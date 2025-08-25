@@ -31,7 +31,6 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
   - [ ] BudgetValue
   - [ ] Concept
   - [ ] Item
-  - [ ] package-info
   - [ ] Sentence
   - [ ] Stamp
   - [ ] Task
@@ -43,7 +42,6 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
   - [ ] BudgetFunctions
   - [ ] CompositionalRules
   - [ ] LocalRules
-  - [ ] package-info
   - [ ] RuleTables
   - [ ] StructuralRules
   - [ ] SyllogisticRules
@@ -72,7 +70,6 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
     - [ ] TextOutputHandler
   - [ ] ConfigReader
   - [ ] Narsese
-  - [ ] package-info
   - [ ] Parser
   - [ ] Symbols
   - [ ] Texts
@@ -95,7 +92,6 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
   - [ ] IntersectionInt
   - [ ] Interval
   - [ ] Negation
-  - [ ] package-info
   - [ ] Product
   - [ ] Property
   - [ ] SetExt
@@ -156,6 +152,5 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
   - [ ] Bag
   - [x] Distributor
   - [ ] Memory
-  - [ ] package-info
 - [ ] util
   - [ ] ListUtil
