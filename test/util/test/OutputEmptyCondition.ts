@@ -9,7 +9,7 @@ import { java } from "jree";
 export class OutputEmptyCondition extends OutputCondition {
     protected readonly output: java.util.List<java.lang.String> = new java.util.LinkedList();
 
-    public constructor(/* final */  nar: Nar) {
+    public constructor(nar: Nar) {
         super(nar);
         succeeded = true;
     }
@@ -18,7 +18,7 @@ export class OutputEmptyCondition extends OutputCondition {
         return "FAIL: output exists but should not: " + this.output;
     }
 
-    public condition(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object): boolean {
+    public condition(channel: java.lang.Class<unknown>, signal: java.lang.Object): boolean {
         // any OUT or ERR output is a failure
         if ((channel === OUT.class) || (channel === ERR.class)) {
             this.output.add(channel.getSimpleName() + ": " + signal.toString());

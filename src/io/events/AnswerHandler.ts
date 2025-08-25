@@ -14,7 +14,7 @@ export abstract class AnswerHandler extends JavaObject implements EventObserver 
         Answer.class
     ];
 
-    public start(/* final */  question: Task, /* final */  n: Nar): void {
+    public start(question: Task, n: Nar): void {
         this.nar = n;
         this.question = question;
 
@@ -25,7 +25,7 @@ export abstract class AnswerHandler extends JavaObject implements EventObserver 
         this.nar.event(this, false, AnswerHandler.events);
     }
 
-    public event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]): void {
+    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
 
         if (event === Answer.class) {
             let task: Task = args[0] as Task;

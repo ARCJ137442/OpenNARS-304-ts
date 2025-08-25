@@ -7,7 +7,7 @@ import { java, JavaObject, type int } from "jree";
  */
 export class ExampleFileInput extends JavaObject {
 
-    public static load(/* final */  path: java.lang.String): java.lang.String {
+    public static load(path: java.lang.String): java.lang.String {
         let sb: java.lang.StringBuilder = new java.lang.StringBuilder();
         let line: java.lang.String;
         let fp: java.io.File = new java.io.File(path);
@@ -22,20 +22,20 @@ export class ExampleFileInput extends JavaObject {
     /** narsese source code, one instruction per line */
     private readonly source: java.lang.String;
 
-    protected constructor(/* final */  input: java.lang.String) {
+    protected constructor(input: java.lang.String) {
         super();
         this.source = input;
     }
 
-    public static get(/* final */  id: java.lang.String): ExampleFileInput {
+    public static get(id: java.lang.String): ExampleFileInput {
         return new ExampleFileInput(ExampleFileInput.load("./nal/" + id + ".nal"));
     }
 
-    public enableConditions(/* final */  n: Nar, /* final */  similarResultsToSave: int): java.util.List<OutputCondition> {
+    public enableConditions(n: Nar, similarResultsToSave: int): java.util.List<OutputCondition> {
         return OutputCondition.getConditions(n, this.source, similarResultsToSave);
     }
 
-    public static getUnitTests(/* final */  directories: java.lang.String[]): java.util.Map<java.lang.String, java.lang.Object> {
+    public static getUnitTests(directories: java.lang.String[]): java.util.Map<java.lang.String, java.lang.Object> {
         let l: java.util.Map<java.lang.String, java.lang.Object> = new java.util.TreeMap();
 
         for (let dir of directories) {

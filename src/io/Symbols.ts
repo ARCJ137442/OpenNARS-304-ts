@@ -180,11 +180,11 @@ export class Symbols extends JavaObject {
         /** closer? */
         public readonly closer: boolean;
 
-        protected constructor(/* final */  string: string, $name$: string, $index$: number);
+        protected constructor(string: string, $name$: string, $index$: number);
 
-        protected constructor(/* final */  string: string, /* final */  relation: boolean, $name$: string, $index$: number);
+        protected constructor(string: string, relation: boolean, $name$: string, $index$: number);
 
-        protected constructor(/* final */  string: string, /* final */  relation: boolean, /* final */  innate: boolean, $name$: string, $index$: number);
+        protected constructor(string: string, relation: boolean, innate: boolean, $name$: string, $index$: number);
         protected constructor(...args: unknown[]) {
             switch (args.length) {
                 case 1: {
@@ -255,9 +255,9 @@ export class Symbols extends JavaObject {
         }
     }
 
-    public static getOperator(/* final */  c: string): Symbols.NativeOperator;
+    public static getOperator(c: string): Symbols.NativeOperator;
 
-    public static getOperator(/* final */  s: string): Symbols.NativeOperator;
+    public static getOperator(s: string): Symbols.NativeOperator;
     public static getOperator(...args: unknown[]): Symbols.NativeOperator {
         switch (args.length) {
             case 1: {
@@ -287,7 +287,7 @@ export class Symbols extends JavaObject {
     }
 
 
-    public static getRelation(/* final */  s: string): Symbols.NativeOperator {
+    public static getRelation(s: string): Symbols.NativeOperator {
         let o: Symbols.NativeOperator = Symbols.getOperator(s);
         if (o === null)
             return null;
@@ -296,7 +296,7 @@ export class Symbols extends JavaObject {
         return null;
     }
 
-    public static getOpener(/* final */  c: string): Symbols.NativeOperator {
+    public static getOpener(c: string): Symbols.NativeOperator {
         let o: Symbols.NativeOperator = Symbols.getOperator(c);
         if (o === null)
             return null;
@@ -305,7 +305,7 @@ export class Symbols extends JavaObject {
         return null;
     }
 
-    public static getCloser(/* final */  c: string): Symbols.NativeOperator {
+    public static getCloser(c: string): Symbols.NativeOperator {
         let o: Symbols.NativeOperator = Symbols.getOperator(c);
         if (o === null)
             return null;
@@ -320,7 +320,7 @@ export class Symbols extends JavaObject {
      * @param s The String to be checked
      * @return if the given String is a getRelation symbol
      */
-    public static isRelation(/* final */  s: string): boolean {
+    public static isRelation(s: string): boolean {
         return Symbols.getRelation(s) !== null;
     }
 }

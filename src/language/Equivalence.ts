@@ -17,7 +17,7 @@ export class Equivalence extends Statement {
      *
      * @param components The component list of the term
      */
-    private constructor(/* final */  components: Term[], /* final */  order: int) {
+    private constructor(components: Term[], order: int) {
         super(components);
 
         this.temporalOrder = order;
@@ -32,7 +32,7 @@ export class Equivalence extends Statement {
      */
     public clone(): Equivalence;
 
-    public clone(/* final */  t: Term[]): Equivalence;
+    public clone(t: Term[]): Equivalence;
     public clone(...args: unknown[]): Equivalence {
         switch (args.length) {
             case 0: {
@@ -71,7 +71,7 @@ export class Equivalence extends Statement {
      * predicate
      * to be reduced to the common term.
      */
-    public static makeTerm(/* final */  subject: Term, /* final */  predicate: Term, /* final */  temporalOrder: int): Term {
+    public static makeTerm(subject: Term, predicate: Term, temporalOrder: int): Term {
         if (subject.equals(predicate))
             return subject;
         return Equivalence.make(subject, predicate, temporalOrder);
@@ -85,7 +85,7 @@ export class Equivalence extends Statement {
      * @param predicate The second component
      * @return A compound generated or null
      */
-    public static make(/* final */  subject: Term, /* final */  predicate: Term): Equivalence;
+    public static make(subject: Term, predicate: Term): Equivalence;
 
     public static make(subject: Term, predicate: Term, temporalOrder: int): Equivalence;
     public static make(...args: unknown[]): Equivalence {

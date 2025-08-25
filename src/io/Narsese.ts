@@ -13,9 +13,9 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
 
     public readonly memory: Memory;
 
-    public constructor(/* final */  memory: Memory);
+    public constructor(memory: Memory);
 
-    public constructor(/* final */  n: Nar);
+    public constructor(n: Nar);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -53,7 +53,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param s the single-line addInput String
      * @return An experienced task
      */
-    public parseTask(/* final */  s: java.lang.String): Task {
+    public parseTask(s: java.lang.String): Task {
         let buffer: java.lang.StringBuilder = new java.lang.StringBuilder(s);
 
         let budgetString: java.lang.String = Narsese.getBudgetString(buffer);
@@ -95,7 +95,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException if the addInput cannot be parsed into a
      *                                      BudgetValue
      */
-    private static getBudgetString(/* final */  s: java.lang.StringBuilder): java.lang.String {
+    private static getBudgetString(s: java.lang.StringBuilder): java.lang.String {
         if (s.length() === 0 || s.charAt(0) !== BUDGET_VALUE_MARK) {
             return null;
         }
@@ -120,7 +120,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException if the addInput cannot be parsed into a
      *                                      TruthValue
      */
-    private static getTruthString(/* final */  s: java.lang.StringBuilder): java.lang.String {
+    private static getTruthString(s: java.lang.StringBuilder): java.lang.String {
         let last: int = s.length() - 1;
         if (s.length() === 0 || s.charAt(last) !== TRUTH_VALUE_MARK) { // use default
             return null;
@@ -145,7 +145,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param type Task type
      * @return the addInput TruthValue
      */
-    private parseTruth(/* final */  s: java.lang.String, /* final */  type: char): TruthValue {
+    private parseTruth(s: java.lang.String, type: char): TruthValue {
         if ((type === QUESTION_MARK) || (type === QUEST_MARK)) {
             return null;
         }
@@ -176,7 +176,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException If the String cannot be parsed into a
      *                                      BudgetValue
      */
-    private parseBudget(/* final */  s: java.lang.String, /* final */  punctuation: char, /* final */  truth: TruthValue): BudgetValue {
+    private parseBudget(s: java.lang.String, punctuation: char, truth: TruthValue): BudgetValue {
         let priority: float;
         let durability: float;
         switch (punctuation) {
@@ -221,7 +221,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param s the addInput in a StringBuilder
      * @return a tense value
      */
-    public static parseTense(/* final */  s: java.lang.StringBuilder): Tense {
+    public static parseTense(s: java.lang.StringBuilder): Tense {
         let i: int = s.indexOf(Symbols.TENSE_MARK);
         let t: java.lang.String = "";
         if (i > 0) {
@@ -346,7 +346,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException if the String couldn't get parsed to a
      *                                      term
      */
-    private parseAtomicTerm(/* final */  s0: java.lang.String): Term {
+    private parseAtomicTerm(s0: java.lang.String): Term {
         let s: java.lang.String = s0.trim();
         if (s.length() === 0) {
             throw new Parser.InvalidInputException("missing term");
@@ -382,7 +382,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException if the String couldn't get parsed to a
      *                                      term
      */
-    private parseStatement(/* final */  s0: java.lang.String): Statement {
+    private parseStatement(s0: java.lang.String): Statement {
         let s: java.lang.String = s0.trim();
         let i: int = Narsese.topRelation(s);
         if (i < 0) {
@@ -408,7 +408,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException if the String couldn't get parsed to a
      *                                      term
      */
-    private parseCompoundTerm(/* final */  s0: java.lang.String): Term {
+    private parseCompoundTerm(s0: java.lang.String): Term {
         let s: java.lang.String = s0.trim();
         if (s.isEmpty()) {
             throw new Parser.InvalidInputException("Empty compound term: " + s);
@@ -453,7 +453,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException if the String couldn't get parsed to a
      *                                      term
      */
-    private parseArguments(/* final */  s0: java.lang.String): java.util.List<Term> {
+    private parseArguments(s0: java.lang.String): java.util.List<Term> {
         let s: java.lang.String = s0.trim();
         let list: java.util.List<Term> = new java.util.ArrayList();
         let start: int = 0;
@@ -481,7 +481,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param s     The String to be parsed
      * @param first The starting index
      */
-    private static nextSeparator(/* final */  s: java.lang.String, /* final */  first: int): int {
+    private static nextSeparator(s: java.lang.String, first: int): int {
         let levelCounter: int = 0;
         let i: int = first;
         while (i < s.length() - 1) {
@@ -505,7 +505,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @return the index of the top-level getRelation
      * @param s The String to be parsed
      */
-    private static topRelation(/* final */  s: java.lang.String): int { // need efficiency improvement
+    private static topRelation(s: java.lang.String): int { // need efficiency improvement
         let levelCounter: int = 0;
         let i: int = 0;
         while (i < s.length() - 3) { // don't need to check the last 3 characters
@@ -530,7 +530,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param s The String to be checked
      * @param i The starting index
      */
-    private static isOpener(/* final */  s: java.lang.String, /* final */  i: int): boolean {
+    private static isOpener(s: java.lang.String, i: int): boolean {
         let c: char = s.charAt(i);
 
         let b: boolean = (getOpener(c) !== null);
@@ -547,7 +547,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param s The String to be checked
      * @param i The starting index
      */
-    private static isCloser(/* final */  s: java.lang.String, /* final */  i: int): boolean {
+    private static isCloser(s: java.lang.String, i: int): boolean {
         let c: char = s.charAt(i);
 
         let b: boolean = (getCloser(c) !== null);
@@ -561,7 +561,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param s string to get checked if it may be narsese
      * @return returns if the string may be narsese
      */
-    public static possiblyNarsese(/* final */  s: java.lang.String): boolean {
+    public static possiblyNarsese(s: java.lang.String): boolean {
         return !s.contains("(") && !s.contains(")") && !s.contains("<") && !s.contains(">");
     }
 }

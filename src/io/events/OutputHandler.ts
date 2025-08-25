@@ -24,13 +24,13 @@ export abstract class OutputHandler extends EventHandler {
     public static readonly DefaultOutputEvents: java.lang.Class<unknown>[] = [IN.class, EXE.class, OUT.class, ERR.class,
     ECHO.class, Answer.class, OutputHandler.ANTICIPATE.class, OutputHandler.CONFIRM.class, OutputHandler.DISAPPOINT.class, DEBUG.class];
 
-    public constructor(/* final */  n: Nar);
+    public constructor(n: Nar);
 
-    public constructor(/* final */  source: EventEmitter, /* final */  active: boolean);
+    public constructor(source: EventEmitter, active: boolean);
 
-    public constructor(/* final */  m: Memory, /* final */  active: boolean);
+    public constructor(m: Memory, active: boolean);
 
-    public constructor(/* final */  n: Nar, /* final */  active: boolean);
+    public constructor(n: Nar, active: boolean);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {

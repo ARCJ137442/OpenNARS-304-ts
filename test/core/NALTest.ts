@@ -36,7 +36,7 @@ export class NALTest extends JavaObject {
     public static bestAnswerConfSum: double = 0.0;
     public static samplesCnt: long = 0;
 
-    public static getExample(/* final */  path: java.lang.String): java.lang.String {
+    public static getExample(path: java.lang.String): java.lang.String {
         try {
             let existing: java.lang.String = NALTest.examples.get(path);
             if (existing !== null)
@@ -74,7 +74,7 @@ export class NALTest extends JavaObject {
         NALTest.tests.put(name, true);
     }
 
-    public static runTests(/* final */  c: java.lang.Class<unknown>): void {
+    public static runTests(c: java.lang.Class<unknown>): void {
 
         NALTest.tests.clear();
         NALTest.scores.clear();
@@ -120,19 +120,19 @@ export class NALTest extends JavaObject {
          */
     }
 
-    public constructor(/* final */  scriptPath: java.lang.String) {
+    public constructor(scriptPath: java.lang.String) {
         super();
         this.scriptPath = scriptPath;
 
     }
 
-    public testNAL(/* final */  path: java.lang.String): void {
+    public testNAL(path: java.lang.String): void {
         for (let iSample: int = 0; iSample < NALTest.numberOfSamples; iSample++) {
             this.sample(path);
         }
     }
 
-    public sample(/* final */  path: java.lang.String): double {
+    public sample(path: java.lang.String): double {
         let example: java.lang.String = NALTest.getExample(path);
 
         if (NALTest.showOutput) {
@@ -259,7 +259,7 @@ export class NALTest extends JavaObject {
         java.lang.System.out.println("avg best conf = " + (NALTest.bestAnswerConfSum / NALTest.samplesCnt));
     }
 
-    public static main(/* final */  args: java.lang.String[]): void {
+    public static main(args: java.lang.String[]): void {
         NALTest.runTests(NALTest.class);
     }
 

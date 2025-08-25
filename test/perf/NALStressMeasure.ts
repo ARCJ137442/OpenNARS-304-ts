@@ -8,8 +8,8 @@ import { java, JavaObject, type double, type int, type long, type float } from "
  * useful for examining with a profiler.
  */
 export class NALStressMeasure extends JavaObject {
-    public static perfNAL(/* final */  n: Reasoner, /* final */  path: java.lang.String, /* final */  extraCycles: int, /* final */  repeats: int,
-            /* final */  warmups: int, /* final */  gc: boolean): double {
+    public static perfNAL(n: Reasoner, path: java.lang.String, extraCycles: int, repeats: int,
+        warmups: int, gc: boolean): double {
 
         let example: java.lang.String = NALTest.getExample(path);
 
@@ -21,7 +21,7 @@ export class NALStressMeasure extends JavaObject {
                 this.totalCycles = 0;
             }
 
-            public run(/* final */  warmup: boolean): void {
+            public run(warmup: boolean): void {
                 n.reset();
                 n.addInput(example);
                 n.cycles(1);
@@ -38,7 +38,7 @@ export class NALStressMeasure extends JavaObject {
 
             }
 
-            public printCSV(/* final */  finalComma: boolean): Performance {
+            public printCSV(finalComma: boolean): Performance {
                 super.printCSV(true);
                 java.lang.System.out.print(df.format(getCycleTimeMS() / this.totalCycles * 1000.0) + ", "
                     + ((this.totalCycles as float) / (warmups + repeats)));
@@ -61,7 +61,7 @@ export class NALStressMeasure extends JavaObject {
 
     }
 
-    public static test(/* final */  n: Reasoner): void {
+    public static test(n: Reasoner): void {
         let repeats: int = 1;
         let warmups: int = 0;
         let extraCycles: int = 5000;
@@ -75,7 +75,7 @@ export class NALStressMeasure extends JavaObject {
         java.lang.System.out.println("\n\nTotal mean runtime (ms): " + totalTime);
     }
 
-    public static main(/* final */  args: java.lang.String[]): void {
+    public static main(args: java.lang.String[]): void {
         let nd: Reasoner = new Nar();
         NALStressMeasure.test(nd);
     }

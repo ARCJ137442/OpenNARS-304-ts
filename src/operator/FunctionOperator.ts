@@ -11,7 +11,7 @@ import { java, type int, type float } from "jree";
  */
 export abstract class FunctionOperator extends Operator {
 
-    protected constructor(/* final */  name: java.lang.String) {
+    protected constructor(name: java.lang.String) {
         super(name);
     }
 
@@ -31,7 +31,7 @@ export abstract class FunctionOperator extends Operator {
     // abstract protected int getMinArity();
     // abstract protected int getMaxArity();
 
-    protected execute(operation: Operation, /* final */  args: Term[], /* final */  m: Memory, /* final */  time: Timable): java.util.List<Task> {
+    protected execute(operation: Operation, args: Term[], m: Memory, time: Timable): java.util.List<Task> {
         // TODO make memory access optional by constructor argument
         // TODO allow access to Nar instance?
         let numArgs: int = args.length - 1;
@@ -102,7 +102,7 @@ export abstract class FunctionOperator extends Operator {
      * (can be overridden in subclasses) the extent to which it is truth
      * that the 2 given terms are equal. in other words, a distance metric
      */
-    public equals(/* final */  a: Term, /* final */  b: Term): float {
+    public equals(a: Term, b: Term): float {
         // default: Term equality
         return a.equals(b) ? 1.0 : 0.0;
     }

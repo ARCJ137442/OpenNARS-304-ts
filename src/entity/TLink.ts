@@ -9,7 +9,7 @@ import { java, type short, type int, type float } from "jree";
  */
 interface TLink<T> {
 
-    getIndex(/* final */  i: int): short;
+    getIndex(i: int): short;
 
     getTarget(): T;
 

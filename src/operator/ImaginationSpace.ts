@@ -16,7 +16,7 @@ import { java } from "jree";
  */
 interface ImaginationSpace {
     //
-    AbductionOrComparisonTo(/* final */  obj: ImaginationSpace, comparison: boolean): TruthValue;
+    AbductionOrComparisonTo(obj: ImaginationSpace, comparison: boolean): TruthValue;
 
     // attaches an imagination space to the conjunction that is constructed
     // by starting with the leftmost element of the conjunction

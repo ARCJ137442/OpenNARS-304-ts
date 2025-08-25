@@ -86,7 +86,7 @@ export class TemporalOneShotMetric extends AnswerHandler {
 
     }
 
-    private static createRandomString(/* final */  length: int, rng: java.util.Random): java.lang.String {
+    private static createRandomString(length: int, rng: java.util.Random): java.lang.String {
         let res: java.lang.String = "";
 
         for (let i: int = 0; i < length; i++) {

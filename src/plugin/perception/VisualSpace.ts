@@ -20,8 +20,8 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
     public static readonly zoom: NullOperator = new NullOperator("^zoom");
     private readonly nar: Nar;
 
-    public constructor(/* final */  nar: Nar, /* final */  source: Float64Array[], /* final */  py: int, /* final */  px: int, /* final */  height: int,
-            /* final */  width: int) {
+    public constructor(nar: Nar, source: Float64Array[], py: int, px: int, height: int,
+        width: int) {
         super();
         this.nar = nar;
         this.height = height;
@@ -80,7 +80,7 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
         return bestShiftTruth;
     }
 
-    public ConstructSpace(/* final */  program: Conjunction): ImaginationSpace {
+    public ConstructSpace(program: Conjunction): ImaginationSpace {
         if (program.isSpatial || program.getTemporalOrder() !== TemporalRules.ORDER_FORWARD) {
             return null; // would be a strange program :)
         }
@@ -104,7 +104,7 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
         return null;
     }
 
-    public ProgressSpace(/* final */  op: Operation, /* final */  b: ImaginationSpace): ImaginationSpace {
+    public ProgressSpace(op: Operation, b: ImaginationSpace): ImaginationSpace {
         if (!(b instanceof VisualSpace)) {
             return null; // incompatible
         }
@@ -121,7 +121,7 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
         return progressed;
     }
 
-    public IsOperationInSpace(/* final */  oper: Operation): boolean {
+    public IsOperationInSpace(oper: Operation): boolean {
         let op: Operator = oper.getPredicate() as Operator;
         return op.equals(VisualSpace.move) || op.equals(VisualSpace.zoom);
     }

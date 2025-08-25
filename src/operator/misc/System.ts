@@ -11,7 +11,7 @@ export class System extends FunctionOperator {
         super("^system");
     }
 
-    protected function(/* final */  memory: Memory, /* final */  x: Term[]): Term {
+    protected function(memory: Memory, x: Term[]): Term {
         let cmd: java.lang.String = "";
         for (let i: int = 0; i < x.length; ++i) {
             cmd += x[i].name().toString() + " ";

@@ -31,10 +31,10 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
     /** maximum number of items to be taken out at current level */
     private currentCounter: int;
 
-    public constructor(/* final */  levels: int, /* final */  capacity: int, narParameters: Parameters);
+    public constructor(levels: int, capacity: int, narParameters: Parameters);
 
     /** thresholdLevel = 0 disables "fire level completely" threshold effect */
-    public constructor(/* final */  levels: int, /* final */  capacity: int, /* final */  thresholdLevel: int);
+    public constructor(levels: int, capacity: int, thresholdLevel: int);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 3: {
@@ -149,7 +149,7 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
      * @param m       related memory
      * @return the item which was removed, or null if none removed
      */
-    public putBack(/* final */  oldItem: Type, /* final */  forgetCycles: float, /* final */  m: Memory): Type {
+    public putBack(oldItem: Type, forgetCycles: float, m: Memory): Type {
         let relativeThreshold: float = m.narParameters.FORGET_QUALITY_RELATIVE;
         BudgetFunctions.applyForgetting(oldItem.budget, forgetCycles, relativeThreshold);
         return this.putIn(oldItem);

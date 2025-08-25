@@ -48,7 +48,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     private threads: java.lang.Thread[] = null;
     protected sensoryChannels: java.util.Map<Term, SensoryChannel> = new java.util.LinkedHashMap();
 
-    public addSensoryChannel(/* final */  term: java.lang.String, /* final */  channel: SensoryChannel): void {
+    public addSensoryChannel(term: java.lang.String, channel: SensoryChannel): void {
         try {
             this.sensoryChannels.put(new Narsese(this).parseTerm(term), channel);
         } catch (ex) {
@@ -61,14 +61,14 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         }
     }
 
-    public SaveToFile(/* final */  name: java.lang.String): void {
+    public SaveToFile(name: java.lang.String): void {
         let outStream: java.io.FileOutputStream = new java.io.FileOutputStream(name);
         let stream: java.io.ObjectOutputStream = new java.io.ObjectOutputStream(outStream);
         stream.writeObject(this);
         outStream.close();
     }
 
-    public static LoadFromFile(/* final */  name: java.lang.String): Nar {
+    public static LoadFromFile(name: java.lang.String): Nar {
         let inStream: java.io.FileInputStream = new java.io.FileInputStream(name);
         let stream: java.io.ObjectInputStream = new java.io.ObjectInputStream(inStream);
         let ret: Nar = stream.readObject() as Nar;
@@ -100,9 +100,9 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             public readonly plugin: Plugin;
             protected enabled: boolean = false;
 
-            public constructor(/* final */  plugin: Plugin);
+            public constructor(plugin: Plugin);
 
-            public constructor(/* final */  plugin: Plugin, /* final */  enabled: boolean);
+            public constructor(plugin: Plugin, enabled: boolean);
             public constructor(...args: unknown[]) {
                 switch (args.length) {
                     case 1: {
@@ -134,7 +134,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             }
 
 
-            public setEnabled(/* final */  enabled: boolean): void {
+            public setEnabled(enabled: boolean): void {
                 if (this.enabled === enabled)
                     return;
 
@@ -188,7 +188,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      *
      * @param parameterOverrides (overwritten) parameters of a Reasoner
      */
-    public constructor(/* final */  parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
+    public constructor(parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
 
     /**
      * constructs the NAR and loads a config from the filepath
@@ -204,7 +204,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      * @param relativeConfigFilePath (relative) path of the XML encoded config file
      * @param parameterOverrides     (overwritten) parameters of a Reasoner
      */
-    public constructor(relativeConfigFilePath: java.lang.String, /* final */  parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
+    public constructor(relativeConfigFilePath: java.lang.String, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
 
     /**
      * constructs the NAR and loads a config from the filepath
@@ -213,7 +213,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      * @param relativeConfigFilePath (relative) path of the XML encoded config file
      * @param parameterOverrides     (overwritten) parameters of a Reasoner
      */
-    public constructor(narId: long, relativeConfigFilePath: java.lang.String, /* final */  parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
+    public constructor(narId: long, relativeConfigFilePath: java.lang.String, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -335,7 +335,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      * will be set to the current memory cycle time, but may be processed by
      * memory later according to the length of the input queue.
      */
-    private addMultiLineInput(/* final */  text: java.lang.String): boolean {
+    private addMultiLineInput(text: java.lang.String): boolean {
         let lines: java.lang.String[] = text.split("\n");
         for (let s of lines) {
             this.addInput(s);
@@ -346,7 +346,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         return true;
     }
 
-    private addCommand(/* final */  text: java.lang.String): boolean {
+    private addCommand(text: java.lang.String): boolean {
         // 重置
         if (text.startsWith("**") || text.startsWith("*reset")) {
             this.reset();
@@ -424,7 +424,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     public addInput(text: java.lang.String): void;
 
-    public addInput(/* final */  t: Task, /* final */  time: Timable): Nar;
+    public addInput(t: Task, time: Timable): Nar;
     public addInput(...args: unknown[]): void | Nar {
         switch (args.length) {
             case 1: {
@@ -548,7 +548,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         return false;
     }
 
-    public addInputFile(/* final */  s: java.lang.String): void {
+    public addInputFile(s: java.lang.String): void {
         try {
             // This holds the final error to throw (if any).
             let error: java.lang.Throwable | undefined;
@@ -602,11 +602,11 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
     /** gets a concept if it exists, or returns null if it does not */
-    public concept(/* final */  concept: java.lang.String): Concept {
+    public concept(concept: java.lang.String): Concept {
         return this.memory.concept(new Narsese(this).parseTerm(concept));
     }
 
-    public ask(/* final */  termString: java.lang.String, /* final */  answered: AnswerHandler): Nar {
+    public ask(termString: java.lang.String, answered: AnswerHandler): Nar {
         let sentenceForNewTask: Sentence = new Sentence(
             new Narsese(this).parseTerm(termString),
             Symbols.QUESTION_MARK,
@@ -627,7 +627,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     }
 
-    public askNow(/* final */  termString: java.lang.String, /* final */  answered: AnswerHandler): Nar {
+    public askNow(termString: java.lang.String, answered: AnswerHandler): Nar {
         let sentenceForNewTask: Sentence = new Sentence(
             new Narsese(this).parseTerm(termString),
             Symbols.QUESTION_MARK,
@@ -649,21 +649,21 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
     /** attach event handler */
-    public on(/* final */  c: java.lang.Class<unknown>, /* final */  o: EventObserver): void {
+    public on(c: java.lang.Class<unknown>, o: EventObserver): void {
         this.memory.event.on(c, o);
     }
 
     /** remove event handler */
-    public off(/* final */  c: java.lang.Class<unknown>, /* final */  o: EventObserver): void {
+    public off(c: java.lang.Class<unknown>, o: EventObserver): void {
         this.memory.event.off(c, o);
     }
 
     /** set an event handler. useful for multiple events. */
-    public event(/* final */  e: EventObserver, /* final */  enabled: boolean, /* final */ ...events: java.lang.Class<unknown>[]): void {
+    public event(e: EventObserver, enabled: boolean, ...events: java.lang.Class<unknown>[]): void {
         this.memory.event.set(e, enabled, events);
     }
 
-    public addPlugin(/* final */  p: Plugin): void {
+    public addPlugin(p: Plugin): void {
         if (p instanceof SensoryChannel) {
             this.addSensoryChannel((p as SensoryChannel).getName(), p as SensoryChannel);
         } else if (p instanceof Operator) {
@@ -678,7 +678,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         this.emit(Events.PluginsChange.class, p, null);
     }
 
-    public removePlugin(/* final */  ps: Nar.PluginState): void {
+    public removePlugin(ps: Nar.PluginState): void {
         if (this.plugins.remove(ps)) {
             let p: Plugin = ps.plugin;
             if (p instanceof Operator) {
@@ -699,7 +699,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     public start(): void;
 
-    public start(/* final */  minCyclePeriodMS: long): void;
+    public start(minCyclePeriodMS: long): void;
     public start(...args: unknown[]): void {
         switch (args.length) {
             case 0: {
@@ -751,7 +751,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
     /** Execute a fixed number of cycles. */
-    public cycles(/* final */  cycles: int): void {
+    public cycles(cycles: int): void {
         this.memory.allowExecution = true;
         this.emit(CyclesStart.class);
         let wasRunning: boolean = this.running;
@@ -791,7 +791,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         }
     }
 
-    public emit(/* final */  c: java.lang.Class<unknown>, /* final */ ...o: java.lang.Object[]): void {
+    public emit(c: java.lang.Class<unknown>, ...o: java.lang.Object[]): void {
         this.memory.event.emit(c, o);
     }
 
@@ -847,7 +847,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      * minCyclePeriodMS==0 (no delay).
      * This is for improving program responsiveness when Nar is run with no delay.
      */
-    public setThreadYield(/* final */  b: boolean): void {
+    public setThreadYield(b: boolean): void {
         this.threadYield = b;
     }
 

@@ -25,7 +25,7 @@ export class Term extends JavaObject {
     // private to cache it
     private name: string = null;
 
-    public static isSelf(/* final */  t: Term): boolean {
+    public static isSelf(t: Term): boolean {
         return Term.SELF.equals(t);
     }
 
@@ -37,7 +37,7 @@ export class Term extends JavaObject {
         return (this instanceof Equivalence) || (this instanceof Implication);
     }
 
-    public isExecutable(/* final */  mem: Memory): boolean {
+    public isExecutable(mem: Memory): boolean {
         // don't allow ^want and ^believe to be active/have an effect,
         // which means its only used as monitor
         let isOp: boolean = this instanceof Operation;
@@ -65,7 +65,7 @@ export class Term extends JavaObject {
      *
      * @param name A String as the name of the Term
      */
-    public constructor(/* final */  name: java.lang.CharSequence);
+    public constructor(name: java.lang.CharSequence);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -95,10 +95,10 @@ export class Term extends JavaObject {
 
 
     /** gets the atomic term given a name */
-    public static get(/* final */  name: java.lang.CharSequence): Term;
+    public static get(name: java.lang.CharSequence): Term;
 
     /** gets the atomic term of an integer */
-    public static get(/* final */  i: int): Term;
+    public static get(i: int): Term;
     public static get(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
@@ -208,7 +208,7 @@ export class Term extends JavaObject {
      * @return Whether the two Terms are equal
      * @param that The Term to be compared with the current Term
      */
-    public override  equals(/* final */  that: java.lang.Object): boolean {
+    public override  equals(that: java.lang.Object): boolean {
         if (that === this)
             return true;
         if (this.getClass() !== this.getClass())
@@ -249,7 +249,7 @@ export class Term extends JavaObject {
         return false;
     }
 
-    public recurseTerms(/* final */  v: Term.TermVisitor, /* final */  parent: Term): void {
+    public recurseTerms(v: Term.TermVisitor, parent: Term): void {
         v.visit(this, parent);
         if (this instanceof CompoundTerm) {
             for (let t of (this as CompoundTerm).term) {
@@ -258,9 +258,9 @@ export class Term extends JavaObject {
         }
     }
 
-    public recurseSubtermsContainingVariables(/* final */  v: Term.TermVisitor): void;
+    public recurseSubtermsContainingVariables(v: Term.TermVisitor): void;
 
-    public recurseSubtermsContainingVariables(/* final */  v: Term.TermVisitor, /* final */  parent: Term): void;
+    public recurseSubtermsContainingVariables(v: Term.TermVisitor, parent: Term): void;
     public recurseSubtermsContainingVariables(...args: unknown[]): void {
         switch (args.length) {
             case 1: {
@@ -309,7 +309,7 @@ export class Term extends JavaObject {
      * set the name
      */
     // only method that should modify Term.name
-    protected setName(/* final */  newName: java.lang.CharSequence): void {
+    protected setName(newName: java.lang.CharSequence): void {
         this.name = newName;
     }
 
@@ -317,7 +317,7 @@ export class Term extends JavaObject {
      * @param that The Term to be compared with the current Term
      * @return The same as compareTo as defined on Strings
      */
-    public compareTo(/* final */  that: AbstractTerm): int {
+    public compareTo(that: AbstractTerm): int {
         if (that === this) {
             return 0;
         }
@@ -340,7 +340,7 @@ export class Term extends JavaObject {
      * @param target The term to be searched
      * @return Whether the two have the same content
      */
-    public containsTermRecursively(/* final */  target: Term): boolean {
+    public containsTermRecursively(target: Term): boolean {
         if (target === null) {
             return false;
         }
@@ -363,7 +363,7 @@ export class Term extends JavaObject {
     }
 
     /** whether this contains a term in its components. */
-    public containsTerm(/* final */  target: Term): boolean {
+    public containsTerm(target: Term): boolean {
         return this.equals(target);
     }
 
@@ -380,7 +380,7 @@ export class Term extends JavaObject {
      * Creates a quote-escaped term from a string. Useful for an atomic term that is
      * meant to contain a message as its name
      */
-    public static text(/* final */  t: java.lang.String): Term {
+    public static text(t: java.lang.String): Term {
         return Term.get("\"" + t + "\"");
     }
 
@@ -391,7 +391,7 @@ export class Term extends JavaObject {
      */
     public hasVar(): boolean;
 
-    public hasVar(/* final */  type: char): boolean;
+    public hasVar(type: char): boolean;
     public hasVar(...args: unknown[]): boolean {
         switch (args.length) {
             case 0: {
@@ -446,7 +446,7 @@ export class Term extends JavaObject {
         return false;
     }
 
-    public static toSortedSet(/* final */ ...arg: Term[]): java.util.NavigableSet<Term> {
+    public static toSortedSet(...arg: Term[]): java.util.NavigableSet<Term> {
         // use toSortedSetArray where possible
         let t: java.util.NavigableSet<Term> = new java.util.TreeSet();
         java.util.Collections.addAll(t, arg);
@@ -455,7 +455,7 @@ export class Term extends JavaObject {
 
     public static readonly EmptyTermArray: Term[] = new Array<Term>(0);
 
-    public static toSortedSetArray(/* final */ ...arg: Term[]): Term[] {
+    public static toSortedSetArray(...arg: Term[]): Term[] {
         switch (arg.length) {
             case 0:
                 return Term.EmptyTermArray;
@@ -502,7 +502,7 @@ export class Term extends JavaObject {
      * performs a thorough check of the validity of a term (by cloneDeep it) to see
      * if it's valid
      */
-    public static valid(/* final */  content: Term): boolean {
+    public static valid(content: Term): boolean {
         let cloned: Term = content.cloneDeep();
         return cloned !== null;
     }

@@ -13,7 +13,7 @@ export class ListUtil extends JavaObject {
      * @param <T>        generic type
      * @return element which matched first, null if none matched
      */
-    public static findAny<T>(/* final */  candidates: java.util.List<T>, /* final */  predicate: java.util.function.Predicate<T>): T {
+    public static findAny<T>(candidates: java.util.List<T>, predicate: java.util.function.Predicate<T>): T {
         for (let i of candidates) {
             if (predicate.test(i)) {
                 return i;

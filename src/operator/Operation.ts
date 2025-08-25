@@ -9,13 +9,13 @@ export class Operation extends Inheritance {
     private task: Task;
     public static readonly SELF_TERM_ARRAY: Term[] = [SELF];
 
-    protected constructor(/* final */  t: Term[]);
+    protected constructor(t: Term[]);
 
     /**
      * Constructor with partial values, called by make
      *
      */
-    protected constructor(/* final */  argProduct: Term, /* final */  operator: Term);
+    protected constructor(argProduct: Term, operator: Term);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -61,7 +61,7 @@ export class Operation extends Inheritance {
      * @param addSelf include SELF term at end of product terms
      * @return A compound generated or null
      */
-    public static make(/* final */  oper: Operator, /* final */  arg: Term[], /* final */  addSelf: boolean): Operation {
+    public static make(oper: Operator, arg: Term[], addSelf: boolean): Operation {
         return new Operation(new Product(arg), oper);
     }
 
@@ -75,7 +75,7 @@ export class Operation extends Inheritance {
         return makeStatementName(java.security.cert.X509CertSelector.getSubject(), Symbols.NativeOperator.INHERITANCE, getPredicate());
     }
 
-    public static makeName(/* final */  op: java.lang.CharSequence, /* final */  arg: Term[]): java.lang.CharSequence {
+    public static makeName(op: java.lang.CharSequence, arg: Term[]): java.lang.CharSequence {
         let nameBuilder: java.lang.StringBuilder = new java.lang.StringBuilder(16) // estimate
             .append(COMPOUND_TERM_OPENER.ch).append(op);
 
@@ -92,7 +92,7 @@ export class Operation extends Inheritance {
      * stores the currently executed task, which can be accessed by Operator
      * execution
      */
-    public setTask(/* final */  task: Task): void {
+    public setTask(task: Task): void {
         this.task = task;
     }
 

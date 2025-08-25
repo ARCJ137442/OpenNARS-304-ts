@@ -10,7 +10,7 @@ export abstract class Image extends CompoundTerm {
     /** The index of relation in the component list */
     public readonly relationIndex: short;
 
-    protected constructor(/* final */  components: Term[], /* final */  relationIndex: short) {
+    protected constructor(components: Term[], relationIndex: short) {
         super(components);
 
         this.relationIndex = relationIndex;
@@ -18,12 +18,12 @@ export abstract class Image extends CompoundTerm {
         this.init(components);
     }
 
-    protected init(/* final */  components: Term[]): void {
+    protected init(components: Term[]): void {
         super.init(components);
         this.hash = java.util.Objects.hash(super.hashCode(), this.relationIndex);
     }
 
-    public compareTo(/* final */  that: AbstractTerm): int {
+    public compareTo(that: AbstractTerm): int {
         if (that instanceof Image) {
             let r: int = this.relationIndex - (that as Image).relationIndex;
             if (r !== 0)
@@ -33,7 +33,7 @@ export abstract class Image extends CompoundTerm {
     }
 
     // TODO replace with a special Term type
-    public static isPlaceHolder(/* final */  t: Term): boolean {
+    public static isPlaceHolder(t: Term): boolean {
         if (t.getClass() !== Term.class)
             return false;
         let n: java.lang.CharSequence = t.name();
@@ -50,7 +50,7 @@ export abstract class Image extends CompoundTerm {
      * @param relationIndex the location of the place holder
      * @return the oldName of the term
      */
-    protected static makeImageName(/* final */  op: NativeOperator, /* final */  arg: Term[], /* final */  relationIndex: int): java.lang.String {
+    protected static makeImageName(op: NativeOperator, arg: Term[], relationIndex: int): java.lang.String {
         let sizeEstimate: int = 12 * arg.length + 2;
 
         let name: java.lang.StringBuilder = new java.lang.StringBuilder(sizeEstimate)

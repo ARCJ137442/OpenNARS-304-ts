@@ -37,7 +37,7 @@ export class Task extends Item<Sentence> {
      * @param s The sentence
      * @param b The budget
      */
-    public constructor(/* final */  s: Sentence, /* final */  b: BudgetValue, type: Task.EnumType);
+    public constructor(s: Sentence, b: BudgetValue, type: Task.EnumType);
 
     /***
      * Constructors for double premise derived task
@@ -46,7 +46,7 @@ export class Task extends Item<Sentence> {
      * @param b            The budget
      * @param parentBelief The belief used for deriving the task
      */
-    public constructor(/* final */  s: Sentence, /* final */  b: BudgetValue, /* final */  parentBelief: Sentence);
+    public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence);
 
     /***
      * Constructors for solved double premise derived task
@@ -56,7 +56,7 @@ export class Task extends Item<Sentence> {
      * @param parentBelief The belief used for deriving the task
      * @param solution     The solution to the task
      */
-    public constructor(/* final */  s: Sentence, /* final */  b: BudgetValue, /* final */  parentBelief: Sentence, /* final */  solution: Sentence);
+    public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence, solution: Sentence);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 3: {
@@ -104,7 +104,7 @@ export class Task extends Item<Sentence> {
         return this.sentence;
     }
 
-    public equals(/* final */  obj: java.lang.Object): boolean {
+    public equals(obj: java.lang.Object): boolean {
         if (obj === this)
             return true;
         if (obj instanceof Task) {
@@ -145,7 +145,7 @@ export class Task extends Item<Sentence> {
      *
      * @param that The other Task
      */
-    public merge(/* final */  that: Item<unknown>): Item<unknown> {
+    public merge(that: Item<unknown>): Item<unknown> {
         if (this.getCreationTime() >= (that as Task).getCreationTime()) {
             return super.merge(that);
         } else {
@@ -168,7 +168,7 @@ export class Task extends Item<Sentence> {
      *
      * @param judgment The solution to be remembered
      */
-    public setBestSolution(/* final */  memory: Memory, /* final */  judgment: Sentence, /* final */  time: Timable): void {
+    public setBestSolution(memory: Memory, judgment: Sentence, time: Timable): void {
         if (memory.internalExperience !== null) {
             InternalExperience.InternalExperienceFromBelief(memory, this, judgment, time);
         }
@@ -203,7 +203,7 @@ export class Task extends Item<Sentence> {
     /**
      * flag to indicate whether this Event Task participates in temporal induction
      */
-    public setElemOfSequenceBuffer(/* final */  b: boolean): void {
+    public setElemOfSequenceBuffer(b: boolean): void {
         this.partOfSequenceBuffer = b;
     }
 

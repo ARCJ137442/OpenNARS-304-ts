@@ -8,7 +8,7 @@ import { java, type float } from "jree";
 export abstract class Feel extends Operator {
     private readonly feelingTerm: Term;
 
-    public constructor(/* final */  name: java.lang.String) {
+    public constructor(name: java.lang.String) {
         super(name);
 
         // remove the "^feel" prefix from name
@@ -24,7 +24,7 @@ export abstract class Feel extends Operator {
      * @param memory The memory in which the operation is executed
      * @return Immediate results as Tasks
      */
-    protected feeling(/* final */  value: float, /* final */  memory: Memory, /* final */  time: Timable): java.util.List<Task> {
+    protected feeling(value: float, memory: Memory, time: Timable): java.util.List<Task> {
         let stamp: Stamp = new Stamp(time, memory, Tense.Present);
         let truth: TruthValue = new TruthValue(value, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
             memory.narParameters);

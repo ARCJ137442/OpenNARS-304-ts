@@ -18,7 +18,7 @@ export class Reflect extends FunctionOperator {
         super("^reflect");
     }
 
-    protected function(/* final */  memory: Memory, /* final */  x: Term[]): Term {
+    protected function(memory: Memory, x: Term[]): Term {
 
         if (x.length !== 1) {
             throw new java.lang.IllegalStateException("Requires 1 Term argument");
@@ -29,11 +29,11 @@ export class Reflect extends FunctionOperator {
         return Reflect.getMetaTerm(content);
     }
 
-    public static sop(/* final */  s: Statement, /* final */  operatorName: java.lang.String): Term;
+    public static sop(s: Statement, operatorName: java.lang.String): Term;
 
-    public static sop(/* final */  s: Statement, /* final */  predicate: Term): Term;
+    public static sop(s: Statement, predicate: Term): Term;
 
-    public static sop(/* final */  operatorName: java.lang.String, /* final */ ...t: Term[]): Term;
+    public static sop(operatorName: java.lang.String, ...t: Term[]): Term;
 
     /**
      * <(*,subject,object) --> predicate>
@@ -42,7 +42,7 @@ export class Reflect extends FunctionOperator {
      * @param object    the object for the relation
      * @param predicate the predicate of the relation
      */
-    public static sop(/* final */  subject: Term, /* final */  object: Term, /* final */  predicate: Term): Term;
+    public static sop(subject: Term, object: Term, predicate: Term): Term;
     public static sop(...args: unknown[]): Term {
         switch (args.length) {
             case 2: {
@@ -98,7 +98,7 @@ export class Reflect extends FunctionOperator {
     }
 
 
-    public static getMetaTerm(/* final */  node: Term): Term {
+    public static getMetaTerm(node: Term): Term {
         if (!(node instanceof CompoundTerm)) {
             return node;
         }

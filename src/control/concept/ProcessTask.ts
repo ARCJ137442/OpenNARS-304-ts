@@ -28,7 +28,7 @@ export class ProcessTask extends JavaObject {
      * @return whether it was processed
      */
     // called in Memory.localInference only, for both derived and input tasks
-    public static processTask(/* final */  concept: Concept, /* final */  nal: DerivationContext, /* final */  task: Task,
+    public static processTask(concept: Concept, nal: DerivationContext, task: Task,
         time: Timable): boolean {
         /* synchronized (concept) { */
         concept.observable |= task.isInput();

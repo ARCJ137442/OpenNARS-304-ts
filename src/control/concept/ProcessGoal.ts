@@ -16,7 +16,7 @@ export class ProcessGoal extends JavaObject {
      * @param nal     The derivation context
      * @param task    The goal task to be processed
      */
-    protected static processGoal(/* final */  concept: Concept, /* final */  nal: DerivationContext, /* final */  task: Task): void {
+    protected static processGoal(concept: Concept, nal: DerivationContext, task: Task): void {
         let goal: Sentence = task.sentence;
         let oldGoalT: Task = concept.selectCandidate(task, concept.desires, nal.time); // revise with the existing
         // desire values
@@ -132,8 +132,8 @@ export class ProcessGoal extends JavaObject {
      * @param oldGoalT      The best goal in the goal table
      * @param task          The goal task
      */
-    protected static processOperationGoal(/* final */  projectedGoal: Sentence, /* final */  nal: DerivationContext,
-            /* final */  concept: Concept, /* final */  oldGoalT: Task, /* final */  task: Task): void {
+    protected static processOperationGoal(projectedGoal: Sentence, nal: DerivationContext,
+        concept: Concept, oldGoalT: Task, task: Task): void {
         if (projectedGoal.truth.getExpectation() > nal.narParameters.DECISION_THRESHOLD) {
             // see whether the goal evidence is fully included in the old goal, if yes don't
             // execute
@@ -167,7 +167,7 @@ export class ProcessGoal extends JavaObject {
      * @param task the task for which the question should be processed
      * @param nal  The derivation context
      */
-    public static questionFromGoal(/* final */  task: Task, /* final */  nal: DerivationContext): void {
+    public static questionFromGoal(task: Task, nal: DerivationContext): void {
         if (nal.narParameters.QUESTION_GENERATION_ON_DECISION_MAKING
             || nal.narParameters.HOW_QUESTION_GENERATION_ON_DECISION_MAKING) {
             // ok, how can we achieve it? add a question of whether it is fulfilled
@@ -233,8 +233,8 @@ export class ProcessGoal extends JavaObject {
      * @param projectedGoal The current goal
      * @param task          The goal task
      */
-    public static bestReactionForGoal(/* final */  concept: Concept, /* final */  nal: DerivationContext,
-            /* final */  projectedGoal: Sentence, /* final */  task: Task): void {
+    public static bestReactionForGoal(concept: Concept, nal: DerivationContext,
+        projectedGoal: Sentence, task: Task): void {
         concept.incAcquiredQuality(); // useful as it is represents a goal concept that can hold important procedure
         // knowledge
         // 1. pull up variable based preconditions from component concepts without
@@ -310,8 +310,8 @@ export class ProcessGoal extends JavaObject {
      *                          preconditions
      * @return The procedural hypothesis with the highest result truth expectation
      */
-    private static calcBestExecutablePrecondition(/* final */  nal: DerivationContext,
-            /* final */  concept: Concept, /* final */  projectedGoal: Sentence, execPreconditions: java.util.List<Task>,
+    private static calcBestExecutablePrecondition(nal: DerivationContext,
+        concept: Concept, projectedGoal: Sentence, execPreconditions: java.util.List<Task>,
         anticipationsToMake: java.util.Map<Operation, java.util.List<ProcessGoal.ExecutablePrecondition>>): ProcessGoal.ExecutablePrecondition {
         let result: ProcessGoal.ExecutablePrecondition = new ProcessGoal.ExecutablePrecondition();
         for (let t of execPreconditions) {
@@ -415,8 +415,8 @@ export class ProcessGoal extends JavaObject {
      * @param projectedGoal The goal projected to the current time
      * @param task          The goal task
      */
-    private static executePrecondition(/* final */  nal: DerivationContext, precon: ProcessGoal.ExecutablePrecondition,
-            /* final */  concept: Concept, /* final */  projectedGoal: Sentence, /* final */  task: Task): boolean {
+    private static executePrecondition(nal: DerivationContext, precon: ProcessGoal.ExecutablePrecondition,
+        concept: Concept, projectedGoal: Sentence, task: Task): boolean {
         if (precon.bestOp !== null && precon.bestOp_truthExp > nal.narParameters.DECISION_THRESHOLD /*
                                                                                                     * && Math.random() <
                                                                                                     * bestOp_truthexp
@@ -449,7 +449,7 @@ export class ProcessGoal extends JavaObject {
      * @param nal The derivation concept
      * @param t   The operation goal task
      */
-    public static executeOperation(/* final */  nal: DerivationContext, /* final */  t: Task): boolean {
+    public static executeOperation(nal: DerivationContext, t: Task): boolean {
         let content: Term = t.getTerm();
         if (!(nal.memory.allowExecution) || !(content instanceof Operation)) {
             return false;

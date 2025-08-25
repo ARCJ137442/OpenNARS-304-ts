@@ -15,7 +15,7 @@ export class UtilityFunctions extends JavaObject {
      * @param arr The inputs, each in [0, 1]
      * @return The output that is no larger than each input
      */
-    public static and(/* final */ ...arr: double[]): double {
+    public static and(...arr: double[]): double {
         let product: float = 1;
         for (let f of arr) {
             product *= f;
@@ -29,7 +29,7 @@ export class UtilityFunctions extends JavaObject {
      * @param arr The inputs, each in [0, 1]
      * @return The output that is no smaller than each input
      */
-    public static or(/* final */ ...arr: float[]): float {
+    public static or(...arr: float[]): float {
         let product: float = 1;
         for (let f of arr) {
             product *= (1 - f);
@@ -43,7 +43,7 @@ export class UtilityFunctions extends JavaObject {
      * @param arr The inputs, each in [0, 1]
      * @return The arithmetic average the inputs
      */
-    public static aveAri(/* final */ ...arr: float[]): float {
+    public static aveAri(...arr: float[]): float {
         let sum: float = 0;
         for (let f of arr) {
             sum += f;
@@ -57,7 +57,7 @@ export class UtilityFunctions extends JavaObject {
      * @param arr The inputs, each in [0, 1]
      * @return The geometric average the inputs
      */
-    public static aveGeo(/* final */ ...arr: float[]): float {
+    public static aveGeo(...arr: float[]): float {
         let product: float = 1;
         for (let f of arr) {
             product *= f;
@@ -76,7 +76,7 @@ export class UtilityFunctions extends JavaObject {
      * @param narParameters parameters of the reasoner
      * @return The corresponding confidence, in [0, 1)
      */
-    public static w2c(/* final */ w: double, narParameters: Parameters): double {
+    public static w2c(w: double, narParameters: Parameters): double {
         return w / (w + narParameters.HORIZON);
     }
 
@@ -87,7 +87,7 @@ export class UtilityFunctions extends JavaObject {
      * @param narParameters parameters of the reasoner
      * @return The corresponding weight of evidence, a non-negative real number
      */
-    public static c2w(/* final */  c: double, narParameters: Parameters): double {
+    public static c2w(c: double, narParameters: Parameters): double {
         return narParameters.HORIZON * c / (1 - c);
     }
 }

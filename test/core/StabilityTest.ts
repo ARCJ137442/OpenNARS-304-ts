@@ -23,7 +23,7 @@ export class StabilityTest extends JavaObject {
     public static readonly scores: java.util.Map<java.lang.String, java.lang.Double> = new java.util.LinkedHashMap();
     protected readonly scriptPath: java.lang.String;
 
-    public static getExample(/* final */  path: java.lang.String): java.lang.String {
+    public static getExample(path: java.lang.String): java.lang.String {
         try {
             let existing: java.lang.String = StabilityTest.examples.get(path);
             if (existing !== null)
@@ -64,7 +64,7 @@ export class StabilityTest extends JavaObject {
         StabilityTest.tests.put(name, true);
     }
 
-    public static runTests(/* final */  c: java.lang.Class<unknown>): double {
+    public static runTests(c: java.lang.Class<unknown>): double {
 
         StabilityTest.tests.clear();
         StabilityTest.scores.clear();
@@ -129,11 +129,11 @@ export class StabilityTest extends JavaObject {
         return totalScore;
     }
 
-    public static main(/* final */  args: java.lang.String[]): void {
+    public static main(args: java.lang.String[]): void {
         StabilityTest.runTests(org.opennars.core.NALTest.class);
     }
 
-    public constructor(/* final */  scriptPath: java.lang.String) {
+    public constructor(scriptPath: java.lang.String) {
         super();
         this.scriptPath = scriptPath;
 
@@ -143,7 +143,7 @@ export class StabilityTest extends JavaObject {
         return this.testNAL(this.scriptPath);
     }
 
-    protected testNAL(/* final */  path: java.lang.String): double {
+    protected testNAL(path: java.lang.String): double {
         let expects: java.util.List<OutputCondition> = new java.util.ArrayList();
 
         let n: Nar = null;

@@ -25,7 +25,7 @@ interface Reasoner extends
      * @return reasoner which processes the question
      * @throws Narsese.InvalidInputException
      */
-    ask(/* final */  termString: java.lang.String, /* final */  answered: AnswerHandler): Reasoner;
+    ask(termString: java.lang.String, answered: AnswerHandler): Reasoner;
 
     /**
      * ask reasoner a now question
@@ -35,7 +35,7 @@ interface Reasoner extends
      * @return reasoner which processes the question
      * @throws Narsese.InvalidInputException
      */
-    askNow(/* final */  termString: java.lang.String, /* final */  answered: AnswerHandler): Reasoner;
+    askNow(termString: java.lang.String, answered: AnswerHandler): Reasoner;
 
     /**
      * returns the concept by name/term or creates it if it doesn't exist
@@ -44,7 +44,7 @@ interface Reasoner extends
      * @return queried or created concept
      * @throws Narsese.InvalidInputException
      */
-    concept(/* final */  concept: java.lang.String): Concept;
+    concept(concept: java.lang.String): Concept;
 
     /**
      * Main loop executed by the Thread. Should not be called directly.
@@ -79,5 +79,5 @@ interface Reasoner extends
      *
      * @param b Nar will call Thread.yield each run()
      */
-    setThreadYield(/* final */  b: boolean): void;
+    setThreadYield(b: boolean): void;
 }

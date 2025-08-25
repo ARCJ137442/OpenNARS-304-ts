@@ -16,14 +16,14 @@ export class Variable extends Term {
 
     private hash: int;
 
-    public constructor(/* final */  name: java.lang.CharSequence);
+    public constructor(name: java.lang.CharSequence);
 
     /**
      * Constructor, from a given variable name
      *
      * @param name A String read from input
      */
-    protected constructor(/* final */  name: java.lang.CharSequence, /* final */  scope: Term);
+    protected constructor(name: java.lang.CharSequence, scope: Term);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -54,7 +54,7 @@ export class Variable extends Term {
     }
 
 
-    public setScope(/* final */  scope: Term, /* final */  n: java.lang.CharSequence): Variable {
+    public setScope(scope: Term, n: java.lang.CharSequence): Variable {
         this.setName(n);
         this.type = n.charAt(0);
         this.scope = scope !== null ? scope : this;
@@ -120,7 +120,7 @@ export class Variable extends Term {
         return this.isQueryVariable();
     }
 
-    public equals(/* final */  that: java.lang.Object): boolean {
+    public equals(that: java.lang.Object): boolean {
         if (that === this) {
             return true;
         }
@@ -141,7 +141,7 @@ export class Variable extends Term {
         return (v.getScope().name().equals(this.getScope().name()));
     }
 
-    public equalsTerm(/* final */  that: java.lang.Object): boolean {
+    public equalsTerm(that: java.lang.Object): boolean {
         // TODO factor these comparisons into 2 nested if's
         let v: Variable = that as Variable;
         if ((v.scope === v) && (this.scope === this))
@@ -182,7 +182,7 @@ export class Variable extends Term {
         return this.hash;
     }
 
-    public compareTo(/* final */  that: AbstractTerm): int {
+    public compareTo(that: AbstractTerm): int {
         if (this === that) {
             return 0;
         }
@@ -246,7 +246,7 @@ export class Variable extends Term {
     }
 
     // ported back from 1.7, sehs addition
-    public static compare(/* final */  a: Variable, /* final */  b: Variable): int {
+    public static compare(a: Variable, b: Variable): int {
         // int i = a.name().compareTo(b.name());
         let i: int = Texts.compareTo(a.name(), b.name());
         if (i === 0) {
@@ -270,7 +270,7 @@ export class Variable extends Term {
         return i;
     }
 
-    public static validVariableType(/* final */  c: char): boolean {
+    public static validVariableType(c: char): boolean {
         return (c === VAR_QUERY) || (c === VAR_DEPENDENT) || (c === VAR_INDEPENDENT);
     }
 
@@ -279,7 +279,7 @@ export class Variable extends Term {
     private static readonly vn2: java.lang.CharSequence[] = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
     private static readonly vn3: java.lang.CharSequence[] = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
 
-    public static getName(/* final */  type: char, /* final */  index: int): java.lang.CharSequence {
+    public static getName(type: char, index: int): java.lang.CharSequence {
         if (index > Variable.MAX_CACHED_VARNAME_INDEXES)
             return Variable.newName(type, index);
 
@@ -307,7 +307,7 @@ export class Variable extends Term {
         return c;
     }
 
-    protected static newName(/* final */  type: char, index: int): java.lang.CharSequence {
+    protected static newName(type: char, index: int): java.lang.CharSequence {
 
         let digits: int = (index >= 256 ? 3 : ((index >= 16) ? 2 : 1));
         let cb: java.nio.CharBuffer = java.nio.CharBuffer.allocate(1 + digits).append(type);

@@ -8,11 +8,11 @@ import { java } from "jree";
  * @author Robert Wünsche
  */
 interface Eventable {
-    on(/* final */  c: java.lang.Class<unknown>, /* final */  o: EventEmitter.EventObserver): void;
+    on(c: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void;
 
-    off(/* final */  c: java.lang.Class<unknown>, /* final */  o: EventEmitter.EventObserver): void;
+    off(c: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void;
 
-    event(/* final */  e: EventEmitter.EventObserver, /* final */  enabled: boolean, /* final */ ...events: java.lang.Class<unknown>[]): void;
+    event(e: EventEmitter.EventObserver, enabled: boolean, ...events: java.lang.Class<unknown>[]): void;
 
-    emit(/* final */  c: java.lang.Class<unknown>, /* final */ ...o: java.lang.Object[]): void;
+    emit(c: java.lang.Class<unknown>, ...o: java.lang.Object[]): void;
 }

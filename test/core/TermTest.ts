@@ -15,7 +15,7 @@ export class TermTest extends JavaObject {
         super();
     }
 
-    protected assertEquivalent(/* final */  term1String: java.lang.String, /* final */  term2String: java.lang.String): void {
+    protected assertEquivalent(term1String: java.lang.String, term2String: java.lang.String): void {
         // final Nar n = new Nar();
 
         try {

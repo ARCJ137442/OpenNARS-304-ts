@@ -24,8 +24,8 @@ export class Believe extends Operator {
      * @param memory The memory in which the operation is executed
      *               + * @return Immediate results as Tasks
      */
-    protected execute(/* final */  operation: Operation, /* final */  args: Term[], /* final */  memory: Memory,
-            /* final */  time: Timable): Task[] {
+    protected execute(operation: Operation, args: Term[], memory: Memory,
+        time: Timable): Task[] {
 
         let content: Term = args[1];
 

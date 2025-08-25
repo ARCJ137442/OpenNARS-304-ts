@@ -22,7 +22,7 @@ export abstract class InstanceProperty extends JavaObject /* extends Statement *
      * @param predicate The second component
      * @return A compound generated or null
      */
-    public static make(/* final */  subject: Term, /* final */  predicate: Term): Inheritance {
+    public static make(subject: Term, predicate: Term): Inheritance {
         return Inheritance.make(new SetExt(subject), new SetInt(predicate));
     }
 }

@@ -89,7 +89,7 @@ export class Concept extends Item<Term> {
      * @param tm     A term corresponding to the concept
      * @param memory A reference to the memory
      */
-    public constructor(/* final */  b: BudgetValue, /* final */  tm: Term, /* final */  memory: Memory) {
+    public constructor(b: BudgetValue, tm: Term, memory: Memory) {
         super(b);
 
         this.term = tm;
@@ -115,7 +115,7 @@ export class Concept extends Item<Term> {
 
     }
 
-    public equals(/* final */  obj: java.lang.Object): boolean {
+    public equals(obj: java.lang.Object): boolean {
         if (this === obj)
             return true;
         if (!(obj instanceof Concept))
@@ -131,8 +131,8 @@ export class Concept extends Item<Term> {
         return this.term;
     }
 
-    public addToTable(/* final */  task: Task, /* final */  rankTruthExpectation: boolean, /* final */  table: java.util.List<Task>, /* final */  max: int,
-            /* final */  eventAdd: java.lang.Class<unknown>, /* final */  eventRemove: java.lang.Class<unknown>, /* final */ ...extraEventArguments: java.lang.Object[]): void {
+    public addToTable(task: Task, rankTruthExpectation: boolean, table: java.util.List<Task>, max: int,
+        eventAdd: java.lang.Class<unknown>, eventRemove: java.lang.Class<unknown>, ...extraEventArguments: java.lang.Object[]): void {
 
         let preSize: int = table.size();
         let removedT: Task;
@@ -159,7 +159,7 @@ export class Concept extends Item<Term> {
      * @param task    The task to be linked
      * @param content The content of the task
      */
-    public linkToTask(/* final */  task: Task, /* final */  content: DerivationContext): TaskLink {
+    public linkToTask(task: Task, content: DerivationContext): TaskLink {
         let taskBudget: BudgetValue = task.budget;
 
         let retLink: TaskLink = new TaskLink(task, null, taskBudget, content.narParameters.TERM_LINK_RECORD_LENGTH);
@@ -204,8 +204,8 @@ export class Concept extends Item<Term> {
      * @param capacity The capacity of the table
      * @return whether table was modified
      */
-    public static addToTable(/* final */  newTask: Task, /* final */  table: java.util.List<Task>, /* final */  capacity: int,
-            /* final */  rankTruthExpectation: boolean): Task {
+    public static addToTable(newTask: Task, table: java.util.List<Task>, capacity: int,
+        rankTruthExpectation: boolean): Task {
         let newSentence: Sentence = newTask.sentence;
         let rank1: float = rankBelief(newSentence, rankTruthExpectation); // for the new isBelief
         let rank2: float;
@@ -244,7 +244,7 @@ export class Concept extends Item<Term> {
      * @param list  The list of beliefs or desires to be used
      * @return The best candidate selected
      */
-    public selectCandidate(/* final */  query: Task, /* final */  list: java.util.List<Task>, /* final */  time: Timable): Task {
+    public selectCandidate(query: Task, list: java.util.List<Task>, time: Timable): Task {
         // if (list == null) {
         // return null;
         // }
@@ -310,7 +310,7 @@ export class Concept extends Item<Term> {
      *
      * @param taskLink The termLink to be inserted
      */
-    protected insertTaskLink(/* final */  taskLink: TaskLink, /* final */  nal: DerivationContext): boolean {
+    protected insertTaskLink(taskLink: TaskLink, nal: DerivationContext): boolean {
         let target: Task = taskLink.getTarget();
         // what question answering, question side:
         ProcessQuestion.ProcessWhatQuestion(this, target, nal);
@@ -360,7 +360,7 @@ export class Concept extends Item<Term> {
      *
      * @param taskBudget The BudgetValue of the task
      */
-    public buildTermLinks(/* final */  taskBudget: BudgetValue, narParameters: Parameters): void {
+    public buildTermLinks(taskBudget: BudgetValue, narParameters: Parameters): void {
         if (this.termLinkTemplates.size() === 0) {
             return;
         }
@@ -400,7 +400,7 @@ export class Concept extends Item<Term> {
      *
      * @param termLink The termLink to be inserted
      */
-    public insertTermLink(/* final */  termLink: TermLink): boolean {
+    public insertTermLink(termLink: TermLink): boolean {
         let removed: TermLink = this.termLinks.putIn(termLink);
         if (removed !== null) {
             if (removed === termLink) {
@@ -447,7 +447,7 @@ export class Concept extends Item<Term> {
         return res;
     }
 
-    private toStringIfNotNull(/* final */  item: java.lang.Object, /* final */  title: java.lang.String): java.lang.String {
+    private toStringIfNotNull(item: java.lang.Object, title: java.lang.String): java.lang.String {
         if (item === null) {
             return "";
         }
@@ -505,7 +505,7 @@ export class Concept extends Item<Term> {
      * @param task The selected task
      * @return The selected isBelief
      */
-    public getBelief(/* final */  nal: DerivationContext, /* final */  task: Task): Sentence {
+    public getBelief(nal: DerivationContext, task: Task): Sentence {
         let taskStamp: Stamp = task.sentence.stamp;
         let currentTime: long = nal.time.time();
 
@@ -545,7 +545,7 @@ export class Concept extends Item<Term> {
      * @param time     The current time
      * @return The selected TermLink
      */
-    public selectTermLink(/* final */  taskLink: TaskLink, /* final */  time: long, /* final */  narParameters: Parameters): TermLink {
+    public selectTermLink(taskLink: TaskLink, time: long, narParameters: Parameters): TermLink {
         let toMatch: int = narParameters.TERM_LINK_MAX_MATCHED; // Math.min(memory.param.termLinkMaxMatched.get(),
         // termLinks.size());
         for (let i: int = 0; (i < toMatch) && (this.termLinks.size() > 0); i++) {
@@ -565,7 +565,7 @@ export class Concept extends Item<Term> {
 
     }
 
-    public returnTermLink(/* final */  termLink: TermLink): void {
+    public returnTermLink(termLink: TermLink): void {
         this.termLinks.putBack(termLink, this.memory.cycles(this.memory.narParameters.TERMLINK_FORGET_DURATIONS), this.memory);
     }
 
@@ -581,7 +581,7 @@ export class Concept extends Item<Term> {
         return java.util.Collections.unmodifiableList(this.quests);
     }
 
-    public discountConfidence(/* final */  onBeliefs: boolean): void {
+    public discountConfidence(onBeliefs: boolean): void {
         if (onBeliefs) {
             for (let t of this.beliefs) {
                 t.sentence.discountConfidence(this.memory.narParameters);

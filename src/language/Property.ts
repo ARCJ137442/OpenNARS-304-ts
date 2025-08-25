@@ -21,7 +21,7 @@ export abstract class Property extends JavaObject /* would extend "Statement" if
      * @param predicate The second component
      * @return A compound generated or null
      */
-    public static make(/* final */  subject: Term, /* final */  predicate: Term): Inheritance {
+    public static make(subject: Term, predicate: Term): Inheritance {
         return Inheritance.make(subject, new SetInt(predicate));
     }
 }

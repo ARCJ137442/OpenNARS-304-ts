@@ -41,11 +41,11 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
 
     public constructor();
 
-    public constructor(/* final */  nar: Nar, /* final */  reportResultsTo: java.util.Collection<SensoryChannel>, /* final */  width: int,
-            /* final */  height: int, /* final */  duration: int, label: Term);
+    public constructor(nar: Nar, reportResultsTo: java.util.Collection<SensoryChannel>, width: int,
+        height: int, duration: int, label: Term);
 
-    public constructor(/* final */  nar: Nar, /* final */  reportResultsTo: SensoryChannel, /* final */  width: int, /* final */  height: int,
-            /* final */  duration: int, label: Term);
+    public constructor(nar: Nar, reportResultsTo: SensoryChannel, width: int, height: int,
+        duration: int, label: Term);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -89,7 +89,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
     }
 
 
-    public addInput(/* final */  text: java.lang.String, /* final */  time: Timable): void {
+    public addInput(text: java.lang.String, time: Timable): void {
         try {
             let t: Task = new Narsese(this.nar).parseTask(text);
             this.addInput(t, time);
@@ -103,12 +103,12 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         }
     }
 
-    public abstract addInput(/* final */  t: Task, /* final */  time: Timable): Nar;
+    public abstract addInput(t: Task, time: Timable): Nar;
 
-    public step_start(/* final */  time: Timable): void {
+    public step_start(time: Timable): void {
     } // needs to put results into results and call step_finished when ready
 
-    public step_finished(/* final */  time: Timable): void {
+    public step_finished(time: Timable): void {
         for (let ch of this.reportResultsTo) {
             for (let t of this.results) {
                 ch.addInput(t, time);
@@ -117,7 +117,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         this.results.clear();
     }
 
-    public topDownPriority(/* final */  t: Term): double {
+    public topDownPriority(t: Term): double {
         let prioritySum: double = 0.0;
         for (let chan of this.reportResultsTo) {
             prioritySum += chan.priority(t);
@@ -125,7 +125,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         return prioritySum / this.reportResultsTo.size() as double;
     }
 
-    public priority(/* final */  t: Term): double {
+    public priority(t: Term): double {
         if (this instanceof Nar) { // on highest level it is simply the concept priority
             let c: Concept = (this as Nar).memory.concept(t);
             if (c !== null) {

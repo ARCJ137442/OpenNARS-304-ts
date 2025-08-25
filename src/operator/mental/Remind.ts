@@ -11,7 +11,7 @@ export class Remind extends Operator {
         super("^remind");
     }
 
-    public activate(/* final */  memory: Memory, /* final */  c: Concept, /* final */  b: BudgetValue, /* final */  mode: Activating): void {
+    public activate(memory: Memory, c: Concept, b: BudgetValue, mode: Activating): void {
         memory.concepts.pickOut(c.name());
         BudgetFunctions.activate(c.budget, b, mode);
         memory.concepts.putBack(c, memory.cycles(memory.narParameters.CONCEPT_FORGET_DURATIONS), memory);
@@ -24,8 +24,8 @@ export class Remind extends Operator {
      * @param memory The memory in which the operation is executed
      * @return Immediate results as Tasks
      */
-    protected execute(/* final */  operation: Operation, /* final */  args: Term[], /* final */  memory: Memory,
-            /* final */  time: Timable): java.util.List<Task> {
+    protected execute(operation: Operation, args: Term[], memory: Memory,
+        time: Timable): java.util.List<Task> {
         let term: Term = args[1];
         let concept: Concept = memory.conceptualize(Consider.budgetMentalConcept(operation), term);
         let budget: BudgetValue = new BudgetValue(memory.narParameters.DEFAULT_QUESTION_PRIORITY,

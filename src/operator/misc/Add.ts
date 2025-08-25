@@ -11,7 +11,7 @@ export class Add extends FunctionOperator {
         super("^add");
     }
 
-    protected function(/* final */  memory: Memory, /* final */  x: Term[]): Term {
+    protected function(memory: Memory, x: Term[]): Term {
         if (x.length !== 2) {
             throw new java.lang.IllegalStateException("Requires 2 arguments");
         }

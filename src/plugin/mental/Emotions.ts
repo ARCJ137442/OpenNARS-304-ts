@@ -107,7 +107,7 @@ export class Emotions extends JavaObject implements Plugin {
     }
 
 
-    public set(/* final */  happy: float, /* final */  busy: float): void {
+    public set(happy: float, busy: float): void {
         this.happy = happy;
         this.busy = busy;
     }
@@ -120,7 +120,7 @@ export class Emotions extends JavaObject implements Plugin {
         return this.busy;
     }
 
-    public adjustSatisfaction(/* final */  newValue: float, /* final */  weight: float, /* final */  nal: DerivationContext): void {
+    public adjustSatisfaction(newValue: float, weight: float, nal: DerivationContext): void {
 
         // float oldV = happyValue;
         this.happy += newValue * weight;
@@ -210,7 +210,7 @@ export class Emotions extends JavaObject implements Plugin {
     public lastbusy: double = 0.5;
     public readonly CHANGE_THRESHOLD: double = 0.25;
 
-    public adjustBusy(/* final */  newValue: float, /* final */  weight: float, /* final */  nal: DerivationContext): void {
+    public adjustBusy(newValue: float, weight: float, nal: DerivationContext): void {
 
         this.busy += newValue * weight;
         this.busy /= (1.0 + weight);
@@ -254,7 +254,7 @@ export class Emotions extends JavaObject implements Plugin {
 
     protected enabled: boolean = false; // false means it needs to be retrieved using feelSatisfied / feelBusy instead
 
-    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
+    public setEnabled(n: Nar, enabled: boolean): boolean {
         this.enabled = enabled;
         if (this.enabled) {
             this.resetEmotions();

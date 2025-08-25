@@ -9,9 +9,9 @@ export abstract class EventHandler extends JavaObject implements EventEmitter.Ev
     protected active: boolean = false;
     private readonly events: java.lang.Class<unknown>[];
 
-    public constructor(/* final */  n: Nar, /* final */  active: boolean, /* final */ ...events: java.lang.Class<unknown>[]);
+    public constructor(n: Nar, active: boolean, ...events: java.lang.Class<unknown>[]);
 
-    public constructor(/* final */  source: EventEmitter, /* final */  active: boolean, /* final */ ...events: java.lang.Class<unknown>[]);
+    public constructor(source: EventEmitter, active: boolean, ...events: java.lang.Class<unknown>[]);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 3: {
@@ -44,7 +44,7 @@ export abstract class EventHandler extends JavaObject implements EventEmitter.Ev
     }
 
 
-    public setActive(/* final */  b: boolean): void {
+    public setActive(b: boolean): void {
         if (this.active === b)
             return;
 

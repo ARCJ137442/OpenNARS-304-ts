@@ -52,8 +52,8 @@ export class TruthFunctions extends UtilityFunctions {
      * @param b    truth value of the second premise
      * @return truth value as computed by the truth-function
      */
-    public static lookupTruthFunctionAndCompute(/* final */  type: TruthFunctions.EnumType, /* final */  a: TruthValue, /* final */  b: TruthValue,
-            /* final */  narParameters: Parameters): TruthValue {
+    public static lookupTruthFunctionAndCompute(type: TruthFunctions.EnumType, a: TruthValue, b: TruthValue,
+        narParameters: Parameters): TruthValue {
         switch (type) {
             case DESIREDED:
                 return TruthFunctions.desireDed(a, b, narParameters);
@@ -101,8 +101,8 @@ export class TruthFunctions extends UtilityFunctions {
      * @param b         truth value of the second premise
      * @return truth value as computed by the truth-function
      */
-    public static lookupTruthFunctionByBoolAndCompute(/* final */  flag: boolean, /* final */  typeTrue: TruthFunctions.EnumType,
-            /* final */  typeFalse: TruthFunctions.EnumType, /* final */  a: TruthValue, /* final */  b: TruthValue, narParameters: Parameters): TruthValue {
+    public static lookupTruthFunctionByBoolAndCompute(flag: boolean, typeTrue: TruthFunctions.EnumType,
+        typeFalse: TruthFunctions.EnumType, a: TruthValue, b: TruthValue, narParameters: Parameters): TruthValue {
         let type: TruthFunctions.EnumType = flag ? typeTrue : typeFalse;
         return TruthFunctions.lookupTruthFunctionAndCompute(type, a, b, narParameters);
     }
@@ -118,8 +118,8 @@ export class TruthFunctions extends UtilityFunctions {
      * @return truth value as computed by the truth-function or null if no boolean
      *         value was true
      */
-    public static lookupTruthOrNull(/* final */  a: TruthValue, /* final */  b: TruthValue, narParameters: Parameters,
-            /* final */ ...values: java.lang.Object[]): TruthValue {
+    public static lookupTruthOrNull(a: TruthValue, b: TruthValue, narParameters: Parameters,
+        ...values: java.lang.Object[]): TruthValue {
         let numberOfTuples: int = (java.io.ObjectInputFilter.Status.values.length) / 2;
 
         for (let idx: int = 0; idx < numberOfTuples; idx++) {
@@ -140,7 +140,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v1 Truth value of the premise
      * @return Truth value of the conclusion
      */
-    public static conversion(/* final */  v1: TruthValue, narParameters: Parameters): TruthValue {
+    public static conversion(v1: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let c1: double = v1.getConfidence();
         let w: float = java.math.BigInteger.and(f1, c1) as float;
@@ -155,7 +155,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v1 Truth value of the premise
      * @return Truth value of the conclusion
      */
-    public static negation(/* final */  v1: TruthValue, narParameters: Parameters): TruthValue {
+    public static negation(v1: TruthValue, narParameters: Parameters): TruthValue {
         let f: float = 1 - v1.getFrequency();
         let c: double = v1.getConfidence();
         return new TruthValue(f, c, narParameters);
@@ -167,7 +167,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v1 Truth value of the premise
      * @return Truth value of the conclusion
      */
-    public static contraposition(/* final */  v1: TruthValue, narParameters: Parameters): TruthValue {
+    public static contraposition(v1: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let c1: double = v1.getConfidence();
         let w: float = java.math.BigInteger.and(1 - f1 as double, c1) as float;
@@ -183,9 +183,9 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static revision(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue;
+    public static revision(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue;
 
-    private static revision(/* final */  v1: TruthValue, /* final */  v2: TruthValue, /* final */  result: TruthValue,
+    private static revision(v1: TruthValue, v2: TruthValue, result: TruthValue,
         narParameters: Parameters): TruthValue;
     public static revision(...args: unknown[]): TruthValue {
         switch (args.length) {
@@ -231,7 +231,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static deduction(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue;
+    public static deduction(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue;
 
     /**
      * {M, <M ==> P>} |- P
@@ -240,7 +240,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param reliance Confidence of the second (analytical) premise
      * @return Truth value of the conclusion
      */
-    public static deduction(/* final */  v1: TruthValue, /* final */  reliance: float, narParameters: Parameters): TruthValue;
+    public static deduction(v1: TruthValue, reliance: float, narParameters: Parameters): TruthValue;
     public static deduction(...args: unknown[]): TruthValue {
         switch (args.length) {
             case 3: {
@@ -286,7 +286,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static analogy(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static analogy(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -303,7 +303,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static resemblance(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static resemblance(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -320,7 +320,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static abduction(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue;
+    public static abduction(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue;
 
     /**
      * {M, <P ==> M>} |- P
@@ -329,7 +329,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param reliance Confidence of the second (analytical) premise
      * @return Truth value of the conclusion
      */
-    public static abduction(/* final */  v1: TruthValue, /* final */  reliance: float, narParameters: Parameters): TruthValue;
+    public static abduction(v1: TruthValue, reliance: float, narParameters: Parameters): TruthValue;
     public static abduction(...args: unknown[]): TruthValue {
         switch (args.length) {
             case 3: {
@@ -382,7 +382,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static induction(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static induction(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         return TruthFunctions.abduction(v2, v1, narParameters);
     }
 
@@ -393,7 +393,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static exemplification(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static exemplification(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         if (v1.getAnalytic() || v2.getAnalytic()) {
             return new TruthValue(0.5, 0, narParameters);
         }
@@ -413,7 +413,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static comparison(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static comparison(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -433,7 +433,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static desireStrong(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static desireStrong(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -450,7 +450,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static desireWeak(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static desireWeak(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -467,7 +467,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static desireDed(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static desireDed(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -484,7 +484,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static desireInd(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static desireInd(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -502,7 +502,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static union(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static union(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -519,7 +519,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static intersection(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
+    public static intersection(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -536,7 +536,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static reduceDisjunction(/* final */  v1: TruthValue, /* final */  v2: TruthValue,
+    public static reduceDisjunction(v1: TruthValue, v2: TruthValue,
         narParameters: Parameters): TruthValue {
         let v0: TruthValue = TruthFunctions.intersection(v1, TruthFunctions.negation(v2, narParameters), narParameters);
         return TruthFunctions.deduction(v0, 1, narParameters);
@@ -549,7 +549,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static reduceConjunction(/* final */  v1: TruthValue, /* final */  v2: TruthValue,
+    public static reduceConjunction(v1: TruthValue, v2: TruthValue,
         narParameters: Parameters): TruthValue {
         let v0: TruthValue = TruthFunctions.intersection(TruthFunctions.negation(v1, narParameters), v2, narParameters);
         return TruthFunctions.negation(TruthFunctions.deduction(v0, 1, narParameters), narParameters);
@@ -562,7 +562,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static reduceConjunctionNeg(/* final */  v1: TruthValue, /* final */  v2: TruthValue,
+    public static reduceConjunctionNeg(v1: TruthValue, v2: TruthValue,
         narParameters: Parameters): TruthValue {
         return TruthFunctions.reduceConjunction(v1, TruthFunctions.negation(v2, narParameters), narParameters);
     }
@@ -575,7 +575,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static anonymousAnalogy(/* final */  v1: TruthValue, /* final */  v2: TruthValue,
+    public static anonymousAnalogy(v1: TruthValue, v2: TruthValue,
         narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let c1: double = v1.getConfidence();
@@ -589,7 +589,7 @@ export class TruthFunctions extends UtilityFunctions {
      * Implements the same functionality like TruthValue
      */
     public static readonly EternalizedTruthValue = class EternalizedTruthValue extends TruthValue {
-        public constructor(/* final */  f: float, /* final */  c: double, narParameters: Parameters) {
+        public constructor(f: float, c: double, narParameters: Parameters) {
             super(f, c, narParameters);
         }
     };
@@ -601,14 +601,14 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v1 Truth value of the premise
      * @return Truth value of the conclusion
      */
-    public static eternalize(/* final */  v1: TruthValue, narParameters: Parameters): TruthFunctions.EternalizedTruthValue {
+    public static eternalize(v1: TruthValue, narParameters: Parameters): TruthFunctions.EternalizedTruthValue {
         let f1: float = v1.getFrequency();
         let c1: double = v1.getConfidence();
         let c: double = w2c(c1, narParameters);
         return new TruthFunctions.EternalizedTruthValue(f1, c, narParameters);
     }
 
-    public static temporalProjection(/* final */  sourceTime: long, /* final */  targetTime: long, /* final */  currentTime: long,
+    public static temporalProjection(sourceTime: long, targetTime: long, currentTime: long,
         param: Parameters): float {
         let a: double = 100000.0 * param.PROJECTION_DECAY; // projection less strict as we changed in v2.0.0 10000.0
         // slower decay than 100000.0

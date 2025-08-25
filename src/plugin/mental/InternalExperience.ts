@@ -89,7 +89,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         return this.ALLOW_WANT_BELIEF;
     }
 
-    public setALLOW_WANT_BELIEF(/* final */  val: boolean): void {
+    public setALLOW_WANT_BELIEF(val: boolean): void {
         this.ALLOW_WANT_BELIEF = val;
     }
 
@@ -97,7 +97,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         return this.OLD_BELIEVE_WANT_EVALUATE_WONDER_STRATEGY;
     }
 
-    public setOLD_BELIEVE_WANT_EVALUATE_WONDER_STRATEGY(/* final */  val: boolean): void {
+    public setOLD_BELIEVE_WANT_EVALUATE_WONDER_STRATEGY(val: boolean): void {
         this.OLD_BELIEVE_WANT_EVALUATE_WONDER_STRATEGY = val;
     }
 
@@ -105,7 +105,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         return this.FULL_REFLECTION;
     }
 
-    public setFULL_REFLECTION(/* final */  val: boolean): void {
+    public setFULL_REFLECTION(val: boolean): void {
         this.FULL_REFLECTION = val;
     }
 
@@ -156,7 +156,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
     }
 
 
-    public setEnabled(/* final */  n: Nar, /* final */  enable: boolean): boolean {
+    public setEnabled(n: Nar, enable: boolean): boolean {
         this.memory = n.memory;
         this.nar = n;
 
@@ -170,7 +170,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         return true;
     }
 
-    public static toTerm(/* final */  s: Sentence, /* final */  mem: Memory, /* final */  time: Timable): Term {
+    public static toTerm(s: Sentence, mem: Memory, time: Timable): Term {
         let opName: java.lang.String;
         switch (s.punctuation) {
             case Symbols.JUDGMENT_MARK:
@@ -211,7 +211,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         return operation;
     }
 
-    public event(/* final */  event: java.lang.Class<unknown>, /* final */  a: java.lang.Object[]): void {
+    public event(event: java.lang.Class<unknown>, a: java.lang.Object[]): void {
 
         if (event === Events.ConceptDirectProcessedTask.class) {
             let task: Task = a[0] as Task;
@@ -232,15 +232,15 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         }
     }
 
-    public static InternalExperienceFromBelief(/* final */  memory: Memory, /* final */  task: Task, /* final */  belief: Sentence,
-            /* final */  time: Timable): void {
+    public static InternalExperienceFromBelief(memory: Memory, task: Task, belief: Sentence,
+        time: Timable): void {
         let newTask: Task = new Task(belief.clone(), task.budget.clone(), Task.EnumType.INPUT);
 
         InternalExperience.InternalExperienceFromTask(memory, newTask, false, time);
     }
 
-    public static InternalExperienceFromTask(/* final */  memory: Memory, /* final */  task: Task, /* final */  full: boolean,
-            /* final */  time: Timable): void {
+    public static InternalExperienceFromTask(memory: Memory, task: Task, full: boolean,
+        time: Timable): void {
         if (memory.internalExperience === null) {
             return;
         }
@@ -249,8 +249,8 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         }
     }
 
-    public static InternalExperienceFromTaskInternal(/* final */  memory: Memory, /* final */  task: Task, /* final */  full: boolean,
-            /* final */  time: Timable): boolean {
+    public static InternalExperienceFromTaskInternal(memory: Memory, task: Task, full: boolean,
+        time: Timable): boolean {
         if (!InternalExperience.enabled) {
             return false;
         }
@@ -316,8 +316,8 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
     ];
 
     /** used in full internal experience mode only */
-    protected beliefReason(/* final */  belief: Sentence, /* final */  beliefTerm: Term, /* final */  taskTerm: Term,
-            /* final */  nal: DerivationContext): void {
+    protected beliefReason(belief: Sentence, beliefTerm: Term, taskTerm: Term,
+        nal: DerivationContext): void {
 
         let memory: Memory = nal.memory;
 

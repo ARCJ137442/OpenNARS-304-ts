@@ -19,16 +19,16 @@ export class Implication extends Statement {
      *
      * @param arg The component list of the term
      */
-    public constructor(/* final */  arg: Term[], /* final */  order: int);
+    public constructor(arg: Term[], order: int);
 
     /**
      * Constructor with partial values, called by make
      *
      * @param arg The component list of the term
      */
-    public constructor(/* final */  arg: Term[], /* final */  order: int, /* final */  counter: long);
+    public constructor(arg: Term[], order: int, counter: long);
 
-    public constructor(/* final */  subject: Term, /* final */  predicate: Term, /* final */  order: int);
+    public constructor(subject: Term, predicate: Term, order: int);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 2: {
@@ -84,7 +84,7 @@ export class Implication extends Statement {
      */
     public clone(): Implication;
 
-    public clone(/* final */  t: Term[]): Implication;
+    public clone(t: Term[]): Implication;
     public clone(...args: unknown[]): Implication {
         switch (args.length) {
             case 0: {
@@ -125,9 +125,9 @@ export class Implication extends Statement {
      * @param predicate The second component
      * @return A compound generated or a term it reduced to
      */
-    public static make(/* final */  subject: Term, /* final */  predicate: Term): Implication;
+    public static make(subject: Term, predicate: Term): Implication;
 
-    public static make(/* final */  subject: Term, /* final */  predicate: Term, /* final */  temporalOrder: int): Implication;
+    public static make(subject: Term, predicate: Term, temporalOrder: int): Implication;
     public static make(...args: unknown[]): Implication {
         switch (args.length) {
             case 2: {
@@ -185,7 +185,7 @@ export class Implication extends Statement {
     }
 
 
-    public static makeName(/* final */  subject: Term, /* final */  temporalOrder: int, /* final */  predicate: Term): java.lang.CharSequence {
+    public static makeName(subject: Term, temporalOrder: int, predicate: Term): java.lang.CharSequence {
         let copula: NativeOperator;
         switch (temporalOrder) {
             case TemporalRules.ORDER_FORWARD:

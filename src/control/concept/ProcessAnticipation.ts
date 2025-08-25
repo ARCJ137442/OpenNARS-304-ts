@@ -8,8 +8,8 @@ import { java, JavaObject, type long, type float, type double } from "jree";
  */
 export class ProcessAnticipation extends JavaObject {
 
-    public static anticipate(/* final */  nal: DerivationContext, /* final */  mainSentence: Sentence, /* final */  budget: BudgetValue,
-            /* final */  minTime: long, /* final */  maxTime: long, /* final */  urgency: float, substitution: java.util.Map<Term, Term>): void {
+    public static anticipate(nal: DerivationContext, mainSentence: Sentence, budget: BudgetValue,
+        minTime: long, maxTime: long, urgency: float, substitution: java.util.Map<Term, Term>): void {
         // derivation was successful and it was a judgment event
         let stamp: Stamp = new Stamp(nal.time, nal.memory);
         stamp.setOccurrenceTime(Stamp.ETERNAL);
@@ -93,8 +93,8 @@ export class ProcessAnticipation extends JavaObject {
      *                      should be processed
      * @param nar           the reasoner
      */
-    public static maintainDisappointedAnticipations(/* final */  narParameters: Parameters, /* final */  concept: Concept,
-            /* final */  nar: Nar): void {
+    public static maintainDisappointedAnticipations(narParameters: Parameters, concept: Concept,
+        nar: Nar): void {
         // here we can check the expiration of the feedback:
         let confirmed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList();
         let disappointed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList();
@@ -199,7 +199,7 @@ export class ProcessAnticipation extends JavaObject {
      * @param concept The concept that is processed
      * @param nal     The derivation context
      */
-    public static confirmAnticipation(task: Task, concept: Concept, /* final */  nal: DerivationContext): void {
+    public static confirmAnticipation(task: Task, concept: Concept, nal: DerivationContext): void {
         let satisfiesAnticipation: boolean = task.isInput() && !task.sentence.isEternal();
         let isExpectationAboveThreshold: boolean = task.sentence.truth
             .getExpectation() > nal.narParameters.DEFAULT_CONFIRMATION_EXPECTATION;
@@ -227,7 +227,7 @@ export class ProcessAnticipation extends JavaObject {
      * @param time          used to retrieve current time
      * @param taskLink      corresponding taskLink
      */
-    public static firePredictions(/* final */  judgementTask: Task, /* final */  concept: Concept, /* final */  nal: DerivationContext,
+    public static firePredictions(judgementTask: Task, concept: Concept, nal: DerivationContext,
         time: Timable, taskLink: TaskLink): void {
         if (!judgementTask.sentence.isEternal() && judgementTask.isInput() && judgementTask.sentence.isJudgment()) {
             for (let tl of concept.termLinks) {

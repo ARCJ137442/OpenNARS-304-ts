@@ -54,13 +54,13 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     /** cache of hashcode of evidential base */
     private evidentialHash: int;
 
-    public before(/* final */  s: Stamp, /* final */  duration: int): boolean {
+    public before(s: Stamp, duration: int): boolean {
         if (this.isEternal() || s.isEternal())
             return false;
         return java.nio.ByteBuffer.order(s.occurrenceTime, this.occurrenceTime, duration) === TemporalRules.ORDER_BACKWARD;
     }
 
-    public after(/* final */  s: Stamp, /* final */  duration: int): boolean {
+    public after(s: Stamp, duration: int): boolean {
         if (this.isEternal() || s.isEternal())
             return false;
         return java.nio.ByteBuffer.order(s.occurrenceTime, this.occurrenceTime, duration) === TemporalRules.ORDER_FORWARD;
@@ -75,13 +75,13 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      *
      * @param old The stamp to be cloned
      */
-    private constructor(/* final */  old: Stamp);
+    private constructor(old: Stamp);
 
     /**
      * used for when the ocrrence time will be set later; so should not be called
      * from externally but through another Stamp constructor
      */
-    protected constructor(/* final */  tense: Tense, /* final */  serial: Stamp.BaseEntry);
+    protected constructor(tense: Tense, serial: Stamp.BaseEntry);
 
     /**
      * Generate a new stamp from an existing one, with the same evidentialBase
@@ -92,21 +92,21 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * @param old          The stamp of the single premise
      * @param creationTime The current time
      */
-    public constructor(/* final */  old: Stamp, /* final */  creationTime: long);
+    public constructor(old: Stamp, creationTime: long);
 
     /** creates a stamp with default Present tense */
-    public constructor(/* final */  time: Timable, /* final */  memory: Memory);
+    public constructor(time: Timable, memory: Memory);
 
-    public constructor(/* final */  old: Stamp, /* final */  creationTime: long, /* final */  useEvidentialBase: Stamp);
+    public constructor(old: Stamp, creationTime: long, useEvidentialBase: Stamp);
 
-    public constructor(/* final */  time: Timable, /* final */  memory: Memory, /* final */  tense: Tense);
+    public constructor(time: Timable, memory: Memory, tense: Tense);
 
     /**
      * Generate a new stamp, with a new serial number, for a new Task
      *
      * @param time Creation time of the stamp
      */
-    public constructor(/* final */  time: long, /* final */  tense: Tense, /* final */  serial: Stamp.BaseEntry, /* final */  duration: int);
+    public constructor(time: long, tense: Tense, serial: Stamp.BaseEntry, duration: int);
 
     /**
      * Generate a new stamp for derived sentence by merging the two from parents
@@ -115,7 +115,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * @param first  The first Stamp
      * @param second The second Stamp
      */
-    public constructor(/* final */  first: Stamp, /* final */  second: Stamp, /* final */  time: long, narParameters: Parameters);
+    public constructor(first: Stamp, second: Stamp, time: long, narParameters: Parameters);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -243,7 +243,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
 
 
     /** Detects evidental base overlaps **/
-    public static baseOverlap(/* final */  a: Stamp, /* final */  b: Stamp): boolean {
+    public static baseOverlap(a: Stamp, b: Stamp): boolean {
         let base1: Stamp.BaseEntry[] = a.evidentialBase;
         let base2: Stamp.BaseEntry[] = b.evidentialBase;
 
@@ -291,7 +291,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * sets the creation time; used to set input tasks with the actual time they
      * enter Memory
      */
-    public setCreationTime(/* final */  time: long, /* final */  duration: int): void {
+    public setCreationTime(time: long, duration: int): void {
         this.creationTime = time;
 
         if (this.tense === null) {
@@ -317,7 +317,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         return new Stamp(this);
     }
 
-    public static toSetArray(/* final */  x: Stamp.BaseEntry[]): Stamp.BaseEntry[] {
+    public static toSetArray(x: Stamp.BaseEntry[]): Stamp.BaseEntry[] {
         let set: Stamp.BaseEntry[] = x.clone();
 
         if (x.length < 2)
@@ -363,7 +363,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         return this.evidentialSet;
     }
 
-    public override  equals(/* final */  that: java.lang.Object): boolean;
+    public override  equals(that: java.lang.Object): boolean;
 
     /**
      * Check if two stamps contains the same types of content
@@ -371,8 +371,8 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * @param s The Stamp to be compared
      * @return Whether the two have contain the same evidential base
      */
-    public override  equals(/* final */  s: Stamp, /* final */  creationTime: boolean, /* final */  ocurrenceTime: boolean,
-            /* final */  evidentialBase: boolean): boolean;
+    public override  equals(s: Stamp, creationTime: boolean, ocurrenceTime: boolean,
+        evidentialBase: boolean): boolean;
     public override equals(...args: unknown[]): boolean {
         switch (args.length) {
             case 1: {
@@ -428,7 +428,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         return this.evidentialHash;
     }
 
-    public cloneWithNewOccurrenceTime(/* final */  newOcurrenceTime: long): Stamp {
+    public cloneWithNewOccurrenceTime(newOcurrenceTime: long): Stamp {
         let s: Stamp = this.clone();
         if (newOcurrenceTime === Stamp.ETERNAL)
             s.tense = Tense.Eternal;
@@ -452,7 +452,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         this.occurrenceTime = Stamp.ETERNAL;
     }
 
-    public appendOcurrenceTime(/* final */  sb: java.lang.StringBuilder): java.lang.StringBuilder {
+    public appendOcurrenceTime(sb: java.lang.StringBuilder): java.lang.StringBuilder {
         if (this.occurrenceTime !== Stamp.ETERNAL) {
             let estTimeLength: int = 8; /* # digits */
             sb.ensureCapacity(estTimeLength + 1 + 1);
@@ -474,7 +474,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         }
     }
 
-    public getTense(/* final */  currentTime: long, /* final */  duration: int): java.lang.String {
+    public getTense(currentTime: long, duration: int): java.lang.String {
 
         if (this.isEternal()) {
             return "";
@@ -489,7 +489,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         }
     }
 
-    public setOccurrenceTime(/* final */  time: long): void {
+    public setOccurrenceTime(time: long): void {
         if (this.occurrenceTime !== time) {
             this.occurrenceTime = time;
 

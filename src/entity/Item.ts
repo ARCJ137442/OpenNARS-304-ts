@@ -15,7 +15,7 @@ export abstract  class Item<K> implements JavaObject, java.io.Serializable {
 
     public static ItemPriorityComparator =  class ItemPriorityComparator<E extends Item<unknown>> extends JavaObject implements java.util.Comparator<java.lang.Math.E> {
 
-        public  compare(/* final */  a: E, /* final */  b: E):  int {
+        public  compare(a: E, b: E):  int {
              let  ap: float = a.getPriority();
              let  bp: float = b.getPriority();
 
@@ -40,7 +40,7 @@ export abstract  class Item<K> implements JavaObject, java.io.Serializable {
      *
      * @param budget The initial budget
      */
-    protected  constructor(/* final */  budget: BudgetValue);
+    protected  constructor(budget: BudgetValue);
     public constructor(...args: unknown[]) {
 		switch (args.length) {
 			case 0: {
@@ -94,7 +94,7 @@ if (budget !== null)
      *
      * @param v Set a new priority value
      */
-    public  setPriority(/* final */  v: float):  void {
+    public  setPriority(v: float):  void {
         this.budget.setPriority(v);
     }
 
@@ -103,7 +103,7 @@ if (budget !== null)
      *
      * @param v The amount of increase
      */
-    public  incPriority(/* final */  v: float):  void {
+    public  incPriority(v: float):  void {
         this.budget.incPriority(v);
     }
 
@@ -112,7 +112,7 @@ if (budget !== null)
      *
      * @param v The amount of decrease
      */
-    public  decPriority(/* final */  v: float):  void {
+    public  decPriority(v: float):  void {
         this.budget.decPriority(v);
     }
 
@@ -130,7 +130,7 @@ if (budget !== null)
      *
      * @param v The new durability value
      */
-    public  setDurability(/* final */  v: float):  void {
+    public  setDurability(v: float):  void {
         this.budget.setDurability(v);
     }
 
@@ -139,7 +139,7 @@ if (budget !== null)
      *
      * @param v The amount of increase
      */
-    public  incDurability(/* final */  v: float):  void {
+    public  incDurability(v: float):  void {
         this.budget.incDurability(v);
     }
 
@@ -148,7 +148,7 @@ if (budget !== null)
      *
      * @param v The amount of decrease
      */
-    public  decDurability(/* final */  v: float):  void {
+    public  decDurability(v: float):  void {
         this.budget.decDurability(v);
     }
 
@@ -166,7 +166,7 @@ if (budget !== null)
      *
      * @param v The new quality value
      */
-    public  setQuality(/* final */  v: float):  void {
+    public  setQuality(v: float):  void {
         this.budget.setQuality(v);
     }
 
@@ -176,7 +176,7 @@ if (budget !== null)
      * @param that The Item to be merged
      * @return the resulting Item: this or that
      */
-    public  merge(/* final */  that: Item<unknown>):  Item<unknown> {
+    public  merge(that: Item<unknown>):  Item<unknown> {
         this.budget.merge(that.budget);
         return this;
     }
@@ -233,7 +233,7 @@ if (budget !== null)
         return this.name().hashCode();
     }
 
-    public equals(/* final */  obj: java.lang.Object):  boolean {
+    public equals(obj: java.lang.Object):  boolean {
         if (obj === this)
             return true;
         if (obj instanceof Item) {
@@ -244,7 +244,7 @@ if (budget !== null)
 
     public abstract static StringKeyItem =  class StringKeyItem extends Item<java.lang.CharSequence> {
 
-        public  constructor(/* final */  budget: BudgetValue) {
+        public  constructor(budget: BudgetValue) {
             super(budget);
         }
 
@@ -252,7 +252,7 @@ if (budget !== null)
             return $outer.name().hashCode();
         }
 
-        public  equals(/* final */  obj: java.lang.Object):  boolean {
+        public  equals(obj: java.lang.Object):  boolean {
             if (obj === this)
                 return true;
             if (obj instanceof Item) {
@@ -264,7 +264,7 @@ if (budget !== null)
     };
 
 
-    public static  getPrioritySum(/* final */  c: java.lang.Iterable< Item<unknown>>):  float {
+    public static  getPrioritySum(c: java.lang.Iterable< Item<unknown>>):  float {
         let  totalPriority: float = 0;
         for (let i of c)
             totalPriority += i.getPriority();

@@ -85,7 +85,7 @@ export class BagPerf extends JavaObject {
 
     public totalMaxItemsPerLevel: float;
 
-    public testBag(/* final */  List: boolean, /* final */  levels: int, /* final */  capacity: int, /* final */  forgetRate: float): void {
+    public testBag(List: boolean, levels: int, capacity: int, forgetRate: float): void {
 
         this.totalPriority = 0;
         this.totalMaxItemsPerLevel = this.totalMinItemsPerLevel = 0;
@@ -95,7 +95,7 @@ export class BagPerf extends JavaObject {
             public init(): void {
             }
 
-            public run(/* final */  warmup: boolean): void {
+            public run(warmup: boolean): void {
                 let nar: Nar = null;
                 try {
                     nar = new Nar();
@@ -167,7 +167,7 @@ export class BagPerf extends JavaObject {
 
         public constructor();
 
-        public constructor(/* final */  priority: float);
+        public constructor(priority: float);
         public constructor(...args: unknown[]) {
             switch (args.length) {
                 case 0: {
@@ -203,8 +203,8 @@ export class BagPerf extends JavaObject {
     };
 
 
-    public static randomBagIO(/* final */  b: Bag<BagPerf.NullItem, java.lang.CharSequence>, /* final */  accesses: int,
-            /* final */  insertProportion: double): void {
+    public static randomBagIO(b: Bag<BagPerf.NullItem, java.lang.CharSequence>, accesses: int,
+        insertProportion: double): void {
         for (let i: int = 0; i < accesses; i++) {
             if (BagPerf.rnd.nextFloat() > insertProportion) {
                 // remove
@@ -216,7 +216,7 @@ export class BagPerf extends JavaObject {
         }
     }
 
-    public static iterate(/* final */  b: Bag<BagPerf.NullItem, java.lang.CharSequence>): void {
+    public static iterate(b: Bag<BagPerf.NullItem, java.lang.CharSequence>): void {
         let i: java.util.Iterator<BagPerf.NullItem> = b.iterator();
         let count: int = 0;
         while (i.hasNext()) {
@@ -228,16 +228,16 @@ export class BagPerf extends JavaObject {
         }
     }
 
-    public static getTime(/* final */  label: java.lang.String, /* final */  b: BagPerf.BagBuilder<BagPerf.NullItem, java.lang.CharSequence>,
-            /* final */  iterations: int,
-            /* final */  randomAccesses: int,
-            /* final */  insertRatio: float, /* final */  repeats: int, /* final */  warmups: int): double {
+    public static getTime(label: java.lang.String, b: BagPerf.BagBuilder<BagPerf.NullItem, java.lang.CharSequence>,
+        iterations: int,
+        randomAccesses: int,
+        insertRatio: float, repeats: int, warmups: int): double {
         let p: Performance = new class extends Performance {
 
             public init(): void {
             }
 
-            public run(/* final */  warmup: boolean): void {
+            public run(warmup: boolean): void {
 
                 let bag: Bag<BagPerf.NullItem, java.lang.CharSequence> = b.newBag();
 
@@ -268,10 +268,10 @@ export class BagPerf extends JavaObject {
 
     }
 
-    public static compare(/* final */  iterations: int,
-            /* final */  randomAccesses: int,
-            /* final */  insertRatio: float,
-            /* final */  repeats: int, /* final */  warmups: int, /* final */ ...B: Bag<BagPerf.NullItem, java.lang.CharSequence>[]): java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, java.lang.Double> {
+    public static compare(iterations: int,
+        randomAccesses: int,
+        insertRatio: float,
+        repeats: int, warmups: int, ...B: Bag<BagPerf.NullItem, java.lang.CharSequence>[]): java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, java.lang.Double> {
 
         let t: java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, java.lang.Double> = new java.util.LinkedHashMap();
 
@@ -285,9 +285,9 @@ export class BagPerf extends JavaObject {
 
     }
 
-    public static printCSVLine(/* final */  out: java.io.PrintStream, /* final */ ...s: java.lang.String[]): void;
+    public static printCSVLine(out: java.io.PrintStream, ...s: java.lang.String[]): void;
 
-    public static printCSVLine(/* final */  out: java.io.PrintStream, /* final */  o: java.util.List<java.lang.String>): void;
+    public static printCSVLine(out: java.io.PrintStream, o: java.util.List<java.lang.String>): void;
     public static printCSVLine(...args: unknown[]): void {
         switch (args.length) {
             case 2: {
@@ -320,7 +320,7 @@ export class BagPerf extends JavaObject {
     }
 
 
-    public static main(/* final */  args: java.lang.String[]): void {
+    public static main(args: java.lang.String[]): void {
         BagPerf.narParameters = new Nar().narParameters;
         let itemsPerLevel: int = 10;
         let repeats: int = 10;

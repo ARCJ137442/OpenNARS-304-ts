@@ -17,8 +17,8 @@ export class VisionChannel extends SensoryChannel {
     // Nar"
     public readonly obs: EventEmitter.EventObserver;
 
-    public constructor(/* final */  label: java.lang.String, /* final */  nar: Reasoner, /* final */  reportResultsTo: Reasoner, /* final */  width: int,
-            /* final */  height: int, /* final */  duration: int,
+    public constructor(label: java.lang.String, nar: Reasoner, reportResultsTo: Reasoner, width: int,
+        height: int, duration: int,
         defaultOutputConfidence: float, nPrototypes: int) {
         super(nar as Nar, reportResultsTo as SensoryChannel, width, height, duration, SetInt.make(new Term(label)));
         this.nar = nar as Nar;
@@ -41,7 +41,7 @@ export class VisionChannel extends SensoryChannel {
 
     }
 
-    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
+    public setEnabled(n: Nar, enabled: boolean): boolean {
         n.memory.event.set(this.obs, enabled, Events.CycleEnd.class);
         n.memory.event.set(this.obs, enabled, Events.ResetEnd.class);
         return true;
@@ -60,7 +60,7 @@ export class VisionChannel extends SensoryChannel {
     protected subj: java.lang.String = "";
     protected empty_cycles: int = 0;
 
-    public AddToMatrix(/* final */  t: Task, /* final */  time: Timable): boolean {
+    public AddToMatrix(t: Task, time: Timable): boolean {
         let inh: Inheritance = t.getTerm() as Inheritance; // channels receive inheritances
         let cur_subj: java.lang.String = (inh.getSubject() as SetExt).term[0].index_variable;
         if (!cur_subj.equals(this.subj)) { // when subject changes, we start to collect from scratch,
@@ -88,7 +88,7 @@ export class VisionChannel extends SensoryChannel {
 
     protected isEternal: boolean = false; // don't use increasing ID if eternal
 
-    public addInput(/* final */  t: Task, /* final */  time: Timable): Nar {
+    public addInput(t: Task, time: Timable): Nar {
         this.isEternal = t.sentence.isEternal();
         if (this.AddToMatrix(t, time)) // new data complete
             this.step_start(time);
@@ -97,7 +97,7 @@ export class VisionChannel extends SensoryChannel {
 
     protected termid: int = 0;
 
-    public step_start(/* final */  time: Timable): void {
+    public step_start(time: Timable): void {
         this.cnt_updated = 0;
         this.HadNewInput = false;
         this.termid++;

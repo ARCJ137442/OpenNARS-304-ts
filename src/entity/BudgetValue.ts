@@ -48,9 +48,9 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param v Budget value to be cloned
      */
-    public constructor(/* final */  v: BudgetValue);
+    public constructor(v: BudgetValue);
 
-    public constructor(/* final */  p: float, /* final */  d: float, /* final */  qualityFromTruth: TruthValue, narParameters: Parameters);
+    public constructor(p: float, d: float, qualityFromTruth: TruthValue, narParameters: Parameters);
 
     /**
      * Constructor with initialization
@@ -59,7 +59,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      * @param d Initial durability
      * @param q Initial quality
      */
-    public constructor(/* final */  p: float, /* final */  d: float, /* final */  q: float, narParameters: Parameters);
+    public constructor(p: float, d: float, q: float, narParameters: Parameters);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -133,7 +133,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param v The new priority
      */
-    public setPriority(/* final */  v: float): void {
+    public setPriority(v: float): void {
         if (v > 1.0) {
             throw new java.lang.IllegalStateException("Priority > 1.0: " + v);
             // v=1.0f;
@@ -146,12 +146,12 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param v The increasing percent
      */
-    public incPriority(/* final */  v: float): void {
+    public incPriority(v: float): void {
         this.setPriority(java.lang.Math.min(1.0, UtilityFunctions.or(this.priority, v)) as float);
     }
 
     /** AND's (multiplies) priority with another value */
-    public andPriority(/* final */  v: float): void {
+    public andPriority(v: float): void {
         this.setPriority(UtilityFunctions.and(this.priority, v) as float);
     }
 
@@ -160,7 +160,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param v The decreasing percent
      */
-    public decPriority(/* final */  v: float): void {
+    public decPriority(v: float): void {
         this.setPriority(UtilityFunctions.and(this.priority, v) as float);
     }
 
@@ -190,7 +190,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param v The increasing percent
      */
-    public incDurability(/* final */  v: float): void {
+    public incDurability(v: float): void {
         let durability2: float = UtilityFunctions.or(this.durability, v);
         if (durability2 >= 1.0) {
             durability2 = 1.0 - this.narParameters.TRUTH_EPSILON; // put into allowed range
@@ -203,7 +203,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param v The decreasing percent
      */
-    public decDurability(/* final */  v: float): void {
+    public decDurability(v: float): void {
         this.durability = UtilityFunctions.and(this.durability, v) as float;
     }
 
@@ -221,7 +221,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param v The new quality
      */
-    public setQuality(/* final */  v: float): void {
+    public setQuality(v: float): void {
         this.quality = v;
     }
 
@@ -230,7 +230,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param v The increasing percent
      */
-    public incQuality(/* final */  v: float): void {
+    public incQuality(v: float): void {
         this.quality = UtilityFunctions.or(this.quality, v);
     }
 
@@ -239,7 +239,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param v The decreasing percent
      */
-    public decQuality(/* final */  v: float): void {
+    public decQuality(v: float): void {
         this.quality = UtilityFunctions.and(this.quality, v) as float;
     }
 
@@ -248,7 +248,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param that The other Budget
      */
-    public merge(/* final */  that: BudgetValue): void {
+    public merge(that: BudgetValue): void {
         BudgetFunctions.merge(this, that);
     }
 
@@ -257,7 +257,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      * @return if this budget is greater in all quantities than another budget,
      */
     // used to prevent a merge that would have no consequence
-    public greaterThan(/* final */  rhs: BudgetValue): boolean {
+    public greaterThan(rhs: BudgetValue): boolean {
         return (this.getPriority() - rhs.getPriority() > this.narParameters.BUDGET_THRESHOLD) &&
             (this.getDurability() - rhs.getDurability() > this.narParameters.BUDGET_THRESHOLD) &&
             (this.getQuality() - rhs.getQuality() > this.narParameters.BUDGET_THRESHOLD);
@@ -272,7 +272,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
         return aveGeo(this.priority, this.durability, this.quality);
     }
 
-    public equalsByPrecision(/* final */  that: java.lang.Object): boolean {
+    public equalsByPrecision(that: java.lang.Object): boolean {
         if (that instanceof BudgetValue) {
             let t: BudgetValue = (that as BudgetValue);
             let dPrio: float = java.lang.Math.abs(this.getPriority() - t.getPriority());
@@ -335,7 +335,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      * @return period in time: currentTime - lastForgetTime
      */
     // TODO< split this into two methods >
-    public setLastForgetTime(/* final */  currentTime: long): long {
+    public setLastForgetTime(currentTime: long): long {
         let period: long;
         if (this.lastForgetTime === -1)
             period = 0;

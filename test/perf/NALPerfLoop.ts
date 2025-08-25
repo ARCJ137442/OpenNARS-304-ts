@@ -7,7 +7,7 @@ import { java, JavaObject, type int } from "jree";
  */
 export class NALPerfLoop extends JavaObject {
 
-    public static main(/* final */  args: java.lang.String[]): void {
+    public static main(args: java.lang.String[]): void {
 
         let repeats: int = 2;
         let warmups: int = 1;

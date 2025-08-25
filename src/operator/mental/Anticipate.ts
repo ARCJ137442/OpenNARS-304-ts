@@ -53,7 +53,7 @@ export class Anticipate extends Operator implements EventObserver {
     }
 
 
-    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
+    public setEnabled(n: Nar, enabled: boolean): boolean {
         n.memory.event.set(this, enabled, Events.InduceSucceedingEvent.class, Events.CycleEnd.class);
         this.expiredTruth = new TruthValue(0.0, n.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, n.narParameters);
         this.expiredBudget = new BudgetValue(n.narParameters.DEFAULT_JUDGMENT_PRIORITY,
@@ -159,7 +159,7 @@ export class Anticipate extends Operator implements EventObserver {
         this.newTasks.clear();
     }
 
-    public event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]): void {
+    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
         if (event === Events.InduceSucceedingEvent.class || event === Events.TaskDerive.class) {
             let newEvent: Task = args[0] as Task;
             let nal: DerivationContext = args[1] as DerivationContext;
@@ -181,8 +181,8 @@ export class Anticipate extends Operator implements EventObserver {
     }
 
     // to create a judgment with a given statement
-    protected execute(/* final */  operation: Operation, /* final */  args: Term[], /* final */  memory: Memory,
-            /* final */  time: Timable): java.util.List<Task> {
+    protected execute(operation: Operation, args: Term[], memory: Memory,
+        time: Timable): java.util.List<Task> {
         if (operation === null) {
             return null; // not as mental operator but as fundamental principle
         }
@@ -200,12 +200,12 @@ export class Anticipate extends Operator implements EventObserver {
         return this.anticipationOperator;
     }
 
-    public setAnticipationAsOperator(/* final */  val: boolean): void {
+    public setAnticipationAsOperator(val: boolean): void {
         this.anticipationOperator = val;
     }
 
-    public anticipate(/* final */  content: Term, /* final */  memory: Memory, /* final */  occurenceTime: long, /* final */  t: Task,
-            /* final */  time: Timable): void {
+    public anticipate(content: Term, memory: Memory, occurenceTime: long, t: Task,
+        time: Timable): void {
         if (t !== null && t.sentence.truth.getExpectation() < memory.narParameters.DEFAULT_CONFIRMATION_EXPECTATION) {
             return;
         }
@@ -223,7 +223,7 @@ export class Anticipate extends Operator implements EventObserver {
         this.anticipationFeedback(content, t, memory, time);
     }
 
-    public anticipationFeedback(/* final */  content: Term, /* final */  t: Task, /* final */  memory: Memory, /* final */  time: Timable): void {
+    public anticipationFeedback(content: Term, t: Task, memory: Memory, time: Timable): void {
         if (this.anticipationOperator) {
             let op: Operation = Operation.make(Product.make(Term.SELF, content), this) as Operation;
             let truth: TruthValue = new TruthValue(1.0, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
@@ -252,7 +252,7 @@ export class Anticipate extends Operator implements EventObserver {
         }
     }
 
-    protected deriveDidntHappen(/* final */  aTerm: Term, /* final */  expectedOccurenceTime: long, nal: DerivationContext): void {
+    protected deriveDidntHappen(aTerm: Term, expectedOccurenceTime: long, nal: DerivationContext): void {
 
         let truth: TruthValue = this.expiredTruth;
         let budget: BudgetValue = this.expiredBudget;
@@ -281,7 +281,7 @@ export class Anticipate extends Operator implements EventObserver {
             // simple?
             public readonly predictedOccurenceTime: long;
 
-            public constructor(/* final */  predictionCreationTime: long, /* final */  predictedOccurenceTime: long) { // rest of the crap:
+            public constructor(predictionCreationTime: long, predictedOccurenceTime: long) { // rest of the crap:
                 super();
                 this.predictionCreationTime = predictionCreationTime; // when the prediction happened
                 this.predictedOccurenceTime = predictedOccurenceTime; // when the event is expected

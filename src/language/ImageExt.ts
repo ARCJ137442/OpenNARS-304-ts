@@ -21,7 +21,7 @@ export class ImageExt extends Image {
      * @param arg   The component list of the term
      * @param index The index of relation in the component list
      */
-    public constructor(/* final */  arg: Term[], /* final */  index: short) {
+    public constructor(arg: Term[], index: short) {
         super(arg, index);
     }
 
@@ -32,7 +32,7 @@ export class ImageExt extends Image {
      */
     public clone(): ImageExt;
 
-    public clone(/* final */  replaced: Term[]): Term;
+    public clone(replaced: Term[]): Term;
     public clone(...args: unknown[]): ImageExt | Term {
         switch (args.length) {
             case 0: {
@@ -73,7 +73,7 @@ export class ImageExt extends Image {
      * @return the Term generated from the arguments
      * @param argList The list of term
      */
-    public static make(/* final */  argList: Term[]): Term;
+    public static make(argList: Term[]): Term;
 
     /**
      * Try to make an Image from a Product and a relation. Called by the inference
@@ -84,7 +84,7 @@ export class ImageExt extends Image {
      * @param index    The index of the place-holder
      * @return A compound generated or a term it reduced to
      */
-    public static make(/* final */  product: Product, /* final */  relation: Term, /* final */  index: short): Term;
+    public static make(product: Product, relation: Term, index: short): Term;
 
     /**
      * Try to make an Image from an existing Image and a component. Called by the
@@ -95,7 +95,7 @@ export class ImageExt extends Image {
      * @param index     The index of the place-holder in the new Image
      * @return A compound generated or a term it reduced to
      */
-    public static make(/* final */  oldImage: ImageExt, /* final */  component: Term, /* final */  index: short): Term;
+    public static make(oldImage: ImageExt, component: Term, index: short): Term;
     public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {

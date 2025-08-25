@@ -9,7 +9,7 @@ import { java, JavaObject, type int, type short, S } from "jree";
  */
 export class Terms extends JavaObject {
 
-    public static equalSubTermsInRespectToImageAndProduct(/* final */  a: Term, /* final */  b: Term): boolean {
+    public static equalSubTermsInRespectToImageAndProduct(a: Term, b: Term): boolean {
         if (a === null || b === null) {
             return false;
         }
@@ -54,7 +54,7 @@ export class Terms extends JavaObject {
         }
     }
 
-    public static reduceUntilLayer2(/* final */  _itself: CompoundTerm, /* final */  replacement: Term, /* final */  memory: Memory): Term {
+    public static reduceUntilLayer2(_itself: CompoundTerm, replacement: Term, memory: Memory): Term {
         if (_itself === null)
             return null;
 
@@ -97,9 +97,9 @@ export class Terms extends JavaObject {
      * @param components The term
      * @return A compound term or null
      */
-    public static term(/* final */  compound: CompoundTerm, /* final */  components: Term[]): Term;
+    public static term(compound: CompoundTerm, components: Term[]): Term;
 
-    public static term(/* final */  compound: CompoundTerm, /* final */  components: java.util.Collection<Term>): Term;
+    public static term(compound: CompoundTerm, components: java.util.Collection<Term>): Term;
 
     /**
      * Try to make a compound term from an operator and a list of term
@@ -110,7 +110,7 @@ export class Terms extends JavaObject {
      * @param componentList Component list
      * @return A term or null
      */
-    public static term(/* final */  copula: Symbols.NativeOperator, /* final */  componentList: Term[]): Term;
+    public static term(copula: Symbols.NativeOperator, componentList: Term[]): Term;
     public static term(...args: unknown[]): Term {
         switch (args.length) {
             case 2: {
@@ -216,7 +216,7 @@ export class Terms extends JavaObject {
      * @param memory    Reference to the memory
      * @return The new compound
      */
-    public static reduceComponents(/* final */  compound: CompoundTerm, /* final */  component: Term, /* final */  memory: Memory): Term {
+    public static reduceComponents(compound: CompoundTerm, component: Term, memory: Memory): Term {
         let list: Term[];
         if (compound.getClass() === component.getClass()) {
             list = compound.cloneTermsExcept(true, (component as CompoundTerm).term);
@@ -238,7 +238,7 @@ export class Terms extends JavaObject {
         return null;
     }
 
-    public static reduceComponentOneLayer(/* final */  compound: CompoundTerm, /* final */  component: Term, /* final */  memory: Memory): Term {
+    public static reduceComponentOneLayer(compound: CompoundTerm, component: Term, memory: Memory): Term {
         let list: Term[];
         if (compound.getClass() === component.getClass()) {
             list = compound.cloneTermsExcept(true, (component as CompoundTerm).term);
@@ -255,14 +255,14 @@ export class Terms extends JavaObject {
         return compound;
     }
 
-    public static unwrapNegation(/* final */  T: Term): Term {
+    public static unwrapNegation(T: Term): Term {
         if (T !== null && T instanceof Negation) {
             return (T as CompoundTerm).term[0];
         }
         return T;
     }
 
-    public static equalSubjectPredicateInRespectToImageAndProduct(/* final */  a: Term, /* final */  b: Term): boolean {
+    public static equalSubjectPredicateInRespectToImageAndProduct(a: Term, b: Term): boolean {
 
         if (a === null || b === null) {
             return false;
@@ -375,7 +375,7 @@ export class Terms extends JavaObject {
         return true;
     }
 
-    public static prepareComponentLinks(/* final */  componentLinks: java.util.List<TermLink>, /* final */  ct: CompoundTerm): java.util.List<TermLink>;
+    public static prepareComponentLinks(componentLinks: java.util.List<TermLink>, ct: CompoundTerm): java.util.List<TermLink>;
 
     /**
      * Collect TermLink templates into a list, go down one level except in
@@ -386,8 +386,8 @@ export class Terms extends JavaObject {
      * @param type           The type of TermLink to be built
      * @param term           The CompoundTerm for which the links are built
      */
-    public static prepareComponentLinks(/* final */  componentLinks: java.util.List<TermLink>, /* final */  type: short,
-            /* final */  term: CompoundTerm): java.util.List<TermLink>;
+    public static prepareComponentLinks(componentLinks: java.util.List<TermLink>, type: short,
+        term: CompoundTerm): java.util.List<TermLink>;
     public static prepareComponentLinks(...args: unknown[]): java.util.List<TermLink> {
         switch (args.length) {
             case 2: {
@@ -488,7 +488,7 @@ export class Terms extends JavaObject {
 
 
     // TODO move this to a utility method
-    public static indexOf<T>(/* final */  array: T[], /* final */  v: T): int {
+    public static indexOf<T>(array: T[], v: T): int {
         /*
          * if (v == null) {
          * for (final T e : array)
@@ -515,7 +515,7 @@ export class Terms extends JavaObject {
      * conjunction)
      * are equivalent.
      */
-    public static containsAll<T>(/* final */  a: T[], /* final */  b: T[]): boolean {
+    public static containsAll<T>(a: T[], b: T[]): boolean {
         for (let ax of a) {
             if (!Terms.contains(b, ax))
                 return false;
@@ -524,7 +524,7 @@ export class Terms extends JavaObject {
     }
 
     /** a contains any of b NOT TESTED YET */
-    public static containsAny(/* final */  a: Term[], /* final */  b: java.util.Collection<Term>): boolean {
+    public static containsAny(a: Term[], b: java.util.Collection<Term>): boolean {
         for (let bx of b) {
             if (Terms.contains(a, bx))
                 return true;
@@ -538,7 +538,7 @@ export class Terms extends JavaObject {
         return false;
     }
 
-    public static contains<T>(/* final */  array: T[], /* final */  v: T): boolean {
+    public static contains<T>(array: T[], v: T): boolean {
         for (let e of array) {
             if (v.equals(e)) {
                 return true;
@@ -547,7 +547,7 @@ export class Terms extends JavaObject {
         return false;
     }
 
-    protected override static equals(/* final */  a: Term[], /* final */  b: Term[]): boolean {
+    protected override static equals(a: Term[], b: Term[]): boolean {
         if (a.length !== b.length)
             return false;
         for (let i: int = 0; i < a.length; i++) {
@@ -557,9 +557,9 @@ export class Terms extends JavaObject {
         return true;
     }
 
-    public static verifyNonNull(/* final */  t: java.util.Collection<unknown>): void;
+    public static verifyNonNull(t: java.util.Collection<unknown>): void;
 
-    protected static verifyNonNull(/* final */ ...t: Term[]): void;
+    protected static verifyNonNull(...t: Term[]): void;
     public static verifyNonNull(...args: unknown[]): void {
         switch (args.length) {
             case 1: {
@@ -593,7 +593,7 @@ export class Terms extends JavaObject {
     }
 
 
-    public static verifySortedAndUnique(/* final */  arg: Term[], /* final */  allowSingleton: boolean): Term[] {
+    public static verifySortedAndUnique(arg: Term[], allowSingleton: boolean): Term[] {
         if (arg.length === 0) {
             throw new java.lang.IllegalStateException("Needs >0 components");
         }

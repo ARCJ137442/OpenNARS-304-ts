@@ -14,7 +14,7 @@ export class Negation extends CompoundTerm {
      * avoid using this externally, because double-negatives can be unwrapped to the
      * original term using Negation.make
      */
-    protected constructor(/* final */  t: Term) {
+    protected constructor(t: Term) {
         super([t]);
 
         java.security.cert.CertPathChecker.init(term);
@@ -31,7 +31,7 @@ export class Negation extends CompoundTerm {
      */
     public clone(): Negation;
 
-    public clone(/* final */  replaced: Term[]): Term;
+    public clone(replaced: Term[]): Term;
     public clone(...args: unknown[]): Negation | Term {
         switch (args.length) {
             case 0: {
@@ -70,7 +70,7 @@ export class Negation extends CompoundTerm {
      * @param t The component
      * @return A compound generated or a term it reduced to
      */
-    public static make(/* final */  t: Term): Term;
+    public static make(t: Term): Term;
 
     /**
      * Try to make a new Negation. Called by StringParser.
@@ -78,7 +78,7 @@ export class Negation extends CompoundTerm {
      * @return the Term generated from the arguments
      * @param argument The list of term
      */
-    public static make(/* final */  argument: Term[]): Term;
+    public static make(argument: Term[]): Term;
     public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
@@ -123,7 +123,7 @@ export class Negation extends CompoundTerm {
         return NativeOperator.NEGATION;
     }
 
-    public static areMutuallyInverse(/* final */  tc: Term, /* final */  ptc: Term): boolean {
+    public static areMutuallyInverse(tc: Term, ptc: Term): boolean {
         // doesnt seem necessary to check both, one seems sufficient.
         // incurs cost of creating a Negation and its id
         return (ptc.equals(Negation.make(tc)) /* || tc.equals(Negation.make(ptc)) */);

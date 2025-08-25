@@ -94,7 +94,7 @@ export class Shell extends JavaObject {
         new Shell(nar).run(args);
     }
 
-    public constructor(/* final */  n: Nar) {
+    public constructor(n: Nar) {
         super();
         this.nar = n;
     }
@@ -104,7 +104,7 @@ export class Shell extends JavaObject {
             private readonly bufIn: java.io.BufferedReader;
             protected readonly nar: Nar;
 
-            protected constructor(/* final */  in: java.io.InputStream, /* final */  nar: Nar) {
+            protected constructor(in: java.io.InputStream, nar: Nar) {
                 super();
                 this.bufIn = new java.io.BufferedReader(new java.io.InputStreamReader(in));
                 this.nar = nar;
@@ -157,7 +157,7 @@ export class Shell extends JavaObject {
      * non-static equivalent to {@link #main(String[])} : finish to completion from
      * an addInput file
      */
-    public run(/* final */  args: java.lang.String[]): void {
+    public run(args: java.lang.String[]): void {
         let output: TextOutputHandler = new TextOutputHandler(this.nar, new java.io.PrintWriter(this.out, true));
         output.setErrors(true);
         output.setErrorStackTrace(true);
@@ -182,7 +182,7 @@ export class Shell extends JavaObject {
         }
     }
 
-    public setPrintStream(/* final */  out: java.io.PrintStream): void {
+    public setPrintStream(out: java.io.PrintStream): void {
         this.out = out;
     }
 }

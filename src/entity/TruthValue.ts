@@ -49,7 +49,7 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      *
      * @param v truth value to be cloned
      */
-    public  constructor(/* final */  v: TruthValue);
+    public  constructor(v: TruthValue);
 
     /**
      * Constructor
@@ -58,7 +58,7 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      * @param c             confidence value
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(/* final */  f: float, /* final */  c: double, narParameters: Parameters);
+    public  constructor(f: float, c: double, narParameters: Parameters);
 
     /**
      * Constructor
@@ -68,7 +68,7 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      * @param isAnalytic    is the truth value an analytic one?
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(/* final */  f: float, /* final */  c: double, /* final */  isAnalytic: boolean, narParameters: Parameters);
+    public  constructor(f: float, c: double, isAnalytic: boolean, narParameters: Parameters);
     public constructor(...args: unknown[]) {
 		switch (args.length) {
 			case 1: {
@@ -144,18 +144,18 @@ this.narParameters = narParameters;
         return this.confidence;
     }
 
-    public  setFrequency(/* final */  f: float):  TruthValue {
+    public  setFrequency(f: float):  TruthValue {
         this.frequency = f;
         return this;
     }
 
-    public  setConfidence(/* final */  c: double):  TruthValue {
+    public  setConfidence(c: double):  TruthValue {
         let  max_confidence: double = 1.0 - this.narParameters.TRUTH_EPSILON;
         this.confidence = (c < max_confidence) ? c : max_confidence;
         return this;
     }
 
-    public  mulConfidence(/* final */  mul: float):  TruthValue {
+    public  mulConfidence(mul: float):  TruthValue {
          let  max_confidence: double = 1.0 - this.narParameters.TRUTH_EPSILON;
          let  c: double = this.confidence * mul;
         this.confidence = (c < max_confidence) ? c : max_confidence;
@@ -174,7 +174,7 @@ this.narParameters = narParameters;
      */
     public  setAnalytic():  void;
 
-    public  setAnalytic(/* final */  a: boolean):  TruthValue;
+    public  setAnalytic(a: boolean):  TruthValue;
 public setAnalytic(...args: unknown[]):  void |  TruthValue {
 		switch (args.length) {
 			case 0: {
@@ -219,7 +219,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
      * @param t given value
      * @return absolute difference
      */
-    public  getExpDifAbs(/* final */  t: TruthValue):  float {
+    public  getExpDifAbs(t: TruthValue):  float {
         return java.lang.Math.abs(this.getExpectation() - t.getExpectation());
     }
 
@@ -232,7 +232,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
         return this.getFrequency() < 0.5;
     }
 
-    public static  isEqual(/* final */  a: double, /* final */  b: double, /* final */  epsilon: double):  boolean {
+    public static  isEqual(a: double, b: double, epsilon: double):  boolean {
          let  d: double = java.lang.Math.abs(a - b);
         return (d < epsilon);
     }
@@ -243,7 +243,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
      * @param that other TruthValue
      * @return Whether the two are equivalent
      */
-    public override  equals(/* final */  that: java.lang.Object):  boolean {
+    public override  equals(that: java.lang.Object):  boolean {
         if (that instanceof TruthValue) {
              let  t: TruthValue =  that as TruthValue;
             return TruthValue.isEqual(this.getFrequency(), t.getFrequency(), this.narParameters.TRUTH_EPSILON) &&
@@ -268,7 +268,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
     /**
      * A simplified String representation of a TruthValue
      */
-    public  appendString(/* final */  sb: java.lang.StringBuilder, /* final */  external: boolean):  java.lang.StringBuilder {
+    public  appendString(sb: java.lang.StringBuilder, external: boolean):  java.lang.StringBuilder {
         sb.ensureCapacity(11);
         return sb
                 .append(TruthValue.DELIMITER)
@@ -324,7 +324,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
     }
 
     // * 📝【2024-05-08 20:49:46】这个函数并无所用之处
-    public  set(/* final */  frequency: float, /* final */  confidence: double):  TruthValue {
+    public  set(frequency: float, confidence: double):  TruthValue {
         this.setFrequency(frequency);
         this.setConfidence(confidence);
         return this;

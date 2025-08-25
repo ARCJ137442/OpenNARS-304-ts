@@ -24,8 +24,8 @@ export class CompositionalRules extends JavaObject {
      * @param index         The location of the shared term
      * @param nal           Reference to the memory
      */
-    protected static composeCompound(/* final */  taskContent: Statement, /* final */  beliefContent: Statement, /* final */  index: int,
-            /* final */  nal: DerivationContext): void {
+    protected static composeCompound(taskContent: Statement, beliefContent: Statement, index: int,
+        nal: DerivationContext): void {
         if ((!nal.getCurrentTask().sentence.isJudgment()) || (taskContent.getClass() !== beliefContent.getClass())) {
             return;
         }
@@ -110,8 +110,8 @@ export class CompositionalRules extends JavaObject {
      * @param truth     TruthValue of the contentInd
      * @param nal       Reference to the memory
      */
-    private static processComposed(/* final */  statement: Statement, /* final */  subject: Term, /* final */  predicate: Term,
-            /* final */  order: int, /* final */  truth: TruthValue, /* final */  nal: DerivationContext): void {
+    private static processComposed(statement: Statement, subject: Term, predicate: Term,
+        order: int, truth: TruthValue, nal: DerivationContext): void {
         if ((subject === null) || (predicate === null)) {
             return;
         }
@@ -135,8 +135,8 @@ export class CompositionalRules extends JavaObject {
      * @param compoundTask Whether the implication comes from the task
      * @param nal          Reference to the memory
      */
-    private static decomposeCompound(/* final */  compound: CompoundTerm, /* final */  component: Term, /* final */  term1: Term,
-            /* final */  index: int, /* final */  compoundTask: boolean, /* final */  order: int, /* final */  nal: DerivationContext): void {
+    private static decomposeCompound(compound: CompoundTerm, component: Term, term1: Term,
+        index: int, compoundTask: boolean, order: int, nal: DerivationContext): void {
 
         if ((compound instanceof Statement) || (compound instanceof ImageExt) || (compound instanceof ImageInt)) {
             return;
@@ -231,8 +231,8 @@ export class CompositionalRules extends JavaObject {
      * @param compoundTask Whether the implication comes from the task
      * @param nal          Reference to the memory
      */
-    protected static decomposeStatement(/* final */  compound: CompoundTerm, /* final */  component: Term, /* final */  compoundTask: boolean,
-            /* final */  index: int, /* final */  nal: DerivationContext): void {
+    protected static decomposeStatement(compound: CompoundTerm, component: Term, compoundTask: boolean,
+        index: int, nal: DerivationContext): void {
         let isTemporalConjunction: boolean = (compound instanceof Conjunction) && !(compound as Conjunction).isSpatial;
         if (isTemporalConjunction && (compound.getTemporalOrder() === TemporalRules.ORDER_FORWARD) && (index !== 0)) {
             return;
@@ -323,8 +323,8 @@ export class CompositionalRules extends JavaObject {
      *                      predicate
      * @param nal           Reference to the memory
      */
-    public static introVarOuter(/* final */  taskContent: Statement, /* final */  beliefContent: Statement, /* final */  index: int,
-            /* final */  nal: DerivationContext): void {
+    public static introVarOuter(taskContent: Statement, beliefContent: Statement, index: int,
+        nal: DerivationContext): void {
 
         if (!(taskContent instanceof Inheritance)) {
             return;
@@ -394,8 +394,8 @@ export class CompositionalRules extends JavaObject {
      *                    or Conjunction
      * @param nal         Reference to the memory
      */
-    protected static introVarInner(/* final */  premise1: Statement, /* final */  premise2: Statement, /* final */  oldCompound: CompoundTerm,
-            /* final */  nal: DerivationContext): boolean {
+    protected static introVarInner(premise1: Statement, premise2: Statement, oldCompound: CompoundTerm,
+        nal: DerivationContext): boolean {
         let task: Task = nal.getCurrentTask();
         let taskSentence: Sentence = task.sentence;
         if (!taskSentence.isJudgment() || (premise1.getClass() !== premise2.getClass())
@@ -454,8 +454,8 @@ export class CompositionalRules extends JavaObject {
      * OUT: <lock1 --> lock>.
      * http://code.google.com/p/open-nars/issues/detail?id=40&can=1
      */
-    public static eliminateVariableOfConditionAbductive(/* final */  figure: int, /* final */  sentence: Sentence,
-            /* final */  belief: Sentence, /* final */  nal: DerivationContext): void {
+    public static eliminateVariableOfConditionAbductive(figure: int, sentence: Sentence,
+        belief: Sentence, nal: DerivationContext): void {
         let T1: Statement = sentence.term as Statement;
         let T2: Statement = belief.term as Statement;
 
@@ -608,8 +608,8 @@ export class CompositionalRules extends JavaObject {
         }
     }
 
-    protected static IntroVarSameSubjectOrPredicate(/* final */  originalMainSentence: Sentence, /* final */  subSentence: Sentence,
-            /* final */  component: Term, /* final */  content: Term, /* final */  index: int, /* final */  nal: DerivationContext): void {
+    protected static IntroVarSameSubjectOrPredicate(originalMainSentence: Sentence, subSentence: Sentence,
+        component: Term, content: Term, index: int, nal: DerivationContext): void {
         let T1: Term = originalMainSentence.term;
         if (!(T1 instanceof CompoundTerm) || !(content instanceof CompoundTerm)) {
             return;

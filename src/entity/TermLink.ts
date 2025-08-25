@@ -62,7 +62,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      * @param type    Link type
      * @param indices Component indices in compound, may be 1 to 4
      */
-    public constructor(/* final */  target: Term, /* final */  type: short, /* final */ ...indices: short[]);
+    public constructor(target: Term, type: short, ...indices: short[]);
 
     /**
      * Constructor to make actual TermLink from a template
@@ -73,15 +73,15 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      * @param template TermLink template previously prepared
      * @param v        Budget value of the link
      */
-    public constructor(/* final */  t: Term, /* final */  template: TermLink, /* final */  v: BudgetValue);
+    public constructor(t: Term, template: TermLink, v: BudgetValue);
 
-    public constructor(/* final */  type: short, /* final */  target: Term, /* final */  i0: int);
+    public constructor(type: short, target: Term, i0: int);
 
-    public constructor(/* final */  type: short, /* final */  target: Term, /* final */  i0: int, /* final */  i1: int);
+    public constructor(type: short, target: Term, i0: int, i1: int);
 
-    public constructor(/* final */  type: short, /* final */  target: Term, /* final */  i0: int, /* final */  i1: int, /* final */  i2: int);
+    public constructor(type: short, target: Term, i0: int, i1: int, i2: int);
 
-    public constructor(/* final */  type: short, /* final */  target: Term, /* final */  i0: int, /* final */  i1: int, /* final */  i2: int, /* final */  i3: int);
+    public constructor(type: short, target: Term, i0: int, i1: int, i2: int, i3: int);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 3: {
@@ -178,7 +178,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
         return this.hash;
     }
 
-    public equals(/* final */  obj: java.lang.Object): boolean {
+    public equals(obj: java.lang.Object): boolean {
         if (obj === this)
             return true;
         if (this.hashCode() !== obj.hashCode())
@@ -247,7 +247,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      * @param i The index level
      * @return The index value
      */
-    public getIndex(/* final */  i: int): short {
+    public getIndex(i: int): short {
         if ((this.index !== null) && (i < this.index.length)) {
             return this.index[i];
         } else {

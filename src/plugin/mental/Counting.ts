@@ -51,7 +51,7 @@ export class Counting extends JavaObject implements Plugin {
     }
 
 
-    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
+    public setEnabled(n: Nar, enabled: boolean): boolean {
         let memory: Memory = n.memory;
 
         if (this.obs === null) {

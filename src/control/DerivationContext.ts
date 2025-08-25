@@ -23,14 +23,14 @@ export class DerivationContext extends JavaObject {
 
     public time: Timable;
 
-    public constructor(/* final */  mem: Memory, /* final */  narParameters: Parameters, /* final */  time: Timable) {
+    public constructor(mem: Memory, narParameters: Parameters, time: Timable) {
         super();
         this.memory = mem;
         this.narParameters = narParameters;
         this.time = time;
     }
 
-    public emit(/* final */  c: java.lang.Class<unknown>, /* final */ ...o: java.lang.Object[]): void {
+    public emit(c: java.lang.Class<unknown>, ...o: java.lang.Object[]): void {
         this.memory.emit(c, o);
     }
 
@@ -40,11 +40,11 @@ export class DerivationContext extends JavaObject {
      * @param task           the derived task
      * @param overlapAllowed //https://groups.google.com/forum/#!topic/open-nars/FVbbKq5En-M
      */
-    public derivedTask(/* final */  task: Task, /* final */  revised: boolean, /* final */  single: boolean,
-            /* final */  overlapAllowed: boolean): boolean;
+    public derivedTask(task: Task, revised: boolean, single: boolean,
+        overlapAllowed: boolean): boolean;
 
-    public derivedTask(/* final */  task: Task, /* final */  revised: boolean, /* final */  single: boolean,
-            /* final */  overlapAllowed: boolean, /* final */  addToMemory: boolean): boolean;
+    public derivedTask(task: Task, revised: boolean, single: boolean,
+        overlapAllowed: boolean, addToMemory: boolean): boolean;
     public derivedTask(...args: unknown[]): boolean {
         switch (args.length) {
             case 4: {
@@ -164,8 +164,8 @@ export class DerivationContext extends JavaObject {
      * @param newTruth   The truth value of the sentence in task
      * @param newBudget  The budget value in task
      */
-    public doublePremiseTaskRevised(/* final */  newContent: Term, /* final */  newTruth: TruthValue,
-            /* final */  newBudget: BudgetValue, /* final */  counter: long): boolean {
+    public doublePremiseTaskRevised(newContent: Term, newTruth: TruthValue,
+        newBudget: BudgetValue, counter: long): boolean {
         let derived_stamp: Stamp = this.getTheNewStamp().clone();
         this.resetOccurrenceTime(); // stamp was already absorbed
 
@@ -203,11 +203,11 @@ export class DerivationContext extends JavaObject {
      * @param overlapAllowed    //
      *                          https://groups.google.com/forum/#!topic/open-nars/FVbbKq5En-M
      */
-    public doublePremiseTask(/* final */  newContent: Term, /* final */  newTruth: TruthValue, /* final */  newBudget: BudgetValue,
-            /* final */  temporalInduction: boolean, /* final */  overlapAllowed: boolean): java.util.List<Task>;
+    public doublePremiseTask(newContent: Term, newTruth: TruthValue, newBudget: BudgetValue,
+        temporalInduction: boolean, overlapAllowed: boolean): java.util.List<Task>;
 
-    public doublePremiseTask(/* final */  newContent: Term, /* final */  newTruth: TruthValue, /* final */  newBudget: BudgetValue,
-            /* final */  temporalInduction: boolean, /* final */  overlapAllowed: boolean, /* final */  addToMemory: boolean): java.util.List<Task>;
+    public doublePremiseTask(newContent: Term, newTruth: TruthValue, newBudget: BudgetValue,
+        temporalInduction: boolean, overlapAllowed: boolean, addToMemory: boolean): java.util.List<Task>;
     public doublePremiseTask(...args: unknown[]): java.util.List<Task> {
         switch (args.length) {
             case 5: {
@@ -289,7 +289,7 @@ export class DerivationContext extends JavaObject {
     }
 
 
-    public singlePremiseTask(/* final */  newSentence: Sentence, /* final */  newBudget: BudgetValue): boolean;
+    public singlePremiseTask(newSentence: Sentence, newBudget: BudgetValue): boolean;
 
     /**
      * Shared final operations by all single-premise rules, called in
@@ -299,7 +299,7 @@ export class DerivationContext extends JavaObject {
      * @param newTruth   The truth value of the sentence in task
      * @param newBudget  The budget value in task
      */
-    public singlePremiseTask(/* final */  newContent: Term, /* final */  newTruth: TruthValue, /* final */  newBudget: BudgetValue): boolean;
+    public singlePremiseTask(newContent: Term, newTruth: TruthValue, newBudget: BudgetValue): boolean;
 
     /**
      * Shared final operations by all single-premise rules, called in
@@ -310,8 +310,8 @@ export class DerivationContext extends JavaObject {
      * @param newTruth    The truth value of the sentence in task
      * @param newBudget   The budget value in task
      */
-    public singlePremiseTask(newContent: Term, /* final */  punctuation: char, /* final */  newTruth: TruthValue,
-            /* final */  newBudget: BudgetValue): boolean;
+    public singlePremiseTask(newContent: Term, punctuation: char, newTruth: TruthValue,
+        newBudget: BudgetValue): boolean;
     public singlePremiseTask(...args: unknown[]): boolean {
         switch (args.length) {
             case 2: {
@@ -393,7 +393,7 @@ export class DerivationContext extends JavaObject {
         return this.newStamp;
     }
 
-    public setNewStamp(/* final */  newStamp: Stamp): void {
+    public setNewStamp(newStamp: Stamp): void {
         this.newStamp = newStamp;
     }
 
@@ -407,11 +407,11 @@ export class DerivationContext extends JavaObject {
     /**
      * @param currentTask the currentTask to set
      */
-    public setCurrentTask(/* final */  currentTask: Task): void {
+    public setCurrentTask(currentTask: Task): void {
         this.currentTask = currentTask;
     }
 
-    public setCurrentConcept(/* final */  currentConcept: Concept): void {
+    public setCurrentConcept(currentConcept: Concept): void {
         this.currentConcept = currentConcept;
     }
 
@@ -438,13 +438,13 @@ export class DerivationContext extends JavaObject {
     /**
      * @param newStamp the newStamp to set
      */
-    public setTheNewStamp(/* final */  newStamp: Stamp): Stamp;
+    public setTheNewStamp(newStamp: Stamp): Stamp;
 
     /**
      * creates a lazy/deferred StampBuilder which only constructs the stamp if
      * getTheNewStamp() is actually invoked
      */
-    public setTheNewStamp(/* final */  first: Stamp, /* final */  second: Stamp, /* final */  time: long): void;
+    public setTheNewStamp(first: Stamp, second: Stamp, time: long): void;
     public setTheNewStamp(...args: unknown[]): Stamp | void {
         switch (args.length) {
             case 1: {
@@ -487,7 +487,7 @@ export class DerivationContext extends JavaObject {
     /**
      * @param currentBelief the currentBelief to set
      */
-    public setCurrentBelief(/* final */  currentBelief: Sentence): void {
+    public setCurrentBelief(currentBelief: Sentence): void {
         this.currentBelief = currentBelief;
     }
 
@@ -501,7 +501,7 @@ export class DerivationContext extends JavaObject {
     /**
      * @param currentBeliefLink the currentBeliefLink to set
      */
-    public setCurrentBeliefLink(/* final */  currentBeliefLink: TermLink): void {
+    public setCurrentBeliefLink(currentBeliefLink: TermLink): void {
         this.currentBeliefLink = currentBeliefLink;
     }
 
@@ -515,7 +515,7 @@ export class DerivationContext extends JavaObject {
     /**
      * @param currentTaskLink the currentTaskLink to set
      */
-    public setCurrentTaskLink(/* final */  currentTaskLink: TaskLink): void {
+    public setCurrentTaskLink(currentTaskLink: TaskLink): void {
         this.currentTaskLink = currentTaskLink;
     }
 
@@ -529,7 +529,7 @@ export class DerivationContext extends JavaObject {
     /**
      * @param currentTerm the currentTerm to set
      */
-    public setCurrentTerm(/* final */  currentTerm: Term): void {
+    public setCurrentTerm(currentTerm: Term): void {
         this.currentTerm = currentTerm;
     }
 
@@ -548,7 +548,7 @@ export class DerivationContext extends JavaObject {
      * tasks added with this method will be remembered by this NAL instance; useful
      * for feedback
      */
-    public addTask(/* final */  t: Task, /* final */  reason: java.lang.String): void;
+    public addTask(t: Task, reason: java.lang.String): void;
 
     /**
      * Activated task called in MatchingRules.trySolution and
@@ -559,8 +559,8 @@ export class DerivationContext extends JavaObject {
      * @param candidateBelief The belief to be used in future inference, for
      *                        forward/backward correspondence
      */
-    public addTask(/* final */  currentTask: Task, /* final */  budget: BudgetValue, /* final */  sentence: Sentence,
-            /* final */  candidateBelief: Sentence): void;
+    public addTask(currentTask: Task, budget: BudgetValue, sentence: Sentence,
+        candidateBelief: Sentence): void;
     public addTask(...args: unknown[]): void {
         switch (args.length) {
             case 2: {

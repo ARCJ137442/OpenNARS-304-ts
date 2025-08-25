@@ -30,7 +30,7 @@ export class BudgetFunctions {
      * @param t The truth value of a judgment
      * @return The quality of the judgment, according to truth value only
      */
-    public static truthToQuality(/* final */  t: TruthValue): float {
+    public static truthToQuality(t: TruthValue): float {
         let exp: float = t.getExpectation();
         return Math.max(exp, (1 - exp) * 0.75) as float;
     }
@@ -42,7 +42,7 @@ export class BudgetFunctions {
      * @param judg The judgment to be ranked
      * @return The rank of the judgment, according to truth value only
      */
-    public static rankBelief(/* final */  judg: Sentence, /* final */  rankTruthExpectation: boolean): float {
+    public static rankBelief(judg: Sentence, rankTruthExpectation: boolean): float {
         if (rankTruthExpectation) {
             return judg.getTruth().getExpectation();
         }
@@ -59,8 +59,8 @@ export class BudgetFunctions {
      * @param truth  The truth value of the conclusion of revision
      * @return The budget for the new task
      */
-    protected static revise(/* final */  tTruth: TruthValue, /* final */  bTruth: TruthValue, /* final */  truth: TruthValue,
-            /* final */  feedbackToLinks: boolean, /* final */  nal: DerivationContext): BudgetValue {
+    protected static revise(tTruth: TruthValue, bTruth: TruthValue, truth: TruthValue,
+        feedbackToLinks: boolean, nal: DerivationContext): BudgetValue {
         let difT: float = truth.getExpDifAbs(tTruth);
         let task: Task = nal.getCurrentTask();
         task.decPriority(1 - difT);
@@ -114,7 +114,7 @@ export class BudgetFunctions {
      * @param bTruth Truth value of the previous belief
      * @return Budget value of the updating task
      */
-    public static update(/* final */  task: Task, /* final */  bTruth: TruthValue, narParameters: Parameters): BudgetValue {
+    public static update(task: Task, bTruth: TruthValue, narParameters: Parameters): BudgetValue {
         let tTruth: TruthValue = task.sentence.truth;
         let dif: float = tTruth.getExpDifAbs(bTruth);
         let priority: float = java.math.BigInteger.or(dif, task.getPriority());
@@ -131,7 +131,7 @@ export class BudgetFunctions {
      * @param n Number of links
      * @return Budget value for each link
      */
-    public static distributeAmongLinks(/* final */  b: BudgetValue, /* final */  n: int, narParameters: Parameters): BudgetValue {
+    public static distributeAmongLinks(b: BudgetValue, n: int, narParameters: Parameters): BudgetValue {
         let priority: float = (b.getPriority() / java.lang.Math.sqrt(n)) as float;
         return new BudgetValue(priority, b.getDurability(), b.getQuality(), narParameters);
     }
@@ -150,7 +150,7 @@ export class BudgetFunctions {
      * @param receiver The budget receiving the activation
      * @param amount   The budget for the new item
      */
-    public static activate(/* final */  receiver: BudgetValue, /* final */  amount: BudgetValue, /* final */  mode: BudgetFunctions.Activating): void {
+    public static activate(receiver: BudgetValue, amount: BudgetValue, mode: BudgetFunctions.Activating): void {
         switch (mode) {
             case Max:
                 BudgetFunctions.merge(receiver, amount);
@@ -181,8 +181,8 @@ export class BudgetFunctions {
      * @param forgetCycles      The budget for the new item
      * @param relativeThreshold The relative threshold of the bag
      */
-    public static applyForgetting(/* final */  budget: BudgetValue, /* final */  forgetCycles: float,
-            /* final */  relativeThreshold: float): void {
+    public static applyForgetting(budget: BudgetValue, forgetCycles: float,
+        relativeThreshold: float): void {
         let quality: float = budget.getQuality() * relativeThreshold; // re-scaled quality
         let p: float = budget.getPriority() - quality; // priority above quality
         if (p > 0) {
@@ -198,7 +198,7 @@ export class BudgetFunctions {
      * @param b The budget baseValue to be modified
      * @param a The budget adjustValue doing the adjusting
      */
-    public static merge(/* final */  b: BudgetValue, /* final */  a: BudgetValue): void {
+    public static merge(b: BudgetValue, a: BudgetValue): void {
         b.setPriority(Math.max(b.getPriority(), a.getPriority()));
         b.setDurability(Math.max(b.getDurability(), a.getDurability()));
         b.setQuality(Math.max(b.getQuality(), a.getQuality()));
@@ -211,7 +211,7 @@ export class BudgetFunctions {
      * @param truth The truth value of the conclusion
      * @return The budget value of the conclusion
      */
-    public static forward(/* final */  truth: TruthValue, /* final */  nal: DerivationContext): BudgetValue {
+    public static forward(truth: TruthValue, nal: DerivationContext): BudgetValue {
         return BudgetFunctions.budgetInference(BudgetFunctions.truthToQuality(truth), 1, nal);
     }
 
@@ -222,7 +222,7 @@ export class BudgetFunctions {
      * @param nal   Reference to the memory
      * @return The budget value of the conclusion
      */
-    public static backward(/* final */  truth: TruthValue, /* final */  nal: DerivationContext): BudgetValue {
+    public static backward(truth: TruthValue, nal: DerivationContext): BudgetValue {
         return BudgetFunctions.budgetInference(BudgetFunctions.truthToQuality(truth), 1, nal);
     }
 
@@ -233,7 +233,7 @@ export class BudgetFunctions {
      * @param nal   Reference to the memory
      * @return The budget value of the conclusion
      */
-    public static backwardWeak(/* final */  truth: TruthValue, /* final */  nal: DerivationContext): BudgetValue {
+    public static backwardWeak(truth: TruthValue, nal: DerivationContext): BudgetValue {
         return BudgetFunctions.budgetInference(w2c(1, nal.narParameters) as float * BudgetFunctions.truthToQuality(truth), 1, nal);
     }
 
@@ -246,8 +246,8 @@ export class BudgetFunctions {
      * @param nal     Reference to the memory
      * @return The budget of the conclusion
      */
-    public static compoundForward(/* final */  truth: TruthValue, /* final */  content: Term,
-            /* final */  nal: DerivationContext): BudgetValue {
+    public static compoundForward(truth: TruthValue, content: Term,
+        nal: DerivationContext): BudgetValue {
         let complexity: float = (content === null) ? nal.narParameters.COMPLEXITY_UNIT
             : nal.narParameters.COMPLEXITY_UNIT * content.getComplexity();
         return BudgetFunctions.budgetInference(BudgetFunctions.truthToQuality(truth), complexity, nal);
@@ -260,7 +260,7 @@ export class BudgetFunctions {
      * @param nal     Reference to the memory
      * @return The budget of the conclusion
      */
-    public static compoundBackward(/* final */  content: Term, /* final */  nal: DerivationContext): BudgetValue {
+    public static compoundBackward(content: Term, nal: DerivationContext): BudgetValue {
         return BudgetFunctions.budgetInference(1, content.getComplexity() * nal.narParameters.COMPLEXITY_UNIT, nal);
     }
 
@@ -271,8 +271,8 @@ export class BudgetFunctions {
      * @param nal     Reference to the memory
      * @return The budget of the conclusion
      */
-    public static compoundBackwardWeak(/* final */  content: Term,
-            /* final */  nal: DerivationContext): BudgetValue {
+    public static compoundBackwardWeak(content: Term,
+        nal: DerivationContext): BudgetValue {
         return BudgetFunctions.budgetInference(w2c(1, nal.narParameters) as float,
             content.getComplexity() * nal.narParameters.COMPLEXITY_UNIT, nal);
     }
@@ -283,7 +283,7 @@ export class BudgetFunctions {
      * @param t The Term naming a concept
      * @return the priority value of the concept
      */
-    public static conceptActivation(/* final */  mem: Memory, /* final */  t: Term): float {
+    public static conceptActivation(mem: Memory, t: Term): float {
         let c: Concept = mem.concept(t);
         return (c === null) ? 0 : c.getPriority();
     }
@@ -296,8 +296,8 @@ export class BudgetFunctions {
      * @param nal        Reference to the memory
      * @return Budget of the conclusion task
      */
-    private static budgetInference(/* final */  qual: float, /* final */  complexity: float,
-            /* final */  nal: DerivationContext): BudgetValue {
+    private static budgetInference(qual: float, complexity: float,
+        nal: DerivationContext): BudgetValue {
         let t: Item<unknown> = nal.getCurrentTaskLink();
         if (t === null) {
             t = nal.getCurrentTask();
@@ -316,13 +316,13 @@ export class BudgetFunctions {
         return new BudgetValue(priority, durability, quality, nal.narParameters);
     }
 
-    protected static solutionEval(/* final */  problem: Sentence, /* final */  solution: Sentence, /* final */  task: Task,
-            /* final */  memory: Memory): BudgetValue {
+    protected static solutionEval(problem: Sentence, solution: Sentence, task: Task,
+        memory: Memory): BudgetValue {
         throw new java.lang.IllegalStateException("Moved to TemporalRules.java");
     }
 
-    public static budgetTermLinkConcept(/* final */  c: Concept, /* final */  taskBudget: BudgetValue,
-            /* final */  termLink: TermLink): BudgetValue {
+    public static budgetTermLinkConcept(c: Concept, taskBudget: BudgetValue,
+        termLink: TermLink): BudgetValue {
         return taskBudget.clone();
     }
 

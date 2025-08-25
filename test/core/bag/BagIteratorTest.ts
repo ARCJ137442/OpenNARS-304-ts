@@ -6,7 +6,7 @@ export class BagIteratorTest extends JavaObject {
 
     protected readonly L: int = 4;
 
-    public testIterator(/* final */  b: Bag<NullItem, java.lang.CharSequence>): void {
+    public testIterator(b: Bag<NullItem, java.lang.CharSequence>): void {
         let count: int = 0;
         let first: NullItem = null;
         let current: NullItem = null;
@@ -41,7 +41,7 @@ export class BagIteratorTest extends JavaObject {
         return 0;
     }
 
-    public testBagIterator(/* final */  b: Bag<NullItem, java.lang.CharSequence>): void {
+    public testBagIterator(b: Bag<NullItem, java.lang.CharSequence>): void {
 
         b.putIn(new NullItem(0.1));
         b.putIn(new NullItem(0.2));

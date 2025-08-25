@@ -14,5 +14,5 @@ interface SensoryChannelConsumer {
      * @param term    term in narsese
      * @param channel the channel to be registered
      */
-    addSensoryChannel(/* final */  term: java.lang.String, /* final */  channel: SensoryChannel): void;
+    addSensoryChannel(term: java.lang.String, channel: SensoryChannel): void;
 }

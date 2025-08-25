@@ -18,7 +18,7 @@ export abstract class Operator extends Term implements Plugin {
 
     protected constructor();
 
-    protected constructor(/* final */  name: string);
+    protected constructor(name: string);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -48,7 +48,7 @@ export abstract class Operator extends Term implements Plugin {
     }
 
 
-    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
+    public setEnabled(n: Nar, enabled: boolean): boolean {
         return true;
     }
 
@@ -62,9 +62,9 @@ export abstract class Operator extends Term implements Plugin {
      * @return The direct collectable results and feedback of the
      *         reportExecution
      */
-    protected abstract execute(operation: Operation, args: Term[], memory: Memory, /* final */  time: Timable): Task[];
+    protected abstract execute(operation: Operation, args: Term[], memory: Memory, time: Timable): Task[];
 
-    public call(/* final */  op: Operation, /* final */  memory: Memory, /* final */  time: Timable): boolean;
+    public call(op: Operation, memory: Memory, time: Timable): boolean;
 
     /**
      * The standard way to carry out an operation, which invokes the execute
@@ -76,7 +76,7 @@ export abstract class Operator extends Term implements Plugin {
      * @param time      used to retrieve the time
      * @return true if successful, false if an error occurred
      */
-    public call(/* final */  operation: Operation, /* final */  args: Term[], /* final */  memory: Memory, /* final */  time: Timable): boolean;
+    public call(operation: Operation, args: Term[], memory: Memory, time: Timable): boolean;
     public call(...args: unknown[]): boolean {
         switch (args.length) {
             case 3: {
@@ -141,7 +141,7 @@ export abstract class Operator extends Term implements Plugin {
     }
 
 
-    public static operationExecutionString(/* final */  operation: Statement): java.lang.String {
+    public static operationExecutionString(operation: Statement): java.lang.String {
         let operator: Term = operation.getPredicate();
         let arguments: Term = operation.getSubject();
         let argList: java.lang.String = arguments.toString().substring(3); // skip the product prefix "(*,"
@@ -159,8 +159,8 @@ export abstract class Operator extends Term implements Plugin {
     // * <p>
     // * @param operation The content of the operation to be executed
     // */
-    public static reportExecution(/* final */  operation: Operation, /* final */  args: Term[], feedback: java.lang.Object,
-            /* final */  memory: Memory): void {
+    public static reportExecution(operation: Operation, args: Term[], feedback: java.lang.Object,
+        memory: Memory): void {
 
         let opT: Term = operation.getPredicate();
         if (!(opT instanceof Operator)) {
@@ -181,7 +181,7 @@ export abstract class Operator extends Term implements Plugin {
         private readonly operation: Operation;
         private readonly feedback: java.lang.Object;
 
-        public constructor(/* final */  op: Operation, /* final */  feedback: java.lang.Object) {
+        public constructor(op: Operation, feedback: java.lang.Object) {
             super();
             this.operation = op;
             this.feedback = feedback;
@@ -206,7 +206,7 @@ export abstract class Operator extends Term implements Plugin {
     };
 
 
-    public static addPrefixIfMissing(/* final */  opName: java.lang.String): java.lang.String {
+    public static addPrefixIfMissing(opName: java.lang.String): java.lang.String {
         if (!opName.startsWith("^"))
             return '^' + opName;
         return opName;

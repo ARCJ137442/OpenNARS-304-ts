@@ -17,7 +17,7 @@ export class OutputContainsCondition extends OutputCondition {
         public readonly signal: java.lang.String;
         public readonly distance: int;
 
-        public constructor(/* final */  signal: java.lang.String, /* final */  distance: int) {
+        public constructor(signal: java.lang.String, distance: int) {
             super();
             this.signal = signal;
             this.distance = distance;
@@ -27,7 +27,7 @@ export class OutputContainsCondition extends OutputCondition {
             return this.signal.hashCode();
         }
 
-        public override  equals(/* final */  obj: java.lang.Object): boolean {
+        public override  equals(obj: java.lang.Object): boolean {
             return this.signal.equals((obj as SimilarOutput).signal);
         }
 
@@ -35,7 +35,7 @@ export class OutputContainsCondition extends OutputCondition {
             return "similar(" + this.distance + "): " + this.signal;
         }
 
-        public compareTo(/* final */  o: SimilarOutput): int {
+        public compareTo(o: SimilarOutput): int {
             return java.lang.Integer.compare(this.distance, o.distance);
         }
 
@@ -53,7 +53,7 @@ export class OutputContainsCondition extends OutputCondition {
      * @param containing
      * @param maxSimilars # of similar results to collect, -1 to disable
      */
-    public constructor(/* final */  nar: Nar, /* final */  containing: java.lang.String, /* final */  maxSimilars: int) {
+    public constructor(nar: Nar, containing: java.lang.String, maxSimilars: int) {
         super(nar);
         this.containing = containing;
         this.maxSimilars = maxSimilars;
@@ -70,14 +70,14 @@ export class OutputContainsCondition extends OutputCondition {
         return s;
     }
 
-    public getCandidates(/* final */  max: int): java.util.Collection<OutputContainsCondition.SimilarOutput> {
+    public getCandidates(max: int): java.util.Collection<OutputContainsCondition.SimilarOutput> {
         return this.almost;
     }
 
     /**
      * @author http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Java
      */
-    public static levenshteinDistance(/* final */  a: java.lang.CharSequence, /* final */  b: java.lang.CharSequence): int {
+    public static levenshteinDistance(a: java.lang.CharSequence, b: java.lang.CharSequence): int {
         let len0: int = a.length() + 1;
         let len1: int = b.length() + 1;
         let cost: Int32Array = new Int32Array(len0);
@@ -109,7 +109,7 @@ export class OutputContainsCondition extends OutputCondition {
         return cost[len0 - 1];
     }
 
-    public cond(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object): boolean {
+    public cond(channel: java.lang.Class<unknown>, signal: java.lang.Object): boolean {
         if ((channel === OUT.class) || (channel === EXE.class)) {
             let o: java.lang.String;
             if (signal instanceof Task) {
@@ -161,7 +161,7 @@ export class OutputContainsCondition extends OutputCondition {
         return false;
     }
 
-    public condition(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object): boolean {
+    public condition(channel: java.lang.Class<unknown>, signal: java.lang.Object): boolean {
         if ((channel === OUT.class) || (channel === EXE.class)) {
             if (signal instanceof Task) {
                 let t: Task = signal as Task;

@@ -9,9 +9,9 @@ export abstract class Performance extends JavaObject {
     private totalMemory: long;
     protected readonly df: java.text.DecimalFormat = new java.text.DecimalFormat("#.###");
 
-    public constructor(/* final */  name: java.lang.String, /* final */  repeats: int, /* final */  warmups: int);
+    public constructor(name: java.lang.String, repeats: int, warmups: int);
 
-    public constructor(/* final */  name: java.lang.String, /* final */  repeats: int, warmups: int, /* final */  gc: boolean);
+    public constructor(name: java.lang.String, repeats: int, warmups: int, gc: boolean);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 3: {
@@ -74,7 +74,7 @@ export abstract class Performance extends JavaObject {
         return this;
     }
 
-    public printCSV(/* final */  finalComma: boolean): Performance {
+    public printCSV(finalComma: boolean): Performance {
         java.lang.System.out.print(this.name + ", " + this.df.format(this.getCycleTimeMS()) + ", ");
         java.lang.System.out.print(this.df.format(this.totalMemory / this.repeats / 1024.0));
         if (finalComma)

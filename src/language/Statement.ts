@@ -18,11 +18,11 @@ export abstract class Statement extends CompoundTerm {
      *
      * @param arg The component list of the term
      */
-    protected constructor(/* final */  arg: Term[]) {
+    protected constructor(arg: Term[]) {
         super(arg);
     }
 
-    protected init(/* final */  t: Term[]): void {
+    protected init(t: Term[]): void {
         if (t.length !== 2)
             throw new java.lang.IllegalStateException("Requires 2 terms: " + java.util.Arrays.toString(t));
         if (t[0] === null)
@@ -48,7 +48,7 @@ export abstract class Statement extends CompoundTerm {
      * @param pred      The second component
      * @param statement A sample statement providing the class type
      */
-    public static make(/* final */  statement: Statement, /* final */  subj: Term, /* final */  pred: Term): Statement;
+    public static make(statement: Statement, subj: Term, pred: Term): Statement;
 
     /**
      * Make a Statement from given term, called by the rules
@@ -58,9 +58,9 @@ export abstract class Statement extends CompoundTerm {
      * @param subj The first component
      * @param pred The second component
      */
-    public static make(/* final */  op: NativeOperator, /* final */  subj: Term, /* final */  pred: Term, /* final */  order: int): Statement;
+    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement;
 
-    public static make(/* final */  statement: Statement, /* final */  subj: Term, /* final */  pred: Term, /* final */  order: int): Statement;
+    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement;
 
     /**
      * Make a Statement from String, called by StringParser
@@ -70,8 +70,8 @@ export abstract class Statement extends CompoundTerm {
      * @param predicate The second component
      * @return The Statement built
      */
-    public static make(/* final */  o: NativeOperator, /* final */  subject: Term, /* final */  predicate: Term,
-            /* final */  customOrder: boolean, /* final */  order: int): Statement;
+    public static make(o: NativeOperator, subject: Term, predicate: Term,
+        customOrder: boolean, order: int): Statement;
     public static make(...args: unknown[]): Statement {
         switch (args.length) {
             case 3: {
@@ -179,8 +179,8 @@ export abstract class Statement extends CompoundTerm {
      * @param order     The temporal order
      * @return The Statement built
      */
-    public static makeSym(/* final */  statement: Statement, /* final */  subj: Term, /* final */  pred: Term,
-            /* final */  order: int): Statement {
+    public static makeSym(statement: Statement, subj: Term, pred: Term,
+        order: int): Statement {
         if (statement instanceof Inheritance) {
             return Similarity.make(subj, pred);
         }
@@ -200,8 +200,8 @@ export abstract class Statement extends CompoundTerm {
         return Statement.makeStatementName(this.getSubject(), operator(), this.getPredicate());
     }
 
-    protected static makeStatementName(/* final */  subject: Term, /* final */  relation: NativeOperator,
-            /* final */  predicate: Term): java.lang.CharSequence {
+    protected static makeStatementName(subject: Term, relation: NativeOperator,
+        predicate: Term): java.lang.CharSequence {
         let subjectName: java.lang.CharSequence = subject.name();
         let predicateName: java.lang.CharSequence = predicate.name();
         let length: int = subjectName.length() + predicateName.length() + relation.toString().length() + 4;
@@ -223,7 +223,7 @@ export abstract class Statement extends CompoundTerm {
         return cb.compact().toString();
     }
 
-    public static invalidStatement(/* final */  subject: Term, /* final */  predicate: Term): boolean;
+    public static invalidStatement(subject: Term, predicate: Term): boolean;
 
     /**
      * Check the validity of a potential Statement. [To be refined]
@@ -233,8 +233,8 @@ export abstract class Statement extends CompoundTerm {
      * @param predicate The second component
      * @return Whether The Statement is invalid
      */
-    public static invalidStatement(/* final */  subject: Term, /* final */  predicate: Term,
-            /* final */  checkSameTermInPredicateAndSubject: boolean): boolean;
+    public static invalidStatement(subject: Term, predicate: Term,
+        checkSameTermInPredicateAndSubject: boolean): boolean;
     public static invalidStatement(...args: unknown[]): boolean {
         switch (args.length) {
             case 2: {
@@ -294,7 +294,7 @@ export abstract class Statement extends CompoundTerm {
      * @param t2 The second term
      * @return Whether they cannot be related in a statement
      */
-    private static invalidReflexive(/* final */  t1: Term, /* final */  t2: Term): boolean {
+    private static invalidReflexive(t1: Term, t2: Term): boolean {
         if (!(t1 instanceof CompoundTerm)) {
             return false;
         }
@@ -305,7 +305,7 @@ export abstract class Statement extends CompoundTerm {
         return ct1.containsTerm(t2);
     }
 
-    public static invalidPair(/* final */  s1: Term, /* final */  s2: Term): boolean {
+    public static invalidPair(s1: Term, s2: Term): boolean {
         let s1Indep: boolean = s1.hasVarIndep();
         let s2Indep: boolean = s2.hasVarIndep();
         if (s1Indep && !s2Indep) {
@@ -350,11 +350,11 @@ export abstract class Statement extends CompoundTerm {
      * @param side subject(0) or predicate(1)
      * @return the term of the side
      */
-    public retBySide(/* final */  side: Statement.EnumStatementSide): Term {
+    public retBySide(side: Statement.EnumStatementSide): Term {
         return side === Statement.EnumStatementSide.SUBJECT ? this.getSubject() : this.getPredicate();
     }
 
-    public static retOppositeSide(/* final */  side: Statement.EnumStatementSide): Statement.EnumStatementSide {
+    public static retOppositeSide(side: Statement.EnumStatementSide): Statement.EnumStatementSide {
         return side === Statement.EnumStatementSide.SUBJECT ? Statement.EnumStatementSide.PREDICATE : Statement.EnumStatementSide.SUBJECT;
     }
 

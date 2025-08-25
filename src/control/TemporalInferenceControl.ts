@@ -7,9 +7,9 @@ import { java, JavaObject, type int, type long, type float } from "jree";
  * @author Patrick Hammer
  */
 export class TemporalInferenceControl extends JavaObject {
-    public static proceedWithTemporalInduction(/* final */  newEvent: Sentence, /* final */  stmLast: Sentence,
-            /* final */  controllerTask: Task, /* final */  nal: DerivationContext, /* final */  SucceedingEventsInduction: boolean,
-            /* final */  addToMemory: boolean, /* final */  allowSequence: boolean): java.util.List<Task> {
+    public static proceedWithTemporalInduction(newEvent: Sentence, stmLast: Sentence,
+        controllerTask: Task, nal: DerivationContext, SucceedingEventsInduction: boolean,
+        addToMemory: boolean, allowSequence: boolean): java.util.List<Task> {
 
         if (SucceedingEventsInduction && !controllerTask.isElemOfSequenceBuffer()) { // todo refine, add directbool in
             // task
@@ -40,7 +40,7 @@ export class TemporalInferenceControl extends JavaObject {
             addToMemory, allowSequence);
     }
 
-    public static eventInference(/* final */  newEvent: Task, /* final */  nal: DerivationContext): boolean {
+    public static eventInference(newEvent: Task, nal: DerivationContext): boolean {
 
         if (newEvent.getTerm() === null || newEvent.budget === null || !newEvent.isElemOfSequenceBuffer()) { // todo
             // refine,
@@ -151,7 +151,7 @@ export class TemporalInferenceControl extends JavaObject {
         return true;
     }
 
-    public static addToSequenceTasks(/* final */  nal: DerivationContext, /* final */  newEvent: Task): void {
+    public static addToSequenceTasks(nal: DerivationContext, newEvent: Task): void {
         // multiple versions are necessary, but we do not allow duplicates
         let removal: Task = null;
         /* synchronized (nal.memory.seq_current) { */
@@ -200,7 +200,7 @@ export class TemporalInferenceControl extends JavaObject {
         /* } */
     }
 
-    public static NewOperationFrame(/* final */  mem: Memory, /* final */  task: Task): void {
+    public static NewOperationFrame(mem: Memory, task: Task): void {
         let toRemove: java.util.List<Task> = new java.util.LinkedList(); // can there be more than one? I don't think so..
         let priorityGain: float = 0.0;
         for (let t of mem.recent_operations) { // when made sure, make single element and add break

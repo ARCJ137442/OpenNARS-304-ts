@@ -39,7 +39,7 @@ export class BagOperationsTest extends JavaObject {
         }
     }
 
-    protected static makeConcept(/* final */  name: java.lang.String, /* final */  priority: float): Concept {
+    protected static makeConcept(name: java.lang.String, priority: float): Concept {
         let budget: BudgetValue = new BudgetValue(priority, priority, priority, BagOperationsTest.narParameters);
         let s: Concept = new Concept(budget, new Term(name), BagOperationsTest.nar.memory);
         return s;
@@ -71,7 +71,7 @@ export class BagOperationsTest extends JavaObject {
         return max;
     }
 
-    public static testBagSequence(/* final */  b: Bag<Concept, Term>): void {
+    public static testBagSequence(b: Bag<Concept, Term>): void {
 
         // different id, different priority
         b.putIn(BagOperationsTest.makeConcept("a", 0.1));

@@ -15,9 +15,9 @@ export class Product extends CompoundTerm {
      *
      * @param arg The component list of the term
      */
-    public constructor(/* final */ ...arg: Term[]);
+    public constructor(...arg: Term[]);
 
-    public constructor(/* final */  x: java.util.List<Term>);
+    public constructor(x: java.util.List<Term>);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -49,7 +49,7 @@ export class Product extends CompoundTerm {
     }
 
 
-    public static make(/* final */ ...arg: Term[]): Product;
+    public static make(...arg: Term[]): Product;
 
     /**
      * Try to make a Product from an ImageExt/ImageInt and a component. Called by
@@ -61,7 +61,7 @@ export class Product extends CompoundTerm {
      *                  parameter
      * @return A compound generated or a term it reduced to
      */
-    public static make(/* final */  image: CompoundTerm, /* final */  component: Term, /* final */  index: int): Term;
+    public static make(image: CompoundTerm, component: Term, index: int): Term;
     public static make(...args: unknown[]): Product | Term {
         switch (args.length) {
             case 1: {
@@ -100,7 +100,7 @@ export class Product extends CompoundTerm {
      */
     public clone(): Product;
 
-    public clone(/* final */  replaced: Term[]): CompoundTerm;
+    public clone(replaced: Term[]): CompoundTerm;
     public clone(...args: unknown[]): Product | CompoundTerm {
         switch (args.length) {
             case 0: {

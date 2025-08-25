@@ -75,13 +75,13 @@ export class Abbreviation extends JavaObject implements Plugin {
     }
 
 
-    public canAbbreviate(/* final */  task: Task): boolean {
+    public canAbbreviate(task: Task): boolean {
         return !(task.sentence.term instanceof Operation) &&
             (task.sentence.term.getComplexity() > this.abbreviationComplexityMin) &&
             (task.budget.getQuality() > this.abbreviationQualityMin);
     }
 
-    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
+    public setEnabled(n: Nar, enabled: boolean): boolean {
         let memory: Memory = n.memory;
 
         let _abbreviate: Operator = memory.getOperator("^abbreviate");
@@ -131,7 +131,7 @@ export class Abbreviation extends JavaObject implements Plugin {
 
         private static currentTermSerial: java.lang.Integer = 1;
 
-        public newSerialTerm(/* final */  prefix: char): Term {
+        public newSerialTerm(prefix: char): Term {
             /* synchronized (currentTermSerial) { */
             Abbreviate.currentTermSerial++;
             /* } */
@@ -145,8 +145,8 @@ export class Abbreviation extends JavaObject implements Plugin {
          * @param memory The memory in which the operation is executed
          * @return Immediate results as Tasks
          */
-        protected execute(/* final */  operation: Operation, /* final */  args: Term[], /* final */  memory: Memory,
-                /* final */  time: Timable): java.util.List<Task> {
+        protected execute(operation: Operation, args: Term[], memory: Memory,
+            time: Timable): java.util.List<Task> {
 
             let compound: Term = args[0];
 

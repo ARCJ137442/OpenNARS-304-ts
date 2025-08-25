@@ -24,7 +24,7 @@ export class EventEmitter extends JavaObject {
      * EventEmitter with a fixed set of known events; the 'events' map
      * can then be made unmodifiable and non-concurrent for speed.
      */
-    public constructor(/* final */ ...knownEventClasses: java.lang.Class<unknown>[]);
+    public constructor(...knownEventClasses: java.lang.Class<unknown>[]);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -71,7 +71,7 @@ export class EventEmitter extends JavaObject {
          */
     }
 
-    public isActive(/* final */  event: java.lang.Class<unknown>): boolean {
+    public isActive(event: java.lang.Class<unknown>): boolean {
         if (this.events.get(event) !== null)
             return !this.events.get(event).isEmpty();
         return false;
@@ -95,7 +95,7 @@ export class EventEmitter extends JavaObject {
         /* } */
     }
 
-    public on(/* final */  event: java.lang.Class<unknown>, /* final */  o: EventEmitter.EventObserver): void {
+    public on(event: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void {
         if (this.events.containsKey(event))
             this.events.get(event).add(o);
         else {
@@ -109,7 +109,7 @@ export class EventEmitter extends JavaObject {
      * @param event
      * @param o
      */
-    public off(/* final */  event: java.lang.Class<unknown>, /* final */  o: EventEmitter.EventObserver): void {
+    public off(event: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void {
         if (null === event | === o)
             throw new java.lang.IllegalStateException("Invalid parameter");
 
@@ -126,7 +126,7 @@ export class EventEmitter extends JavaObject {
     }
 
     /** for enabling many events at the same time */
-    public set(/* final */  o: EventEmitter.EventObserver, /* final */  enable: boolean, /* final */ ...events: java.lang.Class<unknown>[]): void {
+    public set(o: EventEmitter.EventObserver, enable: boolean, ...events: java.lang.Class<unknown>[]): void {
         for (let c of this.events) {
             if (enable)
                 this.on(c, o);
@@ -135,7 +135,7 @@ export class EventEmitter extends JavaObject {
         }
     }
 
-    public emit(/* final */  eventClass: java.lang.Class<unknown>, /* final */ ...params: java.lang.Object[]): void {
+    public emit(eventClass: java.lang.Class<unknown>, ...params: java.lang.Object[]): void {
         let observers: java.util.List<EventEmitter.EventObserver> = this.events.get(eventClass);
 
         if ((observers === null) || (observers.isEmpty()))

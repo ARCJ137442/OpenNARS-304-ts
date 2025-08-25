@@ -16,7 +16,7 @@ export class SetExt extends SetTensional {
      *
      * @param arg The component list of the term - args must be unique and sorted
      */
-    public constructor(/* final */ ...arg: Term[]) {
+    public constructor(...arg: Term[]) {
         super(arg);
     }
 
@@ -27,7 +27,7 @@ export class SetExt extends SetTensional {
      */
     public clone(): SetExt;
 
-    public clone(/* final */  replaced: Term[]): SetExt;
+    public clone(replaced: Term[]): SetExt;
     public clone(...args: unknown[]): SetExt {
         switch (args.length) {
             case 0: {
@@ -60,7 +60,7 @@ export class SetExt extends SetTensional {
 
     public static make(...t: Term[]): SetExt;
 
-    public static make(/* final */  l: java.util.Collection<Term>): SetExt;
+    public static make(l: java.util.Collection<Term>): SetExt;
     public static make(...args: unknown[]): SetExt {
         switch (args.length) {
             case 1: {

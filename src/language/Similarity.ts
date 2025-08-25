@@ -15,9 +15,9 @@ export class Similarity extends Statement {
      *
      * @param arg The component list of the term
      */
-    public constructor(/* final */  arg: Term[]);
+    public constructor(arg: Term[]);
 
-    public constructor(/* final */  subj: Term, /* final */  pred: Term);
+    public constructor(subj: Term, pred: Term);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -56,7 +56,7 @@ export class Similarity extends Statement {
      */
     public clone(): Similarity;
 
-    public clone(/* final */  replaced: Term[]): Similarity;
+    public clone(replaced: Term[]): Similarity;
     public clone(...args: unknown[]): Similarity {
         switch (args.length) {
             case 0: {
@@ -93,7 +93,7 @@ export class Similarity extends Statement {
      * alternate version of make that allows equivalent subject and predicate
      * to be reduced to the common term.
      */
-    public static makeTerm(/* final */  subject: Term, /* final */  predicate: Term): Term {
+    public static makeTerm(subject: Term, predicate: Term): Term {
         if (subject.equals(predicate))
             return subject;
         return Similarity.make(subject, predicate);
@@ -106,7 +106,7 @@ export class Similarity extends Statement {
      * @param predicate The second component
      * @return A compound generated or null
      */
-    public static make(/* final */  subject: Term, /* final */  predicate: Term): Similarity {
+    public static make(subject: Term, predicate: Term): Similarity {
 
         if (invalidStatement(subject, predicate)) {
             return null;

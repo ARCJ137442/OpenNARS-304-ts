@@ -26,7 +26,7 @@ export class Count extends FunctionOperator {
 
     protected static readonly counted: Term = Term.get("counted");
 
-    protected function(/* final */  memory: Memory, /* final */  x: Term[]): Term {
+    protected function(memory: Memory, x: Term[]): Term {
         if (x.length !== 1) {
             throw new java.lang.IllegalStateException(Count.requireMessage);
         }

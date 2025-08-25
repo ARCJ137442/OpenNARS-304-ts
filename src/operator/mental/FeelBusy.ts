@@ -18,8 +18,8 @@ export class FeelBusy extends Feel {
      * @param memory The memory in which the operation is executed
      * @return Immediate results as Tasks
      */
-    protected execute(/* final */  operation: Operation, /* final */  args: Term[], /* final */  memory: Memory,
-            /* final */  time: Timable): java.util.List<Task> {
+    protected execute(operation: Operation, args: Term[], memory: Memory,
+        time: Timable): java.util.List<Task> {
         if (memory.emotion === null) {
             return null;
         }

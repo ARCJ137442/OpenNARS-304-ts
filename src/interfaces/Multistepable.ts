@@ -9,13 +9,13 @@ import { java, type long, type int } from "jree";
  * @author Robert Wünsche
  */
 interface Multistepable {
-    start(/* final */  minCyclePeriodMS: long): void;
+    start(minCyclePeriodMS: long): void;
 
     start(): void;
 
     stop(): void;
 
-    cycles(/* final */  cycles: int): void;
+    cycles(cycles: int): void;
 
     cycle(): void;
 }

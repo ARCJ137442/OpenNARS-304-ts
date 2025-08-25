@@ -8,7 +8,7 @@ import { java } from "jree";
  */
 export class OutputNotContainsCondition extends OutputContainsCondition {
 
-    public constructor(/* final */  nar: Nar, /* final */  containing: java.lang.String) {
+    public constructor(nar: Nar, containing: java.lang.String) {
         super(nar, containing, -1);
         succeeded = true;
     }
@@ -17,7 +17,7 @@ export class OutputNotContainsCondition extends OutputContainsCondition {
         return "incorrect output: " + containing;
     }
 
-    public condition(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object): boolean {
+    public condition(channel: java.lang.Class<unknown>, signal: java.lang.Object): boolean {
         if (!succeeded) {
             return false;
         }
@@ -33,7 +33,7 @@ export class OutputNotContainsCondition extends OutputContainsCondition {
         return true;
     }
 
-    protected onFailure(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object): void {
+    protected onFailure(channel: java.lang.Class<unknown>, signal: java.lang.Object): void {
     }
 
 }

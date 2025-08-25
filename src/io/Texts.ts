@@ -23,7 +23,7 @@ export class Texts extends JavaObject {
      * TODO do not allow a StringBuilder to appear in output, instead wrap in
      * CharArrayRope
      */
-    public static yarn(/* final */ ...components: java.lang.CharSequence[]): java.lang.CharSequence {
+    public static yarn(...components: java.lang.CharSequence[]): java.lang.CharSequence {
         let totalLen: int = 0;
         let total: int = 0;
         let lastNonNull: java.lang.CharSequence = null;
@@ -54,27 +54,27 @@ export class Texts extends JavaObject {
 
     protected static readonly fourDecimal: java.text.Format = new java.text.DecimalFormat("0.0000");
 
-    public static n4(/* final */  x: float): java.lang.String {
+    public static n4(x: float): java.lang.String {
         return Texts.fourDecimal.format(x);
     }
 
     protected static readonly twoDecimal: java.text.Format = new java.text.DecimalFormat("0.00");
 
-    public static n2Slow(/* final */  x: float): java.lang.String {
+    public static n2Slow(x: float): java.lang.String {
         return Texts.twoDecimal.format(x);
     }
 
-    public static thousandths(/* final */  d: float): long {
+    public static thousandths(d: float): long {
         return ((d * 1000 + 0.5)) as long;
     }
 
-    public static hundredths(/* final */  d: float): long {
+    public static hundredths(d: float): long {
         return ((d * 100 + 0.5)) as long;
     }
 
-    public static n2(/* final */  x: float): java.lang.CharSequence;
+    public static n2(x: float): java.lang.CharSequence;
 
-    public static n2(/* final */  p: double): java.lang.CharSequence;
+    public static n2(p: double): java.lang.CharSequence;
     public static n2(...args: unknown[]): java.lang.CharSequence {
         switch (args.length) {
             case 1: {
@@ -134,11 +134,11 @@ export class Texts extends JavaObject {
 
     protected static readonly oneDecimal: java.text.Format = new java.text.DecimalFormat("0.0");
 
-    public static n1(/* final */  x: float): java.lang.String {
+    public static n1(x: float): java.lang.String {
         return Texts.oneDecimal.format(x);
     }
 
-    public static compareTo(/* final */  s: java.lang.CharSequence, /* final */  t: java.lang.CharSequence): int {
+    public static compareTo(s: java.lang.CharSequence, t: java.lang.CharSequence): int {
         if ((s instanceof java.lang.String) && (t instanceof java.lang.String)) {
             return (s as java.lang.String).compareTo(t as java.lang.String);
         } else if ((s instanceof java.nio.CharBuffer) && (t instanceof java.nio.CharBuffer)) {

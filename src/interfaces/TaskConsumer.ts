@@ -17,5 +17,5 @@ interface TaskConsumer<R> {
      * @param time used to retrieve the time
      * @return something which consumed the task or which was assigned the task
      */
-    addInput(/* final */  task: Task, /* final */  time: Timable): R;
+    addInput(task: Task, time: Timable): R;
 }

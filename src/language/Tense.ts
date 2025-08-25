@@ -13,7 +13,7 @@ class Tense extends java.lang.Enum<Tense> {
 
     public static readonly Eternal: Tense = null;
 
-    protected constructor(/* final */  string: java.lang.String, $name$: java.lang.String, $index$: number) {
+    protected constructor(string: java.lang.String, $name$: java.lang.String, $index$: number) {
         super($name$, $index$);
         this.symbol = string;
     }
@@ -30,7 +30,7 @@ class Tense extends java.lang.Enum<Tense> {
         }
     }
 
-    public static tense(/* final */  s: java.lang.String): Tense {
+    public static tense(s: java.lang.String): Tense {
         return Tense.stringToTense.get(s);
     }
 

@@ -155,7 +155,7 @@ export class NarNode extends JavaObject implements EventObserver {
      */
     public static sendNarsese(input: java.lang.String, target: NarNode.TargetNar): void;
 
-    public static sendNarsese(input: java.lang.String, /* final */  targetIP: java.lang.String, /* final */  targetPort: int, /* final */  taskThreshold: float,
+    public static sendNarsese(input: java.lang.String, targetIP: java.lang.String, targetPort: int, taskThreshold: float,
         mustContainTerm: Term): void;
     public static sendNarsese(...args: unknown[]): void {
         switch (args.length) {
@@ -211,7 +211,7 @@ export class NarNode extends JavaObject implements EventObserver {
          * @throws SocketException
          * @throws UnknownHostException
          */
-        public constructor(/* final */  targetIP: java.lang.String, /* final */  targetPort: int, /* final */  threshold: float, mustContainTerm: Term,
+        public constructor(targetIP: java.lang.String, targetPort: int, threshold: float, mustContainTerm: Term,
             sendInput: boolean) {
             super();
             this.targetAddress = java.net.InetAddress.getByName(targetIP);
@@ -247,7 +247,7 @@ export class NarNode extends JavaObject implements EventObserver {
      * @throws SocketException
      * @throws UnknownHostException
      */
-    public addRedirectionTo(/* final */  targetIP: java.lang.String, /* final */  targetPort: int, /* final */  taskThreshold: float,
+    public addRedirectionTo(targetIP: java.lang.String, targetPort: int, taskThreshold: float,
         mustContainTerm: Term, sendInput: boolean): void;
     public addRedirectionTo(...args: unknown[]): void {
         switch (args.length) {

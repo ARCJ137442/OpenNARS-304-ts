@@ -33,7 +33,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
         public readonly link: TermLink;
         protected time: long;
 
-        public constructor(/* final */  link: TermLink, /* final */  time: long) {
+        public constructor(link: TermLink, time: long) {
             super();
             this.link = link;
             this.time = time;
@@ -43,7 +43,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
             return this.time;
         }
 
-        public setTime(/* final */  t: long): void {
+        public setTime(t: long): void {
             this.time = t;
         }
 
@@ -71,7 +71,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param template The TermLink template
      * @param v        The budget
      */
-    public constructor(/* final */  t: Task, /* final */  template: TermLink, /* final */  v: BudgetValue, /* final */  recordLength: int) {
+    public constructor(t: Task, template: TermLink, v: BudgetValue, recordLength: int) {
         super(v);
         this.type = template === null ? TermLink.SELF : template.type;
         this.index =
@@ -92,7 +92,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
         return this.targetTask;
     }
 
-    public equals(/* final */  obj: java.lang.Object): boolean {
+    public equals(obj: java.lang.Object): boolean {
         if (obj === this)
             return true;
         if (obj instanceof TaskLink) {
@@ -108,7 +108,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param i The index level
      * @return The index value
      */
-    public getIndex(/* final */  i: int): short {
+    public getIndex(i: int): short {
         if ((this.index !== null) && (i < this.index.length)) {
             return this.index[i];
         } else {
@@ -126,10 +126,10 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param currentTime The current time
      * @return Whether they are novel to each other
      */
-    public novel(/* final */  termLink: TermLink, /* final */  currentTime: long, /* final */  narParameters: Parameters): boolean;
+    public novel(termLink: TermLink, currentTime: long, narParameters: Parameters): boolean;
 
-    public novel(/* final */  termLink: TermLink, /* final */  currentTime: long, /* final */  narParameters: Parameters,
-            /* final */  transformTask: boolean): boolean;
+    public novel(termLink: TermLink, currentTime: long, narParameters: Parameters,
+        transformTask: boolean): boolean;
     public novel(...args: unknown[]): boolean {
         switch (args.length) {
             case 3: {

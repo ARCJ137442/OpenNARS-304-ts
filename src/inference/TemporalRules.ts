@@ -15,7 +15,7 @@ export class TemporalRules extends JavaObject {
     public static readonly ORDER_BACKWARD: int = -1;
     public static readonly ORDER_INVALID: int = -2;
 
-    public static reverseOrder(/* final */  order: int): int {
+    public static reverseOrder(order: int): int {
         if (order === TemporalRules.ORDER_NONE) {
             return TemporalRules.ORDER_NONE;
         } else {
@@ -23,9 +23,9 @@ export class TemporalRules extends JavaObject {
         }
     }
 
-    public static matchingOrder(/* final */  a: Sentence, /* final */  b: Sentence): boolean;
+    public static matchingOrder(a: Sentence, b: Sentence): boolean;
 
-    public static matchingOrder(/* final */  order1: int, /* final */  order2: int): boolean;
+    public static matchingOrder(order1: int, order2: int): boolean;
     public static matchingOrder(...args: unknown[]): boolean {
         switch (args.length) {
             case 2: {
@@ -55,7 +55,7 @@ export class TemporalRules extends JavaObject {
     }
 
 
-    public static dedExeOrder(/* final */  order1: int, /* final */  order2: int): int {
+    public static dedExeOrder(order1: int, order2: int): int {
         let order: int = TemporalRules.ORDER_INVALID;
         if ((order1 === order2) || (order2 === TemporalRules.ORDER_NONE)) {
             order = order1;
@@ -67,7 +67,7 @@ export class TemporalRules extends JavaObject {
         return order;
     }
 
-    public static abdIndComOrder(/* final */  order1: int, /* final */  order2: int): int {
+    public static abdIndComOrder(order1: int, order2: int): int {
         let order: int = TemporalRules.ORDER_INVALID;
         if (order2 === TemporalRules.ORDER_NONE) {
             order = order1;
@@ -79,7 +79,7 @@ export class TemporalRules extends JavaObject {
         return order;
     }
 
-    public static analogyOrder(/* final */  order1: int, /* final */  order2: int, /* final */  figure: int): int {
+    public static analogyOrder(order1: int, order2: int, figure: int): int {
         let order: int = TemporalRules.ORDER_INVALID;
         if ((order2 === TemporalRules.ORDER_NONE) || (order2 === TemporalRules.ORDER_CONCURRENT)) {
             order = order1;
@@ -97,7 +97,7 @@ export class TemporalRules extends JavaObject {
         return order;
     }
 
-    public static resemblanceOrder(/* final */  order1: int, /* final */  order2: int, /* final */  figure: int): int {
+    public static resemblanceOrder(order1: int, order2: int, figure: int): int {
         let order: int = TemporalRules.ORDER_INVALID;
         let order1Reverse: int = TemporalRules.reverseOrder(order1);
 
@@ -113,7 +113,7 @@ export class TemporalRules extends JavaObject {
         return order;
     }
 
-    public static composeOrder(/* final */  order1: int, /* final */  order2: int): int {
+    public static composeOrder(order1: int, order2: int): int {
         let order: int = TemporalRules.ORDER_INVALID;
         if (order2 === TemporalRules.ORDER_NONE) {
             order = order1;
@@ -129,19 +129,19 @@ export class TemporalRules extends JavaObject {
      * whether temporal induction can generate a task by avoiding producing wrong
      * terms; only one temporal operator is allowed
      */
-    public static tooMuchTemporalStatements(/* final */  t: Term): boolean {
+    public static tooMuchTemporalStatements(t: Term): boolean {
         return (t === null) || (t.containedTemporalRelations() > 1);
     }
 
     /** whether a term can be used in temoralInduction(,,) */
-    protected static termForTemporalInduction(/* final */  t: Term): boolean {
+    protected static termForTemporalInduction(t: Term): boolean {
         return (t instanceof Inheritance) || (t instanceof Similarity);
     }
 
     // TODO maybe split &/ case into own function
-    public static temporalInduction(/* final */  s1: Sentence, /* final */  s2: Sentence,
-            /* final */  nal: org.opennars.control.DerivationContext, /* final */  SucceedingEventsInduction: boolean,
-            /* final */  addToMemory: boolean, /* final */  allowSequence: boolean): java.util.List<Task> {
+    public static temporalInduction(s1: Sentence, s2: Sentence,
+        nal: org.opennars.control.DerivationContext, SucceedingEventsInduction: boolean,
+        addToMemory: boolean, allowSequence: boolean): java.util.List<Task> {
 
         if ((s1.truth === null) || (s2.truth === null) || s1.punctuation !== Symbols.JUDGMENT_MARK
             || s2.punctuation !== Symbols.JUDGMENT_MARK
@@ -274,14 +274,14 @@ export class TemporalRules extends JavaObject {
         }
     }
 
-    public static order(/* final */  timeDiff: long, /* final */  durationCycles: int): int;
+    public static order(timeDiff: long, durationCycles: int): int;
 
     /**
      * if (relative) event B after (stationary) event A then order=forward;
      * event B before then order=backward
      * occur at the same time, relative to duration: order = concurrent
      */
-    public static order(/* final */  a: long, /* final */  b: long, /* final */  durationCycles: int): int;
+    public static order(a: long, b: long, durationCycles: int): int;
     public static order(...args: unknown[]): int {
         switch (args.length) {
             case 2: {
@@ -321,7 +321,7 @@ export class TemporalRules extends JavaObject {
     }
 
 
-    public static concurrent(/* final */  a: long, /* final */  b: long, /* final */  durationCycles: int): boolean {
+    public static concurrent(a: long, b: long, durationCycles: int): boolean {
         // since Stamp.ETERNAL is Integer.MIN_VALUE,
         // avoid any overflow errors by checking eternal first
 

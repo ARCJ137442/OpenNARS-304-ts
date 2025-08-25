@@ -15,7 +15,7 @@ export class Disjunction extends CompoundTerm {
      *
      * @param arg The component list of the term
      */
-    private constructor(/* final */  arg: Term[]) {
+    private constructor(arg: Term[]) {
         super(arg);
 
         if (Debug.DETAILED) {
@@ -32,7 +32,7 @@ export class Disjunction extends CompoundTerm {
      */
     public clone(): Disjunction;
 
-    public clone(/* final */  x: Term[]): Term;
+    public clone(x: Term[]): Term;
     public clone(...args: unknown[]): Disjunction | Term {
         switch (args.length) {
             case 0: {
@@ -72,7 +72,7 @@ export class Disjunction extends CompoundTerm {
      * @param term2 The first component
      * @return A Disjunction generated or a Term it reduced to
      */
-    public static make(/* final */  term1: Term, /* final */  term2: Term): Term;
+    public static make(term1: Term, term2: Term): Term;
     public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {

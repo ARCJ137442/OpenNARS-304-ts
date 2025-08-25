@@ -15,7 +15,7 @@ import { java, type long, S } from "jree";
  */
 export class Interval extends Term {
 
-    public static interval(/* final */  i: java.lang.String): Interval {
+    public static interval(i: java.lang.String): Interval {
         return new Interval(java.lang.Long.parseLong(i.substring(1)));
     }
 
@@ -30,9 +30,9 @@ export class Interval extends Term {
      * other one,
      * for specifying magnitude directly.
      */
-    public constructor(/* final */  time: long);
+    public constructor(time: long);
 
-    public constructor(/* final */  i: java.lang.String);
+    public constructor(i: java.lang.String);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {

@@ -15,7 +15,7 @@ export abstract class OutputCondition extends OutputHandler {
     public readonly nar: Nar;
     protected successAt: long = -1;
 
-    public constructor(/* final */  nar: Nar) {
+    public constructor(nar: Nar) {
         super(nar);
         this.nar = nar;
     }
@@ -25,7 +25,7 @@ export abstract class OutputCondition extends OutputHandler {
         return false;
     }
 
-    public event(/* final */  channel: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]): void {
+    public event(channel: java.lang.Class<unknown>, args: java.lang.Object[]): void {
         if ((this.succeeded) && (!this.isInverse())) {
             return;
         }
@@ -55,8 +55,8 @@ export abstract class OutputCondition extends OutputHandler {
      * reads an example file line-by-line, before being processed, to extract
      * expectations
      */
-    public static getConditions(/* final */  n: Nar, /* final */  example: java.lang.String,
-            /* final */  similarResultsToSave: int): java.util.List<OutputCondition> {
+    public static getConditions(n: Nar, example: java.lang.String,
+        similarResultsToSave: int): java.util.List<OutputCondition> {
         let conditions: java.util.List<OutputCondition> = new java.util.ArrayList();
         let lines: java.lang.String[] = example.split("\n");
 

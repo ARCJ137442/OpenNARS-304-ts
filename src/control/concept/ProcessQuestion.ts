@@ -14,7 +14,7 @@ export class ProcessQuestion extends JavaObject {
      * @param nal     The derivation context
      * @param task    The task to be processed
      */
-    protected static processQuestion(/* final */  concept: Concept, /* final */  nal: DerivationContext, /* final */  task: Task): void {
+    protected static processQuestion(concept: Concept, nal: DerivationContext, task: Task): void {
         let quesTask: Task = task;
         let questions: java.util.List<Task> = concept.questions;
         if (task.sentence.punctuation === Symbols.QUEST_MARK) {
@@ -68,7 +68,7 @@ export class ProcessQuestion extends JavaObject {
      * @param nal     The derivation context
      */
     // called only in GeneralInferenceControl.insertTaskLink on concept selection
-    public static ProcessWhatQuestion(/* final */  concept: Concept, /* final */  ques: Task, /* final */  nal: DerivationContext): void {
+    public static ProcessWhatQuestion(concept: Concept, ques: Task, nal: DerivationContext): void {
         if (!(ques.sentence.isJudgment()) && ques.getTerm().hasVarQuery()) { // ok query var, search
             let newAnswer: boolean = false;
             for (let t of concept.taskLinks) {
@@ -106,7 +106,7 @@ export class ProcessQuestion extends JavaObject {
      * @param nal     The derivation context
      */
     // called only in GeneralInferenceControl.insertTaskLink on concept selection
-    public static ProcessWhatQuestionAnswer(/* final */  concept: Concept, /* final */  t: Task, /* final */  nal: DerivationContext): void {
+    public static ProcessWhatQuestionAnswer(concept: Concept, t: Task, nal: DerivationContext): void {
         if (!t.sentence.term.hasVarQuery() && t.sentence.isJudgment() || t.sentence.isGoal()) { // ok query var, search
             for (let quess of concept.taskLinks) {
                 let ques: Task = quess.getTarget();

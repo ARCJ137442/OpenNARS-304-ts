@@ -24,19 +24,19 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
      *
      * @param n
      */
-    public constructor(/* final */  n: Nar);
+    public constructor(n: Nar);
 
-    public constructor(/* final */  n: Nar, /* final */  outExp2: TextOutputHandler.LineOutput);
+    public constructor(n: Nar, outExp2: TextOutputHandler.LineOutput);
 
-    public constructor(/* final */  n: Nar, /* final */  outExp: java.io.PrintWriter);
+    public constructor(n: Nar, outExp: java.io.PrintWriter);
 
-    public constructor(/* final */  n: Nar, /* final */  ps: java.io.PrintStream);
+    public constructor(n: Nar, ps: java.io.PrintStream);
 
-    public constructor(/* final */  n: Nar, /* final */  s: java.io.StringWriter);
+    public constructor(n: Nar, s: java.io.StringWriter);
 
-    public constructor(/* final */  n: Nar, /* final */  outExp: java.io.PrintWriter, /* final */  minPriority: float);
+    public constructor(n: Nar, outExp: java.io.PrintWriter, minPriority: float);
 
-    public constructor(/* final */  n: Nar, /* final */  ps: java.io.PrintStream, /* final */  minPriority: float);
+    public constructor(n: Nar, ps: java.io.PrintStream, minPriority: float);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -124,7 +124,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
     /**
      * Open an output experience file
      */
-    public openSaveFile(/* final */  path: java.lang.String): void {
+    public openSaveFile(path: java.lang.String): void {
         try {
             this.outExp = new java.io.PrintWriter(new java.io.FileWriter(path));
         } catch (ex) {
@@ -148,7 +148,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
      * Process the next chunk of output data
      *
      */
-    public event(/* final */  channel: java.lang.Class<unknown>, /* final */  oo: java.lang.Object[]): void {
+    public event(channel: java.lang.Class<unknown>, oo: java.lang.Object[]): void {
         if (!this.showErrors && (channel === ERR.class))
             return;
 
@@ -172,36 +172,36 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
 
     protected readonly result: java.lang.StringBuilder = new java.lang.StringBuilder(16 /* estimate */);
 
-    public process(/* final */  c: java.lang.Class<unknown>, /* final */  o: java.lang.Object): java.lang.String {
+    public process(c: java.lang.Class<unknown>, o: java.lang.Object): java.lang.String {
         return this.getOutputString(c, o, true, this.showStamp, this.nar, this.result, this.minPriority);
     }
 
-    public setErrors(/* final */  errors: boolean): TextOutputHandler {
+    public setErrors(errors: boolean): TextOutputHandler {
         this.showErrors = errors;
         return this;
     }
 
-    public setShowInput(/* final */  showInput: boolean): TextOutputHandler {
+    public setShowInput(showInput: boolean): TextOutputHandler {
         this.showInput = showInput;
         return this;
     }
 
-    public setErrorStackTrace(/* final */  b: boolean): TextOutputHandler {
+    public setErrorStackTrace(b: boolean): TextOutputHandler {
         this.showStackTrace = true;
         return this;
     }
 
-    public setLinePrefix(/* final */  prefix: java.lang.String): TextOutputHandler {
+    public setLinePrefix(prefix: java.lang.String): TextOutputHandler {
         this.prefix = prefix;
         return this;
     }
 
-    public getOutputString(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object, /* final */  showChannel: boolean,
-            /* final */  showStamp: boolean, /* final */  nar: Nar, /* final */  buffer: java.lang.StringBuilder): java.lang.String;
+    public getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
+        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String;
 
     /** generates a human-readable string from an output channel and signal */
-    public getOutputString(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object, /* final */  showChannel: boolean,
-            /* final */  showStamp: boolean, /* final */  nar: Nar, /* final */  buffer: java.lang.StringBuilder, /* final */  minPriority: float): java.lang.String;
+    public getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
+        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder, minPriority: float): java.lang.String;
     public getOutputString(...args: unknown[]): java.lang.String {
         switch (args.length) {
             case 6: {
