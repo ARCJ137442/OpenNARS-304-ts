@@ -4,8 +4,8 @@ import { java, JavaObject, type int } from "jree";
 
 export class ApplySubstituteTest extends JavaObject {
 
-    protected readonly n: Nar | null = new Nar();
-    protected readonly np: Narsese | null = new Narsese(this.n);
+    protected readonly n: Nar = new Nar();
+    protected readonly np: Narsese = new Narsese(this.n);
 
     public constructor() {
         super();

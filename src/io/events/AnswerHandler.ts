@@ -7,14 +7,14 @@ import { java, JavaObject } from "jree";
  */
 export abstract class AnswerHandler extends JavaObject implements EventObserver {
 
-    private question: Task | null;
-    private nar: Nar | null;
+    private question: Task;
+    private nar: Nar;
 
-    protected static readonly events: java.lang.Class<unknown>[] | null = [
+    protected static readonly events: java.lang.Class<unknown>[] = [
         Answer.class
     ];
 
-    public start(/* final */  question: Task | null, /* final */  n: Nar | null): void {
+    public start(/* final */  question: Task, /* final */  n: Nar): void {
         this.nar = n;
         this.question = question;
 
@@ -25,7 +25,7 @@ export abstract class AnswerHandler extends JavaObject implements EventObserver 
         this.nar.event(this, false, AnswerHandler.events);
     }
 
-    public event(/* final */  event: java.lang.Class<unknown> | null, /* final */  args: java.lang.Object[] | null): void {
+    public event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]): void {
 
         if (event === Answer.class) {
             let task: Task = args[0] as Task;
@@ -37,5 +37,5 @@ export abstract class AnswerHandler extends JavaObject implements EventObserver 
     }
 
     /** called when the question task has been solved directly */
-    public abstract onSolution(belief: Sentence | null): void;
+    public abstract onSolution(belief: Sentence): void;
 }

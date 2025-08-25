@@ -14,5 +14,5 @@ interface InputFileConsumer {
      *
      * @param filename optional path followed by filename
      */
-    addInputFile(/* final */  filename: java.lang.String | null): void;
+    addInputFile(/* final */  filename: java.lang.String): void;
 }

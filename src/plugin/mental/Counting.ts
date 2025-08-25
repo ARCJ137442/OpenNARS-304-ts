@@ -7,9 +7,9 @@ import { java, JavaObject, type float, type double, type int, S } from "jree";
  */
 export class Counting extends JavaObject implements Plugin {
 
-    public obs: EventObserver | null;
+    public obs: EventObserver;
 
-    protected static readonly CARDINALITY: Term | null = Term.get("CARDINALITY");
+    protected static readonly CARDINALITY: Term = Term.get("CARDINALITY");
     public MINIMUM_PRIORITY: float = 0.3;
 
     public setMINIMUM_PRIORITY(val: double): void {
@@ -51,7 +51,7 @@ export class Counting extends JavaObject implements Plugin {
     }
 
 
-    public setEnabled(/* final */  n: Nar | null, /* final */  enabled: boolean): boolean {
+    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
         let memory: Memory = n.memory;
 
         if (this.obs === null) {

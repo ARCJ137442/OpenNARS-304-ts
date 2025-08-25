@@ -12,7 +12,7 @@ import { java, JavaObject, type float, type int } from "jree";
  */
 export class GeneralInferenceControl extends JavaObject {
 
-    public static selectConceptForInference(/* final */  mem: Memory | null, /* final */  narParameters: java.security.Policy.Parameters | null, /* final */  nar: Nar | null): void {
+    public static selectConceptForInference(/* final */  mem: Memory, /* final */  narParameters: java.security.Policy.Parameters, /* final */  nar: Nar): void {
         let currentConcept: Concept;
         /* synchronized (mem.concepts) { */ // modify concept bag
         currentConcept = mem.concepts.takeOut();
@@ -54,7 +54,7 @@ export class GeneralInferenceControl extends JavaObject {
     }
 
     // /return true if concept must be put back
-    public static fireConcept(/* final */  nal: DerivationContext | null, /* final */  numTaskLinks: int): boolean {
+    public static fireConcept(/* final */  nal: DerivationContext, /* final */  numTaskLinks: int): boolean {
         for (let i: int = 0; i < numTaskLinks; i++) {
             if (nal.currentConcept.taskLinks.size() === 0) {
                 return false;
@@ -72,7 +72,7 @@ export class GeneralInferenceControl extends JavaObject {
         return true;
     }
 
-    protected static fireTaskLink(/* final */  nal: DerivationContext | null, termLinks: int): void {
+    protected static fireTaskLink(/* final */  nal: DerivationContext, termLinks: int): void {
         let task: Task = nal.currentTaskLink.getTarget();
         nal.setCurrentTerm(nal.currentConcept.term);
         nal.setCurrentTaskLink(nal.currentTaskLink);
@@ -106,7 +106,7 @@ export class GeneralInferenceControl extends JavaObject {
         // memory.logic.TASKLINK_FIRE.commit(currentTaskLink.budget.getPriority());
     }
 
-    public static fireTermlink(/* final */  termLink: TermLink | null, /* final */  nal: DerivationContext | null): boolean {
+    public static fireTermlink(/* final */  termLink: TermLink, /* final */  nal: DerivationContext): boolean {
         nal.setCurrentBeliefLink(termLink);
         RuleTables.reason(nal.currentTaskLink, termLink, nal);
         nal.memory.emit(Events.TermLinkSelect.class, termLink, nal.currentConcept, nal);

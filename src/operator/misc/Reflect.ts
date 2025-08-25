@@ -18,7 +18,7 @@ export class Reflect extends FunctionOperator {
         super("^reflect");
     }
 
-    protected function(/* final */  memory: Memory | null, /* final */  x: Term[] | null): Term | null {
+    protected function(/* final */  memory: Memory, /* final */  x: Term[]): Term {
 
         if (x.length !== 1) {
             throw new java.lang.IllegalStateException("Requires 1 Term argument");
@@ -29,11 +29,11 @@ export class Reflect extends FunctionOperator {
         return Reflect.getMetaTerm(content);
     }
 
-    public static sop(/* final */  s: Statement | null, /* final */  operatorName: java.lang.String | null): Term | null;
+    public static sop(/* final */  s: Statement, /* final */  operatorName: java.lang.String): Term;
 
-    public static sop(/* final */  s: Statement | null, /* final */  predicate: Term | null): Term | null;
+    public static sop(/* final */  s: Statement, /* final */  predicate: Term): Term;
 
-    public static sop(/* final */  operatorName: java.lang.String | null, /* final */ ...t: Term | null[]): Term | null;
+    public static sop(/* final */  operatorName: java.lang.String, /* final */ ...t: Term[]): Term;
 
     /**
      * <(*,subject,object) --> predicate>
@@ -42,8 +42,8 @@ export class Reflect extends FunctionOperator {
      * @param object    the object for the relation
      * @param predicate the predicate of the relation
      */
-    public static sop(/* final */  subject: Term | null, /* final */  object: Term | null, /* final */  predicate: Term | null): Term | null;
-    public static sop(...args: unknown[]): Term | null {
+    public static sop(/* final */  subject: Term, /* final */  object: Term, /* final */  predicate: Term): Term;
+    public static sop(...args: unknown[]): Term {
         switch (args.length) {
             case 2: {
                 const [s, operatorName] = args as [Statement, java.lang.String];
@@ -98,7 +98,7 @@ export class Reflect extends FunctionOperator {
     }
 
 
-    public static getMetaTerm(/* final */  node: Term | null): Term | null {
+    public static getMetaTerm(/* final */  node: Term): Term {
         if (!(node instanceof CompoundTerm)) {
             return node;
         }
@@ -114,7 +114,7 @@ export class Reflect extends FunctionOperator {
 
     }
 
-    protected getRange(): Term | null {
+    protected getRange(): Term {
         return Term.get("reflect");
     }
 

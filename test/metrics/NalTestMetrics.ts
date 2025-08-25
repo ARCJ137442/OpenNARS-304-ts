@@ -8,7 +8,7 @@ import { java, JavaObject, type double, type int } from "jree";
  * Metrics are numeric values which indicate how fast NARS could solve problems
  */
 export class NalTestMetrics extends JavaObject {
-    public static computeMetric(/* final */  scores: java.util.Map<java.lang.String, java.util.List<java.lang.Double>> | null): double {
+    public static computeMetric(/* final */  scores: java.util.Map<java.lang.String, java.util.List<java.lang.Double>>): double {
         let metric: double = 0;
 
         // compute median of (valid) samples
@@ -29,7 +29,7 @@ export class NalTestMetrics extends JavaObject {
     }
 
     // helper
-    public static removeInfinities(/* final */  values: java.util.List<java.lang.Double> | null): java.util.List<java.lang.Double> | null {
+    public static removeInfinities(/* final */  values: java.util.List<java.lang.Double>): java.util.List<java.lang.Double> {
         let result: java.util.List<java.lang.Double> = new java.util.ArrayList();
 
         for (let iValue of values) {
@@ -42,11 +42,11 @@ export class NalTestMetrics extends JavaObject {
     }
 
     // helper
-    public static calcMedian(/* final */  values: java.util.List<java.lang.Double> | null): double {
+    public static calcMedian(/* final */  values: java.util.List<java.lang.Double>): double {
         return values.get(values.size() / 2);
     }
 
-    public static main(args: java.lang.String[] | null): void {
+    public static main(args: java.lang.String[]): void {
         // number of samples was guessed and not computed with probability theory
         // TODO< maybe we need to compute it with probability theory to make sure that
         // we test enough and not to much for a given error margin >

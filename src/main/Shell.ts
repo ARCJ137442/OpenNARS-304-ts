@@ -9,10 +9,10 @@ import { java, JavaObject, type int } from "jree";
 // Manage the internal working thread. Communicate with Reasoner only.
 export class Shell extends JavaObject {
 
-    private readonly nar: Nar | null;
-    private out: java.io.PrintStream | null = java.lang.System.out;
+    private readonly nar: Nar;
+    private out: java.io.PrintStream = java.lang.System.out;
 
-    public static createNar(args: java.lang.String[] | null): Nar | null {
+    public static createNar(args: java.lang.String[]): Nar {
         let nar: Nar = null;
         let id: java.lang.Integer = null;
         if (!args[1].toLowerCase().equals("null")) {
@@ -57,7 +57,7 @@ export class Shell extends JavaObject {
      * logging
      *
      */
-    protected static log(message: java.lang.String | null): void {
+    protected static log(message: java.lang.String): void {
         // l for log
         java.lang.System.out.println("[l]: " + message);
     }
@@ -67,7 +67,7 @@ export class Shell extends JavaObject {
      *
      * @param args command line arguments
      */
-    public static main(args: java.lang.String[] | null): void {
+    public static main(args: java.lang.String[]): void {
         if (args.length === 0) { // in that case just run the instance
             args = ["null", "null", "null", "null"];
         }
@@ -94,17 +94,17 @@ export class Shell extends JavaObject {
         new Shell(nar).run(args);
     }
 
-    public constructor(/* final */  n: Nar | null) {
+    public constructor(/* final */  n: Nar) {
         super();
         this.nar = n;
     }
 
     public InputThread = (($outer) => {
         return class InputThread extends java.lang.Thread {
-            private readonly bufIn: java.io.BufferedReader | null;
-            protected readonly nar: Nar | null;
+            private readonly bufIn: java.io.BufferedReader;
+            protected readonly nar: Nar;
 
-            protected constructor(/* final */  in: java.io.InputStream | null, /* final */  nar: Nar | null) {
+            protected constructor(/* final */  in: java.io.InputStream, /* final */  nar: Nar) {
                 super();
                 this.bufIn = new java.io.BufferedReader(new java.io.InputStreamReader(in));
                 this.nar = nar;
@@ -157,7 +157,7 @@ export class Shell extends JavaObject {
      * non-static equivalent to {@link #main(String[])} : finish to completion from
      * an addInput file
      */
-    public run(/* final */  args: java.lang.String[] | null): void {
+    public run(/* final */  args: java.lang.String[]): void {
         let output: TextOutputHandler = new TextOutputHandler(this.nar, new java.io.PrintWriter(this.out, true));
         output.setErrors(true);
         output.setErrorStackTrace(true);
@@ -182,7 +182,7 @@ export class Shell extends JavaObject {
         }
     }
 
-    public setPrintStream(/* final */  out: java.io.PrintStream | null): void {
+    public setPrintStream(/* final */  out: java.io.PrintStream): void {
         this.out = out;
     }
 }

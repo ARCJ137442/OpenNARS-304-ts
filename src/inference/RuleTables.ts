@@ -18,7 +18,7 @@ export class RuleTables extends JavaObject {
      * @param tLink The selected TaskLink, which will provide a task
      * @param bLink The selected TermLink, which may provide a belief
      */
-    public static reason(/* final */  tLink: TaskLink | null, /* final */  bLink: TermLink | null, /* final */  nal: DerivationContext | null): void {
+    public static reason(/* final */  tLink: TaskLink, /* final */  bLink: TermLink, /* final */  nal: DerivationContext): void {
 
         // REFACTOR< the body should be split into another static function >
 
@@ -99,8 +99,8 @@ export class RuleTables extends JavaObject {
         RuleTables.applyRuleTable(tLink, bLink, nal, task, taskSentence, taskTerm, beliefTerm, belief);
     }
 
-    private static applyRuleTable(tLink: TaskLink | null, bLink: TermLink | null, nal: DerivationContext | null, task: Task | null,
-        taskSentence: Sentence | null, taskTerm: Term | null, beliefTerm: Term | null, belief: Sentence | null): void {
+    private static applyRuleTable(tLink: TaskLink, bLink: TermLink, nal: DerivationContext, task: Task,
+        taskSentence: Sentence, taskTerm: Term, beliefTerm: Term, belief: Sentence): void {
         let tIndex: short = tLink.getIndex(0);
         let bIndex: short = bLink.getIndex(0);
         switch (tLink.type) { // dispatch first by TaskLink type
@@ -256,8 +256,8 @@ export class RuleTables extends JavaObject {
         }
     }
 
-    public static goalFromWantBelief(/* final */  task: Task | null, /* final */  tIndex: short, /* final */  bIndex: short, /* final */  taskTerm: Term | null,
-            /* final */  nal: DerivationContext | null, /* final */  beliefTerm: Term | null): void {
+    public static goalFromWantBelief(/* final */  task: Task, /* final */  tIndex: short, /* final */  bIndex: short, /* final */  taskTerm: Term,
+            /* final */  nal: DerivationContext, /* final */  beliefTerm: Term): void {
         if (task.sentence.isJudgment() && tIndex === 0 && bIndex === 1 && taskTerm instanceof Operation) {
             let op: Operation = taskTerm as Operation;
             if (op.getPredicate() === nal.memory.getOperator("^want")) {
@@ -269,7 +269,7 @@ export class RuleTables extends JavaObject {
         }
     }
 
-    private static goalFromQuestion(/* final */  task: Task | null, /* final */  taskTerm: Term | null, /* final */  nal: DerivationContext | null): void {
+    private static goalFromQuestion(/* final */  task: Task, /* final */  taskTerm: Term, /* final */  nal: DerivationContext): void {
         if (task.sentence.punctuation === Symbols.QUESTION_MARK
             && (taskTerm instanceof Implication || taskTerm instanceof Equivalence)) { // <a =/> b>? |- a!
             let goalterm: Term = null;
@@ -358,8 +358,8 @@ export class RuleTables extends JavaObject {
      * @param beliefTerm The content of belief
      * @param nal        Reference to the memory
      */
-    private static syllogisms(/* final */  tLink: TaskLink | null, /* final */  bLink: TermLink | null, /* final */  taskTerm: Term | null,
-            /* final */  beliefTerm: Term | null, /* final */  nal: DerivationContext | null): void {
+    private static syllogisms(/* final */  tLink: TaskLink, /* final */  bLink: TermLink, /* final */  taskTerm: Term,
+            /* final */  beliefTerm: Term, /* final */  nal: DerivationContext): void {
         let taskSentence: Sentence = nal.getCurrentTask().sentence;
         let belief: Sentence = nal.getCurrentBelief();
         let figure: int;
@@ -428,7 +428,7 @@ export class RuleTables extends JavaObject {
      * @param link2 The link to the second premise
      * @return The figure of the syllogism, one of the four: 11, 12, 21, or 22
      */
-    private static indexToFigure(/* final */  link1: TLink<unknown> | null, /* final */  link2: TLink<unknown> | null): int {
+    private static indexToFigure(/* final */  link1: TLink<unknown>, /* final */  link2: TLink<unknown>): int {
         return (link1.getIndex(0) + 1) * 10 + (link2.getIndex(0) + 1);
     }
 
@@ -440,8 +440,8 @@ export class RuleTables extends JavaObject {
      * @param figure       The location of the shared term
      * @param nal          Reference to the memory
      */
-    private static asymmetricAsymmetric(/* final */  taskSentence: Sentence | null, /* final */  belief: Sentence | null, /* final */  figure: int,
-            /* final */  nal: DerivationContext | null): void {
+    private static asymmetricAsymmetric(/* final */  taskSentence: Sentence, /* final */  belief: Sentence, /* final */  figure: int,
+            /* final */  nal: DerivationContext): void {
         let taskStatement: Statement = taskSentence.term as Statement;
         let beliefStatement: Statement = belief.term as Statement;
 
@@ -531,8 +531,8 @@ export class RuleTables extends JavaObject {
      * @param figure The location of the shared term
      * @param nal    Reference to the memory
      */
-    private static asymmetricSymmetric(/* final */  asym: Sentence | null, /* final */  sym: Sentence | null, /* final */  figure: int,
-            /* final */  nal: DerivationContext | null): void {
+    private static asymmetricSymmetric(/* final */  asym: Sentence, /* final */  sym: Sentence, /* final */  figure: int,
+            /* final */  nal: DerivationContext): void {
         let asymSt: Statement = asym.term as Statement;
         let symSt: Statement = sym.term as Statement;
 
@@ -580,7 +580,7 @@ export class RuleTables extends JavaObject {
      * @param sideOfFigure side
      * @return
      */
-    private static retSideFromFigure(figure: int, sideOfFigure: RuleTables.EnumFigureSide | null): Statement.EnumStatementSide | null {
+    private static retSideFromFigure(figure: int, sideOfFigure: RuleTables.EnumFigureSide): Statement.EnumStatementSide {
         if (sideOfFigure === RuleTables.EnumFigureSide.LEFT) {
             switch (figure) {
                 case 11:
@@ -630,8 +630,8 @@ export class RuleTables extends JavaObject {
      * @param figure       The location of the shared term
      * @param nal          Reference to the memory
      */
-    private static symmetricSymmetric(/* final */  belief: Sentence | null, /* final */  taskSentence: Sentence | null, /* final */  figure: int,
-            /* final */  nal: DerivationContext | null): void {
+    private static symmetricSymmetric(/* final */  belief: Sentence, /* final */  taskSentence: Sentence, /* final */  figure: int,
+            /* final */  nal: DerivationContext): void {
         let s1: Statement = belief.term as Statement;
         let s2: Statement = taskSentence.term as Statement;
 
@@ -691,11 +691,11 @@ export class RuleTables extends JavaObject {
      * @param index                The location of the second premise in the first
      * @param nal                  Reference to the memory
      */
-    private static detachmentWithVar(/* final */  originalMainSentence: Sentence | null, /* final */  subSentence: Sentence | null,
-            /* final */  index: int, /* final */  nal: DerivationContext | null): void;
+    private static detachmentWithVar(/* final */  originalMainSentence: Sentence, /* final */  subSentence: Sentence,
+            /* final */  index: int, /* final */  nal: DerivationContext): void;
 
-    private static detachmentWithVar(/* final */  originalMainSentence: Sentence | null, subSentence: Sentence | null, /* final */  index: int,
-            /* final */  checkTermAgain: boolean, /* final */  nal: DerivationContext | null): void;
+    private static detachmentWithVar(/* final */  originalMainSentence: Sentence, subSentence: Sentence, /* final */  index: int,
+            /* final */  checkTermAgain: boolean, /* final */  nal: DerivationContext): void;
     private static detachmentWithVar(...args: unknown[]): void {
         switch (args.length) {
             case 4: {
@@ -773,8 +773,8 @@ export class RuleTables extends JavaObject {
      * @param side        The location of the shared term in the statement
      * @param nal         Reference to the memory
      */
-    private static conditionalDedIndWithVar(/* final */  conditionalSentence: Sentence | null, conditional: Implication | null,
-            /* final */  index: short, statement: Statement | null, side: short, /* final */  nal: DerivationContext | null): void {
+    private static conditionalDedIndWithVar(/* final */  conditionalSentence: Sentence, conditional: Implication,
+            /* final */  index: short, statement: Statement, side: short, /* final */  nal: DerivationContext): void {
 
         if (!(conditional.getSubject() instanceof CompoundTerm))
             return;
@@ -817,8 +817,8 @@ export class RuleTables extends JavaObject {
      * @param compoundTask Whether the compound comes from the task
      * @param nal          Reference to the memory
      */
-    private static compoundAndSelf(/* final */  compound: CompoundTerm | null, /* final */  component: Term | null, /* final */  compoundTask: boolean,
-            /* final */  index: int, /* final */  nal: DerivationContext | null): void {
+    private static compoundAndSelf(/* final */  compound: CompoundTerm, /* final */  component: Term, /* final */  compoundTask: boolean,
+            /* final */  index: int, /* final */  nal: DerivationContext): void {
         if ((compound instanceof Conjunction) || (compound instanceof Disjunction)) {
             if (nal.getCurrentBelief() !== null) {
                 if (compound.containsTerm(component)) {
@@ -845,8 +845,8 @@ export class RuleTables extends JavaObject {
      * @param beliefTerm The compound from the belief
      * @param nal        Reference to the memory
      */
-    private static compoundAndCompound(/* final */  taskTerm: CompoundTerm | null, /* final */  beliefTerm: CompoundTerm | null,
-            /* final */  tindex: int, /* final */  bindex: int, /* final */  nal: DerivationContext | null): void {
+    private static compoundAndCompound(/* final */  taskTerm: CompoundTerm, /* final */  beliefTerm: CompoundTerm,
+            /* final */  tindex: int, /* final */  bindex: int, /* final */  nal: DerivationContext): void {
         if (taskTerm.getClass() === beliefTerm.getClass()) {
             if (taskTerm.size() >= beliefTerm.size()) {
                 RuleTables.compoundAndSelf(taskTerm, beliefTerm, true, tindex, nal);
@@ -866,8 +866,8 @@ export class RuleTables extends JavaObject {
      * @param beliefTerm The content of the belief
      * @param nal        Reference to the memory
      */
-    private static compoundAndStatement(compound: CompoundTerm | null, /* final */  index: short, statement: Statement | null,
-            /* final */  side: short, /* final */  beliefTerm: Term | null, /* final */  nal: DerivationContext | null): void {
+    private static compoundAndStatement(compound: CompoundTerm, /* final */  index: short, statement: Statement,
+            /* final */  side: short, /* final */  beliefTerm: Term, /* final */  nal: DerivationContext): void {
 
         if (index >= compound.term.length) {
             return;
@@ -920,8 +920,8 @@ export class RuleTables extends JavaObject {
      * @param side      The location of the current term in the statement
      * @param nal       Reference to the memory
      */
-    private static componentAndStatement(/* final */  compound: CompoundTerm | null, /* final */  index: short, /* final */  statement: Statement | null,
-            /* final */  side: short, /* final */  nal: DerivationContext | null): void {
+    private static componentAndStatement(/* final */  compound: CompoundTerm, /* final */  index: short, /* final */  statement: Statement,
+            /* final */  side: short, /* final */  nal: DerivationContext): void {
         if (statement instanceof Inheritance) {
             StructuralRules.structuralDecompose1(compound, index, statement, nal);
             if (!(compound instanceof SetExt) && !(compound instanceof SetInt)) {
@@ -954,7 +954,7 @@ export class RuleTables extends JavaObject {
      * @param tLink The task link
      * @param nal   Reference to the memory
      */
-    public static transformTask(/* final */  tLink: TaskLink | null, /* final */  nal: DerivationContext | null): void {
+    public static transformTask(/* final */  tLink: TaskLink, /* final */  nal: DerivationContext): void {
         let content: CompoundTerm = nal.getCurrentTask().getTerm() as CompoundTerm;
         let indices: Int16Array = tLink.index;
         let expectedInheritanceTerm: Term = null; // we store here the (dereferenced) term which we expect to be a

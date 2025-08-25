@@ -11,7 +11,7 @@ import { java, type int, type float } from "jree";
  */
 export abstract class FunctionOperator extends Operator {
 
-    protected constructor(/* final */  name: java.lang.String | null) {
+    protected constructor(/* final */  name: java.lang.String) {
         super(name);
     }
 
@@ -20,18 +20,18 @@ export abstract class FunctionOperator extends Operator {
      *
      * @return y, or null if unsuccessful
      */
-    protected abstract function(memory: Memory | null, x: Term[] | null): Term | null;
+    protected abstract function(memory: Memory, x: Term[]): Term;
 
     /**
      * the term that the output will inherit from; analogous to the 'Range' of a
      * function in mathematical terminology
      */
-    protected abstract getRange(): Term | null;
+    protected abstract getRange(): Term;
 
     // abstract protected int getMinArity();
     // abstract protected int getMaxArity();
 
-    protected execute(operation: Operation | null, /* final */  args: Term[] | null, /* final */  m: Memory | null, /* final */  time: Timable | null): java.util.List<Task> | null {
+    protected execute(operation: Operation, /* final */  args: Term[], /* final */  m: Memory, /* final */  time: Timable): java.util.List<Task> {
         // TODO make memory access optional by constructor argument
         // TODO allow access to Nar instance?
         let numArgs: int = args.length - 1;
@@ -102,7 +102,7 @@ export abstract class FunctionOperator extends Operator {
      * (can be overridden in subclasses) the extent to which it is truth
      * that the 2 given terms are equal. in other words, a distance metric
      */
-    public equals(/* final */  a: Term | null, /* final */  b: Term | null): float {
+    public equals(/* final */  a: Term, /* final */  b: Term): float {
         // default: Term equality
         return a.equals(b) ? 1.0 : 0.0;
     }

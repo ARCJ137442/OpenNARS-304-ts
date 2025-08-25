@@ -8,16 +8,16 @@ import { java } from "jree";
  */
 export class OutputNotContainsCondition extends OutputContainsCondition {
 
-    public constructor(/* final */  nar: Nar | null, /* final */  containing: java.lang.String | null) {
+    public constructor(/* final */  nar: Nar, /* final */  containing: java.lang.String) {
         super(nar, containing, -1);
         succeeded = true;
     }
 
-    public getFalseReason(): java.lang.String | null {
+    public getFalseReason(): java.lang.String {
         return "incorrect output: " + containing;
     }
 
-    public condition(/* final */  channel: java.lang.Class<unknown> | null, /* final */  signal: java.lang.Object | null): boolean {
+    public condition(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object): boolean {
         if (!succeeded) {
             return false;
         }
@@ -33,7 +33,7 @@ export class OutputNotContainsCondition extends OutputContainsCondition {
         return true;
     }
 
-    protected onFailure(/* final */  channel: java.lang.Class<unknown> | null, /* final */  signal: java.lang.Object | null): void {
+    protected onFailure(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object): void {
     }
 
 }

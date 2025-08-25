@@ -41,16 +41,16 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      */
     private lastForgetTime: long = -1;
 
-    private narParameters: Parameters | null;
+    private narParameters: Parameters;
 
     /**
      * Cloning constructor
      *
      * @param v Budget value to be cloned
      */
-    public constructor(/* final */  v: BudgetValue | null);
+    public constructor(/* final */  v: BudgetValue);
 
-    public constructor(/* final */  p: float, /* final */  d: float, /* final */  qualityFromTruth: TruthValue | null, narParameters: Parameters | null);
+    public constructor(/* final */  p: float, /* final */  d: float, /* final */  qualityFromTruth: TruthValue, narParameters: Parameters);
 
     /**
      * Constructor with initialization
@@ -59,7 +59,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      * @param d Initial durability
      * @param q Initial quality
      */
-    public constructor(/* final */  p: float, /* final */  d: float, /* final */  q: float, narParameters: Parameters | null);
+    public constructor(/* final */  p: float, /* final */  d: float, /* final */  q: float, narParameters: Parameters);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -115,7 +115,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
     /**
      * Cloning method
      */
-    public override  clone(): BudgetValue | null {
+    public override  clone(): BudgetValue {
         return new BudgetValue(this.getPriority(), this.getDurability(), this.getQuality(), this.narParameters);
     }
 
@@ -248,7 +248,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param that The other Budget
      */
-    public merge(/* final */  that: BudgetValue | null): void {
+    public merge(/* final */  that: BudgetValue): void {
         BudgetFunctions.merge(this, that);
     }
 
@@ -272,7 +272,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
         return aveGeo(this.priority, this.durability, this.quality);
     }
 
-    public equalsByPrecision(/* final */  that: java.lang.Object | null): boolean {
+    public equalsByPrecision(/* final */  that: java.lang.Object): boolean {
         if (that instanceof BudgetValue) {
             let t: BudgetValue = (that as BudgetValue);
             let dPrio: float = java.lang.Math.abs(this.getPriority() - t.getPriority());
@@ -303,7 +303,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @return String representation of the value
      */
-    public override  toString(): java.lang.String | null {
+    public override  toString(): java.lang.String {
         return BudgetValue.MARK + Texts.n4(this.priority) + BudgetValue.SEPARATOR + Texts.n4(this.durability) + BudgetValue.SEPARATOR + Texts.n4(this.quality) + BudgetValue.MARK;
     }
 
@@ -312,7 +312,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @return String representation of the value with 2-digit accuracy
      */
-    public toStringExternal(): java.lang.String | null {
+    public toStringExternal(): java.lang.String {
         // return MARK + priority.toStringBrief() + SEPARATOR +
         // durability.toStringBrief() + SEPARATOR + quality.toStringBrief() + MARK;
 

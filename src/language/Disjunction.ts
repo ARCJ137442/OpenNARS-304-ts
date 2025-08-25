@@ -15,7 +15,7 @@ export class Disjunction extends CompoundTerm {
      *
      * @param arg The component list of the term
      */
-    private constructor(/* final */  arg: Term[] | null) {
+    private constructor(/* final */  arg: Term[]) {
         super(arg);
 
         if (Debug.DETAILED) {
@@ -30,10 +30,10 @@ export class Disjunction extends CompoundTerm {
      *
      * @return A new object
      */
-    public clone(): Disjunction | null;
+    public clone(): Disjunction;
 
-    public clone(/* final */  x: Term[] | null): Term | null;
-    public clone(...args: unknown[]): Disjunction | null | Term | null {
+    public clone(/* final */  x: Term[]): Term;
+    public clone(...args: unknown[]): Disjunction | Term {
         switch (args.length) {
             case 0: {
 
@@ -63,7 +63,7 @@ export class Disjunction extends CompoundTerm {
     }
 
 
-    public static make(t: Term[] | null): Term | null;
+    public static make(t: Term[]): Term;
 
     /**
      * Try to make a new Disjunction from two term. Called by the inference rules.
@@ -72,8 +72,8 @@ export class Disjunction extends CompoundTerm {
      * @param term2 The first component
      * @return A Disjunction generated or a Term it reduced to
      */
-    public static make(/* final */  term1: Term | null, /* final */  term2: Term | null): Term | null;
-    public static make(...args: unknown[]): Term | null {
+    public static make(/* final */  term1: Term, /* final */  term2: Term): Term;
+    public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
                 const [t] = args as [Term[]];
@@ -134,7 +134,7 @@ export class Disjunction extends CompoundTerm {
      *
      * @return the operator of the term
      */
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         return NativeOperator.DISJUNCTION;
     }
 

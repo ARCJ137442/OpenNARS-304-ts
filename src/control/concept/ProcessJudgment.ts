@@ -15,7 +15,7 @@ export class ProcessJudgment extends JavaObject {
      * @param concept The concept of the judment task
      * @param nal     The derivation context
      */
-    public static processJudgment(/* final */  concept: Concept | null, /* final */  nal: DerivationContext | null, /* final */  task: Task | null): void {
+    public static processJudgment(/* final */  concept: Concept, /* final */  nal: DerivationContext, /* final */  task: Task): void {
         ProcessJudgment.handleOperationFeedback(task, nal);
         let judg: Sentence = task.sentence;
         ProcessAnticipation.confirmAnticipation(task, concept, nal);
@@ -66,7 +66,7 @@ export class ProcessJudgment extends JavaObject {
      * @param task The judgement task be checked
      * @param nal  The derivation context
      */
-    public static handleOperationFeedback(task: Task | null, nal: DerivationContext | null): void {
+    public static handleOperationFeedback(task: Task, nal: DerivationContext): void {
         if (task.isInput() && !task.sentence.isEternal() && task.sentence.term instanceof Operation) {
             let op: Operation = task.sentence.term as Operation;
             let o: Operator = op.getPredicate() as Operator;
@@ -87,7 +87,7 @@ export class ProcessJudgment extends JavaObject {
      * @param nal  The derivation context
      * @return Whether task is an executable precondition
      */
-    protected static isExecutableHypothesis(task: Task | null, /* final */  nal: DerivationContext | null): boolean {
+    protected static isExecutableHypothesis(task: Task, /* final */  nal: DerivationContext): boolean {
         let term: Term = task.getTerm();
         if (!task.sentence.isEternal() ||
             !(term instanceof Implication)) {
@@ -118,7 +118,7 @@ export class ProcessJudgment extends JavaObject {
      * @param task The potential implication task
      * @param nal  The derivation context
      */
-    protected static addToTargetConceptsPreconditions(/* final */  task: Task | null, /* final */  nal: DerivationContext | null): void {
+    protected static addToTargetConceptsPreconditions(/* final */  task: Task, /* final */  nal: DerivationContext): void {
         let targets: java.util.Set<Term> = new java.util.LinkedHashSet();
         // add to all components, unless it doesn't have vars
         if (!(task.getTerm() as Implication).getPredicate().hasVar()) {

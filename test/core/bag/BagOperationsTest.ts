@@ -8,8 +8,8 @@ import { java, JavaObject, type float } from "jree";
  */
 export class BagOperationsTest extends JavaObject {
 
-    private static narParameters: java.security.Policy.Parameters | null;
-    protected static nar: Nar | null;
+    private static narParameters: java.security.Policy.Parameters;
+    protected static nar: Nar;
 
     static {
         try {
@@ -39,7 +39,7 @@ export class BagOperationsTest extends JavaObject {
         }
     }
 
-    protected static makeConcept(/* final */  name: java.lang.String | null, /* final */  priority: float): Concept | null {
+    protected static makeConcept(/* final */  name: java.lang.String, /* final */  priority: float): Concept {
         let budget: BudgetValue = new BudgetValue(priority, priority, priority, BagOperationsTest.narParameters);
         let s: Concept = new Concept(budget, new Term(name), BagOperationsTest.nar.memory);
         return s;
@@ -51,7 +51,7 @@ export class BagOperationsTest extends JavaObject {
         BagOperationsTest.testBagSequence(new Bag(2, 2, nar.narParameters));
     }
 
-    public static getMinPriority(bag: Bag<Concept, Term> | null): float {
+    public static getMinPriority(bag: Bag<Concept, Term>): float {
         let min: float = 1.0;
         for (let e of bag) {
             let p: float = e.getPriority();
@@ -61,7 +61,7 @@ export class BagOperationsTest extends JavaObject {
         return min;
     }
 
-    public static getMaxPriority(bag: Bag<Concept, Term> | null): float {
+    public static getMaxPriority(bag: Bag<Concept, Term>): float {
         let max: float = 0.0;
         for (let e of bag) {
             let p: float = e.getPriority();
@@ -71,7 +71,7 @@ export class BagOperationsTest extends JavaObject {
         return max;
     }
 
-    public static testBagSequence(/* final */  b: Bag<Concept, Term> | null): void {
+    public static testBagSequence(/* final */  b: Bag<Concept, Term>): void {
 
         // different id, different priority
         b.putIn(BagOperationsTest.makeConcept("a", 0.1));

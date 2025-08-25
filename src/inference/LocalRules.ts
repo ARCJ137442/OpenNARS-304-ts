@@ -25,8 +25,8 @@ export class LocalRules extends JavaObject {
      * @param belief The belief
      */
     // called in RuleTables.reason
-    public static match(/* final */  task: Task | null, /* final */  belief: Sentence | null, beliefConcept: Concept | null,
-            /* final */  nal: DerivationContext | null): boolean {
+    public static match(/* final */  task: Task, /* final */  belief: Sentence, beliefConcept: Concept,
+            /* final */  nal: DerivationContext): boolean {
         let sentence: Sentence = task.sentence;
 
         if (sentence.isJudgment()) {
@@ -51,7 +51,7 @@ export class LocalRules extends JavaObject {
      * @param s2 The second sentence
      * @return If revision is possible between the two sentences
      */
-    public static revisable(/* final */  s1: Sentence | null, /* final */  s2: Sentence | null, narParameters: java.security.Policy.Parameters | null): boolean {
+    public static revisable(/* final */  s1: Sentence, /* final */  s2: Sentence, narParameters: java.security.Policy.Parameters): boolean {
         if (!s1.isEternal() && !s2.isEternal() && java.lang.Math
             .abs(s1.getOccurrenceTime()
                 - s2.getOccurrenceTime()) > narParameters.REVISION_MAX_OCCURRENCE_DISTANCE) {
@@ -80,8 +80,8 @@ export class LocalRules extends JavaObject {
      * @param oldBelief       The previous belief with the same content
      * @param feedbackToLinks Whether to send feedback to the links
      */
-    public static revision(/* final */  newBelief: Sentence | null, /* final */  oldBelief: Sentence | null, /* final */  beliefConcept: Concept | null,
-            /* final */  feedbackToLinks: boolean, /* final */  nal: DerivationContext | null): boolean {
+    public static revision(/* final */  newBelief: Sentence, /* final */  oldBelief: Sentence, /* final */  beliefConcept: Concept,
+            /* final */  feedbackToLinks: boolean, /* final */  nal: DerivationContext): boolean {
         if (newBelief.term === null) {
             return false;
         }
@@ -123,8 +123,8 @@ export class LocalRules extends JavaObject {
      * @param newTruth
      * @return
      */
-    public static intervalProjection(/* final */  nal: DerivationContext | null, /* final */  newBeliefTerm: Term | null,
-            /* final */  oldBeliefTerm: Term | null, /* final */  recent_ivals: java.util.List<java.lang.Float> | null, /* final */  newTruth: TruthValue | null): boolean {
+    public static intervalProjection(/* final */  nal: DerivationContext, /* final */  newBeliefTerm: Term,
+            /* final */  oldBeliefTerm: Term, /* final */  recent_ivals: java.util.List<java.lang.Float>, /* final */  newTruth: TruthValue): boolean {
         let useNewBeliefTerm: boolean = false;
         if (newBeliefTerm.hasInterval()) {
             let ivalOld: java.util.List<java.lang.Long> = extractIntervals(nal.memory, oldBeliefTerm);
@@ -174,7 +174,7 @@ export class LocalRules extends JavaObject {
      * @param belief The proposed answer
      * @param task   The task to be processed
      */
-    public static trySolution(/* final */  belief: Sentence | null, /* final */  task: Task | null, /* final */  nal: DerivationContext | null,
+    public static trySolution(/* final */  belief: Sentence, /* final */  task: Task, /* final */  nal: DerivationContext,
             /* final */  report: boolean): boolean {
         let problem: Sentence = task.sentence;
         let memory: Memory = nal.mem();
@@ -227,8 +227,8 @@ export class LocalRules extends JavaObject {
      * @param solution The solution to be evaluated
      * @return The quality of the judgment as the solution
      */
-    public static solutionQuality(/* final */  rateByConfidence: boolean, /* final */  probT: Task | null, /* final */  solution: Sentence | null,
-            /* final */  memory: Memory | null, /* final */  time: Timable | null): float {
+    public static solutionQuality(/* final */  rateByConfidence: boolean, /* final */  probT: Task, /* final */  solution: Sentence,
+            /* final */  memory: Memory, /* final */  time: Timable): float {
         let problem: Sentence = probT.sentence;
 
         if ((probT.sentence.punctuation !== solution.punctuation && solution.term.hasVarQuery())
@@ -272,8 +272,8 @@ export class LocalRules extends JavaObject {
      * @return The budget for the new task which is the belief activated, if
      *         necessary
      */
-    public static solutionEval(/* final */  problem: Task | null, /* final */  solution: Sentence | null, task: Task | null,
-            /* final */  nal: org.opennars.control.DerivationContext | null): BudgetValue | null {
+    public static solutionEval(/* final */  problem: Task, /* final */  solution: Sentence, task: Task,
+            /* final */  nal: org.opennars.control.DerivationContext): BudgetValue {
         if (problem.sentence.punctuation !== solution.punctuation && solution.term.hasVarQuery()) {
             return null;
         }
@@ -316,7 +316,7 @@ export class LocalRules extends JavaObject {
      *
      * @param nal Reference to the memory
      */
-    public static matchReverse(/* final */  nal: DerivationContext | null): void {
+    public static matchReverse(/* final */  nal: DerivationContext): void {
         let task: Task = nal.getCurrentTask();
         let belief: Sentence = nal.getCurrentBelief();
         let sentence: Sentence = task.sentence;
@@ -337,8 +337,8 @@ export class LocalRules extends JavaObject {
      * @param figure location of the shared term
      * @param nal    Reference to the memory
      */
-    public static matchAsymSym(/* final */  asym: Sentence | null, /* final */  sym: Sentence | null, /* final */  figure: int,
-            /* final */  nal: DerivationContext | null): void {
+    public static matchAsymSym(/* final */  asym: Sentence, /* final */  sym: Sentence, /* final */  figure: int,
+            /* final */  nal: DerivationContext): void {
         if (nal.getCurrentTask().sentence.isJudgment()) {
             LocalRules.inferToAsym(asym, sym, nal);
         } else {
@@ -357,7 +357,7 @@ export class LocalRules extends JavaObject {
      * @param judgment2 The second premise
      * @param nal       Reference to the memory
      */
-    private static inferToSym(/* final */  judgment1: Sentence | null, /* final */  judgment2: Sentence | null, /* final */  nal: DerivationContext | null): void {
+    private static inferToSym(/* final */  judgment1: Sentence, /* final */  judgment2: Sentence, /* final */  nal: DerivationContext): void {
         let s1: Statement = judgment1.term as Statement;
         let t1: Term = s1.getSubject();
         let t2: Term = s1.getPredicate();
@@ -385,7 +385,7 @@ export class LocalRules extends JavaObject {
      * @param sym  The symmetric premise
      * @param nal  Reference to the memory
      */
-    private static inferToAsym(/* final */  asym: Sentence | null, /* final */  sym: Sentence | null, /* final */  nal: DerivationContext | null): void {
+    private static inferToAsym(/* final */  asym: Sentence, /* final */  sym: Sentence, /* final */  nal: DerivationContext): void {
         let statement: Statement = asym.term as Statement;
         let sub: Term = statement.getPredicate();
         let pre: Term = statement.getSubject();
@@ -407,7 +407,7 @@ export class LocalRules extends JavaObject {
      *
      * @param nal Reference to the memory
      */
-    private static conversion(/* final */  nal: DerivationContext | null): void {
+    private static conversion(/* final */  nal: DerivationContext): void {
         let truth: TruthValue = TruthFunctions.conversion(nal.getCurrentBelief().truth, nal.narParameters);
         let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
         LocalRules.convertedJudgment(truth, budget, nal);
@@ -421,7 +421,7 @@ export class LocalRules extends JavaObject {
      *
      * @param nal Reference to the memory
      */
-    private static convertRelation(/* final */  nal: DerivationContext | null): void {
+    private static convertRelation(/* final */  nal: DerivationContext): void {
         let truth: TruthValue = nal.getCurrentBelief().truth;
         if ((nal.getCurrentTask().getTerm() as CompoundTerm).isCommutative()) {
             truth = TruthFunctions.abduction(truth, 1.0, nal.narParameters);
@@ -441,8 +441,8 @@ export class LocalRules extends JavaObject {
      * @param newTruth  The truth value of the new task
      * @param nal       Reference to the memory
      */
-    private static convertedJudgment(/* final */  newTruth: TruthValue | null, /* final */  newBudget: BudgetValue | null,
-            /* final */  nal: DerivationContext | null): void {
+    private static convertedJudgment(/* final */  newTruth: TruthValue, /* final */  newBudget: BudgetValue,
+            /* final */  nal: DerivationContext): void {
         let content: Statement = nal.getCurrentTask().getTerm() as Statement;
         let beliefContent: Statement = nal.getCurrentBelief().term as Statement;
         let order: int = TemporalRules.reverseOrder(beliefContent.getTemporalOrder());

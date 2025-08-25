@@ -18,7 +18,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
     /**
      * The Task linked. The "target" field in TermLink is not used here.
      */
-    public readonly targetTask: Task | null;
+    public readonly targetTask: Task;
     private readonly recordLength: int;
 
     /* Hash of the object */
@@ -30,10 +30,10 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      */
     public static readonly Recording = class Recording extends JavaObject implements java.io.Serializable {
 
-        public readonly link: TermLink | null;
+        public readonly link: TermLink;
         protected time: long;
 
-        public constructor(/* final */  link: TermLink | null, /* final */  time: long) {
+        public constructor(/* final */  link: TermLink, /* final */  time: long) {
             super();
             this.link = link;
             this.time = time;
@@ -51,7 +51,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
 
 
     /** The usage record **/
-    public readonly records: java.util.Deque<TaskLink.Recording> | null;
+    public readonly records: java.util.Deque<TaskLink.Recording>;
 
     /** The type of link, one of the above */
     public readonly type: short;
@@ -71,7 +71,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param template The TermLink template
      * @param v        The budget
      */
-    public constructor(/* final */  t: Task | null, /* final */  template: TermLink | null, /* final */  v: BudgetValue | null, /* final */  recordLength: int) {
+    public constructor(/* final */  t: Task, /* final */  template: TermLink, /* final */  v: BudgetValue, /* final */  recordLength: int) {
         super(v);
         this.type = template === null ? TermLink.SELF : template.type;
         this.index =
@@ -88,11 +88,11 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
         return this.hash;
     }
 
-    public name(): Task | null {
+    public name(): Task {
         return this.targetTask;
     }
 
-    public equals(/* final */  obj: java.lang.Object | null): boolean {
+    public equals(/* final */  obj: java.lang.Object): boolean {
         if (obj === this)
             return true;
         if (obj instanceof TaskLink) {
@@ -126,9 +126,9 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param currentTime The current time
      * @return Whether they are novel to each other
      */
-    public novel(/* final */  termLink: TermLink | null, /* final */  currentTime: long, /* final */  narParameters: java.security.Policy.Parameters | null): boolean;
+    public novel(/* final */  termLink: TermLink, /* final */  currentTime: long, /* final */  narParameters: java.security.Policy.Parameters): boolean;
 
-    public novel(/* final */  termLink: TermLink | null, /* final */  currentTime: long, /* final */  narParameters: java.security.Policy.Parameters | null,
+    public novel(/* final */  termLink: TermLink, /* final */  currentTime: long, /* final */  narParameters: java.security.Policy.Parameters,
             /* final */  transformTask: boolean): boolean;
     public novel(...args: unknown[]): boolean {
         switch (args.length) {
@@ -188,11 +188,11 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
     }
 
 
-    public toString(): java.lang.String | null {
+    public toString(): java.lang.String {
         return super.toString() + " " + this.getTarget().sentence.stamp;
     }
 
-    public toStringBrief(): java.lang.String | null {
+    public toStringBrief(): java.lang.String {
         return super.toString();
     }
 
@@ -201,11 +201,11 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      *
      * @return The linked Task
      */
-    public getTarget(): Task | null {
+    public getTarget(): Task {
         return this.targetTask;
     }
 
-    public getTerm(): Term | null {
+    public getTerm(): Term {
         return this.getTarget().getTerm();
     }
 }

@@ -16,7 +16,7 @@ export class SetExt extends SetTensional {
      *
      * @param arg The component list of the term - args must be unique and sorted
      */
-    public constructor(/* final */ ...arg: Term | null[]) {
+    public constructor(/* final */ ...arg: Term[]) {
         super(arg);
     }
 
@@ -25,10 +25,10 @@ export class SetExt extends SetTensional {
      *
      * @return A new object, to be casted into a SetExt
      */
-    public clone(): SetExt | null;
+    public clone(): SetExt;
 
-    public clone(/* final */  replaced: Term[] | null): SetExt | null;
-    public clone(...args: unknown[]): SetExt | null {
+    public clone(/* final */  replaced: Term[]): SetExt;
+    public clone(...args: unknown[]): SetExt {
         switch (args.length) {
             case 0: {
 
@@ -58,10 +58,10 @@ export class SetExt extends SetTensional {
     }
 
 
-    public static make(...t: Term | null[]): SetExt | null;
+    public static make(...t: Term[]): SetExt;
 
-    public static make(/* final */  l: java.util.Collection<Term> | null): SetExt | null;
-    public static make(...args: unknown[]): SetExt | null {
+    public static make(/* final */  l: java.util.Collection<Term>): SetExt;
+    public static make(...args: unknown[]): SetExt {
         switch (args.length) {
             case 1: {
                 const [t] = args as [Term[]];
@@ -98,7 +98,7 @@ export class SetExt extends SetTensional {
      *
      * @return the operator of the term
      */
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         return NativeOperator.SET_EXT_OPENER;
     }
 
@@ -107,7 +107,7 @@ export class SetExt extends SetTensional {
      *
      * @return true for communitative
      */
-    public makeName(): java.lang.CharSequence | null {
+    public makeName(): java.lang.CharSequence {
         return makeSetName(SET_EXT_OPENER.ch, term, SET_EXT_CLOSER.ch);
     }
 }

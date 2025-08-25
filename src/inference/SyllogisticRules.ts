@@ -25,8 +25,8 @@ export class SyllogisticRules extends JavaObject {
      * @param belief   The second premise
      * @param nal      Reference to the memory
      */
-    protected static dedExe(/* final */  term1: Term | null, /* final */  term2: Term | null, /* final */  sentence: Sentence | null, /* final */  belief: Sentence | null,
-            /* final */  nal: DerivationContext | null): void {
+    protected static dedExe(/* final */  term1: Term, /* final */  term2: Term, /* final */  sentence: Sentence, /* final */  belief: Sentence,
+            /* final */  nal: DerivationContext): void {
         if (Statement.invalidStatement(term1, term2)) {
             return;
         }
@@ -89,8 +89,8 @@ export class SyllogisticRules extends JavaObject {
      *                  removed?
      * @param nal       Reference to the memory
      */
-    protected static abdIndCom(term1: Term | null, term2: Term | null, /* final */  sentence1: Sentence | null, /* final */  sentence2: Sentence | null,
-            /* final */  figure: int, /* final */  nal: DerivationContext | null): boolean {
+    protected static abdIndCom(term1: Term, term2: Term, /* final */  sentence1: Sentence, /* final */  sentence2: Sentence,
+            /* final */  figure: int, /* final */  nal: DerivationContext): boolean {
         if (Statement.invalidStatement(term1, term2) || Statement.invalidPair(term1, term2)) {
             return false;
         }
@@ -232,8 +232,8 @@ export class SyllogisticRules extends JavaObject {
      * @param figure Locations of the shared term in premises
      * @param nal    Reference to the memory
      */
-    protected static analogy(/* final */  subj: Term | null, /* final */  pred: Term | null, /* final */  asym: Sentence | null, /* final */  sym: Sentence | null, /* final */  figure: int,
-            /* final */  nal: DerivationContext | null): void {
+    protected static analogy(/* final */  subj: Term, /* final */  pred: Term, /* final */  asym: Sentence, /* final */  sym: Sentence, /* final */  figure: int,
+            /* final */  nal: DerivationContext): void {
         if (Statement.invalidStatement(subj, pred)) {
             return;
         }
@@ -289,8 +289,8 @@ export class SyllogisticRules extends JavaObject {
      * @param figure   Locations of the shared term in premises
      * @param nal      Reference to the memory
      */
-    protected static resemblance(/* final */  term1: Term | null, /* final */  term2: Term | null, /* final */  belief: Sentence | null, /* final */  sentence: Sentence | null,
-            /* final */  figure: int, /* final */  nal: DerivationContext | null): void {
+    protected static resemblance(/* final */  term1: Term, /* final */  term2: Term, /* final */  belief: Sentence, /* final */  sentence: Sentence,
+            /* final */  figure: int, /* final */  nal: DerivationContext): void {
         if (Statement.invalidStatement(term1, term2)) {
             return;
         }
@@ -425,11 +425,11 @@ export class SyllogisticRules extends JavaObject {
      * @param side         The location of s2 in s1
      * @param nal          Reference to the memory
      */
-    protected static detachment(/* final */  mainSentence: Sentence | null, /* final */  subSentence: Sentence | null, /* final */  side: int,
-            /* final */  nal: DerivationContext | null): void;
+    protected static detachment(/* final */  mainSentence: Sentence, /* final */  subSentence: Sentence, /* final */  side: int,
+            /* final */  nal: DerivationContext): void;
 
-    protected static detachment(/* final */  mainSentence: Sentence | null, /* final */  subSentence: Sentence | null, /* final */  side: int,
-            /* final */  checkTermAgain: boolean, /* final */  nal: DerivationContext | null): void;
+    protected static detachment(/* final */  mainSentence: Sentence, /* final */  subSentence: Sentence, /* final */  side: int,
+            /* final */  checkTermAgain: boolean, /* final */  nal: DerivationContext): void;
     protected static detachment(...args: unknown[]): void {
         switch (args.length) {
             case 4: {
@@ -570,8 +570,8 @@ export class SyllogisticRules extends JavaObject {
      *                 for predicate, -1 for the whole term
      * @param nal      Reference to the memory
      */
-    protected static conditionalDedInd(/* final */  premise1Sentence: Sentence | null, premise1: Implication | null, index: short, premise2: Term | null,
-            /* final */  side: int, /* final */  nal: DerivationContext | null): void {
+    protected static conditionalDedInd(/* final */  premise1Sentence: Sentence, premise1: Implication, index: short, premise2: Term,
+            /* final */  side: int, /* final */  nal: DerivationContext): void {
         let task: Task = nal.getCurrentTask();
         let taskSentence: Sentence = task.sentence;
         let belief: Sentence = nal.getCurrentBelief();
@@ -752,8 +752,8 @@ export class SyllogisticRules extends JavaObject {
      *                 for predicate, -1 for the whole term
      * @param nal      Reference to the memory
      */
-    protected static conditionalAna(premise1: Equivalence | null, /* final */  index: short, premise2: Term | null, /* final */  side: int,
-            /* final */  nal: DerivationContext | null): void {
+    protected static conditionalAna(premise1: Equivalence, /* final */  index: short, premise2: Term, /* final */  side: int,
+            /* final */  nal: DerivationContext): void {
         let task: Task = nal.getCurrentTask();
         let taskSentence: Sentence = task.sentence;
         let belief: Sentence = nal.getCurrentBelief();
@@ -862,8 +862,8 @@ export class SyllogisticRules extends JavaObject {
      * @param nal   Reference to the memory
      * @return Whether there are derived tasks
      */
-    protected static conditionalAbd(/* final */  cond1: Term | null, /* final */  cond2: Term | null, /* final */  st1: Statement | null, /* final */  st2: Statement | null,
-            /* final */  nal: DerivationContext | null): boolean {
+    protected static conditionalAbd(/* final */  cond1: Term, /* final */  cond2: Term, /* final */  st1: Statement, /* final */  st2: Statement,
+            /* final */  nal: DerivationContext): boolean {
         if (!(st1 instanceof Implication) || !(st2 instanceof Implication)) {
             return false;
         }
@@ -949,8 +949,8 @@ export class SyllogisticRules extends JavaObject {
      * @param compoundTask Whether the compound comes from the task
      * @param nal          Reference to the memory
      */
-    protected static elimiVarDep(/* final */  compound: CompoundTerm | null, /* final */  component: Term | null, /* final */  compoundTask: boolean,
-            /* final */  nal: DerivationContext | null): void {
+    protected static elimiVarDep(/* final */  compound: CompoundTerm, /* final */  component: Term, /* final */  compoundTask: boolean,
+            /* final */  nal: DerivationContext): void {
         let comp: Term = null;
         for (let t of compound) {
             let unify: Term[] = [t, component];

@@ -23,7 +23,7 @@ export class Term extends JavaObject {
     public static readonly SEQ_TEMPORAL: Term = Term.get("&/");
 
     // private to cache it
-    private name: string | null = null;
+    private name: string = null;
 
     public static isSelf(/* final */  t: Term): boolean {
         return Term.SELF.equals(t);
@@ -178,7 +178,7 @@ export class Term extends JavaObject {
         return this.name;
     }
 
-    public term_indices: int[] | null = null;
+    public term_indices: int[] = null;
     public index_variable: string = "";
 
     /**

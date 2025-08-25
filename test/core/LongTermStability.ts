@@ -9,13 +9,13 @@ import { java, JavaObject, type long, type int } from "jree";
  * @author Robert Wünsche
  */
 export class LongTermStability extends JavaObject {
-    public readonly reasoner: Reasoner | null;
+    public readonly reasoner: Reasoner;
 
-    public readonly counter: LongTermStability.ObjectIdCounter | null = new LongTermStability.ObjectIdCounter();
+    public readonly counter: LongTermStability.ObjectIdCounter = new LongTermStability.ObjectIdCounter();
 
-    public readonly rng: java.util.Random | null = new java.util.Random(42);
+    public readonly rng: java.util.Random = new java.util.Random(42);
 
-    public constructor(reasoner: Reasoner | null) {
+    public constructor(reasoner: Reasoner) {
         super();
         this.reasoner = reasoner;
     }
@@ -34,7 +34,7 @@ export class LongTermStability extends JavaObject {
         this.reasoner.cycles(numberOfCycles);
     }
 
-    public feed(consumer: Reasoner | null): void {
+    public feed(consumer: Reasoner): void {
         let objectIdA: int = this.rng.nextInt(10000);
         let placeIdA: int = this.rng.nextInt(10000);
 
@@ -51,7 +51,7 @@ export class LongTermStability extends JavaObject {
         this.feedRelation2(consumer, this.rng.nextInt(3000), this.rng.nextInt(3000), "a2", true);
     }
 
-    public feedRelation2(consumer: Reasoner | null, objectId: long, placeId: long, relation: java.lang.String | null, isQuestion: boolean): void {
+    public feedRelation2(consumer: Reasoner, objectId: long, placeId: long, relation: java.lang.String, isQuestion: boolean): void {
         let taskType: java.lang.String = isQuestion ? "?" : ".";
 
         // we feed a combination of forms
@@ -80,7 +80,7 @@ export class LongTermStability extends JavaObject {
         consumer.addInput(java.lang.String.format("<{%d} --> (/, %s, {%d}, _)>%s :|:", objectId, relation, placeId, taskType));
     }
 
-    public static main(args: java.lang.String[] | null): void {
+    public static main(args: java.lang.String[]): void {
         let reasonerUnderTest: Reasoner = new Nar();
         let test: LongTermStability = new LongTermStability(reasonerUnderTest);
 

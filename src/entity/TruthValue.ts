@@ -11,9 +11,9 @@ import { Symbols } from "../io/Symbols";
  */
 export  class TruthValue extends JavaObject implements java.lang.Cloneable, java.io.Serializable { // implements Cloneable {
 
-    protected static readonly  Truth_TRUE:  Term | null = new  Term("TRUE");
-    protected static readonly  Truth_FALSE:  Term | null = new  Term("FALSE");
-    protected static readonly  Truth_UNSURE:  Term | null = new  Term("UNSURE");
+    protected static readonly  Truth_TRUE:  Term = new  Term("TRUE");
+    protected static readonly  Truth_FALSE:  Term = new  Term("FALSE");
+    protected static readonly  Truth_UNSURE:  Term = new  Term("UNSURE");
 
     /**
      * character that marks the two ends of a truth value
@@ -36,7 +36,7 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      */
     private  analytic:  boolean = false;
 
-    private  narParameters:  java.security.Policy.Parameters | null;
+    private  narParameters:  java.security.Policy.Parameters;
 
     /**
      * @param narParameters parameters of the reasoner
@@ -143,18 +143,18 @@ this.narParameters = narParameters;
         return this.confidence;
     }
 
-    public  setFrequency(/* final */  f: float):  TruthValue | null {
+    public  setFrequency(/* final */  f: float):  TruthValue {
         this.frequency = f;
         return this;
     }
 
-    public  setConfidence(/* final */  c: double):  TruthValue | null {
+    public  setConfidence(/* final */  c: double):  TruthValue {
         let  max_confidence: double = 1.0 - this.narParameters.TRUTH_EPSILON;
         this.confidence = (c < max_confidence) ? c : max_confidence;
         return this;
     }
 
-    public  mulConfidence(/* final */  mul: float):  TruthValue | null {
+    public  mulConfidence(/* final */  mul: float):  TruthValue {
          let  max_confidence: double = 1.0 - this.narParameters.TRUTH_EPSILON;
          let  c: double = this.confidence * mul;
         this.confidence = (c < max_confidence) ? c : max_confidence;
@@ -173,8 +173,8 @@ this.narParameters = narParameters;
      */
     public  setAnalytic():  void;
 
-    public  setAnalytic(/* final */  a: boolean):  TruthValue | null;
-public setAnalytic(...args: unknown[]):  void |  TruthValue | null {
+    public  setAnalytic(/* final */  a: boolean):  TruthValue;
+public setAnalytic(...args: unknown[]):  void |  TruthValue {
 		switch (args.length) {
 			case 0: {
 
@@ -260,14 +260,14 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue | null {
         return ( (0xFFFF * this.frequency) as int << 16) |  (0xFFFF * this.confidence) as int;
     }
 
-    public override  clone():  TruthValue | null {
+    public override  clone():  TruthValue {
         return new  TruthValue(this.frequency, this.confidence, this.getAnalytic(), this.narParameters);
     }
 
     /**
      * A simplified String representation of a TruthValue
      */
-    public  appendString(/* final */  sb: java.lang.StringBuilder| null, /* final */  external: boolean):  java.lang.StringBuilder | null {
+    public  appendString(/* final */  sb: java.lang.StringBuilder| null, /* final */  external: boolean):  java.lang.StringBuilder {
         sb.ensureCapacity(11);
         return sb
                 .append(TruthValue.DELIMITER)
@@ -277,13 +277,13 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue | null {
                 .append(TruthValue.DELIMITER);
     }
 
-    public  name():  java.lang.CharSequence | null {
+    public  name():  java.lang.CharSequence {
          let  sb: java.lang.StringBuilder = new  java.lang.StringBuilder();
         return this.appendString(sb, false);
     }
 
     /** output representation */
-    public  toStringExternal():  java.lang.CharSequence | null {
+    public  toStringExternal():  java.lang.CharSequence {
          let  sb: java.lang.StringBuilder = new  java.lang.StringBuilder();
         return this.appendString(sb, true);
     }
@@ -294,11 +294,11 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue | null {
      *
      * @return String representation
      */
-    public override  toString():  java.lang.String | null {
+    public override  toString():  java.lang.String {
         return this.name().toString();
     }
 
-    public  toWordTerm():  Term | null {
+    public  toWordTerm():  Term {
          let  e: float = this.getExpectation();
          let  t: float = this.narParameters.DEFAULT_CREATION_EXPECTATION;
         if (e > t) {
@@ -310,7 +310,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue | null {
         return TruthValue.Truth_UNSURE;
     }
 
-    public static  fromWordTerm(narParameters: java.security.Policy.Parameters| null, term: Term| null):  TruthValue | null {
+    public static  fromWordTerm(narParameters: java.security.Policy.Parameters| null, term: Term| null):  TruthValue {
         if (term.equals(TruthValue.Truth_TRUE)) {
             return new  TruthValue(1.0, narParameters.DEFAULT_JUDGMENT_CONFIDENCE, narParameters);
         } else if (term.equals(TruthValue.Truth_FALSE)) {
@@ -323,7 +323,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue | null {
     }
 
     // * 📝【2024-05-08 20:49:46】这个函数并无所用之处
-    public  set(/* final */  frequency: float, /* final */  confidence: double):  TruthValue | null {
+    public  set(/* final */  frequency: float, /* final */  confidence: double):  TruthValue {
         this.setFrequency(frequency);
         this.setConfidence(confidence);
         return this;

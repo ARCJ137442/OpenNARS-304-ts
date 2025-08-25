@@ -53,7 +53,7 @@ export abstract  class Events extends JavaObject {
             super(c, when);
         }
 
-        public override  toString():  java.lang.String | null {
+        public override  toString():  java.lang.String {
             return "Concept Created: " + this.object;
         }
     };
@@ -233,7 +233,7 @@ export abstract  class Events extends JavaObject {
     public abstract static InferenceEvent =  class InferenceEvent extends JavaObject {
 
         public readonly  when:  long;
-        public readonly  stack:  java.util.List<java.lang.StackTraceElement> | null;
+        public readonly  stack:  java.util.List<java.lang.StackTraceElement>;
 
         // how many stack frames down to record from; we don't need to include the
         // current and the previous (InferenceEvent subclass's constructor
@@ -290,7 +290,7 @@ this.when = when;
 	}
 
 
-        public  getType():  java.lang.Class<unknown> | null {
+        public  getType():  java.lang.Class<unknown> {
             return this.getClass();
         }
 
@@ -298,7 +298,7 @@ this.when = when;
 
 
     public abstract static ParametricInferenceEvent =  class ParametricInferenceEvent<O> extends Events.InferenceEvent {
-        public readonly  object:  O | null;
+        public readonly  object:  O;
 
         public  constructor(/* final */  object: O| null, /* final */  when: long) {
             super(when);

@@ -10,9 +10,9 @@ import { java, JavaObject, S } from "jree";
 // TODO separate this into a single-thread and multithread implementation
 export class EventEmitter extends JavaObject {
 
-    private readonly events: java.util.Map<java.lang.Class<unknown>, java.util.List<EventEmitter.EventObserver>> | null;
+    private readonly events: java.util.Map<java.lang.Class<unknown>, java.util.List<EventEmitter.EventObserver>>;
 
-    private readonly pendingOps: java.util.Deque<java.lang.Object[]> | null = new java.util.ArrayDeque();
+    private readonly pendingOps: java.util.Deque<java.lang.Object[]> = new java.util.ArrayDeque();
 
     /**
      * EventEmitter that allows unknown events; must use concurrent collection
@@ -24,7 +24,7 @@ export class EventEmitter extends JavaObject {
      * EventEmitter with a fixed set of known events; the 'events' map
      * can then be made unmodifiable and non-concurrent for speed.
      */
-    public constructor(/* final */ ...knownEventClasses: java.lang.Class<unknown> | null[]);
+    public constructor(/* final */ ...knownEventClasses: java.lang.Class<unknown>[]);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -63,7 +63,7 @@ export class EventEmitter extends JavaObject {
     }
 
 
-    protected newObserverList(): java.util.List<EventEmitter.EventObserver> | null {
+    protected newObserverList(): java.util.List<EventEmitter.EventObserver> {
         return new java.util.ArrayList();
         /*
          * return Parameters.THREADS == 1 ?
@@ -71,7 +71,7 @@ export class EventEmitter extends JavaObject {
          */
     }
 
-    public isActive(/* final */  event: java.lang.Class<unknown> | null): boolean {
+    public isActive(/* final */  event: java.lang.Class<unknown>): boolean {
         if (this.events.get(event) !== null)
             return !this.events.get(event).isEmpty();
         return false;
@@ -95,7 +95,7 @@ export class EventEmitter extends JavaObject {
         /* } */
     }
 
-    public on(/* final */  event: java.lang.Class<unknown> | null, /* final */  o: EventEmitter.EventObserver | null): void {
+    public on(/* final */  event: java.lang.Class<unknown>, /* final */  o: EventEmitter.EventObserver): void {
         if (this.events.containsKey(event))
             this.events.get(event).add(o);
         else {
@@ -109,7 +109,7 @@ export class EventEmitter extends JavaObject {
      * @param event
      * @param o
      */
-    public off(/* final */  event: java.lang.Class<unknown> | null, /* final */  o: EventEmitter.EventObserver | null): void {
+    public off(/* final */  event: java.lang.Class<unknown>, /* final */  o: EventEmitter.EventObserver): void {
         if (null === event || null === o)
             throw new java.lang.IllegalStateException("Invalid parameter");
 
@@ -126,7 +126,7 @@ export class EventEmitter extends JavaObject {
     }
 
     /** for enabling many events at the same time */
-    public set(/* final */  o: EventEmitter.EventObserver | null, /* final */  enable: boolean, /* final */ ...events: java.lang.Class<unknown> | null[]): void {
+    public set(/* final */  o: EventEmitter.EventObserver, /* final */  enable: boolean, /* final */ ...events: java.lang.Class<unknown>[]): void {
         for (let c of this.events) {
             if (enable)
                 this.on(c, o);
@@ -135,7 +135,7 @@ export class EventEmitter extends JavaObject {
         }
     }
 
-    public emit(/* final */  eventClass: java.lang.Class<unknown> | null, /* final */ ...params: java.lang.Object | null[]): void {
+    public emit(/* final */  eventClass: java.lang.Class<unknown>, /* final */ ...params: java.lang.Object[]): void {
         let observers: java.util.List<EventEmitter.EventObserver> = this.events.get(eventClass);
 
         if ((observers === null) || (observers.isEmpty()))
@@ -152,7 +152,7 @@ export class EventEmitter extends JavaObject {
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace EventEmitter {
     export interface EventObserver {
-        event(event: java.lang.Class<unknown> | null, args: java.lang.Object[] | null): void;
+        event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void;
     }
 
 }

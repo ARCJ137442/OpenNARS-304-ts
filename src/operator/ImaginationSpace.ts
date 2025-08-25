@@ -16,16 +16,16 @@ import { java } from "jree";
  */
 interface ImaginationSpace {
     //
-    AbductionOrComparisonTo(/* final */  obj: ImaginationSpace | null, comparison: boolean): TruthValue;
+    AbductionOrComparisonTo(/* final */  obj: ImaginationSpace, comparison: boolean): TruthValue;
 
     // attaches an imagination space to the conjunction that is constructed
     // by starting with the leftmost element of the conjunction
     // and then gradually moving to the right
-    ConstructSpace(program: Conjunction | null): ImaginationSpace;
+    ConstructSpace(program: Conjunction): ImaginationSpace;
 
     // Has to return a new instance, not changing "this"!
-    ProgressSpace(op: Operation | null, B: ImaginationSpace | null): ImaginationSpace;
+    ProgressSpace(op: Operation, B: ImaginationSpace): ImaginationSpace;
 
     // Check whether the operation is part of the space:
-    IsOperationInSpace(oper: Operation | null): boolean;
+    IsOperationInSpace(oper: Operation): boolean;
 }

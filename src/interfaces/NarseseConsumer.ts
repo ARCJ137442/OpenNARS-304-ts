@@ -17,5 +17,5 @@ interface NarseseConsumer {
      *
      * @param narsese the narsese text
      */
-    addInput(narsese: java.lang.String | null): void;
+    addInput(narsese: java.lang.String): void;
 }

@@ -8,7 +8,7 @@ import { java, JavaObject } from "jree";
  */
 export class VariableTest extends JavaObject {
 
-    protected readonly n: Nar | null = new Nar();
+    protected readonly n: Nar = new Nar();
 
     public constructor() {
         super();
@@ -29,7 +29,7 @@ export class VariableTest extends JavaObject {
          * query variable
          */
         new class extends EventHandler {
-            public event(/* final */  event: java.lang.Class<unknown> | null, /* final */  args: java.lang.Object[] | null): void {
+            public event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]): void {
                 // nothing should arrive via Solved.class channel
                 assertTrue(false);
             }
@@ -57,7 +57,7 @@ export class VariableTest extends JavaObject {
 
         let solutionFound: java.util.concurrent.atomic.AtomicBoolean = new java.util.concurrent.atomic.AtomicBoolean(false);
         new class extends EventHandler {
-            public event(/* final */  event: java.lang.Class<unknown> | null, /* final */  args: java.lang.Object[] | null): void {
+            public event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]): void {
                 solutionFound.set(true);
                 $outer.n.stop();
             }

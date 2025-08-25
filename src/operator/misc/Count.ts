@@ -22,11 +22,11 @@ export class Count extends FunctionOperator {
         super("^count");
     }
 
-    protected static readonly requireMessage: java.lang.String | null = "Requires 1 SetExt or SetInt argument";
+    protected static readonly requireMessage: java.lang.String = "Requires 1 SetExt or SetInt argument";
 
-    protected static readonly counted: Term | null = Term.get("counted");
+    protected static readonly counted: Term = Term.get("counted");
 
-    protected function(/* final */  memory: Memory | null, /* final */  x: Term[] | null): Term | null {
+    protected function(/* final */  memory: Memory, /* final */  x: Term[]): Term {
         if (x.length !== 1) {
             throw new java.lang.IllegalStateException(Count.requireMessage);
         }
@@ -40,7 +40,7 @@ export class Count extends FunctionOperator {
         return Term.get(n);
     }
 
-    protected getRange(): Term | null {
+    protected getRange(): Term {
         return Count.counted;
     }
 

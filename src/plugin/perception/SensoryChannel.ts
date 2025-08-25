@@ -3,13 +3,13 @@ import { java, JavaObject, type int, type double, S } from "jree";
 
 
 export abstract class SensoryChannel extends JavaObject implements Plugin {
-    private reportResultsTo: java.util.Collection<SensoryChannel> | null;
-    public nar: Nar | null; // for top-down influence of concept budgets
-    public readonly results: java.util.List<Task> | null = new java.util.ArrayList();
+    private reportResultsTo: java.util.Collection<SensoryChannel>;
+    public nar: Nar; // for top-down influence of concept budgets
+    public readonly results: java.util.List<Task> = new java.util.ArrayList();
     public height: int = 0; // 1D channels have height 1
     public width: int = 0;
     public duration: int = -1;
-    private label: Term | null;
+    private label: Term;
 
     public resetChannel(): void {
     }
@@ -41,11 +41,11 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
 
     public constructor();
 
-    public constructor(/* final */  nar: Nar | null, /* final */  reportResultsTo: java.util.Collection<SensoryChannel> | null, /* final */  width: int,
-            /* final */  height: int, /* final */  duration: int, label: Term | null);
+    public constructor(/* final */  nar: Nar, /* final */  reportResultsTo: java.util.Collection<SensoryChannel>, /* final */  width: int,
+            /* final */  height: int, /* final */  duration: int, label: Term);
 
-    public constructor(/* final */  nar: Nar | null, /* final */  reportResultsTo: SensoryChannel | null, /* final */  width: int, /* final */  height: int,
-            /* final */  duration: int, label: Term | null);
+    public constructor(/* final */  nar: Nar, /* final */  reportResultsTo: SensoryChannel, /* final */  width: int, /* final */  height: int,
+            /* final */  duration: int, label: Term);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -89,7 +89,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
     }
 
 
-    public addInput(/* final */  text: java.lang.String | null, /* final */  time: Timable | null): void {
+    public addInput(/* final */  text: java.lang.String, /* final */  time: Timable): void {
         try {
             let t: Task = new Narsese(this.nar).parseTask(text);
             this.addInput(t, time);
@@ -103,12 +103,12 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         }
     }
 
-    public abstract addInput(/* final */  t: Task | null, /* final */  time: Timable | null): Nar | null;
+    public abstract addInput(/* final */  t: Task, /* final */  time: Timable): Nar;
 
-    public step_start(/* final */  time: Timable | null): void {
+    public step_start(/* final */  time: Timable): void {
     } // needs to put results into results and call step_finished when ready
 
-    public step_finished(/* final */  time: Timable | null): void {
+    public step_finished(/* final */  time: Timable): void {
         for (let ch of this.reportResultsTo) {
             for (let t of this.results) {
                 ch.addInput(t, time);
@@ -117,7 +117,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         this.results.clear();
     }
 
-    public topDownPriority(/* final */  t: Term | null): double {
+    public topDownPriority(/* final */  t: Term): double {
         let prioritySum: double = 0.0;
         for (let chan of this.reportResultsTo) {
             prioritySum += chan.priority(t);
@@ -125,7 +125,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         return prioritySum / this.reportResultsTo.size() as double;
     }
 
-    public priority(/* final */  t: Term | null): double {
+    public priority(/* final */  t: Term): double {
         if (this instanceof Nar) { // on highest level it is simply the concept priority
             let c: Concept = (this as Nar).memory.concept(t);
             if (c !== null) {
@@ -135,11 +135,11 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         return 0.0;
     }
 
-    public getName(): java.lang.String | null {
+    public getName(): java.lang.String {
         return this.label.toString();
     }
 
-    public setName(val: java.lang.String | null): void {
+    public setName(val: java.lang.String): void {
         this.label = new Term(val);
         this.nar.removePlugin(.newthis.nar.new PluginState(this));
         this.nar.addPlugin(this);

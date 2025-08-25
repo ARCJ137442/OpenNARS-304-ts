@@ -13,14 +13,14 @@ interface Pluggable {
      *
      * @param plugin plugin to be registered
      */
-    addPlugin(/* final */  plugin: Plugin | null): void;
+    addPlugin(/* final */  plugin: Plugin): void;
 
     /**
      * removes a plugin
      *
      * @param pluginState plugin to be removed
      */
-    removePlugin(/* final */  pluginState: Nar.PluginState | null): void;
+    removePlugin(/* final */  pluginState: Nar.PluginState): void;
 
     /**
      * returns all plugins which were added

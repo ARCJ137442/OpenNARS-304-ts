@@ -9,8 +9,8 @@ import { java, JavaObject, type int, type float, type double } from "jree";
  */
 export class ConfigReader extends JavaObject {
 
-    public static loadParamsFromFileAndReturnPlugins(/* final */  filepath: java.lang.String | null, /* final */  reasoner: Reasoner | null,
-            /* final */  parameters: java.security.Policy.Parameters | null): java.util.List<Plugin> | null {
+    public static loadParamsFromFileAndReturnPlugins(/* final */  filepath: java.lang.String, /* final */  reasoner: Reasoner,
+            /* final */  parameters: java.security.Policy.Parameters): java.util.List<Plugin> {
 
         java.lang.System.out.println("Got relative path for loading the config: " + filepath);
         let ret: java.util.List<Plugin> = new java.util.ArrayList<Plugin>();
@@ -116,8 +116,8 @@ export class ConfigReader extends JavaObject {
         return ret;
     }
 
-    private static createPluginByClassnameAndArguments(pluginClassPath: java.lang.String | null, arguments: NodeList | null,
-        reasoner: Reasoner | null): Plugin | null {
+    private static createPluginByClassnameAndArguments(pluginClassPath: java.lang.String, arguments: NodeList,
+        reasoner: Reasoner): Plugin {
         let types: java.util.List<java.lang.Class<unknown>> = new java.util.ArrayList();
         let values: java.util.List<java.lang.Object> = new java.util.ArrayList();
 

@@ -15,9 +15,9 @@ export class Inheritance extends Statement {
      *
      * @param arg The component list of the term
      */
-    protected constructor(/* final */  arg: Term[] | null);
+    protected constructor(/* final */  arg: Term[]);
 
-    protected constructor(/* final */  subj: Term | null, /* final */  pred: Term | null);
+    protected constructor(/* final */  subj: Term, /* final */  pred: Term);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -54,10 +54,10 @@ export class Inheritance extends Statement {
      *
      * @return A new object, to be casted into a SetExt
      */
-    public clone(): Inheritance | null;
+    public clone(): Inheritance;
 
-    public clone(/* final */  t: Term[] | null): Inheritance | null;
-    public clone(...args: unknown[]): Inheritance | null {
+    public clone(/* final */  t: Term[]): Inheritance;
+    public clone(...args: unknown[]): Inheritance {
         switch (args.length) {
             case 0: {
 
@@ -96,7 +96,7 @@ export class Inheritance extends Statement {
      * predicate
      * to be reduced to the common term.
      */
-    public static makeTerm(/* final */  subject: Term | null, /* final */  predicate: Term | null): Term | null {
+    public static makeTerm(/* final */  subject: Term, /* final */  predicate: Term): Term {
         return Inheritance.make(subject, predicate);
     }
 
@@ -107,7 +107,7 @@ export class Inheritance extends Statement {
      * @param predicate The second component
      * @return A compound generated or null
      */
-    public static make(/* final */  subject: Term | null, /* final */  predicate: Term | null): Inheritance | null {
+    public static make(/* final */  subject: Term, /* final */  predicate: Term): Inheritance {
 
         if (subject === null || predicate === null || invalidStatement(subject, predicate)) {
             return null;
@@ -136,7 +136,7 @@ export class Inheritance extends Statement {
      *
      * @return the operator of the term
      */
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         return NativeOperator.INHERITANCE;
     }
 

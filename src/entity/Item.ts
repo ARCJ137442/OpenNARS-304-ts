@@ -78,7 +78,7 @@ if (budget !== null)
      *
      * @return Current key value
      */
-    public abstract  name():  K | null;
+    public abstract  name():  K;
 
     /**
      * Get priority value
@@ -176,7 +176,7 @@ if (budget !== null)
      * @param that The Item to be merged
      * @return the resulting Item: this or that
      */
-    public  merge(/* final */  that: Item<unknown>| null):  Item<unknown> | null {
+    public  merge(/* final */  that: Item<unknown>| null):  Item<unknown> {
         this.budget.merge(that.budget);
         return this;
     }
@@ -186,7 +186,7 @@ if (budget !== null)
      *
      * @return The String representation of the full content
      */
-    public override  toString():  java.lang.String | null {
+    public override  toString():  java.lang.String {
         // return budget + " " + key ;
 
          let  budgetStr: java.lang.String = this.budget !== null ? this.budget.toString() : "";
@@ -200,7 +200,7 @@ if (budget !== null)
      *
      * @return A simplified String representation of the content
      */
-    public  toStringExternal():  java.lang.String | null {
+    public  toStringExternal():  java.lang.String {
          let  briefBudget: java.lang.String = this.budget.toStringExternal();
          let  n: java.lang.String = this.name().toString();
         return new  java.lang.StringBuilder(briefBudget.length() + n.length() + 1).append(briefBudget).append(' ').append(n)
@@ -208,14 +208,14 @@ if (budget !== null)
     }
 
     /** similar to toStringExternal but includes budget afterward */
-    public  toStringExternal2():  java.lang.String | null {
+    public  toStringExternal2():  java.lang.String {
          let  briefBudget: java.lang.String = this.budget.toStringExternal();
          let  n: java.lang.String = this.name().toString();
         return new  java.lang.StringBuilder(briefBudget.length() + n.length() + 1).append(n).append(' ').append(briefBudget)
                 .toString();
     }
 
-    public  toStringLong():  java.lang.String | null {
+    public  toStringLong():  java.lang.String {
         return this.toString();
     }
 
@@ -271,7 +271,7 @@ if (budget !== null)
         return totalPriority;
     }
 
-    public  getBudget():  BudgetValue | null {
+    public  getBudget():  BudgetValue {
         return this.budget;
     }
 }

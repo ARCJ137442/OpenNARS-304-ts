@@ -15,7 +15,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      *
      */
     // TODO make final again
-    public readonly term: Term[] | null;
+    public readonly term: Term[];
 
     /**
      * syntactic complexity of the compound, the sum of those of its term plus 1
@@ -49,27 +49,27 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     /**
      * method to get the operator of the compound
      */
-    public abstract operator(): NativeOperator | null;
+    public abstract operator(): NativeOperator;
 
     /**
      * clone method
      *
      * @return A clone of the compound term
      */
-    public abstract clone(): CompoundTerm | null;
+    public abstract clone(): CompoundTerm;
 
     /**
      * subclasses should be sure to call init() in their constructors;
      * it is not done here to allow subclass constructors to set data before calling
      * init()
      */
-    public constructor(/* final */  components: Term[] | null) {
+    public constructor(/* final */  components: Term[]) {
         super();
         this.term = components;
     }
 
     public static ConvRectangle = class ConvRectangle extends JavaObject {
-        public index_variable: java.lang.String | null = null;
+        public index_variable: java.lang.String = null;
         public term_indices: Int32Array = null; // size X, size Y, pos X, pos Y, min size X, min size Y
 
         public constructor() {
@@ -78,7 +78,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     };
 
 
-    public static UpdateConvRectangle(/* final */  term: Term[] | null): CompoundTerm.ConvRectangle | null {
+    public static UpdateConvRectangle(/* final */  term: Term[]): CompoundTerm.ConvRectangle {
         let index_last_var: java.lang.String = null;
         let minX: int = java.lang.Integer.MAX_VALUE;
         let minY: int = java.lang.Integer.MAX_VALUE;
@@ -134,7 +134,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     }
 
     /** call this after changing Term[] contents */
-    protected init(/* final */  term: Term[] | null): void {
+    protected init(/* final */  term: Term[]): void {
 
         this.complexity = 1;
         this.hasVariables = this.hasVarDeps = this.hasVarIndeps = this.hasVarQueries = false;
@@ -175,9 +175,9 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * Must be Term return type because the type of Term may change with different
      * arguments
      */
-    public abstract clone(/* final */  replaced: Term[] | null): Term | null;
+    public abstract clone(/* final */  replaced: Term[]): Term;
 
-    public cloneDeep(): CompoundTerm | null {
+    public cloneDeep(): CompoundTerm {
         let c: Term = this.clone(this.cloneTermsDeep());
         if (c === null)
             return null;
@@ -193,7 +193,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         return c as CompoundTerm;
     }
 
-    public static transformIndependentVariableToDependent(/* final */  T: CompoundTerm | null): void { // a special instance of
+    public static transformIndependentVariableToDependent(/* final */  T: CompoundTerm): void { // a special instance of
         // transformVariableTermsDeep in
         // 1.7
         let term: Term[] = T.term;
@@ -210,9 +210,9 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         }
     }
 
-    protected static readonly conceptival: Interval | null = new Interval(1);
+    protected static readonly conceptival: Interval = new Interval(1);
 
-    private static ReplaceIntervals(/* final */  comp: CompoundTerm | null): void {
+    private static ReplaceIntervals(/* final */  comp: CompoundTerm): void {
         if (!comp.hasIntervals) {
             return;
         }
@@ -230,7 +230,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         }
     }
 
-    public static replaceIntervals(T: Term | null): Term | null {
+    public static replaceIntervals(T: Term): Term {
         if (T instanceof CompoundTerm) {
             T = T.cloneDeep(); // we will operate on a copy
             if (T === null) {
@@ -241,7 +241,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         return T;
     }
 
-    private static ExtractIntervals(/* final */  mem: Memory | null, /* final */  ivals: java.util.List<java.lang.Long> | null, /* final */  comp: CompoundTerm | null): void {
+    private static ExtractIntervals(/* final */  mem: Memory, /* final */  ivals: java.util.List<java.lang.Long>, /* final */  comp: CompoundTerm): void {
         for (let i: int = 0; i < comp.term.length; i++) {
             let t: Term = comp.term[i];
             if (t instanceof Interval) {
@@ -252,7 +252,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         }
     }
 
-    public static extractIntervals(/* final */  mem: Memory | null, /* final */  T: Term | null): java.util.List<java.lang.Long> | null {
+    public static extractIntervals(/* final */  mem: Memory, /* final */  T: Term): java.util.List<java.lang.Long> {
         let ret: java.util.List<java.lang.Long> = new java.util.ArrayList();
         if (T instanceof CompoundTerm) {
             CompoundTerm.ExtractIntervals(mem, ret, T as CompoundTerm);
@@ -262,11 +262,11 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
 
     public static UnableToCloneException = class UnableToCloneException extends java.lang.RuntimeException {
 
-        public constructor(/* final */  message: java.lang.String | null) {
+        public constructor(/* final */  message: java.lang.String) {
             super(message);
         }
 
-        public override  fillInStackTrace(): java.lang.Throwable | null {
+        public override  fillInStackTrace(): java.lang.Throwable {
             if (Debug.DETAILED) {
                 return super.fillInStackTrace();
             } else {
@@ -278,7 +278,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     };
 
 
-    public cloneDeepVariables(): CompoundTerm | null {
+    public cloneDeepVariables(): CompoundTerm {
         let c: Term = this.clone(this.cloneVariableTermsDeep());
 
         if (c === null)
@@ -321,11 +321,11 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      *
      * @return the component list
      */
-    public static termArray(/* final */ ...t: Term | null[]): Term[] | null {
+    public static termArray(/* final */ ...t: Term[]): Term[] {
         return t;
     }
 
-    public static termList(/* final */ ...t: Term | null[]): java.util.List<Term> | null {
+    public static termList(/* final */ ...t: Term[]): java.util.List<Term> {
         return java.util.Arrays.asList(t as Term[]);
     }
 
@@ -336,11 +336,11 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      *
      * @return the oldName of the term
      */
-    protected makeName(): java.lang.CharSequence | null {
+    protected makeName(): java.lang.CharSequence {
         return CompoundTerm.makeCompoundName(this.operator(), this.term);
     }
 
-    public name(): java.lang.CharSequence | null {
+    public name(): java.lang.CharSequence {
         if (this.nameInternal() === null) {
             this.setName(this.makeName());
         }
@@ -354,7 +354,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @param arg the list of term
      * @return the oldName of the term
      */
-    protected static makeCompoundName(/* final */  op: NativeOperator | null, /* final */ ...arg: Term | null[]): java.lang.CharSequence | null {
+    protected static makeCompoundName(/* final */  op: NativeOperator, /* final */ ...arg: Term[]): java.lang.CharSequence {
         let size: int = 1 + 1;
 
         let opString: java.lang.String = op.toString();
@@ -409,7 +409,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     }
 
     /** Gives a set of all contained term, recursively */
-    public getContainedTerms(): java.util.Set<Term> | null {
+    public getContainedTerms(): java.util.Set<Term> {
         let s: java.util.Set<Term> = new java.util.LinkedHashSet(this.getComplexity());
         for (let t of this.term) {
             s.add(t);
@@ -424,7 +424,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      *
      * @return The cloned component list
      */
-    public cloneTerms(/* final */ ...additional: Term | null[]): Term[] | null {
+    public cloneTerms(/* final */ ...additional: Term[]): Term[] {
         return CompoundTerm.cloneTermsAppend(this.term, additional);
     }
 
@@ -435,7 +435,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @return the cloned array with the missing terms removed, OR null if no terms
      *         were actually removed when requireModification=true
      */
-    public cloneTermsExcept(/* final */  requireModification: boolean, /* final */  toRemove: Term[] | null): Term[] | null {
+    public cloneTermsExcept(/* final */  requireModification: boolean, /* final */  toRemove: Term[]): Term[] {
         // TODO if deep, this wastes created clones that are then removed. correct this
         // inefficiency?
 
@@ -458,7 +458,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @param original The original component list
      * @return an identical and separate copy of the list
      */
-    public static cloneTermsAppend(/* final */  original: Term[] | null, /* final */  additional: Term[] | null): Term[] | null {
+    public static cloneTermsAppend(/* final */  original: Term[], /* final */  additional: Term[]): Term[] {
         if (original === null) {
             return null;
         }
@@ -487,14 +487,14 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
 
     }
 
-    public asTermList(): java.util.List<Term> | null {
+    public asTermList(): java.util.List<Term> {
         let l: java.util.List<Term> = new java.util.ArrayList(this.term.length);
         this.addTermsTo(l);
         return l;
     }
 
     /** forced deep clone of terms */
-    public cloneTermsDeep(): Term[] | null {
+    public cloneTermsDeep(): Term[] {
         let l: Term[] = new Array<Term>(this.term.length);
         for (let i: int = 0; i < l.length; i++) {
             l[i] = this.term[i].cloneDeep();
@@ -505,7 +505,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         return l;
     }
 
-    public cloneVariableTermsDeep(): Term[] | null {
+    public cloneVariableTermsDeep(): Term[] {
         let l: Term[] = new Array<Term>(this.term.length);
         for (let i: int = 0; i < l.length; i++) {
             let t: Term = this.term[i];
@@ -521,14 +521,14 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     }
 
     /** forced deep clone of terms */
-    public cloneTermsListDeep(): java.util.List<Term> | null {
+    public cloneTermsListDeep(): java.util.List<Term> {
         let l: java.util.List<Term> = new java.util.ArrayList(this.term.length);
         for (let t of this.term)
             l.add(t.clone());
         return l;
     }
 
-    protected static shuffle(/* final */  ar: Term[] | null, /* final */  randomNumber: java.util.Random | null): void {
+    protected static shuffle(/* final */  ar: Term[], /* final */  randomNumber: java.util.Random): void {
         if (ar.length < 2) {
             return;
         }
@@ -556,7 +556,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * Also matches variables, ex: (&&,<a --> b>,<b --> c>) also contains <a --> #1>
      * ^^^ is this right? if so then try containsVariablesAsWildcard
      */
-    public containsTerm(/* final */  t: Term | null): boolean {
+    public containsTerm(/* final */  t: Term): boolean {
         return Terms.contains(this.term, t);
         // return Terms.containsVariablesAsWildcard(term, t);
     }
@@ -567,7 +567,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @param target The term to be searched
      * @return Whether the target is in the current term
      */
-    public containsTermRecursively(/* final */  target: Term | null): boolean {
+    public containsTermRecursively(/* final */  target: Term): boolean {
         if (super.containsTermRecursively(target))
             return true;
         for (let term of term) {
@@ -585,7 +585,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      *            occurs
      * @return The counts of the terms
      */
-    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer> | null): java.util.Map<Term, java.lang.Integer> | null {
+    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer>): java.util.Map<Term, java.lang.Integer> {
         if (map === null) {
             map = new java.util.LinkedHashMap<Term, java.lang.Integer>();
         }
@@ -603,7 +603,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @param components The components
      * @return
      */
-    public static addComponentsRecursively(t: Term | null, components: java.util.Set<Term> | null): java.util.Set<Term> | null {
+    public static addComponentsRecursively(t: Term, components: java.util.Set<Term>): java.util.Set<Term> {
         if (components === null) {
             components = new java.util.LinkedHashSet<Term>();
         }
@@ -624,7 +624,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @param t The other term
      * @return Whether the term are all in the compound
      */
-    public containsAllTermsOf(/* final */  t: Term | null): boolean {
+    public containsAllTermsOf(/* final */  t: Term): boolean {
         if (java.lang.Object.getClass() === t.getClass()) { // (t instanceof CompoundTerm) {
             return Terms.containsAll(this.term, (t as CompoundTerm).term);
         } else {
@@ -640,7 +640,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @param memory Reference to the memory
      * @return The new compound
      */
-    public setComponent(/* final */  index: int, /* final */  t: Term | null, /* final */  memory: Memory | null): Term | null {
+    public setComponent(/* final */  index: int, /* final */  t: Term, /* final */  memory: Memory): Term {
         let list: java.util.List<Term> = this.asTermList();// Deep();
         list.remove(index);
         if (t !== null) {
@@ -693,7 +693,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      *
      * @param subs
      */
-    public applySubstitute(/* final */  subs: java.util.Map<Term, Term> | null): Term | null {
+    public applySubstitute(/* final */  subs: java.util.Map<Term, Term>): Term {
         if ((subs === null) || (subs.isEmpty())) {
             return this;// .clone();
         }
@@ -737,7 +737,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * returns result of applySubstitute, if and only if it's a CompoundTerm.
      * otherwise it is null
      */
-    public applySubstituteToCompound(/* final */  substitute: java.util.Map<Term, Term> | null): CompoundTerm | null {
+    public applySubstituteToCompound(/* final */  substitute: java.util.Map<Term, Term>): CompoundTerm {
         let t: Term = this.applySubstitute(substitute);
         if (t instanceof CompoundTerm)
             return (t as CompoundTerm);
@@ -753,7 +753,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      *
      * @return A list of TermLink templates
      */
-    public prepareComponentLinks(): java.util.List<TermLink> | null {
+    public prepareComponentLinks(): java.util.List<TermLink> {
         // complexity seems like an upper bound for the resulting number of
         // componentLinks.
         // so use it as an initial size for the array list
@@ -761,7 +761,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         return Terms.prepareComponentLinks(componentLinks, this);
     }
 
-    public addTermsTo(/* final */  c: java.util.Collection<Term> | null): void {
+    public addTermsTo(/* final */  c: java.util.Collection<Term>): void {
         java.util.Collections.addAll(c, this.term);
     }
 
@@ -769,14 +769,14 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         return this.name().hashCode();
     }
 
-    public compareTo(/* final */  that: AbstractTerm | null): int {
+    public compareTo(/* final */  that: AbstractTerm): int {
         if (that === this) {
             return 0;
         }
         return super.compareTo(that);
     }
 
-    public equals(/* final */  that: java.lang.Object | null): boolean {
+    public equals(/* final */  that: java.lang.Object): boolean {
         if (that === this)
             return true;
         if (!(that instanceof Term))
@@ -792,7 +792,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         return this.normalized;
     }
 
-    public cloneTermsReplacing(/* final */  from: Term | null, /* final */  to: Term | null): Term[] | null {
+    public cloneTermsReplacing(/* final */  from: Term, /* final */  to: Term): Term[] {
         let y: Term[] = new Array<Term>(this.term.length);
         let i: int = 0;
         for (let x of this.term) {
@@ -803,7 +803,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         return y;
     }
 
-    public iterator(): java.util.Iterator<Term> | null {
+    public iterator(): java.util.Iterator<Term> {
         return Iterators.forArray(this.term);
     }
 

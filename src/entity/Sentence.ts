@@ -17,7 +17,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
     /**
      * The content of a Sentence is a Term
      */
-    public readonly term: Term | null;
+    public readonly term: Term;
 
     /**
      * The punctuation indicates the type of the Sentence:
@@ -28,12 +28,12 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
     /**
      * The truth value of Judgment, or desire value of Goal
      */
-    public readonly truth: TruthValue | null;
+    public readonly truth: TruthValue;
 
     /**
      * Partial record of the derivation path
      */
-    public readonly stamp: Stamp | null;
+    public readonly stamp: Stamp;
 
     /**
      * Whether the sentence can be revised
@@ -43,11 +43,11 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
     /**
      * caches the 'getKey()' result
      */
-    private key: java.lang.CharSequence | null;
+    private key: java.lang.CharSequence;
 
     private readonly hash: int;
 
-    public constructor(/* final */  term: Term | null, /* final */  punctuation: char, /* final */  newTruth: TruthValue | null, /* final */  newStamp: Stamp | null);
+    public constructor(/* final */  term: Term, /* final */  punctuation: char, /* final */  newTruth: TruthValue, /* final */  newStamp: Stamp);
 
     /**
      * Create a Sentence with the given fields
@@ -59,7 +59,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *                    and
      *                    base
      */
-    private constructor(_content: Term | null, /* final */  punctuation: char, /* final */  truth: TruthValue | null, /* final */  stamp: Stamp | null,
+    private constructor(_content: Term, /* final */  punctuation: char, /* final */  truth: TruthValue, /* final */  stamp: Stamp,
             /* final */  normalize: boolean);
     public constructor(...args: unknown[]) {
         switch (args.length) {
@@ -261,7 +261,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      * @param that The other sentence
      * @return Whether the two sentences have the same content
      */
-    public override  equals(/* final */  that: java.lang.Object | null): boolean {
+    public override  equals(/* final */  that: java.lang.Object): boolean {
         if (this === that)
             return true;
         if (that instanceof Sentence) {
@@ -315,9 +315,9 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *
      * @return The cloned Sentence
      */
-    public override  clone(): Sentence | null;
+    public override  clone(): Sentence;
 
-    public override  clone(/* final */  makeEternal: boolean): Sentence | null;
+    public override  clone(/* final */  makeEternal: boolean): Sentence;
 
     /**
      * clone with a different term
@@ -325,8 +325,8 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      * @param t term which has to get cloned
      * @return sentence with the cloned term as a property
      */
-    public override clone(/* final */  t: Term | null): Sentence | null;
-    public override clone(...args: unknown[]): Sentence | null {
+    public override clone(/* final */  t: Term): Sentence;
+    public override clone(...args: unknown[]): Sentence {
         switch (args.length) {
             case 0: {
 
@@ -379,7 +379,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      * @param currentTime The current time as a reference
      * @return The projected belief
      */
-    public projection(/* final */  targetTime: long, /* final */  currentTime: long, mem: Memory | null): Sentence | null {
+    public projection(/* final */  targetTime: long, /* final */  currentTime: long, mem: Memory): Sentence {
 
         let newTruth: TruthValue = this.projectionTruth(targetTime, currentTime, mem);
         let eternalizing: boolean = (newTruth instanceof EternalizedTruthValue);
@@ -395,7 +395,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
             false);
     }
 
-    public projectionTruth(/* final */  targetTime: long, /* final */  currentTime: long, mem: Memory | null): TruthValue | null {
+    public projectionTruth(/* final */  targetTime: long, /* final */  currentTime: long, mem: Memory): TruthValue {
         let newTruth: TruthValue = null;
 
         if (!this.stamp.isEternal()) {
@@ -469,15 +469,15 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *
      * @return The String
      */
-    public override  toString(): java.lang.String | null;
+    public override  toString(): java.lang.String;
 
     /**
      * @param nar       Reasoner instance
      * @param showStamp must the stamp get appended to the string?
      * @return textural representation of the sentence for humans
      */
-    public override  toString(/* final */  nar: Nar | null, /* final */  showStamp: boolean): java.lang.CharSequence | null;
-    public override toString(...args: unknown[]): java.lang.String | null | java.lang.CharSequence | null {
+    public override  toString(/* final */  nar: Nar, /* final */  showStamp: boolean): java.lang.CharSequence;
+    public override toString(...args: unknown[]): java.lang.String | java.lang.CharSequence {
         switch (args.length) {
             case 0: {
 
@@ -568,7 +568,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *
      * @return The String
      */
-    public getKey(): java.lang.CharSequence | null {
+    public getKey(): java.lang.CharSequence {
         // key must be invalidated if content or truth change
         if (this.key === null) {
             let contentName: java.lang.CharSequence = this.term.name();
@@ -613,7 +613,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      * discounts the truth value of the sentence
      *
      */
-    public discountConfidence(narParameters: java.security.Policy.Parameters | null): void {
+    public discountConfidence(narParameters: java.security.Policy.Parameters): void {
         this.truth.setConfidence(this.truth.getConfidence() * narParameters.DISCOUNT_RATE).setAnalytic(false);
     }
 
@@ -629,7 +629,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *
      * @return term of the sentence, terms are properties of sentences
      */
-    public getTerm(): Term | null {
+    public getTerm(): Term {
         return this.term;
     }
 
@@ -637,7 +637,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *
      * @return truth of the sentence, truths are properties of sentences
      */
-    public getTruth(): TruthValue | null {
+    public getTruth(): TruthValue {
         return this.truth;
     }
 }

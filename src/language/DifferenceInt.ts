@@ -16,7 +16,7 @@ export class DifferenceInt extends CompoundTerm {
      *
      * @param arg The component list of the term
      */
-    private constructor(/* final */  arg: Term[] | null) {
+    private constructor(/* final */  arg: Term[]) {
         super(arg);
 
         DifferenceInt.ensureValidDifferenceArguments(arg);
@@ -24,7 +24,7 @@ export class DifferenceInt extends CompoundTerm {
         java.security.cert.CertPathChecker.init(arg);
     }
 
-    public static ensureValidDifferenceArguments(/* final */  arg: Term[] | null): void {
+    public static ensureValidDifferenceArguments(/* final */  arg: Term[]): void {
         if (arg.length !== 2)
             throw new java.lang.IllegalStateException("Requires 2 components");
 
@@ -39,10 +39,10 @@ export class DifferenceInt extends CompoundTerm {
      *
      * @return A new object, to be casted into a DifferenceInt
      */
-    public clone(): DifferenceInt | null;
+    public clone(): DifferenceInt;
 
-    public clone(/* final */  replaced: Term[] | null): Term | null;
-    public clone(...args: unknown[]): DifferenceInt | null | Term | null {
+    public clone(/* final */  replaced: Term[]): Term;
+    public clone(...args: unknown[]): DifferenceInt | Term {
         switch (args.length) {
             case 0: {
 
@@ -78,7 +78,7 @@ export class DifferenceInt extends CompoundTerm {
      * @return the Term generated from the arguments
      * @param arg The list of term
      */
-    public static make(/* final */  arg: Term[] | null): Term | null;
+    public static make(/* final */  arg: Term[]): Term;
 
     /**
      * Try to make a new compound from two term. Called by the inference rules.
@@ -87,8 +87,8 @@ export class DifferenceInt extends CompoundTerm {
      * @param t2 The second component
      * @return A compound generated or a term it reduced to
      */
-    public static make(/* final */  t1: Term | null, /* final */  t2: Term | null): Term | null;
-    public static make(...args: unknown[]): Term | null {
+    public static make(/* final */  t1: Term, /* final */  t2: Term): Term;
+    public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
                 const [arg] = args as [Term[]];
@@ -143,7 +143,7 @@ export class DifferenceInt extends CompoundTerm {
      *
      * @return the operator of the term
      */
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         return NativeOperator.DIFFERENCE_INT;
     }
 }

@@ -24,8 +24,8 @@ export class CompositionalRules extends JavaObject {
      * @param index         The location of the shared term
      * @param nal           Reference to the memory
      */
-    protected static composeCompound(/* final */  taskContent: Statement | null, /* final */  beliefContent: Statement | null, /* final */  index: int,
-            /* final */  nal: DerivationContext | null): void {
+    protected static composeCompound(/* final */  taskContent: Statement, /* final */  beliefContent: Statement, /* final */  index: int,
+            /* final */  nal: DerivationContext): void {
         if ((!nal.getCurrentTask().sentence.isJudgment()) || (taskContent.getClass() !== beliefContent.getClass())) {
             return;
         }
@@ -110,8 +110,8 @@ export class CompositionalRules extends JavaObject {
      * @param truth     TruthValue of the contentInd
      * @param nal       Reference to the memory
      */
-    private static processComposed(/* final */  statement: Statement | null, /* final */  subject: Term | null, /* final */  predicate: Term | null,
-            /* final */  order: int, /* final */  truth: TruthValue | null, /* final */  nal: DerivationContext | null): void {
+    private static processComposed(/* final */  statement: Statement, /* final */  subject: Term, /* final */  predicate: Term,
+            /* final */  order: int, /* final */  truth: TruthValue, /* final */  nal: DerivationContext): void {
         if ((subject === null) || (predicate === null)) {
             return;
         }
@@ -135,8 +135,8 @@ export class CompositionalRules extends JavaObject {
      * @param compoundTask Whether the implication comes from the task
      * @param nal          Reference to the memory
      */
-    private static decomposeCompound(/* final */  compound: CompoundTerm | null, /* final */  component: Term | null, /* final */  term1: Term | null,
-            /* final */  index: int, /* final */  compoundTask: boolean, /* final */  order: int, /* final */  nal: DerivationContext | null): void {
+    private static decomposeCompound(/* final */  compound: CompoundTerm, /* final */  component: Term, /* final */  term1: Term,
+            /* final */  index: int, /* final */  compoundTask: boolean, /* final */  order: int, /* final */  nal: DerivationContext): void {
 
         if ((compound instanceof Statement) || (compound instanceof ImageExt) || (compound instanceof ImageInt)) {
             return;
@@ -231,8 +231,8 @@ export class CompositionalRules extends JavaObject {
      * @param compoundTask Whether the implication comes from the task
      * @param nal          Reference to the memory
      */
-    protected static decomposeStatement(/* final */  compound: CompoundTerm | null, /* final */  component: Term | null, /* final */  compoundTask: boolean,
-            /* final */  index: int, /* final */  nal: DerivationContext | null): void {
+    protected static decomposeStatement(/* final */  compound: CompoundTerm, /* final */  component: Term, /* final */  compoundTask: boolean,
+            /* final */  index: int, /* final */  nal: DerivationContext): void {
         let isTemporalConjunction: boolean = (compound instanceof Conjunction) && !(compound as Conjunction).isSpatial;
         if (isTemporalConjunction && (compound.getTemporalOrder() === TemporalRules.ORDER_FORWARD) && (index !== 0)) {
             return;
@@ -323,8 +323,8 @@ export class CompositionalRules extends JavaObject {
      *                      predicate
      * @param nal           Reference to the memory
      */
-    public static introVarOuter(/* final */  taskContent: Statement | null, /* final */  beliefContent: Statement | null, /* final */  index: int,
-            /* final */  nal: DerivationContext | null): void {
+    public static introVarOuter(/* final */  taskContent: Statement, /* final */  beliefContent: Statement, /* final */  index: int,
+            /* final */  nal: DerivationContext): void {
 
         if (!(taskContent instanceof Inheritance)) {
             return;
@@ -394,8 +394,8 @@ export class CompositionalRules extends JavaObject {
      *                    or Conjunction
      * @param nal         Reference to the memory
      */
-    protected static introVarInner(/* final */  premise1: Statement | null, /* final */  premise2: Statement | null, /* final */  oldCompound: CompoundTerm | null,
-            /* final */  nal: DerivationContext | null): boolean {
+    protected static introVarInner(/* final */  premise1: Statement, /* final */  premise2: Statement, /* final */  oldCompound: CompoundTerm,
+            /* final */  nal: DerivationContext): boolean {
         let task: Task = nal.getCurrentTask();
         let taskSentence: Sentence = task.sentence;
         if (!taskSentence.isJudgment() || (premise1.getClass() !== premise2.getClass())
@@ -454,8 +454,8 @@ export class CompositionalRules extends JavaObject {
      * OUT: <lock1 --> lock>.
      * http://code.google.com/p/open-nars/issues/detail?id=40&can=1
      */
-    public static eliminateVariableOfConditionAbductive(/* final */  figure: int, /* final */  sentence: Sentence | null,
-            /* final */  belief: Sentence | null, /* final */  nal: DerivationContext | null): void {
+    public static eliminateVariableOfConditionAbductive(/* final */  figure: int, /* final */  sentence: Sentence,
+            /* final */  belief: Sentence, /* final */  nal: DerivationContext): void {
         let T1: Statement = sentence.term as Statement;
         let T2: Statement = belief.term as Statement;
 
@@ -565,8 +565,8 @@ export class CompositionalRules extends JavaObject {
         }
     }
 
-    private static eliminateVariableOfConditionAbductiveTryCrossUnification(sentence: Sentence | null, belief: Sentence | null,
-        nal: DerivationContext | null, s1: Term | null, p2: Term | null, res3: java.util.Map<Term, Term> | null, res4: java.util.Map<Term, Term> | null): void {
+    private static eliminateVariableOfConditionAbductiveTryCrossUnification(sentence: Sentence, belief: Sentence,
+        nal: DerivationContext, s1: Term, p2: Term, res3: java.util.Map<Term, Term>, res4: java.util.Map<Term, Term>): void {
         if (s1 instanceof Conjunction) {
             // try to unify P2 with a component
             CompositionalRules.eliminateVariableOfConditionAbductiveTryUnification1(sentence, belief, nal, p2, s1 as CompoundTerm, res3,
@@ -579,8 +579,8 @@ export class CompositionalRules extends JavaObject {
         }
     }
 
-    private static eliminateVariableOfConditionAbductiveTryUnification1(sentence: Sentence | null, belief: Sentence | null,
-        nal: DerivationContext | null, p1: Term | null, p2: CompoundTerm | null, res3: java.util.Map<Term, Term> | null, res4: java.util.Map<Term, Term> | null): void {
+    private static eliminateVariableOfConditionAbductiveTryUnification1(sentence: Sentence, belief: Sentence,
+        nal: DerivationContext, p1: Term, p2: CompoundTerm, res3: java.util.Map<Term, Term>, res4: java.util.Map<Term, Term>): void {
         for (let s1 of p2.term) {
             res3.clear();
             res4.clear(); // here the dependent part matters, see example of Issue40
@@ -590,8 +590,8 @@ export class CompositionalRules extends JavaObject {
         }
     }
 
-    private static eliminateVariableOfConditionAbductiveInner1(sentence: Sentence | null, belief: Sentence | null,
-        nal: DerivationContext | null, s1: CompoundTerm | null, res3: java.util.Map<Term, Term> | null, s12: Term | null): void {
+    private static eliminateVariableOfConditionAbductiveInner1(sentence: Sentence, belief: Sentence,
+        nal: DerivationContext, s1: CompoundTerm, res3: java.util.Map<Term, Term>, s12: Term): void {
         for (let s2 of s1.term) {
             if (!(s2 instanceof CompoundTerm)) {
                 continue;
@@ -608,8 +608,8 @@ export class CompositionalRules extends JavaObject {
         }
     }
 
-    protected static IntroVarSameSubjectOrPredicate(/* final */  originalMainSentence: Sentence | null, /* final */  subSentence: Sentence | null,
-            /* final */  component: Term | null, /* final */  content: Term | null, /* final */  index: int, /* final */  nal: DerivationContext | null): void {
+    protected static IntroVarSameSubjectOrPredicate(/* final */  originalMainSentence: Sentence, /* final */  subSentence: Sentence,
+            /* final */  component: Term, /* final */  content: Term, /* final */  index: int, /* final */  nal: DerivationContext): void {
         let T1: Term = originalMainSentence.term;
         if (!(T1 instanceof CompoundTerm) || !(content instanceof CompoundTerm)) {
             return;
@@ -663,7 +663,7 @@ export class CompositionalRules extends JavaObject {
      * @param originalSet
      * @return
      */
-    public static powerSet<T>(originalSet: java.util.Set<T> | null): java.util.Set<java.util.Set<T>> | null {
+    public static powerSet<T>(originalSet: java.util.Set<T>): java.util.Set<java.util.Set<T>> {
         let sets: java.util.Set<java.util.Set<T>> = new java.util.LinkedHashSet<java.util.Set<T>>();
         if (originalSet.isEmpty()) {
             sets.add(new java.util.LinkedHashSet<T>());
@@ -692,8 +692,8 @@ export class CompositionalRules extends JavaObject {
      * @return The terms of the variable introduction variants plus the penalty from
      *         the amount of vars introduced
      */
-    public static introduceVariables(nal: DerivationContext | null,
-        implicationEquivalenceOrJunction: Term | null, subject: boolean): java.util.Set<Pair<Term, java.lang.Float>> | null {
+    public static introduceVariables(nal: DerivationContext,
+        implicationEquivalenceOrJunction: Term, subject: boolean): java.util.Set<Pair<Term, java.lang.Float>> {
         let result: java.util.Set<Pair<Term, java.lang.Float>> = new java.util.LinkedHashSet();
         let validForIntroduction: boolean = implicationEquivalenceOrJunction instanceof Conjunction ||
             implicationEquivalenceOrJunction instanceof Disjunction ||
@@ -772,7 +772,7 @@ export class CompositionalRules extends JavaObject {
      * @param side
      * @param subject
      */
-    public static addVariableCandidates(candidates: java.util.Set<Term> | null, side: Term | null, subject: boolean): void {
+    public static addVariableCandidates(candidates: java.util.Set<Term>, side: Term, subject: boolean): void {
         let junction: boolean = (side instanceof Conjunction || side instanceof Disjunction || side instanceof Negation);
         let n: int = junction ? (side as CompoundTerm).size() : 1;
         for (let i: int = 0; i < n; i++) {

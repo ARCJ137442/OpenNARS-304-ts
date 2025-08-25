@@ -65,35 +65,35 @@ export class TestSystemOperator extends JavaObject {
      * @param consumer
      * @param expectedResultType datatype of the expected result
      */
-    private static test0Ret(consumer: NarseseConsumer | null, expectedResultType: java.lang.String | null): void {
+    private static test0Ret(consumer: NarseseConsumer, expectedResultType: java.lang.String): void {
         //consumer.addInput("<(&/, <cond0-->Cond0>, (^system, {SELF}, ls, $ret)) =/> <{$ret}-->res>>.");
         consumer.addInput("<(&/, <cond0-->Cond0>, (^system, {SELF}, ./src/main/resources/unittest/TestscriptRet" + expectedResultType + ".sh, $ret)) =/> <{$ret}-->res>>.");
         consumer.addInput("<cond0-->Cond0>. :|:");
         consumer.addInput("<{#0}-->res>!");
     }
 
-    private static test1Ret(consumer: NarseseConsumer | null, expectedResultType: java.lang.String | null): void {
+    private static test1Ret(consumer: NarseseConsumer, expectedResultType: java.lang.String): void {
         consumer.addInput("<(&/, <cond0-->Cond0>, (^system, {SELF}, ./src/main/resources/unittest/TestscriptRet" + expectedResultType + ".sh, Arg0, $ret)) =/> <{$ret}-->res>>.");
         consumer.addInput("<cond0-->Cond0>. :|:");
         consumer.addInput("<{#0}-->res>!");
     }
 
-    private static test2Ret(consumer: NarseseConsumer | null, expectedResultType: java.lang.String | null): void {
+    private static test2Ret(consumer: NarseseConsumer, expectedResultType: java.lang.String): void {
         consumer.addInput("<(&/, <cond0-->Cond0>, (^system, {SELF}, ./src/main/resources/unittest/TestscriptRet" + expectedResultType + ".sh, Arg0, Arg1, $ret)) =/> <{$ret}-->res>>.");
         consumer.addInput("<cond0-->Cond0>. :|:");
         consumer.addInput("<{#0}-->res>!");
     }
 
-    private static test3Ret(consumer: NarseseConsumer | null, expectedResultType: java.lang.String | null): void {
+    private static test3Ret(consumer: NarseseConsumer, expectedResultType: java.lang.String): void {
         consumer.addInput("<(&/, <cond0-->Cond0>, (^system, {SELF}, ./src/main/resources/unittest/TestscriptRet" + expectedResultType + ".sh, Arg0, Arg1, Arg2, $ret)) =/> <{$ret}-->res>>.");
         consumer.addInput("<cond0-->Cond0>. :|:");
         consumer.addInput("<{#0}-->res>!");
     }
 
     public static MyAnswerHandler = class MyAnswerHandler extends AnswerHandler {
-        public lastAnswerTerm: Term | null = null;
+        public lastAnswerTerm: Term = null;
 
-        public onSolution(belief: Sentence | null): void {
+        public onSolution(belief: Sentence): void {
             this.lastAnswerTerm = belief.term;
         }
     };

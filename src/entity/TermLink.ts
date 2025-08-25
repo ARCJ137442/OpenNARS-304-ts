@@ -40,7 +40,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
     public static readonly TEMPORAL: short = 9;
 
     /** The linked Term */
-    public readonly target: Term | null;
+    public readonly target: Term;
 
     /** The type of link, one of the above */
     public readonly type: short;
@@ -62,7 +62,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      * @param type    Link type
      * @param indices Component indices in compound, may be 1 to 4
      */
-    public constructor(/* final */  target: Term | null, /* final */  type: short, /* final */ ...indices: short[]);
+    public constructor(/* final */  target: Term, /* final */  type: short, /* final */ ...indices: short[]);
 
     /**
      * Constructor to make actual TermLink from a template
@@ -73,15 +73,15 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      * @param template TermLink template previously prepared
      * @param v        Budget value of the link
      */
-    public constructor(/* final */  t: Term | null, /* final */  template: TermLink | null, /* final */  v: BudgetValue | null);
+    public constructor(/* final */  t: Term, /* final */  template: TermLink, /* final */  v: BudgetValue);
 
-    public constructor(/* final */  type: short, /* final */  target: Term | null, /* final */  i0: int);
+    public constructor(/* final */  type: short, /* final */  target: Term, /* final */  i0: int);
 
-    public constructor(/* final */  type: short, /* final */  target: Term | null, /* final */  i0: int, /* final */  i1: int);
+    public constructor(/* final */  type: short, /* final */  target: Term, /* final */  i0: int, /* final */  i1: int);
 
-    public constructor(/* final */  type: short, /* final */  target: Term | null, /* final */  i0: int, /* final */  i1: int, /* final */  i2: int);
+    public constructor(/* final */  type: short, /* final */  target: Term, /* final */  i0: int, /* final */  i1: int, /* final */  i2: int);
 
-    public constructor(/* final */  type: short, /* final */  target: Term | null, /* final */  i0: int, /* final */  i1: int, /* final */  i2: int, /* final */  i3: int);
+    public constructor(/* final */  type: short, /* final */  target: Term, /* final */  i0: int, /* final */  i1: int, /* final */  i2: int, /* final */  i3: int);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 3: {
@@ -170,7 +170,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
     }
 
 
-    public name(): TermLink | null {
+    public name(): TermLink {
         return this;
     }
 
@@ -178,7 +178,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
         return this.hash;
     }
 
-    public equals(/* final */  obj: java.lang.Object | null): boolean {
+    public equals(/* final */  obj: java.lang.Object): boolean {
         if (obj === this)
             return true;
         if (this.hashCode() !== obj.hashCode())
@@ -213,11 +213,11 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
         return h;
     }
 
-    public toString(): java.lang.String | null {
+    public toString(): java.lang.String {
         return new java.lang.StringBuilder().append(this.newKeyPrefix()).append(this.target !== null ? this.target.name() : "").toString();
     }
 
-    public newKeyPrefix(): java.lang.CharSequence | null {
+    public newKeyPrefix(): java.lang.CharSequence {
         let at1: java.lang.String;
         let at2: java.lang.String;
         if ((this.type % 2) === 1) { // to component
@@ -255,11 +255,11 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
         }
     }
 
-    public getTarget(): Term | null {
+    public getTarget(): Term {
         return this.target;
     }
 
-    public getTerm(): Term | null {
+    public getTerm(): Term {
         return this.getTarget();
     }
 }

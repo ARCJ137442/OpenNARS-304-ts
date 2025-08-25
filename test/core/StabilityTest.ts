@@ -18,12 +18,12 @@ export class StabilityTest extends JavaObject {
     public static readonly similarsToSave: int = 5;
     private static readonly waitForEnterKeyOnStart: boolean = false; // useful for running profiler or some other
     // instrumentation
-    protected static readonly examples: java.util.Map<java.lang.String, java.lang.String> | null = new java.util.LinkedHashMap(); // path -> script data
-    public static readonly tests: java.util.Map<java.lang.String, java.lang.Boolean> | null = new java.util.LinkedHashMap();
-    public static readonly scores: java.util.Map<java.lang.String, java.lang.Double> | null = new java.util.LinkedHashMap();
-    protected readonly scriptPath: java.lang.String | null;
+    protected static readonly examples: java.util.Map<java.lang.String, java.lang.String> = new java.util.LinkedHashMap(); // path -> script data
+    public static readonly tests: java.util.Map<java.lang.String, java.lang.Boolean> = new java.util.LinkedHashMap();
+    public static readonly scores: java.util.Map<java.lang.String, java.lang.Double> = new java.util.LinkedHashMap();
+    protected readonly scriptPath: java.lang.String;
 
-    public static getExample(/* final */  path: java.lang.String | null): java.lang.String | null {
+    public static getExample(/* final */  path: java.lang.String): java.lang.String {
         try {
             let existing: java.lang.String = StabilityTest.examples.get(path);
             if (existing !== null)
@@ -42,14 +42,14 @@ export class StabilityTest extends JavaObject {
         }
     }
 
-    public newNAR(): Nar | null {
+    public newNAR(): Nar {
         return new Nar();
         // return Nar.build(Default.fromJSON("nal/build/pei1.fast.nar"));
         // return new ContinuousBagNARBuilder().build();
         // return new DiscretinuousBagNARBuilder().build();
     }
 
-    public static params(): java.util.Collection<unknown> | null {
+    public static params(): java.util.Collection<unknown> {
         let directories: java.lang.String[] = ["/nal/stability/"];
 
         let et: java.util.Map<java.lang.String, java.lang.Object> = ExampleFileInput.getUnitTests(directories);
@@ -59,12 +59,12 @@ export class StabilityTest extends JavaObject {
         return t;
     }
 
-    public static addTest(name: java.lang.String | null): void {
+    public static addTest(name: java.lang.String): void {
         name = name.substring(3, name.indexOf(".nal"));
         StabilityTest.tests.put(name, true);
     }
 
-    public static runTests(/* final */  c: java.lang.Class<unknown> | null): double {
+    public static runTests(/* final */  c: java.lang.Class<unknown>): double {
 
         StabilityTest.tests.clear();
         StabilityTest.scores.clear();
@@ -129,11 +129,11 @@ export class StabilityTest extends JavaObject {
         return totalScore;
     }
 
-    public static main(/* final */  args: java.lang.String[] | null): void {
+    public static main(/* final */  args: java.lang.String[]): void {
         StabilityTest.runTests(org.opennars.core.NALTest.class);
     }
 
-    public constructor(/* final */  scriptPath: java.lang.String | null) {
+    public constructor(/* final */  scriptPath: java.lang.String) {
         super();
         this.scriptPath = scriptPath;
 
@@ -143,7 +143,7 @@ export class StabilityTest extends JavaObject {
         return this.testNAL(this.scriptPath);
     }
 
-    protected testNAL(/* final */  path: java.lang.String | null): double {
+    protected testNAL(/* final */  path: java.lang.String): double {
         let expects: java.util.List<OutputCondition> = new java.util.ArrayList();
 
         let n: Nar = null;

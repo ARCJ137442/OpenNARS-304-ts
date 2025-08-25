@@ -12,10 +12,10 @@ import { java, type long, type int } from "jree";
 export abstract class OutputCondition extends OutputHandler {
     public succeeded: boolean = false;
 
-    public readonly nar: Nar | null;
+    public readonly nar: Nar;
     protected successAt: long = -1;
 
-    public constructor(/* final */  nar: Nar | null) {
+    public constructor(/* final */  nar: Nar) {
         super(nar);
         this.nar = nar;
     }
@@ -25,7 +25,7 @@ export abstract class OutputCondition extends OutputHandler {
         return false;
     }
 
-    public event(/* final */  channel: java.lang.Class<unknown> | null, /* final */  args: java.lang.Object[] | null): void {
+    public event(/* final */  channel: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]): void {
         if ((this.succeeded) && (!this.isInverse())) {
             return;
         }
@@ -49,14 +49,14 @@ export abstract class OutputCondition extends OutputHandler {
     }
 
     /** returns true if condition was satisfied */
-    public abstract condition(channel: java.lang.Class<unknown> | null, signal: java.lang.Object | null): boolean;
+    public abstract condition(channel: java.lang.Class<unknown>, signal: java.lang.Object): boolean;
 
     /**
      * reads an example file line-by-line, before being processed, to extract
      * expectations
      */
-    public static getConditions(/* final */  n: Nar | null, /* final */  example: java.lang.String | null,
-            /* final */  similarResultsToSave: int): java.util.List<OutputCondition> | null {
+    public static getConditions(/* final */  n: Nar, /* final */  example: java.lang.String,
+            /* final */  similarResultsToSave: int): java.util.List<OutputCondition> {
         let conditions: java.util.List<OutputCondition> = new java.util.ArrayList();
         let lines: java.lang.String[] = example.split("\n");
 
@@ -103,18 +103,18 @@ export abstract class OutputCondition extends OutputHandler {
         return conditions;
     }
 
-    public toString(): java.lang.String | null {
+    public toString(): java.lang.String {
         return java.lang.Object.getClass().getSimpleName() + " " + (this.succeeded ? "OK: " + this.getTrueReasons() : this.getFalseReason());
     }
 
-    public getTrueReasons(): java.util.List<unknown> | null {
+    public getTrueReasons(): java.util.List<unknown> {
         if (!this.isTrue())
             throw new java.lang.IllegalStateException(this + " is not true so has no true reasons");
         return java.util.Collections.emptyList();
     }
 
     /** if false, a reported reason why this condition is false */
-    public abstract getFalseReason(): java.lang.String | null;
+    public abstract getFalseReason(): java.lang.String;
 
     /** if true, when it became true */
     public getTrueTime(): long {

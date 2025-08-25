@@ -8,14 +8,14 @@ import { java, JavaObject, type int } from "jree";
  */
 export class TermTest extends JavaObject {
 
-    protected readonly n: Nar | null = new Nar();
-    protected readonly np: Narsese | null = new Narsese(this.n);
+    protected readonly n: Nar = new Nar();
+    protected readonly np: Narsese = new Narsese(this.n);
 
     public constructor() {
         super();
     }
 
-    protected assertEquivalent(/* final */  term1String: java.lang.String | null, /* final */  term2String: java.lang.String | null): void {
+    protected assertEquivalent(/* final */  term1String: java.lang.String, /* final */  term2String: java.lang.String): void {
         // final Nar n = new Nar();
 
         try {

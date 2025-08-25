@@ -13,7 +13,7 @@ export class Conjunction extends CompoundTerm {
     public readonly temporalOrder: int;
     public readonly isSpatial: boolean;
 
-    protected constructor(/* final */  arg: Term[] | null, /* final */  order: int, /* final */  normalized: boolean, /* final */  spatial: boolean);
+    protected constructor(/* final */  arg: Term[], /* final */  order: int, /* final */  normalized: boolean, /* final */  spatial: boolean);
 
     /**
      * Constructor with partial values, called by make
@@ -23,8 +23,8 @@ export class Conjunction extends CompoundTerm {
      * @param normalized
      */
     // avoids re-calculates of conv rectangle
-    protected constructor(/* final */  arg: Term[] | null, /* final */  order: int, /* final */  normalized: boolean, /* final */  spatial: boolean,
-            /* final */  rect: CompoundTerm.ConvRectangle | null);
+    protected constructor(/* final */  arg: Term[], /* final */  order: int, /* final */  normalized: boolean, /* final */  spatial: boolean,
+            /* final */  rect: CompoundTerm.ConvRectangle);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 4: {
@@ -71,10 +71,10 @@ export class Conjunction extends CompoundTerm {
      *
      * @return A new object
      */
-    public clone(): Conjunction | null;
+    public clone(): Conjunction;
 
-    public clone(/* final */  t: Term[] | null): Term | null;
-    public clone(...args: unknown[]): Conjunction | null | Term | null {
+    public clone(/* final */  t: Term[]): Term;
+    public clone(...args: unknown[]): Conjunction | Term {
         switch (args.length) {
             case 0: {
 
@@ -109,7 +109,7 @@ export class Conjunction extends CompoundTerm {
      *
      * @return the operator of the term
      */
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         switch (this.temporalOrder) {
             case TemporalRules.ORDER_FORWARD:
                 if (this.isSpatial) {
@@ -139,7 +139,7 @@ export class Conjunction extends CompoundTerm {
      * @return the Term generated from the arguments
      * @param argList the list of arguments
      */
-    public static make(/* final */  argList: Term[] | null): Term | null;
+    public static make(/* final */  argList: Term[]): Term;
 
     /**
      * Try to make a new compound from a list of term. Called by StringParser.
@@ -148,7 +148,7 @@ export class Conjunction extends CompoundTerm {
      * @param argList       the list of arguments
      * @return the Term generated from the arguments, or null if not possible
      */
-    public static make(/* final */  argList: Term[] | null, /* final */  temporalOrder: int): Term | null;
+    public static make(/* final */  argList: Term[], /* final */  temporalOrder: int): Term;
 
     // overload this method by term type?
     /**
@@ -158,25 +158,25 @@ export class Conjunction extends CompoundTerm {
      * @param term2 The second component
      * @return A compound generated or a term it reduced to
      */
-    public static make(/* final */  term1: Term | null, /* final */  term2: Term | null): Term | null;
+    public static make(/* final */  term1: Term, /* final */  term2: Term): Term;
 
-    public static make(/* final */  argList: Term[] | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
+    public static make(/* final */  argList: Term[], /* final */  temporalOrder: int, /* final */  spatial: boolean): Term;
 
-    public static make(/* final */  prefix: Term | null, /* final */  suffix: Interval | null, /* final */  temporalOrder: int): Term | null;
+    public static make(/* final */  prefix: Term, /* final */  suffix: Interval, /* final */  temporalOrder: int): Term;
 
     /**
      *
      * @param set a set of Term as term
      * @return the Term generated from the arguments
      */
-    private static make(/* final */  set: java.util.Collection<Term> | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
+    private static make(/* final */  set: java.util.Collection<Term>, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term;
 
-    public static make(/* final */  term1: Term | null, /* final */  term2: Term | null, /* final */  temporalOrder: int): Term | null;
+    public static make(/* final */  term1: Term, /* final */  term2: Term, /* final */  temporalOrder: int): Term;
 
-    public static make(/* final */  prefix: Term | null, /* final */  ival: Interval | null, /* final */  suffix: Term | null, /* final */  temporalOrder: int): Term | null;
+    public static make(/* final */  prefix: Term, /* final */  ival: Interval, /* final */  suffix: Term, /* final */  temporalOrder: int): Term;
 
-    public static make(/* final */  term1: Term | null, /* final */  term2: Term | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
-    public static make(...args: unknown[]): Term | null {
+    public static make(/* final */  term1: Term, /* final */  term2: Term, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term;
+    public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
                 const [argList] = args as [Term[]];
@@ -382,7 +382,7 @@ export class Conjunction extends CompoundTerm {
     }
 
 
-    public static isConjunctionAndHasSameOrder(/* final */  t: Term | null, /* final */  order: int): boolean {
+    public static isConjunctionAndHasSameOrder(/* final */  t: Term, /* final */  order: int): boolean {
         if (t instanceof Conjunction) {
             let c: Conjunction = t as Conjunction;
             return c.getTemporalOrder() === order;
@@ -390,7 +390,7 @@ export class Conjunction extends CompoundTerm {
         return false;
     }
 
-    public static flatten(/* final */  args: Term[] | null, /* final */  order: int, /* final */  isSpatial: boolean): Term[] | null { // flatten only same
+    public static flatten(/* final */  args: Term[], /* final */  order: int, /* final */  isSpatial: boolean): Term[] { // flatten only same
         // order!
         // determine how many there are with same order
         let sz: int = 0;
@@ -418,7 +418,7 @@ export class Conjunction extends CompoundTerm {
         return ret;
     }
 
-    public static PositiveIntString(/* final */  value: int): java.lang.String | null {
+    public static PositiveIntString(/* final */  value: int): java.lang.String {
         if (value === 0) {
             return "";
         } else {
@@ -427,7 +427,7 @@ export class Conjunction extends CompoundTerm {
     }
 
     public static UpdateRelativeIndices(/* final */  minX: int, /* final */  minY: int, /* final */  minsX: int, /* final */  minsY: int,
-            /* final */  term: Term | null): Term | null {
+            /* final */  term: Term): Term {
         if (term instanceof CompoundTerm) {
             let ct: CompoundTerm = (term as CompoundTerm);
             for (let i: int = 0; i < ct.term.length; i++) {
@@ -462,7 +462,7 @@ export class Conjunction extends CompoundTerm {
      * @return The components sequence with summed intervals
      *         for transforming (&/,a,+1,+1) to (&/,a,+2)
      */
-    public static simplifyIntervals(components: Term[] | null): Term[] | null {
+    public static simplifyIntervals(components: Term[]): Term[] {
         let ret: java.util.List<Term> = new java.util.ArrayList<Term>();
         for (let i: int = 0; i < components.length;) {
             if (components[i] instanceof Interval) {
@@ -480,7 +480,7 @@ export class Conjunction extends CompoundTerm {
         return ret.toArray(new Array<Term>(0));
     }
 
-    protected makeName(): java.lang.CharSequence | null {
+    protected makeName(): java.lang.CharSequence {
         return makeCompoundName(this.operator(), term);
     }
 

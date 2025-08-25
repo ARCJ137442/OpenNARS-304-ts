@@ -11,7 +11,7 @@ export class Add extends FunctionOperator {
         super("^add");
     }
 
-    protected function(/* final */  memory: Memory | null, /* final */  x: Term[] | null): Term | null {
+    protected function(/* final */  memory: Memory, /* final */  x: Term[]): Term {
         if (x.length !== 2) {
             throw new java.lang.IllegalStateException("Requires 2 arguments");
         }
@@ -34,7 +34,7 @@ export class Add extends FunctionOperator {
         return new Term(java.lang.String.valueOf(n1 + n2));
     }
 
-    protected getRange(): Term | null {
+    protected getRange(): Term {
         return Term.get("added");
     }
 

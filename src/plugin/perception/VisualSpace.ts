@@ -16,11 +16,11 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
     public py: int = 0;
 
     // those are the same for each instance:
-    public static readonly move: NullOperator | null = new NullOperator("^move");
-    public static readonly zoom: NullOperator | null = new NullOperator("^zoom");
-    private readonly nar: Nar | null;
+    public static readonly move: NullOperator = new NullOperator("^move");
+    public static readonly zoom: NullOperator = new NullOperator("^zoom");
+    private readonly nar: Nar;
 
-    public constructor(/* final */  nar: Nar | null, /* final */  source: Float64Array[], /* final */  py: int, /* final */  px: int, /* final */  height: int,
+    public constructor(/* final */  nar: Nar, /* final */  source: Float64Array[], /* final */  py: int, /* final */  px: int, /* final */  height: int,
             /* final */  width: int) {
         super();
         this.nar = nar;
@@ -43,7 +43,7 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
         nar.addPlugin(VisualSpace.zoom);
     }
 
-    public AbductionOrComparisonTo(obj: ImaginationSpace | null, comparison: boolean): TruthValue | null {
+    public AbductionOrComparisonTo(obj: ImaginationSpace, comparison: boolean): TruthValue {
         if (!(obj instanceof VisualSpace)) {
             return new TruthValue(1.0, 0.0, this.nar.narParameters);
         }
@@ -80,7 +80,7 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
         return bestShiftTruth;
     }
 
-    public ConstructSpace(/* final */  program: Conjunction | null): ImaginationSpace | null {
+    public ConstructSpace(/* final */  program: Conjunction): ImaginationSpace {
         if (program.isSpatial || program.getTemporalOrder() !== TemporalRules.ORDER_FORWARD) {
             return null; // would be a strange program :)
         }
@@ -104,7 +104,7 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
         return null;
     }
 
-    public ProgressSpace(/* final */  op: Operation | null, /* final */  b: ImaginationSpace | null): ImaginationSpace | null {
+    public ProgressSpace(/* final */  op: Operation, /* final */  b: ImaginationSpace): ImaginationSpace {
         if (!(b instanceof VisualSpace)) {
             return null; // incompatible
         }
@@ -121,7 +121,7 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
         return progressed;
     }
 
-    public IsOperationInSpace(/* final */  oper: Operation | null): boolean {
+    public IsOperationInSpace(/* final */  oper: Operation): boolean {
         let op: Operator = oper.getPredicate() as Operator;
         return op.equals(VisualSpace.move) || op.equals(VisualSpace.zoom);
     }

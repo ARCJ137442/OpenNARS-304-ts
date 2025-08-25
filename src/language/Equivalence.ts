@@ -17,7 +17,7 @@ export class Equivalence extends Statement {
      *
      * @param components The component list of the term
      */
-    private constructor(/* final */  components: Term[] | null, /* final */  order: int) {
+    private constructor(/* final */  components: Term[], /* final */  order: int) {
         super(components);
 
         this.temporalOrder = order;
@@ -30,10 +30,10 @@ export class Equivalence extends Statement {
      *
      * @return A new object
      */
-    public clone(): Equivalence | null;
+    public clone(): Equivalence;
 
-    public clone(/* final */  t: Term[] | null): Equivalence | null;
-    public clone(...args: unknown[]): Equivalence | null {
+    public clone(/* final */  t: Term[]): Equivalence;
+    public clone(...args: unknown[]): Equivalence {
         switch (args.length) {
             case 0: {
 
@@ -71,7 +71,7 @@ export class Equivalence extends Statement {
      * predicate
      * to be reduced to the common term.
      */
-    public static makeTerm(/* final */  subject: Term | null, /* final */  predicate: Term | null, /* final */  temporalOrder: int): Term | null {
+    public static makeTerm(/* final */  subject: Term, /* final */  predicate: Term, /* final */  temporalOrder: int): Term {
         if (subject.equals(predicate))
             return subject;
         return Equivalence.make(subject, predicate, temporalOrder);
@@ -85,10 +85,10 @@ export class Equivalence extends Statement {
      * @param predicate The second component
      * @return A compound generated or null
      */
-    public static make(/* final */  subject: Term | null, /* final */  predicate: Term | null): Equivalence | null;
+    public static make(/* final */  subject: Term, /* final */  predicate: Term): Equivalence;
 
-    public static make(subject: Term | null, predicate: Term | null, temporalOrder: int): Equivalence | null;
-    public static make(...args: unknown[]): Equivalence | null {
+    public static make(subject: Term, predicate: Term, temporalOrder: int): Equivalence;
+    public static make(...args: unknown[]): Equivalence {
         switch (args.length) {
             case 2: {
                 const [subject, predicate] = args as [Term, Term];
@@ -167,7 +167,7 @@ export class Equivalence extends Statement {
      *
      * @return the operator of the term
      */
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         switch (this.temporalOrder) {
             case TemporalRules.ORDER_FORWARD:
                 return NativeOperator.EQUIVALENCE_AFTER;

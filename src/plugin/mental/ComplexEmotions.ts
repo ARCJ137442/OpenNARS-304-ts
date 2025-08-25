@@ -8,10 +8,10 @@ import { java, JavaObject, type float } from "jree";
  */
 export class ComplexEmotions extends JavaObject implements Plugin {
 
-    public obs: EventEmitter.EventObserver | null;
+    public obs: EventEmitter.EventObserver;
     protected fear: float = 0.5;
 
-    public setEnabled(/* final */  n: Nar | null, /* final */  enabled: boolean): boolean {
+    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
         if (enabled) {
 
             let memory: Memory = n.memory;

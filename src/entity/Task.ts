@@ -16,16 +16,16 @@ import { java, type int, type long, S } from "jree";
 export class Task extends Item<Sentence> {
 
     /* The sentence of the Task */
-    public readonly sentence: Sentence | null;
+    public readonly sentence: Sentence;
     /* Belief from which the Task is derived, or null if derived from a theorem */
-    public readonly parentBelief: Sentence | null;
+    public readonly parentBelief: Sentence;
     /*
      * Tasklink from which the Task is derived, null unless Debug.PARENTS is turned
      * on
      */
-    public parentTask: Sentence | null;
+    public parentTask: Sentence;
     /* For Question and Goal: best solution found so far */
-    private bestSolution: Sentence | null;
+    private bestSolution: Sentence;
     /* Whether the task should go into event bag or not */
     private partOfSequenceBuffer: boolean = false;
     /* Whether it is an input task or not */
@@ -37,7 +37,7 @@ export class Task extends Item<Sentence> {
      * @param s The sentence
      * @param b The budget
      */
-    public constructor(/* final */  s: Sentence | null, /* final */  b: BudgetValue | null, type: Task.EnumType | null);
+    public constructor(/* final */  s: Sentence, /* final */  b: BudgetValue, type: Task.EnumType);
 
     /***
      * Constructors for double premise derived task
@@ -46,7 +46,7 @@ export class Task extends Item<Sentence> {
      * @param b            The budget
      * @param parentBelief The belief used for deriving the task
      */
-    public constructor(/* final */  s: Sentence | null, /* final */  b: BudgetValue | null, /* final */  parentBelief: Sentence | null);
+    public constructor(/* final */  s: Sentence, /* final */  b: BudgetValue, /* final */  parentBelief: Sentence);
 
     /***
      * Constructors for solved double premise derived task
@@ -56,7 +56,7 @@ export class Task extends Item<Sentence> {
      * @param parentBelief The belief used for deriving the task
      * @param solution     The solution to the task
      */
-    public constructor(/* final */  s: Sentence | null, /* final */  b: BudgetValue | null, /* final */  parentBelief: Sentence | null, /* final */  solution: Sentence | null);
+    public constructor(/* final */  s: Sentence, /* final */  b: BudgetValue, /* final */  parentBelief: Sentence, /* final */  solution: Sentence);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 3: {
@@ -100,11 +100,11 @@ export class Task extends Item<Sentence> {
     }
 
 
-    public name(): Sentence | null {
+    public name(): Sentence {
         return this.sentence;
     }
 
-    public equals(/* final */  obj: java.lang.Object | null): boolean {
+    public equals(/* final */  obj: java.lang.Object): boolean {
         if (obj === this)
             return true;
         if (obj instanceof Task) {
@@ -145,7 +145,7 @@ export class Task extends Item<Sentence> {
      *
      * @param that The other Task
      */
-    public merge(/* final */  that: Item<unknown> | null): Item<unknown> | null {
+    public merge(/* final */  that: Item<unknown>): Item<unknown> {
         if (this.getCreationTime() >= (that as Task).getCreationTime()) {
             return super.merge(that);
         } else {
@@ -158,7 +158,7 @@ export class Task extends Item<Sentence> {
      *
      * @return The stored Sentence or null
      */
-    public getBestSolution(): Sentence | null {
+    public getBestSolution(): Sentence {
         return this.bestSolution;
     }
 
@@ -168,7 +168,7 @@ export class Task extends Item<Sentence> {
      *
      * @param judgment The solution to be remembered
      */
-    public setBestSolution(/* final */  memory: Memory | null, /* final */  judgment: Sentence | null, /* final */  time: Timable | null): void {
+    public setBestSolution(/* final */  memory: Memory, /* final */  judgment: Sentence, /* final */  time: Timable): void {
         if (memory.internalExperience !== null) {
             InternalExperience.InternalExperienceFromBelief(memory, this, judgment, time);
         }
@@ -180,7 +180,7 @@ export class Task extends Item<Sentence> {
      *
      * @return The belief from which the task is derived
      */
-    public getParentBelief(): Sentence | null {
+    public getParentBelief(): Sentence {
         if (this.parentBelief === null)
             return null;
         return this.parentBelief;
@@ -191,7 +191,7 @@ export class Task extends Item<Sentence> {
      *
      * @return The Task as a String
      */
-    public toStringLong(): java.lang.String | null {
+    public toStringLong(): java.lang.String {
         let s: java.lang.StringBuilder = new java.lang.StringBuilder();
         s.append(super.toString()).append(' ').append(this.sentence.stamp.name());
         if (this.bestSolution !== null) {
@@ -211,7 +211,7 @@ export class Task extends Item<Sentence> {
         return !this.sentence.isEternal() && (this.isInput() || this.partOfSequenceBuffer);
     }
 
-    public getTerm(): Term | null {
+    public getTerm(): Term {
         return this.sentence.getTerm();
     }
 

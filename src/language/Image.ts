@@ -10,7 +10,7 @@ export abstract class Image extends CompoundTerm {
     /** The index of relation in the component list */
     public readonly relationIndex: short;
 
-    protected constructor(/* final */  components: Term[] | null, /* final */  relationIndex: short) {
+    protected constructor(/* final */  components: Term[], /* final */  relationIndex: short) {
         super(components);
 
         this.relationIndex = relationIndex;
@@ -18,12 +18,12 @@ export abstract class Image extends CompoundTerm {
         this.init(components);
     }
 
-    protected init(/* final */  components: Term[] | null): void {
+    protected init(/* final */  components: Term[]): void {
         super.init(components);
         this.hash = java.util.Objects.hash(super.hashCode(), this.relationIndex);
     }
 
-    public compareTo(/* final */  that: AbstractTerm | null): int {
+    public compareTo(/* final */  that: AbstractTerm): int {
         if (that instanceof Image) {
             let r: int = this.relationIndex - (that as Image).relationIndex;
             if (r !== 0)
@@ -33,7 +33,7 @@ export abstract class Image extends CompoundTerm {
     }
 
     // TODO replace with a special Term type
-    public static isPlaceHolder(/* final */  t: Term | null): boolean {
+    public static isPlaceHolder(/* final */  t: Term): boolean {
         if (t.getClass() !== Term.class)
             return false;
         let n: java.lang.CharSequence = t.name();
@@ -50,7 +50,7 @@ export abstract class Image extends CompoundTerm {
      * @param relationIndex the location of the place holder
      * @return the oldName of the term
      */
-    protected static makeImageName(/* final */  op: NativeOperator | null, /* final */  arg: Term[] | null, /* final */  relationIndex: int): java.lang.String | null {
+    protected static makeImageName(/* final */  op: NativeOperator, /* final */  arg: Term[], /* final */  relationIndex: int): java.lang.String {
         let sizeEstimate: int = 12 * arg.length + 2;
 
         let name: java.lang.StringBuilder = new java.lang.StringBuilder(sizeEstimate)
@@ -77,7 +77,7 @@ export abstract class Image extends CompoundTerm {
      * @return The term relaterom existing fields
      * @return the name of the term
      */
-    public makeName(): java.lang.CharSequence | null {
+    public makeName(): java.lang.CharSequence {
         return Image.makeImageName(operator(), term, this.relationIndex);
     }
 
@@ -86,7 +86,7 @@ export abstract class Image extends CompoundTerm {
      *
      * @return The term representing a relation
      */
-    public getRelation(): Term | null {
+    public getRelation(): Term {
         return term[this.relationIndex];
     }
 
@@ -95,7 +95,7 @@ export abstract class Image extends CompoundTerm {
      *
      * @return The term related
      */
-    public getTheOtherComponent(): Term | null {
+    public getTheOtherComponent(): Term {
         if (term.length !== 2) {
             return null;
         }

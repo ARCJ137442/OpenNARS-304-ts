@@ -12,7 +12,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     /**
      * serial numbers. not to be modified after Stamp constructor has initialized it
      */
-    public evidentialBase: Stamp.BaseEntry[] | null;
+    public evidentialBase: Stamp.BaseEntry[];
 
     /** the length of @see evidentialBase */
     public baseLength: int;
@@ -33,16 +33,16 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * caches evidentialBase as a set for comparisons and hashcode, stores the
      * unique Long's in-order for efficiency
      */
-    private evidentialSet: Stamp.BaseEntry[] | null = null;
+    private evidentialSet: Stamp.BaseEntry[] = null;
 
     /** Tense of the item */
-    private tense: Tense | null;
+    private tense: Tense;
 
     /** is it a neg confirmation task that was already checked */
     public alreadyAnticipatedNegConfirmation: boolean = false;
 
     /** caches */
-    protected name: java.lang.CharSequence | null = null;
+    protected name: java.lang.CharSequence = null;
 
     /**
      * derivation chain containing the used premises and conclusions which made
@@ -54,13 +54,13 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     /** cache of hashcode of evidential base */
     private evidentialHash: int;
 
-    public before(/* final */  s: Stamp | null, /* final */  duration: int): boolean {
+    public before(/* final */  s: Stamp, /* final */  duration: int): boolean {
         if (this.isEternal() || s.isEternal())
             return false;
         return java.nio.ByteBuffer.order(s.occurrenceTime, this.occurrenceTime, duration) === TemporalRules.ORDER_BACKWARD;
     }
 
-    public after(/* final */  s: Stamp | null, /* final */  duration: int): boolean {
+    public after(/* final */  s: Stamp, /* final */  duration: int): boolean {
         if (this.isEternal() || s.isEternal())
             return false;
         return java.nio.ByteBuffer.order(s.occurrenceTime, this.occurrenceTime, duration) === TemporalRules.ORDER_FORWARD;
@@ -75,13 +75,13 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      *
      * @param old The stamp to be cloned
      */
-    private constructor(/* final */  old: Stamp | null);
+    private constructor(/* final */  old: Stamp);
 
     /**
      * used for when the ocrrence time will be set later; so should not be called
      * from externally but through another Stamp constructor
      */
-    protected constructor(/* final */  tense: Tense | null, /* final */  serial: Stamp.BaseEntry | null);
+    protected constructor(/* final */  tense: Tense, /* final */  serial: Stamp.BaseEntry);
 
     /**
      * Generate a new stamp from an existing one, with the same evidentialBase
@@ -92,21 +92,21 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * @param old          The stamp of the single premise
      * @param creationTime The current time
      */
-    public constructor(/* final */  old: Stamp | null, /* final */  creationTime: long);
+    public constructor(/* final */  old: Stamp, /* final */  creationTime: long);
 
     /** creates a stamp with default Present tense */
-    public constructor(/* final */  time: Timable | null, /* final */  memory: Memory | null);
+    public constructor(/* final */  time: Timable, /* final */  memory: Memory);
 
-    public constructor(/* final */  old: Stamp | null, /* final */  creationTime: long, /* final */  useEvidentialBase: Stamp | null);
+    public constructor(/* final */  old: Stamp, /* final */  creationTime: long, /* final */  useEvidentialBase: Stamp);
 
-    public constructor(/* final */  time: Timable | null, /* final */  memory: Memory | null, /* final */  tense: Tense | null);
+    public constructor(/* final */  time: Timable, /* final */  memory: Memory, /* final */  tense: Tense);
 
     /**
      * Generate a new stamp, with a new serial number, for a new Task
      *
      * @param time Creation time of the stamp
      */
-    public constructor(/* final */  time: long, /* final */  tense: Tense | null, /* final */  serial: Stamp.BaseEntry | null, /* final */  duration: int);
+    public constructor(/* final */  time: long, /* final */  tense: Tense, /* final */  serial: Stamp.BaseEntry, /* final */  duration: int);
 
     /**
      * Generate a new stamp for derived sentence by merging the two from parents
@@ -115,7 +115,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * @param first  The first Stamp
      * @param second The second Stamp
      */
-    public constructor(/* final */  first: Stamp | null, /* final */  second: Stamp | null, /* final */  time: long, narParameters: java.security.Policy.Parameters | null);
+    public constructor(/* final */  first: Stamp, /* final */  second: Stamp, /* final */  time: long, narParameters: java.security.Policy.Parameters);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -243,7 +243,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
 
 
     /** Detects evidental base overlaps **/
-    public static baseOverlap(/* final */  a: Stamp | null, /* final */  b: Stamp | null): boolean {
+    public static baseOverlap(/* final */  a: Stamp, /* final */  b: Stamp): boolean {
         let base1: Stamp.BaseEntry[] = a.evidentialBase;
         let base2: Stamp.BaseEntry[] = b.evidentialBase;
 
@@ -313,11 +313,11 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      *
      * @return The cloned stamp
      */
-    public override  clone(): Stamp | null {
+    public override  clone(): Stamp {
         return new Stamp(this);
     }
 
-    public static toSetArray(/* final */  x: Stamp.BaseEntry[] | null): Stamp.BaseEntry[] | null {
+    public static toSetArray(/* final */  x: Stamp.BaseEntry[]): Stamp.BaseEntry[] {
         let set: Stamp.BaseEntry[] = x.clone();
 
         if (x.length < 2)
@@ -354,7 +354,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      *
      * @return The NavigableSet representation of the evidential base
      */
-    private toSet(): Stamp.BaseEntry[] | null {
+    private toSet(): Stamp.BaseEntry[] {
         if (this.evidentialSet === null) {
             this.evidentialSet = Stamp.toSetArray(this.evidentialBase);
             this.evidentialHash = java.util.Arrays.hashCode(this.evidentialSet);
@@ -363,7 +363,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         return this.evidentialSet;
     }
 
-    public override  equals(/* final */  that: java.lang.Object | null): boolean;
+    public override  equals(/* final */  that: java.lang.Object): boolean;
 
     /**
      * Check if two stamps contains the same types of content
@@ -371,7 +371,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * @param s The Stamp to be compared
      * @return Whether the two have contain the same evidential base
      */
-    public override  equals(/* final */  s: Stamp | null, /* final */  creationTime: boolean, /* final */  ocurrenceTime: boolean,
+    public override  equals(/* final */  s: Stamp, /* final */  creationTime: boolean, /* final */  ocurrenceTime: boolean,
             /* final */  evidentialBase: boolean): boolean;
     public override equals(...args: unknown[]): boolean {
         switch (args.length) {
@@ -428,7 +428,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         return this.evidentialHash;
     }
 
-    public cloneWithNewOccurrenceTime(/* final */  newOcurrenceTime: long): Stamp | null {
+    public cloneWithNewOccurrenceTime(/* final */  newOcurrenceTime: long): Stamp {
         let s: Stamp = this.clone();
         if (newOcurrenceTime === Stamp.ETERNAL)
             s.tense = Tense.Eternal;
@@ -452,7 +452,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         this.occurrenceTime = Stamp.ETERNAL;
     }
 
-    public appendOcurrenceTime(/* final */  sb: java.lang.StringBuilder | null): java.lang.StringBuilder | null {
+    public appendOcurrenceTime(/* final */  sb: java.lang.StringBuilder): java.lang.StringBuilder {
         if (this.occurrenceTime !== Stamp.ETERNAL) {
             let estTimeLength: int = 8; /* # digits */
             sb.ensureCapacity(estTimeLength + 1 + 1);
@@ -466,7 +466,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      *
      * @return occurrence time
      */
-    public getOccurrenceTimeString(): java.lang.String | null {
+    public getOccurrenceTimeString(): java.lang.String {
         if (this.isEternal()) {
             return "";
         } else {
@@ -474,7 +474,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         }
     }
 
-    public getTense(/* final */  currentTime: long, /* final */  duration: int): java.lang.String | null {
+    public getTense(/* final */  currentTime: long, /* final */  duration: int): java.lang.String {
 
         if (this.isEternal()) {
             return "";
@@ -500,7 +500,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         }
     }
 
-    public name(): java.lang.CharSequence | null {
+    public name(): java.lang.CharSequence {
         if (this.name === null) {
 
             let estimatedInitialSize: int = 10 * this.baseLength;
@@ -527,7 +527,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         return this.name;
     }
 
-    public override  toString(): java.lang.String | null {
+    public override  toString(): java.lang.String {
         return this.name().toString();
     }
 
@@ -566,11 +566,11 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
             this.inputId = inputId;
         }
 
-        public override  toString(): java.lang.String | null {
+        public override  toString(): java.lang.String {
             return "(" + this.narId + "," + this.inputId + ")";
         }
 
-        public override  equals(other: java.lang.Object | null): boolean {
+        public override  equals(other: java.lang.Object): boolean {
             if (other === this) {
                 return true;
             }
@@ -589,7 +589,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
             return result;
         }
 
-        public compareTo(o: BaseEntry | null): int {
+        public compareTo(o: BaseEntry): int {
             return java.util.Comparator.comparing(BaseEntry.getNarId)
                 .thenComparing(BaseEntry.getInputId)
                 .compare(this, o);

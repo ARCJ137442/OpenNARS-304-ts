@@ -6,16 +6,16 @@ import { java, type float } from "jree";
  * Feeling common operations
  */
 export abstract class Feel extends Operator {
-    private readonly feelingTerm: Term | null;
+    private readonly feelingTerm: Term;
 
-    public constructor(/* final */  name: java.lang.String | null) {
+    public constructor(/* final */  name: java.lang.String) {
         super(name);
 
         // remove the "^feel" prefix from name
         this.feelingTerm = Term.get((name() as java.lang.String).substring(5).toLowerCase());
     }
 
-    protected static readonly selfSubject: Term | null = Term.SELF;
+    protected static readonly selfSubject: Term = Term.SELF;
 
     /**
      * To get the current value of an internal sensor
@@ -24,7 +24,7 @@ export abstract class Feel extends Operator {
      * @param memory The memory in which the operation is executed
      * @return Immediate results as Tasks
      */
-    protected feeling(/* final */  value: float, /* final */  memory: Memory | null, /* final */  time: Timable | null): java.util.List<Task> | null {
+    protected feeling(/* final */  value: float, /* final */  memory: Memory, /* final */  time: Timable): java.util.List<Task> {
         let stamp: Stamp = new Stamp(time, memory, Tense.Present);
         let truth: TruthValue = new TruthValue(value, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
             memory.narParameters);

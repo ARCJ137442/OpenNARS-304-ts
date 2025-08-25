@@ -15,7 +15,7 @@ import { java, type long, S } from "jree";
  */
 export class Interval extends Term {
 
-    public static interval(/* final */  i: java.lang.String | null): Interval | null {
+    public static interval(/* final */  i: java.lang.String): Interval {
         return new Interval(java.lang.Long.parseLong(i.substring(1)));
     }
 
@@ -32,7 +32,7 @@ export class Interval extends Term {
      */
     public constructor(/* final */  time: long);
 
-    public constructor(/* final */  i: java.lang.String | null);
+    public constructor(/* final */  i: java.lang.String);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -64,7 +64,7 @@ export class Interval extends Term {
     }
 
 
-    public clone(): Interval | null {
+    public clone(): Interval {
         // can return this as its own clone since it's immutable.
         // originally: return new Interval(magnitude, true);
         return this;

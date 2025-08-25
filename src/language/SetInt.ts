@@ -16,7 +16,7 @@ export class SetInt extends SetTensional {
      *
      * @param arg The component list of the term - args must be unique and sorted
      */
-    public constructor(/* final */ ...arg: Term | null[]) {
+    public constructor(/* final */ ...arg: Term[]) {
         super(arg);
     }
 
@@ -25,10 +25,10 @@ export class SetInt extends SetTensional {
      *
      * @return A new object, to be casted into a SetInt
      */
-    public clone(): SetInt | null;
+    public clone(): SetInt;
 
-    public clone(/* final */  replaced: Term[] | null): SetInt | null;
-    public clone(...args: unknown[]): SetInt | null {
+    public clone(/* final */  replaced: Term[]): SetInt;
+    public clone(...args: unknown[]): SetInt {
         switch (args.length) {
             case 0: {
 
@@ -58,10 +58,10 @@ export class SetInt extends SetTensional {
     }
 
 
-    public static make(/* final */  l: java.util.Collection<Term> | null): SetInt | null;
+    public static make(/* final */  l: java.util.Collection<Term>): SetInt;
 
-    public static make(...t: Term | null[]): SetInt | null;
-    public static make(...args: unknown[]): SetInt | null {
+    public static make(...t: Term[]): SetInt;
+    public static make(...args: unknown[]): SetInt {
         switch (args.length) {
             case 1: {
                 const [l] = args as [java.util.Collection<Term>];
@@ -98,7 +98,7 @@ export class SetInt extends SetTensional {
      *
      * @return the operator of the term
      */
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         return NativeOperator.SET_INT_OPENER;
     }
 
@@ -107,7 +107,7 @@ export class SetInt extends SetTensional {
      *
      * @return true for communitative
      */
-    public makeName(): java.lang.CharSequence | null {
+    public makeName(): java.lang.CharSequence {
         return makeSetName(SET_INT_OPENER.ch, term, SET_INT_CLOSER.ch);
     }
 

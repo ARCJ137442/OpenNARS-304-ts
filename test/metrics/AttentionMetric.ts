@@ -5,15 +5,15 @@ import { java, JavaObject, type int, type double, closeResources, handleResource
 // TODO< run more tests >
 
 export class AttentionMetric extends JavaObject {
-    public static directories: java.lang.String[] | null = ["/nal/multi_step/", "/nal/application/"];
+    public static directories: java.lang.String[] = ["/nal/multi_step/", "/nal/application/"];
 
     public static showOutput: boolean = true;
 
     public static numberOfSamples: int = 8;
 
-    public static rng: java.util.Random | null = new java.util.Random(23 + 42);
+    public static rng: java.util.Random = new java.util.Random(23 + 42);
 
-    public static main(args: java.lang.String[] | null): void {
+    public static main(args: java.lang.String[]): void {
 
         let et: java.util.Map<java.lang.String, java.lang.Object> = ExampleFileInput.getUnitTests(AttentionMetric.directories);
 
@@ -41,7 +41,7 @@ export class AttentionMetric extends JavaObject {
         // int debugHere = 5;
     }
 
-    public static calcScore(execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime> | null, narParams: java.security.Policy.Parameters | null): double {
+    public static calcScore(execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>, narParams: java.security.Policy.Parameters): double {
         let score: double = 0.0;
 
         let exponentialDecayTimeWeightFactor: double = 0.0003; // how fast does the "score" decay for a solution?
@@ -97,7 +97,7 @@ export class AttentionMetric extends JavaObject {
         return score;
     }
 
-    public static runMetricTest(name: java.lang.String | null): double {
+    public static runMetricTest(name: java.lang.String): double {
         let execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime> = new java.util.HashMap();
 
         let n: Reasoner = null;
@@ -170,7 +170,7 @@ export class AttentionMetric extends JavaObject {
         return scoreOfThisTest;
     }
 
-    public static readFile(filepath: java.lang.String | null): java.util.List<java.lang.String> | null {
+    public static readFile(filepath: java.lang.String): java.util.List<java.lang.String> {
         let res: java.util.List<java.lang.String> = new java.util.ArrayList();
         try {
             // This holds the final error to throw (if any).
@@ -199,16 +199,16 @@ export class AttentionMetric extends JavaObject {
     }
 
     public static OutputHandler2 = class OutputHandler2 extends EventHandler {
-        private readonly execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime> | null;
-        private readonly nar: Nar | null;
+        private readonly execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>;
+        private readonly nar: Nar;
 
-        public constructor(nar: Nar | null, execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime> | null) {
+        public constructor(nar: Nar, execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>) {
             super(nar, true);
             this.nar = nar;
             this.execOrQaAnswersByTime = execOrQaAnswersByTime;
         }
 
-        public event(event: java.lang.Class<unknown> | null, args: java.lang.Object[] | null): void {
+        public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
             let exeResult: Operator.ExecutionResult = args[0] as Operator.ExecutionResult;
             let task: Task = exeResult.getTask();
             AttentionMetric.update(this.execOrQaAnswersByTime, task.sentence, this.nar);
@@ -217,16 +217,16 @@ export class AttentionMetric extends JavaObject {
 
 
     public static AnswerHandler = class AnswerHandler extends org.opennars.io.events.AnswerHandler {
-        private readonly execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime> | null;
-        private readonly reasoner: Reasoner | null;
+        private readonly execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>;
+        private readonly reasoner: Reasoner;
 
-        public constructor(reasoner: Reasoner | null, execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime> | null) {
+        public constructor(reasoner: Reasoner, execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>) {
             super();
             this.reasoner = reasoner;
             this.execOrQaAnswersByTime = execOrQaAnswersByTime;
         }
 
-        public onSolution(belief: Sentence | null): void {
+        public onSolution(belief: Sentence): void {
             AttentionMetric.update(this.execOrQaAnswersByTime, belief, this.reasoner);
 
             // int here = 5;
@@ -236,7 +236,7 @@ export class AttentionMetric extends JavaObject {
 
     // TODO< handle truth of answer correctly >
     // updates execOrQaAnswersByTime with the result from the sentence
-    public static update(execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime> | null, s: Sentence | null, nar: Reasoner | null): void {
+    public static update(execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>, s: Sentence, nar: Reasoner): void {
         let exec: AttentionMetric.ExecOrAnswerByTime;
 
         if (execOrQaAnswersByTime.containsKey(s.term.toString())) {
@@ -265,18 +265,18 @@ export class AttentionMetric extends JavaObject {
 
     // used to record the first and best answer or exec of op by time
     public static ExecOrAnswerByTime = class ExecOrAnswerByTime extends JavaObject {
-        public readonly narseseTerm: java.lang.String | null;
-        public readonly type: java.lang.String | null;
+        public readonly narseseTerm: java.lang.String;
+        public readonly type: java.lang.String;
 
-        public firstTime: java.lang.Long | null;
-        public firstTruth: TruthValue | null;
+        public firstTime: java.lang.Long;
+        public firstTruth: TruthValue;
 
-        public bestTime: java.lang.Long | null;
-        public bestTruth: TruthValue | null;
+        public bestTime: java.lang.Long;
+        public bestTruth: TruthValue;
 
         // /param type is the type, "exec" or "q&a"
         // /param narseseTerm term as string
-        public constructor(type: java.lang.String | null, narseseTerm: java.lang.String | null) {
+        public constructor(type: java.lang.String, narseseTerm: java.lang.String) {
             super();
             this.type = type;
             this.narseseTerm = narseseTerm;

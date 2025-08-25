@@ -5,13 +5,13 @@ import { java, JavaObject, S } from "jree";
 /**
  */
 export abstract class EventHandler extends JavaObject implements EventEmitter.EventObserver {
-    protected readonly source: EventEmitter | null;
+    protected readonly source: EventEmitter;
     protected active: boolean = false;
-    private readonly events: java.lang.Class<unknown>[] | null;
+    private readonly events: java.lang.Class<unknown>[];
 
-    public constructor(/* final */  n: Nar | null, /* final */  active: boolean, /* final */ ...events: java.lang.Class<unknown> | null[]);
+    public constructor(/* final */  n: Nar, /* final */  active: boolean, /* final */ ...events: java.lang.Class<unknown>[]);
 
-    public constructor(/* final */  source: EventEmitter | null, /* final */  active: boolean, /* final */ ...events: java.lang.Class<unknown> | null[]);
+    public constructor(/* final */  source: EventEmitter, /* final */  active: boolean, /* final */ ...events: java.lang.Class<unknown>[]);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 3: {

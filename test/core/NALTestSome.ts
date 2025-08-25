@@ -13,12 +13,12 @@ export class NALTestSome extends NALTest {
         showSuccess = showOutput;
     }
 
-    public static include(/* final */  filename: java.lang.String | null): boolean {
+    public static include(/* final */  filename: java.lang.String): boolean {
         // return true; //filename.startsWith("nal6.8.nal");
         return filename.startsWith("nal4");
     }
 
-    public static params(): java.util.Collection<unknown> | null {
+    public static params(): java.util.Collection<unknown> {
         let l: java.util.List<java.lang.Object[]> = new java.util.LinkedList();
 
         let folder: java.io.File = null;
@@ -42,11 +42,11 @@ export class NALTestSome extends NALTest {
         return l;
     }
 
-    public static main(/* final */  args: java.lang.String[] | null): void {
+    public static main(/* final */  args: java.lang.String[]): void {
         org.junit.runner.JUnitCore.runClasses(NALTestSome.class);
     }
 
-    public constructor(/* final */  scriptPath: java.lang.String | null) {
+    public constructor(/* final */  scriptPath: java.lang.String) {
         super(scriptPath);// , true);
 
     }

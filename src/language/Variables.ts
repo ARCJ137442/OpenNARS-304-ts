@@ -16,14 +16,14 @@ export class Variables extends JavaObject {
      * this is to delay the instantiation of the 2 Map until necessary to avoid
      * wasting them if they are not used.
      */
-    public static findSubstitute(rnd: java.util.Random | null, /* final */  type: char, /* final */  term1: Term | null, /* final */  term2: Term | null,
-            /* final */  map: java.util.Map<Term, Term>[] | null): boolean;
+    public static findSubstitute(rnd: java.util.Random, /* final */  type: char, /* final */  term1: Term, /* final */  term2: Term,
+            /* final */  map: java.util.Map<Term, Term>[]): boolean;
 
-    public static findSubstitute(rnd: java.util.Random | null, /* final */  type: char, /* final */  term1: Term | null, /* final */  term2: Term | null,
-            /* final */  map1: java.util.Map<Term, Term> | null, /* final */  map2: java.util.Map<Term, Term> | null): boolean;
+    public static findSubstitute(rnd: java.util.Random, /* final */  type: char, /* final */  term1: Term, /* final */  term2: Term,
+            /* final */  map1: java.util.Map<Term, Term>, /* final */  map2: java.util.Map<Term, Term>): boolean;
 
-    public static findSubstitute(rnd: java.util.Random | null, /* final */  type: char, /* final */  term1: Term | null, /* final */  term2: Term | null,
-            /* final */  map: java.util.Map<Term, Term>[] | null, /* final */  allowPartial: boolean): boolean;
+    public static findSubstitute(rnd: java.util.Random, /* final */  type: char, /* final */  term1: Term, /* final */  term2: Term,
+            /* final */  map: java.util.Map<Term, Term>[], /* final */  allowPartial: boolean): boolean;
     public static findSubstitute(...args: unknown[]): boolean {
         switch (args.length) {
             case 5: {
@@ -305,7 +305,7 @@ export class Variables extends JavaObject {
      * @param source source maps (two)
      * @return copied maps
      */
-    private static copyMapFrom(source: java.util.Map<Term, Term>[] | null): java.util.Map<Term, Term>[] | null {
+    private static copyMapFrom(source: java.util.Map<Term, Term>[]): java.util.Map<Term, Term>[] {
         let destination: java.util.Map<Term, Term>[] = new Array<java.util.LinkedHashMap<unknown, unknown>>(2) as java.util.Map<Term, Term>[];
 
         destination[0] = new java.util.LinkedHashMap();
@@ -316,7 +316,7 @@ export class Variables extends JavaObject {
         return destination;
     }
 
-    private static appendToMap(source: java.util.Map<Term, Term> | null, target: java.util.Map<Term, Term> | null): void {
+    private static appendToMap(source: java.util.Map<Term, Term>, target: java.util.Map<Term, Term>): void {
         for (let c of source.keySet()) {
             target.put(c, source.get(c));
         }
@@ -329,9 +329,9 @@ export class Variables extends JavaObject {
      * @param n The string name to be checked
      * @return Whether the name contains a variable
      */
-    public static containVar(/* final */  n: java.lang.CharSequence | null): boolean;
+    public static containVar(/* final */  n: java.lang.CharSequence): boolean;
 
-    public static containVar(/* final */  t: Term[] | null): boolean;
+    public static containVar(/* final */  t: Term[]): boolean;
     public static containVar(...args: unknown[]): boolean {
         switch (args.length) {
             case 1: {
@@ -387,7 +387,7 @@ export class Variables extends JavaObject {
      * @return Whether the unification is possible. 't' will refer to the unified
      *         terms
      */
-    public static unify(rnd: java.util.Random | null, /* final */  type: char, /* final */  t: Term[] | null): boolean;
+    public static unify(rnd: java.util.Random, /* final */  type: char, /* final */  t: Term[]): boolean;
 
     /**
      * To unify two terms
@@ -400,9 +400,9 @@ export class Variables extends JavaObject {
      * @return Whether the unification is possible. 't' will refer to the unified
      *         terms
      */
-    public static unify(rnd: java.util.Random | null, /* final */  type: char, /* final */  t1: Term | null, /* final */  t2: Term | null, /* final */  compound: Term[] | null): boolean;
+    public static unify(rnd: java.util.Random, /* final */  type: char, /* final */  t1: Term, /* final */  t2: Term, /* final */  compound: Term[]): boolean;
 
-    public static unify(rnd: java.util.Random | null, /* final */  type: char, /* final */  t1: Term | null, /* final */  t2: Term | null, /* final */  compound: Term[] | null,
+    public static unify(rnd: java.util.Random, /* final */  type: char, /* final */  t1: Term, /* final */  t2: Term, /* final */  compound: Term[],
             /* final */  allowPartial: boolean): boolean;
     public static unify(...args: unknown[]): boolean {
         switch (args.length) {
@@ -473,7 +473,7 @@ export class Variables extends JavaObject {
      * appliesSubstitute and renameVariables, resulting in a cloned object,
      * will not change this instance
      */
-    private static applySubstituteAndRenameVariables(/* final */  t: CompoundTerm | null, /* final */  subs: java.util.Map<Term, Term> | null): Term | null {
+    private static applySubstituteAndRenameVariables(/* final */  t: CompoundTerm, /* final */  subs: java.util.Map<Term, Term>): Term {
         if ((subs === null) || (subs.isEmpty())) {
             // no change needed
             return t;
@@ -490,7 +490,7 @@ export class Variables extends JavaObject {
         return r;
     }
 
-    public static makeCommonVariable(/* final */  v1: Term | null, /* final */  v2: Term | null): Variable | null {
+    public static makeCommonVariable(/* final */  v1: Term, /* final */  v2: Term): Variable {
         // TODO use more efficient string construction
         return new Variable(v2.toString() + v1.toString() + '$'); // v2 first since when type does not match
     } // but it is an allowed rename like $1 -> #1 then the second type should be used
@@ -502,7 +502,7 @@ export class Variables extends JavaObject {
      * @param T term to be examined
      * @return Whether the term contains an independent variable
      */
-    public static indepVarUsedInvalid(/* final */  T: Term | null): boolean {
+    public static indepVarUsedInvalid(/* final */  T: Term): boolean {
 
         // if its a conjunction/disjunction, this is invalid: (&&,<$1 --> test>,<$1 -->
         // test2>), while this isnt: (&&,<$1 --> test ==> <$1 --> test2>,others)
@@ -533,7 +533,7 @@ export class Variables extends JavaObject {
      * @param term2 The second term to be unified
      * @return Whether there is a substitution
      */
-    public static hasSubstitute(rnd: java.util.Random | null, /* final */  type: char, /* final */  term1: Term | null, /* final */  term2: Term | null): boolean {
+    public static hasSubstitute(rnd: java.util.Random, /* final */  type: char, /* final */  term1: Term, /* final */  term2: Term): boolean {
         return Variables.findSubstitute(rnd, type, term1, term2, new java.util.LinkedHashMap(), new java.util.LinkedHashMap());
     }
 

@@ -11,7 +11,7 @@ export class System extends FunctionOperator {
         super("^system");
     }
 
-    protected function(/* final */  memory: Memory | null, /* final */  x: Term[] | null): Term | null {
+    protected function(/* final */  memory: Memory, /* final */  x: Term[]): Term {
         let cmd: java.lang.String = "";
         for (let i: int = 0; i < x.length; ++i) {
             cmd += x[i].name().toString() + " ";
@@ -41,7 +41,7 @@ export class System extends FunctionOperator {
         return new Term(ret);
     }
 
-    protected getRange(): Term | null {
+    protected getRange(): Term {
         return Term.get("system_called");
     }
 

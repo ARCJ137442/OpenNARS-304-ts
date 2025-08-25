@@ -8,7 +8,7 @@ import { java, JavaObject, type double, type int, type char, type float, S } fro
  * Experimental alternative to Abbreviation plugin.
  */
 export class Abbreviation extends JavaObject implements Plugin {
-    public obs: EventObserver | null;
+    public obs: EventObserver;
 
     // TODO different parameters for priorities and budgets of both the abbreviation
     // process and the resulting abbreviation judgment
@@ -75,13 +75,13 @@ export class Abbreviation extends JavaObject implements Plugin {
     }
 
 
-    public canAbbreviate(/* final */  task: Task | null): boolean {
+    public canAbbreviate(/* final */  task: Task): boolean {
         return !(task.sentence.term instanceof Operation) &&
             (task.sentence.term.getComplexity() > this.abbreviationComplexityMin) &&
             (task.budget.getQuality() > this.abbreviationQualityMin);
     }
 
-    public setEnabled(/* final */  n: Nar | null, /* final */  enabled: boolean): boolean {
+    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
         let memory: Memory = n.memory;
 
         let _abbreviate: Operator = memory.getOperator("^abbreviate");
@@ -129,9 +129,9 @@ export class Abbreviation extends JavaObject implements Plugin {
             super("^abbreviate");
         }
 
-        private static currentTermSerial: java.lang.Integer | null = 1;
+        private static currentTermSerial: java.lang.Integer = 1;
 
-        public newSerialTerm(/* final */  prefix: char): Term | null {
+        public newSerialTerm(/* final */  prefix: char): Term {
             /* synchronized (currentTermSerial) { */
             Abbreviate.currentTermSerial++;
             /* } */
@@ -145,8 +145,8 @@ export class Abbreviation extends JavaObject implements Plugin {
          * @param memory The memory in which the operation is executed
          * @return Immediate results as Tasks
          */
-        protected execute(/* final */  operation: Operation | null, /* final */  args: Term[] | null, /* final */  memory: Memory | null,
-                /* final */  time: Timable | null): java.util.List<Task> | null {
+        protected execute(/* final */  operation: Operation, /* final */  args: Term[], /* final */  memory: Memory,
+                /* final */  time: Timable): java.util.List<Task> {
 
             let compound: Term = args[0];
 

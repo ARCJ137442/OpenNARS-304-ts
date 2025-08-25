@@ -31,7 +31,7 @@
 export class TestStamp extends JavaObject {
     private narid: long = 0;
 
-    protected entry(inputId: long): BaseEntry | null {
+    protected entry(inputId: long): BaseEntry {
         return new BaseEntry(this.narid, inputId);
     }
 

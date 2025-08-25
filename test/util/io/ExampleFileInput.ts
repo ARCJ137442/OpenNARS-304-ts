@@ -7,7 +7,7 @@ import { java, JavaObject, type int } from "jree";
  */
 export class ExampleFileInput extends JavaObject {
 
-    public static load(/* final */  path: java.lang.String | null): java.lang.String | null {
+    public static load(/* final */  path: java.lang.String): java.lang.String {
         let sb: java.lang.StringBuilder = new java.lang.StringBuilder();
         let line: java.lang.String;
         let fp: java.io.File = new java.io.File(path);
@@ -20,22 +20,22 @@ export class ExampleFileInput extends JavaObject {
     }
 
     /** narsese source code, one instruction per line */
-    private readonly source: java.lang.String | null;
+    private readonly source: java.lang.String;
 
-    protected constructor(/* final */  input: java.lang.String | null) {
+    protected constructor(/* final */  input: java.lang.String) {
         super();
         this.source = input;
     }
 
-    public static get(/* final */  id: java.lang.String | null): ExampleFileInput | null {
+    public static get(/* final */  id: java.lang.String): ExampleFileInput {
         return new ExampleFileInput(ExampleFileInput.load("./nal/" + id + ".nal"));
     }
 
-    public enableConditions(/* final */  n: Nar | null, /* final */  similarResultsToSave: int): java.util.List<OutputCondition> | null {
+    public enableConditions(/* final */  n: Nar, /* final */  similarResultsToSave: int): java.util.List<OutputCondition> {
         return OutputCondition.getConditions(n, this.source, similarResultsToSave);
     }
 
-    public static getUnitTests(/* final */  directories: java.lang.String[] | null): java.util.Map<java.lang.String, java.lang.Object> | null {
+    public static getUnitTests(/* final */  directories: java.lang.String[]): java.util.Map<java.lang.String, java.lang.Object> {
         let l: java.util.Map<java.lang.String, java.lang.Object> = new java.util.TreeMap();
 
         for (let dir of directories) {
@@ -65,7 +65,7 @@ export class ExampleFileInput extends JavaObject {
         return l;
     }
 
-    public getSource(): java.lang.String | null {
+    public getSource(): java.lang.String {
         return this.source;
     }
 

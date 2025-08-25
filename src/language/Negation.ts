@@ -14,13 +14,13 @@ export class Negation extends CompoundTerm {
      * avoid using this externally, because double-negatives can be unwrapped to the
      * original term using Negation.make
      */
-    protected constructor(/* final */  t: Term | null) {
+    protected constructor(/* final */  t: Term) {
         super([t]);
 
         java.security.cert.CertPathChecker.init(term);
     }
 
-    protected makeName(): java.lang.CharSequence | null {
+    protected makeName(): java.lang.CharSequence {
         return makeCompoundName(NativeOperator.NEGATION, term[0]);
     }
 
@@ -29,10 +29,10 @@ export class Negation extends CompoundTerm {
      *
      * @return A new object
      */
-    public clone(): Negation | null;
+    public clone(): Negation;
 
-    public clone(/* final */  replaced: Term[] | null): Term | null;
-    public clone(...args: unknown[]): Negation | null | Term | null {
+    public clone(/* final */  replaced: Term[]): Term;
+    public clone(...args: unknown[]): Negation | Term {
         switch (args.length) {
             case 0: {
 
@@ -70,7 +70,7 @@ export class Negation extends CompoundTerm {
      * @param t The component
      * @return A compound generated or a term it reduced to
      */
-    public static make(/* final */  t: Term | null): Term | null;
+    public static make(/* final */  t: Term): Term;
 
     /**
      * Try to make a new Negation. Called by StringParser.
@@ -78,8 +78,8 @@ export class Negation extends CompoundTerm {
      * @return the Term generated from the arguments
      * @param argument The list of term
      */
-    public static make(/* final */  argument: Term[] | null): Term | null;
-    public static make(...args: unknown[]): Term | null {
+    public static make(/* final */  argument: Term[]): Term;
+    public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
                 const [t] = args as [Term];
@@ -119,11 +119,11 @@ export class Negation extends CompoundTerm {
      *
      * @return the operator of the term
      */
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         return NativeOperator.NEGATION;
     }
 
-    public static areMutuallyInverse(/* final */  tc: Term | null, /* final */  ptc: Term | null): boolean {
+    public static areMutuallyInverse(/* final */  tc: Term, /* final */  ptc: Term): boolean {
         // doesnt seem necessary to check both, one seems sufficient.
         // incurs cost of creating a Negation and its id
         return (ptc.equals(Negation.make(tc)) /* || tc.equals(Negation.make(ptc)) */);

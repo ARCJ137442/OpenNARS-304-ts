@@ -12,18 +12,18 @@ export class Variable extends Term {
     /** caches the type character for faster lookup than charAt(0) */
     private type: char = 0;
 
-    private scope: Term | null;
+    private scope: Term;
 
     private hash: int;
 
-    public constructor(/* final */  name: java.lang.CharSequence | null);
+    public constructor(/* final */  name: java.lang.CharSequence);
 
     /**
      * Constructor, from a given variable name
      *
      * @param name A String read from input
      */
-    protected constructor(/* final */  name: java.lang.CharSequence | null, /* final */  scope: Term | null);
+    protected constructor(/* final */  name: java.lang.CharSequence, /* final */  scope: Term);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -54,7 +54,7 @@ export class Variable extends Term {
     }
 
 
-    public setScope(/* final */  scope: Term | null, /* final */  n: java.lang.CharSequence | null): Variable | null {
+    public setScope(/* final */  scope: Term, /* final */  n: java.lang.CharSequence): Variable {
         this.setName(n);
         this.type = n.charAt(0);
         this.scope = scope !== null ? scope : this;
@@ -69,7 +69,7 @@ export class Variable extends Term {
      *
      * @return The cloned Variable
      */
-    public clone(): Variable | null {
+    public clone(): Variable {
         let v: Variable = new Variable(java.lang.Enum.name(), this.scope);
         if (this.scope === this)
             v.scope = v;
@@ -120,7 +120,7 @@ export class Variable extends Term {
         return this.isQueryVariable();
     }
 
-    public equals(/* final */  that: java.lang.Object | null): boolean {
+    public equals(/* final */  that: java.lang.Object): boolean {
         if (that === this) {
             return true;
         }
@@ -141,7 +141,7 @@ export class Variable extends Term {
         return (v.getScope().name().equals(this.getScope().name()));
     }
 
-    public equalsTerm(/* final */  that: java.lang.Object | null): boolean {
+    public equalsTerm(/* final */  that: java.lang.Object): boolean {
         // TODO factor these comparisons into 2 nested if's
         let v: Variable = that as Variable;
         if ((v.scope === v) && (this.scope === this))
@@ -182,7 +182,7 @@ export class Variable extends Term {
         return this.hash;
     }
 
-    public compareTo(/* final */  that: AbstractTerm | null): int {
+    public compareTo(/* final */  that: AbstractTerm): int {
         if (this === that) {
             return 0;
         }
@@ -241,12 +241,12 @@ export class Variable extends Term {
         return n.charAt(l - 1) === '$';
     }
 
-    public getScope(): Term | null {
+    public getScope(): Term {
         return this.scope;
     }
 
     // ported back from 1.7, sehs addition
-    public static compare(/* final */  a: Variable | null, /* final */  b: Variable | null): int {
+    public static compare(/* final */  a: Variable, /* final */  b: Variable): int {
         // int i = a.name().compareTo(b.name());
         let i: int = Texts.compareTo(a.name(), b.name());
         if (i === 0) {
@@ -275,11 +275,11 @@ export class Variable extends Term {
     }
 
     private static readonly MAX_CACHED_VARNAME_INDEXES: int = 64;
-    private static readonly vn1: java.lang.CharSequence[] | null = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
-    private static readonly vn2: java.lang.CharSequence[] | null = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
-    private static readonly vn3: java.lang.CharSequence[] | null = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
+    private static readonly vn1: java.lang.CharSequence[] = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
+    private static readonly vn2: java.lang.CharSequence[] = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
+    private static readonly vn3: java.lang.CharSequence[] = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
 
-    public static getName(/* final */  type: char, /* final */  index: int): java.lang.CharSequence | null {
+    public static getName(/* final */  type: char, /* final */  index: int): java.lang.CharSequence {
         if (index > Variable.MAX_CACHED_VARNAME_INDEXES)
             return Variable.newName(type, index);
 
@@ -307,7 +307,7 @@ export class Variable extends Term {
         return c;
     }
 
-    protected static newName(/* final */  type: char, index: int): java.lang.CharSequence | null {
+    protected static newName(/* final */  type: char, index: int): java.lang.CharSequence {
 
         let digits: int = (index >= 256 ? 3 : ((index >= 16) ? 2 : 1));
         let cb: java.nio.CharBuffer = java.nio.CharBuffer.allocate(1 + digits).append(type);
@@ -318,7 +318,7 @@ export class Variable extends Term {
         return cb.compact().toString();
     }
 
-    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer> | null): java.util.Map<Term, java.lang.Integer> | null {
+    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer>): java.util.Map<Term, java.lang.Integer> {
         if (map === null) {
             map = new java.util.LinkedHashMap<Term, java.lang.Integer>();
         }

@@ -15,7 +15,7 @@ export class IntersectionInt extends CompoundTerm {
      *
      * @param arg The component list of the term
      */
-    private constructor(/* final */  arg: Term[] | null) {
+    private constructor(/* final */  arg: Term[]) {
         super(arg);
 
         if (Debug.DETAILED) {
@@ -30,10 +30,10 @@ export class IntersectionInt extends CompoundTerm {
      *
      * @return A new object, to be casted into a Conjunction
      */
-    public clone(): IntersectionInt | null;
+    public clone(): IntersectionInt;
 
-    public clone(/* final */  replaced: Term[] | null): Term | null;
-    public clone(...args: unknown[]): IntersectionInt | null | Term | null {
+    public clone(/* final */  replaced: Term[]): Term;
+    public clone(...args: unknown[]): IntersectionInt | Term {
         switch (args.length) {
             case 0: {
 
@@ -63,7 +63,7 @@ export class IntersectionInt extends CompoundTerm {
     }
 
 
-    public static make(t: Term[] | null): Term | null;
+    public static make(t: Term[]): Term;
 
     /**
      * Try to make a new compound from two term. Called by the inference rules.
@@ -72,8 +72,8 @@ export class IntersectionInt extends CompoundTerm {
      * @param term2 The second component
      * @return A compound generated or a term it reduced to
      */
-    public static make(/* final */  term1: Term | null, /* final */  term2: Term | null): Term | null;
-    public static make(...args: unknown[]): Term | null {
+    public static make(/* final */  term1: Term, /* final */  term2: Term): Term;
+    public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
                 const [t] = args as [Term[]];
@@ -153,7 +153,7 @@ export class IntersectionInt extends CompoundTerm {
      *
      * @return the operator of the term
      */
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         return NativeOperator.INTERSECTION_INT;
     }
 

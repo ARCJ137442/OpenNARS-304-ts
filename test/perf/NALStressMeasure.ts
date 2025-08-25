@@ -8,7 +8,7 @@ import { java, JavaObject, type double, type int, type long, type float } from "
  * useful for examining with a profiler.
  */
 export class NALStressMeasure extends JavaObject {
-    public static perfNAL(/* final */  n: Reasoner | null, /* final */  path: java.lang.String | null, /* final */  extraCycles: int, /* final */  repeats: int,
+    public static perfNAL(/* final */  n: Reasoner, /* final */  path: java.lang.String, /* final */  extraCycles: int, /* final */  repeats: int,
             /* final */  warmups: int, /* final */  gc: boolean): double {
 
         let example: java.lang.String = NALTest.getExample(path);
@@ -30,7 +30,7 @@ export class NALStressMeasure extends JavaObject {
                 this.totalCycles += n.time();
             }
 
-            public print(): Performance | null {
+            public print(): Performance {
                 super.print();
                 java.lang.System.out.print(", " + df.format(getCycleTimeMS() / this.totalCycles * 1000.0) + " uS/cycle, "
                     + ((this.totalCycles as float) / (warmups + repeats)) + " cycles/run");
@@ -38,7 +38,7 @@ export class NALStressMeasure extends JavaObject {
 
             }
 
-            public printCSV(/* final */  finalComma: boolean): Performance | null {
+            public printCSV(/* final */  finalComma: boolean): Performance {
                 super.printCSV(true);
                 java.lang.System.out.print(df.format(getCycleTimeMS() / this.totalCycles * 1000.0) + ", "
                     + ((this.totalCycles as float) / (warmups + repeats)));
@@ -61,7 +61,7 @@ export class NALStressMeasure extends JavaObject {
 
     }
 
-    public static test(/* final */  n: Reasoner | null): void {
+    public static test(/* final */  n: Reasoner): void {
         let repeats: int = 1;
         let warmups: int = 0;
         let extraCycles: int = 5000;
@@ -75,7 +75,7 @@ export class NALStressMeasure extends JavaObject {
         java.lang.System.out.println("\n\nTotal mean runtime (ms): " + totalTime);
     }
 
-    public static main(/* final */  args: java.lang.String[] | null): void {
+    public static main(/* final */  args: java.lang.String[]): void {
         let nd: Reasoner = new Nar();
         NALStressMeasure.test(nd);
     }

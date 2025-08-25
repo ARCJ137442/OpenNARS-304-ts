@@ -13,7 +13,7 @@ export abstract class SetTensional extends CompoundTerm {
      *
      * @param arg The component list of the term
      */
-    protected constructor(/* final */  arg: Term[] | null) {
+    protected constructor(/* final */  arg: Term[]) {
         super(arg);
 
         if (arg.length === 0)
@@ -34,7 +34,7 @@ export abstract class SetTensional extends CompoundTerm {
      * @param arg    the list of term
      * @return the oldName of the term
      */
-    protected static makeSetName(/* final */  opener: char, /* final */  arg: Term[] | null, /* final */  closer: char): java.lang.CharSequence | null {
+    protected static makeSetName(/* final */  opener: char, /* final */  arg: Term[], /* final */  closer: char): java.lang.CharSequence {
         let size: int = 1 + 1 - 1; // opener + closer - 1 [no preceding separator for first element]
 
         for (let t of arg)

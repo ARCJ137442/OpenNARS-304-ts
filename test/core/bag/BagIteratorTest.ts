@@ -6,7 +6,7 @@ export class BagIteratorTest extends JavaObject {
 
     protected readonly L: int = 4;
 
-    public testIterator(/* final */  b: Bag<NullItem, java.lang.CharSequence> | null): void {
+    public testIterator(/* final */  b: Bag<NullItem, java.lang.CharSequence>): void {
         let count: int = 0;
         let first: NullItem = null;
         let current: NullItem = null;
@@ -28,7 +28,7 @@ export class BagIteratorTest extends JavaObject {
         assertTrue(count === b.size());
     }
 
-    public numEmptyLevels(bag: Bag<unknown, unknown> | null): int {
+    public numEmptyLevels(bag: Bag<unknown, unknown>): int {
         /*
          * int empty = 0;
          * for (int i = 0; i < bag.level.length; i++) {
@@ -41,7 +41,7 @@ export class BagIteratorTest extends JavaObject {
         return 0;
     }
 
-    public testBagIterator(/* final */  b: Bag<NullItem, java.lang.CharSequence> | null): void {
+    public testBagIterator(/* final */  b: Bag<NullItem, java.lang.CharSequence>): void {
 
         b.putIn(new NullItem(0.1));
         b.putIn(new NullItem(0.2));

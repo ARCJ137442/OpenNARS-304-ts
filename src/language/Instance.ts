@@ -22,7 +22,7 @@ export abstract class Instance extends JavaObject /* extends Statement */ {
      * @param predicate The second component
      * @return A compound generated or null
      */
-    public static make(/* final */  subject: Term | null, /* final */  predicate: Term | null): Inheritance | null {
+    public static make(/* final */  subject: Term, /* final */  predicate: Term): Inheritance {
         return Inheritance.make(new SetExt(subject), predicate);
     }
 }

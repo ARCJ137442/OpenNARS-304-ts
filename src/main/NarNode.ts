@@ -15,7 +15,7 @@ export class NarNode extends JavaObject implements EventObserver {
 
 
     /* The socket the Nar listens from */
-    private receiveSocket: java.net.DatagramSocket | null;
+    private receiveSocket: java.net.DatagramSocket;
 
     // /*
     // * Listen port however is not transient and can be used to recover the
@@ -23,7 +23,7 @@ export class NarNode extends JavaObject implements EventObserver {
     // */
     // private int listenPort;
 
-    public nar: Nar | null;
+    public nar: Nar;
 
     /***
      * Create a Nar node that listens for received tasks from other NarNode
@@ -35,7 +35,7 @@ export class NarNode extends JavaObject implements EventObserver {
      */
     public constructor(listenPort: int);
 
-    public constructor(nar: Nar | null, listenPort: int);
+    public constructor(nar: Nar, listenPort: int);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -100,7 +100,7 @@ export class NarNode extends JavaObject implements EventObserver {
      * @param event
      * @param args
      */
-    public event(event: java.lang.Class<unknown> | null, args: java.lang.Object[] | null): void {
+    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
         if (event === Events.TaskAdd.class) {
             let t: Task = args[0] as Task;
             try {
@@ -122,7 +122,7 @@ export class NarNode extends JavaObject implements EventObserver {
      * @param t
      * @throws IOException
      */
-    private sendTask(t: Task | null): void {
+    private sendTask(t: Task): void {
         let bStream: java.io.ByteArrayOutputStream = new java.io.ByteArrayOutputStream();
         let oo: java.io.ObjectOutput = new java.io.ObjectOutputStream(bStream);
         oo.writeObject(t);
@@ -153,10 +153,10 @@ export class NarNode extends JavaObject implements EventObserver {
      * @param target
      * @throws IOException
      */
-    public static sendNarsese(input: java.lang.String | null, target: NarNode.TargetNar | null): void;
+    public static sendNarsese(input: java.lang.String, target: NarNode.TargetNar): void;
 
-    public static sendNarsese(input: java.lang.String | null, /* final */  targetIP: java.lang.String | null, /* final */  targetPort: int, /* final */  taskThreshold: float,
-        mustContainTerm: Term | null): void;
+    public static sendNarsese(input: java.lang.String, /* final */  targetIP: java.lang.String, /* final */  targetPort: int, /* final */  taskThreshold: float,
+        mustContainTerm: Term): void;
     public static sendNarsese(...args: unknown[]): void {
         switch (args.length) {
             case 2: {
@@ -211,7 +211,7 @@ export class NarNode extends JavaObject implements EventObserver {
          * @throws SocketException
          * @throws UnknownHostException
          */
-        public constructor(/* final */  targetIP: java.lang.String | null, /* final */  targetPort: int, /* final */  threshold: float, mustContainTerm: Term | null,
+        public constructor(/* final */  targetIP: java.lang.String, /* final */  targetPort: int, /* final */  threshold: float, mustContainTerm: Term,
             sendInput: boolean) {
             super();
             this.targetAddress = java.net.InetAddress.getByName(targetIP);
@@ -223,17 +223,17 @@ export class NarNode extends JavaObject implements EventObserver {
         }
 
         protected readonly threshold: float;
-        protected readonly sendSocket: java.net.DatagramSocket | null;
+        protected readonly sendSocket: java.net.DatagramSocket;
         protected readonly targetPort: int;
-        protected readonly targetAddress: java.net.InetAddress | null;
-        protected readonly mustContainTerm: Term | null;
+        protected readonly targetAddress: java.net.InetAddress;
+        protected readonly mustContainTerm: Term;
         protected readonly sendInput: boolean;
     };
 
 
-    private targets: java.util.List<NarNode.TargetNar> | null = new java.util.ArrayList();
+    private targets: java.util.List<NarNode.TargetNar> = new java.util.ArrayList();
 
-    public addRedirectionTo(target: NarNode.TargetNar | null): void;
+    public addRedirectionTo(target: NarNode.TargetNar): void;
 
     /**
      * Add another target Nar node to redirect tasks to, and under which conditions.
@@ -247,8 +247,8 @@ export class NarNode extends JavaObject implements EventObserver {
      * @throws SocketException
      * @throws UnknownHostException
      */
-    public addRedirectionTo(/* final */  targetIP: java.lang.String | null, /* final */  targetPort: int, /* final */  taskThreshold: float,
-        mustContainTerm: Term | null, sendInput: boolean): void;
+    public addRedirectionTo(/* final */  targetIP: java.lang.String, /* final */  targetPort: int, /* final */  taskThreshold: float,
+        mustContainTerm: Term, sendInput: boolean): void;
     public addRedirectionTo(...args: unknown[]): void {
         switch (args.length) {
             case 1: {
@@ -284,7 +284,7 @@ export class NarNode extends JavaObject implements EventObserver {
      * @return the object received (Task, String)
      * @throws IOException when can't receive packet
      */
-    private receiveObject(): java.lang.Object | null {
+    private receiveObject(): java.lang.Object {
         let recBytes: Int8Array = new Int8Array(65535);
         let packet: java.net.DatagramPacket = new java.net.DatagramPacket(recBytes, recBytes.length);
         this.receiveSocket.receive(packet);

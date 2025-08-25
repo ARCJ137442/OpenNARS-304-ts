@@ -18,8 +18,8 @@ export class Register extends Operator {
      * @param memory The memory in which the operation is executed
      * @return Immediate results as Tasks
      */
-    protected execute(/* final */  operation: Operation | null, /* final */  args: Term[] | null, /* final */  memory: Memory | null,
-            /* final */  time: Timable | null): java.util.List<Task> | null {
+    protected execute(/* final */  operation: Operation, /* final */  args: Term[], /* final */  memory: Memory,
+            /* final */  time: Timable): java.util.List<Task> {
         let op: Operator = new NullOperator(args[1].toString());
         memory.addOperator(op); // add error checking
         return null;

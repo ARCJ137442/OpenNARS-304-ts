@@ -7,7 +7,7 @@ import { java } from "jree";
  */
 export class Consider extends Operator {
 
-    public static budgetMentalConcept(/* final */  o: Operation | null): BudgetValue | null {
+    public static budgetMentalConcept(/* final */  o: Operation): BudgetValue {
         return o.getTask().budget.clone();
     }
 
@@ -22,8 +22,8 @@ export class Consider extends Operator {
      * @param memory The memory in which the operation is executed
      * @return Immediate results as Tasks
      */
-    protected execute(/* final */  operation: Operation | null, /* final */  args: Term[] | null, /* final */  memory: Memory | null,
-            /* final */  time: Timable | null): java.util.List<Task> | null {
+    protected execute(/* final */  operation: Operation, /* final */  args: Term[], /* final */  memory: Memory,
+            /* final */  time: Timable): java.util.List<Task> {
         let term: Term = args[1];
 
         let concept: Concept = memory.conceptualize(Consider.budgetMentalConcept(operation), term);

@@ -11,13 +11,13 @@ export class OutputContainsCondition extends OutputCondition {
     public confOfBestAnswer: double = 0.0;
     public timeOfBestAnswer: long = 0;
 
-    public readonly exact: java.util.List<Task> | null = new java.util.ArrayList<Task>();
+    public readonly exact: java.util.List<Task> = new java.util.ArrayList<Task>();
 
     public static SimilarOutput = class SimilarOutput extends JavaObject implements java.lang.Comparable<SimilarOutput> {
-        public readonly signal: java.lang.String | null;
+        public readonly signal: java.lang.String;
         public readonly distance: int;
 
-        public constructor(/* final */  signal: java.lang.String | null, /* final */  distance: int) {
+        public constructor(/* final */  signal: java.lang.String, /* final */  distance: int) {
             super();
             this.signal = signal;
             this.distance = distance;
@@ -27,23 +27,23 @@ export class OutputContainsCondition extends OutputCondition {
             return this.signal.hashCode();
         }
 
-        public override  equals(/* final */  obj: java.lang.Object | null): boolean {
+        public override  equals(/* final */  obj: java.lang.Object): boolean {
             return this.signal.equals((obj as SimilarOutput).signal);
         }
 
-        public override  toString(): java.lang.String | null {
+        public override  toString(): java.lang.String {
             return "similar(" + this.distance + "): " + this.signal;
         }
 
-        public compareTo(/* final */  o: SimilarOutput | null): int {
+        public compareTo(/* final */  o: SimilarOutput): int {
             return java.lang.Integer.compare(this.distance, o.distance);
         }
 
     };
 
 
-    protected readonly containing: java.lang.String | null;
-    public readonly almost: java.util.NavigableSet<OutputContainsCondition.SimilarOutput> | null = new java.util.TreeSet();
+    protected readonly containing: java.lang.String;
+    public readonly almost: java.util.NavigableSet<OutputContainsCondition.SimilarOutput> = new java.util.TreeSet();
     protected readonly saveSimilar: boolean;
     protected maxSimilars: int = 5;
 
@@ -53,14 +53,14 @@ export class OutputContainsCondition extends OutputCondition {
      * @param containing
      * @param maxSimilars # of similar results to collect, -1 to disable
      */
-    public constructor(/* final */  nar: Nar | null, /* final */  containing: java.lang.String | null, /* final */  maxSimilars: int) {
+    public constructor(/* final */  nar: Nar, /* final */  containing: java.lang.String, /* final */  maxSimilars: int) {
         super(nar);
         this.containing = containing;
         this.maxSimilars = maxSimilars;
         this.saveSimilar = maxSimilars !== -1;
     }
 
-    public getFalseReason(): java.lang.String | null {
+    public getFalseReason(): java.lang.String {
         let s: java.lang.String = "FAIL: No substring match: " + this.containing;
         if (!this.almost.isEmpty()) {
             for (let cs of this.getCandidates(5)) {
@@ -70,14 +70,14 @@ export class OutputContainsCondition extends OutputCondition {
         return s;
     }
 
-    public getCandidates(/* final */  max: int): java.util.Collection<OutputContainsCondition.SimilarOutput> | null {
+    public getCandidates(/* final */  max: int): java.util.Collection<OutputContainsCondition.SimilarOutput> {
         return this.almost;
     }
 
     /**
      * @author http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Java
      */
-    public static levenshteinDistance(/* final */  a: java.lang.CharSequence | null, /* final */  b: java.lang.CharSequence | null): int {
+    public static levenshteinDistance(/* final */  a: java.lang.CharSequence, /* final */  b: java.lang.CharSequence): int {
         let len0: int = a.length() + 1;
         let len1: int = b.length() + 1;
         let cost: Int32Array = new Int32Array(len0);
@@ -109,7 +109,7 @@ export class OutputContainsCondition extends OutputCondition {
         return cost[len0 - 1];
     }
 
-    public cond(/* final */  channel: java.lang.Class<unknown> | null, /* final */  signal: java.lang.Object | null): boolean {
+    public cond(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object): boolean {
         if ((channel === OUT.class) || (channel === EXE.class)) {
             let o: java.lang.String;
             if (signal instanceof Task) {
@@ -161,7 +161,7 @@ export class OutputContainsCondition extends OutputCondition {
         return false;
     }
 
-    public condition(/* final */  channel: java.lang.Class<unknown> | null, /* final */  signal: java.lang.Object | null): boolean {
+    public condition(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object): boolean {
         if ((channel === OUT.class) || (channel === EXE.class)) {
             if (signal instanceof Task) {
                 let t: Task = signal as Task;
@@ -181,7 +181,7 @@ export class OutputContainsCondition extends OutputCondition {
         return this.cond(channel, signal);
     }
 
-    public getTrueReasons(): java.util.List<unknown> | null {
+    public getTrueReasons(): java.util.List<unknown> {
         return this.exact;
     }
 

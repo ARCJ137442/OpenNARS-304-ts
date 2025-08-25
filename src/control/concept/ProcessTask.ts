@@ -28,8 +28,8 @@ export class ProcessTask extends JavaObject {
      * @return whether it was processed
      */
     // called in Memory.localInference only, for both derived and input tasks
-    public static processTask(/* final */  concept: Concept | null, /* final */  nal: DerivationContext | null, /* final */  task: Task | null,
-        time: Timable | null): boolean {
+    public static processTask(/* final */  concept: Concept, /* final */  nal: DerivationContext, /* final */  task: Task,
+        time: Timable): boolean {
         /* synchronized (concept) { */
         concept.observable |= task.isInput();
         let type: char = task.sentence.punctuation;

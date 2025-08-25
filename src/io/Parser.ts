@@ -8,7 +8,7 @@ import { java } from "jree";
  * @author Robert Wünsche
  */
 abstract class Parser {
-    protected abstract parseTask(/* final */  narsese: java.lang.String | null): Task;
+    protected abstract parseTask(/* final */  narsese: java.lang.String): Task;
 
     /**
      * All kinds of invalid addInput lines
@@ -20,7 +20,7 @@ abstract class Parser {
              *
              * @param s type of error
              */
-            protected constructor(/* final */  s: java.lang.String | null) {
+            protected constructor(/* final */  s: java.lang.String) {
                 super(s);
             }
         }

@@ -14,18 +14,18 @@ export class NALTest extends JavaObject {
     public static readonly showReport: boolean = true;
     public static readonly requireSuccess: boolean = true;
     public static readonly similarsToSave: int = 5;
-    protected static readonly examples: java.util.Map<java.lang.String, java.lang.String> | null = new java.util.LinkedHashMap(); // path -> script data
-    public static readonly tests: java.util.Map<java.lang.String, java.lang.Boolean> | null = new java.util.LinkedHashMap();
+    protected static readonly examples: java.util.Map<java.lang.String, java.lang.String> = new java.util.LinkedHashMap(); // path -> script data
+    public static readonly tests: java.util.Map<java.lang.String, java.lang.Boolean> = new java.util.LinkedHashMap();
 
     // we store a list of scores to keep track of each sample
-    public static readonly scores: java.util.Map<java.lang.String, java.util.List<java.lang.Double>> | null = new java.util.LinkedHashMap();
-    protected readonly scriptPath: java.lang.String | null;
+    public static readonly scores: java.util.Map<java.lang.String, java.util.List<java.lang.Double>> = new java.util.LinkedHashMap();
+    protected readonly scriptPath: java.lang.String;
 
     /** how many times should one test be run (to collect run scores) */
     public static numberOfSamples: int = 1;
 
     // exposed to be able to change it from the outside
-    public static directories: java.lang.String[] | null = ["/nal/single_step/", "/nal/multi_step/", "/nal/application/"];
+    public static directories: java.lang.String[] = ["/nal/single_step/", "/nal/multi_step/", "/nal/application/"];
 
     public static scoreSum: double = 0.0; // sum of all scores
     public static scoreSumWithTime: double = 0.0; // sum of all scores
@@ -36,7 +36,7 @@ export class NALTest extends JavaObject {
     public static bestAnswerConfSum: double = 0.0;
     public static samplesCnt: long = 0;
 
-    public static getExample(/* final */  path: java.lang.String | null): java.lang.String | null {
+    public static getExample(/* final */  path: java.lang.String): java.lang.String {
         try {
             let existing: java.lang.String = NALTest.examples.get(path);
             if (existing !== null)
@@ -55,11 +55,11 @@ export class NALTest extends JavaObject {
         }
     }
 
-    public newNAR(): Nar | null {
+    public newNAR(): Nar {
         return new Nar();
     }
 
-    public static params(): java.util.Collection<unknown> | null {
+    public static params(): java.util.Collection<unknown> {
         // return all test-paths of all files in the directories
 
         let et: java.util.Map<java.lang.String, java.lang.Object> = ExampleFileInput.getUnitTests(NALTest.directories);
@@ -69,12 +69,12 @@ export class NALTest extends JavaObject {
         return t;
     }
 
-    public static addTest(name: java.lang.String | null): void {
+    public static addTest(name: java.lang.String): void {
         name = name.substring(3, name.indexOf(".nal"));
         NALTest.tests.put(name, true);
     }
 
-    public static runTests(/* final */  c: java.lang.Class<unknown> | null): void {
+    public static runTests(/* final */  c: java.lang.Class<unknown>): void {
 
         NALTest.tests.clear();
         NALTest.scores.clear();
@@ -120,19 +120,19 @@ export class NALTest extends JavaObject {
          */
     }
 
-    public constructor(/* final */  scriptPath: java.lang.String | null) {
+    public constructor(/* final */  scriptPath: java.lang.String) {
         super();
         this.scriptPath = scriptPath;
 
     }
 
-    public testNAL(/* final */  path: java.lang.String | null): void {
+    public testNAL(/* final */  path: java.lang.String): void {
         for (let iSample: int = 0; iSample < NALTest.numberOfSamples; iSample++) {
             this.sample(path);
         }
     }
 
-    public sample(/* final */  path: java.lang.String | null): double {
+    public sample(/* final */  path: java.lang.String): double {
         let example: java.lang.String = NALTest.getExample(path);
 
         if (NALTest.showOutput) {
@@ -259,7 +259,7 @@ export class NALTest extends JavaObject {
         java.lang.System.out.println("avg best conf = " + (NALTest.bestAnswerConfSum / NALTest.samplesCnt));
     }
 
-    public static main(/* final */  args: java.lang.String[] | null): void {
+    public static main(/* final */  args: java.lang.String[]): void {
         NALTest.runTests(NALTest.class);
     }
 

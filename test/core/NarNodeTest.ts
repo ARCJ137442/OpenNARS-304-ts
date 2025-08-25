@@ -6,7 +6,7 @@ import { java, JavaObject, type int } from "jree";
  * Test for NarNode functionality
  */
 export class NarNodeTest extends JavaObject {
-    protected static a: java.lang.Integer | null = 0;
+    protected static a: java.lang.Integer = 0;
 
     public testNarToNar(): void {
         NarNodeTest.a = 0; // just in case of a re-test
@@ -18,7 +18,7 @@ export class NarNodeTest extends JavaObject {
         let nar2_connection: TargetNar = new TargetNar(localIP, nar2port, 0.5, null, true);
         nar1.addRedirectionTo(nar2_connection);
         nar2.nar.event(new class extends EventEmitter.EventObserver {
-            public event(event: java.lang.Class<unknown> | null, args: java.lang.Object[] | null): void {
+            public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
                 if (event === NarNode.EventReceivedTask.class || event === IN.class) {
                     let task: Task = args[0] as Task;
                     java.lang.System.out.println("received task event triggered in nar2: " + task);

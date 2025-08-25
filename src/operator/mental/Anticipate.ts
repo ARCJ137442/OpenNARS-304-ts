@@ -7,19 +7,19 @@ import { java, type float, type long, type double, JavaObject, S } from "jree";
  */
 export class Anticipate extends Operator implements EventObserver {
 
-    public readonly anticipations: java.util.Map<Anticipate.Prediction, java.util.LinkedHashSet<Term>> | null = new java.util.LinkedHashMap();
+    public readonly anticipations: java.util.Map<Anticipate.Prediction, java.util.LinkedHashSet<Term>> = new java.util.LinkedHashMap();
 
-    private newTasks: java.util.Set<Term> | null = new java.util.LinkedHashSet();
+    private newTasks: java.util.Set<Term> = new java.util.LinkedHashSet();
 
-    private expiredTruth: TruthValue | null = null;
-    private expiredBudget: BudgetValue | null = null;
+    private expiredTruth: TruthValue = null;
+    private expiredBudget: BudgetValue = null;
 
     // internal experience has less durability?
     public ANTICIPATION_DURABILITY_MUL: float = 0.1; // 0.1
     // internal experience has less priority?
     public ANTICIPATION_PRIORITY_MUL: float = 0.1; // 0.1
 
-    private nal: DerivationContext | null; // don't serialize, it will be re-set after deserialization
+    private nal: DerivationContext; // don't serialize, it will be re-set after deserialization
 
     public constructor();
 
@@ -53,7 +53,7 @@ export class Anticipate extends Operator implements EventObserver {
     }
 
 
-    public setEnabled(/* final */  n: Nar | null, /* final */  enabled: boolean): boolean {
+    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
         n.memory.event.set(this, enabled, Events.InduceSucceedingEvent.class, Events.CycleEnd.class);
         this.expiredTruth = new TruthValue(0.0, n.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, n.narParameters);
         this.expiredBudget = new BudgetValue(n.narParameters.DEFAULT_JUDGMENT_PRIORITY,
@@ -62,7 +62,7 @@ export class Anticipate extends Operator implements EventObserver {
         return true;
     }
 
-    public updateAnticipations(nal: DerivationContext | null): void {
+    public updateAnticipations(nal: DerivationContext): void {
 
         if (this.anticipations.isEmpty())
             return;
@@ -159,7 +159,7 @@ export class Anticipate extends Operator implements EventObserver {
         this.newTasks.clear();
     }
 
-    public event(/* final */  event: java.lang.Class<unknown> | null, /* final */  args: java.lang.Object[] | null): void {
+    public event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]): void {
         if (event === Events.InduceSucceedingEvent.class || event === Events.TaskDerive.class) {
             let newEvent: Task = args[0] as Task;
             let nal: DerivationContext = args[1] as DerivationContext;
@@ -181,8 +181,8 @@ export class Anticipate extends Operator implements EventObserver {
     }
 
     // to create a judgment with a given statement
-    protected execute(/* final */  operation: Operation | null, /* final */  args: Term[] | null, /* final */  memory: Memory | null,
-            /* final */  time: Timable | null): java.util.List<Task> | null {
+    protected execute(/* final */  operation: Operation, /* final */  args: Term[], /* final */  memory: Memory,
+            /* final */  time: Timable): java.util.List<Task> {
         if (operation === null) {
             return null; // not as mental operator but as fundamental principle
         }
@@ -204,8 +204,8 @@ export class Anticipate extends Operator implements EventObserver {
         this.anticipationOperator = val;
     }
 
-    public anticipate(/* final */  content: Term | null, /* final */  memory: Memory | null, /* final */  occurenceTime: long, /* final */  t: Task | null,
-            /* final */  time: Timable | null): void {
+    public anticipate(/* final */  content: Term, /* final */  memory: Memory, /* final */  occurenceTime: long, /* final */  t: Task,
+            /* final */  time: Timable): void {
         if (t !== null && t.sentence.truth.getExpectation() < memory.narParameters.DEFAULT_CONFIRMATION_EXPECTATION) {
             return;
         }
@@ -223,7 +223,7 @@ export class Anticipate extends Operator implements EventObserver {
         this.anticipationFeedback(content, t, memory, time);
     }
 
-    public anticipationFeedback(/* final */  content: Term | null, /* final */  t: Task | null, /* final */  memory: Memory | null, /* final */  time: Timable | null): void {
+    public anticipationFeedback(/* final */  content: Term, /* final */  t: Task, /* final */  memory: Memory, /* final */  time: Timable): void {
         if (this.anticipationOperator) {
             let op: Operation = Operation.make(Product.make(Term.SELF, content), this) as Operation;
             let truth: TruthValue = new TruthValue(1.0, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
@@ -252,7 +252,7 @@ export class Anticipate extends Operator implements EventObserver {
         }
     }
 
-    protected deriveDidntHappen(/* final */  aTerm: Term | null, /* final */  expectedOccurenceTime: long, nal: DerivationContext | null): void {
+    protected deriveDidntHappen(/* final */  aTerm: Term, /* final */  expectedOccurenceTime: long, nal: DerivationContext): void {
 
         let truth: TruthValue = this.expiredTruth;
         let budget: BudgetValue = this.expiredBudget;

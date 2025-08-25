@@ -17,34 +17,34 @@ import { java, JavaObject, type long, type float, type int, type double, S } fro
 export class Memory extends JavaObject implements java.io.Serializable, java.lang.Iterable<Concept>, Resettable {
 
     /* Nar parameters */
-    public readonly narParameters: java.security.Policy.Parameters | null;
+    public readonly narParameters: java.security.Policy.Parameters;
 
     public narId: long = 0;
     // emotion meter keeping track of global emotion
-    public emotion: Emotions | null = null;
-    public internalExperience: InternalExperience | null = null;
-    public lastDecision: Task | null = null;
+    public emotion: Emotions = null;
+    public internalExperience: InternalExperience = null;
+    public lastDecision: Task = null;
     public allowExecution: boolean = true;
 
     public readonly randomSeed: long = 1;
-    public readonly randomNumber: java.util.Random | null = new java.util.Random(this.randomSeed);
+    public readonly randomNumber: java.util.Random = new java.util.Random(this.randomSeed);
 
     // todo make sense of this class and de-obfuscate
-    public readonly concepts: Bag<Concept, Term> | null;
-    public event: EventEmitter | null;
+    public readonly concepts: Bag<Concept, Term>;
+    public event: EventEmitter;
 
     /* InnateOperator registry. Containing all registered operators of the system */
-    public readonly operators: java.util.Map<java.lang.CharSequence, Operator> | null;
+    public readonly operators: java.util.Map<java.lang.CharSequence, Operator>;
 
     /* a mutex for novel and new tasks */
-    private readonly tasksMutex: java.lang.Boolean | null = java.lang.Boolean.TRUE;
+    private readonly tasksMutex: java.lang.Boolean = java.lang.Boolean.TRUE;
 
     /* New tasks with novel composed terms, for delayed and selective processing */
-    public readonly novelTasks: Bag<Task, Sentence> | null;
+    public readonly novelTasks: Bag<Task, Sentence>;
 
     /* Input event tasks that were either input events or derived sequences */
-    public readonly seq_current: Bag<Task, Sentence> | null;
-    public readonly recent_operations: Bag<Task, Sentence> | null;
+    public readonly seq_current: Bag<Task, Sentence>;
+    public readonly recent_operations: Bag<Task, Sentence>;
 
     // Boolean localInferenceMutex = false;
 
@@ -55,10 +55,10 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     /**
      * Create a new memory
      */
-    public constructor(/* final */  narParameters: java.security.Policy.Parameters | null, /* final */  concepts: Bag<Concept, Term> | null,
-            /* final */  novelTasks: Bag<Task, Sentence> | null,
-            /* final */  seq_current: Bag<Task, Sentence> | null,
-            /* final */  recent_operations: Bag<Task, Sentence> | null) {
+    public constructor(/* final */  narParameters: java.security.Policy.Parameters, /* final */  concepts: Bag<Concept, Term>,
+            /* final */  novelTasks: Bag<Task, Sentence>,
+            /* final */  seq_current: Bag<Task, Sentence>,
+            /* final */  recent_operations: Bag<Task, Sentence>) {
         super();
         this.narParameters = narParameters;
         this.event = new EventEmitter();
@@ -99,7 +99,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
      * @param t the name of a concept
      * @return a Concept or null
      */
-    public concept(/* final */  t: Term | null): Concept | null {
+    public concept(/* final */  t: Term): Concept {
         /* synchronized (concepts) { */
         return this.concepts.get(CompoundTerm.replaceIntervals(t));
         /* } */
@@ -121,7 +121,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
      * @param term indicating the concept
      * @return an existing Concept, or a new one, or null
      */
-    public conceptualize(/* final */  budget: BudgetValue | null, term: Term | null): Concept | null {
+    public conceptualize(/* final */  budget: BudgetValue, term: Term): Concept {
         if (term instanceof Interval) {
             return null;
         }
@@ -169,7 +169,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     /**
      * add new task that waits to be processed in the next cycleMemory
      */
-    public addNewTask(/* final */  t: Task | null, /* final */  reason: java.lang.String | null): void {
+    public addNewTask(/* final */  t: Task, /* final */  reason: java.lang.String): void {
         /* synchronized (tasksMutex) { */
         this.novelTasks.putIn(t);
         /* } */
@@ -192,7 +192,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     /**
      * @param time indirection to retrieve time
      */
-    public inputTask(/* final */  time: Timable | null, /* final */  t: Task | null): void;
+    public inputTask(/* final */  time: Timable, /* final */  t: Task): void;
 
     /**
      * Input task processing. Invoked by the outside or inside environment.
@@ -211,7 +211,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
      * Input tasks with low priority are ignored, and the others are put into task
      * buffer.
      */
-    public inputTask(/* final */  time: Timable | null, /* final */  task: Task | null, /* final */  emitIn: boolean): void;
+    public inputTask(/* final */  time: Timable, /* final */  task: Task, /* final */  emitIn: boolean): void;
     public inputTask(...args: unknown[]): void {
         switch (args.length) {
             case 2: {
@@ -259,7 +259,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     }
 
 
-    public removeTask(/* final */  task: Task | null, /* final */  reason: java.lang.String | null): void {
+    public removeTask(/* final */  task: Task, /* final */  reason: java.lang.String): void {
         this.emit(TaskRemove.class, task, reason);
     }
 
@@ -269,7 +269,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
      * @param operation The operation just executed
      * @param time      indirection to retrieve time
      */
-    public executedTask(/* final */  time: Timable | null, /* final */  operation: Operation | null, /* final */  truth: TruthValue | null): void {
+    public executedTask(/* final */  time: Timable, /* final */  operation: Operation, /* final */  truth: TruthValue): void {
         // final Task opTask = operation.getTask();
         // logic.TASK_EXECUTED.commit(opTask.budget.getPriority());
 
@@ -289,7 +289,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
         this.addNewTask(newTask, "Executed");
     }
 
-    public output(/* final */  t: Task | null): void {
+    public output(/* final */  t: Task): void {
 
         let budget: float = t.budget.summary();
         let noiseLevel: float = 1.0 - (this.narParameters.VOLUME / 100.0);
@@ -303,19 +303,19 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
         }
     }
 
-    public emit(/* final */  c: java.lang.Class<unknown> | null, /* final */ ...signal: java.lang.Object | null[]): void {
+    public emit(/* final */  c: java.lang.Class<unknown>, /* final */ ...signal: java.lang.Object[]): void {
         this.event.emit(c, java.util.concurrent.locks.Condition.signal);
     }
 
-    public emitting(/* final */  channel: java.lang.Class<unknown> | null): boolean {
+    public emitting(/* final */  channel: java.lang.Class<unknown>): boolean {
         return this.event.isActive(channel);
     }
 
-    public conceptRemoved(/* final */  c: Concept | null): void {
+    public conceptRemoved(/* final */  c: Concept): void {
         this.emit(Events.ConceptForget.class, c);
     }
 
-    public cycle(/* final */  nar: Nar | null): void {
+    public cycle(/* final */  nar: Nar): void {
 
         this.event.emit(Events.CycleStart.class);
         for (let i: int = 0; i < nar.narParameters.NOVEL_TASK_BAG_SELECTIONS; i++) {
@@ -334,7 +334,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
      * @param narParameters parameters for the Reasoner instance
      * @param time          indirection to retrieve time
      */
-    public localInference(/* final */  task: Task | null, narParameters: java.security.Policy.Parameters | null, /* final */  time: Timable | null): void {
+    public localInference(/* final */  task: Task, narParameters: java.security.Policy.Parameters, /* final */  time: Timable): void {
         // synchronized (localInferenceMutex) {
         let cont: DerivationContext = new DerivationContext(this, narParameters, time);
         cont.setCurrentTask(task);
@@ -362,7 +362,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
      * @param narParameters parameters for the Reasoner instance
      * @param time          indirection to retrieve time
      */
-    public processNovelTask(narParameters: java.security.Policy.Parameters | null, /* final */  time: Timable | null): void {
+    public processNovelTask(narParameters: java.security.Policy.Parameters, /* final */  time: Timable): void {
         /* synchronized (tasksMutex) { */
         let task: Task = this.novelTasks.takeOut();
         if (task !== null) {
@@ -371,22 +371,22 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
         /* } */
     }
 
-    public getOperator(/* final */  op: java.lang.String | null): Operator | null {
+    public getOperator(/* final */  op: java.lang.String): Operator {
         return this.operators.get(op);
     }
 
-    public addOperator(/* final */  op: Operator | null): Operator | null {
+    public addOperator(/* final */  op: Operator): Operator {
         this.operators.put(op.name(), op);
         return op;
     }
 
-    public removeOperator(/* final */  op: Operator | null): Operator | null {
+    public removeOperator(/* final */  op: Operator): Operator {
         return this.operators.remove(op.name());
     }
 
     private currentStampSerial: long = 0;
 
-    public newStampSerial(): BaseEntry | null {
+    public newStampSerial(): BaseEntry {
         return new BaseEntry(this.narId, this.currentStampSerial++);
     }
 
@@ -395,7 +395,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
         return this.narParameters.DURATION * durations as float;
     }
 
-    public iterator(): java.util.Iterator<Concept> | null {
+    public iterator(): java.util.Iterator<Concept> {
         return this.concepts.iterator();
     }
 }

@@ -23,7 +23,7 @@ export class TemporalRules extends JavaObject {
         }
     }
 
-    public static matchingOrder(/* final */  a: Sentence | null, /* final */  b: Sentence | null): boolean;
+    public static matchingOrder(/* final */  a: Sentence, /* final */  b: Sentence): boolean;
 
     public static matchingOrder(/* final */  order1: int, /* final */  order2: int): boolean;
     public static matchingOrder(...args: unknown[]): boolean {
@@ -129,19 +129,19 @@ export class TemporalRules extends JavaObject {
      * whether temporal induction can generate a task by avoiding producing wrong
      * terms; only one temporal operator is allowed
      */
-    public static tooMuchTemporalStatements(/* final */  t: Term | null): boolean {
+    public static tooMuchTemporalStatements(/* final */  t: Term): boolean {
         return (t === null) || (t.containedTemporalRelations() > 1);
     }
 
     /** whether a term can be used in temoralInduction(,,) */
-    protected static termForTemporalInduction(/* final */  t: Term | null): boolean {
+    protected static termForTemporalInduction(/* final */  t: Term): boolean {
         return (t instanceof Inheritance) || (t instanceof Similarity);
     }
 
     // TODO maybe split &/ case into own function
-    public static temporalInduction(/* final */  s1: Sentence | null, /* final */  s2: Sentence | null,
-            /* final */  nal: org.opennars.control.DerivationContext | null, /* final */  SucceedingEventsInduction: boolean,
-            /* final */  addToMemory: boolean, /* final */  allowSequence: boolean): java.util.List<Task> | null {
+    public static temporalInduction(/* final */  s1: Sentence, /* final */  s2: Sentence,
+            /* final */  nal: org.opennars.control.DerivationContext, /* final */  SucceedingEventsInduction: boolean,
+            /* final */  addToMemory: boolean, /* final */  allowSequence: boolean): java.util.List<Task> {
 
         if ((s1.truth === null) || (s2.truth === null) || s1.punctuation !== Symbols.JUDGMENT_MARK
             || s2.punctuation !== Symbols.JUDGMENT_MARK
@@ -264,8 +264,8 @@ export class TemporalRules extends JavaObject {
         return derivations;
     }
 
-    private static appendConclusion(nal: DerivationContext | null, truth1: TruthValue | null, budget1: BudgetValue | null,
-        statement1: Statement | null, success: java.util.List<Task> | null): void {
+    private static appendConclusion(nal: DerivationContext, truth1: TruthValue, budget1: BudgetValue,
+        statement1: Statement, success: java.util.List<Task>): void {
         if (!TemporalRules.tooMuchTemporalStatements(statement1)) {
             let t: java.util.List<Task> = nal.doublePremiseTask(statement1, truth1, budget1, true, false);
             if (t !== null) {

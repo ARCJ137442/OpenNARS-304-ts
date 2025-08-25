@@ -23,7 +23,7 @@ export class Texts extends JavaObject {
      * TODO do not allow a StringBuilder to appear in output, instead wrap in
      * CharArrayRope
      */
-    public static yarn(/* final */ ...components: java.lang.CharSequence | null[]): java.lang.CharSequence | null {
+    public static yarn(/* final */ ...components: java.lang.CharSequence[]): java.lang.CharSequence {
         let totalLen: int = 0;
         let total: int = 0;
         let lastNonNull: java.lang.CharSequence = null;
@@ -52,15 +52,15 @@ export class Texts extends JavaObject {
         return sb;
     }
 
-    protected static readonly fourDecimal: java.text.Format | null = new java.text.DecimalFormat("0.0000");
+    protected static readonly fourDecimal: java.text.Format = new java.text.DecimalFormat("0.0000");
 
-    public static n4(/* final */  x: float): java.lang.String | null {
+    public static n4(/* final */  x: float): java.lang.String {
         return Texts.fourDecimal.format(x);
     }
 
-    protected static readonly twoDecimal: java.text.Format | null = new java.text.DecimalFormat("0.00");
+    protected static readonly twoDecimal: java.text.Format = new java.text.DecimalFormat("0.00");
 
-    public static n2Slow(/* final */  x: float): java.lang.String | null {
+    public static n2Slow(/* final */  x: float): java.lang.String {
         return Texts.twoDecimal.format(x);
     }
 
@@ -72,10 +72,10 @@ export class Texts extends JavaObject {
         return ((d * 100 + 0.5)) as long;
     }
 
-    public static n2(/* final */  x: float): java.lang.CharSequence | null;
+    public static n2(/* final */  x: float): java.lang.CharSequence;
 
-    public static n2(/* final */  p: double): java.lang.CharSequence | null;
-    public static n2(...args: unknown[]): java.lang.CharSequence | null {
+    public static n2(/* final */  p: double): java.lang.CharSequence;
+    public static n2(...args: unknown[]): java.lang.CharSequence {
         switch (args.length) {
             case 1: {
                 const [x] = args as [float];
@@ -132,13 +132,13 @@ export class Texts extends JavaObject {
     }
 
 
-    protected static readonly oneDecimal: java.text.Format | null = new java.text.DecimalFormat("0.0");
+    protected static readonly oneDecimal: java.text.Format = new java.text.DecimalFormat("0.0");
 
-    public static n1(/* final */  x: float): java.lang.String | null {
+    public static n1(/* final */  x: float): java.lang.String {
         return Texts.oneDecimal.format(x);
     }
 
-    public static compareTo(/* final */  s: java.lang.CharSequence | null, /* final */  t: java.lang.CharSequence | null): int {
+    public static compareTo(/* final */  s: java.lang.CharSequence, /* final */  t: java.lang.CharSequence): int {
         if ((s instanceof java.lang.String) && (t instanceof java.lang.String)) {
             return (s as java.lang.String).compareTo(t as java.lang.String);
         } else if ((s instanceof java.nio.CharBuffer) && (t instanceof java.nio.CharBuffer)) {

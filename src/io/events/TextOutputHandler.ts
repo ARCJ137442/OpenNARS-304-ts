@@ -8,11 +8,11 @@ import { java, type float, S } from "jree";
  */
 export class TextOutputHandler extends OutputHandler implements java.io.Serializable {
 
-    private readonly nar: Nar | null;
+    private readonly nar: Nar;
 
-    private prefix: java.lang.String | null = "";
-    private outExp2: TextOutputHandler.LineOutput | null;
-    private outExp: java.io.PrintWriter | null;
+    private prefix: java.lang.String = "";
+    private outExp2: TextOutputHandler.LineOutput;
+    private outExp: java.io.PrintWriter;
     private showErrors: boolean = true;
     private showStackTrace: boolean = false;
     private readonly showStamp: boolean = true;
@@ -24,19 +24,19 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
      *
      * @param n
      */
-    public constructor(/* final */  n: Nar | null);
+    public constructor(/* final */  n: Nar);
 
-    public constructor(/* final */  n: Nar | null, /* final */  outExp2: TextOutputHandler.LineOutput | null);
+    public constructor(/* final */  n: Nar, /* final */  outExp2: TextOutputHandler.LineOutput);
 
-    public constructor(/* final */  n: Nar | null, /* final */  outExp: java.io.PrintWriter | null);
+    public constructor(/* final */  n: Nar, /* final */  outExp: java.io.PrintWriter);
 
-    public constructor(/* final */  n: Nar | null, /* final */  ps: java.io.PrintStream | null);
+    public constructor(/* final */  n: Nar, /* final */  ps: java.io.PrintStream);
 
-    public constructor(/* final */  n: Nar | null, /* final */  s: java.io.StringWriter | null);
+    public constructor(/* final */  n: Nar, /* final */  s: java.io.StringWriter);
 
-    public constructor(/* final */  n: Nar | null, /* final */  outExp: java.io.PrintWriter | null, /* final */  minPriority: float);
+    public constructor(/* final */  n: Nar, /* final */  outExp: java.io.PrintWriter, /* final */  minPriority: float);
 
-    public constructor(/* final */  n: Nar | null, /* final */  ps: java.io.PrintStream | null, /* final */  minPriority: float);
+    public constructor(/* final */  n: Nar, /* final */  ps: java.io.PrintStream, /* final */  minPriority: float);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -124,7 +124,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
     /**
      * Open an output experience file
      */
-    public openSaveFile(/* final */  path: java.lang.String | null): void {
+    public openSaveFile(/* final */  path: java.lang.String): void {
         try {
             this.outExp = new java.io.PrintWriter(new java.io.FileWriter(path));
         } catch (ex) {
@@ -148,7 +148,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
      * Process the next chunk of output data
      *
      */
-    public event(/* final */  channel: java.lang.Class<unknown> | null, /* final */  oo: java.lang.Object[] | null): void {
+    public event(/* final */  channel: java.lang.Class<unknown>, /* final */  oo: java.lang.Object[]): void {
         if (!this.showErrors && (channel === ERR.class))
             return;
 
@@ -170,39 +170,39 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
         }
     }
 
-    protected readonly result: java.lang.StringBuilder | null = new java.lang.StringBuilder(16 /* estimate */);
+    protected readonly result: java.lang.StringBuilder = new java.lang.StringBuilder(16 /* estimate */);
 
-    public process(/* final */  c: java.lang.Class<unknown> | null, /* final */  o: java.lang.Object | null): java.lang.String | null {
+    public process(/* final */  c: java.lang.Class<unknown>, /* final */  o: java.lang.Object): java.lang.String {
         return this.getOutputString(c, o, true, this.showStamp, this.nar, this.result, this.minPriority);
     }
 
-    public setErrors(/* final */  errors: boolean): TextOutputHandler | null {
+    public setErrors(/* final */  errors: boolean): TextOutputHandler {
         this.showErrors = errors;
         return this;
     }
 
-    public setShowInput(/* final */  showInput: boolean): TextOutputHandler | null {
+    public setShowInput(/* final */  showInput: boolean): TextOutputHandler {
         this.showInput = showInput;
         return this;
     }
 
-    public setErrorStackTrace(/* final */  b: boolean): TextOutputHandler | null {
+    public setErrorStackTrace(/* final */  b: boolean): TextOutputHandler {
         this.showStackTrace = true;
         return this;
     }
 
-    public setLinePrefix(/* final */  prefix: java.lang.String | null): TextOutputHandler | null {
+    public setLinePrefix(/* final */  prefix: java.lang.String): TextOutputHandler {
         this.prefix = prefix;
         return this;
     }
 
-    public getOutputString(/* final */  channel: java.lang.Class<unknown> | null, /* final */  signal: java.lang.Object | null, /* final */  showChannel: boolean,
-            /* final */  showStamp: boolean, /* final */  nar: Nar | null, /* final */  buffer: java.lang.StringBuilder | null): java.lang.String | null;
+    public getOutputString(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object, /* final */  showChannel: boolean,
+            /* final */  showStamp: boolean, /* final */  nar: Nar, /* final */  buffer: java.lang.StringBuilder): java.lang.String;
 
     /** generates a human-readable string from an output channel and signal */
-    public getOutputString(/* final */  channel: java.lang.Class<unknown> | null, /* final */  signal: java.lang.Object | null, /* final */  showChannel: boolean,
-            /* final */  showStamp: boolean, /* final */  nar: Nar | null, /* final */  buffer: java.lang.StringBuilder | null, /* final */  minPriority: float): java.lang.String | null;
-    public getOutputString(...args: unknown[]): java.lang.String | null {
+    public getOutputString(/* final */  channel: java.lang.Class<unknown>, /* final */  signal: java.lang.Object, /* final */  showChannel: boolean,
+            /* final */  showStamp: boolean, /* final */  nar: Nar, /* final */  buffer: java.lang.StringBuilder, /* final */  minPriority: float): java.lang.String;
+    public getOutputString(...args: unknown[]): java.lang.String {
         switch (args.length) {
             case 6: {
                 const [channel, signal, showChannel, showStamp, nar, buffer] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, boolean, Nar, java.lang.StringBuilder];
@@ -286,7 +286,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace TextOutputHandler {
     export interface LineOutput {
-        println(s: java.lang.String | null): void;
+        println(s: java.lang.String): void;
     }
 
 }

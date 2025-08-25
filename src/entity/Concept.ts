@@ -21,27 +21,27 @@ export class Concept extends Item<Term> {
     /**
      * The term is the unique ID of the concept
      */
-    public readonly term: Term | null;
+    public readonly term: Term;
 
     // recent events that happened before the operation the
     // concept represents was executed
-    public seq_before: Bag<Task, Sentence> | null;
+    public seq_before: Bag<Task, Sentence>;
 
     /**
      * Task links for indirect processing
      */
-    public readonly taskLinks: Bag<TaskLink, Task> | null;
+    public readonly taskLinks: Bag<TaskLink, Task>;
 
     /**
      * Term links between the term and its components and compounds; beliefs
      */
-    public readonly termLinks: Bag<TermLink, TermLink> | null;
+    public readonly termLinks: Bag<TermLink, TermLink>;
 
     /**
      * Link templates of TermLink, only in concepts with CompoundTerm Templates
      * are used to improve the efficiency of TermLink building
      */
-    public readonly termLinkTemplates: java.util.List<TermLink> | null;
+    public readonly termLinkTemplates: java.util.List<TermLink>;
 
     /**
      * Pending Question directly asked about the term
@@ -49,35 +49,35 @@ export class Concept extends Item<Term> {
      * Note: since this is iterated frequently, an array should be used. To
      * avoid iterator allocation, use .get(n) in a for-loop
      */
-    public readonly questions: java.util.List<Task> | null;
+    public readonly questions: java.util.List<Task>;
 
     /**
      * Pending Quests to be answered by new desire values
      */
-    public readonly quests: java.util.List<Task> | null;
+    public readonly quests: java.util.List<Task>;
 
     /**
      * Judgments directly made about the term Use List because of access
      * and insertion in the middle
      */
-    public readonly beliefs: java.util.List<Task> | null;
-    public executable_preconditions: java.util.List<Task> | null;
-    public general_executable_preconditions: java.util.List<Task> | null;
+    public readonly beliefs: java.util.List<Task>;
+    public executable_preconditions: java.util.List<Task>;
+    public general_executable_preconditions: java.util.List<Task>;
 
     /**
      * Desire values on the term, similar to the above one
      */
-    public readonly desires: java.util.List<Task> | null;
+    public readonly desires: java.util.List<Task>;
 
     /**
      * Reference to the memory to which the Concept belongs
      */
-    public readonly memory: Memory | null;
+    public readonly memory: Memory;
 
     // use to create averaging stats of occurring intervals
     // so that revision can decide whether to use the new or old term
     // based on which intervals are closer to the average
-    public readonly recent_intervals: java.util.List<java.lang.Float> | null = new java.util.ArrayList();
+    public readonly recent_intervals: java.util.List<java.lang.Float> = new java.util.ArrayList();
 
     public observable: boolean = false; // whether it received a "native" input task
     public allowBabbling: boolean = true; // for operations, becomes false if sufficiently
@@ -89,7 +89,7 @@ export class Concept extends Item<Term> {
      * @param tm     A term corresponding to the concept
      * @param memory A reference to the memory
      */
-    public constructor(/* final */  b: BudgetValue | null, /* final */  tm: Term | null, /* final */  memory: Memory | null) {
+    public constructor(/* final */  b: BudgetValue, /* final */  tm: Term, /* final */  memory: Memory) {
         super(b);
 
         this.term = tm;
@@ -115,7 +115,7 @@ export class Concept extends Item<Term> {
 
     }
 
-    public equals(/* final */  obj: java.lang.Object | null): boolean {
+    public equals(/* final */  obj: java.lang.Object): boolean {
         if (this === obj)
             return true;
         if (!(obj instanceof Concept))
@@ -127,12 +127,12 @@ export class Concept extends Item<Term> {
         return this.name().hashCode();
     }
 
-    public name(): Term | null {
+    public name(): Term {
         return this.term;
     }
 
-    public addToTable(/* final */  task: Task | null, /* final */  rankTruthExpectation: boolean, /* final */  table: java.util.List<Task> | null, /* final */  max: int,
-            /* final */  eventAdd: java.lang.Class<unknown> | null, /* final */  eventRemove: java.lang.Class<unknown> | null, /* final */ ...extraEventArguments: java.lang.Object | null[]): void {
+    public addToTable(/* final */  task: Task, /* final */  rankTruthExpectation: boolean, /* final */  table: java.util.List<Task>, /* final */  max: int,
+            /* final */  eventAdd: java.lang.Class<unknown>, /* final */  eventRemove: java.lang.Class<unknown>, /* final */ ...extraEventArguments: java.lang.Object[]): void {
 
         let preSize: int = table.size();
         let removedT: Task;
@@ -159,7 +159,7 @@ export class Concept extends Item<Term> {
      * @param task    The task to be linked
      * @param content The content of the task
      */
-    public linkToTask(/* final */  task: Task | null, /* final */  content: DerivationContext | null): TaskLink | null {
+    public linkToTask(/* final */  task: Task, /* final */  content: DerivationContext): TaskLink {
         let taskBudget: BudgetValue = task.budget;
 
         let retLink: TaskLink = new TaskLink(task, null, taskBudget, content.narParameters.TERM_LINK_RECORD_LENGTH);
@@ -204,8 +204,8 @@ export class Concept extends Item<Term> {
      * @param capacity The capacity of the table
      * @return whether table was modified
      */
-    public static addToTable(/* final */  newTask: Task | null, /* final */  table: java.util.List<Task> | null, /* final */  capacity: int,
-            /* final */  rankTruthExpectation: boolean): Task | null {
+    public static addToTable(/* final */  newTask: Task, /* final */  table: java.util.List<Task>, /* final */  capacity: int,
+            /* final */  rankTruthExpectation: boolean): Task {
         let newSentence: Sentence = newTask.sentence;
         let rank1: float = rankBelief(newSentence, rankTruthExpectation); // for the new isBelief
         let rank2: float;
@@ -244,7 +244,7 @@ export class Concept extends Item<Term> {
      * @param list  The list of beliefs or desires to be used
      * @return The best candidate selected
      */
-    public selectCandidate(/* final */  query: Task | null, /* final */  list: java.util.List<Task> | null, /* final */  time: Timable | null): Task | null {
+    public selectCandidate(/* final */  query: Task, /* final */  list: java.util.List<Task>, /* final */  time: Timable): Task {
         // if (list == null) {
         // return null;
         // }
@@ -285,11 +285,11 @@ export class Concept extends Item<Term> {
 
     public static AnticipationEntry = class AnticipationEntry extends JavaObject implements java.io.Serializable {
         public negConfirmationPriority: float = 0.0;
-        public negConfirmation: Task | null = null;
+        public negConfirmation: Task = null;
         public negConfirm_abort_minTime: long = 0;
         public negConfirm_abort_maxTime: long = 0;
 
-        public constructor(negConfirmationPriority: float, negConfirmation: Task | null, negConfirm_abort_minTime: long,
+        public constructor(negConfirmationPriority: float, negConfirmation: Task, negConfirm_abort_minTime: long,
             negConfirm_abort_maxTime: long) {
             super();
             this.negConfirmationPriority = negConfirmationPriority;
@@ -300,7 +300,7 @@ export class Concept extends Item<Term> {
     };
 
 
-    public anticipations: java.util.List<Concept.AnticipationEntry> | null = new java.util.ArrayList();
+    public anticipations: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList();
 
     /* ---------- insert Links for indirect processing ---------- */
     /**
@@ -310,7 +310,7 @@ export class Concept extends Item<Term> {
      *
      * @param taskLink The termLink to be inserted
      */
-    protected insertTaskLink(/* final */  taskLink: TaskLink | null, /* final */  nal: DerivationContext | null): boolean {
+    protected insertTaskLink(/* final */  taskLink: TaskLink, /* final */  nal: DerivationContext): boolean {
         let target: Task = taskLink.getTarget();
         // what question answering, question side:
         ProcessQuestion.ProcessWhatQuestion(this, target, nal);
@@ -360,7 +360,7 @@ export class Concept extends Item<Term> {
      *
      * @param taskBudget The BudgetValue of the task
      */
-    public buildTermLinks(/* final */  taskBudget: BudgetValue | null, narParameters: java.security.Policy.Parameters | null): void {
+    public buildTermLinks(/* final */  taskBudget: BudgetValue, narParameters: java.security.Policy.Parameters): void {
         if (this.termLinkTemplates.size() === 0) {
             return;
         }
@@ -400,7 +400,7 @@ export class Concept extends Item<Term> {
      *
      * @param termLink The termLink to be inserted
      */
-    public insertTermLink(/* final */  termLink: TermLink | null): boolean {
+    public insertTermLink(/* final */  termLink: TermLink): boolean {
         let removed: TermLink = this.termLinks.putIn(termLink);
         if (removed !== null) {
             if (removed === termLink) {
@@ -420,7 +420,7 @@ export class Concept extends Item<Term> {
      *
      * @return The concept name, with taskBudget in the full version
      */
-    public toString(): java.lang.String | null { // called from concept bag
+    public toString(): java.lang.String { // called from concept bag
         // return (super.toStringBrief() + " " + key);
         return super.toStringExternal();
     }
@@ -428,7 +428,7 @@ export class Concept extends Item<Term> {
     /**
      * called from {@link Shell}
      */
-    public toStringLong(): java.lang.String | null {
+    public toStringLong(): java.lang.String {
         let res: java.lang.String = toStringExternal() + " " + this.term.name()
             + this.toStringIfNotNull(this.termLinks.size(), "termLinks")
             + this.toStringIfNotNull(this.taskLinks.size(), "taskLinks")
@@ -447,7 +447,7 @@ export class Concept extends Item<Term> {
         return res;
     }
 
-    private toStringIfNotNull(/* final */  item: java.lang.Object | null, /* final */  title: java.lang.String | null): java.lang.String | null {
+    private toStringIfNotNull(/* final */  item: java.lang.Object, /* final */  title: java.lang.String): java.lang.String {
         if (item === null) {
             return "";
         }
@@ -491,7 +491,7 @@ export class Concept extends Item<Term> {
      *
      * @return The template get
      */
-    public getTermLinkTemplates(): java.util.List<TermLink> | null {
+    public getTermLinkTemplates(): java.util.List<TermLink> {
         return this.termLinkTemplates;
     }
 
@@ -505,7 +505,7 @@ export class Concept extends Item<Term> {
      * @param task The selected task
      * @return The selected isBelief
      */
-    public getBelief(/* final */  nal: DerivationContext | null, /* final */  task: Task | null): Sentence | null {
+    public getBelief(/* final */  nal: DerivationContext, /* final */  task: Task): Sentence {
         let taskStamp: Stamp = task.sentence.stamp;
         let currentTime: long = nal.time.time();
 
@@ -530,7 +530,7 @@ export class Concept extends Item<Term> {
     /**
      * Get the current overall desire value. TODO to be refined
      */
-    public getDesire(): TruthValue | null {
+    public getDesire(): TruthValue {
         if (this.desires.isEmpty()) {
             return null;
         }
@@ -545,7 +545,7 @@ export class Concept extends Item<Term> {
      * @param time     The current time
      * @return The selected TermLink
      */
-    public selectTermLink(/* final */  taskLink: TaskLink | null, /* final */  time: long, /* final */  narParameters: java.security.Policy.Parameters | null): TermLink | null {
+    public selectTermLink(/* final */  taskLink: TaskLink, /* final */  time: long, /* final */  narParameters: java.security.Policy.Parameters): TermLink {
         let toMatch: int = narParameters.TERM_LINK_MAX_MATCHED; // Math.min(memory.param.termLinkMaxMatched.get(),
         // termLinks.size());
         for (let i: int = 0; (i < toMatch) && (this.termLinks.size() > 0); i++) {
@@ -565,7 +565,7 @@ export class Concept extends Item<Term> {
 
     }
 
-    public returnTermLink(/* final */  termLink: TermLink | null): void {
+    public returnTermLink(/* final */  termLink: TermLink): void {
         this.termLinks.putBack(termLink, this.memory.cycles(this.memory.narParameters.TERMLINK_FORGET_DURATIONS), this.memory);
     }
 
@@ -573,11 +573,11 @@ export class Concept extends Item<Term> {
      * Return the questions, called in ComposionalRules in
      * dedConjunctionByQuestion only
      */
-    public getQuestions(): java.util.List<Task> | null {
+    public getQuestions(): java.util.List<Task> {
         return java.util.Collections.unmodifiableList(this.questions);
     }
 
-    public getQuess(): java.util.List<Task> | null {
+    public getQuess(): java.util.List<Task> {
         return java.util.Collections.unmodifiableList(this.quests);
     }
 
@@ -593,21 +593,21 @@ export class Concept extends Item<Term> {
         }
     }
 
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         return this.term.operator();
     }
 
-    public getTerm(): Term | null {
+    public getTerm(): Term {
         return this.term;
     }
 
     /** returns unmodifidable collection wrapping beliefs */
-    public getBeliefs(): java.util.List<Task> | null {
+    public getBeliefs(): java.util.List<Task> {
         return java.util.Collections.unmodifiableList(this.beliefs);
     }
 
     /** returns unmodifidable collection wrapping beliefs */
-    public getDesires(): java.util.List<Task> | null {
+    public getDesires(): java.util.List<Task> {
         return java.util.Collections.unmodifiableList(this.desires);
     }
 }

@@ -7,9 +7,9 @@ import { java, JavaObject, type int, type long, type float } from "jree";
  * @author Patrick Hammer
  */
 export class TemporalInferenceControl extends JavaObject {
-    public static proceedWithTemporalInduction(/* final */  newEvent: Sentence | null, /* final */  stmLast: Sentence | null,
-            /* final */  controllerTask: Task | null, /* final */  nal: DerivationContext | null, /* final */  SucceedingEventsInduction: boolean,
-            /* final */  addToMemory: boolean, /* final */  allowSequence: boolean): java.util.List<Task> | null {
+    public static proceedWithTemporalInduction(/* final */  newEvent: Sentence, /* final */  stmLast: Sentence,
+            /* final */  controllerTask: Task, /* final */  nal: DerivationContext, /* final */  SucceedingEventsInduction: boolean,
+            /* final */  addToMemory: boolean, /* final */  allowSequence: boolean): java.util.List<Task> {
 
         if (SucceedingEventsInduction && !controllerTask.isElemOfSequenceBuffer()) { // todo refine, add directbool in
             // task
@@ -40,7 +40,7 @@ export class TemporalInferenceControl extends JavaObject {
             addToMemory, allowSequence);
     }
 
-    public static eventInference(/* final */  newEvent: Task | null, /* final */  nal: DerivationContext | null): boolean {
+    public static eventInference(/* final */  newEvent: Task, /* final */  nal: DerivationContext): boolean {
 
         if (newEvent.getTerm() === null || newEvent.budget === null || !newEvent.isElemOfSequenceBuffer()) { // todo
             // refine,
@@ -151,7 +151,7 @@ export class TemporalInferenceControl extends JavaObject {
         return true;
     }
 
-    public static addToSequenceTasks(/* final */  nal: DerivationContext | null, /* final */  newEvent: Task | null): void {
+    public static addToSequenceTasks(/* final */  nal: DerivationContext, /* final */  newEvent: Task): void {
         // multiple versions are necessary, but we do not allow duplicates
         let removal: Task = null;
         /* synchronized (nal.memory.seq_current) { */
@@ -200,7 +200,7 @@ export class TemporalInferenceControl extends JavaObject {
         /* } */
     }
 
-    public static NewOperationFrame(/* final */  mem: Memory | null, /* final */  task: Task | null): void {
+    public static NewOperationFrame(/* final */  mem: Memory, /* final */  task: Task): void {
         let toRemove: java.util.List<Task> = new java.util.LinkedList(); // can there be more than one? I don't think so..
         let priorityGain: float = 0.0;
         for (let t of mem.recent_operations) { // when made sure, make single element and add break

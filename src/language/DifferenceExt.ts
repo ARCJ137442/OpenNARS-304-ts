@@ -16,7 +16,7 @@ export class DifferenceExt extends CompoundTerm {
      *
      * @param arg The component list of the term
      */
-    private constructor(/* final */  arg: Term[] | null) {
+    private constructor(/* final */  arg: Term[]) {
         super(arg);
 
         ensureValidDifferenceArguments(arg);
@@ -29,10 +29,10 @@ export class DifferenceExt extends CompoundTerm {
      *
      * @return A new object, to be casted into a DifferenceExt
      */
-    public clone(): DifferenceExt | null;
+    public clone(): DifferenceExt;
 
-    public clone(/* final */  replaced: Term[] | null): Term | null;
-    public clone(...args: unknown[]): DifferenceExt | null | Term | null {
+    public clone(/* final */  replaced: Term[]): Term;
+    public clone(...args: unknown[]): DifferenceExt | Term {
         switch (args.length) {
             case 0: {
 
@@ -68,7 +68,7 @@ export class DifferenceExt extends CompoundTerm {
      * @return the Term generated from the arguments
      * @param arg The list of term
      */
-    public static make(/* final */  arg: Term[] | null): Term | null;
+    public static make(/* final */  arg: Term[]): Term;
 
     /**
      * Try to make a new compound from two term. Called by the inference rules.
@@ -77,8 +77,8 @@ export class DifferenceExt extends CompoundTerm {
      * @param t2 The second component
      * @return A compound generated or a term it reduced to
      */
-    public static make(/* final */  t1: Term | null, /* final */  t2: Term | null): Term | null;
-    public static make(...args: unknown[]): Term | null {
+    public static make(/* final */  t1: Term, /* final */  t2: Term): Term;
+    public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
                 const [arg] = args as [Term[]];
@@ -132,7 +132,7 @@ export class DifferenceExt extends CompoundTerm {
      *
      * @return the operator of the term
      */
-    public operator(): NativeOperator | null {
+    public operator(): NativeOperator {
         return NativeOperator.DIFFERENCE_EXT;
     }
 }

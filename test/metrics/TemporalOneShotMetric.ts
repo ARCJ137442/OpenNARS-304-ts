@@ -7,7 +7,7 @@ import { java, type int, type char } from "jree";
  * to retain a temporal relationship it had learned a long time ago with events.
  */
 export class TemporalOneShotMetric extends AnswerHandler {
-    public reasonerUnderTest: Reasoner | null;
+    public reasonerUnderTest: Reasoner;
 
     public numberOfShots: int = 2;
 
@@ -15,13 +15,13 @@ export class TemporalOneShotMetric extends AnswerHandler {
 
     public numberOfRandomEventsBeforeTest: int = 14;
 
-    private termNames: java.util.List<java.lang.String> | null = new java.util.ArrayList();
+    private termNames: java.util.List<java.lang.String> = new java.util.ArrayList();
 
-    private rng: java.util.Random | null = new java.util.Random(42);
+    private rng: java.util.Random = new java.util.Random(42);
 
     private wasAnswered: boolean = false;
 
-    public static main(args: java.lang.String[] | null): void {
+    public static main(args: java.lang.String[]): void {
         let metric: TemporalOneShotMetric = new TemporalOneShotMetric();
         metric.reasonerUnderTest = new Nar();
 
@@ -86,7 +86,7 @@ export class TemporalOneShotMetric extends AnswerHandler {
 
     }
 
-    private static createRandomString(/* final */  length: int, rng: java.util.Random | null): java.lang.String | null {
+    private static createRandomString(/* final */  length: int, rng: java.util.Random): java.lang.String {
         let res: java.lang.String = "";
 
         for (let i: int = 0; i < length; i++) {
@@ -96,7 +96,7 @@ export class TemporalOneShotMetric extends AnswerHandler {
         return res;
     }
 
-    public onSolution(belief: Sentence | null): void {
+    public onSolution(belief: Sentence): void {
         this.wasAnswered = true;
     }
 }

@@ -11,7 +11,7 @@ abstract class Plugin extends java.io.Serializable {
      * called when plugin is activated (enabled = true) / deactivated
      * (enabled=false)
      */
-    protected abstract setEnabled(n: Nar | null, enabled: boolean): boolean {
+    protected abstract setEnabled(n: Nar, enabled: boolean): boolean {
         return true;
     }
 

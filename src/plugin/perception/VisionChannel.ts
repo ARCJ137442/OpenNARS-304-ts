@@ -5,19 +5,19 @@ import { java, type float, type int, JavaObject } from "jree";
 export class VisionChannel extends SensoryChannel {
     public defaultOutputConfidence: float = 0.5;
     public nPrototypes: int = 0;
-    public prototypes: java.util.ArrayList<VisionChannel.Prototype> | null;
+    public prototypes: java.util.ArrayList<VisionChannel.Prototype>;
     protected inputs: Float64Array[];
     protected updated: boolean[][];
     protected cnt_updated: int = 0;
     protected px: int = 0;
     protected py: int = 0;
-    protected readonly label: Term | null;
-    protected readonly nar: Nar | null;
+    protected readonly label: Term;
+    protected readonly nar: Nar;
     protected HadNewInput: boolean = false; // only generate frames if at least something was input since last "commit to
     // Nar"
-    public readonly obs: EventEmitter.EventObserver | null;
+    public readonly obs: EventEmitter.EventObserver;
 
-    public constructor(/* final */  label: java.lang.String | null, /* final */  nar: Reasoner | null, /* final */  reportResultsTo: Reasoner | null, /* final */  width: int,
+    public constructor(/* final */  label: java.lang.String, /* final */  nar: Reasoner, /* final */  reportResultsTo: Reasoner, /* final */  width: int,
             /* final */  height: int, /* final */  duration: int,
         defaultOutputConfidence: float, nPrototypes: int) {
         super(nar as Nar, reportResultsTo as SensoryChannel, width, height, duration, SetInt.make(new Term(label)));
@@ -41,7 +41,7 @@ export class VisionChannel extends SensoryChannel {
 
     }
 
-    public setEnabled(/* final */  n: Nar | null, /* final */  enabled: boolean): boolean {
+    public setEnabled(/* final */  n: Nar, /* final */  enabled: boolean): boolean {
         n.memory.event.set(this.obs, enabled, Events.CycleEnd.class);
         n.memory.event.set(this.obs, enabled, Events.ResetEnd.class);
         return true;
@@ -57,10 +57,10 @@ export class VisionChannel extends SensoryChannel {
         this.subj = "";
     }
 
-    protected subj: java.lang.String | null = "";
+    protected subj: java.lang.String = "";
     protected empty_cycles: int = 0;
 
-    public AddToMatrix(/* final */  t: Task | null, /* final */  time: Timable | null): boolean {
+    public AddToMatrix(/* final */  t: Task, /* final */  time: Timable): boolean {
         let inh: Inheritance = t.getTerm() as Inheritance; // channels receive inheritances
         let cur_subj: java.lang.String = (inh.getSubject() as SetExt).term[0].index_variable;
         if (!cur_subj.equals(this.subj)) { // when subject changes, we start to collect from scratch,
@@ -88,7 +88,7 @@ export class VisionChannel extends SensoryChannel {
 
     protected isEternal: boolean = false; // don't use increasing ID if eternal
 
-    public addInput(/* final */  t: Task | null, /* final */  time: Timable | null): Nar | null {
+    public addInput(/* final */  t: Task, /* final */  time: Timable): Nar {
         this.isEternal = t.sentence.isEternal();
         if (this.AddToMatrix(t, time)) // new data complete
             this.step_start(time);
@@ -97,7 +97,7 @@ export class VisionChannel extends SensoryChannel {
 
     protected termid: int = 0;
 
-    public step_start(/* final */  time: Timable | null): void {
+    public step_start(/* final */  time: Timable): void {
         this.cnt_updated = 0;
         this.HadNewInput = false;
         this.termid++;
@@ -253,7 +253,7 @@ export class VisionChannel extends SensoryChannel {
         }
     }
 
-    protected lastPrototype: VisionChannel.Prototype | null = null;
+    protected lastPrototype: VisionChannel.Prototype = null;
 
     public setFocus(px: int, py: int): void {
         this.px = px;
@@ -263,9 +263,9 @@ export class VisionChannel extends SensoryChannel {
     public Prototype = (($outer) => {
         return class Prototype extends JavaObject {
             protected observationCount: int;
-            protected task: Task | null;
+            protected task: Task;
 
-            public constructor(t: Task | null) {
+            public constructor(t: Task) {
                 super();
                 this.observationCount = 1; // as the task itself is a case
                 this.task = t;
