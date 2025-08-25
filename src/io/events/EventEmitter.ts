@@ -110,7 +110,7 @@ export class EventEmitter extends JavaObject {
      * @param o
      */
     public off(/* final */  event: java.lang.Class<unknown>, /* final */  o: EventEmitter.EventObserver): void {
-        if (null === event || null === o)
+        if (null === event | === o)
             throw new java.lang.IllegalStateException("Invalid parameter");
 
         if (!this.events.containsKey(event))

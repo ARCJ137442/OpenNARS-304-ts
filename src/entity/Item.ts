@@ -40,7 +40,7 @@ export abstract  class Item<K> implements JavaObject, java.io.Serializable {
      *
      * @param budget The initial budget
      */
-    protected  constructor(/* final */  budget: BudgetValue| null);
+    protected  constructor(/* final */  budget: BudgetValue);
     public constructor(...args: unknown[]) {
 		switch (args.length) {
 			case 0: {
@@ -176,7 +176,7 @@ if (budget !== null)
      * @param that The Item to be merged
      * @return the resulting Item: this or that
      */
-    public  merge(/* final */  that: Item<unknown>| null):  Item<unknown> {
+    public  merge(/* final */  that: Item<unknown>):  Item<unknown> {
         this.budget.merge(that.budget);
         return this;
     }
@@ -233,7 +233,7 @@ if (budget !== null)
         return this.name().hashCode();
     }
 
-    public equals(/* final */  obj: java.lang.Object| null):  boolean {
+    public equals(/* final */  obj: java.lang.Object):  boolean {
         if (obj === this)
             return true;
         if (obj instanceof Item) {
@@ -244,7 +244,7 @@ if (budget !== null)
 
     public abstract static StringKeyItem =  class StringKeyItem extends Item<java.lang.CharSequence> {
 
-        public  constructor(/* final */  budget: BudgetValue| null) {
+        public  constructor(/* final */  budget: BudgetValue) {
             super(budget);
         }
 
@@ -252,7 +252,7 @@ if (budget !== null)
             return $outer.name().hashCode();
         }
 
-        public  equals(/* final */  obj: java.lang.Object| null):  boolean {
+        public  equals(/* final */  obj: java.lang.Object):  boolean {
             if (obj === this)
                 return true;
             if (obj instanceof Item) {
@@ -264,7 +264,7 @@ if (budget !== null)
     };
 
 
-    public static  getPrioritySum(/* final */  c: java.lang.Iterable< Item<unknown>>| null):  float {
+    public static  getPrioritySum(/* final */  c: java.lang.Iterable< Item<unknown>>):  float {
         let  totalPriority: float = 0;
         for (let i of c)
             totalPriority += i.getPriority();

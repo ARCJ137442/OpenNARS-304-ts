@@ -1,5 +1,6 @@
 import { java, JavaObject, type char, type float, type double, type int, S } from "jree";
 import { Symbols } from "../io/Symbols";
+import { Parameters } from "../main/Parameters";
 
 
 
@@ -41,14 +42,14 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
     /**
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(narParameters: Parameters| null);
+    public  constructor(narParameters: Parameters);
 
     /**
      * Constructor with a TruthValue to clone
      *
      * @param v truth value to be cloned
      */
-    public  constructor(/* final */  v: TruthValue| null);
+    public  constructor(/* final */  v: TruthValue);
 
     /**
      * Constructor
@@ -57,7 +58,7 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      * @param c             confidence value
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(/* final */  f: float, /* final */  c: double, narParameters: Parameters| null);
+    public  constructor(/* final */  f: float, /* final */  c: double, narParameters: Parameters);
 
     /**
      * Constructor
@@ -67,7 +68,7 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      * @param isAnalytic    is the truth value an analytic one?
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(/* final */  f: float, /* final */  c: double, /* final */  isAnalytic: boolean, narParameters: Parameters| null);
+    public  constructor(/* final */  f: float, /* final */  c: double, /* final */  isAnalytic: boolean, narParameters: Parameters);
     public constructor(...args: unknown[]) {
 		switch (args.length) {
 			case 1: {
@@ -218,7 +219,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
      * @param t given value
      * @return absolute difference
      */
-    public  getExpDifAbs(/* final */  t: TruthValue| null):  float {
+    public  getExpDifAbs(/* final */  t: TruthValue):  float {
         return java.lang.Math.abs(this.getExpectation() - t.getExpectation());
     }
 
@@ -242,7 +243,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
      * @param that other TruthValue
      * @return Whether the two are equivalent
      */
-    public override  equals(/* final */  that: java.lang.Object| null):  boolean {
+    public override  equals(/* final */  that: java.lang.Object):  boolean {
         if (that instanceof TruthValue) {
              let  t: TruthValue =  that as TruthValue;
             return TruthValue.isEqual(this.getFrequency(), t.getFrequency(), this.narParameters.TRUTH_EPSILON) &&
@@ -267,7 +268,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
     /**
      * A simplified String representation of a TruthValue
      */
-    public  appendString(/* final */  sb: java.lang.StringBuilder| null, /* final */  external: boolean):  java.lang.StringBuilder {
+    public  appendString(/* final */  sb: java.lang.StringBuilder, /* final */  external: boolean):  java.lang.StringBuilder {
         sb.ensureCapacity(11);
         return sb
                 .append(TruthValue.DELIMITER)
@@ -310,7 +311,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
         return TruthValue.Truth_UNSURE;
     }
 
-    public static  fromWordTerm(narParameters: Parameters| null, term: Term| null):  TruthValue {
+    public static  fromWordTerm(narParameters: Parameters, term: Term):  TruthValue {
         if (term.equals(TruthValue.Truth_TRUE)) {
             return new  TruthValue(1.0, narParameters.DEFAULT_JUDGMENT_CONFIDENCE, narParameters);
         } else if (term.equals(TruthValue.Truth_FALSE)) {

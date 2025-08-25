@@ -49,7 +49,7 @@ export abstract  class Events extends JavaObject {
 
 
     public static ConceptNew =  class ConceptNew extends Events.ParametricInferenceEvent<Concept> {
-        public  constructor(/* final */  c: Concept| null, /* final */  when: long) {
+        public  constructor(/* final */  c: Concept, /* final */  when: long) {
             super(c, when);
         }
 
@@ -77,9 +77,9 @@ export abstract  class Events extends JavaObject {
 
     public abstract static ConceptBeliefAdd =  class ConceptBeliefAdd extends JavaObject implements EventObserver {
 
-        public abstract  onBeliefAdd(c: Concept| null, t: Task| null, extra: java.lang.Object[]| null):  void;
+        public abstract  onBeliefAdd(c: Concept, t: Task, extra: java.lang.Object[]):  void;
 
-        public  event(/* final */  event: java.lang.Class<unknown>| null, /* final */  args: java.lang.Object[]| null):  void {
+        public  event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]):  void {
             this.onBeliefAdd( args[0] as Concept,  args[1] as Task,  args[2] as java.lang.Object[]);
         }
 
@@ -88,9 +88,9 @@ export abstract  class Events extends JavaObject {
 
     public abstract static ConceptBeliefRemove =  class ConceptBeliefRemove extends JavaObject implements EventObserver {
 
-        public abstract  onBeliefRemove(c: Concept| null, removed: Sentence| null, t: Task| null, extra: java.lang.Object[]| null):  void;
+        public abstract  onBeliefRemove(c: Concept, removed: Sentence, t: Task, extra: java.lang.Object[]):  void;
 
-        public  event(/* final */  event: java.lang.Class<unknown>| null, /* final */  args: java.lang.Object[]| null):  void {
+        public  event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]):  void {
             this.onBeliefRemove( args[0] as Concept,  args[1] as Sentence,  args[2] as Task,  args[3] as java.lang.Object[]);
         }
 
@@ -165,9 +165,9 @@ export abstract  class Events extends JavaObject {
          * Concept n.getCurrentConcept()
          * TaskLink n.getCurrentTaskLink()
          */
-        public abstract  onFire(n: GeneralInferenceControl| null):  void;
+        public abstract  onFire(n: GeneralInferenceControl):  void;
 
-        public  event(/* final */  event: java.lang.Class<unknown>| null, /* final */  args: java.lang.Object[]| null):  void {
+        public  event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]):  void {
             this.onFire( args[0] as GeneralInferenceControl);
         }
 
@@ -176,9 +176,9 @@ export abstract  class Events extends JavaObject {
 
     public abstract static TaskImmediateProcess =  class TaskImmediateProcess extends JavaObject implements EventObserver {
 
-        public abstract  onProcessed(t: Task| null, n: DerivationContext| null):  void;
+        public abstract  onProcessed(t: Task, n: DerivationContext):  void;
 
-        public  event(/* final */  event: java.lang.Class<unknown>| null, /* final */  args: java.lang.Object[]| null):  void {
+        public  event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]):  void {
             this.onProcessed( args[0] as Task,  args[1] as DerivationContext);
         }
 
@@ -204,9 +204,9 @@ export abstract  class Events extends JavaObject {
 
     public abstract static TaskAdd =  class TaskAdd extends JavaObject implements EventObserver {
 
-        public abstract  onTaskAdd(t: Task| null, reason: java.lang.String| null):  void;
+        public abstract  onTaskAdd(t: Task, reason: java.lang.String):  void;
 
-        public  event(/* final */  event: java.lang.Class<unknown>| null, /* final */  args: java.lang.Object[]| null):  void {
+        public  event(/* final */  event: java.lang.Class<unknown>, /* final */  args: java.lang.Object[]):  void {
             this.onTaskAdd( args[0] as Task,  args[1] as java.lang.String);
         }
     };
@@ -300,7 +300,7 @@ this.when = when;
     public abstract static ParametricInferenceEvent =  class ParametricInferenceEvent<O> extends Events.InferenceEvent {
         public readonly  object:  O;
 
-        public  constructor(/* final */  object: O| null, /* final */  when: long) {
+        public  constructor(/* final */  object: O, /* final */  when: long) {
             super(when);
             this.object = object;
         }
