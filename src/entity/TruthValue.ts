@@ -10,46 +10,46 @@ import { Parameters } from "../main/Parameters";
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export  class TruthValue extends JavaObject implements java.lang.Cloneable, java.io.Serializable { // implements Cloneable {
+export class TruthValue extends JavaObject implements java.lang.Cloneable, java.io.Serializable { // implements Cloneable {
 
-    protected static readonly  Truth_TRUE:  Term = new  Term("TRUE");
-    protected static readonly  Truth_FALSE:  Term = new  Term("FALSE");
-    protected static readonly  Truth_UNSURE:  Term = new  Term("UNSURE");
+    protected static readonly Truth_TRUE: Term = new Term("TRUE");
+    protected static readonly Truth_FALSE: Term = new Term("FALSE");
+    protected static readonly Truth_UNSURE: Term = new Term("UNSURE");
 
     /**
      * character that marks the two ends of a truth value
      */
-    private static readonly  DELIMITER:  char = Symbols.TRUTH_VALUE_MARK;
+    private static readonly DELIMITER: char = Symbols.TRUTH_VALUE_MARK;
     /**
      * character that separates the factors in a truth value
      */
-    private static readonly  SEPARATOR:  char = Symbols.VALUE_SEPARATOR;
+    private static readonly SEPARATOR: char = Symbols.VALUE_SEPARATOR;
     /**
      * frequency factor of the truth value
      */
-    private  frequency:  float;
+    private frequency: float;
     /**
      * confidence factor of the truth value
      */
-    private  confidence:  double;
+    private confidence: double;
     /**
      * Whether the truth value is derived from a definition
      */
-    private  analytic:  boolean = false;
+    private analytic: boolean = false;
 
-    private  narParameters:  Parameters;
+    private narParameters: Parameters;
 
     /**
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(narParameters: Parameters);
+    public constructor(narParameters: Parameters);
 
     /**
      * Constructor with a TruthValue to clone
      *
      * @param v truth value to be cloned
      */
-    public  constructor(v: TruthValue);
+    public constructor(v: TruthValue);
 
     /**
      * Constructor
@@ -58,7 +58,7 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      * @param c             confidence value
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(f: float, c: double, narParameters: Parameters);
+    public constructor(f: float, c: double, narParameters: Parameters);
 
     /**
      * Constructor
@@ -68,62 +68,62 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      * @param isAnalytic    is the truth value an analytic one?
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(f: float, c: double, isAnalytic: boolean, narParameters: Parameters);
+    public constructor(f: float, c: double, isAnalytic: boolean, narParameters: Parameters);
     public constructor(...args: unknown[]) {
-		switch (args.length) {
-			case 1: {
-				const [narParameters] = args as [Parameters];
+        switch (args.length) {
+            case 1: {
+                const [narParameters] = args as [Parameters];
 
 
-        this(0, 0, narParameters);
-    
-
-				break;
-			}
-
-			case 1: {
-				const [v] = args as [TruthValue];
+                this(0, 0, narParameters);
 
 
-        super();
-this.narParameters = v.narParameters;
-        this.frequency = v.getFrequency();
-        this.confidence = v.getConfidence();
-        this.analytic = v.getAnalytic();
-    
+                break;
+            }
 
-				break;
-			}
-
-			case 3: {
-				const [f, c, narParameters] = args as [float, double, Parameters];
+            case 1: {
+                const [v] = args as [TruthValue];
 
 
-        this(f, c, false, narParameters);
-    
-
-				break;
-			}
-
-			case 4: {
-				const [f, c, isAnalytic, narParameters] = args as [float, double, boolean, Parameters];
+                super();
+                this.narParameters = v.narParameters;
+                this.frequency = v.getFrequency();
+                this.confidence = v.getConfidence();
+                this.analytic = v.getAnalytic();
 
 
-        super();
-this.narParameters = narParameters;
-        this.setFrequency(f);
-        this.setConfidence(c);
-        this.setAnalytic(isAnalytic);
-    
+                break;
+            }
 
-				break;
-			}
+            case 3: {
+                const [f, c, narParameters] = args as [float, double, Parameters];
 
-			default: {
-				throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-			}
-		}
-	}
+
+                this(f, c, false, narParameters);
+
+
+                break;
+            }
+
+            case 4: {
+                const [f, c, isAnalytic, narParameters] = args as [float, double, boolean, Parameters];
+
+
+                super();
+                this.narParameters = narParameters;
+                this.setFrequency(f);
+                this.setConfidence(c);
+                this.setAnalytic(isAnalytic);
+
+
+                break;
+            }
+
+            default: {
+                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            }
+        }
+    }
 
 
     /**
@@ -131,7 +131,7 @@ this.narParameters = narParameters;
      *
      * @return frequency value
      */
-    public  getFrequency():  float {
+    public getFrequency(): float {
         return this.frequency;
     }
 
@@ -140,24 +140,24 @@ this.narParameters = narParameters;
      *
      * @return confidence value
      */
-    public  getConfidence():  double {
+    public getConfidence(): double {
         return this.confidence;
     }
 
-    public  setFrequency(f: float):  TruthValue {
+    public setFrequency(f: float): TruthValue {
         this.frequency = f;
         return this;
     }
 
-    public  setConfidence(c: double):  TruthValue {
-        let  max_confidence: double = 1.0 - this.narParameters.TRUTH_EPSILON;
+    public setConfidence(c: double): TruthValue {
+        let max_confidence: double = 1.0 - this.narParameters.TRUTH_EPSILON;
         this.confidence = (c < max_confidence) ? c : max_confidence;
         return this;
     }
 
-    public  mulConfidence(mul: float):  TruthValue {
-         let  max_confidence: double = 1.0 - this.narParameters.TRUTH_EPSILON;
-         let  c: double = this.confidence * mul;
+    public mulConfidence(mul: float): TruthValue {
+        let max_confidence: double = 1.0 - this.narParameters.TRUTH_EPSILON;
+        let c: double = this.confidence * mul;
         this.confidence = (c < max_confidence) ? c : max_confidence;
         return this;
     }
@@ -165,42 +165,42 @@ this.narParameters = narParameters;
     /**
      * @return is it a analytic truth value?
      */
-    public  getAnalytic():  boolean {
+    public getAnalytic(): boolean {
         return this.analytic;
     }
 
     /**
      * Set it to analytic truth
      */
-    public  setAnalytic():  void;
+    public setAnalytic(): void;
 
-    public  setAnalytic(a: boolean):  TruthValue;
-public setAnalytic(...args: unknown[]):  void |  TruthValue {
-		switch (args.length) {
-			case 0: {
+    public setAnalytic(a: boolean): TruthValue;
+    public setAnalytic(...args: unknown[]): void | TruthValue {
+        switch (args.length) {
+            case 0: {
 
-        this.analytic = true;
-    
-
-				break;
-			}
-
-			case 1: {
-				const [a] = args as [boolean];
+                this.analytic = true;
 
 
-        this.analytic = a;
-        return this;
-    
+                break;
+            }
 
-				break;
-			}
+            case 1: {
+                const [a] = args as [boolean];
 
-			default: {
-				throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-			}
-		}
-	}
+
+                this.analytic = a;
+                return this;
+
+
+                break;
+            }
+
+            default: {
+                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            }
+        }
+    }
 
 
     /**
@@ -208,8 +208,8 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
      *
      * @return expectation value
      */
-    public  getExpectation():  float {
-        return ( this.confidence as float * (this.frequency - 0.5) + 0.5);
+    public getExpectation(): float {
+        return (this.confidence as float * (this.frequency - 0.5) + 0.5);
     }
 
     /**
@@ -219,7 +219,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
      * @param t given value
      * @return absolute difference
      */
-    public  getExpDifAbs(t: TruthValue):  float {
+    public getExpDifAbs(t: TruthValue): float {
         return java.lang.Math.abs(this.getExpectation() - t.getExpectation());
     }
 
@@ -228,12 +228,12 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
      *
      * @return True if the frequency is less than 1/2
      */
-    public  isNegative():  boolean {
+    public isNegative(): boolean {
         return this.getFrequency() < 0.5;
     }
 
-    public static  isEqual(a: double, b: double, epsilon: double):  boolean {
-         let  d: double = java.lang.Math.abs(a - b);
+    public static isEqual(a: double, b: double, epsilon: double): boolean {
+        let d: double = java.lang.Math.abs(a - b);
         return (d < epsilon);
     }
 
@@ -243,11 +243,11 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
      * @param that other TruthValue
      * @return Whether the two are equivalent
      */
-    public override  equals(that: java.lang.Object):  boolean {
+    public override  equals(that: java.lang.Object): boolean {
         if (that instanceof TruthValue) {
-             let  t: TruthValue =  that as TruthValue;
+            let t: TruthValue = that as TruthValue;
             return TruthValue.isEqual(this.getFrequency(), t.getFrequency(), this.narParameters.TRUTH_EPSILON) &&
-                    TruthValue.isEqual(this.getConfidence(), t.getConfidence(), this.narParameters.TRUTH_EPSILON);
+                TruthValue.isEqual(this.getConfidence(), t.getConfidence(), this.narParameters.TRUTH_EPSILON);
         }
         return false;
     }
@@ -257,35 +257,35 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
      *
      * @return hash code
      */
-    public override  hashCode():  int {
-        return ( (0xFFFF * this.frequency) as int << 16) |  (0xFFFF * this.confidence) as int;
+    public override  hashCode(): int {
+        return (((0xFFFF * this.frequency) & 0) << 16) | ((0xFFFF * this.confidence) & 0);
     }
 
-    public override  clone():  TruthValue {
-        return new  TruthValue(this.frequency, this.confidence, this.getAnalytic(), this.narParameters);
+    public override  clone(): TruthValue {
+        return new TruthValue(this.frequency, this.confidence, this.getAnalytic(), this.narParameters);
     }
 
     /**
      * A simplified String representation of a TruthValue
      */
-    public  appendString(sb: java.lang.StringBuilder, external: boolean):  java.lang.StringBuilder {
+    public appendString(sb: java.lang.StringBuilder, external: boolean): java.lang.StringBuilder {
         sb.ensureCapacity(11);
         return sb
-                .append(TruthValue.DELIMITER)
-                .append(Texts.n2(this.frequency))
-                .append(TruthValue.SEPARATOR)
-                .append(Texts.n2(this.confidence))
-                .append(TruthValue.DELIMITER);
+            .append(TruthValue.DELIMITER)
+            .append(Texts.n2(this.frequency))
+            .append(TruthValue.SEPARATOR)
+            .append(Texts.n2(this.confidence))
+            .append(TruthValue.DELIMITER);
     }
 
-    public  name():  java.lang.CharSequence {
-         let  sb: java.lang.StringBuilder = new  java.lang.StringBuilder();
+    public name(): java.lang.CharSequence {
+        let sb: java.lang.StringBuilder = new java.lang.StringBuilder();
         return this.appendString(sb, false);
     }
 
     /** output representation */
-    public  toStringExternal():  java.lang.CharSequence {
-         let  sb: java.lang.StringBuilder = new  java.lang.StringBuilder();
+    public toStringExternal(): java.lang.CharSequence {
+        let sb: java.lang.StringBuilder = new java.lang.StringBuilder();
         return this.appendString(sb, true);
     }
 
@@ -295,13 +295,13 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
      *
      * @return String representation
      */
-    public override  toString():  java.lang.String {
+    public override  toString(): java.lang.String {
         return this.name().toString();
     }
 
-    public  toWordTerm():  Term {
-         let  e: float = this.getExpectation();
-         let  t: float = this.narParameters.DEFAULT_CREATION_EXPECTATION;
+    public toWordTerm(): Term {
+        let e: float = this.getExpectation();
+        let t: float = this.narParameters.DEFAULT_CREATION_EXPECTATION;
         if (e > t) {
             return TruthValue.Truth_TRUE;
         }
@@ -311,20 +311,20 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
         return TruthValue.Truth_UNSURE;
     }
 
-    public static  fromWordTerm(narParameters: Parameters, term: Term):  TruthValue {
+    public static fromWordTerm(narParameters: Parameters, term: Term): TruthValue {
         if (term.equals(TruthValue.Truth_TRUE)) {
-            return new  TruthValue(1.0, narParameters.DEFAULT_JUDGMENT_CONFIDENCE, narParameters);
+            return new TruthValue(1.0, narParameters.DEFAULT_JUDGMENT_CONFIDENCE, narParameters);
         } else if (term.equals(TruthValue.Truth_FALSE)) {
-            return new  TruthValue(0.0, narParameters.DEFAULT_JUDGMENT_CONFIDENCE, narParameters);
+            return new TruthValue(0.0, narParameters.DEFAULT_JUDGMENT_CONFIDENCE, narParameters);
         } else if (term.equals(TruthValue.Truth_UNSURE)) {
-            return new  TruthValue(0.5, narParameters.DEFAULT_JUDGMENT_CONFIDENCE / 2.0, narParameters);
+            return new TruthValue(0.5, narParameters.DEFAULT_JUDGMENT_CONFIDENCE / 2.0, narParameters);
         } else {
             return null;
         }
     }
 
     // * 📝【2024-05-08 20:49:46】这个函数并无所用之处
-    public  set(frequency: float, confidence: double):  TruthValue {
+    public set(frequency: float, confidence: double): TruthValue {
         this.setFrequency(frequency);
         this.setConfidence(confidence);
         return this;
