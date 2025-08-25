@@ -1,0 +1,163 @@
+
+
+
+import { java, JavaObject, S } from "jree";
+
+
+
+/**
+ *
+ */
+// Adapted from
+// http://www.recursiverobot.com/post/86215392884/witness-a-simple-android-and-java-event-emitter
+// TODO separate this into a single-thread and multithread implementation
+export class EventEmitter extends JavaObject {
+
+    private readonly events: java.util.Map<java.lang.Class<unknown>, java.util.List<EventEmitter.EventObserver>> | null;
+
+    private readonly pendingOps: java.util.Deque<java.lang.Object[]> | null = new java.util.ArrayDeque();
+
+    /**
+     * EventEmitter that allows unknown events; must use concurrent collection
+     * for multithreading since new event classes may be added at any time.
+     */
+    public constructor();
+
+    /**
+     * EventEmitter with a fixed set of known events; the 'events' map
+     * can then be made unmodifiable and non-concurrent for speed.
+     */
+    public constructor(/* final */ ...knownEventClasses: java.lang.Class<unknown> | null[]);
+    public constructor(...args: unknown[]) {
+        switch (args.length) {
+            case 0: {
+
+                /*
+                 * if (Parameters.THREADS > 1)
+                 * events = new ConcurrentHashMap<>();
+                 * else
+                 */
+                // events = new LinkedHashMap<>();
+                super();
+                this.events = new java.util.LinkedHashMap();
+
+
+                break;
+            }
+
+            case 1: {
+                const [knownEventClasses] = args as [java.lang.Class<unknown>[]];
+
+
+                super();
+                this.events = new java.util.LinkedHashMap(knownEventClasses.length);
+                for (let c of knownEventClasses) {
+                    this.events.put(c, this.newObserverList());
+                }
+
+
+                break;
+            }
+
+            default: {
+                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            }
+        }
+    }
+
+
+    protected newObserverList(): java.util.List<EventEmitter.EventObserver> | null {
+        return new java.util.ArrayList();
+        /*
+         * return Parameters.THREADS == 1 ?
+         * new ArrayList<>() : Collections.synchronizedList(new ArrayList<>());
+         */
+    }
+
+    public readonly isActive(/* final */  event: java.lang.Class<unknown> | null): boolean {
+        if (this.events.get(event) !== null)
+            return !this.events.get(event).isEmpty();
+        return false;
+    }
+
+    // apply pending on/off changes when synchronizing, ex: in-between memory cycles
+    public synch(): void {
+        /* synchronized (pendingOps) { */
+        if (!this.pendingOps.isEmpty()) {
+            for (let o of this.pendingOps) {
+                let c: java.lang.Class<unknown> = o[1] as java.lang.Class<unknown>;
+                let d: EventEmitter.EventObserver = o[2] as EventObserver;
+                if (o[0] as java.lang.Boolean) {
+                    this.on(c, d);
+                } else {
+                    this.off(c, d);
+                }
+            }
+        }
+        this.pendingOps.clear();
+        /* } */
+    }
+
+    public on(/* final */  event: java.lang.Class<unknown> | null, /* final */  o: EventEmitter.EventObserver | null): void {
+        if (this.events.containsKey(event))
+            this.events.get(event).add(o);
+        else {
+            let a: java.util.List<EventEmitter.EventObserver> = this.newObserverList();
+            a.add(o);
+            this.events.put(event, a);
+        }
+    }
+
+    /**
+     * @param event
+     * @param o
+     */
+    public off(/* final */  event: java.lang.Class<unknown> | null, /* final */  o: EventEmitter.EventObserver | null): void {
+        if (null === event || null === o)
+            throw new java.lang.IllegalStateException("Invalid parameter");
+
+        if (!this.events.containsKey(event))
+            throw new java.lang.IllegalStateException("Unknown event: " + event);
+
+        this.events.get(event).remove(o);
+        /*
+         * if (!removed) {
+         * throw new IllegalStateException("EventObserver " + o +
+         * " was not registered for events");
+         * }
+         */
+    }
+
+    /** for enabling many events at the same time */
+    public set(/* final */  o: EventEmitter.EventObserver | null, /* final */  enable: boolean, /* final */ ...events: java.lang.Class<unknown> | null[]): void {
+        for (let c of this.events) {
+            if (enable)
+                this.on(c, o);
+            else
+                this.off(c, o);
+        }
+    }
+
+    public emit(/* final */  eventClass: java.lang.Class<unknown> | null, /* final */ ...params: java.lang.Object | null[]): void {
+        let observers: java.util.List<EventEmitter.EventObserver> = this.events.get(eventClass);
+
+        if ((observers === null) || (observers.isEmpty()))
+            return;
+
+        // final int n = observers.size();
+        for (let m of observers) {
+            m.event(eventClass, params);
+        }
+
+    }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
+export namespace EventEmitter {
+    export interface EventObserver {
+        event(event: java.lang.Class<unknown> | null, args: java.lang.Object[] | null): void;
+    }
+
+}
+
+

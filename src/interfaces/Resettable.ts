@@ -1,0 +1,17 @@
+
+import { java } from "jree";
+
+
+
+/**
+ * Implementations can be reseted - that is to flush all content and restore the
+ * state to some default state
+ *
+ * @author Robert Wünsche
+ */
+interface Resettable {
+    /**
+     * reset
+     */
+    reset(): void;
+}

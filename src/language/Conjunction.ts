@@ -1,0 +1,497 @@
+
+
+
+import { java, type int, type long, S } from "jree";
+
+
+
+/**
+ * Conjunction of statements as defined in the NARS-theory
+ *
+ * @author Pei Wang
+ * @author Patrick Hammer
+ */
+export class Conjunction extends CompoundTerm {
+
+    public readonly temporalOrder: int;
+    public readonly isSpatial: boolean;
+
+    protected constructor(/* final */  arg: Term[] | null, /* final */  order: int, /* final */  normalized: boolean, /* final */  spatial: boolean);
+
+    /**
+     * Constructor with partial values, called by make
+     *
+     * @param arg        The component list of the term
+     * @param order
+     * @param normalized
+     */
+    // avoids re-calculates of conv rectangle
+    protected constructor(/* final */  arg: Term[] | null, /* final */  order: int, /* final */  normalized: boolean, /* final */  spatial: boolean,
+            /* final */  rect: CompoundTerm.ConvRectangle | null);
+    protected constructor(...args: unknown[]) {
+        switch (args.length) {
+            case 4: {
+                const [arg, order, normalized, spatial] = args as [Term[], int, boolean, boolean];
+
+
+                super(arg);
+                this.isSpatial = spatial;
+                this.temporalOrder = order;
+                java.security.cert.CertPathChecker.init(this.term);
+                // update imagination space if it exists (also type checking the operations):
+                if (arg[0].imagination !== null) {
+                    this.imagination = arg[0].imagination.ConstructSpace(this);
+                }
+
+
+                break;
+            }
+
+            case 5: {
+                const [arg, order, normalized, spatial, rect] = args as [Term[], int, boolean, boolean, CompoundTerm.ConvRectangle];
+
+
+                super(arg);
+                this.isSpatial = spatial;
+                this.temporalOrder = order;
+                this.index_variable = rect.index_variable;
+                this.term_indices = rect.term_indices;
+                java.security.cert.CertPathChecker.init(this.term);
+
+
+                break;
+            }
+
+            default: {
+                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            }
+        }
+    }
+
+
+    /**
+     * Clone an object
+     *
+     * @return A new object
+     */
+    public clone(): Conjunction | null;
+
+    public clone(/* final */  t: Term[] | null): Term | null;
+    public clone(...args: unknown[]): Conjunction | null | Term | null {
+        switch (args.length) {
+            case 0: {
+
+                return new Conjunction(term, this.temporalOrder, java.text.Normalizer.isNormalized(), this.isSpatial);
+
+
+                break;
+            }
+
+            case 1: {
+                const [t] = args as [Term[]];
+
+
+                if (t === null) {
+                    return null;
+                }
+                return Conjunction.make(t, this.temporalOrder, this.isSpatial);
+
+
+                break;
+            }
+
+            default: {
+                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            }
+        }
+    }
+
+
+    /**
+     * Get the operator of the term.
+     *
+     * @return the operator of the term
+     */
+    public operator(): NativeOperator | null {
+        switch (this.temporalOrder) {
+            case TemporalRules.ORDER_FORWARD:
+                if (this.isSpatial) {
+                    return NativeOperator.SPATIAL;
+                } else {
+                    return NativeOperator.SEQUENCE;
+                }
+            case TemporalRules.ORDER_CONCURRENT:
+                return NativeOperator.PARALLEL;
+            default:
+                return NativeOperator.CONJUNCTION;
+        }
+    }
+
+    /**
+     * Check if the compound is commutative.
+     *
+     * @return true for commutative
+     */
+    public isCommutative(): boolean {
+        return this.temporalOrder !== TemporalRules.ORDER_FORWARD;
+    }
+
+    /**
+     * Try to make a new compound from a list of term. Called by StringParser.
+     *
+     * @return the Term generated from the arguments
+     * @param argList the list of arguments
+     */
+    public static readonly make(/* final */  argList: Term[] | null): Term | null;
+
+    /**
+     * Try to make a new compound from a list of term. Called by StringParser.
+     *
+     * @param temporalOrder The temporal order among term
+     * @param argList       the list of arguments
+     * @return the Term generated from the arguments, or null if not possible
+     */
+    public static readonly make(/* final */  argList: Term[] | null, /* final */  temporalOrder: int): Term | null;
+
+    // overload this method by term type?
+    /**
+     * Try to make a new compound from two term. Called by the inference rules.
+     *
+     * @param term1 The first component
+     * @param term2 The second component
+     * @return A compound generated or a term it reduced to
+     */
+    public static readonly make(/* final */  term1: Term | null, /* final */  term2: Term | null): Term | null;
+
+    public static readonly make(/* final */  argList: Term[] | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
+
+    public static readonly make(/* final */  prefix: Term | null, /* final */  suffix: Interval | null, /* final */  temporalOrder: int): Term | null;
+
+    /**
+     *
+     * @param set a set of Term as term
+     * @return the Term generated from the arguments
+     */
+    private static readonly make(/* final */  set: java.util.Collection<Term> | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
+
+    public static readonly make(/* final */  term1: Term | null, /* final */  term2: Term | null, /* final */  temporalOrder: int): Term | null;
+
+    public static readonly make(/* final */  prefix: Term | null, /* final */  ival: Interval | null, /* final */  suffix: Term | null, /* final */  temporalOrder: int): Term | null;
+
+    public static readonly make(/* final */  term1: Term | null, /* final */  term2: Term | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
+    public static readonly make(...args: unknown[]): Term | null {
+        switch (args.length) {
+            case 1: {
+                const [argList] = args as [Term[]];
+
+
+                return Conjunction.make(argList, TemporalRules.ORDER_NONE);
+
+
+                break;
+            }
+
+            case 2: {
+                const [argList, temporalOrder] = args as [Term[], int];
+
+
+                return Conjunction.make(argList, temporalOrder, false);
+
+
+                break;
+            }
+
+            case 2: {
+                const [term1, term2] = args as [Term, Term];
+
+
+                return Conjunction.make(term1, term2, TemporalRules.ORDER_NONE);
+
+
+                break;
+            }
+
+            case 3: {
+                const [argList, temporalOrder, spatial] = args as [Term[], int, boolean];
+
+
+                if (Debug.DETAILED) {
+                    Terms.verifyNonNull(argList);
+                }
+
+                if (argList === null || argList.length === 0) {
+                    return null;
+                } // special case: single component
+                if (argList.length === 1) {
+                    return argList[0];
+                } // special case: single component
+
+                if (temporalOrder === TemporalRules.ORDER_FORWARD) {
+                    let newArgList: Term[] = spatial ? argList : Conjunction.simplifyIntervals(Conjunction.flatten(argList, temporalOrder, spatial));
+
+                    if (newArgList.length === 1) {
+                        return newArgList[0];
+                    }
+                    return new Conjunction(newArgList, temporalOrder, false, spatial);
+
+                } else {
+
+                    // sort/merge arguments
+                    let set: java.util.NavigableSet<Term> = new java.util.TreeSet();
+                    let flattened: Term[] = Conjunction.flatten(argList, temporalOrder, spatial);
+                    let rect: ConvRectangle = UpdateConvRectangle(flattened);
+                    for (let t of flattened) {
+                        if (!(t instanceof Interval)) { // intervals only for seqs
+                            if (t.term_indices === null || rect === null || rect.term_indices === null) {
+                                set.add(t);
+                            } else if (t instanceof CompoundTerm) {
+                                let updated: Term = Conjunction.UpdateRelativeIndices(rect.term_indices[2], rect.term_indices[3],
+                                    rect.term_indices[4], rect.term_indices[5], t.cloneDeep());
+                                set.add(updated);
+                            }
+                        }
+                    }
+
+                    if (set.size() === 1) {
+                        return set.first();
+                    }
+
+                    return new Conjunction(set.toArray(new Array<Term>(0)), temporalOrder, false, spatial, rect);
+                }
+
+
+                break;
+            }
+
+            case 3: {
+                const [prefix, suffix, temporalOrder] = args as [Term, Interval, int];
+
+
+                let t: Term[] = new Array<Term>(1 + 1);
+                let i: int = 0;
+                t[i++] = prefix;
+                t[i++] = suffix;
+                return Conjunction.make(t, temporalOrder);
+
+
+                break;
+            }
+
+            case 3: {
+                const [set, temporalOrder, spatial] = args as [java.util.Collection<Term>, int, boolean];
+
+
+                let argument: Term[] = set.toArray(new Array<Term>(0));
+                return Conjunction.make(argument, temporalOrder, spatial);
+
+
+                break;
+            }
+
+            case 3: {
+                const [term1, term2, temporalOrder] = args as [Term, Term, int];
+
+
+                return Conjunction.make(term1, term2, temporalOrder, false);
+
+
+                break;
+            }
+
+            case 4: {
+                const [prefix, ival, suffix, temporalOrder] = args as [Term, Interval, Term, int];
+
+
+                let t: Term[] = new Array<Term>(1 + 2);
+                let i: int = 0;
+                t[i++] = prefix;
+                t[i++] = ival;
+                t[i++] = suffix;
+                return Conjunction.make(t, temporalOrder);
+
+
+                break;
+            }
+
+            case 4: {
+                const [term1, term2, temporalOrder, spatial] = args as [Term, Term, int, boolean];
+
+
+                if (temporalOrder === TemporalRules.ORDER_FORWARD) {
+
+                    let components: Term[];
+
+                    if ((term1 instanceof Conjunction) && (term1.getTemporalOrder() === TemporalRules.ORDER_FORWARD)) {
+
+                        let cterm1: CompoundTerm = term1 as CompoundTerm;
+
+                        let list: java.util.List<Term> = new java.util.ArrayList(cterm1.size());
+                        cterm1.addTermsTo(list);
+
+                        if ((term2 instanceof Conjunction) &&
+                            cterm1.getIsSpatial() === term2.getIsSpatial() &&
+                            term2.getTemporalOrder() === TemporalRules.ORDER_FORWARD) {
+                            // (&/,(&/,P,Q),(&/,R,S)) = (&/,P,Q,R,S)
+                            (term2 as CompoundTerm).addTermsTo(list);
+                        } else {
+                            // (&,(&,P,Q),R) = (&,P,Q,R)
+                            list.add(term2);
+                        }
+
+                        components = list.toArray(new Array<Term>(0));
+
+                    } else if ((term2 instanceof Conjunction) && (term2.getTemporalOrder() === TemporalRules.ORDER_FORWARD)) {
+                        let cterm2: CompoundTerm = term2 as CompoundTerm;
+                        components = new Array<Term>((term2 as CompoundTerm).size() + 1);
+                        components[0] = term1;
+                        java.lang.System.arraycopy(cterm2.term, 0, components, 1, cterm2.size());
+                    } else {
+                        components = [term1, term2];
+                    }
+                    return Conjunction.make(components, temporalOrder, spatial);
+
+                } else {
+
+                    let set: java.util.List<Term> = new java.util.ArrayList();
+                    if (term1 instanceof Conjunction) {
+                        (term1 as CompoundTerm).addTermsTo(set);
+                        if (term2 instanceof Conjunction) {
+                            // (&,(&,P,Q),(&,R,S)) = (&,P,Q,R,S)
+                            (term2 as CompoundTerm).addTermsTo(set);
+                        } else {
+                            // (&,(&,P,Q),R) = (&,P,Q,R)
+                            set.add(term2);
+                        }
+
+                    } else if (term2 instanceof Conjunction) {
+                        (term2 as CompoundTerm).addTermsTo(set);
+                        set.add(term1); // (&,R,(&,P,Q)) = (&,P,Q,R)
+                    } else {
+                        set.add(term1);
+                        set.add(term2);
+                    }
+
+                    return Conjunction.make(set, temporalOrder, spatial);
+                }
+
+
+                break;
+            }
+
+            default: {
+                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            }
+        }
+    }
+
+
+    public static isConjunctionAndHasSameOrder(/* final */  t: Term | null, /* final */  order: int): boolean {
+        if (t instanceof Conjunction) {
+            let c: Conjunction = t as Conjunction;
+            return c.getTemporalOrder() === order;
+        }
+        return false;
+    }
+
+    public static flatten(/* final */  args: Term[] | null, /* final */  order: int, /* final */  isSpatial: boolean): Term[] | null { // flatten only same
+        // order!
+        // determine how many there are with same order
+        let sz: int = 0;
+        for (let a of args) {
+            if (Conjunction.isConjunctionAndHasSameOrder(a, order) && isSpatial === (a as Conjunction).isSpatial) {
+                sz += (a as Conjunction).term.length;
+            } else {
+                sz += 1;
+            }
+        }
+        let ret: Term[] = new Array<Term>(sz);
+        let k: int = 0;
+        for (let a of args) {
+            if (Conjunction.isConjunctionAndHasSameOrder(a, order) && isSpatial === (a as Conjunction).isSpatial) {
+                let c: Conjunction = (a as Conjunction);
+                for (let t of c.term) {
+                    ret[k] = t;
+                    k++;
+                }
+            } else {
+                ret[k] = a;
+                k++;
+            }
+        }
+        return ret;
+    }
+
+    public static PositiveIntString(/* final */  value: int): java.lang.String | null {
+        if (value === 0) {
+            return "";
+        } else {
+            return "+" + java.lang.String.valueOf(value);
+        }
+    }
+
+    public static UpdateRelativeIndices(/* final */  minX: int, /* final */  minY: int, /* final */  minsX: int, /* final */  minsY: int,
+            /* final */  term: Term | null): Term | null {
+        if (term instanceof CompoundTerm) {
+            let ct: CompoundTerm = (term as CompoundTerm);
+            for (let i: int = 0; i < ct.term.length; i++) {
+                ct.term[i] = Conjunction.UpdateRelativeIndices(minX, minY, minsX, minsY, ct.term[i]);
+            }
+            return ct;
+        } else {
+            if (term.term_indices !== null) {
+                // term indices remain the same, but representation changes
+                let s: java.lang.String = term.index_variable;
+                let relativeSizeX: int = term.term_indices[0] - minsX;
+                let relativeSizeY: int = term.term_indices[1] - minsY;
+                let relativePositionX: int = term.term_indices[2] - minX;
+                let relativePositionY: int = term.term_indices[3] - minY;
+
+                s += "[i" + Conjunction.PositiveIntString(relativeSizeX) +
+                    ",j" + Conjunction.PositiveIntString(relativeSizeY);
+                s += ",k" + Conjunction.PositiveIntString(relativePositionX);
+                s += ",l" + Conjunction.PositiveIntString(relativePositionY) + "]";
+                let ret: Term = Term.get(s);
+                ret.term_indices = term.term_indices;
+                ret.index_variable = term.index_variable;
+                return ret;
+            } else {
+                return term; // another atomic term
+            }
+        }
+    }
+
+    /**
+     * @param components The components
+     * @return The components sequence with summed intervals
+     *         for transforming (&/,a,+1,+1) to (&/,a,+2)
+     */
+    public static simplifyIntervals(components: Term[] | null): Term[] | null {
+        let ret: java.util.List<Term> = new java.util.ArrayList<Term>();
+        for (let i: int = 0; i < components.length;) {
+            if (components[i] instanceof Interval) {
+                // add up next ones
+                let ival: long = 0;
+                for (; i < components.length && components[i] instanceof Interval; i++) {
+                    ival += (components[i] as Interval).time;
+                }
+                ret.add(new Interval(ival));
+            } else {
+                ret.add(components[i]);
+                i++;
+            }
+        }
+        return ret.toArray(new Array<Term>(0));
+    }
+
+    protected makeName(): java.lang.CharSequence | null {
+        return makeCompoundName(this.operator(), term);
+    }
+
+    public getTemporalOrder(): int {
+        return this.temporalOrder;
+    }
+
+    public getIsSpatial(): boolean {
+        return this.isSpatial;
+    }
+}

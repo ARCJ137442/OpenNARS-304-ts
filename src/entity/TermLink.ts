@@ -1,0 +1,268 @@
+
+
+
+import { java, type short, type int, S } from "jree";
+
+
+
+/**
+ * A link between a compound term and a component term
+ * <p>
+ * A TermLink links the current Term to a target Term, which is
+ * either a component of, or compound made from, the current term.
+ * <p>
+ * Neither of the two terms contain variable shared with other terms.
+ * <p>
+ * The index value(s) indicates the location of the component in the compound.
+ * <p>
+ * This class is mainly used in inference.RuleTable to dispatch premises to
+ * inference rules
+ *
+ * @author Pei Wang
+ * @author Patrick Hammer
+ */
+export class TermLink extends Item<TermLink> implements TLink<Term> {
+
+    /** At C, point to C; TaskLink only */
+    public static readonly SELF: short = 0;
+    /** At (&&, A, C), point to C */
+    public static readonly COMPONENT: short = 1;
+    /** At C, point to (&&, A, C) */
+    public static readonly COMPOUND: short = 2;
+    /** At <C --> A>, point to C */
+    public static readonly COMPONENT_STATEMENT: short = 3;
+    /** At C, point to <C --> A> */
+    public static readonly COMPOUND_STATEMENT: short = 4;
+    /** At <(&&, C, B) ==> A>, point to C */
+    public static readonly COMPONENT_CONDITION: short = 5;
+    /** At C, point to <(&&, C, B) ==> A> */
+    public static readonly COMPOUND_CONDITION: short = 6;
+    /** At C, point to <(*, C, B) --> A>; TaskLink only */
+    public static readonly TRANSFORM: short = 8;
+    /** At C, point to B, potentially without common subterm term */
+    public static readonly TEMPORAL: short = 9;
+
+    /** The linked Term */
+    public readonly target: Term | null;
+
+    /** The type of link, one of the above */
+    public readonly type: short;
+
+    /**
+     * The index of the component in the component list of the compound, may have up
+     * to 4 levels
+     */
+    public readonly index: Int16Array;
+
+    protected readonly hash: int;
+
+    /**
+     * Constructor for TermLink template
+     * <p>
+     * called in CompoundTerm.prepareComponentLinks only
+     *
+     * @param target  Target Term
+     * @param type    Link type
+     * @param indices Component indices in compound, may be 1 to 4
+     */
+    public constructor(/* final */  target: Term | null, /* final */  type: short, /* final */ ...indices: short[]);
+
+    /**
+     * Constructor to make actual TermLink from a template
+     * <p>
+     * called in Concept.buildTermLinks only
+     *
+     * @param t        Target Term
+     * @param template TermLink template previously prepared
+     * @param v        Budget value of the link
+     */
+    public constructor(/* final */  t: Term | null, /* final */  template: TermLink | null, /* final */  v: BudgetValue | null);
+
+    public constructor(/* final */  type: short, /* final */  target: Term | null, /* final */  i0: int);
+
+    public constructor(/* final */  type: short, /* final */  target: Term | null, /* final */  i0: int, /* final */  i1: int);
+
+    public constructor(/* final */  type: short, /* final */  target: Term | null, /* final */  i0: int, /* final */  i1: int, /* final */  i2: int);
+
+    public constructor(/* final */  type: short, /* final */  target: Term | null, /* final */  i0: int, /* final */  i1: int, /* final */  i2: int, /* final */  i3: int);
+    public constructor(...args: unknown[]) {
+        switch (args.length) {
+            case 3: {
+                const [target, type, indices] = args as [Term, short, short[]];
+
+
+                super(null);
+                this.target = target;
+                this.type = type;
+                /* assert (type % 2 == 0); */  // template types all point to compound, though the target is component
+                if (type === TermLink.COMPOUND_CONDITION) { // the first index is 0 by default
+
+                    this.index = new Int16Array(indices.length + 1);
+                    this.index[0] = 0;
+
+                    java.lang.System.arraycopy(indices, 0, this.index, 1, indices.length);
+                } else {
+                    this.index = indices;
+                }
+                this.hash = this.init();
+
+
+                break;
+            }
+
+            case 3: {
+                const [t, template, v] = args as [Term, TermLink, BudgetValue];
+
+
+                super(v);
+                this.target = t;
+                this.type = (template.target.equals(t))
+                    ? (template.type - 1) as short // point to component
+                    : template.type;
+                this.index = template.index;
+                this.hash = this.init();
+
+
+                break;
+            }
+
+            case 3: {
+                const [type, target, i0] = args as [short, Term, int];
+
+
+                this(target, type, i0 as short);
+
+
+                break;
+            }
+
+            case 4: {
+                const [type, target, i0, i1] = args as [short, Term, int, int];
+
+
+                this(target, type, i0 as short, i1 as short);
+
+
+                break;
+            }
+
+            case 5: {
+                const [type, target, i0, i1, i2] = args as [short, Term, int, int, int];
+
+
+                this(target, type, i0 as short, i1 as short, i2 as short);
+
+
+                break;
+            }
+
+            case 6: {
+                const [type, target, i0, i1, i2, i3] = args as [short, Term, int, int, int, int];
+
+
+                this(target, type, i0 as short, i1 as short, i2 as short, i3 as short);
+
+
+                break;
+            }
+
+            default: {
+                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            }
+        }
+    }
+
+
+    public name(): TermLink | null {
+        return this;
+    }
+
+    public hashCode(): int {
+        return this.hash;
+    }
+
+    public equals(/* final */  obj: java.lang.Object | null): boolean {
+        if (obj === this)
+            return true;
+        if (this.hashCode() !== obj.hashCode())
+            return false;
+
+        if (obj instanceof TermLink) {
+            let t: TermLink = obj as TermLink;
+
+            if (this.type !== t.type)
+                return false;
+            if (!java.util.Arrays.equals(t.index, this.index))
+                return false;
+
+            let tt: Term = t.target;
+            if (this.target === null) {
+                return tt === null;
+            } else if (tt === null) {
+                return this.target === null;
+            } else
+                return this.target.equals(t.target);
+
+        }
+        return false;
+    }
+
+    /**
+     * @return hashcode
+     */
+    protected init(): int {
+        // TODO lazy calculate this?
+        let h: int = java.util.Objects.hash(this.target, this.type, java.util.Arrays.hashCode(this.index));
+        return h;
+    }
+
+    public toString(): java.lang.String | null {
+        return new java.lang.StringBuilder().append(this.newKeyPrefix()).append(this.target !== null ? this.target.name() : "").toString();
+    }
+
+    public newKeyPrefix(): java.lang.CharSequence | null {
+        let at1: java.lang.String;
+        let at2: java.lang.String;
+        if ((this.type % 2) === 1) { // to component
+            at1 = Symbols.TO_COMPONENT_1;
+            at2 = Symbols.TO_COMPONENT_2;
+        } else { // to compound
+            at1 = Symbols.TO_COMPOUND_1;
+            at2 = Symbols.TO_COMPOUND_2;
+        }
+        let MAX_INDEX_DIGITS: int = 2;
+        let estimatedLength: int = 2 + 2 + 1 + MAX_INDEX_DIGITS * ((this.index !== null ? this.index.length : 0) + 1);
+        let prefix: java.lang.StringBuilder = new java.lang.StringBuilder(estimatedLength);
+        prefix.append(at1).append('T').append(this.type);
+        if (this.index !== null) {
+            for (let i of this.index) {
+                prefix.append('-').append(java.lang.Integer.toString(i + 1, 16 /** hexadecimal */
+                ));
+            }
+        }
+        prefix.append(at2);
+        return prefix;
+    }
+
+    /**
+     * Get one index by level
+     *
+     * @param i The index level
+     * @return The index value
+     */
+    public readonly getIndex(/* final */  i: int): short {
+        if ((this.index !== null) && (i < this.index.length)) {
+            return this.index[i];
+        } else {
+            return -1;
+        }
+    }
+
+    public getTarget(): Term | null {
+        return this.target;
+    }
+
+    public getTerm(): Term | null {
+        return this.getTarget();
+    }
+}
