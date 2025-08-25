@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type double, type float } from "jree";
 import { Parameters } from "../main/Parameters";
 

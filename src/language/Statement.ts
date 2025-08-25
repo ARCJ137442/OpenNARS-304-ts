@@ -1,6 +1,3 @@
-
-
-
 import { java, type int, S } from "jree";
 
 
@@ -61,9 +58,9 @@ export abstract class Statement extends CompoundTerm {
      * @param subj The first component
      * @param pred The second component
      */
-    public static readonly make(/* final */  op: NativeOperator | null, /* final */  subj: Term | null, /* final */  pred: Term | null, /* final */  order: int): Statement | null;
+    public static make(/* final */  op: NativeOperator | null, /* final */  subj: Term | null, /* final */  pred: Term | null, /* final */  order: int): Statement | null;
 
-    public static readonly make(/* final */  statement: Statement | null, /* final */  subj: Term | null, /* final */  pred: Term | null, /* final */  order: int): Statement | null;
+    public static make(/* final */  statement: Statement | null, /* final */  subj: Term | null, /* final */  pred: Term | null, /* final */  order: int): Statement | null;
 
     /**
      * Make a Statement from String, called by StringParser
@@ -73,7 +70,7 @@ export abstract class Statement extends CompoundTerm {
      * @param predicate The second component
      * @return The Statement built
      */
-    public static readonly make(/* final */  o: NativeOperator | null, /* final */  subject: Term | null, /* final */  predicate: Term | null,
+    public static make(/* final */  o: NativeOperator | null, /* final */  subject: Term | null, /* final */  predicate: Term | null,
             /* final */  customOrder: boolean, /* final */  order: int): Statement | null;
     public static make(...args: unknown[]): Statement | null {
         switch (args.length) {
@@ -182,7 +179,7 @@ export abstract class Statement extends CompoundTerm {
      * @param order     The temporal order
      * @return The Statement built
      */
-    public static readonly makeSym(/* final */  statement: Statement | null, /* final */  subj: Term | null, /* final */  pred: Term | null,
+    public static makeSym(/* final */  statement: Statement | null, /* final */  subj: Term | null, /* final */  pred: Term | null,
             /* final */  order: int): Statement | null {
         if (statement instanceof Inheritance) {
             return Similarity.make(subj, pred);
@@ -203,7 +200,7 @@ export abstract class Statement extends CompoundTerm {
         return Statement.makeStatementName(this.getSubject(), operator(), this.getPredicate());
     }
 
-    protected static readonly makeStatementName(/* final */  subject: Term | null, /* final */  relation: NativeOperator | null,
+    protected static makeStatementName(/* final */  subject: Term | null, /* final */  relation: NativeOperator | null,
             /* final */  predicate: Term | null): java.lang.CharSequence | null {
         let subjectName: java.lang.CharSequence = subject.name();
         let predicateName: java.lang.CharSequence = predicate.name();
@@ -226,7 +223,7 @@ export abstract class Statement extends CompoundTerm {
         return cb.compact().toString();
     }
 
-    public static readonly invalidStatement(/* final */  subject: Term | null, /* final */  predicate: Term | null): boolean;
+    public static invalidStatement(/* final */  subject: Term | null, /* final */  predicate: Term | null): boolean;
 
     /**
      * Check the validity of a potential Statement. [To be refined]
@@ -236,9 +233,9 @@ export abstract class Statement extends CompoundTerm {
      * @param predicate The second component
      * @return Whether The Statement is invalid
      */
-    public static readonly invalidStatement(/* final */  subject: Term | null, /* final */  predicate: Term | null,
+    public static invalidStatement(/* final */  subject: Term | null, /* final */  predicate: Term | null,
             /* final */  checkSameTermInPredicateAndSubject: boolean): boolean;
-    public static readonly invalidStatement(...args: unknown[]): boolean {
+    public static invalidStatement(...args: unknown[]): boolean {
         switch (args.length) {
             case 2: {
                 const [subject, predicate] = args as [Term, Term];

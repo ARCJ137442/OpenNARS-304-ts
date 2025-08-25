@@ -31,8 +31,6 @@
  * <li>Indirect processing by reasoning, in related concepts and unlimited
  * steps. It happens in each inference cycle.</li>
  * </ol>
- */
-
-import { java } from "jree";
+ */import { java } from "jree";
 
 

@@ -1,6 +1,3 @@
-
-
-
 import { java, type short, type int, JavaObject } from "jree";
 
 
@@ -407,7 +404,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      *
      * @return the size of the component list
      */
-    public readonly size(): int {
+    public size(): int {
         return this.term.length;
     }
 
@@ -764,7 +761,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         return Terms.prepareComponentLinks(componentLinks, this);
     }
 
-    public readonly addTermsTo(/* final */  c: java.util.Collection<Term> | null): void {
+    public addTermsTo(/* final */  c: java.util.Collection<Term> | null): void {
         java.util.Collections.addAll(c, this.term);
     }
 

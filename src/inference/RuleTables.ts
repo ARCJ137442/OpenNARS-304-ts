@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type short, type int, S } from "jree";
 
 
@@ -431,7 +428,7 @@ export class RuleTables extends JavaObject {
      * @param link2 The link to the second premise
      * @return The figure of the syllogism, one of the four: 11, 12, 21, or 22
      */
-    private static readonly indexToFigure(/* final */  link1: TLink<unknown> | null, /* final */  link2: TLink<unknown> | null): int {
+    private static indexToFigure(/* final */  link1: TLink<unknown> | null, /* final */  link2: TLink<unknown> | null): int {
         return (link1.getIndex(0) + 1) * 10 + (link2.getIndex(0) + 1);
     }
 

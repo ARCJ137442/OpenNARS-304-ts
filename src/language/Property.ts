@@ -21,7 +21,7 @@ export abstract class Property extends JavaObject /* would extend "Statement" if
      * @param predicate The second component
      * @return A compound generated or null
      */
-    public static readonly make(/* final */  subject: Term | null, /* final */  predicate: Term | null): Inheritance | null {
+    public static make(/* final */  subject: Term | null, /* final */  predicate: Term | null): Inheritance | null {
         return Inheritance.make(subject, new SetInt(predicate));
     }
 }

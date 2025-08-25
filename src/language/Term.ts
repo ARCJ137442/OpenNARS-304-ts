@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type int, type short, type char, S } from "jree";
 import { SetExt } from "./SetExt";
 
@@ -98,11 +95,11 @@ export class Term extends JavaObject {
 
 
     /** gets the atomic term given a name */
-    public static readonly get(/* final */  name: java.lang.CharSequence): Term;
+    public static get(/* final */  name: java.lang.CharSequence): Term;
 
     /** gets the atomic term of an integer */
-    public static readonly get(/* final */  i: int): Term;
-    public static readonly get(...args: unknown[]): Term {
+    public static get(/* final */  i: int): Term;
+    public static get(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
                 const [name] = args as [java.lang.CharSequence];
@@ -375,7 +372,7 @@ export class Term extends JavaObject {
      *
      * @return The name of the term as a String
      */
-    public override readonly toString(): java.lang.String {
+    public override toString(): java.lang.String {
         return this.name().toString();
     }
 

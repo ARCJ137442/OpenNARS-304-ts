@@ -56,8 +56,6 @@
  * <li>create and access corresponding concept</li>
  * <li>structural operation in compound</li>
  * </ul>
- */
-
-import { java } from "jree";
+ */import { java } from "jree";
 
 

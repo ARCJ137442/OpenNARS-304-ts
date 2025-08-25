@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type char, type int, S } from "jree";
 
 
@@ -334,7 +331,7 @@ export class Variables extends JavaObject {
      */
     public static containVar(/* final */  n: java.lang.CharSequence | null): boolean;
 
-    public static readonly containVar(/* final */  t: Term[] | null): boolean;
+    public static containVar(/* final */  t: Term[] | null): boolean;
     public static containVar(...args: unknown[]): boolean {
         switch (args.length) {
             case 1: {

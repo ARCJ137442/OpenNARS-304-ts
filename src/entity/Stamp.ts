@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type int, type long, type float, S } from "jree";
 
 
@@ -425,7 +422,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      *
      * @return hash code
      */
-    public readonly evidentialHash(): int {
+    public evidentialHash(): int {
         if (this.evidentialSet === null)
             this.toSet();
         return this.evidentialHash;

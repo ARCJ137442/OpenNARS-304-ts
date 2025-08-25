@@ -1,6 +1,3 @@
-
-
-
 import { java, type int, JavaObject, type long, type short, S } from "jree";
 
 
@@ -111,7 +108,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param i The index level
      * @return The index value
      */
-    public readonly getIndex(/* final */  i: int): short {
+    public getIndex(/* final */  i: int): short {
         if ((this.index !== null) && (i < this.index.length)) {
             return this.index[i];
         } else {

@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type long, type float, type int, type double, S } from "jree";
 
 
@@ -306,11 +303,11 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
         }
     }
 
-    public readonly emit(/* final */  c: java.lang.Class<unknown> | null, /* final */ ...signal: java.lang.Object | null[]): void {
+    public emit(/* final */  c: java.lang.Class<unknown> | null, /* final */ ...signal: java.lang.Object | null[]): void {
         this.event.emit(c, java.util.concurrent.locks.Condition.signal);
     }
 
-    public readonly emitting(/* final */  channel: java.lang.Class<unknown> | null): boolean {
+    public emitting(/* final */  channel: java.lang.Class<unknown> | null): boolean {
         return this.event.isActive(channel);
     }
 
@@ -394,7 +391,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     }
 
     /** converts durations to cycles */
-    public readonly cycles(/* final */  durations: double): float {
+    public cycles(/* final */  durations: double): float {
         return this.narParameters.DURATION * durations as float;
     }
 

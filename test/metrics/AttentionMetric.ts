@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type int, type double, closeResources, handleResourceError, throwResourceError } from "jree";
 
 

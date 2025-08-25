@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, S } from "jree";
 
 
@@ -74,7 +71,7 @@ export class EventEmitter extends JavaObject {
          */
     }
 
-    public readonly isActive(/* final */  event: java.lang.Class<unknown> | null): boolean {
+    public isActive(/* final */  event: java.lang.Class<unknown> | null): boolean {
         if (this.events.get(event) !== null)
             return !this.events.get(event).isEmpty();
         return false;

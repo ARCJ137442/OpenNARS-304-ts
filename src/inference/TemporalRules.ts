@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type int, type long, S } from "jree";
 
 
@@ -18,7 +15,7 @@ export class TemporalRules extends JavaObject {
     public static readonly ORDER_BACKWARD: int = -1;
     public static readonly ORDER_INVALID: int = -2;
 
-    public static readonly reverseOrder(/* final */  order: int): int {
+    public static reverseOrder(/* final */  order: int): int {
         if (order === TemporalRules.ORDER_NONE) {
             return TemporalRules.ORDER_NONE;
         } else {
@@ -26,10 +23,10 @@ export class TemporalRules extends JavaObject {
         }
     }
 
-    public static readonly matchingOrder(/* final */  a: Sentence | null, /* final */  b: Sentence | null): boolean;
+    public static matchingOrder(/* final */  a: Sentence | null, /* final */  b: Sentence | null): boolean;
 
-    public static readonly matchingOrder(/* final */  order1: int, /* final */  order2: int): boolean;
-    public static readonly matchingOrder(...args: unknown[]): boolean {
+    public static matchingOrder(/* final */  order1: int, /* final */  order2: int): boolean;
+    public static matchingOrder(...args: unknown[]): boolean {
         switch (args.length) {
             case 2: {
                 const [a, b] = args as [Sentence, Sentence];
@@ -58,7 +55,7 @@ export class TemporalRules extends JavaObject {
     }
 
 
-    public static readonly dedExeOrder(/* final */  order1: int, /* final */  order2: int): int {
+    public static dedExeOrder(/* final */  order1: int, /* final */  order2: int): int {
         let order: int = TemporalRules.ORDER_INVALID;
         if ((order1 === order2) || (order2 === TemporalRules.ORDER_NONE)) {
             order = order1;
@@ -70,7 +67,7 @@ export class TemporalRules extends JavaObject {
         return order;
     }
 
-    public static readonly abdIndComOrder(/* final */  order1: int, /* final */  order2: int): int {
+    public static abdIndComOrder(/* final */  order1: int, /* final */  order2: int): int {
         let order: int = TemporalRules.ORDER_INVALID;
         if (order2 === TemporalRules.ORDER_NONE) {
             order = order1;
@@ -82,7 +79,7 @@ export class TemporalRules extends JavaObject {
         return order;
     }
 
-    public static readonly analogyOrder(/* final */  order1: int, /* final */  order2: int, /* final */  figure: int): int {
+    public static analogyOrder(/* final */  order1: int, /* final */  order2: int, /* final */  figure: int): int {
         let order: int = TemporalRules.ORDER_INVALID;
         if ((order2 === TemporalRules.ORDER_NONE) || (order2 === TemporalRules.ORDER_CONCURRENT)) {
             order = order1;
@@ -100,7 +97,7 @@ export class TemporalRules extends JavaObject {
         return order;
     }
 
-    public static readonly resemblanceOrder(/* final */  order1: int, /* final */  order2: int, /* final */  figure: int): int {
+    public static resemblanceOrder(/* final */  order1: int, /* final */  order2: int, /* final */  figure: int): int {
         let order: int = TemporalRules.ORDER_INVALID;
         let order1Reverse: int = TemporalRules.reverseOrder(order1);
 
@@ -116,7 +113,7 @@ export class TemporalRules extends JavaObject {
         return order;
     }
 
-    public static readonly composeOrder(/* final */  order1: int, /* final */  order2: int): int {
+    public static composeOrder(/* final */  order1: int, /* final */  order2: int): int {
         let order: int = TemporalRules.ORDER_INVALID;
         if (order2 === TemporalRules.ORDER_NONE) {
             order = order1;
@@ -132,7 +129,7 @@ export class TemporalRules extends JavaObject {
      * whether temporal induction can generate a task by avoiding producing wrong
      * terms; only one temporal operator is allowed
      */
-    public static readonly tooMuchTemporalStatements(/* final */  t: Term | null): boolean {
+    public static tooMuchTemporalStatements(/* final */  t: Term | null): boolean {
         return (t === null) || (t.containedTemporalRelations() > 1);
     }
 

@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type float, type long, S } from "jree";
 import { Symbols } from "../io/Symbols";
 import { UtilityFunctions } from "../inference/UtilityFunctions";
@@ -136,7 +133,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @param v The new priority
      */
-    public readonly setPriority(/* final */  v: float): void {
+    public setPriority(/* final */  v: float): void {
         if (v > 1.0) {
             throw new java.lang.IllegalStateException("Priority > 1.0: " + v);
             // v=1.0f;

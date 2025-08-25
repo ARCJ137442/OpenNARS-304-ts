@@ -1,6 +1,3 @@
-
-
-
 import { java, type short, type int, S } from "jree";
 
 
@@ -250,7 +247,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      * @param i The index level
      * @return The index value
      */
-    public readonly getIndex(/* final */  i: int): short {
+    public getIndex(/* final */  i: int): short {
         if ((this.index !== null) && (i < this.index.length)) {
             return this.index[i];
         } else {

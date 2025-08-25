@@ -1,6 +1,3 @@
-
-
-
 import { java, type float } from "jree";
 import { Operator } from "../Operator";
 import { Operation } from "../Operation";

@@ -1,6 +1,3 @@
-
-
-
 import { java, type float, JavaObject, S } from "jree";
 import { Term } from "../language/Term";
 import { Operation } from "./Operation";

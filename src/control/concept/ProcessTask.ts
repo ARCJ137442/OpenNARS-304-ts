@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type char } from "jree";
 
 

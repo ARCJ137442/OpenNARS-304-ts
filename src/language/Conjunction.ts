@@ -1,6 +1,3 @@
-
-
-
 import { java, type int, type long, S } from "jree";
 
 
@@ -142,7 +139,7 @@ export class Conjunction extends CompoundTerm {
      * @return the Term generated from the arguments
      * @param argList the list of arguments
      */
-    public static readonly make(/* final */  argList: Term[] | null): Term | null;
+    public static make(/* final */  argList: Term[] | null): Term | null;
 
     /**
      * Try to make a new compound from a list of term. Called by StringParser.
@@ -151,7 +148,7 @@ export class Conjunction extends CompoundTerm {
      * @param argList       the list of arguments
      * @return the Term generated from the arguments, or null if not possible
      */
-    public static readonly make(/* final */  argList: Term[] | null, /* final */  temporalOrder: int): Term | null;
+    public static make(/* final */  argList: Term[] | null, /* final */  temporalOrder: int): Term | null;
 
     // overload this method by term type?
     /**
@@ -161,25 +158,25 @@ export class Conjunction extends CompoundTerm {
      * @param term2 The second component
      * @return A compound generated or a term it reduced to
      */
-    public static readonly make(/* final */  term1: Term | null, /* final */  term2: Term | null): Term | null;
+    public static make(/* final */  term1: Term | null, /* final */  term2: Term | null): Term | null;
 
-    public static readonly make(/* final */  argList: Term[] | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
+    public static make(/* final */  argList: Term[] | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
 
-    public static readonly make(/* final */  prefix: Term | null, /* final */  suffix: Interval | null, /* final */  temporalOrder: int): Term | null;
+    public static make(/* final */  prefix: Term | null, /* final */  suffix: Interval | null, /* final */  temporalOrder: int): Term | null;
 
     /**
      *
      * @param set a set of Term as term
      * @return the Term generated from the arguments
      */
-    private static readonly make(/* final */  set: java.util.Collection<Term> | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
+    private static make(/* final */  set: java.util.Collection<Term> | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
 
-    public static readonly make(/* final */  term1: Term | null, /* final */  term2: Term | null, /* final */  temporalOrder: int): Term | null;
+    public static make(/* final */  term1: Term | null, /* final */  term2: Term | null, /* final */  temporalOrder: int): Term | null;
 
-    public static readonly make(/* final */  prefix: Term | null, /* final */  ival: Interval | null, /* final */  suffix: Term | null, /* final */  temporalOrder: int): Term | null;
+    public static make(/* final */  prefix: Term | null, /* final */  ival: Interval | null, /* final */  suffix: Term | null, /* final */  temporalOrder: int): Term | null;
 
-    public static readonly make(/* final */  term1: Term | null, /* final */  term2: Term | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
-    public static readonly make(...args: unknown[]): Term | null {
+    public static make(/* final */  term1: Term | null, /* final */  term2: Term | null, /* final */  temporalOrder: int, /* final */  spatial: boolean): Term | null;
+    public static make(...args: unknown[]): Term | null {
         switch (args.length) {
             case 1: {
                 const [argList] = args as [Term[]];

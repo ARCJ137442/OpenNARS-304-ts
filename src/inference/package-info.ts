@@ -65,8 +65,6 @@
  * (as a Term), (2) the truth-value, and (3) the budget-value, roughly in that
  * order.
  * </p>
- */
-
-import { java } from "jree";
+ */import { java } from "jree";
 
 

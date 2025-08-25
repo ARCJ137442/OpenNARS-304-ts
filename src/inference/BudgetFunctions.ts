@@ -1,6 +1,3 @@
-
-
-
 import { java, type float, type double, type int, S } from "jree";
 import { TruthValue } from "../entity/TruthValue";
 import { Sentence } from "../entity/Sentence";

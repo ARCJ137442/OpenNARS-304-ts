@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type char, type int, type long, type float, type double, S } from "jree";
 
 
@@ -328,7 +325,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      * @param t term which has to get cloned
      * @return sentence with the cloned term as a property
      */
-    public override readonly clone(/* final */  t: Term | null): Sentence | null;
+    public override clone(/* final */  t: Term | null): Sentence | null;
     public override clone(...args: unknown[]): Sentence | null {
         switch (args.length) {
             case 0: {

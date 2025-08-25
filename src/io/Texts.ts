@@ -1,6 +1,3 @@
-
-
-
 import { java, JavaObject, type int, type float, type long, type char, type double, S } from "jree";
 
 
@@ -57,13 +54,13 @@ export class Texts extends JavaObject {
 
     protected static readonly fourDecimal: java.text.Format | null = new java.text.DecimalFormat("0.0000");
 
-    public static readonly n4(/* final */  x: float): java.lang.String | null {
+    public static n4(/* final */  x: float): java.lang.String | null {
         return Texts.fourDecimal.format(x);
     }
 
     protected static readonly twoDecimal: java.text.Format | null = new java.text.DecimalFormat("0.00");
 
-    public static readonly n2Slow(/* final */  x: float): java.lang.String | null {
+    public static n2Slow(/* final */  x: float): java.lang.String | null {
         return Texts.twoDecimal.format(x);
     }
 
@@ -75,10 +72,10 @@ export class Texts extends JavaObject {
         return ((d * 100 + 0.5)) as long;
     }
 
-    public static readonly n2(/* final */  x: float): java.lang.CharSequence | null;
+    public static n2(/* final */  x: float): java.lang.CharSequence | null;
 
     public static n2(/* final */  p: double): java.lang.CharSequence | null;
-    public static readonly n2(...args: unknown[]): java.lang.CharSequence | null {
+    public static n2(...args: unknown[]): java.lang.CharSequence | null {
         switch (args.length) {
             case 1: {
                 const [x] = args as [float];
@@ -137,7 +134,7 @@ export class Texts extends JavaObject {
 
     protected static readonly oneDecimal: java.text.Format | null = new java.text.DecimalFormat("0.0");
 
-    public static readonly n1(/* final */  x: float): java.lang.String | null {
+    public static n1(/* final */  x: float): java.lang.String | null {
         return Texts.oneDecimal.format(x);
     }
 
