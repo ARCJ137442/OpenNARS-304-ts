@@ -93,7 +93,7 @@ export class ProcessAnticipation extends JavaObject {
      *                      should be processed
      * @param nar           the reasoner
      */
-    public static maintainDisappointedAnticipations(/* final */  narParameters: java.security.Policy.Parameters, /* final */  concept: Concept,
+    public static maintainDisappointedAnticipations(/* final */  narParameters: Parameters, /* final */  concept: Concept,
             /* final */  nar: Nar): void {
         // here we can check the expiration of the feedback:
         let confirmed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList();

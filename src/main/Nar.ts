@@ -20,7 +20,7 @@ import { java, type long, JavaObject, S, type int, type double, closeResources, 
  * @author Patrick Hammer
  */
 export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable {
-    public narParameters: java.security.Policy.Parameters = new java.security.Policy.Parameters();
+    public narParameters: Parameters = new Parameters();
 
     /*
      * System clock, relatively defined to guarantee the repeatability of behaviors
@@ -857,13 +857,13 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      * @param parameters (overwritten) parameters of a Reasoner
      * @param overrides  specific override values by parameter name
      */
-    private static overrideParameters(parameters: java.security.Policy.Parameters, overrides: java.util.Map<java.lang.String, java.lang.Object>): void {
+    private static overrideParameters(parameters: Parameters, overrides: java.util.Map<java.lang.String, java.lang.Object>): void {
         for (let iOverride of overrides.entrySet()) {
             let propertyName: java.lang.String = iOverride.getKey();
             let value: java.lang.Object = iOverride.getValue();
 
             try {
-                let fieldOfProperty: java.lang.reflect.Field = java.security.Policy.Parameters.class.getField(propertyName);
+                let fieldOfProperty: java.lang.reflect.Field = Parameters.class.getField(propertyName);
                 fieldOfProperty.set(parameters, value);
             } catch (e) {
                 if (e instanceof java.lang.NoSuchFieldException) {

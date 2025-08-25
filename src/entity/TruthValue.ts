@@ -36,12 +36,12 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      */
     private  analytic:  boolean = false;
 
-    private  narParameters:  java.security.Policy.Parameters;
+    private  narParameters:  Parameters;
 
     /**
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(narParameters: java.security.Policy.Parameters| null);
+    public  constructor(narParameters: Parameters| null);
 
     /**
      * Constructor with a TruthValue to clone
@@ -57,7 +57,7 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      * @param c             confidence value
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(/* final */  f: float, /* final */  c: double, narParameters: java.security.Policy.Parameters| null);
+    public  constructor(/* final */  f: float, /* final */  c: double, narParameters: Parameters| null);
 
     /**
      * Constructor
@@ -67,11 +67,11 @@ export  class TruthValue extends JavaObject implements java.lang.Cloneable, java
      * @param isAnalytic    is the truth value an analytic one?
      * @param narParameters parameters of the reasoner
      */
-    public  constructor(/* final */  f: float, /* final */  c: double, /* final */  isAnalytic: boolean, narParameters: java.security.Policy.Parameters| null);
+    public  constructor(/* final */  f: float, /* final */  c: double, /* final */  isAnalytic: boolean, narParameters: Parameters| null);
     public constructor(...args: unknown[]) {
 		switch (args.length) {
 			case 1: {
-				const [narParameters] = args as [java.security.Policy.Parameters];
+				const [narParameters] = args as [Parameters];
 
 
         this(0, 0, narParameters);
@@ -95,7 +95,7 @@ this.narParameters = v.narParameters;
 			}
 
 			case 3: {
-				const [f, c, narParameters] = args as [float, double, java.security.Policy.Parameters];
+				const [f, c, narParameters] = args as [float, double, Parameters];
 
 
         this(f, c, false, narParameters);
@@ -105,7 +105,7 @@ this.narParameters = v.narParameters;
 			}
 
 			case 4: {
-				const [f, c, isAnalytic, narParameters] = args as [float, double, boolean, java.security.Policy.Parameters];
+				const [f, c, isAnalytic, narParameters] = args as [float, double, boolean, Parameters];
 
 
         super();
@@ -310,7 +310,7 @@ public setAnalytic(...args: unknown[]):  void |  TruthValue {
         return TruthValue.Truth_UNSURE;
     }
 
-    public static  fromWordTerm(narParameters: java.security.Policy.Parameters| null, term: Term| null):  TruthValue {
+    public static  fromWordTerm(narParameters: Parameters| null, term: Term| null):  TruthValue {
         if (term.equals(TruthValue.Truth_TRUE)) {
             return new  TruthValue(1.0, narParameters.DEFAULT_JUDGMENT_CONFIDENCE, narParameters);
         } else if (term.equals(TruthValue.Truth_FALSE)) {

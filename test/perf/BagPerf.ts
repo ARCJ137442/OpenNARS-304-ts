@@ -7,7 +7,7 @@ import { java, JavaObject, type int, type float, type double, S } from "jree";
  */
 export class BagPerf extends JavaObject {
 
-    private static narParameters: java.security.Policy.Parameters;
+    private static narParameters: Parameters;
     protected readonly repeats: int = 8;
     protected readonly warmups: int = 1;
     protected static forgetRate: float;

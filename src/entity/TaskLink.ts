@@ -126,14 +126,14 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param currentTime The current time
      * @return Whether they are novel to each other
      */
-    public novel(/* final */  termLink: TermLink, /* final */  currentTime: long, /* final */  narParameters: java.security.Policy.Parameters): boolean;
+    public novel(/* final */  termLink: TermLink, /* final */  currentTime: long, /* final */  narParameters: Parameters): boolean;
 
-    public novel(/* final */  termLink: TermLink, /* final */  currentTime: long, /* final */  narParameters: java.security.Policy.Parameters,
+    public novel(/* final */  termLink: TermLink, /* final */  currentTime: long, /* final */  narParameters: Parameters,
             /* final */  transformTask: boolean): boolean;
     public novel(...args: unknown[]): boolean {
         switch (args.length) {
             case 3: {
-                const [termLink, currentTime, narParameters] = args as [TermLink, long, java.security.Policy.Parameters];
+                const [termLink, currentTime, narParameters] = args as [TermLink, long, Parameters];
 
 
                 return this.novel(termLink, currentTime, narParameters, false);
@@ -143,7 +143,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
             }
 
             case 4: {
-                const [termLink, currentTime, narParameters, transformTask] = args as [TermLink, long, java.security.Policy.Parameters, boolean];
+                const [termLink, currentTime, narParameters, transformTask] = args as [TermLink, long, Parameters, boolean];
 
 
                 let bTerm: Term = termLink.target;

@@ -8,7 +8,7 @@ import { java, JavaObject, type float } from "jree";
  */
 export class BagOperationsTest extends JavaObject {
 
-    private static narParameters: java.security.Policy.Parameters;
+    private static narParameters: Parameters;
     protected static nar: Nar;
 
     static {

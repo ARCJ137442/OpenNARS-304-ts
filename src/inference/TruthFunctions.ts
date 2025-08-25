@@ -53,7 +53,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @return truth value as computed by the truth-function
      */
     public static lookupTruthFunctionAndCompute(/* final */  type: TruthFunctions.EnumType, /* final */  a: TruthValue, /* final */  b: TruthValue,
-            /* final */  narParameters: java.security.Policy.Parameters): TruthValue {
+            /* final */  narParameters: Parameters): TruthValue {
         switch (type) {
             case DESIREDED:
                 return TruthFunctions.desireDed(a, b, narParameters);
@@ -102,7 +102,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @return truth value as computed by the truth-function
      */
     public static lookupTruthFunctionByBoolAndCompute(/* final */  flag: boolean, /* final */  typeTrue: TruthFunctions.EnumType,
-            /* final */  typeFalse: TruthFunctions.EnumType, /* final */  a: TruthValue, /* final */  b: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+            /* final */  typeFalse: TruthFunctions.EnumType, /* final */  a: TruthValue, /* final */  b: TruthValue, narParameters: Parameters): TruthValue {
         let type: TruthFunctions.EnumType = flag ? typeTrue : typeFalse;
         return TruthFunctions.lookupTruthFunctionAndCompute(type, a, b, narParameters);
     }
@@ -118,7 +118,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @return truth value as computed by the truth-function or null if no boolean
      *         value was true
      */
-    public static lookupTruthOrNull(/* final */  a: TruthValue, /* final */  b: TruthValue, narParameters: java.security.Policy.Parameters,
+    public static lookupTruthOrNull(/* final */  a: TruthValue, /* final */  b: TruthValue, narParameters: Parameters,
             /* final */ ...values: java.lang.Object[]): TruthValue {
         let numberOfTuples: int = (java.io.ObjectInputFilter.Status.values.length) / 2;
 
@@ -140,7 +140,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v1 Truth value of the premise
      * @return Truth value of the conclusion
      */
-    public static conversion(/* final */  v1: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static conversion(/* final */  v1: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let c1: double = v1.getConfidence();
         let w: float = java.math.BigInteger.and(f1, c1) as float;
@@ -155,7 +155,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v1 Truth value of the premise
      * @return Truth value of the conclusion
      */
-    public static negation(/* final */  v1: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static negation(/* final */  v1: TruthValue, narParameters: Parameters): TruthValue {
         let f: float = 1 - v1.getFrequency();
         let c: double = v1.getConfidence();
         return new TruthValue(f, c, narParameters);
@@ -167,7 +167,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v1 Truth value of the premise
      * @return Truth value of the conclusion
      */
-    public static contraposition(/* final */  v1: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static contraposition(/* final */  v1: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let c1: double = v1.getConfidence();
         let w: float = java.math.BigInteger.and(1 - f1 as double, c1) as float;
@@ -183,14 +183,14 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static revision(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue;
+    public static revision(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue;
 
     private static revision(/* final */  v1: TruthValue, /* final */  v2: TruthValue, /* final */  result: TruthValue,
-        narParameters: java.security.Policy.Parameters): TruthValue;
+        narParameters: Parameters): TruthValue;
     public static revision(...args: unknown[]): TruthValue {
         switch (args.length) {
             case 3: {
-                const [v1, v2, narParameters] = args as [TruthValue, TruthValue, java.security.Policy.Parameters];
+                const [v1, v2, narParameters] = args as [TruthValue, TruthValue, Parameters];
 
 
                 return TruthFunctions.revision(v1, v2, new TruthValue(narParameters), narParameters);
@@ -200,7 +200,7 @@ export class TruthFunctions extends UtilityFunctions {
             }
 
             case 4: {
-                const [v1, v2, result, narParameters] = args as [TruthValue, TruthValue, TruthValue, java.security.Policy.Parameters];
+                const [v1, v2, result, narParameters] = args as [TruthValue, TruthValue, TruthValue, Parameters];
 
 
                 let f1: float = v1.getFrequency();
@@ -231,7 +231,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static deduction(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue;
+    public static deduction(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue;
 
     /**
      * {M, <M ==> P>} |- P
@@ -240,11 +240,11 @@ export class TruthFunctions extends UtilityFunctions {
      * @param reliance Confidence of the second (analytical) premise
      * @return Truth value of the conclusion
      */
-    public static deduction(/* final */  v1: TruthValue, /* final */  reliance: float, narParameters: java.security.Policy.Parameters): TruthValue;
+    public static deduction(/* final */  v1: TruthValue, /* final */  reliance: float, narParameters: Parameters): TruthValue;
     public static deduction(...args: unknown[]): TruthValue {
         switch (args.length) {
             case 3: {
-                const [v1, v2, narParameters] = args as [TruthValue, TruthValue, java.security.Policy.Parameters];
+                const [v1, v2, narParameters] = args as [TruthValue, TruthValue, Parameters];
 
 
                 let f1: float = v1.getFrequency();
@@ -260,7 +260,7 @@ export class TruthFunctions extends UtilityFunctions {
             }
 
             case 3: {
-                const [v1, reliance, narParameters] = args as [TruthValue, float, java.security.Policy.Parameters];
+                const [v1, reliance, narParameters] = args as [TruthValue, float, Parameters];
 
 
                 let f1: float = v1.getFrequency();
@@ -286,7 +286,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static analogy(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static analogy(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -303,7 +303,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static resemblance(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static resemblance(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -320,7 +320,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static abduction(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue;
+    public static abduction(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue;
 
     /**
      * {M, <P ==> M>} |- P
@@ -329,11 +329,11 @@ export class TruthFunctions extends UtilityFunctions {
      * @param reliance Confidence of the second (analytical) premise
      * @return Truth value of the conclusion
      */
-    public static abduction(/* final */  v1: TruthValue, /* final */  reliance: float, narParameters: java.security.Policy.Parameters): TruthValue;
+    public static abduction(/* final */  v1: TruthValue, /* final */  reliance: float, narParameters: Parameters): TruthValue;
     public static abduction(...args: unknown[]): TruthValue {
         switch (args.length) {
             case 3: {
-                const [v1, v2, narParameters] = args as [TruthValue, TruthValue, java.security.Policy.Parameters];
+                const [v1, v2, narParameters] = args as [TruthValue, TruthValue, Parameters];
 
 
                 if (v1.getAnalytic() || v2.getAnalytic()) {
@@ -352,7 +352,7 @@ export class TruthFunctions extends UtilityFunctions {
             }
 
             case 3: {
-                const [v1, reliance, narParameters] = args as [TruthValue, float, java.security.Policy.Parameters];
+                const [v1, reliance, narParameters] = args as [TruthValue, float, Parameters];
 
 
                 if (v1.getAnalytic()) {
@@ -382,7 +382,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static induction(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static induction(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         return TruthFunctions.abduction(v2, v1, narParameters);
     }
 
@@ -393,7 +393,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static exemplification(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static exemplification(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         if (v1.getAnalytic() || v2.getAnalytic()) {
             return new TruthValue(0.5, 0, narParameters);
         }
@@ -413,7 +413,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static comparison(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static comparison(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -433,7 +433,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static desireStrong(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static desireStrong(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -450,7 +450,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static desireWeak(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static desireWeak(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -467,7 +467,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static desireDed(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static desireDed(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -484,7 +484,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static desireInd(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static desireInd(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -502,7 +502,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static union(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static union(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -519,7 +519,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v2 Truth value of the second premise
      * @return Truth value of the conclusion
      */
-    public static intersection(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: java.security.Policy.Parameters): TruthValue {
+    public static intersection(/* final */  v1: TruthValue, /* final */  v2: TruthValue, narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let f2: float = v2.getFrequency();
         let c1: double = v1.getConfidence();
@@ -537,7 +537,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static reduceDisjunction(/* final */  v1: TruthValue, /* final */  v2: TruthValue,
-        narParameters: java.security.Policy.Parameters): TruthValue {
+        narParameters: Parameters): TruthValue {
         let v0: TruthValue = TruthFunctions.intersection(v1, TruthFunctions.negation(v2, narParameters), narParameters);
         return TruthFunctions.deduction(v0, 1, narParameters);
     }
@@ -550,7 +550,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static reduceConjunction(/* final */  v1: TruthValue, /* final */  v2: TruthValue,
-        narParameters: java.security.Policy.Parameters): TruthValue {
+        narParameters: Parameters): TruthValue {
         let v0: TruthValue = TruthFunctions.intersection(TruthFunctions.negation(v1, narParameters), v2, narParameters);
         return TruthFunctions.negation(TruthFunctions.deduction(v0, 1, narParameters), narParameters);
     }
@@ -563,7 +563,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static reduceConjunctionNeg(/* final */  v1: TruthValue, /* final */  v2: TruthValue,
-        narParameters: java.security.Policy.Parameters): TruthValue {
+        narParameters: Parameters): TruthValue {
         return TruthFunctions.reduceConjunction(v1, TruthFunctions.negation(v2, narParameters), narParameters);
     }
 
@@ -576,7 +576,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static anonymousAnalogy(/* final */  v1: TruthValue, /* final */  v2: TruthValue,
-        narParameters: java.security.Policy.Parameters): TruthValue {
+        narParameters: Parameters): TruthValue {
         let f1: float = v1.getFrequency();
         let c1: double = v1.getConfidence();
         let v0: TruthValue = new TruthValue(f1, w2c(c1, narParameters), narParameters);
@@ -589,7 +589,7 @@ export class TruthFunctions extends UtilityFunctions {
      * Implements the same functionality like TruthValue
      */
     public static readonly EternalizedTruthValue = class EternalizedTruthValue extends TruthValue {
-        public constructor(/* final */  f: float, /* final */  c: double, narParameters: java.security.Policy.Parameters) {
+        public constructor(/* final */  f: float, /* final */  c: double, narParameters: Parameters) {
             super(f, c, narParameters);
         }
     };
@@ -601,7 +601,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param v1 Truth value of the premise
      * @return Truth value of the conclusion
      */
-    public static eternalize(/* final */  v1: TruthValue, narParameters: java.security.Policy.Parameters): TruthFunctions.EternalizedTruthValue {
+    public static eternalize(/* final */  v1: TruthValue, narParameters: Parameters): TruthFunctions.EternalizedTruthValue {
         let f1: float = v1.getFrequency();
         let c1: double = v1.getConfidence();
         let c: double = w2c(c1, narParameters);
@@ -609,7 +609,7 @@ export class TruthFunctions extends UtilityFunctions {
     }
 
     public static temporalProjection(/* final */  sourceTime: long, /* final */  targetTime: long, /* final */  currentTime: long,
-        param: java.security.Policy.Parameters): float {
+        param: Parameters): float {
         let a: double = 100000.0 * param.PROJECTION_DECAY; // projection less strict as we changed in v2.0.0 10000.0
         // slower decay than 100000.0
         return 1.0 - java.lang.Math.abs(sourceTime - targetTime)

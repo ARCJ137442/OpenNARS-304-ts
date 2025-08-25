@@ -51,7 +51,7 @@ export class LocalRules extends JavaObject {
      * @param s2 The second sentence
      * @return If revision is possible between the two sentences
      */
-    public static revisable(/* final */  s1: Sentence, /* final */  s2: Sentence, narParameters: java.security.Policy.Parameters): boolean {
+    public static revisable(/* final */  s1: Sentence, /* final */  s2: Sentence, narParameters: Parameters): boolean {
         if (!s1.isEternal() && !s2.isEternal() && java.lang.Math
             .abs(s1.getOccurrenceTime()
                 - s2.getOccurrenceTime()) > narParameters.REVISION_MAX_OCCURRENCE_DISTANCE) {

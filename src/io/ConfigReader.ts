@@ -10,7 +10,7 @@ import { java, JavaObject, type int, type float, type double } from "jree";
 export class ConfigReader extends JavaObject {
 
     public static loadParamsFromFileAndReturnPlugins(/* final */  filepath: java.lang.String, /* final */  reasoner: Reasoner,
-            /* final */  parameters: java.security.Policy.Parameters): java.util.List<Plugin> {
+            /* final */  parameters: Parameters): java.util.List<Plugin> {
 
         java.lang.System.out.println("Got relative path for loading the config: " + filepath);
         let ret: java.util.List<Plugin> = new java.util.ArrayList<Plugin>();
@@ -67,7 +67,7 @@ export class ConfigReader extends JavaObject {
                 let wasConfigValueAssigned: boolean = false;
 
                 try {
-                    let fieldOfProperty: java.lang.reflect.Field = java.security.Policy.Parameters.class.getField(propertyName);
+                    let fieldOfProperty: java.lang.reflect.Field = Parameters.class.getField(propertyName);
 
                     if (fieldOfProperty.getType() === int.class) {
                         fieldOfProperty.set(parameters, java.lang.Integer.parseInt(propertyValueAsString));

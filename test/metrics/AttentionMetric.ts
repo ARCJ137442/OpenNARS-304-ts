@@ -41,7 +41,7 @@ export class AttentionMetric extends JavaObject {
         // int debugHere = 5;
     }
 
-    public static calcScore(execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>, narParams: java.security.Policy.Parameters): double {
+    public static calcScore(execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>, narParams: Parameters): double {
         let score: double = 0.0;
 
         let exponentialDecayTimeWeightFactor: double = 0.0003; // how fast does the "score" decay for a solution?

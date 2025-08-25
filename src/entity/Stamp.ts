@@ -115,7 +115,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * @param first  The first Stamp
      * @param second The second Stamp
      */
-    public constructor(/* final */  first: Stamp, /* final */  second: Stamp, /* final */  time: long, narParameters: java.security.Policy.Parameters);
+    public constructor(/* final */  first: Stamp, /* final */  second: Stamp, /* final */  time: long, narParameters: Parameters);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
@@ -200,7 +200,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
             }
 
             case 4: {
-                const [first, second, time, narParameters] = args as [Stamp, Stamp, long, java.security.Policy.Parameters];
+                const [first, second, time, narParameters] = args as [Stamp, Stamp, long, Parameters];
 
 
                 // TODO use iterators instead of repeated first and second .get's?

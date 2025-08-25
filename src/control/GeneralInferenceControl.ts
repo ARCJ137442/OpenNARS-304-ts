@@ -12,7 +12,7 @@ import { java, JavaObject, type float, type int } from "jree";
  */
 export class GeneralInferenceControl extends JavaObject {
 
-    public static selectConceptForInference(/* final */  mem: Memory, /* final */  narParameters: java.security.Policy.Parameters, /* final */  nar: Nar): void {
+    public static selectConceptForInference(/* final */  mem: Memory, /* final */  narParameters: Parameters, /* final */  nar: Nar): void {
         let currentConcept: Concept;
         /* synchronized (mem.concepts) { */ // modify concept bag
         currentConcept = mem.concepts.takeOut();

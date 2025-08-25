@@ -17,7 +17,7 @@ import { java, JavaObject, type long, type float, type int, type double, S } fro
 export class Memory extends JavaObject implements java.io.Serializable, java.lang.Iterable<Concept>, Resettable {
 
     /* Nar parameters */
-    public readonly narParameters: java.security.Policy.Parameters;
+    public readonly narParameters: Parameters;
 
     public narId: long = 0;
     // emotion meter keeping track of global emotion
@@ -55,7 +55,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     /**
      * Create a new memory
      */
-    public constructor(/* final */  narParameters: java.security.Policy.Parameters, /* final */  concepts: Bag<Concept, Term>,
+    public constructor(/* final */  narParameters: Parameters, /* final */  concepts: Bag<Concept, Term>,
             /* final */  novelTasks: Bag<Task, Sentence>,
             /* final */  seq_current: Bag<Task, Sentence>,
             /* final */  recent_operations: Bag<Task, Sentence>) {
@@ -334,7 +334,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
      * @param narParameters parameters for the Reasoner instance
      * @param time          indirection to retrieve time
      */
-    public localInference(/* final */  task: Task, narParameters: java.security.Policy.Parameters, /* final */  time: Timable): void {
+    public localInference(/* final */  task: Task, narParameters: Parameters, /* final */  time: Timable): void {
         // synchronized (localInferenceMutex) {
         let cont: DerivationContext = new DerivationContext(this, narParameters, time);
         cont.setCurrentTask(task);
@@ -362,7 +362,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
      * @param narParameters parameters for the Reasoner instance
      * @param time          indirection to retrieve time
      */
-    public processNovelTask(narParameters: java.security.Policy.Parameters, /* final */  time: Timable): void {
+    public processNovelTask(narParameters: Parameters, /* final */  time: Timable): void {
         /* synchronized (tasksMutex) { */
         let task: Task = this.novelTasks.takeOut();
         if (task !== null) {

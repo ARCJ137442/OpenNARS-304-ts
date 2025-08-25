@@ -114,7 +114,7 @@ export class BudgetFunctions {
      * @param bTruth Truth value of the previous belief
      * @return Budget value of the updating task
      */
-    public static update(/* final */  task: Task, /* final */  bTruth: TruthValue, narParameters: java.security.Policy.Parameters): BudgetValue {
+    public static update(/* final */  task: Task, /* final */  bTruth: TruthValue, narParameters: Parameters): BudgetValue {
         let tTruth: TruthValue = task.sentence.truth;
         let dif: float = tTruth.getExpDifAbs(bTruth);
         let priority: float = java.math.BigInteger.or(dif, task.getPriority());
@@ -131,7 +131,7 @@ export class BudgetFunctions {
      * @param n Number of links
      * @return Budget value for each link
      */
-    public static distributeAmongLinks(/* final */  b: BudgetValue, /* final */  n: int, narParameters: java.security.Policy.Parameters): BudgetValue {
+    public static distributeAmongLinks(/* final */  b: BudgetValue, /* final */  n: int, narParameters: Parameters): BudgetValue {
         let priority: float = (b.getPriority() / java.lang.Math.sqrt(n)) as float;
         return new BudgetValue(priority, b.getDurability(), b.getQuality(), narParameters);
     }

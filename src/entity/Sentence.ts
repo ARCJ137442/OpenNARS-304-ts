@@ -613,7 +613,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      * discounts the truth value of the sentence
      *
      */
-    public discountConfidence(narParameters: java.security.Policy.Parameters): void {
+    public discountConfidence(narParameters: Parameters): void {
         this.truth.setConfidence(this.truth.getConfidence() * narParameters.DISCOUNT_RATE).setAnalytic(false);
     }
 

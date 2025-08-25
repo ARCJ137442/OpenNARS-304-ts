@@ -19,11 +19,11 @@ export class DerivationContext extends JavaObject {
     protected newStamp: Stamp;
     public newStampBuilder: DerivationContext.StampBuilder;
 
-    public narParameters: java.security.Policy.Parameters;
+    public narParameters: Parameters;
 
     public time: Timable;
 
-    public constructor(/* final */  mem: Memory, /* final */  narParameters: java.security.Policy.Parameters, /* final */  time: Timable) {
+    public constructor(/* final */  mem: Memory, /* final */  narParameters: Parameters, /* final */  time: Timable) {
         super();
         this.memory = mem;
         this.narParameters = narParameters;

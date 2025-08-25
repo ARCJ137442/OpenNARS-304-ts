@@ -360,7 +360,7 @@ export class Concept extends Item<Term> {
      *
      * @param taskBudget The BudgetValue of the task
      */
-    public buildTermLinks(/* final */  taskBudget: BudgetValue, narParameters: java.security.Policy.Parameters): void {
+    public buildTermLinks(/* final */  taskBudget: BudgetValue, narParameters: Parameters): void {
         if (this.termLinkTemplates.size() === 0) {
             return;
         }
@@ -545,7 +545,7 @@ export class Concept extends Item<Term> {
      * @param time     The current time
      * @return The selected TermLink
      */
-    public selectTermLink(/* final */  taskLink: TaskLink, /* final */  time: long, /* final */  narParameters: java.security.Policy.Parameters): TermLink {
+    public selectTermLink(/* final */  taskLink: TaskLink, /* final */  time: long, /* final */  narParameters: Parameters): TermLink {
         let toMatch: int = narParameters.TERM_LINK_MAX_MATCHED; // Math.min(memory.param.termLinkMaxMatched.get(),
         // termLinks.size());
         for (let i: int = 0; (i < toMatch) && (this.termLinks.size() > 0); i++) {
