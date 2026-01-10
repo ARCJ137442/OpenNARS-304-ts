@@ -8,7 +8,7 @@ author: '{author}'
 <!-- 温习、完成工作与撰写报告的流程
 | 阶段 | 操作 | 产出 |
 | ------ | ------ | ------ |
-| 温习 | 打开`reports`目录中最近一次报告，阅读其中以方头括号（`【`、`】`）标注的用户批示，使用`lean-spec board`与`lean-spec search`搜索并阅读所涉及的spec | 调用`.lean-spec\report-new.py`，在`reports`目录下创建新报告文件，并填写文件信息 |
+| 温习 | 调用`.lean-spec\report-get-latest.py`获知并打开`reports`目录中最近一次报告，阅读其中以方头括号（`【`、`】`）标注的用户批示（Human Notes），使用`lean-spec board`与`lean-spec search`搜索并阅读所涉及的spec | 调用`.lean-spec\report-new.py`，在`reports`目录下创建新报告文件，并填写文件信息 |
 | 计划 | 理解用户下达的指令，列举并填写「需要完成的任务」 | 任务得到清晰表征与分解 |
 | 实现 | 遵照指令完成任务 | 列举的任务得到完成 |
 | 记录 | 填写「任务主要进展」、「任务过程笔记」、「修改内容汇总」、「其他备注」 | 填写完毕，等待用户审阅与新批示 |

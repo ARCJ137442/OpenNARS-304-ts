@@ -1,12 +1,9 @@
-import { java, JavaObject, type int } from "jree";
-
-
+import type { int } from "jree";
 
 /**
  * A pseudo-random number generator, used in Bag.
  */
 export class Distributor {
-
     /** Shuffled sequence of index numbers */
     public order: int[];
     /** Capacity of the array */
@@ -19,16 +16,20 @@ export class Distributor {
      * @param range Range of valid numbers
      */
     public constructor(range: int) {
-        let index: int;
-        let rank: int;
-        let time: int;
-        this.capacity = (range * (range + 1)) / 2;
-        this.order = new /* Int32 */Array(this.capacity);
-        for (index = 0; index < this.capacity; index++) {
-            this.order[index] = -1;
+        if (range <= 0) {
+            throw new RangeError("Distributor range must be >= 1");
         }
-        for (rank = range; rank > 0; rank--) {
-            for (time = 0; time < rank; time++) {
+
+        this.capacity = (range * (range + 1)) / 2;
+        this.order = new Array<int>(this.capacity);
+
+        for (let arrayIndex: int = 0; arrayIndex < this.capacity; arrayIndex++) {
+            this.order[arrayIndex] = -1;
+        }
+
+        let index: int = 0;
+        for (let rank: int = range; rank > 0; rank--) {
+            for (let time: int = 0; time < rank; time++) {
                 index = (Math.floor(this.capacity / rank) + index) % this.capacity;
                 while (this.order[index] >= 0) {
                     index = (index + 1) % this.capacity;
@@ -57,12 +58,4 @@ export class Distributor {
     public next(index: int): int {
         return (index + 1) % this.capacity;
     }
-}
-
-const d = new Distributor(1000);
-console.log(d.order);
-let j = 0
-for (let i = 0; i < 50; i++) {
-    console.log(d.pick(j));
-    j = d.next(j);
 }
