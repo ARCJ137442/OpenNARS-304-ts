@@ -17,42 +17,42 @@ completed: '2026-01-10'
 
 
 
-## Overview
+## 概述
 
-Assess current Java-to-TypeScript translation coverage and quality. Produce a detailed situation report and a forward plan.
+评估当前 Java 到 TypeScript 的翻译覆盖率与质量，输出详细的现状报告以及下一步的执行计划。
 
-## Goals
+## 目标
 
-- Provide file-level coverage mapping between java-master and src.
-- Identify missing, mismatched, or risky translation areas.
-- Deliver an actionable plan derived from the Java baseline.
+- 提供 java-master 与 src 之间的逐文件覆盖映射。
+- 找出缺失、错位或存在风险的翻译区域。
+- 基于 Java 基线产出可执行的后续计划。
 
-## Non-goals
+## 非目标
 
-- No code changes or refactors.
-- No runtime or behavior fixes.
-- No test execution or benchmarking.
+- 不涉及任何代码变更或重构。
+- 不处理运行时或行为问题。
+- 不执行测试或性能基准。
 
-## Design
+## 设计
 
-Use static repository analysis (file mapping, presence checks, TODO scan, and spot checks) to summarize the current translation state. Write findings in situation.md and derive the plan in plans.md.
+通过静态仓库分析（文件映射、存在性检查、TODO 扫描与抽样复核）来概括当前的翻译状态。将结论写入 situation.md，并在 plans.md 中推导出后续计划。
 
-## Documentation Structure
+## 文档结构
 
-- Situation report: situation.md
-- Plan: plans.md
+- 现状报告：situation.md
+- 计划：plans.md
 
-## Plan
+## 计划
 
-- [x] Create situation report with coverage metrics and gaps.
-- [x] Draft plans based on java-master structure and TS gaps.
-- [x] Link sub-docs and keep frontmatter managed by LeanSpec tools.
+- [x] 编写包含覆盖率指标与缺口的现状报告。
+- [x] 基于 java-master 结构与 TS 缺口草拟计划。
+- [x] 关联子文档并通过 LeanSpec 工具维护 frontmatter。
 
-## Testing
+## 测试
 
-- [x] Confirm mapping counts with scripts (java-master vs src).
-- [x] Spot-check key classes and TODO hotspots for translation risks.
+- [x] 使用脚本校验 java-master 与 src 的文件映射数量。
+- [x] 抽查关键类与 TODO 热点以确认翻译风险。
 
-## Notes
+## 备注
 
-- Parameter classes exist under src/main instead of src/parameter, causing package drift.
+- Parameter 相关类目前位于 src/main 而非 src/parameter，导致包结构漂移。
