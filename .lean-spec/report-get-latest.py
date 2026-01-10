@@ -35,7 +35,11 @@ def find_latest_report():
     reports = [f for f in os.listdir(DIR_NAME) if os.path.isfile(os.path.join(DIR_NAME, f))]
     if len(reports) == 0:
         return None
-    latest_report = max(reports, key=get_report_datetime)
+    parsed_reports = [(f, get_report_datetime(f)) for f in reports]
+    valid_reports = [item for item in parsed_reports if item[1] is not None]
+    if not valid_reports:
+        return None
+    latest_report, _ = max(valid_reports, key=lambda item: item[1])
     return latest_report
 
 # CLI入口：列出报告有关信息——报告总数、最新报告名称、最新报告时间

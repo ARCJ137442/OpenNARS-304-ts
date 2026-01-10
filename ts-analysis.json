@@ -1,0 +1,3264 @@
+[
+  {
+    "ts_path": "control/DerivationContext.ts",
+    "package": "control",
+    "subgroup": "control/DerivationContext.ts",
+    "loc": 610,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "DerivationContext",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/control/DerivationContext.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "control/GeneralInferenceControl.ts",
+    "package": "control",
+    "subgroup": "control/GeneralInferenceControl.ts",
+    "loc": 115,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "GeneralInferenceControl",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/control/GeneralInferenceControl.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "control/TemporalInferenceControl.ts",
+    "package": "control",
+    "subgroup": "control/TemporalInferenceControl.ts",
+    "loc": 235,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "TemporalInferenceControl",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/control/TemporalInferenceControl.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "control/concept/ProcessAnticipation.ts",
+    "package": "control",
+    "subgroup": "control/concept",
+    "loc": 264,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "ProcessAnticipation",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/control/concept/ProcessAnticipation.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "control/concept/ProcessGoal.ts",
+    "package": "control",
+    "subgroup": "control/concept",
+    "loc": 492,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "ProcessGoal",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/control/concept/ProcessGoal.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "control/concept/ProcessJudgment.ts",
+    "package": "control",
+    "subgroup": "control/concept",
+    "loc": 181,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "ProcessJudgment",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/control/concept/ProcessJudgment.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "control/concept/ProcessQuestion.ts",
+    "package": "control",
+    "subgroup": "control/concept",
+    "loc": 143,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "ProcessQuestion",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/control/concept/ProcessQuestion.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "control/concept/ProcessTask.ts",
+    "package": "control",
+    "subgroup": "control/concept",
+    "loc": 62,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "ProcessTask",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/control/concept/ProcessTask.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "entity/BudgetValue.ts",
+    "package": "entity",
+    "subgroup": "entity/BudgetValue.ts",
+    "loc": 353,
+    "todos": 1,
+    "local_imports": [
+      {
+        "path": "io/Symbols.ts",
+        "exists": true
+      },
+      {
+        "path": "inference/UtilityFunctions.ts",
+        "exists": true
+      },
+      {
+        "path": "inference/BudgetFunctions.ts",
+        "exists": true
+      },
+      {
+        "path": "main/Parameters.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/TruthValue.ts",
+        "exists": true
+      }
+    ],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "BudgetValue",
+        "extends": [],
+        "implements": [
+          "JavaObject",
+          "java.lang.Cloneable<BudgetValue>",
+          "java.io.Serializable"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/entity/BudgetValue.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "entity/Concept.ts",
+    "package": "entity",
+    "subgroup": "entity/Concept.ts",
+    "loc": 620,
+    "todos": 2,
+    "local_imports": [
+      {
+        "path": "entity/Item.ts",
+        "exists": true
+      },
+      {
+        "path": "language/Term.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/Sentence.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/Task.ts",
+        "exists": true
+      },
+      {
+        "path": "storage/Bag.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/TaskLink.ts",
+        "exists": true
+      }
+    ],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Concept",
+        "extends": [
+          "Item<Term>"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/entity/Concept.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "entity/Item.ts",
+    "package": "entity",
+    "subgroup": "entity/Item.ts",
+    "loc": 285,
+    "todos": 0,
+    "local_imports": [
+      {
+        "path": "entity/BudgetValue.ts",
+        "exists": true
+      }
+    ],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/entity/Item.java",
+    "java_exists": true,
+    "tsc_errors": [
+      {
+        "line": 281,
+        "col": 36,
+        "code": "TS1005",
+        "message": "'=' expected."
+      },
+      {
+        "line": 281,
+        "col": 62,
+        "code": "TS1005",
+        "message": "'(' expected."
+      },
+      {
+        "line": 281,
+        "col": 64,
+        "code": "TS1005",
+        "message": "';' expected."
+      }
+    ],
+    "tests": []
+  },
+  {
+    "ts_path": "entity/Sentence.ts",
+    "package": "entity",
+    "subgroup": "entity/Sentence.ts",
+    "loc": 643,
+    "todos": 2,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Sentence",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "java.lang.Cloneable",
+          "java.io.Serializable"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/entity/Sentence.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "entity/Stamp.ts",
+    "package": "entity",
+    "subgroup": "entity/Stamp.ts",
+    "loc": 606,
+    "todos": 2,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Stamp",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "java.lang.Cloneable",
+          "java.io.Serializable"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/entity/Stamp.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "entity/TLink.ts",
+    "package": "entity",
+    "subgroup": "entity/TLink.ts",
+    "loc": 18,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/entity/TLink.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "entity/Task.ts",
+    "package": "entity",
+    "subgroup": "entity/Task.ts",
+    "loc": 232,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Task",
+        "extends": [
+          "Item<Sentence>"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/entity/Task.java",
+    "java_exists": true,
+    "tsc_errors": [
+      {
+        "line": 222,
+        "col": 25,
+        "code": "TS1005",
+        "message": "';' expected."
+      }
+    ],
+    "tests": []
+  },
+  {
+    "ts_path": "entity/TaskLink.ts",
+    "package": "entity",
+    "subgroup": "entity/TaskLink.ts",
+    "loc": 218,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "TaskLink",
+        "extends": [
+          "Item<Task>"
+        ],
+        "implements": [
+          "TLink<Task>"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/entity/TaskLink.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "entity/TermLink.ts",
+    "package": "entity",
+    "subgroup": "entity/TermLink.ts",
+    "loc": 265,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "TermLink",
+        "extends": [
+          "Item<TermLink>"
+        ],
+        "implements": [
+          "TLink<Term>"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/entity/TermLink.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "entity/TruthValue.ts",
+    "package": "entity",
+    "subgroup": "entity/TruthValue.ts",
+    "loc": 332,
+    "todos": 0,
+    "local_imports": [
+      {
+        "path": "io/Symbols.ts",
+        "exists": true
+      },
+      {
+        "path": "main/Parameters.ts",
+        "exists": true
+      }
+    ],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "TruthValue",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "java.lang.Cloneable",
+          "java.io.Serializable"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/entity/TruthValue.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "inference/BudgetFunctions.ts",
+    "package": "inference",
+    "subgroup": "inference/BudgetFunctions.ts",
+    "loc": 336,
+    "todos": 0,
+    "local_imports": [
+      {
+        "path": "entity/TruthValue.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/Sentence.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/TaskLink.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/Task.ts",
+        "exists": true
+      },
+      {
+        "path": "control/DerivationContext.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/BudgetValue.ts",
+        "exists": true
+      },
+      {
+        "path": "language/Term.ts",
+        "exists": true
+      },
+      {
+        "path": "storage/Memory.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/Item.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/TermLink.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/Concept.ts",
+        "exists": true
+      }
+    ],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "BudgetFunctions",
+        "extends": [],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/inference/BudgetFunctions.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "inference/CompositionalRules.ts",
+    "package": "inference",
+    "subgroup": "inference/CompositionalRules.ts",
+    "loc": 827,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "CompositionalRules",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/inference/CompositionalRules.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "inference/LocalRules.ts",
+    "package": "inference",
+    "subgroup": "inference/LocalRules.ts",
+    "loc": 470,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "LocalRules",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/inference/LocalRules.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "inference/RuleTables.ts",
+    "package": "inference",
+    "subgroup": "inference/RuleTables.ts",
+    "loc": 999,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "RuleTables",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/inference/RuleTables.java",
+    "java_exists": true,
+    "tsc_errors": [
+      {
+        "line": 621,
+        "col": 23,
+        "code": "TS1005",
+        "message": "';' expected."
+      }
+    ],
+    "tests": []
+  },
+  {
+    "ts_path": "inference/StructuralRules.ts",
+    "package": "inference",
+    "subgroup": "inference/StructuralRules.ts",
+    "loc": 986,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "StructuralRules",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/inference/StructuralRules.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "inference/SyllogisticRules.ts",
+    "package": "inference",
+    "subgroup": "inference/SyllogisticRules.ts",
+    "loc": 1000,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "SyllogisticRules",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/inference/SyllogisticRules.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "inference/TemporalRules.ts",
+    "package": "inference",
+    "subgroup": "inference/TemporalRules.ts",
+    "loc": 340,
+    "todos": 2,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "TemporalRules",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/inference/TemporalRules.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "inference/TruthFunctions.ts",
+    "package": "inference",
+    "subgroup": "inference/TruthFunctions.ts",
+    "loc": 626,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "TruthFunctions",
+        "extends": [
+          "UtilityFunctions"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/inference/TruthFunctions.java",
+    "java_exists": true,
+    "tsc_errors": [
+      {
+        "line": 43,
+        "col": 39,
+        "code": "TS1005",
+        "message": "';' expected."
+      }
+    ],
+    "tests": []
+  },
+  {
+    "ts_path": "inference/UtilityFunctions.ts",
+    "package": "inference",
+    "subgroup": "inference/UtilityFunctions.ts",
+    "loc": 93,
+    "todos": 0,
+    "local_imports": [
+      {
+        "path": "main/Parameters.ts",
+        "exists": true
+      }
+    ],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "UtilityFunctions",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/inference/UtilityFunctions.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "interfaces/Eventable.ts",
+    "package": "interfaces",
+    "subgroup": "interfaces/Eventable.ts",
+    "loc": 18,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [
+      {
+        "name": "Eventable",
+        "extends": []
+      }
+    ],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/interfaces/Eventable.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "interfaces/InputFileConsumer.ts",
+    "package": "interfaces",
+    "subgroup": "interfaces/InputFileConsumer.ts",
+    "loc": 18,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [
+      {
+        "name": "InputFileConsumer",
+        "extends": []
+      }
+    ],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/interfaces/InputFileConsumer.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "interfaces/Multistepable.ts",
+    "package": "interfaces",
+    "subgroup": "interfaces/Multistepable.ts",
+    "loc": 21,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [
+      {
+        "name": "Multistepable",
+        "extends": []
+      }
+    ],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/interfaces/Multistepable.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "interfaces/NarseseConsumer.ts",
+    "package": "interfaces",
+    "subgroup": "interfaces/NarseseConsumer.ts",
+    "loc": 21,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [
+      {
+        "name": "NarseseConsumer",
+        "extends": []
+      }
+    ],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/interfaces/NarseseConsumer.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "interfaces/Pluggable.ts",
+    "package": "interfaces",
+    "subgroup": "interfaces/Pluggable.ts",
+    "loc": 31,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [
+      {
+        "name": "Pluggable",
+        "extends": []
+      }
+    ],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/interfaces/Pluggable.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "interfaces/Resettable.ts",
+    "package": "interfaces",
+    "subgroup": "interfaces/Resettable.ts",
+    "loc": 17,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [
+      {
+        "name": "Resettable",
+        "extends": []
+      }
+    ],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/interfaces/Resettable.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "interfaces/SensoryChannelConsumer.ts",
+    "package": "interfaces",
+    "subgroup": "interfaces/SensoryChannelConsumer.ts",
+    "loc": 18,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [
+      {
+        "name": "SensoryChannelConsumer",
+        "extends": []
+      }
+    ],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/interfaces/SensoryChannelConsumer.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "interfaces/TaskConsumer.ts",
+    "package": "interfaces",
+    "subgroup": "interfaces/TaskConsumer.ts",
+    "loc": 21,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/interfaces/TaskConsumer.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "interfaces/Timable.ts",
+    "package": "interfaces",
+    "subgroup": "interfaces/Timable.ts",
+    "loc": 18,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [
+      {
+        "name": "Timable",
+        "extends": []
+      }
+    ],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/interfaces/Timable.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "interfaces/pub/Reasoner.ts",
+    "package": "interfaces",
+    "subgroup": "interfaces/pub",
+    "loc": 83,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [
+      {
+        "name": "Reasoner",
+        "extends": [
+          "SensoryChannelConsumer",
+          "Resettable",
+          "NarseseConsumer",
+          "InputFileConsumer",
+          "TaskConsumer<Reasoner>",
+          "Eventable",
+          "Pluggable",
+          "Multistepable",
+          "Timable"
+        ]
+      }
+    ],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/interfaces/pub/Reasoner.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "io/ConfigReader.ts",
+    "package": "io",
+    "subgroup": "io/ConfigReader.ts",
+    "loc": 170,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "ConfigReader",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/ConfigReader.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "io/Narsese.ts",
+    "package": "io",
+    "subgroup": "io/Narsese.ts",
+    "loc": 567,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Narsese",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "java.io.Serializable",
+          "Parser"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/Narsese.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "io/Parser.ts",
+    "package": "io",
+    "subgroup": "io/Parser.ts",
+    "loc": 36,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Parser",
+        "extends": [],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/Parser.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "io/Symbols.ts",
+    "package": "io",
+    "subgroup": "io/Symbols.ts",
+    "loc": 333,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Symbols",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/Symbols.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "io/Texts.ts",
+    "package": "io",
+    "subgroup": "io/Texts.ts",
+    "loc": 168,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Texts",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/Texts.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "io/events/AnswerHandler.ts",
+    "package": "io",
+    "subgroup": "io/events",
+    "loc": 41,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "AnswerHandler",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "EventObserver"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/events/AnswerHandler.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "io/events/EventEmitter.ts",
+    "package": "io",
+    "subgroup": "io/events",
+    "loc": 160,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "EventEmitter",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/events/EventEmitter.java",
+    "java_exists": true,
+    "tsc_errors": [
+      {
+        "line": 113,
+        "col": 30,
+        "code": "TS1109",
+        "message": "Expression expected."
+      }
+    ],
+    "tests": []
+  },
+  {
+    "ts_path": "io/events/EventHandler.ts",
+    "package": "io",
+    "subgroup": "io/events",
+    "loc": 58,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "EventHandler",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "EventEmitter.EventObserver"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/events/EventHandler.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "io/events/Events.ts",
+    "package": "io",
+    "subgroup": "io/events",
+    "loc": 360,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Events",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/events/Events.java",
+    "java_exists": true,
+    "tsc_errors": [
+      {
+        "line": 357,
+        "col": 38,
+        "code": "TS1005",
+        "message": "'=' expected."
+      },
+      {
+        "line": 357,
+        "col": 42,
+        "code": "TS1005",
+        "message": "'(' expected."
+      },
+      {
+        "line": 357,
+        "col": 44,
+        "code": "TS1005",
+        "message": "';' expected."
+      }
+    ],
+    "tests": []
+  },
+  {
+    "ts_path": "io/events/OutputHandler.ts",
+    "package": "io",
+    "subgroup": "io/events",
+    "loc": 110,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "OutputHandler",
+        "extends": [
+          "EventHandler"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/events/OutputHandler.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "io/events/TextOutputHandler.ts",
+    "package": "io",
+    "subgroup": "io/events",
+    "loc": 294,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "TextOutputHandler",
+        "extends": [
+          "OutputHandler"
+        ],
+        "implements": [
+          "java.io.Serializable"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/io/events/TextOutputHandler.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/AbstractTerm.ts",
+    "package": "language",
+    "subgroup": "language/AbstractTerm.ts",
+    "loc": 31,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "AbstractTerm",
+        "extends": [
+          "java.lang.Cloneable",
+          "java.lang.Comparable<AbstractTerm>"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/AbstractTerm.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/CompoundTerm.ts",
+    "package": "language",
+    "subgroup": "language/CompoundTerm.ts",
+    "loc": 818,
+    "todos": 4,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "CompoundTerm",
+        "extends": [
+          "Term"
+        ],
+        "implements": [
+          "java.lang.Iterable<Term>"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/CompoundTerm.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Conjunction.ts",
+    "package": "language",
+    "subgroup": "language/Conjunction.ts",
+    "loc": 494,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Conjunction",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Conjunction.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/DifferenceExt.ts",
+    "package": "language",
+    "subgroup": "language/DifferenceExt.ts",
+    "loc": 138,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "DifferenceExt",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/DifferenceExt.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/DifferenceInt.ts",
+    "package": "language",
+    "subgroup": "language/DifferenceInt.ts",
+    "loc": 149,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "DifferenceInt",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/DifferenceInt.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Disjunction.ts",
+    "package": "language",
+    "subgroup": "language/Disjunction.ts",
+    "loc": 149,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Disjunction",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Disjunction.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Equivalence.ts",
+    "package": "language",
+    "subgroup": "language/Equivalence.ts",
+    "loc": 195,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Equivalence",
+        "extends": [
+          "Statement"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Equivalence.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Image.ts",
+    "package": "language",
+    "subgroup": "language/Image.ts",
+    "loc": 104,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Image",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Image.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/ImageExt.ts",
+    "package": "language",
+    "subgroup": "language/ImageExt.ts",
+    "loc": 180,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "ImageExt",
+        "extends": [
+          "Image"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/ImageExt.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/ImageInt.ts",
+    "package": "language",
+    "subgroup": "language/ImageInt.ts",
+    "loc": 200,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "ImageInt",
+        "extends": [
+          "Image"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/ImageInt.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Implication.ts",
+    "package": "language",
+    "subgroup": "language/Implication.ts",
+    "loc": 242,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Implication",
+        "extends": [
+          "Statement"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Implication.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Inheritance.ts",
+    "package": "language",
+    "subgroup": "language/Inheritance.ts",
+    "loc": 143,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Inheritance",
+        "extends": [
+          "Statement"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Inheritance.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Instance.ts",
+    "package": "language",
+    "subgroup": "language/Instance.ts",
+    "loc": 28,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Instance",
+        "extends": [
+          "JavaObject /* extends Statement */"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Instance.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/InstanceProperty.ts",
+    "package": "language",
+    "subgroup": "language/InstanceProperty.ts",
+    "loc": 28,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "InstanceProperty",
+        "extends": [
+          "JavaObject /* extends Statement */"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/InstanceProperty.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/IntersectionExt.ts",
+    "package": "language",
+    "subgroup": "language/IntersectionExt.ts",
+    "loc": 168,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "IntersectionExt",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/IntersectionExt.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/IntersectionInt.ts",
+    "package": "language",
+    "subgroup": "language/IntersectionInt.ts",
+    "loc": 168,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "IntersectionInt",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/IntersectionInt.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Interval.ts",
+    "package": "language",
+    "subgroup": "language/Interval.ts",
+    "loc": 72,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Interval",
+        "extends": [
+          "Term"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Interval.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Negation.ts",
+    "package": "language",
+    "subgroup": "language/Negation.ts",
+    "loc": 132,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Negation",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Negation.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Product.ts",
+    "package": "language",
+    "subgroup": "language/Product.ts",
+    "loc": 143,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Product",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Product.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Property.ts",
+    "package": "language",
+    "subgroup": "language/Property.ts",
+    "loc": 27,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Property",
+        "extends": [
+          "JavaObject /* would extend \"Statement\" if it were its own type */"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Property.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/SetExt.ts",
+    "package": "language",
+    "subgroup": "language/SetExt.ts",
+    "loc": 113,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "SetExt",
+        "extends": [
+          "SetTensional"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/SetExt.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/SetInt.ts",
+    "package": "language",
+    "subgroup": "language/SetInt.ts",
+    "loc": 114,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "SetInt",
+        "extends": [
+          "SetTensional"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/SetInt.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/SetTensional.ts",
+    "package": "language",
+    "subgroup": "language/SetTensional.ts",
+    "loc": 64,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "SetTensional",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/SetTensional.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Similarity.ts",
+    "package": "language",
+    "subgroup": "language/Similarity.ts",
+    "loc": 138,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Similarity",
+        "extends": [
+          "Statement"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Similarity.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Statement.ts",
+    "package": "language",
+    "subgroup": "language/Statement.ts",
+    "loc": 377,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Statement",
+        "extends": [
+          "CompoundTerm"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Statement.java",
+    "java_exists": true,
+    "tsc_errors": [
+      {
+        "line": 365,
+        "col": 27,
+        "code": "TS1005",
+        "message": "';' expected."
+      }
+    ],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Tense.ts",
+    "package": "language",
+    "subgroup": "language/Tense.ts",
+    "loc": 37,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Tense",
+        "extends": [
+          "java.lang.Enum<Tense>"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Tense.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Term.ts",
+    "package": "language",
+    "subgroup": "language/Term.ts",
+    "loc": 536,
+    "todos": 1,
+    "local_imports": [
+      {
+        "path": "language/SetExt.ts",
+        "exists": true
+      }
+    ],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Term",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Term.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Terms.ts",
+    "package": "language",
+    "subgroup": "language/Terms.ts",
+    "loc": 615,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Terms",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Terms.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Variable.ts",
+    "package": "language",
+    "subgroup": "language/Variable.ts",
+    "loc": 327,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Variable",
+        "extends": [
+          "Term"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Variable.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "language/Variables.ts",
+    "package": "language",
+    "subgroup": "language/Variables.ts",
+    "loc": 540,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Variables",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/language/Variables.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "main/Debug.ts",
+    "package": "main",
+    "subgroup": "main/Debug.ts",
+    "loc": 69,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Debug",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/parameter/Debug.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "main/Nar.ts",
+    "package": "main",
+    "subgroup": "main/Nar.ts",
+    "loc": 886,
+    "todos": 2,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Nar",
+        "extends": [
+          "SensoryChannel"
+        ],
+        "implements": [
+          "Reasoner",
+          "java.lang.Runnable"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/main/Nar.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "main/NarNode.ts",
+    "package": "main",
+    "subgroup": "main/NarNode.ts",
+    "loc": 337,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "NarNode",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "EventObserver"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/main/NarNode.java",
+    "java_exists": true,
+    "tsc_errors": [
+      {
+        "line": 316,
+        "col": 13,
+        "code": "TS1472",
+        "message": "'catch' or 'finally' expected."
+      }
+    ],
+    "tests": []
+  },
+  {
+    "ts_path": "main/Parameters.ts",
+    "package": "main",
+    "subgroup": "main/Parameters.ts",
+    "loc": 301,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Parameters",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "java.io.Serializable"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/parameter/Parameters.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "main/Shell.ts",
+    "package": "main",
+    "subgroup": "main/Shell.ts",
+    "loc": 195,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Shell",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/main/Shell.java",
+    "java_exists": true,
+    "tsc_errors": [
+      {
+        "line": 107,
+        "col": 35,
+        "code": "TS1359",
+        "message": "Identifier expected. 'in' is a reserved word that cannot be used here."
+      },
+      {
+        "line": 109,
+        "col": 87,
+        "code": "TS1109",
+        "message": "Expression expected."
+      },
+      {
+        "line": 109,
+        "col": 89,
+        "code": "TS1109",
+        "message": "Expression expected."
+      }
+    ],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/FunctionOperator.ts",
+    "package": "operator",
+    "subgroup": "operator/FunctionOperator.ts",
+    "loc": 109,
+    "todos": 2,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "FunctionOperator",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/FunctionOperator.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/ImaginationSpace.ts",
+    "package": "operator",
+    "subgroup": "operator/ImaginationSpace.ts",
+    "loc": 31,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [
+      {
+        "name": "ImaginationSpace",
+        "extends": []
+      }
+    ],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/ImaginationSpace.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/NullOperator.ts",
+    "package": "operator",
+    "subgroup": "operator/NullOperator.ts",
+    "loc": 49,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "NullOperator",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/NullOperator.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/Operation.ts",
+    "package": "operator",
+    "subgroup": "operator/Operation.ts",
+    "loc": 107,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Operation",
+        "extends": [
+          "Inheritance"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/Operation.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/Operator.ts",
+    "package": "operator",
+    "subgroup": "operator/Operator.ts",
+    "loc": 222,
+    "todos": 0,
+    "local_imports": [
+      {
+        "path": "language/Term.ts",
+        "exists": true
+      },
+      {
+        "path": "operator/Operation.ts",
+        "exists": true
+      },
+      {
+        "path": "storage/Memory.ts",
+        "exists": true
+      },
+      {
+        "path": "interfaces/Timable.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/Task.ts",
+        "exists": true
+      },
+      {
+        "path": "main/Nar.ts",
+        "exists": true
+      }
+    ],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Operator",
+        "extends": [
+          "Term"
+        ],
+        "implements": [
+          "Plugin"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/Operator.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Anticipate.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 299,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Anticipate",
+        "extends": [
+          "Operator"
+        ],
+        "implements": [
+          "EventObserver"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Anticipate.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Believe.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 48,
+    "todos": 0,
+    "local_imports": [
+      {
+        "path": "operator/Operator.ts",
+        "exists": true
+      },
+      {
+        "path": "operator/Operation.ts",
+        "exists": true
+      },
+      {
+        "path": "entity/Task.ts",
+        "exists": true
+      },
+      {
+        "path": "storage/Memory.ts",
+        "exists": true
+      },
+      {
+        "path": "interfaces/Timable.ts",
+        "exists": true
+      }
+    ],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Believe",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Believe.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Consider.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 38,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Consider",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Consider.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Doubt.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 29,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Doubt",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Doubt.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Evaluate.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 37,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Evaluate",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Evaluate.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Feel.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 49,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Feel",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Feel.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/FeelBusy.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 28,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "FeelBusy",
+        "extends": [
+          "Feel"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/FeelBusy.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/FeelSatisfied.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 28,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "FeelSatisfied",
+        "extends": [
+          "Feel"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/FeelSatisfied.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Hesitate.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 29,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Hesitate",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Hesitate.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Name.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 40,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Name",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Name.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Register.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 28,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Register",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Register.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Remind.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 37,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Remind",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Remind.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Want.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 41,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Want",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Want.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/mental/Wonder.ts",
+    "package": "operator",
+    "subgroup": "operator/mental",
+    "loc": 38,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Wonder",
+        "extends": [
+          "Operator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/mental/Wonder.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/misc/Add.ts",
+    "package": "operator",
+    "subgroup": "operator/misc",
+    "loc": 41,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Add",
+        "extends": [
+          "FunctionOperator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/misc/Add.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/misc/Count.ts",
+    "package": "operator",
+    "subgroup": "operator/misc",
+    "loc": 47,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Count",
+        "extends": [
+          "FunctionOperator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/misc/Count.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/misc/Reflect.ts",
+    "package": "operator",
+    "subgroup": "operator/misc",
+    "loc": 121,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Reflect",
+        "extends": [
+          "FunctionOperator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/misc/Reflect.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "operator/misc/System.ts",
+    "package": "operator",
+    "subgroup": "operator/misc",
+    "loc": 48,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "System",
+        "extends": [
+          "FunctionOperator"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/operator/misc/System.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "plugin/Plugin.ts",
+    "package": "plugin",
+    "subgroup": "plugin/Plugin.ts",
+    "loc": 21,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Plugin",
+        "extends": [
+          "java.io.Serializable"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/plugin/Plugin.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "plugin/mental/Abbreviation.ts",
+    "package": "plugin",
+    "subgroup": "plugin/mental",
+    "loc": 184,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Abbreviation",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "Plugin"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/plugin/mental/Abbreviation.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "plugin/mental/ComplexEmotions.ts",
+    "package": "plugin",
+    "subgroup": "plugin/mental",
+    "loc": 59,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "ComplexEmotions",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "Plugin"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/plugin/mental/ComplexEmotions.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "plugin/mental/Counting.ts",
+    "package": "plugin",
+    "subgroup": "plugin/mental",
+    "loc": 117,
+    "todos": 1,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Counting",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "Plugin"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/plugin/mental/Counting.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "plugin/mental/Emotions.ts",
+    "package": "plugin",
+    "subgroup": "plugin/mental",
+    "loc": 264,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Emotions",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "Plugin"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/plugin/mental/Emotions.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "plugin/mental/InternalExperience.ts",
+    "package": "plugin",
+    "subgroup": "plugin/mental",
+    "loc": 408,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "InternalExperience",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "Plugin",
+          "EventObserver"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/plugin/mental/InternalExperience.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "plugin/perception/SensoryChannel.ts",
+    "package": "plugin",
+    "subgroup": "plugin/perception",
+    "loc": 147,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "SensoryChannel",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "Plugin"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/plugin/perception/SensoryChannel.java",
+    "java_exists": true,
+    "tsc_errors": [
+      {
+        "line": 144,
+        "col": 31,
+        "code": "TS1135",
+        "message": "Argument expression expected."
+      },
+      {
+        "line": 144,
+        "col": 48,
+        "code": "TS1005",
+        "message": "',' expected."
+      }
+    ],
+    "tests": []
+  },
+  {
+    "ts_path": "plugin/perception/VisionChannel.ts",
+    "package": "plugin",
+    "subgroup": "plugin/perception",
+    "loc": 291,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "VisionChannel",
+        "extends": [
+          "SensoryChannel"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/plugin/perception/VisionChannel.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "plugin/perception/VisualSpace.ts",
+    "package": "plugin",
+    "subgroup": "plugin/perception",
+    "loc": 137,
+    "todos": 4,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "VisualSpace",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "ImaginationSpace"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/plugin/perception/VisualSpace.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "storage/Bag.ts",
+    "package": "storage",
+    "subgroup": "storage/Bag.ts",
+    "loc": 356,
+    "todos": 2,
+    "local_imports": [
+      {
+        "path": "entity/Item.ts",
+        "exists": true
+      },
+      {
+        "path": "storage/Distributor.ts",
+        "exists": true
+      },
+      {
+        "path": "main/Parameters.ts",
+        "exists": true
+      }
+    ],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/storage/Bag.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "storage/Distributor.ts",
+    "package": "storage",
+    "subgroup": "storage/Distributor.ts",
+    "loc": 61,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Distributor",
+        "extends": [],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/storage/Distributor.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": [
+      "node/distributor.test.ts"
+    ]
+  },
+  {
+    "ts_path": "storage/Memory.ts",
+    "package": "storage",
+    "subgroup": "storage/Memory.ts",
+    "loc": 401,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "Memory",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": [
+          "java.io.Serializable",
+          "java.lang.Iterable<Concept>",
+          "Resettable"
+        ]
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/storage/Memory.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  },
+  {
+    "ts_path": "util/ListUtil.ts",
+    "package": "util",
+    "subgroup": "util/ListUtil.ts",
+    "loc": 25,
+    "todos": 0,
+    "local_imports": [],
+    "external_imports": [
+      "jree"
+    ],
+    "classes": [
+      {
+        "name": "ListUtil",
+        "extends": [
+          "JavaObject"
+        ],
+        "implements": []
+      }
+    ],
+    "interfaces": [],
+    "java_path": "C:/Users/56506/AppData/Local/Temp/vibe-kanban/opennars-304-master/src/main/java/org/opennars/util/ListUtil.java",
+    "java_exists": true,
+    "tsc_errors": [],
+    "tests": []
+  }
+]
