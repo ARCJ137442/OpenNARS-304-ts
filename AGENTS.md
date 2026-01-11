@@ -101,6 +101,10 @@ lean-spec link <spec> --depends-on <other-spec>
 4. **弥合认知差距** - 人与 AI 都要能理解
 5. **渐进式披露** - 只有在痛点出现时才增加复杂度
 
+## 编码注意事项
+
+- 在命令行终端写入包含中文内容的文件时，需使用 `\uXXXX` Unicode 转义（ASCII 字符）在脚本中表达中文，再以 UTF-8 写入文件，以避免 PowerShell 传输过程出现乱码。
+
 ---
 
 **记住：** LeanSpec 跟踪你正在构建的内容。保持 spec 与工作同步！
