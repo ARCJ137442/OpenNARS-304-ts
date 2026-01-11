@@ -1,32 +1,32 @@
-# \u73b0\u72b6\u62a5\u544a
+# 现状报告
 
-> \u6240\u5c5espec\uff1a[ts-translation-assessment](README.md)
+> 所属spec：[ts-translation-assessment](README.md)
 
-## \u8303\u56f4
-\u5bf9\u6bd4 java-master/src/main/java/org/opennars \u548c\u5f53\u524d `src` TypeScript \u5b9e\u73b0\uff0c\u4ee5 ts-analysis.json \u4fe1\u606f\u4e3a\u6838\u5fc3\u8d44\u6599\u6765\u7edf\u8ba1\u8986\u76d6\u7387\u3001\u8bed\u6cd5\u53ef\u6267\u884c\u6027\u4e0e\u4f9d\u8d56\u5b8c\u6574\u6027\u3002
+## 范围
+对比 java-master/src/main/java/org/opennars 和当前 `src` TypeScript 实现，以 ts-analysis.json 信息为核心资料来统计覆盖率、语法可执行性与依赖完整性。
 
-## \u6267\u884c\u6458\u8981
-- \u89c4\u6a21\uff1a\u5171\u8ba1 119 \u4e2a TS \u6587\u4ef6\uff0cTODO 43 \u5904\uff0c\u5168\u90e8\u5df2\u6620\u5c04\u81f3 Java \u6e90\u6587\u4ef6\u3002
-- \u7f16\u8bd1\uff1a`npx tsc --noEmit` \u5bf9 10 \u4e2a TS \u6587\u4ef6\u62a5\u544a\u9519\u8bef\uff0c\u53ca `test/metrics/AttentionMetric.ts` (\u5355\u72ec\u8bbe\u7f6e\u7684\u6d4b\u8bd5) \u9700\u8981\u4e00\u5e76\u4fee\u590d\u3002
-- \u6d4b\u8bd5\uff1a\u76ee\u524d `npm test` \u53ea\u8986\u76d6 `test/node/distributor.test.ts`\uff0c\u5927\u90e8\u5206\u6838\u5fc3\u6587\u4ef6\u7f3a\u4e4f\u70ed\u70b9\u6d4b\u8bd5\u3002
-- \u6570\u636e\uff1a\u672c\u62a5\u544a\u91c7\u7528 ts-analysis.json + tsc/npm test \u5b9e\u8fd0\u5229\u7528\u7ed3\u679c\u3002
+## 执行摘要
+- 规模：共计 119 个 TS 文件，TODO 43 处，全部已映射至 Java 源文件。
+- 编译：`npx tsc --noEmit` 对 10 个 TS 文件报告错误，及 `test/metrics/AttentionMetric.ts` (单独设置的测试) 需要一并修复。
+- 测试：目前 `npm test` 只覆盖 `test/node/distributor.test.ts`，大部分核心文件缺乏热点测试。
+- 数据：本报告采用 ts-analysis.json + tsc/npm test 实运利用结果。
 
-## \u6309\u5305\u7edf\u8ba1
-- control: TS 8/8\uff0c\u5df2\u5b8c\u5168\u5bf9\u9f50
-- entity: TS 10/11\uff0c\u4ecd\u7f3a 1 \u4e2a Java \u6587\u4ef6\u7ffb\u8bd1
-- inference: TS 9/10\uff0c\u4ecd\u7f3a 1 \u4e2a Java \u6587\u4ef6\u7ffb\u8bd1
-- interfaces: TS 10/10\uff0c\u5df2\u5b8c\u5168\u5bf9\u9f50
-- io: TS 11/12\uff0c\u4ecd\u7f3a 1 \u4e2a Java \u6587\u4ef6\u7ffb\u8bd1
-- language: TS 30/31\uff0c\u4ecd\u7f3a 1 \u4e2a Java \u6587\u4ef6\u7ffb\u8bd1
-- main: TS 5/3\uff0cTS \u6bd4 Java \u989d\u5916 2 \u4e2a\u6587\u4ef6 (\u5982 main/\u63d0\u53d6 Parameter)
-- operator: TS 23/23\uff0c\u5df2\u5b8c\u5168\u5bf9\u9f50
-- plugin: TS 9/9\uff0c\u5df2\u5b8c\u5168\u5bf9\u9f50
-- storage: TS 3/4\uff0c\u4ecd\u7f3a 1 \u4e2a Java \u6587\u4ef6\u7ffb\u8bd1
-- util: TS 1/1\uff0c\u5df2\u5b8c\u5168\u5bf9\u9f50
-- parameter: TS 0/2\uff0c\u4ecd\u7f3a 2 \u4e2a Java \u6587\u4ef6\u7ffb\u8bd1
+## 按包统计
+- control: TS 8/8，已完全对齐
+- entity: TS 10/11，仍缺 1 个 Java 文件翻译
+- inference: TS 9/10，仍缺 1 个 Java 文件翻译
+- interfaces: TS 10/10，已完全对齐
+- io: TS 11/12，仍缺 1 个 Java 文件翻译
+- language: TS 30/31，仍缺 1 个 Java 文件翻译
+- main: TS 5/3，TS 比 Java 额外 2 个文件 (如 main/提取 Parameter)
+- operator: TS 23/23，已完全对齐
+- plugin: TS 9/9，已完全对齐
+- storage: TS 3/4，仍缺 1 个 Java 文件翻译
+- util: TS 1/1，已完全对齐
+- parameter: TS 0/2，仍缺 2 个 Java 文件翻译
 
-## \u7f16\u8bd1\u4e0e\u6d4b\u8bd5\u73b0\u72b6
-\u4ee5\u4e0b\u6587\u4ef6\u9700\u8981\u5148\u4fee\u590d tsc \u9519\u8bef\uff1a
+## 编译与测试现状
+以下文件需要先修复 tsc 错误：
 - entity/Item.ts: TS1005 @ 281:36 '=' expected.
 - entity/Task.ts: TS1005 @ 222:25 ';' expected.
 - inference/RuleTables.ts: TS1005 @ 621:23 ';' expected.
@@ -37,1317 +37,1317 @@
 - main/NarNode.ts: TS1472 @ 316:13 'catch' or 'finally' expected.
 - main/Shell.ts: TS1359 @ 107:35 Identifier expected. 'in' is a reserved word that cannot be used here.
 - plugin/perception/SensoryChannel.ts: TS1135 @ 144:31 Argument expression expected.
-- `npm test`: \u5c1a\u4fdd\u7559 `test/node/distributor.test.ts`\uff0c\u9700\u4f9d\u7167\u8def\u7ebf\u56fe\u4e3a\u5176\u4ed6\u6a21\u5757\u589e\u8865 smoke test\u3002
+- `npm test`: 尚保留 `test/node/distributor.test.ts`，需依照路线图为其他模块增补 smoke test。
 
-## \u6587\u4ef6\u7ea7\u8bc4\u4f30
-\u672c\u6bb5\u5bf9\u6bcf\u4e2a TS \u6587\u4ef6\u5efa\u7acb\u201cJava \u5bf9\u7167\u201d\u3001\u201c\u53ef\u6267\u884c\u6027\u201d\u3001\u201c\u8def\u7ebf\u56fe\u201d\u4fe1\u606f\uff0c\u4ee5\u4fa7\u52a9\u540e\u7eed\u8f6c\u8bd1\u6392\u671f\u3002
+## 文件级评估
+本段对每个 TS 文件建立“Java 对照”、“可执行性”、“路线图”信息，以侧助后续转译排期。
 
 ## control/DerivationContext.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/DerivationContext.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 610 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
+- **Java对照**: `java-master/src/main/java/org/opennars/control/DerivationContext.java`
+- **规模 / TODO**: 约 610 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：重建推理循环、任务调度与暂停机制，替换 synchronized/wait 行为。
+  3. Java-TS 差异：参见《通用转译法.md》 - 控制与调度
 
 ## control/GeneralInferenceControl.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/GeneralInferenceControl.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 115 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
+- **Java对照**: `java-master/src/main/java/org/opennars/control/GeneralInferenceControl.java`
+- **规模 / TODO**: 约 115 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：重建推理循环、任务调度与暂停机制，替换 synchronized/wait 行为。
+  3. Java-TS 差异：参见《通用转译法.md》 - 控制与调度
 
 ## control/TemporalInferenceControl.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/TemporalInferenceControl.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 235 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
+- **Java对照**: `java-master/src/main/java/org/opennars/control/TemporalInferenceControl.java`
+- **规模 / TODO**: 约 235 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：重建推理循环、任务调度与暂停机制，替换 synchronized/wait 行为。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 控制与调度
 
 ## control/concept/ProcessAnticipation.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/concept/ProcessAnticipation.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 264 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
+- **Java对照**: `java-master/src/main/java/org/opennars/control/concept/ProcessAnticipation.java`
+- **规模 / TODO**: 约 264 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：重建推理循环、任务调度与暂停机制，替换 synchronized/wait 行为。
+  3. Java-TS 差异：参见《通用转译法.md》 - 控制与调度
 
 ## control/concept/ProcessGoal.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/concept/ProcessGoal.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 492 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
+- **Java对照**: `java-master/src/main/java/org/opennars/control/concept/ProcessGoal.java`
+- **规模 / TODO**: 约 492 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：重建推理循环、任务调度与暂停机制，替换 synchronized/wait 行为。
+  3. Java-TS 差异：参见《通用转译法.md》 - 控制与调度
 
 ## control/concept/ProcessJudgment.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/concept/ProcessJudgment.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 181 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
+- **Java对照**: `java-master/src/main/java/org/opennars/control/concept/ProcessJudgment.java`
+- **规模 / TODO**: 约 181 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：重建推理循环、任务调度与暂停机制，替换 synchronized/wait 行为。
+  3. Java-TS 差异：参见《通用转译法.md》 - 控制与调度
 
 ## control/concept/ProcessQuestion.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/concept/ProcessQuestion.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 143 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
+- **Java对照**: `java-master/src/main/java/org/opennars/control/concept/ProcessQuestion.java`
+- **规模 / TODO**: 约 143 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：重建推理循环、任务调度与暂停机制，替换 synchronized/wait 行为。
+  3. Java-TS 差异：参见《通用转译法.md》 - 控制与调度
 
 ## control/concept/ProcessTask.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/concept/ProcessTask.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 62 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
+- **Java对照**: `java-master/src/main/java/org/opennars/control/concept/ProcessTask.java`
+- **规模 / TODO**: 约 62 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：重建推理循环、任务调度与暂停机制，替换 synchronized/wait 行为。
+  3. Java-TS 差异：参见《通用转译法.md》 - 控制与调度
 
 ## entity/BudgetValue.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/BudgetValue.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 353 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aio/Symbols.ts, inference/UtilityFunctions.ts, inference/BudgetFunctions.ts, main/Parameters.ts, entity/TruthValue.ts
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aio/Symbols.ts, inference/UtilityFunctions.ts, inference/BudgetFunctions.ts, main/Parameters.ts, entity/TruthValue.ts
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
+- **Java对照**: `java-master/src/main/java/org/opennars/entity/BudgetValue.java`
+- **规模 / TODO**: 约 353 行，TODO 1 处
+- **依赖现状**: 依赖：io/Symbols.ts, inference/UtilityFunctions.ts, inference/BudgetFunctions.ts, main/Parameters.ts, entity/TruthValue.ts
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：依赖：io/Symbols.ts, inference/UtilityFunctions.ts, inference/BudgetFunctions.ts, main/Parameters.ts, entity/TruthValue.ts
+  2. 文件工作：保持 Stamp/TruthValue 等值对象的不可变语义，补齐 clone/equals/hash 与序列化。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 实体与序列化
 
 ## entity/Concept.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/Concept.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 620 \u884c\uff0cTODO 2 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aentity/Item.ts, language/Term.ts, entity/Sentence.ts, entity/Task.ts, storage/Bag.ts, entity/TaskLink.ts
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aentity/Item.ts, language/Term.ts, entity/Sentence.ts, entity/Task.ts, storage/Bag.ts, entity/TaskLink.ts
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1bTODO 2 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
+- **Java对照**: `java-master/src/main/java/org/opennars/entity/Concept.java`
+- **规模 / TODO**: 约 620 行，TODO 2 处
+- **依赖现状**: 依赖：entity/Item.ts, language/Term.ts, entity/Sentence.ts, entity/Task.ts, storage/Bag.ts, entity/TaskLink.ts
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：依赖：entity/Item.ts, language/Term.ts, entity/Sentence.ts, entity/Task.ts, storage/Bag.ts, entity/TaskLink.ts
+  2. 文件工作：保持 Stamp/TruthValue 等值对象的不可变语义，补齐 clone/equals/hash 与序列化。；TODO 2 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 实体与序列化
 
 ## entity/Item.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/Item.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 285 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aentity/BudgetValue.ts
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 281:36 '=' expected.\uff0c\u53e6\u6709 2 \u6761 ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aentity/BudgetValue.ts
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1btsc TS1005 @ 281:36 \u9519\u8bef
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
+- **Java对照**: `java-master/src/main/java/org/opennars/entity/Item.java`
+- **规模 / TODO**: 约 285 行，TODO 0 处
+- **依赖现状**: 依赖：entity/BudgetValue.ts
+- **编译 / 测试**: 编译失败：TS1005 @ 281:36 '=' expected.，另有 2 条 ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：依赖：entity/BudgetValue.ts
+  2. 文件工作：保持 Stamp/TruthValue 等值对象的不可变语义，补齐 clone/equals/hash 与序列化。；tsc TS1005 @ 281:36 错误
+  3. Java-TS 差异：参见《通用转译法.md》 - 实体与序列化
 
 ## entity/Sentence.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/Sentence.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 643 \u884c\uff0cTODO 2 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1bTODO 2 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
+- **Java对照**: `java-master/src/main/java/org/opennars/entity/Sentence.java`
+- **规模 / TODO**: 约 643 行，TODO 2 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：保持 Stamp/TruthValue 等值对象的不可变语义，补齐 clone/equals/hash 与序列化。；TODO 2 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 实体与序列化
 
 ## entity/Stamp.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/Stamp.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 606 \u884c\uff0cTODO 2 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1bTODO 2 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
+- **Java对照**: `java-master/src/main/java/org/opennars/entity/Stamp.java`
+- **规模 / TODO**: 约 606 行，TODO 2 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：保持 Stamp/TruthValue 等值对象的不可变语义，补齐 clone/equals/hash 与序列化。；TODO 2 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 实体与序列化
 
 ## entity/TLink.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/TLink.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 18 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
+- **Java对照**: `java-master/src/main/java/org/opennars/entity/TLink.java`
+- **规模 / TODO**: 约 18 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：保持 Stamp/TruthValue 等值对象的不可变语义，补齐 clone/equals/hash 与序列化。
+  3. Java-TS 差异：参见《通用转译法.md》 - 实体与序列化
 
 ## entity/Task.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/Task.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 232 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 222:25 ';' expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1btsc TS1005 @ 222:25 \u9519\u8bef
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
+- **Java对照**: `java-master/src/main/java/org/opennars/entity/Task.java`
+- **规模 / TODO**: 约 232 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 编译失败：TS1005 @ 222:25 ';' expected. ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：保持 Stamp/TruthValue 等值对象的不可变语义，补齐 clone/equals/hash 与序列化。；tsc TS1005 @ 222:25 错误
+  3. Java-TS 差异：参见《通用转译法.md》 - 实体与序列化
 
 ## entity/TaskLink.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/TaskLink.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 218 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
+- **Java对照**: `java-master/src/main/java/org/opennars/entity/TaskLink.java`
+- **规模 / TODO**: 约 218 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：保持 Stamp/TruthValue 等值对象的不可变语义，补齐 clone/equals/hash 与序列化。
+  3. Java-TS 差异：参见《通用转译法.md》 - 实体与序列化
 
 ## entity/TermLink.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/TermLink.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 265 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
+- **Java对照**: `java-master/src/main/java/org/opennars/entity/TermLink.java`
+- **规模 / TODO**: 约 265 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：保持 Stamp/TruthValue 等值对象的不可变语义，补齐 clone/equals/hash 与序列化。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 实体与序列化
 
 ## entity/TruthValue.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/TruthValue.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 332 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aio/Symbols.ts, main/Parameters.ts
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aio/Symbols.ts, main/Parameters.ts
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
+- **Java对照**: `java-master/src/main/java/org/opennars/entity/TruthValue.java`
+- **规模 / TODO**: 约 332 行，TODO 0 处
+- **依赖现状**: 依赖：io/Symbols.ts, main/Parameters.ts
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：依赖：io/Symbols.ts, main/Parameters.ts
+  2. 文件工作：保持 Stamp/TruthValue 等值对象的不可变语义，补齐 clone/equals/hash 与序列化。
+  3. Java-TS 差异：参见《通用转译法.md》 - 实体与序列化
 
 ## inference/BudgetFunctions.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/BudgetFunctions.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 336 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aentity/TruthValue.ts, entity/Sentence.ts, entity/TaskLink.ts, entity/Task.ts, control/DerivationContext.ts, entity/BudgetValue.ts ...
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aentity/TruthValue.ts, entity/Sentence.ts, entity/TaskLink.ts, entity/Task.ts, control/DerivationContext.ts, entity/BudgetValue.ts ...
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
+- **Java对照**: `java-master/src/main/java/org/opennars/inference/BudgetFunctions.java`
+- **规模 / TODO**: 约 336 行，TODO 0 处
+- **依赖现状**: 依赖：entity/TruthValue.ts, entity/Sentence.ts, entity/TaskLink.ts, entity/Task.ts, control/DerivationContext.ts, entity/BudgetValue.ts ...
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：依赖：entity/TruthValue.ts, entity/Sentence.ts, entity/TaskLink.ts, entity/Task.ts, control/DerivationContext.ts, entity/BudgetValue.ts ...
+  2. 文件工作：复制规则/真值/预算静态表并完善类型约束与数值校验。
+  3. Java-TS 差异：参见《通用转译法.md》 - 推理规则
 
 ## inference/CompositionalRules.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/CompositionalRules.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 827 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
+- **Java对照**: `java-master/src/main/java/org/opennars/inference/CompositionalRules.java`
+- **规模 / TODO**: 约 827 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：复制规则/真值/预算静态表并完善类型约束与数值校验。
+  3. Java-TS 差异：参见《通用转译法.md》 - 推理规则
 
 ## inference/LocalRules.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/LocalRules.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 470 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
+- **Java对照**: `java-master/src/main/java/org/opennars/inference/LocalRules.java`
+- **规模 / TODO**: 约 470 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：复制规则/真值/预算静态表并完善类型约束与数值校验。
+  3. Java-TS 差异：参见《通用转译法.md》 - 推理规则
 
 ## inference/RuleTables.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/RuleTables.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 999 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 621:23 ';' expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002\uff1btsc TS1005 @ 621:23 \u9519\u8bef\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
+- **Java对照**: `java-master/src/main/java/org/opennars/inference/RuleTables.java`
+- **规模 / TODO**: 约 999 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 编译失败：TS1005 @ 621:23 ';' expected. ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：复制规则/真值/预算静态表并完善类型约束与数值校验。；tsc TS1005 @ 621:23 错误；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 推理规则
 
 ## inference/StructuralRules.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/StructuralRules.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 986 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
+- **Java对照**: `java-master/src/main/java/org/opennars/inference/StructuralRules.java`
+- **规模 / TODO**: 约 986 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：复制规则/真值/预算静态表并完善类型约束与数值校验。
+  3. Java-TS 差异：参见《通用转译法.md》 - 推理规则
 
 ## inference/SyllogisticRules.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/SyllogisticRules.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 1000 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
+- **Java对照**: `java-master/src/main/java/org/opennars/inference/SyllogisticRules.java`
+- **规模 / TODO**: 约 1000 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：复制规则/真值/预算静态表并完善类型约束与数值校验。
+  3. Java-TS 差异：参见《通用转译法.md》 - 推理规则
 
 ## inference/TemporalRules.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/TemporalRules.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 340 \u884c\uff0cTODO 2 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002\uff1bTODO 2 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
+- **Java对照**: `java-master/src/main/java/org/opennars/inference/TemporalRules.java`
+- **规模 / TODO**: 约 340 行，TODO 2 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：复制规则/真值/预算静态表并完善类型约束与数值校验。；TODO 2 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 推理规则
 
 ## inference/TruthFunctions.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/TruthFunctions.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 626 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 43:39 ';' expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002\uff1btsc TS1005 @ 43:39 \u9519\u8bef
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
+- **Java对照**: `java-master/src/main/java/org/opennars/inference/TruthFunctions.java`
+- **规模 / TODO**: 约 626 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 编译失败：TS1005 @ 43:39 ';' expected. ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：复制规则/真值/预算静态表并完善类型约束与数值校验。；tsc TS1005 @ 43:39 错误
+  3. Java-TS 差异：参见《通用转译法.md》 - 推理规则
 
 ## inference/UtilityFunctions.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/UtilityFunctions.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 93 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1amain/Parameters.ts
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1amain/Parameters.ts
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
+- **Java对照**: `java-master/src/main/java/org/opennars/inference/UtilityFunctions.java`
+- **规模 / TODO**: 约 93 行，TODO 0 处
+- **依赖现状**: 依赖：main/Parameters.ts
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：依赖：main/Parameters.ts
+  2. 文件工作：复制规则/真值/预算静态表并完善类型约束与数值校验。
+  3. Java-TS 差异：参见《通用转译法.md》 - 推理规则
 
 ## interfaces/Eventable.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/Eventable.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 18 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
+- **Java对照**: `java-master/src/main/java/org/opennars/interfaces/Eventable.java`
+- **规模 / TODO**: 约 18 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：以 interface/abstract class 还原 Java 接口，在 TS 实现类中显式 implements。
+  3. Java-TS 差异：参见《通用转译法.md》 - 接口规范
 
 ## interfaces/InputFileConsumer.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/InputFileConsumer.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 18 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
+- **Java对照**: `java-master/src/main/java/org/opennars/interfaces/InputFileConsumer.java`
+- **规模 / TODO**: 约 18 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：以 interface/abstract class 还原 Java 接口，在 TS 实现类中显式 implements。
+  3. Java-TS 差异：参见《通用转译法.md》 - 接口规范
 
 ## interfaces/Multistepable.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/Multistepable.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 21 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
+- **Java对照**: `java-master/src/main/java/org/opennars/interfaces/Multistepable.java`
+- **规模 / TODO**: 约 21 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：以 interface/abstract class 还原 Java 接口，在 TS 实现类中显式 implements。
+  3. Java-TS 差异：参见《通用转译法.md》 - 接口规范
 
 ## interfaces/NarseseConsumer.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/NarseseConsumer.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 21 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
+- **Java对照**: `java-master/src/main/java/org/opennars/interfaces/NarseseConsumer.java`
+- **规模 / TODO**: 约 21 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：以 interface/abstract class 还原 Java 接口，在 TS 实现类中显式 implements。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 接口规范
 
 ## interfaces/Pluggable.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/Pluggable.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 31 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
+- **Java对照**: `java-master/src/main/java/org/opennars/interfaces/Pluggable.java`
+- **规模 / TODO**: 约 31 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：以 interface/abstract class 还原 Java 接口，在 TS 实现类中显式 implements。
+  3. Java-TS 差异：参见《通用转译法.md》 - 接口规范
 
 ## interfaces/Resettable.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/Resettable.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 17 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
+- **Java对照**: `java-master/src/main/java/org/opennars/interfaces/Resettable.java`
+- **规模 / TODO**: 约 17 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：以 interface/abstract class 还原 Java 接口，在 TS 实现类中显式 implements。
+  3. Java-TS 差异：参见《通用转译法.md》 - 接口规范
 
 ## interfaces/SensoryChannelConsumer.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/SensoryChannelConsumer.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 18 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
+- **Java对照**: `java-master/src/main/java/org/opennars/interfaces/SensoryChannelConsumer.java`
+- **规模 / TODO**: 约 18 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：以 interface/abstract class 还原 Java 接口，在 TS 实现类中显式 implements。
+  3. Java-TS 差异：参见《通用转译法.md》 - 接口规范
 
 ## interfaces/TaskConsumer.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/TaskConsumer.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 21 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
+- **Java对照**: `java-master/src/main/java/org/opennars/interfaces/TaskConsumer.java`
+- **规模 / TODO**: 约 21 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：以 interface/abstract class 还原 Java 接口，在 TS 实现类中显式 implements。
+  3. Java-TS 差异：参见《通用转译法.md》 - 接口规范
 
 ## interfaces/Timable.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/Timable.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 18 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
+- **Java对照**: `java-master/src/main/java/org/opennars/interfaces/Timable.java`
+- **规模 / TODO**: 约 18 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：以 interface/abstract class 还原 Java 接口，在 TS 实现类中显式 implements。
+  3. Java-TS 差异：参见《通用转译法.md》 - 接口规范
 
 ## interfaces/pub/Reasoner.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/pub/Reasoner.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 83 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
+- **Java对照**: `java-master/src/main/java/org/opennars/interfaces/pub/Reasoner.java`
+- **规模 / TODO**: 约 83 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：以 interface/abstract class 还原 Java 接口，在 TS 实现类中显式 implements。
+  3. Java-TS 差异：参见《通用转译法.md》 - 接口规范
 
 ## io/ConfigReader.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/ConfigReader.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 170 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/ConfigReader.java`
+- **规模 / TODO**: 约 170 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## io/Narsese.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/Narsese.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 567 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/Narsese.java`
+- **规模 / TODO**: 约 567 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## io/Parser.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/Parser.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 36 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/Parser.java`
+- **规模 / TODO**: 约 36 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## io/Symbols.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/Symbols.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 333 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/Symbols.java`
+- **规模 / TODO**: 约 333 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## io/Texts.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/Texts.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 168 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/Texts.java`
+- **规模 / TODO**: 约 168 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## io/events/AnswerHandler.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/AnswerHandler.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 41 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/events/AnswerHandler.java`
+- **规模 / TODO**: 约 41 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## io/events/EventEmitter.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/EventEmitter.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 160 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1109 @ 113:30 Expression expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002\uff1btsc TS1109 @ 113:30 \u9519\u8bef\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/events/EventEmitter.java`
+- **规模 / TODO**: 约 160 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 编译失败：TS1109 @ 113:30 Expression expected. ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。；tsc TS1109 @ 113:30 错误；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## io/events/EventHandler.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/EventHandler.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 58 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/events/EventHandler.java`
+- **规模 / TODO**: 约 58 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## io/events/Events.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/Events.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 360 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 357:38 '=' expected.\uff0c\u53e6\u6709 2 \u6761 ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002\uff1btsc TS1005 @ 357:38 \u9519\u8bef
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/events/Events.java`
+- **规模 / TODO**: 约 360 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 编译失败：TS1005 @ 357:38 '=' expected.，另有 2 条 ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。；tsc TS1005 @ 357:38 错误
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## io/events/OutputHandler.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/OutputHandler.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 110 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/events/OutputHandler.java`
+- **规模 / TODO**: 约 110 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## io/events/TextOutputHandler.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/TextOutputHandler.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 294 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/io/events/TextOutputHandler.java`
+- **规模 / TODO**: 约 294 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 java.io 流与事件转接到 Node 流 + EventEmitter，补宏 Parser/Narsese/Events 链路。
+  3. Java-TS 差异：参见《通用转译法.md》 - I/O 与事件
 
 ## language/AbstractTerm.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/AbstractTerm.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 31 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/AbstractTerm.java`
+- **规模 / TODO**: 约 31 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/CompoundTerm.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/CompoundTerm.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 818 \u884c\uff0cTODO 4 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 4 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/CompoundTerm.java`
+- **规模 / TODO**: 约 818 行，TODO 4 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 4 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Conjunction.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Conjunction.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 494 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Conjunction.java`
+- **规模 / TODO**: 约 494 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/DifferenceExt.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/DifferenceExt.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 138 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/DifferenceExt.java`
+- **规模 / TODO**: 约 138 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/DifferenceInt.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/DifferenceInt.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 149 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/DifferenceInt.java`
+- **规模 / TODO**: 约 149 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Disjunction.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Disjunction.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 149 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Disjunction.java`
+- **规模 / TODO**: 约 149 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Equivalence.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Equivalence.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 195 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Equivalence.java`
+- **规模 / TODO**: 约 195 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Image.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Image.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 104 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Image.java`
+- **规模 / TODO**: 约 104 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/ImageExt.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/ImageExt.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 180 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/ImageExt.java`
+- **规模 / TODO**: 约 180 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/ImageInt.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/ImageInt.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 200 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/ImageInt.java`
+- **规模 / TODO**: 约 200 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Implication.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Implication.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 242 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Implication.java`
+- **规模 / TODO**: 约 242 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Inheritance.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Inheritance.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 143 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Inheritance.java`
+- **规模 / TODO**: 约 143 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Instance.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Instance.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 28 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Instance.java`
+- **规模 / TODO**: 约 28 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/InstanceProperty.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/InstanceProperty.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 28 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/InstanceProperty.java`
+- **规模 / TODO**: 约 28 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/IntersectionExt.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/IntersectionExt.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 168 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/IntersectionExt.java`
+- **规模 / TODO**: 约 168 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/IntersectionInt.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/IntersectionInt.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 168 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/IntersectionInt.java`
+- **规模 / TODO**: 约 168 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Interval.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Interval.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 72 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Interval.java`
+- **规模 / TODO**: 约 72 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Negation.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Negation.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 132 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Negation.java`
+- **规模 / TODO**: 约 132 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Product.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Product.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 143 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Product.java`
+- **规模 / TODO**: 约 143 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Property.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Property.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 27 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Property.java`
+- **规模 / TODO**: 约 27 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/SetExt.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/SetExt.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 113 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/SetExt.java`
+- **规模 / TODO**: 约 113 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/SetInt.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/SetInt.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 114 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/SetInt.java`
+- **规模 / TODO**: 约 114 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/SetTensional.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/SetTensional.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 64 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/SetTensional.java`
+- **规模 / TODO**: 约 64 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Similarity.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Similarity.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 138 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Similarity.java`
+- **规模 / TODO**: 约 138 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Statement.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Statement.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 377 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 365:27 ';' expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1btsc TS1005 @ 365:27 \u9519\u8bef
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Statement.java`
+- **规模 / TODO**: 约 377 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 编译失败：TS1005 @ 365:27 ';' expected. ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；tsc TS1005 @ 365:27 错误
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Tense.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Tense.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 37 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Tense.java`
+- **规模 / TODO**: 约 37 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Term.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Term.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 536 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1alanguage/SetExt.ts
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1alanguage/SetExt.ts
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Term.java`
+- **规模 / TODO**: 约 536 行，TODO 1 处
+- **依赖现状**: 依赖：language/SetExt.ts
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：依赖：language/SetExt.ts
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Terms.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Terms.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 615 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Terms.java`
+- **规模 / TODO**: 约 615 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Variable.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Variable.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 327 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Variable.java`
+- **规模 / TODO**: 约 327 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## language/Variables.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Variables.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 540 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/language/Variables.java`
+- **规模 / TODO**: 约 540 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：维持 Term/Statement 层的泛型层次和不可变结构，同时统一缓存策略。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 语言层
 
 ## main/Debug.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/parameter/Debug.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 69 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u628a Nar/NarNode/Shell \u751f\u547d\u5468\u671f\u3001\u7ebf\u7a0b\u548c CLI \u642d\u5230 Node \u5f02\u6b65\u63a7\u5236\u5668\u4e0a\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u4e3b\u7a0b\u5e8f
+- **Java对照**: `java-master/src/main/java/org/opennars/parameter/Debug.java`
+- **规模 / TODO**: 约 69 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：把 Nar/NarNode/Shell 生命周期、线程和 CLI 搭到 Node 异步控制器上。
+  3. Java-TS 差异：参见《通用转译法.md》 - 主程序
 
 ## main/Nar.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/main/Nar.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 886 \u884c\uff0cTODO 2 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u628a Nar/NarNode/Shell \u751f\u547d\u5468\u671f\u3001\u7ebf\u7a0b\u548c CLI \u642d\u5230 Node \u5f02\u6b65\u63a7\u5236\u5668\u4e0a\u3002\uff1bTODO 2 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u4e3b\u7a0b\u5e8f
+- **Java对照**: `java-master/src/main/java/org/opennars/main/Nar.java`
+- **规模 / TODO**: 约 886 行，TODO 2 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：把 Nar/NarNode/Shell 生命周期、线程和 CLI 搭到 Node 异步控制器上。；TODO 2 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 主程序
 
 ## main/NarNode.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/main/NarNode.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 337 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1472 @ 316:13 'catch' or 'finally' expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u628a Nar/NarNode/Shell \u751f\u547d\u5468\u671f\u3001\u7ebf\u7a0b\u548c CLI \u642d\u5230 Node \u5f02\u6b65\u63a7\u5236\u5668\u4e0a\u3002\uff1btsc TS1472 @ 316:13 \u9519\u8bef
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u4e3b\u7a0b\u5e8f
+- **Java对照**: `java-master/src/main/java/org/opennars/main/NarNode.java`
+- **规模 / TODO**: 约 337 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 编译失败：TS1472 @ 316:13 'catch' or 'finally' expected. ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：把 Nar/NarNode/Shell 生命周期、线程和 CLI 搭到 Node 异步控制器上。；tsc TS1472 @ 316:13 错误
+  3. Java-TS 差异：参见《通用转译法.md》 - 主程序
 
 ## main/Parameters.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/parameter/Parameters.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 301 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u628a Nar/NarNode/Shell \u751f\u547d\u5468\u671f\u3001\u7ebf\u7a0b\u548c CLI \u642d\u5230 Node \u5f02\u6b65\u63a7\u5236\u5668\u4e0a\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u4e3b\u7a0b\u5e8f
+- **Java对照**: `java-master/src/main/java/org/opennars/parameter/Parameters.java`
+- **规模 / TODO**: 约 301 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：把 Nar/NarNode/Shell 生命周期、线程和 CLI 搭到 Node 异步控制器上。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 主程序
 
 ## main/Shell.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/main/Shell.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 195 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1359 @ 107:35 Identifier expected. 'in' is a reserved word that cannot be used here.\uff0c\u53e6\u6709 2 \u6761 ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u628a Nar/NarNode/Shell \u751f\u547d\u5468\u671f\u3001\u7ebf\u7a0b\u548c CLI \u642d\u5230 Node \u5f02\u6b65\u63a7\u5236\u5668\u4e0a\u3002\uff1btsc TS1359 @ 107:35 \u9519\u8bef\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u4e3b\u7a0b\u5e8f
+- **Java对照**: `java-master/src/main/java/org/opennars/main/Shell.java`
+- **规模 / TODO**: 约 195 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 编译失败：TS1359 @ 107:35 Identifier expected. 'in' is a reserved word that cannot be used here.，另有 2 条 ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：把 Nar/NarNode/Shell 生命周期、线程和 CLI 搭到 Node 异步控制器上。；tsc TS1359 @ 107:35 错误；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 主程序
 
 ## operator/FunctionOperator.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/FunctionOperator.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 109 \u884c\uff0cTODO 2 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002\uff1bTODO 2 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/FunctionOperator.java`
+- **规模 / TODO**: 约 109 行，TODO 2 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。；TODO 2 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/ImaginationSpace.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/ImaginationSpace.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 31 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/ImaginationSpace.java`
+- **规模 / TODO**: 约 31 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/NullOperator.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/NullOperator.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 49 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/NullOperator.java`
+- **规模 / TODO**: 约 49 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/Operation.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/Operation.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 107 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/Operation.java`
+- **规模 / TODO**: 约 107 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/Operator.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/Operator.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 222 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1alanguage/Term.ts, operator/Operation.ts, storage/Memory.ts, interfaces/Timable.ts, entity/Task.ts, main/Nar.ts
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1alanguage/Term.ts, operator/Operation.ts, storage/Memory.ts, interfaces/Timable.ts, entity/Task.ts, main/Nar.ts
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/Operator.java`
+- **规模 / TODO**: 约 222 行，TODO 0 处
+- **依赖现状**: 依赖：language/Term.ts, operator/Operation.ts, storage/Memory.ts, interfaces/Timable.ts, entity/Task.ts, main/Nar.ts
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：依赖：language/Term.ts, operator/Operation.ts, storage/Memory.ts, interfaces/Timable.ts, entity/Task.ts, main/Nar.ts
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Anticipate.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Anticipate.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 299 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Anticipate.java`
+- **规模 / TODO**: 约 299 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Believe.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Believe.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 48 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aoperator/Operator.ts, operator/Operation.ts, entity/Task.ts, storage/Memory.ts, interfaces/Timable.ts
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aoperator/Operator.ts, operator/Operation.ts, entity/Task.ts, storage/Memory.ts, interfaces/Timable.ts
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Believe.java`
+- **规模 / TODO**: 约 48 行，TODO 0 处
+- **依赖现状**: 依赖：operator/Operator.ts, operator/Operation.ts, entity/Task.ts, storage/Memory.ts, interfaces/Timable.ts
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：依赖：operator/Operator.ts, operator/Operation.ts, entity/Task.ts, storage/Memory.ts, interfaces/Timable.ts
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Consider.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Consider.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 38 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Consider.java`
+- **规模 / TODO**: 约 38 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Doubt.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Doubt.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 29 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Doubt.java`
+- **规模 / TODO**: 约 29 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Evaluate.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Evaluate.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 37 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Evaluate.java`
+- **规模 / TODO**: 约 37 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Feel.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Feel.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 49 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Feel.java`
+- **规模 / TODO**: 约 49 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/FeelBusy.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/FeelBusy.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 28 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/FeelBusy.java`
+- **规模 / TODO**: 约 28 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/FeelSatisfied.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/FeelSatisfied.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 28 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/FeelSatisfied.java`
+- **规模 / TODO**: 约 28 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Hesitate.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Hesitate.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 29 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Hesitate.java`
+- **规模 / TODO**: 约 29 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Name.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Name.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 40 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Name.java`
+- **规模 / TODO**: 约 40 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Register.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Register.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 28 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Register.java`
+- **规模 / TODO**: 约 28 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Remind.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Remind.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 37 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Remind.java`
+- **规模 / TODO**: 约 37 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Want.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Want.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 41 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Want.java`
+- **规模 / TODO**: 约 41 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/mental/Wonder.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Wonder.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 38 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/mental/Wonder.java`
+- **规模 / TODO**: 约 38 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/misc/Add.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/misc/Add.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 41 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/misc/Add.java`
+- **规模 / TODO**: 约 41 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/misc/Count.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/misc/Count.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 47 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/misc/Count.java`
+- **规模 / TODO**: 约 47 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/misc/Reflect.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/misc/Reflect.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 121 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/misc/Reflect.java`
+- **规模 / TODO**: 约 121 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## operator/misc/System.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/misc/System.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 48 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
+- **Java对照**: `java-master/src/main/java/org/opennars/operator/misc/System.java`
+- **规模 / TODO**: 约 48 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：将 Operation 注册与 Memory 交互显式化，补写副作用与预算更新。
+  3. Java-TS 差异：参见《通用转译法.md》 - 操作符
 
 ## plugin/Plugin.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/Plugin.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 21 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/plugin/Plugin.java`
+- **规模 / TODO**: 约 21 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：为心理/感知插件提供事件通道、状态缓存与关闭流程。
+  3. Java-TS 差异：参见《通用转译法.md》 - 插件
 
 ## plugin/mental/Abbreviation.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/mental/Abbreviation.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 184 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/plugin/mental/Abbreviation.java`
+- **规模 / TODO**: 约 184 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：为心理/感知插件提供事件通道、状态缓存与关闭流程。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 插件
 
 ## plugin/mental/ComplexEmotions.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/mental/ComplexEmotions.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 59 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/plugin/mental/ComplexEmotions.java`
+- **规模 / TODO**: 约 59 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：为心理/感知插件提供事件通道、状态缓存与关闭流程。
+  3. Java-TS 差异：参见《通用转译法.md》 - 插件
 
 ## plugin/mental/Counting.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/mental/Counting.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 117 \u884c\uff0cTODO 1 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002\uff1bTODO 1 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/plugin/mental/Counting.java`
+- **规模 / TODO**: 约 117 行，TODO 1 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：为心理/感知插件提供事件通道、状态缓存与关闭流程。；TODO 1 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 插件
 
 ## plugin/mental/Emotions.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/mental/Emotions.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 264 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/plugin/mental/Emotions.java`
+- **规模 / TODO**: 约 264 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：为心理/感知插件提供事件通道、状态缓存与关闭流程。
+  3. Java-TS 差异：参见《通用转译法.md》 - 插件
 
 ## plugin/mental/InternalExperience.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/mental/InternalExperience.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 408 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/plugin/mental/InternalExperience.java`
+- **规模 / TODO**: 约 408 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：为心理/感知插件提供事件通道、状态缓存与关闭流程。
+  3. Java-TS 差异：参见《通用转译法.md》 - 插件
 
 ## plugin/perception/SensoryChannel.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/perception/SensoryChannel.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 147 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1135 @ 144:31 Argument expression expected.\uff0c\u53e6\u6709 1 \u6761 ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002\uff1btsc TS1135 @ 144:31 \u9519\u8bef
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/plugin/perception/SensoryChannel.java`
+- **规模 / TODO**: 约 147 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 编译失败：TS1135 @ 144:31 Argument expression expected.，另有 1 条 ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：为心理/感知插件提供事件通道、状态缓存与关闭流程。；tsc TS1135 @ 144:31 错误
+  3. Java-TS 差异：参见《通用转译法.md》 - 插件
 
 ## plugin/perception/VisionChannel.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/perception/VisionChannel.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 291 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/plugin/perception/VisionChannel.java`
+- **规模 / TODO**: 约 291 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：为心理/感知插件提供事件通道、状态缓存与关闭流程。
+  3. Java-TS 差异：参见《通用转译法.md》 - 插件
 
 ## plugin/perception/VisualSpace.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/perception/VisualSpace.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 137 \u884c\uff0cTODO 4 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002\uff1bTODO 4 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
+- **Java对照**: `java-master/src/main/java/org/opennars/plugin/perception/VisualSpace.java`
+- **规模 / TODO**: 约 137 行，TODO 4 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：为心理/感知插件提供事件通道、状态缓存与关闭流程。；TODO 4 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 插件
 
 ## storage/Bag.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/storage/Bag.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 356 \u884c\uff0cTODO 2 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aentity/Item.ts, storage/Distributor.ts, main/Parameters.ts
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aentity/Item.ts, storage/Distributor.ts, main/Parameters.ts
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u9a8c\u8bc1 Bag/Memory/Distributor \u7684\u5bb9\u91cf\u3001\u987a\u5e8f\u4e0e\u7ebf\u7a0b\u5b89\u5168\uff0c\u8865\u5b8c\u65ad\u8a00\u548c\u6d4b\u8bd5\u3002\uff1bTODO 2 \u5904
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b58\u50a8\u7ed3\u6784
+- **Java对照**: `java-master/src/main/java/org/opennars/storage/Bag.java`
+- **规模 / TODO**: 约 356 行，TODO 2 处
+- **依赖现状**: 依赖：entity/Item.ts, storage/Distributor.ts, main/Parameters.ts
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：依赖：entity/Item.ts, storage/Distributor.ts, main/Parameters.ts
+  2. 文件工作：验证 Bag/Memory/Distributor 的容量、顺序与线程安全，补完断言和测试。；TODO 2 处
+  3. Java-TS 差异：参见《通用转译法.md》 - 存储结构
 
 ## storage/Distributor.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/storage/Distributor.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 61 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u5df2\u88ab `npm test` \u8986\u76d6\uff1atest/node/distributor.test.ts
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u9a8c\u8bc1 Bag/Memory/Distributor \u7684\u5bb9\u91cf\u3001\u987a\u5e8f\u4e0e\u7ebf\u7a0b\u5b89\u5168\uff0c\u8865\u5b8c\u65ad\u8a00\u548c\u6d4b\u8bd5\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b58\u50a8\u7ed3\u6784
+- **Java对照**: `java-master/src/main/java/org/opennars/storage/Distributor.java`
+- **规模 / TODO**: 约 61 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 已被 `npm test` 覆盖：test/node/distributor.test.ts
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：验证 Bag/Memory/Distributor 的容量、顺序与线程安全，补完断言和测试。
+  3. Java-TS 差异：参见《通用转译法.md》 - 存储结构
 
 ## storage/Memory.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/storage/Memory.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 401 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u9a8c\u8bc1 Bag/Memory/Distributor \u7684\u5bb9\u91cf\u3001\u987a\u5e8f\u4e0e\u7ebf\u7a0b\u5b89\u5168\uff0c\u8865\u5b8c\u65ad\u8a00\u548c\u6d4b\u8bd5\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b58\u50a8\u7ed3\u6784
+- **Java对照**: `java-master/src/main/java/org/opennars/storage/Memory.java`
+- **规模 / TODO**: 约 401 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：验证 Bag/Memory/Distributor 的容量、顺序与线程安全，补完断言和测试。
+  3. Java-TS 差异：参见《通用转译法.md》 - 存储结构
 
 ## util/ListUtil.ts
 
-- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/util/ListUtil.java`
-- **\u89c4\u6a21 / TODO**: \u7ea6 25 \u884c\uff0cTODO 0 \u5904
-- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
-- **\u8def\u7ebf\u56fe**:
-  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
-  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u6574\u5408 java.util \u5de5\u5177\u5e76\u4fdd\u6301 int/long \u884c\u4e3a\u4e00\u81f4\uff0c\u4e2d\u5fc3\u5b58\u653e\u5de5\u5177\u51fd\u6570\u3002
-  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5de5\u5177\u5c42
+- **Java对照**: `java-master/src/main/java/org/opennars/util/ListUtil.java`
+- **规模 / TODO**: 约 25 行，TODO 0 处
+- **依赖现状**: 仅依赖 jree 或 TS 自身静态成员
+- **编译 / 测试**: 已通过 `npx tsc --noEmit` ; 暂无针对性测试
+- **路线图**:
+  1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
+  2. 文件工作：整合 java.util 工具并保持 int/long 行为一致，中心存放工具函数。
+  3. Java-TS 差异：参见《通用转译法.md》 - 工具层
 
