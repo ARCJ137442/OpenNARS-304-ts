@@ -14,8 +14,57 @@
 
 - 执行的命令：`npx tsc src/language/Product.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L11, C30）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L18, C32）：[full_check] Cannot find name 'Term'.
+  - TS2304（L20, C42）：[full_check] Cannot find name 'Term'.
+  - TS2304（L24, C40）：[full_check] Cannot find name 'Term'.
+  - TS2339（L29, C31）：[full_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L36, C53）：[full_check] Cannot find name 'Term'.
+  - TS2349（L39, C17）：[full_check] This expression is not callable.
+  - TS17009（L39, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L39, C42）：[full_check] Cannot find name 'Term'.
+  - TS2304（L52, C32）：[full_check] Cannot find name 'Term'.
+  - TS2304（L64, C31）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L64, C56）：[full_check] Cannot find name 'Term'.
+  - TS2304（L64, C75）：[full_check] Cannot find name 'Term'.
+  - TS2304（L65, C55）：[full_check] Cannot find name 'Term'.
+  - TS2304（L68, C40）：[full_check] Cannot find name 'Term'.
+  - TS2304（L78, C60）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L78, C74）：[full_check] Cannot find name 'Term'.
+  - TS2304（L81, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L103, C28）：[full_check] Cannot find name 'Term'.
+  - TS2304（L103, C37）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L104, C49）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L108, C36）：[full_check] Cannot find name 'term'.
+  - TS2304（L115, C45）：[full_check] Cannot find name 'Term'.
+  - TS2304（L139, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L140, C16）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L11, C30）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L18, C32）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L20, C42）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L24, C40）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L29, C31）：[syntax_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L36, C53）：[syntax_check] Cannot find name 'Term'.
+  - TS2349（L39, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L39, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L39, C42）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L52, C32）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L64, C31）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L64, C56）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L64, C75）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L65, C55）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L68, C40）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L78, C60）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L78, C74）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L81, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L103, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L103, C37）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L104, C49）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L108, C36）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L115, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L139, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L140, C16）：[syntax_check] Cannot find name 'NativeOperator'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +80,50 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L11
+- `[full_check] Cannot find name 'Term'.` @ L18
+- `[full_check] Cannot find name 'Term'.` @ L20
+- `[full_check] Cannot find name 'Term'.` @ L24
+- `[full_check] Cannot find name 'Term'.` @ L36
+- `[full_check] Cannot find name 'Term'.` @ L39
+- `[full_check] Cannot find name 'Term'.` @ L52
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L64
+- `[full_check] Cannot find name 'Term'.` @ L64
+- `[full_check] Cannot find name 'Term'.` @ L64
+- `[full_check] Cannot find name 'Term'.` @ L65
+- `[full_check] Cannot find name 'Term'.` @ L68
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L78
+- `[full_check] Cannot find name 'Term'.` @ L78
+- `[full_check] Cannot find name 'Term'.` @ L81
+- `[full_check] Cannot find name 'Term'.` @ L103
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L103
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L104
+- `[full_check] Cannot find name 'term'.` @ L108
+- `[full_check] Cannot find name 'Term'.` @ L115
+- `[full_check] Cannot find name 'NativeOperator'.` @ L139
+- `[full_check] Cannot find name 'NativeOperator'.` @ L140
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L11
+- `[syntax_check] Cannot find name 'Term'.` @ L18
+- `[syntax_check] Cannot find name 'Term'.` @ L20
+- `[syntax_check] Cannot find name 'Term'.` @ L24
+- `[syntax_check] Cannot find name 'Term'.` @ L36
+- `[syntax_check] Cannot find name 'Term'.` @ L39
+- `[syntax_check] Cannot find name 'Term'.` @ L52
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L64
+- `[syntax_check] Cannot find name 'Term'.` @ L64
+- `[syntax_check] Cannot find name 'Term'.` @ L64
+- `[syntax_check] Cannot find name 'Term'.` @ L65
+- `[syntax_check] Cannot find name 'Term'.` @ L68
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L78
+- `[syntax_check] Cannot find name 'Term'.` @ L78
+- `[syntax_check] Cannot find name 'Term'.` @ L81
+- `[syntax_check] Cannot find name 'Term'.` @ L103
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L103
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L104
+- `[syntax_check] Cannot find name 'term'.` @ L108
+- `[syntax_check] Cannot find name 'Term'.` @ L115
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L139
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L140
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -56,6 +148,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

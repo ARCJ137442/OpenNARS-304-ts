@@ -14,8 +14,55 @@
 
 - 执行的命令：`npx tsc src/language/Similarity.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L11, C33）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L18, C29）：[full_check] Cannot find name 'Term'.
+  - TS2304（L20, C30）：[full_check] Cannot find name 'Term'.
+  - TS2304（L20, C42）：[full_check] Cannot find name 'Term'.
+  - TS2304（L24, C40）：[full_check] Cannot find name 'Term'.
+  - TS2339（L29, C31）：[full_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L36, C47）：[full_check] Cannot find name 'Term'.
+  - TS2304（L36, C53）：[full_check] Cannot find name 'Term'.
+  - TS2349（L39, C17）：[full_check] This expression is not callable.
+  - TS17009（L39, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L59, C28）：[full_check] Cannot find name 'Term'.
+  - TS2304（L64, C39）：[full_check] Cannot find name 'term'.
+  - TS2304（L71, C45）：[full_check] Cannot find name 'Term'.
+  - TS2322（L75, C21）：[full_check] Type 'null' is not assignable to type 'Similarity'.
+  - TS2322（L78, C21）：[full_check] Type 'null' is not assignable to type 'Similarity'.
+  - TS2304（L96, C37）：[full_check] Cannot find name 'Term'.
+  - TS2304（L96, C54）：[full_check] Cannot find name 'Term'.
+  - TS2304（L96, C61）：[full_check] Cannot find name 'Term'.
+  - TS2304（L109, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L109, C50）：[full_check] Cannot find name 'Term'.
+  - TS2304（L111, C13）：[full_check] Cannot find name 'invalidStatement'.
+  - TS2322（L112, C13）：[full_check] Type 'null' is not assignable to type 'Similarity'.
+  - TS2304（L126, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L127, C16）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L11, C33）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L18, C29）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L20, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L20, C42）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L24, C40）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L29, C31）：[syntax_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L36, C47）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L36, C53）：[syntax_check] Cannot find name 'Term'.
+  - TS2349（L39, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L39, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L59, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L64, C39）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L71, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L75, C21）：[syntax_check] Type 'null' is not assignable to type 'Similarity'.
+  - TS2322（L78, C21）：[syntax_check] Type 'null' is not assignable to type 'Similarity'.
+  - TS2304（L96, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L96, C54）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L96, C61）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L109, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L109, C50）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L111, C13）：[syntax_check] Cannot find name 'invalidStatement'.
+  - TS2322（L112, C13）：[syntax_check] Type 'null' is not assignable to type 'Similarity'.
+  - TS2304（L126, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L127, C16）：[syntax_check] Cannot find name 'NativeOperator'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +78,42 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Statement'.` @ L11
+- `[full_check] Cannot find name 'Term'.` @ L18
+- `[full_check] Cannot find name 'Term'.` @ L20
+- `[full_check] Cannot find name 'Term'.` @ L20
+- `[full_check] Cannot find name 'Term'.` @ L24
+- `[full_check] Cannot find name 'Term'.` @ L36
+- `[full_check] Cannot find name 'Term'.` @ L36
+- `[full_check] Cannot find name 'Term'.` @ L59
+- `[full_check] Cannot find name 'term'.` @ L64
+- `[full_check] Cannot find name 'Term'.` @ L71
+- `[full_check] Cannot find name 'Term'.` @ L96
+- `[full_check] Cannot find name 'Term'.` @ L96
+- `[full_check] Cannot find name 'Term'.` @ L96
+- `[full_check] Cannot find name 'Term'.` @ L109
+- `[full_check] Cannot find name 'Term'.` @ L109
+- `[full_check] Cannot find name 'invalidStatement'.` @ L111
+- `[full_check] Cannot find name 'NativeOperator'.` @ L126
+- `[full_check] Cannot find name 'NativeOperator'.` @ L127
+- `[syntax_check] Cannot find name 'Statement'.` @ L11
+- `[syntax_check] Cannot find name 'Term'.` @ L18
+- `[syntax_check] Cannot find name 'Term'.` @ L20
+- `[syntax_check] Cannot find name 'Term'.` @ L20
+- `[syntax_check] Cannot find name 'Term'.` @ L24
+- `[syntax_check] Cannot find name 'Term'.` @ L36
+- `[syntax_check] Cannot find name 'Term'.` @ L36
+- `[syntax_check] Cannot find name 'Term'.` @ L59
+- `[syntax_check] Cannot find name 'term'.` @ L64
+- `[syntax_check] Cannot find name 'Term'.` @ L71
+- `[syntax_check] Cannot find name 'Term'.` @ L96
+- `[syntax_check] Cannot find name 'Term'.` @ L96
+- `[syntax_check] Cannot find name 'Term'.` @ L96
+- `[syntax_check] Cannot find name 'Term'.` @ L109
+- `[syntax_check] Cannot find name 'Term'.` @ L109
+- `[syntax_check] Cannot find name 'invalidStatement'.` @ L111
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L126
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L127
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -57,6 +139,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

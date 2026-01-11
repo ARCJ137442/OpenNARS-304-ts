@@ -14,8 +14,35 @@
 
 - 执行的命令：`npx tsc src/operator/mental/Consider.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L8, C31）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L10, C42）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L10, C54）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L25, C34）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L25, C51）：[full_check] Cannot find name 'Term'.
+  - TS2304（L25, C67）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L26, C15）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L26, C40）：[full_check] Cannot find name 'Task'.
+  - TS2304（L27, C19）：[full_check] Cannot find name 'Term'.
+  - TS2304（L29, C22）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L31, C19）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L31, C43）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L33, C9）：[full_check] Cannot find name 'GeneralInferenceControl'.
+  - TS2322（L35, C9）：[full_check] Type 'null' is not assignable to type 'List<Task>'.
+  - TS2304（L8, C31）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L10, C42）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L10, C54）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L25, C34）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L25, C51）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L25, C67）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L26, C15）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L26, C40）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L27, C19）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L29, C22）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L31, C19）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L31, C43）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L33, C9）：[syntax_check] Cannot find name 'GeneralInferenceControl'.
+  - TS2322（L35, C9）：[syntax_check] Type 'null' is not assignable to type 'List<Task>'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +58,32 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Operator'.` @ L8
+- `[full_check] Cannot find name 'Operation'.` @ L10
+- `[full_check] Cannot find name 'BudgetValue'.` @ L10
+- `[full_check] Cannot find name 'Operation'.` @ L25
+- `[full_check] Cannot find name 'Term'.` @ L25
+- `[full_check] Cannot find name 'Memory'.` @ L25
+- `[full_check] Cannot find name 'Timable'.` @ L26
+- `[full_check] Cannot find name 'Task'.` @ L26
+- `[full_check] Cannot find name 'Term'.` @ L27
+- `[full_check] Cannot find name 'Concept'.` @ L29
+- `[full_check] Cannot find name 'DerivationContext'.` @ L31
+- `[full_check] Cannot find name 'DerivationContext'.` @ L31
+- `[full_check] Cannot find name 'GeneralInferenceControl'.` @ L33
+- `[syntax_check] Cannot find name 'Operator'.` @ L8
+- `[syntax_check] Cannot find name 'Operation'.` @ L10
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L10
+- `[syntax_check] Cannot find name 'Operation'.` @ L25
+- `[syntax_check] Cannot find name 'Term'.` @ L25
+- `[syntax_check] Cannot find name 'Memory'.` @ L25
+- `[syntax_check] Cannot find name 'Timable'.` @ L26
+- `[syntax_check] Cannot find name 'Task'.` @ L26
+- `[syntax_check] Cannot find name 'Term'.` @ L27
+- `[syntax_check] Cannot find name 'Concept'.` @ L29
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L31
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L31
+- `[syntax_check] Cannot find name 'GeneralInferenceControl'.` @ L33
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -63,6 +115,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

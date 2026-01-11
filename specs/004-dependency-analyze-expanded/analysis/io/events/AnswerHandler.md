@@ -14,8 +14,31 @@
 
 - 执行的命令：`npx tsc src/io/events/AnswerHandler.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L8, C67）：[full_check] Cannot find name 'EventObserver'.
+  - TS2304（L10, C23）：[full_check] Cannot find name 'Task'.
+  - TS2304（L11, C18）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L14, C9）：[full_check] Cannot find name 'Answer'.
+  - TS2304（L17, C28）：[full_check] Cannot find name 'Task'.
+  - TS2304（L17, C37）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L30, C23）：[full_check] Cannot find name 'Answer'.
+  - TS2304（L31, C23）：[full_check] Cannot find name 'Task'.
+  - TS2304（L31, C41）：[full_check] Cannot find name 'Task'.
+  - TS2304（L32, C25）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L32, C47）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L40, C40）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L8, C67）：[syntax_check] Cannot find name 'EventObserver'.
+  - TS2304（L10, C23）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L11, C18）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L14, C9）：[syntax_check] Cannot find name 'Answer'.
+  - TS2304（L17, C28）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L17, C37）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L30, C23）：[syntax_check] Cannot find name 'Answer'.
+  - TS2304（L31, C23）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L31, C41）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L32, C25）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L32, C47）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L40, C40）：[syntax_check] Cannot find name 'Sentence'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +54,30 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'EventObserver'.` @ L8
+- `[full_check] Cannot find name 'Task'.` @ L10
+- `[full_check] Cannot find name 'Nar'.` @ L11
+- `[full_check] Cannot find name 'Answer'.` @ L14
+- `[full_check] Cannot find name 'Task'.` @ L17
+- `[full_check] Cannot find name 'Nar'.` @ L17
+- `[full_check] Cannot find name 'Answer'.` @ L30
+- `[full_check] Cannot find name 'Task'.` @ L31
+- `[full_check] Cannot find name 'Task'.` @ L31
+- `[full_check] Cannot find name 'Sentence'.` @ L32
+- `[full_check] Cannot find name 'Sentence'.` @ L32
+- `[full_check] Cannot find name 'Sentence'.` @ L40
+- `[syntax_check] Cannot find name 'EventObserver'.` @ L8
+- `[syntax_check] Cannot find name 'Task'.` @ L10
+- `[syntax_check] Cannot find name 'Nar'.` @ L11
+- `[syntax_check] Cannot find name 'Answer'.` @ L14
+- `[syntax_check] Cannot find name 'Task'.` @ L17
+- `[syntax_check] Cannot find name 'Nar'.` @ L17
+- `[syntax_check] Cannot find name 'Answer'.` @ L30
+- `[syntax_check] Cannot find name 'Task'.` @ L31
+- `[syntax_check] Cannot find name 'Task'.` @ L31
+- `[syntax_check] Cannot find name 'Sentence'.` @ L32
+- `[syntax_check] Cannot find name 'Sentence'.` @ L32
+- `[syntax_check] Cannot find name 'Sentence'.` @ L40
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -58,6 +104,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

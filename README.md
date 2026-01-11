@@ -154,3 +154,30 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
   - [ ] Memory
 - [ ] util
   - [ ] ListUtil
+
+## 文件分析进展（基于 `full_check.txt`）
+
+- 数据来源：`specs/003-dependency-analyze-brief-plan/tsc_checks/full_check.txt`（`npx tsc --noEmit` 在当前 `src` 上的完整输出），共命中 109/119 个 TypeScript 文件。
+- 现阶段所有顶层模块都存在阻塞型依赖，仅 `storage/Distributor.ts` 一个文件在 `tsc` 结果中未出现报错，其余模块至少有一半文件待补充依赖或语义对齐。
+
+| 模块 | 出错文件 / 总数 | 报错条数 | 说明 |
+| --- | --- | --- | --- |
+| control | 8 / 8 | 586 | `DerivationContext` 与 `Process*` 系列完整依赖 `entity` / `language` 层，当前全部无法解析外部符号。 |
+| entity | 9 / 10 | 513 | 核心结构（`Concept`、`Sentence`、`Stamp` 等）均缺少互相引用的类型，仅 `TLink.ts` 未触发报错。 |
+| inference | 8 / 9 | 2100 | `CompositionalRules`、`RuleTables`、`StructuralRules`、`SyllogisticRules` 单文件即累计 350+ 报错，揭示推理规则链尚未建立。 |
+| interfaces | 5 / 10 | 19 | `Reasoner` 及部分接口（`Eventable`、`TaskConsumer` 等）仍引用缺失的事件 / Narsese 类型。 |
+| io | 11 / 11 | 463 | `Narsese`、`Symbols`、`events/*` 均依赖 `language` 与插件层，导致 I/O 层整体无法通过检查。 |
+| language | 30 / 30 | 1543 | 语言层所有基础类型待补齐，`Terms.ts`、`Variables.ts`、`Statement.ts` 报错尤多。 |
+| main | 3 / 5 | 317 | `Nar.ts`、`NarNode.ts`、`Shell.ts` 依赖尚未接通，使主循环无法构建。 |
+| operator | 23 / 23 | 472 | mental / misc 操作器全部依赖 `Task`、`Concept`、`BudgetValue` 等核心结构。 |
+| plugin | 9 / 9 | 468 | 感知与情绪插件 (`VisionChannel.ts`、`InternalExperience.ts` 等) 全面受制于 `io` 和 `entity`。 |
+| storage | 2 / 3 | 148 | `Bag.ts`、`Memory.ts` 仍等待 `Task`/`Concept` 定义，`Distributor.ts` 暂为唯一未报错文件。 |
+| util | 1 / 1 | 2 | `ListUtil.ts` 只剩两处泛型签名问题，属低优先级但可快速收敛。 |
+
+### 优先排查文件（报错条数 Top 5）
+
+- `src/inference/CompositionalRules.ts`：435 条，覆盖绝大多数结论生成规则。
+- `src/inference/RuleTables.ts`：400 条，需先补齐语言层与推理上下文。
+- `src/inference/StructuralRules.ts`：391 条，当前所有结构性推导均被阻塞。
+- `src/inference/SyllogisticRules.ts`：392 条，暴露出 `Term`、`Statement` 未就绪。
+- `src/language/Terms.ts`：252 条，说明语言层基础 API 仍未连通 `CompoundTerm` / `Variable`。

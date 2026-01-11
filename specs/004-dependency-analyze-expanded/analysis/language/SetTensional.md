@@ -14,8 +14,21 @@
 
 - 执行的命令：`npx tsc src/language/SetTensional.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L10, C44）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L16, C32）：[full_check] Cannot find name 'Term'.
+  - TS2304（L22, C13）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L23, C13）：[full_check] Cannot find name 'Terms'.
+  - TS2339（L26, C23）：[full_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L37, C53）：[full_check] Cannot find name 'Term'.
+  - TS2304（L48, C26）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L10, C44）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L16, C32）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L22, C13）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L23, C13）：[syntax_check] Cannot find name 'Terms'.
+  - TS2339（L26, C23）：[syntax_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L37, C53）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L48, C26）：[syntax_check] Cannot find name 'Symbols'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +44,18 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L10
+- `[full_check] Cannot find name 'Term'.` @ L16
+- `[full_check] Cannot find name 'Debug'.` @ L22
+- `[full_check] Cannot find name 'Terms'.` @ L23
+- `[full_check] Cannot find name 'Term'.` @ L37
+- `[full_check] Cannot find name 'Symbols'.` @ L48
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L10
+- `[syntax_check] Cannot find name 'Term'.` @ L16
+- `[syntax_check] Cannot find name 'Debug'.` @ L22
+- `[syntax_check] Cannot find name 'Terms'.` @ L23
+- `[syntax_check] Cannot find name 'Term'.` @ L37
+- `[syntax_check] Cannot find name 'Symbols'.` @ L48
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -58,6 +82,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

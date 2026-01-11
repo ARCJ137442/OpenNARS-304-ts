@@ -14,8 +14,37 @@
 
 - 执行的命令：`npx tsc src/control/concept/ProcessTask.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L31, C40）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L31, C54）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L31, C79）：[full_check] Cannot find name 'Task'.
+  - TS2304（L32, C15）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L37, C18）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L38, C17）：[full_check] Cannot find name 'ProcessJudgment'.
+  - TS2304（L40, C18）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L41, C17）：[full_check] Cannot find name 'ProcessGoal'.
+  - TS2304（L43, C18）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L44, C18）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L45, C17）：[full_check] Cannot find name 'ProcessQuestion'.
+  - TS2304（L52, C24）：[full_check] Cannot find name 'TaskLink'.
+  - TS2304（L53, C47）：[full_check] Cannot find name 'ProcessJudgment'.
+  - TS2304（L55, C17）：[full_check] Cannot find name 'ProcessJudgment'.
+  - TS2304（L57, C13）：[full_check] Cannot find name 'ProcessAnticipation'.
+  - TS2304（L31, C40）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L31, C54）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L31, C79）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L32, C15）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L37, C18）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L38, C17）：[syntax_check] Cannot find name 'ProcessJudgment'.
+  - TS2304（L40, C18）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L41, C17）：[syntax_check] Cannot find name 'ProcessGoal'.
+  - TS2304（L43, C18）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L44, C18）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L45, C17）：[syntax_check] Cannot find name 'ProcessQuestion'.
+  - TS2304（L52, C24）：[syntax_check] Cannot find name 'TaskLink'.
+  - TS2304（L53, C47）：[syntax_check] Cannot find name 'ProcessJudgment'.
+  - TS2304（L55, C17）：[syntax_check] Cannot find name 'ProcessJudgment'.
+  - TS2304（L57, C13）：[syntax_check] Cannot find name 'ProcessAnticipation'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +60,36 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Concept'.` @ L31
+- `[full_check] Cannot find name 'DerivationContext'.` @ L31
+- `[full_check] Cannot find name 'Task'.` @ L31
+- `[full_check] Cannot find name 'Timable'.` @ L32
+- `[full_check] Cannot find name 'Symbols'.` @ L37
+- `[full_check] Cannot find name 'ProcessJudgment'.` @ L38
+- `[full_check] Cannot find name 'Symbols'.` @ L40
+- `[full_check] Cannot find name 'ProcessGoal'.` @ L41
+- `[full_check] Cannot find name 'Symbols'.` @ L43
+- `[full_check] Cannot find name 'Symbols'.` @ L44
+- `[full_check] Cannot find name 'ProcessQuestion'.` @ L45
+- `[full_check] Cannot find name 'TaskLink'.` @ L52
+- `[full_check] Cannot find name 'ProcessJudgment'.` @ L53
+- `[full_check] Cannot find name 'ProcessJudgment'.` @ L55
+- `[full_check] Cannot find name 'ProcessAnticipation'.` @ L57
+- `[syntax_check] Cannot find name 'Concept'.` @ L31
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L31
+- `[syntax_check] Cannot find name 'Task'.` @ L31
+- `[syntax_check] Cannot find name 'Timable'.` @ L32
+- `[syntax_check] Cannot find name 'Symbols'.` @ L37
+- `[syntax_check] Cannot find name 'ProcessJudgment'.` @ L38
+- `[syntax_check] Cannot find name 'Symbols'.` @ L40
+- `[syntax_check] Cannot find name 'ProcessGoal'.` @ L41
+- `[syntax_check] Cannot find name 'Symbols'.` @ L43
+- `[syntax_check] Cannot find name 'Symbols'.` @ L44
+- `[syntax_check] Cannot find name 'ProcessQuestion'.` @ L45
+- `[syntax_check] Cannot find name 'TaskLink'.` @ L52
+- `[syntax_check] Cannot find name 'ProcessJudgment'.` @ L53
+- `[syntax_check] Cannot find name 'ProcessJudgment'.` @ L55
+- `[syntax_check] Cannot find name 'ProcessAnticipation'.` @ L57
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -64,6 +122,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

@@ -14,8 +14,255 @@
 
 - 执行的命令：`npx tsc src/plugin/mental/InternalExperience.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2420（L10, C14）：[full_check] Class 'InternalExperience' incorrectly implements interface 'Plugin'.
+  - TS2304（L10, C71）：[full_check] Cannot find name 'EventObserver'.
+  - TS2304（L11, C21）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L15, C18）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L159, C26）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L163, C45）：[full_check] Cannot find name 'Events'.
+  - TS2304（L166, C49）：[full_check] Cannot find name 'Events'.
+  - TS2304（L173, C29）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L173, C44）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L173, C58）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L173, C68）：[full_check] Cannot find name 'Term'.
+  - TS2304（L176, C18）：[full_check] Cannot find name 'Symbols'.
+  - TS2322（L177, C17）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L182, C18）：[full_check] Cannot find name 'Symbols'.
+  - TS2322（L183, C17）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L188, C18）：[full_check] Cannot find name 'Symbols'.
+  - TS2322（L189, C17）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L191, C18）：[full_check] Cannot find name 'Symbols'.
+  - TS2322（L192, C17）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L198, C21）：[full_check] Cannot find name 'Term'.
+  - TS2304（L199, C18）：[full_check] Cannot find name 'Term'.
+  - TS2304（L199, C37）：[full_check] Cannot find name 'Term'.
+  - TS2304（L200, C18）：[full_check] Cannot find name 'Term'.
+  - TS2304（L207, C24）：[full_check] Cannot find name 'Term'.
+  - TS2304（L207, C31）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L207, C52）：[full_check] Cannot find name 'Product'.
+  - TS2304（L216, C23）：[full_check] Cannot find name 'Events'.
+  - TS2304（L217, C23）：[full_check] Cannot find name 'Task'.
+  - TS2304（L217, C38）：[full_check] Cannot find name 'Task'.
+  - TS2304（L221, C51）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L222, C54）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L225, C30）：[full_check] Cannot find name 'Events'.
+  - TS2304（L227, C25）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L227, C44）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L228, C29）：[full_check] Cannot find name 'Term'.
+  - TS2304（L228, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L229, C27）：[full_check] Cannot find name 'Term'.
+  - TS2304（L229, C42）：[full_check] Cannot find name 'Term'.
+  - TS2304（L230, C22）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L230, C50）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L235, C56）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L235, C70）：[full_check] Cannot find name 'Task'.
+  - TS2304（L235, C84）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L236, C15）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L237, C22）：[full_check] Cannot find name 'Task'.
+  - TS2304（L237, C33）：[full_check] Cannot find name 'Task'.
+  - TS2304（L237, C75）：[full_check] Cannot find name 'Task'.
+  - TS2304（L242, C54）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L242, C68）：[full_check] Cannot find name 'Task'.
+  - TS2304（L243, C15）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L252, C62）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L252, C76）：[full_check] Cannot find name 'Task'.
+  - TS2304（L253, C15）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L263, C47）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L263, C102）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L272, C22）：[full_check] Cannot find name 'Term'.
+  - TS2304（L274, C32）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L280, C23）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L281, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L281, C37）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L283, C20）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L285, C18）：[full_check] Cannot find name 'Term'.
+  - TS2304（L289, C16）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L289, C31）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L291, C13）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L295, C24）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L295, C42）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L300, C13）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L308, C22）：[full_check] Cannot find name 'Task'.
+  - TS2304（L308, C33）：[full_check] Cannot find name 'Task'.
+  - TS2304（L308, C52）：[full_check] Cannot find name 'Task'.
+  - TS2322（L315, C9）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C20）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C30）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C43）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C56）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C69）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C80）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C91）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L319, C36）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L319, C58）：[full_check] Cannot find name 'Term'.
+  - TS2304（L319, C74）：[full_check] Cannot find name 'Term'.
+  - TS2304（L320, C14）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L322, C21）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L328, C21）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L331, C23）：[full_check] Cannot find name 'Product'.
+  - TS2304（L331, C37）：[full_check] Cannot find name 'Product'.
+  - TS2304（L335, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L335, C38）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L336, C31）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L336, C46）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L338, C21）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L339, C25）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L342, C25）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L344, C38）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L345, C29）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L345, C47）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L350, C30）：[full_check] Cannot find name 'Task'.
+  - TS2304（L350, C41）：[full_check] Cannot find name 'Task'.
+  - TS2304（L350, C64）：[full_check] Cannot find name 'Task'.
+  - TS2304（L356, C35）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L358, C22）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L358, C50）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L359, C44）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L362, C49）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L363, C31）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L363, C65）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L368, C55）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L380, C29）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L384, C31）：[full_check] Cannot find name 'Product'.
+  - TS2304（L384, C45）：[full_check] Cannot find name 'Product'.
+  - TS2304（L385, C35）：[full_check] Cannot find name 'Term'.
+  - TS2304（L385, C42）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L387, C35）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L387, C50）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L389, C25）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L390, C29）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L393, C29）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L395, C42）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L396, C33）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L396, C51）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L401, C34）：[full_check] Cannot find name 'Task'.
+  - TS2304（L401, C45）：[full_check] Cannot find name 'Task'.
+  - TS2304（L401, C68）：[full_check] Cannot find name 'Task'.
+  - TS2420（L10, C14）：[syntax_check] Class 'InternalExperience' incorrectly implements interface 'Plugin'.
+  - TS2304（L10, C71）：[syntax_check] Cannot find name 'EventObserver'.
+  - TS2304（L11, C21）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L15, C18）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L159, C26）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L163, C45）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L166, C49）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L173, C29）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L173, C44）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L173, C58）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L173, C68）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L176, C18）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2322（L177, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L182, C18）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2322（L183, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L188, C18）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2322（L189, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L191, C18）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2322（L192, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L198, C21）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L199, C18）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L199, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L200, C18）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L207, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L207, C31）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L207, C52）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L216, C23）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L217, C23）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L217, C38）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L221, C51）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L222, C54）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L225, C30）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L227, C25）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L227, C44）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L228, C29）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L228, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L229, C27）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L229, C42）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L230, C22）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L230, C50）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L235, C56）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L235, C70）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L235, C84）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L236, C15）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L237, C22）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L237, C33）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L237, C75）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L242, C54）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L242, C68）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L243, C15）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L252, C62）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L252, C76）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L253, C15）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L263, C47）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L263, C102）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L272, C22）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L274, C32）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L280, C23）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L281, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L281, C37）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L283, C20）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L285, C18）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L289, C16）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L289, C31）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L291, C13）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L295, C24）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L295, C42）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L300, C13）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L308, C22）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L308, C33）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L308, C52）：[syntax_check] Cannot find name 'Task'.
+  - TS2322（L315, C9）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C20）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C30）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C43）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C56）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C69）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C80）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L315, C91）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L319, C36）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L319, C58）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L319, C74）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L320, C14）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L322, C21）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L328, C21）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L331, C23）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L331, C37）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L335, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L335, C38）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L336, C31）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L336, C46）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L338, C21）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L339, C25）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L342, C25）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L344, C38）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L345, C29）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L345, C47）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L350, C30）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L350, C41）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L350, C64）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L356, C35）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L358, C22）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L358, C50）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L359, C44）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L362, C49）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L363, C31）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L363, C65）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L368, C55）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L380, C29）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L384, C31）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L384, C45）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L385, C35）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L385, C42）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L387, C35）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L387, C50）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L389, C25）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L390, C29）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L393, C29）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L395, C42）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L396, C33）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L396, C51）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L401, C34）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L401, C45）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L401, C68）：[syntax_check] Cannot find name 'Task'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +278,228 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'EventObserver'.` @ L10
+- `[full_check] Cannot find name 'Memory'.` @ L11
+- `[full_check] Cannot find name 'Nar'.` @ L15
+- `[full_check] Cannot find name 'Nar'.` @ L159
+- `[full_check] Cannot find name 'Events'.` @ L163
+- `[full_check] Cannot find name 'Events'.` @ L166
+- `[full_check] Cannot find name 'Sentence'.` @ L173
+- `[full_check] Cannot find name 'Memory'.` @ L173
+- `[full_check] Cannot find name 'Timable'.` @ L173
+- `[full_check] Cannot find name 'Term'.` @ L173
+- `[full_check] Cannot find name 'Symbols'.` @ L176
+- `[full_check] Cannot find name 'Symbols'.` @ L182
+- `[full_check] Cannot find name 'Symbols'.` @ L188
+- `[full_check] Cannot find name 'Symbols'.` @ L191
+- `[full_check] Cannot find name 'Term'.` @ L198
+- `[full_check] Cannot find name 'Term'.` @ L199
+- `[full_check] Cannot find name 'Term'.` @ L199
+- `[full_check] Cannot find name 'Term'.` @ L200
+- `[full_check] Cannot find name 'Term'.` @ L207
+- `[full_check] Cannot find name 'Inheritance'.` @ L207
+- `[full_check] Cannot find name 'Product'.` @ L207
+- `[full_check] Cannot find name 'Events'.` @ L216
+- `[full_check] Cannot find name 'Task'.` @ L217
+- `[full_check] Cannot find name 'Task'.` @ L217
+- `[full_check] Cannot find name 'Symbols'.` @ L221
+- `[full_check] Cannot find name 'Symbols'.` @ L222
+- `[full_check] Cannot find name 'Events'.` @ L225
+- `[full_check] Cannot find name 'Sentence'.` @ L227
+- `[full_check] Cannot find name 'Sentence'.` @ L227
+- `[full_check] Cannot find name 'Term'.` @ L228
+- `[full_check] Cannot find name 'Term'.` @ L228
+- `[full_check] Cannot find name 'Term'.` @ L229
+- `[full_check] Cannot find name 'Term'.` @ L229
+- `[full_check] Cannot find name 'DerivationContext'.` @ L230
+- `[full_check] Cannot find name 'DerivationContext'.` @ L230
+- `[full_check] Cannot find name 'Memory'.` @ L235
+- `[full_check] Cannot find name 'Task'.` @ L235
+- `[full_check] Cannot find name 'Sentence'.` @ L235
+- `[full_check] Cannot find name 'Timable'.` @ L236
+- `[full_check] Cannot find name 'Task'.` @ L237
+- `[full_check] Cannot find name 'Task'.` @ L237
+- `[full_check] Cannot find name 'Task'.` @ L237
+- `[full_check] Cannot find name 'Memory'.` @ L242
+- `[full_check] Cannot find name 'Task'.` @ L242
+- `[full_check] Cannot find name 'Timable'.` @ L243
+- `[full_check] Cannot find name 'Memory'.` @ L252
+- `[full_check] Cannot find name 'Task'.` @ L252
+- `[full_check] Cannot find name 'Timable'.` @ L253
+- `[full_check] Cannot find name 'Symbols'.` @ L263
+- `[full_check] Cannot find name 'Symbols'.` @ L263
+- `[full_check] Cannot find name 'Term'.` @ L272
+- `[full_check] Cannot find name 'Operation'.` @ L274
+- `[full_check] Cannot find name 'Sentence'.` @ L280
+- `[full_check] Cannot find name 'TruthValue'.` @ L281
+- `[full_check] Cannot find name 'TruthValue'.` @ L281
+- `[full_check] Cannot find name 'Stamp'.` @ L283
+- `[full_check] Cannot find name 'Term'.` @ L285
+- `[full_check] Cannot find name 'Sentence'.` @ L289
+- `[full_check] Cannot find name 'Sentence'.` @ L289
+- `[full_check] Cannot find name 'Symbols'.` @ L291
+- `[full_check] Cannot find name 'BudgetValue'.` @ L295
+- `[full_check] Cannot find name 'BudgetValue'.` @ L295
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L300
+- `[full_check] Cannot find name 'Task'.` @ L308
+- `[full_check] Cannot find name 'Task'.` @ L308
+- `[full_check] Cannot find name 'Task'.` @ L308
+- `[full_check] Cannot find name 'Sentence'.` @ L319
+- `[full_check] Cannot find name 'Term'.` @ L319
+- `[full_check] Cannot find name 'Term'.` @ L319
+- `[full_check] Cannot find name 'DerivationContext'.` @ L320
+- `[full_check] Cannot find name 'Memory'.` @ L322
+- `[full_check] Cannot find name 'Operator'.` @ L328
+- `[full_check] Cannot find name 'Product'.` @ L331
+- `[full_check] Cannot find name 'Product'.` @ L331
+- `[full_check] Cannot find name 'Term'.` @ L335
+- `[full_check] Cannot find name 'Inheritance'.` @ L335
+- `[full_check] Cannot find name 'Sentence'.` @ L336
+- `[full_check] Cannot find name 'Sentence'.` @ L336
+- `[full_check] Cannot find name 'Symbols'.` @ L338
+- `[full_check] Cannot find name 'TruthValue'.` @ L339
+- `[full_check] Cannot find name 'Stamp'.` @ L342
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L344
+- `[full_check] Cannot find name 'BudgetValue'.` @ L345
+- `[full_check] Cannot find name 'BudgetValue'.` @ L345
+- `[full_check] Cannot find name 'Task'.` @ L350
+- `[full_check] Cannot find name 'Task'.` @ L350
+- `[full_check] Cannot find name 'Task'.` @ L350
+- `[full_check] Cannot find name 'Implication'.` @ L356
+- `[full_check] Cannot find name 'Implication'.` @ L358
+- `[full_check] Cannot find name 'Implication'.` @ L358
+- `[full_check] Cannot find name 'TemporalRules'.` @ L359
+- `[full_check] Cannot find name 'Conjunction'.` @ L362
+- `[full_check] Cannot find name 'Conjunction'.` @ L363
+- `[full_check] Cannot find name 'Conjunction'.` @ L363
+- `[full_check] Cannot find name 'Interval'.` @ L368
+- `[full_check] Cannot find name 'Operator'.` @ L380
+- `[full_check] Cannot find name 'Product'.` @ L384
+- `[full_check] Cannot find name 'Product'.` @ L384
+- `[full_check] Cannot find name 'Term'.` @ L385
+- `[full_check] Cannot find name 'Operation'.` @ L385
+- `[full_check] Cannot find name 'Sentence'.` @ L387
+- `[full_check] Cannot find name 'Sentence'.` @ L387
+- `[full_check] Cannot find name 'Symbols'.` @ L389
+- `[full_check] Cannot find name 'TruthValue'.` @ L390
+- `[full_check] Cannot find name 'Stamp'.` @ L393
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L395
+- `[full_check] Cannot find name 'BudgetValue'.` @ L396
+- `[full_check] Cannot find name 'BudgetValue'.` @ L396
+- `[full_check] Cannot find name 'Task'.` @ L401
+- `[full_check] Cannot find name 'Task'.` @ L401
+- `[full_check] Cannot find name 'Task'.` @ L401
+- `[syntax_check] Cannot find name 'EventObserver'.` @ L10
+- `[syntax_check] Cannot find name 'Memory'.` @ L11
+- `[syntax_check] Cannot find name 'Nar'.` @ L15
+- `[syntax_check] Cannot find name 'Nar'.` @ L159
+- `[syntax_check] Cannot find name 'Events'.` @ L163
+- `[syntax_check] Cannot find name 'Events'.` @ L166
+- `[syntax_check] Cannot find name 'Sentence'.` @ L173
+- `[syntax_check] Cannot find name 'Memory'.` @ L173
+- `[syntax_check] Cannot find name 'Timable'.` @ L173
+- `[syntax_check] Cannot find name 'Term'.` @ L173
+- `[syntax_check] Cannot find name 'Symbols'.` @ L176
+- `[syntax_check] Cannot find name 'Symbols'.` @ L182
+- `[syntax_check] Cannot find name 'Symbols'.` @ L188
+- `[syntax_check] Cannot find name 'Symbols'.` @ L191
+- `[syntax_check] Cannot find name 'Term'.` @ L198
+- `[syntax_check] Cannot find name 'Term'.` @ L199
+- `[syntax_check] Cannot find name 'Term'.` @ L199
+- `[syntax_check] Cannot find name 'Term'.` @ L200
+- `[syntax_check] Cannot find name 'Term'.` @ L207
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L207
+- `[syntax_check] Cannot find name 'Product'.` @ L207
+- `[syntax_check] Cannot find name 'Events'.` @ L216
+- `[syntax_check] Cannot find name 'Task'.` @ L217
+- `[syntax_check] Cannot find name 'Task'.` @ L217
+- `[syntax_check] Cannot find name 'Symbols'.` @ L221
+- `[syntax_check] Cannot find name 'Symbols'.` @ L222
+- `[syntax_check] Cannot find name 'Events'.` @ L225
+- `[syntax_check] Cannot find name 'Sentence'.` @ L227
+- `[syntax_check] Cannot find name 'Sentence'.` @ L227
+- `[syntax_check] Cannot find name 'Term'.` @ L228
+- `[syntax_check] Cannot find name 'Term'.` @ L228
+- `[syntax_check] Cannot find name 'Term'.` @ L229
+- `[syntax_check] Cannot find name 'Term'.` @ L229
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L230
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L230
+- `[syntax_check] Cannot find name 'Memory'.` @ L235
+- `[syntax_check] Cannot find name 'Task'.` @ L235
+- `[syntax_check] Cannot find name 'Sentence'.` @ L235
+- `[syntax_check] Cannot find name 'Timable'.` @ L236
+- `[syntax_check] Cannot find name 'Task'.` @ L237
+- `[syntax_check] Cannot find name 'Task'.` @ L237
+- `[syntax_check] Cannot find name 'Task'.` @ L237
+- `[syntax_check] Cannot find name 'Memory'.` @ L242
+- `[syntax_check] Cannot find name 'Task'.` @ L242
+- `[syntax_check] Cannot find name 'Timable'.` @ L243
+- `[syntax_check] Cannot find name 'Memory'.` @ L252
+- `[syntax_check] Cannot find name 'Task'.` @ L252
+- `[syntax_check] Cannot find name 'Timable'.` @ L253
+- `[syntax_check] Cannot find name 'Symbols'.` @ L263
+- `[syntax_check] Cannot find name 'Symbols'.` @ L263
+- `[syntax_check] Cannot find name 'Term'.` @ L272
+- `[syntax_check] Cannot find name 'Operation'.` @ L274
+- `[syntax_check] Cannot find name 'Sentence'.` @ L280
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L281
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L281
+- `[syntax_check] Cannot find name 'Stamp'.` @ L283
+- `[syntax_check] Cannot find name 'Term'.` @ L285
+- `[syntax_check] Cannot find name 'Sentence'.` @ L289
+- `[syntax_check] Cannot find name 'Sentence'.` @ L289
+- `[syntax_check] Cannot find name 'Symbols'.` @ L291
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L295
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L295
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L300
+- `[syntax_check] Cannot find name 'Task'.` @ L308
+- `[syntax_check] Cannot find name 'Task'.` @ L308
+- `[syntax_check] Cannot find name 'Task'.` @ L308
+- `[syntax_check] Cannot find name 'Sentence'.` @ L319
+- `[syntax_check] Cannot find name 'Term'.` @ L319
+- `[syntax_check] Cannot find name 'Term'.` @ L319
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L320
+- `[syntax_check] Cannot find name 'Memory'.` @ L322
+- `[syntax_check] Cannot find name 'Operator'.` @ L328
+- `[syntax_check] Cannot find name 'Product'.` @ L331
+- `[syntax_check] Cannot find name 'Product'.` @ L331
+- `[syntax_check] Cannot find name 'Term'.` @ L335
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L335
+- `[syntax_check] Cannot find name 'Sentence'.` @ L336
+- `[syntax_check] Cannot find name 'Sentence'.` @ L336
+- `[syntax_check] Cannot find name 'Symbols'.` @ L338
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L339
+- `[syntax_check] Cannot find name 'Stamp'.` @ L342
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L344
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L345
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L345
+- `[syntax_check] Cannot find name 'Task'.` @ L350
+- `[syntax_check] Cannot find name 'Task'.` @ L350
+- `[syntax_check] Cannot find name 'Task'.` @ L350
+- `[syntax_check] Cannot find name 'Implication'.` @ L356
+- `[syntax_check] Cannot find name 'Implication'.` @ L358
+- `[syntax_check] Cannot find name 'Implication'.` @ L358
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L359
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L362
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L363
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L363
+- `[syntax_check] Cannot find name 'Interval'.` @ L368
+- `[syntax_check] Cannot find name 'Operator'.` @ L380
+- `[syntax_check] Cannot find name 'Product'.` @ L384
+- `[syntax_check] Cannot find name 'Product'.` @ L384
+- `[syntax_check] Cannot find name 'Term'.` @ L385
+- `[syntax_check] Cannot find name 'Operation'.` @ L385
+- `[syntax_check] Cannot find name 'Sentence'.` @ L387
+- `[syntax_check] Cannot find name 'Sentence'.` @ L387
+- `[syntax_check] Cannot find name 'Symbols'.` @ L389
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L390
+- `[syntax_check] Cannot find name 'Stamp'.` @ L393
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L395
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L396
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L396
+- `[syntax_check] Cannot find name 'Task'.` @ L401
+- `[syntax_check] Cannot find name 'Task'.` @ L401
+- `[syntax_check] Cannot find name 'Task'.` @ L401
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -80,6 +548,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

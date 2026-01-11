@@ -14,8 +14,287 @@
 
 - 执行的命令：`npx tsc src/entity/Sentence.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2314（L13, C53）：[full_check] Generic type 'Cloneable<T>' requires 1 type argument(s).
+  - TS2304（L20, C27）：[full_check] Cannot find name 'Term'.
+  - TS2564（L26, C21）：[full_check] Property 'punctuation' has no initializer and is not definitely assigned in the constructor.
+  - TS2304（L31, C28）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L36, C28）：[full_check] Cannot find name 'Stamp'.
+  - TS2564（L41, C13）：[full_check] Property 'revisable' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L46, C13）：[full_check] Property 'key' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L48, C22）：[full_check] Property 'hash' has no initializer and is not definitely assigned in the constructor.
+  - TS2304（L50, C30）：[full_check] Cannot find name 'Term'.
+  - TS2304（L50, C65）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L50, C87）：[full_check] Cannot find name 'Stamp'.
+  - TS2385（L62, C5）：[full_check] Overload signatures must all be public, private or protected.
+  - TS2304（L62, C35）：[full_check] Cannot find name 'Term'.
+  - TS2304（L62, C67）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L62, C86）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L67, C74）：[full_check] Cannot find name 'Term'.
+  - TS2304（L67, C86）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L67, C98）：[full_check] Cannot find name 'Stamp'.
+  - TS2349（L70, C17）：[full_check] This expression is not callable.
+  - TS17009（L70, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L77, C83）：[full_check] Cannot find name 'Term'.
+  - TS2304（L77, C95）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L77, C107）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L84, C37）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L85, C45）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L86, C32）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L86, C58）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L87, C54）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L88, C70）：[full_check] Cannot find name 'Interval'.
+  - TS2322（L89, C37）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L92, C111）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L93, C79）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L97, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L97, C63）：[full_check] Cannot find name 'Term'.
+  - TS2588（L99, C33）：[full_check] Cannot assign to '_content' because it is a constant.
+  - TS2304（L99, C44）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L104, C101）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L107, C54）：[full_check] Cannot find name 'Interval'.
+  - TS2322（L108, C37）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L111, C83）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L112, C59）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L116, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L116, C63）：[full_check] Cannot find name 'Term'.
+  - TS2588（L118, C33）：[full_check] Cannot assign to '_content' because it is a constant.
+  - TS2304（L118, C44）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L123, C101）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L133, C45）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L133, C80）：[full_check] Cannot find name 'Equivalence'.
+  - TS2304（L134, C42）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L135, C46）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L137, C42）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L138, C46）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L140, C52）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L140, C80）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L142, C29）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L142, C47）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L148, C44）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L153, C44）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L155, C29）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L155, C47）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L160, C25）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L160, C43）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L160, C87）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L161, C30）：[full_check] Cannot find name 'Term'.
+  - TS2503（L162, C38）：[full_check] Cannot find namespace 'CompoundTerm'.
+  - TS2304（L162, C80）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L170, C78）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L179, C54）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L179, C89）：[full_check] Cannot find name 'Equivalence'.
+  - TS2304（L181, C30）：[full_check] Cannot find name 'Term'.
+  - TS2304（L182, C41）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L183, C44）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L187, C90）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L190, C28）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L190, C56）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L191, C46）：[full_check] Cannot find name 'Variable'.
+  - TS2304（L191, C82）：[full_check] Cannot find name 'Variable'.
+  - TS7006（L193, C59）：[full_check] Parameter 't' implicitly has an 'any' type.
+  - TS7006（L193, C62）：[full_check] Parameter 'parent' implicitly has an 'any' type.
+  - TS2304（L194, C42）：[full_check] Cannot find name 'Variable'.
+  - TS2304（L195, C36）：[full_check] Cannot find name 'Variable'.
+  - TS2304（L195, C53）：[full_check] Cannot find name 'Variable'.
+  - TS2322（L206, C29）：[full_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2322（L207, C29）：[full_check] Type 'CharSequence | null' is not assignable to type 'CharSequence'.
+  - TS2304（L210, C51）：[full_check] Cannot find name 'Variable'.
+  - TS2339（L211, C36）：[full_check] Property 'equals' does not exist on type 'CharSequence'.
+  - TS2304（L221, C29）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L221, C47）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L222, C34）：[full_check] Cannot find name 'Term'.
+  - TS2503（L223, C42）：[full_check] Cannot find namespace 'CompoundTerm'.
+  - TS2304（L223, C84）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2339（L238, C45）：[full_check] Property 'AssertionError' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L255, C37）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L328, C30）：[full_check] Cannot find name 'Term'.
+  - TS2304（L344, C56）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L355, C38）：[full_check] Cannot find name 'Term'.
+  - TS2304（L361, C47）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L382, C65）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L384, C23）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L385, C58）：[full_check] Cannot find name 'EternalizedTruthValue'.
+  - TS2304（L387, C23）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L387, C84）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L398, C70）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L398, C79）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L399, C23）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L402, C24）：[full_check] Cannot find name 'TruthFunctions'.
+  - TS2304（L403, C32）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L405, C37）：[full_check] Cannot find name 'TruthFunctions'.
+  - TS2304（L409, C36）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L424, C38）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L431, C38）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L438, C38）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L445, C38）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L479, C36）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L491, C51）：[full_check] Cannot find name 'Nar'.
+  - TS2322（L499, C21）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2322（L502, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L504, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L506, C25）：[full_check] Type 'bigint' is not assignable to type 'Long'.
+  - TS2322（L507, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L510, C21）：[full_check] Cannot find name 'Debug'.
+  - TS2322（L511, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L514, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L515, C56）：[full_check] Cannot find name 'Stamp'.
+  - TS2322（L516, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2339（L526, C41）：[full_check] Property 'AssertionError' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2322（L530, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L532, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L534, C25）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L536, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L576, C69）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L577, C42）：[full_check] Cannot find name 'Symbols'.
+  - TS2322（L584, C17）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L586, C17）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L588, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L590, C17）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L605, C24）：[full_check] Cannot find name 'Texts'.
+  - TS2314（L616, C46）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L632, C23）：[full_check] Cannot find name 'Term'.
+  - TS2304（L640, C24）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L13, C53）：[syntax_check] Generic type 'Cloneable<T>' requires 1 type argument(s).
+  - TS2304（L20, C27）：[syntax_check] Cannot find name 'Term'.
+  - TS2564（L26, C21）：[syntax_check] Property 'punctuation' has no initializer and is not definitely assigned in the constructor.
+  - TS2304（L31, C28）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L36, C28）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2564（L41, C13）：[syntax_check] Property 'revisable' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L46, C13）：[syntax_check] Property 'key' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L48, C22）：[syntax_check] Property 'hash' has no initializer and is not definitely assigned in the constructor.
+  - TS2304（L50, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L50, C65）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L50, C87）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2385（L62, C5）：[syntax_check] Overload signatures must all be public, private or protected.
+  - TS2304（L62, C35）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L62, C67）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L62, C86）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L67, C74）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L67, C86）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L67, C98）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2349（L70, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L70, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L77, C83）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L77, C95）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L77, C107）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L84, C37）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L85, C45）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L86, C32）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L86, C58）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L87, C54）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L88, C70）：[syntax_check] Cannot find name 'Interval'.
+  - TS2322（L89, C37）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L92, C111）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L93, C79）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L97, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L97, C63）：[syntax_check] Cannot find name 'Term'.
+  - TS2588（L99, C33）：[syntax_check] Cannot assign to '_content' because it is a constant.
+  - TS2304（L99, C44）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L104, C101）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L107, C54）：[syntax_check] Cannot find name 'Interval'.
+  - TS2322（L108, C37）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L111, C83）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L112, C59）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L116, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L116, C63）：[syntax_check] Cannot find name 'Term'.
+  - TS2588（L118, C33）：[syntax_check] Cannot assign to '_content' because it is a constant.
+  - TS2304（L118, C44）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L123, C101）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L133, C45）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L133, C80）：[syntax_check] Cannot find name 'Equivalence'.
+  - TS2304（L134, C42）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L135, C46）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L137, C42）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L138, C46）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L140, C52）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L140, C80）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L142, C29）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L142, C47）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L148, C44）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L153, C44）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L155, C29）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L155, C47）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L160, C25）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L160, C43）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L160, C87）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L161, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2503（L162, C38）：[syntax_check] Cannot find namespace 'CompoundTerm'.
+  - TS2304（L162, C80）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L170, C78）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L179, C54）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L179, C89）：[syntax_check] Cannot find name 'Equivalence'.
+  - TS2304（L181, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L182, C41）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L183, C44）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L187, C90）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L190, C28）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L190, C56）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L191, C46）：[syntax_check] Cannot find name 'Variable'.
+  - TS2304（L191, C82）：[syntax_check] Cannot find name 'Variable'.
+  - TS7006（L193, C59）：[syntax_check] Parameter 't' implicitly has an 'any' type.
+  - TS7006（L193, C62）：[syntax_check] Parameter 'parent' implicitly has an 'any' type.
+  - TS2304（L194, C42）：[syntax_check] Cannot find name 'Variable'.
+  - TS2304（L195, C36）：[syntax_check] Cannot find name 'Variable'.
+  - TS2304（L195, C53）：[syntax_check] Cannot find name 'Variable'.
+  - TS2322（L206, C29）：[syntax_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2322（L207, C29）：[syntax_check] Type 'CharSequence | null' is not assignable to type 'CharSequence'.
+  - TS2304（L210, C51）：[syntax_check] Cannot find name 'Variable'.
+  - TS2339（L211, C36）：[syntax_check] Property 'equals' does not exist on type 'CharSequence'.
+  - TS2304（L221, C29）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L221, C47）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L222, C34）：[syntax_check] Cannot find name 'Term'.
+  - TS2503（L223, C42）：[syntax_check] Cannot find namespace 'CompoundTerm'.
+  - TS2304（L223, C84）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2339（L238, C45）：[syntax_check] Property 'AssertionError' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L255, C37）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L328, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L344, C56）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L355, C38）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L361, C47）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L382, C65）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L384, C23）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L385, C58）：[syntax_check] Cannot find name 'EternalizedTruthValue'.
+  - TS2304（L387, C23）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L387, C84）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L398, C70）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L398, C79）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L399, C23）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L402, C24）：[syntax_check] Cannot find name 'TruthFunctions'.
+  - TS2304（L403, C32）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L405, C37）：[syntax_check] Cannot find name 'TruthFunctions'.
+  - TS2304（L409, C36）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L424, C38）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L431, C38）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L438, C38）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L445, C38）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L479, C36）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L491, C51）：[syntax_check] Cannot find name 'Nar'.
+  - TS2322（L499, C21）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2322（L502, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L504, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L506, C25）：[syntax_check] Type 'bigint' is not assignable to type 'Long'.
+  - TS2322（L507, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L510, C21）：[syntax_check] Cannot find name 'Debug'.
+  - TS2322（L511, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L514, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L515, C56）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2322（L516, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2339（L526, C41）：[syntax_check] Property 'AssertionError' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2322（L530, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L532, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L534, C25）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L536, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L576, C69）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L577, C42）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2322（L584, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L586, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L588, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L590, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L605, C24）：[syntax_check] Cannot find name 'Texts'.
+  - TS2314（L616, C46）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L632, C23）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L640, C24）：[syntax_check] Cannot find name 'TruthValue'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +310,214 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Term'.` @ L20
+- `[full_check] Cannot find name 'TruthValue'.` @ L31
+- `[full_check] Cannot find name 'Stamp'.` @ L36
+- `[full_check] Cannot find name 'Term'.` @ L50
+- `[full_check] Cannot find name 'TruthValue'.` @ L50
+- `[full_check] Cannot find name 'Stamp'.` @ L50
+- `[full_check] Cannot find name 'Term'.` @ L62
+- `[full_check] Cannot find name 'TruthValue'.` @ L62
+- `[full_check] Cannot find name 'Stamp'.` @ L62
+- `[full_check] Cannot find name 'Term'.` @ L67
+- `[full_check] Cannot find name 'TruthValue'.` @ L67
+- `[full_check] Cannot find name 'Stamp'.` @ L67
+- `[full_check] Cannot find name 'Term'.` @ L77
+- `[full_check] Cannot find name 'TruthValue'.` @ L77
+- `[full_check] Cannot find name 'Stamp'.` @ L77
+- `[full_check] Cannot find name 'Symbols'.` @ L84
+- `[full_check] Cannot find name 'Conjunction'.` @ L85
+- `[full_check] Cannot find name 'Conjunction'.` @ L86
+- `[full_check] Cannot find name 'Conjunction'.` @ L86
+- `[full_check] Cannot find name 'TemporalRules'.` @ L87
+- `[full_check] Cannot find name 'Interval'.` @ L88
+- `[full_check] Cannot find name 'Interval'.` @ L92
+- `[full_check] Cannot find name 'Interval'.` @ L93
+- `[full_check] Cannot find name 'Term'.` @ L97
+- `[full_check] Cannot find name 'Term'.` @ L97
+- `[full_check] Cannot find name 'Conjunction'.` @ L99
+- `[full_check] Cannot find name 'Stamp'.` @ L104
+- `[full_check] Cannot find name 'Interval'.` @ L107
+- `[full_check] Cannot find name 'Interval'.` @ L111
+- `[full_check] Cannot find name 'Interval'.` @ L112
+- `[full_check] Cannot find name 'Term'.` @ L116
+- `[full_check] Cannot find name 'Term'.` @ L116
+- `[full_check] Cannot find name 'Conjunction'.` @ L118
+- `[full_check] Cannot find name 'Stamp'.` @ L123
+- `[full_check] Cannot find name 'Implication'.` @ L133
+- `[full_check] Cannot find name 'Equivalence'.` @ L133
+- `[full_check] Cannot find name 'Statement'.` @ L134
+- `[full_check] Cannot find name 'Statement'.` @ L135
+- `[full_check] Cannot find name 'Statement'.` @ L137
+- `[full_check] Cannot find name 'Statement'.` @ L138
+- `[full_check] Cannot find name 'Interval'.` @ L140
+- `[full_check] Cannot find name 'Symbols'.` @ L140
+- `[full_check] Cannot find name 'Debug'.` @ L142
+- `[full_check] Cannot find name 'Debug'.` @ L142
+- `[full_check] Cannot find name 'Symbols'.` @ L148
+- `[full_check] Cannot find name 'Symbols'.` @ L153
+- `[full_check] Cannot find name 'Debug'.` @ L155
+- `[full_check] Cannot find name 'Debug'.` @ L155
+- `[full_check] Cannot find name 'Debug'.` @ L160
+- `[full_check] Cannot find name 'Debug'.` @ L160
+- `[full_check] Cannot find name 'Symbols'.` @ L160
+- `[full_check] Cannot find name 'Term'.` @ L161
+- `[full_check] Cannot find namespace 'CompoundTerm'.` @ L162
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L162
+- `[full_check] Cannot find name 'Symbols'.` @ L170
+- `[full_check] Cannot find name 'Implication'.` @ L179
+- `[full_check] Cannot find name 'Equivalence'.` @ L179
+- `[full_check] Cannot find name 'Term'.` @ L181
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L182
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L183
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L187
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L190
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L190
+- `[full_check] Cannot find name 'Variable'.` @ L191
+- `[full_check] Cannot find name 'Variable'.` @ L191
+- `[full_check] Cannot find name 'Variable'.` @ L194
+- `[full_check] Cannot find name 'Variable'.` @ L195
+- `[full_check] Cannot find name 'Variable'.` @ L195
+- `[full_check] Cannot find name 'Variable'.` @ L210
+- `[full_check] Cannot find name 'Debug'.` @ L221
+- `[full_check] Cannot find name 'Debug'.` @ L221
+- `[full_check] Cannot find name 'Term'.` @ L222
+- `[full_check] Cannot find namespace 'CompoundTerm'.` @ L223
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L223
+- `[full_check] Cannot find name 'Symbols'.` @ L255
+- `[full_check] Cannot find name 'Term'.` @ L328
+- `[full_check] Cannot find name 'Stamp'.` @ L344
+- `[full_check] Cannot find name 'Term'.` @ L355
+- `[full_check] Cannot find name 'TruthValue'.` @ L361
+- `[full_check] Cannot find name 'Memory'.` @ L382
+- `[full_check] Cannot find name 'TruthValue'.` @ L384
+- `[full_check] Cannot find name 'EternalizedTruthValue'.` @ L385
+- `[full_check] Cannot find name 'Stamp'.` @ L387
+- `[full_check] Cannot find name 'Stamp'.` @ L387
+- `[full_check] Cannot find name 'Memory'.` @ L398
+- `[full_check] Cannot find name 'TruthValue'.` @ L398
+- `[full_check] Cannot find name 'TruthValue'.` @ L399
+- `[full_check] Cannot find name 'TruthFunctions'.` @ L402
+- `[full_check] Cannot find name 'Stamp'.` @ L403
+- `[full_check] Cannot find name 'TruthFunctions'.` @ L405
+- `[full_check] Cannot find name 'TruthValue'.` @ L409
+- `[full_check] Cannot find name 'Symbols'.` @ L424
+- `[full_check] Cannot find name 'Symbols'.` @ L431
+- `[full_check] Cannot find name 'Symbols'.` @ L438
+- `[full_check] Cannot find name 'Symbols'.` @ L445
+- `[full_check] Cannot find name 'Nar'.` @ L479
+- `[full_check] Cannot find name 'Nar'.` @ L491
+- `[full_check] Cannot find name 'Debug'.` @ L510
+- `[full_check] Cannot find name 'Stamp'.` @ L515
+- `[full_check] Cannot find name 'Symbols'.` @ L576
+- `[full_check] Cannot find name 'Symbols'.` @ L577
+- `[full_check] Cannot find name 'Texts'.` @ L605
+- `[full_check] Cannot find name 'Term'.` @ L632
+- `[full_check] Cannot find name 'TruthValue'.` @ L640
+- `[syntax_check] Cannot find name 'Term'.` @ L20
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L31
+- `[syntax_check] Cannot find name 'Stamp'.` @ L36
+- `[syntax_check] Cannot find name 'Term'.` @ L50
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L50
+- `[syntax_check] Cannot find name 'Stamp'.` @ L50
+- `[syntax_check] Cannot find name 'Term'.` @ L62
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L62
+- `[syntax_check] Cannot find name 'Stamp'.` @ L62
+- `[syntax_check] Cannot find name 'Term'.` @ L67
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L67
+- `[syntax_check] Cannot find name 'Stamp'.` @ L67
+- `[syntax_check] Cannot find name 'Term'.` @ L77
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L77
+- `[syntax_check] Cannot find name 'Stamp'.` @ L77
+- `[syntax_check] Cannot find name 'Symbols'.` @ L84
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L85
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L86
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L86
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L87
+- `[syntax_check] Cannot find name 'Interval'.` @ L88
+- `[syntax_check] Cannot find name 'Interval'.` @ L92
+- `[syntax_check] Cannot find name 'Interval'.` @ L93
+- `[syntax_check] Cannot find name 'Term'.` @ L97
+- `[syntax_check] Cannot find name 'Term'.` @ L97
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L99
+- `[syntax_check] Cannot find name 'Stamp'.` @ L104
+- `[syntax_check] Cannot find name 'Interval'.` @ L107
+- `[syntax_check] Cannot find name 'Interval'.` @ L111
+- `[syntax_check] Cannot find name 'Interval'.` @ L112
+- `[syntax_check] Cannot find name 'Term'.` @ L116
+- `[syntax_check] Cannot find name 'Term'.` @ L116
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L118
+- `[syntax_check] Cannot find name 'Stamp'.` @ L123
+- `[syntax_check] Cannot find name 'Implication'.` @ L133
+- `[syntax_check] Cannot find name 'Equivalence'.` @ L133
+- `[syntax_check] Cannot find name 'Statement'.` @ L134
+- `[syntax_check] Cannot find name 'Statement'.` @ L135
+- `[syntax_check] Cannot find name 'Statement'.` @ L137
+- `[syntax_check] Cannot find name 'Statement'.` @ L138
+- `[syntax_check] Cannot find name 'Interval'.` @ L140
+- `[syntax_check] Cannot find name 'Symbols'.` @ L140
+- `[syntax_check] Cannot find name 'Debug'.` @ L142
+- `[syntax_check] Cannot find name 'Debug'.` @ L142
+- `[syntax_check] Cannot find name 'Symbols'.` @ L148
+- `[syntax_check] Cannot find name 'Symbols'.` @ L153
+- `[syntax_check] Cannot find name 'Debug'.` @ L155
+- `[syntax_check] Cannot find name 'Debug'.` @ L155
+- `[syntax_check] Cannot find name 'Debug'.` @ L160
+- `[syntax_check] Cannot find name 'Debug'.` @ L160
+- `[syntax_check] Cannot find name 'Symbols'.` @ L160
+- `[syntax_check] Cannot find name 'Term'.` @ L161
+- `[syntax_check] Cannot find namespace 'CompoundTerm'.` @ L162
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L162
+- `[syntax_check] Cannot find name 'Symbols'.` @ L170
+- `[syntax_check] Cannot find name 'Implication'.` @ L179
+- `[syntax_check] Cannot find name 'Equivalence'.` @ L179
+- `[syntax_check] Cannot find name 'Term'.` @ L181
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L182
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L183
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L187
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L190
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L190
+- `[syntax_check] Cannot find name 'Variable'.` @ L191
+- `[syntax_check] Cannot find name 'Variable'.` @ L191
+- `[syntax_check] Cannot find name 'Variable'.` @ L194
+- `[syntax_check] Cannot find name 'Variable'.` @ L195
+- `[syntax_check] Cannot find name 'Variable'.` @ L195
+- `[syntax_check] Cannot find name 'Variable'.` @ L210
+- `[syntax_check] Cannot find name 'Debug'.` @ L221
+- `[syntax_check] Cannot find name 'Debug'.` @ L221
+- `[syntax_check] Cannot find name 'Term'.` @ L222
+- `[syntax_check] Cannot find namespace 'CompoundTerm'.` @ L223
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L223
+- `[syntax_check] Cannot find name 'Symbols'.` @ L255
+- `[syntax_check] Cannot find name 'Term'.` @ L328
+- `[syntax_check] Cannot find name 'Stamp'.` @ L344
+- `[syntax_check] Cannot find name 'Term'.` @ L355
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L361
+- `[syntax_check] Cannot find name 'Memory'.` @ L382
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L384
+- `[syntax_check] Cannot find name 'EternalizedTruthValue'.` @ L385
+- `[syntax_check] Cannot find name 'Stamp'.` @ L387
+- `[syntax_check] Cannot find name 'Stamp'.` @ L387
+- `[syntax_check] Cannot find name 'Memory'.` @ L398
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L398
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L399
+- `[syntax_check] Cannot find name 'TruthFunctions'.` @ L402
+- `[syntax_check] Cannot find name 'Stamp'.` @ L403
+- `[syntax_check] Cannot find name 'TruthFunctions'.` @ L405
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L409
+- `[syntax_check] Cannot find name 'Symbols'.` @ L424
+- `[syntax_check] Cannot find name 'Symbols'.` @ L431
+- `[syntax_check] Cannot find name 'Symbols'.` @ L438
+- `[syntax_check] Cannot find name 'Symbols'.` @ L445
+- `[syntax_check] Cannot find name 'Nar'.` @ L479
+- `[syntax_check] Cannot find name 'Nar'.` @ L491
+- `[syntax_check] Cannot find name 'Debug'.` @ L510
+- `[syntax_check] Cannot find name 'Stamp'.` @ L515
+- `[syntax_check] Cannot find name 'Symbols'.` @ L576
+- `[syntax_check] Cannot find name 'Symbols'.` @ L577
+- `[syntax_check] Cannot find name 'Texts'.` @ L605
+- `[syntax_check] Cannot find name 'Term'.` @ L632
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L640
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -72,6 +558,7 @@
 ## 6. 一致性风险
 
 - 文件内仍保留 2 处 TODO，需对照 Java 填补。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

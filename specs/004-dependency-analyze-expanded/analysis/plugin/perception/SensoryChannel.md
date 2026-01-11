@@ -14,8 +14,74 @@
 
 - 执行的命令：`npx tsc src/plugin/perception/SensoryChannel.ts --noEmit`
 - 关键输出：
-  - TS1135（L144, C31）：Argument expression expected.
-  - TS1005（L144, C48）：',' expected.
+  - TS2420（L5, C23）：[full_check] Class 'SensoryChannel' incorrectly implements interface 'Plugin'.
+  - TS2564（L6, C13）：[full_check] Property 'reportResultsTo' has no initializer and is not definitely assigned in the constructor.
+  - TS2304（L7, C17）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L8, C45）：[full_check] Cannot find name 'Task'.
+  - TS2304（L12, C20）：[full_check] Cannot find name 'Term'.
+  - TS2304（L44, C29）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L45, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L47, C29）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L48, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L60, C89）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L60, C147）：[full_check] Cannot find name 'Term'.
+  - TS2304（L76, C89）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L76, C125）：[full_check] Cannot find name 'Term'.
+  - TS2349（L79, C17）：[full_check] This expression is not callable.
+  - TS17009（L79, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L92, C51）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L94, C20）：[full_check] Cannot find name 'Task'.
+  - TS2304（L94, C31）：[full_check] Cannot find name 'Narsese'.
+  - TS2304（L97, C31）：[full_check] Cannot find name 'Narsese'.
+  - TS2339（L98, C34）：[full_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2339（L98, C104）：[full_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2345（L99, C84）：[full_check] Argument of type 'unknown' is not assignable to parameter of type 'Throwable | null'.
+  - TS2512（L106, C21）：[full_check] Overload signatures must all be abstract or non-abstract.
+  - TS2304（L106, C33）：[full_check] Cannot find name 'Task'.
+  - TS2304（L106, C45）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L106, C55）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L108, C29）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L111, C32）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L120, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L128, C24）：[full_check] Cannot find name 'Term'.
+  - TS2304（L129, C29）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L130, C20）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L130, C39）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L143, C26）：[full_check] Cannot find name 'Term'.
+  - TS2420（L5, C23）：[syntax_check] Class 'SensoryChannel' incorrectly implements interface 'Plugin'.
+  - TS2564（L6, C13）：[syntax_check] Property 'reportResultsTo' has no initializer and is not definitely assigned in the constructor.
+  - TS2304（L7, C17）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L8, C45）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L12, C20）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L44, C29）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L45, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L47, C29）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L48, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L60, C89）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L60, C147）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L76, C89）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L76, C125）：[syntax_check] Cannot find name 'Term'.
+  - TS2349（L79, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L79, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L92, C51）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L94, C20）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L94, C31）：[syntax_check] Cannot find name 'Narsese'.
+  - TS2304（L97, C31）：[syntax_check] Cannot find name 'Narsese'.
+  - TS2339（L98, C34）：[syntax_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2339（L98, C104）：[syntax_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2345（L99, C84）：[syntax_check] Argument of type 'unknown' is not assignable to parameter of type 'Throwable | null'.
+  - TS2512（L106, C21）：[syntax_check] Overload signatures must all be abstract or non-abstract.
+  - TS2304（L106, C33）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L106, C45）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L106, C55）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L108, C29）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L111, C32）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L120, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L128, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L129, C29）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L130, C20）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L130, C39）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L143, C26）：[syntax_check] Cannot find name 'Term'.
 - 总结：存在语法错误，需要比对 Java 语句结构。；编译失败：TS1135 @ 144:31 Argument expression expected.，另有 1 条 ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
@@ -32,7 +98,58 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Nar'.` @ L7
+- `[full_check] Cannot find name 'Task'.` @ L8
+- `[full_check] Cannot find name 'Term'.` @ L12
+- `[full_check] Cannot find name 'Nar'.` @ L44
+- `[full_check] Cannot find name 'Term'.` @ L45
+- `[full_check] Cannot find name 'Nar'.` @ L47
+- `[full_check] Cannot find name 'Term'.` @ L48
+- `[full_check] Cannot find name 'Nar'.` @ L60
+- `[full_check] Cannot find name 'Term'.` @ L60
+- `[full_check] Cannot find name 'Nar'.` @ L76
+- `[full_check] Cannot find name 'Term'.` @ L76
+- `[full_check] Cannot find name 'Timable'.` @ L92
+- `[full_check] Cannot find name 'Task'.` @ L94
+- `[full_check] Cannot find name 'Narsese'.` @ L94
+- `[full_check] Cannot find name 'Narsese'.` @ L97
+- `[full_check] Cannot find name 'Task'.` @ L106
+- `[full_check] Cannot find name 'Timable'.` @ L106
+- `[full_check] Cannot find name 'Nar'.` @ L106
+- `[full_check] Cannot find name 'Timable'.` @ L108
+- `[full_check] Cannot find name 'Timable'.` @ L111
+- `[full_check] Cannot find name 'Term'.` @ L120
+- `[full_check] Cannot find name 'Term'.` @ L128
+- `[full_check] Cannot find name 'Nar'.` @ L129
+- `[full_check] Cannot find name 'Concept'.` @ L130
+- `[full_check] Cannot find name 'Nar'.` @ L130
+- `[full_check] Cannot find name 'Term'.` @ L143
+- `[syntax_check] Cannot find name 'Nar'.` @ L7
+- `[syntax_check] Cannot find name 'Task'.` @ L8
+- `[syntax_check] Cannot find name 'Term'.` @ L12
+- `[syntax_check] Cannot find name 'Nar'.` @ L44
+- `[syntax_check] Cannot find name 'Term'.` @ L45
+- `[syntax_check] Cannot find name 'Nar'.` @ L47
+- `[syntax_check] Cannot find name 'Term'.` @ L48
+- `[syntax_check] Cannot find name 'Nar'.` @ L60
+- `[syntax_check] Cannot find name 'Term'.` @ L60
+- `[syntax_check] Cannot find name 'Nar'.` @ L76
+- `[syntax_check] Cannot find name 'Term'.` @ L76
+- `[syntax_check] Cannot find name 'Timable'.` @ L92
+- `[syntax_check] Cannot find name 'Task'.` @ L94
+- `[syntax_check] Cannot find name 'Narsese'.` @ L94
+- `[syntax_check] Cannot find name 'Narsese'.` @ L97
+- `[syntax_check] Cannot find name 'Task'.` @ L106
+- `[syntax_check] Cannot find name 'Timable'.` @ L106
+- `[syntax_check] Cannot find name 'Nar'.` @ L106
+- `[syntax_check] Cannot find name 'Timable'.` @ L108
+- `[syntax_check] Cannot find name 'Timable'.` @ L111
+- `[syntax_check] Cannot find name 'Term'.` @ L120
+- `[syntax_check] Cannot find name 'Term'.` @ L128
+- `[syntax_check] Cannot find name 'Nar'.` @ L129
+- `[syntax_check] Cannot find name 'Concept'.` @ L130
+- `[syntax_check] Cannot find name 'Nar'.` @ L130
+- `[syntax_check] Cannot find name 'Term'.` @ L143
 
 ## 4. Java 依赖对照（`deps.xml`）
 

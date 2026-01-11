@@ -14,8 +14,53 @@
 
 - 执行的命令：`npx tsc src/language/Image.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L9, C37）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L13, C39）：[full_check] Cannot find name 'Term'.
+  - TS2304（L21, C32）：[full_check] Cannot find name 'Term'.
+  - TS2339（L23, C14）：[full_check] Property 'hash' does not exist on type 'Image'.
+  - TS2304（L26, C28）：[full_check] Cannot find name 'AbstractTerm'.
+  - TS2304（L36, C36）：[full_check] Cannot find name 'Term'.
+  - TS2304（L37, C30）：[full_check] Cannot find name 'Term'.
+  - TS2304（L42, C32）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L53, C40）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L53, C61）：[full_check] Cannot find name 'Term'.
+  - TS2304（L57, C21）：[full_check] Cannot find name 'COMPOUND_TERM_OPENER'.
+  - TS2304（L59, C21）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L63, C25）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L65, C29）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L70, C21）：[full_check] Cannot find name 'COMPOUND_TERM_CLOSER'.
+  - TS2304（L81, C36）：[full_check] Cannot find name 'operator'.
+  - TS2304（L81, C48）：[full_check] Cannot find name 'term'.
+  - TS2304（L89, C27）：[full_check] Cannot find name 'Term'.
+  - TS2304（L90, C16）：[full_check] Cannot find name 'term'.
+  - TS2304（L98, C36）：[full_check] Cannot find name 'Term'.
+  - TS2304（L99, C13）：[full_check] Cannot find name 'term'.
+  - TS2304（L102, C45）：[full_check] Cannot find name 'term'.
+  - TS2304（L102, C55）：[full_check] Cannot find name 'term'.
+  - TS2304（L9, C37）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L13, C39）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L21, C32）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L23, C14）：[syntax_check] Property 'hash' does not exist on type 'Image'.
+  - TS2304（L26, C28）：[syntax_check] Cannot find name 'AbstractTerm'.
+  - TS2304（L36, C36）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L37, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L42, C32）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L53, C40）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L53, C61）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L57, C21）：[syntax_check] Cannot find name 'COMPOUND_TERM_OPENER'.
+  - TS2304（L59, C21）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L63, C25）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L65, C29）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L70, C21）：[syntax_check] Cannot find name 'COMPOUND_TERM_CLOSER'.
+  - TS2304（L81, C36）：[syntax_check] Cannot find name 'operator'.
+  - TS2304（L81, C48）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L89, C27）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L90, C16）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L98, C36）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L99, C13）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L102, C45）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L102, C55）：[syntax_check] Cannot find name 'term'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +76,50 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L9
+- `[full_check] Cannot find name 'Term'.` @ L13
+- `[full_check] Cannot find name 'Term'.` @ L21
+- `[full_check] Cannot find name 'AbstractTerm'.` @ L26
+- `[full_check] Cannot find name 'Term'.` @ L36
+- `[full_check] Cannot find name 'Term'.` @ L37
+- `[full_check] Cannot find name 'Symbols'.` @ L42
+- `[full_check] Cannot find name 'NativeOperator'.` @ L53
+- `[full_check] Cannot find name 'Term'.` @ L53
+- `[full_check] Cannot find name 'COMPOUND_TERM_OPENER'.` @ L57
+- `[full_check] Cannot find name 'Symbols'.` @ L59
+- `[full_check] Cannot find name 'Symbols'.` @ L63
+- `[full_check] Cannot find name 'Symbols'.` @ L65
+- `[full_check] Cannot find name 'COMPOUND_TERM_CLOSER'.` @ L70
+- `[full_check] Cannot find name 'operator'.` @ L81
+- `[full_check] Cannot find name 'term'.` @ L81
+- `[full_check] Cannot find name 'Term'.` @ L89
+- `[full_check] Cannot find name 'term'.` @ L90
+- `[full_check] Cannot find name 'Term'.` @ L98
+- `[full_check] Cannot find name 'term'.` @ L99
+- `[full_check] Cannot find name 'term'.` @ L102
+- `[full_check] Cannot find name 'term'.` @ L102
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L9
+- `[syntax_check] Cannot find name 'Term'.` @ L13
+- `[syntax_check] Cannot find name 'Term'.` @ L21
+- `[syntax_check] Cannot find name 'AbstractTerm'.` @ L26
+- `[syntax_check] Cannot find name 'Term'.` @ L36
+- `[syntax_check] Cannot find name 'Term'.` @ L37
+- `[syntax_check] Cannot find name 'Symbols'.` @ L42
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L53
+- `[syntax_check] Cannot find name 'Term'.` @ L53
+- `[syntax_check] Cannot find name 'COMPOUND_TERM_OPENER'.` @ L57
+- `[syntax_check] Cannot find name 'Symbols'.` @ L59
+- `[syntax_check] Cannot find name 'Symbols'.` @ L63
+- `[syntax_check] Cannot find name 'Symbols'.` @ L65
+- `[syntax_check] Cannot find name 'COMPOUND_TERM_CLOSER'.` @ L70
+- `[syntax_check] Cannot find name 'operator'.` @ L81
+- `[syntax_check] Cannot find name 'term'.` @ L81
+- `[syntax_check] Cannot find name 'Term'.` @ L89
+- `[syntax_check] Cannot find name 'term'.` @ L90
+- `[syntax_check] Cannot find name 'Term'.` @ L98
+- `[syntax_check] Cannot find name 'term'.` @ L99
+- `[syntax_check] Cannot find name 'term'.` @ L102
+- `[syntax_check] Cannot find name 'term'.` @ L102
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -58,6 +146,7 @@
 ## 6. 一致性风险
 
 - 文件内仍保留 1 处 TODO，需对照 Java 填补。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

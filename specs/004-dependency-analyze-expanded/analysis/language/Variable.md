@@ -14,8 +14,101 @@
 
 - 执行的命令：`npx tsc src/language/Variable.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L11, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L15, C20）：[full_check] Cannot find name 'Term'.
+  - TS2564（L17, C13）：[full_check] Property 'hash' has no initializer and is not definitely assigned in the constructor.
+  - TS2385（L26, C5）：[full_check] Overload signatures must all be public, private or protected.
+  - TS2304（L26, C64）：[full_check] Cannot find name 'Term'.
+  - TS2349（L33, C17）：[full_check] This expression is not callable.
+  - TS17009（L33, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L40, C72）：[full_check] Cannot find name 'Term'.
+  - TS2304（L57, C28）：[full_check] Cannot find name 'Term'.
+  - TS2339（L58, C14）：[full_check] Property 'setName' does not exist on type 'Variable'.
+  - TS2322（L59, C9）：[full_check] Type 'number | null' is not assignable to type 'number'.
+  - TS2349（L73, C55）：[full_check] This expression is not callable.
+  - TS2367（L124, C13）：[full_check] This comparison appears to be unintentional because the types 'JavaObject' and 'this' have no overlap.
+  - TS2349（L134, C29）：[full_check] This expression is not callable.
+  - TS2339（L134, C45）：[full_check] Property 'name' does not exist on type 'Variable'.
+  - TS2352（L146, C27）：[full_check] Conversion of type 'JavaObject' to type 'Variable' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2349（L149, C35）：[full_check] This expression is not callable.
+  - TS2339（L149, C51）：[full_check] Property 'name' does not exist on type 'Variable'.
+  - TS2349（L155, C33）：[full_check] This expression is not callable.
+  - TS2339（L155, C49）：[full_check] Property 'name' does not exist on type 'Variable'.
+  - TS2349（L178, C49）：[full_check] This expression is not callable.
+  - TS2349（L180, C44）：[full_check] This expression is not callable.
+  - TS2304（L185, C28）：[full_check] Cannot find name 'AbstractTerm'.
+  - TS2339（L198, C58）：[full_check] Property 'name' does not exist on type 'Variable'.
+  - TS2339（L198, C109）：[full_check] Property 'name' does not exist on type 'Variable'.
+  - TS2304（L227, C35）：[full_check] Cannot find name 'VAR_QUERY'.
+  - TS2304（L231, C35）：[full_check] Cannot find name 'VAR_DEPENDENT'.
+  - TS2304（L235, C35）：[full_check] Cannot find name 'VAR_INDEPENDENT'.
+  - TS2349（L239, C56）：[full_check] This expression is not callable.
+  - TS2367（L241, C16）：[full_check] This comparison appears to be unintentional because the types 'number | null' and 'string' have no overlap.
+  - TS2304（L244, C24）：[full_check] Cannot find name 'Term'.
+  - TS2304（L251, C22）：[full_check] Cannot find name 'Texts'.
+  - TS2339（L251, C40）：[full_check] Property 'name' does not exist on type 'Variable'.
+  - TS2339（L251, C50）：[full_check] Property 'name' does not exist on type 'Variable'.
+  - TS2339（L258, C48）：[full_check] Property 'identityHashCode' does not exist on type 'typeof System'.
+  - TS2339（L259, C48）：[full_check] Property 'identityHashCode' does not exist on type 'typeof System'.
+  - TS2304（L266, C24）：[full_check] Cannot find name 'Texts'.
+  - TS2304（L274, C23）：[full_check] Cannot find name 'VAR_QUERY'.
+  - TS2304（L274, C44）：[full_check] Cannot find name 'VAR_DEPENDENT'.
+  - TS2304（L274, C69）：[full_check] Cannot find name 'VAR_INDEPENDENT'.
+  - TS2304（L288, C18）：[full_check] Cannot find name 'VAR_INDEPENDENT'.
+  - TS2304（L291, C18）：[full_check] Cannot find name 'VAR_DEPENDENT'.
+  - TS2304（L294, C18）：[full_check] Cannot find name 'VAR_QUERY'.
+  - TS2339（L315, C43）：[full_check] Property 'forDigit' does not exist on type 'typeof Character'.
+  - TS2304（L321, C52）：[full_check] Cannot find name 'Term'.
+  - TS2304（L321, C93）：[full_check] Cannot find name 'Term'.
+  - TS2304（L323, C47）：[full_check] Cannot find name 'Term'.
+  - TS2304（L11, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L15, C20）：[syntax_check] Cannot find name 'Term'.
+  - TS2564（L17, C13）：[syntax_check] Property 'hash' has no initializer and is not definitely assigned in the constructor.
+  - TS2385（L26, C5）：[syntax_check] Overload signatures must all be public, private or protected.
+  - TS2304（L26, C64）：[syntax_check] Cannot find name 'Term'.
+  - TS2349（L33, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L33, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L40, C72）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L57, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L58, C14）：[syntax_check] Property 'setName' does not exist on type 'Variable'.
+  - TS2322（L59, C9）：[syntax_check] Type 'number | null' is not assignable to type 'number'.
+  - TS2349（L73, C55）：[syntax_check] This expression is not callable.
+  - TS2367（L124, C13）：[syntax_check] This comparison appears to be unintentional because the types 'JavaObject' and 'this' have no overlap.
+  - TS2349（L134, C29）：[syntax_check] This expression is not callable.
+  - TS2339（L134, C45）：[syntax_check] Property 'name' does not exist on type 'Variable'.
+  - TS2352（L146, C27）：[syntax_check] Conversion of type 'JavaObject' to type 'Variable' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2349（L149, C35）：[syntax_check] This expression is not callable.
+  - TS2339（L149, C51）：[syntax_check] Property 'name' does not exist on type 'Variable'.
+  - TS2349（L155, C33）：[syntax_check] This expression is not callable.
+  - TS2339（L155, C49）：[syntax_check] Property 'name' does not exist on type 'Variable'.
+  - TS2349（L178, C49）：[syntax_check] This expression is not callable.
+  - TS2349（L180, C44）：[syntax_check] This expression is not callable.
+  - TS2304（L185, C28）：[syntax_check] Cannot find name 'AbstractTerm'.
+  - TS2339（L198, C58）：[syntax_check] Property 'name' does not exist on type 'Variable'.
+  - TS2339（L198, C109）：[syntax_check] Property 'name' does not exist on type 'Variable'.
+  - TS2304（L227, C35）：[syntax_check] Cannot find name 'VAR_QUERY'.
+  - TS2304（L231, C35）：[syntax_check] Cannot find name 'VAR_DEPENDENT'.
+  - TS2304（L235, C35）：[syntax_check] Cannot find name 'VAR_INDEPENDENT'.
+  - TS2349（L239, C56）：[syntax_check] This expression is not callable.
+  - TS2367（L241, C16）：[syntax_check] This comparison appears to be unintentional because the types 'number | null' and 'string' have no overlap.
+  - TS2304（L244, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L251, C22）：[syntax_check] Cannot find name 'Texts'.
+  - TS2339（L251, C40）：[syntax_check] Property 'name' does not exist on type 'Variable'.
+  - TS2339（L251, C50）：[syntax_check] Property 'name' does not exist on type 'Variable'.
+  - TS2339（L258, C48）：[syntax_check] Property 'identityHashCode' does not exist on type 'typeof System'.
+  - TS2339（L259, C48）：[syntax_check] Property 'identityHashCode' does not exist on type 'typeof System'.
+  - TS2304（L266, C24）：[syntax_check] Cannot find name 'Texts'.
+  - TS2304（L274, C23）：[syntax_check] Cannot find name 'VAR_QUERY'.
+  - TS2304（L274, C44）：[syntax_check] Cannot find name 'VAR_DEPENDENT'.
+  - TS2304（L274, C69）：[syntax_check] Cannot find name 'VAR_INDEPENDENT'.
+  - TS2304（L288, C18）：[syntax_check] Cannot find name 'VAR_INDEPENDENT'.
+  - TS2304（L291, C18）：[syntax_check] Cannot find name 'VAR_DEPENDENT'.
+  - TS2304（L294, C18）：[syntax_check] Cannot find name 'VAR_QUERY'.
+  - TS2339（L315, C43）：[syntax_check] Property 'forDigit' does not exist on type 'typeof Character'.
+  - TS2304（L321, C52）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L321, C93）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L323, C47）：[syntax_check] Cannot find name 'Term'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +124,48 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Term'.` @ L11
+- `[full_check] Cannot find name 'Term'.` @ L15
+- `[full_check] Cannot find name 'Term'.` @ L26
+- `[full_check] Cannot find name 'Term'.` @ L40
+- `[full_check] Cannot find name 'Term'.` @ L57
+- `[full_check] Cannot find name 'AbstractTerm'.` @ L185
+- `[full_check] Cannot find name 'VAR_QUERY'.` @ L227
+- `[full_check] Cannot find name 'VAR_DEPENDENT'.` @ L231
+- `[full_check] Cannot find name 'VAR_INDEPENDENT'.` @ L235
+- `[full_check] Cannot find name 'Term'.` @ L244
+- `[full_check] Cannot find name 'Texts'.` @ L251
+- `[full_check] Cannot find name 'Texts'.` @ L266
+- `[full_check] Cannot find name 'VAR_QUERY'.` @ L274
+- `[full_check] Cannot find name 'VAR_DEPENDENT'.` @ L274
+- `[full_check] Cannot find name 'VAR_INDEPENDENT'.` @ L274
+- `[full_check] Cannot find name 'VAR_INDEPENDENT'.` @ L288
+- `[full_check] Cannot find name 'VAR_DEPENDENT'.` @ L291
+- `[full_check] Cannot find name 'VAR_QUERY'.` @ L294
+- `[full_check] Cannot find name 'Term'.` @ L321
+- `[full_check] Cannot find name 'Term'.` @ L321
+- `[full_check] Cannot find name 'Term'.` @ L323
+- `[syntax_check] Cannot find name 'Term'.` @ L11
+- `[syntax_check] Cannot find name 'Term'.` @ L15
+- `[syntax_check] Cannot find name 'Term'.` @ L26
+- `[syntax_check] Cannot find name 'Term'.` @ L40
+- `[syntax_check] Cannot find name 'Term'.` @ L57
+- `[syntax_check] Cannot find name 'AbstractTerm'.` @ L185
+- `[syntax_check] Cannot find name 'VAR_QUERY'.` @ L227
+- `[syntax_check] Cannot find name 'VAR_DEPENDENT'.` @ L231
+- `[syntax_check] Cannot find name 'VAR_INDEPENDENT'.` @ L235
+- `[syntax_check] Cannot find name 'Term'.` @ L244
+- `[syntax_check] Cannot find name 'Texts'.` @ L251
+- `[syntax_check] Cannot find name 'Texts'.` @ L266
+- `[syntax_check] Cannot find name 'VAR_QUERY'.` @ L274
+- `[syntax_check] Cannot find name 'VAR_DEPENDENT'.` @ L274
+- `[syntax_check] Cannot find name 'VAR_INDEPENDENT'.` @ L274
+- `[syntax_check] Cannot find name 'VAR_INDEPENDENT'.` @ L288
+- `[syntax_check] Cannot find name 'VAR_DEPENDENT'.` @ L291
+- `[syntax_check] Cannot find name 'VAR_QUERY'.` @ L294
+- `[syntax_check] Cannot find name 'Term'.` @ L321
+- `[syntax_check] Cannot find name 'Term'.` @ L321
+- `[syntax_check] Cannot find name 'Term'.` @ L323
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -58,6 +192,7 @@
 ## 6. 一致性风险
 
 - 文件内仍保留 1 处 TODO，需对照 Java 填补。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

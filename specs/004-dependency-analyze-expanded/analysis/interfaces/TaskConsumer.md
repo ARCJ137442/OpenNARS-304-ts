@@ -14,8 +14,11 @@
 
 - 执行的命令：`npx tsc src/interfaces/TaskConsumer.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L20, C20）：[full_check] Cannot find name 'Task'.
+  - TS2304（L20, C32）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L20, C20）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L20, C32）：[syntax_check] Cannot find name 'Timable'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +34,10 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Task'.` @ L20
+- `[full_check] Cannot find name 'Timable'.` @ L20
+- `[syntax_check] Cannot find name 'Task'.` @ L20
+- `[syntax_check] Cannot find name 'Timable'.` @ L20
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -55,6 +61,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

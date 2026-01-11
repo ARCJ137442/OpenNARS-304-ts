@@ -14,8 +14,421 @@
 
 - 执行的命令：`npx tsc src/main/Nar.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L22, C26）：[full_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L22, C52）：[full_check] Cannot find name 'Reasoner'.
+  - TS2314（L23, C27）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2693（L23, C44）：[full_check] 'Parameters' only refers to a type, but is being used as a value here.
+  - TS2300（L28, C13）：[full_check] Duplicate identifier 'cycle'.
+  - TS2322（L33, C28）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L38, C28）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L43, C28）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L48, C13）：[full_check] Type 'null' is not assignable to type 'java.lang.Thread[]'.
+  - TS2694（L48, C32）：[full_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'Thread'.
+  - TS2304（L49, C46）：[full_check] Cannot find name 'Term'.
+  - TS2304（L49, C52）：[full_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L51, C63）：[full_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L53, C42）：[full_check] Cannot find name 'Narsese'.
+  - TS2304（L55, C31）：[full_check] Cannot find name 'Parser'.
+  - TS2339（L56, C34）：[full_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2339（L56, C55）：[full_check] Property 'class' does not exist on type 'typeof Nar'.
+  - TS2339（L56, C93）：[full_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2345（L57, C93）：[full_check] Argument of type 'unknown' is not assignable to parameter of type 'Throwable | null'.
+  - TS2724（L66, C29）：[full_check] '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index"' has no exported member named 'ObjectOutputStream'. Did you mean 'OutputStream'?
+  - TS2551（L66, C62）：[full_check] Property 'ObjectOutputStream' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'. Did you mean 'OutputStream'?
+  - TS2694（L73, C29）：[full_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index"' has no exported member 'ObjectInputStream'.
+  - TS2339（L73, C61）：[full_check] Property 'ObjectInputStream' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2304（L75, C32）：[full_check] Cannot find name 'EventEmitter'.
+  - TS2322（L76, C9）：[full_check] Type 'ArrayList<unknown>' is not assignable to type 'List<PluginState>'.
+  - TS2304（L78, C52）：[full_check] Cannot find name 'ConfigReader'.
+  - TS2564（L87, C15）：[full_check] Property 'minCyclePeriodMS' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L92, C15）：[full_check] Property 'name' has no initializer and is not definitely assigned in the constructor.
+  - TS2304（L96, C29）：[full_check] Cannot find name 'Memory'.
+  - TS2564（L100, C29）：[full_check] Property 'plugin' has no initializer and is not definitely assigned in the constructor.
+  - TS2349（L112, C25）：[full_check] This expression is not callable.
+  - TS17009（L112, C25）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2339（L141, C29）：[full_check] Property 'setEnabled' does not exist on type 'Plugin'.
+  - TS2339（L141, C44）：[full_check] Property 'this' does not exist on type 'typeof Nar'.
+  - TS2304（L143, C29）：[full_check] Cannot find name 'Events'.
+  - TS2345（L143, C57）：[full_check] Argument of type 'Plugin' is not assignable to parameter of type 'JavaObject'.
+  - TS2322（L153, C15）：[full_check] Type 'ArrayList<unknown>' is not assignable to type 'List<PluginState>'.
+  - TS2564（L159, C13）：[full_check] Property 'threadYield' has no initializer and is not definitely assigned in the constructor.
+  - TS2322（L161, C28）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2349（L221, C17）：[full_check] This expression is not callable.
+  - TS17009（L221, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2349（L231, C17）：[full_check] This expression is not callable.
+  - TS17009（L231, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2349（L241, C17）：[full_check] This expression is not callable.
+  - TS17009（L241, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2339（L241, C32）：[full_check] Property 'UUID' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+  - TS2349（L251, C17）：[full_check] This expression is not callable.
+  - TS17009（L251, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L262, C60）：[full_check] Cannot find name 'ConfigReader'.
+  - TS2304（L264, C24）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L264, C37）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L265, C25）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L266, C25）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L267, C25）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L268, C25）：[full_check] Cannot find name 'Bag'.
+  - TS2349（L284, C17）：[full_check] This expression is not callable.
+  - TS17009（L284, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2339（L284, C32）：[full_check] Property 'UUID' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+  - TS2304（L295, C60）：[full_check] Cannot find name 'ConfigReader'.
+  - TS2304（L298, C24）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L298, C37）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L299, C25）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L300, C25）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L301, C25）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L302, C25）：[full_check] Cannot find name 'Bag'.
+  - TS2322（L322, C12）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L328, C9）：[full_check] Type 'bigint' is not assignable to type 'Long'.
+  - TS2352（L328, C22）：[full_check] Conversion of type 'number' to type 'bigint' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2349（L343, C22）：[full_check] This expression is not callable.
+  - TS2345（L351, C29）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L351, C54）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L355, C34）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2694（L357, C34）：[full_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'Double'.
+  - TS2339（L357, C53）：[full_check] Property 'Double' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2345（L361, C34）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L366, C34）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L371, C34）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L384, C34）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L386, C17）：[full_check] Type 'JavaString | ""' is not assignable to type 'JavaString'.
+  - TS2345（L388, C37）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L390, C17）：[full_check] Type 'Long' is not assignable to type 'bigint'.
+  - TS2367（L395, C22）：[full_check] This comparison appears to be unintentional because the types 'bigint' and 'number' have no overlap.
+  - TS2345（L402, C34）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L404, C13）：[full_check] Type 'Integer' is not assignable to type 'bigint'.
+  - TS2304（L408, C18）：[full_check] Cannot find name 'StringUtils'.
+  - TS2322（L409, C17）：[full_check] Type 'number' is not assignable to type 'Integer'.
+  - TS2304（L413, C23）：[full_check] Cannot find name 'CyclesStart'.
+  - TS2365（L414, C34）：[full_check] Operator '<' cannot be applied to types 'number' and 'Integer'.
+  - TS2349（L415, C22）：[full_check] This expression is not callable.
+  - TS2304（L417, C23）：[full_check] Cannot find name 'CyclesEnd'.
+  - TS2304（L427, C24）：[full_check] Cannot find name 'Task'.
+  - TS2304（L427, C36）：[full_check] Cannot find name 'Timable'.
+  - TS2588（L434, C17）：[full_check] Cannot assign to 'text' because it is a constant.
+  - TS2304（L435, C30）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L435, C43）：[full_check] Cannot find name 'Narsese'.
+  - TS2339（L436, C26）：[full_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2345（L440, C37）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L440, C62）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2304（L442, C35）：[full_check] Cannot find name 'org'.
+  - TS2304（L457, C27）：[full_check] Cannot find name 'Task'.
+  - TS2304（L461, C38）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L462, C29）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L463, C39）：[full_check] Cannot find name 'ERR'.
+  - TS2345（L463, C50）：[full_check] Argument of type 'unknown' is not assignable to parameter of type 'JavaObject'.
+  - TS2304（L465, C30）：[full_check] Cannot find name 'Debug'.
+  - TS2345（L466, C97）：[full_check] Argument of type 'unknown' is not assignable to parameter of type 'Throwable | null'.
+  - TS2304（L486, C44）：[full_check] Cannot find name 'Task'.
+  - TS2304（L486, C50）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L509, C44）：[full_check] Cannot find name 'Task'.
+  - TS2304（L510, C16）：[full_check] Cannot find name 'Term'.
+  - TS2304（L512, C28）：[full_check] Cannot find name 'Term'.
+  - TS2304（L513, C30）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L514, C35）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L516, C29）：[full_check] Cannot find name 'SetInt'.
+  - TS2304（L516, C45）：[full_check] Cannot find name 'Term'.
+  - TS2304（L522, C80）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L523, C28）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L523, C65）：[full_check] Cannot find name 'SetExt'.
+  - TS2304（L524, C31）：[full_check] Cannot find name 'SetExt'.
+  - TS2304（L524, C46）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L524, C75）：[full_check] Cannot find name 'SetExt'.
+  - TS2339（L529, C56）：[full_check] Property 'Double' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L530, C55）：[full_check] Property 'Double' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2352（L531, C41）：[full_check] Conversion of type 'bigint' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2352（L533, C41）：[full_check] Conversion of type 'bigint' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2322（L535, C29）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L536, C29）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L560, C29）：[full_check] Type 'JavaString | null' is not assignable to type 'JavaString'.
+  - TS2339（L563, C38）：[full_check] Property 'matches' does not exist on type 'JavaString'.
+  - TS2345（L565, C54）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2769（L568, C76）：[full_check] No overload matches this call.
+  - TS2322（L573, C37）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L575, C37）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2339（L596, C34）：[full_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2339（L596, C55）：[full_check] Property 'class' does not exist on type 'typeof Nar'.
+  - TS2339（L596, C93）：[full_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2304（L605, C48）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L606, C40）：[full_check] Cannot find name 'Narsese'.
+  - TS2304（L609, C56）：[full_check] Cannot find name 'AnswerHandler'.
+  - TS2304（L610, C33）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L610, C48）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L611, C17）：[full_check] Cannot find name 'Narsese'.
+  - TS2304（L612, C13）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L614, C17）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L614, C42）：[full_check] Cannot find name 'Tense'.
+  - TS2304（L615, C21）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L615, C39）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L619, C16）：[full_check] Cannot find name 'Task'.
+  - TS2304（L619, C27）：[full_check] Cannot find name 'Task'.
+  - TS2304（L619, C60）：[full_check] Cannot find name 'Task'.
+  - TS2304（L630, C59）：[full_check] Cannot find name 'AnswerHandler'.
+  - TS2304（L631, C33）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L631, C48）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L632, C17）：[full_check] Cannot find name 'Narsese'.
+  - TS2304（L633, C13）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L635, C17）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L635, C42）：[full_check] Cannot find name 'Tense'.
+  - TS2304（L636, C31）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L636, C49）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L640, C16）：[full_check] Cannot find name 'Task'.
+  - TS2304（L640, C27）：[full_check] Cannot find name 'Task'.
+  - TS2304（L640, C70）：[full_check] Cannot find name 'Task'.
+  - TS2304（L652, C47）：[full_check] Cannot find name 'EventObserver'.
+  - TS2304（L657, C48）：[full_check] Cannot find name 'EventObserver'.
+  - TS2304（L662, C21）：[full_check] Cannot find name 'EventObserver'.
+  - TS2304（L667, C26）：[full_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L668, C42）：[full_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L668, C74）：[full_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L669, C33）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L670, C42）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L671, C33）：[full_check] Cannot find name 'Emotions'.
+  - TS2304（L672, C40）：[full_check] Cannot find name 'Emotions'.
+  - TS2304（L673, C33）：[full_check] Cannot find name 'InternalExperience'.
+  - TS2304（L674, C51）：[full_check] Cannot find name 'InternalExperience'.
+  - TS2663（L676, C39）：[full_check] Cannot find name 'PluginState'. Did you mean the instance member 'this.PluginState'?
+  - TS2304（L678, C19）：[full_check] Cannot find name 'Events'.
+  - TS2345（L678, C47）：[full_check] Argument of type 'Plugin' is not assignable to parameter of type 'JavaObject'.
+  - TS2304（L684, C30）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L685, C49）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L687, C30）：[full_check] Cannot find name 'SensoryChannel'.
+  - TS2352（L688, C45）：[full_check] Conversion of type 'Plugin' to type 'JavaObject' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2304（L692, C23）：[full_check] Cannot find name 'Events'.
+  - TS2345（L692, C51）：[full_check] Argument of type 'null' is not assignable to parameter of type 'JavaObject'.
+  - TS2694（L720, C56）：[full_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'Thread'.
+  - TS2339（L722, C57）：[full_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2322（L747, C13）：[full_check] Type 'null' is not assignable to type 'java.lang.Thread[]'.
+  - TS2304（L756, C19）：[full_check] Cannot find name 'CyclesStart'.
+  - TS2349（L761, C18）：[full_check] This expression is not callable.
+  - TS2304（L764, C19）：[full_check] Cannot find name 'CyclesEnd'.
+  - TS2304（L775, C23）：[full_check] Cannot find name 'CyclesStart'.
+  - TS2349（L776, C18）：[full_check] This expression is not callable.
+  - TS2304（L777, C23）：[full_check] Cannot find name 'CyclesEnd'.
+  - TS2339（L781, C31）：[full_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L783, C48）：[full_check] Property 'InterruptedException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L789, C27）：[full_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2300（L801, C12）：[full_check] Duplicate identifier 'cycle'.
+  - TS2356（L808, C13）：[full_check] An arithmetic operand must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2304（L812, C21）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L813, C31）：[full_check] Cannot find name 'ERR'.
+  - TS2304（L816, C22）：[full_check] Cannot find name 'Debug'.
+  - TS2416（L825, C12）：[full_check] Property 'toString' in type 'Nar' is not assignable to the same property in base type 'Runnable'.
+  - TS2322（L831, C13）：[full_check] Type 'Long' is not assignable to type 'bigint'.
+  - TS2314（L860, C51）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2694（L866, C48）：[full_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'reflect'.
+  - TS2693（L866, C64）：[full_check] 'Parameters' only refers to a type, but is being used as a value here.
+  - TS2339（L869, C44）：[full_check] Property 'NoSuchFieldException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2551（L871, C51）：[full_check] Property 'IllegalAccessException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'. Did you mean 'IllegalStateException'?
+  - TS2304（L22, C26）：[syntax_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L22, C52）：[syntax_check] Cannot find name 'Reasoner'.
+  - TS2314（L23, C27）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2693（L23, C44）：[syntax_check] 'Parameters' only refers to a type, but is being used as a value here.
+  - TS2300（L28, C13）：[syntax_check] Duplicate identifier 'cycle'.
+  - TS2322（L33, C28）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L38, C28）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L43, C28）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L48, C13）：[syntax_check] Type 'null' is not assignable to type 'java.lang.Thread[]'.
+  - TS2694（L48, C32）：[syntax_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'Thread'.
+  - TS2304（L49, C46）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L49, C52）：[syntax_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L51, C63）：[syntax_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L53, C42）：[syntax_check] Cannot find name 'Narsese'.
+  - TS2304（L55, C31）：[syntax_check] Cannot find name 'Parser'.
+  - TS2339（L56, C34）：[syntax_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2339（L56, C55）：[syntax_check] Property 'class' does not exist on type 'typeof Nar'.
+  - TS2339（L56, C93）：[syntax_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2345（L57, C93）：[syntax_check] Argument of type 'unknown' is not assignable to parameter of type 'Throwable | null'.
+  - TS2724（L66, C29）：[syntax_check] '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index"' has no exported member named 'ObjectOutputStream'. Did you mean 'OutputStream'?
+  - TS2551（L66, C62）：[syntax_check] Property 'ObjectOutputStream' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'. Did you mean 'OutputStream'?
+  - TS2694（L73, C29）：[syntax_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index"' has no exported member 'ObjectInputStream'.
+  - TS2339（L73, C61）：[syntax_check] Property 'ObjectInputStream' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2304（L75, C32）：[syntax_check] Cannot find name 'EventEmitter'.
+  - TS2322（L76, C9）：[syntax_check] Type 'ArrayList<unknown>' is not assignable to type 'List<PluginState>'.
+  - TS2304（L78, C52）：[syntax_check] Cannot find name 'ConfigReader'.
+  - TS2564（L87, C15）：[syntax_check] Property 'minCyclePeriodMS' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L92, C15）：[syntax_check] Property 'name' has no initializer and is not definitely assigned in the constructor.
+  - TS2304（L96, C29）：[syntax_check] Cannot find name 'Memory'.
+  - TS2564（L100, C29）：[syntax_check] Property 'plugin' has no initializer and is not definitely assigned in the constructor.
+  - TS2349（L112, C25）：[syntax_check] This expression is not callable.
+  - TS17009（L112, C25）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2339（L141, C29）：[syntax_check] Property 'setEnabled' does not exist on type 'Plugin'.
+  - TS2339（L141, C44）：[syntax_check] Property 'this' does not exist on type 'typeof Nar'.
+  - TS2304（L143, C29）：[syntax_check] Cannot find name 'Events'.
+  - TS2345（L143, C57）：[syntax_check] Argument of type 'Plugin' is not assignable to parameter of type 'JavaObject'.
+  - TS2322（L153, C15）：[syntax_check] Type 'ArrayList<unknown>' is not assignable to type 'List<PluginState>'.
+  - TS2564（L159, C13）：[syntax_check] Property 'threadYield' has no initializer and is not definitely assigned in the constructor.
+  - TS2322（L161, C28）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2349（L221, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L221, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2349（L231, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L231, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2349（L241, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L241, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2339（L241, C32）：[syntax_check] Property 'UUID' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+  - TS2349（L251, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L251, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L262, C60）：[syntax_check] Cannot find name 'ConfigReader'.
+  - TS2304（L264, C24）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L264, C37）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L265, C25）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L266, C25）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L267, C25）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L268, C25）：[syntax_check] Cannot find name 'Bag'.
+  - TS2349（L284, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L284, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2339（L284, C32）：[syntax_check] Property 'UUID' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+  - TS2304（L295, C60）：[syntax_check] Cannot find name 'ConfigReader'.
+  - TS2304（L298, C24）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L298, C37）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L299, C25）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L300, C25）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L301, C25）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L302, C25）：[syntax_check] Cannot find name 'Bag'.
+  - TS2322（L322, C12）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L328, C9）：[syntax_check] Type 'bigint' is not assignable to type 'Long'.
+  - TS2352（L328, C22）：[syntax_check] Conversion of type 'number' to type 'bigint' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2349（L343, C22）：[syntax_check] This expression is not callable.
+  - TS2345（L351, C29）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L351, C54）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L355, C34）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2694（L357, C34）：[syntax_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'Double'.
+  - TS2339（L357, C53）：[syntax_check] Property 'Double' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2345（L361, C34）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L366, C34）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L371, C34）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L384, C34）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L386, C17）：[syntax_check] Type 'JavaString | ""' is not assignable to type 'JavaString'.
+  - TS2345（L388, C37）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L390, C17）：[syntax_check] Type 'Long' is not assignable to type 'bigint'.
+  - TS2367（L395, C22）：[syntax_check] This comparison appears to be unintentional because the types 'bigint' and 'number' have no overlap.
+  - TS2345（L402, C34）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L404, C13）：[syntax_check] Type 'Integer' is not assignable to type 'bigint'.
+  - TS2304（L408, C18）：[syntax_check] Cannot find name 'StringUtils'.
+  - TS2322（L409, C17）：[syntax_check] Type 'number' is not assignable to type 'Integer'.
+  - TS2304（L413, C23）：[syntax_check] Cannot find name 'CyclesStart'.
+  - TS2365（L414, C34）：[syntax_check] Operator '<' cannot be applied to types 'number' and 'Integer'.
+  - TS2349（L415, C22）：[syntax_check] This expression is not callable.
+  - TS2304（L417, C23）：[syntax_check] Cannot find name 'CyclesEnd'.
+  - TS2304（L427, C24）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L427, C36）：[syntax_check] Cannot find name 'Timable'.
+  - TS2588（L434, C17）：[syntax_check] Cannot assign to 'text' because it is a constant.
+  - TS2304（L435, C30）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L435, C43）：[syntax_check] Cannot find name 'Narsese'.
+  - TS2339（L436, C26）：[syntax_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2345（L440, C37）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L440, C62）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2304（L442, C35）：[syntax_check] Cannot find name 'org'.
+  - TS2304（L457, C27）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L461, C38）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L462, C29）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L463, C39）：[syntax_check] Cannot find name 'ERR'.
+  - TS2345（L463, C50）：[syntax_check] Argument of type 'unknown' is not assignable to parameter of type 'JavaObject'.
+  - TS2304（L465, C30）：[syntax_check] Cannot find name 'Debug'.
+  - TS2345（L466, C97）：[syntax_check] Argument of type 'unknown' is not assignable to parameter of type 'Throwable | null'.
+  - TS2304（L486, C44）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L486, C50）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L509, C44）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L510, C16）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L512, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L513, C30）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L514, C35）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L516, C29）：[syntax_check] Cannot find name 'SetInt'.
+  - TS2304（L516, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L522, C80）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L523, C28）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L523, C65）：[syntax_check] Cannot find name 'SetExt'.
+  - TS2304（L524, C31）：[syntax_check] Cannot find name 'SetExt'.
+  - TS2304（L524, C46）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L524, C75）：[syntax_check] Cannot find name 'SetExt'.
+  - TS2339（L529, C56）：[syntax_check] Property 'Double' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L530, C55）：[syntax_check] Property 'Double' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2352（L531, C41）：[syntax_check] Conversion of type 'bigint' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2352（L533, C41）：[syntax_check] Conversion of type 'bigint' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2322（L535, C29）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L536, C29）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L560, C29）：[syntax_check] Type 'JavaString | null' is not assignable to type 'JavaString'.
+  - TS2339（L563, C38）：[syntax_check] Property 'matches' does not exist on type 'JavaString'.
+  - TS2345（L565, C54）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2769（L568, C76）：[syntax_check] No overload matches this call.
+  - TS2322（L573, C37）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L575, C37）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2339（L596, C34）：[syntax_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2339（L596, C55）：[syntax_check] Property 'class' does not exist on type 'typeof Nar'.
+  - TS2339（L596, C93）：[syntax_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2304（L605, C48）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L606, C40）：[syntax_check] Cannot find name 'Narsese'.
+  - TS2304（L609, C56）：[syntax_check] Cannot find name 'AnswerHandler'.
+  - TS2304（L610, C33）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L610, C48）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L611, C17）：[syntax_check] Cannot find name 'Narsese'.
+  - TS2304（L612, C13）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L614, C17）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L614, C42）：[syntax_check] Cannot find name 'Tense'.
+  - TS2304（L615, C21）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L615, C39）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L619, C16）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L619, C27）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L619, C60）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L630, C59）：[syntax_check] Cannot find name 'AnswerHandler'.
+  - TS2304（L631, C33）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L631, C48）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L632, C17）：[syntax_check] Cannot find name 'Narsese'.
+  - TS2304（L633, C13）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L635, C17）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L635, C42）：[syntax_check] Cannot find name 'Tense'.
+  - TS2304（L636, C31）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L636, C49）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L640, C16）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L640, C27）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L640, C70）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L652, C47）：[syntax_check] Cannot find name 'EventObserver'.
+  - TS2304（L657, C48）：[syntax_check] Cannot find name 'EventObserver'.
+  - TS2304（L662, C21）：[syntax_check] Cannot find name 'EventObserver'.
+  - TS2304（L667, C26）：[syntax_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L668, C42）：[syntax_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L668, C74）：[syntax_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L669, C33）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L670, C42）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L671, C33）：[syntax_check] Cannot find name 'Emotions'.
+  - TS2304（L672, C40）：[syntax_check] Cannot find name 'Emotions'.
+  - TS2304（L673, C33）：[syntax_check] Cannot find name 'InternalExperience'.
+  - TS2304（L674, C51）：[syntax_check] Cannot find name 'InternalExperience'.
+  - TS2663（L676, C39）：[syntax_check] Cannot find name 'PluginState'. Did you mean the instance member 'this.PluginState'?
+  - TS2304（L678, C19）：[syntax_check] Cannot find name 'Events'.
+  - TS2345（L678, C47）：[syntax_check] Argument of type 'Plugin' is not assignable to parameter of type 'JavaObject'.
+  - TS2304（L684, C30）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L685, C49）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L687, C30）：[syntax_check] Cannot find name 'SensoryChannel'.
+  - TS2352（L688, C45）：[syntax_check] Conversion of type 'Plugin' to type 'JavaObject' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2304（L692, C23）：[syntax_check] Cannot find name 'Events'.
+  - TS2345（L692, C51）：[syntax_check] Argument of type 'null' is not assignable to parameter of type 'JavaObject'.
+  - TS2694（L720, C56）：[syntax_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'Thread'.
+  - TS2339（L722, C57）：[syntax_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2322（L747, C13）：[syntax_check] Type 'null' is not assignable to type 'java.lang.Thread[]'.
+  - TS2304（L756, C19）：[syntax_check] Cannot find name 'CyclesStart'.
+  - TS2349（L761, C18）：[syntax_check] This expression is not callable.
+  - TS2304（L764, C19）：[syntax_check] Cannot find name 'CyclesEnd'.
+  - TS2304（L775, C23）：[syntax_check] Cannot find name 'CyclesStart'.
+  - TS2349（L776, C18）：[syntax_check] This expression is not callable.
+  - TS2304（L777, C23）：[syntax_check] Cannot find name 'CyclesEnd'.
+  - TS2339（L781, C31）：[syntax_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L783, C48）：[syntax_check] Property 'InterruptedException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L789, C27）：[syntax_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2300（L801, C12）：[syntax_check] Duplicate identifier 'cycle'.
+  - TS2356（L808, C13）：[syntax_check] An arithmetic operand must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2304（L812, C21）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L813, C31）：[syntax_check] Cannot find name 'ERR'.
+  - TS2304（L816, C22）：[syntax_check] Cannot find name 'Debug'.
+  - TS2416（L825, C12）：[syntax_check] Property 'toString' in type 'Nar' is not assignable to the same property in base type 'Runnable'.
+  - TS2322（L831, C13）：[syntax_check] Type 'Long' is not assignable to type 'bigint'.
+  - TS2314（L860, C51）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2694（L866, C48）：[syntax_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'reflect'.
+  - TS2693（L866, C64）：[syntax_check] 'Parameters' only refers to a type, but is being used as a value here.
+  - TS2339（L869, C44）：[syntax_check] Property 'NoSuchFieldException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2551（L871, C51）：[syntax_check] Property 'IllegalAccessException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'. Did you mean 'IllegalStateException'?
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +444,214 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'SensoryChannel'.` @ L22
+- `[full_check] Cannot find name 'Reasoner'.` @ L22
+- `[full_check] Cannot find name 'Term'.` @ L49
+- `[full_check] Cannot find name 'SensoryChannel'.` @ L49
+- `[full_check] Cannot find name 'SensoryChannel'.` @ L51
+- `[full_check] Cannot find name 'Narsese'.` @ L53
+- `[full_check] Cannot find name 'Parser'.` @ L55
+- `[full_check] Cannot find name 'EventEmitter'.` @ L75
+- `[full_check] Cannot find name 'ConfigReader'.` @ L78
+- `[full_check] Cannot find name 'Memory'.` @ L96
+- `[full_check] Cannot find name 'Events'.` @ L143
+- `[full_check] Cannot find name 'ConfigReader'.` @ L262
+- `[full_check] Cannot find name 'Memory'.` @ L264
+- `[full_check] Cannot find name 'Memory'.` @ L264
+- `[full_check] Cannot find name 'Bag'.` @ L265
+- `[full_check] Cannot find name 'Bag'.` @ L266
+- `[full_check] Cannot find name 'Bag'.` @ L267
+- `[full_check] Cannot find name 'Bag'.` @ L268
+- `[full_check] Cannot find name 'ConfigReader'.` @ L295
+- `[full_check] Cannot find name 'Memory'.` @ L298
+- `[full_check] Cannot find name 'Memory'.` @ L298
+- `[full_check] Cannot find name 'Bag'.` @ L299
+- `[full_check] Cannot find name 'Bag'.` @ L300
+- `[full_check] Cannot find name 'Bag'.` @ L301
+- `[full_check] Cannot find name 'Bag'.` @ L302
+- `[full_check] Cannot find name 'StringUtils'.` @ L408
+- `[full_check] Cannot find name 'CyclesStart'.` @ L413
+- `[full_check] Cannot find name 'CyclesEnd'.` @ L417
+- `[full_check] Cannot find name 'Task'.` @ L427
+- `[full_check] Cannot find name 'Timable'.` @ L427
+- `[full_check] Cannot find name 'Parser'.` @ L435
+- `[full_check] Cannot find name 'Narsese'.` @ L435
+- `[full_check] Cannot find name 'org'.` @ L442
+- `[full_check] Cannot find name 'Task'.` @ L457
+- `[full_check] Cannot find name 'Parser'.` @ L461
+- `[full_check] Cannot find name 'Debug'.` @ L462
+- `[full_check] Cannot find name 'ERR'.` @ L463
+- `[full_check] Cannot find name 'Debug'.` @ L465
+- `[full_check] Cannot find name 'Task'.` @ L486
+- `[full_check] Cannot find name 'Timable'.` @ L486
+- `[full_check] Cannot find name 'Task'.` @ L509
+- `[full_check] Cannot find name 'Term'.` @ L510
+- `[full_check] Cannot find name 'Term'.` @ L512
+- `[full_check] Cannot find name 'Inheritance'.` @ L513
+- `[full_check] Cannot find name 'Inheritance'.` @ L514
+- `[full_check] Cannot find name 'SetInt'.` @ L516
+- `[full_check] Cannot find name 'Term'.` @ L516
+- `[full_check] Cannot find name 'Inheritance'.` @ L522
+- `[full_check] Cannot find name 'Inheritance'.` @ L523
+- `[full_check] Cannot find name 'SetExt'.` @ L523
+- `[full_check] Cannot find name 'SetExt'.` @ L524
+- `[full_check] Cannot find name 'Inheritance'.` @ L524
+- `[full_check] Cannot find name 'SetExt'.` @ L524
+- `[full_check] Cannot find name 'Concept'.` @ L605
+- `[full_check] Cannot find name 'Narsese'.` @ L606
+- `[full_check] Cannot find name 'AnswerHandler'.` @ L609
+- `[full_check] Cannot find name 'Sentence'.` @ L610
+- `[full_check] Cannot find name 'Sentence'.` @ L610
+- `[full_check] Cannot find name 'Narsese'.` @ L611
+- `[full_check] Cannot find name 'Symbols'.` @ L612
+- `[full_check] Cannot find name 'Stamp'.` @ L614
+- `[full_check] Cannot find name 'Tense'.` @ L614
+- `[full_check] Cannot find name 'BudgetValue'.` @ L615
+- `[full_check] Cannot find name 'BudgetValue'.` @ L615
+- `[full_check] Cannot find name 'Task'.` @ L619
+- `[full_check] Cannot find name 'Task'.` @ L619
+- `[full_check] Cannot find name 'Task'.` @ L619
+- `[full_check] Cannot find name 'AnswerHandler'.` @ L630
+- `[full_check] Cannot find name 'Sentence'.` @ L631
+- `[full_check] Cannot find name 'Sentence'.` @ L631
+- `[full_check] Cannot find name 'Narsese'.` @ L632
+- `[full_check] Cannot find name 'Symbols'.` @ L633
+- `[full_check] Cannot find name 'Stamp'.` @ L635
+- `[full_check] Cannot find name 'Tense'.` @ L635
+- `[full_check] Cannot find name 'BudgetValue'.` @ L636
+- `[full_check] Cannot find name 'BudgetValue'.` @ L636
+- `[full_check] Cannot find name 'Task'.` @ L640
+- `[full_check] Cannot find name 'Task'.` @ L640
+- `[full_check] Cannot find name 'Task'.` @ L640
+- `[full_check] Cannot find name 'EventObserver'.` @ L652
+- `[full_check] Cannot find name 'EventObserver'.` @ L657
+- `[full_check] Cannot find name 'EventObserver'.` @ L662
+- `[full_check] Cannot find name 'SensoryChannel'.` @ L667
+- `[full_check] Cannot find name 'SensoryChannel'.` @ L668
+- `[full_check] Cannot find name 'SensoryChannel'.` @ L668
+- `[full_check] Cannot find name 'Operator'.` @ L669
+- `[full_check] Cannot find name 'Operator'.` @ L670
+- `[full_check] Cannot find name 'Emotions'.` @ L671
+- `[full_check] Cannot find name 'Emotions'.` @ L672
+- `[full_check] Cannot find name 'InternalExperience'.` @ L673
+- `[full_check] Cannot find name 'InternalExperience'.` @ L674
+- `[full_check] Cannot find name 'PluginState'. Did you mean the instance member 'this.PluginState'?` @ L676
+- `[full_check] Cannot find name 'Events'.` @ L678
+- `[full_check] Cannot find name 'Operator'.` @ L684
+- `[full_check] Cannot find name 'Operator'.` @ L685
+- `[full_check] Cannot find name 'SensoryChannel'.` @ L687
+- `[full_check] Cannot find name 'Events'.` @ L692
+- `[full_check] Cannot find name 'CyclesStart'.` @ L756
+- `[full_check] Cannot find name 'CyclesEnd'.` @ L764
+- `[full_check] Cannot find name 'CyclesStart'.` @ L775
+- `[full_check] Cannot find name 'CyclesEnd'.` @ L777
+- `[full_check] Cannot find name 'Debug'.` @ L812
+- `[full_check] Cannot find name 'ERR'.` @ L813
+- `[full_check] Cannot find name 'Debug'.` @ L816
+- `[syntax_check] Cannot find name 'SensoryChannel'.` @ L22
+- `[syntax_check] Cannot find name 'Reasoner'.` @ L22
+- `[syntax_check] Cannot find name 'Term'.` @ L49
+- `[syntax_check] Cannot find name 'SensoryChannel'.` @ L49
+- `[syntax_check] Cannot find name 'SensoryChannel'.` @ L51
+- `[syntax_check] Cannot find name 'Narsese'.` @ L53
+- `[syntax_check] Cannot find name 'Parser'.` @ L55
+- `[syntax_check] Cannot find name 'EventEmitter'.` @ L75
+- `[syntax_check] Cannot find name 'ConfigReader'.` @ L78
+- `[syntax_check] Cannot find name 'Memory'.` @ L96
+- `[syntax_check] Cannot find name 'Events'.` @ L143
+- `[syntax_check] Cannot find name 'ConfigReader'.` @ L262
+- `[syntax_check] Cannot find name 'Memory'.` @ L264
+- `[syntax_check] Cannot find name 'Memory'.` @ L264
+- `[syntax_check] Cannot find name 'Bag'.` @ L265
+- `[syntax_check] Cannot find name 'Bag'.` @ L266
+- `[syntax_check] Cannot find name 'Bag'.` @ L267
+- `[syntax_check] Cannot find name 'Bag'.` @ L268
+- `[syntax_check] Cannot find name 'ConfigReader'.` @ L295
+- `[syntax_check] Cannot find name 'Memory'.` @ L298
+- `[syntax_check] Cannot find name 'Memory'.` @ L298
+- `[syntax_check] Cannot find name 'Bag'.` @ L299
+- `[syntax_check] Cannot find name 'Bag'.` @ L300
+- `[syntax_check] Cannot find name 'Bag'.` @ L301
+- `[syntax_check] Cannot find name 'Bag'.` @ L302
+- `[syntax_check] Cannot find name 'StringUtils'.` @ L408
+- `[syntax_check] Cannot find name 'CyclesStart'.` @ L413
+- `[syntax_check] Cannot find name 'CyclesEnd'.` @ L417
+- `[syntax_check] Cannot find name 'Task'.` @ L427
+- `[syntax_check] Cannot find name 'Timable'.` @ L427
+- `[syntax_check] Cannot find name 'Parser'.` @ L435
+- `[syntax_check] Cannot find name 'Narsese'.` @ L435
+- `[syntax_check] Cannot find name 'org'.` @ L442
+- `[syntax_check] Cannot find name 'Task'.` @ L457
+- `[syntax_check] Cannot find name 'Parser'.` @ L461
+- `[syntax_check] Cannot find name 'Debug'.` @ L462
+- `[syntax_check] Cannot find name 'ERR'.` @ L463
+- `[syntax_check] Cannot find name 'Debug'.` @ L465
+- `[syntax_check] Cannot find name 'Task'.` @ L486
+- `[syntax_check] Cannot find name 'Timable'.` @ L486
+- `[syntax_check] Cannot find name 'Task'.` @ L509
+- `[syntax_check] Cannot find name 'Term'.` @ L510
+- `[syntax_check] Cannot find name 'Term'.` @ L512
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L513
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L514
+- `[syntax_check] Cannot find name 'SetInt'.` @ L516
+- `[syntax_check] Cannot find name 'Term'.` @ L516
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L522
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L523
+- `[syntax_check] Cannot find name 'SetExt'.` @ L523
+- `[syntax_check] Cannot find name 'SetExt'.` @ L524
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L524
+- `[syntax_check] Cannot find name 'SetExt'.` @ L524
+- `[syntax_check] Cannot find name 'Concept'.` @ L605
+- `[syntax_check] Cannot find name 'Narsese'.` @ L606
+- `[syntax_check] Cannot find name 'AnswerHandler'.` @ L609
+- `[syntax_check] Cannot find name 'Sentence'.` @ L610
+- `[syntax_check] Cannot find name 'Sentence'.` @ L610
+- `[syntax_check] Cannot find name 'Narsese'.` @ L611
+- `[syntax_check] Cannot find name 'Symbols'.` @ L612
+- `[syntax_check] Cannot find name 'Stamp'.` @ L614
+- `[syntax_check] Cannot find name 'Tense'.` @ L614
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L615
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L615
+- `[syntax_check] Cannot find name 'Task'.` @ L619
+- `[syntax_check] Cannot find name 'Task'.` @ L619
+- `[syntax_check] Cannot find name 'Task'.` @ L619
+- `[syntax_check] Cannot find name 'AnswerHandler'.` @ L630
+- `[syntax_check] Cannot find name 'Sentence'.` @ L631
+- `[syntax_check] Cannot find name 'Sentence'.` @ L631
+- `[syntax_check] Cannot find name 'Narsese'.` @ L632
+- `[syntax_check] Cannot find name 'Symbols'.` @ L633
+- `[syntax_check] Cannot find name 'Stamp'.` @ L635
+- `[syntax_check] Cannot find name 'Tense'.` @ L635
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L636
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L636
+- `[syntax_check] Cannot find name 'Task'.` @ L640
+- `[syntax_check] Cannot find name 'Task'.` @ L640
+- `[syntax_check] Cannot find name 'Task'.` @ L640
+- `[syntax_check] Cannot find name 'EventObserver'.` @ L652
+- `[syntax_check] Cannot find name 'EventObserver'.` @ L657
+- `[syntax_check] Cannot find name 'EventObserver'.` @ L662
+- `[syntax_check] Cannot find name 'SensoryChannel'.` @ L667
+- `[syntax_check] Cannot find name 'SensoryChannel'.` @ L668
+- `[syntax_check] Cannot find name 'SensoryChannel'.` @ L668
+- `[syntax_check] Cannot find name 'Operator'.` @ L669
+- `[syntax_check] Cannot find name 'Operator'.` @ L670
+- `[syntax_check] Cannot find name 'Emotions'.` @ L671
+- `[syntax_check] Cannot find name 'Emotions'.` @ L672
+- `[syntax_check] Cannot find name 'InternalExperience'.` @ L673
+- `[syntax_check] Cannot find name 'InternalExperience'.` @ L674
+- `[syntax_check] Cannot find name 'PluginState'. Did you mean the instance member 'this.PluginState'?` @ L676
+- `[syntax_check] Cannot find name 'Events'.` @ L678
+- `[syntax_check] Cannot find name 'Operator'.` @ L684
+- `[syntax_check] Cannot find name 'Operator'.` @ L685
+- `[syntax_check] Cannot find name 'SensoryChannel'.` @ L687
+- `[syntax_check] Cannot find name 'Events'.` @ L692
+- `[syntax_check] Cannot find name 'CyclesStart'.` @ L756
+- `[syntax_check] Cannot find name 'CyclesEnd'.` @ L764
+- `[syntax_check] Cannot find name 'CyclesStart'.` @ L775
+- `[syntax_check] Cannot find name 'CyclesEnd'.` @ L777
+- `[syntax_check] Cannot find name 'Debug'.` @ L812
+- `[syntax_check] Cannot find name 'ERR'.` @ L813
+- `[syntax_check] Cannot find name 'Debug'.` @ L816
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -86,6 +706,7 @@
 ## 6. 一致性风险
 
 - 文件内仍保留 2 处 TODO，需对照 Java 填补。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

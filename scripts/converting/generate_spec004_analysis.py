@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 import re
-from collections import Counter
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -25,6 +25,24 @@ DEPS_PATH = (
     / "java-dep-graph"
     / "deps.xml"
 )
+TSC_CHECKS = [
+    (
+        "full_check",
+        WORKSPACE
+        / "specs"
+        / "003-dependency-analyze-brief-plan"
+        / "tsc_checks"
+        / "full_check.txt",
+    ),
+    (
+        "syntax_check",
+        WORKSPACE
+        / "specs"
+        / "003-dependency-analyze-brief-plan"
+        / "tsc_checks"
+        / "syntax_check.txt",
+    ),
+]
 ANALYSIS_ROOT = WORKSPACE / "specs" / "004-dependency-analyze-expanded" / "analysis"
 
 MODULE_CHAIN = {
@@ -140,6 +158,33 @@ def parse_deps(path: Path) -> Dict[str, List[Tuple[str, int]]]:
             if match:
                 deps[current].append((match.group(1), idx))
     return deps
+
+
+def parse_tsc_logs(
+    sources: Sequence[Tuple[str, Path]]
+) -> Dict[str, List[Dict[str, object]]]:
+    pattern = re.compile(
+        r"^(src/(?P<path>[^\(]+))\((?P<line>\d+),(?P<col>\d+)\): error (?P<code>TS\d+): (?P<msg>.+)$"
+    )
+    result: Dict[str, List[Dict[str, object]]] = defaultdict(list)
+    for source_name, log_path in sources:
+        if not log_path.exists():
+            continue
+        for raw_line in log_path.read_text(encoding="utf-8").splitlines():
+            line = raw_line.strip()
+            match = pattern.match(line)
+            if not match:
+                continue
+            ts_path = match.group("path")
+            result[ts_path].append(
+                {
+                    "code": match.group("code"),
+                    "line": int(match.group("line")),
+                    "col": int(match.group("col")),
+                    "message": f"[{source_name}] {match.group('msg')}",
+                }
+            )
+    return result
 
 
 def normalize_dep(dep: str) -> str:
@@ -446,6 +491,9 @@ def main() -> None:
     ts_map = {entry["ts_path"]: entry for entry in ts_entries}
     progress_map = parse_progress(PROGRESS_PATH)
     java_deps_map = parse_deps(DEPS_PATH)
+    tsc_errors_map = parse_tsc_logs(TSC_CHECKS)
+    for ts_path, entry in ts_map.items():
+        entry["tsc_errors"] = tsc_errors_map.get(ts_path, [])
     ANALYSIS_ROOT.mkdir(parents=True, exist_ok=True)
 
     for ts_path in sorted(ts_map.keys()):

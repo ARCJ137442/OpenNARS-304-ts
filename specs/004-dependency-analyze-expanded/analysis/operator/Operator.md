@@ -14,8 +14,59 @@
 
 - 执行的命令：`npx tsc src/operator/Operator.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2420（L17, C23）：[full_check] Class 'Operator' incorrectly implements interface 'Plugin'.
+  - TS2345（L37, C38）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2448（L83, C44）：[full_check] Block-scoped variable 'args' used before its declaration.
+  - TS2339（L86, C25）：[full_check] Property 'isExecutable' does not exist on type 'Operation'.
+  - TS2304（L89, C27）：[full_check] Cannot find name 'Product'.
+  - TS2448（L97, C57）：[full_check] Block-scoped variable 'args' used before its declaration.
+  - TS2454（L97, C57）：[full_check] Variable 'args' is used before being assigned.
+  - TS2352（L97, C57）：[full_check] Conversion of type 'Term[]' to type '[Operation, Term[], Memory, Timable]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2322（L100, C21）：[full_check] Type 'null' is not assignable to type 'List<Task>'.
+  - TS2740（L102, C21）：[full_check] Type 'Task[]' is missing the following properties from type 'List<Task>': add, addAll, clear, contains, and 26 more.
+  - TS2304（L105, C29）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L106, C47）：[full_check] Cannot find name 'ERR'.
+  - TS2304（L108, C30）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L120, C62）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L144, C55）：[full_check] Cannot find name 'Statement'.
+  - TS1210（L146, C13）：[full_check] Code contained in a class is evaluated in JavaScript's strict mode which does not allow this use of 'arguments'. For more information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode.
+  - TS2322（L148, C9）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2339（L165, C35）：[full_check] Property 'getPredicate' does not exist on type 'Operation'.
+  - TS2304（L170, C29）：[full_check] Cannot find name 'EXE'.
+  - TS2322（L174, C17）：[full_check] Type 'string' is not assignable to type 'JavaObject'.
+  - TS2304（L176, C25）：[full_check] Cannot find name 'EXE'.
+  - TS2304（L195, C20）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2339（L197, C36）：[full_check] Property 'budget' does not exist on type 'Task'.
+  - TS2322（L202, C13）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2345（L210, C32）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L211, C13）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2420（L17, C23）：[syntax_check] Class 'Operator' incorrectly implements interface 'Plugin'.
+  - TS2345（L37, C38）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2448（L83, C44）：[syntax_check] Block-scoped variable 'args' used before its declaration.
+  - TS2339（L86, C25）：[syntax_check] Property 'isExecutable' does not exist on type 'Operation'.
+  - TS2304（L89, C27）：[syntax_check] Cannot find name 'Product'.
+  - TS2448（L97, C57）：[syntax_check] Block-scoped variable 'args' used before its declaration.
+  - TS2454（L97, C57）：[syntax_check] Variable 'args' is used before being assigned.
+  - TS2352（L97, C57）：[syntax_check] Conversion of type 'Term[]' to type '[Operation, Term[], Memory, Timable]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2322（L100, C21）：[syntax_check] Type 'null' is not assignable to type 'List<Task>'.
+  - TS2740（L102, C21）：[syntax_check] Type 'Task[]' is missing the following properties from type 'List<Task>': add, addAll, clear, contains, and 26 more.
+  - TS2304（L105, C29）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L106, C47）：[syntax_check] Cannot find name 'ERR'.
+  - TS2304（L108, C30）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L120, C62）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L144, C55）：[syntax_check] Cannot find name 'Statement'.
+  - TS1210（L146, C13）：[syntax_check] Code contained in a class is evaluated in JavaScript's strict mode which does not allow this use of 'arguments'. For more information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode.
+  - TS2322（L148, C9）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2339（L165, C35）：[syntax_check] Property 'getPredicate' does not exist on type 'Operation'.
+  - TS2304（L170, C29）：[syntax_check] Cannot find name 'EXE'.
+  - TS2322（L174, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaObject'.
+  - TS2304（L176, C25）：[syntax_check] Cannot find name 'EXE'.
+  - TS2304（L195, C20）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2339（L197, C36）：[syntax_check] Property 'budget' does not exist on type 'Task'.
+  - TS2322（L202, C13）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2345（L210, C32）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L211, C13）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -38,7 +89,24 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Product'.` @ L89
+- `[full_check] Cannot find name 'Debug'.` @ L105
+- `[full_check] Cannot find name 'ERR'.` @ L106
+- `[full_check] Cannot find name 'Debug'.` @ L108
+- `[full_check] Cannot find name 'TruthValue'.` @ L120
+- `[full_check] Cannot find name 'Statement'.` @ L144
+- `[full_check] Cannot find name 'EXE'.` @ L170
+- `[full_check] Cannot find name 'EXE'.` @ L176
+- `[full_check] Cannot find name 'BudgetValue'.` @ L195
+- `[syntax_check] Cannot find name 'Product'.` @ L89
+- `[syntax_check] Cannot find name 'Debug'.` @ L105
+- `[syntax_check] Cannot find name 'ERR'.` @ L106
+- `[syntax_check] Cannot find name 'Debug'.` @ L108
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L120
+- `[syntax_check] Cannot find name 'Statement'.` @ L144
+- `[syntax_check] Cannot find name 'EXE'.` @ L170
+- `[syntax_check] Cannot find name 'EXE'.` @ L176
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L195
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -77,7 +145,7 @@
 
 ## 6. 一致性风险
 
-- 主要风险来自尚未补齐的 Java 语义与单元测试缺失。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 
 ## 7. 路线图定位
 

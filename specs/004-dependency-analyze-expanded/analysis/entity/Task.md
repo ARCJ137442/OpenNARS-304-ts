@@ -14,7 +14,94 @@
 
 - 执行的命令：`npx tsc src/entity/Task.ts --noEmit`
 - 关键输出：
-  - TS1005（L222, C25）：';' expected.
+  - TS2304（L16, C27）：[full_check] Cannot find name 'Item'.
+  - TS2304（L16, C32）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L19, C31）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L21, C35）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L26, C24）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L28, C27）：[full_check] Cannot find name 'Sentence'.
+  - TS2300（L32, C13）：[full_check] Duplicate identifier 'isInput'.
+  - TS2304（L40, C27）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L40, C40）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L49, C27）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L49, C40）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L49, C67）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L59, C27）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L59, C40）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L59, C67）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L59, C87）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L63, C47）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L63, C57）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2349（L66, C17）：[full_check] This expression is not callable.
+  - TS17009（L66, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS17009（L67, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L74, C55）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L74, C65）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L74, C78）：[full_check] Cannot find name 'Sentence'.
+  - TS2349（L77, C17）：[full_check] This expression is not callable.
+  - TS17009（L77, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L84, C65）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L84, C75）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L84, C88）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L84, C98）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L103, C20）：[full_check] Cannot find name 'Sentence'.
+  - TS2367（L108, C13）：[full_check] This comparison appears to be unintentional because the types 'JavaObject' and 'this' have no overlap.
+  - TS2300（L135, C12）：[full_check] Duplicate identifier 'isInput'.
+  - TS2304（L140, C16）：[full_check] Cannot find name 'budget'.
+  - TS2304（L148, C24）：[full_check] Cannot find name 'Item'.
+  - TS2304（L148, C40）：[full_check] Cannot find name 'Item'.
+  - TS2304（L161, C31）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L171, C36）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L171, C54）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L171, C70）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L173, C13）：[full_check] Cannot find name 'InternalExperience'.
+  - TS2304（L183, C31）：[full_check] Cannot find name 'Sentence'.
+  - TS2349（L211, C52）：[full_check] This expression is not callable.
+  - TS2304（L214, C23）：[full_check] Cannot find name 'Term'.
+  - TS2304（L16, C27）：[syntax_check] Cannot find name 'Item'.
+  - TS2304（L16, C32）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L19, C31）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L21, C35）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L26, C24）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L28, C27）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2300（L32, C13）：[syntax_check] Duplicate identifier 'isInput'.
+  - TS2304（L40, C27）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L40, C40）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L49, C27）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L49, C40）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L49, C67）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L59, C27）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L59, C40）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L59, C67）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L59, C87）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L63, C47）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L63, C57）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2349（L66, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L66, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS17009（L67, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L74, C55）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L74, C65）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L74, C78）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2349（L77, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L77, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L84, C65）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L84, C75）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L84, C88）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L84, C98）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L103, C20）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2367（L108, C13）：[syntax_check] This comparison appears to be unintentional because the types 'JavaObject' and 'this' have no overlap.
+  - TS2300（L135, C12）：[syntax_check] Duplicate identifier 'isInput'.
+  - TS2304（L140, C16）：[syntax_check] Cannot find name 'budget'.
+  - TS2304（L148, C24）：[syntax_check] Cannot find name 'Item'.
+  - TS2304（L148, C40）：[syntax_check] Cannot find name 'Item'.
+  - TS2304（L161, C31）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L171, C36）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L171, C54）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L171, C70）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L173, C13）：[syntax_check] Cannot find name 'InternalExperience'.
+  - TS2304（L183, C31）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2349（L211, C52）：[syntax_check] This expression is not callable.
+  - TS2304（L214, C23）：[syntax_check] Cannot find name 'Term'.
 - 总结：存在语法错误，需要比对 Java 语句结构。；编译失败：TS1005 @ 222:25 ';' expected. ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
@@ -31,7 +118,76 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Item'.` @ L16
+- `[full_check] Cannot find name 'Sentence'.` @ L16
+- `[full_check] Cannot find name 'Sentence'.` @ L19
+- `[full_check] Cannot find name 'Sentence'.` @ L21
+- `[full_check] Cannot find name 'Sentence'.` @ L26
+- `[full_check] Cannot find name 'Sentence'.` @ L28
+- `[full_check] Cannot find name 'Sentence'.` @ L40
+- `[full_check] Cannot find name 'BudgetValue'.` @ L40
+- `[full_check] Cannot find name 'Sentence'.` @ L49
+- `[full_check] Cannot find name 'BudgetValue'.` @ L49
+- `[full_check] Cannot find name 'Sentence'.` @ L49
+- `[full_check] Cannot find name 'Sentence'.` @ L59
+- `[full_check] Cannot find name 'BudgetValue'.` @ L59
+- `[full_check] Cannot find name 'Sentence'.` @ L59
+- `[full_check] Cannot find name 'Sentence'.` @ L59
+- `[full_check] Cannot find name 'Sentence'.` @ L63
+- `[full_check] Cannot find name 'BudgetValue'.` @ L63
+- `[full_check] Cannot find name 'Sentence'.` @ L74
+- `[full_check] Cannot find name 'BudgetValue'.` @ L74
+- `[full_check] Cannot find name 'Sentence'.` @ L74
+- `[full_check] Cannot find name 'Sentence'.` @ L84
+- `[full_check] Cannot find name 'BudgetValue'.` @ L84
+- `[full_check] Cannot find name 'Sentence'.` @ L84
+- `[full_check] Cannot find name 'Sentence'.` @ L84
+- `[full_check] Cannot find name 'Sentence'.` @ L103
+- `[full_check] Cannot find name 'budget'.` @ L140
+- `[full_check] Cannot find name 'Item'.` @ L148
+- `[full_check] Cannot find name 'Item'.` @ L148
+- `[full_check] Cannot find name 'Sentence'.` @ L161
+- `[full_check] Cannot find name 'Memory'.` @ L171
+- `[full_check] Cannot find name 'Sentence'.` @ L171
+- `[full_check] Cannot find name 'Timable'.` @ L171
+- `[full_check] Cannot find name 'InternalExperience'.` @ L173
+- `[full_check] Cannot find name 'Sentence'.` @ L183
+- `[full_check] Cannot find name 'Term'.` @ L214
+- `[syntax_check] Cannot find name 'Item'.` @ L16
+- `[syntax_check] Cannot find name 'Sentence'.` @ L16
+- `[syntax_check] Cannot find name 'Sentence'.` @ L19
+- `[syntax_check] Cannot find name 'Sentence'.` @ L21
+- `[syntax_check] Cannot find name 'Sentence'.` @ L26
+- `[syntax_check] Cannot find name 'Sentence'.` @ L28
+- `[syntax_check] Cannot find name 'Sentence'.` @ L40
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L40
+- `[syntax_check] Cannot find name 'Sentence'.` @ L49
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L49
+- `[syntax_check] Cannot find name 'Sentence'.` @ L49
+- `[syntax_check] Cannot find name 'Sentence'.` @ L59
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L59
+- `[syntax_check] Cannot find name 'Sentence'.` @ L59
+- `[syntax_check] Cannot find name 'Sentence'.` @ L59
+- `[syntax_check] Cannot find name 'Sentence'.` @ L63
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L63
+- `[syntax_check] Cannot find name 'Sentence'.` @ L74
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L74
+- `[syntax_check] Cannot find name 'Sentence'.` @ L74
+- `[syntax_check] Cannot find name 'Sentence'.` @ L84
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L84
+- `[syntax_check] Cannot find name 'Sentence'.` @ L84
+- `[syntax_check] Cannot find name 'Sentence'.` @ L84
+- `[syntax_check] Cannot find name 'Sentence'.` @ L103
+- `[syntax_check] Cannot find name 'budget'.` @ L140
+- `[syntax_check] Cannot find name 'Item'.` @ L148
+- `[syntax_check] Cannot find name 'Item'.` @ L148
+- `[syntax_check] Cannot find name 'Sentence'.` @ L161
+- `[syntax_check] Cannot find name 'Memory'.` @ L171
+- `[syntax_check] Cannot find name 'Sentence'.` @ L171
+- `[syntax_check] Cannot find name 'Timable'.` @ L171
+- `[syntax_check] Cannot find name 'InternalExperience'.` @ L173
+- `[syntax_check] Cannot find name 'Sentence'.` @ L183
+- `[syntax_check] Cannot find name 'Term'.` @ L214
 
 ## 4. Java 依赖对照（`deps.xml`）
 

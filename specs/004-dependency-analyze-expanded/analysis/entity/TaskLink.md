@@ -14,8 +14,63 @@
 
 - 执行的命令：`npx tsc src/entity/TaskLink.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L16, C31）：[full_check] Cannot find name 'Item'.
+  - TS2304（L16, C36）：[full_check] Cannot find name 'Task'.
+  - TS2304（L16, C53）：[full_check] Cannot find name 'TLink'.
+  - TS2304（L16, C59）：[full_check] Cannot find name 'Task'.
+  - TS2304（L21, C33）：[full_check] Cannot find name 'Task'.
+  - TS2304（L33, C31）：[full_check] Cannot find name 'TermLink'.
+  - TS2304（L36, C34）：[full_check] Cannot find name 'TermLink'.
+  - TS2304（L74, C27）：[full_check] Cannot find name 'Task'.
+  - TS2304（L74, C43）：[full_check] Cannot find name 'TermLink'.
+  - TS2304（L74, C56）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L76, C41）：[full_check] Cannot find name 'TermLink'.
+  - TS2322（L83, C9）：[full_check] Type 'ArrayDeque<unknown>' is not assignable to type 'Deque<Recording>'.
+  - TS2304（L91, C20）：[full_check] Cannot find name 'Task'.
+  - TS2367（L96, C13）：[full_check] This comparison appears to be unintentional because the types 'JavaObject' and 'this' have no overlap.
+  - TS2304（L129, C28）：[full_check] Cannot find name 'TermLink'.
+  - TS2314（L129, C72）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L131, C28）：[full_check] Cannot find name 'TermLink'.
+  - TS2314（L131, C72）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L136, C73）：[full_check] Cannot find name 'TermLink'.
+  - TS2314（L136, C89）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L146, C88）：[full_check] Cannot find name 'TermLink'.
+  - TS2314（L146, C104）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L149, C28）：[full_check] Cannot find name 'Term'.
+  - TS2304（L153, C30）：[full_check] Cannot find name 'TermLink'.
+  - TS2554（L175, C34）：[full_check] Expected 1 arguments, but got 0.
+  - TS2322（L192, C9）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L204, C25）：[full_check] Cannot find name 'Task'.
+  - TS2304（L208, C23）：[full_check] Cannot find name 'Term'.
+  - TS2304（L16, C31）：[syntax_check] Cannot find name 'Item'.
+  - TS2304（L16, C36）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L16, C53）：[syntax_check] Cannot find name 'TLink'.
+  - TS2304（L16, C59）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L21, C33）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L33, C31）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2304（L36, C34）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2304（L74, C27）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L74, C43）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2304（L74, C56）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L76, C41）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2322（L83, C9）：[syntax_check] Type 'ArrayDeque<unknown>' is not assignable to type 'Deque<Recording>'.
+  - TS2304（L91, C20）：[syntax_check] Cannot find name 'Task'.
+  - TS2367（L96, C13）：[syntax_check] This comparison appears to be unintentional because the types 'JavaObject' and 'this' have no overlap.
+  - TS2304（L129, C28）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2314（L129, C72）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L131, C28）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2314（L131, C72）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L136, C73）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2314（L136, C89）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L146, C88）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2314（L146, C104）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L149, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L153, C30）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2554（L175, C34）：[syntax_check] Expected 1 arguments, but got 0.
+  - TS2322（L192, C9）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L204, C25）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L208, C23）：[syntax_check] Cannot find name 'Term'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +86,46 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Item'.` @ L16
+- `[full_check] Cannot find name 'Task'.` @ L16
+- `[full_check] Cannot find name 'TLink'.` @ L16
+- `[full_check] Cannot find name 'Task'.` @ L16
+- `[full_check] Cannot find name 'Task'.` @ L21
+- `[full_check] Cannot find name 'TermLink'.` @ L33
+- `[full_check] Cannot find name 'TermLink'.` @ L36
+- `[full_check] Cannot find name 'Task'.` @ L74
+- `[full_check] Cannot find name 'TermLink'.` @ L74
+- `[full_check] Cannot find name 'BudgetValue'.` @ L74
+- `[full_check] Cannot find name 'TermLink'.` @ L76
+- `[full_check] Cannot find name 'Task'.` @ L91
+- `[full_check] Cannot find name 'TermLink'.` @ L129
+- `[full_check] Cannot find name 'TermLink'.` @ L131
+- `[full_check] Cannot find name 'TermLink'.` @ L136
+- `[full_check] Cannot find name 'TermLink'.` @ L146
+- `[full_check] Cannot find name 'Term'.` @ L149
+- `[full_check] Cannot find name 'TermLink'.` @ L153
+- `[full_check] Cannot find name 'Task'.` @ L204
+- `[full_check] Cannot find name 'Term'.` @ L208
+- `[syntax_check] Cannot find name 'Item'.` @ L16
+- `[syntax_check] Cannot find name 'Task'.` @ L16
+- `[syntax_check] Cannot find name 'TLink'.` @ L16
+- `[syntax_check] Cannot find name 'Task'.` @ L16
+- `[syntax_check] Cannot find name 'Task'.` @ L21
+- `[syntax_check] Cannot find name 'TermLink'.` @ L33
+- `[syntax_check] Cannot find name 'TermLink'.` @ L36
+- `[syntax_check] Cannot find name 'Task'.` @ L74
+- `[syntax_check] Cannot find name 'TermLink'.` @ L74
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L74
+- `[syntax_check] Cannot find name 'TermLink'.` @ L76
+- `[syntax_check] Cannot find name 'Task'.` @ L91
+- `[syntax_check] Cannot find name 'TermLink'.` @ L129
+- `[syntax_check] Cannot find name 'TermLink'.` @ L131
+- `[syntax_check] Cannot find name 'TermLink'.` @ L136
+- `[syntax_check] Cannot find name 'TermLink'.` @ L146
+- `[syntax_check] Cannot find name 'Term'.` @ L149
+- `[syntax_check] Cannot find name 'TermLink'.` @ L153
+- `[syntax_check] Cannot find name 'Task'.` @ L204
+- `[syntax_check] Cannot find name 'Term'.` @ L208
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -61,6 +155,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

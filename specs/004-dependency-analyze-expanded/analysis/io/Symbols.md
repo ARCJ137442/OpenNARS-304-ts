@@ -14,8 +14,123 @@
 
 - 执行的命令：`npx tsc src/io/Symbols.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L44, C56）：[full_check] Cannot find name 'IN'.
+  - TS2304（L45, C57）：[full_check] Cannot find name 'OUT'.
+  - TS2304（L46, C56）：[full_check] Cannot find name 'ERR'.
+  - TS2345（L80, C29）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L82, C29）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L84, C29）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L86, C29）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L88, C29）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L90, C29）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L92, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L96, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L98, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L100, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L102, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L104, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L106, C29）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L110, C29）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L112, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L114, C29）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L116, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L120, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L122, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L124, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L126, C30）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L130, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L132, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L134, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L136, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L138, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L140, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L144, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L146, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L148, C25）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L150, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L152, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L154, C24）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L158, C23）：[full_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2564（L163, C25）：[full_check] Property 'symbol' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L169, C25）：[full_check] Property 'ch' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L172, C25）：[full_check] Property 'relation' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L175, C25）：[full_check] Property 'isNative' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L178, C25）：[full_check] Property 'opener' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L181, C25）：[full_check] Property 'closer' has no initializer and is not definitely assigned in the constructor.
+  - TS2349（L194, C21）：[full_check] This expression is not callable.
+  - TS17009（L194, C21）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2349（L204, C21）：[full_check] This expression is not callable.
+  - TS17009（L204, C21）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L214, C27）：[full_check] Cannot find name '$name$'.
+  - TS2304（L214, C35）：[full_check] Cannot find name '$index$'.
+  - TS2322（L218, C21）：[full_check] Type 'string | 0' is not assignable to type 'string'.
+  - TS2349（L218, C38）：[full_check] This expression is not callable.
+  - TS2339（L220, C47）：[full_check] Property 'endsWith' does not exist on type 'JavaString'.
+  - TS2339（L221, C47）：[full_check] Property 'endsWith' does not exist on type 'JavaString'.
+  - TS2339（L252, C31）：[full_check] Property 'ch' does not exist on type 'Enum<unknown>'.
+  - TS2367（L253, C17）：[full_check] This comparison appears to be unintentional because the types 'string' and 'number' have no overlap.
+  - TS2345（L254, C44）：[full_check] Argument of type 'string' is not assignable to parameter of type 'Character'.
+  - TS2345（L267, C51）：[full_check] Argument of type 'number' is not assignable to parameter of type 'Character'.
+  - TS2344（L330, C47）：[full_check] Type 'typeof NativeOperator' does not satisfy the constraint 'abstract new (...args: any) => any'.
+  - TS2304（L44, C56）：[syntax_check] Cannot find name 'IN'.
+  - TS2304（L45, C57）：[syntax_check] Cannot find name 'OUT'.
+  - TS2304（L46, C56）：[syntax_check] Cannot find name 'ERR'.
+  - TS2345（L80, C29）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L82, C29）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L84, C29）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L86, C29）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L88, C29）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L90, C29）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L92, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L96, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L98, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L100, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L102, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L104, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L106, C29）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L110, C29）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L112, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L114, C29）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L116, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L120, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L122, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L124, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L126, C30）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L130, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L132, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L134, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L136, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L138, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L140, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L144, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L146, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L148, C25）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L150, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L152, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L154, C24）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2345（L158, C23）：[syntax_check] Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+  - TS2564（L163, C25）：[syntax_check] Property 'symbol' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L169, C25）：[syntax_check] Property 'ch' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L172, C25）：[syntax_check] Property 'relation' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L175, C25）：[syntax_check] Property 'isNative' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L178, C25）：[syntax_check] Property 'opener' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L181, C25）：[syntax_check] Property 'closer' has no initializer and is not definitely assigned in the constructor.
+  - TS2349（L194, C21）：[syntax_check] This expression is not callable.
+  - TS17009（L194, C21）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2349（L204, C21）：[syntax_check] This expression is not callable.
+  - TS17009（L204, C21）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L214, C27）：[syntax_check] Cannot find name '$name$'.
+  - TS2304（L214, C35）：[syntax_check] Cannot find name '$index$'.
+  - TS2322（L218, C21）：[syntax_check] Type 'string | 0' is not assignable to type 'string'.
+  - TS2349（L218, C38）：[syntax_check] This expression is not callable.
+  - TS2339（L220, C47）：[syntax_check] Property 'endsWith' does not exist on type 'JavaString'.
+  - TS2339（L221, C47）：[syntax_check] Property 'endsWith' does not exist on type 'JavaString'.
+  - TS2339（L252, C31）：[syntax_check] Property 'ch' does not exist on type 'Enum<unknown>'.
+  - TS2367（L253, C17）：[syntax_check] This comparison appears to be unintentional because the types 'string' and 'number' have no overlap.
+  - TS2345（L254, C44）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'Character'.
+  - TS2345（L267, C51）：[syntax_check] Argument of type 'number' is not assignable to parameter of type 'Character'.
+  - TS2344（L330, C47）：[syntax_check] Type 'typeof NativeOperator' does not satisfy the constraint 'abstract new (...args: any) => any'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +146,16 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'IN'.` @ L44
+- `[full_check] Cannot find name 'OUT'.` @ L45
+- `[full_check] Cannot find name 'ERR'.` @ L46
+- `[full_check] Cannot find name '$name$'.` @ L214
+- `[full_check] Cannot find name '$index$'.` @ L214
+- `[syntax_check] Cannot find name 'IN'.` @ L44
+- `[syntax_check] Cannot find name 'OUT'.` @ L45
+- `[syntax_check] Cannot find name 'ERR'.` @ L46
+- `[syntax_check] Cannot find name '$name$'.` @ L214
+- `[syntax_check] Cannot find name '$index$'.` @ L214
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -54,6 +178,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

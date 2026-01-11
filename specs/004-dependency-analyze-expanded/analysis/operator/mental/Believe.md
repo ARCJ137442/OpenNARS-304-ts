@@ -14,8 +14,31 @@
 
 - 执行的命令：`npx tsc src/operator/mental/Believe.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L27, C51）：[full_check] Cannot find name 'Term'.
+  - TS2304（L30, C22）：[full_check] Cannot find name 'Term'.
+  - TS2304（L32, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L32, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L33, C23）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L33, C38）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L35, C13）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L37, C17）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L39, C30）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L40, C21）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L40, C39）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L45, C16）：[full_check] Cannot find name 'Lists'.
+  - TS2304（L27, C51）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L30, C22）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L32, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L32, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L33, C23）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L33, C38）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L35, C13）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L37, C17）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L39, C30）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L40, C21）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L40, C39）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L45, C16）：[syntax_check] Cannot find name 'Lists'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -37,7 +60,30 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Term'.` @ L27
+- `[full_check] Cannot find name 'Term'.` @ L30
+- `[full_check] Cannot find name 'TruthValue'.` @ L32
+- `[full_check] Cannot find name 'TruthValue'.` @ L32
+- `[full_check] Cannot find name 'Sentence'.` @ L33
+- `[full_check] Cannot find name 'Sentence'.` @ L33
+- `[full_check] Cannot find name 'Symbols'.` @ L35
+- `[full_check] Cannot find name 'Stamp'.` @ L37
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L39
+- `[full_check] Cannot find name 'BudgetValue'.` @ L40
+- `[full_check] Cannot find name 'BudgetValue'.` @ L40
+- `[full_check] Cannot find name 'Lists'.` @ L45
+- `[syntax_check] Cannot find name 'Term'.` @ L27
+- `[syntax_check] Cannot find name 'Term'.` @ L30
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L32
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L32
+- `[syntax_check] Cannot find name 'Sentence'.` @ L33
+- `[syntax_check] Cannot find name 'Sentence'.` @ L33
+- `[syntax_check] Cannot find name 'Symbols'.` @ L35
+- `[syntax_check] Cannot find name 'Stamp'.` @ L37
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L39
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L40
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L40
+- `[syntax_check] Cannot find name 'Lists'.` @ L45
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -72,7 +118,7 @@
 
 ## 6. 一致性风险
 
-- 主要风险来自尚未补齐的 Java 语义与单元测试缺失。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 
 ## 7. 路线图定位
 

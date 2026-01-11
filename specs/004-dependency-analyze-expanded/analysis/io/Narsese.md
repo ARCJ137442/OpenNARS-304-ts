@@ -14,8 +14,285 @@
 
 - 执行的命令：`npx tsc src/io/Narsese.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L12, C74）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L14, C29）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L16, C32）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L18, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L22, C43）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L33, C38）：[full_check] Cannot find name 'Nar'.
+  - TS2349（L36, C17）：[full_check] This expression is not callable.
+  - TS17009（L36, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L56, C44）：[full_check] Cannot find name 'Task'.
+  - TS2304（L61, C20）：[full_check] Cannot find name 'Tense'.
+  - TS2304（L66, C20）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L66, C32）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L69, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L70, C22）：[full_check] Cannot find name 'Term'.
+  - TS2304（L72, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L74, C23）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L74, C38）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L84, C21）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L85, C20）：[full_check] Cannot find name 'Task'.
+  - TS2304（L85, C43）：[full_check] Cannot find name 'Task'.
+  - TS2304（L99, C49）：[full_check] Cannot find name 'BUDGET_VALUE_MARK'.
+  - TS2322（L100, C13）：[full_check] Type 'null' is not assignable to type 'JavaString'.
+  - TS2339（L102, C40）：[full_check] Property 'ObjectInputFilter' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2304（L102, C73）：[full_check] Cannot find name 'BUDGET_VALUE_MARK'.
+  - TS2304（L104, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L108, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L125, C52）：[full_check] Cannot find name 'TRUTH_VALUE_MARK'.
+  - TS2322（L126, C13）：[full_check] Type 'null' is not assignable to type 'JavaString'.
+  - TS2339（L128, C44）：[full_check] Property 'ObjectInputFilter' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2304（L128, C77）：[full_check] Cannot find name 'TRUTH_VALUE_MARK'.
+  - TS2304（L130, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L134, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L148, C58）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L149, C23）：[full_check] Cannot find name 'QUESTION_MARK'.
+  - TS2304（L149, C51）：[full_check] Cannot find name 'QUEST_MARK'.
+  - TS2304（L154, C22）：[full_check] Cannot find name 'GOAL_MARK'.
+  - TS2304（L158, C36）：[full_check] Cannot find name 'VALUE_SEPARATOR'.
+  - TS2339（L160, C39）：[full_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L162, C39）：[full_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L163, C40）：[full_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L166, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L179, C72）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L179, C85）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L183, C18）：[full_check] Cannot find name 'JUDGMENT_MARK'.
+  - TS2304（L187, C18）：[full_check] Cannot find name 'QUESTION_MARK'.
+  - TS2304（L191, C18）：[full_check] Cannot find name 'GOAL_MARK'.
+  - TS2304（L195, C18）：[full_check] Cannot find name 'QUEST_MARK'.
+  - TS2304（L200, C27）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L203, C36）：[full_check] Cannot find name 'VALUE_SEPARATOR'.
+  - TS2339（L205, C38）：[full_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L207, C41）：[full_check] Cannot find name 'VALUE_SEPARATOR'.
+  - TS2339（L210, C38）：[full_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L211, C40）：[full_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L214, C53）：[full_check] Cannot find name 'truthToQuality'.
+  - TS2304（L215, C20）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L224, C59）：[full_check] Cannot find name 'Tense'.
+  - TS2304（L225, C32）：[full_check] Cannot find name 'Symbols'.
+  - TS2322（L226, C13）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L231, C16）：[full_check] Cannot find name 'Tense'.
+  - TS2304（L251, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L261, C21）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L261, C38）：[full_check] Cannot find name 'getOpener'.
+  - TS2304（L264, C22）：[full_check] Cannot find name 'COMPOUND_TERM_OPENER'.
+  - TS2304（L265, C34）：[full_check] Cannot find name 'COMPOUND_TERM_CLOSER'.
+  - TS2304（L268, C35）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L270, C22）：[full_check] Cannot find name 'SET_EXT_OPENER'.
+  - TS2304（L271, C34）：[full_check] Cannot find name 'SET_EXT_CLOSER'.
+  - TS2304（L272, C32）：[full_check] Cannot find name 'SetExt'.
+  - TS2304（L272, C88）：[full_check] Cannot find name 'ARGUMENT_SEPARATOR'.
+  - TS2304（L274, C35）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L276, C22）：[full_check] Cannot find name 'SET_INT_OPENER'.
+  - TS2304（L277, C34）：[full_check] Cannot find name 'SET_INT_CLOSER'.
+  - TS2304（L278, C32）：[full_check] Cannot find name 'SetInt'.
+  - TS2304（L278, C88）：[full_check] Cannot find name 'ARGUMENT_SEPARATOR'.
+  - TS2304（L280, C35）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L282, C22）：[full_check] Cannot find name 'STATEMENT_OPENER'.
+  - TS2304（L283, C34）：[full_check] Cannot find name 'STATEMENT_CLOSER'.
+  - TS2304（L286, C35）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L289, C31）：[full_check] Cannot find name 'Parser'.
+  - TS2769（L299, C40）：[full_check] No overload matches this call.
+  - TS2769（L300, C45）：[full_check] No overload matches this call.
+  - TS2304（L303, C56）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L305, C31）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L309, C31）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L314, C24）：[full_check] Cannot find name 'Term'.
+  - TS2304（L316, C46）：[full_check] Cannot find name 'Term'.
+  - TS2304（L317, C48）：[full_check] Cannot find name 'Term'.
+  - TS2304（L320, C25）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L323, C24）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L323, C36）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L349, C52）：[full_check] Cannot find name 'Term'.
+  - TS2304（L352, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L355, C17）：[full_check] Cannot find name 'Operator'.
+  - TS2339（L360, C15）：[full_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2304（L361, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L365, C19）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L366, C20）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L369, C13）：[full_check] Cannot find name 'containVar'.
+  - TS2304（L370, C24）：[full_check] Cannot find name 'Variable'.
+  - TS2304（L372, C20）：[full_check] Cannot find name 'Term'.
+  - TS2304（L385, C51）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L389, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L392, C22）：[full_check] Cannot find name 'Term'.
+  - TS2304（L393, C24）：[full_check] Cannot find name 'Term'.
+  - TS2304（L394, C16）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L394, C28）：[full_check] Cannot find name 'make'.
+  - TS2304（L394, C33）：[full_check] Cannot find name 'getRelation'.
+  - TS2304（L396, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L397, C19）：[full_check] Cannot find name 'getOperator'.
+  - TS2304（L411, C54）：[full_check] Cannot find name 'Term'.
+  - TS2304（L414, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L416, C45）：[full_check] Cannot find name 'ARGUMENT_SEPARATOR'.
+  - TS2304（L418, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L422, C22）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L422, C39）：[full_check] Cannot find name 'getOperator'.
+  - TS2304（L423, C26）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L426, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L429, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L430, C69）：[full_check] Cannot find name 'ARGUMENT_SEPARATOR'.
+  - TS2304（L432, C19）：[full_check] Cannot find name 'Term'.
+  - TS2304（L432, C50）：[full_check] Cannot find name 'Term'.
+  - TS2304（L434, C16）：[full_check] Cannot find name 'Term'.
+  - TS2304（L437, C17）：[full_check] Cannot find name 'Terms'.
+  - TS2304（L439, C17）：[full_check] Cannot find name 'make'.
+  - TS2304（L441, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L456, C66）：[full_check] Cannot find name 'Term'.
+  - TS2304（L458, C34）：[full_check] Cannot find name 'Term'.
+  - TS2304（L461, C16）：[full_check] Cannot find name 'Term'.
+  - TS2304（L471, C23）：[full_check] Cannot find name 'Parser'.
+  - TS2304（L492, C40）：[full_check] Cannot find name 'ARGUMENT_SEPARATOR'.
+  - TS2304（L512, C42）：[full_check] Cannot find name 'isRelation'.
+  - TS2304（L536, C27）：[full_check] Cannot find name 'getOpener'.
+  - TS2304（L540, C39）：[full_check] Cannot find name 'isRelation'.
+  - TS2304（L553, C27）：[full_check] Cannot find name 'getCloser'.
+  - TS2304（L557, C26）：[full_check] Cannot find name 'isRelation'.
+  - TS2339（L565, C19）：[full_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2339（L565, C39）：[full_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2339（L565, C59）：[full_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2339（L565, C79）：[full_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2304（L12, C74）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L14, C29）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L16, C32）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L18, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L22, C43）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L33, C38）：[syntax_check] Cannot find name 'Nar'.
+  - TS2349（L36, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L36, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L56, C44）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L61, C20）：[syntax_check] Cannot find name 'Tense'.
+  - TS2304（L66, C20）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L66, C32）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L69, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L70, C22）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L72, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L74, C23）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L74, C38）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L84, C21）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L85, C20）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L85, C43）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L99, C49）：[syntax_check] Cannot find name 'BUDGET_VALUE_MARK'.
+  - TS2322（L100, C13）：[syntax_check] Type 'null' is not assignable to type 'JavaString'.
+  - TS2339（L102, C40）：[syntax_check] Property 'ObjectInputFilter' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2304（L102, C73）：[syntax_check] Cannot find name 'BUDGET_VALUE_MARK'.
+  - TS2304（L104, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L108, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L125, C52）：[syntax_check] Cannot find name 'TRUTH_VALUE_MARK'.
+  - TS2322（L126, C13）：[syntax_check] Type 'null' is not assignable to type 'JavaString'.
+  - TS2339（L128, C44）：[syntax_check] Property 'ObjectInputFilter' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2304（L128, C77）：[syntax_check] Cannot find name 'TRUTH_VALUE_MARK'.
+  - TS2304（L130, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L134, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L148, C58）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L149, C23）：[syntax_check] Cannot find name 'QUESTION_MARK'.
+  - TS2304（L149, C51）：[syntax_check] Cannot find name 'QUEST_MARK'.
+  - TS2304（L154, C22）：[syntax_check] Cannot find name 'GOAL_MARK'.
+  - TS2304（L158, C36）：[syntax_check] Cannot find name 'VALUE_SEPARATOR'.
+  - TS2339（L160, C39）：[syntax_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L162, C39）：[syntax_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L163, C40）：[syntax_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L166, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L179, C72）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L179, C85）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L183, C18）：[syntax_check] Cannot find name 'JUDGMENT_MARK'.
+  - TS2304（L187, C18）：[syntax_check] Cannot find name 'QUESTION_MARK'.
+  - TS2304（L191, C18）：[syntax_check] Cannot find name 'GOAL_MARK'.
+  - TS2304（L195, C18）：[syntax_check] Cannot find name 'QUEST_MARK'.
+  - TS2304（L200, C27）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L203, C36）：[syntax_check] Cannot find name 'VALUE_SEPARATOR'.
+  - TS2339（L205, C38）：[syntax_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L207, C41）：[syntax_check] Cannot find name 'VALUE_SEPARATOR'.
+  - TS2339（L210, C38）：[syntax_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L211, C40）：[syntax_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L214, C53）：[syntax_check] Cannot find name 'truthToQuality'.
+  - TS2304（L215, C20）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L224, C59）：[syntax_check] Cannot find name 'Tense'.
+  - TS2304（L225, C32）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2322（L226, C13）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L231, C16）：[syntax_check] Cannot find name 'Tense'.
+  - TS2304（L251, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L261, C21）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L261, C38）：[syntax_check] Cannot find name 'getOpener'.
+  - TS2304（L264, C22）：[syntax_check] Cannot find name 'COMPOUND_TERM_OPENER'.
+  - TS2304（L265, C34）：[syntax_check] Cannot find name 'COMPOUND_TERM_CLOSER'.
+  - TS2304（L268, C35）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L270, C22）：[syntax_check] Cannot find name 'SET_EXT_OPENER'.
+  - TS2304（L271, C34）：[syntax_check] Cannot find name 'SET_EXT_CLOSER'.
+  - TS2304（L272, C32）：[syntax_check] Cannot find name 'SetExt'.
+  - TS2304（L272, C88）：[syntax_check] Cannot find name 'ARGUMENT_SEPARATOR'.
+  - TS2304（L274, C35）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L276, C22）：[syntax_check] Cannot find name 'SET_INT_OPENER'.
+  - TS2304（L277, C34）：[syntax_check] Cannot find name 'SET_INT_CLOSER'.
+  - TS2304（L278, C32）：[syntax_check] Cannot find name 'SetInt'.
+  - TS2304（L278, C88）：[syntax_check] Cannot find name 'ARGUMENT_SEPARATOR'.
+  - TS2304（L280, C35）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L282, C22）：[syntax_check] Cannot find name 'STATEMENT_OPENER'.
+  - TS2304（L283, C34）：[syntax_check] Cannot find name 'STATEMENT_CLOSER'.
+  - TS2304（L286, C35）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L289, C31）：[syntax_check] Cannot find name 'Parser'.
+  - TS2769（L299, C40）：[syntax_check] No overload matches this call.
+  - TS2769（L300, C45）：[syntax_check] No overload matches this call.
+  - TS2304（L303, C56）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L305, C31）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L309, C31）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L314, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L316, C46）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L317, C48）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L320, C25）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L323, C24）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L323, C36）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L349, C52）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L352, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L355, C17）：[syntax_check] Cannot find name 'Operator'.
+  - TS2339（L360, C15）：[syntax_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2304（L361, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L365, C19）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L366, C20）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L369, C13）：[syntax_check] Cannot find name 'containVar'.
+  - TS2304（L370, C24）：[syntax_check] Cannot find name 'Variable'.
+  - TS2304（L372, C20）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L385, C51）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L389, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L392, C22）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L393, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L394, C16）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L394, C28）：[syntax_check] Cannot find name 'make'.
+  - TS2304（L394, C33）：[syntax_check] Cannot find name 'getRelation'.
+  - TS2304（L396, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L397, C19）：[syntax_check] Cannot find name 'getOperator'.
+  - TS2304（L411, C54）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L414, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L416, C45）：[syntax_check] Cannot find name 'ARGUMENT_SEPARATOR'.
+  - TS2304（L418, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L422, C22）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L422, C39）：[syntax_check] Cannot find name 'getOperator'.
+  - TS2304（L423, C26）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L426, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L429, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L430, C69）：[syntax_check] Cannot find name 'ARGUMENT_SEPARATOR'.
+  - TS2304（L432, C19）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L432, C50）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L434, C16）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L437, C17）：[syntax_check] Cannot find name 'Terms'.
+  - TS2304（L439, C17）：[syntax_check] Cannot find name 'make'.
+  - TS2304（L441, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L456, C66）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L458, C34）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L461, C16）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L471, C23）：[syntax_check] Cannot find name 'Parser'.
+  - TS2304（L492, C40）：[syntax_check] Cannot find name 'ARGUMENT_SEPARATOR'.
+  - TS2304（L512, C42）：[syntax_check] Cannot find name 'isRelation'.
+  - TS2304（L536, C27）：[syntax_check] Cannot find name 'getOpener'.
+  - TS2304（L540, C39）：[syntax_check] Cannot find name 'isRelation'.
+  - TS2304（L553, C27）：[syntax_check] Cannot find name 'getCloser'.
+  - TS2304（L557, C26）：[syntax_check] Cannot find name 'isRelation'.
+  - TS2339（L565, C19）：[syntax_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2339（L565, C39）：[syntax_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2339（L565, C59）：[syntax_check] Property 'contains' does not exist on type 'JavaString'.
+  - TS2339（L565, C79）：[syntax_check] Property 'contains' does not exist on type 'JavaString'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +308,244 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Parser'.` @ L12
+- `[full_check] Cannot find name 'Memory'.` @ L14
+- `[full_check] Cannot find name 'Memory'.` @ L16
+- `[full_check] Cannot find name 'Nar'.` @ L18
+- `[full_check] Cannot find name 'Memory'.` @ L22
+- `[full_check] Cannot find name 'Nar'.` @ L33
+- `[full_check] Cannot find name 'Task'.` @ L56
+- `[full_check] Cannot find name 'Tense'.` @ L61
+- `[full_check] Cannot find name 'Stamp'.` @ L66
+- `[full_check] Cannot find name 'Stamp'.` @ L66
+- `[full_check] Cannot find name 'TruthValue'.` @ L69
+- `[full_check] Cannot find name 'Term'.` @ L70
+- `[full_check] Cannot find name 'Parser'.` @ L72
+- `[full_check] Cannot find name 'Sentence'.` @ L74
+- `[full_check] Cannot find name 'Sentence'.` @ L74
+- `[full_check] Cannot find name 'BudgetValue'.` @ L84
+- `[full_check] Cannot find name 'Task'.` @ L85
+- `[full_check] Cannot find name 'Task'.` @ L85
+- `[full_check] Cannot find name 'BUDGET_VALUE_MARK'.` @ L99
+- `[full_check] Cannot find name 'BUDGET_VALUE_MARK'.` @ L102
+- `[full_check] Cannot find name 'Parser'.` @ L104
+- `[full_check] Cannot find name 'Parser'.` @ L108
+- `[full_check] Cannot find name 'TRUTH_VALUE_MARK'.` @ L125
+- `[full_check] Cannot find name 'TRUTH_VALUE_MARK'.` @ L128
+- `[full_check] Cannot find name 'Parser'.` @ L130
+- `[full_check] Cannot find name 'Parser'.` @ L134
+- `[full_check] Cannot find name 'TruthValue'.` @ L148
+- `[full_check] Cannot find name 'QUESTION_MARK'.` @ L149
+- `[full_check] Cannot find name 'QUEST_MARK'.` @ L149
+- `[full_check] Cannot find name 'GOAL_MARK'.` @ L154
+- `[full_check] Cannot find name 'VALUE_SEPARATOR'.` @ L158
+- `[full_check] Cannot find name 'TruthValue'.` @ L166
+- `[full_check] Cannot find name 'TruthValue'.` @ L179
+- `[full_check] Cannot find name 'BudgetValue'.` @ L179
+- `[full_check] Cannot find name 'JUDGMENT_MARK'.` @ L183
+- `[full_check] Cannot find name 'QUESTION_MARK'.` @ L187
+- `[full_check] Cannot find name 'GOAL_MARK'.` @ L191
+- `[full_check] Cannot find name 'QUEST_MARK'.` @ L195
+- `[full_check] Cannot find name 'Parser'.` @ L200
+- `[full_check] Cannot find name 'VALUE_SEPARATOR'.` @ L203
+- `[full_check] Cannot find name 'VALUE_SEPARATOR'.` @ L207
+- `[full_check] Cannot find name 'truthToQuality'.` @ L214
+- `[full_check] Cannot find name 'BudgetValue'.` @ L215
+- `[full_check] Cannot find name 'Tense'.` @ L224
+- `[full_check] Cannot find name 'Symbols'.` @ L225
+- `[full_check] Cannot find name 'Tense'.` @ L231
+- `[full_check] Cannot find name 'Term'.` @ L251
+- `[full_check] Cannot find name 'NativeOperator'.` @ L261
+- `[full_check] Cannot find name 'getOpener'.` @ L261
+- `[full_check] Cannot find name 'COMPOUND_TERM_OPENER'.` @ L264
+- `[full_check] Cannot find name 'COMPOUND_TERM_CLOSER'.` @ L265
+- `[full_check] Cannot find name 'Parser'.` @ L268
+- `[full_check] Cannot find name 'SET_EXT_OPENER'.` @ L270
+- `[full_check] Cannot find name 'SET_EXT_CLOSER'.` @ L271
+- `[full_check] Cannot find name 'SetExt'.` @ L272
+- `[full_check] Cannot find name 'ARGUMENT_SEPARATOR'.` @ L272
+- `[full_check] Cannot find name 'Parser'.` @ L274
+- `[full_check] Cannot find name 'SET_INT_OPENER'.` @ L276
+- `[full_check] Cannot find name 'SET_INT_CLOSER'.` @ L277
+- `[full_check] Cannot find name 'SetInt'.` @ L278
+- `[full_check] Cannot find name 'ARGUMENT_SEPARATOR'.` @ L278
+- `[full_check] Cannot find name 'Parser'.` @ L280
+- `[full_check] Cannot find name 'STATEMENT_OPENER'.` @ L282
+- `[full_check] Cannot find name 'STATEMENT_CLOSER'.` @ L283
+- `[full_check] Cannot find name 'Parser'.` @ L286
+- `[full_check] Cannot find name 'Parser'.` @ L289
+- `[full_check] Cannot find name 'Operator'.` @ L303
+- `[full_check] Cannot find name 'Operator'.` @ L305
+- `[full_check] Cannot find name 'Parser'.` @ L309
+- `[full_check] Cannot find name 'Term'.` @ L314
+- `[full_check] Cannot find name 'Term'.` @ L316
+- `[full_check] Cannot find name 'Term'.` @ L317
+- `[full_check] Cannot find name 'Operation'.` @ L320
+- `[full_check] Cannot find name 'Operation'.` @ L323
+- `[full_check] Cannot find name 'Operation'.` @ L323
+- `[full_check] Cannot find name 'Term'.` @ L349
+- `[full_check] Cannot find name 'Parser'.` @ L352
+- `[full_check] Cannot find name 'Operator'.` @ L355
+- `[full_check] Cannot find name 'Parser'.` @ L361
+- `[full_check] Cannot find name 'Symbols'.` @ L365
+- `[full_check] Cannot find name 'Interval'.` @ L366
+- `[full_check] Cannot find name 'containVar'.` @ L369
+- `[full_check] Cannot find name 'Variable'.` @ L370
+- `[full_check] Cannot find name 'Term'.` @ L372
+- `[full_check] Cannot find name 'Statement'.` @ L385
+- `[full_check] Cannot find name 'Parser'.` @ L389
+- `[full_check] Cannot find name 'Term'.` @ L392
+- `[full_check] Cannot find name 'Term'.` @ L393
+- `[full_check] Cannot find name 'Statement'.` @ L394
+- `[full_check] Cannot find name 'make'.` @ L394
+- `[full_check] Cannot find name 'getRelation'.` @ L394
+- `[full_check] Cannot find name 'Parser'.` @ L396
+- `[full_check] Cannot find name 'getOperator'.` @ L397
+- `[full_check] Cannot find name 'Term'.` @ L411
+- `[full_check] Cannot find name 'Parser'.` @ L414
+- `[full_check] Cannot find name 'ARGUMENT_SEPARATOR'.` @ L416
+- `[full_check] Cannot find name 'Parser'.` @ L418
+- `[full_check] Cannot find name 'NativeOperator'.` @ L422
+- `[full_check] Cannot find name 'getOperator'.` @ L422
+- `[full_check] Cannot find name 'Operator'.` @ L423
+- `[full_check] Cannot find name 'Parser'.` @ L426
+- `[full_check] Cannot find name 'Term'.` @ L429
+- `[full_check] Cannot find name 'ARGUMENT_SEPARATOR'.` @ L430
+- `[full_check] Cannot find name 'Term'.` @ L432
+- `[full_check] Cannot find name 'Term'.` @ L432
+- `[full_check] Cannot find name 'Term'.` @ L434
+- `[full_check] Cannot find name 'Terms'.` @ L437
+- `[full_check] Cannot find name 'make'.` @ L439
+- `[full_check] Cannot find name 'Parser'.` @ L441
+- `[full_check] Cannot find name 'Term'.` @ L456
+- `[full_check] Cannot find name 'Term'.` @ L458
+- `[full_check] Cannot find name 'Term'.` @ L461
+- `[full_check] Cannot find name 'Parser'.` @ L471
+- `[full_check] Cannot find name 'ARGUMENT_SEPARATOR'.` @ L492
+- `[full_check] Cannot find name 'isRelation'.` @ L512
+- `[full_check] Cannot find name 'getOpener'.` @ L536
+- `[full_check] Cannot find name 'isRelation'.` @ L540
+- `[full_check] Cannot find name 'getCloser'.` @ L553
+- `[full_check] Cannot find name 'isRelation'.` @ L557
+- `[syntax_check] Cannot find name 'Parser'.` @ L12
+- `[syntax_check] Cannot find name 'Memory'.` @ L14
+- `[syntax_check] Cannot find name 'Memory'.` @ L16
+- `[syntax_check] Cannot find name 'Nar'.` @ L18
+- `[syntax_check] Cannot find name 'Memory'.` @ L22
+- `[syntax_check] Cannot find name 'Nar'.` @ L33
+- `[syntax_check] Cannot find name 'Task'.` @ L56
+- `[syntax_check] Cannot find name 'Tense'.` @ L61
+- `[syntax_check] Cannot find name 'Stamp'.` @ L66
+- `[syntax_check] Cannot find name 'Stamp'.` @ L66
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L69
+- `[syntax_check] Cannot find name 'Term'.` @ L70
+- `[syntax_check] Cannot find name 'Parser'.` @ L72
+- `[syntax_check] Cannot find name 'Sentence'.` @ L74
+- `[syntax_check] Cannot find name 'Sentence'.` @ L74
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L84
+- `[syntax_check] Cannot find name 'Task'.` @ L85
+- `[syntax_check] Cannot find name 'Task'.` @ L85
+- `[syntax_check] Cannot find name 'BUDGET_VALUE_MARK'.` @ L99
+- `[syntax_check] Cannot find name 'BUDGET_VALUE_MARK'.` @ L102
+- `[syntax_check] Cannot find name 'Parser'.` @ L104
+- `[syntax_check] Cannot find name 'Parser'.` @ L108
+- `[syntax_check] Cannot find name 'TRUTH_VALUE_MARK'.` @ L125
+- `[syntax_check] Cannot find name 'TRUTH_VALUE_MARK'.` @ L128
+- `[syntax_check] Cannot find name 'Parser'.` @ L130
+- `[syntax_check] Cannot find name 'Parser'.` @ L134
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L148
+- `[syntax_check] Cannot find name 'QUESTION_MARK'.` @ L149
+- `[syntax_check] Cannot find name 'QUEST_MARK'.` @ L149
+- `[syntax_check] Cannot find name 'GOAL_MARK'.` @ L154
+- `[syntax_check] Cannot find name 'VALUE_SEPARATOR'.` @ L158
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L166
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L179
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L179
+- `[syntax_check] Cannot find name 'JUDGMENT_MARK'.` @ L183
+- `[syntax_check] Cannot find name 'QUESTION_MARK'.` @ L187
+- `[syntax_check] Cannot find name 'GOAL_MARK'.` @ L191
+- `[syntax_check] Cannot find name 'QUEST_MARK'.` @ L195
+- `[syntax_check] Cannot find name 'Parser'.` @ L200
+- `[syntax_check] Cannot find name 'VALUE_SEPARATOR'.` @ L203
+- `[syntax_check] Cannot find name 'VALUE_SEPARATOR'.` @ L207
+- `[syntax_check] Cannot find name 'truthToQuality'.` @ L214
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L215
+- `[syntax_check] Cannot find name 'Tense'.` @ L224
+- `[syntax_check] Cannot find name 'Symbols'.` @ L225
+- `[syntax_check] Cannot find name 'Tense'.` @ L231
+- `[syntax_check] Cannot find name 'Term'.` @ L251
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L261
+- `[syntax_check] Cannot find name 'getOpener'.` @ L261
+- `[syntax_check] Cannot find name 'COMPOUND_TERM_OPENER'.` @ L264
+- `[syntax_check] Cannot find name 'COMPOUND_TERM_CLOSER'.` @ L265
+- `[syntax_check] Cannot find name 'Parser'.` @ L268
+- `[syntax_check] Cannot find name 'SET_EXT_OPENER'.` @ L270
+- `[syntax_check] Cannot find name 'SET_EXT_CLOSER'.` @ L271
+- `[syntax_check] Cannot find name 'SetExt'.` @ L272
+- `[syntax_check] Cannot find name 'ARGUMENT_SEPARATOR'.` @ L272
+- `[syntax_check] Cannot find name 'Parser'.` @ L274
+- `[syntax_check] Cannot find name 'SET_INT_OPENER'.` @ L276
+- `[syntax_check] Cannot find name 'SET_INT_CLOSER'.` @ L277
+- `[syntax_check] Cannot find name 'SetInt'.` @ L278
+- `[syntax_check] Cannot find name 'ARGUMENT_SEPARATOR'.` @ L278
+- `[syntax_check] Cannot find name 'Parser'.` @ L280
+- `[syntax_check] Cannot find name 'STATEMENT_OPENER'.` @ L282
+- `[syntax_check] Cannot find name 'STATEMENT_CLOSER'.` @ L283
+- `[syntax_check] Cannot find name 'Parser'.` @ L286
+- `[syntax_check] Cannot find name 'Parser'.` @ L289
+- `[syntax_check] Cannot find name 'Operator'.` @ L303
+- `[syntax_check] Cannot find name 'Operator'.` @ L305
+- `[syntax_check] Cannot find name 'Parser'.` @ L309
+- `[syntax_check] Cannot find name 'Term'.` @ L314
+- `[syntax_check] Cannot find name 'Term'.` @ L316
+- `[syntax_check] Cannot find name 'Term'.` @ L317
+- `[syntax_check] Cannot find name 'Operation'.` @ L320
+- `[syntax_check] Cannot find name 'Operation'.` @ L323
+- `[syntax_check] Cannot find name 'Operation'.` @ L323
+- `[syntax_check] Cannot find name 'Term'.` @ L349
+- `[syntax_check] Cannot find name 'Parser'.` @ L352
+- `[syntax_check] Cannot find name 'Operator'.` @ L355
+- `[syntax_check] Cannot find name 'Parser'.` @ L361
+- `[syntax_check] Cannot find name 'Symbols'.` @ L365
+- `[syntax_check] Cannot find name 'Interval'.` @ L366
+- `[syntax_check] Cannot find name 'containVar'.` @ L369
+- `[syntax_check] Cannot find name 'Variable'.` @ L370
+- `[syntax_check] Cannot find name 'Term'.` @ L372
+- `[syntax_check] Cannot find name 'Statement'.` @ L385
+- `[syntax_check] Cannot find name 'Parser'.` @ L389
+- `[syntax_check] Cannot find name 'Term'.` @ L392
+- `[syntax_check] Cannot find name 'Term'.` @ L393
+- `[syntax_check] Cannot find name 'Statement'.` @ L394
+- `[syntax_check] Cannot find name 'make'.` @ L394
+- `[syntax_check] Cannot find name 'getRelation'.` @ L394
+- `[syntax_check] Cannot find name 'Parser'.` @ L396
+- `[syntax_check] Cannot find name 'getOperator'.` @ L397
+- `[syntax_check] Cannot find name 'Term'.` @ L411
+- `[syntax_check] Cannot find name 'Parser'.` @ L414
+- `[syntax_check] Cannot find name 'ARGUMENT_SEPARATOR'.` @ L416
+- `[syntax_check] Cannot find name 'Parser'.` @ L418
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L422
+- `[syntax_check] Cannot find name 'getOperator'.` @ L422
+- `[syntax_check] Cannot find name 'Operator'.` @ L423
+- `[syntax_check] Cannot find name 'Parser'.` @ L426
+- `[syntax_check] Cannot find name 'Term'.` @ L429
+- `[syntax_check] Cannot find name 'ARGUMENT_SEPARATOR'.` @ L430
+- `[syntax_check] Cannot find name 'Term'.` @ L432
+- `[syntax_check] Cannot find name 'Term'.` @ L432
+- `[syntax_check] Cannot find name 'Term'.` @ L434
+- `[syntax_check] Cannot find name 'Terms'.` @ L437
+- `[syntax_check] Cannot find name 'make'.` @ L439
+- `[syntax_check] Cannot find name 'Parser'.` @ L441
+- `[syntax_check] Cannot find name 'Term'.` @ L456
+- `[syntax_check] Cannot find name 'Term'.` @ L458
+- `[syntax_check] Cannot find name 'Term'.` @ L461
+- `[syntax_check] Cannot find name 'Parser'.` @ L471
+- `[syntax_check] Cannot find name 'ARGUMENT_SEPARATOR'.` @ L492
+- `[syntax_check] Cannot find name 'isRelation'.` @ L512
+- `[syntax_check] Cannot find name 'getOpener'.` @ L536
+- `[syntax_check] Cannot find name 'isRelation'.` @ L540
+- `[syntax_check] Cannot find name 'getCloser'.` @ L553
+- `[syntax_check] Cannot find name 'isRelation'.` @ L557
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -75,6 +589,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

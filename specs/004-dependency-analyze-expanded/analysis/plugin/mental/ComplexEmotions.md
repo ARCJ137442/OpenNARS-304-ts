@@ -14,8 +14,39 @@
 
 - 执行的命令：`npx tsc src/plugin/mental/ComplexEmotions.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2420（L9, C14）：[full_check] Class 'ComplexEmotions' incorrectly implements interface 'Plugin'.
+  - TS2503（L11, C17）：[full_check] Cannot find namespace 'EventEmitter'.
+  - TS2304（L14, C26）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L17, C25）：[full_check] Cannot find name 'Memory'.
+  - TS7006（L20, C29）：[full_check] Parameter 'event' implicitly has an 'any' type.
+  - TS7006（L20, C36）：[full_check] Parameter 'a' implicitly has an 'any' type.
+  - TS2304（L21, C35）：[full_check] Cannot find name 'Events'.
+  - TS2304（L22, C35）：[full_check] Cannot find name 'Events'.
+  - TS2304（L24, C38）：[full_check] Cannot find name 'Task'.
+  - TS2304（L24, C53）：[full_check] Cannot find name 'Task'.
+  - TS2304（L27, C32）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L37, C55）：[full_check] Cannot find name 'solutionQuality'.
+  - TS2304（L43, C45）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L47, C49）：[full_check] Cannot find name 'Answer'.
+  - TS2304（L55, C49）：[full_check] Cannot find name 'Events'.
+  - TS2304（L55, C85）：[full_check] Cannot find name 'Events'.
+  - TS2420（L9, C14）：[syntax_check] Class 'ComplexEmotions' incorrectly implements interface 'Plugin'.
+  - TS2503（L11, C17）：[syntax_check] Cannot find namespace 'EventEmitter'.
+  - TS2304（L14, C26）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L17, C25）：[syntax_check] Cannot find name 'Memory'.
+  - TS7006（L20, C29）：[syntax_check] Parameter 'event' implicitly has an 'any' type.
+  - TS7006（L20, C36）：[syntax_check] Parameter 'a' implicitly has an 'any' type.
+  - TS2304（L21, C35）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L22, C35）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L24, C38）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L24, C53）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L27, C32）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L37, C55）：[syntax_check] Cannot find name 'solutionQuality'.
+  - TS2304（L43, C45）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L47, C49）：[syntax_check] Cannot find name 'Answer'.
+  - TS2304（L55, C49）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L55, C85）：[syntax_check] Cannot find name 'Events'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +62,32 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find namespace 'EventEmitter'.` @ L11
+- `[full_check] Cannot find name 'Nar'.` @ L14
+- `[full_check] Cannot find name 'Memory'.` @ L17
+- `[full_check] Cannot find name 'Events'.` @ L21
+- `[full_check] Cannot find name 'Events'.` @ L22
+- `[full_check] Cannot find name 'Task'.` @ L24
+- `[full_check] Cannot find name 'Task'.` @ L24
+- `[full_check] Cannot find name 'Concept'.` @ L27
+- `[full_check] Cannot find name 'solutionQuality'.` @ L37
+- `[full_check] Cannot find name 'Concept'.` @ L43
+- `[full_check] Cannot find name 'Answer'.` @ L47
+- `[full_check] Cannot find name 'Events'.` @ L55
+- `[full_check] Cannot find name 'Events'.` @ L55
+- `[syntax_check] Cannot find namespace 'EventEmitter'.` @ L11
+- `[syntax_check] Cannot find name 'Nar'.` @ L14
+- `[syntax_check] Cannot find name 'Memory'.` @ L17
+- `[syntax_check] Cannot find name 'Events'.` @ L21
+- `[syntax_check] Cannot find name 'Events'.` @ L22
+- `[syntax_check] Cannot find name 'Task'.` @ L24
+- `[syntax_check] Cannot find name 'Task'.` @ L24
+- `[syntax_check] Cannot find name 'Concept'.` @ L27
+- `[syntax_check] Cannot find name 'solutionQuality'.` @ L37
+- `[syntax_check] Cannot find name 'Concept'.` @ L43
+- `[syntax_check] Cannot find name 'Answer'.` @ L47
+- `[syntax_check] Cannot find name 'Events'.` @ L55
+- `[syntax_check] Cannot find name 'Events'.` @ L55
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -65,6 +121,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

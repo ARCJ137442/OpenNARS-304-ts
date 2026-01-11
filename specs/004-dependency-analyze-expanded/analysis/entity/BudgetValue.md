@@ -14,8 +14,55 @@
 
 - 执行的命令：`npx tsc src/entity/BudgetValue.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2564（L25, C13）：[full_check] Property 'priority' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L33, C13）：[full_check] Property 'durability' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L36, C13）：[full_check] Property 'quality' has no initializer and is not definitely assigned in the constructor.
+  - TS2322（L42, C13）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2564（L44, C13）：[full_check] Property 'narParameters' has no initializer and is not definitely assigned in the constructor.
+  - TS2349（L69, C17）：[full_check] This expression is not callable.
+  - TS2349（L79, C17）：[full_check] This expression is not callable.
+  - TS2335（L89, C17）：[full_check] 'super' can only be referenced in a derived class.
+  - TS2416（L118, C22）：[full_check] Property 'clone' in type 'BudgetValue' is not assignable to the same property in base type 'JavaObject'.
+  - TS4112（L118, C22）：[full_check] This member cannot have an 'override' modifier because its containing class 'BudgetValue' does not extend another class.
+  - TS2304（L272, C16）：[full_check] Cannot find name 'aveGeo'.
+  - TS2416（L306, C22）：[full_check] Property 'toString' in type 'BudgetValue' is not assignable to the same property in base type 'Cloneable<BudgetValue>'.
+  - TS2416（L306, C22）：[full_check] Property 'toString' in type 'BudgetValue' is not assignable to the same property in base type 'JavaObject'.
+  - TS2416（L306, C22）：[full_check] Property 'toString' in type 'BudgetValue' is not assignable to the same property in base type 'Serializable'.
+  - TS4112（L306, C22）：[full_check] This member cannot have an 'override' modifier because its containing class 'BudgetValue' does not extend another class.
+  - TS2322（L307, C9）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L307, C35）：[full_check] Cannot find name 'Texts'.
+  - TS2304（L307, C85）：[full_check] Cannot find name 'Texts'.
+  - TS2304（L307, C137）：[full_check] Cannot find name 'Texts'.
+  - TS2304（L319, C54）：[full_check] Cannot find name 'Texts'.
+  - TS2304（L320, C56）：[full_check] Cannot find name 'Texts'.
+  - TS2304（L321, C53）：[full_check] Cannot find name 'Texts'.
+  - TS2367（L340, C13）：[full_check] This comparison appears to be unintentional because the types 'bigint' and 'number' have no overlap.
+  - TS2322（L341, C13）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2564（L25, C13）：[syntax_check] Property 'priority' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L33, C13）：[syntax_check] Property 'durability' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L36, C13）：[syntax_check] Property 'quality' has no initializer and is not definitely assigned in the constructor.
+  - TS2322（L42, C13）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2564（L44, C13）：[syntax_check] Property 'narParameters' has no initializer and is not definitely assigned in the constructor.
+  - TS2349（L69, C17）：[syntax_check] This expression is not callable.
+  - TS2349（L79, C17）：[syntax_check] This expression is not callable.
+  - TS2335（L89, C17）：[syntax_check] 'super' can only be referenced in a derived class.
+  - TS2416（L118, C22）：[syntax_check] Property 'clone' in type 'BudgetValue' is not assignable to the same property in base type 'JavaObject'.
+  - TS4112（L118, C22）：[syntax_check] This member cannot have an 'override' modifier because its containing class 'BudgetValue' does not extend another class.
+  - TS2304（L272, C16）：[syntax_check] Cannot find name 'aveGeo'.
+  - TS2416（L306, C22）：[syntax_check] Property 'toString' in type 'BudgetValue' is not assignable to the same property in base type 'Cloneable<BudgetValue>'.
+  - TS2416（L306, C22）：[syntax_check] Property 'toString' in type 'BudgetValue' is not assignable to the same property in base type 'JavaObject'.
+  - TS2416（L306, C22）：[syntax_check] Property 'toString' in type 'BudgetValue' is not assignable to the same property in base type 'Serializable'.
+  - TS4112（L306, C22）：[syntax_check] This member cannot have an 'override' modifier because its containing class 'BudgetValue' does not extend another class.
+  - TS2322（L307, C9）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L307, C35）：[syntax_check] Cannot find name 'Texts'.
+  - TS2304（L307, C85）：[syntax_check] Cannot find name 'Texts'.
+  - TS2304（L307, C137）：[syntax_check] Cannot find name 'Texts'.
+  - TS2304（L319, C54）：[syntax_check] Cannot find name 'Texts'.
+  - TS2304（L320, C56）：[syntax_check] Cannot find name 'Texts'.
+  - TS2304（L321, C53）：[syntax_check] Cannot find name 'Texts'.
+  - TS2367（L340, C13）：[syntax_check] This comparison appears to be unintentional because the types 'bigint' and 'number' have no overlap.
+  - TS2322（L341, C13）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -37,7 +84,20 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'aveGeo'.` @ L272
+- `[full_check] Cannot find name 'Texts'.` @ L307
+- `[full_check] Cannot find name 'Texts'.` @ L307
+- `[full_check] Cannot find name 'Texts'.` @ L307
+- `[full_check] Cannot find name 'Texts'.` @ L319
+- `[full_check] Cannot find name 'Texts'.` @ L320
+- `[full_check] Cannot find name 'Texts'.` @ L321
+- `[syntax_check] Cannot find name 'aveGeo'.` @ L272
+- `[syntax_check] Cannot find name 'Texts'.` @ L307
+- `[syntax_check] Cannot find name 'Texts'.` @ L307
+- `[syntax_check] Cannot find name 'Texts'.` @ L307
+- `[syntax_check] Cannot find name 'Texts'.` @ L319
+- `[syntax_check] Cannot find name 'Texts'.` @ L320
+- `[syntax_check] Cannot find name 'Texts'.` @ L321
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -67,6 +127,7 @@
 ## 6. 一致性风险
 
 - 文件内仍保留 1 处 TODO，需对照 Java 填补。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 
 ## 7. 路线图定位
 

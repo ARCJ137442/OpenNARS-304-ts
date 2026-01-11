@@ -14,8 +14,81 @@
 
 - 执行的命令：`npx tsc src/language/ImageExt.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L24, C29）：[full_check] Cannot find name 'Term'.
+  - TS2345（L25, C15）：[full_check] Argument of type 'Term[]' is not assignable to parameter of type 'number'.
+  - TS2304（L35, C28）：[full_check] Cannot find name 'Term'.
+  - TS2304（L35, C37）：[full_check] Cannot find name 'Term'.
+  - TS2304（L36, C50）：[full_check] Cannot find name 'Term'.
+  - TS2304（L40, C37）：[full_check] Cannot find name 'term'.
+  - TS2304（L40, C43）：[full_check] Cannot find name 'relationIndex'.
+  - TS2304（L47, C45）：[full_check] Cannot find name 'Term'.
+  - TS2304（L53, C41）：[full_check] Cannot find name 'term'.
+  - TS2304（L54, C122）：[full_check] Cannot find name 'term'.
+  - TS2304（L57, C47）：[full_check] Cannot find name 'relationIndex'.
+  - TS2304（L76, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L76, C42）：[full_check] Cannot find name 'Term'.
+  - TS2304（L87, C33）：[full_check] Cannot find name 'Product'.
+  - TS2304（L87, C52）：[full_check] Cannot find name 'Term'.
+  - TS2304（L87, C73）：[full_check] Cannot find name 'Term'.
+  - TS2304（L98, C55）：[full_check] Cannot find name 'Term'.
+  - TS2304（L98, C76）：[full_check] Cannot find name 'Term'.
+  - TS2304（L99, C45）：[full_check] Cannot find name 'Term'.
+  - TS2304（L102, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L108, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L109, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L109, C50）：[full_check] Cannot find name 'Term'.
+  - TS2304（L113, C25）：[full_check] Cannot find name 'isPlaceHolder'.
+  - TS2304（L128, C61）：[full_check] Cannot find name 'Product'.
+  - TS2304（L128, C70）：[full_check] Cannot find name 'Term'.
+  - TS2304（L131, C41）：[full_check] Cannot find name 'Product'.
+  - TS2304（L132, C29）：[full_check] Cannot find name 'Product'.
+  - TS2304（L132, C51）：[full_check] Cannot find name 'Product'.
+  - TS2304（L142, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L151, C73）：[full_check] Cannot find name 'Term'.
+  - TS2304（L154, C30）：[full_check] Cannot find name 'Term'.
+  - TS2339（L154, C48）：[full_check] Property 'cloneTerms' does not exist on type 'ImageExt'.
+  - TS2339（L155, C46）：[full_check] Property 'relationIndex' does not exist on type 'ImageExt'.
+  - TS2304（L156, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L177, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L178, C16）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L24, C29）：[syntax_check] Cannot find name 'Term'.
+  - TS2345（L25, C15）：[syntax_check] Argument of type 'Term[]' is not assignable to parameter of type 'number'.
+  - TS2304（L35, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L35, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L36, C50）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L40, C37）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L40, C43）：[syntax_check] Cannot find name 'relationIndex'.
+  - TS2304（L47, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L53, C41）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L54, C122）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L57, C47）：[syntax_check] Cannot find name 'relationIndex'.
+  - TS2304（L76, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L76, C42）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L87, C33）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L87, C52）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L87, C73）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L98, C55）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L98, C76）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L99, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L102, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L108, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L109, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L109, C50）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L113, C25）：[syntax_check] Cannot find name 'isPlaceHolder'.
+  - TS2304（L128, C61）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L128, C70）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L131, C41）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L132, C29）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L132, C51）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L142, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L151, C73）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L154, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L154, C48）：[syntax_check] Property 'cloneTerms' does not exist on type 'ImageExt'.
+  - TS2339（L155, C46）：[syntax_check] Property 'relationIndex' does not exist on type 'ImageExt'.
+  - TS2304（L156, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L177, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L178, C16）：[syntax_check] Cannot find name 'NativeOperator'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +104,74 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Term'.` @ L24
+- `[full_check] Cannot find name 'Term'.` @ L35
+- `[full_check] Cannot find name 'Term'.` @ L35
+- `[full_check] Cannot find name 'Term'.` @ L36
+- `[full_check] Cannot find name 'term'.` @ L40
+- `[full_check] Cannot find name 'relationIndex'.` @ L40
+- `[full_check] Cannot find name 'Term'.` @ L47
+- `[full_check] Cannot find name 'term'.` @ L53
+- `[full_check] Cannot find name 'term'.` @ L54
+- `[full_check] Cannot find name 'relationIndex'.` @ L57
+- `[full_check] Cannot find name 'Term'.` @ L76
+- `[full_check] Cannot find name 'Term'.` @ L76
+- `[full_check] Cannot find name 'Product'.` @ L87
+- `[full_check] Cannot find name 'Term'.` @ L87
+- `[full_check] Cannot find name 'Term'.` @ L87
+- `[full_check] Cannot find name 'Term'.` @ L98
+- `[full_check] Cannot find name 'Term'.` @ L98
+- `[full_check] Cannot find name 'Term'.` @ L99
+- `[full_check] Cannot find name 'Term'.` @ L102
+- `[full_check] Cannot find name 'Term'.` @ L108
+- `[full_check] Cannot find name 'Term'.` @ L109
+- `[full_check] Cannot find name 'Term'.` @ L109
+- `[full_check] Cannot find name 'isPlaceHolder'.` @ L113
+- `[full_check] Cannot find name 'Product'.` @ L128
+- `[full_check] Cannot find name 'Term'.` @ L128
+- `[full_check] Cannot find name 'Product'.` @ L131
+- `[full_check] Cannot find name 'Product'.` @ L132
+- `[full_check] Cannot find name 'Product'.` @ L132
+- `[full_check] Cannot find name 'Term'.` @ L142
+- `[full_check] Cannot find name 'Term'.` @ L151
+- `[full_check] Cannot find name 'Term'.` @ L154
+- `[full_check] Cannot find name 'Term'.` @ L156
+- `[full_check] Cannot find name 'NativeOperator'.` @ L177
+- `[full_check] Cannot find name 'NativeOperator'.` @ L178
+- `[syntax_check] Cannot find name 'Term'.` @ L24
+- `[syntax_check] Cannot find name 'Term'.` @ L35
+- `[syntax_check] Cannot find name 'Term'.` @ L35
+- `[syntax_check] Cannot find name 'Term'.` @ L36
+- `[syntax_check] Cannot find name 'term'.` @ L40
+- `[syntax_check] Cannot find name 'relationIndex'.` @ L40
+- `[syntax_check] Cannot find name 'Term'.` @ L47
+- `[syntax_check] Cannot find name 'term'.` @ L53
+- `[syntax_check] Cannot find name 'term'.` @ L54
+- `[syntax_check] Cannot find name 'relationIndex'.` @ L57
+- `[syntax_check] Cannot find name 'Term'.` @ L76
+- `[syntax_check] Cannot find name 'Term'.` @ L76
+- `[syntax_check] Cannot find name 'Product'.` @ L87
+- `[syntax_check] Cannot find name 'Term'.` @ L87
+- `[syntax_check] Cannot find name 'Term'.` @ L87
+- `[syntax_check] Cannot find name 'Term'.` @ L98
+- `[syntax_check] Cannot find name 'Term'.` @ L98
+- `[syntax_check] Cannot find name 'Term'.` @ L99
+- `[syntax_check] Cannot find name 'Term'.` @ L102
+- `[syntax_check] Cannot find name 'Term'.` @ L108
+- `[syntax_check] Cannot find name 'Term'.` @ L109
+- `[syntax_check] Cannot find name 'Term'.` @ L109
+- `[syntax_check] Cannot find name 'isPlaceHolder'.` @ L113
+- `[syntax_check] Cannot find name 'Product'.` @ L128
+- `[syntax_check] Cannot find name 'Term'.` @ L128
+- `[syntax_check] Cannot find name 'Product'.` @ L131
+- `[syntax_check] Cannot find name 'Product'.` @ L132
+- `[syntax_check] Cannot find name 'Product'.` @ L132
+- `[syntax_check] Cannot find name 'Term'.` @ L142
+- `[syntax_check] Cannot find name 'Term'.` @ L151
+- `[syntax_check] Cannot find name 'Term'.` @ L154
+- `[syntax_check] Cannot find name 'Term'.` @ L156
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L177
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L178
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -59,6 +199,7 @@
 ## 6. 一致性风险
 
 - 文件内仍保留 1 处 TODO，需对照 Java 填补。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

@@ -14,8 +14,41 @@
 
 - 执行的命令：`npx tsc src/operator/misc/System.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L8, C29）：[full_check] Cannot find name 'FunctionOperator'.
+  - TS2304（L14, C32）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L14, C43）：[full_check] Cannot find name 'Term'.
+  - TS2304（L14, C52）：[full_check] Cannot find name 'Term'.
+  - TS2322（L15, C13）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L17, C13）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L20, C13）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L21, C41）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L21, C49）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2694（L22, C26）：[full_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'Runtime'.
+  - TS2694（L23, C26）：[full_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'Process'.
+  - TS2339（L25, C27）：[full_check] Property 'Runtime' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2322（L29, C21）：[full_check] Type 'JavaString | null' is not assignable to type 'JavaString'.
+  - TS2365（L30, C17）：[full_check] Operator '+=' cannot be applied to types 'import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/String").JavaString' and 'import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/String").JavaString'.
+  - TS2304（L41, C20）：[full_check] Cannot find name 'Term'.
+  - TS2304（L44, C27）：[full_check] Cannot find name 'Term'.
+  - TS2304（L45, C16）：[full_check] Cannot find name 'Term'.
+  - TS2304（L8, C29）：[syntax_check] Cannot find name 'FunctionOperator'.
+  - TS2304（L14, C32）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L14, C43）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L14, C52）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L15, C13）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L17, C13）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L20, C13）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L21, C41）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L21, C49）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2694（L22, C26）：[syntax_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'Runtime'.
+  - TS2694（L23, C26）：[syntax_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index"' has no exported member 'Process'.
+  - TS2339（L25, C27）：[syntax_check] Property 'Runtime' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2322（L29, C21）：[syntax_check] Type 'JavaString | null' is not assignable to type 'JavaString'.
+  - TS2365（L30, C17）：[syntax_check] Operator '+=' cannot be applied to types 'import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/String").JavaString' and 'import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/String").JavaString'.
+  - TS2304（L41, C20）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L44, C27）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L45, C16）：[syntax_check] Cannot find name 'Term'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +64,20 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'FunctionOperator'.` @ L8
+- `[full_check] Cannot find name 'Memory'.` @ L14
+- `[full_check] Cannot find name 'Term'.` @ L14
+- `[full_check] Cannot find name 'Term'.` @ L14
+- `[full_check] Cannot find name 'Term'.` @ L41
+- `[full_check] Cannot find name 'Term'.` @ L44
+- `[full_check] Cannot find name 'Term'.` @ L45
+- `[syntax_check] Cannot find name 'FunctionOperator'.` @ L8
+- `[syntax_check] Cannot find name 'Memory'.` @ L14
+- `[syntax_check] Cannot find name 'Term'.` @ L14
+- `[syntax_check] Cannot find name 'Term'.` @ L14
+- `[syntax_check] Cannot find name 'Term'.` @ L41
+- `[syntax_check] Cannot find name 'Term'.` @ L44
+- `[syntax_check] Cannot find name 'Term'.` @ L45
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -56,6 +102,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

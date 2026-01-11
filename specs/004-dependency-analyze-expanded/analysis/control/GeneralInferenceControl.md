@@ -14,8 +14,45 @@
 
 - 执行的命令：`npx tsc src/control/GeneralInferenceControl.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L15, C50）：[full_check] Cannot find name 'Memory'.
+  - TS2314（L15, C73）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L15, C90）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L16, C29）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L24, C18）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L24, C42）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L28, C9）：[full_check] Cannot find name 'ProcessAnticipation'.
+  - TS2304（L45, C21）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L57, C36）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L75, C40）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L76, C19）：[full_check] Cannot find name 'Task'.
+  - TS2304（L84, C42）：[full_check] Cannot find name 'TermLink'.
+  - TS2304（L90, C13）：[full_check] Cannot find name 'RuleTables'.
+  - TS2304（L94, C31）：[full_check] Cannot find name 'TermLink'.
+  - TS2304（L105, C25）：[full_check] Cannot find name 'Events'.
+  - TS2304（L109, C42）：[full_check] Cannot find name 'TermLink'.
+  - TS2304（L109, C57）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L111, C9）：[full_check] Cannot find name 'RuleTables'.
+  - TS2304（L112, C25）：[full_check] Cannot find name 'Events'.
+  - TS2304（L15, C50）：[syntax_check] Cannot find name 'Memory'.
+  - TS2314（L15, C73）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L15, C90）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L16, C29）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L24, C18）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L24, C42）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L28, C9）：[syntax_check] Cannot find name 'ProcessAnticipation'.
+  - TS2304（L45, C21）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L57, C36）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L75, C40）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L76, C19）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L84, C42）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2304（L90, C13）：[syntax_check] Cannot find name 'RuleTables'.
+  - TS2304（L94, C31）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2304（L105, C25）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L109, C42）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2304（L109, C57）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L111, C9）：[syntax_check] Cannot find name 'RuleTables'.
+  - TS2304（L112, C25）：[syntax_check] Cannot find name 'Events'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +68,42 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Memory'.` @ L15
+- `[full_check] Cannot find name 'Nar'.` @ L15
+- `[full_check] Cannot find name 'Concept'.` @ L16
+- `[full_check] Cannot find name 'DerivationContext'.` @ L24
+- `[full_check] Cannot find name 'DerivationContext'.` @ L24
+- `[full_check] Cannot find name 'ProcessAnticipation'.` @ L28
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L45
+- `[full_check] Cannot find name 'DerivationContext'.` @ L57
+- `[full_check] Cannot find name 'DerivationContext'.` @ L75
+- `[full_check] Cannot find name 'Task'.` @ L76
+- `[full_check] Cannot find name 'TermLink'.` @ L84
+- `[full_check] Cannot find name 'RuleTables'.` @ L90
+- `[full_check] Cannot find name 'TermLink'.` @ L94
+- `[full_check] Cannot find name 'Events'.` @ L105
+- `[full_check] Cannot find name 'TermLink'.` @ L109
+- `[full_check] Cannot find name 'DerivationContext'.` @ L109
+- `[full_check] Cannot find name 'RuleTables'.` @ L111
+- `[full_check] Cannot find name 'Events'.` @ L112
+- `[syntax_check] Cannot find name 'Memory'.` @ L15
+- `[syntax_check] Cannot find name 'Nar'.` @ L15
+- `[syntax_check] Cannot find name 'Concept'.` @ L16
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L24
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L24
+- `[syntax_check] Cannot find name 'ProcessAnticipation'.` @ L28
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L45
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L57
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L75
+- `[syntax_check] Cannot find name 'Task'.` @ L76
+- `[syntax_check] Cannot find name 'TermLink'.` @ L84
+- `[syntax_check] Cannot find name 'RuleTables'.` @ L90
+- `[syntax_check] Cannot find name 'TermLink'.` @ L94
+- `[syntax_check] Cannot find name 'Events'.` @ L105
+- `[syntax_check] Cannot find name 'TermLink'.` @ L109
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L109
+- `[syntax_check] Cannot find name 'RuleTables'.` @ L111
+- `[syntax_check] Cannot find name 'Events'.` @ L112
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -72,6 +144,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

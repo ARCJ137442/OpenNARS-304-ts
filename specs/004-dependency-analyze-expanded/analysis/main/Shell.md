@@ -14,9 +14,108 @@
 
 - 执行的命令：`npx tsc src/main/Shell.ts --noEmit`
 - 关键输出：
-  - TS1359（L107, C35）：Identifier expected. 'in' is a reserved word that cannot be used here.
-  - TS1109（L109, C87）：Expression expected.
-  - TS1109（L109, C89）：Expression expected.
+  - TS2304（L12, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L15, C56）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L16, C18）：[full_check] Cannot find name 'Nar'.
+  - TS2322（L17, C13）：[full_check] Type 'null' is not assignable to type 'Integer'.
+  - TS2339（L18, C22）：[full_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2322（L19, C13）：[full_check] Type 'number' is not assignable to type 'Integer'.
+  - TS2339（L22, C21）：[full_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2304（L24, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L26, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2339（L28, C28）：[full_check] Property 'endsWith' does not exist on type 'JavaString'.
+  - TS2304（L30, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L32, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2339（L38, C34）：[full_check] Property 'exit' does not exist on type 'typeof System'.
+  - TS2304（L40, C19）：[full_check] Cannot find name 'Nar'.
+  - TS2322（L72, C21）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L72, C29）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L72, C37）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L72, C45）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2339（L76, C30）：[full_check] Property 'exit' does not exist on type 'typeof System'.
+  - TS2345（L79, C19）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2339（L79, C65）：[full_check] Property 'join' does not exist on type 'typeof JavaString'.
+  - TS2304（L80, C18）：[full_check] Cannot find name 'Nar'.
+  - TS2345（L83, C23）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2304（L85, C23）：[full_check] Cannot find name 'NarNode'.
+  - TS2304（L85, C37）：[full_check] Cannot find name 'NarNode'.
+  - TS2304（L87, C24）：[full_check] Cannot find name 'Term'.
+  - TS2339（L87, C43）：[full_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2304（L87, C85）：[full_check] Cannot find name 'Term'.
+  - TS2339（L88, C99）：[full_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2345（L93, C19）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2304（L97, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2339（L103, C52）：[full_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L105, C37）：[full_check] Cannot find name 'Nar'.
+  - TS2377（L107, C13）：[full_check] Constructors for derived classes must contain a 'super' call.
+  - TS2304（L107, C74）：[full_check] Cannot find name 'Nar'.
+  - TS17009（L108, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS17009（L109, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS4112（L112, C30）：[full_check] This member cannot have an 'override' modifier because its containing class 'InputThread' does not extend another class.
+  - TS2322（L115, C29）：[full_check] Type 'JavaString | null' is not assignable to type 'JavaString'.
+  - TS2304（L121, C41）：[full_check] Cannot find name 'Debug'.
+  - TS2339（L141, C35）：[full_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L143, C52）：[full_check] Property 'InterruptedException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2345（L144, C122）：[full_check] Argument of type 'unknown' is not assignable to parameter of type 'Throwable | null'.
+  - TS2304（L160, C21）：[full_check] Cannot find name 'TextOutputHandler'.
+  - TS2304（L160, C45）：[full_check] Cannot find name 'TextOutputHandler'.
+  - TS2339（L165, C46）：[full_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2339（L166, C50）：[full_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2663（L171, C18）：[full_check] Cannot find name 'InputThread'. Did you mean the instance member 'this.InputThread'?
+  - TS2339（L171, C47）：[full_check] Property 'in' does not exist on type 'typeof System'.
+  - TS2339（L178, C30）：[full_check] Property 'exit' does not exist on type 'typeof System'.
+  - TS2344（L191, C44）：[full_check] Type 'typeof InputThread' does not satisfy the constraint 'abstract new (...args: any) => any'.
+  - TS2304（L12, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L15, C56）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L16, C18）：[syntax_check] Cannot find name 'Nar'.
+  - TS2322（L17, C13）：[syntax_check] Type 'null' is not assignable to type 'Integer'.
+  - TS2339（L18, C22）：[syntax_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2322（L19, C13）：[syntax_check] Type 'number' is not assignable to type 'Integer'.
+  - TS2339（L22, C21）：[syntax_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2304（L24, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L26, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2339（L28, C28）：[syntax_check] Property 'endsWith' does not exist on type 'JavaString'.
+  - TS2304（L30, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L32, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2339（L38, C34）：[syntax_check] Property 'exit' does not exist on type 'typeof System'.
+  - TS2304（L40, C19）：[syntax_check] Cannot find name 'Nar'.
+  - TS2322（L72, C21）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L72, C29）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L72, C37）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L72, C45）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2339（L76, C30）：[syntax_check] Property 'exit' does not exist on type 'typeof System'.
+  - TS2345（L79, C19）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2339（L79, C65）：[syntax_check] Property 'join' does not exist on type 'typeof JavaString'.
+  - TS2304（L80, C18）：[syntax_check] Cannot find name 'Nar'.
+  - TS2345（L83, C23）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2304（L85, C23）：[syntax_check] Cannot find name 'NarNode'.
+  - TS2304（L85, C37）：[syntax_check] Cannot find name 'NarNode'.
+  - TS2304（L87, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L87, C43）：[syntax_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2304（L87, C85）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L88, C99）：[syntax_check] Property 'Float' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2345（L93, C19）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2304（L97, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2339（L103, C52）：[syntax_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L105, C37）：[syntax_check] Cannot find name 'Nar'.
+  - TS2377（L107, C13）：[syntax_check] Constructors for derived classes must contain a 'super' call.
+  - TS2304（L107, C74）：[syntax_check] Cannot find name 'Nar'.
+  - TS17009（L108, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS17009（L109, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS4112（L112, C30）：[syntax_check] This member cannot have an 'override' modifier because its containing class 'InputThread' does not extend another class.
+  - TS2322（L115, C29）：[syntax_check] Type 'JavaString | null' is not assignable to type 'JavaString'.
+  - TS2304（L121, C41）：[syntax_check] Cannot find name 'Debug'.
+  - TS2339（L141, C35）：[syntax_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2339（L143, C52）：[syntax_check] Property 'InterruptedException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2345（L144, C122）：[syntax_check] Argument of type 'unknown' is not assignable to parameter of type 'Throwable | null'.
+  - TS2304（L160, C21）：[syntax_check] Cannot find name 'TextOutputHandler'.
+  - TS2304（L160, C45）：[syntax_check] Cannot find name 'TextOutputHandler'.
+  - TS2339（L165, C46）：[syntax_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2339（L166, C50）：[syntax_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2663（L171, C18）：[syntax_check] Cannot find name 'InputThread'. Did you mean the instance member 'this.InputThread'?
+  - TS2339（L171, C47）：[syntax_check] Property 'in' does not exist on type 'typeof System'.
+  - TS2339（L178, C30）：[syntax_check] Property 'exit' does not exist on type 'typeof System'.
+  - TS2344（L191, C44）：[syntax_check] Type 'typeof InputThread' does not satisfy the constraint 'abstract new (...args: any) => any'.
 - 总结：存在语法错误，需要比对 Java 语句结构。；编译失败：TS1359 @ 107:35 Identifier expected. 'in' is a reserved word that cannot be used here.，另有 2 条 ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
@@ -33,7 +132,46 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Nar'.` @ L12
+- `[full_check] Cannot find name 'Nar'.` @ L15
+- `[full_check] Cannot find name 'Nar'.` @ L16
+- `[full_check] Cannot find name 'Nar'.` @ L24
+- `[full_check] Cannot find name 'Nar'.` @ L26
+- `[full_check] Cannot find name 'Nar'.` @ L30
+- `[full_check] Cannot find name 'Nar'.` @ L32
+- `[full_check] Cannot find name 'Nar'.` @ L40
+- `[full_check] Cannot find name 'Nar'.` @ L80
+- `[full_check] Cannot find name 'NarNode'.` @ L85
+- `[full_check] Cannot find name 'NarNode'.` @ L85
+- `[full_check] Cannot find name 'Term'.` @ L87
+- `[full_check] Cannot find name 'Term'.` @ L87
+- `[full_check] Cannot find name 'Nar'.` @ L97
+- `[full_check] Cannot find name 'Nar'.` @ L105
+- `[full_check] Cannot find name 'Nar'.` @ L107
+- `[full_check] Cannot find name 'Debug'.` @ L121
+- `[full_check] Cannot find name 'TextOutputHandler'.` @ L160
+- `[full_check] Cannot find name 'TextOutputHandler'.` @ L160
+- `[full_check] Cannot find name 'InputThread'. Did you mean the instance member 'this.InputThread'?` @ L171
+- `[syntax_check] Cannot find name 'Nar'.` @ L12
+- `[syntax_check] Cannot find name 'Nar'.` @ L15
+- `[syntax_check] Cannot find name 'Nar'.` @ L16
+- `[syntax_check] Cannot find name 'Nar'.` @ L24
+- `[syntax_check] Cannot find name 'Nar'.` @ L26
+- `[syntax_check] Cannot find name 'Nar'.` @ L30
+- `[syntax_check] Cannot find name 'Nar'.` @ L32
+- `[syntax_check] Cannot find name 'Nar'.` @ L40
+- `[syntax_check] Cannot find name 'Nar'.` @ L80
+- `[syntax_check] Cannot find name 'NarNode'.` @ L85
+- `[syntax_check] Cannot find name 'NarNode'.` @ L85
+- `[syntax_check] Cannot find name 'Term'.` @ L87
+- `[syntax_check] Cannot find name 'Term'.` @ L87
+- `[syntax_check] Cannot find name 'Nar'.` @ L97
+- `[syntax_check] Cannot find name 'Nar'.` @ L105
+- `[syntax_check] Cannot find name 'Nar'.` @ L107
+- `[syntax_check] Cannot find name 'Debug'.` @ L121
+- `[syntax_check] Cannot find name 'TextOutputHandler'.` @ L160
+- `[syntax_check] Cannot find name 'TextOutputHandler'.` @ L160
+- `[syntax_check] Cannot find name 'InputThread'. Did you mean the instance member 'this.InputThread'?` @ L171
 
 ## 4. Java 依赖对照（`deps.xml`）
 

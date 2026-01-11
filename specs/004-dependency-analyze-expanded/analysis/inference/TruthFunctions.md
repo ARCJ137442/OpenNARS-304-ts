@@ -14,7 +14,438 @@
 
 - 执行的命令：`npx tsc src/inference/TruthFunctions.ts --noEmit`
 - 关键输出：
-  - TS1005（L43, C39）：';' expected.
+  - TS2304（L10, C37）：[full_check] Cannot find name 'UtilityFunctions'.
+  - TS2304（L53, C83）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L53, C98）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L54, C24）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L54, C37）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L56, C18）：[full_check] Cannot find name 'DESIREDED'.
+  - TS2304（L58, C18）：[full_check] Cannot find name 'DESIREIND'.
+  - TS2304（L60, C18）：[full_check] Cannot find name 'DESIREWEAK'.
+  - TS2304（L62, C18）：[full_check] Cannot find name 'DESIRESTRONG'.
+  - TS2304（L64, C18）：[full_check] Cannot find name 'COMPARISON'.
+  - TS2304（L66, C18）：[full_check] Cannot find name 'ANALOGY'.
+  - TS2304（L68, C18）：[full_check] Cannot find name 'ANONYMOUSANALOGY'.
+  - TS2304（L70, C18）：[full_check] Cannot find name 'DEDUCTION'.
+  - TS2304（L72, C18）：[full_check] Cannot find name 'EXEMPLIFICATION'.
+  - TS2304（L74, C18）：[full_check] Cannot find name 'ABDUCTION'.
+  - TS2304（L76, C18）：[full_check] Cannot find name 'RESEMBLENCE'.
+  - TS2304（L78, C18）：[full_check] Cannot find name 'REDUCECONJUNCTION'.
+  - TS2304（L80, C18）：[full_check] Cannot find name 'REDUCEDISJUNCTION'.
+  - TS2304（L82, C18）：[full_check] Cannot find name 'REDUCEDISJUNCTIONREV'.
+  - TS2304（L84, C18）：[full_check] Cannot find name 'REDUCECONJUNCTIONNEG'.
+  - TS2304（L103, C48）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L103, C63）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L103, C90）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L103, C103）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L119, C40）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L119, C55）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L119, C82）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L120, C41）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L121, C44）：[full_check] Property 'ObjectInputFilter' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2339（L124, C38）：[full_check] Property 'ObjectInputFilter' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2339（L126, C61）：[full_check] Property 'ObjectInputFilter' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2304（L141, C34）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L141, C61）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L141, C74）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L144, C29）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L145, C25）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L146, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L156, C32）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L156, C59）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L156, C72）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L159, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L168, C38）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L168, C65）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L168, C78）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L171, C29）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L172, C25）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L173, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L184, C32）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L184, C48）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L184, C75）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L184, C88）：[full_check] Cannot find name 'TruthValue'.
+  - TS2385（L186, C20）：[full_check] Overload signatures must all be public, private or protected.
+  - TS2304（L186, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L186, C49）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L186, C69）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L187, C24）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L187, C37）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L188, C49）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L191, C58）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L191, C70）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L191, C82）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L194, C60）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L201, C66）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L201, C78）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L201, C90）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L201, C102）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L206, C34）：[full_check] Cannot find name 'c2w'.
+  - TS2304（L207, C34）：[full_check] Cannot find name 'c2w'.
+  - TS2304（L210, C38）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L232, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L232, C49）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L232, C76）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L232, C89）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L241, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L241, C77）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L241, C90）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L242, C50）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L245, C58）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L245, C70）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L245, C82）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2339（L252, C37）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L253, C38）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L254, C28）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L261, C64）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L261, C83）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2339（L266, C38）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L267, C28）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L287, C31）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L287, C47）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L287, C74）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L287, C87）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L292, C29）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L293, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L294, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L304, C35）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L304, C51）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L304, C78）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L304, C91）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L309, C29）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L310, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L310, C63）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L311, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L321, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L321, C49）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L321, C76）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L321, C89）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L330, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L330, C77）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L330, C90）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L331, C50）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L334, C58）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L334, C70）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L334, C82）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L338, C32）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L344, C38）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L345, C33）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L346, C28）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L353, C64）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L353, C83）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L357, C32）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L361, C38）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L362, C33）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L363, C28）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L383, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L383, C49）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L383, C76）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L383, C89）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L394, C39）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L394, C55）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L394, C82）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L394, C95）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L396, C24）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L402, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L403, C25）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L404, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L414, C34）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L414, C50）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L414, C77）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L414, C90）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L419, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L420, C47）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L421, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L422, C25）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L423, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L434, C36）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L434, C52）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L434, C79）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L434, C92）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L439, C29）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L440, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L441, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L451, C34）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L451, C50）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L451, C77）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L451, C90）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L456, C29）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L457, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L457, C62）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L458, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L468, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L468, C49）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L468, C76）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L468, C89）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L473, C29）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L474, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L475, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L485, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L485, C49）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L485, C76）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L485, C89）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L490, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L491, C25）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L492, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L503, C29）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L503, C45）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L503, C72）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L503, C85）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L508, C29）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L509, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L510, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L520, C36）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L520, C52）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L520, C79）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L520, C92）：[full_check] Cannot find name 'TruthValue'.
+  - TS2339（L525, C29）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L526, C30）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L527, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L537, C41）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L537, C57）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L538, C24）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L538, C37）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L539, C17）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L550, C41）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L550, C57）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L551, C24）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L551, C37）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L552, C17）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L563, C44）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L563, C60）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L564, C24）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L564, C37）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L576, C40）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L576, C56）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L577, C24）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L577, C37）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L580, C17）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L580, C34）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L580, C49）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L589, C88）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L590, C64）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L602, C34）：[full_check] Cannot find name 'TruthValue'.
+  - TS2314（L602, C61）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L605, C25）：[full_check] Cannot find name 'w2c'.
+  - TS2314（L610, C16）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2365（L613, C16）：[full_check] Operator '-' cannot be applied to types 'number' and 'bigint'.
+  - TS2365（L614, C16）：[full_check] Operator '+' cannot be applied to types 'bigint' and 'number'.
+  - TS2304（L10, C37）：[syntax_check] Cannot find name 'UtilityFunctions'.
+  - TS2304（L53, C83）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L53, C98）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L54, C24）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L54, C37）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L56, C18）：[syntax_check] Cannot find name 'DESIREDED'.
+  - TS2304（L58, C18）：[syntax_check] Cannot find name 'DESIREIND'.
+  - TS2304（L60, C18）：[syntax_check] Cannot find name 'DESIREWEAK'.
+  - TS2304（L62, C18）：[syntax_check] Cannot find name 'DESIRESTRONG'.
+  - TS2304（L64, C18）：[syntax_check] Cannot find name 'COMPARISON'.
+  - TS2304（L66, C18）：[syntax_check] Cannot find name 'ANALOGY'.
+  - TS2304（L68, C18）：[syntax_check] Cannot find name 'ANONYMOUSANALOGY'.
+  - TS2304（L70, C18）：[syntax_check] Cannot find name 'DEDUCTION'.
+  - TS2304（L72, C18）：[syntax_check] Cannot find name 'EXEMPLIFICATION'.
+  - TS2304（L74, C18）：[syntax_check] Cannot find name 'ABDUCTION'.
+  - TS2304（L76, C18）：[syntax_check] Cannot find name 'RESEMBLENCE'.
+  - TS2304（L78, C18）：[syntax_check] Cannot find name 'REDUCECONJUNCTION'.
+  - TS2304（L80, C18）：[syntax_check] Cannot find name 'REDUCEDISJUNCTION'.
+  - TS2304（L82, C18）：[syntax_check] Cannot find name 'REDUCEDISJUNCTIONREV'.
+  - TS2304（L84, C18）：[syntax_check] Cannot find name 'REDUCECONJUNCTIONNEG'.
+  - TS2304（L103, C48）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L103, C63）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L103, C90）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L103, C103）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L119, C40）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L119, C55）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L119, C82）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L120, C41）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L121, C44）：[syntax_check] Property 'ObjectInputFilter' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2339（L124, C38）：[syntax_check] Property 'ObjectInputFilter' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2339（L126, C61）：[syntax_check] Property 'ObjectInputFilter' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/io/index")'.
+  - TS2304（L141, C34）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L141, C61）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L141, C74）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L144, C29）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L145, C25）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L146, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L156, C32）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L156, C59）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L156, C72）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L159, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L168, C38）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L168, C65）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L168, C78）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L171, C29）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L172, C25）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L173, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L184, C32）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L184, C48）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L184, C75）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L184, C88）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2385（L186, C20）：[syntax_check] Overload signatures must all be public, private or protected.
+  - TS2304（L186, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L186, C49）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L186, C69）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L187, C24）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L187, C37）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L188, C49）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L191, C58）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L191, C70）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L191, C82）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L194, C60）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L201, C66）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L201, C78）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L201, C90）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L201, C102）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L206, C34）：[syntax_check] Cannot find name 'c2w'.
+  - TS2304（L207, C34）：[syntax_check] Cannot find name 'c2w'.
+  - TS2304（L210, C38）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L232, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L232, C49）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L232, C76）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L232, C89）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L241, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L241, C77）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L241, C90）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L242, C50）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L245, C58）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L245, C70）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L245, C82）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2339（L252, C37）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L253, C38）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L254, C28）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L261, C64）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L261, C83）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2339（L266, C38）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L267, C28）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L287, C31）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L287, C47）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L287, C74）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L287, C87）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L292, C29）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L293, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L294, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L304, C35）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L304, C51）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L304, C78）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L304, C91）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L309, C29）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L310, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L310, C63）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L311, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L321, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L321, C49）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L321, C76）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L321, C89）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L330, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L330, C77）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L330, C90）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L331, C50）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L334, C58）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L334, C70）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L334, C82）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L338, C32）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L344, C38）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L345, C33）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L346, C28）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L353, C64）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L353, C83）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L357, C32）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L361, C38）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L362, C33）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L363, C28）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L383, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L383, C49）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L383, C76）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L383, C89）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L394, C39）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L394, C55）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L394, C82）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L394, C95）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L396, C24）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L402, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L403, C25）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L404, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L414, C34）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L414, C50）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L414, C77）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L414, C90）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L419, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L420, C47）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L421, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L422, C25）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L423, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L434, C36）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L434, C52）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L434, C79）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L434, C92）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L439, C29）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L440, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L441, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L451, C34）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L451, C50）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L451, C77）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L451, C90）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L456, C29）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L457, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L457, C62）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L458, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L468, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L468, C49）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L468, C76）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L468, C89）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L473, C29）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L474, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L475, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L485, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L485, C49）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L485, C76）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L485, C89）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L490, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L491, C25）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L492, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L503, C29）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L503, C45）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L503, C72）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L503, C85）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L508, C29）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L509, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L510, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L520, C36）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L520, C52）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L520, C79）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L520, C92）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2339（L525, C29）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L526, C30）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L527, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L537, C41）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L537, C57）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L538, C24）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L538, C37）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L539, C17）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L550, C41）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L550, C57）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L551, C24）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L551, C37）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L552, C17）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L563, C44）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L563, C60）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L564, C24）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L564, C37）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L576, C40）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L576, C56）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L577, C24）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L577, C37）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L580, C17）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L580, C34）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L580, C49）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L589, C88）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L590, C64）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L602, C34）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2314（L602, C61）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L605, C25）：[syntax_check] Cannot find name 'w2c'.
+  - TS2314（L610, C16）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2365（L613, C16）：[syntax_check] Operator '-' cannot be applied to types 'number' and 'bigint'.
+  - TS2365（L614, C16）：[syntax_check] Operator '+' cannot be applied to types 'bigint' and 'number'.
 - 总结：存在语法错误，需要比对 Java 语句结构。；编译失败：TS1005 @ 43:39 ';' expected. ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
@@ -31,7 +462,300 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'UtilityFunctions'.` @ L10
+- `[full_check] Cannot find name 'TruthValue'.` @ L53
+- `[full_check] Cannot find name 'TruthValue'.` @ L53
+- `[full_check] Cannot find name 'TruthValue'.` @ L54
+- `[full_check] Cannot find name 'DESIREDED'.` @ L56
+- `[full_check] Cannot find name 'DESIREIND'.` @ L58
+- `[full_check] Cannot find name 'DESIREWEAK'.` @ L60
+- `[full_check] Cannot find name 'DESIRESTRONG'.` @ L62
+- `[full_check] Cannot find name 'COMPARISON'.` @ L64
+- `[full_check] Cannot find name 'ANALOGY'.` @ L66
+- `[full_check] Cannot find name 'ANONYMOUSANALOGY'.` @ L68
+- `[full_check] Cannot find name 'DEDUCTION'.` @ L70
+- `[full_check] Cannot find name 'EXEMPLIFICATION'.` @ L72
+- `[full_check] Cannot find name 'ABDUCTION'.` @ L74
+- `[full_check] Cannot find name 'RESEMBLENCE'.` @ L76
+- `[full_check] Cannot find name 'REDUCECONJUNCTION'.` @ L78
+- `[full_check] Cannot find name 'REDUCEDISJUNCTION'.` @ L80
+- `[full_check] Cannot find name 'REDUCEDISJUNCTIONREV'.` @ L82
+- `[full_check] Cannot find name 'REDUCECONJUNCTIONNEG'.` @ L84
+- `[full_check] Cannot find name 'TruthValue'.` @ L103
+- `[full_check] Cannot find name 'TruthValue'.` @ L103
+- `[full_check] Cannot find name 'TruthValue'.` @ L103
+- `[full_check] Cannot find name 'TruthValue'.` @ L119
+- `[full_check] Cannot find name 'TruthValue'.` @ L119
+- `[full_check] Cannot find name 'TruthValue'.` @ L120
+- `[full_check] Cannot find name 'TruthValue'.` @ L141
+- `[full_check] Cannot find name 'TruthValue'.` @ L141
+- `[full_check] Cannot find name 'w2c'.` @ L145
+- `[full_check] Cannot find name 'TruthValue'.` @ L146
+- `[full_check] Cannot find name 'TruthValue'.` @ L156
+- `[full_check] Cannot find name 'TruthValue'.` @ L156
+- `[full_check] Cannot find name 'TruthValue'.` @ L159
+- `[full_check] Cannot find name 'TruthValue'.` @ L168
+- `[full_check] Cannot find name 'TruthValue'.` @ L168
+- `[full_check] Cannot find name 'w2c'.` @ L172
+- `[full_check] Cannot find name 'TruthValue'.` @ L173
+- `[full_check] Cannot find name 'TruthValue'.` @ L184
+- `[full_check] Cannot find name 'TruthValue'.` @ L184
+- `[full_check] Cannot find name 'TruthValue'.` @ L184
+- `[full_check] Cannot find name 'TruthValue'.` @ L186
+- `[full_check] Cannot find name 'TruthValue'.` @ L186
+- `[full_check] Cannot find name 'TruthValue'.` @ L186
+- `[full_check] Cannot find name 'TruthValue'.` @ L187
+- `[full_check] Cannot find name 'TruthValue'.` @ L188
+- `[full_check] Cannot find name 'TruthValue'.` @ L191
+- `[full_check] Cannot find name 'TruthValue'.` @ L191
+- `[full_check] Cannot find name 'TruthValue'.` @ L194
+- `[full_check] Cannot find name 'TruthValue'.` @ L201
+- `[full_check] Cannot find name 'TruthValue'.` @ L201
+- `[full_check] Cannot find name 'TruthValue'.` @ L201
+- `[full_check] Cannot find name 'c2w'.` @ L206
+- `[full_check] Cannot find name 'c2w'.` @ L207
+- `[full_check] Cannot find name 'w2c'.` @ L210
+- `[full_check] Cannot find name 'TruthValue'.` @ L232
+- `[full_check] Cannot find name 'TruthValue'.` @ L232
+- `[full_check] Cannot find name 'TruthValue'.` @ L232
+- `[full_check] Cannot find name 'TruthValue'.` @ L241
+- `[full_check] Cannot find name 'TruthValue'.` @ L241
+- `[full_check] Cannot find name 'TruthValue'.` @ L242
+- `[full_check] Cannot find name 'TruthValue'.` @ L245
+- `[full_check] Cannot find name 'TruthValue'.` @ L245
+- `[full_check] Cannot find name 'TruthValue'.` @ L254
+- `[full_check] Cannot find name 'TruthValue'.` @ L261
+- `[full_check] Cannot find name 'TruthValue'.` @ L267
+- `[full_check] Cannot find name 'TruthValue'.` @ L287
+- `[full_check] Cannot find name 'TruthValue'.` @ L287
+- `[full_check] Cannot find name 'TruthValue'.` @ L287
+- `[full_check] Cannot find name 'TruthValue'.` @ L294
+- `[full_check] Cannot find name 'TruthValue'.` @ L304
+- `[full_check] Cannot find name 'TruthValue'.` @ L304
+- `[full_check] Cannot find name 'TruthValue'.` @ L304
+- `[full_check] Cannot find name 'TruthValue'.` @ L311
+- `[full_check] Cannot find name 'TruthValue'.` @ L321
+- `[full_check] Cannot find name 'TruthValue'.` @ L321
+- `[full_check] Cannot find name 'TruthValue'.` @ L321
+- `[full_check] Cannot find name 'TruthValue'.` @ L330
+- `[full_check] Cannot find name 'TruthValue'.` @ L330
+- `[full_check] Cannot find name 'TruthValue'.` @ L331
+- `[full_check] Cannot find name 'TruthValue'.` @ L334
+- `[full_check] Cannot find name 'TruthValue'.` @ L334
+- `[full_check] Cannot find name 'TruthValue'.` @ L338
+- `[full_check] Cannot find name 'w2c'.` @ L345
+- `[full_check] Cannot find name 'TruthValue'.` @ L346
+- `[full_check] Cannot find name 'TruthValue'.` @ L353
+- `[full_check] Cannot find name 'TruthValue'.` @ L357
+- `[full_check] Cannot find name 'w2c'.` @ L362
+- `[full_check] Cannot find name 'TruthValue'.` @ L363
+- `[full_check] Cannot find name 'TruthValue'.` @ L383
+- `[full_check] Cannot find name 'TruthValue'.` @ L383
+- `[full_check] Cannot find name 'TruthValue'.` @ L383
+- `[full_check] Cannot find name 'TruthValue'.` @ L394
+- `[full_check] Cannot find name 'TruthValue'.` @ L394
+- `[full_check] Cannot find name 'TruthValue'.` @ L394
+- `[full_check] Cannot find name 'TruthValue'.` @ L396
+- `[full_check] Cannot find name 'w2c'.` @ L403
+- `[full_check] Cannot find name 'TruthValue'.` @ L404
+- `[full_check] Cannot find name 'TruthValue'.` @ L414
+- `[full_check] Cannot find name 'TruthValue'.` @ L414
+- `[full_check] Cannot find name 'TruthValue'.` @ L414
+- `[full_check] Cannot find name 'w2c'.` @ L422
+- `[full_check] Cannot find name 'TruthValue'.` @ L423
+- `[full_check] Cannot find name 'TruthValue'.` @ L434
+- `[full_check] Cannot find name 'TruthValue'.` @ L434
+- `[full_check] Cannot find name 'TruthValue'.` @ L434
+- `[full_check] Cannot find name 'TruthValue'.` @ L441
+- `[full_check] Cannot find name 'TruthValue'.` @ L451
+- `[full_check] Cannot find name 'TruthValue'.` @ L451
+- `[full_check] Cannot find name 'TruthValue'.` @ L451
+- `[full_check] Cannot find name 'w2c'.` @ L457
+- `[full_check] Cannot find name 'TruthValue'.` @ L458
+- `[full_check] Cannot find name 'TruthValue'.` @ L468
+- `[full_check] Cannot find name 'TruthValue'.` @ L468
+- `[full_check] Cannot find name 'TruthValue'.` @ L468
+- `[full_check] Cannot find name 'TruthValue'.` @ L475
+- `[full_check] Cannot find name 'TruthValue'.` @ L485
+- `[full_check] Cannot find name 'TruthValue'.` @ L485
+- `[full_check] Cannot find name 'TruthValue'.` @ L485
+- `[full_check] Cannot find name 'w2c'.` @ L491
+- `[full_check] Cannot find name 'TruthValue'.` @ L492
+- `[full_check] Cannot find name 'TruthValue'.` @ L503
+- `[full_check] Cannot find name 'TruthValue'.` @ L503
+- `[full_check] Cannot find name 'TruthValue'.` @ L503
+- `[full_check] Cannot find name 'TruthValue'.` @ L510
+- `[full_check] Cannot find name 'TruthValue'.` @ L520
+- `[full_check] Cannot find name 'TruthValue'.` @ L520
+- `[full_check] Cannot find name 'TruthValue'.` @ L520
+- `[full_check] Cannot find name 'TruthValue'.` @ L527
+- `[full_check] Cannot find name 'TruthValue'.` @ L537
+- `[full_check] Cannot find name 'TruthValue'.` @ L537
+- `[full_check] Cannot find name 'TruthValue'.` @ L538
+- `[full_check] Cannot find name 'TruthValue'.` @ L539
+- `[full_check] Cannot find name 'TruthValue'.` @ L550
+- `[full_check] Cannot find name 'TruthValue'.` @ L550
+- `[full_check] Cannot find name 'TruthValue'.` @ L551
+- `[full_check] Cannot find name 'TruthValue'.` @ L552
+- `[full_check] Cannot find name 'TruthValue'.` @ L563
+- `[full_check] Cannot find name 'TruthValue'.` @ L563
+- `[full_check] Cannot find name 'TruthValue'.` @ L564
+- `[full_check] Cannot find name 'TruthValue'.` @ L576
+- `[full_check] Cannot find name 'TruthValue'.` @ L576
+- `[full_check] Cannot find name 'TruthValue'.` @ L577
+- `[full_check] Cannot find name 'TruthValue'.` @ L580
+- `[full_check] Cannot find name 'TruthValue'.` @ L580
+- `[full_check] Cannot find name 'w2c'.` @ L580
+- `[full_check] Cannot find name 'TruthValue'.` @ L589
+- `[full_check] Cannot find name 'TruthValue'.` @ L602
+- `[full_check] Cannot find name 'w2c'.` @ L605
+- `[syntax_check] Cannot find name 'UtilityFunctions'.` @ L10
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L53
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L53
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L54
+- `[syntax_check] Cannot find name 'DESIREDED'.` @ L56
+- `[syntax_check] Cannot find name 'DESIREIND'.` @ L58
+- `[syntax_check] Cannot find name 'DESIREWEAK'.` @ L60
+- `[syntax_check] Cannot find name 'DESIRESTRONG'.` @ L62
+- `[syntax_check] Cannot find name 'COMPARISON'.` @ L64
+- `[syntax_check] Cannot find name 'ANALOGY'.` @ L66
+- `[syntax_check] Cannot find name 'ANONYMOUSANALOGY'.` @ L68
+- `[syntax_check] Cannot find name 'DEDUCTION'.` @ L70
+- `[syntax_check] Cannot find name 'EXEMPLIFICATION'.` @ L72
+- `[syntax_check] Cannot find name 'ABDUCTION'.` @ L74
+- `[syntax_check] Cannot find name 'RESEMBLENCE'.` @ L76
+- `[syntax_check] Cannot find name 'REDUCECONJUNCTION'.` @ L78
+- `[syntax_check] Cannot find name 'REDUCEDISJUNCTION'.` @ L80
+- `[syntax_check] Cannot find name 'REDUCEDISJUNCTIONREV'.` @ L82
+- `[syntax_check] Cannot find name 'REDUCECONJUNCTIONNEG'.` @ L84
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L103
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L103
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L103
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L119
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L119
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L120
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L141
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L141
+- `[syntax_check] Cannot find name 'w2c'.` @ L145
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L146
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L156
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L156
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L159
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L168
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L168
+- `[syntax_check] Cannot find name 'w2c'.` @ L172
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L173
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L184
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L184
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L184
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L186
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L186
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L186
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L187
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L188
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L191
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L191
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L194
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L201
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L201
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L201
+- `[syntax_check] Cannot find name 'c2w'.` @ L206
+- `[syntax_check] Cannot find name 'c2w'.` @ L207
+- `[syntax_check] Cannot find name 'w2c'.` @ L210
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L232
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L232
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L232
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L241
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L241
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L242
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L245
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L245
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L254
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L261
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L267
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L287
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L287
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L287
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L294
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L304
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L304
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L304
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L311
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L321
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L321
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L321
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L330
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L330
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L331
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L334
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L334
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L338
+- `[syntax_check] Cannot find name 'w2c'.` @ L345
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L346
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L353
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L357
+- `[syntax_check] Cannot find name 'w2c'.` @ L362
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L363
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L383
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L383
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L383
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L394
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L394
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L394
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L396
+- `[syntax_check] Cannot find name 'w2c'.` @ L403
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L404
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L414
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L414
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L414
+- `[syntax_check] Cannot find name 'w2c'.` @ L422
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L423
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L434
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L434
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L434
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L441
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L451
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L451
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L451
+- `[syntax_check] Cannot find name 'w2c'.` @ L457
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L458
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L468
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L468
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L468
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L475
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L485
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L485
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L485
+- `[syntax_check] Cannot find name 'w2c'.` @ L491
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L492
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L503
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L503
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L503
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L510
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L520
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L520
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L520
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L527
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L537
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L537
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L538
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L539
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L550
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L550
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L551
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L552
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L563
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L563
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L564
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L576
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L576
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L577
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L580
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L580
+- `[syntax_check] Cannot find name 'w2c'.` @ L580
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L589
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L602
+- `[syntax_check] Cannot find name 'w2c'.` @ L605
 
 ## 4. Java 依赖对照（`deps.xml`）
 

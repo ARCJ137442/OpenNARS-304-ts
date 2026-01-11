@@ -14,8 +14,65 @@
 
 - 执行的命令：`npx tsc src/operator/mental/Feel.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L8, C36）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L9, C35）：[full_check] Cannot find name 'Term'.
+  - TS2304（L15, C28）：[full_check] Cannot find name 'Term'.
+  - TS2349（L15, C38）：[full_check] This expression is not callable.
+  - TS2339（L15, C79）：[full_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2304（L18, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L18, C51）：[full_check] Cannot find name 'Term'.
+  - TS2304（L27, C45）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L27, C59）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L27, C84）：[full_check] Cannot find name 'Task'.
+  - TS2304（L28, C20）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L28, C32）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L28, C52）：[full_check] Cannot find name 'Tense'.
+  - TS2304（L29, C20）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L29, C37）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L32, C24）：[full_check] Cannot find name 'Term'.
+  - TS2304（L32, C35）：[full_check] Cannot find name 'SetInt'.
+  - TS2304（L34, C22）：[full_check] Cannot find name 'Term'.
+  - TS2304（L34, C29）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L35, C23）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L35, C38）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L37, C13）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L41, C30）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L42, C21）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L42, C39）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L45, C22）：[full_check] Cannot find name 'Task'.
+  - TS2304（L45, C33）：[full_check] Cannot find name 'Task'.
+  - TS2304（L45, C56）：[full_check] Cannot find name 'Task'.
+  - TS2304（L46, C16）：[full_check] Cannot find name 'Lists'.
+  - TS2304（L8, C36）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L9, C35）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L15, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2349（L15, C38）：[syntax_check] This expression is not callable.
+  - TS2339（L15, C79）：[syntax_check] Property 'toLowerCase' does not exist on type 'JavaString'.
+  - TS2304（L18, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L18, C51）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L27, C45）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L27, C59）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L27, C84）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L28, C20）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L28, C32）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L28, C52）：[syntax_check] Cannot find name 'Tense'.
+  - TS2304（L29, C20）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L29, C37）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L32, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L32, C35）：[syntax_check] Cannot find name 'SetInt'.
+  - TS2304（L34, C22）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L34, C29）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L35, C23）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L35, C38）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L37, C13）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L41, C30）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L42, C21）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L42, C39）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L45, C22）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L45, C33）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L45, C56）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L46, C16）：[syntax_check] Cannot find name 'Lists'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +88,60 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Operator'.` @ L8
+- `[full_check] Cannot find name 'Term'.` @ L9
+- `[full_check] Cannot find name 'Term'.` @ L15
+- `[full_check] Cannot find name 'Term'.` @ L18
+- `[full_check] Cannot find name 'Term'.` @ L18
+- `[full_check] Cannot find name 'Memory'.` @ L27
+- `[full_check] Cannot find name 'Timable'.` @ L27
+- `[full_check] Cannot find name 'Task'.` @ L27
+- `[full_check] Cannot find name 'Stamp'.` @ L28
+- `[full_check] Cannot find name 'Stamp'.` @ L28
+- `[full_check] Cannot find name 'Tense'.` @ L28
+- `[full_check] Cannot find name 'TruthValue'.` @ L29
+- `[full_check] Cannot find name 'TruthValue'.` @ L29
+- `[full_check] Cannot find name 'Term'.` @ L32
+- `[full_check] Cannot find name 'SetInt'.` @ L32
+- `[full_check] Cannot find name 'Term'.` @ L34
+- `[full_check] Cannot find name 'Inheritance'.` @ L34
+- `[full_check] Cannot find name 'Sentence'.` @ L35
+- `[full_check] Cannot find name 'Sentence'.` @ L35
+- `[full_check] Cannot find name 'Symbols'.` @ L37
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L41
+- `[full_check] Cannot find name 'BudgetValue'.` @ L42
+- `[full_check] Cannot find name 'BudgetValue'.` @ L42
+- `[full_check] Cannot find name 'Task'.` @ L45
+- `[full_check] Cannot find name 'Task'.` @ L45
+- `[full_check] Cannot find name 'Task'.` @ L45
+- `[full_check] Cannot find name 'Lists'.` @ L46
+- `[syntax_check] Cannot find name 'Operator'.` @ L8
+- `[syntax_check] Cannot find name 'Term'.` @ L9
+- `[syntax_check] Cannot find name 'Term'.` @ L15
+- `[syntax_check] Cannot find name 'Term'.` @ L18
+- `[syntax_check] Cannot find name 'Term'.` @ L18
+- `[syntax_check] Cannot find name 'Memory'.` @ L27
+- `[syntax_check] Cannot find name 'Timable'.` @ L27
+- `[syntax_check] Cannot find name 'Task'.` @ L27
+- `[syntax_check] Cannot find name 'Stamp'.` @ L28
+- `[syntax_check] Cannot find name 'Stamp'.` @ L28
+- `[syntax_check] Cannot find name 'Tense'.` @ L28
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L29
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L29
+- `[syntax_check] Cannot find name 'Term'.` @ L32
+- `[syntax_check] Cannot find name 'SetInt'.` @ L32
+- `[syntax_check] Cannot find name 'Term'.` @ L34
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L34
+- `[syntax_check] Cannot find name 'Sentence'.` @ L35
+- `[syntax_check] Cannot find name 'Sentence'.` @ L35
+- `[syntax_check] Cannot find name 'Symbols'.` @ L37
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L41
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L42
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L42
+- `[syntax_check] Cannot find name 'Task'.` @ L45
+- `[syntax_check] Cannot find name 'Task'.` @ L45
+- `[syntax_check] Cannot find name 'Task'.` @ L45
+- `[syntax_check] Cannot find name 'Lists'.` @ L46
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -68,6 +178,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

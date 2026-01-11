@@ -14,7 +14,26 @@
 
 - 执行的命令：`npx tsc src/io/events/EventEmitter.ts --noEmit`
 - 关键输出：
-  - TS1109（L113, C30）：Expression expected.
+  - TS2339（L11, C48）：[full_check] Property 'Observable' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+  - TS2322（L15, C22）：[full_check] Type 'ArrayDeque<unknown>' is not assignable to type 'Deque<JavaObject[]>'.
+  - TS2322（L67, C9）：[full_check] Type 'ArrayList<unknown>' is not assignable to type 'List<EventObserver>'.
+  - TS2531（L76, C21）：[full_check] Object is possibly 'null'.
+  - TS2304（L86, C61）：[full_check] Cannot find name 'EventObserver'.
+  - TS2531（L100, C13）：[full_check] Object is possibly 'null'.
+  - TS2531（L120, C9）：[full_check] Object is possibly 'null'.
+  - TS2322（L140, C13）：[full_check] Type 'List<EventObserver> | null' is not assignable to type 'List<EventObserver>'.
+  - TS2339（L159, C57）：[full_check] Property 'Observer' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+  - TS2339（L161, C18）：[full_check] Property 'update' does not exist on type 'DefaultEventObserver'.
+  - TS2339（L11, C48）：[syntax_check] Property 'Observable' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+  - TS2322（L15, C22）：[syntax_check] Type 'ArrayDeque<unknown>' is not assignable to type 'Deque<JavaObject[]>'.
+  - TS2322（L67, C9）：[syntax_check] Type 'ArrayList<unknown>' is not assignable to type 'List<EventObserver>'.
+  - TS2531（L76, C21）：[syntax_check] Object is possibly 'null'.
+  - TS2304（L86, C61）：[syntax_check] Cannot find name 'EventObserver'.
+  - TS2531（L100, C13）：[syntax_check] Object is possibly 'null'.
+  - TS2531（L120, C9）：[syntax_check] Object is possibly 'null'.
+  - TS2322（L140, C13）：[syntax_check] Type 'List<EventObserver> | null' is not assignable to type 'List<EventObserver>'.
+  - TS2339（L159, C57）：[syntax_check] Property 'Observer' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+  - TS2339（L161, C18）：[syntax_check] Property 'update' does not exist on type 'DefaultEventObserver'.
 - 总结：存在语法错误，需要比对 Java 语句结构。；编译失败：TS1109 @ 113:30 Expression expected. ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
@@ -31,7 +50,8 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'EventObserver'.` @ L86
+- `[syntax_check] Cannot find name 'EventObserver'.` @ L86
 
 ## 4. Java 依赖对照（`deps.xml`）
 

@@ -14,8 +14,145 @@
 
 - 执行的命令：`npx tsc src/language/Implication.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L11, C34）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L12, C34）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2322（L15, C12）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L22, C29）：[full_check] Cannot find name 'Term'.
+  - TS2304（L29, C29）：[full_check] Cannot find name 'Term'.
+  - TS2304（L31, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L31, C50）：[full_check] Cannot find name 'Term'.
+  - TS2304（L35, C47）：[full_check] Cannot find name 'Term'.
+  - TS2339（L42, C31）：[full_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L49, C56）：[full_check] Cannot find name 'Term'.
+  - TS2339（L57, C31）：[full_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L64, C62）：[full_check] Cannot find name 'Term'.
+  - TS2304（L64, C68）：[full_check] Cannot find name 'Term'.
+  - TS2349（L67, C17）：[full_check] This expression is not callable.
+  - TS17009（L67, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L87, C21）：[full_check] Cannot find name 'Term'.
+  - TS2304（L92, C40）：[full_check] Cannot find name 'term'.
+  - TS2304（L99, C38）：[full_check] Cannot find name 'Term'.
+  - TS2322（L103, C21）：[full_check] Type 'null' is not assignable to type 'Implication'.
+  - TS2304（L128, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L128, C50）：[full_check] Cannot find name 'Term'.
+  - TS2304（L130, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L130, C50）：[full_check] Cannot find name 'Term'.
+  - TS2304（L134, C55）：[full_check] Cannot find name 'Term'.
+  - TS2304（L134, C61）：[full_check] Cannot find name 'Term'.
+  - TS2304（L137, C61）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L144, C70）：[full_check] Cannot find name 'Term'.
+  - TS2304（L144, C76）：[full_check] Cannot find name 'Term'.
+  - TS2304（L147, C21）：[full_check] Cannot find name 'invalidStatement'.
+  - TS2304（L148, C39）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L148, C88）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2322（L149, C21）：[full_check] Type 'null' is not assignable to type 'Implication'.
+  - TS2304（L152, C77）：[full_check] Cannot find name 'Equivalence'.
+  - TS2304（L152, C115）：[full_check] Cannot find name 'Equivalence'.
+  - TS2304（L154, C41）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L154, C76）：[full_check] Cannot find name 'Interval'.
+  - TS2322（L155, C21）：[full_check] Type 'null' is not assignable to type 'Implication'.
+  - TS2304（L160, C39）：[full_check] Cannot find name 'Term'.
+  - TS2304（L160, C60）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L161, C50）：[full_check] Cannot find name 'Conjunction'.
+  - TS2322（L162, C25）：[full_check] Type 'null' is not assignable to type 'Implication'.
+  - TS2304（L166, C44）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L167, C35）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L167, C60）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L171, C39）：[full_check] Cannot find name 'Term'.
+  - TS2304（L171, C46）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L172, C73）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L188, C37）：[full_check] Cannot find name 'Term'.
+  - TS2304（L188, C74）：[full_check] Cannot find name 'Term'.
+  - TS2304（L189, C21）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L191, C18）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L192, C26）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L194, C18）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L195, C26）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L197, C18）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L198, C26）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L201, C26）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L203, C16）：[full_check] Cannot find name 'makeStatementName'.
+  - TS2304（L211, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L213, C18）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L214, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L215, C18）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L216, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L217, C18）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L218, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L223, C16）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L231, C44）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L235, C44）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L239, C44）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L11, C34）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L12, C34）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2322（L15, C12）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L22, C29）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L29, C29）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L31, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L31, C50）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L35, C47）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L42, C31）：[syntax_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L49, C56）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L57, C31）：[syntax_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L64, C62）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L64, C68）：[syntax_check] Cannot find name 'Term'.
+  - TS2349（L67, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L67, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L87, C21）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L92, C40）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L99, C38）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L103, C21）：[syntax_check] Type 'null' is not assignable to type 'Implication'.
+  - TS2304（L128, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L128, C50）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L130, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L130, C50）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L134, C55）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L134, C61）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L137, C61）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L144, C70）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L144, C76）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L147, C21）：[syntax_check] Cannot find name 'invalidStatement'.
+  - TS2304（L148, C39）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L148, C88）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2322（L149, C21）：[syntax_check] Type 'null' is not assignable to type 'Implication'.
+  - TS2304（L152, C77）：[syntax_check] Cannot find name 'Equivalence'.
+  - TS2304（L152, C115）：[syntax_check] Cannot find name 'Equivalence'.
+  - TS2304（L154, C41）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L154, C76）：[syntax_check] Cannot find name 'Interval'.
+  - TS2322（L155, C21）：[syntax_check] Type 'null' is not assignable to type 'Implication'.
+  - TS2304（L160, C39）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L160, C60）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L161, C50）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2322（L162, C25）：[syntax_check] Type 'null' is not assignable to type 'Implication'.
+  - TS2304（L166, C44）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L167, C35）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L167, C60）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L171, C39）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L171, C46）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L172, C73）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L188, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L188, C74）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L189, C21）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L191, C18）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L192, C26）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L194, C18）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L195, C26）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L197, C18）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L198, C26）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L201, C26）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L203, C16）：[syntax_check] Cannot find name 'makeStatementName'.
+  - TS2304（L211, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L213, C18）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L214, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L215, C18）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L216, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L217, C18）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L218, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L223, C16）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L231, C44）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L235, C44）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L239, C44）：[syntax_check] Cannot find name 'TemporalRules'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +168,126 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Statement'.` @ L11
+- `[full_check] Cannot find name 'TemporalRules'.` @ L12
+- `[full_check] Cannot find name 'Term'.` @ L22
+- `[full_check] Cannot find name 'Term'.` @ L29
+- `[full_check] Cannot find name 'Term'.` @ L31
+- `[full_check] Cannot find name 'Term'.` @ L31
+- `[full_check] Cannot find name 'Term'.` @ L35
+- `[full_check] Cannot find name 'Term'.` @ L49
+- `[full_check] Cannot find name 'Term'.` @ L64
+- `[full_check] Cannot find name 'Term'.` @ L64
+- `[full_check] Cannot find name 'Term'.` @ L87
+- `[full_check] Cannot find name 'term'.` @ L92
+- `[full_check] Cannot find name 'Term'.` @ L99
+- `[full_check] Cannot find name 'Term'.` @ L128
+- `[full_check] Cannot find name 'Term'.` @ L128
+- `[full_check] Cannot find name 'Term'.` @ L130
+- `[full_check] Cannot find name 'Term'.` @ L130
+- `[full_check] Cannot find name 'Term'.` @ L134
+- `[full_check] Cannot find name 'Term'.` @ L134
+- `[full_check] Cannot find name 'TemporalRules'.` @ L137
+- `[full_check] Cannot find name 'Term'.` @ L144
+- `[full_check] Cannot find name 'Term'.` @ L144
+- `[full_check] Cannot find name 'invalidStatement'.` @ L147
+- `[full_check] Cannot find name 'TemporalRules'.` @ L148
+- `[full_check] Cannot find name 'TemporalRules'.` @ L148
+- `[full_check] Cannot find name 'Equivalence'.` @ L152
+- `[full_check] Cannot find name 'Equivalence'.` @ L152
+- `[full_check] Cannot find name 'Interval'.` @ L154
+- `[full_check] Cannot find name 'Interval'.` @ L154
+- `[full_check] Cannot find name 'Term'.` @ L160
+- `[full_check] Cannot find name 'Statement'.` @ L160
+- `[full_check] Cannot find name 'Conjunction'.` @ L161
+- `[full_check] Cannot find name 'Conjunction'.` @ L166
+- `[full_check] Cannot find name 'Conjunction'.` @ L167
+- `[full_check] Cannot find name 'Conjunction'.` @ L167
+- `[full_check] Cannot find name 'Term'.` @ L171
+- `[full_check] Cannot find name 'Conjunction'.` @ L171
+- `[full_check] Cannot find name 'Statement'.` @ L172
+- `[full_check] Cannot find name 'Term'.` @ L188
+- `[full_check] Cannot find name 'Term'.` @ L188
+- `[full_check] Cannot find name 'NativeOperator'.` @ L189
+- `[full_check] Cannot find name 'TemporalRules'.` @ L191
+- `[full_check] Cannot find name 'NativeOperator'.` @ L192
+- `[full_check] Cannot find name 'TemporalRules'.` @ L194
+- `[full_check] Cannot find name 'NativeOperator'.` @ L195
+- `[full_check] Cannot find name 'TemporalRules'.` @ L197
+- `[full_check] Cannot find name 'NativeOperator'.` @ L198
+- `[full_check] Cannot find name 'NativeOperator'.` @ L201
+- `[full_check] Cannot find name 'makeStatementName'.` @ L203
+- `[full_check] Cannot find name 'NativeOperator'.` @ L211
+- `[full_check] Cannot find name 'TemporalRules'.` @ L213
+- `[full_check] Cannot find name 'NativeOperator'.` @ L214
+- `[full_check] Cannot find name 'TemporalRules'.` @ L215
+- `[full_check] Cannot find name 'NativeOperator'.` @ L216
+- `[full_check] Cannot find name 'TemporalRules'.` @ L217
+- `[full_check] Cannot find name 'NativeOperator'.` @ L218
+- `[full_check] Cannot find name 'NativeOperator'.` @ L223
+- `[full_check] Cannot find name 'TemporalRules'.` @ L231
+- `[full_check] Cannot find name 'TemporalRules'.` @ L235
+- `[full_check] Cannot find name 'TemporalRules'.` @ L239
+- `[syntax_check] Cannot find name 'Statement'.` @ L11
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L12
+- `[syntax_check] Cannot find name 'Term'.` @ L22
+- `[syntax_check] Cannot find name 'Term'.` @ L29
+- `[syntax_check] Cannot find name 'Term'.` @ L31
+- `[syntax_check] Cannot find name 'Term'.` @ L31
+- `[syntax_check] Cannot find name 'Term'.` @ L35
+- `[syntax_check] Cannot find name 'Term'.` @ L49
+- `[syntax_check] Cannot find name 'Term'.` @ L64
+- `[syntax_check] Cannot find name 'Term'.` @ L64
+- `[syntax_check] Cannot find name 'Term'.` @ L87
+- `[syntax_check] Cannot find name 'term'.` @ L92
+- `[syntax_check] Cannot find name 'Term'.` @ L99
+- `[syntax_check] Cannot find name 'Term'.` @ L128
+- `[syntax_check] Cannot find name 'Term'.` @ L128
+- `[syntax_check] Cannot find name 'Term'.` @ L130
+- `[syntax_check] Cannot find name 'Term'.` @ L130
+- `[syntax_check] Cannot find name 'Term'.` @ L134
+- `[syntax_check] Cannot find name 'Term'.` @ L134
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L137
+- `[syntax_check] Cannot find name 'Term'.` @ L144
+- `[syntax_check] Cannot find name 'Term'.` @ L144
+- `[syntax_check] Cannot find name 'invalidStatement'.` @ L147
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L148
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L148
+- `[syntax_check] Cannot find name 'Equivalence'.` @ L152
+- `[syntax_check] Cannot find name 'Equivalence'.` @ L152
+- `[syntax_check] Cannot find name 'Interval'.` @ L154
+- `[syntax_check] Cannot find name 'Interval'.` @ L154
+- `[syntax_check] Cannot find name 'Term'.` @ L160
+- `[syntax_check] Cannot find name 'Statement'.` @ L160
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L161
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L166
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L167
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L167
+- `[syntax_check] Cannot find name 'Term'.` @ L171
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L171
+- `[syntax_check] Cannot find name 'Statement'.` @ L172
+- `[syntax_check] Cannot find name 'Term'.` @ L188
+- `[syntax_check] Cannot find name 'Term'.` @ L188
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L189
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L191
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L192
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L194
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L195
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L197
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L198
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L201
+- `[syntax_check] Cannot find name 'makeStatementName'.` @ L203
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L211
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L213
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L214
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L215
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L216
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L217
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L218
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L223
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L231
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L235
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L239
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -61,6 +317,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

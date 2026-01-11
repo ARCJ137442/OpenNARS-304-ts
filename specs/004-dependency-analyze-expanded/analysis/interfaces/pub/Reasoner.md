@@ -14,8 +14,31 @@
 
 - 执行的命令：`npx tsc src/interfaces/pub/Reasoner.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L11, C5）：[full_check] Cannot find name 'SensoryChannelConsumer'.
+  - TS2304（L12, C5）：[full_check] Cannot find name 'Resettable'.
+  - TS2304（L13, C5）：[full_check] Cannot find name 'NarseseConsumer'.
+  - TS2304（L14, C5）：[full_check] Cannot find name 'InputFileConsumer'.
+  - TS2304（L15, C5）：[full_check] Cannot find name 'TaskConsumer'.
+  - TS2304（L16, C5）：[full_check] Cannot find name 'Eventable'.
+  - TS2304（L17, C5）：[full_check] Cannot find name 'Pluggable'.
+  - TS2304（L18, C5）：[full_check] Cannot find name 'Multistepable'.
+  - TS2304（L19, C5）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L28, C49）：[full_check] Cannot find name 'AnswerHandler'.
+  - TS2304（L38, C52）：[full_check] Cannot find name 'AnswerHandler'.
+  - TS2304（L47, C41）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L11, C5）：[syntax_check] Cannot find name 'SensoryChannelConsumer'.
+  - TS2304（L12, C5）：[syntax_check] Cannot find name 'Resettable'.
+  - TS2304（L13, C5）：[syntax_check] Cannot find name 'NarseseConsumer'.
+  - TS2304（L14, C5）：[syntax_check] Cannot find name 'InputFileConsumer'.
+  - TS2304（L15, C5）：[syntax_check] Cannot find name 'TaskConsumer'.
+  - TS2304（L16, C5）：[syntax_check] Cannot find name 'Eventable'.
+  - TS2304（L17, C5）：[syntax_check] Cannot find name 'Pluggable'.
+  - TS2304（L18, C5）：[syntax_check] Cannot find name 'Multistepable'.
+  - TS2304（L19, C5）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L28, C49）：[syntax_check] Cannot find name 'AnswerHandler'.
+  - TS2304（L38, C52）：[syntax_check] Cannot find name 'AnswerHandler'.
+  - TS2304（L47, C41）：[syntax_check] Cannot find name 'Concept'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +54,30 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'SensoryChannelConsumer'.` @ L11
+- `[full_check] Cannot find name 'Resettable'.` @ L12
+- `[full_check] Cannot find name 'NarseseConsumer'.` @ L13
+- `[full_check] Cannot find name 'InputFileConsumer'.` @ L14
+- `[full_check] Cannot find name 'TaskConsumer'.` @ L15
+- `[full_check] Cannot find name 'Eventable'.` @ L16
+- `[full_check] Cannot find name 'Pluggable'.` @ L17
+- `[full_check] Cannot find name 'Multistepable'.` @ L18
+- `[full_check] Cannot find name 'Timable'.` @ L19
+- `[full_check] Cannot find name 'AnswerHandler'.` @ L28
+- `[full_check] Cannot find name 'AnswerHandler'.` @ L38
+- `[full_check] Cannot find name 'Concept'.` @ L47
+- `[syntax_check] Cannot find name 'SensoryChannelConsumer'.` @ L11
+- `[syntax_check] Cannot find name 'Resettable'.` @ L12
+- `[syntax_check] Cannot find name 'NarseseConsumer'.` @ L13
+- `[syntax_check] Cannot find name 'InputFileConsumer'.` @ L14
+- `[syntax_check] Cannot find name 'TaskConsumer'.` @ L15
+- `[syntax_check] Cannot find name 'Eventable'.` @ L16
+- `[syntax_check] Cannot find name 'Pluggable'.` @ L17
+- `[syntax_check] Cannot find name 'Multistepable'.` @ L18
+- `[syntax_check] Cannot find name 'Timable'.` @ L19
+- `[syntax_check] Cannot find name 'AnswerHandler'.` @ L28
+- `[syntax_check] Cannot find name 'AnswerHandler'.` @ L38
+- `[syntax_check] Cannot find name 'Concept'.` @ L47
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -66,6 +112,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

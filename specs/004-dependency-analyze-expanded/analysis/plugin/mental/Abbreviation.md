@@ -14,8 +14,95 @@
 
 - 执行的命令：`npx tsc src/plugin/mental/Abbreviation.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2420（L10, C14）：[full_check] Class 'Abbreviation' incorrectly implements interface 'Plugin'.
+  - TS2304（L11, C17）：[full_check] Cannot find name 'EventObserver'.
+  - TS2304（L78, C32）：[full_check] Cannot find name 'Task'.
+  - TS2304（L79, C48）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L84, C26）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L85, C21）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L87, C26）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L91, C25）：[full_check] Cannot find name 'Operator'.
+  - TS7006（L94, C25）：[full_check] Parameter 'event' implicitly has an 'any' type.
+  - TS7006（L94, C32）：[full_check] Parameter 'a' implicitly has an 'any' type.
+  - TS2304（L95, C31）：[full_check] Cannot find name 'TaskDerive'.
+  - TS2304（L101, C27）：[full_check] Cannot find name 'Task'.
+  - TS2304（L101, C42）：[full_check] Cannot find name 'Task'.
+  - TS2304（L106, C36）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L106, C48）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L107, C37）：[full_check] Cannot find name 'termArray'.
+  - TS2304（L118, C45）：[full_check] Cannot find name 'TaskDerive'.
+  - TS2304（L126, C57）：[full_check] Cannot find name 'Operator'.
+  - TS2322（L132, C24）：[full_check] Type 'number' is not assignable to type 'Integer'.
+  - TS2304（L134, C45）：[full_check] Cannot find name 'Term'.
+  - TS2356（L136, C13）：[full_check] An arithmetic operand must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2304（L138, C24）：[full_check] Cannot find name 'Term'.
+  - TS2365（L138, C29）：[full_check] Operator '+' cannot be applied to types 'number' and 'JavaString'.
+  - TS2304（L148, C38）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L148, C55）：[full_check] Cannot find name 'Term'.
+  - TS2304（L148, C71）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L149, C19）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L149, C44）：[full_check] Cannot find name 'Task'.
+  - TS2304（L151, C27）：[full_check] Cannot find name 'Term'.
+  - TS2304（L153, C25）：[full_check] Cannot find name 'Term'.
+  - TS2304（L153, C51）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L155, C27）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L155, C42）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L156, C17）：[full_check] Cannot find name 'Similarity'.
+  - TS2304（L157, C17）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L158, C21）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L161, C21）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L163, C34）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L165, C25）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L165, C43）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L170, C26）：[full_check] Cannot find name 'Task'.
+  - TS2304（L170, C37）：[full_check] Cannot find name 'Task'.
+  - TS2304（L170, C60）：[full_check] Cannot find name 'Task'.
+  - TS2304（L171, C20）：[full_check] Cannot find name 'Lists'.
+  - TS2420（L10, C14）：[syntax_check] Class 'Abbreviation' incorrectly implements interface 'Plugin'.
+  - TS2304（L11, C17）：[syntax_check] Cannot find name 'EventObserver'.
+  - TS2304（L78, C32）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L79, C48）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L84, C26）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L85, C21）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L87, C26）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L91, C25）：[syntax_check] Cannot find name 'Operator'.
+  - TS7006（L94, C25）：[syntax_check] Parameter 'event' implicitly has an 'any' type.
+  - TS7006（L94, C32）：[syntax_check] Parameter 'a' implicitly has an 'any' type.
+  - TS2304（L95, C31）：[syntax_check] Cannot find name 'TaskDerive'.
+  - TS2304（L101, C27）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L101, C42）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L106, C36）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L106, C48）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L107, C37）：[syntax_check] Cannot find name 'termArray'.
+  - TS2304（L118, C45）：[syntax_check] Cannot find name 'TaskDerive'.
+  - TS2304（L126, C57）：[syntax_check] Cannot find name 'Operator'.
+  - TS2322（L132, C24）：[syntax_check] Type 'number' is not assignable to type 'Integer'.
+  - TS2304（L134, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2356（L136, C13）：[syntax_check] An arithmetic operand must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2304（L138, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2365（L138, C29）：[syntax_check] Operator '+' cannot be applied to types 'number' and 'JavaString'.
+  - TS2304（L148, C38）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L148, C55）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L148, C71）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L149, C19）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L149, C44）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L151, C27）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L153, C25）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L153, C51）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L155, C27）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L155, C42）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L156, C17）：[syntax_check] Cannot find name 'Similarity'.
+  - TS2304（L157, C17）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L158, C21）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L161, C21）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L163, C34）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L165, C25）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L165, C43）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L170, C26）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L170, C37）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L170, C60）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L171, C20）：[syntax_check] Cannot find name 'Lists'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +118,82 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'EventObserver'.` @ L11
+- `[full_check] Cannot find name 'Task'.` @ L78
+- `[full_check] Cannot find name 'Operation'.` @ L79
+- `[full_check] Cannot find name 'Nar'.` @ L84
+- `[full_check] Cannot find name 'Memory'.` @ L85
+- `[full_check] Cannot find name 'Operator'.` @ L87
+- `[full_check] Cannot find name 'Operator'.` @ L91
+- `[full_check] Cannot find name 'TaskDerive'.` @ L95
+- `[full_check] Cannot find name 'Task'.` @ L101
+- `[full_check] Cannot find name 'Task'.` @ L101
+- `[full_check] Cannot find name 'Operation'.` @ L106
+- `[full_check] Cannot find name 'Operation'.` @ L106
+- `[full_check] Cannot find name 'termArray'.` @ L107
+- `[full_check] Cannot find name 'TaskDerive'.` @ L118
+- `[full_check] Cannot find name 'Operator'.` @ L126
+- `[full_check] Cannot find name 'Term'.` @ L134
+- `[full_check] Cannot find name 'Term'.` @ L138
+- `[full_check] Cannot find name 'Operation'.` @ L148
+- `[full_check] Cannot find name 'Term'.` @ L148
+- `[full_check] Cannot find name 'Memory'.` @ L148
+- `[full_check] Cannot find name 'Timable'.` @ L149
+- `[full_check] Cannot find name 'Task'.` @ L149
+- `[full_check] Cannot find name 'Term'.` @ L151
+- `[full_check] Cannot find name 'Term'.` @ L153
+- `[full_check] Cannot find name 'Symbols'.` @ L153
+- `[full_check] Cannot find name 'Sentence'.` @ L155
+- `[full_check] Cannot find name 'Sentence'.` @ L155
+- `[full_check] Cannot find name 'Similarity'.` @ L156
+- `[full_check] Cannot find name 'Symbols'.` @ L157
+- `[full_check] Cannot find name 'TruthValue'.` @ L158
+- `[full_check] Cannot find name 'Stamp'.` @ L161
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L163
+- `[full_check] Cannot find name 'BudgetValue'.` @ L165
+- `[full_check] Cannot find name 'BudgetValue'.` @ L165
+- `[full_check] Cannot find name 'Task'.` @ L170
+- `[full_check] Cannot find name 'Task'.` @ L170
+- `[full_check] Cannot find name 'Task'.` @ L170
+- `[full_check] Cannot find name 'Lists'.` @ L171
+- `[syntax_check] Cannot find name 'EventObserver'.` @ L11
+- `[syntax_check] Cannot find name 'Task'.` @ L78
+- `[syntax_check] Cannot find name 'Operation'.` @ L79
+- `[syntax_check] Cannot find name 'Nar'.` @ L84
+- `[syntax_check] Cannot find name 'Memory'.` @ L85
+- `[syntax_check] Cannot find name 'Operator'.` @ L87
+- `[syntax_check] Cannot find name 'Operator'.` @ L91
+- `[syntax_check] Cannot find name 'TaskDerive'.` @ L95
+- `[syntax_check] Cannot find name 'Task'.` @ L101
+- `[syntax_check] Cannot find name 'Task'.` @ L101
+- `[syntax_check] Cannot find name 'Operation'.` @ L106
+- `[syntax_check] Cannot find name 'Operation'.` @ L106
+- `[syntax_check] Cannot find name 'termArray'.` @ L107
+- `[syntax_check] Cannot find name 'TaskDerive'.` @ L118
+- `[syntax_check] Cannot find name 'Operator'.` @ L126
+- `[syntax_check] Cannot find name 'Term'.` @ L134
+- `[syntax_check] Cannot find name 'Term'.` @ L138
+- `[syntax_check] Cannot find name 'Operation'.` @ L148
+- `[syntax_check] Cannot find name 'Term'.` @ L148
+- `[syntax_check] Cannot find name 'Memory'.` @ L148
+- `[syntax_check] Cannot find name 'Timable'.` @ L149
+- `[syntax_check] Cannot find name 'Task'.` @ L149
+- `[syntax_check] Cannot find name 'Term'.` @ L151
+- `[syntax_check] Cannot find name 'Term'.` @ L153
+- `[syntax_check] Cannot find name 'Symbols'.` @ L153
+- `[syntax_check] Cannot find name 'Sentence'.` @ L155
+- `[syntax_check] Cannot find name 'Sentence'.` @ L155
+- `[syntax_check] Cannot find name 'Similarity'.` @ L156
+- `[syntax_check] Cannot find name 'Symbols'.` @ L157
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L158
+- `[syntax_check] Cannot find name 'Stamp'.` @ L161
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L163
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L165
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L165
+- `[syntax_check] Cannot find name 'Task'.` @ L170
+- `[syntax_check] Cannot find name 'Task'.` @ L170
+- `[syntax_check] Cannot find name 'Task'.` @ L170
+- `[syntax_check] Cannot find name 'Lists'.` @ L171
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -73,6 +235,7 @@
 ## 6. 一致性风险
 
 - 文件内仍保留 1 处 TODO，需对照 Java 填补。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

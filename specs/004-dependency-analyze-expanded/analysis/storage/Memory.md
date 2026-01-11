@@ -14,8 +14,251 @@
 
 - 执行的命令：`npx tsc src/storage/Memory.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2720（L17, C14）：[full_check] Class 'Memory' incorrectly implements class 'JavaIterable<Concept>'. Did you mean to extend 'JavaIterable<Concept>' and inherit its members as a subclass?
+  - TS2304（L17, C92）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L17, C102）：[full_check] Cannot find name 'Resettable'.
+  - TS2314（L20, C36）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2322（L22, C12）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L24, C21）：[full_check] Cannot find name 'Emotions'.
+  - TS2304（L25, C32）：[full_check] Cannot find name 'InternalExperience'.
+  - TS2304（L26, C26）：[full_check] Cannot find name 'Task'.
+  - TS2322（L29, C21）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L33, C31）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L33, C35）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L33, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L34, C19）：[full_check] Cannot find name 'EventEmitter'.
+  - TS2304（L37, C70）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L43, C33）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L43, C37）：[full_check] Cannot find name 'Task'.
+  - TS2304（L43, C43）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L46, C34）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L46, C38）：[full_check] Cannot find name 'Task'.
+  - TS2304（L46, C44）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L47, C40）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L47, C44）：[full_check] Cannot find name 'Task'.
+  - TS2304（L47, C50）：[full_check] Cannot find name 'Sentence'.
+  - TS2314（L58, C39）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L58, C61）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L58, C65）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L58, C74）：[full_check] Cannot find name 'Term'.
+  - TS2304（L59, C21）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L59, C25）：[full_check] Cannot find name 'Task'.
+  - TS2304（L59, C31）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L60, C22）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L60, C26）：[full_check] Cannot find name 'Task'.
+  - TS2304（L60, C32）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L61, C28）：[full_check] Cannot find name 'Bag'.
+  - TS2304（L61, C32）：[full_check] Cannot find name 'Task'.
+  - TS2304（L61, C38）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L64, C26）：[full_check] Cannot find name 'EventEmitter'.
+  - TS2304（L74, C25）：[full_check] Cannot find name 'ResetStart'.
+  - TS2304（L90, C25）：[full_check] Cannot find name 'ResetEnd'.
+  - TS2304（L102, C23）：[full_check] Cannot find name 'Term'.
+  - TS2304（L102, C30）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L104, C34）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L124, C34）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L124, C53）：[full_check] Cannot find name 'Term'.
+  - TS2304（L124, C60）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L125, C29）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L128, C16）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L130, C24）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L131, C22）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L139, C27）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L142, C23）：[full_check] Cannot find name 'Events'.
+  - TS2304（L146, C13）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L146, C62）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L172, C26）：[full_check] Cannot find name 'Task'.
+  - TS2304（L177, C19）：[full_check] Cannot find name 'Events'.
+  - TS2339（L182, C67）：[full_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L195, C28）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L195, C40）：[full_check] Cannot find name 'Task'.
+  - TS2304（L214, C28）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L214, C43）：[full_check] Cannot find name 'Task'.
+  - TS2304（L218, C44）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L218, C53）：[full_check] Cannot find name 'Task'.
+  - TS2304（L228, C55）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L228, C64）：[full_check] Cannot find name 'Task'.
+  - TS2304（L236, C28）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L241, C35）：[full_check] Cannot find name 'IN'.
+  - TS2345（L245, C47）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L247, C47）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2304（L262, C29）：[full_check] Cannot find name 'Task'.
+  - TS2304（L263, C19）：[full_check] Cannot find name 'TaskRemove'.
+  - TS2304（L272, C31）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L272, C51）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L272, C69）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L276, C20）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L276, C32）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L276, C50）：[full_check] Cannot find name 'Tense'.
+  - TS2304（L277, C23）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L277, C38）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L279, C13）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L283, C31）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L283, C49）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L285, C13）：[full_check] Cannot find name 'truthToQuality'.
+  - TS2304（L286, C22）：[full_check] Cannot find name 'Task'.
+  - TS2304（L286, C33）：[full_check] Cannot find name 'Task'.
+  - TS2304（L286, C66）：[full_check] Cannot find name 'Task'.
+  - TS2345（L289, C34）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2304（L292, C22）：[full_check] Cannot find name 'Task'.
+  - TS2304（L298, C23）：[full_check] Cannot find name 'OUT'.
+  - TS2304（L299, C17）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L300, C27）：[full_check] Cannot find name 'DEBUG'.
+  - TS2345（L300, C40）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaObject'.
+  - TS2304（L301, C27）：[full_check] Cannot find name 'DEBUG'.
+  - TS2345（L301, C40）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaObject'.
+  - TS2339（L307, C49）：[full_check] Property 'locks' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/concurrent/index")'.
+  - TS2304（L314, C30）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L315, C19）：[full_check] Cannot find name 'Events'.
+  - TS2304（L318, C23）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L320, C25）：[full_check] Cannot find name 'Events'.
+  - TS2304（L325, C9）：[full_check] Cannot find name 'GeneralInferenceControl'.
+  - TS2304（L327, C25）：[full_check] Cannot find name 'Events'.
+  - TS2304（L337, C33）：[full_check] Cannot find name 'Task'.
+  - TS2314（L337, C54）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L337, C72）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L339, C19）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L339, C43）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L344, C38）：[full_check] Cannot find name 'ProcessTask'.
+  - TS2304（L346, C33）：[full_check] Cannot find name 'Events'.
+  - TS2304（L350, C75）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L351, C13）：[full_check] Cannot find name 'TemporalInferenceControl'.
+  - TS2304（L355, C19）：[full_check] Cannot find name 'Events'.
+  - TS2314（L365, C44）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L365, C62）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L367, C19）：[full_check] Cannot find name 'Task'.
+  - TS2304（L374, C47）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L378, C28）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L378, C39）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L383, C31）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L383, C42）：[full_check] Cannot find name 'Operator'.
+  - TS2322（L387, C13）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L389, C30）：[full_check] Cannot find name 'BaseEntry'.
+  - TS2304（L390, C20）：[full_check] Cannot find name 'BaseEntry'.
+  - TS2304（L398, C43）：[full_check] Cannot find name 'Concept'.
+  - TS2720（L17, C14）：[syntax_check] Class 'Memory' incorrectly implements class 'JavaIterable<Concept>'. Did you mean to extend 'JavaIterable<Concept>' and inherit its members as a subclass?
+  - TS2304（L17, C92）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L17, C102）：[syntax_check] Cannot find name 'Resettable'.
+  - TS2314（L20, C36）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2322（L22, C12）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L24, C21）：[syntax_check] Cannot find name 'Emotions'.
+  - TS2304（L25, C32）：[syntax_check] Cannot find name 'InternalExperience'.
+  - TS2304（L26, C26）：[syntax_check] Cannot find name 'Task'.
+  - TS2322（L29, C21）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L33, C31）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L33, C35）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L33, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L34, C19）：[syntax_check] Cannot find name 'EventEmitter'.
+  - TS2304（L37, C70）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L43, C33）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L43, C37）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L43, C43）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L46, C34）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L46, C38）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L46, C44）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L47, C40）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L47, C44）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L47, C50）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2314（L58, C39）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L58, C61）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L58, C65）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L58, C74）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L59, C21）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L59, C25）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L59, C31）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L60, C22）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L60, C26）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L60, C32）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L61, C28）：[syntax_check] Cannot find name 'Bag'.
+  - TS2304（L61, C32）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L61, C38）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L64, C26）：[syntax_check] Cannot find name 'EventEmitter'.
+  - TS2304（L74, C25）：[syntax_check] Cannot find name 'ResetStart'.
+  - TS2304（L90, C25）：[syntax_check] Cannot find name 'ResetEnd'.
+  - TS2304（L102, C23）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L102, C30）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L104, C34）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L124, C34）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L124, C53）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L124, C60）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L125, C29）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L128, C16）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L130, C24）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L131, C22）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L139, C27）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L142, C23）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L146, C13）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L146, C62）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L172, C26）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L177, C19）：[syntax_check] Cannot find name 'Events'.
+  - TS2339（L182, C67）：[syntax_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L195, C28）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L195, C40）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L214, C28）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L214, C43）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L218, C44）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L218, C53）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L228, C55）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L228, C64）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L236, C28）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L241, C35）：[syntax_check] Cannot find name 'IN'.
+  - TS2345（L245, C47）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L247, C47）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2304（L262, C29）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L263, C19）：[syntax_check] Cannot find name 'TaskRemove'.
+  - TS2304（L272, C31）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L272, C51）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L272, C69）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L276, C20）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L276, C32）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L276, C50）：[syntax_check] Cannot find name 'Tense'.
+  - TS2304（L277, C23）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L277, C38）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L279, C13）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L283, C31）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L283, C49）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L285, C13）：[syntax_check] Cannot find name 'truthToQuality'.
+  - TS2304（L286, C22）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L286, C33）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L286, C66）：[syntax_check] Cannot find name 'Task'.
+  - TS2345（L289, C34）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2304（L292, C22）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L298, C23）：[syntax_check] Cannot find name 'OUT'.
+  - TS2304（L299, C17）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L300, C27）：[syntax_check] Cannot find name 'DEBUG'.
+  - TS2345（L300, C40）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaObject'.
+  - TS2304（L301, C27）：[syntax_check] Cannot find name 'DEBUG'.
+  - TS2345（L301, C40）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaObject'.
+  - TS2339（L307, C49）：[syntax_check] Property 'locks' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/concurrent/index")'.
+  - TS2304（L314, C30）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L315, C19）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L318, C23）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L320, C25）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L325, C9）：[syntax_check] Cannot find name 'GeneralInferenceControl'.
+  - TS2304（L327, C25）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L337, C33）：[syntax_check] Cannot find name 'Task'.
+  - TS2314（L337, C54）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L337, C72）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L339, C19）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L339, C43）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L344, C38）：[syntax_check] Cannot find name 'ProcessTask'.
+  - TS2304（L346, C33）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L350, C75）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L351, C13）：[syntax_check] Cannot find name 'TemporalInferenceControl'.
+  - TS2304（L355, C19）：[syntax_check] Cannot find name 'Events'.
+  - TS2314（L365, C44）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L365, C62）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L367, C19）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L374, C47）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L378, C28）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L378, C39）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L383, C31）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L383, C42）：[syntax_check] Cannot find name 'Operator'.
+  - TS2322（L387, C13）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L389, C30）：[syntax_check] Cannot find name 'BaseEntry'.
+  - TS2304（L390, C20）：[syntax_check] Cannot find name 'BaseEntry'.
+  - TS2304（L398, C43）：[syntax_check] Cannot find name 'Concept'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +274,220 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Concept'.` @ L17
+- `[full_check] Cannot find name 'Resettable'.` @ L17
+- `[full_check] Cannot find name 'Emotions'.` @ L24
+- `[full_check] Cannot find name 'InternalExperience'.` @ L25
+- `[full_check] Cannot find name 'Task'.` @ L26
+- `[full_check] Cannot find name 'Bag'.` @ L33
+- `[full_check] Cannot find name 'Concept'.` @ L33
+- `[full_check] Cannot find name 'Term'.` @ L33
+- `[full_check] Cannot find name 'EventEmitter'.` @ L34
+- `[full_check] Cannot find name 'Operator'.` @ L37
+- `[full_check] Cannot find name 'Bag'.` @ L43
+- `[full_check] Cannot find name 'Task'.` @ L43
+- `[full_check] Cannot find name 'Sentence'.` @ L43
+- `[full_check] Cannot find name 'Bag'.` @ L46
+- `[full_check] Cannot find name 'Task'.` @ L46
+- `[full_check] Cannot find name 'Sentence'.` @ L46
+- `[full_check] Cannot find name 'Bag'.` @ L47
+- `[full_check] Cannot find name 'Task'.` @ L47
+- `[full_check] Cannot find name 'Sentence'.` @ L47
+- `[full_check] Cannot find name 'Bag'.` @ L58
+- `[full_check] Cannot find name 'Concept'.` @ L58
+- `[full_check] Cannot find name 'Term'.` @ L58
+- `[full_check] Cannot find name 'Bag'.` @ L59
+- `[full_check] Cannot find name 'Task'.` @ L59
+- `[full_check] Cannot find name 'Sentence'.` @ L59
+- `[full_check] Cannot find name 'Bag'.` @ L60
+- `[full_check] Cannot find name 'Task'.` @ L60
+- `[full_check] Cannot find name 'Sentence'.` @ L60
+- `[full_check] Cannot find name 'Bag'.` @ L61
+- `[full_check] Cannot find name 'Task'.` @ L61
+- `[full_check] Cannot find name 'Sentence'.` @ L61
+- `[full_check] Cannot find name 'EventEmitter'.` @ L64
+- `[full_check] Cannot find name 'ResetStart'.` @ L74
+- `[full_check] Cannot find name 'ResetEnd'.` @ L90
+- `[full_check] Cannot find name 'Term'.` @ L102
+- `[full_check] Cannot find name 'Concept'.` @ L102
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L104
+- `[full_check] Cannot find name 'BudgetValue'.` @ L124
+- `[full_check] Cannot find name 'Term'.` @ L124
+- `[full_check] Cannot find name 'Concept'.` @ L124
+- `[full_check] Cannot find name 'Interval'.` @ L125
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L128
+- `[full_check] Cannot find name 'Concept'.` @ L130
+- `[full_check] Cannot find name 'Concept'.` @ L131
+- `[full_check] Cannot find name 'Concept'.` @ L139
+- `[full_check] Cannot find name 'Events'.` @ L142
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L146
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L146
+- `[full_check] Cannot find name 'Task'.` @ L172
+- `[full_check] Cannot find name 'Events'.` @ L177
+- `[full_check] Cannot find name 'Timable'.` @ L195
+- `[full_check] Cannot find name 'Task'.` @ L195
+- `[full_check] Cannot find name 'Timable'.` @ L214
+- `[full_check] Cannot find name 'Task'.` @ L214
+- `[full_check] Cannot find name 'Timable'.` @ L218
+- `[full_check] Cannot find name 'Task'.` @ L218
+- `[full_check] Cannot find name 'Timable'.` @ L228
+- `[full_check] Cannot find name 'Task'.` @ L228
+- `[full_check] Cannot find name 'Stamp'.` @ L236
+- `[full_check] Cannot find name 'IN'.` @ L241
+- `[full_check] Cannot find name 'Task'.` @ L262
+- `[full_check] Cannot find name 'TaskRemove'.` @ L263
+- `[full_check] Cannot find name 'Timable'.` @ L272
+- `[full_check] Cannot find name 'Operation'.` @ L272
+- `[full_check] Cannot find name 'TruthValue'.` @ L272
+- `[full_check] Cannot find name 'Stamp'.` @ L276
+- `[full_check] Cannot find name 'Stamp'.` @ L276
+- `[full_check] Cannot find name 'Tense'.` @ L276
+- `[full_check] Cannot find name 'Sentence'.` @ L277
+- `[full_check] Cannot find name 'Sentence'.` @ L277
+- `[full_check] Cannot find name 'Symbols'.` @ L279
+- `[full_check] Cannot find name 'BudgetValue'.` @ L283
+- `[full_check] Cannot find name 'BudgetValue'.` @ L283
+- `[full_check] Cannot find name 'truthToQuality'.` @ L285
+- `[full_check] Cannot find name 'Task'.` @ L286
+- `[full_check] Cannot find name 'Task'.` @ L286
+- `[full_check] Cannot find name 'Task'.` @ L286
+- `[full_check] Cannot find name 'Task'.` @ L292
+- `[full_check] Cannot find name 'OUT'.` @ L298
+- `[full_check] Cannot find name 'Debug'.` @ L299
+- `[full_check] Cannot find name 'DEBUG'.` @ L300
+- `[full_check] Cannot find name 'DEBUG'.` @ L301
+- `[full_check] Cannot find name 'Concept'.` @ L314
+- `[full_check] Cannot find name 'Events'.` @ L315
+- `[full_check] Cannot find name 'Nar'.` @ L318
+- `[full_check] Cannot find name 'Events'.` @ L320
+- `[full_check] Cannot find name 'GeneralInferenceControl'.` @ L325
+- `[full_check] Cannot find name 'Events'.` @ L327
+- `[full_check] Cannot find name 'Task'.` @ L337
+- `[full_check] Cannot find name 'Timable'.` @ L337
+- `[full_check] Cannot find name 'DerivationContext'.` @ L339
+- `[full_check] Cannot find name 'DerivationContext'.` @ L339
+- `[full_check] Cannot find name 'ProcessTask'.` @ L344
+- `[full_check] Cannot find name 'Events'.` @ L346
+- `[full_check] Cannot find name 'Operation'.` @ L350
+- `[full_check] Cannot find name 'TemporalInferenceControl'.` @ L351
+- `[full_check] Cannot find name 'Events'.` @ L355
+- `[full_check] Cannot find name 'Timable'.` @ L365
+- `[full_check] Cannot find name 'Task'.` @ L367
+- `[full_check] Cannot find name 'Operator'.` @ L374
+- `[full_check] Cannot find name 'Operator'.` @ L378
+- `[full_check] Cannot find name 'Operator'.` @ L378
+- `[full_check] Cannot find name 'Operator'.` @ L383
+- `[full_check] Cannot find name 'Operator'.` @ L383
+- `[full_check] Cannot find name 'BaseEntry'.` @ L389
+- `[full_check] Cannot find name 'BaseEntry'.` @ L390
+- `[full_check] Cannot find name 'Concept'.` @ L398
+- `[syntax_check] Cannot find name 'Concept'.` @ L17
+- `[syntax_check] Cannot find name 'Resettable'.` @ L17
+- `[syntax_check] Cannot find name 'Emotions'.` @ L24
+- `[syntax_check] Cannot find name 'InternalExperience'.` @ L25
+- `[syntax_check] Cannot find name 'Task'.` @ L26
+- `[syntax_check] Cannot find name 'Bag'.` @ L33
+- `[syntax_check] Cannot find name 'Concept'.` @ L33
+- `[syntax_check] Cannot find name 'Term'.` @ L33
+- `[syntax_check] Cannot find name 'EventEmitter'.` @ L34
+- `[syntax_check] Cannot find name 'Operator'.` @ L37
+- `[syntax_check] Cannot find name 'Bag'.` @ L43
+- `[syntax_check] Cannot find name 'Task'.` @ L43
+- `[syntax_check] Cannot find name 'Sentence'.` @ L43
+- `[syntax_check] Cannot find name 'Bag'.` @ L46
+- `[syntax_check] Cannot find name 'Task'.` @ L46
+- `[syntax_check] Cannot find name 'Sentence'.` @ L46
+- `[syntax_check] Cannot find name 'Bag'.` @ L47
+- `[syntax_check] Cannot find name 'Task'.` @ L47
+- `[syntax_check] Cannot find name 'Sentence'.` @ L47
+- `[syntax_check] Cannot find name 'Bag'.` @ L58
+- `[syntax_check] Cannot find name 'Concept'.` @ L58
+- `[syntax_check] Cannot find name 'Term'.` @ L58
+- `[syntax_check] Cannot find name 'Bag'.` @ L59
+- `[syntax_check] Cannot find name 'Task'.` @ L59
+- `[syntax_check] Cannot find name 'Sentence'.` @ L59
+- `[syntax_check] Cannot find name 'Bag'.` @ L60
+- `[syntax_check] Cannot find name 'Task'.` @ L60
+- `[syntax_check] Cannot find name 'Sentence'.` @ L60
+- `[syntax_check] Cannot find name 'Bag'.` @ L61
+- `[syntax_check] Cannot find name 'Task'.` @ L61
+- `[syntax_check] Cannot find name 'Sentence'.` @ L61
+- `[syntax_check] Cannot find name 'EventEmitter'.` @ L64
+- `[syntax_check] Cannot find name 'ResetStart'.` @ L74
+- `[syntax_check] Cannot find name 'ResetEnd'.` @ L90
+- `[syntax_check] Cannot find name 'Term'.` @ L102
+- `[syntax_check] Cannot find name 'Concept'.` @ L102
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L104
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L124
+- `[syntax_check] Cannot find name 'Term'.` @ L124
+- `[syntax_check] Cannot find name 'Concept'.` @ L124
+- `[syntax_check] Cannot find name 'Interval'.` @ L125
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L128
+- `[syntax_check] Cannot find name 'Concept'.` @ L130
+- `[syntax_check] Cannot find name 'Concept'.` @ L131
+- `[syntax_check] Cannot find name 'Concept'.` @ L139
+- `[syntax_check] Cannot find name 'Events'.` @ L142
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L146
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L146
+- `[syntax_check] Cannot find name 'Task'.` @ L172
+- `[syntax_check] Cannot find name 'Events'.` @ L177
+- `[syntax_check] Cannot find name 'Timable'.` @ L195
+- `[syntax_check] Cannot find name 'Task'.` @ L195
+- `[syntax_check] Cannot find name 'Timable'.` @ L214
+- `[syntax_check] Cannot find name 'Task'.` @ L214
+- `[syntax_check] Cannot find name 'Timable'.` @ L218
+- `[syntax_check] Cannot find name 'Task'.` @ L218
+- `[syntax_check] Cannot find name 'Timable'.` @ L228
+- `[syntax_check] Cannot find name 'Task'.` @ L228
+- `[syntax_check] Cannot find name 'Stamp'.` @ L236
+- `[syntax_check] Cannot find name 'IN'.` @ L241
+- `[syntax_check] Cannot find name 'Task'.` @ L262
+- `[syntax_check] Cannot find name 'TaskRemove'.` @ L263
+- `[syntax_check] Cannot find name 'Timable'.` @ L272
+- `[syntax_check] Cannot find name 'Operation'.` @ L272
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L272
+- `[syntax_check] Cannot find name 'Stamp'.` @ L276
+- `[syntax_check] Cannot find name 'Stamp'.` @ L276
+- `[syntax_check] Cannot find name 'Tense'.` @ L276
+- `[syntax_check] Cannot find name 'Sentence'.` @ L277
+- `[syntax_check] Cannot find name 'Sentence'.` @ L277
+- `[syntax_check] Cannot find name 'Symbols'.` @ L279
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L283
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L283
+- `[syntax_check] Cannot find name 'truthToQuality'.` @ L285
+- `[syntax_check] Cannot find name 'Task'.` @ L286
+- `[syntax_check] Cannot find name 'Task'.` @ L286
+- `[syntax_check] Cannot find name 'Task'.` @ L286
+- `[syntax_check] Cannot find name 'Task'.` @ L292
+- `[syntax_check] Cannot find name 'OUT'.` @ L298
+- `[syntax_check] Cannot find name 'Debug'.` @ L299
+- `[syntax_check] Cannot find name 'DEBUG'.` @ L300
+- `[syntax_check] Cannot find name 'DEBUG'.` @ L301
+- `[syntax_check] Cannot find name 'Concept'.` @ L314
+- `[syntax_check] Cannot find name 'Events'.` @ L315
+- `[syntax_check] Cannot find name 'Nar'.` @ L318
+- `[syntax_check] Cannot find name 'Events'.` @ L320
+- `[syntax_check] Cannot find name 'GeneralInferenceControl'.` @ L325
+- `[syntax_check] Cannot find name 'Events'.` @ L327
+- `[syntax_check] Cannot find name 'Task'.` @ L337
+- `[syntax_check] Cannot find name 'Timable'.` @ L337
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L339
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L339
+- `[syntax_check] Cannot find name 'ProcessTask'.` @ L344
+- `[syntax_check] Cannot find name 'Events'.` @ L346
+- `[syntax_check] Cannot find name 'Operation'.` @ L350
+- `[syntax_check] Cannot find name 'TemporalInferenceControl'.` @ L351
+- `[syntax_check] Cannot find name 'Events'.` @ L355
+- `[syntax_check] Cannot find name 'Timable'.` @ L365
+- `[syntax_check] Cannot find name 'Task'.` @ L367
+- `[syntax_check] Cannot find name 'Operator'.` @ L374
+- `[syntax_check] Cannot find name 'Operator'.` @ L378
+- `[syntax_check] Cannot find name 'Operator'.` @ L378
+- `[syntax_check] Cannot find name 'Operator'.` @ L383
+- `[syntax_check] Cannot find name 'Operator'.` @ L383
+- `[syntax_check] Cannot find name 'BaseEntry'.` @ L389
+- `[syntax_check] Cannot find name 'BaseEntry'.` @ L390
+- `[syntax_check] Cannot find name 'Concept'.` @ L398
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -83,6 +539,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位
