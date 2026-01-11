@@ -1,7 +1,6 @@
 import { java, JavaObject, type short, type int, S } from "jree";
 
 
-
 /**
  * Table of inference rules, indexed by the TermLinks for the task and the
  * belief. Used in indirective processing of a task, to dispatch inference cases
@@ -49,54 +48,57 @@ export class RuleTables extends JavaObject {
              * if(belief_event != null) {
              * boolean found_overlap = false;
              * if(Stamp.baseOverlap(task.sentence.stamp.evidentialBase,
-             * belief_event.stamp.evidentialBase)) {
-             * found_overlap = true;
-             * }
-             * if(!found_overlap) { //temporal rules are inductive so no chance to succeed
-             * if there is an overlap
-             * //and since the temporal rule is relatively expensive the check here was
-             * good.
-             * Sentence inference_belief = belief;
-             * nal.setCurrentBelief(belief_event);
-             * nal.setTheNewStamp(task.sentence.stamp, belief_event.stamp,
-             * nal.memory.time());
-             * TemporalRules.temporalInduction(task.sentence, belief_event, nal, true);
-             * nal.setCurrentBelief(inference_belief);
-             * nal.setTheNewStamp(task.sentence.stamp, belief.stamp, nal.memory.time());
-             * }
-             * }
              */
+        }
+    }
 
-            // too restrictive, its checked for non-deductive inference rules in derivedTask
-            // (also for single prem)
-            nal.evidentialOverlap = Stamp.baseOverlap(task.sentence.stamp, belief.stamp);
-            if (nal.evidentialOverlap && (!task.sentence.isEternal() || !belief.isEternal())) {
-                return; // only allow for eternal reasoning for now to prevent derived event floods
+    protected static EnumFigureSide = class EnumFigureSide extends java.lang.Enum<EnumFigureSide> {
+        public static readonly LEFT: EnumFigureSide = new class extends EnumFigureSide {
+        }(S("LEFT"), 0);
+        public static readonly RIGHT: EnumFigureSide = new class extends EnumFigureSide {
+        }(S("RIGHT"), 1);
+    };
+
+    /**
+     * converts the side of a figure to a zero based index - which determines the
+     * side of the Statement
+     *
+     * a figure is a encoding for the sides
+     *
+     * @param figure       figure encoding as 11 or 12 or 21 or 22
+     * @param sideOfFigure side
+     * @return
+     */
+    private static retSideFromFigure(figure: int, sideOfFigure: RuleTables.EnumFigureSide): Statement.EnumStatementSide {
+        if (sideOfFigure === RuleTables.EnumFigureSide.LEFT) {
+            switch (figure) {
+                case 11:
+                    return Statement.EnumStatementSide.SUBJECT;
+                case 12:
+                    return Statement.EnumStatementSide.SUBJECT;
+                case 21:
+                    return Statement.EnumStatementSide.PREDICATE;
+                case 22:
+                    return Statement.EnumStatementSide.PREDICATE;
+
+                default:
+                    throw new java.lang.IllegalArgumentException("figure is invalid");
             }
+        } else {
+            switch (figure) {
+                case 11:
+                    return Statement.EnumStatementSide.PREDICATE;
+                case 12:
+                    return Statement.EnumStatementSide.PREDICATE;
+                case 21:
+                    return Statement.EnumStatementSide.SUBJECT;
+                case 22:
+                    return Statement.EnumStatementSide.SUBJECT;
 
-            nal.emit(Events.BeliefReason.class, belief, beliefTerm, taskTerm, nal);
-
-            if (LocalRules.match(task, belief, beliefConcept, nal)) { // new tasks resulted from the match, so return
-                return;
+                default:
+                    throw new java.lang.IllegalArgumentException("figure is invalid");
             }
         }
-
-        // current belief and task may have changed, so set again:
-        nal.setCurrentBelief(belief);
-        nal.setCurrentTask(task);
-
-        // put here since LocalRules match should be possible even if the belief is
-        // foreign
-        if (equalSubTermsInRespectToImageAndProduct(taskTerm, beliefTerm))
-            return;
-
-        /*
-         * if ((memory.getNewTaskCount() > 0) && taskSentence.isJudgment()) {
-         * return;
-         * }
-         */
-
-        RuleTables.applyRuleTable(tLink, bLink, nal, task, taskSentence, taskTerm, beliefTerm, belief);
     }
 
     private static applyRuleTable(tLink: TaskLink, bLink: TermLink, nal: DerivationContext, task: Task,
@@ -565,62 +567,9 @@ export class RuleTables extends JavaObject {
                     break;
 
                 default:
-
             }
         }
     }
-
-    /**
-     * converts the side of a figure to a zero based index - which determines the
-     * side of the Statement
-     *
-     * a figure is a encoding for the sides
-     *
-     * @param figure       figure encoding as 11 or 12 or 21 or 22
-     * @param sideOfFigure side
-     * @return
-     */
-    private static retSideFromFigure(figure: int, sideOfFigure: RuleTables.EnumFigureSide): Statement.EnumStatementSide {
-        if (sideOfFigure === RuleTables.EnumFigureSide.LEFT) {
-            switch (figure) {
-                case 11:
-                    return Statement.EnumStatementSide.SUBJECT;
-                case 12:
-                    return Statement.EnumStatementSide.SUBJECT;
-                case 21:
-                    return Statement.EnumStatementSide.PREDICATE;
-                case 22:
-                    return Statement.EnumStatementSide.PREDICATE;
-
-                default:
-
-            }
-        } else {
-            switch (figure) {
-                case 11:
-                    return Statement.EnumStatementSide.SUBJECT;
-                case 12:
-                    return Statement.EnumStatementSide.PREDICATE;
-                case 21:
-                    return Statement.EnumStatementSide.SUBJECT;
-                case 22:
-                    return Statement.EnumStatementSide.PREDICATE;
-
-                default:
-
-            }
-        }
-
-        throw new java.lang.IllegalArgumentException("figure is invalid");
-    }
-
-    protected static EnumFigureSide = class EnumFigureSide extends java.lang.Enum<EnumFigureSide> {
-        public static readonly LEFT: EnumFigureSide = new class extends EnumFigureSide {
-        }(S`LEFT`, 0);
-        public static readonly RIGHT: EnumFigureSide = new class extends EnumFigureSide {
-        }(S`RIGHT`, 1),
-    };
-
 
     /**
      * Syllogistic rules whose both premises are on the same symmetric relation
@@ -757,7 +706,7 @@ export class RuleTables extends JavaObject {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new java.lang.IllegalArgumentException(S("Invalid number of arguments"));
             }
         }
     }
@@ -901,12 +850,12 @@ export class RuleTables extends JavaObject {
                     StructuralRules.structuralCompose1(compound, index, statement, nal);
                     if (!(compound instanceof SetExt || compound instanceof SetInt || compound instanceof Negation
                         || compound instanceof Conjunction || compound instanceof Disjunction)) {
-                        StructuralRules.structuralCompose2(compound, index, statement, side, nal);
-                    } // {A --> B, A @ (A&C)} |- (A&C) --> (B&C)
+                        StructuralRules.structuralCompose2(compound, index, statement, side, nal); // {A --> B, A @ (A&C)} |- (A&C) --> (B&C)
+                    }
                 } else if (!(compound instanceof Negation || compound instanceof Conjunction
                     || compound instanceof Disjunction)) {
-                    StructuralRules.structuralCompose2(compound, index, statement, side, nal);
-                } // {A <-> B, A @ (A&C)} |- (A&C) <-> (B&C)
+                    StructuralRules.structuralCompose2(compound, index, statement, side, nal); // {A <-> B, A @ (A&C)} |- (A&C) <-> (B&C)
+                }
             }
         }
     }
@@ -995,5 +944,3 @@ export class RuleTables extends JavaObject {
 export namespace RuleTables {
     export type EnumFigureSide = InstanceType<typeof RuleTables.EnumFigureSide>;
 }
-
-

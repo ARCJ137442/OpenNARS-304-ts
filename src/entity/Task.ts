@@ -219,7 +219,7 @@ export class Task extends Item<Sentence> {
         public static readonly INPUT: EnumType = new class extends EnumType {
         }(S`INPUT`, 0);
         public static readonly DERIVED: EnumType = new class extends EnumType {
-        }(S`DERIVED`, 1),
+        }(S`DERIVED`, 1);
     };
 
 }

@@ -193,8 +193,11 @@ export class AttentionMetric extends JavaObject {
             } finally {
                 throwResourceError(error);
             }
+        } catch (ex) {
+            ex.printStackTrace();
+        } finally {
+            // 确保 catch 块完整性
         }
-
         return res;
     }
 

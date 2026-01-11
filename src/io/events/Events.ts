@@ -297,7 +297,7 @@ this.when = when;
     };
 
 
-    public abstract static ParametricInferenceEvent =  class ParametricInferenceEvent<O> extends Events.InferenceEvent {
+    public abstract static ParametricInferenceEvent =  class ParametricInferenceEvent<O> extends java.util.EventObject {
         public readonly  object:  O;
 
         public  constructor(object: O, when: long) {
@@ -305,56 +305,7 @@ this.when = when;
             this.object = object;
         }
 
-    };
-
-
+    }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
-export namespace Events {
-	export type CyclesStart = InstanceType<typeof Events.CyclesStart>;
-	export type CyclesEnd = InstanceType<typeof Events.CyclesEnd>;
-	export type CycleStart = InstanceType<typeof Events.CycleStart>;
-	export type CycleEnd = InstanceType<typeof Events.CycleEnd>;
-	export type WorkCycleStart = InstanceType<typeof Events.WorkCycleStart>;
-	export type WorkCycleEnd = InstanceType<typeof Events.WorkCycleEnd>;
-	export type ResetStart = InstanceType<typeof Events.ResetStart>;
-	export type ResetEnd = InstanceType<typeof Events.ResetEnd>;
-	export type ConceptNew = InstanceType<typeof Events.ConceptNew>;
-	export type Perceive = InstanceType<typeof Events.Perceive>;
-	export type ConceptForget = InstanceType<typeof Events.ConceptForget>;
-	export type EnactableExplainationAdd = InstanceType<typeof Events.EnactableExplainationAdd>;
-	export type EnactableExplainationRemove = InstanceType<typeof Events.EnactableExplainationRemove>;
-	export type ConceptBeliefAdd = InstanceType<typeof Events.ConceptBeliefAdd>;
-	export type ConceptBeliefRemove = InstanceType<typeof Events.ConceptBeliefRemove>;
-	export type ConceptGoalAdd = InstanceType<typeof Events.ConceptGoalAdd>;
-	export type ConceptGoalRemove = InstanceType<typeof Events.ConceptGoalRemove>;
-	export type ConceptQuestionAdd = InstanceType<typeof Events.ConceptQuestionAdd>;
-	export type ConceptQuestionRemove = InstanceType<typeof Events.ConceptQuestionRemove>;
-	export type UnexecutableGoal = InstanceType<typeof Events.UnexecutableGoal>;
-	export type UnexecutableOperation = InstanceType<typeof Events.UnexecutableOperation>;
-	export type NewTaskExecution = InstanceType<typeof Events.NewTaskExecution>;
-	export type InduceSucceedingEvent = InstanceType<typeof Events.InduceSucceedingEvent>;
-	export type TermLinkAdd = InstanceType<typeof Events.TermLinkAdd>;
-	export type TermLinkRemove = InstanceType<typeof Events.TermLinkRemove>;
-	export type TaskLinkAdd = InstanceType<typeof Events.TaskLinkAdd>;
-	export type TaskLinkRemove = InstanceType<typeof Events.TaskLinkRemove>;
-	export type Answer = InstanceType<typeof Events.Answer>;
-	export type Unsolved = InstanceType<typeof Events.Unsolved>;
-	export type TrySolution = InstanceType<typeof Events.TrySolution>;
-	export type ConceptFire = InstanceType<typeof Events.ConceptFire>;
-	export type TaskImmediateProcess = InstanceType<typeof Events.TaskImmediateProcess>;
-	export type TermLinkSelect = InstanceType<typeof Events.TermLinkSelect>;
-	export type BeliefSelect = InstanceType<typeof Events.BeliefSelect>;
-	export type BeliefReason = InstanceType<typeof Events.BeliefReason>;
-	export type ConceptUnification = InstanceType<typeof Events.ConceptUnification>;
-	export type TaskAdd = InstanceType<typeof Events.TaskAdd>;
-	export type TaskRemove = InstanceType<typeof Events.TaskRemove>;
-	export type TaskDerive = InstanceType<typeof Events.TaskDerive>;
-	export type PluginsChange = InstanceType<typeof Events.PluginsChange>;
-	export type ConceptDirectProcessedTask = InstanceType<typeof Events.ConceptDirectProcessedTask>;
-	export type InferenceEvent = InstanceType<typeof Events.InferenceEvent>;
-	export type ParametricInferenceEvent<<O>> = InstanceType<typeof Events.ParametricInferenceEvent<O>>;
-}
-
-
+export type ParametricInferenceEvent<O> = InstanceType<typeof Events.ParametricInferenceEvent<O>>;

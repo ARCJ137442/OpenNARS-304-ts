@@ -1,7 +1,5 @@
 import { java, S, type int, type float, type double, type long } from "jree";
 
-
-
 /**
  * All truth-value (and desire-value) functions used in inference rules
  *
@@ -40,7 +38,7 @@ export class TruthFunctions extends UtilityFunctions {
         public static readonly REDUCEDISJUNCTIONREV: EnumType = new class extends EnumType {
         }(S`REDUCEDISJUNCTIONREV`, 13);
         public static readonly REDUCECONJUNCTIONNEG: EnumType = new class extends EnumType {
-        }(S`REDUCECONJUNCTIONNEG`, 14),
+        }(S`REDUCECONJUNCTIONNEG`, 14);
     };
 
 

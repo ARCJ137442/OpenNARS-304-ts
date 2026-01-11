@@ -8,7 +8,7 @@ import { java, JavaObject, S } from "jree";
 // Adapted from
 // http://www.recursiverobot.com/post/86215392884/witness-a-simple-android-and-java-event-emitter
 // TODO separate this into a single-thread and multithread implementation
-export class EventEmitter extends JavaObject {
+export class EventEmitter<O> extends java.util.Observable {
 
     private readonly events: java.util.Map<java.lang.Class<unknown>, java.util.List<EventEmitter.EventObserver>>;
 
@@ -110,8 +110,9 @@ export class EventEmitter extends JavaObject {
      * @param o
      */
     public off(event: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void {
-        if (null === event | === o)
+        if (null === event || null === o) {
             throw new java.lang.IllegalStateException("Invalid parameter");
+        }
 
         if (!this.events.containsKey(event))
             throw new java.lang.IllegalStateException("Unknown event: " + event);
@@ -127,7 +128,7 @@ export class EventEmitter extends JavaObject {
 
     /** for enabling many events at the same time */
     public set(o: EventEmitter.EventObserver, enable: boolean, ...events: java.lang.Class<unknown>[]): void {
-        for (let c of this.events) {
+        for (let c of events) {
             if (enable)
                 this.on(c, o);
             else
@@ -155,6 +156,9 @@ export namespace EventEmitter {
         event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void;
     }
 
+    export class DefaultEventObserver extends java.util.Observer implements EventObserver {
+        public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+            this.update(null, args);
+        }
+    }
 }
-
-

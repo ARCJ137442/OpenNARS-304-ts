@@ -138,7 +138,7 @@ export class NarNode extends JavaObject implements EventObserver {
                     && (term as CompoundTerm).containsTermRecursively(target.mustContainTerm);
                 if (!searchTerm || atomicEqualsSearched || compoundContainsSearched) {
                     let packet: java.net.DatagramPacket = new java.net.DatagramPacket(serializedMessage, serializedMessage.length,
-                        target.targetAddress, target.targetPort);
+                        target.targetAddress, target.port);
                     target.sendSocket.send(packet);
                     // System.out.println("task sent:" + t);
                 }
@@ -172,7 +172,7 @@ export class NarNode extends JavaObject implements EventObserver {
                 let containsFound: boolean = searchTerm && input.contains(target.mustContainTerm.toString());
                 if (!searchTerm || containsFound) {
                     let packet: java.net.DatagramPacket = new java.net.DatagramPacket(serializedMessage, serializedMessage.length,
-                        target.targetAddress, target.targetPort);
+                        target.targetAddress, target.port);
                     target.sendSocket.send(packet);
                     // System.out.println("narsese sent:" + input);
                 }
@@ -217,14 +217,14 @@ export class NarNode extends JavaObject implements EventObserver {
             this.targetAddress = java.net.InetAddress.getByName(targetIP);
             this.sendSocket = new java.net.DatagramSocket();
             this.threshold = threshold;
-            this.targetPort = targetPort;
+            this.port = targetPort;
             this.mustContainTerm = mustContainTerm;
             this.sendInput = sendInput;
         }
 
         protected readonly threshold: float;
         protected readonly sendSocket: java.net.DatagramSocket;
-        protected readonly targetPort: int;
+        protected readonly port: int;
         protected readonly targetAddress: java.net.InetAddress;
         protected readonly mustContainTerm: Term;
         protected readonly sendInput: boolean;
@@ -290,48 +290,28 @@ export class NarNode extends JavaObject implements EventObserver {
         this.receiveSocket.receive(packet);
         if (packet.getLength() > 0) {
             try {
+                // This holds the final error to throw (if any).
+                let error: java.lang.Throwable | undefined;
+
+                const iStream: java.io.ObjectInputStream = new java.io.ObjectInputStream(new java.io.ByteArrayInputStream(recBytes));
                 try {
-                    // This holds the final error to throw (if any).
-                    let error: java.lang.Throwable | undefined;
-
-                    const iStream: java.io.ObjectInputStream = new java.io.ObjectInputStream(new java.io.ByteArrayInputStream(recBytes))
                     try {
-                        try {
-                            let msg: java.lang.Object = iStream.readObject();
-                            if (msg instanceof Task || msg instanceof java.lang.String) {
-                                return msg;
-                            }
+                        let msg: java.lang.Object = iStream.readObject();
+                        if (msg instanceof Task || msg instanceof java.lang.String) {
+                            return msg;
                         }
-                        finally {
-                            error = closeResources([iStream]);
-                        }
-                    } catch (e) {
-                        error = handleResourceError(e, error);
                     } finally {
-                        throwResourceError(error);
+                        error = closeResources([iStream]);
                     }
+                } catch (e) {
+                    error = handleResourceError(e, error);
+                } finally {
+                    throwResourceError(error);
                 }
-
-                // not an object NarNode could digest
             } catch (ex) {
-                if (ex instanceof java.lang.Exception) {
-                    // object wasn't retrieved, maybe it wasn't one
-                } else {
-                    throw ex;
-                }
+                throw new java.lang.RuntimeException(ex);
             }
-            // ok let's assume it's a raw Narsese string encoding not a Java object, the
-            // parser will tell
-            return new java.lang.String(recBytes, java.nio.charset.StandardCharsets.UTF_8).trim();
         }
         return null;
     }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
-export namespace NarNode {
-    export type EventReceivedTask = InstanceType<NarNode["EventReceivedTask"]>;
-    export type TargetNar = InstanceType<typeof NarNode.TargetNar>;
-}
-
-
