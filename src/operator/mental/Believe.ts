@@ -2,6 +2,7 @@ import { java, type float } from "jree";
 import { Operator } from "../Operator";
 import { Operation } from "../Operation";
 import { Task } from "../../entity/Task";
+import { truthFromWordTerm } from "../../entity/TruthValueTerm";
 import { Memory } from "../../storage/Memory";
 import { Timable } from "../../interfaces/Timable";
 
@@ -29,7 +30,7 @@ export class Believe extends Operator {
 
         let content: Term = args[1];
 
-        let truth: TruthValue = TruthValue.fromWordTerm(memory.narParameters, args[2]);
+        let truth: TruthValue = truthFromWordTerm(memory.narParameters, args[2]);
         let sentence: Sentence = new Sentence(
             content,
             Symbols.JUDGMENT_MARK,

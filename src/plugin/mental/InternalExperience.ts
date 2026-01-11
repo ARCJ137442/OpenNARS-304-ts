@@ -1,4 +1,5 @@
 import { java, JavaObject, type float, type double, type int, S } from "jree";
+import { truthToWordTerm } from "../../entity/TruthValueTerm";
 
 
 
@@ -200,7 +201,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         arg[0] = Term.SELF;
         arg[1] = s.getTerm();
         if (s.truth !== null) {
-            arg[2] = s.projection(time.time(), time.time(), mem).truth.toWordTerm();
+            arg[2] = truthToWordTerm(s.projection(time.time(), time.time(), mem).truth);
         }
 
         // Operation.make ?

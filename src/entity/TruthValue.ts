@@ -12,10 +12,6 @@ import { Parameters } from "../main/Parameters";
  */
 export class TruthValue extends JavaObject implements java.lang.Cloneable, java.io.Serializable { // implements Cloneable {
 
-    protected static readonly Truth_TRUE: Term = new Term("TRUE");
-    protected static readonly Truth_FALSE: Term = new Term("FALSE");
-    protected static readonly Truth_UNSURE: Term = new Term("UNSURE");
-
     /**
      * character that marks the two ends of a truth value
      */
@@ -169,6 +165,10 @@ export class TruthValue extends JavaObject implements java.lang.Cloneable, java.
         return this.analytic;
     }
 
+    public getNarParameters(): Parameters {
+        return this.narParameters;
+    }
+
     /**
      * Set it to analytic truth
      */
@@ -297,30 +297,6 @@ export class TruthValue extends JavaObject implements java.lang.Cloneable, java.
      */
     public override  toString(): java.lang.String {
         return this.name().toString();
-    }
-
-    public toWordTerm(): Term {
-        let e: float = this.getExpectation();
-        let t: float = this.narParameters.DEFAULT_CREATION_EXPECTATION;
-        if (e > t) {
-            return TruthValue.Truth_TRUE;
-        }
-        if (e < 1 - t) {
-            return TruthValue.Truth_FALSE;
-        }
-        return TruthValue.Truth_UNSURE;
-    }
-
-    public static fromWordTerm(narParameters: Parameters, term: Term): TruthValue {
-        if (term.equals(TruthValue.Truth_TRUE)) {
-            return new TruthValue(1.0, narParameters.DEFAULT_JUDGMENT_CONFIDENCE, narParameters);
-        } else if (term.equals(TruthValue.Truth_FALSE)) {
-            return new TruthValue(0.0, narParameters.DEFAULT_JUDGMENT_CONFIDENCE, narParameters);
-        } else if (term.equals(TruthValue.Truth_UNSURE)) {
-            return new TruthValue(0.5, narParameters.DEFAULT_JUDGMENT_CONFIDENCE / 2.0, narParameters);
-        } else {
-            return null;
-        }
     }
 
     // * 📝【2024-05-08 20:49:46】这个函数并无所用之处
