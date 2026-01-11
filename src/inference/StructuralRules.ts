@@ -655,7 +655,7 @@ export class StructuralRules extends JavaObject {
             }
             if (curS.isGoal()) {
                 truth = TruthFunctions.desireStrong(nal.getCurrentTask().sentence.truth,
-                    new TruthValue(1.0, nal.narParameters.reliance, nal.narParameters), nal.narParameters);
+                    TruthValue.fromFrequencyConfidence(1.0, nal.narParameters.reliance, nal.narParameters), nal.narParameters);
             }
             let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
             nal.singlePremiseTask(cont, truth, budget);
@@ -698,7 +698,7 @@ export class StructuralRules extends JavaObject {
             }
             if (curS.isGoal()) {
                 truth = TruthFunctions.desireStrong(curS.truth,
-                    new TruthValue(1.0, nal.narParameters.reliance, nal.narParameters), nal.narParameters);
+                    TruthValue.fromFrequencyConfidence(1.0, nal.narParameters.reliance, nal.narParameters), nal.narParameters);
             }
             StructuralRules.deriveSequenceTask(nal, conjCompound, newTermLeft, truth);
             StructuralRules.deriveSequenceTask(nal, conjCompound, newTermRight, truth);

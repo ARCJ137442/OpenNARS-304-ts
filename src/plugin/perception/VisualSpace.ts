@@ -45,15 +45,15 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
 
     public AbductionOrComparisonTo(obj: ImaginationSpace, comparison: boolean): TruthValue {
         if (!(obj instanceof VisualSpace)) {
-            return new TruthValue(1.0, 0.0, this.nar.narParameters);
+            return TruthValue.fromFrequencyConfidence(1.0, 0.0, this.nar.narParameters);
         }
         let other: VisualSpace = obj as VisualSpace;
         let kh: double = (other.height as float) / (this.height as double);
         let kw: double = (other.width as float) / (this.width as double);
-        let bestShiftTruth: TruthValue = new TruthValue(0.5, 0.01, this.nar.narParameters);
+        let bestShiftTruth: TruthValue = TruthValue.fromFrequencyConfidence(0.5, 0.01, this.nar.narParameters);
         for (let oj: int = -this.height; oj < this.height; oj++) {
             for (let oi: int = -this.width; oi < this.width; oi++) {
-                let sim: TruthValue = new TruthValue(0.5, 0.01, this.nar.narParameters);
+                let sim: TruthValue = TruthValue.fromFrequencyConfidence(0.5, 0.01, this.nar.narParameters);
                 for (let i: int = 0; i < this.height; i++) {
                     for (let j: int = 0; j < this.width; j++) {
                         let transi: int = i + oi;
@@ -63,9 +63,9 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
                         }
                         let i2: int = ((i as double) * kh) as int;
                         let j2: int = ((j as double) * kw) as int;
-                        let t1: TruthValue = new TruthValue(this.cropped[transi][transj],
+                        let t1: TruthValue = TruthValue.fromFrequencyConfidence(this.cropped[transi][transj],
                             this.nar.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, this.nar.narParameters);
-                        let t2: TruthValue = new TruthValue(other.cropped[i2][j2],
+                        let t2: TruthValue = TruthValue.fromFrequencyConfidence(other.cropped[i2][j2],
                             this.nar.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, this.nar.narParameters);
                         let t3: TruthValue = comparison ? TruthFunctions.comparison(t1, t2, this.nar.narParameters)
                             : TruthFunctions.abduction(t1, t2, this.nar.narParameters);

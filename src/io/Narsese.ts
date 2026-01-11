@@ -163,7 +163,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
                 confidence = java.lang.Float.parseFloat(s.substring(i + 1));
             }
         }
-        return new TruthValue(frequency, confidence, this.memory.narParameters);
+        return TruthValue.fromFrequencyConfidence(frequency, confidence, this.memory.narParameters);
     }
 
     /**

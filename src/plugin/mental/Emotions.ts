@@ -147,7 +147,7 @@ export class Emotions extends JavaObject implements Plugin {
             let predicate: Term = SetInt.make(new Term("satisfied"));
             let subject: Term = Term.SELF;
             let inh: Inheritance = Inheritance.make(subject, predicate);
-            let truth: TruthValue = new TruthValue(this.happy, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
+            let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.happy, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
                 nal.narParameters);
             let s: Sentence = new Sentence(inh, Symbols.JUDGMENT_MARK, truth, new Stamp(nal.time, nal.memory));
             s.stamp.setOccurrenceTime(nal.time.time());
@@ -162,7 +162,7 @@ export class Emotions extends JavaObject implements Plugin {
             /*
              * if(Parameters.REFLECT_META_HAPPY_GOAL) { //remind on the goal whenever
              * happyness changes, should suffice for now
-             * TruthValue truth2=new TruthValue(1.0f,Parameters.DEFAULT_GOAL_CONFIDENCE);
+             * TruthValue truth2=TruthValue.fromFrequencyConfidence(1.0f,Parameters.DEFAULT_GOAL_CONFIDENCE);
              * Sentence s2=new Sentence(inh,Symbols.GOAL_MARK,truth2,new Stamp(nal.memory));
              * s2.stamp.setOccurrenceTime(nal.memory.time());
              * Task t2=new Task(s2,new
@@ -235,7 +235,7 @@ export class Emotions extends JavaObject implements Plugin {
             let predicate: Term = SetInt.make(new Term("busy"));
             let subject: Term = new Term("SELF");
             let inh: Inheritance = Inheritance.make(subject, predicate);
-            let truth: TruthValue = new TruthValue(this.busy, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
+            let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.busy, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
                 nal.narParameters);
             let s: Sentence = new Sentence(
                 inh,

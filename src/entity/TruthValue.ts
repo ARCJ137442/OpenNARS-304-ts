@@ -1,308 +1,163 @@
-import { java, JavaObject, type char, type float, type double, type int, S } from "jree";
-import { Symbols } from "../io/Symbols";
-import { Parameters } from "../main/Parameters";
+export interface TruthParameters {
+    TRUTH_EPSILON: number;
+    DEFAULT_CREATION_EXPECTATION: number;
+    DEFAULT_JUDGMENT_CONFIDENCE: number;
+}
 
+type StringBuilderLike = {
+    append(value: string): StringBuilderLike;
+};
 
+const DELIMITER: string = "%";
+const SEPARATOR: string = ";";
+
+function formatN2(value: number): string {
+    if (value < 0 || value > 1.0) {
+        throw new Error("Invalid value for TruthValue formatN2");
+    }
+    const hundredths = Math.floor(value * 100 + 0.5);
+    switch (hundredths) {
+        case 100:
+            return "1.00";
+        case 99:
+            return "0.99";
+        case 90:
+            return "0.90";
+        case 0:
+            return "0.00";
+        default:
+    }
+    if (hundredths > 9) {
+        const tens = Math.floor(hundredths / 10);
+        return `0.${tens}${hundredths % 10}`;
+    }
+    return `0.0${hundredths}`;
+}
 
 /**
- * Truth is a tuple of frequency and confidence as defined by NARS theory
- *
- * @author Pei Wang
- * @author Patrick Hammer
+ * Truth is a tuple of frequency and confidence as defined by NARS theory.
  */
-export class TruthValue extends JavaObject implements java.lang.Cloneable, java.io.Serializable { // implements Cloneable {
+export class TruthValue {
+    private frequency: number;
+    private confidence: number;
+    private analytic: boolean;
+    private narParameters: TruthParameters;
 
-    /**
-     * character that marks the two ends of a truth value
-     */
-    private static readonly DELIMITER: char = Symbols.TRUTH_VALUE_MARK;
-    /**
-     * character that separates the factors in a truth value
-     */
-    private static readonly SEPARATOR: char = Symbols.VALUE_SEPARATOR;
-    /**
-     * frequency factor of the truth value
-     */
-    private frequency: float;
-    /**
-     * confidence factor of the truth value
-     */
-    private confidence: double;
-    /**
-     * Whether the truth value is derived from a definition
-     */
-    private analytic: boolean = false;
-
-    private narParameters: Parameters;
-
-    /**
-     * @param narParameters parameters of the reasoner
-     */
-    public constructor(narParameters: Parameters);
-
-    /**
-     * Constructor with a TruthValue to clone
-     *
-     * @param v truth value to be cloned
-     */
-    public constructor(v: TruthValue);
-
-    /**
-     * Constructor
-     *
-     * @param f             frequency value
-     * @param c             confidence value
-     * @param narParameters parameters of the reasoner
-     */
-    public constructor(f: float, c: double, narParameters: Parameters);
-
-    /**
-     * Constructor
-     *
-     * @param f             frequency value
-     * @param c             confidence value
-     * @param isAnalytic    is the truth value an analytic one?
-     * @param narParameters parameters of the reasoner
-     */
-    public constructor(f: float, c: double, isAnalytic: boolean, narParameters: Parameters);
-    public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 1: {
-                const [narParameters] = args as [Parameters];
-
-
-                this(0, 0, narParameters);
-
-
-                break;
-            }
-
-            case 1: {
-                const [v] = args as [TruthValue];
-
-
-                super();
-                this.narParameters = v.narParameters;
-                this.frequency = v.getFrequency();
-                this.confidence = v.getConfidence();
-                this.analytic = v.getAnalytic();
-
-
-                break;
-            }
-
-            case 3: {
-                const [f, c, narParameters] = args as [float, double, Parameters];
-
-
-                this(f, c, false, narParameters);
-
-
-                break;
-            }
-
-            case 4: {
-                const [f, c, isAnalytic, narParameters] = args as [float, double, boolean, Parameters];
-
-
-                super();
-                this.narParameters = narParameters;
-                this.setFrequency(f);
-                this.setConfidence(c);
-                this.setAnalytic(isAnalytic);
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
-        }
+    public constructor(frequency: number, confidence: number, analytic: boolean, narParameters: TruthParameters) {
+        this.narParameters = narParameters;
+        this.analytic = analytic;
+        this.setFrequency(frequency);
+        this.setConfidence(confidence);
     }
 
+    public static fromParameters(narParameters: TruthParameters): TruthValue {
+        return new TruthValue(0, 0, false, narParameters);
+    }
 
-    /**
-     * returns the frequency value
-     *
-     * @return frequency value
-     */
-    public getFrequency(): float {
+    public static fromFrequencyConfidence(
+        frequency: number,
+        confidence: number,
+        narParameters: TruthParameters,
+        analytic: boolean = false
+    ): TruthValue {
+        return new TruthValue(frequency, confidence, analytic, narParameters);
+    }
+
+    public static fromTruthValue(value: TruthValue): TruthValue {
+        return new TruthValue(value.getFrequency(), value.getConfidence(), value.getAnalytic(), value.getNarParameters());
+    }
+
+    public getFrequency(): number {
         return this.frequency;
     }
 
-    /**
-     * returns the confidence value
-     *
-     * @return confidence value
-     */
-    public getConfidence(): double {
+    public getConfidence(): number {
         return this.confidence;
     }
 
-    public setFrequency(f: float): TruthValue {
-        this.frequency = f;
-        return this;
-    }
-
-    public setConfidence(c: double): TruthValue {
-        let max_confidence: double = 1.0 - this.narParameters.TRUTH_EPSILON;
-        this.confidence = (c < max_confidence) ? c : max_confidence;
-        return this;
-    }
-
-    public mulConfidence(mul: float): TruthValue {
-        let max_confidence: double = 1.0 - this.narParameters.TRUTH_EPSILON;
-        let c: double = this.confidence * mul;
-        this.confidence = (c < max_confidence) ? c : max_confidence;
-        return this;
-    }
-
-    /**
-     * @return is it a analytic truth value?
-     */
     public getAnalytic(): boolean {
         return this.analytic;
     }
 
-    public getNarParameters(): Parameters {
+    public getNarParameters(): TruthParameters {
         return this.narParameters;
     }
 
-    /**
-     * Set it to analytic truth
-     */
-    public setAnalytic(): void;
-
-    public setAnalytic(a: boolean): TruthValue;
-    public setAnalytic(...args: unknown[]): void | TruthValue {
-        switch (args.length) {
-            case 0: {
-
-                this.analytic = true;
-
-
-                break;
-            }
-
-            case 1: {
-                const [a] = args as [boolean];
-
-
-                this.analytic = a;
-                return this;
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
-        }
+    public setFrequency(frequency: number): TruthValue {
+        this.frequency = frequency;
+        return this;
     }
 
-
-    /**
-     * Calculate the expectation value of the truth value
-     *
-     * @return expectation value
-     */
-    public getExpectation(): float {
-        return (this.confidence as float * (this.frequency - 0.5) + 0.5);
+    public setConfidence(confidence: number): TruthValue {
+        const maxConfidence = 1.0 - this.narParameters.TRUTH_EPSILON;
+        this.confidence = confidence < maxConfidence ? confidence : maxConfidence;
+        return this;
     }
 
-    /**
-     * Calculate the absolute difference of the expectation value and that of a
-     * given truth value
-     *
-     * @param t given value
-     * @return absolute difference
-     */
-    public getExpDifAbs(t: TruthValue): float {
-        return java.lang.Math.abs(this.getExpectation() - t.getExpectation());
+    public mulConfidence(mul: number): TruthValue {
+        const maxConfidence = 1.0 - this.narParameters.TRUTH_EPSILON;
+        const confidence = this.confidence * mul;
+        this.confidence = confidence < maxConfidence ? confidence : maxConfidence;
+        return this;
     }
 
-    /**
-     * Check if the truth value is negative
-     *
-     * @return True if the frequency is less than 1/2
-     */
+    public setAnalytic(analytic: boolean = true): TruthValue {
+        this.analytic = analytic;
+        return this;
+    }
+
+    public getExpectation(): number {
+        return this.confidence * (this.frequency - 0.5) + 0.5;
+    }
+
+    public getExpDifAbs(value: TruthValue): number {
+        return Math.abs(this.getExpectation() - value.getExpectation());
+    }
+
     public isNegative(): boolean {
-        return this.getFrequency() < 0.5;
+        return this.frequency < 0.5;
     }
 
-    public static isEqual(a: double, b: double, epsilon: double): boolean {
-        let d: double = java.lang.Math.abs(a - b);
-        return (d < epsilon);
+    public static isEqual(a: number, b: number, epsilon: number): boolean {
+        return Math.abs(a - b) < epsilon;
     }
 
-    /**
-     * Compare two truth values
-     *
-     * @param that other TruthValue
-     * @return Whether the two are equivalent
-     */
-    public override  equals(that: java.lang.Object): boolean {
-        if (that instanceof TruthValue) {
-            let t: TruthValue = that as TruthValue;
-            return TruthValue.isEqual(this.getFrequency(), t.getFrequency(), this.narParameters.TRUTH_EPSILON) &&
-                TruthValue.isEqual(this.getConfidence(), t.getConfidence(), this.narParameters.TRUTH_EPSILON);
-        }
-        return false;
+    public appendString(builder: StringBuilderLike, _external: boolean): StringBuilderLike {
+        return builder
+            .append(DELIMITER)
+            .append(formatN2(this.frequency))
+            .append(SEPARATOR)
+            .append(formatN2(this.confidence))
+            .append(DELIMITER);
     }
 
-    /**
-     * The hash code of a TruthValue
-     *
-     * @return hash code
-     */
-    public override  hashCode(): int {
-        return (((0xFFFF * this.frequency) & 0) << 16) | ((0xFFFF * this.confidence) & 0);
+    public name(): string {
+        return this.formatString(false);
     }
 
-    public override  clone(): TruthValue {
-        return new TruthValue(this.frequency, this.confidence, this.getAnalytic(), this.narParameters);
+    public toStringExternal(): string {
+        return this.formatString(true);
     }
 
-    /**
-     * A simplified String representation of a TruthValue
-     */
-    public appendString(sb: java.lang.StringBuilder, external: boolean): java.lang.StringBuilder {
-        sb.ensureCapacity(11);
-        return sb
-            .append(TruthValue.DELIMITER)
-            .append(Texts.n2(this.frequency))
-            .append(TruthValue.SEPARATOR)
-            .append(Texts.n2(this.confidence))
-            .append(TruthValue.DELIMITER);
+    public toString(): string {
+        return this.name();
     }
 
-    public name(): java.lang.CharSequence {
-        let sb: java.lang.StringBuilder = new java.lang.StringBuilder();
-        return this.appendString(sb, false);
+    public toKey(): string {
+        return `f=${this.frequency};c=${this.confidence};a=${this.analytic ? 1 : 0}`;
     }
 
-    /** output representation */
-    public toStringExternal(): java.lang.CharSequence {
-        let sb: java.lang.StringBuilder = new java.lang.StringBuilder();
-        return this.appendString(sb, true);
+    public clone(): TruthValue {
+        return TruthValue.fromTruthValue(this);
     }
 
-    /**
-     * Returns a String representation of a TruthValue, as used internally by the
-     * system
-     *
-     * @return String representation
-     */
-    public override  toString(): java.lang.String {
-        return this.name().toString();
-    }
-
-    // * 📝【2024-05-08 20:49:46】这个函数并无所用之处
-    public set(frequency: float, confidence: double): TruthValue {
+    public set(frequency: number, confidence: number): TruthValue {
         this.setFrequency(frequency);
         this.setConfidence(confidence);
         return this;
+    }
+
+    private formatString(_external: boolean): string {
+        return `${DELIMITER}${formatN2(this.frequency)}${SEPARATOR}${formatN2(this.confidence)}${DELIMITER}`;
     }
 }

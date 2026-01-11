@@ -55,7 +55,7 @@ export class Anticipate extends Operator implements EventObserver {
 
     public setEnabled(n: Nar, enabled: boolean): boolean {
         n.memory.event.set(this, enabled, Events.InduceSucceedingEvent.class, Events.CycleEnd.class);
-        this.expiredTruth = new TruthValue(0.0, n.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, n.narParameters);
+        this.expiredTruth = TruthValue.fromFrequencyConfidence(0.0, n.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, n.narParameters);
         this.expiredBudget = new BudgetValue(n.narParameters.DEFAULT_JUDGMENT_PRIORITY,
             n.narParameters.DEFAULT_JUDGMENT_DURABILITY,
             BudgetFunctions.truthToQuality(this.expiredTruth), n.narParameters);
@@ -226,7 +226,7 @@ export class Anticipate extends Operator implements EventObserver {
     public anticipationFeedback(content: Term, t: Task, memory: Memory, time: Timable): void {
         if (this.anticipationOperator) {
             let op: Operation = Operation.make(Product.make(Term.SELF, content), this) as Operation;
-            let truth: TruthValue = new TruthValue(1.0, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
+            let truth: TruthValue = TruthValue.fromFrequencyConfidence(1.0, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
                 memory.narParameters);
             let st: Stamp;
             if (t === null) {

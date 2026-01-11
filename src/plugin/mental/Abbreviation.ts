@@ -155,7 +155,7 @@ export class Abbreviation extends JavaObject implements Plugin {
             let sentence: Sentence = new Sentence(
                 Similarity.make(compound, atomic),
                 Symbols.JUDGMENT_MARK,
-                new TruthValue(1, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, memory.narParameters), // a
+                TruthValue.fromFrequencyConfidence(1, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, memory.narParameters), // a
                 // naming
                 // convension
                 new Stamp(time, memory));

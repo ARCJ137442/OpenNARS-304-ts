@@ -279,7 +279,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
             return true;
         }
         let sentence: Sentence = task.sentence;
-        let truth: TruthValue = new TruthValue(1.0, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
+        let truth: TruthValue = TruthValue.fromFrequencyConfidence(1.0, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
             memory.narParameters);
         let stamp: Stamp = task.sentence.stamp.clone();
         stamp.setOccurrenceTime(time.time());
@@ -337,7 +337,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
                 let sentence: Sentence = new Sentence(
                     new_term,
                     Symbols.GOAL_MARK,
-                    new TruthValue(1, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, memory.narParameters), // a
+                    TruthValue.fromFrequencyConfidence(1, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, memory.narParameters), // a
                     // naming
                     // convension
                     new Stamp(nal.time, memory));
@@ -388,7 +388,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
                     let sentence: Sentence = new Sentence(
                         new_term,
                         Symbols.GOAL_MARK,
-                        new TruthValue(1, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, memory.narParameters), // a
+                        TruthValue.fromFrequencyConfidence(1, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, memory.narParameters), // a
                         // naming
                         // convension
                         new Stamp(nal.time, memory));

@@ -26,7 +26,7 @@ export abstract class Feel extends Operator {
      */
     protected feeling(value: float, memory: Memory, time: Timable): java.util.List<Task> {
         let stamp: Stamp = new Stamp(time, memory, Tense.Present);
-        let truth: TruthValue = new TruthValue(value, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
+        let truth: TruthValue = TruthValue.fromFrequencyConfidence(value, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
             memory.narParameters);
 
         let predicate: Term = new SetInt(this.feelingTerm);

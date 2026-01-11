@@ -17,7 +17,7 @@ export class ProcessAnticipation extends JavaObject {
         let s: Sentence = new Sentence(
             mainSentence.term,
             mainSentence.punctuation,
-            new TruthValue(0.0, eternalized_induction_confidence, nal.narParameters),
+            TruthValue.fromFrequencyConfidence(0.0, eternalized_induction_confidence, nal.narParameters),
             stamp);
         let t: Task = new Task(s, new BudgetValue(0.99, 0.1, 0.1, nal.narParameters), Task.EnumType.DERIVED);
         // Budget for one-time processing
@@ -173,7 +173,7 @@ export class ProcessAnticipation extends JavaObject {
                     w *= negativeEvidenceRatio;
                     let c: double = w2c(w as float, narParameters);
 
-                    let truth: TruthValue = new TruthValue(0.0, c, narParameters); // frequency of negative
+                    let truth: TruthValue = TruthValue.fromFrequencyConfidence(0.0, c, narParameters); // frequency of negative
                     // confirmation is 0.0
 
                     let sentenceForNewTask: Sentence = new Sentence(

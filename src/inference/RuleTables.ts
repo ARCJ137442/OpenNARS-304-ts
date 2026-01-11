@@ -310,7 +310,7 @@ export class RuleTables extends JavaObject {
                     }
                 }
             }
-            let truth: TruthValue = new TruthValue(1.0,
+            let truth: TruthValue = TruthValue.fromFrequencyConfidence(1.0,
                 nal.narParameters.DEFAULT_GOAL_CONFIDENCE * nal.narParameters.CURIOSITY_DESIRE_CONFIDENCE_MUL,
                 nal.narParameters);
             if (goalterm !== null && !(goalterm instanceof Variable) && goalterm instanceof CompoundTerm) {

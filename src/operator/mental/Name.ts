@@ -24,7 +24,7 @@ export class Name extends Operator {
         let atomic: Term = args[2];
         let content: Similarity = Similarity.make(compound, atomic);
 
-        let truth: TruthValue = new TruthValue(1, 0.9999, memory.narParameters); // a naming convension
+        let truth: TruthValue = TruthValue.fromFrequencyConfidence(1, 0.9999, memory.narParameters); // a naming convension
         let sentence: Sentence = new Sentence(
             content,
             Symbols.JUDGMENT_MARK,

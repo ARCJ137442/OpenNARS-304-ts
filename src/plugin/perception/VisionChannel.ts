@@ -124,7 +124,7 @@ export class VisionChannel extends SensoryChannel {
 
         let s: Sentence = new Sentence(Inheritance.make(V, this.label),
             Symbols.JUDGMENT_MARK,
-            new TruthValue(1.0,
+            TruthValue.fromFrequencyConfidence(1.0,
                 this.defaultOutputConfidence, this.nar.narParameters),
             stamp);
 

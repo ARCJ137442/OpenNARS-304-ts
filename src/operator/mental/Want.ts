@@ -23,7 +23,7 @@ export class Want extends Operator {
 
         let content: Term = args[1];
 
-        let truth: TruthValue = new TruthValue(1, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
+        let truth: TruthValue = TruthValue.fromFrequencyConfidence(1, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
             memory.narParameters);
         let sentence: Sentence = new Sentence(
             content,

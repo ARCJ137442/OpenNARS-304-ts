@@ -117,7 +117,7 @@ export abstract class Operator extends Term implements Plugin {
 
                 let executionConfidence: float = memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE;
                 if (feedback === null || feedback.isEmpty()) { // null operator case
-                    memory.executedTask(time, operation, new TruthValue(1, executionConfidence, memory.narParameters));
+                    memory.executedTask(time, operation, TruthValue.fromFrequencyConfidence(1, executionConfidence, memory.narParameters));
                 }
 
                 Operator.reportExecution(operation, args, feedback, memory);

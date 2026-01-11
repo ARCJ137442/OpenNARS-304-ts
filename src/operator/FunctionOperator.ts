@@ -89,7 +89,7 @@ export abstract class FunctionOperator extends Operator {
         let confidence: float = m.narParameters.DEFAULT_JUDGMENT_CONFIDENCE;
         let s: Sentence = new Sentence(operation,
             Symbols.JUDGMENT_MARK,
-            new TruthValue(1.0, confidence, m.narParameters),
+            TruthValue.fromFrequencyConfidence(1.0, confidence, m.narParameters),
             new Stamp(time, m));
         let budgetForNewTask: BudgetValue = new BudgetValue(m.narParameters.DEFAULT_JUDGMENT_PRIORITY,
             m.narParameters.DEFAULT_FEEDBACK_DURABILITY,

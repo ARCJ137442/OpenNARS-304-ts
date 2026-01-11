@@ -358,7 +358,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
                 return new Sentence(
                     t,
                     this.punctuation,
-                    this.truth !== null ? new TruthValue(this.truth) : null,
+                    this.truth !== null ? TruthValue.fromTruthValue(this.truth) : null,
                     this.stamp.clone());
 
 
@@ -406,7 +406,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
                     mem.narParameters);
                 let projectedConfidence: double = factor * this.truth.getConfidence();
                 if (projectedConfidence > newTruth.getConfidence()) {
-                    newTruth = new TruthValue(this.truth.getFrequency(), projectedConfidence, mem.narParameters);
+                    newTruth = TruthValue.fromFrequencyConfidence(this.truth.getFrequency(), projectedConfidence, mem.narParameters);
                 }
             }
         }
