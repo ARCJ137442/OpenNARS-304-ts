@@ -189,7 +189,12 @@ def main() -> int:
             print(f"- {file} ({len(issues_by_file[file])} issues)")
             for issue in issues_by_file[file]:
                 location = f"line {issue.line}" if issue.line is not None else "file"
-                print(f"  - [{issue.rule}] {location}: {repr(issue.snippet)}")
+                # 打印snippet也可能出现错误，所以使用try
+                snippet = repr(issue.snippet)
+                try:
+                    print(f"  - [{issue.rule}] {location}: {snippet}")
+                except:
+                    print(f"  - [{issue.rule}] {location}: <string truncated with len={len(snippet)} can't print>")
     else:
         print(
             f"[ok] No encoding anomalies were found."
