@@ -145,18 +145,16 @@ def build_report_index() -> Tuple[List[Tuple[str, datetime]], List[str]]:
     return valid_entries, invalid_reports
 
 
-def find_latest_report(index: Optional[List[Tuple[str, datetime]]] = None) -> Optional[Tuple[str, datetime]]:
+def find_latest_report(
+    index: Optional[List[Tuple[str, datetime]]] = None,
+) -> Optional[Tuple[str, datetime]]:
     """Return the latest report entry (name, datetime) if available."""
     if index is None:
         index, _ = build_report_index()
     if not index:
         return None
-    parsed_reports = [(f, get_report_datetime(f)) for f in reports]
-    valid_reports = [item for item in parsed_reports if item[1] is not None]
-    if not valid_reports:
-        return None
-    latest_report, _ = max(valid_reports, key=lambda item: item[1])
-    return latest_report
+    # `index` only contains reports with valid datetimes, so we can rely on it directly.
+    return max(index, key=lambda item: item[1])
 
 if __name__ == "__main__":
     report_index, invalid_reports = build_report_index()
