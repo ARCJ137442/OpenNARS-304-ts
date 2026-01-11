@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+#!/usr/bin/env python3
 # encoding: utf-8
 """
 批量根据 ts-analysis.json、progress.md 与 deps.xml 生成 spec004 要求的
