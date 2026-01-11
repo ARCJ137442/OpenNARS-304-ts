@@ -1,4 +1,5 @@
 import { java, type char, type int, type short, S } from "jree";
+import { Texts } from "../io/Texts";
 
 
 
@@ -248,7 +249,7 @@ export class Variable extends Term {
     // ported back from 1.7, sehs addition
     public static compare(a: Variable, b: Variable): int {
         // int i = a.name().compareTo(b.name());
-        let i: int = Texts.compareTo(a.name(), b.name());
+        let i: int = Texts.compareTo(a.name().toString(), b.name().toString());
         if (i === 0) {
             let ascoped: boolean = a.scope !== a;
             let bscoped: boolean = b.scope !== b;
@@ -263,7 +264,7 @@ export class Variable extends Term {
             } else if (bscoped && !ascoped) {
                 return 1;
             } else {
-                return Texts.compareTo(a.getScope().name(), b.getScope().name());
+                return Texts.compareTo(a.getScope().name().toString(), b.getScope().name().toString());
                 // return Texts.compare(a.getScope().name(), b.getScope().name());
             }
         }

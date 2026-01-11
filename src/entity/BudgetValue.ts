@@ -1,5 +1,6 @@
 import { java, JavaObject, type float, type long, S } from "jree";
 import { Symbols } from "../io/Symbols";
+import { Texts } from "../io/Texts";
 import { UtilityFunctions } from "../inference/UtilityFunctions";
 import { BudgetFunctions } from "../inference/BudgetFunctions";
 import { Parameters } from "../main/Parameters";
@@ -316,17 +317,16 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
         // return MARK + priority.toStringBrief() + SEPARATOR +
         // durability.toStringBrief() + SEPARATOR + quality.toStringBrief() + MARK;
 
-        let priorityString: java.lang.CharSequence = Texts.n2(this.priority);
-        let durabilityString: java.lang.CharSequence = Texts.n2(this.durability);
-        let qualityString: java.lang.CharSequence = Texts.n2(this.quality);
-        return new java.lang.StringBuilder(
-            1 + priorityString.length() + 1 + durabilityString.length() + 1 + qualityString.length() + 1)
-            .append(BudgetValue.MARK)
-            .append(priorityString).append(BudgetValue.SEPARATOR)
-            .append(durabilityString).append(BudgetValue.SEPARATOR)
-            .append(qualityString)
-            .append(BudgetValue.MARK)
-            .toString();
+        let priorityString: string = Texts.n2(this.priority);
+        let durabilityString: string = Texts.n2(this.durability);
+        let qualityString: string = Texts.n2(this.quality);
+        return BudgetValue.MARK
+            + priorityString
+            + BudgetValue.SEPARATOR
+            + durabilityString
+            + BudgetValue.SEPARATOR
+            + qualityString
+            + BudgetValue.MARK;
     }
 
     /**

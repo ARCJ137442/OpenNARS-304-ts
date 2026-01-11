@@ -1,168 +1,97 @@
-import { java, JavaObject, type int, type float, type long, type char, type double, S } from "jree";
-
-
-
 /**
- * Utilities for process Text & String input/output, ex: encoding/escaping
- * and decoding/unescaping Terms
- *
- *
+ * Utilities for processing text input/output, including formatting and comparison.
  */
-export class Texts extends JavaObject {
-
+export class Texts {
     /**
-     * Half-way between a String and a Rope; concatenates a list of strings into an
-     * immutable CharSequence which is either:
-     * If a component is null, it is ignored.
-     * if total non-null components is 0, returns null
-     * if total non-null components is 1, returns that component.
-     * if the combined length <= maxLen, creates a StringBuilder appending them
-     * all.
-     * if the combined length > maxLen, creates a Rope appending them all.
-     *
-     * TODO do not allow a StringBuilder to appear in output, instead wrap in
-     * CharArrayRope
+     * Concatenates a list of components into a single string.
+     * Null or undefined components are ignored.
+     * Returns null when all components are null/undefined.
      */
-    public static yarn(...components: java.lang.CharSequence[]): java.lang.CharSequence {
-        let totalLen: int = 0;
-        let total: int = 0;
-        let lastNonNull: java.lang.CharSequence = null;
-        for (let s of components) {
-            if (s !== null) {
-                totalLen += s.length();
-                total++;
-                lastNonNull = s;
+    public static yarn(...components: Array<string | null | undefined>): string | null {
+        const parts: string[] = [];
+        for (const component of components) {
+            if (component !== null && component !== undefined) {
+                parts.push(String(component));
             }
         }
-        if (total === 0) {
+        if (parts.length === 0) {
             return null;
         }
-        if (total === 1) {
-            if (lastNonNull === null)
-                throw new java.lang.IllegalStateException("lastNonNull is null");
-            return lastNonNull.toString();
+        if (parts.length === 1) {
+            return parts[0];
+        }
+        return parts.join("");
+    }
+
+    public static n4(x: number): string {
+        return Texts.formatFixed(x, 4);
+    }
+
+    public static n2Slow(x: number): string {
+        return Texts.formatFixed(x, 2);
+    }
+
+    public static thousandths(d: number): number {
+        return Math.floor(d * 1000 + 0.5);
+    }
+
+    public static hundredths(d: number): number {
+        return Math.floor(d * 100 + 0.5);
+    }
+
+    public static n2(x: number): string {
+        if (x < 0 || x > 1.0) {
+            throw new Error("Invalid value for Texts.n2");
         }
 
-        let sb: java.lang.StringBuilder = new java.lang.StringBuilder(totalLen);
-        for (let s of components) {
-            if (s !== null) {
-                sb.append(s);
-            }
-        }
-        return sb;
-    }
-
-    protected static readonly fourDecimal: java.text.Format = new java.text.DecimalFormat("0.0000");
-
-    public static n4(x: float): java.lang.String {
-        return Texts.fourDecimal.format(x);
-    }
-
-    protected static readonly twoDecimal: java.text.Format = new java.text.DecimalFormat("0.00");
-
-    public static n2Slow(x: float): java.lang.String {
-        return Texts.twoDecimal.format(x);
-    }
-
-    public static thousandths(d: float): long {
-        return ((d * 1000 + 0.5)) as long;
-    }
-
-    public static hundredths(d: float): long {
-        return ((d * 100 + 0.5)) as long;
-    }
-
-    public static n2(x: float): java.lang.CharSequence;
-
-    public static n2(p: double): java.lang.CharSequence;
-    public static n2(...args: unknown[]): java.lang.CharSequence {
-        switch (args.length) {
-            case 1: {
-                const [x] = args as [float];
-
-
-                if ((x < 0) || (x > 1.0))
-                    throw new java.lang.IllegalStateException("Invalid value for Texts.n2");
-
-                let hundredths: int = hundredths(x) as int;
-                switch (hundredths) {
-                    // some common values
-                    case 100:
-                        return "1.00";
-                    case 99:
-                        return "0.99";
-                    case 90:
-                        return "0.90";
-                    case 0:
-                        return "0.00";
-
-                    default:
-
-                }
-
-                if (hundredths > 9) {
-                    let tens: int = hundredths / 10;
-                    return new java.lang.String([
-                        '0', '.', ('0' + tens) as char, ('0' + hundredths % 10) as char
-                    ]);
-                } else {
-                    return new java.lang.String([
-                        '0', '.', '0', ('0' + hundredths) as char
-                    ]);
-                }
-
-
+        const hundredths = Texts.hundredths(x);
+        switch (hundredths) {
+            case 100:
+                return "1.00";
+            case 99:
+                return "0.99";
+            case 90:
+                return "0.90";
+            case 0:
+                return "0.00";
+            default:
                 break;
-            }
-
-            case 1: {
-                const [p] = args as [double];
-
-
-                return Texts.n2(p as float);
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
-        }
-    }
-
-
-    protected static readonly oneDecimal: java.text.Format = new java.text.DecimalFormat("0.0");
-
-    public static n1(x: float): java.lang.String {
-        return Texts.oneDecimal.format(x);
-    }
-
-    public static compareTo(s: java.lang.CharSequence, t: java.lang.CharSequence): int {
-        if ((s instanceof java.lang.String) && (t instanceof java.lang.String)) {
-            return (s as java.lang.String).compareTo(t as java.lang.String);
-        } else if ((s instanceof java.nio.CharBuffer) && (t instanceof java.nio.CharBuffer)) {
-            return (s as java.nio.CharBuffer).compareTo(t as java.nio.CharBuffer);
         }
 
-        let i: int = 0;
+        if (hundredths > 9) {
+            const tens = Math.floor(hundredths / 10);
+            return `0.${tens}${hundredths % 10}`;
+        }
+        return `0.0${hundredths}`;
+    }
 
-        let sl: int = s.length();
-        let tl: int = t.length();
+    public static n1(x: number): string {
+        return Texts.formatFixed(x, 1);
+    }
 
-        while (i < sl && i < tl) {
-            let a: char = s.charAt(i);
-            let b: char = t.charAt(i);
+    public static compareTo(s: string, t: string): number {
+        if (s === t) {
+            return 0;
+        }
 
-            let diff: int = a - b;
+        const sl = s.length;
+        const tl = t.length;
+        const limit = Math.min(sl, tl);
 
-            if (diff !== 0)
+        for (let i = 0; i < limit; i++) {
+            const diff = s.charCodeAt(i) - t.charCodeAt(i);
+            if (diff !== 0) {
                 return diff;
-
-            i++;
+            }
         }
 
         return sl - tl;
     }
 
+    private static formatFixed(value: number, digits: number): string {
+        if (!isFinite(value)) {
+            throw new Error("Invalid value for Texts.formatFixed");
+        }
+        return value.toFixed(digits);
+    }
 }

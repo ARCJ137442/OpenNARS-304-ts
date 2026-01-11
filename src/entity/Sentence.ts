@@ -1,4 +1,5 @@
 import { java, JavaObject, type char, type int, type long, type float, type double, S } from "jree";
+import { Texts } from "../io/Texts";
 
 
 
@@ -43,7 +44,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
     /**
      * caches the 'getKey()' result
      */
-    private key: java.lang.CharSequence;
+    private key: string | null = null;
 
     private readonly hash: int;
 
@@ -568,10 +569,10 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *
      * @return The String
      */
-    public getKey(): java.lang.CharSequence {
+    public getKey(): string {
         // key must be invalidated if content or truth change
         if (this.key === null) {
-            let contentName: java.lang.CharSequence = this.term.name();
+            let contentName: string = this.term.name().toString();
 
             let showOcurrenceTime: boolean = ((this.punctuation === Symbols.JUDGMENT_MARK)
                 || (this.punctuation === Symbols.QUESTION_MARK));
@@ -604,7 +605,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
 
             this.key = Texts.yarn(
                 contentName,
-                suffix);
+                suffix.toString()) ?? "";
         }
         return this.key;
     }

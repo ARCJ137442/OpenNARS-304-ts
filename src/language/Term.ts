@@ -1,4 +1,5 @@
 import { java, JavaObject, type int, type short, type char, S } from "jree";
+import { Texts } from "../io/Texts";
 import { SetExt } from "./SetExt";
 
 
@@ -327,7 +328,7 @@ export class Term extends JavaObject {
         } else if ((this instanceof Variable) && (that.getClass() !== Variable.class)) {
             return -1;
         }
-        return Texts.compareTo(this.name(), that.name());
+        return Texts.compareTo(this.name().toString(), that.name().toString());
     }
 
     public containedTemporalRelations(): int {
