@@ -5,6 +5,7 @@
 - `npm test` 仅执行 `test/node/distributor.test.ts` 并通过。
 
 包受监控：
+
 - control: 8 个 TS 文件
 - entity: 10 个 TS 文件
 - inference: 9 个 TS 文件
@@ -1327,4 +1328,3 @@
   1. 依赖准备：仅依赖 jree 或 TS 自身静态成员
   2. 文件工作：整合 java.util 工具并保持 int/long 行为一致，中心存放工具函数。
   3. Java-TS 差异：参见《通用转译法.md》 - 工具层
-
