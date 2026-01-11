@@ -151,8 +151,12 @@ def find_latest_report(index: Optional[List[Tuple[str, datetime]]] = None) -> Op
         index, _ = build_report_index()
     if not index:
         return None
-    return max(index, key=lambda item: item[1])
-
+    parsed_reports = [(f, get_report_datetime(f)) for f in reports]
+    valid_reports = [item for item in parsed_reports if item[1] is not None]
+    if not valid_reports:
+        return None
+    latest_report, _ = max(valid_reports, key=lambda item: item[1])
+    return latest_report
 
 if __name__ == "__main__":
     report_index, invalid_reports = build_report_index()

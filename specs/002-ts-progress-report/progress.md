@@ -1,46 +1,23 @@
-# 现状报告
+# TypeScript 文件进度总览
 
-> 所属spec：[ts-translation-assessment](README.md)
+- 当前追踪 `src` 目录下 119 个 TypeScript 文件，累计发现 TODO 43 处。
+- `npx tsc --noEmit` 在 10 个源代码文件 (另含 `test/metrics/AttentionMetric.ts`) 上失败。
+- `npm test` 仅执行 `test/node/distributor.test.ts` 并通过。
 
-## 范围
-对比 java-master/src/main/java/org/opennars 和当前 `src` TypeScript 实现，以 ts-analysis.json 信息为核心资料来统计覆盖率、语法可执行性与依赖完整性。
+包受监控：
+- control: 8 个 TS 文件
+- entity: 10 个 TS 文件
+- inference: 9 个 TS 文件
+- interfaces: 10 个 TS 文件
+- io: 11 个 TS 文件
+- language: 30 个 TS 文件
+- main: 5 个 TS 文件
+- operator: 23 个 TS 文件
+- plugin: 9 个 TS 文件
+- storage: 3 个 TS 文件
+- util: 1 个 TS 文件
 
-## 执行摘要
-- 规模：共计 119 个 TS 文件，TODO 43 处，全部已映射至 Java 源文件。
-- 编译：`npx tsc --noEmit` 对 10 个 TS 文件报告错误，及 `test/metrics/AttentionMetric.ts` (单独设置的测试) 需要一并修复。
-- 测试：目前 `npm test` 只覆盖 `test/node/distributor.test.ts`，大部分核心文件缺乏热点测试。
-- 数据：本报告采用 ts-analysis.json + tsc/npm test 实运利用结果。
-
-## 按包统计
-- control: TS 8/8，已完全对齐
-- entity: TS 10/11，仍缺 1 个 Java 文件翻译
-- inference: TS 9/10，仍缺 1 个 Java 文件翻译
-- interfaces: TS 10/10，已完全对齐
-- io: TS 11/12，仍缺 1 个 Java 文件翻译
-- language: TS 30/31，仍缺 1 个 Java 文件翻译
-- main: TS 5/3，TS 比 Java 额外 2 个文件 (如 main/提取 Parameter)
-- operator: TS 23/23，已完全对齐
-- plugin: TS 9/9，已完全对齐
-- storage: TS 3/4，仍缺 1 个 Java 文件翻译
-- util: TS 1/1，已完全对齐
-- parameter: TS 0/2，仍缺 2 个 Java 文件翻译
-
-## 编译与测试现状
-以下文件需要先修复 tsc 错误：
-- entity/Item.ts: TS1005 @ 281:36 '=' expected.
-- entity/Task.ts: TS1005 @ 222:25 ';' expected.
-- inference/RuleTables.ts: TS1005 @ 621:23 ';' expected.
-- inference/TruthFunctions.ts: TS1005 @ 43:39 ';' expected.
-- io/events/EventEmitter.ts: TS1109 @ 113:30 Expression expected.
-- io/events/Events.ts: TS1005 @ 357:38 '=' expected.
-- language/Statement.ts: TS1005 @ 365:27 ';' expected.
-- main/NarNode.ts: TS1472 @ 316:13 'catch' or 'finally' expected.
-- main/Shell.ts: TS1359 @ 107:35 Identifier expected. 'in' is a reserved word that cannot be used here.
-- plugin/perception/SensoryChannel.ts: TS1135 @ 144:31 Argument expression expected.
-- `npm test`: 尚保留 `test/node/distributor.test.ts`，需依照路线图为其他模块增补 smoke test。
-
-## 文件级评估
-本段对每个 TS 文件建立“Java 对照”、“可执行性”、“路线图”信息，以侧助后续转译排期。
+下文按包列出 Java 对照、依赖现状、编译/测试和路线图。
 
 ## control/DerivationContext.ts
 

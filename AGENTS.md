@@ -43,6 +43,7 @@
 | **务必链接 spec 引用** | 内容提及其他 spec -> `lean-spec link <spec> --depends-on <other>` |
 | **跟踪状态流转** | `planned` -> `in-progress`（编码前）-> `complete`（完成后） |
 | **不要嵌套代码块** | 使用缩进替代 |
+| **Encoding workflow** | When writing Chinese via CLI, emit literal `\uXXXX` escapes and rerun `python scripts/checking/check_hanzi_encoding.py --json-output scripts/checking/hanzi-report.json` to confirm there are no repeated `?` placeholders or mojibake before commit. |
 
 ### 🚫常见错误
 
@@ -100,6 +101,10 @@ lean-spec link <spec> --depends-on <other-spec>
 3. **意图优先于实现** - 记录为什么，让实现自然涌现
 4. **弥合认知差距** - 人与 AI 都要能理解
 5. **渐进式披露** - 只有在痛点出现时才增加复杂度
+
+## 编码注意事项
+
+- 在命令行终端写入包含中文内容的文件时，需使用 `\uXXXX` Unicode 转义（ASCII 字符）在脚本中表达中文，再以 UTF-8 写入文件，以避免 PowerShell 传输过程出现乱码。
 
 ---
 
