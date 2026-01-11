@@ -615,7 +615,8 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *
      */
     public discountConfidence(narParameters: Parameters): void {
-        this.truth.confidence = this.truth.confidence * narParameters.DISCOUNT_RATE.analytic = false;
+        this.truth.confidence = this.truth.confidence * narParameters.DISCOUNT_RATE;
+        this.truth.analytic = false;
     }
 
     /**
