@@ -1,3 +1,4 @@
+//! Java source: opennars/main/NarNode.java
 import { java, JavaObject, type int, type float, closeResources, handleResourceError, throwResourceError, S } from "jree";
 
 

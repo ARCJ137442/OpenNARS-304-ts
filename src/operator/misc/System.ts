@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/misc/System.java
 import { java, type int } from "jree";
 
 

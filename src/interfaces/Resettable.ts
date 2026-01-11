@@ -1,3 +1,4 @@
+//! Java source: opennars/interfaces/Resettable.java
 
 import { java } from "jree";
 

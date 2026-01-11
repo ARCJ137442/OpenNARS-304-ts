@@ -1,3 +1,4 @@
+//! Java source: opennars/language/CompoundTerm.java
 import { java, type short, type int, JavaObject } from "jree";
 
 

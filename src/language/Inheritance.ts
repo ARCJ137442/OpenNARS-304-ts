@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Inheritance.java
 import { java, S } from "jree";
 
 

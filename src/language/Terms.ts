@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Terms.java
 import { java, JavaObject, type int, type short, S } from "jree";
 
 

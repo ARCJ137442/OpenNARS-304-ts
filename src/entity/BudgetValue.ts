@@ -1,3 +1,4 @@
+//! Java source: opennars/entity/BudgetValue.java
 import { java, JavaObject, type float, type long, S } from "jree";
 import { Symbols } from "../io/Symbols";
 import { Texts } from "../io/Texts";

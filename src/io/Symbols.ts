@@ -1,3 +1,4 @@
+//! Java source: opennars/io/Symbols.java
 import { java, JavaObject, type char, S } from "jree";
 
 

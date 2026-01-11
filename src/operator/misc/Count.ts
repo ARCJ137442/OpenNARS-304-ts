@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/misc/Count.java
 import { java, type int } from "jree";
 
 

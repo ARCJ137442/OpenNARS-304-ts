@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/FeelSatisfied.java
 import { java } from "jree";
 
 

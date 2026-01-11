@@ -1,3 +1,4 @@
+//! Java source: opennars/control/concept/ProcessAnticipation.java
 import { java, JavaObject, type long, type float, type double } from "jree";
 
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/plugin/Plugin.java
 import { java } from "jree";
 
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/plugin/mental/Counting.java
 import { java, JavaObject, type float, type double, type int, S } from "jree";
 
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/Operation.java
 import { java, S } from "jree";
 
 

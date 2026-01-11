@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/Want.java
 import { java } from "jree";
 
 

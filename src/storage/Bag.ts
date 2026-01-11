@@ -1,3 +1,4 @@
+//! Java source: opennars/storage/Bag.java
 import { java, JavaObject, type int, type float, S } from "jree";
 import { Item } from "../entity/Item";
 import { Distributor } from "./Distributor";

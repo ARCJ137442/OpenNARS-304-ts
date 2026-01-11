@@ -1,3 +1,4 @@
+//! Java source: opennars/interfaces/pub/Reasoner.java
 import { java, type long } from "jree";
 
 

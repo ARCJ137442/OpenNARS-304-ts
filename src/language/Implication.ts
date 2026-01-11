@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Implication.java
 import { java, type int, type long, S } from "jree";
 
 

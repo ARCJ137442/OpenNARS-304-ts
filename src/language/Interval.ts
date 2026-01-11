@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Interval.java
 import { java, type long, S } from "jree";
 
 

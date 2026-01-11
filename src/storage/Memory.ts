@@ -1,3 +1,4 @@
+//! Java source: opennars/storage/Memory.java
 import { java, JavaObject, type long, type float, type int, type double, S } from "jree";
 
 

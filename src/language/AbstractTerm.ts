@@ -1,3 +1,4 @@
+//! Java source: opennars/language/AbstractTerm.java
 
 import { java } from "jree";
 

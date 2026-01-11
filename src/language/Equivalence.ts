@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Equivalence.java
 import { java, type int, S } from "jree";
 
 

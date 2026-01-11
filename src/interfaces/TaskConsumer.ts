@@ -1,3 +1,4 @@
+//! Java source: opennars/interfaces/TaskConsumer.java
 import { java } from "jree";
 
 

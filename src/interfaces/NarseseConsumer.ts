@@ -1,3 +1,4 @@
+//! Java source: opennars/interfaces/NarseseConsumer.java
 
 import { java } from "jree";
 

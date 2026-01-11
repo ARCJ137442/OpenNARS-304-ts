@@ -1,3 +1,4 @@
+//! Java source: opennars/io/events/TextOutputHandler.java
 import { java, type float, S } from "jree";
 
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/parameter/Parameters.java
 import { java, JavaObject, type int, type float, type double } from "jree";
 
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/entity/Task.java
 import { java, type int, type long, S } from "jree";
 
 

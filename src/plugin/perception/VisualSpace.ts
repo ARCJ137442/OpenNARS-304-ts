@@ -1,3 +1,4 @@
+//! Java source: opennars/plugin/perception/VisualSpace.java
 import { java, JavaObject, type int, type double, type float } from "jree";
 
 

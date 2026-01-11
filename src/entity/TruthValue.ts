@@ -1,3 +1,4 @@
+//! Java source: opennars/entity/TruthValue.java
 export interface TruthParameters {
     TRUTH_EPSILON: number;
     DEFAULT_CREATION_EXPECTATION: number;

@@ -1,3 +1,4 @@
+//! Java source: opennars/language/ImageExt.java
 import { java, type short, type int, S } from "jree";
 
 

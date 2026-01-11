@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/NullOperator.java
 import { java, S } from "jree";
 
 

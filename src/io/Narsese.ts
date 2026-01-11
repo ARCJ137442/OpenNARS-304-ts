@@ -1,3 +1,4 @@
+//! Java source: opennars/io/Narsese.java
 import { java, JavaObject, type int, type char, type float, S } from "jree";
 
 

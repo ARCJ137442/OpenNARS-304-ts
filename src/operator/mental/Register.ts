@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/Register.java
 import { java } from "jree";
 
 

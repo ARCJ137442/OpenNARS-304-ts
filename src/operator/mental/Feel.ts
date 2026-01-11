@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/Feel.java
 import { java, type float } from "jree";
 
 

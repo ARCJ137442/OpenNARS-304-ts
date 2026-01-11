@@ -1,3 +1,4 @@
+//! Java source: opennars/io/events/OutputHandler.java
 import { java, JavaObject, S } from "jree";
 
 

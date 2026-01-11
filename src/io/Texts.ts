@@ -1,3 +1,4 @@
+//! Java source: opennars/io/Texts.java
 /**
  * Utilities for processing text input/output, including formatting and comparison.
  */

@@ -1,3 +1,4 @@
+//! Java source: opennars/control/concept/ProcessGoal.java
 import { java, JavaObject, type double, type float, type long, type int } from "jree";
 
 

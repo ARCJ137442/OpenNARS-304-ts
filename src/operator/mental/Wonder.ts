@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/Wonder.java
 import { java } from "jree";
 
 

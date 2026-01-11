@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Statement.java
 import { java, type int, S } from "jree";
 
 

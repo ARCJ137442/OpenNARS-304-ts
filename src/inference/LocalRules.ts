@@ -1,3 +1,4 @@
+//! Java source: opennars/inference/LocalRules.java
 import { java, JavaObject, type int, type long, type float } from "jree";
 
 

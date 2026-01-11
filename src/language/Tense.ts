@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Tense.java
 import { java, S } from "jree";
 
 class Tense extends java.lang.Enum<Tense> {

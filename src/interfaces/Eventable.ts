@@ -1,3 +1,4 @@
+//! Java source: opennars/interfaces/Eventable.java
 import { java } from "jree";
 
 

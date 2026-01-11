@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/Evaluate.java
 import { java } from "jree";
 
 

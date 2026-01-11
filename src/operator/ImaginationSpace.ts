@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/ImaginationSpace.java
 import { java } from "jree";
 
 

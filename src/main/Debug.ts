@@ -1,3 +1,4 @@
+//! Java source: opennars/parameter/Debug.java
 
 import { java, JavaObject } from "jree";
 

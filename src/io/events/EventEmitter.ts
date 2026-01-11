@@ -1,3 +1,4 @@
+//! Java source: opennars/io/events/EventEmitter.java
 import { java, JavaObject, S } from "jree";
 
 

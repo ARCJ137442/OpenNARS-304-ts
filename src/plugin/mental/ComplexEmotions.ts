@@ -1,3 +1,4 @@
+//! Java source: opennars/plugin/mental/ComplexEmotions.java
 import { java, JavaObject, type float } from "jree";
 
 

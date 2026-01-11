@@ -1,3 +1,4 @@
+//! Java source: opennars/plugin/mental/Abbreviation.java
 import { java, JavaObject, type double, type int, type char, type float, S } from "jree";
 
 

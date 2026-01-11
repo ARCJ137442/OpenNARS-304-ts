@@ -1,3 +1,4 @@
+//! Java source: opennars/interfaces/Multistepable.java
 
 import { java, type long, type int } from "jree";
 
