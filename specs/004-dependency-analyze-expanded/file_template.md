@@ -1,90 +1,90 @@
-# file_template.md
+# 文件分析模板
 
-> Template for the analysis record of a single TypeScript file. Store actual records under `analysis/<ts-relative-path>.md`, mirroring the `src/` directory, and keep the Markdown filename identical to the analyzed TypeScript file.
+> 本模板用于记录单个 TypeScript 文件的依赖分析结果。实际记录需保存在 `analysis/<ts-relative-path>.md`，并与 `src/` 的目录结构保持一致，Markdown 文件名与目标 TypeScript 文件名一致。
 
-## 1. Metadata
+## 1. 基础信息
 
-| Field | Value |
+| 字段 | 内容 |
 | --- | --- |
-| TypeScript file | `src/.../<File>.ts` |
-| Matching Java source | `java-master/.../<File>.java` |
-| Module chain | e.g. `io -> entity -> ...` aligned with the roadmap |
-| Analysis date / owner | `2026-01-11 / ChatGPT Codex` |
-| Evidence sources | `deps.xml` excerpt, specs, design docs |
+| TypeScript 文件 | `src/.../<File>.ts` |
+| 对应 Java 源文件 | `java-master/.../<File>.java` |
+| 模块链路 | 如 `io -> entity -> ...`，需与路线图节点一致 |
+| 分析时间 / 执行人 | `2026-01-11 / ChatGPT Codex` |
+| 参考资料 | `deps.xml` 片段、spec、设计文档等 |
 
-Explain how the TS file maps to the Java source and list the references that will be cited later.
+说明 TS 文件与 Java 源的映射关系，并枚举后续引用的证据来源。
 
-## 2. Syntax check (`npx tsc <file> --noEmit`)
+## 2. 语法检查（`npx tsc <file> --noEmit`）
 
-- Command executed
-- Key findings: missing symbols, type errors, unresolved imports
-- Takeaways: can this file compile, and does it rely on ambient declarations?
+- 执行的命令
+- 关键输出：缺失符号、类型错误、无法解析的 import
+- 总结：能否通过编译、是否依赖外部声明
 
-For repetitive errors, capture a few representative samples with line numbers instead of dumping the full log.
+如报错重复，可只列举典型条目并附行号，无需粘贴完整日志。
 
-## 3. TypeScript dependency audit
+## 3. TypeScript 依赖梳理
 
-### 3.1 Structural dependencies
+### 3.1 结构性依赖
 
-| Symbol | Source file | Touch point | Reason |
+| 符号 | 来源文件 | 触发位置 | 依赖原因 |
 | --- | --- | --- | --- |
-| `Concept` | `src/concept/Concept.ts` | Constructor | Directly required for runtime behavior |
+| `Concept` | `src/concept/Concept.ts` | 构造函数 | 直接影响运行逻辑 |
 
-### 3.2 Superficial dependencies (constants, diagnostics, enums, etc.)
+### 3.2 表面依赖（常量/调试/枚举等）
 
-| Symbol | Source file | Touch point | Notes |
+| 符号 | 来源文件 | 触发位置 | 说明 |
 | --- | --- | --- | --- |
-| `Operator` | `src/bag/Operator.ts` | Constant definition | Referenced only through constants |
+| `Operator` | `src/bag/Operator.ts` | 常量定义 | 仅因常量引用 |
 
-### 3.3 Missing symbols / unresolved references
+### 3.3 缺失符号 / 未决依赖
 
-List items raised by tsc or manual inspection and note the suspected source plus severity.
+列出 tsc 报告或人工识别的缺失符号，注明潜在来源与阻塞程度。
 
-Highlight why each dependency matters; structural ones block behavior, superficial ones may be deferred if the cost is acceptable.
+强调每条依赖的必要性：结构性依赖属于强阻塞，表面依赖可以注明可否延后处理。
 
-## 4. Java dependency cross-check (from `deps.xml`)
+## 4. Java 依赖对照（`deps.xml`）
 
-- Direct edges: `<from> -> <to>` with the corresponding `deps.xml` snippet or line reference.
-- Cross-check result: describe where the TS audit diverges from the Java dependency graph.
-- Divergence notes: justify any mismatch (constant-only usage, not yet ported classes, etc.).
+- 直接依赖列表：`<from> -> <to>`，并附 `deps.xml` 行号或片段。
+- 交叉校验：说明 3.1/3.2 与 `deps.xml` 的一致性。
+- 差异记录：当 TS 与 Java 依赖不一致时，阐述原因（如常量导致、尚未转写等）。
 
-Clarify which relationships are grounded in Java semantics versus TypeScript-only artifacts.
+明确哪些关系来源于 Java 语义，哪些仅在 TypeScript 中出现。
 
-## 5. Function description sourced from Java
+## 5. Java 功能说明
 
-- **Responsibility**: one-sentence summary of the Java file.
-- **Key data structures**: main classes, members, and their roles.
-- **Core flow / algorithms**: ordered steps or pseudo-code for important methods.
-- **Critical invariants / constraints**: initialization, default values, concurrency, serialization, etc.
-- **Collaboration points**: how this file interacts with prerequisite or successor modules.
+- **职责概述**：一句话描述该文件负责的功能。
+- **关键数据结构**：列出主要类、字段及含义。
+- **核心流程 / 算法**：用步骤描述关键方法或执行路径。
+- **重要不变量 / 约束**：初始化、默认值、并发、序列化等要点。
+- **协作接口**：与前置/后续模块的交互方式。
 
-This section must be backed by the Java source, not guesses from TypeScript.
+内容必须基于 Java 源文件，而非仅凭 TypeScript 猜测。
 
-## 6. Consistency risks
+## 6. 一致性风险
 
-Capture anything that could break the "same behavior" goal, including:
+记录可能破坏“行为保持不变”目标的风险，例如：
 
-- Initialization order and static blocks
-- Default/null handling differences
-- Inherited or implicit interface dependencies
-- Serialization or protocol assumptions
-- Any other behavior that might drift during porting
+- 初始化顺序 / 静态代码块
+- 默认值与空值处理
+- 继承或接口中的隐式依赖
+- 序列化 / 外部协议约束
+- 其他需要转写时特别关注的点
 
-Each risk should describe the trigger and the mitigation or follow-up action.
+每条风险都要说明触发条件与后续动作。
 
-## 7. Roadmap placement
+## 7. 路线图定位
 
-- Chain position: `io -> entity -> ...`
-- Predecessors: files that must be analyzed/ported first and why.
-- Unlocks: files or modules enabled once this file is complete.
-- Evidence: cite whether the ordering comes from the TS audit, `deps.xml`, or Java semantics.
+- 链路位置：`io -> entity -> ...`
+- 前置文件：必须优先完成的文件及理由。
+- 解锁内容：本文件就绪后可以推进的其他文件或模块。
+- 依据来源：标注排序依据来自 TS 分析、`deps.xml` 还是 Java 语义。
 
-This keeps the output aligned with the roadmap template from spec003.
+保持与 spec003 中的路线图模板一致，方便整体排期。
 
-## 8. Additional notes
+## 8. 附加记录
 
-- Location of the `tsc` log or any helper script outputs.
-- `deps.xml` snippets that were referenced.
-- TODO / open questions for review or follow-up specs.
+- `tsc` 日志或辅助脚本输出的路径。
+- 引用的 `deps.xml` 片段。
+- TODO / Open Questions：需要进一步确认或汇报的事项。
 
-Document anything that needs to be fed back into specs or tracking artifacts.
+如需回写 spec 或新增依赖，请在此处建立链接与说明。

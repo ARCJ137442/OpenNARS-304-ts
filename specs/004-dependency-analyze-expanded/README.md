@@ -42,6 +42,8 @@ transitions:
 
 ❗重要：分析记录的输出格式为 Markdown 文件，并存放在 `analysis` 文件夹下，文件夹结构应与`src`文件夹结构保持一致，文件名为 `xxx.md`，其中 `xxx` 为对应 TypeScript/Java 文件名。
 
+📝 所有单文件记录必须套用 `specs/004-dependency-analyze-expanded/file_template.md`（中文模板），逐段填写语法检查、依赖对照、Java 功能描述、风险与路线图位置，确保记录可直接复用。
+
 ## 计划
 
 <!-- 将实现拆分为步骤 -->
