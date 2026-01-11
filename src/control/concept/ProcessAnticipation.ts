@@ -169,7 +169,7 @@ export class ProcessAnticipation extends JavaObject {
                     let negativeEvidenceRatio: double = 1.0 / countWithNegativeEvidence as double;
 
                     // compute confidence by negative evidence
-                    let w: double = c2w(truthOfBeliefWithTerm.getConfidence(), narParameters);
+                    let w: double = c2w(truthOfBeliefWithTerm.confidence, narParameters);
                     w *= negativeEvidenceRatio;
                     let c: double = w2c(w as float, narParameters);
 

@@ -54,7 +54,7 @@ export class AttentionMetric extends JavaObject {
         for (let iEntry of execOrQaAnswersByTime.entrySet()) {
             let iEntryVal: AttentionMetric.ExecOrAnswerByTime = iEntry.getValue();
 
-            let bestWeight: double = TruthFunctions.c2w(iEntryVal.bestTruth.getConfidence(), narParams); // we care about
+            let bestWeight: double = TruthFunctions.c2w(iEntryVal.bestTruth.confidence, narParams); // we care about
             // weight because it
             // doesn't converge
             // to 1.0 like conf,
@@ -68,7 +68,7 @@ export class AttentionMetric extends JavaObject {
             // better
             // ranking
 
-            let firstWeight: double = TruthFunctions.c2w(iEntryVal.firstTruth.getConfidence(), narParams); // we care about
+            let firstWeight: double = TruthFunctions.c2w(iEntryVal.firstTruth.confidence, narParams); // we care about
             // weight because
             // it doesn't
             // converge to 1.0
@@ -256,7 +256,7 @@ export class AttentionMetric extends JavaObject {
         if (exec.bestTruth === null) { // is it the first time?
             exec.bestTime = nar.time(); // the first is the best
             exec.bestTruth = s.truth.clone();
-        } else if (s.truth.clone().getConfidence() > exec.bestTruth.getConfidence()) { // is the TV this time better
+        } else if (s.truth.clone().confidence > exec.bestTruth.confidence) { // is the TV this time better
             // than the recorded one?
             exec.bestTime = nar.time();
             exec.bestTruth = s.truth.clone();

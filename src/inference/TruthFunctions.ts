@@ -141,8 +141,8 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static conversion(v1: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let c1: double = v1.getConfidence();
+        let f1: float = v1.frequency;
+        let c1: double = v1.confidence;
         let w: float = java.math.BigInteger.and(f1, c1) as float;
         let c: double = w2c(w, narParameters);
         return TruthValue.fromFrequencyConfidence(1, c, narParameters);
@@ -156,8 +156,8 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static negation(v1: TruthValue, narParameters: Parameters): TruthValue {
-        let f: float = 1 - v1.getFrequency();
-        let c: double = v1.getConfidence();
+        let f: float = 1 - v1.frequency;
+        let c: double = v1.confidence;
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
 
@@ -168,8 +168,8 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static contraposition(v1: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let c1: double = v1.getConfidence();
+        let f1: float = v1.frequency;
+        let c1: double = v1.confidence;
         let w: float = java.math.BigInteger.and(1 - f1 as double, c1) as float;
         let c: double = w2c(w, narParameters);
         return TruthValue.fromFrequencyConfidence(0, c, narParameters);
@@ -203,13 +203,13 @@ export class TruthFunctions extends UtilityFunctions {
                 const [v1, v2, result, narParameters] = args as [TruthValue, TruthValue, TruthValue, Parameters];
 
 
-                let f1: float = v1.getFrequency();
-                let f2: float = v2.getFrequency();
-                let w1: double = c2w(v1.getConfidence(), narParameters);
-                let w2: double = c2w(v2.getConfidence(), narParameters);
+                let f1: float = v1.frequency;
+                let f2: float = v2.frequency;
+                let w1: double = c2w(v1.confidence, narParameters);
+                let w2: double = c2w(v2.confidence, narParameters);
                 let w: double = w1 + w2;
-                result.setFrequency(((w1 * f1 + w2 * f2) / w) as float);
-                result.setConfidence(w2c(w, narParameters));
+                result.frequency = ((w1 * f1 + w2 * f2 / w) as float);
+                result.confidence = w2c(w, narParameters);
                 return result;
 
 
@@ -247,10 +247,10 @@ export class TruthFunctions extends UtilityFunctions {
                 const [v1, v2, narParameters] = args as [TruthValue, TruthValue, Parameters];
 
 
-                let f1: float = v1.getFrequency();
-                let f2: float = v2.getFrequency();
-                let c1: double = v1.getConfidence();
-                let c2: double = v2.getConfidence();
+                let f1: float = v1.frequency;
+                let f2: float = v2.frequency;
+                let c1: double = v1.confidence;
+                let c2: double = v2.confidence;
                 let f: float = java.math.BigInteger.and(f1, f2) as float;
                 let c: double = java.math.BigInteger.and(c1, c2, f);
                 return TruthValue.fromFrequencyConfidence(f, c, narParameters);
@@ -263,8 +263,8 @@ export class TruthFunctions extends UtilityFunctions {
                 const [v1, reliance, narParameters] = args as [TruthValue, float, Parameters];
 
 
-                let f1: float = v1.getFrequency();
-                let c1: double = v1.getConfidence();
+                let f1: float = v1.frequency;
+                let c1: double = v1.confidence;
                 let c: double = java.math.BigInteger.and(f1, c1, reliance);
                 return TruthValue.fromFrequencyConfidence(f1, c, narParameters, true);
 
@@ -287,10 +287,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static analogy(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let f2: float = v2.getFrequency();
-        let c1: double = v1.getConfidence();
-        let c2: double = v2.getConfidence();
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let c1: double = v1.confidence;
+        let c2: double = v2.confidence;
         let f: float = java.math.BigInteger.and(f1, f2) as float;
         let c: double = java.math.BigInteger.and(c1, c2, f2);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
@@ -304,10 +304,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static resemblance(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let f2: float = v2.getFrequency();
-        let c1: double = v1.getConfidence();
-        let c2: double = v2.getConfidence();
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let c1: double = v1.confidence;
+        let c2: double = v2.confidence;
         let f: float = java.math.BigInteger.and(f1, f2) as float;
         let c: double = java.math.BigInteger.and(c1, c2, java.math.BigInteger.or(f1, f2));
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
@@ -336,13 +336,13 @@ export class TruthFunctions extends UtilityFunctions {
                 const [v1, v2, narParameters] = args as [TruthValue, TruthValue, Parameters];
 
 
-                if (v1.getAnalytic() || v2.getAnalytic()) {
+                if (v1.analytic || v2.analytic) {
                     return TruthValue.fromFrequencyConfidence(0.5, 0, narParameters);
                 }
-                let f1: float = v1.getFrequency();
-                let f2: float = v2.getFrequency();
-                let c1: double = v1.getConfidence();
-                let c2: double = v2.getConfidence();
+                let f1: float = v1.frequency;
+                let f2: float = v2.frequency;
+                let c1: double = v1.confidence;
+                let c2: double = v2.confidence;
                 let w: double = java.math.BigInteger.and(f2, c1, c2);
                 let c: double = w2c(w, narParameters);
                 return TruthValue.fromFrequencyConfidence(f1, c, narParameters);
@@ -355,11 +355,11 @@ export class TruthFunctions extends UtilityFunctions {
                 const [v1, reliance, narParameters] = args as [TruthValue, float, Parameters];
 
 
-                if (v1.getAnalytic()) {
+                if (v1.analytic) {
                     return TruthValue.fromFrequencyConfidence(0.5, 0, narParameters);
                 }
-                let f1: float = v1.getFrequency();
-                let c1: double = v1.getConfidence();
+                let f1: float = v1.frequency;
+                let c1: double = v1.confidence;
                 let w: double = java.math.BigInteger.and(c1, reliance);
                 let c: double = w2c(w, narParameters);
                 return TruthValue.fromFrequencyConfidence(f1, c, narParameters, true);
@@ -394,13 +394,13 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static exemplification(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        if (v1.getAnalytic() || v2.getAnalytic()) {
+        if (v1.analytic || v2.analytic) {
             return TruthValue.fromFrequencyConfidence(0.5, 0, narParameters);
         }
-        let f1: float = v1.getFrequency();
-        let f2: float = v2.getFrequency();
-        let c1: double = v1.getConfidence();
-        let c2: double = v2.getConfidence();
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let c1: double = v1.confidence;
+        let c2: double = v2.confidence;
         let w: double = java.math.BigInteger.and(f1, f2, c1, c2);
         let c: double = w2c(w, narParameters);
         return TruthValue.fromFrequencyConfidence(1, c, narParameters);
@@ -414,10 +414,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static comparison(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let f2: float = v2.getFrequency();
-        let c1: double = v1.getConfidence();
-        let c2: double = v2.getConfidence();
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let c1: double = v1.confidence;
+        let c2: double = v2.confidence;
         let f0: float = java.math.BigInteger.or(f1, f2);
         let f: float = (f0 === 0) ? 0 : (java.math.BigInteger.and(f1, f2) as float / f0);
         let w: double = java.math.BigInteger.and(f0, c1, c2);
@@ -434,10 +434,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static desireStrong(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let f2: float = v2.getFrequency();
-        let c1: double = v1.getConfidence();
-        let c2: double = v2.getConfidence();
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let c1: double = v1.confidence;
+        let c2: double = v2.confidence;
         let f: float = java.math.BigInteger.and(f1, f2) as float;
         let c: double = java.math.BigInteger.and(c1, c2, f2);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
@@ -451,10 +451,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static desireWeak(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let f2: float = v2.getFrequency();
-        let c1: double = v1.getConfidence();
-        let c2: double = v2.getConfidence();
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let c1: double = v1.confidence;
+        let c2: double = v2.confidence;
         let f: float = java.math.BigInteger.and(f1, f2) as float;
         let c: double = java.math.BigInteger.and(c1, c2, f2, w2c(1.0, narParameters));
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
@@ -468,10 +468,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static desireDed(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let f2: float = v2.getFrequency();
-        let c1: double = v1.getConfidence();
-        let c2: double = v2.getConfidence();
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let c1: double = v1.confidence;
+        let c2: double = v2.confidence;
         let f: float = java.math.BigInteger.and(f1, f2) as float;
         let c: double = java.math.BigInteger.and(c1, c2);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
@@ -485,10 +485,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static desireInd(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let f2: float = v2.getFrequency();
-        let c1: double = v1.getConfidence();
-        let c2: double = v2.getConfidence();
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let c1: double = v1.confidence;
+        let c2: double = v2.confidence;
         let w: double = java.math.BigInteger.and(f2, c1, c2);
         let c: double = w2c(w, narParameters);
         return TruthValue.fromFrequencyConfidence(f1, c, narParameters);
@@ -503,10 +503,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static union(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let f2: float = v2.getFrequency();
-        let c1: double = v1.getConfidence();
-        let c2: double = v2.getConfidence();
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let c1: double = v1.confidence;
+        let c2: double = v2.confidence;
         let f: float = java.math.BigInteger.or(f1, f2);
         let c: double = java.math.BigInteger.and(c1, c2);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
@@ -520,10 +520,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static intersection(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let f2: float = v2.getFrequency();
-        let c1: double = v1.getConfidence();
-        let c2: double = v2.getConfidence();
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let c1: double = v1.confidence;
+        let c2: double = v2.confidence;
         let f: float = java.math.BigInteger.and(f1, f2) as float;
         let c: double = java.math.BigInteger.and(c1, c2);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
@@ -577,8 +577,8 @@ export class TruthFunctions extends UtilityFunctions {
      */
     public static anonymousAnalogy(v1: TruthValue, v2: TruthValue,
         narParameters: Parameters): TruthValue {
-        let f1: float = v1.getFrequency();
-        let c1: double = v1.getConfidence();
+        let f1: float = v1.frequency;
+        let c1: double = v1.confidence;
         let v0: TruthValue = TruthValue.fromFrequencyConfidence(f1, w2c(c1, narParameters), narParameters);
         return TruthFunctions.analogy(v2, v0, narParameters);
     }
@@ -602,8 +602,8 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static eternalize(v1: TruthValue, narParameters: Parameters): TruthFunctions.EternalizedTruthValue {
-        let f1: float = v1.getFrequency();
-        let c1: double = v1.getConfidence();
+        let f1: float = v1.frequency;
+        let c1: double = v1.confidence;
         let c: double = w2c(c1, narParameters);
         return new TruthFunctions.EternalizedTruthValue(f1, c, narParameters);
     }

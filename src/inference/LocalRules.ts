@@ -162,7 +162,7 @@ export class LocalRules extends JavaObject {
             // when the second premise would have been shifted
             // to the necessary time in the first place
             // to build the hypothesis newBelief encodes
-            newTruth.setConfidence(newTruth.getConfidence() * a);
+            newTruth.confidence = newTruth.confidence * a;
             useNewBeliefTerm = AbsDiffSumNew < AbsDiffSumOld;
         }
         return useNewBeliefTerm;
@@ -256,7 +256,7 @@ export class LocalRules extends JavaObject {
             return (truth.getExpectation() / java.lang.Math
                 .sqrt(java.lang.Math.sqrt(java.lang.Math.sqrt(solution.term.getComplexity() * memory.narParameters.COMPLEXITY_UNIT)))) as float;
         } else {
-            return truth.getConfidence() as float;
+            return truth.confidence as float;
         }
     }
 

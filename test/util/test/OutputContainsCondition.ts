@@ -167,10 +167,10 @@ export class OutputContainsCondition extends OutputCondition {
                 let t: Task = signal as Task;
                 let s: Sentence = t.sentence;
                 if (s.truth !== null) {
-                    if (s.truth.getConfidence() > this.confOfBestAnswer) {
+                    if (s.truth.confidence > this.confOfBestAnswer) {
                         this.timeOfBestAnswer = nar.time();
                     }
-                    this.confOfBestAnswer = java.lang.Math.max(this.confOfBestAnswer, s.truth.getConfidence());
+                    this.confOfBestAnswer = java.lang.Math.max(this.confOfBestAnswer, s.truth.confidence);
                 }
             }
         }

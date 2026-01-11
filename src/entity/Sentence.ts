@@ -133,12 +133,12 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
                     if (_content instanceof Implication || _content instanceof Equivalence) {
                         if ((_content as Statement).getSubject().hasVarIndep()
                             && !(_content as Statement).getPredicate().hasVarIndep())
-                            truth.setConfidence(0.0);
+                            truth.confidence = 0.0;
                         if ((_content as Statement).getPredicate().hasVarIndep()
                             && !(_content as Statement).getSubject().hasVarIndep())
-                            truth.setConfidence(0.0); // TODO:
+                            truth.confidence = 0.0; // TODO:
                     } else if (_content instanceof Interval && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
-                        truth.setConfidence(0.0); // do it that way for now, because else further inference is interrupted.
+                        truth.confidence = 0.0; // do it that way for now, because else further inference is interrupted.
                         if (Debug.DETAILED && Debug.DETAILED_SENTENCES)
                             throw new java.lang.IllegalStateException(
                                 "Sentence content must not be Interval: " + _content + punctuation + " " + stamp);
@@ -151,7 +151,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
 
                     if (_content.subjectOrPredicateIsIndependentVar()
                         && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
-                        truth.setConfidence(0.0); // do it that way for now, because else further inference is interrupted.
+                        truth.confidence = 0.0; // do it that way for now, because else further inference is interrupted.
                         if (Debug.DETAILED && Debug.DETAILED_SENTENCES)
                             throw new java.lang.IllegalStateException(
                                 "A statement sentence is not allowed to have a independent variable as subj or pred");
@@ -404,9 +404,9 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
                 let occurrenceTime: long = this.stamp.getOccurrenceTime();
                 let factor: float = TruthFunctions.temporalProjection(occurrenceTime, targetTime, currentTime,
                     mem.narParameters);
-                let projectedConfidence: double = factor * this.truth.getConfidence();
-                if (projectedConfidence > newTruth.getConfidence()) {
-                    newTruth = TruthValue.fromFrequencyConfidence(this.truth.getFrequency(), projectedConfidence, mem.narParameters);
+                let projectedConfidence: double = factor * this.truth.confidence;
+                if (projectedConfidence > newTruth.confidence) {
+                    newTruth = TruthValue.fromFrequencyConfidence(this.truth.frequency, projectedConfidence, mem.narParameters);
                 }
             }
         }
@@ -614,7 +614,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *
      */
     public discountConfidence(narParameters: Parameters): void {
-        this.truth.setConfidence(this.truth.getConfidence() * narParameters.DISCOUNT_RATE).setAnalytic(false);
+        this.truth.confidence = this.truth.confidence * narParameters.DISCOUNT_RATE.analytic = false;
     }
 
     /**

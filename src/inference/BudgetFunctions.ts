@@ -46,7 +46,7 @@ export class BudgetFunctions {
         if (rankTruthExpectation) {
             return judg.getTruth().getExpectation();
         }
-        let confidence: double = judg.truth.getConfidence();
+        let confidence: double = judg.truth.confidence;
         // final float originality = judg.stamp.getOriginality();
         return confidence as float; // or(confidence, originality);
     }
@@ -74,7 +74,7 @@ export class BudgetFunctions {
             bLink.decPriority(1 - difB);
             bLink.decDurability(1 - difB);
         }
-        let dif: double = truth.getConfidence() - Math.max(tTruth.getConfidence(), bTruth.getConfidence());
+        let dif: double = truth.confidence - Math.max(tTruth.confidence, bTruth.confidence);
         let priority: float = java.math.BigInteger.or(dif as float, task.getPriority());
         let durability: float = aveAri(dif as float, task.getDurability());
         let quality: float = BudgetFunctions.truthToQuality(truth);

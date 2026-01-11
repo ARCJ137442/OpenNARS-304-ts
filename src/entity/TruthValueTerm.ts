@@ -8,7 +8,7 @@ const TRUTH_UNSURE: Term = new Term("UNSURE");
 
 export function truthToWordTerm(truth: TruthValue): Term {
     const e: number = truth.getExpectation();
-    const t: number = truth.getNarParameters().DEFAULT_CREATION_EXPECTATION;
+    const t: number = truth.narParameters.DEFAULT_CREATION_EXPECTATION;
     if (e > t) {
         return TRUTH_TRUE;
     }

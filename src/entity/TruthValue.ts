@@ -38,16 +38,16 @@ function formatN2(value: number): string {
  * Truth is a tuple of frequency and confidence as defined by NARS theory.
  */
 export class TruthValue {
-    private frequency: number;
-    private confidence: number;
-    private analytic: boolean;
-    private narParameters: TruthParameters;
+    private _confidence!: number;
+    public frequency: number;
+    public analytic: boolean;
+    public readonly narParameters: TruthParameters;
 
     public constructor(frequency: number, confidence: number, analytic: boolean, narParameters: TruthParameters) {
         this.narParameters = narParameters;
         this.analytic = analytic;
-        this.setFrequency(frequency);
-        this.setConfidence(confidence);
+        this.frequency = frequency;
+        this.confidence = confidence;
     }
 
     public static fromParameters(narParameters: TruthParameters): TruthValue {
@@ -64,45 +64,20 @@ export class TruthValue {
     }
 
     public static fromTruthValue(value: TruthValue): TruthValue {
-        return new TruthValue(value.getFrequency(), value.getConfidence(), value.getAnalytic(), value.getNarParameters());
+        return new TruthValue(value.frequency, value.confidence, value.analytic, value.narParameters);
     }
 
-    public getFrequency(): number {
-        return this.frequency;
+    public get confidence(): number {
+        return this._confidence;
     }
 
-    public getConfidence(): number {
-        return this.confidence;
-    }
-
-    public getAnalytic(): boolean {
-        return this.analytic;
-    }
-
-    public getNarParameters(): TruthParameters {
-        return this.narParameters;
-    }
-
-    public setFrequency(frequency: number): TruthValue {
-        this.frequency = frequency;
-        return this;
-    }
-
-    public setConfidence(confidence: number): TruthValue {
+    public set confidence(confidence: number) {
         const maxConfidence = 1.0 - this.narParameters.TRUTH_EPSILON;
-        this.confidence = confidence < maxConfidence ? confidence : maxConfidence;
-        return this;
+        this._confidence = confidence < maxConfidence ? confidence : maxConfidence;
     }
 
     public mulConfidence(mul: number): TruthValue {
-        const maxConfidence = 1.0 - this.narParameters.TRUTH_EPSILON;
-        const confidence = this.confidence * mul;
-        this.confidence = confidence < maxConfidence ? confidence : maxConfidence;
-        return this;
-    }
-
-    public setAnalytic(analytic: boolean = true): TruthValue {
-        this.analytic = analytic;
+        this.confidence = this.confidence * mul;
         return this;
     }
 
@@ -149,12 +124,6 @@ export class TruthValue {
 
     public clone(): TruthValue {
         return TruthValue.fromTruthValue(this);
-    }
-
-    public set(frequency: number, confidence: number): TruthValue {
-        this.setFrequency(frequency);
-        this.setConfidence(confidence);
-        return this;
     }
 
     private formatString(_external: boolean): string {

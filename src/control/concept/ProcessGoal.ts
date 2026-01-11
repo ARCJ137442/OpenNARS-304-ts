@@ -280,7 +280,7 @@ export class ProcessGoal extends JavaObject {
             if (ProcessGoal.executePrecondition(nal, bestOpWithMeta, concept, projectedGoal, task)) {
                 let op: Concept = nal.memory.concept(bestOpWithMeta.bestOp);
                 if (op !== null && bestOpWithMeta.executable_precondition.sentence.truth
-                    .getConfidence() > nal.narParameters.MOTOR_BABBLING_CONFIDENCE_THRESHOLD) {
+                    .confidence > nal.narParameters.MOTOR_BABBLING_CONFIDENCE_THRESHOLD) {
                     /* synchronized (op) { */
                     op.allowBabbling = false;
                     /* } */

@@ -76,12 +76,12 @@ export class VisionChannel extends SensoryChannel {
         let x: int = t.getTerm().term_indices[2];
         let y: int = t.getTerm().term_indices[3];
         if (!this.updated[y][x]) {
-            this.inputs[y][x] = t.sentence.getTruth().getFrequency();
+            this.inputs[y][x] = t.sentence.getTruth().frequency;
             this.cnt_updated++;
             this.updated[y][x] = true;
         } else { // a second value, so take average of frequencies
             // revision wouldn't be proper as each sensory point can just have 1 vote
-            this.inputs[y][x] = (this.inputs[y][x] + t.sentence.getTruth().getFrequency()) / 2.0;
+            this.inputs[y][x] = (this.inputs[y][x] + t.sentence.getTruth().frequency) / 2.0;
         }
         return this.cnt_updated === height * width;
     }

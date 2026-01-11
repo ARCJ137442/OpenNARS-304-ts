@@ -74,7 +74,7 @@ export class DerivationContext extends JavaObject {
                     return false;
                 }
                 if (task.sentence !== null && task.sentence.truth !== null) {
-                    let conf: double = task.sentence.truth.getConfidence();
+                    let conf: double = task.sentence.truth.confidence;
                     if (conf < this.narParameters.TRUTH_EPSILON) {
                         // no confidence - we can delete the wrongs out that way.
                         this.memory.removeTask(task, "Ignored (zero confidence)");
