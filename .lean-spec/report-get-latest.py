@@ -132,27 +132,39 @@ def list_report_files() -> List[str]:
     return files
 
 
-def build_report_index() -> List[Tuple[str, Optional[datetime]]]:
-    """Collect report names with their parsed timestamps."""
-    return [(file_name, get_report_datetime(file_name)) for file_name in list_report_files()]
+def build_report_index() -> Tuple[List[Tuple[str, datetime]], List[str]]:
+    """Collect report names with valid datetimes plus a list of invalid ones."""
+    valid_entries: List[Tuple[str, datetime]] = []
+    invalid_reports: List[str] = []
+    for file_name in list_report_files():
+        dt_value = get_report_datetime(file_name)
+        if dt_value is None:
+            invalid_reports.append(file_name)
+            continue
+        valid_entries.append((file_name, dt_value))
+    return valid_entries, invalid_reports
 
 
-def find_latest_report(index: Optional[List[Tuple[str, Optional[datetime]]]] = None) -> Optional[Tuple[str, datetime]]:
+def find_latest_report(index: Optional[List[Tuple[str, datetime]]] = None) -> Optional[Tuple[str, datetime]]:
     """Return the latest report entry (name, datetime) if available."""
     if index is None:
-        index = build_report_index()
-    dated_entries = [(name, dt) for name, dt in index if dt is not None]
-    if not dated_entries:
+        index, _ = build_report_index()
+    if not index:
         return None
-    return max(dated_entries, key=lambda item: item[1])
+    return max(index, key=lambda item: item[1])
 
 
 if __name__ == "__main__":
-    report_index = build_report_index()
-    safe_print("Total reports:", len(report_index))
+    report_index, invalid_reports = build_report_index()
+    total_reports = len(report_index) + len(invalid_reports)
+    safe_print("Total reports:", total_reports)
+
+    display_rows: List[Tuple[str, Optional[datetime]]] = [
+        (name, dt) for name, dt in report_index
+    ] + [(name, None) for name in invalid_reports]
 
     sorted_reports = sorted(
-        report_index,
+        display_rows,
         key=lambda item: (item[1] is None, item[1] or datetime.min, item[0]),
     )
     for report_name, dt in sorted_reports:
@@ -163,6 +175,12 @@ if __name__ == "__main__":
         else:
             safe_print(f"    Report: '{report_name}'    Time: <unknown>")
     safe_print()
+
+    if invalid_reports:
+        safe_print("Skipped reports without valid timestamps:")
+        for file_name in invalid_reports:
+            safe_print(f"    - {file_name}")
+        safe_print()
 
     latest_entry = find_latest_report(report_index)
     if latest_entry is None:
