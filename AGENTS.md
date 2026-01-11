@@ -43,6 +43,7 @@
 | **务必链接 spec 引用** | 内容提及其他 spec -> `lean-spec link <spec> --depends-on <other>` |
 | **跟踪状态流转** | `planned` -> `in-progress`（编码前）-> `complete`（完成后） |
 | **不要嵌套代码块** | 使用缩进替代 |
+| **Encoding workflow** | When writing Chinese via CLI, emit literal `\uXXXX` escapes and rerun `python scripts/checking/check_hanzi_encoding.py --json-output scripts/checking/hanzi-report.json` to confirm there are no repeated `?` placeholders or mojibake before commit. |
 
 ### 🚫常见错误
 

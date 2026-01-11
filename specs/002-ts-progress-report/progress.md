@@ -1,1316 +1,1330 @@
-# TypeScript æä»¶è¿åº¦æ»è§
+# TypeScript \u6587\u4ef6\u8fdb\u5ea6\u603b\u89c8
 
-- å½åè¿½è¸ª `src` ç®å½ä¸ 119 ä¸ª TypeScript æä»¶ï¼ç´¯è®¡åç° TODO 43 å¤ã
-- `npx tsc --noEmit` å¨ 10 ä¸ªæºç æä»¶ (å¦å« `test/metrics/AttentionMetric.ts`) ä¸å¤±è´¥ã
-- `npm test` ä»æ§è¡ `test/node/distributor.test.ts` å¹¶éè¿ã
+- \u5f53\u524d\u8ffd\u8e2a `src` \u76ee\u5f55\u4e0b 119 \u4e2a TypeScript \u6587\u4ef6\uff0c\u7d2f\u8ba1\u53d1\u73b0 TODO 43 \u5904\u3002
+- `npx tsc --noEmit` \u5728 10 \u4e2a\u6e90\u4ee3\u7801\u6587\u4ef6 (\u53e6\u542b `test/metrics/AttentionMetric.ts`) \u4e0a\u5931\u8d25\u3002
+- `npm test` \u4ec5\u6267\u884c `test/node/distributor.test.ts` \u5e76\u901a\u8fc7\u3002
 
-ä¸ææåååº Java å¯¹ç§ãä¾èµç°ç¶ãç¼è¯/æµè¯åè·¯çº¿å¾ã
+\u5305\u53d7\u76d1\u63a7\uff1a
+- control: 8 \u4e2a TS \u6587\u4ef6
+- entity: 10 \u4e2a TS \u6587\u4ef6
+- inference: 9 \u4e2a TS \u6587\u4ef6
+- interfaces: 10 \u4e2a TS \u6587\u4ef6
+- io: 11 \u4e2a TS \u6587\u4ef6
+- language: 30 \u4e2a TS \u6587\u4ef6
+- main: 5 \u4e2a TS \u6587\u4ef6
+- operator: 23 \u4e2a TS \u6587\u4ef6
+- plugin: 9 \u4e2a TS \u6587\u4ef6
+- storage: 3 \u4e2a TS \u6587\u4ef6
+- util: 1 \u4e2a TS \u6587\u4ef6
+
+\u4e0b\u6587\u6309\u5305\u5217\u51fa Java \u5bf9\u7167\u3001\u4f9d\u8d56\u73b0\u72b6\u3001\u7f16\u8bd1/\u6d4b\u8bd5\u548c\u8def\u7ebf\u56fe\u3002
 
 ## control/DerivationContext.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/control/DerivationContext.java`
-- **è§æ¨¡ / TODO**: çº¦ 610 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼éå»ºæ¨çå¾ªç¯ãä»»å¡è°åº¦ä¸æåæºå¶ï¼æ¿æ¢ synchronized/wait è¡ä¸ºã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ§å¶ä¸è°åº¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/DerivationContext.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 610 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
 
 ## control/GeneralInferenceControl.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/control/GeneralInferenceControl.java`
-- **è§æ¨¡ / TODO**: çº¦ 115 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼éå»ºæ¨çå¾ªç¯ãä»»å¡è°åº¦ä¸æåæºå¶ï¼æ¿æ¢ synchronized/wait è¡ä¸ºã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ§å¶ä¸è°åº¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/GeneralInferenceControl.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 115 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
 
 ## control/TemporalInferenceControl.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/control/TemporalInferenceControl.java`
-- **è§æ¨¡ / TODO**: çº¦ 235 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼éå»ºæ¨çå¾ªç¯ãä»»å¡è°åº¦ä¸æåæºå¶ï¼æ¿æ¢ synchronized/wait è¡ä¸ºã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ§å¶ä¸è°åº¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/TemporalInferenceControl.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 235 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
 
 ## control/concept/ProcessAnticipation.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/control/concept/ProcessAnticipation.java`
-- **è§æ¨¡ / TODO**: çº¦ 264 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼éå»ºæ¨çå¾ªç¯ãä»»å¡è°åº¦ä¸æåæºå¶ï¼æ¿æ¢ synchronized/wait è¡ä¸ºã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ§å¶ä¸è°åº¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/concept/ProcessAnticipation.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 264 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
 
 ## control/concept/ProcessGoal.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/control/concept/ProcessGoal.java`
-- **è§æ¨¡ / TODO**: çº¦ 492 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼éå»ºæ¨çå¾ªç¯ãä»»å¡è°åº¦ä¸æåæºå¶ï¼æ¿æ¢ synchronized/wait è¡ä¸ºã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ§å¶ä¸è°åº¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/concept/ProcessGoal.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 492 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
 
 ## control/concept/ProcessJudgment.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/control/concept/ProcessJudgment.java`
-- **è§æ¨¡ / TODO**: çº¦ 181 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼éå»ºæ¨çå¾ªç¯ãä»»å¡è°åº¦ä¸æåæºå¶ï¼æ¿æ¢ synchronized/wait è¡ä¸ºã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ§å¶ä¸è°åº¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/concept/ProcessJudgment.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 181 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
 
 ## control/concept/ProcessQuestion.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/control/concept/ProcessQuestion.java`
-- **è§æ¨¡ / TODO**: çº¦ 143 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼éå»ºæ¨çå¾ªç¯ãä»»å¡è°åº¦ä¸æåæºå¶ï¼æ¿æ¢ synchronized/wait è¡ä¸ºã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ§å¶ä¸è°åº¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/concept/ProcessQuestion.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 143 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
 
 ## control/concept/ProcessTask.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/control/concept/ProcessTask.java`
-- **è§æ¨¡ / TODO**: çº¦ 62 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼éå»ºæ¨çå¾ªç¯ãä»»å¡è°åº¦ä¸æåæºå¶ï¼æ¿æ¢ synchronized/wait è¡ä¸ºã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ§å¶ä¸è°åº¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/control/concept/ProcessTask.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 62 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u91cd\u5efa\u63a8\u7406\u5faa\u73af\u3001\u4efb\u52a1\u8c03\u5ea6\u4e0e\u6682\u505c\u673a\u5236\uff0c\u66ff\u6362 synchronized/wait \u884c\u4e3a\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a7\u5236\u4e0e\u8c03\u5ea6
 
 ## entity/BudgetValue.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/entity/BudgetValue.java`
-- **è§æ¨¡ / TODO**: çº¦ 353 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä¾èµï¼io/Symbols.ts, inference/UtilityFunctions.ts, inference/BudgetFunctions.ts, main/Parameters.ts, entity/TruthValue.ts
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä¾èµï¼io/Symbols.ts, inference/UtilityFunctions.ts, inference/BudgetFunctions.ts, main/Parameters.ts, entity/TruthValue.ts
-  2. æä»¶å·¥ä½ï¼ä¿æ Stamp/TruthValue ç­å¼å¯¹è±¡çä¸å¯åè¯­ä¹ï¼è¡¥é½ clone/equals/hash ä¸åºååã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å®ä½ä¸åºåå
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/BudgetValue.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 353 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aio/Symbols.ts, inference/UtilityFunctions.ts, inference/BudgetFunctions.ts, main/Parameters.ts, entity/TruthValue.ts
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aio/Symbols.ts, inference/UtilityFunctions.ts, inference/BudgetFunctions.ts, main/Parameters.ts, entity/TruthValue.ts
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
 
 ## entity/Concept.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/entity/Concept.java`
-- **è§æ¨¡ / TODO**: çº¦ 620 è¡ï¼TODO 2 å¤
-- **ä¾èµç°ç¶**: ä¾èµï¼entity/Item.ts, language/Term.ts, entity/Sentence.ts, entity/Task.ts, storage/Bag.ts, entity/TaskLink.ts
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä¾èµï¼entity/Item.ts, language/Term.ts, entity/Sentence.ts, entity/Task.ts, storage/Bag.ts, entity/TaskLink.ts
-  2. æä»¶å·¥ä½ï¼ä¿æ Stamp/TruthValue ç­å¼å¯¹è±¡çä¸å¯åè¯­ä¹ï¼è¡¥é½ clone/equals/hash ä¸åºååã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å®ä½ä¸åºåå
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/Concept.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 620 \u884c\uff0cTODO 2 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aentity/Item.ts, language/Term.ts, entity/Sentence.ts, entity/Task.ts, storage/Bag.ts, entity/TaskLink.ts
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aentity/Item.ts, language/Term.ts, entity/Sentence.ts, entity/Task.ts, storage/Bag.ts, entity/TaskLink.ts
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1bTODO 2 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
 
 ## entity/Item.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/entity/Item.java`
-- **è§æ¨¡ / TODO**: çº¦ 285 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä¾èµï¼entity/BudgetValue.ts
-- **ç¼è¯ / æµè¯**: ç¼è¯å¤±è´¥ï¼TS1005 @ 281:36 '=' expected.ï¼å¦æ 2 æ¡ ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä¾èµï¼entity/BudgetValue.ts
-  2. æä»¶å·¥ä½ï¼ä¿æ Stamp/TruthValue ç­å¼å¯¹è±¡çä¸å¯åè¯­ä¹ï¼è¡¥é½ clone/equals/hash ä¸åºååã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å®ä½ä¸åºåå
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/Item.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 285 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aentity/BudgetValue.ts
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 281:36 '=' expected.\uff0c\u53e6\u6709 2 \u6761 ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aentity/BudgetValue.ts
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1btsc TS1005 @ 281:36 \u9519\u8bef
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
 
 ## entity/Sentence.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/entity/Sentence.java`
-- **è§æ¨¡ / TODO**: çº¦ 643 è¡ï¼TODO 2 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¿æ Stamp/TruthValue ç­å¼å¯¹è±¡çä¸å¯åè¯­ä¹ï¼è¡¥é½ clone/equals/hash ä¸åºååã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å®ä½ä¸åºåå
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/Sentence.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 643 \u884c\uff0cTODO 2 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1bTODO 2 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
 
 ## entity/Stamp.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/entity/Stamp.java`
-- **è§æ¨¡ / TODO**: çº¦ 606 è¡ï¼TODO 2 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¿æ Stamp/TruthValue ç­å¼å¯¹è±¡çä¸å¯åè¯­ä¹ï¼è¡¥é½ clone/equals/hash ä¸åºååã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å®ä½ä¸åºåå
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/Stamp.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 606 \u884c\uff0cTODO 2 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1bTODO 2 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
 
 ## entity/TLink.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/entity/TLink.java`
-- **è§æ¨¡ / TODO**: çº¦ 18 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¿æ Stamp/TruthValue ç­å¼å¯¹è±¡çä¸å¯åè¯­ä¹ï¼è¡¥é½ clone/equals/hash ä¸åºååã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å®ä½ä¸åºåå
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/TLink.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 18 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
 
 ## entity/Task.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/entity/Task.java`
-- **è§æ¨¡ / TODO**: çº¦ 232 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: ç¼è¯å¤±è´¥ï¼TS1005 @ 222:25 ';' expected. ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¿æ Stamp/TruthValue ç­å¼å¯¹è±¡çä¸å¯åè¯­ä¹ï¼è¡¥é½ clone/equals/hash ä¸åºååã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å®ä½ä¸åºåå
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/Task.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 232 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 222:25 ';' expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1btsc TS1005 @ 222:25 \u9519\u8bef
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
 
 ## entity/TaskLink.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/entity/TaskLink.java`
-- **è§æ¨¡ / TODO**: çº¦ 218 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¿æ Stamp/TruthValue ç­å¼å¯¹è±¡çä¸å¯åè¯­ä¹ï¼è¡¥é½ clone/equals/hash ä¸åºååã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å®ä½ä¸åºåå
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/TaskLink.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 218 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
 
 ## entity/TermLink.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/entity/TermLink.java`
-- **è§æ¨¡ / TODO**: çº¦ 265 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¿æ Stamp/TruthValue ç­å¼å¯¹è±¡çä¸å¯åè¯­ä¹ï¼è¡¥é½ clone/equals/hash ä¸åºååã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å®ä½ä¸åºåå
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/TermLink.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 265 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
 
 ## entity/TruthValue.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/entity/TruthValue.java`
-- **è§æ¨¡ / TODO**: çº¦ 332 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä¾èµï¼io/Symbols.ts, main/Parameters.ts
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä¾èµï¼io/Symbols.ts, main/Parameters.ts
-  2. æä»¶å·¥ä½ï¼ä¿æ Stamp/TruthValue ç­å¼å¯¹è±¡çä¸å¯åè¯­ä¹ï¼è¡¥é½ clone/equals/hash ä¸åºååã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å®ä½ä¸åºåå
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/entity/TruthValue.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 332 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aio/Symbols.ts, main/Parameters.ts
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aio/Symbols.ts, main/Parameters.ts
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4fdd\u6301 Stamp/TruthValue \u7b49\u503c\u5bf9\u8c61\u7684\u4e0d\u53ef\u53d8\u8bed\u4e49\uff0c\u8865\u9f50 clone/equals/hash \u4e0e\u5e8f\u5217\u5316\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b9e\u4f53\u4e0e\u5e8f\u5217\u5316
 
 ## inference/BudgetFunctions.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/inference/BudgetFunctions.java`
-- **è§æ¨¡ / TODO**: çº¦ 336 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä¾èµï¼entity/TruthValue.ts, entity/Sentence.ts, entity/TaskLink.ts, entity/Task.ts, control/DerivationContext.ts, entity/BudgetValue.ts ...
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä¾èµï¼entity/TruthValue.ts, entity/Sentence.ts, entity/TaskLink.ts, entity/Task.ts, control/DerivationContext.ts, entity/BudgetValue.ts ...
-  2. æä»¶å·¥ä½ï¼å¤å¶è§å/çå¼/é¢ç®éæè¡¨å¹¶å®åç±»åçº¦æä¸æ°å¼æ ¡éªã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¨çè§å
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/BudgetFunctions.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 336 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aentity/TruthValue.ts, entity/Sentence.ts, entity/TaskLink.ts, entity/Task.ts, control/DerivationContext.ts, entity/BudgetValue.ts ...
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aentity/TruthValue.ts, entity/Sentence.ts, entity/TaskLink.ts, entity/Task.ts, control/DerivationContext.ts, entity/BudgetValue.ts ...
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
 
 ## inference/CompositionalRules.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/inference/CompositionalRules.java`
-- **è§æ¨¡ / TODO**: çº¦ 827 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å¤å¶è§å/çå¼/é¢ç®éæè¡¨å¹¶å®åç±»åçº¦æä¸æ°å¼æ ¡éªã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¨çè§å
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/CompositionalRules.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 827 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
 
 ## inference/LocalRules.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/inference/LocalRules.java`
-- **è§æ¨¡ / TODO**: çº¦ 470 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å¤å¶è§å/çå¼/é¢ç®éæè¡¨å¹¶å®åç±»åçº¦æä¸æ°å¼æ ¡éªã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¨çè§å
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/LocalRules.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 470 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
 
 ## inference/RuleTables.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/inference/RuleTables.java`
-- **è§æ¨¡ / TODO**: çº¦ 999 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: ç¼è¯å¤±è´¥ï¼TS1005 @ 621:23 ';' expected. ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å¤å¶è§å/çå¼/é¢ç®éæè¡¨å¹¶å®åç±»åçº¦æä¸æ°å¼æ ¡éªã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¨çè§å
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/RuleTables.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 999 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 621:23 ';' expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002\uff1btsc TS1005 @ 621:23 \u9519\u8bef\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
 
 ## inference/StructuralRules.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/inference/StructuralRules.java`
-- **è§æ¨¡ / TODO**: çº¦ 986 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å¤å¶è§å/çå¼/é¢ç®éæè¡¨å¹¶å®åç±»åçº¦æä¸æ°å¼æ ¡éªã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¨çè§å
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/StructuralRules.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 986 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
 
 ## inference/SyllogisticRules.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/inference/SyllogisticRules.java`
-- **è§æ¨¡ / TODO**: çº¦ 1000 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å¤å¶è§å/çå¼/é¢ç®éæè¡¨å¹¶å®åç±»åçº¦æä¸æ°å¼æ ¡éªã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¨çè§å
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/SyllogisticRules.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 1000 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
 
 ## inference/TemporalRules.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/inference/TemporalRules.java`
-- **è§æ¨¡ / TODO**: çº¦ 340 è¡ï¼TODO 2 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å¤å¶è§å/çå¼/é¢ç®éæè¡¨å¹¶å®åç±»åçº¦æä¸æ°å¼æ ¡éªã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¨çè§å
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/TemporalRules.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 340 \u884c\uff0cTODO 2 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002\uff1bTODO 2 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
 
 ## inference/TruthFunctions.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/inference/TruthFunctions.java`
-- **è§æ¨¡ / TODO**: çº¦ 626 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: ç¼è¯å¤±è´¥ï¼TS1005 @ 43:39 ';' expected. ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å¤å¶è§å/çå¼/é¢ç®éæè¡¨å¹¶å®åç±»åçº¦æä¸æ°å¼æ ¡éªã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¨çè§å
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/TruthFunctions.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 626 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 43:39 ';' expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002\uff1btsc TS1005 @ 43:39 \u9519\u8bef
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
 
 ## inference/UtilityFunctions.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/inference/UtilityFunctions.java`
-- **è§æ¨¡ / TODO**: çº¦ 93 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä¾èµï¼main/Parameters.ts
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä¾èµï¼main/Parameters.ts
-  2. æä»¶å·¥ä½ï¼å¤å¶è§å/çå¼/é¢ç®éæè¡¨å¹¶å®åç±»åçº¦æä¸æ°å¼æ ¡éªã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¨çè§å
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/inference/UtilityFunctions.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 93 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1amain/Parameters.ts
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1amain/Parameters.ts
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u590d\u5236\u89c4\u5219/\u771f\u503c/\u9884\u7b97\u9759\u6001\u8868\u5e76\u5b8c\u5584\u7c7b\u578b\u7ea6\u675f\u4e0e\u6570\u503c\u6821\u9a8c\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a8\u7406\u89c4\u5219
 
 ## interfaces/Eventable.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/interfaces/Eventable.java`
-- **è§æ¨¡ / TODO**: çº¦ 18 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä»¥ interface/abstract class è¿å Java æ¥å£ï¼å¨ TS å®ç°ç±»ä¸­æ¾å¼ implementsã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¥å£è§è
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/Eventable.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 18 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
 
 ## interfaces/InputFileConsumer.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/interfaces/InputFileConsumer.java`
-- **è§æ¨¡ / TODO**: çº¦ 18 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä»¥ interface/abstract class è¿å Java æ¥å£ï¼å¨ TS å®ç°ç±»ä¸­æ¾å¼ implementsã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¥å£è§è
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/InputFileConsumer.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 18 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
 
 ## interfaces/Multistepable.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/interfaces/Multistepable.java`
-- **è§æ¨¡ / TODO**: çº¦ 21 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä»¥ interface/abstract class è¿å Java æ¥å£ï¼å¨ TS å®ç°ç±»ä¸­æ¾å¼ implementsã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¥å£è§è
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/Multistepable.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 21 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
 
 ## interfaces/NarseseConsumer.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/interfaces/NarseseConsumer.java`
-- **è§æ¨¡ / TODO**: çº¦ 21 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä»¥ interface/abstract class è¿å Java æ¥å£ï¼å¨ TS å®ç°ç±»ä¸­æ¾å¼ implementsã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¥å£è§è
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/NarseseConsumer.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 21 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
 
 ## interfaces/Pluggable.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/interfaces/Pluggable.java`
-- **è§æ¨¡ / TODO**: çº¦ 31 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä»¥ interface/abstract class è¿å Java æ¥å£ï¼å¨ TS å®ç°ç±»ä¸­æ¾å¼ implementsã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¥å£è§è
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/Pluggable.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 31 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
 
 ## interfaces/Resettable.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/interfaces/Resettable.java`
-- **è§æ¨¡ / TODO**: çº¦ 17 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä»¥ interface/abstract class è¿å Java æ¥å£ï¼å¨ TS å®ç°ç±»ä¸­æ¾å¼ implementsã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¥å£è§è
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/Resettable.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 17 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
 
 ## interfaces/SensoryChannelConsumer.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/interfaces/SensoryChannelConsumer.java`
-- **è§æ¨¡ / TODO**: çº¦ 18 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä»¥ interface/abstract class è¿å Java æ¥å£ï¼å¨ TS å®ç°ç±»ä¸­æ¾å¼ implementsã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¥å£è§è
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/SensoryChannelConsumer.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 18 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
 
 ## interfaces/TaskConsumer.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/interfaces/TaskConsumer.java`
-- **è§æ¨¡ / TODO**: çº¦ 21 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä»¥ interface/abstract class è¿å Java æ¥å£ï¼å¨ TS å®ç°ç±»ä¸­æ¾å¼ implementsã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¥å£è§è
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/TaskConsumer.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 21 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
 
 ## interfaces/Timable.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/interfaces/Timable.java`
-- **è§æ¨¡ / TODO**: çº¦ 18 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä»¥ interface/abstract class è¿å Java æ¥å£ï¼å¨ TS å®ç°ç±»ä¸­æ¾å¼ implementsã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¥å£è§è
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/Timable.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 18 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
 
 ## interfaces/pub/Reasoner.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/interfaces/pub/Reasoner.java`
-- **è§æ¨¡ / TODO**: çº¦ 83 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä»¥ interface/abstract class è¿å Java æ¥å£ï¼å¨ TS å®ç°ç±»ä¸­æ¾å¼ implementsã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æ¥å£è§è
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/interfaces/pub/Reasoner.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 83 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4ee5 interface/abstract class \u8fd8\u539f Java \u63a5\u53e3\uff0c\u5728 TS \u5b9e\u73b0\u7c7b\u4e2d\u663e\u5f0f implements\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63a5\u53e3\u89c4\u8303
 
 ## io/ConfigReader.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/ConfigReader.java`
-- **è§æ¨¡ / TODO**: çº¦ 170 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/ConfigReader.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 170 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## io/Narsese.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/Narsese.java`
-- **è§æ¨¡ / TODO**: çº¦ 567 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/Narsese.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 567 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## io/Parser.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/Parser.java`
-- **è§æ¨¡ / TODO**: çº¦ 36 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/Parser.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 36 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## io/Symbols.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/Symbols.java`
-- **è§æ¨¡ / TODO**: çº¦ 333 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/Symbols.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 333 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## io/Texts.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/Texts.java`
-- **è§æ¨¡ / TODO**: çº¦ 168 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/Texts.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 168 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## io/events/AnswerHandler.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/events/AnswerHandler.java`
-- **è§æ¨¡ / TODO**: çº¦ 41 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/AnswerHandler.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 41 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## io/events/EventEmitter.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/events/EventEmitter.java`
-- **è§æ¨¡ / TODO**: çº¦ 160 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: ç¼è¯å¤±è´¥ï¼TS1109 @ 113:30 Expression expected. ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/EventEmitter.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 160 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1109 @ 113:30 Expression expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002\uff1btsc TS1109 @ 113:30 \u9519\u8bef\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## io/events/EventHandler.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/events/EventHandler.java`
-- **è§æ¨¡ / TODO**: çº¦ 58 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/EventHandler.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 58 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## io/events/Events.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/events/Events.java`
-- **è§æ¨¡ / TODO**: çº¦ 360 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: ç¼è¯å¤±è´¥ï¼TS1005 @ 357:38 '=' expected.ï¼å¦æ 2 æ¡ ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/Events.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 360 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 357:38 '=' expected.\uff0c\u53e6\u6709 2 \u6761 ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002\uff1btsc TS1005 @ 357:38 \u9519\u8bef
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## io/events/OutputHandler.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/events/OutputHandler.java`
-- **è§æ¨¡ / TODO**: çº¦ 110 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/OutputHandler.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 110 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## io/events/TextOutputHandler.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/io/events/TextOutputHandler.java`
-- **è§æ¨¡ / TODO**: çº¦ 294 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.io æµä¸äºä»¶è½¬æ¥å° Node æµ + EventEmitterï¼è¡¥ä¿ Parser/Narsese/Events é¾è·¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - I/O ä¸äºä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/io/events/TextOutputHandler.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 294 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 java.io \u6d41\u4e0e\u4e8b\u4ef6\u8f6c\u63a5\u5230 Node \u6d41 + EventEmitter\uff0c\u8865\u5b8f Parser/Narsese/Events \u94fe\u8def\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - I/O \u4e0e\u4e8b\u4ef6
 
 ## language/AbstractTerm.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/AbstractTerm.java`
-- **è§æ¨¡ / TODO**: çº¦ 31 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/AbstractTerm.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 31 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/CompoundTerm.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/CompoundTerm.java`
-- **è§æ¨¡ / TODO**: çº¦ 818 è¡ï¼TODO 4 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/CompoundTerm.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 818 \u884c\uff0cTODO 4 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 4 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Conjunction.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Conjunction.java`
-- **è§æ¨¡ / TODO**: çº¦ 494 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Conjunction.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 494 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/DifferenceExt.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/DifferenceExt.java`
-- **è§æ¨¡ / TODO**: çº¦ 138 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/DifferenceExt.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 138 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/DifferenceInt.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/DifferenceInt.java`
-- **è§æ¨¡ / TODO**: çº¦ 149 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/DifferenceInt.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 149 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Disjunction.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Disjunction.java`
-- **è§æ¨¡ / TODO**: çº¦ 149 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Disjunction.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 149 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Equivalence.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Equivalence.java`
-- **è§æ¨¡ / TODO**: çº¦ 195 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Equivalence.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 195 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Image.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Image.java`
-- **è§æ¨¡ / TODO**: çº¦ 104 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Image.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 104 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/ImageExt.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/ImageExt.java`
-- **è§æ¨¡ / TODO**: çº¦ 180 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/ImageExt.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 180 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/ImageInt.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/ImageInt.java`
-- **è§æ¨¡ / TODO**: çº¦ 200 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/ImageInt.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 200 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Implication.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Implication.java`
-- **è§æ¨¡ / TODO**: çº¦ 242 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Implication.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 242 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Inheritance.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Inheritance.java`
-- **è§æ¨¡ / TODO**: çº¦ 143 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Inheritance.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 143 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Instance.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Instance.java`
-- **è§æ¨¡ / TODO**: çº¦ 28 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Instance.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 28 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/InstanceProperty.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/InstanceProperty.java`
-- **è§æ¨¡ / TODO**: çº¦ 28 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/InstanceProperty.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 28 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/IntersectionExt.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/IntersectionExt.java`
-- **è§æ¨¡ / TODO**: çº¦ 168 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/IntersectionExt.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 168 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/IntersectionInt.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/IntersectionInt.java`
-- **è§æ¨¡ / TODO**: çº¦ 168 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/IntersectionInt.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 168 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Interval.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Interval.java`
-- **è§æ¨¡ / TODO**: çº¦ 72 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Interval.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 72 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Negation.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Negation.java`
-- **è§æ¨¡ / TODO**: çº¦ 132 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Negation.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 132 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Product.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Product.java`
-- **è§æ¨¡ / TODO**: çº¦ 143 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Product.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 143 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Property.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Property.java`
-- **è§æ¨¡ / TODO**: çº¦ 27 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Property.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 27 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/SetExt.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/SetExt.java`
-- **è§æ¨¡ / TODO**: çº¦ 113 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/SetExt.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 113 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/SetInt.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/SetInt.java`
-- **è§æ¨¡ / TODO**: çº¦ 114 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/SetInt.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 114 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/SetTensional.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/SetTensional.java`
-- **è§æ¨¡ / TODO**: çº¦ 64 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/SetTensional.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 64 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Similarity.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Similarity.java`
-- **è§æ¨¡ / TODO**: çº¦ 138 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Similarity.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 138 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Statement.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Statement.java`
-- **è§æ¨¡ / TODO**: çº¦ 377 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: ç¼è¯å¤±è´¥ï¼TS1005 @ 365:27 ';' expected. ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Statement.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 377 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1005 @ 365:27 ';' expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1btsc TS1005 @ 365:27 \u9519\u8bef
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Tense.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Tense.java`
-- **è§æ¨¡ / TODO**: çº¦ 37 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Tense.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 37 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Term.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Term.java`
-- **è§æ¨¡ / TODO**: çº¦ 536 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä¾èµï¼language/SetExt.ts
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä¾èµï¼language/SetExt.ts
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Term.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 536 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1alanguage/SetExt.ts
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1alanguage/SetExt.ts
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Terms.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Terms.java`
-- **è§æ¨¡ / TODO**: çº¦ 615 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Terms.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 615 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Variable.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Variable.java`
-- **è§æ¨¡ / TODO**: çº¦ 327 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Variable.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 327 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## language/Variables.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/language/Variables.java`
-- **è§æ¨¡ / TODO**: çº¦ 540 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ç»´æ Term ä¸ Statement å±çæ³åå±æ¬¡åä¸å¯åç»æï¼åæ¶ç»ä¸ç¼å­ç­ç¥ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - è¯­è¨å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/language/Variables.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 540 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u7ef4\u6301 Term/Statement \u5c42\u7684\u6cdb\u578b\u5c42\u6b21\u548c\u4e0d\u53ef\u53d8\u7ed3\u6784\uff0c\u540c\u65f6\u7edf\u4e00\u7f13\u5b58\u7b56\u7565\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u8bed\u8a00\u5c42
 
 ## main/Debug.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/parameter/Debug.java`
-- **è§æ¨¡ / TODO**: çº¦ 69 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼æ Nar/NarNode/Shell çå½å¨æãçº¿ç¨å CLI æ­å° Node å¼æ­¥æ§å¶å¨ä¸ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - ä¸»ç¨åº
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/parameter/Debug.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 69 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u628a Nar/NarNode/Shell \u751f\u547d\u5468\u671f\u3001\u7ebf\u7a0b\u548c CLI \u642d\u5230 Node \u5f02\u6b65\u63a7\u5236\u5668\u4e0a\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u4e3b\u7a0b\u5e8f
 
 ## main/Nar.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/main/Nar.java`
-- **è§æ¨¡ / TODO**: çº¦ 886 è¡ï¼TODO 2 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼æ Nar/NarNode/Shell çå½å¨æãçº¿ç¨å CLI æ­å° Node å¼æ­¥æ§å¶å¨ä¸ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - ä¸»ç¨åº
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/main/Nar.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 886 \u884c\uff0cTODO 2 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u628a Nar/NarNode/Shell \u751f\u547d\u5468\u671f\u3001\u7ebf\u7a0b\u548c CLI \u642d\u5230 Node \u5f02\u6b65\u63a7\u5236\u5668\u4e0a\u3002\uff1bTODO 2 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u4e3b\u7a0b\u5e8f
 
 ## main/NarNode.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/main/NarNode.java`
-- **è§æ¨¡ / TODO**: çº¦ 337 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: ç¼è¯å¤±è´¥ï¼TS1472 @ 316:13 'catch' or 'finally' expected. ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼æ Nar/NarNode/Shell çå½å¨æãçº¿ç¨å CLI æ­å° Node å¼æ­¥æ§å¶å¨ä¸ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - ä¸»ç¨åº
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/main/NarNode.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 337 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1472 @ 316:13 'catch' or 'finally' expected. ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u628a Nar/NarNode/Shell \u751f\u547d\u5468\u671f\u3001\u7ebf\u7a0b\u548c CLI \u642d\u5230 Node \u5f02\u6b65\u63a7\u5236\u5668\u4e0a\u3002\uff1btsc TS1472 @ 316:13 \u9519\u8bef
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u4e3b\u7a0b\u5e8f
 
 ## main/Parameters.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/parameter/Parameters.java`
-- **è§æ¨¡ / TODO**: çº¦ 301 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼æ Nar/NarNode/Shell çå½å¨æãçº¿ç¨å CLI æ­å° Node å¼æ­¥æ§å¶å¨ä¸ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - ä¸»ç¨åº
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/parameter/Parameters.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 301 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u628a Nar/NarNode/Shell \u751f\u547d\u5468\u671f\u3001\u7ebf\u7a0b\u548c CLI \u642d\u5230 Node \u5f02\u6b65\u63a7\u5236\u5668\u4e0a\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u4e3b\u7a0b\u5e8f
 
 ## main/Shell.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/main/Shell.java`
-- **è§æ¨¡ / TODO**: çº¦ 195 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: ç¼è¯å¤±è´¥ï¼TS1359 @ 107:35 Identifier expected. 'in' is a reserved word that cannot be used here.ï¼å¦æ 2 æ¡ ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼æ Nar/NarNode/Shell çå½å¨æãçº¿ç¨å CLI æ­å° Node å¼æ­¥æ§å¶å¨ä¸ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - ä¸»ç¨åº
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/main/Shell.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 195 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1359 @ 107:35 Identifier expected. 'in' is a reserved word that cannot be used here.\uff0c\u53e6\u6709 2 \u6761 ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u628a Nar/NarNode/Shell \u751f\u547d\u5468\u671f\u3001\u7ebf\u7a0b\u548c CLI \u642d\u5230 Node \u5f02\u6b65\u63a7\u5236\u5668\u4e0a\u3002\uff1btsc TS1359 @ 107:35 \u9519\u8bef\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u4e3b\u7a0b\u5e8f
 
 ## operator/FunctionOperator.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/FunctionOperator.java`
-- **è§æ¨¡ / TODO**: çº¦ 109 è¡ï¼TODO 2 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/FunctionOperator.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 109 \u884c\uff0cTODO 2 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002\uff1bTODO 2 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/ImaginationSpace.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/ImaginationSpace.java`
-- **è§æ¨¡ / TODO**: çº¦ 31 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/ImaginationSpace.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 31 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/NullOperator.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/NullOperator.java`
-- **è§æ¨¡ / TODO**: çº¦ 49 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/NullOperator.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 49 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/Operation.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/Operation.java`
-- **è§æ¨¡ / TODO**: çº¦ 107 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/Operation.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 107 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/Operator.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/Operator.java`
-- **è§æ¨¡ / TODO**: çº¦ 222 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä¾èµï¼language/Term.ts, operator/Operation.ts, storage/Memory.ts, interfaces/Timable.ts, entity/Task.ts, main/Nar.ts
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä¾èµï¼language/Term.ts, operator/Operation.ts, storage/Memory.ts, interfaces/Timable.ts, entity/Task.ts, main/Nar.ts
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/Operator.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 222 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1alanguage/Term.ts, operator/Operation.ts, storage/Memory.ts, interfaces/Timable.ts, entity/Task.ts, main/Nar.ts
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1alanguage/Term.ts, operator/Operation.ts, storage/Memory.ts, interfaces/Timable.ts, entity/Task.ts, main/Nar.ts
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Anticipate.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Anticipate.java`
-- **è§æ¨¡ / TODO**: çº¦ 299 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Anticipate.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 299 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Believe.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Believe.java`
-- **è§æ¨¡ / TODO**: çº¦ 48 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä¾èµï¼operator/Operator.ts, operator/Operation.ts, entity/Task.ts, storage/Memory.ts, interfaces/Timable.ts
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä¾èµï¼operator/Operator.ts, operator/Operation.ts, entity/Task.ts, storage/Memory.ts, interfaces/Timable.ts
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Believe.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 48 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aoperator/Operator.ts, operator/Operation.ts, entity/Task.ts, storage/Memory.ts, interfaces/Timable.ts
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aoperator/Operator.ts, operator/Operation.ts, entity/Task.ts, storage/Memory.ts, interfaces/Timable.ts
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Consider.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Consider.java`
-- **è§æ¨¡ / TODO**: çº¦ 38 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Consider.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 38 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Doubt.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Doubt.java`
-- **è§æ¨¡ / TODO**: çº¦ 29 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Doubt.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 29 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Evaluate.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Evaluate.java`
-- **è§æ¨¡ / TODO**: çº¦ 37 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Evaluate.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 37 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Feel.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Feel.java`
-- **è§æ¨¡ / TODO**: çº¦ 49 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Feel.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 49 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/FeelBusy.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/FeelBusy.java`
-- **è§æ¨¡ / TODO**: çº¦ 28 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/FeelBusy.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 28 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/FeelSatisfied.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/FeelSatisfied.java`
-- **è§æ¨¡ / TODO**: çº¦ 28 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/FeelSatisfied.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 28 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Hesitate.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Hesitate.java`
-- **è§æ¨¡ / TODO**: çº¦ 29 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Hesitate.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 29 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Name.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Name.java`
-- **è§æ¨¡ / TODO**: çº¦ 40 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Name.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 40 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Register.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Register.java`
-- **è§æ¨¡ / TODO**: çº¦ 28 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Register.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 28 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Remind.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Remind.java`
-- **è§æ¨¡ / TODO**: çº¦ 37 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Remind.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 37 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Want.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Want.java`
-- **è§æ¨¡ / TODO**: çº¦ 41 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Want.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 41 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/mental/Wonder.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/mental/Wonder.java`
-- **è§æ¨¡ / TODO**: çº¦ 38 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/mental/Wonder.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 38 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/misc/Add.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/misc/Add.java`
-- **è§æ¨¡ / TODO**: çº¦ 41 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/misc/Add.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 41 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/misc/Count.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/misc/Count.java`
-- **è§æ¨¡ / TODO**: çº¦ 47 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/misc/Count.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 47 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/misc/Reflect.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/misc/Reflect.java`
-- **è§æ¨¡ / TODO**: çº¦ 121 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/misc/Reflect.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 121 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## operator/misc/System.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/operator/misc/System.java`
-- **è§æ¨¡ / TODO**: çº¦ 48 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° Operation æ³¨åä¸ Memory äº¤äºæ¾å¼åï¼è¡¥åå¯ä½ç¨ä¸é¢ç®æ´æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä½ç¬¦
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/operator/misc/System.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 48 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u5c06 Operation \u6ce8\u518c\u4e0e Memory \u4ea4\u4e92\u663e\u5f0f\u5316\uff0c\u8865\u5199\u526f\u4f5c\u7528\u4e0e\u9884\u7b97\u66f4\u65b0\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u64cd\u4f5c\u7b26
 
 ## plugin/Plugin.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/plugin/Plugin.java`
-- **è§æ¨¡ / TODO**: çº¦ 21 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¸ºå¿ç/æç¥æä»¶æä¾äºä»¶ééãç¶æç¼å­ä¸å³é­æµç¨ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/Plugin.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 21 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
 
 ## plugin/mental/Abbreviation.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/plugin/mental/Abbreviation.java`
-- **è§æ¨¡ / TODO**: çº¦ 184 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¸ºå¿ç/æç¥æä»¶æä¾äºä»¶ééãç¶æç¼å­ä¸å³é­æµç¨ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/mental/Abbreviation.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 184 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
 
 ## plugin/mental/ComplexEmotions.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/plugin/mental/ComplexEmotions.java`
-- **è§æ¨¡ / TODO**: çº¦ 59 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¸ºå¿ç/æç¥æä»¶æä¾äºä»¶ééãç¶æç¼å­ä¸å³é­æµç¨ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/mental/ComplexEmotions.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 59 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
 
 ## plugin/mental/Counting.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/plugin/mental/Counting.java`
-- **è§æ¨¡ / TODO**: çº¦ 117 è¡ï¼TODO 1 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¸ºå¿ç/æç¥æä»¶æä¾äºä»¶ééãç¶æç¼å­ä¸å³é­æµç¨ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/mental/Counting.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 117 \u884c\uff0cTODO 1 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002\uff1bTODO 1 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
 
 ## plugin/mental/Emotions.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/plugin/mental/Emotions.java`
-- **è§æ¨¡ / TODO**: çº¦ 264 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¸ºå¿ç/æç¥æä»¶æä¾äºä»¶ééãç¶æç¼å­ä¸å³é­æµç¨ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/mental/Emotions.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 264 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
 
 ## plugin/mental/InternalExperience.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/plugin/mental/InternalExperience.java`
-- **è§æ¨¡ / TODO**: çº¦ 408 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¸ºå¿ç/æç¥æä»¶æä¾äºä»¶ééãç¶æç¼å­ä¸å³é­æµç¨ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/mental/InternalExperience.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 408 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
 
 ## plugin/perception/SensoryChannel.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/plugin/perception/SensoryChannel.java`
-- **è§æ¨¡ / TODO**: çº¦ 147 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: ç¼è¯å¤±è´¥ï¼TS1135 @ 144:31 Argument expression expected.ï¼å¦æ 1 æ¡ ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¸ºå¿ç/æç¥æä»¶æä¾äºä»¶ééãç¶æç¼å­ä¸å³é­æµç¨ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/perception/SensoryChannel.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 147 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u7f16\u8bd1\u5931\u8d25\uff1aTS1135 @ 144:31 Argument expression expected.\uff0c\u53e6\u6709 1 \u6761 ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002\uff1btsc TS1135 @ 144:31 \u9519\u8bef
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
 
 ## plugin/perception/VisionChannel.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/plugin/perception/VisionChannel.java`
-- **è§æ¨¡ / TODO**: çº¦ 291 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¸ºå¿ç/æç¥æä»¶æä¾äºä»¶ééãç¶æç¼å­ä¸å³é­æµç¨ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/perception/VisionChannel.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 291 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
 
 ## plugin/perception/VisualSpace.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/plugin/perception/VisualSpace.java`
-- **è§æ¨¡ / TODO**: çº¦ 137 è¡ï¼TODO 4 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼ä¸ºå¿ç/æç¥æä»¶æä¾äºä»¶ééãç¶æç¼å­ä¸å³é­æµç¨ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - æä»¶
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/plugin/perception/VisualSpace.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 137 \u884c\uff0cTODO 4 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u4e3a\u5fc3\u7406/\u611f\u77e5\u63d2\u4ef6\u63d0\u4f9b\u4e8b\u4ef6\u901a\u9053\u3001\u72b6\u6001\u7f13\u5b58\u4e0e\u5173\u95ed\u6d41\u7a0b\u3002\uff1bTODO 4 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u63d2\u4ef6
 
 ## storage/Bag.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/storage/Bag.java`
-- **è§æ¨¡ / TODO**: çº¦ 356 è¡ï¼TODO 2 å¤
-- **ä¾èµç°ç¶**: ä¾èµï¼entity/Item.ts, storage/Distributor.ts, main/Parameters.ts
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä¾èµï¼entity/Item.ts, storage/Distributor.ts, main/Parameters.ts
-  2. æä»¶å·¥ä½ï¼éªè¯ Bag/Memory/Distributor çå®¹éãé¡ºåºä¸çº¿ç¨å®å¨ï¼è¡¥ä¿æ­è¨åæµè¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å­å¨ç»æ
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/storage/Bag.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 356 \u884c\uff0cTODO 2 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4f9d\u8d56\uff1aentity/Item.ts, storage/Distributor.ts, main/Parameters.ts
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4f9d\u8d56\uff1aentity/Item.ts, storage/Distributor.ts, main/Parameters.ts
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u9a8c\u8bc1 Bag/Memory/Distributor \u7684\u5bb9\u91cf\u3001\u987a\u5e8f\u4e0e\u7ebf\u7a0b\u5b89\u5168\uff0c\u8865\u5b8c\u65ad\u8a00\u548c\u6d4b\u8bd5\u3002\uff1bTODO 2 \u5904
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b58\u50a8\u7ed3\u6784
 
 ## storage/Distributor.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/storage/Distributor.java`
-- **è§æ¨¡ / TODO**: çº¦ 61 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; å·²è¢« `npm test` è¦çï¼test/node/distributor.test.ts
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼éªè¯ Bag/Memory/Distributor çå®¹éãé¡ºåºä¸çº¿ç¨å®å¨ï¼è¡¥ä¿æ­è¨åæµè¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å­å¨ç»æ
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/storage/Distributor.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 61 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u5df2\u88ab `npm test` \u8986\u76d6\uff1atest/node/distributor.test.ts
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u9a8c\u8bc1 Bag/Memory/Distributor \u7684\u5bb9\u91cf\u3001\u987a\u5e8f\u4e0e\u7ebf\u7a0b\u5b89\u5168\uff0c\u8865\u5b8c\u65ad\u8a00\u548c\u6d4b\u8bd5\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b58\u50a8\u7ed3\u6784
 
 ## storage/Memory.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/storage/Memory.java`
-- **è§æ¨¡ / TODO**: çº¦ 401 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼éªè¯ Bag/Memory/Distributor çå®¹éãé¡ºåºä¸çº¿ç¨å®å¨ï¼è¡¥ä¿æ­è¨åæµè¯ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å­å¨ç»æ
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/storage/Memory.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 401 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u9a8c\u8bc1 Bag/Memory/Distributor \u7684\u5bb9\u91cf\u3001\u987a\u5e8f\u4e0e\u7ebf\u7a0b\u5b89\u5168\uff0c\u8865\u5b8c\u65ad\u8a00\u548c\u6d4b\u8bd5\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5b58\u50a8\u7ed3\u6784
 
 ## util/ListUtil.ts
 
-- **Java å¯¹åº**: `java-master/src/main/java/org/opennars/util/ListUtil.java`
-- **è§æ¨¡ / TODO**: çº¦ 25 è¡ï¼TODO 0 å¤
-- **ä¾èµç°ç¶**: ä»ä¾èµ jree æ TS èªèº«éææå
-- **ç¼è¯ / æµè¯**: å·²éè¿ `npx tsc --noEmit` ; ææ éå¯¹æ§æµè¯
-- **è·¯çº¿å¾**:
-  1. ä¾èµåå¤ï¼ä»ä¾èµ jree æ TS èªèº«éææå
-  2. æä»¶å·¥ä½ï¼å° java.util å·¥å·æ´çå¹¶ä¿æ int/long è¡ä¸ºä¸è´ï¼ä¸­å¿å­æ¾å·¥å·å½æ°ã
-  3. Java-TS å·®å¼ï¼åè§ãéç¨è½¬è¯æ³.mdã - å·¥å·å±
+- **Java\u5bf9\u7167**: `java-master/src/main/java/org/opennars/util/ListUtil.java`
+- **\u89c4\u6a21 / TODO**: \u7ea6 25 \u884c\uff0cTODO 0 \u5904
+- **\u4f9d\u8d56\u73b0\u72b6**: \u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+- **\u7f16\u8bd1 / \u6d4b\u8bd5**: \u5df2\u901a\u8fc7 `npx tsc --noEmit` ; \u6682\u65e0\u9488\u5bf9\u6027\u6d4b\u8bd5
+- **\u8def\u7ebf\u56fe**:
+  1. \u4f9d\u8d56\u51c6\u5907\uff1a\u4ec5\u4f9d\u8d56 jree \u6216 TS \u81ea\u8eab\u9759\u6001\u6210\u5458
+  2. \u6587\u4ef6\u5de5\u4f5c\uff1a\u6574\u5408 java.util \u5de5\u5177\u5e76\u4fdd\u6301 int/long \u884c\u4e3a\u4e00\u81f4\uff0c\u4e2d\u5fc3\u5b58\u653e\u5de5\u5177\u51fd\u6570\u3002
+  3. Java-TS \u5dee\u5f02\uff1a\u53c2\u89c1\u300a\u901a\u7528\u8f6c\u8bd1\u6cd5.md\u300b - \u5de5\u5177\u5c42
+
