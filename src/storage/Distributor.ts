@@ -1,11 +1,13 @@
+import type { int } from "../types";
+
 /**
  * A pseudo-random number generator, used in Bag.
  */
 export class Distributor {
     /** Shuffled sequence of index numbers */
-    public order: number[];
+    public order: int[];
     /** Capacity of the array */
-    private readonly capacity: number;
+    private readonly capacity: int;
 
     /**
      * For any number N < range, there is N+1 copies of it in the array,
@@ -13,21 +15,21 @@ export class Distributor {
      *
      * @param range Range of valid numbers
      */
-    public constructor(range: number) {
+    public constructor(range: int) {
         if (range <= 0) {
             throw new RangeError("Distributor range must be >= 1");
         }
 
         this.capacity = (range * (range + 1)) / 2;
-        this.order = new Array<number>(this.capacity);
+        this.order = new Array<int>(this.capacity);
 
-        for (let arrayIndex: number = 0; arrayIndex < this.capacity; arrayIndex++) {
+        for (let arrayIndex: int = 0; arrayIndex < this.capacity; arrayIndex++) {
             this.order[arrayIndex] = -1;
         }
 
-        let index: number = 0;
-        for (let rank: number = range; rank > 0; rank--) {
-            for (let time: number = 0; time < rank; time++) {
+        let index: int = 0;
+        for (let rank: int = range; rank > 0; rank--) {
+            for (let time: int = 0; time < rank; time++) {
                 index = (Math.floor(this.capacity / rank) + index) % this.capacity;
                 while (this.order[index] >= 0) {
                     index = (index + 1) % this.capacity;
@@ -43,7 +45,7 @@ export class Distributor {
      * @param index The current index
      * @return the random value
      */
-    public pick(index: number): number {
+    public pick(index: int): int {
         return this.order[index];
     }
 
@@ -53,7 +55,7 @@ export class Distributor {
      * @param index The current index
      * @return the next index
      */
-    public next(index: number): number {
+    public next(index: int): int {
         return (index + 1) % this.capacity;
     }
 }
