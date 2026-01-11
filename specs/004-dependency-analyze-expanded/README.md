@@ -17,6 +17,19 @@ updated_at: '2026-01-11T11:39:09.402Z'
 
 基于 spec003 产出的单文件工作流与路线图模板，对关键 TypeScript 文件展开具体依赖分析，形成可复用、可核对的分析记录，并逐步完善整体转写顺序。该 spec 聚焦“如何分析”，不涉及代码改写，确保后续转写有稳定依据。
 
+参考资料
+
+- 语法分析文件
+  - [full_check.txt](../003-dependency-analyze-brief-plan/tsc_checks/full_check.txt)
+  - [syntax_check.txt](../003-dependency-analyze-brief-plan/tsc_checks/syntax_check.txt)
+- Java依赖分析资料
+  - [dependency_graph.dot](../003-dependency-analyze-brief-plan/java-dep-graph/dependency_graph.dot)
+  - [deps.xml](../003-dependency-analyze-brief-plan/java-dep-graph/deps.xml)
+
+- 【❗重要】具体工作流计划
+  - [roadmap.md](../003-dependency-analyze-brief-plan/workflow/roadmap.md)
+  - [to_single_file.md](../003-dependency-analyze-brief-plan/workflow/to_single_file.md)
+
 ## 目标
 
 <!-- 解决问题后应该是什么样的？ -->

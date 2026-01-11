@@ -10,7 +10,7 @@
 
 ## 工作步骤
 
-1. 运行 `npx tsc <文件路径> --noEmit`，记录语法与缺失符号情况。
+1. 对文件运行 `npx tsc <文件路径> --noEmit`，文字记录语法与缺失符号情况。
 2. 基于语法与语义梳理 TS 依赖：
    - import/extends/implements/构造参数/静态成员引用。
    - 注意“仅常量引用造成的表面依赖”。
@@ -20,6 +20,7 @@
 5. 列出行为一致性风险点：
    - 静态初始化、默认值、空值处理、继承链影响、序列化约定等。
 6. 标注该文件在路线图中的位置与先后依赖。
+7. 完成后，将生成的文件转移到相应的模块文件夹中。如 `src/entity/BudgetValue.ts` 的文档应放在 `specs/004-dependency-analyze-expanded/analysis/entity/BudgetValue.ts`。
 
 ## 输出模板
 
