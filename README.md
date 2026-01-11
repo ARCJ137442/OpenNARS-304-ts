@@ -43,7 +43,7 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
   - [ ] TaskLink
   - [ ] TermLink
   - [ ] TLink
-  - [ ] TruthValue
+  - [x] TruthValue
 - [ ] inference
   - [ ] BudgetFunctions
   - [ ] CompositionalRules
@@ -78,7 +78,7 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
   - [ ] Narsese
   - [ ] Parser
   - [ ] Symbols
-  - [ ] Texts
+  - [x] Texts
 - [ ] language
   - [ ] AbstractTerm
   - [ ] CompoundTerm
@@ -160,6 +160,11 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
   - [ ] Memory
 - [ ] util
   - [ ] ListUtil
+
+### 最近转写完成
+
+- Texts（2026-01-12）
+- TruthValue（2026-01-11）
 
 ## 文件分析进展（基于 `full_check.txt`）
 
