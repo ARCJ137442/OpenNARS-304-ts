@@ -15,7 +15,8 @@ NORMAL_CHINESE = re.compile(r"[\u4e00-\u9fff]+")
 '''Typical UTF-8 normal Chinese characters are rendered as single characters.'''
 QUESTION_RUN = re.compile(r"\?{4,}")
 '''Typical UTF-8 question runs (???) are used for Chinese characters.'''
-
+RAW_UNICODE_SERIES = re.compile(r'\\u([0-9a-fA-F]{4})')
+'''Typical UTF-8 raw Unicode series (\\uXXXX) are used instead of normal Chinese characters.'''
 MOJIBAKE = re.compile(r"[\u0080-\u00FF]{2,}")
 '''Typical UTF-8 mojibake renders as sequences of extended Latin letters (æåéâ).'''
 
@@ -118,6 +119,15 @@ def scan_text(text: str, file_display: str) -> List[Issue]:
                 Issue(
                     file=file_display,
                     rule="latin-mojibake",
+                    line=idx,
+                    snippet=trim_snippet(line),
+                )
+            )
+        if RAW_UNICODE_SERIES.search(line):
+            issues.append(
+                Issue(
+                    file=file_display,
+                    rule="raw-unicode-series",
                     line=idx,
                     snippet=trim_snippet(line),
                 )
