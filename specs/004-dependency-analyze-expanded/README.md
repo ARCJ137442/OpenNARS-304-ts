@@ -1,20 +1,24 @@
 ---
-status: in-progress
+status: complete
 created: '2026-01-11'
 tags: []
 priority: medium
 created_at: '2026-01-11T11:38:28.165Z'
 depends_on:
   - 003-dependency-analyze-brief-plan
-updated_at: '2026-01-11T11:55:30.076Z'
+updated_at: '2026-01-11T12:37:23.250Z'
 transitions:
   - status: in-progress
     at: '2026-01-11T11:55:30.076Z'
+  - status: complete
+    at: '2026-01-11T12:37:23.250Z'
+completed_at: '2026-01-11T12:37:23.250Z'
+completed: '2026-01-11'
 ---
 
 # dependency-analyze-expanded
 
-> **Status**: ⏳ In progress · **Priority**: Medium · **Created**: 2026-01-11
+> **Status**: ✅ Complete · **Priority**: Medium · **Created**: 2026-01-11
 
 ## 概述
 
@@ -65,18 +69,18 @@ transitions:
      - IMPLEMENTATION.md 用于详细实现
      - 参考 .lean-spec\references\sub-spec-files.md 的拆分指南 -->
 
-- [ ] 选择首批分析文件清单（按路线图基础模块优先）。
-- [ ] 逐文件执行单文件工作流并输出分析记录。
-- [ ] 对照 `deps.xml` 标注结构性依赖与表面依赖差异。
-- [ ] 从 Java 源文件补写功能描述与关键语义点。
-- [ ] 汇总分析结果，更新路线图的文件级顺序与依赖来源标注。
+- [X] 选择首批分析文件清单（按路线图基础模块优先）。
+- [X] 逐文件执行单文件工作流并输出分析记录。
+- [X] 对照 `deps.xml` 标注结构性依赖与表面依赖差异。
+- [X] 从 Java 源文件补写功能描述与关键语义点。
+- [X] 汇总分析结果，更新路线图的文件级顺序与依赖来源标注。
 
 ## 测试
 
 <!-- 如何验证完成？ -->
 
-- [ ] 每个已分析文件都有完整的模板化记录，包含依赖清单与差异说明。
-- [ ] 路线图更新能被 `deps.xml` 复核，并记录所有不一致点。
+- [X] 每个已分析文件都有完整的模板化记录，包含依赖清单与差异说明。
+- [X] 路线图更新能被 `deps.xml` 复核，并记录所有不一致点。
 
 ## 备注
 
