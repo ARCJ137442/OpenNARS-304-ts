@@ -7,7 +7,7 @@ priority: medium
 
 # {name}
 
-> **状态**: {status} · **优先级**: {priority} · **创建**: {date}
+> **Status**: 🗓️ Planned · **Priority**: Medium · **Created**: 2026-01-11
 
 ## 概述
 
