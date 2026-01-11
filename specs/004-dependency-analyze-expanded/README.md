@@ -1,17 +1,20 @@
 ---
-status: planned
+status: in-progress
 created: '2026-01-11'
 tags: []
 priority: medium
 created_at: '2026-01-11T11:38:28.165Z'
 depends_on:
   - 003-dependency-analyze-brief-plan
-updated_at: '2026-01-11T11:39:09.402Z'
+updated_at: '2026-01-11T11:55:30.076Z'
+transitions:
+  - status: in-progress
+    at: '2026-01-11T11:55:30.076Z'
 ---
 
 # dependency-analyze-expanded
 
-> **Status**: 🗓️ Planned · **Priority**: Medium · **Created**: 2026-01-11
+> **Status**: ⏳ In progress · **Priority**: Medium · **Created**: 2026-01-11
 
 ## 概述
 
@@ -51,6 +54,8 @@ updated_at: '2026-01-11T11:39:09.402Z'
 分析记录使用 spec003 的模板结构，包含 TS 依赖、Java 依赖、差异说明、功能描述与一致性风险点。路线图更新遵循“模块链条 → 文件级排序”的顺序，并标注依赖来源，方便复核与复用。
 
 ❗重要：分析记录的输出格式为 Markdown 文件，并存放在 `analysis` 文件夹下，文件夹结构应与`src`文件夹结构保持一致，文件名为 `xxx.md`，其中 `xxx` 为对应 TypeScript/Java 文件名。
+
+📝 所有单文件记录必须套用 `specs/004-dependency-analyze-expanded/file_template.md`（中文模板），逐段填写语法检查、依赖对照、Java 功能描述、风险与路线图位置，确保记录可直接复用。
 
 ## 计划
 
