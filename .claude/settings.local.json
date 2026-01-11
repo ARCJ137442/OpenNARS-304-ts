@@ -3,5 +3,9 @@
     "allow": [
       "Bash(python:*)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "lean-spec"
+  ],
+  "enableAllProjectMcpServers": true
 }
