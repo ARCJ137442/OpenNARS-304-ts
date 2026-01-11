@@ -14,8 +14,47 @@
 
 - 执行的命令：`npx tsc src/language/SetExt.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L12, C29）：[full_check] Cannot find name 'SetTensional'.
+  - TS2304（L19, C32）：[full_check] Cannot find name 'Term'.
+  - TS2304（L30, C28）：[full_check] Cannot find name 'Term'.
+  - TS2304（L35, C35）：[full_check] Cannot find name 'term'.
+  - TS2304（L42, C45）：[full_check] Cannot find name 'Term'.
+  - TS2322（L46, C21）：[full_check] Type 'null' is not assignable to type 'SetExt'.
+  - TS2304（L61, C30）：[full_check] Cannot find name 'Term'.
+  - TS2304（L63, C48）：[full_check] Cannot find name 'Term'.
+  - TS2304（L67, C38）：[full_check] Cannot find name 'Term'.
+  - TS2588（L70, C17）：[full_check] Cannot assign to 't' because it is a constant.
+  - TS2304（L70, C21）：[full_check] Cannot find name 'Term'.
+  - TS2322（L72, C21）：[full_check] Type 'null' is not assignable to type 'SetExt'.
+  - TS2304（L80, C59）：[full_check] Cannot find name 'Term'.
+  - TS2304（L83, C56）：[full_check] Cannot find name 'Term'.
+  - TS2304（L101, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L102, C16）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L111, C16）：[full_check] Cannot find name 'makeSetName'.
+  - TS2304（L111, C28）：[full_check] Cannot find name 'SET_EXT_OPENER'.
+  - TS2304（L111, C47）：[full_check] Cannot find name 'term'.
+  - TS2304（L111, C53）：[full_check] Cannot find name 'SET_EXT_CLOSER'.
+  - TS2304（L12, C29）：[syntax_check] Cannot find name 'SetTensional'.
+  - TS2304（L19, C32）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L30, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L35, C35）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L42, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L46, C21）：[syntax_check] Type 'null' is not assignable to type 'SetExt'.
+  - TS2304（L61, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L63, C48）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L67, C38）：[syntax_check] Cannot find name 'Term'.
+  - TS2588（L70, C17）：[syntax_check] Cannot assign to 't' because it is a constant.
+  - TS2304（L70, C21）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L72, C21）：[syntax_check] Type 'null' is not assignable to type 'SetExt'.
+  - TS2304（L80, C59）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L83, C56）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L101, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L102, C16）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L111, C16）：[syntax_check] Cannot find name 'makeSetName'.
+  - TS2304（L111, C28）：[syntax_check] Cannot find name 'SET_EXT_OPENER'.
+  - TS2304（L111, C47）：[syntax_check] Cannot find name 'term'.
+  - TS2304（L111, C53）：[syntax_check] Cannot find name 'SET_EXT_CLOSER'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +70,40 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'SetTensional'.` @ L12
+- `[full_check] Cannot find name 'Term'.` @ L19
+- `[full_check] Cannot find name 'Term'.` @ L30
+- `[full_check] Cannot find name 'term'.` @ L35
+- `[full_check] Cannot find name 'Term'.` @ L42
+- `[full_check] Cannot find name 'Term'.` @ L61
+- `[full_check] Cannot find name 'Term'.` @ L63
+- `[full_check] Cannot find name 'Term'.` @ L67
+- `[full_check] Cannot find name 'Term'.` @ L70
+- `[full_check] Cannot find name 'Term'.` @ L80
+- `[full_check] Cannot find name 'Term'.` @ L83
+- `[full_check] Cannot find name 'NativeOperator'.` @ L101
+- `[full_check] Cannot find name 'NativeOperator'.` @ L102
+- `[full_check] Cannot find name 'makeSetName'.` @ L111
+- `[full_check] Cannot find name 'SET_EXT_OPENER'.` @ L111
+- `[full_check] Cannot find name 'term'.` @ L111
+- `[full_check] Cannot find name 'SET_EXT_CLOSER'.` @ L111
+- `[syntax_check] Cannot find name 'SetTensional'.` @ L12
+- `[syntax_check] Cannot find name 'Term'.` @ L19
+- `[syntax_check] Cannot find name 'Term'.` @ L30
+- `[syntax_check] Cannot find name 'term'.` @ L35
+- `[syntax_check] Cannot find name 'Term'.` @ L42
+- `[syntax_check] Cannot find name 'Term'.` @ L61
+- `[syntax_check] Cannot find name 'Term'.` @ L63
+- `[syntax_check] Cannot find name 'Term'.` @ L67
+- `[syntax_check] Cannot find name 'Term'.` @ L70
+- `[syntax_check] Cannot find name 'Term'.` @ L80
+- `[syntax_check] Cannot find name 'Term'.` @ L83
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L101
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L102
+- `[syntax_check] Cannot find name 'makeSetName'.` @ L111
+- `[syntax_check] Cannot find name 'SET_EXT_OPENER'.` @ L111
+- `[syntax_check] Cannot find name 'term'.` @ L111
+- `[syntax_check] Cannot find name 'SET_EXT_CLOSER'.` @ L111
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -57,6 +129,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

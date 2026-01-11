@@ -14,8 +14,65 @@
 
 - 执行的命令：`npx tsc src/inference/BudgetFunctions.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2339（L66, C14）：[full_check] Property 'decPriority' does not exist on type 'Task'.
+  - TS2339（L67, C14）：[full_check] Property 'decDurability' does not exist on type 'Task'.
+  - TS2339（L70, C19）：[full_check] Property 'decPriority' does not exist on type 'TaskLink'.
+  - TS2339（L71, C19）：[full_check] Property 'decDurability' does not exist on type 'TaskLink'.
+  - TS2339（L74, C19）：[full_check] Property 'decPriority' does not exist on type 'TermLink'.
+  - TS2339（L75, C19）：[full_check] Property 'decDurability' does not exist on type 'TermLink'.
+  - TS2339（L78, C36）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L78, C74）：[full_check] Property 'getPriority' does not exist on type 'Task'.
+  - TS2304（L79, C33）：[full_check] Cannot find name 'aveAri'.
+  - TS2339（L79, C59）：[full_check] Property 'getDurability' does not exist on type 'Task'.
+  - TS2314（L117, C73）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2339（L120, C36）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L120, C65）：[full_check] Property 'getPriority' does not exist on type 'Task'.
+  - TS2304（L121, C33）：[full_check] Cannot find name 'aveAri'.
+  - TS2339（L121, C50）：[full_check] Property 'getDurability' does not exist on type 'Task'.
+  - TS2314（L134, C79）：[full_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L155, C18）：[full_check] Cannot find name 'Max'.
+  - TS2740（L158, C18）：[full_check] Type 'typeof TaskLink' is missing the following properties from type 'Enum<Activating>': #private, hashCode, ordinal, [Symbol.toPrimitive], and 7 more.
+  - TS2339（L160, C43）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L161, C40）：[full_check] Cannot find name 'aveAri'.
+  - TS2304（L237, C48）：[full_check] Cannot find name 'w2c'.
+  - TS2304（L276, C48）：[full_check] Cannot find name 'w2c'.
+  - TS2339（L310, C29）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L310, C64）：[full_check] Property 'getPriority' does not exist on type 'TermLink'.
+  - TS2339（L311, C31）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L311, C69）：[full_check] Property 'getDurability' does not exist on type 'TermLink'.
+  - TS2339（L313, C19）：[full_check] Property 'incPriority' does not exist on type 'TermLink'.
+  - TS2339（L313, C36）：[full_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L314, C19）：[full_check] Property 'incDurability' does not exist on type 'TermLink'.
+  - TS2339（L66, C14）：[syntax_check] Property 'decPriority' does not exist on type 'Task'.
+  - TS2339（L67, C14）：[syntax_check] Property 'decDurability' does not exist on type 'Task'.
+  - TS2339（L70, C19）：[syntax_check] Property 'decPriority' does not exist on type 'TaskLink'.
+  - TS2339（L71, C19）：[syntax_check] Property 'decDurability' does not exist on type 'TaskLink'.
+  - TS2339（L74, C19）：[syntax_check] Property 'decPriority' does not exist on type 'TermLink'.
+  - TS2339（L75, C19）：[syntax_check] Property 'decDurability' does not exist on type 'TermLink'.
+  - TS2339（L78, C36）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L78, C74）：[syntax_check] Property 'getPriority' does not exist on type 'Task'.
+  - TS2304（L79, C33）：[syntax_check] Cannot find name 'aveAri'.
+  - TS2339（L79, C59）：[syntax_check] Property 'getDurability' does not exist on type 'Task'.
+  - TS2314（L117, C73）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2339（L120, C36）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L120, C65）：[syntax_check] Property 'getPriority' does not exist on type 'Task'.
+  - TS2304（L121, C33）：[syntax_check] Cannot find name 'aveAri'.
+  - TS2339（L121, C50）：[syntax_check] Property 'getDurability' does not exist on type 'Task'.
+  - TS2314（L134, C79）：[syntax_check] Generic type 'Parameters' requires 1 type argument(s).
+  - TS2304（L155, C18）：[syntax_check] Cannot find name 'Max'.
+  - TS2740（L158, C18）：[syntax_check] Type 'typeof TaskLink' is missing the following properties from type 'Enum<Activating>': #private, hashCode, ordinal, [Symbol.toPrimitive], and 7 more.
+  - TS2339（L160, C43）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2304（L161, C40）：[syntax_check] Cannot find name 'aveAri'.
+  - TS2304（L237, C48）：[syntax_check] Cannot find name 'w2c'.
+  - TS2304（L276, C48）：[syntax_check] Cannot find name 'w2c'.
+  - TS2339（L310, C29）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L310, C64）：[syntax_check] Property 'getPriority' does not exist on type 'TermLink'.
+  - TS2339（L311, C31）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L311, C69）：[syntax_check] Property 'getDurability' does not exist on type 'TermLink'.
+  - TS2339（L313, C19）：[syntax_check] Property 'incPriority' does not exist on type 'TermLink'.
+  - TS2339（L313, C36）：[syntax_check] Property 'math' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/index")'.
+  - TS2339（L314, C19）：[syntax_check] Property 'incDurability' does not exist on type 'TermLink'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -38,7 +95,18 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'aveAri'.` @ L79
+- `[full_check] Cannot find name 'aveAri'.` @ L121
+- `[full_check] Cannot find name 'Max'.` @ L155
+- `[full_check] Cannot find name 'aveAri'.` @ L161
+- `[full_check] Cannot find name 'w2c'.` @ L237
+- `[full_check] Cannot find name 'w2c'.` @ L276
+- `[syntax_check] Cannot find name 'aveAri'.` @ L79
+- `[syntax_check] Cannot find name 'aveAri'.` @ L121
+- `[syntax_check] Cannot find name 'Max'.` @ L155
+- `[syntax_check] Cannot find name 'aveAri'.` @ L161
+- `[syntax_check] Cannot find name 'w2c'.` @ L237
+- `[syntax_check] Cannot find name 'w2c'.` @ L276
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -74,7 +142,7 @@
 
 ## 6. 一致性风险
 
-- 主要风险来自尚未补齐的 Java 语义与单元测试缺失。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 
 ## 7. 路线图定位
 

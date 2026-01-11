@@ -14,8 +14,49 @@
 
 - 执行的命令：`npx tsc src/io/Texts.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2322（L29, C13）：[full_check] Type 'null' is not assignable to type 'CharSequence'.
+  - TS2322（L38, C13）：[full_check] Type 'null' is not assignable to type 'CharSequence'.
+  - TS2339（L55, C77）：[full_check] Property 'DecimalFormat' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+  - TS2339（L61, C76）：[full_check] Property 'DecimalFormat' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+  - TS2352（L68, C16）：[full_check] Conversion of type 'number' to type 'bigint' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2352（L72, C16）：[full_check] Conversion of type 'number' to type 'bigint' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2349（L87, C39）：[full_check] This expression is not callable.
+  - TS2448（L87, C39）：[full_check] Block-scoped variable 'hundredths' used before its declaration.
+  - TS2454（L87, C39）：[full_check] Variable 'hundredths' is used before being assigned.
+  - TS2322（L91, C25）：[full_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2322（L93, C25）：[full_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2322（L95, C25）：[full_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2322（L97, C25）：[full_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2769（L105, C49）：[full_check] No overload matches this call.
+  - TS2352（L106, C35）：[full_check] Conversion of type 'string' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2352（L106, C57）：[full_check] Conversion of type 'string' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2769（L109, C49）：[full_check] No overload matches this call.
+  - TS2352（L110, C40）：[full_check] Conversion of type 'string' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2339（L135, C76）：[full_check] Property 'DecimalFormat' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+  - TS2322（L154, C17）：[full_check] Type 'number | null' is not assignable to type 'number'.
+  - TS2322（L155, C17）：[full_check] Type 'number | null' is not assignable to type 'number'.
+  - TS2322（L29, C13）：[syntax_check] Type 'null' is not assignable to type 'CharSequence'.
+  - TS2322（L38, C13）：[syntax_check] Type 'null' is not assignable to type 'CharSequence'.
+  - TS2339（L55, C77）：[syntax_check] Property 'DecimalFormat' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+  - TS2339（L61, C76）：[syntax_check] Property 'DecimalFormat' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+  - TS2352（L68, C16）：[syntax_check] Conversion of type 'number' to type 'bigint' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2352（L72, C16）：[syntax_check] Conversion of type 'number' to type 'bigint' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2349（L87, C39）：[syntax_check] This expression is not callable.
+  - TS2448（L87, C39）：[syntax_check] Block-scoped variable 'hundredths' used before its declaration.
+  - TS2454（L87, C39）：[syntax_check] Variable 'hundredths' is used before being assigned.
+  - TS2322（L91, C25）：[syntax_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2322（L93, C25）：[syntax_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2322（L95, C25）：[syntax_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2322（L97, C25）：[syntax_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2769（L105, C49）：[syntax_check] No overload matches this call.
+  - TS2352（L106, C35）：[syntax_check] Conversion of type 'string' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2352（L106, C57）：[syntax_check] Conversion of type 'string' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2769（L109, C49）：[syntax_check] No overload matches this call.
+  - TS2352（L110, C40）：[syntax_check] Conversion of type 'string' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  - TS2339（L135, C76）：[syntax_check] Property 'DecimalFormat' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+  - TS2322（L154, C17）：[syntax_check] Type 'number | null' is not assignable to type 'number'.
+  - TS2322（L155, C17）：[syntax_check] Type 'number | null' is not assignable to type 'number'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -55,6 +96,7 @@
 ## 6. 一致性风险
 
 - 文件内仍保留 1 处 TODO，需对照 Java 填补。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

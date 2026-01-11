@@ -14,8 +14,23 @@
 
 - 执行的命令：`npx tsc src/language/Interval.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L16, C31）：[full_check] Cannot find name 'Term'.
+  - TS2769（L19, C29）：[full_check] No overload matches this call.
+  - TS2564（L26, C21）：[full_check] Property 'time' has no initializer and is not definitely assigned in the constructor.
+  - TS2339（L44, C27）：[full_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L44, C42）：[full_check] Cannot find name 'Symbols'.
+  - TS2349（L54, C17）：[full_check] This expression is not callable.
+  - TS17009（L54, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2362（L54, C22）：[full_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2304（L16, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2769（L19, C29）：[syntax_check] No overload matches this call.
+  - TS2564（L26, C21）：[syntax_check] Property 'time' has no initializer and is not definitely assigned in the constructor.
+  - TS2339（L44, C27）：[syntax_check] Property 'Thread' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+  - TS2304（L44, C42）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2349（L54, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L54, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2362（L54, C22）：[syntax_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +46,10 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Term'.` @ L16
+- `[full_check] Cannot find name 'Symbols'.` @ L44
+- `[syntax_check] Cannot find name 'Term'.` @ L16
+- `[syntax_check] Cannot find name 'Symbols'.` @ L44
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -55,6 +73,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

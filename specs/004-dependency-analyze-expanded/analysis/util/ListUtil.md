@@ -14,8 +14,11 @@
 
 - 执行的命令：`npx tsc src/util/ListUtil.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2339（L18, C27）：[full_check] Property 'test' does not exist on type 'Predicate<T>'.
+  - TS2322（L23, C9）：[full_check] Type 'null' is not assignable to type 'T'.
+  - TS2339（L18, C27）：[syntax_check] Property 'test' does not exist on type 'Predicate<T>'.
+  - TS2322（L23, C9）：[syntax_check] Type 'null' is not assignable to type 'T'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -54,6 +57,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

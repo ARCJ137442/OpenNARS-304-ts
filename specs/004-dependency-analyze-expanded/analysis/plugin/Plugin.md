@@ -14,8 +14,17 @@
 
 - 执行的命令：`npx tsc src/plugin/Plugin.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2689（L8, C31）：[full_check] Cannot extend an interface 'java.io.Serializable'. Did you mean 'implements'?
+  - TS1245（L14, C24）：[full_check] Method 'setEnabled' cannot have an implementation because it is marked abstract.
+  - TS2304（L14, C38）：[full_check] Cannot find name 'Nar'.
+  - TS1245（L18, C24）：[full_check] Method 'name' cannot have an implementation because it is marked abstract.
+  - TS2339（L19, C21）：[full_check] Property 'getClass' does not exist on type 'Plugin'.
+  - TS2689（L8, C31）：[syntax_check] Cannot extend an interface 'java.io.Serializable'. Did you mean 'implements'?
+  - TS1245（L14, C24）：[syntax_check] Method 'setEnabled' cannot have an implementation because it is marked abstract.
+  - TS2304（L14, C38）：[syntax_check] Cannot find name 'Nar'.
+  - TS1245（L18, C24）：[syntax_check] Method 'name' cannot have an implementation because it is marked abstract.
+  - TS2339（L19, C21）：[syntax_check] Property 'getClass' does not exist on type 'Plugin'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +40,8 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Nar'.` @ L14
+- `[syntax_check] Cannot find name 'Nar'.` @ L14
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -54,6 +64,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

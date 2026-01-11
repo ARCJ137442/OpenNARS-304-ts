@@ -14,8 +14,107 @@
 
 - 执行的命令：`npx tsc src/plugin/mental/Emotions.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2420（L9, C14）：[full_check] Class 'Emotions' incorrectly implements interface 'Plugin'.
+  - TS2322（L19, C12）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2322（L20, C12）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2300（L23, C13）：[full_check] Duplicate identifier 'happy'.
+  - TS2564（L23, C13）：[full_check] Property 'happy' has no initializer and is not definitely assigned in the constructor.
+  - TS2300（L25, C13）：[full_check] Duplicate identifier 'busy'.
+  - TS2564（L25, C13）：[full_check] Property 'busy' has no initializer and is not definitely assigned in the constructor.
+  - TS2300（L115, C12）：[full_check] Duplicate identifier 'happy'.
+  - TS2300（L119, C12）：[full_check] Duplicate identifier 'busy'.
+  - TS2304（L123, C68）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L147, C28）：[full_check] Cannot find name 'Term'.
+  - TS2304（L147, C35）：[full_check] Cannot find name 'SetInt'.
+  - TS2304（L147, C51）：[full_check] Cannot find name 'Term'.
+  - TS2304（L148, C26）：[full_check] Cannot find name 'Term'.
+  - TS2304（L148, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L149, C22）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L149, C36）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L150, C24）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L150, C41）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L152, C20）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L152, C35）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L152, C49）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L152, C83）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L155, C34）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L155, C52）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L157, C17）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L159, C20）：[full_check] Cannot find name 'Task'.
+  - TS2304（L159, C31）：[full_check] Cannot find name 'Task'.
+  - TS2304（L159, C56）：[full_check] Cannot find name 'Task'.
+  - TS2304（L213, C60）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L235, C28）：[full_check] Cannot find name 'Term'.
+  - TS2304（L235, C35）：[full_check] Cannot find name 'SetInt'.
+  - TS2304（L235, C51）：[full_check] Cannot find name 'Term'.
+  - TS2304（L236, C26）：[full_check] Cannot find name 'Term'.
+  - TS2304（L236, C37）：[full_check] Cannot find name 'Term'.
+  - TS2304（L237, C22）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L237, C36）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L238, C24）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L238, C41）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L240, C20）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L240, C35）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L242, C17）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L244, C21）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L247, C35）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L247, C53）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L249, C17）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L250, C20）：[full_check] Cannot find name 'Task'.
+  - TS2304（L250, C31）：[full_check] Cannot find name 'Task'.
+  - TS2304（L250, C57）：[full_check] Cannot find name 'Task'.
+  - TS2304（L257, C26）：[full_check] Cannot find name 'Nar'.
+  - TS2420（L9, C14）：[syntax_check] Class 'Emotions' incorrectly implements interface 'Plugin'.
+  - TS2322（L19, C12）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2322（L20, C12）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2300（L23, C13）：[syntax_check] Duplicate identifier 'happy'.
+  - TS2564（L23, C13）：[syntax_check] Property 'happy' has no initializer and is not definitely assigned in the constructor.
+  - TS2300（L25, C13）：[syntax_check] Duplicate identifier 'busy'.
+  - TS2564（L25, C13）：[syntax_check] Property 'busy' has no initializer and is not definitely assigned in the constructor.
+  - TS2300（L115, C12）：[syntax_check] Duplicate identifier 'happy'.
+  - TS2300（L119, C12）：[syntax_check] Duplicate identifier 'busy'.
+  - TS2304（L123, C68）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L147, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L147, C35）：[syntax_check] Cannot find name 'SetInt'.
+  - TS2304（L147, C51）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L148, C26）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L148, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L149, C22）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L149, C36）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L150, C24）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L150, C41）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L152, C20）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L152, C35）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L152, C49）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L152, C83）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L155, C34）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L155, C52）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L157, C17）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L159, C20）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L159, C31）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L159, C56）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L213, C60）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L235, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L235, C35）：[syntax_check] Cannot find name 'SetInt'.
+  - TS2304（L235, C51）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L236, C26）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L236, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L237, C22）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L237, C36）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L238, C24）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L238, C41）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L240, C20）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L240, C35）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L242, C17）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L244, C21）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L247, C35）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L247, C53）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L249, C17）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L250, C20）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L250, C31）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L250, C57）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L257, C26）：[syntax_check] Cannot find name 'Nar'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +130,88 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'DerivationContext'.` @ L123
+- `[full_check] Cannot find name 'Term'.` @ L147
+- `[full_check] Cannot find name 'SetInt'.` @ L147
+- `[full_check] Cannot find name 'Term'.` @ L147
+- `[full_check] Cannot find name 'Term'.` @ L148
+- `[full_check] Cannot find name 'Term'.` @ L148
+- `[full_check] Cannot find name 'Inheritance'.` @ L149
+- `[full_check] Cannot find name 'Inheritance'.` @ L149
+- `[full_check] Cannot find name 'TruthValue'.` @ L150
+- `[full_check] Cannot find name 'TruthValue'.` @ L150
+- `[full_check] Cannot find name 'Sentence'.` @ L152
+- `[full_check] Cannot find name 'Sentence'.` @ L152
+- `[full_check] Cannot find name 'Symbols'.` @ L152
+- `[full_check] Cannot find name 'Stamp'.` @ L152
+- `[full_check] Cannot find name 'BudgetValue'.` @ L155
+- `[full_check] Cannot find name 'BudgetValue'.` @ L155
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L157
+- `[full_check] Cannot find name 'Task'.` @ L159
+- `[full_check] Cannot find name 'Task'.` @ L159
+- `[full_check] Cannot find name 'Task'.` @ L159
+- `[full_check] Cannot find name 'DerivationContext'.` @ L213
+- `[full_check] Cannot find name 'Term'.` @ L235
+- `[full_check] Cannot find name 'SetInt'.` @ L235
+- `[full_check] Cannot find name 'Term'.` @ L235
+- `[full_check] Cannot find name 'Term'.` @ L236
+- `[full_check] Cannot find name 'Term'.` @ L236
+- `[full_check] Cannot find name 'Inheritance'.` @ L237
+- `[full_check] Cannot find name 'Inheritance'.` @ L237
+- `[full_check] Cannot find name 'TruthValue'.` @ L238
+- `[full_check] Cannot find name 'TruthValue'.` @ L238
+- `[full_check] Cannot find name 'Sentence'.` @ L240
+- `[full_check] Cannot find name 'Sentence'.` @ L240
+- `[full_check] Cannot find name 'Symbols'.` @ L242
+- `[full_check] Cannot find name 'Stamp'.` @ L244
+- `[full_check] Cannot find name 'BudgetValue'.` @ L247
+- `[full_check] Cannot find name 'BudgetValue'.` @ L247
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L249
+- `[full_check] Cannot find name 'Task'.` @ L250
+- `[full_check] Cannot find name 'Task'.` @ L250
+- `[full_check] Cannot find name 'Task'.` @ L250
+- `[full_check] Cannot find name 'Nar'.` @ L257
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L123
+- `[syntax_check] Cannot find name 'Term'.` @ L147
+- `[syntax_check] Cannot find name 'SetInt'.` @ L147
+- `[syntax_check] Cannot find name 'Term'.` @ L147
+- `[syntax_check] Cannot find name 'Term'.` @ L148
+- `[syntax_check] Cannot find name 'Term'.` @ L148
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L149
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L149
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L150
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L150
+- `[syntax_check] Cannot find name 'Sentence'.` @ L152
+- `[syntax_check] Cannot find name 'Sentence'.` @ L152
+- `[syntax_check] Cannot find name 'Symbols'.` @ L152
+- `[syntax_check] Cannot find name 'Stamp'.` @ L152
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L155
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L155
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L157
+- `[syntax_check] Cannot find name 'Task'.` @ L159
+- `[syntax_check] Cannot find name 'Task'.` @ L159
+- `[syntax_check] Cannot find name 'Task'.` @ L159
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L213
+- `[syntax_check] Cannot find name 'Term'.` @ L235
+- `[syntax_check] Cannot find name 'SetInt'.` @ L235
+- `[syntax_check] Cannot find name 'Term'.` @ L235
+- `[syntax_check] Cannot find name 'Term'.` @ L236
+- `[syntax_check] Cannot find name 'Term'.` @ L236
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L237
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L237
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L238
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L238
+- `[syntax_check] Cannot find name 'Sentence'.` @ L240
+- `[syntax_check] Cannot find name 'Sentence'.` @ L240
+- `[syntax_check] Cannot find name 'Symbols'.` @ L242
+- `[syntax_check] Cannot find name 'Stamp'.` @ L244
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L247
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L247
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L249
+- `[syntax_check] Cannot find name 'Task'.` @ L250
+- `[syntax_check] Cannot find name 'Task'.` @ L250
+- `[syntax_check] Cannot find name 'Task'.` @ L250
+- `[syntax_check] Cannot find name 'Nar'.` @ L257
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -68,6 +248,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

@@ -14,8 +14,287 @@
 
 - 执行的命令：`npx tsc src/language/Conjunction.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L11, C34）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L16, C32）：[full_check] Cannot find name 'Term'.
+  - TS2304（L26, C32）：[full_check] Cannot find name 'Term'.
+  - TS2503（L27, C15）：[full_check] Cannot find namespace 'CompoundTerm'.
+  - TS2304（L31, C68）：[full_check] Cannot find name 'Term'.
+  - TS2339（L37, C31）：[full_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2339（L37, C62）：[full_check] Property 'term' does not exist on type 'Conjunction'.
+  - TS2339（L40, C26）：[full_check] Property 'imagination' does not exist on type 'Conjunction'.
+  - TS2304（L48, C74）：[full_check] Cannot find name 'Term'.
+  - TS2503（L48, C105）：[full_check] Cannot find namespace 'CompoundTerm'.
+  - TS2339（L54, C22）：[full_check] Property 'index_variable' does not exist on type 'Conjunction'.
+  - TS2339（L55, C22）：[full_check] Property 'term_indices' does not exist on type 'Conjunction'.
+  - TS2339（L56, C31）：[full_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2339（L56, C62）：[full_check] Property 'term' does not exist on type 'Conjunction'.
+  - TS2304（L76, C21）：[full_check] Cannot find name 'Term'.
+  - TS2304（L76, C30）：[full_check] Cannot find name 'Term'.
+  - TS2304（L77, C53）：[full_check] Cannot find name 'Term'.
+  - TS2304（L81, C40）：[full_check] Cannot find name 'term'.
+  - TS2339（L81, C76）：[full_check] Property 'Normalizer' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+  - TS2304（L88, C38）：[full_check] Cannot find name 'Term'.
+  - TS2304（L112, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L114, C18）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L116, C28）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L118, C28）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L120, C18）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L121, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L123, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L133, C39）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L142, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L142, C42）：[full_check] Cannot find name 'Term'.
+  - TS2304（L151, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L151, C62）：[full_check] Cannot find name 'Term'.
+  - TS2304（L161, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L161, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L161, C51）：[full_check] Cannot find name 'Term'.
+  - TS2304（L163, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L163, C80）：[full_check] Cannot find name 'Term'.
+  - TS2304（L165, C32）：[full_check] Cannot find name 'Term'.
+  - TS2304（L165, C46）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L165, C77）：[full_check] Cannot find name 'Term'.
+  - TS2385（L172, C20）：[full_check] Overload signatures must all be public, private or protected.
+  - TS2304（L172, C51）：[full_check] Cannot find name 'Term'.
+  - TS2304（L172, C97）：[full_check] Cannot find name 'Term'.
+  - TS2304（L174, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L174, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L174, C71）：[full_check] Cannot find name 'Term'.
+  - TS2304（L176, C32）：[full_check] Cannot find name 'Term'.
+  - TS2304（L176, C44）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L176, C62）：[full_check] Cannot find name 'Term'.
+  - TS2304（L176, C89）：[full_check] Cannot find name 'Term'.
+  - TS2304（L178, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L178, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L178, C89）：[full_check] Cannot find name 'Term'.
+  - TS2304（L179, C45）：[full_check] Cannot find name 'Term'.
+  - TS2304（L182, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L185, C50）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L192, C59）：[full_check] Cannot find name 'Term'.
+  - TS2304（L202, C49）：[full_check] Cannot find name 'Term'.
+  - TS2304（L202, C55）：[full_check] Cannot find name 'Term'.
+  - TS2304（L205, C55）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L212, C68）：[full_check] Cannot find name 'Term'.
+  - TS2304（L215, C21）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L216, C21）：[full_check] Cannot find name 'Terms'.
+  - TS2304（L226, C39）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L227, C37）：[full_check] Cannot find name 'Term'.
+  - TS2694（L237, C40）：[full_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index"' has no exported member 'NavigableSet'.
+  - TS2304（L237, C53）：[full_check] Cannot find name 'Term'.
+  - TS2339（L237, C75）：[full_check] Property 'TreeSet' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+  - TS2304（L238, C36）：[full_check] Cannot find name 'Term'.
+  - TS2304（L239, C31）：[full_check] Cannot find name 'ConvRectangle'.
+  - TS2304（L239, C47）：[full_check] Cannot find name 'UpdateConvRectangle'.
+  - TS2304（L241, C44）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L244, C53）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L245, C46）：[full_check] Cannot find name 'Term'.
+  - TS2304（L256, C66）：[full_check] Cannot find name 'Term'.
+  - TS2304（L264, C66）：[full_check] Cannot find name 'Term'.
+  - TS2304（L264, C72）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L267, C24）：[full_check] Cannot find name 'Term'.
+  - TS2304（L267, C43）：[full_check] Cannot find name 'Term'.
+  - TS2304（L278, C85）：[full_check] Cannot find name 'Term'.
+  - TS2304（L281, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L281, C62）：[full_check] Cannot find name 'Term'.
+  - TS2304（L289, C64）：[full_check] Cannot find name 'Term'.
+  - TS2304（L289, C70）：[full_check] Cannot find name 'Term'.
+  - TS2304（L299, C72）：[full_check] Cannot find name 'Term'.
+  - TS2304（L299, C78）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L299, C88）：[full_check] Cannot find name 'Term'.
+  - TS2304（L302, C24）：[full_check] Cannot find name 'Term'.
+  - TS2304（L302, C43）：[full_check] Cannot find name 'Term'.
+  - TS2304（L314, C73）：[full_check] Cannot find name 'Term'.
+  - TS2304（L314, C79）：[full_check] Cannot find name 'Term'.
+  - TS2304（L317, C39）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L319, C37）：[full_check] Cannot find name 'Term'.
+  - TS2304（L321, C89）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L323, C37）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L323, C61）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L325, C50）：[full_check] Cannot find name 'Term'.
+  - TS2304（L330, C58）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L332, C39）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L338, C61）：[full_check] Cannot find name 'Term'.
+  - TS2304（L340, C96）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L341, C37）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L341, C61）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L342, C48）：[full_check] Cannot find name 'Term'.
+  - TS2304（L342, C64）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L352, C45）：[full_check] Cannot find name 'Term'.
+  - TS2304（L354, C35）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L357, C39）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L364, C35）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L385, C51）：[full_check] Cannot find name 'Term'.
+  - TS2304（L393, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L393, C74）：[full_check] Cannot find name 'Term'.
+  - TS2339（L399, C42）：[full_check] Property 'term' does not exist on type 'Conjunction'.
+  - TS2304（L404, C18）：[full_check] Cannot find name 'Term'.
+  - TS2304（L404, C37）：[full_check] Cannot find name 'Term'.
+  - TS2339（L409, C33）：[full_check] Property 'term' does not exist on type 'Conjunction'.
+  - TS2322（L423, C13）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L425, C13）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L430, C15）：[full_check] Cannot find name 'Term'.
+  - TS2304（L430, C22）：[full_check] Cannot find name 'Term'.
+  - TS2304（L431, C29）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L432, C21）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L432, C45）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2322（L446, C17）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L448, C17）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L449, C17）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L450, C26）：[full_check] Cannot find name 'Term'.
+  - TS2304（L450, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L465, C49）：[full_check] Cannot find name 'Term'.
+  - TS2304（L465, C58）：[full_check] Cannot find name 'Term'.
+  - TS2304（L466, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L466, C65）：[full_check] Cannot find name 'Term'.
+  - TS2304（L468, C42）：[full_check] Cannot find name 'Interval'.
+  - TS2322（L470, C21）：[full_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L471, C74）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L472, C47）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L474, C29）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L480, C38）：[full_check] Cannot find name 'Term'.
+  - TS2304（L484, C16）：[full_check] Cannot find name 'makeCompoundName'.
+  - TS2304（L484, C50）：[full_check] Cannot find name 'term'.
+  - TS2304（L11, C34）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L16, C32）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L26, C32）：[syntax_check] Cannot find name 'Term'.
+  - TS2503（L27, C15）：[syntax_check] Cannot find namespace 'CompoundTerm'.
+  - TS2304（L31, C68）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L37, C31）：[syntax_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2339（L37, C62）：[syntax_check] Property 'term' does not exist on type 'Conjunction'.
+  - TS2339（L40, C26）：[syntax_check] Property 'imagination' does not exist on type 'Conjunction'.
+  - TS2304（L48, C74）：[syntax_check] Cannot find name 'Term'.
+  - TS2503（L48, C105）：[syntax_check] Cannot find namespace 'CompoundTerm'.
+  - TS2339（L54, C22）：[syntax_check] Property 'index_variable' does not exist on type 'Conjunction'.
+  - TS2339（L55, C22）：[syntax_check] Property 'term_indices' does not exist on type 'Conjunction'.
+  - TS2339（L56, C31）：[syntax_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2339（L56, C62）：[syntax_check] Property 'term' does not exist on type 'Conjunction'.
+  - TS2304（L76, C21）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L76, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L77, C53）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L81, C40）：[syntax_check] Cannot find name 'term'.
+  - TS2339（L81, C76）：[syntax_check] Property 'Normalizer' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+  - TS2304（L88, C38）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L112, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L114, C18）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L116, C28）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L118, C28）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L120, C18）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L121, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L123, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L133, C39）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L142, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L142, C42）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L151, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L151, C62）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L161, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L161, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L161, C51）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L163, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L163, C80）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L165, C32）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L165, C46）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L165, C77）：[syntax_check] Cannot find name 'Term'.
+  - TS2385（L172, C20）：[syntax_check] Overload signatures must all be public, private or protected.
+  - TS2304（L172, C51）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L172, C97）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L174, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L174, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L174, C71）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L176, C32）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L176, C44）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L176, C62）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L176, C89）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L178, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L178, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L178, C89）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L179, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L182, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L185, C50）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L192, C59）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L202, C49）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L202, C55）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L205, C55）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L212, C68）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L215, C21）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L216, C21）：[syntax_check] Cannot find name 'Terms'.
+  - TS2304（L226, C39）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L227, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2694（L237, C40）：[syntax_check] Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index"' has no exported member 'NavigableSet'.
+  - TS2304（L237, C53）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L237, C75）：[syntax_check] Property 'TreeSet' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+  - TS2304（L238, C36）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L239, C31）：[syntax_check] Cannot find name 'ConvRectangle'.
+  - TS2304（L239, C47）：[syntax_check] Cannot find name 'UpdateConvRectangle'.
+  - TS2304（L241, C44）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L244, C53）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L245, C46）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L256, C66）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L264, C66）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L264, C72）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L267, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L267, C43）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L278, C85）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L281, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L281, C62）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L289, C64）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L289, C70）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L299, C72）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L299, C78）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L299, C88）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L302, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L302, C43）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L314, C73）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L314, C79）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L317, C39）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L319, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L321, C89）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L323, C37）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L323, C61）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L325, C50）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L330, C58）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L332, C39）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L338, C61）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L340, C96）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L341, C37）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L341, C61）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L342, C48）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L342, C64）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L352, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L354, C35）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L357, C39）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L364, C35）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L385, C51）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L393, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L393, C74）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L399, C42）：[syntax_check] Property 'term' does not exist on type 'Conjunction'.
+  - TS2304（L404, C18）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L404, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L409, C33）：[syntax_check] Property 'term' does not exist on type 'Conjunction'.
+  - TS2322（L423, C13）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L425, C13）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L430, C15）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L430, C22）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L431, C29）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L432, C21）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L432, C45）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2322（L446, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L448, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L449, C17）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L450, C26）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L450, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L465, C49）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L465, C58）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L466, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L466, C65）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L468, C42）：[syntax_check] Cannot find name 'Interval'.
+  - TS2322（L470, C21）：[syntax_check] Type 'number' is not assignable to type 'bigint'.
+  - TS2304（L471, C74）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L472, C47）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L474, C29）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L480, C38）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L484, C16）：[syntax_check] Cannot find name 'makeCompoundName'.
+  - TS2304（L484, C50）：[syntax_check] Cannot find name 'term'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +310,248 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L11
+- `[full_check] Cannot find name 'Term'.` @ L16
+- `[full_check] Cannot find name 'Term'.` @ L26
+- `[full_check] Cannot find namespace 'CompoundTerm'.` @ L27
+- `[full_check] Cannot find name 'Term'.` @ L31
+- `[full_check] Cannot find name 'Term'.` @ L48
+- `[full_check] Cannot find namespace 'CompoundTerm'.` @ L48
+- `[full_check] Cannot find name 'Term'.` @ L76
+- `[full_check] Cannot find name 'Term'.` @ L76
+- `[full_check] Cannot find name 'Term'.` @ L77
+- `[full_check] Cannot find name 'term'.` @ L81
+- `[full_check] Cannot find name 'Term'.` @ L88
+- `[full_check] Cannot find name 'NativeOperator'.` @ L112
+- `[full_check] Cannot find name 'TemporalRules'.` @ L114
+- `[full_check] Cannot find name 'NativeOperator'.` @ L116
+- `[full_check] Cannot find name 'NativeOperator'.` @ L118
+- `[full_check] Cannot find name 'TemporalRules'.` @ L120
+- `[full_check] Cannot find name 'NativeOperator'.` @ L121
+- `[full_check] Cannot find name 'NativeOperator'.` @ L123
+- `[full_check] Cannot find name 'TemporalRules'.` @ L133
+- `[full_check] Cannot find name 'Term'.` @ L142
+- `[full_check] Cannot find name 'Term'.` @ L142
+- `[full_check] Cannot find name 'Term'.` @ L151
+- `[full_check] Cannot find name 'Term'.` @ L151
+- `[full_check] Cannot find name 'Term'.` @ L161
+- `[full_check] Cannot find name 'Term'.` @ L161
+- `[full_check] Cannot find name 'Term'.` @ L161
+- `[full_check] Cannot find name 'Term'.` @ L163
+- `[full_check] Cannot find name 'Term'.` @ L163
+- `[full_check] Cannot find name 'Term'.` @ L165
+- `[full_check] Cannot find name 'Interval'.` @ L165
+- `[full_check] Cannot find name 'Term'.` @ L165
+- `[full_check] Cannot find name 'Term'.` @ L172
+- `[full_check] Cannot find name 'Term'.` @ L172
+- `[full_check] Cannot find name 'Term'.` @ L174
+- `[full_check] Cannot find name 'Term'.` @ L174
+- `[full_check] Cannot find name 'Term'.` @ L174
+- `[full_check] Cannot find name 'Term'.` @ L176
+- `[full_check] Cannot find name 'Interval'.` @ L176
+- `[full_check] Cannot find name 'Term'.` @ L176
+- `[full_check] Cannot find name 'Term'.` @ L176
+- `[full_check] Cannot find name 'Term'.` @ L178
+- `[full_check] Cannot find name 'Term'.` @ L178
+- `[full_check] Cannot find name 'Term'.` @ L178
+- `[full_check] Cannot find name 'Term'.` @ L179
+- `[full_check] Cannot find name 'Term'.` @ L182
+- `[full_check] Cannot find name 'TemporalRules'.` @ L185
+- `[full_check] Cannot find name 'Term'.` @ L192
+- `[full_check] Cannot find name 'Term'.` @ L202
+- `[full_check] Cannot find name 'Term'.` @ L202
+- `[full_check] Cannot find name 'TemporalRules'.` @ L205
+- `[full_check] Cannot find name 'Term'.` @ L212
+- `[full_check] Cannot find name 'Debug'.` @ L215
+- `[full_check] Cannot find name 'Terms'.` @ L216
+- `[full_check] Cannot find name 'TemporalRules'.` @ L226
+- `[full_check] Cannot find name 'Term'.` @ L227
+- `[full_check] Cannot find name 'Term'.` @ L237
+- `[full_check] Cannot find name 'Term'.` @ L238
+- `[full_check] Cannot find name 'ConvRectangle'.` @ L239
+- `[full_check] Cannot find name 'UpdateConvRectangle'.` @ L239
+- `[full_check] Cannot find name 'Interval'.` @ L241
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L244
+- `[full_check] Cannot find name 'Term'.` @ L245
+- `[full_check] Cannot find name 'Term'.` @ L256
+- `[full_check] Cannot find name 'Term'.` @ L264
+- `[full_check] Cannot find name 'Interval'.` @ L264
+- `[full_check] Cannot find name 'Term'.` @ L267
+- `[full_check] Cannot find name 'Term'.` @ L267
+- `[full_check] Cannot find name 'Term'.` @ L278
+- `[full_check] Cannot find name 'Term'.` @ L281
+- `[full_check] Cannot find name 'Term'.` @ L281
+- `[full_check] Cannot find name 'Term'.` @ L289
+- `[full_check] Cannot find name 'Term'.` @ L289
+- `[full_check] Cannot find name 'Term'.` @ L299
+- `[full_check] Cannot find name 'Interval'.` @ L299
+- `[full_check] Cannot find name 'Term'.` @ L299
+- `[full_check] Cannot find name 'Term'.` @ L302
+- `[full_check] Cannot find name 'Term'.` @ L302
+- `[full_check] Cannot find name 'Term'.` @ L314
+- `[full_check] Cannot find name 'Term'.` @ L314
+- `[full_check] Cannot find name 'TemporalRules'.` @ L317
+- `[full_check] Cannot find name 'Term'.` @ L319
+- `[full_check] Cannot find name 'TemporalRules'.` @ L321
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L323
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L323
+- `[full_check] Cannot find name 'Term'.` @ L325
+- `[full_check] Cannot find name 'TemporalRules'.` @ L330
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L332
+- `[full_check] Cannot find name 'Term'.` @ L338
+- `[full_check] Cannot find name 'TemporalRules'.` @ L340
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L341
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L341
+- `[full_check] Cannot find name 'Term'.` @ L342
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L342
+- `[full_check] Cannot find name 'Term'.` @ L352
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L354
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L357
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L364
+- `[full_check] Cannot find name 'Term'.` @ L385
+- `[full_check] Cannot find name 'Term'.` @ L393
+- `[full_check] Cannot find name 'Term'.` @ L393
+- `[full_check] Cannot find name 'Term'.` @ L404
+- `[full_check] Cannot find name 'Term'.` @ L404
+- `[full_check] Cannot find name 'Term'.` @ L430
+- `[full_check] Cannot find name 'Term'.` @ L430
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L431
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L432
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L432
+- `[full_check] Cannot find name 'Term'.` @ L450
+- `[full_check] Cannot find name 'Term'.` @ L450
+- `[full_check] Cannot find name 'Term'.` @ L465
+- `[full_check] Cannot find name 'Term'.` @ L465
+- `[full_check] Cannot find name 'Term'.` @ L466
+- `[full_check] Cannot find name 'Term'.` @ L466
+- `[full_check] Cannot find name 'Interval'.` @ L468
+- `[full_check] Cannot find name 'Interval'.` @ L471
+- `[full_check] Cannot find name 'Interval'.` @ L472
+- `[full_check] Cannot find name 'Interval'.` @ L474
+- `[full_check] Cannot find name 'Term'.` @ L480
+- `[full_check] Cannot find name 'makeCompoundName'.` @ L484
+- `[full_check] Cannot find name 'term'.` @ L484
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L11
+- `[syntax_check] Cannot find name 'Term'.` @ L16
+- `[syntax_check] Cannot find name 'Term'.` @ L26
+- `[syntax_check] Cannot find namespace 'CompoundTerm'.` @ L27
+- `[syntax_check] Cannot find name 'Term'.` @ L31
+- `[syntax_check] Cannot find name 'Term'.` @ L48
+- `[syntax_check] Cannot find namespace 'CompoundTerm'.` @ L48
+- `[syntax_check] Cannot find name 'Term'.` @ L76
+- `[syntax_check] Cannot find name 'Term'.` @ L76
+- `[syntax_check] Cannot find name 'Term'.` @ L77
+- `[syntax_check] Cannot find name 'term'.` @ L81
+- `[syntax_check] Cannot find name 'Term'.` @ L88
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L112
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L114
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L116
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L118
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L120
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L121
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L123
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L133
+- `[syntax_check] Cannot find name 'Term'.` @ L142
+- `[syntax_check] Cannot find name 'Term'.` @ L142
+- `[syntax_check] Cannot find name 'Term'.` @ L151
+- `[syntax_check] Cannot find name 'Term'.` @ L151
+- `[syntax_check] Cannot find name 'Term'.` @ L161
+- `[syntax_check] Cannot find name 'Term'.` @ L161
+- `[syntax_check] Cannot find name 'Term'.` @ L161
+- `[syntax_check] Cannot find name 'Term'.` @ L163
+- `[syntax_check] Cannot find name 'Term'.` @ L163
+- `[syntax_check] Cannot find name 'Term'.` @ L165
+- `[syntax_check] Cannot find name 'Interval'.` @ L165
+- `[syntax_check] Cannot find name 'Term'.` @ L165
+- `[syntax_check] Cannot find name 'Term'.` @ L172
+- `[syntax_check] Cannot find name 'Term'.` @ L172
+- `[syntax_check] Cannot find name 'Term'.` @ L174
+- `[syntax_check] Cannot find name 'Term'.` @ L174
+- `[syntax_check] Cannot find name 'Term'.` @ L174
+- `[syntax_check] Cannot find name 'Term'.` @ L176
+- `[syntax_check] Cannot find name 'Interval'.` @ L176
+- `[syntax_check] Cannot find name 'Term'.` @ L176
+- `[syntax_check] Cannot find name 'Term'.` @ L176
+- `[syntax_check] Cannot find name 'Term'.` @ L178
+- `[syntax_check] Cannot find name 'Term'.` @ L178
+- `[syntax_check] Cannot find name 'Term'.` @ L178
+- `[syntax_check] Cannot find name 'Term'.` @ L179
+- `[syntax_check] Cannot find name 'Term'.` @ L182
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L185
+- `[syntax_check] Cannot find name 'Term'.` @ L192
+- `[syntax_check] Cannot find name 'Term'.` @ L202
+- `[syntax_check] Cannot find name 'Term'.` @ L202
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L205
+- `[syntax_check] Cannot find name 'Term'.` @ L212
+- `[syntax_check] Cannot find name 'Debug'.` @ L215
+- `[syntax_check] Cannot find name 'Terms'.` @ L216
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L226
+- `[syntax_check] Cannot find name 'Term'.` @ L227
+- `[syntax_check] Cannot find name 'Term'.` @ L237
+- `[syntax_check] Cannot find name 'Term'.` @ L238
+- `[syntax_check] Cannot find name 'ConvRectangle'.` @ L239
+- `[syntax_check] Cannot find name 'UpdateConvRectangle'.` @ L239
+- `[syntax_check] Cannot find name 'Interval'.` @ L241
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L244
+- `[syntax_check] Cannot find name 'Term'.` @ L245
+- `[syntax_check] Cannot find name 'Term'.` @ L256
+- `[syntax_check] Cannot find name 'Term'.` @ L264
+- `[syntax_check] Cannot find name 'Interval'.` @ L264
+- `[syntax_check] Cannot find name 'Term'.` @ L267
+- `[syntax_check] Cannot find name 'Term'.` @ L267
+- `[syntax_check] Cannot find name 'Term'.` @ L278
+- `[syntax_check] Cannot find name 'Term'.` @ L281
+- `[syntax_check] Cannot find name 'Term'.` @ L281
+- `[syntax_check] Cannot find name 'Term'.` @ L289
+- `[syntax_check] Cannot find name 'Term'.` @ L289
+- `[syntax_check] Cannot find name 'Term'.` @ L299
+- `[syntax_check] Cannot find name 'Interval'.` @ L299
+- `[syntax_check] Cannot find name 'Term'.` @ L299
+- `[syntax_check] Cannot find name 'Term'.` @ L302
+- `[syntax_check] Cannot find name 'Term'.` @ L302
+- `[syntax_check] Cannot find name 'Term'.` @ L314
+- `[syntax_check] Cannot find name 'Term'.` @ L314
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L317
+- `[syntax_check] Cannot find name 'Term'.` @ L319
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L321
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L323
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L323
+- `[syntax_check] Cannot find name 'Term'.` @ L325
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L330
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L332
+- `[syntax_check] Cannot find name 'Term'.` @ L338
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L340
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L341
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L341
+- `[syntax_check] Cannot find name 'Term'.` @ L342
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L342
+- `[syntax_check] Cannot find name 'Term'.` @ L352
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L354
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L357
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L364
+- `[syntax_check] Cannot find name 'Term'.` @ L385
+- `[syntax_check] Cannot find name 'Term'.` @ L393
+- `[syntax_check] Cannot find name 'Term'.` @ L393
+- `[syntax_check] Cannot find name 'Term'.` @ L404
+- `[syntax_check] Cannot find name 'Term'.` @ L404
+- `[syntax_check] Cannot find name 'Term'.` @ L430
+- `[syntax_check] Cannot find name 'Term'.` @ L430
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L431
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L432
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L432
+- `[syntax_check] Cannot find name 'Term'.` @ L450
+- `[syntax_check] Cannot find name 'Term'.` @ L450
+- `[syntax_check] Cannot find name 'Term'.` @ L465
+- `[syntax_check] Cannot find name 'Term'.` @ L465
+- `[syntax_check] Cannot find name 'Term'.` @ L466
+- `[syntax_check] Cannot find name 'Term'.` @ L466
+- `[syntax_check] Cannot find name 'Interval'.` @ L468
+- `[syntax_check] Cannot find name 'Interval'.` @ L471
+- `[syntax_check] Cannot find name 'Interval'.` @ L472
+- `[syntax_check] Cannot find name 'Interval'.` @ L474
+- `[syntax_check] Cannot find name 'Term'.` @ L480
+- `[syntax_check] Cannot find name 'makeCompoundName'.` @ L484
+- `[syntax_check] Cannot find name 'term'.` @ L484
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -61,6 +581,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

@@ -14,8 +14,49 @@
 
 - 执行的命令：`npx tsc src/entity/TruthValue.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2314（L13, C55）：[full_check] Generic type 'Cloneable<T>' requires 1 type argument(s).
+  - TS2304（L15, C43）：[full_check] Cannot find name 'Term'.
+  - TS2304（L15, C54）：[full_check] Cannot find name 'Term'.
+  - TS2304（L16, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L16, C55）：[full_check] Cannot find name 'Term'.
+  - TS2304（L17, C45）：[full_check] Cannot find name 'Term'.
+  - TS2304（L17, C56）：[full_check] Cannot find name 'Term'.
+  - TS2322（L22, C29）：[full_check] Type 'string' is not assignable to type 'number'.
+  - TS2322（L26, C29）：[full_check] Type 'string' is not assignable to type 'number'.
+  - TS2564（L30, C13）：[full_check] Property 'frequency' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L34, C13）：[full_check] Property 'confidence' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L40, C13）：[full_check] Property 'narParameters' has no initializer and is not definitely assigned in the constructor.
+  - TS2349（L78, C17）：[full_check] This expression is not callable.
+  - TS17009（L78, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2349（L102, C17）：[full_check] This expression is not callable.
+  - TS17009（L102, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L275, C21）：[full_check] Cannot find name 'Texts'.
+  - TS2304（L277, C21）：[full_check] Cannot find name 'Texts'.
+  - TS2304（L302, C26）：[full_check] Cannot find name 'Term'.
+  - TS2304（L314, C65）：[full_check] Cannot find name 'Term'.
+  - TS2322（L322, C13）：[full_check] Type 'null' is not assignable to type 'TruthValue'.
+  - TS2314（L13, C55）：[syntax_check] Generic type 'Cloneable<T>' requires 1 type argument(s).
+  - TS2304（L15, C43）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L15, C54）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L16, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L16, C55）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L17, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L17, C56）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L22, C29）：[syntax_check] Type 'string' is not assignable to type 'number'.
+  - TS2322（L26, C29）：[syntax_check] Type 'string' is not assignable to type 'number'.
+  - TS2564（L30, C13）：[syntax_check] Property 'frequency' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L34, C13）：[syntax_check] Property 'confidence' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L40, C13）：[syntax_check] Property 'narParameters' has no initializer and is not definitely assigned in the constructor.
+  - TS2349（L78, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L78, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2349（L102, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L102, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L275, C21）：[syntax_check] Cannot find name 'Texts'.
+  - TS2304（L277, C21）：[syntax_check] Cannot find name 'Texts'.
+  - TS2304（L302, C26）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L314, C65）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L322, C13）：[syntax_check] Type 'null' is not assignable to type 'TruthValue'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -34,7 +75,26 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Term'.` @ L15
+- `[full_check] Cannot find name 'Term'.` @ L15
+- `[full_check] Cannot find name 'Term'.` @ L16
+- `[full_check] Cannot find name 'Term'.` @ L16
+- `[full_check] Cannot find name 'Term'.` @ L17
+- `[full_check] Cannot find name 'Term'.` @ L17
+- `[full_check] Cannot find name 'Texts'.` @ L275
+- `[full_check] Cannot find name 'Texts'.` @ L277
+- `[full_check] Cannot find name 'Term'.` @ L302
+- `[full_check] Cannot find name 'Term'.` @ L314
+- `[syntax_check] Cannot find name 'Term'.` @ L15
+- `[syntax_check] Cannot find name 'Term'.` @ L15
+- `[syntax_check] Cannot find name 'Term'.` @ L16
+- `[syntax_check] Cannot find name 'Term'.` @ L16
+- `[syntax_check] Cannot find name 'Term'.` @ L17
+- `[syntax_check] Cannot find name 'Term'.` @ L17
+- `[syntax_check] Cannot find name 'Texts'.` @ L275
+- `[syntax_check] Cannot find name 'Texts'.` @ L277
+- `[syntax_check] Cannot find name 'Term'.` @ L302
+- `[syntax_check] Cannot find name 'Term'.` @ L314
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -61,7 +121,7 @@
 
 ## 6. 一致性风险
 
-- 主要风险来自尚未补齐的 Java 语义与单元测试缺失。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 
 ## 7. 路线图定位
 

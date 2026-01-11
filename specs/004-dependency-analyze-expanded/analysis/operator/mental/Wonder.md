@@ -14,8 +14,41 @@
 
 - 执行的命令：`npx tsc src/operator/mental/Wonder.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L8, C29）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L21, C34）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L21, C51）：[full_check] Cannot find name 'Term'.
+  - TS2304（L21, C67）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L22, C15）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L22, C40）：[full_check] Cannot find name 'Task'.
+  - TS2304（L23, C22）：[full_check] Cannot find name 'Term'.
+  - TS2304（L25, C23）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L25, C38）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L27, C13）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L29, C17）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L31, C21）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L31, C39）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L34, C22）：[full_check] Cannot find name 'Task'.
+  - TS2304（L34, C33）：[full_check] Cannot find name 'Task'.
+  - TS2304（L34, C56）：[full_check] Cannot find name 'Task'.
+  - TS2304（L35, C16）：[full_check] Cannot find name 'Lists'.
+  - TS2304（L8, C29）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L21, C34）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L21, C51）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L21, C67）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L22, C15）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L22, C40）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L23, C22）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L25, C23）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L25, C38）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L27, C13）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L29, C17）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L31, C21）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L31, C39）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L34, C22）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L34, C33）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L34, C56）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L35, C16）：[syntax_check] Cannot find name 'Lists'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +64,40 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Operator'.` @ L8
+- `[full_check] Cannot find name 'Operation'.` @ L21
+- `[full_check] Cannot find name 'Term'.` @ L21
+- `[full_check] Cannot find name 'Memory'.` @ L21
+- `[full_check] Cannot find name 'Timable'.` @ L22
+- `[full_check] Cannot find name 'Task'.` @ L22
+- `[full_check] Cannot find name 'Term'.` @ L23
+- `[full_check] Cannot find name 'Sentence'.` @ L25
+- `[full_check] Cannot find name 'Sentence'.` @ L25
+- `[full_check] Cannot find name 'Symbols'.` @ L27
+- `[full_check] Cannot find name 'Stamp'.` @ L29
+- `[full_check] Cannot find name 'BudgetValue'.` @ L31
+- `[full_check] Cannot find name 'BudgetValue'.` @ L31
+- `[full_check] Cannot find name 'Task'.` @ L34
+- `[full_check] Cannot find name 'Task'.` @ L34
+- `[full_check] Cannot find name 'Task'.` @ L34
+- `[full_check] Cannot find name 'Lists'.` @ L35
+- `[syntax_check] Cannot find name 'Operator'.` @ L8
+- `[syntax_check] Cannot find name 'Operation'.` @ L21
+- `[syntax_check] Cannot find name 'Term'.` @ L21
+- `[syntax_check] Cannot find name 'Memory'.` @ L21
+- `[syntax_check] Cannot find name 'Timable'.` @ L22
+- `[syntax_check] Cannot find name 'Task'.` @ L22
+- `[syntax_check] Cannot find name 'Term'.` @ L23
+- `[syntax_check] Cannot find name 'Sentence'.` @ L25
+- `[syntax_check] Cannot find name 'Sentence'.` @ L25
+- `[syntax_check] Cannot find name 'Symbols'.` @ L27
+- `[syntax_check] Cannot find name 'Stamp'.` @ L29
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L31
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L31
+- `[syntax_check] Cannot find name 'Task'.` @ L34
+- `[syntax_check] Cannot find name 'Task'.` @ L34
+- `[syntax_check] Cannot find name 'Task'.` @ L34
+- `[syntax_check] Cannot find name 'Lists'.` @ L35
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -64,6 +130,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

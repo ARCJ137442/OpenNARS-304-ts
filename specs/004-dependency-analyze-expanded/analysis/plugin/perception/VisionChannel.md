@@ -14,8 +14,249 @@
 
 - 执行的命令：`npx tsc src/plugin/perception/VisionChannel.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L5, C36）：[full_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L14, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L15, C29）：[full_check] Cannot find name 'Nar'.
+  - TS2503（L18, C26）：[full_check] Cannot find namespace 'EventEmitter'.
+  - TS2304（L20, C54）：[full_check] Cannot find name 'Reasoner'.
+  - TS2304（L20, C81）：[full_check] Cannot find name 'Reasoner'.
+  - TS2304（L23, C22）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L23, C46）：[full_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L23, C87）：[full_check] Cannot find name 'SetInt'.
+  - TS2304（L23, C103）：[full_check] Cannot find name 'Term'.
+  - TS2304（L24, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L25, C22）：[full_check] Cannot find name 'SetInt'.
+  - TS2304（L25, C38）：[full_check] Cannot find name 'Term'.
+  - TS2304（L28, C51）：[full_check] Cannot find name 'Prototype'.
+  - TS2351（L29, C27）：[full_check] This expression is not constructable.
+  - TS2351（L30, C28）：[full_check] This expression is not constructable.
+  - TS7006（L31, C21）：[full_check] Parameter 'ev' implicitly has an 'any' type.
+  - TS7006（L31, C25）：[full_check] Parameter 'a' implicitly has an 'any' type.
+  - TS2304（L32, C44）：[full_check] Cannot find name 'CycleEnd'.
+  - TS2304（L37, C31）：[full_check] Cannot find name 'ResetEnd'.
+  - TS2304（L44, C26）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L45, C47）：[full_check] Cannot find name 'Events'.
+  - TS2304（L46, C47）：[full_check] Cannot find name 'Events'.
+  - TS2351（L51, C27）：[full_check] This expression is not constructable.
+  - TS2351（L52, C28）：[full_check] This expression is not constructable.
+  - TS2322（L57, C9）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L60, C15）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L63, C27）：[full_check] Cannot find name 'Task'.
+  - TS2304（L63, C39）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L64, C18）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L64, C47）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L65, C63）：[full_check] Cannot find name 'SetExt'.
+  - TS2351（L71, C32）：[full_check] This expression is not constructable.
+  - TS2304（L86, C37）：[full_check] Cannot find name 'height'.
+  - TS2304（L86, C46）：[full_check] Cannot find name 'width'.
+  - TS2304（L91, C24）：[full_check] Cannot find name 'Task'.
+  - TS2304（L91, C36）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L91, C46）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L100, C29）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L104, C16）：[full_check] Cannot find name 'Term'.
+  - TS2304（L106, C17）：[full_check] Cannot find name 'SetExt'.
+  - TS2304（L106, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L108, C17）：[full_check] Cannot find name 'SetExt'.
+  - TS2304（L108, C33）：[full_check] Cannot find name 'Term'.
+  - TS2365（L108, C38）：[full_check] Operator '+' cannot be applied to types 'JavaString' and 'number'.
+  - TS2351（L111, C39）：[full_check] This expression is not constructable.
+  - TS2304（L112, C34）：[full_check] Cannot find name 'height'.
+  - TS2304（L113, C38）：[full_check] Cannot find name 'width'.
+  - TS2351（L117, C28）：[full_check] This expression is not constructable.
+  - TS2351（L118, C27）：[full_check] This expression is not constructable.
+  - TS2322（L119, C9）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L120, C21）：[full_check] Cannot find name 'VisualSpace'.
+  - TS2304（L120, C39）：[full_check] Cannot find name 'VisualSpace'.
+  - TS2304（L120, C84）：[full_check] Cannot find name 'height'.
+  - TS2304（L120, C92）：[full_check] Cannot find name 'width'.
+  - TS2304（L123, C20）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L123, C49）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L123, C78）：[full_check] Cannot find name 'Tense'.
+  - TS2304（L123, C99）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L125, C16）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L125, C31）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L125, C40）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L126, C13）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L127, C17）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L131, C31）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L131, C49）：[full_check] Cannot find name 'BudgetValue'.
+  - TS2304（L133, C13）：[full_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L134, C22）：[full_check] Cannot find name 'Task'.
+  - TS2304（L134, C33）：[full_check] Cannot find name 'Task'.
+  - TS2304（L134, C59）：[full_check] Cannot find name 'Task'.
+  - TS2339（L137, C18）：[full_check] Property 'results' does not exist on type 'VisionChannel'.
+  - TS2339（L138, C18）：[full_check] Property 'step_finished' does not exist on type 'VisionChannel'.
+  - TS2663（L142, C41）：[full_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?
+  - TS2339（L143, C22）：[full_check] Property 'results' does not exist on type 'VisionChannel'.
+  - TS2339（L144, C22）：[full_check] Property 'step_finished' does not exist on type 'VisionChannel'.
+  - TS2304（L148, C32）：[full_check] Cannot find name 'TruthValue'.
+  - TS2322（L149, C21）：[full_check] Type 'null' is not assignable to type 'Prototype'.
+  - TS2304（L151, C30）：[full_check] Cannot find name 'Inheritance'.
+  - TS2445（L151, C46）：[full_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2304（L151, C64）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L152, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2663（L173, C62）：[full_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?
+  - TS2663（L177, C49）：[full_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?
+  - TS2304（L185, C36）：[full_check] Cannot find name 'VisualSpace'.
+  - TS2445（L185, C70）：[full_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2304（L185, C88）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L186, C54）：[full_check] Cannot find name 'VisualSpace'.
+  - TS2304（L189, C35）：[full_check] Cannot find name 'VisualSpace'.
+  - TS2445（L189, C55）：[full_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2304（L189, C73）：[full_check] Cannot find name 'Inheritance'.
+  - TS2304（L189, C114）：[full_check] Cannot find name 'VisualSpace'.
+  - TS2322（L196, C25）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L197, C25）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L201, C25）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L207, C25）：[full_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2339（L210, C51）：[full_check] Property 'width' does not exist on type 'VisionChannel'.
+  - TS2339（L211, C51）：[full_check] Property 'height' does not exist on type 'VisionChannel'.
+  - TS2304（L216, C36）：[full_check] Cannot find name 'Task'.
+  - TS2304（L216, C47）：[full_check] Cannot find name 'Narsese'.
+  - TS2304（L216, C103）：[full_check] Cannot find name 'Texts'.
+  - TS2304（L217, C40）：[full_check] Cannot find name 'Texts'.
+  - TS2339（L219, C30）：[full_check] Property 'results' does not exist on type 'VisionChannel'.
+  - TS2339（L220, C30）：[full_check] Property 'step_finished' does not exist on type 'VisionChannel'.
+  - TS2304（L226, C41）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L229, C43）：[full_check] Cannot find name 'Narsese'.
+  - TS2339（L230, C46）：[full_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2339（L230, C77）：[full_check] Property 'class' does not exist on type 'typeof VisionChannel'.
+  - TS2339（L230, C115）：[full_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2304（L241, C35）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L241, C50）：[full_check] Cannot find name 'Sentence'.
+  - TS2445（L241, C64）：[full_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2445（L242, C26）：[full_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2304（L245, C31）：[full_check] Cannot find name 'Task'.
+  - TS2304（L245, C42）：[full_check] Cannot find name 'Task'.
+  - TS2445（L245, C66）：[full_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2304（L245, C87）：[full_check] Cannot find name 'Task'.
+  - TS2339（L247, C22）：[full_check] Property 'results' does not exist on type 'VisionChannel'.
+  - TS2339（L248, C22）：[full_check] Property 'step_finished' does not exist on type 'VisionChannel'.
+  - TS2322（L256, C15）：[full_check] Type 'null' is not assignable to type 'Prototype'.
+  - TS2304（L266, C29）：[full_check] Cannot find name 'Task'.
+  - TS2304（L268, C35）：[full_check] Cannot find name 'Task'.
+  - TS2304（L5, C36）：[syntax_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L14, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L15, C29）：[syntax_check] Cannot find name 'Nar'.
+  - TS2503（L18, C26）：[syntax_check] Cannot find namespace 'EventEmitter'.
+  - TS2304（L20, C54）：[syntax_check] Cannot find name 'Reasoner'.
+  - TS2304（L20, C81）：[syntax_check] Cannot find name 'Reasoner'.
+  - TS2304（L23, C22）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L23, C46）：[syntax_check] Cannot find name 'SensoryChannel'.
+  - TS2304（L23, C87）：[syntax_check] Cannot find name 'SetInt'.
+  - TS2304（L23, C103）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L24, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L25, C22）：[syntax_check] Cannot find name 'SetInt'.
+  - TS2304（L25, C38）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L28, C51）：[syntax_check] Cannot find name 'Prototype'.
+  - TS2351（L29, C27）：[syntax_check] This expression is not constructable.
+  - TS2351（L30, C28）：[syntax_check] This expression is not constructable.
+  - TS7006（L31, C21）：[syntax_check] Parameter 'ev' implicitly has an 'any' type.
+  - TS7006（L31, C25）：[syntax_check] Parameter 'a' implicitly has an 'any' type.
+  - TS2304（L32, C44）：[syntax_check] Cannot find name 'CycleEnd'.
+  - TS2304（L37, C31）：[syntax_check] Cannot find name 'ResetEnd'.
+  - TS2304（L44, C26）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L45, C47）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L46, C47）：[syntax_check] Cannot find name 'Events'.
+  - TS2351（L51, C27）：[syntax_check] This expression is not constructable.
+  - TS2351（L52, C28）：[syntax_check] This expression is not constructable.
+  - TS2322（L57, C9）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L60, C15）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L63, C27）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L63, C39）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L64, C18）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L64, C47）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L65, C63）：[syntax_check] Cannot find name 'SetExt'.
+  - TS2351（L71, C32）：[syntax_check] This expression is not constructable.
+  - TS2304（L86, C37）：[syntax_check] Cannot find name 'height'.
+  - TS2304（L86, C46）：[syntax_check] Cannot find name 'width'.
+  - TS2304（L91, C24）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L91, C36）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L91, C46）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L100, C29）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L104, C16）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L106, C17）：[syntax_check] Cannot find name 'SetExt'.
+  - TS2304（L106, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L108, C17）：[syntax_check] Cannot find name 'SetExt'.
+  - TS2304（L108, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2365（L108, C38）：[syntax_check] Operator '+' cannot be applied to types 'JavaString' and 'number'.
+  - TS2351（L111, C39）：[syntax_check] This expression is not constructable.
+  - TS2304（L112, C34）：[syntax_check] Cannot find name 'height'.
+  - TS2304（L113, C38）：[syntax_check] Cannot find name 'width'.
+  - TS2351（L117, C28）：[syntax_check] This expression is not constructable.
+  - TS2351（L118, C27）：[syntax_check] This expression is not constructable.
+  - TS2322（L119, C9）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2304（L120, C21）：[syntax_check] Cannot find name 'VisualSpace'.
+  - TS2304（L120, C39）：[syntax_check] Cannot find name 'VisualSpace'.
+  - TS2304（L120, C84）：[syntax_check] Cannot find name 'height'.
+  - TS2304（L120, C92）：[syntax_check] Cannot find name 'width'.
+  - TS2304（L123, C20）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L123, C49）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L123, C78）：[syntax_check] Cannot find name 'Tense'.
+  - TS2304（L123, C99）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L125, C16）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L125, C31）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L125, C40）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L126, C13）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L127, C17）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L131, C31）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L131, C49）：[syntax_check] Cannot find name 'BudgetValue'.
+  - TS2304（L133, C13）：[syntax_check] Cannot find name 'BudgetFunctions'.
+  - TS2304（L134, C22）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L134, C33）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L134, C59）：[syntax_check] Cannot find name 'Task'.
+  - TS2339（L137, C18）：[syntax_check] Property 'results' does not exist on type 'VisionChannel'.
+  - TS2339（L138, C18）：[syntax_check] Property 'step_finished' does not exist on type 'VisionChannel'.
+  - TS2663（L142, C41）：[syntax_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?
+  - TS2339（L143, C22）：[syntax_check] Property 'results' does not exist on type 'VisionChannel'.
+  - TS2339（L144, C22）：[syntax_check] Property 'step_finished' does not exist on type 'VisionChannel'.
+  - TS2304（L148, C32）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2322（L149, C21）：[syntax_check] Type 'null' is not assignable to type 'Prototype'.
+  - TS2304（L151, C30）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2445（L151, C46）：[syntax_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2304（L151, C64）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L152, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2663（L173, C62）：[syntax_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?
+  - TS2663（L177, C49）：[syntax_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?
+  - TS2304（L185, C36）：[syntax_check] Cannot find name 'VisualSpace'.
+  - TS2445（L185, C70）：[syntax_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2304（L185, C88）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L186, C54）：[syntax_check] Cannot find name 'VisualSpace'.
+  - TS2304（L189, C35）：[syntax_check] Cannot find name 'VisualSpace'.
+  - TS2445（L189, C55）：[syntax_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2304（L189, C73）：[syntax_check] Cannot find name 'Inheritance'.
+  - TS2304（L189, C114）：[syntax_check] Cannot find name 'VisualSpace'.
+  - TS2322（L196, C25）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L197, C25）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L201, C25）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2322（L207, C25）：[syntax_check] Type 'string' is not assignable to type 'JavaString'.
+  - TS2339（L210, C51）：[syntax_check] Property 'width' does not exist on type 'VisionChannel'.
+  - TS2339（L211, C51）：[syntax_check] Property 'height' does not exist on type 'VisionChannel'.
+  - TS2304（L216, C36）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L216, C47）：[syntax_check] Cannot find name 'Narsese'.
+  - TS2304（L216, C103）：[syntax_check] Cannot find name 'Texts'.
+  - TS2304（L217, C40）：[syntax_check] Cannot find name 'Texts'.
+  - TS2339（L219, C30）：[syntax_check] Property 'results' does not exist on type 'VisionChannel'.
+  - TS2339（L220, C30）：[syntax_check] Property 'step_finished' does not exist on type 'VisionChannel'.
+  - TS2304（L226, C41）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L229, C43）：[syntax_check] Cannot find name 'Narsese'.
+  - TS2339（L230, C46）：[syntax_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2339（L230, C77）：[syntax_check] Property 'class' does not exist on type 'typeof VisionChannel'.
+  - TS2339（L230, C115）：[syntax_check] Property 'Logger' does not exist on type 'typeof System'.
+  - TS2304（L241, C35）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L241, C50）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2445（L241, C64）：[syntax_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2445（L242, C26）：[syntax_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2304（L245, C31）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L245, C42）：[syntax_check] Cannot find name 'Task'.
+  - TS2445（L245, C66）：[syntax_check] Property 'task' is protected and only accessible within class 'Prototype' and its subclasses.
+  - TS2304（L245, C87）：[syntax_check] Cannot find name 'Task'.
+  - TS2339（L247, C22）：[syntax_check] Property 'results' does not exist on type 'VisionChannel'.
+  - TS2339（L248, C22）：[syntax_check] Property 'step_finished' does not exist on type 'VisionChannel'.
+  - TS2322（L256, C15）：[syntax_check] Type 'null' is not assignable to type 'Prototype'.
+  - TS2304（L266, C29）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L268, C35）：[syntax_check] Cannot find name 'Task'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +272,170 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'SensoryChannel'.` @ L5
+- `[full_check] Cannot find name 'Term'.` @ L14
+- `[full_check] Cannot find name 'Nar'.` @ L15
+- `[full_check] Cannot find namespace 'EventEmitter'.` @ L18
+- `[full_check] Cannot find name 'Reasoner'.` @ L20
+- `[full_check] Cannot find name 'Reasoner'.` @ L20
+- `[full_check] Cannot find name 'Nar'.` @ L23
+- `[full_check] Cannot find name 'SensoryChannel'.` @ L23
+- `[full_check] Cannot find name 'SetInt'.` @ L23
+- `[full_check] Cannot find name 'Term'.` @ L23
+- `[full_check] Cannot find name 'Nar'.` @ L24
+- `[full_check] Cannot find name 'SetInt'.` @ L25
+- `[full_check] Cannot find name 'Term'.` @ L25
+- `[full_check] Cannot find name 'Prototype'.` @ L28
+- `[full_check] Cannot find name 'CycleEnd'.` @ L32
+- `[full_check] Cannot find name 'ResetEnd'.` @ L37
+- `[full_check] Cannot find name 'Nar'.` @ L44
+- `[full_check] Cannot find name 'Events'.` @ L45
+- `[full_check] Cannot find name 'Events'.` @ L46
+- `[full_check] Cannot find name 'Task'.` @ L63
+- `[full_check] Cannot find name 'Timable'.` @ L63
+- `[full_check] Cannot find name 'Inheritance'.` @ L64
+- `[full_check] Cannot find name 'Inheritance'.` @ L64
+- `[full_check] Cannot find name 'SetExt'.` @ L65
+- `[full_check] Cannot find name 'height'.` @ L86
+- `[full_check] Cannot find name 'width'.` @ L86
+- `[full_check] Cannot find name 'Task'.` @ L91
+- `[full_check] Cannot find name 'Timable'.` @ L91
+- `[full_check] Cannot find name 'Nar'.` @ L91
+- `[full_check] Cannot find name 'Timable'.` @ L100
+- `[full_check] Cannot find name 'Term'.` @ L104
+- `[full_check] Cannot find name 'SetExt'.` @ L106
+- `[full_check] Cannot find name 'Term'.` @ L106
+- `[full_check] Cannot find name 'SetExt'.` @ L108
+- `[full_check] Cannot find name 'Term'.` @ L108
+- `[full_check] Cannot find name 'height'.` @ L112
+- `[full_check] Cannot find name 'width'.` @ L113
+- `[full_check] Cannot find name 'VisualSpace'.` @ L120
+- `[full_check] Cannot find name 'VisualSpace'.` @ L120
+- `[full_check] Cannot find name 'height'.` @ L120
+- `[full_check] Cannot find name 'width'.` @ L120
+- `[full_check] Cannot find name 'Stamp'.` @ L123
+- `[full_check] Cannot find name 'Stamp'.` @ L123
+- `[full_check] Cannot find name 'Tense'.` @ L123
+- `[full_check] Cannot find name 'Stamp'.` @ L123
+- `[full_check] Cannot find name 'Sentence'.` @ L125
+- `[full_check] Cannot find name 'Sentence'.` @ L125
+- `[full_check] Cannot find name 'Inheritance'.` @ L125
+- `[full_check] Cannot find name 'Symbols'.` @ L126
+- `[full_check] Cannot find name 'TruthValue'.` @ L127
+- `[full_check] Cannot find name 'BudgetValue'.` @ L131
+- `[full_check] Cannot find name 'BudgetValue'.` @ L131
+- `[full_check] Cannot find name 'BudgetFunctions'.` @ L133
+- `[full_check] Cannot find name 'Task'.` @ L134
+- `[full_check] Cannot find name 'Task'.` @ L134
+- `[full_check] Cannot find name 'Task'.` @ L134
+- `[full_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?` @ L142
+- `[full_check] Cannot find name 'TruthValue'.` @ L148
+- `[full_check] Cannot find name 'Inheritance'.` @ L151
+- `[full_check] Cannot find name 'Inheritance'.` @ L151
+- `[full_check] Cannot find name 'TruthValue'.` @ L152
+- `[full_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?` @ L173
+- `[full_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?` @ L177
+- `[full_check] Cannot find name 'VisualSpace'.` @ L185
+- `[full_check] Cannot find name 'Inheritance'.` @ L185
+- `[full_check] Cannot find name 'VisualSpace'.` @ L186
+- `[full_check] Cannot find name 'VisualSpace'.` @ L189
+- `[full_check] Cannot find name 'Inheritance'.` @ L189
+- `[full_check] Cannot find name 'VisualSpace'.` @ L189
+- `[full_check] Cannot find name 'Task'.` @ L216
+- `[full_check] Cannot find name 'Narsese'.` @ L216
+- `[full_check] Cannot find name 'Texts'.` @ L216
+- `[full_check] Cannot find name 'Texts'.` @ L217
+- `[full_check] Cannot find name 'Stamp'.` @ L226
+- `[full_check] Cannot find name 'Narsese'.` @ L229
+- `[full_check] Cannot find name 'Sentence'.` @ L241
+- `[full_check] Cannot find name 'Sentence'.` @ L241
+- `[full_check] Cannot find name 'Task'.` @ L245
+- `[full_check] Cannot find name 'Task'.` @ L245
+- `[full_check] Cannot find name 'Task'.` @ L245
+- `[full_check] Cannot find name 'Task'.` @ L266
+- `[full_check] Cannot find name 'Task'.` @ L268
+- `[syntax_check] Cannot find name 'SensoryChannel'.` @ L5
+- `[syntax_check] Cannot find name 'Term'.` @ L14
+- `[syntax_check] Cannot find name 'Nar'.` @ L15
+- `[syntax_check] Cannot find namespace 'EventEmitter'.` @ L18
+- `[syntax_check] Cannot find name 'Reasoner'.` @ L20
+- `[syntax_check] Cannot find name 'Reasoner'.` @ L20
+- `[syntax_check] Cannot find name 'Nar'.` @ L23
+- `[syntax_check] Cannot find name 'SensoryChannel'.` @ L23
+- `[syntax_check] Cannot find name 'SetInt'.` @ L23
+- `[syntax_check] Cannot find name 'Term'.` @ L23
+- `[syntax_check] Cannot find name 'Nar'.` @ L24
+- `[syntax_check] Cannot find name 'SetInt'.` @ L25
+- `[syntax_check] Cannot find name 'Term'.` @ L25
+- `[syntax_check] Cannot find name 'Prototype'.` @ L28
+- `[syntax_check] Cannot find name 'CycleEnd'.` @ L32
+- `[syntax_check] Cannot find name 'ResetEnd'.` @ L37
+- `[syntax_check] Cannot find name 'Nar'.` @ L44
+- `[syntax_check] Cannot find name 'Events'.` @ L45
+- `[syntax_check] Cannot find name 'Events'.` @ L46
+- `[syntax_check] Cannot find name 'Task'.` @ L63
+- `[syntax_check] Cannot find name 'Timable'.` @ L63
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L64
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L64
+- `[syntax_check] Cannot find name 'SetExt'.` @ L65
+- `[syntax_check] Cannot find name 'height'.` @ L86
+- `[syntax_check] Cannot find name 'width'.` @ L86
+- `[syntax_check] Cannot find name 'Task'.` @ L91
+- `[syntax_check] Cannot find name 'Timable'.` @ L91
+- `[syntax_check] Cannot find name 'Nar'.` @ L91
+- `[syntax_check] Cannot find name 'Timable'.` @ L100
+- `[syntax_check] Cannot find name 'Term'.` @ L104
+- `[syntax_check] Cannot find name 'SetExt'.` @ L106
+- `[syntax_check] Cannot find name 'Term'.` @ L106
+- `[syntax_check] Cannot find name 'SetExt'.` @ L108
+- `[syntax_check] Cannot find name 'Term'.` @ L108
+- `[syntax_check] Cannot find name 'height'.` @ L112
+- `[syntax_check] Cannot find name 'width'.` @ L113
+- `[syntax_check] Cannot find name 'VisualSpace'.` @ L120
+- `[syntax_check] Cannot find name 'VisualSpace'.` @ L120
+- `[syntax_check] Cannot find name 'height'.` @ L120
+- `[syntax_check] Cannot find name 'width'.` @ L120
+- `[syntax_check] Cannot find name 'Stamp'.` @ L123
+- `[syntax_check] Cannot find name 'Stamp'.` @ L123
+- `[syntax_check] Cannot find name 'Tense'.` @ L123
+- `[syntax_check] Cannot find name 'Stamp'.` @ L123
+- `[syntax_check] Cannot find name 'Sentence'.` @ L125
+- `[syntax_check] Cannot find name 'Sentence'.` @ L125
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L125
+- `[syntax_check] Cannot find name 'Symbols'.` @ L126
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L127
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L131
+- `[syntax_check] Cannot find name 'BudgetValue'.` @ L131
+- `[syntax_check] Cannot find name 'BudgetFunctions'.` @ L133
+- `[syntax_check] Cannot find name 'Task'.` @ L134
+- `[syntax_check] Cannot find name 'Task'.` @ L134
+- `[syntax_check] Cannot find name 'Task'.` @ L134
+- `[syntax_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?` @ L142
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L148
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L151
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L151
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L152
+- `[syntax_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?` @ L173
+- `[syntax_check] Cannot find name 'Prototype'. Did you mean the instance member 'this.Prototype'?` @ L177
+- `[syntax_check] Cannot find name 'VisualSpace'.` @ L185
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L185
+- `[syntax_check] Cannot find name 'VisualSpace'.` @ L186
+- `[syntax_check] Cannot find name 'VisualSpace'.` @ L189
+- `[syntax_check] Cannot find name 'Inheritance'.` @ L189
+- `[syntax_check] Cannot find name 'VisualSpace'.` @ L189
+- `[syntax_check] Cannot find name 'Task'.` @ L216
+- `[syntax_check] Cannot find name 'Narsese'.` @ L216
+- `[syntax_check] Cannot find name 'Texts'.` @ L216
+- `[syntax_check] Cannot find name 'Texts'.` @ L217
+- `[syntax_check] Cannot find name 'Stamp'.` @ L226
+- `[syntax_check] Cannot find name 'Narsese'.` @ L229
+- `[syntax_check] Cannot find name 'Sentence'.` @ L241
+- `[syntax_check] Cannot find name 'Sentence'.` @ L241
+- `[syntax_check] Cannot find name 'Task'.` @ L245
+- `[syntax_check] Cannot find name 'Task'.` @ L245
+- `[syntax_check] Cannot find name 'Task'.` @ L245
+- `[syntax_check] Cannot find name 'Task'.` @ L266
+- `[syntax_check] Cannot find name 'Task'.` @ L268
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -79,6 +483,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

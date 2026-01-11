@@ -14,8 +14,25 @@
 
 - 执行的命令：`npx tsc src/operator/misc/Add.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L8, C26）：[full_check] Cannot find name 'FunctionOperator'.
+  - TS2304（L14, C32）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L14, C43）：[full_check] Cannot find name 'Term'.
+  - TS2304（L14, C52）：[full_check] Cannot find name 'Term'.
+  - TS2304（L22, C13）：[full_check] Cannot find name 'StringUtils'.
+  - TS2304（L28, C13）：[full_check] Cannot find name 'StringUtils'.
+  - TS2304（L34, C20）：[full_check] Cannot find name 'Term'.
+  - TS2304（L37, C27）：[full_check] Cannot find name 'Term'.
+  - TS2304（L38, C16）：[full_check] Cannot find name 'Term'.
+  - TS2304（L8, C26）：[syntax_check] Cannot find name 'FunctionOperator'.
+  - TS2304（L14, C32）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L14, C43）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L14, C52）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L22, C13）：[syntax_check] Cannot find name 'StringUtils'.
+  - TS2304（L28, C13）：[syntax_check] Cannot find name 'StringUtils'.
+  - TS2304（L34, C20）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L37, C27）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L38, C16）：[syntax_check] Cannot find name 'Term'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +48,24 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'FunctionOperator'.` @ L8
+- `[full_check] Cannot find name 'Memory'.` @ L14
+- `[full_check] Cannot find name 'Term'.` @ L14
+- `[full_check] Cannot find name 'Term'.` @ L14
+- `[full_check] Cannot find name 'StringUtils'.` @ L22
+- `[full_check] Cannot find name 'StringUtils'.` @ L28
+- `[full_check] Cannot find name 'Term'.` @ L34
+- `[full_check] Cannot find name 'Term'.` @ L37
+- `[full_check] Cannot find name 'Term'.` @ L38
+- `[syntax_check] Cannot find name 'FunctionOperator'.` @ L8
+- `[syntax_check] Cannot find name 'Memory'.` @ L14
+- `[syntax_check] Cannot find name 'Term'.` @ L14
+- `[syntax_check] Cannot find name 'Term'.` @ L14
+- `[syntax_check] Cannot find name 'StringUtils'.` @ L22
+- `[syntax_check] Cannot find name 'StringUtils'.` @ L28
+- `[syntax_check] Cannot find name 'Term'.` @ L34
+- `[syntax_check] Cannot find name 'Term'.` @ L37
+- `[syntax_check] Cannot find name 'Term'.` @ L38
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -56,6 +90,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

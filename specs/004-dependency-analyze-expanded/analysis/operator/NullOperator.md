@@ -14,8 +14,29 @@
 
 - 执行的命令：`npx tsc src/operator/NullOperator.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L8, C35）：[full_check] Cannot find name 'Operator'.
+  - TS2349（L17, C17）：[full_check] This expression is not callable.
+  - TS17009（L17, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L41, C34）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L41, C51）：[full_check] Cannot find name 'Term'.
+  - TS2304（L41, C67）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L42, C15）：[full_check] Cannot find name 'Timable'.
+  - TS2304（L42, C40）：[full_check] Cannot find name 'Task'.
+  - TS2304（L43, C13）：[full_check] Cannot find name 'Debug'.
+  - TS2339（L44, C42）：[full_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2322（L46, C9）：[full_check] Type 'null' is not assignable to type 'List<Task>'.
+  - TS2304（L8, C35）：[syntax_check] Cannot find name 'Operator'.
+  - TS2349（L17, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L17, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L41, C34）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L41, C51）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L41, C67）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L42, C15）：[syntax_check] Cannot find name 'Timable'.
+  - TS2304（L42, C40）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L43, C13）：[syntax_check] Cannot find name 'Debug'.
+  - TS2339（L44, C42）：[syntax_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2322（L46, C9）：[syntax_check] Type 'null' is not assignable to type 'List<Task>'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +52,20 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Operator'.` @ L8
+- `[full_check] Cannot find name 'Operation'.` @ L41
+- `[full_check] Cannot find name 'Term'.` @ L41
+- `[full_check] Cannot find name 'Memory'.` @ L41
+- `[full_check] Cannot find name 'Timable'.` @ L42
+- `[full_check] Cannot find name 'Task'.` @ L42
+- `[full_check] Cannot find name 'Debug'.` @ L43
+- `[syntax_check] Cannot find name 'Operator'.` @ L8
+- `[syntax_check] Cannot find name 'Operation'.` @ L41
+- `[syntax_check] Cannot find name 'Term'.` @ L41
+- `[syntax_check] Cannot find name 'Memory'.` @ L41
+- `[syntax_check] Cannot find name 'Timable'.` @ L42
+- `[syntax_check] Cannot find name 'Task'.` @ L42
+- `[syntax_check] Cannot find name 'Debug'.` @ L43
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -60,6 +94,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

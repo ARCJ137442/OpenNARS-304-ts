@@ -14,8 +14,137 @@
 
 - 执行的命令：`npx tsc src/control/concept/ProcessJudgment.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L18, C44）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L18, C58）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L18, C83）：[full_check] Cannot find name 'Task'.
+  - TS2304（L20, C19）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L21, C9）：[full_check] Cannot find name 'ProcessAnticipation'.
+  - TS2304（L22, C25）：[full_check] Cannot find name 'Task'.
+  - TS2304（L25, C24）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L28, C27）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L29, C27）：[full_check] Cannot find name 'Stamp'.
+  - TS2304（L33, C24）：[full_check] Cannot find name 'revisable'.
+  - TS2304（L35, C38）：[full_check] Cannot find name 'Sentence'.
+  - TS2304（L39, C21）：[full_check] Cannot find name 'revision'.
+  - TS2304（L48, C13）：[full_check] Cannot find name 'trySolution'.
+  - TS2304（L52, C13）：[full_check] Cannot find name 'trySolution'.
+  - TS2304（L55, C13）：[full_check] Cannot find name 'Events'.
+  - TS2304（L55, C44）：[full_check] Cannot find name 'Events'.
+  - TS2304（L69, C49）：[full_check] Cannot find name 'Task'.
+  - TS2304（L69, C60）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L70, C91）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L71, C21）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L71, C55）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L72, C20）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L72, C52）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L75, C32）：[full_check] Cannot find name 'Believe'.
+  - TS2304（L75, C59）：[full_check] Cannot find name 'Want'.
+  - TS2304（L75, C83）：[full_check] Cannot find name 'Wonder'.
+  - TS2304（L76, C35）：[full_check] Cannot find name 'Evaluate'.
+  - TS2304（L76, C63）：[full_check] Cannot find name 'Anticipate'.
+  - TS2304（L77, C17）：[full_check] Cannot find name 'TemporalInferenceControl'.
+  - TS2304（L90, C51）：[full_check] Cannot find name 'Task'.
+  - TS2304（L90, C62）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L91, C19）：[full_check] Cannot find name 'Term'.
+  - TS2304（L93, C31）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L96, C18）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L96, C40）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L97, C40）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L102, C19）：[full_check] Cannot find name 'Term'.
+  - TS2304（L103, C31）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L106, C19）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L106, C41）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L108, C41）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L110, C56）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L111, C56）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L121, C61）：[full_check] Cannot find name 'Task'.
+  - TS2304（L121, C72）：[full_check] Cannot find name 'DerivationContext'.
+  - TS2304（L122, C36）：[full_check] Cannot find name 'Term'.
+  - TS2304（L124, C33）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L125, C44）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L127, C36）：[full_check] Cannot find name 'Term'.
+  - TS2304（L127, C82）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L133, C29）：[full_check] Cannot find name 'Concept'.
+  - TS2322（L138, C13）：[full_check] Type 'null' is not assignable to type 'Optional<Task>'.
+  - TS2304（L138, C50）：[full_check] Cannot find name 'Task'.
+  - TS2304（L140, C28）：[full_check] Cannot find name 'tryFind'.
+  - TS7006（L140, C60）：[full_check] Parameter 'iTask' implicitly has an 'any' type.
+  - TS2304（L145, C19）：[full_check] Cannot find name 'Term'.
+  - TS2304（L145, C66）：[full_check] Cannot find name 'Implication'.
+  - TS2304（L145, C95）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L147, C36）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L152, C33）：[full_check] Cannot find name 'Concept'.
+  - TS2304（L158, C39）：[full_check] Cannot find name 'Task'.
+  - TS2304（L164, C21）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L165, C21）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L176, C74）：[full_check] Cannot find name 'Events'.
+  - TS2304（L177, C17）：[full_check] Cannot find name 'Events'.
+  - TS2304（L18, C44）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L18, C58）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L18, C83）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L20, C19）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L21, C9）：[syntax_check] Cannot find name 'ProcessAnticipation'.
+  - TS2304（L22, C25）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L25, C24）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L28, C27）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L29, C27）：[syntax_check] Cannot find name 'Stamp'.
+  - TS2304（L33, C24）：[syntax_check] Cannot find name 'revisable'.
+  - TS2304（L35, C38）：[syntax_check] Cannot find name 'Sentence'.
+  - TS2304（L39, C21）：[syntax_check] Cannot find name 'revision'.
+  - TS2304（L48, C13）：[syntax_check] Cannot find name 'trySolution'.
+  - TS2304（L52, C13）：[syntax_check] Cannot find name 'trySolution'.
+  - TS2304（L55, C13）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L55, C44）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L69, C49）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L69, C60）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L70, C91）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L71, C21）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L71, C55）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L72, C20）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L72, C52）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L75, C32）：[syntax_check] Cannot find name 'Believe'.
+  - TS2304（L75, C59）：[syntax_check] Cannot find name 'Want'.
+  - TS2304（L75, C83）：[syntax_check] Cannot find name 'Wonder'.
+  - TS2304（L76, C35）：[syntax_check] Cannot find name 'Evaluate'.
+  - TS2304（L76, C63）：[syntax_check] Cannot find name 'Anticipate'.
+  - TS2304（L77, C17）：[syntax_check] Cannot find name 'TemporalInferenceControl'.
+  - TS2304（L90, C51）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L90, C62）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L91, C19）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L93, C31）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L96, C18）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L96, C40）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L97, C40）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L102, C19）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L103, C31）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L106, C19）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L106, C41）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L108, C41）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L110, C56）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L111, C56）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L121, C61）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L121, C72）：[syntax_check] Cannot find name 'DerivationContext'.
+  - TS2304（L122, C36）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L124, C33）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L125, C44）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L127, C36）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L127, C82）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L133, C29）：[syntax_check] Cannot find name 'Concept'.
+  - TS2322（L138, C13）：[syntax_check] Type 'null' is not assignable to type 'Optional<Task>'.
+  - TS2304（L138, C50）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L140, C28）：[syntax_check] Cannot find name 'tryFind'.
+  - TS7006（L140, C60）：[syntax_check] Parameter 'iTask' implicitly has an 'any' type.
+  - TS2304（L145, C19）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L145, C66）：[syntax_check] Cannot find name 'Implication'.
+  - TS2304（L145, C95）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L147, C36）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L152, C33）：[syntax_check] Cannot find name 'Concept'.
+  - TS2304（L158, C39）：[syntax_check] Cannot find name 'Task'.
+  - TS2304（L164, C21）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L165, C21）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L176, C74）：[syntax_check] Cannot find name 'Events'.
+  - TS2304（L177, C17）：[syntax_check] Cannot find name 'Events'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +160,132 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Concept'.` @ L18
+- `[full_check] Cannot find name 'DerivationContext'.` @ L18
+- `[full_check] Cannot find name 'Task'.` @ L18
+- `[full_check] Cannot find name 'Sentence'.` @ L20
+- `[full_check] Cannot find name 'ProcessAnticipation'.` @ L21
+- `[full_check] Cannot find name 'Task'.` @ L22
+- `[full_check] Cannot find name 'Sentence'.` @ L25
+- `[full_check] Cannot find name 'Stamp'.` @ L28
+- `[full_check] Cannot find name 'Stamp'.` @ L29
+- `[full_check] Cannot find name 'revisable'.` @ L33
+- `[full_check] Cannot find name 'Sentence'.` @ L35
+- `[full_check] Cannot find name 'revision'.` @ L39
+- `[full_check] Cannot find name 'trySolution'.` @ L48
+- `[full_check] Cannot find name 'trySolution'.` @ L52
+- `[full_check] Cannot find name 'Events'.` @ L55
+- `[full_check] Cannot find name 'Events'.` @ L55
+- `[full_check] Cannot find name 'Task'.` @ L69
+- `[full_check] Cannot find name 'DerivationContext'.` @ L69
+- `[full_check] Cannot find name 'Operation'.` @ L70
+- `[full_check] Cannot find name 'Operation'.` @ L71
+- `[full_check] Cannot find name 'Operation'.` @ L71
+- `[full_check] Cannot find name 'Operator'.` @ L72
+- `[full_check] Cannot find name 'Operator'.` @ L72
+- `[full_check] Cannot find name 'Believe'.` @ L75
+- `[full_check] Cannot find name 'Want'.` @ L75
+- `[full_check] Cannot find name 'Wonder'.` @ L75
+- `[full_check] Cannot find name 'Evaluate'.` @ L76
+- `[full_check] Cannot find name 'Anticipate'.` @ L76
+- `[full_check] Cannot find name 'TemporalInferenceControl'.` @ L77
+- `[full_check] Cannot find name 'Task'.` @ L90
+- `[full_check] Cannot find name 'DerivationContext'.` @ L90
+- `[full_check] Cannot find name 'Term'.` @ L91
+- `[full_check] Cannot find name 'Implication'.` @ L93
+- `[full_check] Cannot find name 'Implication'.` @ L96
+- `[full_check] Cannot find name 'Implication'.` @ L96
+- `[full_check] Cannot find name 'TemporalRules'.` @ L97
+- `[full_check] Cannot find name 'Term'.` @ L102
+- `[full_check] Cannot find name 'Conjunction'.` @ L103
+- `[full_check] Cannot find name 'Conjunction'.` @ L106
+- `[full_check] Cannot find name 'Conjunction'.` @ L106
+- `[full_check] Cannot find name 'TemporalRules'.` @ L108
+- `[full_check] Cannot find name 'Interval'.` @ L110
+- `[full_check] Cannot find name 'Operation'.` @ L111
+- `[full_check] Cannot find name 'Task'.` @ L121
+- `[full_check] Cannot find name 'DerivationContext'.` @ L121
+- `[full_check] Cannot find name 'Term'.` @ L122
+- `[full_check] Cannot find name 'Implication'.` @ L124
+- `[full_check] Cannot find name 'Implication'.` @ L125
+- `[full_check] Cannot find name 'Term'.` @ L127
+- `[full_check] Cannot find name 'Implication'.` @ L127
+- `[full_check] Cannot find name 'Concept'.` @ L133
+- `[full_check] Cannot find name 'Task'.` @ L138
+- `[full_check] Cannot find name 'tryFind'.` @ L140
+- `[full_check] Cannot find name 'Term'.` @ L145
+- `[full_check] Cannot find name 'Implication'.` @ L145
+- `[full_check] Cannot find name 'Conjunction'.` @ L145
+- `[full_check] Cannot find name 'Operation'.` @ L147
+- `[full_check] Cannot find name 'Concept'.` @ L152
+- `[full_check] Cannot find name 'Task'.` @ L158
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L164
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L165
+- `[full_check] Cannot find name 'Events'.` @ L176
+- `[full_check] Cannot find name 'Events'.` @ L177
+- `[syntax_check] Cannot find name 'Concept'.` @ L18
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L18
+- `[syntax_check] Cannot find name 'Task'.` @ L18
+- `[syntax_check] Cannot find name 'Sentence'.` @ L20
+- `[syntax_check] Cannot find name 'ProcessAnticipation'.` @ L21
+- `[syntax_check] Cannot find name 'Task'.` @ L22
+- `[syntax_check] Cannot find name 'Sentence'.` @ L25
+- `[syntax_check] Cannot find name 'Stamp'.` @ L28
+- `[syntax_check] Cannot find name 'Stamp'.` @ L29
+- `[syntax_check] Cannot find name 'revisable'.` @ L33
+- `[syntax_check] Cannot find name 'Sentence'.` @ L35
+- `[syntax_check] Cannot find name 'revision'.` @ L39
+- `[syntax_check] Cannot find name 'trySolution'.` @ L48
+- `[syntax_check] Cannot find name 'trySolution'.` @ L52
+- `[syntax_check] Cannot find name 'Events'.` @ L55
+- `[syntax_check] Cannot find name 'Events'.` @ L55
+- `[syntax_check] Cannot find name 'Task'.` @ L69
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L69
+- `[syntax_check] Cannot find name 'Operation'.` @ L70
+- `[syntax_check] Cannot find name 'Operation'.` @ L71
+- `[syntax_check] Cannot find name 'Operation'.` @ L71
+- `[syntax_check] Cannot find name 'Operator'.` @ L72
+- `[syntax_check] Cannot find name 'Operator'.` @ L72
+- `[syntax_check] Cannot find name 'Believe'.` @ L75
+- `[syntax_check] Cannot find name 'Want'.` @ L75
+- `[syntax_check] Cannot find name 'Wonder'.` @ L75
+- `[syntax_check] Cannot find name 'Evaluate'.` @ L76
+- `[syntax_check] Cannot find name 'Anticipate'.` @ L76
+- `[syntax_check] Cannot find name 'TemporalInferenceControl'.` @ L77
+- `[syntax_check] Cannot find name 'Task'.` @ L90
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L90
+- `[syntax_check] Cannot find name 'Term'.` @ L91
+- `[syntax_check] Cannot find name 'Implication'.` @ L93
+- `[syntax_check] Cannot find name 'Implication'.` @ L96
+- `[syntax_check] Cannot find name 'Implication'.` @ L96
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L97
+- `[syntax_check] Cannot find name 'Term'.` @ L102
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L103
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L106
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L106
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L108
+- `[syntax_check] Cannot find name 'Interval'.` @ L110
+- `[syntax_check] Cannot find name 'Operation'.` @ L111
+- `[syntax_check] Cannot find name 'Task'.` @ L121
+- `[syntax_check] Cannot find name 'DerivationContext'.` @ L121
+- `[syntax_check] Cannot find name 'Term'.` @ L122
+- `[syntax_check] Cannot find name 'Implication'.` @ L124
+- `[syntax_check] Cannot find name 'Implication'.` @ L125
+- `[syntax_check] Cannot find name 'Term'.` @ L127
+- `[syntax_check] Cannot find name 'Implication'.` @ L127
+- `[syntax_check] Cannot find name 'Concept'.` @ L133
+- `[syntax_check] Cannot find name 'Task'.` @ L138
+- `[syntax_check] Cannot find name 'tryFind'.` @ L140
+- `[syntax_check] Cannot find name 'Term'.` @ L145
+- `[syntax_check] Cannot find name 'Implication'.` @ L145
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L145
+- `[syntax_check] Cannot find name 'Operation'.` @ L147
+- `[syntax_check] Cannot find name 'Concept'.` @ L152
+- `[syntax_check] Cannot find name 'Task'.` @ L158
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L164
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L165
+- `[syntax_check] Cannot find name 'Events'.` @ L176
+- `[syntax_check] Cannot find name 'Events'.` @ L177
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -79,6 +333,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

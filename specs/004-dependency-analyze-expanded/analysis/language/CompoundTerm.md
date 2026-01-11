@@ -14,8 +14,353 @@
 
 - 执行的命令：`npx tsc src/language/CompoundTerm.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L11, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L11, C79）：[full_check] Cannot find name 'Term'.
+  - TS2304（L18, C27）：[full_check] Cannot find name 'Term'.
+  - TS2564（L24, C12）：[full_check] Property 'complexity' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L27, C13）：[full_check] Property 'hasVariables' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L31, C13）：[full_check] Property 'hasVarQueries' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L35, C13）：[full_check] Property 'hasVarIndeps' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L39, C13）：[full_check] Property 'hasVarDeps' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L43, C13）：[full_check] Property 'hasIntervals' has no initializer and is not definitely assigned in the constructor.
+  - TS2300（L45, C15）：[full_check] Duplicate identifier 'containedTemporalRelations'.
+  - TS2564（L46, C15）：[full_check] Property 'hash' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L47, C13）：[full_check] Property 'normalized' has no initializer and is not definitely assigned in the constructor.
+  - TS2304（L52, C33）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2416（L59, C21）：[full_check] Property 'clone' in type 'CompoundTerm' is not assignable to the same property in base type 'JavaIterable<Term>'.
+  - TS2516（L59, C21）：[full_check] All declarations of an abstract method must be consecutive.
+  - TS2304（L66, C36）：[full_check] Cannot find name 'Term'.
+  - TS2322（L72, C16）：[full_check] Type 'null' is not assignable to type 'JavaString'.
+  - TS2322（L73, C16）：[full_check] Type 'null' is not assignable to type 'Int32Array'.
+  - TS2304（L81, C45）：[full_check] Cannot find name 'Term'.
+  - TS2322（L82, C13）：[full_check] Type 'null' is not assignable to type 'JavaString'.
+  - TS2304（L137, C26）：[full_check] Cannot find name 'Term'.
+  - TS2339（L142, C18）：[full_check] Property 'term_indices' does not exist on type 'CompoundTerm'.
+  - TS2339（L144, C18）：[full_check] Property 'index_variable' does not exist on type 'CompoundTerm'.
+  - TS2339（L145, C18）：[full_check] Property 'term_indices' does not exist on type 'CompoundTerm'.
+  - TS2362（L151, C13）：[full_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2362（L152, C13）：[full_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2362（L153, C13）：[full_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2362（L154, C13）：[full_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2362（L155, C13）：[full_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2339（L165, C14）：[full_check] Property 'setName' does not exist on type 'CompoundTerm'.
+  - TS2416（L178, C21）：[full_check] Property 'clone' in type 'CompoundTerm' is not assignable to the same property in base type 'JavaIterable<Term>'.
+  - TS2304（L178, C37）：[full_check] Cannot find name 'Term'.
+  - TS2304（L178, C46）：[full_check] Cannot find name 'Term'.
+  - TS2304（L181, C16）：[full_check] Cannot find name 'Term'.
+  - TS2322（L183, C13）：[full_check] Type 'null' is not assignable to type 'CompoundTerm'.
+  - TS2304（L184, C13）：[full_check] Cannot find name 'Debug'.
+  - TS2339（L184, C65）：[full_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2322（L191, C13）：[full_check] Type 'null' is not assignable to type 'CompoundTerm'.
+  - TS2304（L199, C19）：[full_check] Cannot find name 'Term'.
+  - TS2304（L201, C20）：[full_check] Cannot find name 'Term'.
+  - TS2304（L205, C41）：[full_check] Cannot find name 'Variable'.
+  - TS2304（L205, C59）：[full_check] Cannot find name 'Variable'.
+  - TS2304（L206, C35）：[full_check] Cannot find name 'Variable'.
+  - TS2304（L206, C49）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L213, C44）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L213, C59）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L222, C20）：[full_check] Cannot find name 'Term'.
+  - TS2304（L223, C30）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L233, C39）：[full_check] Cannot find name 'Term'.
+  - TS2304（L233, C46）：[full_check] Cannot find name 'Term'.
+  - TS2304（L244, C42）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L246, C20）：[full_check] Cannot find name 'Term'.
+  - TS2304（L247, C30）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L248, C33）：[full_check] Cannot find name 'Interval'.
+  - TS2304（L255, C41）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L255, C52）：[full_check] Cannot find name 'Term'.
+  - TS2322（L256, C13）：[full_check] Type 'ArrayList<unknown>' is not assignable to type 'List<Long>'.
+  - TS2304（L270, C17）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L282, C16）：[full_check] Cannot find name 'Term'.
+  - TS2322（L285, C13）：[full_check] Type 'null' is not assignable to type 'CompoundTerm'.
+  - TS2304（L287, C13）：[full_check] Cannot find name 'Debug'.
+  - TS2339（L287, C65）：[full_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2300（L295, C12）：[full_check] Duplicate identifier 'containedTemporalRelations'.
+  - TS2304（L300, C34）：[full_check] Cannot find name 'Equivalence'.
+  - TS2304（L300, C67）：[full_check] Cannot find name 'Implication'.
+  - TS2339（L301, C47）：[full_check] Property 'getTemporalOrder' does not exist on type 'CompoundTerm'.
+  - TS2304（L303, C26）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L304, C26）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L305, C26）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L324, C35）：[full_check] Cannot find name 'Term'.
+  - TS2304（L324, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L328, C34）：[full_check] Cannot find name 'Term'.
+  - TS2304（L328, C58）：[full_check] Cannot find name 'Term'.
+  - TS2304（L329, C45）：[full_check] Cannot find name 'Term'.
+  - TS2339（L344, C18）：[full_check] Property 'nameInternal' does not exist on type 'CompoundTerm'.
+  - TS2339（L345, C18）：[full_check] Property 'setName' does not exist on type 'CompoundTerm'.
+  - TS2339（L347, C21）：[full_check] Property 'nameInternal' does not exist on type 'CompoundTerm'.
+  - TS2304（L357, C43）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L357, C67）：[full_check] Cannot find name 'Term'.
+  - TS2304（L366, C21）：[full_check] Cannot find name 'COMPOUND_TERM_OPENER'.
+  - TS2304（L369, C22）：[full_check] Cannot find name 'Symbols'.
+  - TS2304（L372, C18）：[full_check] Cannot find name 'COMPOUND_TERM_CLOSER'.
+  - TS2304（L412, C47）：[full_check] Cannot find name 'Term'.
+  - TS2304（L413, C30）：[full_check] Cannot find name 'Term'.
+  - TS2304（L427, C38）：[full_check] Cannot find name 'Term'.
+  - TS2304（L427, C47）：[full_check] Cannot find name 'Term'.
+  - TS2304（L438, C69）：[full_check] Cannot find name 'Term'.
+  - TS2304（L438, C78）：[full_check] Cannot find name 'Term'.
+  - TS2304（L442, C31）：[full_check] Cannot find name 'Term'.
+  - TS2322（L450, C13）：[full_check] Type 'null' is not assignable to type 'Term[]'.
+  - TS2304（L452, C36）：[full_check] Cannot find name 'Term'.
+  - TS2304（L461, C46）：[full_check] Cannot find name 'Term'.
+  - TS2304（L461, C66）：[full_check] Cannot find name 'Term'.
+  - TS2304（L461, C75）：[full_check] Cannot find name 'Term'.
+  - TS2322（L463, C13）：[full_check] Type 'null' is not assignable to type 'Term[]'.
+  - TS2304（L472, C18）：[full_check] Cannot find name 'Term'.
+  - TS2304（L472, C37）：[full_check] Cannot find name 'Term'.
+  - TS2304（L476, C23）：[full_check] Cannot find name 'Term'.
+  - TS2304（L490, C41）：[full_check] Cannot find name 'Term'.
+  - TS2304（L491, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L497, C30）：[full_check] Cannot find name 'Term'.
+  - TS2304（L498, C16）：[full_check] Cannot find name 'Term'.
+  - TS2304（L498, C35）：[full_check] Cannot find name 'Term'.
+  - TS2322（L502, C17）：[full_check] Type 'null' is not assignable to type 'Term[]'.
+  - TS2304（L508, C38）：[full_check] Cannot find name 'Term'.
+  - TS2304（L509, C16）：[full_check] Cannot find name 'Term'.
+  - TS2304（L509, C35）：[full_check] Cannot find name 'Term'.
+  - TS2304（L511, C20）：[full_check] Cannot find name 'Term'.
+  - TS2304（L524, C49）：[full_check] Cannot find name 'Term'.
+  - TS2304（L525, C31）：[full_check] Cannot find name 'Term'.
+  - TS2304（L531, C34）：[full_check] Cannot find name 'Term'.
+  - TS2304（L539, C20）：[full_check] Cannot find name 'Term'.
+  - TS2304（L559, C28）：[full_check] Cannot find name 'Term'.
+  - TS2304（L560, C16）：[full_check] Cannot find name 'Terms'.
+  - TS2304（L570, C44）：[full_check] Cannot find name 'Term'.
+  - TS7022（L573, C18）：[full_check] 'term' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+  - TS2448（L573, C26）：[full_check] Block-scoped variable 'term' used before its declaration.
+  - TS2304（L588, C52）：[full_check] Cannot find name 'Term'.
+  - TS2304（L588, C93）：[full_check] Cannot find name 'Term'.
+  - TS2304（L590, C47）：[full_check] Cannot find name 'Term'.
+  - TS2365（L592, C23）：[full_check] Operator '+' cannot be applied to types 'Integer' and 'number'.
+  - TS2345（L592, C46）：[full_check] Argument of type 'number' is not assignable to parameter of type 'Integer'.
+  - TS7022（L593, C18）：[full_check] 'term' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+  - TS2448（L593, C26）：[full_check] Block-scoped variable 'term' used before its declaration.
+  - TS2304（L606, C47）：[full_check] Cannot find name 'Term'.
+  - TS2304（L606, C79）：[full_check] Cannot find name 'Term'.
+  - TS2304（L606, C101）：[full_check] Cannot find name 'Term'.
+  - TS2304（L608, C54）：[full_check] Cannot find name 'Term'.
+  - TS2488（L613, C35）：[full_check] Type 'CompoundTerm' must have a '[Symbol.iterator]()' method that returns an iterator.
+  - TS2304（L627, C34）：[full_check] Cannot find name 'Term'.
+  - TS2339（L628, C30）：[full_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2304（L629, C20）：[full_check] Cannot find name 'Terms'.
+  - TS2304（L631, C20）：[full_check] Cannot find name 'Terms'.
+  - TS2304（L643, C40）：[full_check] Cannot find name 'Term'.
+  - TS2304（L643, C54）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L643, C63）：[full_check] Cannot find name 'Term'.
+  - TS2304（L644, C34）：[full_check] Cannot find name 'Term'.
+  - TS2339（L647, C34）：[full_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2304（L651, C25）：[full_check] Cannot find name 'Term'.
+  - TS2304（L658, C22）：[full_check] Cannot find name 'Term'.
+  - TS2304（L658, C54）：[full_check] Cannot find name 'Term'.
+  - TS2304（L659, C20）：[full_check] Cannot find name 'Terms'.
+  - TS2304（L661, C16）：[full_check] Cannot find name 'Terms'.
+  - TS2304（L696, C48）：[full_check] Cannot find name 'Term'.
+  - TS2304（L696, C54）：[full_check] Cannot find name 'Term'.
+  - TS2304（L696, C62）：[full_check] Cannot find name 'Term'.
+  - TS2304（L701, C17）：[full_check] Cannot find name 'Term'.
+  - TS2304（L701, C36）：[full_check] Cannot find name 'Term'.
+  - TS2304（L705, C21）：[full_check] Cannot find name 'Term'.
+  - TS2304（L708, C25）：[full_check] Cannot find name 'Term'.
+  - TS2304（L718, C25）：[full_check] Cannot find name 'Term'.
+  - TS2304（L740, C64）：[full_check] Cannot find name 'Term'.
+  - TS2304（L740, C70）：[full_check] Cannot find name 'Term'.
+  - TS2304（L741, C16）：[full_check] Cannot find name 'Term'.
+  - TS2322（L744, C9）：[full_check] Type 'null' is not assignable to type 'CompoundTerm'.
+  - TS2304（L756, C52）：[full_check] Cannot find name 'TermLink'.
+  - TS2304（L760, C44）：[full_check] Cannot find name 'TermLink'.
+  - TS2304（L761, C16）：[full_check] Cannot find name 'Terms'.
+  - TS2304（L764, C47）：[full_check] Cannot find name 'Term'.
+  - TS2339（L765, C31）：[full_check] Property 'addAll' does not exist on type 'typeof Collections'.
+  - TS2339（L769, C28）：[full_check] Property 'hashCode' does not exist on type 'CharSequence'.
+  - TS2304（L772, C28）：[full_check] Cannot find name 'AbstractTerm'.
+  - TS2367（L780, C13）：[full_check] This comparison appears to be unintentional because the types 'JavaObject' and 'this' have no overlap.
+  - TS2304（L782, C31）：[full_check] Cannot find name 'Term'.
+  - TS2339（L784, C28）：[full_check] Property 'equals' does not exist on type 'CharSequence'.
+  - TS2304（L784, C44）：[full_check] Cannot find name 'Term'.
+  - TS2304（L795, C38）：[full_check] Cannot find name 'Term'.
+  - TS2304（L795, C48）：[full_check] Cannot find name 'Term'.
+  - TS2304（L795, C55）：[full_check] Cannot find name 'Term'.
+  - TS2304（L796, C16）：[full_check] Cannot find name 'Term'.
+  - TS2304（L796, C35）：[full_check] Cannot find name 'Term'.
+  - TS2304（L806, C43）：[full_check] Cannot find name 'Term'.
+  - TS2304（L807, C16）：[full_check] Cannot find name 'Iterators'.
+  - TS2304（L11, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L11, C79）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L18, C27）：[syntax_check] Cannot find name 'Term'.
+  - TS2564（L24, C12）：[syntax_check] Property 'complexity' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L27, C13）：[syntax_check] Property 'hasVariables' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L31, C13）：[syntax_check] Property 'hasVarQueries' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L35, C13）：[syntax_check] Property 'hasVarIndeps' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L39, C13）：[syntax_check] Property 'hasVarDeps' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L43, C13）：[syntax_check] Property 'hasIntervals' has no initializer and is not definitely assigned in the constructor.
+  - TS2300（L45, C15）：[syntax_check] Duplicate identifier 'containedTemporalRelations'.
+  - TS2564（L46, C15）：[syntax_check] Property 'hash' has no initializer and is not definitely assigned in the constructor.
+  - TS2564（L47, C13）：[syntax_check] Property 'normalized' has no initializer and is not definitely assigned in the constructor.
+  - TS2304（L52, C33）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2416（L59, C21）：[syntax_check] Property 'clone' in type 'CompoundTerm' is not assignable to the same property in base type 'JavaIterable<Term>'.
+  - TS2516（L59, C21）：[syntax_check] All declarations of an abstract method must be consecutive.
+  - TS2304（L66, C36）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L72, C16）：[syntax_check] Type 'null' is not assignable to type 'JavaString'.
+  - TS2322（L73, C16）：[syntax_check] Type 'null' is not assignable to type 'Int32Array'.
+  - TS2304（L81, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L82, C13）：[syntax_check] Type 'null' is not assignable to type 'JavaString'.
+  - TS2304（L137, C26）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L142, C18）：[syntax_check] Property 'term_indices' does not exist on type 'CompoundTerm'.
+  - TS2339（L144, C18）：[syntax_check] Property 'index_variable' does not exist on type 'CompoundTerm'.
+  - TS2339（L145, C18）：[syntax_check] Property 'term_indices' does not exist on type 'CompoundTerm'.
+  - TS2362（L151, C13）：[syntax_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2362（L152, C13）：[syntax_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2362（L153, C13）：[syntax_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2362（L154, C13）：[syntax_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2362（L155, C13）：[syntax_check] The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+  - TS2339（L165, C14）：[syntax_check] Property 'setName' does not exist on type 'CompoundTerm'.
+  - TS2416（L178, C21）：[syntax_check] Property 'clone' in type 'CompoundTerm' is not assignable to the same property in base type 'JavaIterable<Term>'.
+  - TS2304（L178, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L178, C46）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L181, C16）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L183, C13）：[syntax_check] Type 'null' is not assignable to type 'CompoundTerm'.
+  - TS2304（L184, C13）：[syntax_check] Cannot find name 'Debug'.
+  - TS2339（L184, C65）：[syntax_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2322（L191, C13）：[syntax_check] Type 'null' is not assignable to type 'CompoundTerm'.
+  - TS2304（L199, C19）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L201, C20）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L205, C41）：[syntax_check] Cannot find name 'Variable'.
+  - TS2304（L205, C59）：[syntax_check] Cannot find name 'Variable'.
+  - TS2304（L206, C35）：[syntax_check] Cannot find name 'Variable'.
+  - TS2304（L206, C49）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L213, C44）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L213, C59）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L222, C20）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L223, C30）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L233, C39）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L233, C46）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L244, C42）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L246, C20）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L247, C30）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L248, C33）：[syntax_check] Cannot find name 'Interval'.
+  - TS2304（L255, C41）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L255, C52）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L256, C13）：[syntax_check] Type 'ArrayList<unknown>' is not assignable to type 'List<Long>'.
+  - TS2304（L270, C17）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L282, C16）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L285, C13）：[syntax_check] Type 'null' is not assignable to type 'CompoundTerm'.
+  - TS2304（L287, C13）：[syntax_check] Cannot find name 'Debug'.
+  - TS2339（L287, C65）：[syntax_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2300（L295, C12）：[syntax_check] Duplicate identifier 'containedTemporalRelations'.
+  - TS2304（L300, C34）：[syntax_check] Cannot find name 'Equivalence'.
+  - TS2304（L300, C67）：[syntax_check] Cannot find name 'Implication'.
+  - TS2339（L301, C47）：[syntax_check] Property 'getTemporalOrder' does not exist on type 'CompoundTerm'.
+  - TS2304（L303, C26）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L304, C26）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L305, C26）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L324, C35）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L324, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L328, C34）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L328, C58）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L329, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L344, C18）：[syntax_check] Property 'nameInternal' does not exist on type 'CompoundTerm'.
+  - TS2339（L345, C18）：[syntax_check] Property 'setName' does not exist on type 'CompoundTerm'.
+  - TS2339（L347, C21）：[syntax_check] Property 'nameInternal' does not exist on type 'CompoundTerm'.
+  - TS2304（L357, C43）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L357, C67）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L366, C21）：[syntax_check] Cannot find name 'COMPOUND_TERM_OPENER'.
+  - TS2304（L369, C22）：[syntax_check] Cannot find name 'Symbols'.
+  - TS2304（L372, C18）：[syntax_check] Cannot find name 'COMPOUND_TERM_CLOSER'.
+  - TS2304（L412, C47）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L413, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L427, C38）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L427, C47）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L438, C69）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L438, C78）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L442, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L450, C13）：[syntax_check] Type 'null' is not assignable to type 'Term[]'.
+  - TS2304（L452, C36）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L461, C46）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L461, C66）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L461, C75）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L463, C13）：[syntax_check] Type 'null' is not assignable to type 'Term[]'.
+  - TS2304（L472, C18）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L472, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L476, C23）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L490, C41）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L491, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L497, C30）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L498, C16）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L498, C35）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L502, C17）：[syntax_check] Type 'null' is not assignable to type 'Term[]'.
+  - TS2304（L508, C38）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L509, C16）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L509, C35）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L511, C20）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L524, C49）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L525, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L531, C34）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L539, C20）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L559, C28）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L560, C16）：[syntax_check] Cannot find name 'Terms'.
+  - TS2304（L570, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS7022（L573, C18）：[syntax_check] 'term' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+  - TS2448（L573, C26）：[syntax_check] Block-scoped variable 'term' used before its declaration.
+  - TS2304（L588, C52）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L588, C93）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L590, C47）：[syntax_check] Cannot find name 'Term'.
+  - TS2365（L592, C23）：[syntax_check] Operator '+' cannot be applied to types 'Integer' and 'number'.
+  - TS2345（L592, C46）：[syntax_check] Argument of type 'number' is not assignable to parameter of type 'Integer'.
+  - TS7022（L593, C18）：[syntax_check] 'term' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+  - TS2448（L593, C26）：[syntax_check] Block-scoped variable 'term' used before its declaration.
+  - TS2304（L606, C47）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L606, C79）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L606, C101）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L608, C54）：[syntax_check] Cannot find name 'Term'.
+  - TS2488（L613, C35）：[syntax_check] Type 'CompoundTerm' must have a '[Symbol.iterator]()' method that returns an iterator.
+  - TS2304（L627, C34）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L628, C30）：[syntax_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2304（L629, C20）：[syntax_check] Cannot find name 'Terms'.
+  - TS2304（L631, C20）：[syntax_check] Cannot find name 'Terms'.
+  - TS2304（L643, C40）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L643, C54）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L643, C63）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L644, C34）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L647, C34）：[syntax_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2304（L651, C25）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L658, C22）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L658, C54）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L659, C20）：[syntax_check] Cannot find name 'Terms'.
+  - TS2304（L661, C16）：[syntax_check] Cannot find name 'Terms'.
+  - TS2304（L696, C48）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L696, C54）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L696, C62）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L701, C17）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L701, C36）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L705, C21）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L708, C25）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L718, C25）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L740, C64）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L740, C70）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L741, C16）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L744, C9）：[syntax_check] Type 'null' is not assignable to type 'CompoundTerm'.
+  - TS2304（L756, C52）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2304（L760, C44）：[syntax_check] Cannot find name 'TermLink'.
+  - TS2304（L761, C16）：[syntax_check] Cannot find name 'Terms'.
+  - TS2304（L764, C47）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L765, C31）：[syntax_check] Property 'addAll' does not exist on type 'typeof Collections'.
+  - TS2339（L769, C28）：[syntax_check] Property 'hashCode' does not exist on type 'CharSequence'.
+  - TS2304（L772, C28）：[syntax_check] Cannot find name 'AbstractTerm'.
+  - TS2367（L780, C13）：[syntax_check] This comparison appears to be unintentional because the types 'JavaObject' and 'this' have no overlap.
+  - TS2304（L782, C31）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L784, C28）：[syntax_check] Property 'equals' does not exist on type 'CharSequence'.
+  - TS2304（L784, C44）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L795, C38）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L795, C48）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L795, C55）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L796, C16）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L796, C35）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L806, C43）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L807, C16）：[syntax_check] Cannot find name 'Iterators'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +376,248 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Term'.` @ L11
+- `[full_check] Cannot find name 'Term'.` @ L11
+- `[full_check] Cannot find name 'Term'.` @ L18
+- `[full_check] Cannot find name 'NativeOperator'.` @ L52
+- `[full_check] Cannot find name 'Term'.` @ L66
+- `[full_check] Cannot find name 'Term'.` @ L81
+- `[full_check] Cannot find name 'Term'.` @ L137
+- `[full_check] Cannot find name 'Term'.` @ L178
+- `[full_check] Cannot find name 'Term'.` @ L178
+- `[full_check] Cannot find name 'Term'.` @ L181
+- `[full_check] Cannot find name 'Debug'.` @ L184
+- `[full_check] Cannot find name 'Term'.` @ L199
+- `[full_check] Cannot find name 'Term'.` @ L201
+- `[full_check] Cannot find name 'Variable'.` @ L205
+- `[full_check] Cannot find name 'Variable'.` @ L205
+- `[full_check] Cannot find name 'Variable'.` @ L206
+- `[full_check] Cannot find name 'Symbols'.` @ L206
+- `[full_check] Cannot find name 'Interval'.` @ L213
+- `[full_check] Cannot find name 'Interval'.` @ L213
+- `[full_check] Cannot find name 'Term'.` @ L222
+- `[full_check] Cannot find name 'Interval'.` @ L223
+- `[full_check] Cannot find name 'Term'.` @ L233
+- `[full_check] Cannot find name 'Term'.` @ L233
+- `[full_check] Cannot find name 'Memory'.` @ L244
+- `[full_check] Cannot find name 'Term'.` @ L246
+- `[full_check] Cannot find name 'Interval'.` @ L247
+- `[full_check] Cannot find name 'Interval'.` @ L248
+- `[full_check] Cannot find name 'Memory'.` @ L255
+- `[full_check] Cannot find name 'Term'.` @ L255
+- `[full_check] Cannot find name 'Debug'.` @ L270
+- `[full_check] Cannot find name 'Term'.` @ L282
+- `[full_check] Cannot find name 'Debug'.` @ L287
+- `[full_check] Cannot find name 'Equivalence'.` @ L300
+- `[full_check] Cannot find name 'Implication'.` @ L300
+- `[full_check] Cannot find name 'TemporalRules'.` @ L303
+- `[full_check] Cannot find name 'TemporalRules'.` @ L304
+- `[full_check] Cannot find name 'TemporalRules'.` @ L305
+- `[full_check] Cannot find name 'Term'.` @ L324
+- `[full_check] Cannot find name 'Term'.` @ L324
+- `[full_check] Cannot find name 'Term'.` @ L328
+- `[full_check] Cannot find name 'Term'.` @ L328
+- `[full_check] Cannot find name 'Term'.` @ L329
+- `[full_check] Cannot find name 'NativeOperator'.` @ L357
+- `[full_check] Cannot find name 'Term'.` @ L357
+- `[full_check] Cannot find name 'COMPOUND_TERM_OPENER'.` @ L366
+- `[full_check] Cannot find name 'Symbols'.` @ L369
+- `[full_check] Cannot find name 'COMPOUND_TERM_CLOSER'.` @ L372
+- `[full_check] Cannot find name 'Term'.` @ L412
+- `[full_check] Cannot find name 'Term'.` @ L413
+- `[full_check] Cannot find name 'Term'.` @ L427
+- `[full_check] Cannot find name 'Term'.` @ L427
+- `[full_check] Cannot find name 'Term'.` @ L438
+- `[full_check] Cannot find name 'Term'.` @ L438
+- `[full_check] Cannot find name 'Term'.` @ L442
+- `[full_check] Cannot find name 'Term'.` @ L452
+- `[full_check] Cannot find name 'Term'.` @ L461
+- `[full_check] Cannot find name 'Term'.` @ L461
+- `[full_check] Cannot find name 'Term'.` @ L461
+- `[full_check] Cannot find name 'Term'.` @ L472
+- `[full_check] Cannot find name 'Term'.` @ L472
+- `[full_check] Cannot find name 'Term'.` @ L476
+- `[full_check] Cannot find name 'Term'.` @ L490
+- `[full_check] Cannot find name 'Term'.` @ L491
+- `[full_check] Cannot find name 'Term'.` @ L497
+- `[full_check] Cannot find name 'Term'.` @ L498
+- `[full_check] Cannot find name 'Term'.` @ L498
+- `[full_check] Cannot find name 'Term'.` @ L508
+- `[full_check] Cannot find name 'Term'.` @ L509
+- `[full_check] Cannot find name 'Term'.` @ L509
+- `[full_check] Cannot find name 'Term'.` @ L511
+- `[full_check] Cannot find name 'Term'.` @ L524
+- `[full_check] Cannot find name 'Term'.` @ L525
+- `[full_check] Cannot find name 'Term'.` @ L531
+- `[full_check] Cannot find name 'Term'.` @ L539
+- `[full_check] Cannot find name 'Term'.` @ L559
+- `[full_check] Cannot find name 'Terms'.` @ L560
+- `[full_check] Cannot find name 'Term'.` @ L570
+- `[full_check] Cannot find name 'Term'.` @ L588
+- `[full_check] Cannot find name 'Term'.` @ L588
+- `[full_check] Cannot find name 'Term'.` @ L590
+- `[full_check] Cannot find name 'Term'.` @ L606
+- `[full_check] Cannot find name 'Term'.` @ L606
+- `[full_check] Cannot find name 'Term'.` @ L606
+- `[full_check] Cannot find name 'Term'.` @ L608
+- `[full_check] Cannot find name 'Term'.` @ L627
+- `[full_check] Cannot find name 'Terms'.` @ L629
+- `[full_check] Cannot find name 'Terms'.` @ L631
+- `[full_check] Cannot find name 'Term'.` @ L643
+- `[full_check] Cannot find name 'Memory'.` @ L643
+- `[full_check] Cannot find name 'Term'.` @ L643
+- `[full_check] Cannot find name 'Term'.` @ L644
+- `[full_check] Cannot find name 'Term'.` @ L651
+- `[full_check] Cannot find name 'Term'.` @ L658
+- `[full_check] Cannot find name 'Term'.` @ L658
+- `[full_check] Cannot find name 'Terms'.` @ L659
+- `[full_check] Cannot find name 'Terms'.` @ L661
+- `[full_check] Cannot find name 'Term'.` @ L696
+- `[full_check] Cannot find name 'Term'.` @ L696
+- `[full_check] Cannot find name 'Term'.` @ L696
+- `[full_check] Cannot find name 'Term'.` @ L701
+- `[full_check] Cannot find name 'Term'.` @ L701
+- `[full_check] Cannot find name 'Term'.` @ L705
+- `[full_check] Cannot find name 'Term'.` @ L708
+- `[full_check] Cannot find name 'Term'.` @ L718
+- `[full_check] Cannot find name 'Term'.` @ L740
+- `[full_check] Cannot find name 'Term'.` @ L740
+- `[full_check] Cannot find name 'Term'.` @ L741
+- `[full_check] Cannot find name 'TermLink'.` @ L756
+- `[full_check] Cannot find name 'TermLink'.` @ L760
+- `[full_check] Cannot find name 'Terms'.` @ L761
+- `[full_check] Cannot find name 'Term'.` @ L764
+- `[full_check] Cannot find name 'AbstractTerm'.` @ L772
+- `[full_check] Cannot find name 'Term'.` @ L782
+- `[full_check] Cannot find name 'Term'.` @ L784
+- `[full_check] Cannot find name 'Term'.` @ L795
+- `[full_check] Cannot find name 'Term'.` @ L795
+- `[full_check] Cannot find name 'Term'.` @ L795
+- `[full_check] Cannot find name 'Term'.` @ L796
+- `[full_check] Cannot find name 'Term'.` @ L796
+- `[full_check] Cannot find name 'Term'.` @ L806
+- `[full_check] Cannot find name 'Iterators'.` @ L807
+- `[syntax_check] Cannot find name 'Term'.` @ L11
+- `[syntax_check] Cannot find name 'Term'.` @ L11
+- `[syntax_check] Cannot find name 'Term'.` @ L18
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L52
+- `[syntax_check] Cannot find name 'Term'.` @ L66
+- `[syntax_check] Cannot find name 'Term'.` @ L81
+- `[syntax_check] Cannot find name 'Term'.` @ L137
+- `[syntax_check] Cannot find name 'Term'.` @ L178
+- `[syntax_check] Cannot find name 'Term'.` @ L178
+- `[syntax_check] Cannot find name 'Term'.` @ L181
+- `[syntax_check] Cannot find name 'Debug'.` @ L184
+- `[syntax_check] Cannot find name 'Term'.` @ L199
+- `[syntax_check] Cannot find name 'Term'.` @ L201
+- `[syntax_check] Cannot find name 'Variable'.` @ L205
+- `[syntax_check] Cannot find name 'Variable'.` @ L205
+- `[syntax_check] Cannot find name 'Variable'.` @ L206
+- `[syntax_check] Cannot find name 'Symbols'.` @ L206
+- `[syntax_check] Cannot find name 'Interval'.` @ L213
+- `[syntax_check] Cannot find name 'Interval'.` @ L213
+- `[syntax_check] Cannot find name 'Term'.` @ L222
+- `[syntax_check] Cannot find name 'Interval'.` @ L223
+- `[syntax_check] Cannot find name 'Term'.` @ L233
+- `[syntax_check] Cannot find name 'Term'.` @ L233
+- `[syntax_check] Cannot find name 'Memory'.` @ L244
+- `[syntax_check] Cannot find name 'Term'.` @ L246
+- `[syntax_check] Cannot find name 'Interval'.` @ L247
+- `[syntax_check] Cannot find name 'Interval'.` @ L248
+- `[syntax_check] Cannot find name 'Memory'.` @ L255
+- `[syntax_check] Cannot find name 'Term'.` @ L255
+- `[syntax_check] Cannot find name 'Debug'.` @ L270
+- `[syntax_check] Cannot find name 'Term'.` @ L282
+- `[syntax_check] Cannot find name 'Debug'.` @ L287
+- `[syntax_check] Cannot find name 'Equivalence'.` @ L300
+- `[syntax_check] Cannot find name 'Implication'.` @ L300
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L303
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L304
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L305
+- `[syntax_check] Cannot find name 'Term'.` @ L324
+- `[syntax_check] Cannot find name 'Term'.` @ L324
+- `[syntax_check] Cannot find name 'Term'.` @ L328
+- `[syntax_check] Cannot find name 'Term'.` @ L328
+- `[syntax_check] Cannot find name 'Term'.` @ L329
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L357
+- `[syntax_check] Cannot find name 'Term'.` @ L357
+- `[syntax_check] Cannot find name 'COMPOUND_TERM_OPENER'.` @ L366
+- `[syntax_check] Cannot find name 'Symbols'.` @ L369
+- `[syntax_check] Cannot find name 'COMPOUND_TERM_CLOSER'.` @ L372
+- `[syntax_check] Cannot find name 'Term'.` @ L412
+- `[syntax_check] Cannot find name 'Term'.` @ L413
+- `[syntax_check] Cannot find name 'Term'.` @ L427
+- `[syntax_check] Cannot find name 'Term'.` @ L427
+- `[syntax_check] Cannot find name 'Term'.` @ L438
+- `[syntax_check] Cannot find name 'Term'.` @ L438
+- `[syntax_check] Cannot find name 'Term'.` @ L442
+- `[syntax_check] Cannot find name 'Term'.` @ L452
+- `[syntax_check] Cannot find name 'Term'.` @ L461
+- `[syntax_check] Cannot find name 'Term'.` @ L461
+- `[syntax_check] Cannot find name 'Term'.` @ L461
+- `[syntax_check] Cannot find name 'Term'.` @ L472
+- `[syntax_check] Cannot find name 'Term'.` @ L472
+- `[syntax_check] Cannot find name 'Term'.` @ L476
+- `[syntax_check] Cannot find name 'Term'.` @ L490
+- `[syntax_check] Cannot find name 'Term'.` @ L491
+- `[syntax_check] Cannot find name 'Term'.` @ L497
+- `[syntax_check] Cannot find name 'Term'.` @ L498
+- `[syntax_check] Cannot find name 'Term'.` @ L498
+- `[syntax_check] Cannot find name 'Term'.` @ L508
+- `[syntax_check] Cannot find name 'Term'.` @ L509
+- `[syntax_check] Cannot find name 'Term'.` @ L509
+- `[syntax_check] Cannot find name 'Term'.` @ L511
+- `[syntax_check] Cannot find name 'Term'.` @ L524
+- `[syntax_check] Cannot find name 'Term'.` @ L525
+- `[syntax_check] Cannot find name 'Term'.` @ L531
+- `[syntax_check] Cannot find name 'Term'.` @ L539
+- `[syntax_check] Cannot find name 'Term'.` @ L559
+- `[syntax_check] Cannot find name 'Terms'.` @ L560
+- `[syntax_check] Cannot find name 'Term'.` @ L570
+- `[syntax_check] Cannot find name 'Term'.` @ L588
+- `[syntax_check] Cannot find name 'Term'.` @ L588
+- `[syntax_check] Cannot find name 'Term'.` @ L590
+- `[syntax_check] Cannot find name 'Term'.` @ L606
+- `[syntax_check] Cannot find name 'Term'.` @ L606
+- `[syntax_check] Cannot find name 'Term'.` @ L606
+- `[syntax_check] Cannot find name 'Term'.` @ L608
+- `[syntax_check] Cannot find name 'Term'.` @ L627
+- `[syntax_check] Cannot find name 'Terms'.` @ L629
+- `[syntax_check] Cannot find name 'Terms'.` @ L631
+- `[syntax_check] Cannot find name 'Term'.` @ L643
+- `[syntax_check] Cannot find name 'Memory'.` @ L643
+- `[syntax_check] Cannot find name 'Term'.` @ L643
+- `[syntax_check] Cannot find name 'Term'.` @ L644
+- `[syntax_check] Cannot find name 'Term'.` @ L651
+- `[syntax_check] Cannot find name 'Term'.` @ L658
+- `[syntax_check] Cannot find name 'Term'.` @ L658
+- `[syntax_check] Cannot find name 'Terms'.` @ L659
+- `[syntax_check] Cannot find name 'Terms'.` @ L661
+- `[syntax_check] Cannot find name 'Term'.` @ L696
+- `[syntax_check] Cannot find name 'Term'.` @ L696
+- `[syntax_check] Cannot find name 'Term'.` @ L696
+- `[syntax_check] Cannot find name 'Term'.` @ L701
+- `[syntax_check] Cannot find name 'Term'.` @ L701
+- `[syntax_check] Cannot find name 'Term'.` @ L705
+- `[syntax_check] Cannot find name 'Term'.` @ L708
+- `[syntax_check] Cannot find name 'Term'.` @ L718
+- `[syntax_check] Cannot find name 'Term'.` @ L740
+- `[syntax_check] Cannot find name 'Term'.` @ L740
+- `[syntax_check] Cannot find name 'Term'.` @ L741
+- `[syntax_check] Cannot find name 'TermLink'.` @ L756
+- `[syntax_check] Cannot find name 'TermLink'.` @ L760
+- `[syntax_check] Cannot find name 'Terms'.` @ L761
+- `[syntax_check] Cannot find name 'Term'.` @ L764
+- `[syntax_check] Cannot find name 'AbstractTerm'.` @ L772
+- `[syntax_check] Cannot find name 'Term'.` @ L782
+- `[syntax_check] Cannot find name 'Term'.` @ L784
+- `[syntax_check] Cannot find name 'Term'.` @ L795
+- `[syntax_check] Cannot find name 'Term'.` @ L795
+- `[syntax_check] Cannot find name 'Term'.` @ L795
+- `[syntax_check] Cannot find name 'Term'.` @ L796
+- `[syntax_check] Cannot find name 'Term'.` @ L796
+- `[syntax_check] Cannot find name 'Term'.` @ L806
+- `[syntax_check] Cannot find name 'Iterators'.` @ L807
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -66,6 +652,7 @@
 ## 6. 一致性风险
 
 - 文件内仍保留 4 处 TODO，需对照 Java 填补。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

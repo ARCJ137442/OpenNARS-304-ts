@@ -14,8 +14,15 @@
 
 - 执行的命令：`npx tsc src/language/AbstractTerm.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2689（L6, C37）：[full_check] Cannot extend an interface 'java.lang.Cloneable'. Did you mean 'implements'?
+  - TS1174（L6, C58）：[full_check] Classes can only extend a single class.
+  - TS1245（L27, C24）：[full_check] Method 'name' cannot have an implementation because it is marked abstract.
+  - TS2322（L28, C9）：[full_check] Type 'string' is not assignable to type 'CharSequence'.
+  - TS2689（L6, C37）：[syntax_check] Cannot extend an interface 'java.lang.Cloneable'. Did you mean 'implements'?
+  - TS1174（L6, C58）：[syntax_check] Classes can only extend a single class.
+  - TS1245（L27, C24）：[syntax_check] Method 'name' cannot have an implementation because it is marked abstract.
+  - TS2322（L28, C9）：[syntax_check] Type 'string' is not assignable to type 'CharSequence'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -54,6 +61,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

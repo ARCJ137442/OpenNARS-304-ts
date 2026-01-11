@@ -14,8 +14,23 @@
 
 - 执行的命令：`npx tsc src/language/Tense.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2344（L3, C36）：[full_check] Type 'Tense' does not satisfy the constraint 'Enum<Tense>'.
+  - TS2345（L6, C7）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L8, C7）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L10, C7）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L14, C28）：[full_check] Type 'null' is not assignable to type 'Tense'.
+  - TS2416（L21, C12）：[full_check] Property 'toString' in type 'Tense' is not assignable to the same property in base type 'Enum<Tense>'.
+  - TS2345（L29, C37）：[full_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L34, C9）：[full_check] Type 'Tense | null' is not assignable to type 'Tense'.
+  - TS2344（L3, C36）：[syntax_check] Type 'Tense' does not satisfy the constraint 'Enum<Tense>'.
+  - TS2345（L6, C7）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L8, C7）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2345（L10, C7）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L14, C28）：[syntax_check] Type 'null' is not assignable to type 'Tense'.
+  - TS2416（L21, C12）：[syntax_check] Property 'toString' in type 'Tense' is not assignable to the same property in base type 'Enum<Tense>'.
+  - TS2345（L29, C37）：[syntax_check] Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  - TS2322（L34, C9）：[syntax_check] Type 'Tense | null' is not assignable to type 'Tense'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -54,6 +69,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

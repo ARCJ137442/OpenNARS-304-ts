@@ -14,8 +14,51 @@
 
 - 执行的命令：`npx tsc src/io/events/OutputHandler.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L10, C45）：[full_check] Cannot find name 'EventHandler'.
+  - TS2304（L24, C79）：[full_check] Cannot find name 'IN'.
+  - TS2304（L24, C89）：[full_check] Cannot find name 'EXE'.
+  - TS2304（L24, C100）：[full_check] Cannot find name 'OUT'.
+  - TS2304（L24, C111）：[full_check] Cannot find name 'ERR'.
+  - TS2304（L25, C5）：[full_check] Cannot find name 'ECHO'.
+  - TS2304（L25, C17）：[full_check] Cannot find name 'Answer'.
+  - TS2304（L25, C124）：[full_check] Cannot find name 'DEBUG'.
+  - TS2304（L27, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L29, C32）：[full_check] Cannot find name 'EventEmitter'.
+  - TS2304（L31, C27）：[full_check] Cannot find name 'Memory'.
+  - TS2304（L33, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L37, C38）：[full_check] Cannot find name 'Nar'.
+  - TS2349（L40, C17）：[full_check] This expression is not callable.
+  - TS17009（L40, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L47, C51）：[full_check] Cannot find name 'EventEmitter'.
+  - TS2304（L57, C46）：[full_check] Cannot find name 'Memory'.
+  - TS2349（L60, C17）：[full_check] This expression is not callable.
+  - TS17009（L60, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L67, C46）：[full_check] Cannot find name 'Nar'.
+  - TS2349（L70, C17）：[full_check] This expression is not callable.
+  - TS17009（L70, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L10, C45）：[syntax_check] Cannot find name 'EventHandler'.
+  - TS2304（L24, C79）：[syntax_check] Cannot find name 'IN'.
+  - TS2304（L24, C89）：[syntax_check] Cannot find name 'EXE'.
+  - TS2304（L24, C100）：[syntax_check] Cannot find name 'OUT'.
+  - TS2304（L24, C111）：[syntax_check] Cannot find name 'ERR'.
+  - TS2304（L25, C5）：[syntax_check] Cannot find name 'ECHO'.
+  - TS2304（L25, C17）：[syntax_check] Cannot find name 'Answer'.
+  - TS2304（L25, C124）：[syntax_check] Cannot find name 'DEBUG'.
+  - TS2304（L27, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L29, C32）：[syntax_check] Cannot find name 'EventEmitter'.
+  - TS2304（L31, C27）：[syntax_check] Cannot find name 'Memory'.
+  - TS2304（L33, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L37, C38）：[syntax_check] Cannot find name 'Nar'.
+  - TS2349（L40, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L40, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L47, C51）：[syntax_check] Cannot find name 'EventEmitter'.
+  - TS2304（L57, C46）：[syntax_check] Cannot find name 'Memory'.
+  - TS2349（L60, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L60, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L67, C46）：[syntax_check] Cannot find name 'Nar'.
+  - TS2349（L70, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L70, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +74,38 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'EventHandler'.` @ L10
+- `[full_check] Cannot find name 'IN'.` @ L24
+- `[full_check] Cannot find name 'EXE'.` @ L24
+- `[full_check] Cannot find name 'OUT'.` @ L24
+- `[full_check] Cannot find name 'ERR'.` @ L24
+- `[full_check] Cannot find name 'ECHO'.` @ L25
+- `[full_check] Cannot find name 'Answer'.` @ L25
+- `[full_check] Cannot find name 'DEBUG'.` @ L25
+- `[full_check] Cannot find name 'Nar'.` @ L27
+- `[full_check] Cannot find name 'EventEmitter'.` @ L29
+- `[full_check] Cannot find name 'Memory'.` @ L31
+- `[full_check] Cannot find name 'Nar'.` @ L33
+- `[full_check] Cannot find name 'Nar'.` @ L37
+- `[full_check] Cannot find name 'EventEmitter'.` @ L47
+- `[full_check] Cannot find name 'Memory'.` @ L57
+- `[full_check] Cannot find name 'Nar'.` @ L67
+- `[syntax_check] Cannot find name 'EventHandler'.` @ L10
+- `[syntax_check] Cannot find name 'IN'.` @ L24
+- `[syntax_check] Cannot find name 'EXE'.` @ L24
+- `[syntax_check] Cannot find name 'OUT'.` @ L24
+- `[syntax_check] Cannot find name 'ERR'.` @ L24
+- `[syntax_check] Cannot find name 'ECHO'.` @ L25
+- `[syntax_check] Cannot find name 'Answer'.` @ L25
+- `[syntax_check] Cannot find name 'DEBUG'.` @ L25
+- `[syntax_check] Cannot find name 'Nar'.` @ L27
+- `[syntax_check] Cannot find name 'EventEmitter'.` @ L29
+- `[syntax_check] Cannot find name 'Memory'.` @ L31
+- `[syntax_check] Cannot find name 'Nar'.` @ L33
+- `[syntax_check] Cannot find name 'Nar'.` @ L37
+- `[syntax_check] Cannot find name 'EventEmitter'.` @ L47
+- `[syntax_check] Cannot find name 'Memory'.` @ L57
+- `[syntax_check] Cannot find name 'Nar'.` @ L67
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -58,6 +132,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

@@ -14,8 +14,87 @@
 
 - 执行的命令：`npx tsc src/plugin/perception/VisualSpace.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L9, C56）：[full_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L19, C34）：[full_check] Cannot find name 'NullOperator'.
+  - TS2304（L19, C53）：[full_check] Cannot find name 'NullOperator'.
+  - TS2304（L20, C34）：[full_check] Cannot find name 'NullOperator'.
+  - TS2304（L20, C53）：[full_check] Cannot find name 'NullOperator'.
+  - TS2304（L21, C27）：[full_check] Cannot find name 'Nar'.
+  - TS2304（L23, C29）：[full_check] Cannot find name 'Nar'.
+  - TS2351（L29, C28）：[full_check] This expression is not constructable.
+  - TS2351（L30, C27）：[full_check] This expression is not constructable.
+  - TS2345（L34, C40）：[full_check] Argument of type 'Float64Array' is not assignable to parameter of type 'unknown[]'.
+  - TS2345（L40, C40）：[full_check] Argument of type 'Float64Array' is not assignable to parameter of type 'unknown[]'.
+  - TS2304（L46, C41）：[full_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L46, C81）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L48, C24）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L53, C29）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L53, C46）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L56, C26）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L56, C43）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L66, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L66, C50）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L68, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L68, C50）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L70, C33）：[full_check] Cannot find name 'TruthValue'.
+  - TS2304（L70, C59）：[full_check] Cannot find name 'TruthFunctions'.
+  - TS2304（L71, C31）：[full_check] Cannot find name 'TruthFunctions'.
+  - TS2304（L72, C31）：[full_check] Cannot find name 'TruthFunctions'.
+  - TS2304（L83, C36）：[full_check] Cannot find name 'Conjunction'.
+  - TS2304（L83, C50）：[full_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L84, C65）：[full_check] Cannot find name 'TemporalRules'.
+  - TS2304（L87, C24）：[full_check] Cannot find name 'Term'.
+  - TS2304（L91, C18）：[full_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L94, C46）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L97, C23）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L97, C54）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L107, C30）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L107, C44）：[full_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L107, C63）：[full_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L124, C37）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L125, C17）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L125, C51）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L9, C56）：[syntax_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L19, C34）：[syntax_check] Cannot find name 'NullOperator'.
+  - TS2304（L19, C53）：[syntax_check] Cannot find name 'NullOperator'.
+  - TS2304（L20, C34）：[syntax_check] Cannot find name 'NullOperator'.
+  - TS2304（L20, C53）：[syntax_check] Cannot find name 'NullOperator'.
+  - TS2304（L21, C27）：[syntax_check] Cannot find name 'Nar'.
+  - TS2304（L23, C29）：[syntax_check] Cannot find name 'Nar'.
+  - TS2351（L29, C28）：[syntax_check] This expression is not constructable.
+  - TS2351（L30, C27）：[syntax_check] This expression is not constructable.
+  - TS2345（L34, C40）：[syntax_check] Argument of type 'Float64Array' is not assignable to parameter of type 'unknown[]'.
+  - TS2345（L40, C40）：[syntax_check] Argument of type 'Float64Array' is not assignable to parameter of type 'unknown[]'.
+  - TS2304（L46, C41）：[syntax_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L46, C81）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L48, C24）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L53, C29）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L53, C46）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L56, C26）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L56, C43）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L66, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L66, C50）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L68, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L68, C50）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L70, C33）：[syntax_check] Cannot find name 'TruthValue'.
+  - TS2304（L70, C59）：[syntax_check] Cannot find name 'TruthFunctions'.
+  - TS2304（L71, C31）：[syntax_check] Cannot find name 'TruthFunctions'.
+  - TS2304（L72, C31）：[syntax_check] Cannot find name 'TruthFunctions'.
+  - TS2304（L83, C36）：[syntax_check] Cannot find name 'Conjunction'.
+  - TS2304（L83, C50）：[syntax_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L84, C65）：[syntax_check] Cannot find name 'TemporalRules'.
+  - TS2304（L87, C24）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L91, C18）：[syntax_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L94, C46）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L97, C23）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L97, C54）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L107, C30）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L107, C44）：[syntax_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L107, C63）：[syntax_check] Cannot find name 'ImaginationSpace'.
+  - TS2304（L124, C37）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L125, C17）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L125, C51）：[syntax_check] Cannot find name 'Operator'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +110,78 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'ImaginationSpace'.` @ L9
+- `[full_check] Cannot find name 'NullOperator'.` @ L19
+- `[full_check] Cannot find name 'NullOperator'.` @ L19
+- `[full_check] Cannot find name 'NullOperator'.` @ L20
+- `[full_check] Cannot find name 'NullOperator'.` @ L20
+- `[full_check] Cannot find name 'Nar'.` @ L21
+- `[full_check] Cannot find name 'Nar'.` @ L23
+- `[full_check] Cannot find name 'ImaginationSpace'.` @ L46
+- `[full_check] Cannot find name 'TruthValue'.` @ L46
+- `[full_check] Cannot find name 'TruthValue'.` @ L48
+- `[full_check] Cannot find name 'TruthValue'.` @ L53
+- `[full_check] Cannot find name 'TruthValue'.` @ L53
+- `[full_check] Cannot find name 'TruthValue'.` @ L56
+- `[full_check] Cannot find name 'TruthValue'.` @ L56
+- `[full_check] Cannot find name 'TruthValue'.` @ L66
+- `[full_check] Cannot find name 'TruthValue'.` @ L66
+- `[full_check] Cannot find name 'TruthValue'.` @ L68
+- `[full_check] Cannot find name 'TruthValue'.` @ L68
+- `[full_check] Cannot find name 'TruthValue'.` @ L70
+- `[full_check] Cannot find name 'TruthFunctions'.` @ L70
+- `[full_check] Cannot find name 'TruthFunctions'.` @ L71
+- `[full_check] Cannot find name 'TruthFunctions'.` @ L72
+- `[full_check] Cannot find name 'Conjunction'.` @ L83
+- `[full_check] Cannot find name 'ImaginationSpace'.` @ L83
+- `[full_check] Cannot find name 'TemporalRules'.` @ L84
+- `[full_check] Cannot find name 'Term'.` @ L87
+- `[full_check] Cannot find name 'ImaginationSpace'.` @ L91
+- `[full_check] Cannot find name 'Operation'.` @ L94
+- `[full_check] Cannot find name 'Operation'.` @ L97
+- `[full_check] Cannot find name 'Operation'.` @ L97
+- `[full_check] Cannot find name 'Operation'.` @ L107
+- `[full_check] Cannot find name 'ImaginationSpace'.` @ L107
+- `[full_check] Cannot find name 'ImaginationSpace'.` @ L107
+- `[full_check] Cannot find name 'Operation'.` @ L124
+- `[full_check] Cannot find name 'Operator'.` @ L125
+- `[full_check] Cannot find name 'Operator'.` @ L125
+- `[syntax_check] Cannot find name 'ImaginationSpace'.` @ L9
+- `[syntax_check] Cannot find name 'NullOperator'.` @ L19
+- `[syntax_check] Cannot find name 'NullOperator'.` @ L19
+- `[syntax_check] Cannot find name 'NullOperator'.` @ L20
+- `[syntax_check] Cannot find name 'NullOperator'.` @ L20
+- `[syntax_check] Cannot find name 'Nar'.` @ L21
+- `[syntax_check] Cannot find name 'Nar'.` @ L23
+- `[syntax_check] Cannot find name 'ImaginationSpace'.` @ L46
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L46
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L48
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L53
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L53
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L56
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L56
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L66
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L66
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L68
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L68
+- `[syntax_check] Cannot find name 'TruthValue'.` @ L70
+- `[syntax_check] Cannot find name 'TruthFunctions'.` @ L70
+- `[syntax_check] Cannot find name 'TruthFunctions'.` @ L71
+- `[syntax_check] Cannot find name 'TruthFunctions'.` @ L72
+- `[syntax_check] Cannot find name 'Conjunction'.` @ L83
+- `[syntax_check] Cannot find name 'ImaginationSpace'.` @ L83
+- `[syntax_check] Cannot find name 'TemporalRules'.` @ L84
+- `[syntax_check] Cannot find name 'Term'.` @ L87
+- `[syntax_check] Cannot find name 'ImaginationSpace'.` @ L91
+- `[syntax_check] Cannot find name 'Operation'.` @ L94
+- `[syntax_check] Cannot find name 'Operation'.` @ L97
+- `[syntax_check] Cannot find name 'Operation'.` @ L97
+- `[syntax_check] Cannot find name 'Operation'.` @ L107
+- `[syntax_check] Cannot find name 'ImaginationSpace'.` @ L107
+- `[syntax_check] Cannot find name 'ImaginationSpace'.` @ L107
+- `[syntax_check] Cannot find name 'Operation'.` @ L124
+- `[syntax_check] Cannot find name 'Operator'.` @ L125
+- `[syntax_check] Cannot find name 'Operator'.` @ L125
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -67,6 +217,7 @@
 ## 6. 一致性风险
 
 - 文件内仍保留 4 处 TODO，需对照 Java 填补。
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位

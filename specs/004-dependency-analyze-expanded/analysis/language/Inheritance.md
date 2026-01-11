@@ -14,8 +14,69 @@
 
 - 执行的命令：`npx tsc src/language/Inheritance.ts --noEmit`
 - 关键输出：
-  - 无报错
-- 总结：命令通过，未触发额外依赖。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
+  - TS2304（L11, C34）：[full_check] Cannot find name 'Statement'.
+  - TS2304（L18, C32）：[full_check] Cannot find name 'Term'.
+  - TS2304（L20, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L20, C45）：[full_check] Cannot find name 'Term'.
+  - TS2304（L24, C40）：[full_check] Cannot find name 'Term'.
+  - TS2339（L29, C31）：[full_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L36, C47）：[full_check] Cannot find name 'Term'.
+  - TS2304（L36, C53）：[full_check] Cannot find name 'Term'.
+  - TS2349（L39, C17）：[full_check] This expression is not callable.
+  - TS17009（L39, C17）：[full_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L59, C21）：[full_check] Cannot find name 'Term'.
+  - TS2339（L64, C55）：[full_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L64, C91）：[full_check] Cannot find name 'getPredicate'.
+  - TS2304（L71, C38）：[full_check] Cannot find name 'Term'.
+  - TS2322（L75, C21）：[full_check] Type 'null' is not assignable to type 'Inheritance'.
+  - TS2339（L79, C65）：[full_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2304（L99, C37）：[full_check] Cannot find name 'Term'.
+  - TS2304（L99, C54）：[full_check] Cannot find name 'Term'.
+  - TS2304（L99, C61）：[full_check] Cannot find name 'Term'.
+  - TS2304（L110, C33）：[full_check] Cannot find name 'Term'.
+  - TS2304（L110, C50）：[full_check] Cannot find name 'Term'.
+  - TS2304（L112, C55）：[full_check] Cannot find name 'invalidStatement'.
+  - TS2322（L113, C13）：[full_check] Type 'null' is not assignable to type 'Inheritance'.
+  - TS2304（L116, C58）：[full_check] Cannot find name 'Product'.
+  - TS2304（L117, C63）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L119, C13）：[full_check] Cannot find name 'Debug'.
+  - TS2304（L127, C20）：[full_check] Cannot find name 'Operation'.
+  - TS2304（L127, C48）：[full_check] Cannot find name 'Operator'.
+  - TS2304（L127, C70）：[full_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L139, C24）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L140, C16）：[full_check] Cannot find name 'NativeOperator'.
+  - TS2304（L11, C34）：[syntax_check] Cannot find name 'Statement'.
+  - TS2304（L18, C32）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L20, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L20, C45）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L24, C40）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L29, C31）：[syntax_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L36, C47）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L36, C53）：[syntax_check] Cannot find name 'Term'.
+  - TS2349（L39, C17）：[syntax_check] This expression is not callable.
+  - TS17009（L39, C17）：[syntax_check] 'super' must be called before accessing 'this' in the constructor of a derived class.
+  - TS2304（L59, C21）：[syntax_check] Cannot find name 'Term'.
+  - TS2339（L64, C55）：[syntax_check] Property 'cert' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/security/index")'.
+  - TS2304（L64, C91）：[syntax_check] Cannot find name 'getPredicate'.
+  - TS2304（L71, C38）：[syntax_check] Cannot find name 'Term'.
+  - TS2322（L75, C21）：[syntax_check] Type 'null' is not assignable to type 'Inheritance'.
+  - TS2339（L79, C65）：[syntax_check] Property 'getClass' does not exist on type 'typeof JavaObject'.
+  - TS2304（L99, C37）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L99, C54）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L99, C61）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L110, C33）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L110, C50）：[syntax_check] Cannot find name 'Term'.
+  - TS2304（L112, C55）：[syntax_check] Cannot find name 'invalidStatement'.
+  - TS2322（L113, C13）：[syntax_check] Type 'null' is not assignable to type 'Inheritance'.
+  - TS2304（L116, C58）：[syntax_check] Cannot find name 'Product'.
+  - TS2304（L117, C63）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L119, C13）：[syntax_check] Cannot find name 'Debug'.
+  - TS2304（L127, C20）：[syntax_check] Cannot find name 'Operation'.
+  - TS2304（L127, C48）：[syntax_check] Cannot find name 'Operator'.
+  - TS2304（L127, C70）：[syntax_check] Cannot find name 'CompoundTerm'.
+  - TS2304（L139, C24）：[syntax_check] Cannot find name 'NativeOperator'.
+  - TS2304（L140, C16）：[syntax_check] Cannot find name 'NativeOperator'.
+- 总结：存在语法错误，需要比对 Java 语句结构。；已通过 `npx tsc --noEmit` ; 暂无针对性测试
 
 ## 3. TypeScript 依赖梳理
 
@@ -31,7 +92,54 @@
 
 ### 3.3 缺失符号 / 未决依赖
 
-（无缺失符号，报错均与语法结构相关。）
+- `[full_check] Cannot find name 'Statement'.` @ L11
+- `[full_check] Cannot find name 'Term'.` @ L18
+- `[full_check] Cannot find name 'Term'.` @ L20
+- `[full_check] Cannot find name 'Term'.` @ L20
+- `[full_check] Cannot find name 'Term'.` @ L24
+- `[full_check] Cannot find name 'Term'.` @ L36
+- `[full_check] Cannot find name 'Term'.` @ L36
+- `[full_check] Cannot find name 'Term'.` @ L59
+- `[full_check] Cannot find name 'getPredicate'.` @ L64
+- `[full_check] Cannot find name 'Term'.` @ L71
+- `[full_check] Cannot find name 'Term'.` @ L99
+- `[full_check] Cannot find name 'Term'.` @ L99
+- `[full_check] Cannot find name 'Term'.` @ L99
+- `[full_check] Cannot find name 'Term'.` @ L110
+- `[full_check] Cannot find name 'Term'.` @ L110
+- `[full_check] Cannot find name 'invalidStatement'.` @ L112
+- `[full_check] Cannot find name 'Product'.` @ L116
+- `[full_check] Cannot find name 'Operator'.` @ L117
+- `[full_check] Cannot find name 'Debug'.` @ L119
+- `[full_check] Cannot find name 'Operation'.` @ L127
+- `[full_check] Cannot find name 'Operator'.` @ L127
+- `[full_check] Cannot find name 'CompoundTerm'.` @ L127
+- `[full_check] Cannot find name 'NativeOperator'.` @ L139
+- `[full_check] Cannot find name 'NativeOperator'.` @ L140
+- `[syntax_check] Cannot find name 'Statement'.` @ L11
+- `[syntax_check] Cannot find name 'Term'.` @ L18
+- `[syntax_check] Cannot find name 'Term'.` @ L20
+- `[syntax_check] Cannot find name 'Term'.` @ L20
+- `[syntax_check] Cannot find name 'Term'.` @ L24
+- `[syntax_check] Cannot find name 'Term'.` @ L36
+- `[syntax_check] Cannot find name 'Term'.` @ L36
+- `[syntax_check] Cannot find name 'Term'.` @ L59
+- `[syntax_check] Cannot find name 'getPredicate'.` @ L64
+- `[syntax_check] Cannot find name 'Term'.` @ L71
+- `[syntax_check] Cannot find name 'Term'.` @ L99
+- `[syntax_check] Cannot find name 'Term'.` @ L99
+- `[syntax_check] Cannot find name 'Term'.` @ L99
+- `[syntax_check] Cannot find name 'Term'.` @ L110
+- `[syntax_check] Cannot find name 'Term'.` @ L110
+- `[syntax_check] Cannot find name 'invalidStatement'.` @ L112
+- `[syntax_check] Cannot find name 'Product'.` @ L116
+- `[syntax_check] Cannot find name 'Operator'.` @ L117
+- `[syntax_check] Cannot find name 'Debug'.` @ L119
+- `[syntax_check] Cannot find name 'Operation'.` @ L127
+- `[syntax_check] Cannot find name 'Operator'.` @ L127
+- `[syntax_check] Cannot find name 'CompoundTerm'.` @ L127
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L139
+- `[syntax_check] Cannot find name 'NativeOperator'.` @ L140
 
 ## 4. Java 依赖对照（`deps.xml`）
 
@@ -61,6 +169,7 @@
 
 ## 6. 一致性风险
 
+- `tsc` 报错阻塞进一步分析，需要回填语句结构。
 - 缺少显式 import，需依赖 Java/ts-analysis 交叉校验。
 
 ## 7. 路线图定位
