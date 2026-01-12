@@ -1,3 +1,4 @@
+//! Java source: opennars/util/ListUtil.java
 import { java, JavaObject } from "jree";
 
 

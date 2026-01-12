@@ -1,3 +1,4 @@
+//! Java source: opennars/entity/TaskLink.java
 import { java, type int, JavaObject, type long, type short, S } from "jree";
 
 

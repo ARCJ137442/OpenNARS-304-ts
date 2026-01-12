@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Term.java
 import { java, JavaObject, type int, type short, type char, S } from "jree";
 import { Texts } from "../io/Texts";
 import { SetExt } from "./SetExt";

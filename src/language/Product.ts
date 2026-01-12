@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Product.java
 import { java, type int, S } from "jree";
 
 

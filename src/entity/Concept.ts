@@ -1,3 +1,4 @@
+//! Java source: opennars/entity/Concept.java
 import { java, type int, type float, JavaObject, type long } from "jree";
 import { Item } from "./Item";
 import { Term } from "../language/Term";

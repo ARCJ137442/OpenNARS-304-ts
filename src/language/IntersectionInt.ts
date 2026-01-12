@@ -1,3 +1,4 @@
+//! Java source: opennars/language/IntersectionInt.java
 import { java, S } from "jree";
 
 

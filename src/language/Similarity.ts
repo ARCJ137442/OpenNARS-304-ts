@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Similarity.java
 import { java, S } from "jree";
 
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/plugin/perception/SensoryChannel.java
 import { java, JavaObject, type int, type double, S } from "jree";
 
 

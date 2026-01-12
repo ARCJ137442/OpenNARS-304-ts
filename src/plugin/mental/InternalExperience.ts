@@ -1,3 +1,4 @@
+//! Java source: opennars/plugin/mental/InternalExperience.java
 import { java, JavaObject, type float, type double, type int, S } from "jree";
 import { truthToWordTerm } from "../../entity/TruthValueTerm";
 

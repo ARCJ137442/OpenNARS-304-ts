@@ -1,3 +1,4 @@
+//! Java source: opennars/storage/Distributor.java
 import type { int } from "../types";
 
 /**

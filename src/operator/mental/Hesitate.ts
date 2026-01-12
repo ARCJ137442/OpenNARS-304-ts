@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/Hesitate.java
 import { java } from "jree";
 
 

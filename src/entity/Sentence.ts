@@ -1,3 +1,4 @@
+//! Java source: opennars/entity/Sentence.java
 import { java, JavaObject, type char, type int, type long, type float, type double, S } from "jree";
 import { Texts } from "../io/Texts";
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Disjunction.java
 import { java, S } from "jree";
 
 

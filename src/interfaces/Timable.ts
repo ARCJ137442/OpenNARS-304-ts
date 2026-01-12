@@ -1,3 +1,4 @@
+//! Java source: opennars/interfaces/Timable.java
 
 import { java, type long } from "jree";
 

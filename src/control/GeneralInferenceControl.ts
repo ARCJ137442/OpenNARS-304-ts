@@ -1,3 +1,4 @@
+//! Java source: opennars/control/GeneralInferenceControl.java
 import { java, JavaObject, type float, type int } from "jree";
 
 

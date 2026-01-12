@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/misc/Reflect.java
 import { java, type int, S } from "jree";
 
 

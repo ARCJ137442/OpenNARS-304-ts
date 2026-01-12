@@ -1,3 +1,4 @@
+//! Java source: opennars/language/DifferenceExt.java
 import { java, S } from "jree";
 
 

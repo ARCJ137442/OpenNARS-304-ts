@@ -1,3 +1,4 @@
+//! Java source: opennars/entity/TLink.java
 
 import { java, type short, type int, type float } from "jree";
 

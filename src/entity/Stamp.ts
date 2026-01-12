@@ -1,3 +1,4 @@
+//! Java source: opennars/entity/Stamp.java
 import { java, JavaObject, type int, type long, type float, S } from "jree";
 
 

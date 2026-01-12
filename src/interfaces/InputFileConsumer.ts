@@ -1,3 +1,4 @@
+//! Java source: opennars/interfaces/InputFileConsumer.java
 
 import { java } from "jree";
 

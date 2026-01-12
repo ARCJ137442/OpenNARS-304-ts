@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Negation.java
 import { java, S } from "jree";
 
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/Name.java
 import { java } from "jree";
 
 

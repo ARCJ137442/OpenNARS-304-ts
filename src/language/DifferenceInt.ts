@@ -1,3 +1,4 @@
+//! Java source: opennars/language/DifferenceInt.java
 import { java, S } from "jree";
 
 

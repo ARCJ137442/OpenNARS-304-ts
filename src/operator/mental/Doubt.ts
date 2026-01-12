@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/Doubt.java
 import { java } from "jree";
 
 

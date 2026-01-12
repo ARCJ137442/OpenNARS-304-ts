@@ -1,3 +1,4 @@
+//! Java source: opennars/inference/RuleTables.java
 import { java, JavaObject, type short, type int, S } from "jree";
 
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/inference/TruthFunctions.java
 import { java, S, type int, type float, type double, type long } from "jree";
 
 

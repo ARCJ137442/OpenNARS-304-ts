@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/Anticipate.java
 import { java, type float, type long, type double, JavaObject, S } from "jree";
 
 

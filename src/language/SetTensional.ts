@@ -1,3 +1,4 @@
+//! Java source: opennars/language/SetTensional.java
 import { java, type char, type int } from "jree";
 
 

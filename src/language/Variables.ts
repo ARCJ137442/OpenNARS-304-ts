@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Variables.java
 import { java, JavaObject, type char, type int, S } from "jree";
 
 

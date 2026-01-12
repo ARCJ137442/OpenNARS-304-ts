@@ -1,3 +1,4 @@
+//! Java source: opennars/operator/mental/Consider.java
 import { java } from "jree";
 
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/language/Instance.java
 
 import { java, JavaObject } from "jree";
 

@@ -1,3 +1,4 @@
+//! Java source: opennars/io/events/Events.java
 import { java, JavaObject, type long, type int, S } from "jree";
 
 

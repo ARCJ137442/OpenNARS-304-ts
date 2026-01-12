@@ -1,3 +1,4 @@
+//! Java source: opennars/interfaces/SensoryChannelConsumer.java
 import { java } from "jree";
 
 
