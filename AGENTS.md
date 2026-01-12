@@ -5,7 +5,7 @@
 
 ## 项目信息
 
-- 项目名称：opennars-304-master
+- 项目名称：opennars-304-ts
 - 工作方式：LeanSpec 规格驱动开发（SDD）
 
 ## 🚨至关重要：在任何任务之前
