@@ -26,6 +26,7 @@ function parseArgs(argv) {
     start: 0,
     limit: null,
     chunkSize: null,
+    timeoutMs: null,
     all: false,
     summary: false,
   };
@@ -36,6 +37,7 @@ function parseArgs(argv) {
     else if (argument === "--start") options.start = Number(argv[++i]);
     else if (argument === "--limit") options.limit = Number(argv[++i]);
     else if (argument === "--chunk-size") options.chunkSize = Number(argv[++i]);
+    else if (argument === "--timeout-ms") options.timeoutMs = Number(argv[++i]);
     else if (argument === "--all") options.all = true;
     else if (argument === "--summary") options.summary = true;
     else throw new Error(`Unknown argument: ${argument}`);
@@ -51,6 +53,9 @@ function parseArgs(argv) {
   }
   if (options.chunkSize !== null && (!Number.isInteger(options.chunkSize) || options.chunkSize < 1)) {
     throw new Error("--chunk-size must be a positive integer");
+  }
+  if (options.timeoutMs !== null && (!Number.isInteger(options.timeoutMs) || options.timeoutMs < 1)) {
+    throw new Error("--timeout-ms must be a positive integer");
   }
   return options;
 }
@@ -92,14 +97,30 @@ function compileJavaAdapter() {
   return { outputDirectory, classpath: [outputDirectory, classpath].join(delimiter) };
 }
 
-function runJava(files, cycles) {
+function timeoutRows(files, cycles, engine, timeoutMs) {
+  return files.map((file) => ({
+    file,
+    cycles,
+    expected: null,
+    passed: 0,
+    matched: [],
+    ok: false,
+    error: `${engine} runner timed out after ${timeoutMs} ms`,
+  }));
+}
+
+function runJava(files, cycles, timeoutMs) {
   const adapter = compileJavaAdapter();
   try {
     const result = spawnSync("java", ["-cp", adapter.classpath, "NalParityRunner", String(cycles), ...files], {
       cwd: projectRoot,
       encoding: "utf8",
       maxBuffer: 32 * 1024 * 1024,
+      ...(timeoutMs === null ? {} : { timeout: timeoutMs }),
     });
+    if (result.error?.code === "ETIMEDOUT" || result.signal != null) {
+      return timeoutRows(files, cycles, "Java", timeoutMs);
+    }
     if (result.status !== 0) {
       throw new Error(`Java parity runner failed:\n${result.stdout}\n${result.stderr}`);
     }
@@ -109,13 +130,17 @@ function runJava(files, cycles) {
   }
 }
 
-function runTs(files, cycles) {
+function runTs(files, cycles, timeoutMs) {
   const cli = join(projectRoot, "scripts", "cli.mjs");
   const result = spawnSync(process.execPath, ["--loader", "./scripts/ts-loader.mjs", cli, "--cycles", String(cycles), ...files], {
     cwd: projectRoot,
     encoding: "utf8",
     maxBuffer: 32 * 1024 * 1024,
+    ...(timeoutMs === null ? {} : { timeout: timeoutMs }),
   });
+  if (result.error?.code === "ETIMEDOUT" || result.signal != null) {
+    return timeoutRows(files, cycles, "TypeScript", timeoutMs);
+  }
   if (result.status !== 0) {
     throw new Error(`TypeScript CLI failed:\n${result.stdout}\n${result.stderr}`);
   }
@@ -149,8 +174,8 @@ async function main() {
     if (options.chunkSize !== null) {
       console.error(`running chunk ${index + 1}/${chunks.length} (${chunk.length} files)`);
     }
-    if (options.engine !== "ts") javaResults.push(...runJava(chunk, options.cycles));
-    if (options.engine !== "java") tsResults.push(...runTs(chunk, options.cycles));
+    if (options.engine !== "ts") javaResults.push(...runJava(chunk, options.cycles, options.timeoutMs));
+    if (options.engine !== "java") tsResults.push(...runTs(chunk, options.cycles, options.timeoutMs));
   }
   const byFile = (rows) => new Map(rows.map((row) => [resolve(row.file), row]));
   const javaByFile = byFile(javaResults);
@@ -173,6 +198,7 @@ async function main() {
   const summary = {
     engine: options.engine,
     cycles: options.cycles,
+    timeoutMs: options.timeoutMs,
     files: rows.length,
     passed: rows.length - failures.length,
     failed: failures.length,
@@ -189,6 +215,7 @@ async function main() {
     console.log(JSON.stringify({
       engine: summary.engine,
       cycles: summary.cycles,
+      timeoutMs: summary.timeoutMs,
       files: summary.files,
       passed: summary.passed,
       failed: summary.failed,

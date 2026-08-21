@@ -58,4 +58,15 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const setMember = Term.get("setMember");
     const arrayConstructedSet = new SetExt([setMember]);
     assert.equal(arrayConstructedSet.term[0], setMember);
+
+    const { Conjunction } = await import("../../src/language/Conjunction.ts");
+    const conjunction = Conjunction.make([Term.get("a"), Term.get("b")]) as InstanceType<typeof Conjunction>;
+    const clonedConjunction = conjunction.clone();
+    assert.equal(String(clonedConjunction.toString()), "(&&,a,b)");
+
+    const { CompoundTerm } = await import("../../src/language/CompoundTerm.ts");
+    const indexedTerm = Term.get("M1[-1.0,0.0]");
+    const rectangle = CompoundTerm.UpdateConvRectangle([indexedTerm]);
+    assert.equal(rectangle.index_variable, "M1");
+    assert.deepEqual(Array.from(rectangle.term_indices ?? []), [1, 1, -1, 0, 1, 1]);
 });

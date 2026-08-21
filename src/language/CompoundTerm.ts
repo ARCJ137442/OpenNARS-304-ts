@@ -105,7 +105,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
             if (t !== null && t.term_indices !== null) {
                 if (!calculateTermIndices ||
                     (t.index_variable !== null && index_last_var !== null &&
-                        (!t.index_variable.equals(index_last_var)))) {
+                        (String(t.index_variable) !== String(index_last_var)))) {
                     calculateTermIndices = false;
                     hasTermIndices = false;
                     continue; // different "channels", don't calculate term indices

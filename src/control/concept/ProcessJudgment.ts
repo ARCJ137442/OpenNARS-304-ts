@@ -19,6 +19,15 @@ import type { Term } from "../../language/Term.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 import type { Parameters } from "../../main/Parameters.ts";
 
+const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean) => {
+    for (const item of items) {
+        if (predicate(item)) {
+            return { isPresent: () => true, get: () => item };
+        }
+    }
+    return { isPresent: () => false, get: () => { throw new java.util.NoSuchElementException(); } };
+};
+
 
 
 export class ProcessJudgment extends JavaObject {

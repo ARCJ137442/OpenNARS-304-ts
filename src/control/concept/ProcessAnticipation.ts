@@ -21,6 +21,7 @@ import { Implication } from "../../language/Implication.ts";
 import { Interval } from "../../language/Interval.ts";
 import { Statement } from "../../language/Statement.ts";
 import { Tense } from "../../language/Tense.ts";
+import type { Term } from "../../language/Term.ts";
 import type { Nar } from "../../main/Nar.ts";
 import { Anticipate } from "../../operator/mental/Anticipate.ts";
 import { Operator } from "../../operator/Operator.ts";

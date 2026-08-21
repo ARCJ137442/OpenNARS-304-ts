@@ -1,6 +1,6 @@
 # Java → TypeScript 迁移纠正模式库
 
-版本：0.3（2026-08-22）
+版本：0.4（2026-08-22）
 
 本文件把当前 OpenNARS 转写中反复出现的纠正归纳为可检索、可验证、可批量处理的模式。它不是“看到字符串就替换”的规则表：每条模式都必须同时说明识别条件、正确的 TypeScript 语义、验证门禁和自动化边界。
 
@@ -8,12 +8,9 @@
 
 使用本仓库的 TypeScript 5.4.5 编译器检查当前 `src` 与 `test`，并用迁移扫描器屏蔽注释和字符串后统计源码，得到：
 
-- 7,077 行 `tsc` 输出，其中 6,667 条错误；
-- 5,128 条 TS2304，主要是 Java 包级隐式依赖没有变成 TypeScript `import`；
-- 34 条 TS17009，主要是 Java 构造器委托 `this(...)`；
-- 27 处迁移扫描器识别出的构造器委托，分布在 17 个文件；
-- 181 处 `.class`；
-- 259 处 Java 字符串方法、420 处 Java 集合方法调用习惯。
+- `tsc --noEmit --pretty false` 输出 4,403 行，其中 3,674 条 `error TS`，包括 1,613 条 TS2304 和 15 条 TS17009；
+- 迁移扫描器覆盖 163 个 TypeScript 文件，识别出 11 处构造器委托、189 处 `.class`、241 处 Java 字符串方法和 458 处 Java 集合方法调用习惯；
+- 扫描器还识别出 1,926 处 jree 运行时类型边界、68 处匿名 Java 类和 7 处静态初始化模式。
 
 这说明迁移的首要问题是“重复的语义转换模式没有固化”，不是单个文件的偶然手工错误。
 
@@ -185,6 +182,22 @@ Java 子类可以继承 `equals(Object)`，同时声明 `equals(Term, Term)`；T
 
 涉及文件示例：`src/operator/FunctionOperator.ts`、`test/node/core-runtime.test.ts`。
 
+#### B11. Java 随机数的 48 位状态不能交给 JavaScript 位运算
+
+Java `Random` 的线性同余状态是 48 位；jree 迁移实现若用 JavaScript 位运算处理它，会在 `next(>16)` 时截断为 32 位，若把两个 `BigInt` 相除后再转 `Number`，`nextDouble()` 还会退化为 0。结果不是单纯的数值误差，而是概率分支、随机统一和任务选择整体改变。
+
+纠正方式是在项目运行时兼容层维护 Java 48 位状态，按 Java 的 `nextInt`、`nextFloat`、`nextDouble` 公式产生数值；不要在业务推理代码中散落随机数替代实现。验证必须使用 Java 已知序列，例如 seed=1 的 `nextDouble()`、无界 `nextInt()` 和有界 `nextInt(10)`。
+
+涉及文件示例：`src/runtime/jree-compat.ts`、`test/node/random-compat.test.ts`。
+
+#### B12. Java `String.equals` 迁移到原生字符串必须按文本比较
+
+Java 代码中的 `String.equals` 在 TypeScript 目标对象变成原生 `string` 后不能继续调用。比如卷积矩形的 `index_variable` 可能已经是原生文本，直接保留 `.equals()` 会在视觉语料首次构造相似关系时抛出 `TypeError`。
+
+纠正方式先确认边界值的实际形态，再使用 `String(value) === String(other)` 或明确的原生字符串比较；不能给所有字符串伪造 `.equals()`。验证应覆盖有索引项、不同索引变量和无索引项，并至少运行一条视觉/空间 NAL 夹具。
+
+涉及文件示例：`src/language/CompoundTerm.ts`、`test/node/core-runtime.test.ts`。
+
 ### C 级：必须做语义重写，禁止自动替换
 
 #### C1. Java 包装类型与原生类型
@@ -276,6 +289,8 @@ Node import smoke
 
 该命令需要先生成 `java-master/target/classes`、`java-master/target/test-classes` 和 Java 快照 jar。它只锁定局部数值语义，不代表 TypeScript 的 NAL/CLI 端到端链路已经完成；整机差分仍由独立的 NAL fixture 负责。Java 代码在这里是行为基线，TypeScript 侧新增测试和修补应优先围绕已有实现加固，不以重写既有算法为目标。
 
+NAL 夹具还可能包含单独的数字行，例如 `10000` 或 `50000`；这是 Java NAL 测试语义中的“立即执行指定周期”，不能误当作普通文本。CLI 的 `--cycles` 是文件输入完成后的追加周期，因此测试报告必须同时记录夹具内置周期和追加周期，避免把重复执行误判成算法性能问题。
+
 ## 4. 自动化边界
 
 `scripts/converting/scan-migration-patterns.mjs` 只负责扫描和计数，不默认改写源码。`scripts/converting/apply-migration-patterns.mjs` 目前只实现三个 A 级窄规则：导出类型别名中的重复泛型尖括号、明确的 `| ===`/`& ===` 运算符残留，以及相对 ESM 导入补 `.ts`；默认仍然是预览，只有显式 `--write` 才写回。原因是构造器委托、隐式 import、包装类型和集合调用都可能引入循环依赖或改变初始化顺序。
@@ -288,7 +303,7 @@ Node import smoke
 
 ## 5. 当前优先级
 
-1. 固化同参数数目重载、继承方法重载遮蔽、构造器委托和静态成员引用的人工重写模板；
+1. 固化同参数数目重载、继承方法重载遮蔽、构造器委托、静态成员引用和随机数兼容的人工重写模板；
 2. 为最小语言实体闭包建立显式 import 图，并继续修复 JavaString/集合边界；
 3. 把 Java 包装类型收敛到 TS 边界接口；
 4. 再批量处理 A 级语法模式；

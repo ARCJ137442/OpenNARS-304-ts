@@ -23,6 +23,7 @@ import { Variables } from "../../language/Variables.ts";
 import { FunctionOperator } from "../../operator/FunctionOperator.ts";
 import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
+import { ProcessAnticipation } from "./ProcessAnticipation.ts";
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
 

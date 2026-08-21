@@ -87,7 +87,7 @@ export class Conjunction extends CompoundTerm {
         switch (args.length) {
             case 0: {
 
-                return new Conjunction(term, this.temporalOrder, java.text.Normalizer.isNormalized(), this.isSpatial);
+                return new Conjunction(this.term, this.temporalOrder, this.isNormalized(), this.isSpatial);
 
 
                 break;

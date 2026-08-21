@@ -1,7 +1,9 @@
 //! Java source: opennars/inference/CompositionalRules.java
 import { java, JavaObject, type int, type long, type float } from "jree";
 import { BudgetValue } from "../entity/BudgetValue.ts";
+import type { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
+import { Stamp } from "../entity/Stamp.ts";
 import { Task } from "../entity/Task.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Debug } from "../main/Debug.ts";
@@ -24,6 +26,7 @@ import { Interval } from "../language/Interval.ts";
 import { Negation } from "../language/Negation.ts";
 import { SetExt } from "../language/SetExt.ts";
 import { SetInt } from "../language/SetInt.ts";
+import { Similarity } from "../language/Similarity.ts";
 import { Terms } from "../language/Terms.ts";
 import { Variable } from "../language/Variable.ts";
 import { Variables } from "../language/Variables.ts";
