@@ -1,5 +1,44 @@
 //! Java source: opennars/main/Nar.java
+import { readFileSync } from "node:fs";
 import { java, type long, JavaObject, S, type int, type double, closeResources, handleResourceError, throwResourceError } from "jree";
+import { Parameters } from "./Parameters.ts";
+import { Debug } from "./Debug.ts";
+import { ConfigReader } from "../io/ConfigReader.ts";
+import { Narsese } from "../io/Narsese.ts";
+import { Parser } from "../io/Parser.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Events } from "../io/events/Events.ts";
+import { EventEmitter } from "../io/events/EventEmitter.ts";
+import { OutputHandler } from "../io/events/OutputHandler.ts";
+import { AnswerHandler } from "../io/events/AnswerHandler.ts";
+import { Inheritance } from "../language/Inheritance.ts";
+import { SetExt } from "../language/SetExt.ts";
+import { SetInt } from "../language/SetInt.ts";
+import { Tense } from "../language/Tense.ts";
+import { Term } from "../language/Term.ts";
+import { Operator } from "../operator/Operator.ts";
+import { Emotions } from "../plugin/mental/Emotions.ts";
+import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
+import { SensoryChannel } from "../plugin/perception/SensoryChannel.ts";
+import { Bag } from "../storage/Bag.ts";
+import { Memory } from "../storage/Memory.ts";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { Concept } from "../entity/Concept.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { Stamp } from "../entity/Stamp.ts";
+import { Task } from "../entity/Task.ts";
+import type { Plugin } from "../plugin/Plugin.ts";
+import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
+import type { Timable } from "../interfaces/Timable.ts";
+
+const isNumeric = (value: unknown): boolean => /^[-+]?\d+(?:\.\d+)?$/.test(String(value).trim());
+const CyclesStart = Events.CyclesStart;
+const CyclesEnd = Events.CyclesEnd;
+const printInfo = (message: unknown): void => {
+    if (typeof process === "undefined" || process.release?.name !== "node") {
+        java.lang.System.out.println(message);
+    }
+};
 
 
 
@@ -26,7 +65,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     /*
      * System clock, relatively defined to guarantee the repeatability of behaviors
      */
-    private cycle: java.lang.Long = new java.lang.Long(0);
+    private cycleCounter: long = 0;
 
     /**
      * The information about the version of the project
@@ -105,32 +144,14 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
             public constructor(plugin: Plugin, enabled: boolean);
             public constructor(...args: unknown[]) {
-                switch (args.length) {
-                    case 1: {
-                        const [plugin] = args as [Plugin];
-
-
-                        this(plugin, true);
-
-
-                        break;
-                    }
-
-                    case 2: {
-                        const [plugin, enabled] = args as [Plugin, boolean];
-
-
-                        super();
-                        this.plugin = plugin;
-                        this.setEnabled(enabled);
-
-
-                        break;
-                    }
-
-                    default: {
-                        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-                    }
+                if (args.length === 1 || args.length === 2) {
+                    const plugin = args[0] as Plugin;
+                    const enabled = args.length === 2 ? args[1] as boolean : true;
+                    super();
+                    this.plugin = plugin;
+                    this.setEnabled(enabled);
+                } else {
+                    throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
                 }
             }
 
@@ -275,7 +296,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      * Reset the system with an empty memory and reset clock. Called locally.
      */
     public reset(): void {
-        this.cycle = 0 as long;
+        this.cycleCounter = 0 as long;
         this.memory.reset();
     }
 
@@ -341,11 +362,11 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             }
             // 总是打印信息
             if (this.minCyclePeriodMS > 0)
-                java.lang.System.out.println("INFO: Running at " + this.minCyclePeriodMS + "ms per cycle.");
+                printInfo("INFO: Running at " + this.minCyclePeriodMS + "ms per cycle.");
             else if (this.minCyclePeriodMS === 0)
-                java.lang.System.out.println("INFO: Running at full speed.");
+                printInfo("INFO: Running at full speed.");
             else
-                java.lang.System.out.println("INFO: Auto-cycling off.");
+                printInfo("INFO: Auto-cycling off.");
             return true;
         }
         // 设置运行速度（负数为关闭）
@@ -355,11 +376,11 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             return true;
         }
         // 推理循环
-        else if (StringUtils.isNumeric(text)) {
+        else if (isNumeric(text)) {
             let retVal: java.lang.Integer = java.lang.Integer.parseInt(text);
             // * 🚩【2024-04-19 21:08:03】现在无论如何都要运行推理周期
             // if (!running) {
-            java.lang.System.out.println("INFO: Running " + retVal + " cycles.");
+            printInfo("INFO: Running " + retVal + " cycles.");
             this.emit(CyclesStart.class);
             for (let i: int = 0; i < retVal; i++) {
                 this.cycle();
@@ -378,42 +399,40 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     public addInput(...args: unknown[]): void | Nar {
         switch (args.length) {
             case 1: {
-                const [text] = args as [java.lang.String];
-
-
-                text = text.trim();
+                const [rawText] = args as [java.lang.String];
+                const inputText = String(rawText).trim();
                 let narsese: Parser = new Narsese(this);
-                if (text.contains("\n") && this.addMultiLineInput(text)) {
+                if (inputText.includes("\n") && this.addMultiLineInput(new java.lang.String(inputText))) {
                     return;
                 }
                 // Ignore any input that is just a comment
-                if (text.startsWith("\'") || text.startsWith("//") || text.trim().length() <= 0) {
-                    if (text.trim().length() > 0) {
-                        this.emit(org.opennars.io.events.OutputHandler.ECHO.class, text);
+                if (inputText.startsWith("\'") || inputText.startsWith("//") || inputText.length <= 0) {
+                    if (inputText.length > 0) {
+                        this.emit(OutputHandler.ECHO.class, inputText);
                     }
                     return;
                 }
                 try {
-                    if (this.addCommand(text)) {
+                    if (this.addCommand(inputText as unknown as java.lang.String)) {
                         return;
                     }
                 } catch (ex) {
                     if (ex instanceof java.io.IOException) {
-                        throw new java.lang.IllegalStateException("I/O command failed: " + text, ex);
+                        throw new java.lang.IllegalStateException("I/O command failed: " + inputText, ex);
                     } else {
                         throw ex;
                     }
                 }
                 let task: Task = null;
                 try {
-                    task = narsese.parseTask(text);
+                    task = narsese.parseTask(new java.lang.String(inputText));
                 } catch (e) {
                     if (e instanceof Parser.InvalidInputException) {
                         if (Debug.SHOW_INPUT_ERRORS) {
-                            this.emit(ERR.class, e);
+                            this.emit(OutputHandler.ERR.class, e);
                         }
                         if (!Debug.INPUT_ERRORS_CONTINUE) {
-                            throw new java.lang.IllegalStateException("Invalid input: " + text, e);
+                            throw new java.lang.IllegalStateException("Invalid input: " + inputText, e);
                         }
                         return;
                     } else {
@@ -499,6 +518,25 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
     public addInputFile(s: java.lang.String): void {
+        // jree's FileReader currently calls an uninitialized Charset.defaultCharset
+        // field in Node. Keep the Java path below for translated runtimes, while
+        // using the native UTF-8 boundary in the Node CLI and test runners.
+        if (typeof process !== "undefined" && process.release?.name === "node") {
+            const source = readFileSync(String(s), "utf8");
+            for (const rawLine of source.split(/\r?\n/)) {
+                if (rawLine.length === 0) continue;
+                if (/^[A-Za-z]+:/.test(rawLine)) {
+                    if (!rawLine.startsWith("IN:")) continue;
+                    const parts = rawLine.slice(3).split("{");
+                    const creationTime = Number.parseInt(parts.at(-1)?.split(" :")[0].split("|")[0] ?? "0", 10);
+                    while (this.time() < creationTime) this.cycles(1);
+                    this.addInput(new java.lang.String(parts.slice(0, -1).join("{").trim()));
+                } else {
+                    this.addInput(new java.lang.String(rawLine));
+                }
+            }
+            return;
+        }
         try {
             // This holds the final error to throw (if any).
             let error: java.lang.Throwable | undefined;
@@ -623,7 +661,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         } else if (p instanceof InternalExperience) {
             this.memory.internalExperience = p as InternalExperience;
         }
-        let ps: Nar.PluginState = new PluginState(p);
+        let ps: Nar.PluginState = new this.PluginState(p);
         this.plugins.add(ps);
         this.emit(Events.PluginsChange.class, p, null);
     }
@@ -755,12 +793,12 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             // * 🚩断点：reportExecution(operation, args, feedback, memory);
 
             /* synchronized (cycle) { */
-            this.cycle++;
+            this.cycleCounter++;
             /* } */
         } catch (e) {
             if (e instanceof java.lang.Exception) {
                 if (Debug.SHOW_REASONING_ERRORS) {
-                    this.emit(ERR.class, e);
+                    this.emit(OutputHandler.ERR.class, e);
                 }
                 e.printStackTrace();
                 if (!Debug.REASONING_ERRORS_CONTINUE) {
@@ -778,7 +816,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     public time(): long {
         if (this.narParameters.STEPS_CLOCK) {
-            return this.cycle;
+            return this.cycleCounter;
         } else {
             return java.lang.System.currentTimeMillis();
         }

@@ -2,10 +2,11 @@
 import { java, type float, JavaObject, S } from "jree";
 import { Term } from "../language/Term.ts";
 import { Operation } from "./Operation.ts";
-import { Memory } from "../storage/Memory.ts";
-import { Timable } from "../interfaces/Timable.ts";
-import { Task } from "../entity/Task.ts";
-import { Nar } from "../main/Nar.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Timable } from "../interfaces/Timable.ts";
+import type { Task } from "../entity/Task.ts";
+import type { Nar } from "../main/Nar.ts";
+import type { Plugin } from "../plugin/Plugin.ts";
 
 
 
@@ -144,8 +145,8 @@ export abstract class Operator extends Term implements Plugin {
 
     public static operationExecutionString(operation: Statement): java.lang.String {
         let operator: Term = operation.getPredicate();
-        let arguments: Term = operation.getSubject();
-        let argList: java.lang.String = arguments.toString().substring(3); // skip the product prefix "(*,"
+        let operationArguments: Term = operation.getSubject();
+        let argList: java.lang.String = operationArguments.toString().substring(3); // skip the product prefix "(*,"
         return operator + "(" + argList;
     }
 

@@ -1,5 +1,12 @@
 //! Java source: opennars/language/Negation.java
 import { java, S } from "jree";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Term } from "./Term.ts";
+import { Terms } from "./Terms.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Debug } from "../main/Debug.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 

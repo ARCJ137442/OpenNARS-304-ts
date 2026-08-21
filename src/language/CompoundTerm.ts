@@ -8,6 +8,10 @@ import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Terms } from "./Terms.ts";
 
+const NativeOperator = Symbols.NativeOperator;
+const COMPOUND_TERM_OPENER = NativeOperator.COMPOUND_TERM_OPENER;
+const COMPOUND_TERM_CLOSER = NativeOperator.COMPOUND_TERM_CLOSER;
+
 
 
 /**
@@ -29,7 +33,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * syntactic complexity of the compound, the sum of those of its term plus 1
      */
     // TODO make final again
-    public complexity: short;
+    public complexity: short = 0;
 
     /** Whether contains a variable */
     private hasVariables: boolean;
@@ -345,7 +349,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @return the oldName of the term
      */
     protected makeName(): java.lang.CharSequence {
-        return CompoundTerm.makeCompoundName(this.operator(), this.term);
+        return CompoundTerm.makeCompoundName(this.operator(), ...this.term);
     }
 
     public name(): java.lang.CharSequence {
@@ -363,23 +367,10 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @return the oldName of the term
      */
     protected static makeCompoundName(op: NativeOperator, ...arg: Term[]): java.lang.CharSequence {
-        let size: int = 1 + 1;
-
-        let opString: java.lang.String = op.toString();
-        size += opString.length();
-        for (let t of arg)
-            size += 1 + t.name().length();
-
-        let n: java.nio.CharBuffer = java.nio.CharBuffer.allocate(size)
-            .append(COMPOUND_TERM_OPENER.ch).append(opString);
-
-        for (let t of arg) {
-            n.append(Symbols.ARGUMENT_SEPARATOR).append(t.name());
-        }
-
-        n.append(COMPOUND_TERM_CLOSER.ch);
-
-        return n.compact().toString();
+        const opString = String(op);
+        const names = arg.map((t) => String(t.name()));
+        return new java.lang.String(
+            `${COMPOUND_TERM_OPENER.ch}${opString}${Symbols.ARGUMENT_SEPARATOR}${names.join(Symbols.ARGUMENT_SEPARATOR)}${COMPOUND_TERM_CLOSER.ch}`);
     }
 
     /* ----- utilities for other fields ----- */
@@ -578,7 +569,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     public containsTermRecursively(target: Term): boolean {
         if (super.containsTermRecursively(target))
             return true;
-        for (let term of term) {
+        for (let term of this.term) {
             if (term.containsTermRecursively(target)) {
                 return true;
             }
@@ -598,7 +589,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
             map = new java.util.LinkedHashMap<Term, java.lang.Integer>();
         }
         map.put(this, map.getOrDefault(this, 0) + 1);
-        for (let term of term) {
+        for (let term of this.term) {
             term.countTermRecursively(map);
         }
         return map;
@@ -618,7 +609,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         components.add(t);
         if (t instanceof CompoundTerm) {
             let cTerm: CompoundTerm = t as CompoundTerm;
-            for (let component of cTerm) {
+            for (let component of cTerm.term) {
                 CompoundTerm.addComponentsRecursively(component, components);
             }
         }
@@ -633,7 +624,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @return Whether the term are all in the compound
      */
     public containsAllTermsOf(t: Term): boolean {
-        if (java.lang.Object.getClass() === t.getClass()) { // (t instanceof CompoundTerm) {
+        if (this.getClass() === t.getClass()) { // (t instanceof CompoundTerm) {
             return Terms.containsAll(this.term, (t as CompoundTerm).term);
         } else {
             return Terms.contains(this.term, t);
@@ -652,7 +643,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         let list: java.util.List<Term> = this.asTermList();// Deep();
         list.remove(index);
         if (t !== null) {
-            if (java.lang.Object.getClass() !== t.getClass()) {
+            if (this.getClass() !== t.getClass()) {
                 list.add(index, t);
             } else {
                 // final List<Term> list2 = ((CompoundTerm) t).cloneTermsList();
@@ -764,13 +755,16 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     public prepareComponentLinks(): java.util.List<TermLink> {
         // complexity seems like an upper bound for the resulting number of
         // componentLinks.
-        // so use it as an initial size for the array list
-        let componentLinks: java.util.List<TermLink> = new java.util.ArrayList(this.getComplexity());
+        // Capacity is only an optimization; avoid passing a Java short through
+        // jree's native ArrayList length constructor.
+        let componentLinks: java.util.List<TermLink> = new java.util.ArrayList();
         return Terms.prepareComponentLinks(componentLinks, this);
     }
 
     public addTermsTo(c: java.util.Collection<Term>): void {
-        java.util.Collections.addAll(c, this.term);
+        for (const term of this.term) {
+            c.add(term);
+        }
     }
 
     public hashCode(): int {

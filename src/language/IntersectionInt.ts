@@ -1,5 +1,14 @@
 //! Java source: opennars/language/IntersectionInt.java
 import { java, S } from "jree";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Term } from "./Term.ts";
+import { Terms } from "./Terms.ts";
+import { SetInt } from "./SetInt.ts";
+import { SetExt } from "./SetExt.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Debug } from "../main/Debug.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 
@@ -23,7 +32,7 @@ export class IntersectionInt extends CompoundTerm {
             Terms.verifySortedAndUnique(arg, false);
         }
 
-        java.security.cert.CertPathChecker.init(arg);
+        this.init(arg);
     }
 
     /**
@@ -38,7 +47,7 @@ export class IntersectionInt extends CompoundTerm {
         switch (args.length) {
             case 0: {
 
-                return new IntersectionInt(term);
+                return new IntersectionInt(this.term);
 
 
                 break;
@@ -77,10 +86,10 @@ export class IntersectionInt extends CompoundTerm {
     public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
-                const [t] = args as [Term[]];
+                let [t] = args as [Term[]];
 
 
-                t = Term.toSortedSetArray(t);
+                t = Term.toSortedSetArray(...t);
                 switch (t.length) {
                     case 0:
                         return null;
@@ -101,14 +110,15 @@ export class IntersectionInt extends CompoundTerm {
 
                 if ((term1 instanceof SetExt) && (term2 instanceof SetExt)) {
                     // set union
-                    let both: Term[] = ObjectArrays.concat(
-                        (term1 as CompoundTerm).term,
-                        (term2 as CompoundTerm).term, Term.class);
+                    let both: Term[] = [
+                        ...(term1 as CompoundTerm).term,
+                        ...(term2 as CompoundTerm).term,
+                    ];
                     return SetExt.make(both);
                 }
                 if ((term1 instanceof SetInt) && (term2 instanceof SetInt)) {
                     // set intersection
-                    let set: java.util.NavigableSet<Term> = Term.toSortedSet((term1 as CompoundTerm).term);
+                    let set: java.util.NavigableSet<Term> = Term.toSortedSet(...(term1 as CompoundTerm).term);
 
                     set.retainAll((term2 as CompoundTerm).asTermList());
 

@@ -28,31 +28,17 @@ export class TemporalRules extends JavaObject {
 
     public static matchingOrder(order1: int, order2: int): boolean;
     public static matchingOrder(...args: unknown[]): boolean {
-        switch (args.length) {
-            case 2: {
-                const [a, b] = args as [Sentence, Sentence];
-
-
-                return TemporalRules.matchingOrder(a.getTemporalOrder(), b.getTemporalOrder());
-
-
-                break;
+        if (args.length === 2) {
+            const [first, second] = args;
+            if (typeof first === "number" && typeof second === "number") {
+                return (first === second) || (first === TemporalRules.ORDER_NONE) ||
+                    (second === TemporalRules.ORDER_NONE);
             }
-
-            case 2: {
-                const [order1, order2] = args as [int, int];
-
-
-                return (order1 === order2) || (order1 === TemporalRules.ORDER_NONE) || (order2 === TemporalRules.ORDER_NONE);
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+            return (first as Sentence).getTemporalOrder() === (second as Sentence).getTemporalOrder() ||
+                (first as Sentence).getTemporalOrder() === TemporalRules.ORDER_NONE ||
+                (second as Sentence).getTemporalOrder() === TemporalRules.ORDER_NONE;
         }
+        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
     }
 
 

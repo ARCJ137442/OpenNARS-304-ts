@@ -13,6 +13,8 @@ import { Variable } from "../language/Variable.ts";
 import { Stamp } from "./Stamp.ts";
 import { TruthValue } from "./TruthValue.ts";
 import { Debug } from "../main/Debug.ts";
+import { TruthFunctions } from "../inference/TruthFunctions.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
 
 
 
@@ -219,10 +221,12 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
                         if (!v.hasVarIndep())
                             vname = vname + " " + v.getScope().name();
                         let n: java.lang.CharSequence = rename.get(vname);
-                        if (n === null) {
+                        // jree maps return undefined for a missing key, while Java
+                        // Map.get returns null. Treat both as the absent value.
+                        if (n == null) {
                             // type + id
                             rename.put(vname, n = Variable.getName(v.getType(), rename.size() + 1));
-                            if (!n.equals(vname))
+                            if (!java.lang.String.valueOf(n).equals(java.lang.String.valueOf(vname)))
                                 renamed = true;
                         }
 
@@ -343,32 +347,19 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
             }
 
             case 1: {
-                const [makeEternal] = args as [boolean];
-
-
-                let clon: Sentence = this.clone(this.term);
-                if (clon.stamp.getOccurrenceTime() !== Stamp.ETERNAL && makeEternal) {
-                    // change occurence time of clone
-                    clon.stamp.setEternal();
+                const [value] = args;
+                if (typeof value === "boolean") {
+                    let clon: Sentence = this.clone(this.term as unknown as Term);
+                    if (clon.stamp.getOccurrenceTime() !== Stamp.ETERNAL && value) {
+                        clon.stamp.setEternal();
+                    }
+                    return clon;
                 }
-                return clon;
-
-
-                break;
-            }
-
-            case 1: {
-                const [t] = args as [Term];
-
-
                 return new Sentence(
-                    t,
+                    value as Term,
                     this.punctuation,
                     this.truth !== null ? TruthValue.fromTruthValue(this.truth) : null,
                     this.stamp.clone());
-
-
-                break;
             }
 
             default: {
@@ -388,7 +379,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
     public projection(targetTime: long, currentTime: long, mem: Memory): Sentence {
 
         let newTruth: TruthValue = this.projectionTruth(targetTime, currentTime, mem);
-        let eternalizing: boolean = (newTruth instanceof EternalizedTruthValue);
+        let eternalizing: boolean = (newTruth instanceof TruthFunctions.EternalizedTruthValue);
 
         let newStamp: Stamp = eternalizing ? this.stamp.cloneWithNewOccurrenceTime(Stamp.ETERNAL)
             : this.stamp.cloneWithNewOccurrenceTime(targetTime);
@@ -523,7 +514,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
 
                 let stampString: java.lang.CharSequence = showStamp ? this.stamp.name() : null;
 
-                let stringLength: int = contentName.length() + tenseString.length() + 1 + 1;
+                let stringLength: int = String(contentName).length + String(tenseString).length + 1 + 1;
 
                 if (this.truth !== null)
                     stringLength += 11;
@@ -531,7 +522,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
                 if (stampString === null)
                     throw new java.lang.AssertionError("stampString should not be null");
                 if (showStamp)
-                    stringLength += stampString.length() + 1;
+                    stringLength += String(stampString).length + 1;
 
                 let conv: java.lang.String = "";
                 if (this.term.term_indices !== null) {
@@ -545,7 +536,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
                 let buffer: java.lang.StringBuilder = new java.lang.StringBuilder(stringLength).append(contentName).append(this.punctuation)
                     .append(conv);
 
-                if (tenseString.length() > 0)
+                if (String(tenseString).length > 0)
                     buffer.append(' ').append(tenseString);
 
                 if (this.truth !== null) {

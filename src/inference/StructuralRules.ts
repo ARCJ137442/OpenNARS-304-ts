@@ -1,5 +1,31 @@
 //! Java source: opennars/inference/StructuralRules.java
 import { java, JavaObject, type short, type int, type float } from "jree";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { BudgetFunctions } from "./BudgetFunctions.ts";
+import { TruthFunctions } from "./TruthFunctions.ts";
+import { IntersectionExt } from "../language/IntersectionExt.ts";
+import { IntersectionInt } from "../language/IntersectionInt.ts";
+import { SetExt } from "../language/SetExt.ts";
+import { SetInt } from "../language/SetInt.ts";
+import { DifferenceExt } from "../language/DifferenceExt.ts";
+import { DifferenceInt } from "../language/DifferenceInt.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { Product } from "../language/Product.ts";
+import { ImageInt } from "../language/ImageInt.ts";
+import { ImageExt } from "../language/ImageExt.ts";
+import { Term } from "../language/Term.ts";
+import { Inheritance } from "../language/Inheritance.ts";
+import { Terms } from "../language/Terms.ts";
+import { Statement } from "../language/Statement.ts";
+import { TemporalRules } from "./TemporalRules.ts";
+import { Interval } from "../language/Interval.ts";
+import { Similarity } from "../language/Similarity.ts";
+import { Conjunction } from "../language/Conjunction.ts";
+import { Implication } from "../language/Implication.ts";
+import { Disjunction } from "../language/Disjunction.ts";
+import { Equivalence } from "../language/Equivalence.ts";
 
 
 

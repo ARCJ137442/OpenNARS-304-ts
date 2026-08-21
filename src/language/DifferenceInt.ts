@@ -1,5 +1,13 @@
 //! Java source: opennars/language/DifferenceInt.java
 import { java, S } from "jree";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Term } from "./Term.ts";
+import { Terms } from "./Terms.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Debug } from "../main/Debug.ts";
+import { SetInt } from "./SetInt.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 
@@ -22,7 +30,7 @@ export class DifferenceInt extends CompoundTerm {
 
         DifferenceInt.ensureValidDifferenceArguments(arg);
 
-        java.security.cert.CertPathChecker.init(arg);
+        this.init(arg);
     }
 
     public static ensureValidDifferenceArguments(arg: Term[]): void {
@@ -47,7 +55,7 @@ export class DifferenceInt extends CompoundTerm {
         switch (args.length) {
             case 0: {
 
-                return new DifferenceInt(term);
+                return new DifferenceInt(this.term);
 
 
                 break;
@@ -104,7 +112,7 @@ export class DifferenceInt extends CompoundTerm {
 
                 if ((arg[0] instanceof SetInt) && (arg[1] instanceof SetInt)) {
                     // TODO maybe a faster way to calculate:
-                    let set: java.util.NavigableSet<Term> = new java.util.TreeSet((arg[0] as CompoundTerm).asTermList());
+                    let set: java.util.NavigableSet<Term> = Term.toSortedSet(...(arg[0] as CompoundTerm).asTermList().toArray(new Array<Term>(0)));
                     set.removeAll((arg[1] as CompoundTerm).asTermList()); // set difference
                     return SetInt.make(set);
                 }

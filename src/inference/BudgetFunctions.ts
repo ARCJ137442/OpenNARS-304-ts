@@ -11,6 +11,8 @@ import { Memory } from "../storage/Memory.ts";
 import { Item } from "../entity/Item.ts";
 import { TermLink } from "../entity/TermLink.ts";
 import { Concept } from "../entity/Concept.ts";
+import { UtilityFunctions } from "./UtilityFunctions.ts";
+import type { Parameters } from "../main/Parameters.ts";
 
 
 
@@ -20,7 +22,7 @@ import { Concept } from "../entity/Concept.ts";
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class BudgetFunctions {
+export class BudgetFunctions extends UtilityFunctions {
 
     /* ----------------------- Belief evaluation ----------------------- */
     /**
@@ -76,8 +78,8 @@ export class BudgetFunctions {
             bLink.decDurability(1 - difB);
         }
         let dif: double = truth.confidence - Math.max(tTruth.confidence, bTruth.confidence);
-        let priority: float = java.math.BigInteger.or(dif as float, task.getPriority());
-        let durability: float = aveAri(dif as float, task.getDurability());
+        let priority: float = UtilityFunctions.or(dif as float, task.getPriority());
+        let durability: float = UtilityFunctions.aveAri(dif as float, task.getDurability());
         let quality: float = BudgetFunctions.truthToQuality(truth);
 
         /*
@@ -118,8 +120,8 @@ export class BudgetFunctions {
     public static update(task: Task, bTruth: TruthValue, narParameters: Parameters): BudgetValue {
         let tTruth: TruthValue = task.sentence.truth;
         let dif: float = tTruth.getExpDifAbs(bTruth);
-        let priority: float = java.math.BigInteger.or(dif, task.getPriority());
-        let durability: float = aveAri(dif, task.getDurability());
+        let priority: float = UtilityFunctions.or(dif, task.getPriority());
+        let durability: float = UtilityFunctions.aveAri(dif, task.getDurability());
         let quality: float = BudgetFunctions.truthToQuality(bTruth);
         return new BudgetValue(priority, durability, quality, narParameters);
     }
@@ -153,13 +155,13 @@ export class BudgetFunctions {
      */
     public static activate(receiver: BudgetValue, amount: BudgetValue, mode: BudgetFunctions.Activating): void {
         switch (mode) {
-            case Max:
+            case BudgetFunctions.Activating.Max:
                 BudgetFunctions.merge(receiver, amount);
                 break;
-            case TaskLink:
+            case BudgetFunctions.Activating.TaskLink:
                 let oldPri: float = receiver.getPriority();
-                receiver.setPriority(java.math.BigInteger.or(oldPri, amount.getPriority()));
-                receiver.setDurability(aveAri(receiver.getDurability(), amount.getDurability()));
+                receiver.setPriority(UtilityFunctions.or(oldPri, amount.getPriority()));
+                receiver.setDurability(UtilityFunctions.aveAri(receiver.getDurability(), amount.getDurability()));
                 receiver.setQuality(receiver.getQuality());
                 break;
 
@@ -235,7 +237,7 @@ export class BudgetFunctions {
      * @return The budget value of the conclusion
      */
     public static backwardWeak(truth: TruthValue, nal: DerivationContext): BudgetValue {
-        return BudgetFunctions.budgetInference(w2c(1, nal.narParameters) as float * BudgetFunctions.truthToQuality(truth), 1, nal);
+        return BudgetFunctions.budgetInference(BudgetFunctions.w2c(1, nal.narParameters) as float * BudgetFunctions.truthToQuality(truth), 1, nal);
     }
 
     /* ----- Task derivation in CompositionalRules and StructuralRules ----- */
@@ -274,7 +276,7 @@ export class BudgetFunctions {
      */
     public static compoundBackwardWeak(content: Term,
         nal: DerivationContext): BudgetValue {
-        return BudgetFunctions.budgetInference(w2c(1, nal.narParameters) as float,
+        return BudgetFunctions.budgetInference(BudgetFunctions.w2c(1, nal.narParameters) as float,
             content.getComplexity() * nal.narParameters.COMPLEXITY_UNIT, nal);
     }
 
@@ -308,10 +310,10 @@ export class BudgetFunctions {
         let quality: float = qual / complexity;
         let bLink: TermLink = nal.getCurrentBeliefLink();
         if (bLink !== null) {
-            priority = java.math.BigInteger.or(priority, bLink.getPriority());
-            durability = java.math.BigInteger.and(durability, bLink.getDurability()) as float;
+            priority = UtilityFunctions.or(priority, bLink.getPriority());
+            durability = UtilityFunctions.and(durability, bLink.getDurability()) as float;
             let targetActivation: float = BudgetFunctions.conceptActivation(nal.memory, bLink.target);
-            bLink.incPriority(java.math.BigInteger.or(quality, targetActivation));
+            bLink.incPriority(UtilityFunctions.or(quality, targetActivation));
             bLink.incDurability(quality);
         }
         return new BudgetValue(priority, durability, quality, nal.narParameters);

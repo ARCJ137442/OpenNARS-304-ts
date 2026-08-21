@@ -89,51 +89,34 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 3: {
-                const [target, type, indices] = args as [Term, short, short[]];
+                if (args[1] instanceof TermLink) {
+                    const [t, template, v] = args as [Term, TermLink, BudgetValue];
+                    super(v);
+                    this.target = t;
+                    this.type = (template.target.equals(t))
+                        ? (template.type - 1) as short // point to component
+                        : template.type;
+                    this.index = template.index;
+                    this.hash = this.init();
+                    break;
+                }
 
-
+                const typeFirst = typeof args[0] === "number";
+                const type = (typeFirst ? args[0] : args[1]) as short;
+                const target = (typeFirst ? args[1] : args[0]) as Term;
+                const indices = args.slice(2) as short[];
                 super(null);
                 this.target = target;
                 this.type = type;
                 /* assert (type % 2 == 0); */  // template types all point to compound, though the target is component
                 if (type === TermLink.COMPOUND_CONDITION) { // the first index is 0 by default
-
                     this.index = new Int16Array(indices.length + 1);
                     this.index[0] = 0;
-
                     java.lang.System.arraycopy(indices, 0, this.index, 1, indices.length);
                 } else {
                     this.index = indices;
                 }
                 this.hash = this.init();
-
-
-                break;
-            }
-
-            case 3: {
-                const [t, template, v] = args as [Term, TermLink, BudgetValue];
-
-
-                super(v);
-                this.target = t;
-                this.type = (template.target.equals(t))
-                    ? (template.type - 1) as short // point to component
-                    : template.type;
-                this.index = template.index;
-                this.hash = this.init();
-
-
-                break;
-            }
-
-            case 3: {
-                const [type, target, i0] = args as [short, Term, int];
-
-
-                this(target, type, i0 as short);
-
-
                 break;
             }
 
@@ -141,7 +124,11 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 const [type, target, i0, i1] = args as [short, Term, int, int];
 
 
-                this(target, type, i0 as short, i1 as short);
+                super(null);
+                this.target = target;
+                this.type = type;
+                this.index = [i0, i1] as unknown as Int16Array;
+                this.hash = this.init();
 
 
                 break;
@@ -151,7 +138,11 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 const [type, target, i0, i1, i2] = args as [short, Term, int, int, int];
 
 
-                this(target, type, i0 as short, i1 as short, i2 as short);
+                super(null);
+                this.target = target;
+                this.type = type;
+                this.index = [i0, i1, i2] as unknown as Int16Array;
+                this.hash = this.init();
 
 
                 break;
@@ -161,7 +152,11 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 const [type, target, i0, i1, i2, i3] = args as [short, Term, int, int, int, int];
 
 
-                this(target, type, i0 as short, i1 as short, i2 as short, i3 as short);
+                super(null);
+                this.target = target;
+                this.type = type;
+                this.index = [i0, i1, i2, i3] as unknown as Int16Array;
+                this.hash = this.init();
 
 
                 break;

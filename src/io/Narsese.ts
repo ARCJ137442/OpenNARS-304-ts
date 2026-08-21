@@ -1,5 +1,89 @@
 //! Java source: opennars/io/Narsese.java
 import { java, JavaObject, type int, type char, type float, S } from "jree";
+import { Parser } from "./Parser.ts";
+import { Symbols } from "./Symbols.ts";
+import { Tense } from "../language/Tense.ts";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { Stamp } from "../entity/Stamp.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { Task } from "../entity/Task.ts";
+import { Term } from "../language/Term.ts";
+import { Variable } from "../language/Variable.ts";
+import { Variables } from "../language/Variables.ts";
+import { Interval } from "../language/Interval.ts";
+import { Operator } from "../operator/Operator.ts";
+import { Operation } from "../operator/Operation.ts";
+import { Product } from "../language/Product.ts";
+import { Conjunction } from "../language/Conjunction.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
+import { Terms } from "../language/Terms.ts";
+import { SetExt } from "../language/SetExt.ts";
+import { SetInt } from "../language/SetInt.ts";
+import { ImageExt } from "../language/ImageExt.ts";
+import { ImageInt } from "../language/ImageInt.ts";
+import { Statement } from "../language/Statement.ts";
+import { IntersectionExt } from "../language/IntersectionExt.ts";
+import { IntersectionInt } from "../language/IntersectionInt.ts";
+import { DifferenceExt } from "../language/DifferenceExt.ts";
+import { DifferenceInt } from "../language/DifferenceInt.ts";
+import { Inheritance } from "../language/Inheritance.ts";
+import { Negation } from "../language/Negation.ts";
+import { Disjunction } from "../language/Disjunction.ts";
+import { Implication } from "../language/Implication.ts";
+import { Equivalence } from "../language/Equivalence.ts";
+import { Similarity } from "../language/Similarity.ts";
+import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Nar } from "../main/Nar.ts";
+
+const NativeOperator = Symbols.NativeOperator;
+const BUDGET_VALUE_MARK = Symbols.BUDGET_VALUE_MARK;
+const TRUTH_VALUE_MARK = Symbols.TRUTH_VALUE_MARK;
+const VALUE_SEPARATOR = Symbols.VALUE_SEPARATOR;
+const JUDGMENT_MARK = Symbols.JUDGMENT_MARK;
+const QUESTION_MARK = Symbols.QUESTION_MARK;
+const GOAL_MARK = Symbols.GOAL_MARK;
+const QUEST_MARK = Symbols.QUEST_MARK;
+const ARGUMENT_SEPARATOR = Symbols.ARGUMENT_SEPARATOR;
+const COMPOUND_TERM_OPENER = NativeOperator.COMPOUND_TERM_OPENER;
+const COMPOUND_TERM_CLOSER = NativeOperator.COMPOUND_TERM_CLOSER;
+const SET_EXT_OPENER = NativeOperator.SET_EXT_OPENER;
+const SET_EXT_CLOSER = NativeOperator.SET_EXT_CLOSER;
+const SET_INT_OPENER = NativeOperator.SET_INT_OPENER;
+const SET_INT_CLOSER = NativeOperator.SET_INT_CLOSER;
+const STATEMENT_OPENER = NativeOperator.STATEMENT_OPENER;
+const STATEMENT_CLOSER = NativeOperator.STATEMENT_CLOSER;
+const getOperator = (value: string) => Symbols.getOperator(value);
+const getRelation = (value: string) => Symbols.getRelation(value);
+const getOpener = (value: string) => Symbols.getOpener(value);
+const getCloser = (value: string) => Symbols.getCloser(value);
+const isRelation = (value: string) => Symbols.isRelation(value);
+
+Terms.registerRuntime({
+    SetExt,
+    SetInt,
+    IntersectionExt,
+    IntersectionInt,
+    DifferenceExt,
+    DifferenceInt,
+    Inheritance,
+    Product,
+    ImageExt,
+    ImageInt,
+    Negation,
+    Disjunction,
+    Conjunction,
+    Implication,
+    Equivalence,
+});
+
+Statement.registerRuntime({
+    Inheritance,
+    Similarity,
+    Implication,
+    Equivalence,
+});
 
 
 
@@ -42,7 +126,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         let tense: Tense = Narsese.parseTense(buffer);
         let str: java.lang.String = buffer.toString().trim();
         let last: int = str.length() - 1;
-        let punc: char = str.charAt(last);
+        let punc: char = String.fromCharCode(str.charAt(last)) as unknown as char;
 
         let stamp: Stamp = new Stamp(-1 /* if -1, will be set right before the Task is input */,
             tense, this.memory.newStampSerial(), this.memory.narParameters.DURATION);
@@ -77,10 +161,10 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      *                                      BudgetValue
      */
     private static getBudgetString(s: java.lang.StringBuilder): java.lang.String {
-        if (s.length() === 0 || s.charAt(0) !== BUDGET_VALUE_MARK) {
+        if (s.length() === 0 || String.fromCharCode(s.charAt(0)) !== BUDGET_VALUE_MARK) {
             return null;
         }
-        let i: int = s.indexOf(java.io.ObjectInputFilter.Status.valueOf(BUDGET_VALUE_MARK), 1); // looking for the end
+        let i: int = s.indexOf(BUDGET_VALUE_MARK, 1); // looking for the end
         if (i < 0) {
             throw new Parser.InvalidInputException("missing budget closer");
         }
@@ -103,10 +187,10 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      */
     private static getTruthString(s: java.lang.StringBuilder): java.lang.String {
         let last: int = s.length() - 1;
-        if (s.length() === 0 || s.charAt(last) !== TRUTH_VALUE_MARK) { // use default
+        if (s.length() === 0 || String.fromCharCode(s.charAt(last)) !== TRUTH_VALUE_MARK) { // use default
             return null;
         }
-        let first: int = s.indexOf(java.io.ObjectInputFilter.Status.valueOf(TRUTH_VALUE_MARK)); // looking for the beginning
+        let first: int = s.indexOf(TRUTH_VALUE_MARK); // looking for the beginning
         if (first === last) { // no matching closer
             throw new Parser.InvalidInputException("missing truth mark");
         }
@@ -136,12 +220,12 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             confidence = this.memory.narParameters.DEFAULT_GOAL_CONFIDENCE;
         }
         if (s !== null) {
-            let i: int = s.indexOf(VALUE_SEPARATOR);
+            let i: int = s.indexOf(VALUE_SEPARATOR.charCodeAt(0));
             if (i < 0) {
-                frequency = java.lang.Float.parseFloat(s);
+                frequency = Number.parseFloat(String(s));
             } else {
-                frequency = java.lang.Float.parseFloat(s.substring(0, i));
-                confidence = java.lang.Float.parseFloat(s.substring(i + 1));
+                frequency = Number.parseFloat(String(s.substring(0, i)));
+                confidence = Number.parseFloat(String(s.substring(i + 1)));
             }
         }
         return TruthValue.fromFrequencyConfidence(frequency, confidence, this.memory.narParameters);
@@ -181,18 +265,18 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
                 throw new Parser.InvalidInputException("unknown punctuation: '" + punctuation + "'");
         }
         if (s !== null) { // override default
-            let i: int = s.indexOf(VALUE_SEPARATOR);
+            let i: int = s.indexOf(VALUE_SEPARATOR.charCodeAt(0));
             if (i < 0) { // default durability
-                priority = java.lang.Float.parseFloat(s);
+                priority = Number.parseFloat(String(s));
             } else {
-                let i2: int = s.indexOf(VALUE_SEPARATOR, i + 1);
+                let i2: int = s.indexOf(VALUE_SEPARATOR.charCodeAt(0), i + 1);
                 if (i2 === -1)
                     i2 = s.length();
-                priority = java.lang.Float.parseFloat(s.substring(0, i));
-                durability = java.lang.Float.parseFloat(s.substring(i + 1, i2));
+                priority = Number.parseFloat(String(s.substring(0, i)));
+                durability = Number.parseFloat(String(s.substring(i + 1, i2)));
             }
         }
-        let quality: float = (truth === null) ? 1 : truthToQuality(truth);
+        let quality: float = (truth === null) ? 1 : BudgetFunctions.truthToQuality(truth);
         return new BudgetValue(priority, durability, quality, this.memory.narParameters);
     }
 
@@ -236,8 +320,8 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             return null;
 
         let index: int = s.length() - 1;
-        let first: char = s.charAt(0);
-        let last: char = s.charAt(index);
+        let first: char = String.fromCharCode(s.charAt(0)) as unknown as char;
+        let last: char = String.fromCharCode(s.charAt(index)) as unknown as char;
 
         let opener: NativeOperator = getOpener(first);
         if (opener !== null) {
@@ -250,13 +334,13 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
                     }
                 case SET_EXT_OPENER:
                     if (last === SET_EXT_CLOSER.ch) {
-                        return SetExt.make(this.parseArguments(s.substring(1, index) + ARGUMENT_SEPARATOR));
+                        return SetExt.make(this.parseArguments(new java.lang.String(String(s.substring(1, index)) + ARGUMENT_SEPARATOR)));
                     } else {
                         throw new Parser.InvalidInputException("missing ExtensionSet closer");
                     }
                 case SET_INT_OPENER:
                     if (last === SET_INT_CLOSER.ch) {
-                        return SetInt.make(this.parseArguments(s.substring(1, index) + ARGUMENT_SEPARATOR));
+                        return SetInt.make(this.parseArguments(new java.lang.String(String(s.substring(1, index)) + ARGUMENT_SEPARATOR)));
                     } else {
                         throw new Parser.InvalidInputException("missing IntensionSet closer");
                     }
@@ -277,8 +361,8 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             // function(a,b)
 
             // test for existence of matching parentheses at beginning at index!=0
-            let pOpen: int = s.indexOf('(');
-            let pClose: int = s.lastIndexOf(')');
+            let pOpen: int = s.indexOf('('.charCodeAt(0));
+            let pClose: int = s.lastIndexOf(')'.charCodeAt(0));
             if ((pOpen !== -1) && (pClose !== -1) && (pClose === s.length() - 1)) {
 
                 let operatorString: java.lang.String = Operator.addPrefixIfMissing(s.substring(0, pOpen));
@@ -338,7 +422,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             return op;
         }
 
-        if (s.contains(" ")) { // invalid characters in a name
+        if (s.indexOf(" ".charCodeAt(0)) >= 0) { // invalid characters in a name
             throw new Parser.InvalidInputException("invalid term: " + s);
         }
 
@@ -347,7 +431,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             return Interval.interval(s);
         }
 
-        if (containVar(s) && !s.equals("#")) {
+        if (Variables.containVar(s) && !s.equals("#")) {
             return new Variable(s);
         } else {
             return Term.get(s);
@@ -372,7 +456,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         let relation: java.lang.String = s.substring(i, i + 3);
         let subject: Term = this.parseTerm(s.substring(0, i));
         let predicate: Term = this.parseTerm(s.substring(i + 3));
-        let t: Statement = make(getRelation(relation), subject, predicate, false, 0);
+        let t: Statement = Statement.make(getRelation(relation), subject, predicate, false, 0);
         if (t === null) {
             throw new Parser.InvalidInputException("invalid statement: statement unable to create: "
                 + getOperator(relation) + " " + subject + " " + predicate);
@@ -394,7 +478,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         if (s.isEmpty()) {
             throw new Parser.InvalidInputException("Empty compound term: " + s);
         }
-        let firstSeparator: int = s.indexOf(ARGUMENT_SEPARATOR);
+        let firstSeparator: int = s.indexOf(ARGUMENT_SEPARATOR.charCodeAt(0));
         if (firstSeparator === -1) {
             throw new Parser.InvalidInputException("Invalid compound term (missing ARGUMENT_SEPARATOR): " + s);
         }
@@ -408,16 +492,32 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         }
 
         let arg: java.util.List<Term> = (firstSeparator < 0) ? new java.util.ArrayList(0)
-            : this.parseArguments(s.substring(firstSeparator + 1) + ARGUMENT_SEPARATOR);
+            : this.parseArguments(new java.lang.String(String(s.substring(firstSeparator + 1)) + ARGUMENT_SEPARATOR));
 
         let argA: Term[] = arg.toArray(new Array<Term>(0));
 
         let t: Term;
 
         if (oNative !== null) {
-            t = Terms.term(oNative, argA);
+            if (oNative === NativeOperator.IMAGE_EXT) {
+                t = ImageExt.make(argA);
+            } else if (oNative === NativeOperator.IMAGE_INT) {
+                t = ImageInt.make(argA);
+            } else if (oNative === NativeOperator.PRODUCT) {
+                t = new Product(...argA);
+            } else if (oNative === NativeOperator.CONJUNCTION) {
+                t = Conjunction.make(argA);
+            } else if (oNative === NativeOperator.SEQUENCE) {
+                t = Conjunction.make(argA, TemporalRules.ORDER_FORWARD);
+            } else if (oNative === NativeOperator.PARALLEL) {
+                t = Conjunction.make(argA, TemporalRules.ORDER_CONCURRENT);
+            } else if (oNative === NativeOperator.SPATIAL) {
+                t = Conjunction.make(argA, TemporalRules.ORDER_FORWARD, true);
+            } else {
+                t = Terms.term(oNative, argA);
+            }
         } else if (oRegistered !== null) {
-            t = make(oRegistered, argA, true);
+            t = Operation.make(oRegistered, argA, true);
         } else {
             throw new Parser.InvalidInputException("Invalid compound term");
         }
@@ -470,7 +570,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
                 levelCounter++;
             } else if (Narsese.isCloser(s, i)) {
                 levelCounter--;
-            } else if (s.charAt(i) === ARGUMENT_SEPARATOR) {
+            } else if (String.fromCharCode(s.charAt(i)) === ARGUMENT_SEPARATOR) {
                 if (levelCounter === 0) {
                     break;
                 }
@@ -512,7 +612,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param i The starting index
      */
     private static isOpener(s: java.lang.String, i: int): boolean {
-        let c: char = s.charAt(i);
+        let c: char = String.fromCharCode(s.charAt(i)) as unknown as char;
 
         let b: boolean = (getOpener(c) !== null);
         if (!b)
@@ -529,7 +629,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param i The starting index
      */
     private static isCloser(s: java.lang.String, i: int): boolean {
-        let c: char = s.charAt(i);
+        let c: char = String.fromCharCode(s.charAt(i)) as unknown as char;
 
         let b: boolean = (getCloser(c) !== null);
         if (!b)
@@ -543,6 +643,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @return returns if the string may be narsese
      */
     public static possiblyNarsese(s: java.lang.String): boolean {
-        return !s.contains("(") && !s.contains(")") && !s.contains("<") && !s.contains(">");
+        const native = String(s);
+        return !native.includes("(") && !native.includes(")") && !native.includes("<") && !native.includes(">");
     }
 }

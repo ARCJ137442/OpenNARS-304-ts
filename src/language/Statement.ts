@@ -3,6 +3,12 @@ import { java, type int, S } from "jree";
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
+import { Terms } from "./Terms.ts";
+import { Debug } from "../main/Debug.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
+
+type StatementFactory = (subject: Term, predicate: Term, order: int) => Statement;
+type StatementRuntime = Record<string, any>;
 
 
 
@@ -15,6 +21,43 @@ import { Symbols } from "../io/Symbols.ts";
  * @author Patrick Hammer
  */
 export abstract class Statement extends CompoundTerm {
+
+    private static readonly relationFactories = new Map<string, StatementFactory>();
+    private static runtime: StatementRuntime | null = null;
+
+    public static registerRuntime(runtime: StatementRuntime): void {
+        Statement.runtime = runtime;
+        const operators = Symbols.NativeOperator;
+        Statement.relationFactories.set(String(operators.INHERITANCE),
+            (subject, predicate) => runtime.Inheritance.make(subject, predicate));
+        Statement.relationFactories.set(String(operators.SIMILARITY),
+            (subject, predicate) => runtime.Similarity.make(subject, predicate));
+        Statement.relationFactories.set(String(operators.IMPLICATION),
+            (subject, predicate, order) => runtime.Implication.make(subject, predicate, order));
+        Statement.relationFactories.set(String(operators.IMPLICATION_AFTER),
+            (subject, predicate, order) => runtime.Implication.make(subject, predicate, order));
+        Statement.relationFactories.set(String(operators.IMPLICATION_BEFORE),
+            (subject, predicate, order) => runtime.Implication.make(subject, predicate, order));
+        Statement.relationFactories.set(String(operators.IMPLICATION_WHEN),
+            (subject, predicate, order) => runtime.Implication.make(subject, predicate, order));
+        Statement.relationFactories.set(String(operators.EQUIVALENCE),
+            (subject, predicate, order) => runtime.Equivalence.make(subject, predicate, order));
+        Statement.relationFactories.set(String(operators.EQUIVALENCE_AFTER),
+            (subject, predicate, order) => runtime.Equivalence.make(subject, predicate, order));
+        Statement.relationFactories.set(String(operators.EQUIVALENCE_WHEN),
+            (subject, predicate, order) => runtime.Equivalence.make(subject, predicate, order));
+    }
+
+    private static getRuntime(): StatementRuntime {
+        if (Statement.runtime === null) {
+            throw new java.lang.IllegalStateException("Statement runtime classes are not registered");
+        }
+        return Statement.runtime;
+    }
+
+    public static registerRelationFactory(operator: unknown, factory: StatementFactory): void {
+        Statement.relationFactories.set(String(operator), factory);
+    }
 
     /**
      * Constructor with partial values, called by make
@@ -34,7 +77,7 @@ export abstract class Statement extends CompoundTerm {
         if (t[1] === null)
             throw new java.lang.IllegalStateException("Null predicate: " + this);
         if (Debug.DETAILED) {
-            if (isCommutative()) {
+                    if (this.isCommutative()) {
                 if (t[0].compareTo(t[1]) === 1) {
                     throw new java.lang.IllegalStateException(
                         "Commutative term requires natural order of subject,predicate: " + java.util.Arrays.toString(t));
@@ -80,19 +123,20 @@ export abstract class Statement extends CompoundTerm {
         switch (args.length) {
             case 3: {
                 const [statement, subj, pred] = args as [Statement, Term, Term];
+                const runtime = Statement.getRuntime();
 
 
-                if (statement instanceof Inheritance) {
-                    return Inheritance.make(subj, pred);
+                if (statement instanceof runtime.Inheritance) {
+                    return runtime.Inheritance.make(subj, pred);
                 }
-                if (statement instanceof Similarity) {
-                    return Similarity.make(subj, pred);
+                if (statement instanceof runtime.Similarity) {
+                    return runtime.Similarity.make(subj, pred);
                 }
-                if (statement instanceof Implication) {
-                    return Implication.make(subj, pred, statement.getTemporalOrder());
+                if (statement instanceof runtime.Implication) {
+                    return runtime.Implication.make(subj, pred, statement.getTemporalOrder());
                 }
-                if (statement instanceof Equivalence) {
-                    return Equivalence.make(subj, pred, statement.getTemporalOrder());
+                if (statement instanceof runtime.Equivalence) {
+                    return runtime.Equivalence.make(subj, pred, statement.getTemporalOrder());
                 }
                 return null;
 
@@ -101,22 +145,9 @@ export abstract class Statement extends CompoundTerm {
             }
 
             case 4: {
-                const [op, subj, pred, order] = args as [NativeOperator, Term, Term, int];
-
-
-
-                return Statement.make(op, subj, pred, true, order);
-
-
-                break;
-            }
-
-            case 4: {
-                const [statement, subj, pred, order] = args as [Statement, Term, Term, int];
-
-
-
-                return Statement.make(statement.operator(), subj, pred, true, order);
+                const [first, subj, pred, order] = args as [NativeOperator | Statement, Term, Term, int];
+                const op = first instanceof Statement ? first.operator() : first;
+                return Statement.make(op as NativeOperator, subj, pred, true, order);
 
 
                 break;
@@ -130,37 +161,9 @@ export abstract class Statement extends CompoundTerm {
                 if (Terms.equalSubTermsInRespectToImageAndProduct(subject, predicate)) {
                     return null;
                 }
-
-                switch (o) {
-                    case INHERITANCE:
-                        return Inheritance.make(subject, predicate);
-                    case SIMILARITY:
-                        return Similarity.make(subject, predicate);
-                    case java.time.chrono.HijrahChronology.INSTANCE:
-                        return Instance.make(subject, predicate);
-                    case PROPERTY:
-                        return Property.make(subject, predicate);
-                    case INSTANCE_PROPERTY:
-                        return InstanceProperty.make(subject, predicate);
-                    case IMPLICATION:
-                        return Implication.make(subject, predicate, customOrder ? order : TemporalRules.ORDER_NONE);
-                    case IMPLICATION_AFTER:
-                        return Implication.make(subject, predicate, customOrder ? order : TemporalRules.ORDER_FORWARD);
-                    case IMPLICATION_BEFORE:
-                        return Implication.make(subject, predicate, customOrder ? order : TemporalRules.ORDER_BACKWARD);
-                    case IMPLICATION_WHEN:
-                        return Implication.make(subject, predicate, customOrder ? order : TemporalRules.ORDER_CONCURRENT);
-                    case EQUIVALENCE:
-                        return Equivalence.make(subject, predicate, customOrder ? order : TemporalRules.ORDER_NONE);
-                    case EQUIVALENCE_AFTER:
-                        return Equivalence.make(subject, predicate, customOrder ? order : TemporalRules.ORDER_FORWARD);
-                    case EQUIVALENCE_WHEN:
-                        return Equivalence.make(subject, predicate, customOrder ? order : TemporalRules.ORDER_CONCURRENT);
-                    default:
-                        java.lang.System.out.println("Unknown Term operator: " + o + " (" + o.name() + ")");
-                }
-
-                return null;
+                const factory = Statement.relationFactories.get(String(o));
+                return factory === undefined ? null : factory(subject, predicate,
+                    customOrder ? order : TemporalRules.ORDER_NONE);
 
 
                 break;
@@ -185,11 +188,12 @@ export abstract class Statement extends CompoundTerm {
      */
     public static makeSym(statement: Statement, subj: Term, pred: Term,
         order: int): Statement {
-        if (statement instanceof Inheritance) {
-            return Similarity.make(subj, pred);
+        const runtime = Statement.getRuntime();
+        if (statement instanceof runtime.Inheritance) {
+            return runtime.Similarity.make(subj, pred);
         }
-        if (statement instanceof Implication) {
-            return Equivalence.make(subj, pred, order);
+        if (statement instanceof runtime.Implication) {
+            return runtime.Equivalence.make(subj, pred, order);
         }
         return null;
     }
@@ -201,30 +205,15 @@ export abstract class Statement extends CompoundTerm {
      * @return the nameStr of the term
      */
     protected makeName(): java.lang.CharSequence {
-        return Statement.makeStatementName(this.getSubject(), operator(), this.getPredicate());
+        return Statement.makeStatementName(this.getSubject(), this.operator(), this.getPredicate());
     }
 
     protected static makeStatementName(subject: Term, relation: NativeOperator,
         predicate: Term): java.lang.CharSequence {
-        let subjectName: java.lang.CharSequence = subject.name();
-        let predicateName: java.lang.CharSequence = predicate.name();
-        let length: int = subjectName.length() + predicateName.length() + relation.toString().length() + 4;
-
-        let cb: java.nio.CharBuffer = java.nio.CharBuffer.allocate(length);
-
-        cb.append(STATEMENT_OPENER.ch);
-
-        // Texts.append(cb, subjectName);
-        cb.append(subjectName);
-
-        cb.append(' ').append(relation.toString()).append(' ');
-
-        // Texts.append(cb, predicateName);
-        cb.append(predicateName);
-
-        cb.append(STATEMENT_CLOSER.ch);
-
-        return cb.compact().toString();
+        const subjectName = String(subject.name());
+        const predicateName = String(predicate.name());
+        return new java.lang.String(
+            `${Symbols.NativeOperator.STATEMENT_OPENER.ch}${subjectName} ${String(relation)} ${predicateName}${Symbols.NativeOperator.STATEMENT_CLOSER.ch}`);
     }
 
     public static invalidStatement(subject: Term, predicate: Term): boolean;
@@ -303,7 +292,8 @@ export abstract class Statement extends CompoundTerm {
             return false;
         }
         let ct1: CompoundTerm = t1 as CompoundTerm;
-        if ((ct1 instanceof ImageExt) || (ct1 instanceof ImageInt)) {
+        const operatorName = String(ct1.operator()?.name?.() ?? ct1.operator());
+        if (operatorName === "IMAGE_EXT" || operatorName === "IMAGE_INT") {
             return false;
         }
         return ct1.containsTerm(t2);
@@ -336,7 +326,7 @@ export abstract class Statement extends CompoundTerm {
      * @return The first component
      */
     public getSubject(): Term {
-        return term[0];
+        return this.term[0];
     }
 
     /**
@@ -345,7 +335,7 @@ export abstract class Statement extends CompoundTerm {
      * @return The second component
      */
     public getPredicate(): Term {
-        return term[1];
+        return this.term[1];
     }
 
     /**

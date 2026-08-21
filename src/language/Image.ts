@@ -1,5 +1,12 @@
 //! Java source: opennars/language/Image.java
 import { java, type short, type int } from "jree";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Term } from "./Term.ts";
+import { Symbols } from "../io/Symbols.ts";
+
+const NativeOperator = Symbols.NativeOperator;
+const COMPOUND_TERM_OPENER = NativeOperator.COMPOUND_TERM_OPENER;
+const COMPOUND_TERM_CLOSER = NativeOperator.COMPOUND_TERM_CLOSER;
 
 
 
@@ -35,12 +42,12 @@ export abstract class Image extends CompoundTerm {
 
     // TODO replace with a special Term type
     public static isPlaceHolder(t: Term): boolean {
-        if (t.getClass() !== Term.class)
+        if (!(t instanceof Term))
             return false;
         let n: java.lang.CharSequence = t.name();
-        if (n.length() !== 1)
+        if (String(n).length !== 1)
             return false;
-        return n.charAt(0) === Symbols.IMAGE_PLACE_HOLDER;
+        return String(n) === Symbols.IMAGE_PLACE_HOLDER;
     }
 
     /**
@@ -79,7 +86,7 @@ export abstract class Image extends CompoundTerm {
      * @return the name of the term
      */
     public makeName(): java.lang.CharSequence {
-        return Image.makeImageName(operator(), term, this.relationIndex);
+        return Image.makeImageName(this.operator(), this.term, this.relationIndex);
     }
 
     /**
@@ -88,7 +95,7 @@ export abstract class Image extends CompoundTerm {
      * @return The term representing a relation
      */
     public getRelation(): Term {
-        return term[this.relationIndex];
+        return this.term[this.relationIndex];
     }
 
     /**
@@ -97,9 +104,9 @@ export abstract class Image extends CompoundTerm {
      * @return The term related
      */
     public getTheOtherComponent(): Term {
-        if (term.length !== 2) {
+        if (this.term.length !== 2) {
             return null;
         }
-        return (this.relationIndex === 0) ? term[1] : term[0];
+        return (this.relationIndex === 0) ? this.term[1] : this.term[0];
     }
 }

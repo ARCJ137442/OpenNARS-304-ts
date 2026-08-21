@@ -1,5 +1,12 @@
 //! Java source: opennars/operator/NullOperator.java
 import { java, S } from "jree";
+import { Operator } from "./Operator.ts";
+import { Operation } from "./Operation.ts";
+import { Term } from "../language/Term.ts";
+import { Debug } from "../main/Debug.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Timable } from "../interfaces/Timable.ts";
+import type { Task } from "../entity/Task.ts";
 
 
 
@@ -12,28 +19,12 @@ export class NullOperator extends Operator {
 
     public constructor(name: java.lang.String);
     public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 0: {
-
-                this("^sample");
-
-
-                break;
-            }
-
-            case 1: {
-                const [name] = args as [java.lang.String];
-
-
-                super(name);
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        if (args.length === 0) {
+            super("^sample");
+        } else if (args.length === 1) {
+            super(args[0] as java.lang.String);
+        } else {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
     }
 

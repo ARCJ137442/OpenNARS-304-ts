@@ -1,5 +1,12 @@
 //! Java source: opennars/io/ConfigReader.java
 import { java, JavaObject, type int, type float, type double } from "jree";
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { Parameters } from "../main/Parameters.ts";
+import { Debug } from "../main/Debug.ts";
+import type { Plugin } from "../plugin/Plugin.ts";
+import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
+import { NullOperator } from "../operator/NullOperator.ts";
 
 
 
@@ -10,8 +17,70 @@ import { java, JavaObject, type int, type float, type double } from "jree";
  */
 export class ConfigReader extends JavaObject {
 
+    /** Classpaths that were present in an XML config but cannot be loaded in Node yet. */
+    public static lastUnsupportedPluginClasspaths: string[] = [];
+
+    private static nodeConfigPath(filepath: string): string | null {
+        const candidates = [
+            resolve(filepath),
+            resolve(process.cwd(), filepath),
+            resolve(process.cwd(), "java-master", "src", "main", "resources", "config", "defaultConfig.xml"),
+        ];
+        return candidates.find(candidate => existsSync(candidate)) ?? null;
+    }
+
+    private static loadNodeConfig(filepath: string, parameters: Parameters): java.util.List<Plugin> {
+        const path = ConfigReader.nodeConfigPath(filepath);
+        if (path === null) {
+            throw new Error(`Configuration file not found: ${filepath}`);
+        }
+
+        const xml = readFileSync(path, "utf8");
+        const parameterTarget = parameters as unknown as Record<string, unknown>;
+        const debugTarget = Debug as unknown as Record<string, unknown>;
+        const configuredPlugins: string[] = [];
+        const plugins = new java.util.ArrayList<Plugin>();
+        ConfigReader.lastUnsupportedPluginClasspaths = [];
+
+        for (const match of xml.matchAll(/<conf\s+name=["']([^"']+)["']\s+value=["']([^"']*)["']\s*\/?>/g)) {
+            const [, name, rawValue] = match;
+            let value: unknown = rawValue;
+            if (rawValue === "true" || rawValue === "false") {
+                value = rawValue === "true";
+            } else if (/^[-+]?\d+$/.test(rawValue)) {
+                value = Number.parseInt(rawValue, 10);
+            } else if (/^[-+]?(?:\d+\.\d*|\.\d+)(?:[eE][-+]?\d+)?$/.test(rawValue)) {
+                value = Number.parseFloat(rawValue);
+            }
+
+            if (Object.prototype.hasOwnProperty.call(parameterTarget, name)) {
+                parameterTarget[name] = value;
+            } else if (Object.prototype.hasOwnProperty.call(debugTarget, name)) {
+                debugTarget[name] = value;
+            }
+        }
+
+        const pluginPattern = /<plugin\s+[^>]*classpath=["']([^"']+)["'][^>]*(?:\/?>)(?:([\s\S]*?)<\/plugin>)?/g;
+        for (const match of xml.matchAll(pluginPattern)) {
+            const classpath = match[1];
+            const body = match[2] ?? "";
+            if (classpath === "org.opennars.operator.NullOperator") {
+                const valueMatch = body.match(/<arg\s+[^>]*type=["']String\.class["'][^>]*value=["']([^"']+)["'][^>]*\/?\s*>/);
+                plugins.add(valueMatch === null ? new NullOperator() : new NullOperator(valueMatch[1]));
+            } else {
+                configuredPlugins.push(classpath);
+            }
+        }
+        ConfigReader.lastUnsupportedPluginClasspaths = configuredPlugins;
+        return plugins;
+    }
+
     public static loadParamsFromFileAndReturnPlugins(filepath: java.lang.String, reasoner: Reasoner,
         parameters: Parameters): java.util.List<Plugin> {
+
+        if (typeof process !== "undefined" && process.versions?.node !== undefined) {
+            return ConfigReader.loadNodeConfig(String(filepath), parameters);
+        }
 
         java.lang.System.out.println("Got relative path for loading the config: " + filepath);
         let ret: java.util.List<Plugin> = new java.util.ArrayList<Plugin>();
@@ -55,9 +124,9 @@ export class ConfigReader extends JavaObject {
 
                     let pluginClassPath: java.lang.String = iPlugin.getAttributes().getNamedItem("classpath").getNodeValue();
 
-                    let arguments: NodeList = iPlugin.getChildNodes();
+                    let pluginArguments: NodeList = iPlugin.getChildNodes();
 
-                    let createdPlugin: Plugin = ConfigReader.createPluginByClassnameAndArguments(pluginClassPath, arguments, reasoner);
+                    let createdPlugin: Plugin = ConfigReader.createPluginByClassnameAndArguments(pluginClassPath, pluginArguments, reasoner);
                     ret.add(createdPlugin);
                 }
             } else {
@@ -117,13 +186,13 @@ export class ConfigReader extends JavaObject {
         return ret;
     }
 
-    private static createPluginByClassnameAndArguments(pluginClassPath: java.lang.String, arguments: NodeList,
+    private static createPluginByClassnameAndArguments(pluginClassPath: java.lang.String, pluginArguments: NodeList,
         reasoner: Reasoner): Plugin {
         let types: java.util.List<java.lang.Class<unknown>> = new java.util.ArrayList();
         let values: java.util.List<java.lang.Object> = new java.util.ArrayList();
 
-        for (let parameterIdx: int = 0; parameterIdx < arguments.getLength(); parameterIdx++) {
-            let iParameter: Node = arguments.item(parameterIdx);
+        for (let parameterIdx: int = 0; parameterIdx < pluginArguments.getLength(); parameterIdx++) {
+            let iParameter: Node = pluginArguments.item(parameterIdx);
 
             if (iParameter.getNodeType() !== Node.ELEMENT_NODE) {
                 continue;

@@ -6,6 +6,25 @@ import { Sentence } from "./Sentence.ts";
 import { Task } from "./Task.ts";
 import { Bag } from "../storage/Bag.ts";
 import { TaskLink } from "./TaskLink.ts";
+import { TermLink } from "./TermLink.ts";
+import { BudgetValue } from "./BudgetValue.ts";
+import { TruthValue } from "./TruthValue.ts";
+import { Stamp } from "./Stamp.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import { LocalRules } from "../inference/LocalRules.ts";
+import { Events } from "../io/events/Events.ts";
+import { ProcessQuestion } from "../control/concept/ProcessQuestion.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Parameters } from "../main/Parameters.ts";
+import type { Timable } from "../interfaces/Timable.ts";
+import type { DerivationContext } from "../control/DerivationContext.ts";
+
+const TaskLinkAdd = Events.TaskLinkAdd;
+const TaskLinkRemove = Events.TaskLinkRemove;
+const TermLinkAdd = Events.TermLinkAdd;
+const TermLinkRemove = Events.TermLinkRemove;
+const BeliefSelect = Events.BeliefSelect;
 
 
 
@@ -138,7 +157,7 @@ export class Concept extends Item<Term> {
         let preSize: int = table.size();
         let removedT: Task;
         let removed: Sentence = null;
-        removedT = this.addToTable(task, table, max, rankTruthExpectation);
+        removedT = Concept.addToTable(task, table, max, rankTruthExpectation);
         if (removedT !== null) {
             removed = removedT.sentence;
         }
@@ -173,7 +192,7 @@ export class Concept extends Item<Term> {
             return retLink;
         }
 
-        let subBudget: BudgetValue = distributeAmongLinks(taskBudget, this.termLinkTemplates.size(), content.narParameters);
+        let subBudget: BudgetValue = BudgetFunctions.distributeAmongLinks(taskBudget, this.termLinkTemplates.size(), content.narParameters);
         if (subBudget.aboveThreshold()) {
 
             for (let termLink of this.termLinkTemplates) {
@@ -208,12 +227,12 @@ export class Concept extends Item<Term> {
     public static addToTable(newTask: Task, table: java.util.List<Task>, capacity: int,
         rankTruthExpectation: boolean): Task {
         let newSentence: Sentence = newTask.sentence;
-        let rank1: float = rankBelief(newSentence, rankTruthExpectation); // for the new isBelief
+        let rank1: float = BudgetFunctions.rankBelief(newSentence, rankTruthExpectation); // for the new isBelief
         let rank2: float;
         let i: int;
         for (i = 0; i < table.size(); i++) {
             let judgment2: Sentence = table.get(i).sentence;
-            rank2 = rankBelief(judgment2, rankTruthExpectation);
+            rank2 = BudgetFunctions.rankBelief(judgment2, rankTruthExpectation);
             if (rank1 >= rank2) {
                 if (newSentence.truth.equals(judgment2.truth)
                     && newSentence.stamp.equals(judgment2.stamp, false, true, true)) {
@@ -322,7 +341,7 @@ export class Concept extends Item<Term> {
         // one has to go
         let isEternal: boolean = target.sentence.isEternal();
         let nSameContent: int = 0;
-        let lowest_priority: float = java.lang.Float.MAX_VALUE;
+        let lowest_priority: float = Number.MAX_VALUE;
         let lowest: TaskLink = null;
         for (let tl of this.taskLinks) {
             let s: Sentence = tl.getTarget().sentence;
@@ -366,7 +385,7 @@ export class Concept extends Item<Term> {
             return;
         }
 
-        let subBudget: BudgetValue = distributeAmongLinks(taskBudget, this.termLinkTemplates.size(), narParameters);
+        let subBudget: BudgetValue = BudgetFunctions.distributeAmongLinks(taskBudget, this.termLinkTemplates.size(), narParameters);
 
         if (!subBudget.aboveThreshold()) {
             return;

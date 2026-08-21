@@ -1,5 +1,15 @@
 //! Java source: opennars/control/concept/ProcessTask.java
 import { java, JavaObject, type char } from "jree";
+import { Symbols } from "../../io/Symbols.ts";
+import { ProcessJudgment } from "./ProcessJudgment.ts";
+import { ProcessGoal } from "./ProcessGoal.ts";
+import { ProcessQuestion } from "./ProcessQuestion.ts";
+import { ProcessAnticipation } from "./ProcessAnticipation.ts";
+import { TaskLink } from "../../entity/TaskLink.ts";
+import type { Concept } from "../../entity/Concept.ts";
+import type { Task } from "../../entity/Task.ts";
+import type { DerivationContext } from "../DerivationContext.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
 
 
 

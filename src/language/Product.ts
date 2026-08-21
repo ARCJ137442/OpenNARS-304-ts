@@ -1,5 +1,9 @@
 //! Java source: opennars/language/Product.java
 import { java, type int, S } from "jree";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Symbols } from "../io/Symbols.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 
@@ -20,33 +24,16 @@ export class Product extends CompoundTerm {
 
     public constructor(x: java.util.List<Term>);
     public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 1: {
-                const [arg] = args as [Term[]];
-
-
-                super(arg);
-
-                java.security.cert.CertPathChecker.init(arg);
-
-
-                break;
-            }
-
-            case 1: {
-                const [x] = args as [java.util.List<Term>];
-
-
-                this(x.toArray(new Array<Term>(0)));
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        let terms: Term[];
+        if (args.length === 1 && Array.isArray(args[0])) {
+            terms = args[0] as Term[];
+        } else if (args.length === 1 && typeof (args[0] as java.util.List<Term>)?.toArray === "function") {
+            terms = (args[0] as java.util.List<Term>).toArray(new Array<Term>(0));
+        } else {
+            terms = args as Term[];
         }
+        super(terms);
+        this.init(terms);
     }
 
 
@@ -106,7 +93,7 @@ export class Product extends CompoundTerm {
         switch (args.length) {
             case 0: {
 
-                return new Product(term);
+                return new Product(this.term);
 
 
                 break;

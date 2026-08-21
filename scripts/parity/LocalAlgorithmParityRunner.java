@@ -44,6 +44,8 @@ public final class LocalAlgorithmParityRunner {
         appendTruth(out, "reduceDisjunction", TruthFunctions.reduceDisjunction(a, b, parameters), false);
         appendTruth(out, "reduceConjunction", TruthFunctions.reduceConjunction(a, b, parameters), false);
         appendTruth(out, "reduceConjunctionNeg", TruthFunctions.reduceConjunctionNeg(a, b, parameters), false);
+        appendTruth(out, "lookupTruthOrNull", TruthFunctions.lookupTruthOrNull(a, b, parameters,
+                false, TruthFunctions.EnumType.DEDUCTION, true, TruthFunctions.EnumType.ABDUCTION), false);
         out.append("},\"budget\":{");
 
         appendBudget(out, "normal", new BudgetValue(0.4f, 0.6f, 0.8f, parameters), true);

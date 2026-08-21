@@ -1,5 +1,45 @@
 //! Java source: opennars/inference/RuleTables.java
 import { java, JavaObject, type short, type int, S } from "jree";
+import { Symbols } from "../io/Symbols.ts";
+import { Events } from "../io/events/Events.ts";
+import { Terms } from "../language/Terms.ts";
+import { Statement } from "../language/Statement.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { Inheritance } from "../language/Inheritance.ts";
+import { SetExt } from "../language/SetExt.ts";
+import { SetInt } from "../language/SetInt.ts";
+import { Conjunction } from "../language/Conjunction.ts";
+import { Disjunction } from "../language/Disjunction.ts";
+import { Negation } from "../language/Negation.ts";
+import { Implication } from "../language/Implication.ts";
+import { Equivalence } from "../language/Equivalence.ts";
+import { Similarity } from "../language/Similarity.ts";
+import { Variable } from "../language/Variable.ts";
+import { Variables } from "../language/Variables.ts";
+import { Operation } from "../operator/Operation.ts";
+import { Stamp } from "../entity/Stamp.ts";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { LocalRules } from "./LocalRules.ts";
+import { BudgetFunctions } from "./BudgetFunctions.ts";
+import { StructuralRules } from "./StructuralRules.ts";
+import { SyllogisticRules } from "./SyllogisticRules.ts";
+import { CompositionalRules } from "./CompositionalRules.ts";
+import { TruthFunctions } from "./TruthFunctions.ts";
+import { TemporalRules } from "./TemporalRules.ts";
+import type { DerivationContext } from "../control/DerivationContext.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Concept } from "../entity/Concept.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { Task } from "../entity/Task.ts";
+import { TaskLink } from "../entity/TaskLink.ts";
+import { TermLink } from "../entity/TermLink.ts";
+import type { Term } from "../language/Term.ts";
+
+const {
+    VAR_INDEPENDENT, VAR_DEPENDENT, VAR_QUERY, QUESTION_MARK, GOAL_MARK,
+} = Symbols;
+const retOppositeSide = Statement.retOppositeSide;
 
 
 
@@ -88,7 +128,7 @@ export class RuleTables extends JavaObject {
 
         // put here since LocalRules match should be possible even if the belief is
         // foreign
-        if (equalSubTermsInRespectToImageAndProduct(taskTerm, beliefTerm))
+        if (Terms.equalSubTermsInRespectToImageAndProduct(taskTerm, beliefTerm))
             return;
 
         /*
@@ -710,7 +750,7 @@ export class RuleTables extends JavaObject {
             }
 
             case 5: {
-                const [originalMainSentence, subSentence, index, checkTermAgain, nal] = args as [Sentence, Sentence, int, boolean, DerivationContext];
+                let [originalMainSentence, subSentence, index, checkTermAgain, nal] = args as [Sentence, Sentence, int, boolean, DerivationContext];
 
 
                 if (originalMainSentence === null) {

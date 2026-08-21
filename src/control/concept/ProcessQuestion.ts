@@ -1,5 +1,25 @@
 //! Java source: opennars/control/concept/ProcessQuestion.java
 import { java, JavaObject } from "jree";
+import { Symbols } from "../../io/Symbols.ts";
+import { Events } from "../../io/events/Events.ts";
+import { CompoundTerm } from "../../language/CompoundTerm.ts";
+import { Variables } from "../../language/Variables.ts";
+import { LocalRules } from "../../inference/LocalRules.ts";
+import type { Concept } from "../../entity/Concept.ts";
+import type { Sentence } from "../../entity/Sentence.ts";
+import type { Task } from "../../entity/Task.ts";
+import type { Term } from "../../language/Term.ts";
+import type { DerivationContext } from "../DerivationContext.ts";
+
+const trySolution = LocalRules.trySolution;
+const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean) => {
+    for (const item of items) {
+        if (predicate(item)) {
+            return { isPresent: () => true, get: () => item };
+        }
+    }
+    return { isPresent: () => false, get: () => { throw new java.util.NoSuchElementException(); } };
+};
 
 
 

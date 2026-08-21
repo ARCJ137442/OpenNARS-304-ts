@@ -1,5 +1,17 @@
 //! Java source: opennars/language/Variables.java
 import { java, JavaObject, type char, type int, S } from "jree";
+import { Symbols } from "../io/Symbols.ts";
+import { Variable } from "./Variable.ts";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Implication } from "./Implication.ts";
+import { Equivalence } from "./Equivalence.ts";
+import { Conjunction } from "./Conjunction.ts";
+import { Disjunction } from "./Disjunction.ts";
+import { ImageExt } from "./ImageExt.ts";
+import { ImageInt } from "./ImageInt.ts";
+import { Inheritance } from "./Inheritance.ts";
+import { Similarity } from "./Similarity.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
 
 
 
@@ -38,16 +50,11 @@ export class Variables extends JavaObject {
             }
 
             case 6: {
-                const [rnd, type, term1, term2, map1, map2] = args as [java.util.Random, char, Term, Term, java.util.Map<Term, Term>, java.util.Map<Term, Term>];
+                if (typeof args[5] !== "boolean") {
+                    const [rnd, type, term1, term2, map1, map2] = args as [java.util.Random, char, Term, Term, java.util.Map<Term, Term>, java.util.Map<Term, Term>];
+                    return Variables.findSubstitute(rnd, type, term1, term2, [map1, map2]);
+                }
 
-
-                return Variables.findSubstitute(rnd, type, term1, term2, [map1, map2]);
-
-
-                break;
-            }
-
-            case 6: {
                 const [rnd, type, term1, term2, map, allowPartial] = args as [java.util.Random, char, Term, Term, java.util.Map<Term, Term>[], boolean];
 
 
@@ -343,7 +350,7 @@ export class Variables extends JavaObject {
                     return false;
                 let l: int = n.length();
                 for (let i: int = 0; i < l; i++) {
-                    switch (n.charAt(i)) {
+                    switch (String.fromCharCode(n.charAt(i))) {
                         case Symbols.VAR_INDEPENDENT:
                         case Symbols.VAR_DEPENDENT:
                         case Symbols.VAR_QUERY:
@@ -431,7 +438,7 @@ export class Variables extends JavaObject {
                 const [rnd, type, t1, t2, compound, allowPartial] = args as [java.util.Random, char, Term, Term, Term[], boolean];
 
 
-                let map: java.util.Map<Term, Term>[] = new Array<java.util.Map>(2); // begins empty: null,null
+                let map: java.util.Map<Term, Term>[] = [null, null]; // begins empty: null,null
 
                 let hasSubs: boolean = Variables.findSubstitute(rnd, type, t1, t2, map, allowPartial);
                 if (hasSubs) {

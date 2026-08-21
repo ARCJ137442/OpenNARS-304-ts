@@ -31,7 +31,7 @@ export class Task extends Item<Sentence> {
     /* Whether the task should go into event bag or not */
     private partOfSequenceBuffer: boolean = false;
     /* Whether it is an input task or not */
-    private isInput: boolean = false;
+    private inputTask: boolean = false;
 
     /**
      * Constructor for input task and single premise derived task
@@ -73,7 +73,7 @@ export class Task extends Item<Sentence> {
                 const isType = third === Task.EnumType.INPUT || third === Task.EnumType.DERIVED;
                 this.parentBelief = isType ? null : third as Sentence;
                 this.bestSolution = null;
-                this.isInput = third === Task.EnumType.INPUT;
+                this.inputTask = third === Task.EnumType.INPUT;
                 break;
             }
 
@@ -129,11 +129,11 @@ export class Task extends Item<Sentence> {
      * @return Whether the Task is derived from another task
      */
     public isInput(): boolean {
-        return this.isInput;
+        return this.inputTask;
     }
 
     public aboveThreshold(): boolean {
-        return budget.aboveThreshold();
+        return this.budget.aboveThreshold();
     }
 
     /**

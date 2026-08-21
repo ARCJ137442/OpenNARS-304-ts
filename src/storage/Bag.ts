@@ -3,6 +3,8 @@ import { java, JavaObject, type int, type float, S } from "jree";
 import { Item } from "../entity/Item.ts";
 import { Distributor } from "./Distributor.ts";
 import { Parameters } from "../main/Parameters.ts";
+import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import type { Memory } from "./Memory.ts";
 
 
 /**
@@ -335,5 +337,14 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
 
     public iterator(): java.util.Iterator<Type> {
         return this.nameTable.values().iterator();
+    }
+
+    public [Symbol.iterator](): Iterator<Type> {
+        const iterator = this.iterator();
+        return {
+            next: (): IteratorResult<Type> => iterator.hasNext()
+                ? { value: iterator.next(), done: false }
+                : { value: undefined as unknown as Type, done: true },
+        };
     }
 }

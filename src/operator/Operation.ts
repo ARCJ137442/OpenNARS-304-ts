@@ -1,5 +1,12 @@
 //! Java source: opennars/operator/Operation.java
 import { java, S } from "jree";
+import { Inheritance } from "../language/Inheritance.ts";
+import { Product } from "../language/Product.ts";
+import { Term } from "../language/Term.ts";
+import { Statement } from "../language/Statement.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Operator } from "./Operator.ts";
+import type { Task } from "../entity/Task.ts";
 
 
 
@@ -8,7 +15,7 @@ import { java, S } from "jree";
  */
 export class Operation extends Inheritance {
     private task: Task;
-    public static readonly SELF_TERM_ARRAY: Term[] = [SELF];
+    public static readonly SELF_TERM_ARRAY: Term[] = [Term.SELF];
 
     protected constructor(t: Term[]);
 
@@ -52,7 +59,7 @@ export class Operation extends Inheritance {
      * @return A new object, to be casted into a SetExt
      */
     public clone(): Operation {
-        return new Operation(term);
+        return new Operation(this.term);
     }
 
     /**
@@ -67,25 +74,25 @@ export class Operation extends Inheritance {
     }
 
     public getOperator(): Operator {
-        return getPredicate() as Operator;
+        return this.getPredicate() as Operator;
     }
 
     protected makeName(): java.lang.CharSequence {
-        if (java.security.cert.X509CertSelector.getSubject() instanceof Product && getPredicate() instanceof Operator)
-            return this.makeName(getPredicate().name(), (java.security.cert.X509CertSelector.getSubject() as Product).term);
-        return makeStatementName(java.security.cert.X509CertSelector.getSubject(), Symbols.NativeOperator.INHERITANCE, getPredicate());
+        if (this.getSubject() instanceof Product && this.getPredicate() instanceof Operator)
+            return Operation.makeName(this.getPredicate().name(), (this.getSubject() as Product).term);
+        return Statement.makeStatementName(this.getSubject(), Symbols.NativeOperator.INHERITANCE, this.getPredicate());
     }
 
     public static makeName(op: java.lang.CharSequence, arg: Term[]): java.lang.CharSequence {
         let nameBuilder: java.lang.StringBuilder = new java.lang.StringBuilder(16) // estimate
-            .append(COMPOUND_TERM_OPENER.ch).append(op);
+            .append(Symbols.NativeOperator.COMPOUND_TERM_OPENER.ch).append(op);
 
         for (let t of arg) {
             nameBuilder.append(Symbols.ARGUMENT_SEPARATOR);
             nameBuilder.append(t.name());
         }
 
-        nameBuilder.append(COMPOUND_TERM_CLOSER.ch);
+        nameBuilder.append(Symbols.NativeOperator.COMPOUND_TERM_CLOSER.ch);
         return nameBuilder.toString();
     }
 
@@ -102,7 +109,10 @@ export class Operation extends Inheritance {
     }
 
     public getArguments(): Product {
-        return java.security.cert.X509CertSelector.getSubject() as Product;
+        return this.getSubject() as Product;
     }
 
 }
+
+Inheritance.registerOperationFactory((operator, terms, addSelf) =>
+    Operation.make(operator as Operator, terms, addSelf));

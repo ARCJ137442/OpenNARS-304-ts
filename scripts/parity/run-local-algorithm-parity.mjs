@@ -90,6 +90,15 @@ async function tsSnapshot() {
     reduceDisjunction: () => TruthFunctions.reduceDisjunction(a, b, parameters),
     reduceConjunction: () => TruthFunctions.reduceConjunction(a, b, parameters),
     reduceConjunctionNeg: () => TruthFunctions.reduceConjunctionNeg(a, b, parameters),
+    lookupTruthOrNull: () => TruthFunctions.lookupTruthOrNull(
+      a,
+      b,
+      parameters,
+      false,
+      TruthFunctions.EnumType.DEDUCTION,
+      true,
+      TruthFunctions.EnumType.ABDUCTION,
+    ),
   };
   const snapshot = { truth: {}, budget: {}, utility: {} };
   for (const [name, operation] of Object.entries(operations)) snapshot.truth[name] = truth(operation());

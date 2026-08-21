@@ -1,5 +1,6 @@
 //! Java source: opennars/operator/FunctionOperator.java
 import { java, type int, type float } from "jree";
+import { Operator } from "./Operator.ts";
 
 
 

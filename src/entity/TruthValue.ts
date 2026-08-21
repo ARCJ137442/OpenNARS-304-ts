@@ -123,6 +123,17 @@ export class TruthValue {
         return `f=${this.frequency};c=${this.confidence};a=${this.analytic ? 1 : 0}`;
     }
 
+    public equals(other: unknown): boolean {
+        return other instanceof TruthValue
+            && this.frequency === other.frequency
+            && this.confidence === other.confidence
+            && this.analytic === other.analytic;
+    }
+
+    public hashCode(): number {
+        return this.toKey().split("").reduce((hash, character) => ((hash * 31) + character.charCodeAt(0)) | 0, 1);
+    }
+
     public clone(): TruthValue {
         return TruthValue.fromTruthValue(this);
     }

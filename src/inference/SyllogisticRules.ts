@@ -1,5 +1,33 @@
 //! Java source: opennars/inference/SyllogisticRules.java
 import { java, JavaObject, type int, type long, type short, type float, S } from "jree";
+import { Symbols } from "../io/Symbols.ts";
+import { Statement } from "../language/Statement.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { Conjunction } from "../language/Conjunction.ts";
+import { Equivalence } from "../language/Equivalence.ts";
+import { Implication } from "../language/Implication.ts";
+import { Interval } from "../language/Interval.ts";
+import { Terms } from "../language/Terms.ts";
+import type { Term } from "../language/Term.ts";
+import { Variables } from "../language/Variables.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { Task } from "../entity/Task.ts";
+import { Stamp } from "../entity/Stamp.ts";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { BudgetFunctions } from "./BudgetFunctions.ts";
+import { TruthFunctions } from "./TruthFunctions.ts";
+import { TemporalRules } from "./TemporalRules.ts";
+import type { DerivationContext } from "../control/DerivationContext.ts";
+import { ProcessAnticipation } from "../control/concept/ProcessAnticipation.ts";
+
+const NativeOperator = Symbols.NativeOperator;
+const { ORDER_NONE, ORDER_FORWARD, ORDER_BACKWARD, ORDER_INVALID } = TemporalRules;
+const dedExeOrder = TemporalRules.dedExeOrder;
+const abdIndComOrder = TemporalRules.abdIndComOrder;
+const analogyOrder = TemporalRules.analogyOrder;
+const resemblanceOrder = TemporalRules.resemblanceOrder;
+const reduceComponents = Terms.reduceComponents;
 
 
 
@@ -68,7 +96,7 @@ export class SyllogisticRules extends JavaObject {
 
         let content: Statement = sentence.term as Statement;
         let content1: Statement = Statement.make(content, term1, term2, order);
-        let content2: Statement = Statement.make(content, term2, term1, java.util.Collections.reverseOrder(order));
+        let content2: Statement = Statement.make(content, term2, term1, TemporalRules.reverseOrder(order));
 
         if ((content1 === null) || (content2 === null))
             return;
@@ -180,7 +208,7 @@ export class SyllogisticRules extends JavaObject {
                 truth1, budget1, false, false);
             nal.getTheNewStamp().setOccurrenceTime(occurrence_time2);
             nal.doublePremiseTask(
-                Statement.make(taskContent, term2, term1, java.util.Collections.reverseOrder(order)),
+                Statement.make(taskContent, term2, term1, TemporalRules.reverseOrder(order)),
                 truth2, budget2, false, false);
             nal.getTheNewStamp().setOccurrenceTime(occurrence_time1);
             nal.doublePremiseTask(
@@ -873,7 +901,7 @@ export class SyllogisticRules extends JavaObject {
         }
         let order1: int = st1.getTemporalOrder();
         let order2: int = st2.getTemporalOrder();
-        if (order1 !== java.util.Collections.reverseOrder(order2)) {
+        if (order1 !== TemporalRules.reverseOrder(order2)) {
             return false;
         }
         let term1: Term = null;
@@ -953,7 +981,7 @@ export class SyllogisticRules extends JavaObject {
     protected static elimiVarDep(compound: CompoundTerm, component: Term, compoundTask: boolean,
         nal: DerivationContext): void {
         let comp: Term = null;
-        for (let t of compound) {
+        for (let t of compound.term) {
             let unify: Term[] = [t, component];
             if (Variables.unify(nal.memory.randomNumber, Symbols.VAR_DEPENDENT, unify)) {
                 comp = t;

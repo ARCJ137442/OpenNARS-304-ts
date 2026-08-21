@@ -1,5 +1,12 @@
 //! Java source: opennars/language/ImageInt.java
 import { java, type short, type int, S } from "jree";
+import { Image } from "./Image.ts";
+import { Term } from "./Term.ts";
+import { Product } from "./Product.ts";
+import { Symbols } from "../io/Symbols.ts";
+
+const NativeOperator = Symbols.NativeOperator;
+const isPlaceHolder = Image.isPlaceHolder;
 
 
 
@@ -38,7 +45,7 @@ export class ImageInt extends Image {
         switch (args.length) {
             case 0: {
 
-                return new ImageInt(term, relationIndex);
+                return new ImageInt(this.term, this.relationIndex);
 
 
                 break;
@@ -51,11 +58,11 @@ export class ImageInt extends Image {
                 if (replaced === null) {
                     return null;
                 }
-                if (replaced.length !== term.length)
-                    throw new java.lang.IllegalStateException("Replaced terms not the same amount as existing terms (" + term.length
+                if (replaced.length !== this.term.length)
+                    throw new java.lang.IllegalStateException("Replaced terms not the same amount as existing terms (" + this.term.length
                         + "): " + java.util.Arrays.toString(replaced));
 
-                return new ImageInt(replaced, relationIndex);
+                return new ImageInt(replaced, this.relationIndex);
 
 
                 break;

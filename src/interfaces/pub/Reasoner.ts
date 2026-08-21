@@ -8,7 +8,7 @@ import { java, type long } from "jree";
  *
  * @author Robert Wünsche
  */
-interface Reasoner extends
+export interface Reasoner extends
     SensoryChannelConsumer,
     Resettable,
     NarseseConsumer,

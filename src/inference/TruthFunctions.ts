@@ -124,12 +124,12 @@ export class TruthFunctions extends UtilityFunctions {
      */
     public static lookupTruthOrNull(a: TruthValue, b: TruthValue, narParameters: Parameters,
         ...values: java.lang.Object[]): TruthValue {
-        let numberOfTuples: int = (java.io.ObjectInputFilter.Status.values.length) / 2;
+        let numberOfTuples: int = values.length / 2;
 
         for (let idx: int = 0; idx < numberOfTuples; idx++) {
-            let v: boolean = java.io.ObjectInputFilter.Status.values[idx * 2] as boolean;
+            let v: boolean = values[idx * 2] as boolean;
             if (v) {
-                let type: TruthFunctions.EnumType = java.io.ObjectInputFilter.Status.values[idx * 2 + 1] as TruthFunctions.EnumType;
+                let type: TruthFunctions.EnumType = values[idx * 2 + 1] as TruthFunctions.EnumType;
                 return TruthFunctions.lookupTruthFunctionAndCompute(type, a, b, narParameters);
             }
         }

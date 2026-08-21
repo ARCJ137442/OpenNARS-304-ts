@@ -1,6 +1,12 @@
 //! Java source: opennars/language/SetInt.java
 import { java, S } from "jree";
 import { SetTensional } from "./SetTensional.ts";
+import { Term } from "./Term.ts";
+import { Symbols } from "../io/Symbols.ts";
+
+const NativeOperator = Symbols.NativeOperator;
+const SET_INT_OPENER = NativeOperator.SET_INT_OPENER;
+const SET_INT_CLOSER = NativeOperator.SET_INT_CLOSER;
 
 
 
@@ -34,7 +40,7 @@ export class SetInt extends SetTensional {
         switch (args.length) {
             case 0: {
 
-                return new SetInt(term);
+                return new SetInt(...this.term);
 
 
                 break;
@@ -66,10 +72,16 @@ export class SetInt extends SetTensional {
     public static make(...args: unknown[]): SetInt {
         switch (args.length) {
             case 1: {
-                const [l] = args as [java.util.Collection<Term>];
-
-
-                return SetInt.make(l.toArray(new Array<Term>(0)));
+                const [l] = args as [java.util.Collection<Term> | Term[]];
+                if (Array.isArray(l)) {
+                    const sorted = Term.toSortedSetArray(...l);
+                    if (sorted.length === 0) return null;
+                    return new SetInt(...sorted);
+                }
+                if (typeof (l as { toArray?: unknown }).toArray === "function") {
+                    return SetInt.make((l as java.util.Collection<Term>).toArray(new Array<Term>(0)));
+                }
+                return new SetInt(l as Term);
 
 
                 break;
@@ -77,12 +89,10 @@ export class SetInt extends SetTensional {
 
             case 1: {
                 const [t] = args as [Term[]];
-
-
-                t = Term.toSortedSetArray(t);
-                if (t.length === 0)
+                const sorted = Term.toSortedSetArray(...t);
+                if (sorted.length === 0)
                     return null;
-                return new SetInt(t);
+                return new SetInt(...sorted);
 
 
                 break;
@@ -110,7 +120,7 @@ export class SetInt extends SetTensional {
      * @return true for communitative
      */
     public makeName(): java.lang.CharSequence {
-        return makeSetName(SET_INT_OPENER.ch, term, SET_INT_CLOSER.ch);
+        return SetInt.makeSetName(SET_INT_OPENER.ch, this.term, SET_INT_CLOSER.ch);
     }
 
 }

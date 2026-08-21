@@ -5,6 +5,9 @@ import { Term } from "./Term.ts";
 import { Interval } from "./Interval.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
+import { Debug } from "../main/Debug.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 
@@ -40,7 +43,7 @@ export class Conjunction extends CompoundTerm {
                 super(arg);
                 this.isSpatial = spatial;
                 this.temporalOrder = order;
-                java.security.cert.CertPathChecker.init(this.term);
+                this.init(this.term);
                 // update imagination space if it exists (also type checking the operations):
                 if (arg[0].imagination !== null) {
                     this.imagination = arg[0].imagination.ConstructSpace(this);
@@ -59,7 +62,7 @@ export class Conjunction extends CompoundTerm {
                 this.temporalOrder = order;
                 this.index_variable = rect.index_variable;
                 this.term_indices = rect.term_indices;
-                java.security.cert.CertPathChecker.init(this.term);
+                this.init(this.term);
 
 
                 break;
@@ -195,128 +198,74 @@ export class Conjunction extends CompoundTerm {
             }
 
             case 2: {
-                const [argList, temporalOrder] = args as [Term[], int];
-
-
-                return Conjunction.make(argList, temporalOrder, false);
-
-
-                break;
-            }
-
-            case 2: {
-                const [term1, term2] = args as [Term, Term];
-
-
-                return Conjunction.make(term1, term2, TemporalRules.ORDER_NONE);
-
-
-                break;
+                const [first, second] = args;
+                if (Array.isArray(first)) {
+                    return Conjunction.make(first as Term[], second as int, false);
+                }
+                return Conjunction.make(first as Term, second as Term, TemporalRules.ORDER_NONE);
             }
 
             case 3: {
-                const [argList, temporalOrder, spatial] = args as [Term[], int, boolean];
-
-
-                if (Debug.DETAILED) {
-                    Terms.verifyNonNull(argList);
-                }
-
-                if (argList === null || argList.length === 0) {
-                    return null;
-                } // special case: single component
-                if (argList.length === 1) {
-                    return argList[0];
-                } // special case: single component
-
-                if (temporalOrder === TemporalRules.ORDER_FORWARD) {
-                    let newArgList: Term[] = spatial ? argList : Conjunction.simplifyIntervals(Conjunction.flatten(argList, temporalOrder, spatial));
-
-                    if (newArgList.length === 1) {
-                        return newArgList[0];
+                const [first, second, third] = args;
+                if (Array.isArray(first)) {
+                    const argList = first as Term[];
+                    const temporalOrder = second as int;
+                    const spatial = third as boolean;
+                    if (Debug.DETAILED) {
+                        Terms.verifyNonNull(argList);
                     }
-                    return new Conjunction(newArgList, temporalOrder, false, spatial);
-
-                } else {
-
-                    // sort/merge arguments
-                    let set: java.util.NavigableSet<Term> = new java.util.TreeSet();
-                    let flattened: Term[] = Conjunction.flatten(argList, temporalOrder, spatial);
-                    let rect: ConvRectangle = UpdateConvRectangle(flattened);
+                    if (argList === null || argList.length === 0) {
+                        return null;
+                    }
+                    if (argList.length === 1) {
+                        return argList[0];
+                    }
+                    if (temporalOrder === TemporalRules.ORDER_FORWARD) {
+                        const newArgList = spatial ? argList : Conjunction.simplifyIntervals(
+                            Conjunction.flatten(argList, temporalOrder, spatial));
+                        if (newArgList.length === 1) {
+                            return newArgList[0];
+                        }
+                        return new Conjunction(newArgList, temporalOrder, false, spatial);
+                    }
+                    const terms: Term[] = [];
+                    const flattened = Conjunction.flatten(argList, temporalOrder, spatial);
+                    const rect: CompoundTerm.ConvRectangle = CompoundTerm.UpdateConvRectangle(flattened);
                     for (let t of flattened) {
-                        if (!(t instanceof Interval)) { // intervals only for seqs
+                        if (!(t instanceof Interval)) {
                             if (t.term_indices === null || rect === null || rect.term_indices === null) {
-                                set.add(t);
+                                terms.push(t);
                             } else if (t instanceof CompoundTerm) {
-                                let updated: Term = Conjunction.UpdateRelativeIndices(rect.term_indices[2], rect.term_indices[3],
+                                const updated = Conjunction.UpdateRelativeIndices(rect.term_indices[2], rect.term_indices[3],
                                     rect.term_indices[4], rect.term_indices[5], t.cloneDeep());
-                                set.add(updated);
+                                terms.push(updated);
                             }
                         }
                     }
-
-                    if (set.size() === 1) {
-                        return set.first();
+                    const sorted = Term.toSortedSetArray(...terms);
+                    if (sorted.length === 1) {
+                        return sorted[0];
                     }
-
-                    return new Conjunction(set.toArray(new Array<Term>(0)), temporalOrder, false, spatial, rect);
+                    return new Conjunction(sorted, temporalOrder, false, spatial, rect);
                 }
-
-
-                break;
-            }
-
-            case 3: {
-                const [prefix, suffix, temporalOrder] = args as [Term, Interval, int];
-
-
-                let t: Term[] = new Array<Term>(1 + 1);
-                let i: int = 0;
-                t[i++] = prefix;
-                t[i++] = suffix;
-                return Conjunction.make(t, temporalOrder);
-
-
-                break;
-            }
-
-            case 3: {
-                const [set, temporalOrder, spatial] = args as [java.util.Collection<Term>, int, boolean];
-
-
-                let argument: Term[] = set.toArray(new Array<Term>(0));
-                return Conjunction.make(argument, temporalOrder, spatial);
-
-
-                break;
-            }
-
-            case 3: {
-                const [term1, term2, temporalOrder] = args as [Term, Term, int];
-
-
-                return Conjunction.make(term1, term2, temporalOrder, false);
-
-
-                break;
+                if (typeof (first as { toArray?: unknown })?.toArray === "function") {
+                    return Conjunction.make(
+                        (first as java.util.Collection<Term>).toArray(new Array<Term>(0)),
+                        second as int,
+                        third as boolean,
+                    );
+                }
+                if (second instanceof Interval) {
+                    return Conjunction.make([first as Term, second as Interval], third as int);
+                }
+                return Conjunction.make(first as Term, second as Term, third as int, false);
             }
 
             case 4: {
-                const [prefix, ival, suffix, temporalOrder] = args as [Term, Interval, Term, int];
-
-
-                let t: Term[] = new Array<Term>(1 + 2);
-                let i: int = 0;
-                t[i++] = prefix;
-                t[i++] = ival;
-                t[i++] = suffix;
-                return Conjunction.make(t, temporalOrder);
-
-
-                break;
-            }
-
-            case 4: {
+                if (args[1] instanceof Interval) {
+                    const [prefix, ival, suffix, temporalOrder] = args as [Term, Interval, Term, int];
+                    return Conjunction.make([prefix, ival, suffix], temporalOrder);
+                }
                 const [term1, term2, temporalOrder, spatial] = args as [Term, Term, int, boolean];
 
 
@@ -487,7 +436,7 @@ export class Conjunction extends CompoundTerm {
     }
 
     protected makeName(): java.lang.CharSequence {
-        return makeCompoundName(this.operator(), term);
+        return Conjunction.makeCompoundName(this.operator(), ...this.term);
     }
 
     public getTemporalOrder(): int {

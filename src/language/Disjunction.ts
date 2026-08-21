@@ -1,5 +1,12 @@
 //! Java source: opennars/language/Disjunction.java
 import { java, S } from "jree";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Term } from "./Term.ts";
+import { Terms } from "./Terms.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Debug } from "../main/Debug.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 
@@ -23,7 +30,7 @@ export class Disjunction extends CompoundTerm {
             Terms.verifySortedAndUnique(arg, false);
         }
 
-        java.security.cert.CertPathChecker.init(arg);
+        this.init(arg);
     }
 
     /**
@@ -38,7 +45,7 @@ export class Disjunction extends CompoundTerm {
         switch (args.length) {
             case 0: {
 
-                return new Disjunction(term);
+                return new Disjunction(this.term);
 
 
                 break;
@@ -77,10 +84,10 @@ export class Disjunction extends CompoundTerm {
     public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
-                const [t] = args as [Term[]];
+                let [t] = args as [Term[]];
 
 
-                t = Term.toSortedSetArray(t);
+                t = Term.toSortedSetArray(...t);
 
                 if (t.length === 0)
                     return null;

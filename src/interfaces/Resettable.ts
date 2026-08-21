@@ -10,7 +10,7 @@ import { java } from "jree";
  *
  * @author Robert Wünsche
  */
-interface Resettable {
+export interface Resettable {
     /**
      * reset
      */

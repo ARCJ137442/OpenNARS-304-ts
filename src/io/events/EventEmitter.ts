@@ -13,7 +13,9 @@ export class EventEmitter extends JavaObject {
 
     private readonly events: java.util.Map<java.lang.Class<unknown>, java.util.List<EventEmitter.EventObserver>>;
 
-    private readonly pendingOps: java.util.Deque<java.lang.Object[]> = new java.util.ArrayDeque();
+    // jree's ArrayDeque constructor mishandles both an omitted argument and a
+    // numeric capacity; an empty Java collection preserves the no-argument form.
+    private readonly pendingOps: java.util.Deque<java.lang.Object[]> = new java.util.ArrayDeque(new java.util.ArrayList());
 
     /**
      * EventEmitter that allows unknown events; must use concurrent collection

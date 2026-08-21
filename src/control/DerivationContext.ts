@@ -1,5 +1,18 @@
 //! Java source: opennars/control/DerivationContext.java
 import { java, JavaObject, type double, type long, type char, S } from "jree";
+import { Stamp } from "../entity/Stamp.ts";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { Task } from "../entity/Task.ts";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { Equivalence } from "../language/Equivalence.ts";
+import { Implication } from "../language/Implication.ts";
+import { TruthFunctions } from "../inference/TruthFunctions.ts";
+import { Events } from "../io/events/Events.ts";
+import { Interval } from "../language/Interval.ts";
+import { Debug } from "../main/Debug.ts";
+import { Operation } from "../operator/Operation.ts";
+import { Variable } from "../language/Variable.ts";
 
 
 
@@ -465,7 +478,7 @@ export class DerivationContext extends JavaObject {
 
 
                 this.newStamp = null;
-                this.newStampBuilder = () => new Stamp(first, second, time, this.narParameters);
+                this.newStampBuilder = { build: () => new Stamp(first, second, time, this.narParameters) };
 
 
                 break;

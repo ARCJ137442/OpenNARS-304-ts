@@ -1,5 +1,39 @@
 //! Java source: opennars/language/Terms.java
 import { java, JavaObject, type int, type short, S } from "jree";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { TermLink } from "../entity/TermLink.ts";
+import type { Statement } from "./Statement.ts";
+import { Variable } from "./Variable.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
+import type { Term } from "./Term.ts";
+import type { Memory } from "../storage/Memory.ts";
+
+type TermsRuntime = Record<string, any>;
+
+const {
+    SET_EXT_OPENER, SET_INT_OPENER, INTERSECTION_EXT, INTERSECTION_INT,
+    DIFFERENCE_EXT, DIFFERENCE_INT, INHERITANCE, PRODUCT, IMAGE_EXT, IMAGE_INT,
+    NEGATION, DISJUNCTION, CONJUNCTION, SEQUENCE, SPATIAL, PARALLEL,
+    IMPLICATION, IMPLICATION_AFTER, IMPLICATION_BEFORE, IMPLICATION_WHEN,
+    EQUIVALENCE, EQUIVALENCE_AFTER, EQUIVALENCE_WHEN,
+} = Symbols.NativeOperator;
+
+const isStatementTerm = (value: unknown): boolean => {
+    if (!(value instanceof CompoundTerm)) {
+        return false;
+    }
+    const operator = (value as CompoundTerm).operator?.();
+    return Boolean(operator?.relation);
+};
+
+const operatorName = (value: unknown): string => {
+    const operator = (value as { operator?: () => unknown } | null)?.operator?.();
+    const name = (operator as { name?: () => unknown } | null)?.name?.();
+    return String(name ?? operator ?? "");
+};
+
+const isOperator = (value: unknown, name: string): boolean => operatorName(value) === name;
 
 
 
@@ -10,6 +44,19 @@ import { java, JavaObject, type int, type short, S } from "jree";
  */
 export class Terms extends JavaObject {
 
+    private static runtime: TermsRuntime | null = null;
+
+    public static registerRuntime(runtime: TermsRuntime): void {
+        Terms.runtime = runtime;
+    }
+
+    private static getRuntime(): TermsRuntime {
+        if (Terms.runtime === null) {
+            throw new java.lang.IllegalStateException("Terms runtime classes are not registered");
+        }
+        return Terms.runtime;
+    }
+
     public static equalSubTermsInRespectToImageAndProduct(a: Term, b: Term): boolean {
         if (a === null || b === null) {
             return false;
@@ -17,10 +64,10 @@ export class Terms extends JavaObject {
         if (!((a instanceof CompoundTerm) && (b instanceof CompoundTerm))) {
             return a.equals(b);
         }
-        if (a instanceof Inheritance && b instanceof Inheritance) {
+        if (isOperator(a, "INHERITANCE") && isOperator(b, "INHERITANCE")) {
             return Terms.equalSubjectPredicateInRespectToImageAndProduct(a, b);
         }
-        if (a instanceof Similarity && b instanceof Similarity) {
+        if (isOperator(a, "SIMILARITY") && isOperator(b, "SIMILARITY")) {
             return Terms.equalSubjectPredicateInRespectToImageAndProduct(a, b)
                 || Terms.equalSubjectPredicateInRespectToImageAndProduct(b, a);
         }
@@ -33,14 +80,14 @@ export class Terms extends JavaObject {
                 let x: Term = A[i];
                 let y: Term = B[i];
                 if (!x.equals(y)) {
-                    if (x instanceof Inheritance && y instanceof Inheritance) {
+                    if (isOperator(x, "INHERITANCE") && isOperator(y, "INHERITANCE")) {
                         if (!Terms.equalSubjectPredicateInRespectToImageAndProduct(x, y)) {
                             return false;
                         } else {
                             continue;
                         }
                     }
-                    if (x instanceof Similarity && y instanceof Similarity) {
+                    if (isOperator(x, "SIMILARITY") && isOperator(y, "SIMILARITY")) {
                         if (!Terms.equalSubjectPredicateInRespectToImageAndProduct(x, y)
                             && !Terms.equalSubjectPredicateInRespectToImageAndProduct(y, x)) {
                             return false;
@@ -67,8 +114,8 @@ export class Terms extends JavaObject {
         let j: int = 0;
         for (let t of itself.term) {
             let t2: Term = Terms.unwrapNegation(t);
-            if (!(t2 instanceof Implication) && !(t2 instanceof Equivalence) && !(t2 instanceof Conjunction)
-                && !(t2 instanceof Disjunction)) {
+            if (!isOperator(t2, "IMPLICATION") && !isOperator(t2, "EQUIVALENCE")
+                && !isOperator(t2, "CONJUNCTION") && !isOperator(t2, "DISJUNCTION")) {
                 j++;
                 continue;
             }
@@ -115,85 +162,65 @@ export class Terms extends JavaObject {
     public static term(...args: unknown[]): Term {
         switch (args.length) {
             case 2: {
-                const [compound, components] = args as [CompoundTerm, Term[]];
-
-
-                if (compound instanceof ImageExt) {
-                    return new ImageExt(components, (compound as Image).relationIndex);
-                } else if (compound instanceof ImageInt) {
-                    return ImageInt.make(components, (compound as Image).relationIndex);
-                } else {
-                    return Terms.term(compound.operator(), components);
+                const [source, rawComponents] = args as [CompoundTerm | Symbols.NativeOperator, Term[] | java.util.Collection<Term>];
+                const componentList: Term[] = Array.isArray(rawComponents)
+                    ? rawComponents
+                    : rawComponents.toArray(new Array<Term>(0));
+                if (source instanceof CompoundTerm) {
+                    return Terms.term(source.operator(), componentList);
                 }
-
-
-                break;
-            }
-
-            case 2: {
-                const [compound, components] = args as [CompoundTerm, java.util.Collection<Term>];
-
-
-                let c: Term[] = components.toArray(new Array<Term>(0));
-                return Terms.term(compound, c);
-
-
-                break;
-            }
-
-            case 2: {
-                const [copula, componentList] = args as [Symbols.NativeOperator, Term[]];
-
+                const copula = source as Symbols.NativeOperator;
+                const runtime = Terms.getRuntime();
 
 
                 switch (copula) {
 
                     case SET_EXT_OPENER:
-                        return SetExt.make(componentList);
+                        return runtime.SetExt.make(componentList);
                     case SET_INT_OPENER:
-                        return SetInt.make(componentList);
+                        return runtime.SetInt.make(componentList);
                     case INTERSECTION_EXT:
-                        return IntersectionExt.make(componentList);
+                        return runtime.IntersectionExt.make(componentList);
                     case INTERSECTION_INT:
-                        return IntersectionInt.make(componentList);
+                        return runtime.IntersectionInt.make(componentList);
                     case DIFFERENCE_EXT:
-                        return DifferenceExt.make(componentList);
+                        return runtime.DifferenceExt.make(componentList);
                     case DIFFERENCE_INT:
-                        return DifferenceInt.make(componentList);
+                        return runtime.DifferenceInt.make(componentList);
                     case INHERITANCE:
-                        return Inheritance.make(componentList[0], componentList[1]);
+                        return runtime.Inheritance.make(componentList[0], componentList[1]);
                     case PRODUCT:
-                        return new Product(componentList);
+                        return new runtime.Product(...componentList);
                     case IMAGE_EXT:
-                        return ImageExt.make(componentList);
+                        return runtime.ImageExt.make(componentList);
                     case IMAGE_INT:
-                        return ImageInt.make(componentList);
+                        return runtime.ImageInt.make(componentList);
                     case NEGATION:
-                        return Negation.make(componentList);
+                        return runtime.Negation.make(componentList);
                     case DISJUNCTION:
-                        return Disjunction.make(componentList);
+                        return runtime.Disjunction.make(componentList);
                     case CONJUNCTION:
-                        return Conjunction.make(componentList);
+                        return runtime.Conjunction.make(componentList);
                     case SEQUENCE:
-                        return Conjunction.make(componentList, TemporalRules.ORDER_FORWARD);
+                        return runtime.Conjunction.make(componentList, TemporalRules.ORDER_FORWARD);
                     case SPATIAL:
-                        return Conjunction.make(componentList, TemporalRules.ORDER_FORWARD, true);
+                        return runtime.Conjunction.make(componentList, TemporalRules.ORDER_FORWARD, true);
                     case PARALLEL:
-                        return Conjunction.make(componentList, TemporalRules.ORDER_CONCURRENT);
+                        return runtime.Conjunction.make(componentList, TemporalRules.ORDER_CONCURRENT);
                     case IMPLICATION:
-                        return Implication.make(componentList[0], componentList[1]);
+                        return runtime.Implication.make(componentList[0], componentList[1]);
                     case IMPLICATION_AFTER:
-                        return Implication.make(componentList[0], componentList[1], TemporalRules.ORDER_FORWARD);
+                        return runtime.Implication.make(componentList[0], componentList[1], TemporalRules.ORDER_FORWARD);
                     case IMPLICATION_BEFORE:
-                        return Implication.make(componentList[0], componentList[1], TemporalRules.ORDER_BACKWARD);
+                        return runtime.Implication.make(componentList[0], componentList[1], TemporalRules.ORDER_BACKWARD);
                     case IMPLICATION_WHEN:
-                        return Implication.make(componentList[0], componentList[1], TemporalRules.ORDER_CONCURRENT);
+                        return runtime.Implication.make(componentList[0], componentList[1], TemporalRules.ORDER_CONCURRENT);
                     case EQUIVALENCE:
-                        return Equivalence.make(componentList[0], componentList[1]);
+                        return runtime.Equivalence.make(componentList[0], componentList[1]);
                     case EQUIVALENCE_WHEN:
-                        return Equivalence.make(componentList[0], componentList[1], TemporalRules.ORDER_CONCURRENT);
+                        return runtime.Equivalence.make(componentList[0], componentList[1], TemporalRules.ORDER_CONCURRENT);
                     case EQUIVALENCE_AFTER:
-                        return Equivalence.make(componentList[0], componentList[1], TemporalRules.ORDER_FORWARD);
+                        return runtime.Equivalence.make(componentList[0], componentList[1], TemporalRules.ORDER_FORWARD);
                     default:
                         throw new java.lang.IllegalStateException("Unknown Term operator: " + copula + " (" + copula.name() + ")");
                 }
@@ -229,9 +256,9 @@ export class Terms extends JavaObject {
                 return Terms.term(compound, list);
             }
             if (list.length === 1) {
-                if ((compound instanceof Conjunction) || (compound instanceof Disjunction)
-                    || (compound instanceof IntersectionExt) || (compound instanceof IntersectionInt)
-                    || (compound instanceof DifferenceExt) || (compound instanceof DifferenceInt)) {
+                if (isOperator(compound, "CONJUNCTION") || isOperator(compound, "DISJUNCTION")
+                    || isOperator(compound, "INTERSECTION_EXT") || isOperator(compound, "INTERSECTION_INT")
+                    || isOperator(compound, "DIFFERENCE_EXT") || isOperator(compound, "DIFFERENCE_INT")) {
                     return list[0];
                 }
             }
@@ -257,7 +284,7 @@ export class Terms extends JavaObject {
     }
 
     public static unwrapNegation(T: Term): Term {
-        if (T !== null && T instanceof Negation) {
+        if (T !== null && isOperator(T, "NEGATION")) {
             return (T as CompoundTerm).term[0];
         }
         return T;
@@ -269,7 +296,7 @@ export class Terms extends JavaObject {
             return false;
         }
 
-        if (!(a instanceof Statement) && !(b instanceof Statement)) {
+        if (!isStatementTerm(a) && !isStatementTerm(b)) {
             return false;
         }
 
@@ -280,8 +307,8 @@ export class Terms extends JavaObject {
         let A: Statement = a as Statement;
         let B: Statement = b as Statement;
 
-        if (!(A instanceof Similarity && B instanceof Similarity
-            || A instanceof Inheritance && B instanceof Inheritance))
+        if (!(isOperator(A, "SIMILARITY") && isOperator(B, "SIMILARITY")
+            || isOperator(A, "INHERITANCE") && isOperator(B, "INHERITANCE")))
             return false;
 
         let subjA: Term = A.getSubject();
@@ -294,37 +321,37 @@ export class Terms extends JavaObject {
         let sa: Term = null;
         let sb: Term = null;
 
-        if ((subjA instanceof Product) && (predB instanceof ImageExt)) {
+        if (isOperator(subjA, "PRODUCT") && isOperator(predB, "IMAGE_EXT")) {
             ta = predA;
             sa = subjA;
             tb = subjB;
             sb = predB;
         }
-        if ((subjB instanceof Product) && (predA instanceof ImageExt)) {
+        if (isOperator(subjB, "PRODUCT") && isOperator(predA, "IMAGE_EXT")) {
             ta = subjA;
             sa = predA;
             tb = predB;
             sb = subjB;
         }
-        if ((predA instanceof ImageExt) && (predB instanceof ImageExt)) {
+        if (isOperator(predA, "IMAGE_EXT") && isOperator(predB, "IMAGE_EXT")) {
             ta = subjA;
             sa = predA;
             tb = subjB;
             sb = predB;
         }
-        if ((subjA instanceof ImageInt) && (subjB instanceof ImageInt)) {
+        if (isOperator(subjA, "IMAGE_INT") && isOperator(subjB, "IMAGE_INT")) {
             ta = predA;
             sa = subjA;
             tb = predB;
             sb = subjB;
         }
-        if ((predA instanceof Product) && (subjB instanceof ImageInt)) {
+        if (isOperator(predA, "PRODUCT") && isOperator(subjB, "IMAGE_INT")) {
             ta = subjA;
             sa = predA;
             tb = predB;
             sb = subjB;
         }
-        if ((predB instanceof Product) && (subjA instanceof ImageInt)) {
+        if (isOperator(predB, "PRODUCT") && isOperator(subjA, "IMAGE_INT")) {
             ta = predA;
             sa = subjA;
             tb = subjB;
@@ -340,9 +367,10 @@ export class Terms extends JavaObject {
         let sat: Term[] = (sa as CompoundTerm).term;
         let sbt: Term[] = (sb as CompoundTerm).term;
 
-        if (sa instanceof Image && sb instanceof Image) {
-            let im1: Image = sa as Image;
-            let im2: Image = sb as Image;
+        if (isOperator(sa, "IMAGE_EXT") && isOperator(sb, "IMAGE_EXT")
+            || isOperator(sa, "IMAGE_INT") && isOperator(sb, "IMAGE_INT")) {
+            let im1 = sa as CompoundTerm & { relationIndex: number };
+            let im2 = sb as CompoundTerm & { relationIndex: number };
             if (im1.relationIndex !== im2.relationIndex) {
                 return false;
             }
@@ -352,10 +380,14 @@ export class Terms extends JavaObject {
         let componentsB: java.util.Set<Term> = new java.util.LinkedHashSet(1 + sbt.length);
 
         componentsA.add(ta);
-        java.util.Collections.addAll(componentsA, sat);
+        for (const term of sat) {
+            componentsA.add(term);
+        }
 
         componentsB.add(tb);
-        java.util.Collections.addAll(componentsB, sbt);
+        for (const term of sbt) {
+            componentsB.add(term);
+        }
 
         for (let sA of componentsA) {
             let had: boolean = false;
@@ -395,7 +427,7 @@ export class Terms extends JavaObject {
                 const [componentLinks, ct] = args as [java.util.List<TermLink>, CompoundTerm];
 
 
-                let type: short = (ct instanceof Statement) ? TermLink.COMPOUND_STATEMENT : TermLink.COMPOUND; // default
+                let type: short = isStatementTerm(ct) ? TermLink.COMPOUND_STATEMENT : TermLink.COMPOUND; // default
                 return Terms.prepareComponentLinks(componentLinks, type, ct);
 
 
@@ -407,37 +439,25 @@ export class Terms extends JavaObject {
 
 
 
-                let tEquivalence: boolean = (term instanceof Equivalence);
-                let tImplication: boolean = (term instanceof Implication);
+                let tEquivalence: boolean = isOperator(term, "EQUIVALENCE");
+                let tImplication: boolean = isOperator(term, "IMPLICATION");
 
                 for (let i: int = 0; i < term.size(); i++) {
                     let t1: Term = term.term[i];
-                    t1 = new Sentence(
-                        t1,
-                        Symbols.TERM_NORMALIZING_WORKAROUND_MARK,
-                        null,
-                        null).term;
-
                     if (!(t1 instanceof Variable)) {
                         componentLinks.add(new TermLink(type, t1, i));
                     }
                     if ((tEquivalence || (tImplication && (i === 0)))
-                        && ((t1 instanceof Conjunction) || (t1 instanceof Negation))) {
+                        && (isOperator(t1, "CONJUNCTION") || isOperator(t1, "NEGATION"))) {
                         Terms.prepareComponentLinks(componentLinks, TermLink.COMPOUND_CONDITION, t1 as CompoundTerm);
                     } else if (t1 instanceof CompoundTerm) {
                         let ct1: CompoundTerm = t1 as CompoundTerm;
                         let ct1Size: int = ct1.size(); // cache because this loop is critical
-                        let t1ProductOrImage: boolean = (t1 instanceof Product) || (t1 instanceof ImageExt)
-                            || (t1 instanceof ImageInt);
+                        let t1ProductOrImage: boolean = isOperator(t1, "PRODUCT")
+                            || isOperator(t1, "IMAGE_EXT") || isOperator(t1, "IMAGE_INT");
 
                         for (let j: int = 0; j < ct1Size; j++) {
                             let t2: Term = ct1.term[j];
-
-                            t2 = new Sentence(
-                                t2,
-                                Symbols.TERM_NORMALIZING_WORKAROUND_MARK,
-                                null,
-                                null).term;
 
                             if (!t2.hasVar()) {
                                 if (t1ProductOrImage) {
@@ -450,18 +470,13 @@ export class Terms extends JavaObject {
                                     componentLinks.add(new TermLink(type, t2, i, j));
                                 }
                             }
-                            if ((t2 instanceof Product) || (t2 instanceof ImageExt) || (t2 instanceof ImageInt)) {
+                            if (isOperator(t2, "PRODUCT") || isOperator(t2, "IMAGE_EXT")
+                                || isOperator(t2, "IMAGE_INT")) {
                                 let ct2: CompoundTerm = t2 as CompoundTerm;
                                 let ct2Size: int = ct2.size();
 
                                 for (let k: int = 0; k < ct2Size; k++) {
                                     let t3: Term = ct2.term[k];
-
-                                    t3 = new Sentence(
-                                        t3,
-                                        Symbols.TERM_NORMALIZING_WORKAROUND_MARK,
-                                        null,
-                                        null).term;
 
                                     if (!t3.hasVar()) {
                                         if (type === TermLink.COMPOUND_CONDITION) {
@@ -601,7 +616,7 @@ export class Terms extends JavaObject {
         if (!allowSingleton && (arg.length === 1)) {
             throw new java.lang.IllegalStateException("Needs >1 components: " + java.util.Arrays.toString(arg));
         }
-        let s: Term[] = Term.toSortedSetArray(arg);
+        let s: Term[] = Term.toSortedSetArray(...arg);
         if (arg.length !== s.length) {
             throw new java.lang.IllegalStateException("Contains duplicates: " + java.util.Arrays.toString(arg));
         }

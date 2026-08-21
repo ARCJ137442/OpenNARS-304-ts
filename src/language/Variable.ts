@@ -4,6 +4,10 @@ import { Texts } from "../io/Texts.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
 
+const VAR_INDEPENDENT = Symbols.VAR_INDEPENDENT;
+const VAR_DEPENDENT = Symbols.VAR_DEPENDENT;
+const VAR_QUERY = Symbols.VAR_QUERY;
+
 
 
 /**
@@ -34,7 +38,11 @@ export class Variable extends Term {
                 const [name] = args as [java.lang.CharSequence];
 
 
-                this(name, null);
+                // Java constructor delegation (`this(name, null)`) is not legal
+                // in TypeScript; initialize the base class once and reuse the
+                // shared scope setup.
+                super();
+                this.setScope(null, name);
 
 
                 break;
@@ -60,7 +68,8 @@ export class Variable extends Term {
 
     public setScope(scope: Term, n: java.lang.CharSequence): Variable {
         this.setName(n);
-        this.type = n.charAt(0);
+        const first = java.lang.String.valueOf(n).charAt(0);
+        this.type = (typeof first === "number" ? String.fromCharCode(first) : first) as unknown as char;
         this.scope = scope !== null ? scope : this;
         this.hash = 0; // calculate lazily
         if (!Variable.validVariableType(this.type))
@@ -74,7 +83,7 @@ export class Variable extends Term {
      * @return The cloned Variable
      */
     public clone(): Variable {
-        let v: Variable = new Variable(java.lang.Enum.name(), this.scope);
+        let v: Variable = new Variable(this.name(), this.scope);
         if (this.scope === this)
             v.scope = v;
         return v;
@@ -135,7 +144,7 @@ export class Variable extends Term {
             return false;
         }
         let v: Variable = that as Variable;
-        if (!java.lang.Enum.name().equals(v.name())) {
+        if (!this.name().equals(v.name())) {
             return false;
         }
         if ((this.getScope() === this && v.getScope() !== v) ||
@@ -150,13 +159,13 @@ export class Variable extends Term {
         let v: Variable = that as Variable;
         if ((v.scope === v) && (this.scope === this))
             // both are unscoped, so compare by name only
-            return java.lang.Enum.name().equals(v.name());
+            return this.name().equals(v.name());
         else if ((v.scope !== v) && (this.scope === this))
             return false;
         else if ((v.scope === v) && (this.scope !== this))
             return false;
         else {
-            if (!java.lang.Enum.name().equals(v.name()))
+            if (!this.name().equals(v.name()))
                 return false;
 
             if (this.scope === v.scope)
@@ -179,9 +188,9 @@ export class Variable extends Term {
     public hashCode(): int {
         if (this.hash === 0) {
             if (this.scope !== this)
-                this.hash = 31 * java.lang.Enum.name().hashCode() + this.scope.hashCode();
+                this.hash = 31 * this.name().hashCode() + this.scope.hashCode();
             else
-                this.hash = java.lang.Enum.name().hashCode();
+                this.hash = this.name().hashCode();
         }
         return this.hash;
     }
@@ -240,7 +249,7 @@ export class Variable extends Term {
     }
 
     protected isCommon(): boolean {
-        let n: java.lang.CharSequence = java.lang.Enum.name();
+        let n: java.lang.CharSequence = this.name();
         let l: int = n.length();
         return n.charAt(l - 1) === '$';
     }
@@ -303,7 +312,7 @@ export class Variable extends Term {
         }
 
         let c: java.lang.CharSequence = cache[index];
-        if (c === null) {
+        if (c == null) {
             c = Variable.newName(type, index);
             cache[index] = c;
         }
@@ -312,14 +321,13 @@ export class Variable extends Term {
     }
 
     protected static newName(type: char, index: int): java.lang.CharSequence {
-
-        let digits: int = (index >= 256 ? 3 : ((index >= 16) ? 2 : 1));
-        let cb: java.nio.CharBuffer = java.nio.CharBuffer.allocate(1 + digits).append(type);
+        const typeText = typeof type === "number" ? String.fromCharCode(type) : String(type);
+        let name = typeText;
         do {
-            cb.append(java.lang.Character.forDigit(index % 16, 16));
-            index /= 16;
+            name += (index % 16).toString(16);
+            index = Math.trunc(index / 16);
         } while (index !== 0);
-        return cb.compact().toString();
+        return name;
     }
 
     public countTermRecursively(map: java.util.Map<Term, java.lang.Integer>): java.util.Map<Term, java.lang.Integer> {

@@ -224,7 +224,7 @@ export abstract  class Item<K> implements JavaObject, java.io.Serializable {
         return false;
     }
 
-    public abstract static StringKeyItem =  class StringKeyItem extends Item<java.lang.CharSequence> {
+    public static StringKeyItem =  class StringKeyItem extends Item<java.lang.CharSequence> {
 
         public  constructor(budget: BudgetValue) {
             super(budget);

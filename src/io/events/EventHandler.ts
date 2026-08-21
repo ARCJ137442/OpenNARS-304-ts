@@ -14,34 +14,15 @@ export abstract class EventHandler extends JavaObject implements EventEmitter.Ev
 
     public constructor(source: EventEmitter, active: boolean, ...events: java.lang.Class<unknown>[]);
     public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 3: {
-                const [n, active, events] = args as [Nar, boolean, java.lang.Class<unknown>[]];
-
-
-                this(n.memory.event, active, this.events);
-
-
-                break;
-            }
-
-            case 3: {
-                const [source, active, events] = args as [EventEmitter, boolean, java.lang.Class<unknown>[]];
-
-
-                super();
-                this.source = source;
-                this.events = this.events;
-                this.setActive(active);
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        if (args.length !== 3) {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
+        const [candidate, active, events] = args as [Nar | EventEmitter, boolean, java.lang.Class<unknown>[]];
+        const source = (candidate as Nar).memory?.event ?? candidate as EventEmitter;
+        super();
+        this.source = source;
+        this.events = events;
+        this.setActive(active);
     }
 
 

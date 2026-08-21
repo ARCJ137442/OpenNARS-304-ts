@@ -5,6 +5,14 @@ import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 
+const NativeOperator = Symbols.NativeOperator;
+const isVariableTerm = (value: unknown): boolean =>
+    typeof (value as { getType?: unknown } | null)?.getType === "function";
+const compoundTerms = (value: unknown): Term[] | null => {
+    const terms = (value as { term?: unknown } | null)?.term;
+    return Array.isArray(terms) ? terms as Term[] : null;
+};
+
 
 //import org.opennars.util.sort.SortedList;
 
@@ -19,7 +27,9 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
  * @author Patrick Hammer
  */
 export class Term extends JavaObject {
-    // public  imagination:  ImaginationSpace;
+    // Java initializes this reference to null; keeping that default matters for
+    // inference branches that test whether a term has an imagination space.
+    public imagination: any = null;
     private static readonly atoms: java.util.Map<java.lang.CharSequence, Term> = new java.util.LinkedHashMap();
 
     // Keep atomic SELF initialization independent from the SetExt -> Term
@@ -43,13 +53,21 @@ export class Term extends JavaObject {
     }
 
     public isHigherOrderStatement(): boolean { // ==> <=>
-        return (this instanceof Equivalence) || (this instanceof Implication);
+        const operator = this.operator();
+        return operator === NativeOperator.IMPLICATION
+            || operator === NativeOperator.IMPLICATION_AFTER
+            || operator === NativeOperator.IMPLICATION_WHEN
+            || operator === NativeOperator.IMPLICATION_BEFORE
+            || operator === NativeOperator.EQUIVALENCE
+            || operator === NativeOperator.EQUIVALENCE_AFTER
+            || operator === NativeOperator.EQUIVALENCE_WHEN;
     }
 
     public isExecutable(mem: Memory): boolean {
         // don't allow ^want and ^believe to be active/have an effect,
         // which means its only used as monitor
-        let isOp: boolean = this instanceof Operation;
+        let isOp: boolean = typeof (this as unknown as { getOperator?: unknown }).getOperator === "function"
+            && typeof (this as unknown as { getArguments?: unknown }).getArguments === "function";
         if (isOp) {
             // final Operator op = ((Operation) this).getOperator();
             // the following part may be refactored after we know more about how the NAL9
@@ -114,18 +132,19 @@ export class Term extends JavaObject {
                 const [name] = args as [java.lang.CharSequence];
 
 
-                let x: Term = Term.atoms.get(name); // only
-                if (x !== null && !x.toString().toString().endsWith("]")) { // return only if it isn't an index term
+                const nativeName = String(name);
+                let x: Term = Term.atoms.get(nativeName); // only
+                if (x !== null && !String(x).endsWith("]")) { // return only if it isn't an index term
                     return x;
                 }
 
-                let nameStr: java.lang.String = name.toString();
+                let nameStr: java.lang.String = nativeName;
                 // p[s,i,j]
                 let term_indices: Int32Array = null;
                 let before_indices_str: java.lang.String = null;
-                if (nameStr.endsWith("]") && nameStr.contains("[")) { // simple check, failing for most terms
-                    let indices_str: java.lang.String = nameStr.split("\\[")[1].split("\\]")[0];
-                    before_indices_str = nameStr.split("\\[")[0];
+                if (nameStr.endsWith("]") && nameStr.includes("[")) { // simple check, failing for most terms
+                    let indices_str: java.lang.String = nameStr.split("[")[1].split("]")[0];
+                    before_indices_str = nameStr.split("[")[0];
                     let ind_s: java.lang.String[] = indices_str.split(",");
                     if (ind_s.length === 2) { // only position info given
                         indices_str = "1,1," + indices_str;
@@ -133,7 +152,7 @@ export class Term extends JavaObject {
                     }
                     term_indices = new Int32Array(ind_s.length);
                     for (let i: int = 0; i < ind_s.length; i++) {
-                        if (StringUtils.isNumeric(ind_s[i]))
+                        if (/^[-+]?\d+(?:\.\d+)?$/.test(String(ind_s[i]).trim()))
                             term_indices[i] = java.lang.Integer.valueOf(ind_s[i]);
                         else {
                             term_indices = null;
@@ -142,7 +161,7 @@ export class Term extends JavaObject {
                     }
                 }
 
-                let name2: java.lang.CharSequence = name;
+                let name2: java.lang.CharSequence = nativeName;
                 if (term_indices !== null) { // only on conceptual level not
                     name2 = before_indices_str + "[i,j,k,l]";
                 }
@@ -198,7 +217,7 @@ export class Term extends JavaObject {
     public override  clone(): Term {
         let t: Term = new Term();
         if (this.term_indices !== null) {
-            t.term_indices = this.term_indices.clone();
+            t.term_indices = this.term_indices.slice();
             t.index_variable = this.index_variable;
         }
         t.setName(this.name());
@@ -258,22 +277,27 @@ export class Term extends JavaObject {
         return false;
     }
 
-    public recurseTerms(v: Term.TermVisitor, parent: Term): void {
-        v.visit(this, parent);
-        if (this instanceof CompoundTerm) {
-            for (let t of (this as CompoundTerm).term) {
+    public recurseTerms(v: Term.TermVisitor | ((term: Term, parent: Term) => void), parent: Term): void {
+        if (typeof v === "function") {
+            v(this, parent);
+        } else {
+            v.visit(this, parent);
+        }
+        const terms = compoundTerms(this);
+        if (terms !== null) {
+            for (let t of terms) {
                 t.recurseTerms(v, this);
             }
         }
     }
 
-    public recurseSubtermsContainingVariables(v: Term.TermVisitor): void;
+    public recurseSubtermsContainingVariables(v: Term.TermVisitor | ((term: Term, parent: Term) => void)): void;
 
-    public recurseSubtermsContainingVariables(v: Term.TermVisitor, parent: Term): void;
+    public recurseSubtermsContainingVariables(v: Term.TermVisitor | ((term: Term, parent: Term) => void), parent: Term): void;
     public recurseSubtermsContainingVariables(...args: unknown[]): void {
         switch (args.length) {
             case 1: {
-                const [v] = args as [Term.TermVisitor];
+                const [v] = args as [Term.TermVisitor | ((term: Term, parent: Term) => void)];
 
 
                 this.recurseTerms(v, null);
@@ -283,14 +307,19 @@ export class Term extends JavaObject {
             }
 
             case 2: {
-                const [v, parent] = args as [Term.TermVisitor, Term];
+                const [v, parent] = args as [Term.TermVisitor | ((term: Term, parent: Term) => void), Term];
 
 
                 if (!this.hasVar())
                     return;
-                v.visit(this, parent);
-                if (this instanceof CompoundTerm) {
-                    for (let t of (this as CompoundTerm).term) {
+                if (typeof v === "function") {
+                    v(this, parent);
+                } else {
+                    v.visit(this, parent);
+                }
+                const terms = compoundTerms(this);
+                if (terms !== null) {
+                    for (let t of terms) {
                         t.recurseSubtermsContainingVariables(v, this);
                     }
                 }
@@ -335,9 +364,9 @@ export class Term extends JavaObject {
             return 0;
         }
         // previously: Orders among terms: variable < atomic < compound
-        if ((that instanceof Variable) && (this.getClass() !== Variable.class)) {
+        if (isVariableTerm(that) && !isVariableTerm(this)) {
             return 1;
-        } else if ((this instanceof Variable) && (that.getClass() !== Variable.class)) {
+        } else if (isVariableTerm(this) && !isVariableTerm(that)) {
             return -1;
         }
         return Texts.compareTo(this.name().toString(), that.name().toString());
@@ -460,23 +489,26 @@ export class Term extends JavaObject {
     }
 
     public static toSortedSet(...arg: Term[]): java.util.NavigableSet<Term> {
-        // use toSortedSetArray where possible
-        let t: java.util.NavigableSet<Term> = new java.util.TreeSet();
-        java.util.Collections.addAll(t, arg);
-        return t;
+        // jree does not provide java.util.TreeSet. An ArrayList with the same
+        // sorted/unique contents is sufficient for the callers here, which only
+        // use retainAll() and toArray().
+        return new java.util.ArrayList(Term.toSortedSetArray(...arg)) as unknown as java.util.NavigableSet<Term>;
     }
 
     public static readonly EmptyTermArray: Term[] = new Array<Term>(0);
 
     public static toSortedSetArray(...arg: Term[]): Term[] {
-        switch (arg.length) {
+        const values = arg.length === 1 && Array.isArray(arg[0])
+            ? arg[0] as unknown as Term[]
+            : arg;
+        switch (values.length) {
             case 0:
                 return Term.EmptyTermArray;
             case 1:
-                return [arg[0]];
+                return [values[0]];
             case 2:
-                let a: Term = arg[0];
-                let b: Term = arg[1];
+                let a: Term = values[0];
+                let b: Term = values[1];
                 let c: int = a.compareTo(b);
 
                 if (Debug.DETAILED) {
@@ -501,14 +533,16 @@ export class Term extends JavaObject {
 
         // TODO fast sorted array for arg.length == 3
 
-        // terms > 2:
-        let s: java.util.NavigableSet<Term> = new java.util.TreeSet();
-        // SortedList<Term> s = new SortedList<>(arg.length);
-        // s.setAllowDuplicate(false);
-
-        java.util.Collections.addAll(s, arg);
-
-        return s.toArray(new Array<Term>(0));
+        // terms > 2: TreeSet is not part of jree, so preserve its observable
+        // contract with a compareTo-sorted, duplicate-free native array.
+        const sorted = values.slice().sort((left, right) => left.compareTo(right));
+        const unique: Term[] = [];
+        for (const term of sorted) {
+            if (unique.length === 0 || unique[unique.length - 1].compareTo(term) !== 0) {
+                unique.push(term);
+            }
+        }
+        return unique;
     }
 
     /**

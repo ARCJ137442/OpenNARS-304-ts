@@ -1,6 +1,12 @@
 //! Java source: opennars/language/SetTensional.java
 import { java, type char, type int } from "jree";
 import { CompoundTerm } from "./CompoundTerm.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Debug } from "../main/Debug.ts";
+import { Terms } from "./Terms.ts";
+import type { Term } from "./Term.ts";
+
+const ARGUMENT_SEPARATOR = Symbols.ARGUMENT_SEPARATOR;
 
 
 
@@ -25,7 +31,6 @@ export abstract class SetTensional extends CompoundTerm {
             Terms.verifySortedAndUnique(arg, true);
         }
 
-        java.security.cert.CertPathChecker.init(arg);
     }
 
     /**
@@ -37,22 +42,8 @@ export abstract class SetTensional extends CompoundTerm {
      * @return the oldName of the term
      */
     protected static makeSetName(opener: char, arg: Term[], closer: char): java.lang.CharSequence {
-        let size: int = 1 + 1 - 1; // opener + closer - 1 [no preceding separator for first element]
-
-        for (let t of arg)
-            size += 1 + t.name().length();
-
-        let n: java.nio.CharBuffer = java.nio.CharBuffer.allocate(size);
-
-        n.append(opener);
-        for (let i: int = 0; i < arg.length; i++) {
-            if (i !== 0)
-                n.append(Symbols.ARGUMENT_SEPARATOR);
-            n.append(arg[i].name());
-        }
-        n.append(closer);
-
-        return n.compact().toString();
+        const names = arg.map((t) => String(t.name()));
+        return new java.lang.String(`${String(opener)}${names.join(Symbols.ARGUMENT_SEPARATOR)}${String(closer)}`);
     }
 
     /**

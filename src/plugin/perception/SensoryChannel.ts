@@ -1,5 +1,12 @@
 //! Java source: opennars/plugin/perception/SensoryChannel.java
 import { java, JavaObject, type int, type double, S } from "jree";
+import { Narsese } from "../../io/Narsese.ts";
+import { Term } from "../../language/Term.ts";
+import { Concept } from "../../entity/Concept.ts";
+import type { Plugin } from "../Plugin.ts";
+import type { Nar } from "../../main/Nar.ts";
+import type { Task } from "../../entity/Task.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
 
 
 
@@ -127,8 +134,9 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
     }
 
     public priority(t: Term): double {
-        if (this instanceof Nar) { // on highest level it is simply the concept priority
-            let c: Concept = (this as Nar).memory.concept(t);
+        const reasoner = this as unknown as { memory?: { concept(term: Term): Concept } };
+        if (reasoner.memory !== undefined) { // on highest level it is simply the concept priority
+            let c: Concept = reasoner.memory.concept(t);
             if (c !== null) {
                 return c.getPriority();
             }

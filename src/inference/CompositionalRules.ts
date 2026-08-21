@@ -1,5 +1,60 @@
 //! Java source: opennars/inference/CompositionalRules.java
 import { java, JavaObject, type int, type long, type float } from "jree";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { Task } from "../entity/Task.ts";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { Debug } from "../main/Debug.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Statement } from "../language/Statement.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { Conjunction } from "../language/Conjunction.ts";
+import { Disjunction } from "../language/Disjunction.ts";
+import { DifferenceExt } from "../language/DifferenceExt.ts";
+import { DifferenceInt } from "../language/DifferenceInt.ts";
+import { Equivalence } from "../language/Equivalence.ts";
+import { Image } from "../language/Image.ts";
+import { ImageExt } from "../language/ImageExt.ts";
+import { ImageInt } from "../language/ImageInt.ts";
+import { Implication } from "../language/Implication.ts";
+import { Inheritance } from "../language/Inheritance.ts";
+import { IntersectionExt } from "../language/IntersectionExt.ts";
+import { IntersectionInt } from "../language/IntersectionInt.ts";
+import { Interval } from "../language/Interval.ts";
+import { Negation } from "../language/Negation.ts";
+import { SetExt } from "../language/SetExt.ts";
+import { SetInt } from "../language/SetInt.ts";
+import { Terms } from "../language/Terms.ts";
+import { Variable } from "../language/Variable.ts";
+import { Variables } from "../language/Variables.ts";
+import type { Term } from "../language/Term.ts";
+import { BudgetFunctions } from "./BudgetFunctions.ts";
+import { TemporalRules } from "./TemporalRules.ts";
+import { TruthFunctions } from "./TruthFunctions.ts";
+import type { DerivationContext } from "../control/DerivationContext.ts";
+
+type Pair<L, R> = {
+    getLeft(): L;
+    getRight(): R;
+};
+
+const pair = <L, R>(left: L, right: R): Pair<L, R> => ({
+    getLeft: () => left,
+    getRight: () => right,
+});
+
+const union = TruthFunctions.union;
+const intersection = TruthFunctions.intersection;
+const negation = TruthFunctions.negation;
+const induction = TruthFunctions.induction;
+const comparison = TruthFunctions.comparison;
+const abduction = TruthFunctions.abduction;
+const lookupTruthOrNull = TruthFunctions.lookupTruthOrNull;
+const reduceDisjunction = TruthFunctions.reduceDisjunction;
+const reduceConjunction = TruthFunctions.reduceConjunction;
+const reduceConjunctionNeg = TruthFunctions.reduceConjunctionNeg;
+const reduceComponents = Terms.reduceComponents;
+const EnumType = TruthFunctions.EnumType;
 
 
 
@@ -739,7 +794,12 @@ export class CompositionalRules extends JavaObject {
         for (let t of app.keySet()) {
             shuffledVariables.add(t);
         }
-        java.util.Collections.shuffle(shuffledVariables, nal.memory.randomNumber);
+        for (let i = shuffledVariables.size() - 1; i > 0; i--) {
+            const j = nal.memory.randomNumber.nextInt(i + 1);
+            const current = shuffledVariables.get(i);
+            shuffledVariables.set(i, shuffledVariables.get(j));
+            shuffledVariables.set(j, current);
+        }
         let selected: java.util.Set<Term> = new java.util.LinkedHashSet<Term>();
         let i: int = 1;
         for (let t of shuffledVariables) {
@@ -759,7 +819,7 @@ export class CompositionalRules extends JavaObject {
                 let generalizationPenalty: java.lang.Float = java.lang.Math.pow(nal.narParameters.VARIABLE_INTRODUCTION_CONFIDENCE_MUL,
                     mapping.size() - 1) as float;
                 result.add(
-                    new ImmutablePair((implicationEquivalenceOrJunction as CompoundTerm).applySubstitute(mapping),
+                    pair((implicationEquivalenceOrJunction as CompoundTerm).applySubstitute(mapping),
                         generalizationPenalty));
             }
         }

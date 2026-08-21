@@ -49,17 +49,6 @@ export abstract  class Events extends JavaObject {
     };
 
 
-    public static ConceptNew =  class ConceptNew extends Events.ParametricInferenceEvent<Concept> {
-        public  constructor(c: Concept, when: long) {
-            super(c, when);
-        }
-
-        public override  toString():  java.lang.String {
-            return "Concept Created: " + this.object;
-        }
-    };
-
-
     public static Perceive =  class Perceive extends JavaObject {
     };
 
@@ -76,7 +65,7 @@ export abstract  class Events extends JavaObject {
     };
 
 
-    public abstract static ConceptBeliefAdd =  class ConceptBeliefAdd extends JavaObject implements EventObserver {
+    public static ConceptBeliefAdd =  class ConceptBeliefAdd extends JavaObject implements EventObserver {
 
         public abstract  onBeliefAdd(c: Concept, t: Task, extra: java.lang.Object[]):  void;
 
@@ -87,7 +76,7 @@ export abstract  class Events extends JavaObject {
     };
 
 
-    public abstract static ConceptBeliefRemove =  class ConceptBeliefRemove extends JavaObject implements EventObserver {
+    public static ConceptBeliefRemove =  class ConceptBeliefRemove extends JavaObject implements EventObserver {
 
         public abstract  onBeliefRemove(c: Concept, removed: Sentence, t: Task, extra: java.lang.Object[]):  void;
 
@@ -159,7 +148,7 @@ export abstract  class Events extends JavaObject {
     };
 
 
-    public abstract static ConceptFire =  class ConceptFire extends JavaObject implements EventObserver {
+    public static ConceptFire =  class ConceptFire extends JavaObject implements EventObserver {
 
         /**
          * use:
@@ -175,7 +164,7 @@ export abstract  class Events extends JavaObject {
     };
 
 
-    public abstract static TaskImmediateProcess =  class TaskImmediateProcess extends JavaObject implements EventObserver {
+    public static TaskImmediateProcess =  class TaskImmediateProcess extends JavaObject implements EventObserver {
 
         public abstract  onProcessed(t: Task, n: DerivationContext):  void;
 
@@ -203,7 +192,7 @@ export abstract  class Events extends JavaObject {
     };
  // 2nd level unification in CompositionalRules
 
-    public abstract static TaskAdd =  class TaskAdd extends JavaObject implements EventObserver {
+    public static TaskAdd =  class TaskAdd extends JavaObject implements EventObserver {
 
         public abstract  onTaskAdd(t: Task, reason: java.lang.String):  void;
 
@@ -231,7 +220,7 @@ export abstract  class Events extends JavaObject {
     };
 
 
-    public abstract static InferenceEvent =  class InferenceEvent extends JavaObject {
+    public static InferenceEvent =  class InferenceEvent extends JavaObject {
 
         public readonly  when:  long;
         public readonly  stack:  java.util.List<java.lang.StackTraceElement>;
@@ -298,7 +287,7 @@ this.when = when;
     };
 
 
-    public abstract static ParametricInferenceEvent =  class ParametricInferenceEvent<O> extends Events.InferenceEvent {
+    public static ParametricInferenceEvent =  class ParametricInferenceEvent<O> extends Events.InferenceEvent {
         public readonly  object:  O;
 
         public  constructor(object: O, when: long) {
@@ -306,6 +295,17 @@ this.when = when;
             this.object = object;
         }
 
+    };
+
+
+    public static ConceptNew =  class ConceptNew extends Events.ParametricInferenceEvent<Concept> {
+        public  constructor(c: Concept, when: long) {
+            super(c, when);
+        }
+
+        public override  toString():  java.lang.String {
+            return "Concept Created: " + this.object;
+        }
     };
 
 

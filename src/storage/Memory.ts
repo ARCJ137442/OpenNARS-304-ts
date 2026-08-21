@@ -1,5 +1,42 @@
 //! Java source: opennars/storage/Memory.java
 import { java, JavaObject, type long, type float, type int, type double, S } from "jree";
+import { Parameters } from "../main/Parameters.ts";
+import { Concept } from "../entity/Concept.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { Task } from "../entity/Task.ts";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { Stamp } from "../entity/Stamp.ts";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { Bag } from "./Bag.ts";
+import { EventEmitter } from "../io/events/EventEmitter.ts";
+import { Events } from "../io/events/Events.ts";
+import { OutputHandler } from "../io/events/OutputHandler.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { Interval } from "../language/Interval.ts";
+import { Tense } from "../language/Tense.ts";
+import { Term } from "../language/Term.ts";
+import { Operation } from "../operator/Operation.ts";
+import { Operator } from "../operator/Operator.ts";
+import { Debug } from "../main/Debug.ts";
+import { Emotions } from "../plugin/mental/Emotions.ts";
+import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
+import { ProcessTask } from "../control/concept/ProcessTask.ts";
+import { DerivationContext } from "../control/DerivationContext.ts";
+import { GeneralInferenceControl } from "../control/GeneralInferenceControl.ts";
+import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts";
+import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import type { Nar } from "../main/Nar.ts";
+import type { Resettable } from "../interfaces/Resettable.ts";
+import type { Timable } from "../interfaces/Timable.ts";
+
+const IN = OutputHandler.IN;
+const OUT = OutputHandler.OUT;
+const DEBUG = OutputHandler.DEBUG;
+const ResetStart = Events.ResetStart;
+const ResetEnd = Events.ResetEnd;
+const TaskRemove = Events.TaskRemove;
+const BaseEntry = Stamp.BaseEntry;
 
 
 
@@ -27,7 +64,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     public lastDecision: Task = null;
     public allowExecution: boolean = true;
 
-    public readonly randomSeed: long = 1;
+    public readonly randomSeed: long = 1n;
     public readonly randomNumber: java.util.Random = new java.util.Random(this.randomSeed);
 
     // todo make sense of this class and de-obfuscate
@@ -180,6 +217,9 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     }
 
     public static isJUnitTest(): boolean {
+        if (typeof process !== "undefined" && process.release?.name === "node") {
+            return false;
+        }
         let stackTrace: java.lang.StackTraceElement[] = java.lang.Thread.currentThread().getStackTrace();
         let list: java.lang.StackTraceElement[] = stackTrace;
         for (let element of list) {
@@ -239,7 +279,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
                         s.setCreationTime(time.time(), this.narParameters.DURATION);
 
                     if (emitIn) {
-                        this.emit(IN.class, task);
+            this.emit(IN.class, task);
                     }
 
                     if (task.budget.aboveThreshold()) {
@@ -283,7 +323,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
 
         let budgetForNewTask: BudgetValue = new BudgetValue(this.narParameters.DEFAULT_FEEDBACK_PRIORITY,
             this.narParameters.DEFAULT_FEEDBACK_DURABILITY,
-            truthToQuality(sentence.getTruth()), this.narParameters);
+            BudgetFunctions.truthToQuality(sentence.getTruth()), this.narParameters);
         let newTask: Task = new Task(sentence, budgetForNewTask, Task.EnumType.INPUT);
 
         newTask.setElemOfSequenceBuffer(true);
@@ -305,7 +345,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     }
 
     public emit(c: java.lang.Class<unknown>, ...signal: java.lang.Object[]): void {
-        this.event.emit(c, java.util.concurrent.locks.Condition.signal);
+        this.event.emit(c, ...signal);
     }
 
     public emitting(channel: java.lang.Class<unknown>): boolean {

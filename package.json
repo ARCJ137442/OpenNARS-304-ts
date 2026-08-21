@@ -12,7 +12,9 @@
         "scan:migration-patterns": "node scripts/converting/scan-migration-patterns.mjs",
         "apply:migration-patterns": "node scripts/converting/apply-migration-patterns.mjs",
         "test:parity:local": "node --experimental-strip-types scripts/parity/run-local-algorithm-parity.mjs",
+        "cli": "node --loader ./scripts/ts-loader.mjs scripts/cli.mjs",
         "test:e2e:java:smoke": "node scripts/e2e/run-nal-corpus.mjs --engine java --limit 5",
+        "test:e2e:ts:smoke": "node scripts/e2e/run-nal-corpus.mjs --engine ts --limit 5",
         "test:e2e:java": "node scripts/e2e/run-nal-corpus.mjs --engine java --all",
         "test:e2e:parity": "node scripts/e2e/run-nal-corpus.mjs --engine parity --limit 5"
     },

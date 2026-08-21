@@ -1,5 +1,13 @@
 //! Java source: opennars/language/Inheritance.java
 import { java, S } from "jree";
+import { Statement } from "./Statement.ts";
+import { Term } from "./Term.ts";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Product } from "./Product.ts";
+import { Debug } from "../main/Debug.ts";
+import { Symbols } from "../io/Symbols.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 
@@ -11,6 +19,12 @@ import { java, S } from "jree";
  */
 export class Inheritance extends Statement {
 
+    private static operationFactory: ((operator: unknown, terms: Term[], addSelf: boolean) => Inheritance) | null = null;
+
+    public static registerOperationFactory(factory: (operator: unknown, terms: Term[], addSelf: boolean) => Inheritance): void {
+        Inheritance.operationFactory = factory;
+    }
+
     /**
      * Constructor with partial values, called by make
      *
@@ -20,33 +34,17 @@ export class Inheritance extends Statement {
 
     protected constructor(subj: Term, pred: Term);
     protected constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 1: {
-                const [arg] = args as [Term[]];
-
-
-                super(arg);
-
-                java.security.cert.CertPathChecker.init(arg);
-
-
-                break;
-            }
-
-            case 2: {
-                const [subj, pred] = args as [Term, Term];
-
-
-                this([subj, pred]);
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        let terms: Term[];
+        if (args.length === 1) {
+            terms = args[0] as Term[];
+        } else if (args.length === 2) {
+            terms = [args[0] as Term, args[1] as Term];
+        } else {
+            super([]);
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
+        super(terms);
+        this.init(terms);
     }
 
 
@@ -62,7 +60,7 @@ export class Inheritance extends Statement {
         switch (args.length) {
             case 0: {
 
-                return Inheritance.make(java.security.cert.X509CertSelector.getSubject(), getPredicate());
+                return Inheritance.make(this.getSubject(), this.getPredicate());
 
 
                 break;
@@ -110,12 +108,12 @@ export class Inheritance extends Statement {
      */
     public static make(subject: Term, predicate: Term): Inheritance {
 
-        if (subject === null || predicate === null || invalidStatement(subject, predicate)) {
+        if (subject === null || predicate === null || Statement.invalidStatement(subject, predicate)) {
             return null;
         }
 
         let subjectProduct: boolean = subject instanceof Product;
-        let predicateOperator: boolean = predicate instanceof Operator;
+        let predicateOperator: boolean = String(predicate).startsWith("^");
 
         if (Debug.DETAILED) {
             if (!predicateOperator && predicate.toString().startsWith("^")) {
@@ -125,10 +123,14 @@ export class Inheritance extends Statement {
 
         if (subjectProduct && predicateOperator) {
             // name = Operation.makeName(predicate.name(), ((CompoundTerm) subject).term);
-            return Operation.make(predicate as Operator, (subject as CompoundTerm).term, true);
+            if (Inheritance.operationFactory !== null) {
+                return Inheritance.operationFactory(predicate, (subject as CompoundTerm).term, true);
+            }
         } else {
             return new Inheritance(subject, predicate);
         }
+
+        return new Inheritance(subject, predicate);
 
     }
 
@@ -142,3 +144,6 @@ export class Inheritance extends Statement {
     }
 
 }
+
+Statement.registerRelationFactory(NativeOperator.INHERITANCE,
+    (subject, predicate) => Inheritance.make(subject, predicate));

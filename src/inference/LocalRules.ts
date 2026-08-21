@@ -1,5 +1,31 @@
 //! Java source: opennars/inference/LocalRules.java
 import { java, JavaObject, type int, type long, type float } from "jree";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { Concept } from "../entity/Concept.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { Stamp } from "../entity/Stamp.ts";
+import { Task } from "../entity/Task.ts";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { Implication } from "../language/Implication.ts";
+import { Inheritance } from "../language/Inheritance.ts";
+import { Equivalence } from "../language/Equivalence.ts";
+import { Statement } from "../language/Statement.ts";
+import { Similarity } from "../language/Similarity.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { Term } from "../language/Term.ts";
+import { Variables } from "../language/Variables.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { BudgetFunctions } from "./BudgetFunctions.ts";
+import { TemporalRules } from "./TemporalRules.ts";
+import { TruthFunctions } from "./TruthFunctions.ts";
+import { UtilityFunctions } from "./UtilityFunctions.ts";
+import { OutputHandler } from "../io/events/OutputHandler.ts";
+import { Events } from "../io/events/Events.ts";
+
+const matchingOrder = TemporalRules.matchingOrder;
+const reverseOrder = TemporalRules.reverseOrder;
+const Answer = Events.Answer;
+const Unsolved = Events.Unsolved;
 
 
 
@@ -321,7 +347,7 @@ export class LocalRules extends JavaObject {
         let task: Task = nal.getCurrentTask();
         let belief: Sentence = nal.getCurrentBelief();
         let sentence: Sentence = task.sentence;
-        if (matchingOrder(sentence.getTemporalOrder(), java.util.Collections.reverseOrder(belief.getTemporalOrder()))) {
+        if (matchingOrder(sentence.getTemporalOrder(), reverseOrder(belief.getTemporalOrder()))) {
             if (sentence.isJudgment()) {
                 LocalRules.inferToSym(sentence, belief, nal);
             } else {

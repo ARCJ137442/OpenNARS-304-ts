@@ -1,5 +1,16 @@
 //! Java source: opennars/control/GeneralInferenceControl.java
 import { java, JavaObject, type float, type int } from "jree";
+import { Events } from "../io/events/Events.ts";
+import { DerivationContext } from "./DerivationContext.ts";
+import { ProcessAnticipation } from "./concept/ProcessAnticipation.ts";
+import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import { RuleTables } from "../inference/RuleTables.ts";
+import { TermLink } from "../entity/TermLink.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Parameters } from "../main/Parameters.ts";
+import type { Nar } from "../main/Nar.ts";
+import type { Concept } from "../entity/Concept.ts";
+import type { Task } from "../entity/Task.ts";
 
 
 

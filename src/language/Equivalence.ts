@@ -3,6 +3,16 @@ import { java, type int, S } from "jree";
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
+import { Interval } from "./Interval.ts";
+import { Symbols } from "../io/Symbols.ts";
+
+const NativeOperator = Symbols.NativeOperator;
+
+const operatorName = (value: unknown): string => {
+    const operator = (value as { operator?: () => unknown } | null)?.operator?.();
+    return String((operator as { name?: () => unknown } | null)?.name?.() ?? operator ?? "");
+};
+const isOperator = (value: unknown, name: string): boolean => operatorName(value) === name;
 
 
 
@@ -26,7 +36,7 @@ export class Equivalence extends Statement {
 
         this.temporalOrder = order;
 
-        java.security.cert.CertPathChecker.init(components);
+        this.init(components);
     }
 
     /**
@@ -110,13 +120,13 @@ export class Equivalence extends Statement {
 
                 // to be extended to check if
                 // subject is Conjunction
-                if (invalidStatement(subject, predicate) && temporalOrder !== TemporalRules.ORDER_FORWARD
+                if (Statement.invalidStatement(subject, predicate) && temporalOrder !== TemporalRules.ORDER_FORWARD
                     && temporalOrder !== TemporalRules.ORDER_CONCURRENT) {
                     return null;
                 }
 
-                if ((subject instanceof Implication) || (subject instanceof Equivalence)
-                    || (predicate instanceof Implication) || (predicate instanceof Equivalence) ||
+                if (isOperator(subject, "IMPLICATION") || isOperator(subject, "EQUIVALENCE")
+                    || isOperator(predicate, "IMPLICATION") || isOperator(predicate, "EQUIVALENCE") ||
                     (subject instanceof Interval) || (predicate instanceof Interval)) {
                     return null;
                 }

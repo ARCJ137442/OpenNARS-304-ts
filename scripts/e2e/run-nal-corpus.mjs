@@ -90,7 +90,7 @@ function runJava(files, cycles) {
 
 function runTs(files, cycles) {
   const cli = join(projectRoot, "scripts", "cli.mjs");
-  const result = spawnSync(process.execPath, [cli, "--cycles", String(cycles), ...files], {
+  const result = spawnSync(process.execPath, ["--loader", "./scripts/ts-loader.mjs", cli, "--cycles", String(cycles), ...files], {
     cwd: projectRoot,
     encoding: "utf8",
     maxBuffer: 32 * 1024 * 1024,

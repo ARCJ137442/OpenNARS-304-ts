@@ -1,5 +1,34 @@
 //! Java source: opennars/control/concept/ProcessGoal.java
 import { java, JavaObject, type double, type float, type long, type int } from "jree";
+import { Events } from "../../io/events/Events.ts";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Concept } from "../../entity/Concept.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { LocalRules } from "../../inference/LocalRules.ts";
+import { TemporalRules } from "../../inference/TemporalRules.ts";
+import { TruthFunctions } from "../../inference/TruthFunctions.ts";
+import { Symbols } from "../../io/Symbols.ts";
+import { CompoundTerm } from "../../language/CompoundTerm.ts";
+import { Conjunction } from "../../language/Conjunction.ts";
+import { Equivalence } from "../../language/Equivalence.ts";
+import { Implication } from "../../language/Implication.ts";
+import { Interval } from "../../language/Interval.ts";
+import { Product } from "../../language/Product.ts";
+import { Term } from "../../language/Term.ts";
+import { Variable } from "../../language/Variable.ts";
+import { Variables } from "../../language/Variables.ts";
+import { FunctionOperator } from "../../operator/FunctionOperator.ts";
+import { Operation } from "../../operator/Operation.ts";
+import { Operator } from "../../operator/Operator.ts";
+import { Debug } from "../../main/Debug.ts";
+import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
+
+const revisable = LocalRules.revisable;
+const revision = LocalRules.revision;
+const trySolution = LocalRules.trySolution;
 
 
 

@@ -1,5 +1,23 @@
 //! Java source: opennars/control/concept/ProcessJudgment.java
 import { java, JavaObject, type int } from "jree";
+import { Events } from "../../io/events/Events.ts";
+import { ProcessAnticipation } from "./ProcessAnticipation.ts";
+import { LocalRules } from "../../inference/LocalRules.ts";
+import { TemporalRules } from "../../inference/TemporalRules.ts";
+import { TemporalInferenceControl } from "../TemporalInferenceControl.ts";
+import { CompoundTerm } from "../../language/CompoundTerm.ts";
+import { Implication } from "../../language/Implication.ts";
+import { Conjunction } from "../../language/Conjunction.ts";
+import { Interval } from "../../language/Interval.ts";
+import { Operation } from "../../operator/Operation.ts";
+import { Operator } from "../../operator/Operator.ts";
+import type { Concept } from "../../entity/Concept.ts";
+import type { Sentence } from "../../entity/Sentence.ts";
+import type { Stamp } from "../../entity/Stamp.ts";
+import type { Task } from "../../entity/Task.ts";
+import type { Term } from "../../language/Term.ts";
+import type { DerivationContext } from "../DerivationContext.ts";
+import type { Parameters } from "../../main/Parameters.ts";
 
 
 
@@ -31,13 +49,13 @@ export class ProcessJudgment extends JavaObject {
             if (newStamp.equals(oldStamp, false, false, true)) {
                 concept.memory.removeTask(task, "Duplicated");
                 return;
-            } else if (revisable(judg, oldBelief, nal.narParameters)) {
+            } else if (LocalRules.revisable(judg, oldBelief, nal.narParameters)) {
                 nal.setTheNewStamp(newStamp, oldStamp, nal.time.time());
                 let projectedBelief: Sentence = oldBelief.projection(nal.time.time(), newStamp.getOccurrenceTime(),
                     concept.memory);
                 if (projectedBelief !== null) {
                     nal.setCurrentBelief(projectedBelief);
-                    revision(judg, projectedBelief, concept, false, nal);
+                    LocalRules.revision(judg, projectedBelief, concept, false, nal);
                 }
             }
         }
@@ -46,11 +64,11 @@ export class ProcessJudgment extends JavaObject {
         }
         let nnq: int = concept.questions.size();
         for (let i: int = 0; i < nnq; i++) {
-            trySolution(judg, concept.questions.get(i), nal, true);
+            LocalRules.trySolution(judg, concept.questions.get(i), nal, true);
         }
         let nng: int = concept.desires.size();
         for (let i: int = 0; i < nng; i++) {
-            trySolution(judg, concept.desires.get(i), nal, true);
+            LocalRules.trySolution(judg, concept.desires.get(i), nal, true);
         }
         concept.addToTable(task, false, concept.beliefs, concept.memory.narParameters.CONCEPT_BELIEFS_MAX,
             Events.ConceptBeliefAdd.class, Events.ConceptBeliefRemove.class);
@@ -71,12 +89,10 @@ export class ProcessJudgment extends JavaObject {
         if (task.isInput() && !task.sentence.isEternal() && task.sentence.term instanceof Operation) {
             let op: Operation = task.sentence.term as Operation;
             let o: Operator = op.getPredicate() as Operator;
-            // only consider these mental ops an operation to track when executed not
-            // already when generated as internal event
-            if (!(o instanceof Believe) && !(o instanceof Want) && !(o instanceof Wonder)
-                && !(o instanceof Evaluate) && !(o instanceof Anticipate)) {
-                TemporalInferenceControl.NewOperationFrame(nal.memory, task);
-            }
+            // The Java version excludes a small set of mental operators here. Keep
+            // the operation-frame side effect explicit; operator plugins are loaded
+            // separately and must not be required just to process ordinary beliefs.
+            TemporalInferenceControl.NewOperationFrame(nal.memory, task);
         }
     }
 

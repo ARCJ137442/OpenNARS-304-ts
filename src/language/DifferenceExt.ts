@@ -1,5 +1,14 @@
 //! Java source: opennars/language/DifferenceExt.java
 import { java, S } from "jree";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Term } from "./Term.ts";
+import { Terms } from "./Terms.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Debug } from "../main/Debug.ts";
+import { SetExt } from "./SetExt.ts";
+import { DifferenceInt } from "./DifferenceInt.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 
@@ -20,9 +29,9 @@ export class DifferenceExt extends CompoundTerm {
     private constructor(arg: Term[]) {
         super(arg);
 
-        ensureValidDifferenceArguments(arg);
+        DifferenceInt.ensureValidDifferenceArguments(arg);
 
-        java.security.cert.CertPathChecker.init(arg);
+        this.init(arg);
     }
 
     /**
@@ -37,7 +46,7 @@ export class DifferenceExt extends CompoundTerm {
         switch (args.length) {
             case 0: {
 
-                return new DifferenceExt(term);
+                return new DifferenceExt(this.term);
 
 
                 break;
@@ -93,7 +102,7 @@ export class DifferenceExt extends CompoundTerm {
                 }
                 if ((arg[0] instanceof SetExt) && (arg[1] instanceof SetExt)) {
                     // TODO maybe a faster way to do this operation:
-                    let set: java.util.NavigableSet<Term> = new java.util.TreeSet((arg[0] as CompoundTerm).asTermList());
+                    let set: java.util.NavigableSet<Term> = Term.toSortedSet(...(arg[0] as CompoundTerm).asTermList().toArray(new Array<Term>(0)));
                     set.removeAll((arg[1] as CompoundTerm).asTermList()); // set difference
                     return SetExt.make(set);
                 }

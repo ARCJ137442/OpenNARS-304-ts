@@ -3,6 +3,17 @@ import { java, type int, type long, S } from "jree";
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
+import { Conjunction } from "./Conjunction.ts";
+import { Interval } from "./Interval.ts";
+import { Symbols } from "../io/Symbols.ts";
+
+const NativeOperator = Symbols.NativeOperator;
+
+const operatorName = (value: unknown): string => {
+    const operator = (value as { operator?: () => unknown } | null)?.operator?.();
+    return String((operator as { name?: () => unknown } | null)?.name?.() ?? operator ?? "");
+};
+const isOperator = (value: unknown, name: string): boolean => operatorName(value) === name;
 
 
 
@@ -43,32 +54,22 @@ export class Implication extends Statement {
 
                 this.temporalOrder = order;
 
-                java.security.cert.CertPathChecker.init(arg);
+                this.init(arg);
 
 
                 break;
             }
 
             case 3: {
-                const [arg, order, counter] = args as [Term[], int, long];
+                const [first, second, third] = args as [Term[] | Term, int | Term, long | int];
+                const components = Array.isArray(first) ? first : [first as Term, second as Term];
+                const order = (Array.isArray(first) ? second : third) as int;
+                const counter = Array.isArray(first) ? third as long : 1 as long;
 
-
-                super(arg);
-
+                super(components);
                 this.temporalOrder = order;
                 this.counter = counter;
-
-                java.security.cert.CertPathChecker.init(arg);
-
-
-                break;
-            }
-
-            case 3: {
-                const [subject, predicate, order] = args as [Term, Term, int];
-
-
-                this([subject, predicate], order);
+                this.init(components);
 
 
                 break;
@@ -148,12 +149,12 @@ export class Implication extends Statement {
                 const [subject, predicate, temporalOrder] = args as [Term, Term, int];
 
 
-                if (invalidStatement(subject, predicate,
+                if (Statement.invalidStatement(subject, predicate,
                     temporalOrder !== TemporalRules.ORDER_FORWARD && temporalOrder !== TemporalRules.ORDER_CONCURRENT)) {
                     return null;
                 }
 
-                if ((subject instanceof Implication) || (subject instanceof Equivalence) || (predicate instanceof Equivalence)
+                if (isOperator(subject, "IMPLICATION") || isOperator(subject, "EQUIVALENCE") || isOperator(predicate, "EQUIVALENCE")
                     ||
                     (subject instanceof Interval) || (predicate instanceof Interval)) {
                     return null;

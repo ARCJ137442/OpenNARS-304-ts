@@ -1,6 +1,12 @@
 //! Java source: opennars/language/SetExt.java
 import { java, S } from "jree";
 import { SetTensional } from "./SetTensional.ts";
+import { Term } from "./Term.ts";
+import { Symbols } from "../io/Symbols.ts";
+
+const NativeOperator = Symbols.NativeOperator;
+const SET_EXT_OPENER = NativeOperator.SET_EXT_OPENER;
+const SET_EXT_CLOSER = NativeOperator.SET_EXT_CLOSER;
 
 
 
@@ -34,7 +40,7 @@ export class SetExt extends SetTensional {
         switch (args.length) {
             case 0: {
 
-                return new SetExt(term);
+                return new SetExt(...this.term);
 
 
                 break;
@@ -66,13 +72,17 @@ export class SetExt extends SetTensional {
     public static make(...args: unknown[]): SetExt {
         switch (args.length) {
             case 1: {
-                const [t] = args as [Term[]];
-
-
-                t = Term.toSortedSetArray(t);
-                if (t.length === 0)
+                const [t] = args as [Term[] | java.util.Collection<Term>];
+                if (!Array.isArray(t)) {
+                    if (typeof (t as { toArray?: unknown }).toArray === "function") {
+                        return SetExt.make((t as java.util.Collection<Term>).toArray(new Array<Term>(0)));
+                    }
+                    return new SetExt(t as Term);
+                }
+                const sorted = Term.toSortedSetArray(...t);
+                if (sorted.length === 0)
                     return null;
-                return new SetExt(t);
+                return new SetExt(...sorted);
 
 
                 break;
@@ -80,8 +90,6 @@ export class SetExt extends SetTensional {
 
             case 1: {
                 const [l] = args as [java.util.Collection<Term>];
-
-
                 return SetExt.make(l.toArray(new Array<Term>(0)));
 
 
@@ -110,6 +118,6 @@ export class SetExt extends SetTensional {
      * @return true for communitative
      */
     public makeName(): java.lang.CharSequence {
-        return makeSetName(SET_EXT_OPENER.ch, term, SET_EXT_CLOSER.ch);
+        return SetExt.makeSetName(SET_EXT_OPENER.ch, this.term, SET_EXT_CLOSER.ch);
     }
 }

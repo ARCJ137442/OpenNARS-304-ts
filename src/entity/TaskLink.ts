@@ -85,7 +85,9 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
 
         this.targetTask = t;
         this.recordLength = recordLength;
-        this.records = new java.util.ArrayDeque(recordLength);
+        // jree's ArrayDeque constructor treats a numeric capacity as a
+        // collection; initialize an empty deque explicitly instead.
+        this.records = new java.util.ArrayDeque(new java.util.ArrayList());
         this.hash = (((this.targetTask.hashCode() * 31) + this.type) * 31) + (this.index !== null ? java.util.Arrays.hashCode(this.index) : 0);
     }
 

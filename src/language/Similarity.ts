@@ -1,5 +1,11 @@
 //! Java source: opennars/language/Similarity.java
 import { java, S } from "jree";
+import { Statement } from "./Statement.ts";
+import { Term } from "./Term.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Debug } from "../main/Debug.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 
@@ -27,7 +33,7 @@ export class Similarity extends Statement {
 
                 super(arg);
 
-                java.security.cert.CertPathChecker.init(arg);
+                this.init(arg);
 
 
                 break;
@@ -37,7 +43,8 @@ export class Similarity extends Statement {
                 const [subj, pred] = args as [Term, Term];
 
 
-                this([subj, pred]);
+                super([subj, pred]);
+                this.init([subj, pred]);
 
 
                 break;
@@ -61,8 +68,7 @@ export class Similarity extends Statement {
     public clone(...args: unknown[]): Similarity {
         switch (args.length) {
             case 0: {
-
-                return new Similarity(term);
+                return new Similarity(this.term);
 
 
                 break;
@@ -109,7 +115,7 @@ export class Similarity extends Statement {
      */
     public static make(subject: Term, predicate: Term): Similarity {
 
-        if (invalidStatement(subject, predicate)) {
+        if (Statement.invalidStatement(subject, predicate)) {
             return null;
         }
         if (subject.compareTo(predicate) > 0) {

@@ -246,23 +246,15 @@ export class Symbols extends JavaObject {
     public static getOperator(...args: unknown[]): Symbols.NativeOperator {
         switch (args.length) {
             case 1: {
-                const [c] = args as [char];
+                const [value] = args as [string];
+                const nativeValue = typeof value === "string"
+                    ? value
+                    : String((value as unknown as { valueOf?: () => unknown }).valueOf?.() ?? value);
+                return nativeValue.length === 1
+                    ? Symbols.charToOperator.get(nativeValue)
+                    : Symbols.stringToOperator.get(nativeValue);
 
 
-                return Symbols.charToOperator.get(c);
-
-
-                break;
-            }
-
-            case 1: {
-                const [s] = args as [string];
-
-
-                return Symbols.stringToOperator.get(s);
-
-
-                break;
             }
 
             default: {

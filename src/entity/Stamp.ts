@@ -4,6 +4,11 @@ import { Tense } from "../language/Tense.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 
+const hashLong = (value: long): int => {
+    const numeric = Number(value);
+    return (numeric ^ Math.trunc(numeric / 0x100000000)) | 0;
+};
+
 
 
 /**
@@ -58,7 +63,9 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      */
 
     /** cache of hashcode of evidential base */
-    private evidentialHash: int;
+    // Keep the field distinct from evidentialHash(); otherwise the translated
+    // instance field shadows the method at runtime.
+    private evidentialHashValue: int;
 
     public before(s: Stamp, duration: int): boolean {
         if (this.isEternal() || s.isEternal())
@@ -290,7 +297,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     }
 
     public static toSetArray(x: Stamp.BaseEntry[]): Stamp.BaseEntry[] {
-        let set: Stamp.BaseEntry[] = x.clone();
+        let set: Stamp.BaseEntry[] = x.slice();
 
         if (x.length < 2)
             return set;
@@ -329,7 +336,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     private toSet(): Stamp.BaseEntry[] {
         if (this.evidentialSet === null) {
             this.evidentialSet = Stamp.toSetArray(this.evidentialBase);
-            this.evidentialHash = java.util.Arrays.hashCode(this.evidentialSet);
+            this.evidentialHashValue = java.util.Arrays.hashCode(this.evidentialSet);
         }
 
         return this.evidentialSet;
@@ -397,7 +404,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     public evidentialHash(): int {
         if (this.evidentialSet === null)
             this.toSet();
-        return this.evidentialHash;
+        return this.evidentialHashValue;
     }
 
     public cloneWithNewOccurrenceTime(newOcurrenceTime: long): Stamp {
@@ -556,8 +563,8 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         public override  hashCode(): int {
             let prime: int = 31;
             let result: int = 1;
-            result = prime * result + java.lang.Long.hashCode(this.narId);
-            result = prime * result + java.lang.Long.hashCode(this.inputId);
+            result = prime * result + hashLong(this.narId);
+            result = prime * result + hashLong(this.inputId);
             return result;
         }
 
