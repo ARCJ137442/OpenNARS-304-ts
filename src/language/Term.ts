@@ -1,7 +1,9 @@
 //! Java source: opennars/language/Term.java
 import { java, JavaObject, type int, type short, type char, S } from "jree";
-import { Texts } from "../io/Texts";
-import { SetExt } from "./SetExt";
+import { Texts } from "../io/Texts.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Debug } from "../main/Debug.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
 
 
 //import org.opennars.util.sort.SortedList;
@@ -20,12 +22,17 @@ export class Term extends JavaObject {
     // public  imagination:  ImaginationSpace;
     private static readonly atoms: java.util.Map<java.lang.CharSequence, Term> = new java.util.LinkedHashMap();
 
-    public static readonly SELF: Term = SetExt.make(Term.get("SELF"));
+    // Keep atomic SELF initialization independent from the SetExt -> Term
+    // module cycle.
+    public static readonly SELF: Term = Term.get("SELF");
     public static readonly SEQ_SPATIAL: Term = Term.get("#");
     public static readonly SEQ_TEMPORAL: Term = Term.get("&/");
 
     // private to cache it
-    private name: string = null;
+    // Java permits a field and a method to share a name; an instance property
+    // with that name would shadow `name()` in JavaScript. Keep the cache under a
+    // distinct name so the translated method remains callable at runtime.
+    private nameValue: java.lang.CharSequence = null;
 
     public static isSelf(t: Term): boolean {
         return Term.SELF.equals(t);
@@ -108,7 +115,7 @@ export class Term extends JavaObject {
 
 
                 let x: Term = Term.atoms.get(name); // only
-                if (x !== null && !x.toString().endsWith("]")) { // return only if it isn't an index term
+                if (x !== null && !x.toString().toString().endsWith("]")) { // return only if it isn't an index term
                     return x;
                 }
 
@@ -177,7 +184,7 @@ export class Term extends JavaObject {
     }
 
     protected nameInternal(): java.lang.CharSequence {
-        return this.name;
+        return this.nameValue;
     }
 
     public term_indices: int[] = null;
@@ -312,7 +319,11 @@ export class Term extends JavaObject {
      */
     // only method that should modify Term.name
     protected setName(newName: java.lang.CharSequence): void {
-        this.name = newName;
+        // Java callers expect CharSequence methods (hashCode/equals/etc.),
+        // while translated literals arrive as native strings.
+        this.nameValue = typeof newName === "string"
+            ? java.lang.String.valueOf(newName)
+            : newName;
     }
 
     /**
@@ -510,18 +521,24 @@ export class Term extends JavaObject {
     }
 
     public subjectOrPredicateIsIndependentVar(): boolean {
-        if (this instanceof Statement) {
-            let cont: Statement = this as Statement;
-            if (cont.getSubject() instanceof Variable) {
-                let v: Variable = cont.getSubject() as Variable;
-                if (v.hasVarIndep()) {
-                    return true;
-                }
+        // Avoid importing Statement/Variable here: that creates a Term <-
+        // Statement <- CompoundTerm <- Interval <- Term evaluation cycle.
+        // The two accessor methods are the stable behavioural contract needed
+        // by this check, so structural dispatch preserves the Java semantics
+        // without forcing the cycle at module initialization time.
+        const candidate = this as Term & {
+            getSubject?: () => Term;
+            getPredicate?: () => Term;
+        };
+        if (typeof candidate.getSubject === "function" && typeof candidate.getPredicate === "function") {
+            const subject = candidate.getSubject();
+            const predicate = candidate.getPredicate();
+            if (subject !== null && typeof (subject as Term & { hasVarIndep?: () => boolean }).hasVarIndep === "function"
+                && (subject as Term & { hasVarIndep: () => boolean }).hasVarIndep()) {
+                return true;
             }
-            if (cont.getPredicate() instanceof Variable) {
-                let v: Variable = cont.getPredicate() as Variable;
-                return v.hasVarIndep();
-            }
+            return predicate !== null && typeof (predicate as Term & { hasVarIndep?: () => boolean }).hasVarIndep === "function"
+                && (predicate as Term & { hasVarIndep: () => boolean }).hasVarIndep();
         }
         return false;
     }

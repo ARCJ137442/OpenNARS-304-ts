@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { TLink } from "../../src/entity/TLink";
+import { TLink } from "../../src/entity/TLink.ts";
 
 /**
  * Mock implementation of TLink<T> for testing interface contract

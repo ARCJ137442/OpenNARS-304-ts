@@ -1,5 +1,6 @@
 //! Java source: opennars/language/SetInt.java
 import { java, S } from "jree";
+import { SetTensional } from "./SetTensional.ts";
 
 
 

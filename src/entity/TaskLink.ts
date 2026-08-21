@@ -1,5 +1,9 @@
 //! Java source: opennars/entity/TaskLink.java
 import { java, type int, JavaObject, type long, type short, S } from "jree";
+import { Item } from "./Item.ts";
+import { Task } from "./Task.ts";
+import { TermLink } from "./TermLink.ts";
+import { BudgetValue } from "./BudgetValue.ts";
 
 
 

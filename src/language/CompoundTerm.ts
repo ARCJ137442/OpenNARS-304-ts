@@ -1,5 +1,12 @@
 //! Java source: opennars/language/CompoundTerm.java
 import { java, type short, type int, JavaObject } from "jree";
+import { Term } from "./Term.ts";
+import { Interval } from "./Interval.ts";
+import { Variable } from "./Variable.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Debug } from "../main/Debug.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
+import { Terms } from "./Terms.ts";
 
 
 

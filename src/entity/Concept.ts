@@ -1,11 +1,11 @@
 //! Java source: opennars/entity/Concept.java
 import { java, type int, type float, JavaObject, type long } from "jree";
-import { Item } from "./Item";
-import { Term } from "../language/Term";
-import { Sentence } from "./Sentence";
-import { Task } from "./Task";
-import { Bag } from "../storage/Bag";
-import { TaskLink } from "./TaskLink";
+import { Item } from "./Item.ts";
+import { Term } from "../language/Term.ts";
+import { Sentence } from "./Sentence.ts";
+import { Task } from "./Task.ts";
+import { Bag } from "../storage/Bag.ts";
+import { TaskLink } from "./TaskLink.ts";
 
 
 

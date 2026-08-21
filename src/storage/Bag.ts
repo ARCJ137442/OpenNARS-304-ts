@@ -1,8 +1,8 @@
 //! Java source: opennars/storage/Bag.java
 import { java, JavaObject, type int, type float, S } from "jree";
-import { Item } from "../entity/Item";
-import { Distributor } from "./Distributor";
-import { Parameters } from "../main/Parameters";
+import { Item } from "../entity/Item.ts";
+import { Distributor } from "./Distributor.ts";
+import { Parameters } from "../main/Parameters.ts";
 
 
 /**
@@ -37,36 +37,18 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
     /** thresholdLevel = 0 disables "fire level completely" threshold effect */
     public constructor(levels: int, capacity: int, thresholdLevel: int);
     public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 3: {
-                const [levels, capacity, narParameters] = args as [int, int, Parameters];
-
-
-                this(levels, capacity, (narParameters.BAG_THRESHOLD * levels) as int);
-
-
-                break;
-            }
-
-            case 3: {
-                const [levels, capacity, thresholdLevel] = args as [int, int, int];
-
-
-                super();
-                this.TOTAL_LEVEL = levels;
-                this.DISTRIBUTOR = new Distributor(this.TOTAL_LEVEL);
-                this.THRESHOLD = thresholdLevel;
-                this.capacity = capacity;
-                this.clear();
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        if (args.length !== 3) {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
+        const [levels, capacity, third] = args as [int, int, Parameters | int];
+        const thresholdLevel = typeof third === "number"
+            ? third
+            : (third as Parameters).BAG_THRESHOLD * levels as int;
+        this.TOTAL_LEVEL = levels;
+        this.DISTRIBUTOR = new Distributor(this.TOTAL_LEVEL);
+        this.THRESHOLD = thresholdLevel;
+        this.capacity = capacity;
+        this.clear();
     }
 
 
@@ -306,7 +288,7 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
     /**
      * Collect Bag content into a String for display
      */
-    public override  toString(): java.lang.String {
+    public toString(): java.lang.String {
         let buf: java.lang.StringBuffer = new java.lang.StringBuffer(" ");
         for (let i: int = this.TOTAL_LEVEL; i >= 0; i--) {
             if (!this.emptyLevel(i - 1)) {

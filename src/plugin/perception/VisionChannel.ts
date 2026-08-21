@@ -1,6 +1,6 @@
 //! Java source: opennars/plugin/perception/VisionChannel.java
 import { java, type float, type int, JavaObject } from "jree";
-import { Texts } from "../../io/Texts";
+import { Texts } from "../../io/Texts.ts";
 
 
 

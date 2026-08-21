@@ -1,11 +1,11 @@
 //! Java source: opennars/operator/mental/Believe.java
 import { java, type float } from "jree";
-import { Operator } from "../Operator";
-import { Operation } from "../Operation";
-import { Task } from "../../entity/Task";
-import { truthFromWordTerm } from "../../entity/TruthValueTerm";
-import { Memory } from "../../storage/Memory";
-import { Timable } from "../../interfaces/Timable";
+import { Operator } from "../Operator.ts";
+import { Operation } from "../Operation.ts";
+import { Task } from "../../entity/Task.ts";
+import { truthFromWordTerm } from "../../entity/TruthValueTerm.ts";
+import { Memory } from "../../storage/Memory.ts";
+import { Timable } from "../../interfaces/Timable.ts";
 
 
 

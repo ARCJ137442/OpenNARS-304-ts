@@ -1,5 +1,8 @@
 //! Java source: opennars/language/Equivalence.java
 import { java, type int, S } from "jree";
+import { Statement } from "./Statement.ts";
+import { Term } from "./Term.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
 
 
 

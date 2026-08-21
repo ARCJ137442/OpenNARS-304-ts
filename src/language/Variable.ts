@@ -1,6 +1,8 @@
 //! Java source: opennars/language/Variable.java
 import { java, type char, type int, type short, S } from "jree";
-import { Texts } from "../io/Texts";
+import { Texts } from "../io/Texts.ts";
+import { Term } from "./Term.ts";
+import { Symbols } from "../io/Symbols.ts";
 
 
 

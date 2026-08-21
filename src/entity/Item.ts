@@ -1,6 +1,6 @@
 //! Java source: opennars/entity/Item.java
 import { java, JavaObject, type int, type float, S } from "jree";
-import {BudgetValue} from './BudgetValue'
+import {BudgetValue} from './BudgetValue.ts'
 
 
 /**
@@ -43,34 +43,15 @@ export abstract  class Item<K> implements JavaObject, java.io.Serializable {
      */
     protected  constructor(budget: BudgetValue);
     public constructor(...args: unknown[]) {
-		switch (args.length) {
-			case 0: {
- // items that do not need budget
-        super();
-this.budget = null;
-    
-
-				break;
-			}
-
-			case 1: {
-				const [budget] = args as [BudgetValue];
-
-
-        super();
-if (budget !== null)
-            this.budget = budget.clone(); // clone, not assignment
-        else
+        if (args.length === 0) {
+            // Items without a budget are valid (for example StringKeyItem).
             this.budget = null;
-    
-
-				break;
-			}
-
-			default: {
-				throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-			}
-		}
+        } else if (args.length === 1) {
+            const [budget] = args as [BudgetValue];
+            this.budget = budget !== null ? budget.clone() : null; // clone, not assignment
+        } else {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        }
 	}
 
 
@@ -187,7 +168,7 @@ if (budget !== null)
      *
      * @return The String representation of the full content
      */
-    public override  toString():  java.lang.String {
+    public toString():  java.lang.String {
         // return budget + " " + key ;
 
          let  budgetStr: java.lang.String = this.budget !== null ? this.budget.toString() : "";

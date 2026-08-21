@@ -1,5 +1,10 @@
 //! Java source: opennars/language/Conjunction.java
 import { java, type int, type long, S } from "jree";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Term } from "./Term.ts";
+import { Interval } from "./Interval.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
 
 
 

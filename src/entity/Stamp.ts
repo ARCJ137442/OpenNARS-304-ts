@@ -1,5 +1,8 @@
 //! Java source: opennars/entity/Stamp.java
 import { java, JavaObject, type int, type long, type float, S } from "jree";
+import { Tense } from "../language/Tense.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Debug } from "../main/Debug.ts";
 
 
 
@@ -43,7 +46,9 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     public alreadyAnticipatedNegConfirmation: boolean = false;
 
     /** caches */
-    protected name: java.lang.CharSequence = null;
+    // Keep the cache separate from name(); otherwise the Java-to-TypeScript
+    // translation creates an instance field that shadows the method.
+    protected nameCache: java.lang.CharSequence = null;
 
     /**
      * derivation chain containing the used premises and conclusions which made
@@ -118,128 +123,94 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      */
     public constructor(first: Stamp, second: Stamp, time: long, narParameters: Parameters);
     protected constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 1: {
-                const [old] = args as [Stamp];
-
-
-                this(old, old.creationTime);
-
-
-                break;
-            }
-
-            case 2: {
-                const [tense, serial] = args as [Tense, Stamp.BaseEntry];
-
-
-                super();
-                this.baseLength = 1;
-                this.evidentialBase = new Array<Stamp.BaseEntry>(this.baseLength);
-                this.evidentialBase[0] = serial;
-                this.tense = tense;
-                this.creationTime = -1;
-
-
-                break;
-            }
-
-            case 2: {
-                const [old, creationTime] = args as [Stamp, long];
-
-
-                this(old, creationTime, old);
-
-
-                break;
-            }
-
-            case 2: {
-                const [time, memory] = args as [Timable, Memory];
-
-
-                this(time, memory, Tense.Present);
-
-
-                break;
-            }
-
-            case 3: {
-                const [old, creationTime, useEvidentialBase] = args as [Stamp, long, Stamp];
-
-
-                super();
-                this.evidentialBase = useEvidentialBase.evidentialBase;
-                this.baseLength = useEvidentialBase.baseLength;
-                this.creationTime = creationTime;
-
-                this.occurrenceTime = old.getOccurrenceTime();
-
-
-                break;
-            }
-
-            case 3: {
-                const [time, memory, tense] = args as [Timable, Memory, Tense];
-
-
-                this(time.time(), tense, memory.newStampSerial(), memory.narParameters.DURATION);
-
-
-                break;
-            }
-
-            case 4: {
-                const [time, tense, serial, duration] = args as [long, Tense, Stamp.BaseEntry, int];
-
-
-                this(tense, serial);
-                this.setCreationTime(time, duration);
-
-
-                break;
-            }
-
-            case 4: {
-                const [first, second, time, narParameters] = args as [Stamp, Stamp, long, Parameters];
-
-
-                // TODO use iterators instead of repeated first and second .get's?
-
-                super();
-                let i1: int;
-                let i2: int;
-                let j: int;
-                i1 = i2 = j = 0;
-                this.baseLength = java.lang.Math.min(first.baseLength + second.baseLength, narParameters.MAXIMUM_EVIDENTAL_BASE_LENGTH);
-                this.evidentialBase = new Array<Stamp.BaseEntry>(this.baseLength);
-
-                let firstBase: Stamp.BaseEntry[] = first.evidentialBase;
-                let secondBase: Stamp.BaseEntry[] = second.evidentialBase;
-                let firstLength: int = firstBase.length;
-                let secondLength: int = secondBase.length;
-
-                this.creationTime = time;
-                this.occurrenceTime = first.getOccurrenceTime(); // use the occurrence of task
-
-                // https://code.google.com/p/open-nars/source/browse/trunk/nars_core_java/nars/entity/Stamp.java#143
-                while (j < this.baseLength) {
-                    if (i2 < secondLength) {
-                        this.evidentialBase[j++] = secondBase[i2++];
-                    }
-                    if (i1 < firstLength) {
-                        this.evidentialBase[j++] = firstBase[i1++];
-                    }
-                }
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        // Java constructor delegation (`this(...)`) is not legal in TypeScript.
+        // Resolve the overload first, then call `super()` exactly once.
+        super();
+        if (args.length === 1) {
+            const [old] = args as [Stamp];
+            this.evidentialBase = old.evidentialBase;
+            this.baseLength = old.baseLength;
+            this.creationTime = old.creationTime;
+            this.occurrenceTime = old.occurrenceTime;
+            this.tense = old.tense;
+            return;
         }
+
+        if (args.length === 2 && args[0] instanceof Stamp) {
+            const [old, creationTime] = args as [Stamp, long];
+            this.evidentialBase = old.evidentialBase;
+            this.baseLength = old.baseLength;
+            this.creationTime = creationTime;
+            this.occurrenceTime = old.getOccurrenceTime();
+            this.tense = old.tense;
+            return;
+        }
+
+        if (args.length === 2 && typeof (args[0] as { time?: unknown })?.time === "function") {
+            const [time, memory] = args as [Timable, Memory];
+            this.initializeInputStamp(time.time(), Tense.Present, memory);
+            return;
+        }
+
+        if (args.length === 2) {
+            const [tense, serial] = args as [Tense, Stamp.BaseEntry];
+            this.baseLength = 1;
+            this.evidentialBase = [serial];
+            this.tense = tense;
+            this.creationTime = -1;
+            return;
+        }
+
+        if (args.length === 3 && args[0] instanceof Stamp) {
+            const [old, creationTime, useEvidentialBase] = args as [Stamp, long, Stamp];
+            this.evidentialBase = useEvidentialBase.evidentialBase;
+            this.baseLength = useEvidentialBase.baseLength;
+            this.creationTime = creationTime;
+            this.occurrenceTime = old.getOccurrenceTime();
+            this.tense = old.tense;
+            return;
+        }
+
+        if (args.length === 3) {
+            const [time, memory, tense] = args as [Timable, Memory, Tense];
+            this.initializeInputStamp(time.time(), tense, memory);
+            return;
+        }
+
+        if (args.length === 4 && args[0] instanceof Stamp) {
+            const [first, second, time, narParameters] = args as [Stamp, Stamp, long, Parameters];
+            let i1 = 0;
+            let i2 = 0;
+            let j = 0;
+            this.baseLength = Math.min(first.baseLength + second.baseLength, narParameters.MAXIMUM_EVIDENTAL_BASE_LENGTH);
+            this.evidentialBase = new Array<Stamp.BaseEntry>(this.baseLength);
+            this.creationTime = time;
+            this.occurrenceTime = first.getOccurrenceTime();
+            while (j < this.baseLength) {
+                if (i2 < second.baseLength) this.evidentialBase[j++] = second.evidentialBase[i2++];
+                if (i1 < first.baseLength && j < this.baseLength) this.evidentialBase[j++] = first.evidentialBase[i1++];
+            }
+            this.tense = first.tense;
+            return;
+        }
+
+        if (args.length === 4) {
+            const [time, tense, serial, duration] = args as [long, Tense, Stamp.BaseEntry, int];
+            this.baseLength = 1;
+            this.evidentialBase = [serial];
+            this.tense = tense;
+            this.setCreationTime(time, duration);
+            return;
+        }
+
+        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+    }
+
+    private initializeInputStamp(time: long, tense: Tense, memory: Memory): void {
+        this.baseLength = 1;
+        this.evidentialBase = [memory.newStampSerial()];
+        this.tense = tense;
+        this.setCreationTime(time, memory.narParameters.DURATION);
     }
 
 
@@ -297,11 +268,11 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
 
         if (this.tense === null) {
             this.occurrenceTime = Stamp.ETERNAL;
-        } else if (this.tense === Past) {
+        } else if (this.tense === Tense.Past) {
             this.occurrenceTime = time - duration;
-        } else if (this.tense === java.util.concurrent.Future) {
+        } else if (this.tense === Tense.Future) {
             this.occurrenceTime = time + duration;
-        } else if (this.tense === Present) {
+        } else if (this.tense === Tense.Present) {
             this.occurrenceTime = time;
         } else {
             this.occurrenceTime = time;
@@ -497,12 +468,12 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
             if (time === Stamp.ETERNAL)
                 this.tense = Tense.Eternal;
 
-            this.name = null;
+            this.nameCache = null;
         }
     }
 
     public name(): java.lang.CharSequence {
-        if (this.name === null) {
+        if (this.nameCache === null) {
 
             let estimatedInitialSize: int = 10 * this.baseLength;
 
@@ -523,9 +494,9 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
             // this is for estimating an initial size of the stringbuffer
             // System.out.println(baseLength + " " + derivationChain.size() + " " +
             // buffer.baseLength());
-            this.name = buffer;
+            this.nameCache = buffer;
         }
-        return this.name;
+        return this.nameCache;
     }
 
     public override  toString(): java.lang.String {

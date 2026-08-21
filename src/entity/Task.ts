@@ -1,5 +1,6 @@
 //! Java source: opennars/entity/Task.java
 import { java, type int, type long, S } from "jree";
+import { Item } from "./Item.ts";
 
 
 
@@ -59,25 +60,20 @@ export class Task extends Item<Sentence> {
      */
     public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence, solution: Sentence);
     public constructor(...args: unknown[]) {
+        if (args.length !== 3 && args.length !== 4) {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        }
+        const budget = args[1] as BudgetValue;
+        super(budget);
+
         switch (args.length) {
             case 3: {
-                const [s, b, type] = args as [Sentence, BudgetValue, Task.EnumType];
-
-
-                this(s, b, null, null);
-                this.isInput = type === Task.EnumType.INPUT;
-
-
-                break;
-            }
-
-            case 3: {
-                const [s, b, parentBelief] = args as [Sentence, BudgetValue, Sentence];
-
-
-                this(s, b, parentBelief, null);
-
-
+                const [s, _b, third] = args as [Sentence, BudgetValue, Task.EnumType | Sentence];
+                this.sentence = s;
+                const isType = third === Task.EnumType.INPUT || third === Task.EnumType.DERIVED;
+                this.parentBelief = isType ? null : third as Sentence;
+                this.bestSolution = null;
+                this.isInput = third === Task.EnumType.INPUT;
                 break;
             }
 
@@ -85,7 +81,6 @@ export class Task extends Item<Sentence> {
                 const [s, b, parentBelief, solution] = args as [Sentence, BudgetValue, Sentence, Sentence];
 
 
-                super(b);
                 this.sentence = s;
                 this.parentBelief = parentBelief;
                 this.bestSolution = solution;

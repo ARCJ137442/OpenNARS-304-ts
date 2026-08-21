@@ -6,14 +6,14 @@
 
 ## 1. 当前证据
 
-使用本仓库的 TypeScript 5.4.5 编译器检查当前 `src` 与 `test`，得到：
+使用本仓库的 TypeScript 5.4.5 编译器检查当前 `src` 与 `test`，并用迁移扫描器屏蔽注释和字符串后统计源码，得到：
 
-- 7,382 条编译诊断；
-- 5,816 条 TS2304，主要是 Java 包级隐式依赖没有变成 TypeScript `import`；
-- 53 条 TS17009，主要是 Java 构造器委托 `this(...)`；
-- 47 处源码级 `this(...)` 构造器委托，分布在 25 个文件；
-- 171 处 `.class`；
-- 247 处 `.equals`、`.contains`、`.isEmpty`、`.length()` 等 Java 字符串/集合调用习惯。
+- 7,077 行 `tsc` 输出，其中 6,667 条错误；
+- 5,128 条 TS2304，主要是 Java 包级隐式依赖没有变成 TypeScript `import`；
+- 34 条 TS17009，主要是 Java 构造器委托 `this(...)`；
+- 27 处迁移扫描器识别出的构造器委托，分布在 17 个文件；
+- 181 处 `.class`；
+- 259 处 Java 字符串方法、420 处 Java 集合方法调用习惯。
 
 这说明迁移的首要问题是“重复的语义转换模式没有固化”，不是单个文件的偶然手工错误。
 
@@ -28,7 +28,7 @@
 | 泛型尖括号重复 | `<<E>>` | 改为 `<E>`；只处理类型声明，不处理 Narsese 字符串 | `tsc` + 类型声明测试 |
 | 类成员尾逗号 | `}(...) ,` 或类体中最后成员后的逗号 | 改为分号；不能改变对象字面量中的逗号 | `tsc` |
 | Java 运算符残留 | `| ===`、`& ===` | 根据 Java 原表达式恢复为 `||`、`&&`；禁止猜测优先级 | `tsc` + 条件分支测试 |
-| 缺少 ESM 扩展名 | `from "../../src/entity/TLink"` | 在 Node ESM 入口补 `.ts`；库内统一由构建配置决定 | Node import smoke |
+| 缺少 ESM 扩展名 | `from "../../src/entity/TLink"` | 用 `esm-relative-extension` 补 `.ts`；库内统一由构建配置决定 | Node import smoke |
 
 ### B 级：可以识别和生成候选补丁，必须人工确认
 
@@ -148,13 +148,29 @@ Node import smoke
 4. 编译、模块加载、单元和端到端测试结果；
 5. 尚未解决的 Java/TS 行为差异。
 
+### 3.1 局部算法对照联测
+
+局部算法先于整机推理链建立对照契约。`scripts/parity/LocalAlgorithmParityRunner.java` 直接调用 Java 版本的 `TruthFunctions`、`BudgetValue` 与工具函数，输出固定输入向量的 JSON；`scripts/parity/run-local-algorithm-parity.mjs` 使用同一组向量调用 TypeScript 实现，并逐项比较数值、字符串和布尔值。
+
+当前联测覆盖：
+
+- 真值函数：否定、转换、逆否、修订、演绎、归纳、溯因、类比、相似、析取/合取归约，以及欲望相关函数；
+- 预算值：普通构造、由真值构造、有界值、原地修改和合并；
+- 工具函数：`and`、`or`、几何平均和真值到质量的转换。
+
+运行方式：
+
+    node --experimental-strip-types scripts/parity/run-local-algorithm-parity.mjs
+
+该命令需要先生成 `java-master/target/classes`、`java-master/target/test-classes` 和 Java 快照 jar。它只锁定局部数值语义，不代表 TypeScript 的 NAL/CLI 端到端链路已经完成；整机差分仍由独立的 NAL fixture 负责。Java 代码在这里是行为基线，TypeScript 侧新增测试和修补应优先围绕已有实现加固，不以重写既有算法为目标。
+
 ## 4. 自动化边界
 
-`scripts/converting/scan-migration-patterns.mjs` 只负责扫描和计数，不默认改写源码。原因是构造器委托、隐式 import、包装类型和集合调用都可能引入循环依赖或改变初始化顺序。
+`scripts/converting/scan-migration-patterns.mjs` 只负责扫描和计数，不默认改写源码。`scripts/converting/apply-migration-patterns.mjs` 目前只实现三个 A 级窄规则：导出类型别名中的重复泛型尖括号、明确的 `| ===`/`& ===` 运算符残留，以及相对 ESM 导入补 `.ts`；默认仍然是预览，只有显式 `--write` 才写回。原因是构造器委托、隐式 import、包装类型和集合调用都可能引入循环依赖或改变初始化顺序。
 
 后续 codemod 应采用显式模式开关，例如：
 
-    node scripts/converting/apply-migration-patterns.mjs --pattern generic-angle --check
+    node scripts/converting/apply-migration-patterns.mjs --pattern malformed-generic --check
 
 默认只生成 diff 预览；只有在 `tsc`、Node import smoke 和对应测试都通过后，才允许纳入提交。
 

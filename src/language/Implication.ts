@@ -1,5 +1,8 @@
 //! Java source: opennars/language/Implication.java
 import { java, type int, type long, S } from "jree";
+import { Statement } from "./Statement.ts";
+import { Term } from "./Term.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
 
 
 

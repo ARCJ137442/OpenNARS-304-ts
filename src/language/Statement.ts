@@ -1,5 +1,8 @@
 //! Java source: opennars/language/Statement.java
 import { java, type int, S } from "jree";
+import { CompoundTerm } from "./CompoundTerm.ts";
+import { Term } from "./Term.ts";
+import { Symbols } from "../io/Symbols.ts";
 
 
 

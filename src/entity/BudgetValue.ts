@@ -1,11 +1,10 @@
 //! Java source: opennars/entity/BudgetValue.java
 import { java, JavaObject, type float, type long, S } from "jree";
-import { Symbols } from "../io/Symbols";
-import { Texts } from "../io/Texts";
-import { UtilityFunctions } from "../inference/UtilityFunctions";
-import { BudgetFunctions } from "../inference/BudgetFunctions";
-import { Parameters } from "../main/Parameters";
-import { TruthValue } from "./TruthValue";
+import { Symbols } from "../io/Symbols.ts";
+import { Texts } from "../io/Texts.ts";
+import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
+import { Parameters } from "../main/Parameters.ts";
+import { TruthValue } from "./TruthValue.ts";
 
 type char = string
 
@@ -63,53 +62,31 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      */
     public constructor(p: float, d: float, q: float, narParameters: Parameters);
     public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 1: {
-                const [v] = args as [BudgetValue];
+        if (args.length === 1) {
+            const [v] = args as [BudgetValue];
+            this.narParameters = v.narParameters;
+            this.priority = v.getPriority();
+            this.durability = v.getDurability();
+            this.quality = v.getQuality();
+        } else if (args.length === 4) {
+            const [p, d, third, narParameters] = args as [float, float, float | TruthValue, Parameters];
+            this.narParameters = narParameters;
+            this.priority = p;
+            this.durability = d;
+            this.quality = third instanceof TruthValue
+                ? Math.max(third.getExpectation(), (1 - third.getExpectation()) * 0.75) as float
+                : third;
+        } else {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        }
 
-
-                this(v.getPriority(), v.getDurability(), v.getQuality(), v.narParameters);
-
-
-                break;
-            }
-
-            case 4: {
-                const [p, d, qualityFromTruth, narParameters] = args as [float, float, TruthValue, Parameters];
-
-
-                this(p, d, BudgetFunctions.truthToQuality(qualityFromTruth), narParameters);
-
-
-                break;
-            }
-
-            case 4: {
-                const [p, d, q, narParameters] = args as [float, float, float, Parameters];
-
-
-                super();
-                this.narParameters = narParameters;
-                this.priority = p;
-                this.durability = d;
-                this.quality = q;
-
-                if (d >= 1.0) {
-                    this.durability = (1.0 - narParameters.TRUTH_EPSILON) as float;
-                    // throw new IllegalStateException("durability value above or equal 1");
-                }
-                if (p > 1.0) {
-                    this.priority = 1.0;
-                    // throw new IllegalStateException("priority value above 1");
-                }
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        if (this.durability >= 1.0) {
+            this.durability = (1.0 - this.narParameters.TRUTH_EPSILON) as float;
+            // throw new IllegalStateException("durability value above or equal 1");
+        }
+        if (this.priority > 1.0) {
+            this.priority = 1.0;
+            // throw new IllegalStateException("priority value above 1");
         }
     }
 
@@ -117,7 +94,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
     /**
      * Cloning method
      */
-    public override  clone(): BudgetValue {
+    public clone(): BudgetValue {
         return new BudgetValue(this.getPriority(), this.getDurability(), this.getQuality(), this.narParameters);
     }
 
@@ -251,7 +228,9 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      * @param that The other Budget
      */
     public merge(that: BudgetValue): void {
-        BudgetFunctions.merge(this, that);
+        this.setPriority(Math.max(this.getPriority(), that.getPriority()));
+        this.setDurability(Math.max(this.getDurability(), that.getDurability()));
+        this.setQuality(Math.max(this.getQuality(), that.getQuality()));
     }
 
     /**
@@ -271,7 +250,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      * @return The summary value
      */
     public summary(): float {
-        return aveGeo(this.priority, this.durability, this.quality);
+        return UtilityFunctions.aveGeo(this.priority, this.durability, this.quality);
     }
 
     public equalsByPrecision(that: java.lang.Object): boolean {
@@ -305,7 +284,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      *
      * @return String representation of the value
      */
-    public override  toString(): java.lang.String {
+    public toString(): java.lang.String {
         return BudgetValue.MARK + Texts.n4(this.priority) + BudgetValue.SEPARATOR + Texts.n4(this.durability) + BudgetValue.SEPARATOR + Texts.n4(this.quality) + BudgetValue.MARK;
     }
 

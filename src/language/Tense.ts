@@ -1,7 +1,7 @@
 //! Java source: opennars/language/Tense.java
 import { java, S } from "jree";
 
-class Tense extends java.lang.Enum<Tense> {
+export class Tense extends java.lang.Enum<Tense> {
 
     public static readonly Past: Tense = new class extends Tense {
     }(":\\:", S`Past`, 0);

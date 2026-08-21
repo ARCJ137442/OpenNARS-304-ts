@@ -42,9 +42,12 @@ export class Symbols extends JavaObject {
     public static readonly QUOTE: string = '\"';
 
     /* experience line prefix */
-    public static readonly INPUT_LINE_PREFIX: string = IN.class.getSimpleName();
-    public static readonly OUTPUT_LINE_PREFIX: string = OUT.class.getSimpleName();
-    public static readonly ERROR_LINE_PREFIX: string = ERR.class.getSimpleName();
+    // Java obtains these names from OutputHandler nested interfaces. Keep the
+    // stable wire values at this text boundary instead of importing an event
+    // hierarchy during static initialization.
+    public static readonly INPUT_LINE_PREFIX: string = "IN";
+    public static readonly OUTPUT_LINE_PREFIX: string = "OUT";
+    public static readonly ERROR_LINE_PREFIX: string = "ERR";
 
     public static readonly PREFIX_MARK: string = ':';
     public static readonly COMMENT_MARK: string = '/';
@@ -187,48 +190,29 @@ export class Symbols extends JavaObject {
 
         protected constructor(string: string, relation: boolean, innate: boolean, $name$: string, $index$: number);
         protected constructor(...args: unknown[]) {
-            switch (args.length) {
-                case 1: {
-                    const [string] = args as [string];
-
-
-                    this(string, false);
-
-
-                    break;
-                }
-
-                case 2: {
-                    const [string, relation] = args as [string, boolean];
-
-
-                    this(string, relation, !relation);
-
-
-                    break;
-                }
-
-                case 3: {
-                    const [string, relation, innate] = args as [string, boolean, boolean];
-
-
-                    super($name$, $index$);
-                    this.symbol = string;
-                    this.relation = relation;
-                    this.isNative = innate;
-                    this.ch = string.length() === 1 ? string.charAt(0) : 0;
-
-                    this.opener = this.name().endsWith("_OPENER");
-                    this.closer = this.name().endsWith("_CLOSER");
-
-
-                    break;
-                }
-
-                default: {
-                    throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-                }
+            let string: string;
+            let relation = false;
+            let innate = false;
+            let name: string;
+            let index: number;
+            if (args.length === 5) {
+                [string, relation, innate, name, index] = args as [string, boolean, boolean, string, number];
+            } else if (args.length === 4) {
+                [string, relation, name, index] = args as [string, boolean, string, number];
+                innate = !relation;
+            } else if (args.length === 3) {
+                [string, name, index] = args as [string, string, number];
+            } else {
+                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
             }
+            super(name, index);
+            this.symbol = string;
+            this.relation = relation;
+            this.isNative = innate;
+            this.ch = string.length === 1 ? string.charAt(0) : "";
+            const enumName = this.name().valueOf();
+            this.opener = enumName.endsWith("_OPENER");
+            this.closer = enumName.endsWith("_CLOSER");
         }
 
 

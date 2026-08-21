@@ -1,16 +1,16 @@
 //! Java source: opennars/inference/BudgetFunctions.java
 import { java, type float, type double, type int, S } from "jree";
-import { TruthValue } from "../entity/TruthValue";
-import { Sentence } from "../entity/Sentence";
-import { TaskLink } from "../entity/TaskLink";
-import { Task } from "../entity/Task";
-import { DerivationContext } from "../control/DerivationContext";
-import { BudgetValue } from "../entity/BudgetValue";
-import { Term } from "../language/Term";
-import { Memory } from "../storage/Memory";
-import { Item } from "../entity/Item";
-import { TermLink } from "../entity/TermLink";
-import { Concept } from "../entity/Concept";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { TaskLink } from "../entity/TaskLink.ts";
+import { Task } from "../entity/Task.ts";
+import { DerivationContext } from "../control/DerivationContext.ts";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { Term } from "../language/Term.ts";
+import { Memory } from "../storage/Memory.ts";
+import { Item } from "../entity/Item.ts";
+import { TermLink } from "../entity/TermLink.ts";
+import { Concept } from "../entity/Concept.ts";
 
 
 

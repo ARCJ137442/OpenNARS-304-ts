@@ -548,7 +548,7 @@ export class Terms extends JavaObject {
         return false;
     }
 
-    protected override static equals(a: Term[], b: Term[]): boolean {
+    protected static override equals(a: Term[], b: Term[]): boolean {
         if (a.length !== b.length)
             return false;
         for (let i: int = 0; i < a.length; i++) {

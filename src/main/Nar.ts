@@ -216,106 +216,55 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      */
     public constructor(narId: long, relativeConfigFilePath: java.lang.String, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
     public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 0: {
+        // Java constructor delegation (`this(...)`) is not legal in
+        // TypeScript. Resolve all overloads before the one and only `super()`.
+        let narId: long = Nar.randomId();
+        let relativeConfigFilePath: java.lang.String = Nar.DEFAULTCONFIG_FILEPATH;
+        let parameterOverrides: java.util.Map<java.lang.String, java.lang.Object> = null;
 
-                this(Nar.DEFAULTCONFIG_FILEPATH);
-
-
-                break;
+        if (args.length === 0) {
+            // defaults above
+        } else if (args.length === 1) {
+            const value = args[0];
+            if (typeof value === "number" || value instanceof java.lang.Number) {
+                narId = (value as java.lang.Number).longValue();
+            } else if (value !== null && typeof (value as java.lang.Object).toString === "function") {
+                relativeConfigFilePath = value as java.lang.String;
+            } else {
+                parameterOverrides = value as java.util.Map<java.lang.String, java.lang.Object>;
             }
-
-            case 1: {
-                const [narId] = args as [long];
-
-
-                this(narId, Nar.DEFAULTCONFIG_FILEPATH);
-
-
-                break;
+        } else if (args.length === 2) {
+            if (typeof args[0] === "number" || args[0] instanceof java.lang.Number) {
+                narId = (args[0] as java.lang.Number).longValue();
+                relativeConfigFilePath = args[1] as java.lang.String;
+            } else {
+                relativeConfigFilePath = args[0] as java.lang.String;
+                parameterOverrides = args[1] as java.util.Map<java.lang.String, java.lang.Object>;
             }
+        } else if (args.length === 3) {
+            narId = (args[0] as java.lang.Number).longValue();
+            relativeConfigFilePath = args[1] as java.lang.String;
+            parameterOverrides = args[2] as java.util.Map<java.lang.String, java.lang.Object>;
+        } else {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        }
 
-            case 1: {
-                const [relativeConfigFilePath] = args as [java.lang.String];
-
-
-                this(java.util.UUID.randomUUID().getLeastSignificantBits(), relativeConfigFilePath);
-
-
-                break;
-            }
-
-            case 1: {
-                const [parameterOverrides] = args as [java.util.Map<java.lang.String, java.lang.Object>];
-
-
-                this(Nar.DEFAULTCONFIG_FILEPATH, parameterOverrides);
-
-
-                break;
-            }
-
-            case 2: {
-                const [narId, relativeConfigFilePath] = args as [long, java.lang.String];
-
-
-                super();
-                let pluginsToAdd: java.util.List<Plugin> = ConfigReader.loadParamsFromFileAndReturnPlugins(relativeConfigFilePath, this,
-                    this.narParameters);
-                let m: Memory = new Memory(this.narParameters,
-                    new Bag(this.narParameters.CONCEPT_BAG_LEVELS, this.narParameters.CONCEPT_BAG_SIZE, this.narParameters),
-                    new Bag(this.narParameters.NOVEL_TASK_BAG_LEVELS, this.narParameters.NOVEL_TASK_BAG_SIZE, this.narParameters),
-                    new Bag(this.narParameters.SEQUENCE_BAG_LEVELS, this.narParameters.SEQUENCE_BAG_SIZE, this.narParameters),
-                    new Bag(this.narParameters.OPERATION_BAG_LEVELS, this.narParameters.OPERATION_BAG_SIZE, this.narParameters));
-                this.memory = m;
-                this.memory.narId = narId;
-                this.usedConfigFilePath = relativeConfigFilePath;
-                for (let p of pluginsToAdd) { // adding after memory is constructed, as memory depends on the loaded params!!
-                    this.addPlugin(p);
-                }
-
-
-                break;
-            }
-
-            case 2: {
-                const [relativeConfigFilePath, parameterOverrides] = args as [java.lang.String, java.util.Map<java.lang.String, java.lang.Object>];
-
-
-                this(java.util.UUID.randomUUID().getLeastSignificantBits(), relativeConfigFilePath, parameterOverrides);
-
-
-                break;
-            }
-
-            case 3: {
-                const [narId, relativeConfigFilePath, parameterOverrides] = args as [long, java.lang.String, java.util.Map<java.lang.String, java.lang.Object>];
-
-
-                super();
-                let pluginsToAdd: java.util.List<Plugin> = ConfigReader.loadParamsFromFileAndReturnPlugins(relativeConfigFilePath, this,
-                    this.narParameters);
-                Nar.overrideParameters(this.narParameters, parameterOverrides);
-                let m: Memory = new Memory(this.narParameters,
-                    new Bag(this.narParameters.CONCEPT_BAG_LEVELS, this.narParameters.CONCEPT_BAG_SIZE, this.narParameters),
-                    new Bag(this.narParameters.NOVEL_TASK_BAG_LEVELS, this.narParameters.NOVEL_TASK_BAG_SIZE, this.narParameters),
-                    new Bag(this.narParameters.SEQUENCE_BAG_LEVELS, this.narParameters.SEQUENCE_BAG_SIZE, this.narParameters),
-                    new Bag(this.narParameters.OPERATION_BAG_LEVELS, this.narParameters.OPERATION_BAG_SIZE, this.narParameters));
-                this.memory = m;
-                this.memory.narId = narId;
-                this.usedConfigFilePath = relativeConfigFilePath;
-                for (let p of pluginsToAdd) { // adding after memory is constructed, as memory depends on the loaded params!!
-                    this.addPlugin(p);
-                }
-
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        super();
+        let pluginsToAdd: java.util.List<Plugin> = ConfigReader.loadParamsFromFileAndReturnPlugins(relativeConfigFilePath, this,
+            this.narParameters);
+        if (parameterOverrides !== null) {
+            Nar.overrideParameters(this.narParameters, parameterOverrides);
+        }
+        let m: Memory = new Memory(this.narParameters,
+            new Bag(this.narParameters.CONCEPT_BAG_LEVELS, this.narParameters.CONCEPT_BAG_SIZE, this.narParameters),
+            new Bag(this.narParameters.NOVEL_TASK_BAG_LEVELS, this.narParameters.NOVEL_TASK_BAG_SIZE, this.narParameters),
+            new Bag(this.narParameters.SEQUENCE_BAG_LEVELS, this.narParameters.SEQUENCE_BAG_SIZE, this.narParameters),
+            new Bag(this.narParameters.OPERATION_BAG_LEVELS, this.narParameters.OPERATION_BAG_SIZE, this.narParameters));
+        this.memory = m;
+        this.memory.narId = narId;
+        this.usedConfigFilePath = relativeConfigFilePath;
+        for (let p of pluginsToAdd) { // adding after memory is constructed, as memory depends on the loaded params!!
+            this.addPlugin(p);
         }
     }
 
@@ -841,6 +790,13 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     public getMinCyclePeriodMS(): long {
         return this.minCyclePeriodMS;
+    }
+
+    private static randomId(): long {
+        // jree does not expose java.util.UUID. A process-local numeric id is
+        // sufficient here; persisted/inter-process identity is handled by the
+        // explicit narId overload.
+        return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER) as long;
     }
 
     /**

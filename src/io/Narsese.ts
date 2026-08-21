@@ -18,32 +18,12 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
 
     public constructor(n: Nar);
     public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 1: {
-                const [memory] = args as [Memory];
-
-
-                super();
-                this.memory = memory;
-
-
-                break;
-            }
-
-            case 1: {
-                const [n] = args as [Nar];
-
-
-                this(n.memory);
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        if (args.length !== 1 || args[0] === null) {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
+        const value = args[0] as Memory | Nar;
+        super();
+        this.memory = (value as Nar).memory ?? value as Memory;
     }
 
 

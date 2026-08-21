@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import type { int } from "../../src/types";
+import type { int } from "../../src/types.ts";
 import { Distributor } from "../../src/storage/Distributor.ts";
 
 test("Distributor fills order with expected counts", () => {

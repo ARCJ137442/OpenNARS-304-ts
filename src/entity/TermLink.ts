@@ -1,5 +1,8 @@
 //! Java source: opennars/entity/TermLink.java
 import { java, type short, type int, S } from "jree";
+import { Item } from "./Item.ts";
+import { Term } from "../language/Term.ts";
+import { BudgetValue } from "./BudgetValue.ts";
 
 
 

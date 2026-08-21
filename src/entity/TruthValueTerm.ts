@@ -1,6 +1,6 @@
-import { Term } from "../language/Term";
-import { Parameters } from "../main/Parameters";
-import { TruthValue } from "./TruthValue";
+import { Term } from "../language/Term.ts";
+import { Parameters } from "../main/Parameters.ts";
+import { TruthValue } from "./TruthValue.ts";
 
 const TRUTH_TRUE: Term = new Term("TRUE");
 const TRUTH_FALSE: Term = new Term("FALSE");

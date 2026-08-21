@@ -1,5 +1,7 @@
 //! Java source: opennars/language/Interval.java
 import { java, type long, S } from "jree";
+import { Term } from "./Term.ts";
+import { Symbols } from "../io/Symbols.ts";
 
 
 
@@ -35,33 +37,16 @@ export class Interval extends Term {
 
     public constructor(i: java.lang.String);
     public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 1: {
-                const [time] = args as [long];
-
-
-                super();
-                this.time = time;
-                java.lang.Thread.setName(Symbols.INTERVAL_PREFIX + java.lang.String.valueOf(time));
-
-
-                break;
-            }
-
-            case 1: {
-                const [i] = args as [java.lang.String];
-
-
-                this(java.lang.Long.parseLong(i.substring(1)) - 1);
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        if (args.length !== 1) {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
+        const value = args[0] as long | java.lang.String;
+        super();
+        const time = typeof value === "number"
+            ? value as long
+            : java.lang.Long.parseLong(value.substring(1)) - 1;
+        this.time = time;
+        this.setName(Symbols.INTERVAL_PREFIX + java.lang.String.valueOf(time));
     }
 
 

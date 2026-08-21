@@ -8,30 +8,28 @@ import { java } from "jree";
  *
  * @author Robert Wünsche
  */
-abstract class Parser {
+export abstract class Parser {
     protected abstract parseTask(narsese: java.lang.String): Task;
 
     /**
      * All kinds of invalid addInput lines
      */
-    public InvalidInputException = (($outer) => {
-        return class InvalidInputException extends java.lang.Exception {
+    public static InvalidInputException = class InvalidInputException extends java.lang.Exception {
             /**
              * An invalid addInput line.
              *
              * @param s type of error
              */
-            protected constructor(s: java.lang.String) {
+            public constructor(s: java.lang.String) {
                 super(s);
             }
-        }
-    })(this);
+    };
 
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Parser {
-    export type InvalidInputException = InstanceType<Parser["InvalidInputException"]>;
+    export type InvalidInputException = InstanceType<typeof Parser.InvalidInputException>;
 }
 
 

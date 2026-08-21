@@ -1,5 +1,5 @@
 //! Java source: opennars/storage/Distributor.java
-import type { int } from "../types";
+import type { int } from "../types.ts";
 
 /**
  * A pseudo-random number generator, used in Bag.

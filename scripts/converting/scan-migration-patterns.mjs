@@ -79,6 +79,87 @@ async function filesUnder(directory) {
   return result;
 }
 
+function maskNonCode(source) {
+  const masked = [...source];
+  let state = "code";
+  let quote = "";
+  let escaped = false;
+  let regexClass = false;
+  for (let i = 0; i < source.length; i += 1) {
+    const current = source[i];
+    const next = source[i + 1];
+    if (state === "line-comment") {
+      if (current === "\n" || current === "\r") state = "code";
+      else masked[i] = " ";
+      continue;
+    }
+    if (state === "block-comment") {
+      if (current === "*" && next === "/") {
+        masked[i] = " ";
+        masked[i + 1] = " ";
+        i += 1;
+        state = "code";
+      } else if (current !== "\n" && current !== "\r") {
+        masked[i] = " ";
+      }
+      continue;
+    }
+    if (state === "string") {
+      if (current === "\n" || current === "\r") {
+        state = "code";
+        escaped = false;
+        continue;
+      }
+      masked[i] = " ";
+      if (escaped) escaped = false;
+      else if (current === "\\") escaped = true;
+      else if (current === quote) state = "code";
+      continue;
+    }
+    if (state === "regex") {
+      if (current === "\n" || current === "\r") {
+        state = "code";
+        escaped = false;
+        regexClass = false;
+        continue;
+      }
+      masked[i] = " ";
+      if (escaped) escaped = false;
+      else if (current === "\\") escaped = true;
+      else if (current === "[") regexClass = true;
+      else if (current === "]") regexClass = false;
+      else if (current === "/" && !regexClass) state = "code";
+      continue;
+    }
+    if (current === "/" && next === "/") {
+      masked[i] = " ";
+      masked[i + 1] = " ";
+      i += 1;
+      state = "line-comment";
+    } else if (current === "/" && next === "*") {
+      masked[i] = " ";
+      masked[i + 1] = " ";
+      i += 1;
+      state = "block-comment";
+    } else if (current === "\"" || current === "'" || current === "`") {
+      masked[i] = " ";
+      quote = current;
+      escaped = false;
+      state = "string";
+    } else if (current === "/" && !["/", "*"].includes(next)) {
+      let previous = i - 1;
+      while (previous >= 0 && /\s/.test(source[previous])) previous -= 1;
+      if (previous < 0 || /[([{:;,=!?&|]/.test(source[previous])) {
+        masked[i] = " ";
+        escaped = false;
+        regexClass = false;
+        state = "regex";
+      }
+    }
+  }
+  return masked.join("");
+}
+
 async function main() {
   const files = (await Promise.all(sourceRoots.map(filesUnder))).flat().sort();
   const counts = patterns.map((pattern) => ({
@@ -91,8 +172,9 @@ async function main() {
 
   for (const file of files) {
     const source = await readFile(file, "utf8");
+    const code = maskNonCode(source);
     for (let i = 0; i < patterns.length; i += 1) {
-      const matches = source.match(patterns[i].regex);
+      const matches = code.match(patterns[i].regex);
       if (matches?.length) {
         counts[i].occurrences += matches.length;
         counts[i].files += 1;

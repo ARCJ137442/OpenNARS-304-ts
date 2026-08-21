@@ -1,11 +1,11 @@
 //! Java source: opennars/operator/Operator.java
 import { java, type float, JavaObject, S } from "jree";
-import { Term } from "../language/Term";
-import { Operation } from "./Operation";
-import { Memory } from "../storage/Memory";
-import { Timable } from "../interfaces/Timable";
-import { Task } from "../entity/Task";
-import { Nar } from "../main/Nar";
+import { Term } from "../language/Term.ts";
+import { Operation } from "./Operation.ts";
+import { Memory } from "../storage/Memory.ts";
+import { Timable } from "../interfaces/Timable.ts";
+import { Task } from "../entity/Task.ts";
+import { Nar } from "../main/Nar.ts";
 
 
 

@@ -1,6 +1,18 @@
 //! Java source: opennars/entity/Sentence.java
 import { java, JavaObject, type char, type int, type long, type float, type double, S } from "jree";
-import { Texts } from "../io/Texts";
+import { Texts } from "../io/Texts.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { Term } from "../language/Term.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { Conjunction } from "../language/Conjunction.ts";
+import { Statement } from "../language/Statement.ts";
+import { Implication } from "../language/Implication.ts";
+import { Equivalence } from "../language/Equivalence.ts";
+import { Interval } from "../language/Interval.ts";
+import { Variable } from "../language/Variable.ts";
+import { Stamp } from "./Stamp.ts";
+import { TruthValue } from "./TruthValue.ts";
+import { Debug } from "../main/Debug.ts";
 
 
 
@@ -64,19 +76,19 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
     private constructor(_content: Term, punctuation: char, truth: TruthValue, stamp: Stamp,
         normalize: boolean);
     public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 4: {
-                const [term, punctuation, newTruth, newStamp] = args as [Term, char, TruthValue, Stamp];
-
-
-                this(term, punctuation, newTruth, newStamp, true);
-
-
-                break;
-            }
-
-            case 5: {
-                const [_content, punctuation, truth, stamp, normalize] = args as [Term, char, TruthValue, Stamp, boolean];
+        let _content: Term;
+        let punctuation: char;
+        let truth: TruthValue;
+        let stamp: Stamp;
+        let normalize: boolean;
+        if (args.length === 4) {
+            [_content, punctuation, truth, stamp] = args as [Term, char, TruthValue, Stamp];
+            normalize = true;
+        } else if (args.length === 5) {
+            [_content, punctuation, truth, stamp, normalize] = args as [Term, char, TruthValue, Stamp, boolean];
+        } else {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        }
 
 
 
@@ -242,14 +254,6 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
                 } else
                     this.hash = java.util.Objects.hash(this.term, punctuation, truth);
 
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
-        }
     }
 
 
