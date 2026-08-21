@@ -355,7 +355,7 @@ export namespace Events {
 	export type PluginsChange = InstanceType<typeof Events.PluginsChange>;
 	export type ConceptDirectProcessedTask = InstanceType<typeof Events.ConceptDirectProcessedTask>;
 	export type InferenceEvent = InstanceType<typeof Events.InferenceEvent>;
-	export type ParametricInferenceEvent<<O>> = InstanceType<typeof Events.ParametricInferenceEvent<O>>;
+	export type ParametricInferenceEvent<O> = InstanceType<typeof Events.ParametricInferenceEvent<O>>;
 }
 
 

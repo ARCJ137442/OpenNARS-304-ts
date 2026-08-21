@@ -363,7 +363,7 @@ export abstract class Statement extends CompoundTerm {
         public static readonly SUBJECT: EnumStatementSide = new class extends EnumStatementSide {
         }(S`SUBJECT`, 0);
         public static readonly PREDICATE: EnumStatementSide = new class extends EnumStatementSide {
-        }(S`PREDICATE`, 1),
+        }(S`PREDICATE`, 1);
     };
 
 

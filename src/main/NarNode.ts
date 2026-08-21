@@ -291,7 +291,6 @@ export class NarNode extends JavaObject implements EventObserver {
         this.receiveSocket.receive(packet);
         if (packet.getLength() > 0) {
             try {
-                try {
                     // This holds the final error to throw (if any).
                     let error: java.lang.Throwable | undefined;
 
@@ -311,8 +310,6 @@ export class NarNode extends JavaObject implements EventObserver {
                     } finally {
                         throwResourceError(error);
                     }
-                }
-
                 // not an object NarNode could digest
             } catch (ex) {
                 if (ex instanceof java.lang.Exception) {

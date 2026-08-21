@@ -41,7 +41,7 @@ export class TruthFunctions extends UtilityFunctions {
         public static readonly REDUCEDISJUNCTIONREV: EnumType = new class extends EnumType {
         }(S`REDUCEDISJUNCTIONREV`, 13);
         public static readonly REDUCECONJUNCTIONNEG: EnumType = new class extends EnumType {
-        }(S`REDUCECONJUNCTIONNEG`, 14),
+        }(S`REDUCECONJUNCTIONNEG`, 14);
     };
 
 

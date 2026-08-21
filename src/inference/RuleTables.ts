@@ -619,7 +619,7 @@ export class RuleTables extends JavaObject {
         public static readonly LEFT: EnumFigureSide = new class extends EnumFigureSide {
         }(S`LEFT`, 0);
         public static readonly RIGHT: EnumFigureSide = new class extends EnumFigureSide {
-        }(S`RIGHT`, 1),
+        }(S`RIGHT`, 1);
     };
 
 

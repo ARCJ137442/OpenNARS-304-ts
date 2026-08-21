@@ -172,7 +172,6 @@ export class AttentionMetric extends JavaObject {
 
     public static readFile(filepath: java.lang.String): java.util.List<java.lang.String> {
         let res: java.util.List<java.lang.String> = new java.util.ArrayList();
-        try {
             // This holds the final error to throw (if any).
             let error: java.lang.Throwable | undefined;
 
@@ -193,8 +192,6 @@ export class AttentionMetric extends JavaObject {
             } finally {
                 throwResourceError(error);
             }
-        }
-
         return res;
     }
 

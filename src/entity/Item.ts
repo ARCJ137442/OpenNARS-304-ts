@@ -279,7 +279,7 @@ if (budget !== null)
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Item {
-	export type ItemPriorityComparator<<E extends Item<unknown>>> = InstanceType<typeof Item.ItemPriorityComparator<E>>;
+	export type ItemPriorityComparator<E extends Item<unknown>> = InstanceType<typeof Item.ItemPriorityComparator<E>>;
 	export type StringKeyItem = InstanceType<typeof Item.StringKeyItem>;
 }
 

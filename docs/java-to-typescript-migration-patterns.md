@@ -1,0 +1,167 @@
+# Java → TypeScript 迁移纠正模式库
+
+版本：0.1（2026-08-21）
+
+本文件把当前 OpenNARS 转写中反复出现的纠正归纳为可检索、可验证、可批量处理的模式。它不是“看到字符串就替换”的规则表：每条模式都必须同时说明识别条件、正确的 TypeScript 语义、验证门禁和自动化边界。
+
+## 1. 当前证据
+
+使用本仓库的 TypeScript 5.4.5 编译器检查当前 `src` 与 `test`，得到：
+
+- 7,382 条编译诊断；
+- 5,816 条 TS2304，主要是 Java 包级隐式依赖没有变成 TypeScript `import`；
+- 53 条 TS17009，主要是 Java 构造器委托 `this(...)`；
+- 47 处源码级 `this(...)` 构造器委托，分布在 25 个文件；
+- 171 处 `.class`；
+- 247 处 `.equals`、`.contains`、`.isEmpty`、`.length()` 等 Java 字符串/集合调用习惯。
+
+这说明迁移的首要问题是“重复的语义转换模式没有固化”，不是单个文件的偶然手工错误。
+
+## 2. 模式分级
+
+### A 级：可以自动修复，但必须编译验证
+
+这些模式有明确的语法等价物，适合由扫描器或 codemod 批量处理。
+
+| 模式 | Java → TS 痕迹 | 纠正方式 | 门禁 |
+| --- | --- | --- | --- |
+| 泛型尖括号重复 | `<<E>>` | 改为 `<E>`；只处理类型声明，不处理 Narsese 字符串 | `tsc` + 类型声明测试 |
+| 类成员尾逗号 | `}(...) ,` 或类体中最后成员后的逗号 | 改为分号；不能改变对象字面量中的逗号 | `tsc` |
+| Java 运算符残留 | `| ===`、`& ===` | 根据 Java 原表达式恢复为 `||`、`&&`；禁止猜测优先级 | `tsc` + 条件分支测试 |
+| 缺少 ESM 扩展名 | `from "../../src/entity/TLink"` | 在 Node ESM 入口补 `.ts`；库内统一由构建配置决定 | Node import smoke |
+
+### B 级：可以识别和生成候选补丁，必须人工确认
+
+这些模式经常重复，但会影响循环依赖、初始化次序或 Java/TS 运行时差异，不能无条件全局替换。
+
+#### B1. Java 构造器委托
+
+Java：
+
+    Foo() { this(defaultValue); }
+
+生成的 TS 常见为：
+
+    public constructor(...args: unknown[]) {
+        switch (args.length) {
+            case 0: {
+                this(defaultValue);
+                break;
+            }
+        }
+    }
+
+TypeScript/JavaScript 不能用 `this(...)` 调用另一个构造器。正确做法是提取一个私有初始化函数、静态工厂，或在同一个构造器分支中显式完成初始化。不能简单替换为 `super(...)`，因为那会改变继承关系和字段初始化。
+
+验证要求：
+
+- 所有重载入口都能构造；
+- `super()` 是派生类构造器的第一条有效语句；
+- 字段、事件监听器和随机种子只初始化一次；
+- 对应 Java 构造器测试和 Node import smoke 都通过。
+
+涉及文件示例：`src/io/Narsese.ts`、`src/main/Nar.ts`、`src/entity/Task.ts`。
+
+#### B2. Java 包级隐式依赖
+
+Java 同包类可以直接使用：
+
+    Task task;
+    Term term;
+
+TypeScript 必须显式导入：
+
+    import { Task } from "../entity/Task.ts";
+    import { Term } from "../language/Term.ts";
+
+不能只根据首字母把所有同名符号批量导入。必须先建立 `定义符号 → 文件` 索引，再根据编译诊断、实际引用和循环依赖逐个确认。
+
+验证要求：
+
+- 目标模块可独立 import；
+- 没有依赖全局变量的未定义符号；
+- import 图没有把静态初始化提前到未完成状态；
+- 对外入口使用真实导出，而不是 side-effect import。
+
+当前最大的错误簇 TS2304 属于此模式。
+
+#### B3. Java 匿名类与枚举
+
+以下形式本身可以被 JavaScript 解析：
+
+    new class extends EnumType { }("NAME", 0)
+
+但 Java `enum` 的名称、序号、`values()`、比较和静态初始化语义不能仅凭语法保留。基础枚举优先改成不可变对象或显式值对象；只有确实需要 `instanceof` 和方法覆盖时才保留匿名子类。
+
+验证要求：名称、序号、字符串化、相等性和 switch 分支与 Java 一致。
+
+涉及文件示例：`src/io/Symbols.ts`、`src/inference/TruthFunctions.ts`、`src/language/Tense.ts`。
+
+### C 级：必须做语义重写，禁止自动替换
+
+#### C1. Java 包装类型与原生类型
+
+`java.lang.String`、`Integer`、`Float`、`Double`、`Long` 不能机械映射为 TypeScript `string`、`number` 或 `bigint`。需要按边界决定：
+
+- Narsese 文本与 Node I/O：原生 `string`；
+- Java 集合适配层：保留 `jree` 类型或定义最小接口；
+- 周期、时间戳和序列号：统一数值表示，明确是否需要 `bigint`；
+- 算法中的浮点值：统一 `number`，禁止混用 `bigint`。
+
+#### C2. Java 字符串/集合方法
+
+`.equals()`、`.contains()`、`.isEmpty()`、`.length()`、`.add()`、`.put()`、`.get()` 等调用必须根据接收对象决定替代方式。字符串、数组、原生 `Map`、`jree` 集合和领域对象的同名方法不是同一语义。
+
+建议顺序：先明确边界类型，再改调用点；不要为消灭编译错误而给所有对象添加宽泛的 `any` 或兼容方法。
+
+#### C3. 资源、线程与进程控制
+
+Java 的 try-with-resources、`Thread`、`System.exit` 和阻塞 I/O 需要改写为 Node 资源释放、事件循环/Worker 和进程退出策略。对应的代码必须有生命周期测试，不能只修语法。
+
+涉及文件示例：`src/main/Shell.ts`、`src/main/NarNode.ts`、`src/main/Nar.ts`。
+
+## 3. 推荐的批量迁移流水线
+
+```text
+扫描模式
+  ↓
+按 A/B/C 分级
+  ↓
+A 级生成候选补丁并应用
+  ↓
+tsc 语法门禁
+  ↓
+B 级逐模块确认 import/初始化/枚举
+  ↓
+Node import smoke
+  ↓
+单元测试 + Java/TS NAL 差分测试
+  ↓
+记录未解决的 C 级语义差异
+```
+
+每一批迁移必须保留：
+
+1. 原 Java 文件路径和对应 TS 文件；
+2. 使用的模式编号；
+3. 自动修复与人工决策的边界；
+4. 编译、模块加载、单元和端到端测试结果；
+5. 尚未解决的 Java/TS 行为差异。
+
+## 4. 自动化边界
+
+`scripts/converting/scan-migration-patterns.mjs` 只负责扫描和计数，不默认改写源码。原因是构造器委托、隐式 import、包装类型和集合调用都可能引入循环依赖或改变初始化顺序。
+
+后续 codemod 应采用显式模式开关，例如：
+
+    node scripts/converting/apply-migration-patterns.mjs --pattern generic-angle --check
+
+默认只生成 diff 预览；只有在 `tsc`、Node import smoke 和对应测试都通过后，才允许纳入提交。
+
+## 5. 当前优先级
+
+1. 固化构造器委托的人工重写模板，并先处理 `Nar`、`Narsese`、`Sentence`、`Task`；
+2. 为最小语言实体闭包建立显式 import 图；
+3. 把 Java 包装类型收敛到 TS 边界接口；
+4. 再批量处理 A 级语法模式；
+5. 每完成一个闭包，就接入 NAL 差分测试，而不是等待全部文件迁移结束。
