@@ -576,14 +576,17 @@ export class Term extends JavaObject {
             getPredicate?: () => Term;
         };
         if (typeof candidate.getSubject === "function" && typeof candidate.getPredicate === "function") {
-            const subject = candidate.getSubject();
-            const predicate = candidate.getPredicate();
-            if (subject !== null && typeof (subject as Term & { hasVarIndep?: () => boolean }).hasVarIndep === "function"
-                && (subject as Term & { hasVarIndep: () => boolean }).hasVarIndep()) {
-                return true;
-            }
-            return predicate !== null && typeof (predicate as Term & { hasVarIndep?: () => boolean }).hasVarIndep === "function"
-                && (predicate as Term & { hasVarIndep: () => boolean }).hasVarIndep();
+            const subject = candidate.getSubject() as Term & { getType?: () => unknown; hasVarIndep?: () => boolean };
+            const predicate = candidate.getPredicate() as Term & { getType?: () => unknown; hasVarIndep?: () => boolean };
+            // Java checks only whether the direct subject/predicate is a
+            // Variable. A compound statement containing a variable is valid;
+            // treating its recursive hasVarIndep() result as a direct variable
+            // incorrectly zeroes the confidence of higher-order rules.
+            const isIndependentVariable = (value: Term & { getType?: () => unknown; hasVarIndep?: () => boolean }): boolean =>
+                typeof value?.getType === "function"
+                && typeof value?.hasVarIndep === "function"
+                && value.hasVarIndep();
+            return isIndependentVariable(subject) || isIndependentVariable(predicate);
         }
         return false;
     }

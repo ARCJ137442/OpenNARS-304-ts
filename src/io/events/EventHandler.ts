@@ -1,5 +1,7 @@
 //! Java source: opennars/io/events/EventHandler.java
 import { java, JavaObject, S } from "jree";
+import { EventEmitter } from "./EventEmitter.ts";
+import type { Nar } from "../../main/Nar.ts";
 
 
 
@@ -31,7 +33,7 @@ export abstract class EventHandler extends JavaObject implements EventEmitter.Ev
             return;
 
         this.active = b;
-        this.source.set(this, b, this.events);
+        this.source.set(this, b, ...this.events);
     }
 
     public isActive(): boolean {

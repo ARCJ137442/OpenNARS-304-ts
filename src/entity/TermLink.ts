@@ -112,7 +112,11 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 if (type === TermLink.COMPOUND_CONDITION) { // the first index is 0 by default
                     this.index = new Int16Array(indices.length + 1);
                     this.index[0] = 0;
-                    java.lang.System.arraycopy(indices, 0, this.index, 1, indices.length);
+                    // jree's System.arraycopy accepts native arrays only, while
+                    // this field is intentionally a typed array in TypeScript.
+                    // Preserve Java's indexed copy without crossing that
+                    // incompatible runtime boundary.
+                    this.index.set(indices, 1);
                 } else {
                     this.index = indices;
                 }

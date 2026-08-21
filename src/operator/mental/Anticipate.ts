@@ -1,12 +1,36 @@
 //! Java source: opennars/operator/mental/Anticipate.java
 import { java, type float, type long, type double, JavaObject, S } from "jree";
+import type { DerivationContext } from "../../control/DerivationContext.ts";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
+import { Symbols } from "../../io/Symbols.ts";
+import { Events } from "../../io/events/Events.ts";
+import type { EventEmitter } from "../../io/events/EventEmitter.ts";
+import { OutputHandler } from "../../io/events/OutputHandler.ts";
+import { Interval } from "../../language/Interval.ts";
+import { Product } from "../../language/Product.ts";
+import { Term } from "../../language/Term.ts";
+import type { Nar } from "../../main/Nar.ts";
+import { Operation } from "../Operation.ts";
+import { Operator } from "../Operator.ts";
+import type { Memory } from "../../storage/Memory.ts";
+
+const CycleEnd = Events.CycleEnd;
+const ANTICIPATE = OutputHandler.ANTICIPATE;
+const CONFIRM = OutputHandler.CONFIRM;
+const DISAPPOINT = OutputHandler.DISAPPOINT;
 
 
 
 /**
  * Operator that creates a judgment with a given statement
  */
-export class Anticipate extends Operator implements EventObserver {
+export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
     public readonly anticipations: java.util.Map<Anticipate.Prediction, java.util.LinkedHashSet<Term>> = new java.util.LinkedHashMap();
 
@@ -39,7 +63,7 @@ export class Anticipate extends Operator implements EventObserver {
                 const [ANTICIPATION_DURABILITY_MUL, ANTICIPATION_PRIORITY_MUL] = args as [float, float];
 
 
-                this();
+                super("^anticipate");
                 this.ANTICIPATION_DURABILITY_MUL = ANTICIPATION_DURABILITY_MUL;
                 this.ANTICIPATION_PRIORITY_MUL = ANTICIPATION_PRIORITY_MUL;
 
@@ -218,7 +242,7 @@ export class Anticipate extends Operator implements EventObserver {
         }
 
         let ae: java.util.LinkedHashSet<Term> = new java.util.LinkedHashSet();
-        this.anticipations.put(new Prediction(time.time(), occurenceTime), ae);
+        this.anticipations.put(new this.Prediction(time.time(), occurenceTime), ae);
 
         ae.add(content);
         this.anticipationFeedback(content, t, memory, time);

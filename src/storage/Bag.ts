@@ -191,8 +191,7 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
         // The generated switch cannot distinguish them by argument count, so
         // the object overload must be selected explicitly at runtime.
         const [value] = args;
-        const key = value !== null && typeof value === "object" &&
-            typeof (value as Type).name === "function"
+        const key = value instanceof Item
             ? (value as Type).name()
             : value as K;
         const picked: Type = this.nameTable.get(key);

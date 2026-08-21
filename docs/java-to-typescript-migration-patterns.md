@@ -1,6 +1,6 @@
 # Java → TypeScript 迁移纠正模式库
 
-版本：0.2（2026-08-22）
+版本：0.3（2026-08-22）
 
 本文件把当前 OpenNARS 转写中反复出现的纠正归纳为可检索、可验证、可批量处理的模式。它不是“看到字符串就替换”的规则表：每条模式都必须同时说明识别条件、正确的 TypeScript 语义、验证门禁和自动化边界。
 
@@ -104,7 +104,7 @@ Java 允许下面两个重载同时存在：
     pickOut(Key key)
     pickOut(Item item)
 
-迁移器常把它们生成成按 `args.length` 分支的 TypeScript；由于两个入口都是一个参数，后一个分支永远不可达。`Bag.pickOut` 因此曾经无法按 Item 对象移除元素，导致序列 Bag 长期膨胀；`Negation.make(Term)` 与 `make(Term[])` 也曾把数组当成 Term。
+迁移器常把它们生成成按 `args.length` 分支的 TypeScript；由于两个入口都是一个参数，后一个分支永远不可达。`Bag.pickOut` 因此曾经无法按 Item 对象移除元素，导致概念 Bag 取出旧对象失败；`Negation.make(Term)` 与 `make(Term[])` 也曾把数组当成 Term。相同问题还出现在 `SetExt(Term[])`、`SetInt(Term[])` 与 varargs 构造器：`new SetExt(t1)` 如果不解包，会把 `Term[]` 当成集合内唯一元素。
 
 纠正方式是先确认参数的运行时形态，再进入共享实现：
 
@@ -124,9 +124,53 @@ Java 允许下面两个重载同时存在：
 - 数组重载不会把数组包装成领域对象；
 - 至少有一个运行到长期周期的 NAL 用例，确认容器不会异常增长。
 
-涉及文件示例：`src/storage/Bag.ts`、`src/language/Negation.ts`。
+涉及文件示例：`src/storage/Bag.ts`、`src/language/Negation.ts`、`src/language/SetExt.ts`、`src/language/SetInt.ts`。
 
-#### B5. 继承方法被同名业务重载遮蔽
+#### B5. Java 的“直接变量”判断不能改成递归变量判断
+
+Java 的 `Term.subjectOrPredicateIsIndependentVar()` 只判断 Statement 的直接 subject/predicate 是否为 `Variable`。迁移时若写成 `subject.hasVarIndep()`，就会把“包含变量的复合语句”误判成“主项本身是变量”，从而触发 `Sentence` 的置信度清零。典型后果是带变量的高阶规则输入成了 `%1.00;0.00%`，规则虽然能被解析、链接和合一，却因预算阈值无法继续推理。
+
+纠正方式是保留“直接对象”的运行时判别，只对具有 `getType()` 的 Variable 调用 `hasVarIndep()`；不能用递归聚合属性代替 Java 的 `instanceof Variable`。
+
+验证要求：
+
+- 直接变量、包含变量的 Statement、无变量复合项分别测试；
+- 规则输入的默认置信度保持 `DEFAULT_JUDGMENT_CONFIDENCE`；
+- 至少用一条需要高阶条件推理的 NAL 语料验证后续任务没有被零置信度吞掉。
+
+涉及文件示例：`src/language/Term.ts`、`src/entity/Sentence.ts`、`test/node/core-runtime.test.ts`。
+
+#### B6. Java 数组与 jree 集合不能直接走 `System.arraycopy`
+
+Java `System.arraycopy` 可以在数组类型间完成规范复制；jree 的实现只接受原生 JavaScript 数组，而迁移后的目标字段可能是 `Int16Array`。此时“保留 Java 调用形式”反而会在实际构造 TermLink 时抛出 `ArraysStoreException`。
+
+纠正方式是在明确的 typed-array 边界使用 `.set(source, offset)`，或先转换为兼容的原生数组；不要把所有索引容器降级为 `any`。对应测试必须覆盖普通链接、`COMPOUND_CONDITION` 链接和多级索引。
+
+涉及文件示例：`src/entity/TermLink.ts`。
+
+#### B7. Java Enum/类的字符串化要固定在语义边界
+
+部分 jree Enum 的 `String(value)` 暴露的是 ordinal，而 Java 代码中的 `toString()` 才是符号文本。对 Narsese 运算符、集合键和 Statement 名称，必须在边界选择 `op.toString()` 或明确的符号映射；不能以“都是对象”为由统一调用 `String()`。
+
+这类错误通常不会立即报错，而会生成 `21`、`5` 一类看似合法但不可解析的项名。验证要求同时检查运算符文本、复合项名称和 Java/TypeScript 对照结果。
+
+涉及文件示例：`src/language/Statement.ts`、`src/language/CompoundTerm.ts`、`src/language/Image.ts`。
+
+#### B8. Java 静态 `.class` 与 JavaScript 类属性不是同一契约
+
+jree 当前版本的 `JavaObject.class` 静态 getter 可能按 `this.constructor` 返回同一个类标记，导致 `Events.CycleStart.class` 与 `Events.CycleEnd.class` 相等。事件总线因此会把一个事件的观察者误触发到所有事件上，表现为输出重复、生命周期顺序异常或插件收到错误事件。
+
+纠正方式是在应用运行时适配层把静态 `.class` getter 改为按实际静态类构造器返回 `Class.fromConstructor(this)`，并在事件总线上测试不同事件的隔离、批量 `set` 和 `off`。该修复应集中在兼容层，避免散落在业务事件类中。
+
+涉及文件示例：`src/runtime/jree-compat.ts`、`src/io/events/Events.ts`、`src/io/events/EventEmitter.ts`。
+
+#### B9. Java 变长参数调用在事件和数组边界必须显式展开
+
+Java 的 `emit(c, o)`、事件处理器和构造器数组参数在 TypeScript 中常见的错误是把数组作为一个参数继续传递。调用方若拿到 `Object[]`，应在进入 `...params` 的边界使用 `...array`；构造器若对应 `Term[]`，则按 B4 的数组形态解包。
+
+验证要求：事件观察者看到的参数个数和 Java 一致；多参数、空参数以及嵌套数组分别覆盖。涉及文件示例：`src/main/Nar.ts`、`src/io/events/EventEmitter.ts`、`src/io/events/EventHandler.ts`。
+
+#### B10. 继承方法被同名业务重载遮蔽
 
 Java 子类可以继承 `equals(Object)`，同时声明 `equals(Term, Term)`；TypeScript/JavaScript 没有按签名自动重载，后声明的方法会覆盖前者。`FunctionOperator.equals` 因此曾在 TermLink 的单参数比较中把第二个参数读成 `undefined`，使普通链接构造直接崩溃。
 
@@ -173,13 +217,14 @@ Java 子类可以继承 `equals(Object)`，同时声明 `equals(Term, Term)`；T
 
 ### C2.2 配置插件的迁移状态必须显式表达
 
-Java XML 配置会加载比当前 TypeScript 闭包更大的插件集合。Node 侧不能因为类文件能被 import 就假装插件语义已经完成，也不能静默丢掉一个会出现在 Narsese 输入中的操作符。当前 `^anticipate` 使用“可解析兼容桩”：保留操作符名称和输入语法，但暂不宣称已迁移其事件驱动语义；`ConfigReader.lastUnsupportedPluginClasspaths` 与文档必须保留这个边界。
+Java XML 配置会加载比当前 TypeScript 闭包更大的插件集合。Node 侧不能因为类文件能被 import 就假装插件语义已经完成，也不能静默丢掉一个会出现在 Narsese 输入中的操作符。当前 `^anticipate` 已接入实际 `Anticipate` 运算符和 CycleEnd/InduceSucceedingEvent 生命周期；Node 配置路径通过 `new Anticipate(0.1, 0.1)` 注册它。仍未迁移的插件继续记录在 `ConfigReader.lastUnsupportedPluginClasspaths` 中；不能因为配置加载成功就把未支持插件标为已完成。
 
 验证要求：
 
 - 配置加载不会因未迁移插件导致整机启动失败；
 - Narsese 中出现该操作符时可以明确解析；
-- 对应 NAL 结果不能被标记为完整语义等价，直到真实插件实现与 Java 对照通过。
+- `^anticipate` 的注册、事件开关、预测更新和过期分支有独立单测；
+- 其他未迁移插件的 NAL 结果不能被标记为完整语义等价，直到真实插件实现与 Java 对照通过。
 
 #### C3. 资源、线程与进程控制
 

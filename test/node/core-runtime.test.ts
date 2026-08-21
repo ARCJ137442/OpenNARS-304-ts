@@ -34,4 +34,28 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const negated = Negation.make([Term.get("a")]);
     assert.equal(negated instanceof Negation, true);
     assert.equal((negated as InstanceType<typeof Negation>).term[0], Term.get("a"));
+
+    const { Inheritance } = await import("../../src/language/Inheritance.ts");
+    const statement = Inheritance.make(Term.get("A"), Term.get("B"));
+    assert.equal(String(statement.toString()), "<A --> B>");
+    const { ImageExt } = await import("../../src/language/ImageExt.ts");
+    const image = new ImageExt([Term.get("P"), Term.get("A")], 1);
+    assert.equal(String(image.toString()), "(/,A,P,_)");
+
+    const { Variable } = await import("../../src/language/Variable.ts");
+    const { Product } = await import("../../src/language/Product.ts");
+    const { SetInt } = await import("../../src/language/SetInt.ts");
+    const { Implication } = await import("../../src/language/Implication.ts");
+    const sharedVariable = new Variable("$1");
+    const condition = Inheritance.make(Product.make([sharedVariable, Term.get("sunglasses")]), Term.get("own"));
+    const conclusion = Inheritance.make(sharedVariable, new SetInt(Term.get("aggressive")));
+    const rule = Implication.make(condition, conclusion, 0);
+    const ruleSentence = new Sentence(rule, ".", TruthValue.fromFrequencyConfidence(1.0, 0.9, parameters), stamp);
+    assert.equal(ruleSentence.truth.confidence, 0.9);
+    assert.equal(ruleSentence.term.subjectOrPredicateIsIndependentVar(), false);
+
+    const { SetExt } = await import("../../src/language/SetExt.ts");
+    const setMember = Term.get("setMember");
+    const arrayConstructedSet = new SetExt([setMember]);
+    assert.equal(arrayConstructedSet.term[0], setMember);
 });

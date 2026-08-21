@@ -2,6 +2,7 @@
 import { java, JavaObject, S } from "jree";
 import { EventHandler } from "./EventHandler.ts";
 import { Events } from "./Events.ts";
+import type { EventEmitter } from "./EventEmitter.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Memory } from "../../storage/Memory.ts";
 

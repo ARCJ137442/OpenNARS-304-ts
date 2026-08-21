@@ -1,4 +1,5 @@
 //! Java source: opennars/io/events/Events.java
+import "../../runtime/jree-compat.ts";
 import { java, JavaObject, type long, type int, S } from "jree";
 
 

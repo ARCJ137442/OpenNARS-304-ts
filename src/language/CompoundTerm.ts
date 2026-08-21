@@ -367,7 +367,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @return the oldName of the term
      */
     protected static makeCompoundName(op: NativeOperator, ...arg: Term[]): java.lang.CharSequence {
-        const opString = String(op);
+        const opString = op.toString();
         const names = arg.map((t) => String(t.name()));
         return new java.lang.String(
             `${COMPOUND_TERM_OPENER.ch}${opString}${Symbols.ARGUMENT_SEPARATOR}${names.join(Symbols.ARGUMENT_SEPARATOR)}${COMPOUND_TERM_CLOSER.ch}`);

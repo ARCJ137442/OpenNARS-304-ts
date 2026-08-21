@@ -219,7 +219,7 @@ export abstract class Statement extends CompoundTerm {
         const subjectName = String(subject.name());
         const predicateName = String(predicate.name());
         return new java.lang.String(
-            `${Symbols.NativeOperator.STATEMENT_OPENER.ch}${subjectName} ${String(relation)} ${predicateName}${Symbols.NativeOperator.STATEMENT_CLOSER.ch}`);
+            `${Symbols.NativeOperator.STATEMENT_OPENER.ch}${subjectName} ${relation.toString()} ${predicateName}${Symbols.NativeOperator.STATEMENT_CLOSER.ch}`);
     }
 
     public static invalidStatement(subject: Term, predicate: Term): boolean;

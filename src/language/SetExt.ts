@@ -24,8 +24,14 @@ export class SetExt extends SetTensional {
      *
      * @param arg The component list of the term - args must be unique and sorted
      */
-    public constructor(...arg: Term[]) {
-        super(arg);
+    public constructor(arg: Term[]);
+    public constructor(...arg: Term[]);
+    public constructor(...arg: unknown[]) {
+        // Java exposes both SetExt(Term[]) and the varargs call shape. A
+        // translated call such as new SetExt(t1) therefore carries the whole
+        // array as one runtime argument and must not become a one-component
+        // set whose component is itself an array.
+        super(arg.length === 1 && Array.isArray(arg[0]) ? arg[0] as Term[] : arg as Term[]);
     }
 
     /**

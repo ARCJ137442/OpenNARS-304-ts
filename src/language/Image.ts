@@ -63,7 +63,7 @@ export abstract class Image extends CompoundTerm {
 
         let name: java.lang.StringBuilder = new java.lang.StringBuilder(sizeEstimate)
             .append(COMPOUND_TERM_OPENER.ch)
-            .append(op)
+            .append(op.toString())
             .append(Symbols.ARGUMENT_SEPARATOR)
             .append(arg[relationIndex].name());
 

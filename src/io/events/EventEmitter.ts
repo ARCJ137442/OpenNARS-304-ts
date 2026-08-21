@@ -1,4 +1,5 @@
 //! Java source: opennars/io/events/EventEmitter.java
+import "../../runtime/jree-compat.ts";
 import { java, JavaObject, S } from "jree";
 
 
@@ -119,7 +120,16 @@ export class EventEmitter extends JavaObject {
         if (!this.events.containsKey(event))
             throw new java.lang.IllegalStateException("Unknown event: " + event);
 
-        this.events.get(event).remove(o);
+        // Observers are commonly plain TypeScript objects, not JavaObject
+        // instances. jree's List.remove(value) only compares Java-style
+        // equatable objects, so preserve Java's registration identity here.
+        const observers = this.events.get(event);
+        for (let index = 0; index < observers.size(); index += 1) {
+            if (observers.get(index) === o) {
+                observers.remove(index);
+                break;
+            }
+        }
         /*
          * if (!removed) {
          * throw new IllegalStateException("EventObserver " + o +
@@ -130,7 +140,7 @@ export class EventEmitter extends JavaObject {
 
     /** for enabling many events at the same time */
     public set(o: EventEmitter.EventObserver, enable: boolean, ...events: java.lang.Class<unknown>[]): void {
-        for (let c of this.events) {
+        for (let c of events) {
             if (enable)
                 this.on(c, o);
             else

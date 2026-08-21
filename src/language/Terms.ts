@@ -35,6 +35,56 @@ const operatorName = (value: unknown): string => {
 
 const isOperator = (value: unknown, name: string): boolean => operatorName(value) === name;
 
+/**
+ * Java's TermLink preparation passes each inspected component through a
+ * punctuation-only Sentence constructor. That constructor is also the place
+ * where variable scopes are normalized. Importing Sentence here would create
+ * a CompoundTerm -> Terms -> Sentence -> CompoundTerm initialization cycle,
+ * so keep this small, synchronous part of the contract at the lower layer.
+ */
+const normalizeComponentForLinks = (term: Term): Term => {
+    if (!(term instanceof CompoundTerm) || !term.hasVar() || term.isNormalized()) {
+        return term;
+    }
+
+    const normalized = term.cloneDeepVariables();
+    if (!(normalized instanceof CompoundTerm)) {
+        return term;
+    }
+
+    const variables: Variable[] = [];
+    normalized.recurseSubtermsContainingVariables((candidate) => {
+        if (candidate instanceof Variable) {
+            variables.push(candidate);
+        }
+    });
+
+    const rename = new Map<string, java.lang.CharSequence>();
+    let renamed = false;
+    for (const variable of variables) {
+        let variableName = String(variable.name());
+        if (!variable.hasVarIndep()) {
+            variableName += " " + String(variable.getScope().name());
+        }
+
+        let normalizedName = rename.get(variableName);
+        if (normalizedName == null) {
+            normalizedName = Variable.getName(variable.getType(), rename.size + 1);
+            rename.set(variableName, normalizedName);
+            if (String(normalizedName) !== variableName) {
+                renamed = true;
+            }
+        }
+        variable.setScope(normalized, normalizedName);
+    }
+
+    if (renamed) {
+        normalized.invalidateName();
+    }
+    normalized.setNormalized(true);
+    return normalized;
+};
+
 
 
 /**
@@ -444,6 +494,7 @@ export class Terms extends JavaObject {
 
                 for (let i: int = 0; i < term.size(); i++) {
                     let t1: Term = term.term[i];
+                    t1 = normalizeComponentForLinks(t1);
                     if (!(t1 instanceof Variable)) {
                         componentLinks.add(new TermLink(type, t1, i));
                     }
@@ -458,6 +509,7 @@ export class Terms extends JavaObject {
 
                         for (let j: int = 0; j < ct1Size; j++) {
                             let t2: Term = ct1.term[j];
+                            t2 = normalizeComponentForLinks(t2);
 
                             if (!t2.hasVar()) {
                                 if (t1ProductOrImage) {
@@ -477,6 +529,7 @@ export class Terms extends JavaObject {
 
                                 for (let k: int = 0; k < ct2Size; k++) {
                                     let t3: Term = ct2.term[k];
+                                    t3 = normalizeComponentForLinks(t3);
 
                                     if (!t3.hasVar()) {
                                         if (type === TermLink.COMPOUND_CONDITION) {

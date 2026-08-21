@@ -160,7 +160,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                 if (this.enabled === enabled)
                     return;
 
-                this.plugin.setEnabled(Nar.this, enabled);
+                this.plugin.setEnabled($outer, enabled);
                 this.enabled = enabled;
                 $outer.emit(Events.PluginsChange.class, this.plugin, enabled);
             }
@@ -648,7 +648,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     /** set an event handler. useful for multiple events. */
     public event(e: EventObserver, enabled: boolean, ...events: java.lang.Class<unknown>[]): void {
-        this.memory.event.set(e, enabled, events);
+        this.memory.event.set(e, enabled, ...events);
     }
 
     public addPlugin(p: Plugin): void {
@@ -780,7 +780,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
     public emit(c: java.lang.Class<unknown>, ...o: java.lang.Object[]): void {
-        this.memory.event.emit(c, o);
+        this.memory.event.emit(c, ...o);
     }
 
     /**

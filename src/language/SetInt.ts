@@ -24,8 +24,12 @@ export class SetInt extends SetTensional {
      *
      * @param arg The component list of the term - args must be unique and sorted
      */
-    public constructor(...arg: Term[]) {
-        super(arg);
+    public constructor(arg: Term[]);
+    public constructor(...arg: Term[]);
+    public constructor(...arg: unknown[]) {
+        // Keep the Java array and varargs constructor shapes distinct at the
+        // runtime boundary, just as SetExt does.
+        super(arg.length === 1 && Array.isArray(arg[0]) ? arg[0] as Term[] : arg as Term[]);
     }
 
     /**

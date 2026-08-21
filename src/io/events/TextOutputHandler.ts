@@ -1,5 +1,21 @@
 //! Java source: opennars/io/events/TextOutputHandler.java
 import { java, type float, S } from "jree";
+import { OutputHandler } from "./OutputHandler.ts";
+import type { Nar } from "../../main/Nar.ts";
+import type { Sentence } from "../../entity/Sentence.ts";
+import { Task } from "../../entity/Task.ts";
+import { Events } from "./Events.ts";
+
+const IN = OutputHandler.IN;
+const OUT = OutputHandler.OUT;
+const ERR = OutputHandler.ERR;
+const ECHO = OutputHandler.ECHO;
+const EXE = OutputHandler.EXE;
+const DEBUG = OutputHandler.DEBUG;
+const ANTICIPATE = OutputHandler.ANTICIPATE;
+const CONFIRM = OutputHandler.CONFIRM;
+const DISAPPOINT = OutputHandler.DISAPPOINT;
+const Answer = Events.Answer;
 
 
 

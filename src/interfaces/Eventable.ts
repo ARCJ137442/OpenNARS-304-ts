@@ -1,5 +1,6 @@
 //! Java source: opennars/interfaces/Eventable.java
 import { java } from "jree";
+import type { EventEmitter } from "../io/events/EventEmitter.ts";
 
 
 

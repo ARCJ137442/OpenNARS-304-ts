@@ -1,5 +1,30 @@
 //! Java source: opennars/control/concept/ProcessAnticipation.java
 import { java, JavaObject, type long, type float, type double } from "jree";
+import type { DerivationContext } from "../DerivationContext.ts";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Concept } from "../../entity/Concept.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { TaskLink } from "../../entity/TaskLink.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { RuleTables } from "../../inference/RuleTables.ts";
+import { TemporalRules } from "../../inference/TemporalRules.ts";
+import { UtilityFunctions } from "../../inference/UtilityFunctions.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
+import { Symbols } from "../../io/Symbols.ts";
+import { OutputHandler } from "../../io/events/OutputHandler.ts";
+import { CompoundTerm } from "../../language/CompoundTerm.ts";
+import { Conjunction } from "../../language/Conjunction.ts";
+import { Equivalence } from "../../language/Equivalence.ts";
+import { Implication } from "../../language/Implication.ts";
+import { Interval } from "../../language/Interval.ts";
+import { Statement } from "../../language/Statement.ts";
+import { Tense } from "../../language/Tense.ts";
+import type { Nar } from "../../main/Nar.ts";
+import { Anticipate } from "../../operator/mental/Anticipate.ts";
+import { Operator } from "../../operator/Operator.ts";
+import type { Parameters } from "../../main/Parameters.ts";
 
 
 
@@ -170,9 +195,9 @@ export class ProcessAnticipation extends JavaObject {
                     let negativeEvidenceRatio: double = 1.0 / countWithNegativeEvidence as double;
 
                     // compute confidence by negative evidence
-                    let w: double = c2w(truthOfBeliefWithTerm.confidence, narParameters);
+                    let w: double = UtilityFunctions.c2w(truthOfBeliefWithTerm.confidence, narParameters);
                     w *= negativeEvidenceRatio;
-                    let c: double = w2c(w as float, narParameters);
+                    let c: double = UtilityFunctions.w2c(w as float, narParameters);
 
                     let truth: TruthValue = TruthValue.fromFrequencyConfidence(0.0, c, narParameters); // frequency of negative
                     // confirmation is 0.0

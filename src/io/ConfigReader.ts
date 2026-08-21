@@ -10,6 +10,7 @@ import { NullOperator } from "../operator/NullOperator.ts";
 import { Add } from "../operator/misc/Add.ts";
 import { Count } from "../operator/misc/Count.ts";
 import { Reflect } from "../operator/misc/Reflect.ts";
+import { Anticipate } from "../operator/mental/Anticipate.ts";
 import { Believe } from "../operator/mental/Believe.ts";
 import { Doubt } from "../operator/mental/Doubt.ts";
 import { Evaluate } from "../operator/mental/Evaluate.ts";
@@ -55,11 +56,8 @@ export class ConfigReader extends JavaObject {
             ["org.opennars.operator.misc.Add", () => new Add()],
             ["org.opennars.operator.misc.Count", () => new Count()],
             ["org.opennars.operator.misc.Reflect", () => new Reflect()],
+            ["org.opennars.operator.mental.Anticipate", () => new Anticipate(0.1, 0.1)],
             ["org.opennars.operator.mental.Believe", () => new Believe()],
-            // Anticipate's full event-driven implementation still has unresolved
-            // Java same-package dependencies; keep its operator name parseable
-            // until that implementation is migrated, without claiming semantics.
-            ["org.opennars.operator.mental.Anticipate", () => new NullOperator("^anticipate")],
             ["org.opennars.operator.mental.Doubt", () => new Doubt()],
             ["org.opennars.operator.mental.Evaluate", () => new Evaluate()],
             ["org.opennars.operator.mental.Hesitate", () => new Hesitate()],
@@ -68,10 +66,6 @@ export class ConfigReader extends JavaObject {
         ]);
         ConfigReader.lastUnsupportedPluginClasspaths = [];
         ConfigReader.lastCompatibilityStubPluginClasspaths = [];
-        const compatibilityStubClasspaths = new Set([
-            "org.opennars.operator.mental.Anticipate",
-        ]);
-
         for (const match of xml.matchAll(/<conf\s+name=["']([^"']+)["']\s+value=["']([^"']*)["']\s*\/?>/g)) {
             const [, name, rawValue] = match;
             let value: unknown = rawValue;
@@ -101,9 +95,6 @@ export class ConfigReader extends JavaObject {
                 const factory = supportedPluginFactories.get(classpath);
                 if (factory !== undefined) {
                     plugins.add(factory());
-                    if (compatibilityStubClasspaths.has(classpath)) {
-                        ConfigReader.lastCompatibilityStubPluginClasspaths.push(classpath);
-                    }
                 } else {
                     configuredPlugins.push(classpath);
                 }

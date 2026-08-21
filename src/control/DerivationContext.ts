@@ -45,7 +45,7 @@ export class DerivationContext extends JavaObject {
     }
 
     public emit(c: java.lang.Class<unknown>, ...o: java.lang.Object[]): void {
-        this.memory.emit(c, o);
+        this.memory.emit(c, ...o);
     }
 
     /**
