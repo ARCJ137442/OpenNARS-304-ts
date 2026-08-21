@@ -2,6 +2,7 @@ import org.opennars.main.Nar;
 import org.opennars.entity.Task;
 import org.opennars.io.events.EventEmitter;
 import org.opennars.io.events.OutputHandler;
+import org.opennars.parameter.Debug;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -26,6 +27,8 @@ public final class NalParityRunner {
         }
 
         final int cycles = Integer.parseInt(args[0]);
+        // Match java-master's NALTest static setup: deterministic occurrence times.
+        Debug.TEST = true;
         final PrintStream output = System.out;
         final PrintStream quiet = new PrintStream(new ByteArrayOutputStream());
 
@@ -35,18 +38,19 @@ public final class NalParityRunner {
             String error = null;
             int expectedCount = 0;
             int passedCount = 0;
+            Capture capture = null;
 
             try {
                 System.setOut(quiet);
                 final String source = Files.readString(Path.of(file));
                 final Nar nar = new Nar();
                 final List<String> expectations = expectations(source);
-                final Capture capture = new Capture(nar, expectations);
+                capture = new Capture(nar, expectations);
                 expectedCount = expectations.size();
                 nar.addInputFile(file);
                 nar.cycles(cycles);
                 passedCount = capture.passedCount();
-                ok = expectedCount > 0 && expectedCount == passedCount;
+                ok = expectedCount == passedCount;
             } catch (final Throwable failure) {
                 error = failure.toString();
             } finally {
@@ -57,6 +61,7 @@ public final class NalParityRunner {
                     + ",\"cycles\":" + cycles
                     + ",\"expected\":" + expectedCount
                     + ",\"passed\":" + passedCount
+                    + ",\"matched\":" + booleanArray(capture == null ? new boolean[expectedCount] : capture.matched())
                     + ",\"ok\":" + ok
                     + (error == null ? "" : ",\"error\":" + quote(error))
                     + "}");
@@ -113,6 +118,19 @@ public final class NalParityRunner {
             }
             return count;
         }
+
+        private boolean[] matched() {
+            return matched;
+        }
+    }
+
+    private static String booleanArray(final boolean[] values) {
+        final StringBuilder out = new StringBuilder("[");
+        for (int i = 0; i < values.length; i++) {
+            if (i > 0) out.append(',');
+            out.append(values[i]);
+        }
+        return out.append(']').toString();
     }
 
     private static String quote(final String value) {

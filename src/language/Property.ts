@@ -1,6 +1,8 @@
 //! Java source: opennars/language/Property.java
 
 import { java, JavaObject } from "jree";
+import { Inheritance } from "./Inheritance.ts";
+import { SetInt } from "./SetInt.ts";
 
 
 

@@ -30,6 +30,12 @@ export abstract class Statement extends CompoundTerm {
         const operators = Symbols.NativeOperator;
         Statement.relationFactories.set(String(operators.INHERITANCE),
             (subject, predicate) => runtime.Inheritance.make(subject, predicate));
+        Statement.relationFactories.set(String(operators.INSTANCE),
+            (subject, predicate) => runtime.Instance.make(subject, predicate));
+        Statement.relationFactories.set(String(operators.PROPERTY),
+            (subject, predicate) => runtime.Property.make(subject, predicate));
+        Statement.relationFactories.set(String(operators.INSTANCE_PROPERTY),
+            (subject, predicate) => runtime.InstanceProperty.make(subject, predicate));
         Statement.relationFactories.set(String(operators.SIMILARITY),
             (subject, predicate) => runtime.Similarity.make(subject, predicate));
         Statement.relationFactories.set(String(operators.IMPLICATION),

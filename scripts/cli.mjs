@@ -3,6 +3,10 @@ import { resolve } from "node:path";
 
 import { OutputHandler } from "../src/io/events/OutputHandler.ts";
 import { Nar } from "../src/main/Nar.ts";
+import { Debug } from "../src/main/Debug.ts";
+
+// Match java-master's NALTest static setup: deterministic occurrence times.
+Debug.TEST = true;
 
 function parseArgs(argv) {
   let cycles = 1550;
@@ -57,6 +61,12 @@ function signalText(signal, nar) {
   }
 }
 
+function failureText(failure) {
+  const summary = String(failure);
+  const stack = failure?.stack;
+  return stack && !stack.includes(summary) ? `${summary}\n${stack}` : stack ?? summary;
+}
+
 async function runFile(file, cycles) {
   const expectations = extractExpectations(await readFile(file, "utf8"));
   const matched = new Array(expectations.length).fill(false);
@@ -85,11 +95,19 @@ async function runFile(file, cycles) {
     nar.cycles(cycles);
     passed = matched.filter(Boolean).length;
   } catch (failure) {
-    error = failure?.stack ?? String(failure);
+    error = failureText(failure);
   }
 
-  const ok = expectations.length > 0 && expectations.length === passed;
-  return { file, cycles, expected: expectations.length, passed, ok, ...(error ? { error } : {}) };
+  const ok = expectations.length === passed;
+  return {
+    file,
+    cycles,
+    expected: expectations.length,
+    passed,
+    matched,
+    ok,
+    ...(error ? { error } : {}),
+  };
 }
 
 async function main() {

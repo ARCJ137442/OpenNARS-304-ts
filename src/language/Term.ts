@@ -239,9 +239,13 @@ export class Term extends JavaObject {
     public override  equals(that: java.lang.Object): boolean {
         if (that === this)
             return true;
-        if (this.getClass() !== this.getClass())
+        if (that === null || !(that instanceof Term) || this.getClass() !== (that as Term).getClass())
             return false; // optimization, if complexity is different they cant be equal
-        return this.getComplexity() === (that as Term).getComplexity() && this.name().equals((that as Term).name());
+        // jree's JavaString currently compares its UTF-16 backing arrays through
+        // a case-insensitive locale path. Term equality is Java's exact string
+        // equality, so cross the boundary through the native text value here.
+        return this.getComplexity() === (that as Term).getComplexity()
+            && String(this.name()) === String((that as Term).name());
     }
 
     /**
@@ -250,7 +254,14 @@ export class Term extends JavaObject {
      * @return An integer hash code
      */
     public override  hashCode(): int {
-        return this.name().hashCode();
+        // Match java.lang.String.hashCode() instead of jree's typed-array hash
+        // fallback, which otherwise gives unrelated term names the same hash.
+        let hash = 0;
+        const text = String(this.name());
+        for (let index = 0; index < text.length; index += 1) {
+            hash = Math.imul(31, hash) + text.charCodeAt(index);
+        }
+        return hash;
     }
 
     /**

@@ -21,4 +21,17 @@ test("translated term and sentence constructors preserve Java delegation contrac
     assert.equal(String(sentence.getTerm().toString()), "A");
     assert.equal(String(sentence.getTruth().toStringExternal()), "%0.70;0.60%");
     assert.match(String(sentence.getKey()), /^A\. %0\.70;0\.60%/);
+
+    assert.equal(Term.get("a").equals(Term.get("A")), false);
+    assert.notEqual(Term.get("a").hashCode(), Term.get("A").hashCode());
+
+    const { Add } = await import("../../src/operator/misc/Add.ts");
+    const add = new Add();
+    assert.equal(add.equals(add), true);
+    assert.equal(add.equals(Term.get("a"), Term.get("A")), 0);
+
+    const { Negation } = await import("../../src/language/Negation.ts");
+    const negated = Negation.make([Term.get("a")]);
+    assert.equal(negated instanceof Negation, true);
+    assert.equal((negated as InstanceType<typeof Negation>).term[0], Term.get("a"));
 });

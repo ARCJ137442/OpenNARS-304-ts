@@ -16,20 +16,41 @@ const corpusDirectories = [
   join(javaRoot, "src", "main", "resources", "nal", "single_step"),
   join(javaRoot, "src", "main", "resources", "nal", "multi_step"),
   join(javaRoot, "src", "main", "resources", "nal", "application"),
+  join(javaRoot, "src", "main", "resources", "nal", "stability"),
 ];
 
 function parseArgs(argv) {
-  const options = { engine: "java", cycles: 1550, limit: null, all: false };
+  const options = {
+    engine: "java",
+    cycles: 1550,
+    start: 0,
+    limit: null,
+    chunkSize: null,
+    all: false,
+    summary: false,
+  };
   for (let i = 0; i < argv.length; i += 1) {
     const argument = argv[i];
     if (argument === "--engine") options.engine = argv[++i];
     else if (argument === "--cycles") options.cycles = Number(argv[++i]);
+    else if (argument === "--start") options.start = Number(argv[++i]);
     else if (argument === "--limit") options.limit = Number(argv[++i]);
+    else if (argument === "--chunk-size") options.chunkSize = Number(argv[++i]);
     else if (argument === "--all") options.all = true;
+    else if (argument === "--summary") options.summary = true;
     else throw new Error(`Unknown argument: ${argument}`);
   }
   if (!Number.isInteger(options.cycles) || options.cycles < 1) {
     throw new Error("--cycles must be a positive integer");
+  }
+  if (!Number.isInteger(options.start) || options.start < 0) {
+    throw new Error("--start must be a non-negative integer");
+  }
+  if (options.limit !== null && (!Number.isInteger(options.limit) || options.limit < 1)) {
+    throw new Error("--limit must be a positive integer");
+  }
+  if (options.chunkSize !== null && (!Number.isInteger(options.chunkSize) || options.chunkSize < 1)) {
+    throw new Error("--chunk-size must be a positive integer");
   }
   return options;
 }
@@ -101,18 +122,36 @@ function runTs(files, cycles) {
   return result.stdout.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line));
 }
 
+function splitIntoChunks(files, chunkSize) {
+  if (chunkSize === null) return [files];
+  const chunks = [];
+  for (let index = 0; index < files.length; index += chunkSize) {
+    chunks.push(files.slice(index, index + chunkSize));
+  }
+  return chunks;
+}
+
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   let files = (await Promise.all(corpusDirectories.map(findNalFiles))).flat().sort();
-  if (!options.all && options.limit !== null) files = files.slice(0, options.limit);
-  if (!options.all && options.limit === null) files = files.slice(0, 10);
+  files = files.slice(options.start);
+  if (options.limit !== null) files = files.slice(0, options.limit);
+  else if (!options.all) files = files.slice(0, 10);
   if (files.length === 0) throw new Error("No NAL files found");
 
   const sources = new Map();
   for (const file of files) sources.set(file, extractExpectations(await readFile(file, "utf8")));
 
-  const javaResults = options.engine === "ts" ? [] : runJava(files, options.cycles);
-  const tsResults = options.engine === "java" ? [] : runTs(files, options.cycles);
+  const javaResults = [];
+  const tsResults = [];
+  const chunks = splitIntoChunks(files, options.chunkSize);
+  for (const [index, chunk] of chunks.entries()) {
+    if (options.chunkSize !== null) {
+      console.error(`running chunk ${index + 1}/${chunks.length} (${chunk.length} files)`);
+    }
+    if (options.engine !== "ts") javaResults.push(...runJava(chunk, options.cycles));
+    if (options.engine !== "java") tsResults.push(...runTs(chunk, options.cycles));
+  }
   const byFile = (rows) => new Map(rows.map((row) => [resolve(row.file), row]));
   const javaByFile = byFile(javaResults);
   const tsByFile = byFile(tsResults);
@@ -121,7 +160,12 @@ async function main() {
     const expected = sources.get(file).length;
     const java = javaByFile.get(key) ?? null;
     const ts = tsByFile.get(key) ?? null;
-    const parity = java && ts ? java.ok === ts.ok && java.expected === ts.expected && java.passed === ts.passed : null;
+    const parity = java && ts
+      ? java.ok === ts.ok
+        && java.expected === ts.expected
+        && java.passed === ts.passed
+        && JSON.stringify(java.matched ?? []) === JSON.stringify(ts.matched ?? [])
+      : null;
     return { file: key, expected, java, ts, parity };
   });
 
@@ -134,7 +178,31 @@ async function main() {
     failed: failures.length,
     rows,
   };
-  console.log(JSON.stringify(summary, null, 2));
+  if (options.summary) {
+    const compact = (result) => result === null ? null : {
+      expected: result.expected,
+      passed: result.passed,
+      matched: result.matched,
+      ok: result.ok,
+      ...(result.error ? { error: result.error } : {}),
+    };
+    console.log(JSON.stringify({
+      engine: summary.engine,
+      cycles: summary.cycles,
+      files: summary.files,
+      passed: summary.passed,
+      failed: summary.failed,
+      failures: failures.map((row) => ({
+        file: row.file,
+        expected: row.expected,
+        java: compact(row.java),
+        ts: compact(row.ts),
+        parity: row.parity,
+      })),
+    }, null, 2));
+  } else {
+    console.log(JSON.stringify(summary, null, 2));
+  }
   if (failures.length > 0) process.exitCode = 1;
 }
 

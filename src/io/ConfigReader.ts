@@ -7,6 +7,15 @@ import { Debug } from "../main/Debug.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
 import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
 import { NullOperator } from "../operator/NullOperator.ts";
+import { Add } from "../operator/misc/Add.ts";
+import { Count } from "../operator/misc/Count.ts";
+import { Reflect } from "../operator/misc/Reflect.ts";
+import { Believe } from "../operator/mental/Believe.ts";
+import { Doubt } from "../operator/mental/Doubt.ts";
+import { Evaluate } from "../operator/mental/Evaluate.ts";
+import { Hesitate } from "../operator/mental/Hesitate.ts";
+import { Want } from "../operator/mental/Want.ts";
+import { Wonder } from "../operator/mental/Wonder.ts";
 
 
 
@@ -19,6 +28,8 @@ export class ConfigReader extends JavaObject {
 
     /** Classpaths that were present in an XML config but cannot be loaded in Node yet. */
     public static lastUnsupportedPluginClasspaths: string[] = [];
+    /** Classpaths represented by a parse-only compatibility stub in Node. */
+    public static lastCompatibilityStubPluginClasspaths: string[] = [];
 
     private static nodeConfigPath(filepath: string): string | null {
         const candidates = [
@@ -40,7 +51,26 @@ export class ConfigReader extends JavaObject {
         const debugTarget = Debug as unknown as Record<string, unknown>;
         const configuredPlugins: string[] = [];
         const plugins = new java.util.ArrayList<Plugin>();
+        const supportedPluginFactories = new Map<string, () => Plugin>([
+            ["org.opennars.operator.misc.Add", () => new Add()],
+            ["org.opennars.operator.misc.Count", () => new Count()],
+            ["org.opennars.operator.misc.Reflect", () => new Reflect()],
+            ["org.opennars.operator.mental.Believe", () => new Believe()],
+            // Anticipate's full event-driven implementation still has unresolved
+            // Java same-package dependencies; keep its operator name parseable
+            // until that implementation is migrated, without claiming semantics.
+            ["org.opennars.operator.mental.Anticipate", () => new NullOperator("^anticipate")],
+            ["org.opennars.operator.mental.Doubt", () => new Doubt()],
+            ["org.opennars.operator.mental.Evaluate", () => new Evaluate()],
+            ["org.opennars.operator.mental.Hesitate", () => new Hesitate()],
+            ["org.opennars.operator.mental.Want", () => new Want()],
+            ["org.opennars.operator.mental.Wonder", () => new Wonder()],
+        ]);
         ConfigReader.lastUnsupportedPluginClasspaths = [];
+        ConfigReader.lastCompatibilityStubPluginClasspaths = [];
+        const compatibilityStubClasspaths = new Set([
+            "org.opennars.operator.mental.Anticipate",
+        ]);
 
         for (const match of xml.matchAll(/<conf\s+name=["']([^"']+)["']\s+value=["']([^"']*)["']\s*\/?>/g)) {
             const [, name, rawValue] = match;
@@ -68,7 +98,15 @@ export class ConfigReader extends JavaObject {
                 const valueMatch = body.match(/<arg\s+[^>]*type=["']String\.class["'][^>]*value=["']([^"']+)["'][^>]*\/?\s*>/);
                 plugins.add(valueMatch === null ? new NullOperator() : new NullOperator(valueMatch[1]));
             } else {
-                configuredPlugins.push(classpath);
+                const factory = supportedPluginFactories.get(classpath);
+                if (factory !== undefined) {
+                    plugins.add(factory());
+                    if (compatibilityStubClasspaths.has(classpath)) {
+                        ConfigReader.lastCompatibilityStubPluginClasspaths.push(classpath);
+                    }
+                } else {
+                    configuredPlugins.push(classpath);
+                }
             }
         }
         ConfigReader.lastUnsupportedPluginClasspaths = configuredPlugins;

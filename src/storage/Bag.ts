@@ -183,36 +183,24 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
 
     public pickOut(val: Type): Type;
     public pickOut(...args: unknown[]): Type {
-        switch (args.length) {
-            case 1: {
-                const [key] = args as [K];
-
-
-                let picked: Type = this.nameTable.get(key);
-                if (picked !== null) {
-                    this.outOfBase(picked);
-                    this.nameTable.remove(key);
-                }
-                return picked;
-
-
-                break;
-            }
-
-            case 1: {
-                const [val] = args as [Type];
-
-
-                return this.pickOut(val.name());
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        if (args.length !== 1) {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
+
+        // Java overloads pickOut(K) and pickOut(Type) have the same arity.
+        // The generated switch cannot distinguish them by argument count, so
+        // the object overload must be selected explicitly at runtime.
+        const [value] = args;
+        const key = value !== null && typeof value === "object" &&
+            typeof (value as Type).name === "function"
+            ? (value as Type).name()
+            : value as K;
+        const picked: Type = this.nameTable.get(key);
+        if (picked !== null) {
+            this.outOfBase(picked);
+            this.nameTable.remove(key);
+        }
+        return picked;
     }
 
 

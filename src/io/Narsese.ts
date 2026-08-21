@@ -28,6 +28,9 @@ import { IntersectionInt } from "../language/IntersectionInt.ts";
 import { DifferenceExt } from "../language/DifferenceExt.ts";
 import { DifferenceInt } from "../language/DifferenceInt.ts";
 import { Inheritance } from "../language/Inheritance.ts";
+import { Instance } from "../language/Instance.ts";
+import { Property } from "../language/Property.ts";
+import { InstanceProperty } from "../language/InstanceProperty.ts";
 import { Negation } from "../language/Negation.ts";
 import { Disjunction } from "../language/Disjunction.ts";
 import { Implication } from "../language/Implication.ts";
@@ -68,6 +71,9 @@ Terms.registerRuntime({
     DifferenceExt,
     DifferenceInt,
     Inheritance,
+    Instance,
+    Property,
+    InstanceProperty,
     Product,
     ImageExt,
     ImageInt,
@@ -80,6 +86,9 @@ Terms.registerRuntime({
 
 Statement.registerRuntime({
     Inheritance,
+    Instance,
+    Property,
+    InstanceProperty,
     Similarity,
     Implication,
     Equivalence,

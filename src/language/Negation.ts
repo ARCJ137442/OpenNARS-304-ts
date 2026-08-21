@@ -25,11 +25,11 @@ export class Negation extends CompoundTerm {
     protected constructor(t: Term) {
         super([t]);
 
-        java.security.cert.CertPathChecker.init(term);
+        this.init(this.term);
     }
 
     protected makeName(): java.lang.CharSequence {
-        return makeCompoundName(NativeOperator.NEGATION, term[0]);
+        return Negation.makeCompoundName(NativeOperator.NEGATION, this.term[0]);
     }
 
     /**
@@ -44,7 +44,7 @@ export class Negation extends CompoundTerm {
         switch (args.length) {
             case 0: {
 
-                return new Negation(term[0]);
+                return new Negation(this.term[0]);
 
 
                 break;
@@ -88,37 +88,27 @@ export class Negation extends CompoundTerm {
      */
     public static make(argument: Term[]): Term;
     public static make(...args: unknown[]): Term {
-        switch (args.length) {
-            case 1: {
-                const [t] = args as [Term];
-
-
-                if (t instanceof Negation) {
-                    // (--,(--,P)) = P
-                    return (t as Negation).term[0];
-                }
-                return new Negation(t);
-
-
-                break;
-            }
-
-            case 1: {
-                const [argument] = args as [Term[]];
-
-
-                if (argument.length !== 1)
-                    return null;
-                return Negation.make(argument[0]);
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        if (args.length !== 1) {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
+
+        // Java overloads make(Term) and make(Term[]) have the same arity.
+        // The array overload is used by the parser and must be selected before
+        // the single-term construction path.
+        const [value] = args;
+        if (Array.isArray(value)) {
+            if (value.length !== 1) {
+                return null;
+            }
+            return Negation.make(value[0]);
+        }
+
+        const term = value as Term;
+        if (term instanceof Negation) {
+            // (--,(--,P)) = P
+            return term.term[0];
+        }
+        return new Negation(term);
     }
 
 

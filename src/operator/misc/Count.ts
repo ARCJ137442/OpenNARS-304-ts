@@ -1,5 +1,10 @@
 //! Java source: opennars/operator/misc/Count.java
 import { java, type int } from "jree";
+import { FunctionOperator } from "../FunctionOperator.ts";
+import { Term } from "../../language/Term.ts";
+import { SetExt } from "../../language/SetExt.ts";
+import { SetInt } from "../../language/SetInt.ts";
+import { CompoundTerm } from "../../language/CompoundTerm.ts";
 
 
 

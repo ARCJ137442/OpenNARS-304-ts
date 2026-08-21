@@ -1,5 +1,6 @@
 //! Java source: opennars/operator/mental/Want.java
 import { java } from "jree";
+import { Operator } from "../Operator.ts";
 
 
 
