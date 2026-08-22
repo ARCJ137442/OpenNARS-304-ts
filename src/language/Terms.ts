@@ -33,7 +33,25 @@ const operatorName = (value: unknown): string => {
     return String(name ?? operator ?? "");
 };
 
-const isOperator = (value: unknown, name: string): boolean => operatorName(value) === name;
+const isOperator = (value: unknown, name: string): boolean => {
+    const actual = operatorName(value);
+    if (actual === name) {
+        return true;
+    }
+    // Java's `instanceof Conjunction` also covers temporal conjunctions
+    // (`&/`, `&|`, and spatial conjunction). The port sees their native
+    // operator names instead, so preserve that class-level dispatch here.
+    if (name === "CONJUNCTION") {
+        return actual === "SEQUENCE" || actual === "PARALLEL" || actual === "SPATIAL";
+    }
+    if (name === "IMPLICATION") {
+        return actual === "IMPLICATION_AFTER" || actual === "IMPLICATION_BEFORE" || actual === "IMPLICATION_WHEN";
+    }
+    if (name === "EQUIVALENCE") {
+        return actual === "EQUIVALENCE_AFTER" || actual === "EQUIVALENCE_WHEN";
+    }
+    return false;
+};
 
 /**
  * Java's TermLink preparation passes each inspected component through a

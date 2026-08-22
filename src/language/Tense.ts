@@ -32,7 +32,7 @@ export class Tense extends java.lang.Enum<Tense> {
     }
 
     public static tense(s: java.lang.String): Tense {
-        return Tense.stringToTense.get(s);
+        return Tense.stringToTense.get(s) ?? null;
     }
 
 }

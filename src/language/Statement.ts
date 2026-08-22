@@ -168,8 +168,33 @@ export abstract class Statement extends CompoundTerm {
                     return null;
                 }
                 const factory = Statement.relationFactories.get(String(o));
-                return factory === undefined ? null : factory(subject, predicate,
-                    customOrder ? order : TemporalRules.ORDER_NONE);
+                if (factory === undefined) {
+                    return null;
+                }
+
+                // Java's overload derives temporal order from the relation when
+                // customOrder is false. This matters for parser input such as
+                // =/> and =|>, which intentionally calls this overload with
+                // order=0.
+                let effectiveOrder: int = customOrder ? order : TemporalRules.ORDER_NONE;
+                if (!customOrder) {
+                    switch (o) {
+                        case Symbols.NativeOperator.IMPLICATION_AFTER:
+                        case Symbols.NativeOperator.EQUIVALENCE_AFTER:
+                            effectiveOrder = TemporalRules.ORDER_FORWARD;
+                            break;
+                        case Symbols.NativeOperator.IMPLICATION_BEFORE:
+                            effectiveOrder = TemporalRules.ORDER_BACKWARD;
+                            break;
+                        case Symbols.NativeOperator.IMPLICATION_WHEN:
+                        case Symbols.NativeOperator.EQUIVALENCE_WHEN:
+                            effectiveOrder = TemporalRules.ORDER_CONCURRENT;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                return factory(subject, predicate, effectiveOrder);
 
 
                 break;

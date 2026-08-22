@@ -1,6 +1,7 @@
 //! Java source: opennars/operator/Operator.java
 import { java, type float, JavaObject, S } from "jree";
 import { Term } from "../language/Term.ts";
+import { Inheritance } from "../language/Inheritance.ts";
 import { Operation } from "./Operation.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -215,6 +216,8 @@ export abstract class Operator extends Term implements Plugin {
     }
 
 }
+
+Inheritance.registerOperatorPredicate((value) => value instanceof Operator);
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Operator {

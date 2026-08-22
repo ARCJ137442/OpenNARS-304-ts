@@ -20,9 +20,14 @@ const NativeOperator = Symbols.NativeOperator;
 export class Inheritance extends Statement {
 
     private static operationFactory: ((operator: unknown, terms: Term[], addSelf: boolean) => Inheritance) | null = null;
+    private static operatorPredicate: ((value: unknown) => boolean) | null = null;
 
     public static registerOperationFactory(factory: (operator: unknown, terms: Term[], addSelf: boolean) => Inheritance): void {
         Inheritance.operationFactory = factory;
+    }
+
+    public static registerOperatorPredicate(predicate: (value: unknown) => boolean): void {
+        Inheritance.operatorPredicate = predicate;
     }
 
     /**
@@ -113,7 +118,7 @@ export class Inheritance extends Statement {
         }
 
         let subjectProduct: boolean = subject instanceof Product;
-        let predicateOperator: boolean = String(predicate).startsWith("^");
+        let predicateOperator: boolean = Inheritance.operatorPredicate?.(predicate) ?? false;
 
         if (Debug.DETAILED) {
             if (!predicateOperator && predicate.toString().startsWith("^")) {

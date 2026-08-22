@@ -58,8 +58,14 @@ export class Operation extends Inheritance {
      *
      * @return A new object, to be casted into a SetExt
      */
-    public clone(): Operation {
-        return new Operation(this.term);
+    public clone(): Operation;
+
+    public clone(replaced: Term[]): Inheritance;
+    public clone(...args: unknown[]): Operation | Inheritance {
+        if (args.length === 0) {
+            return new Operation(this.term);
+        }
+        return super.clone(args[0] as Term[]);
     }
 
     /**

@@ -116,7 +116,7 @@ export class Equivalence extends Statement {
             }
 
             case 3: {
-                const [subject, predicate, temporalOrder] = args as [Term, Term, int];
+                let [subject, predicate, temporalOrder] = args as [Term, Term, int];
 
                 // to be extended to check if
                 // subject is Conjunction
