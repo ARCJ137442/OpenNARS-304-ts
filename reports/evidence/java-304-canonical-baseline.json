@@ -1,0 +1,107 @@
+{
+  "java_source_commit": "a2d76a246d830671142c61793e0c6aac058ba033",
+  "java_describe": "v3.0.4-28-ga2d76a24",
+  "java_pom_version": "3.0.4-SNAPSHOT",
+  "environment": {
+    "jdk": "18.0.2",
+    "java_home": "D:\\Program Files\\Java\\jdk-18.0.2",
+    "maven": "3.9.9",
+    "maven_home": "D:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition\\plugins\\maven\\lib\\maven3",
+    "os": "Windows 11",
+    "encoding": "UTF-8"
+  },
+  "legacy_artifact": {
+    "jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\target\\opennars-3.1.0-SNAPSHOT.jar",
+    "jar_size": 4097148,
+    "jar_last_write": "2024-05-13T19:38:08.2137252+08:00",
+    "jar_sha256": "796A3B20EE6ED7F8F6778367738AD728F0BFCC32CFAD99BACAEBEC41EBC7EB04",
+    "sources_jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\target\\opennars-3.1.0-SNAPSHOT-sources.jar",
+    "sources_jar_size": 411394,
+    "sources_jar_sha256": "68B40D76C59C692771B0953E88D2E0CCDBAD17E54371BD855331E5FF0ABA2D91",
+    "manifest": {
+      "created_by": "Apache Maven 3.9.6",
+      "build_jdk": "18.0.2",
+      "specification_version": "3.1.0-SNAPSHOT",
+      "implementation_version": "3.1.0-SNAPSHOT",
+      "main_class": "org.opennars.main.Shell"
+    },
+    "classes": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\target\\classes",
+    "test_classes": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\target\\test-classes"
+  },
+  "rebuilt_artifact": {
+    "worktree": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build",
+    "jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+    "jar_size": 4092984,
+    "jar_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41",
+    "sources_jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT-sources.jar",
+    "sources_jar_size": 329662,
+    "sources_jar_sha256": "681E37A069960D08508267206A52BABAEF38C0263165297646E45ADCC7D508FE",
+    "manifest": {
+      "created_by": "Apache Maven 3.9.9",
+      "build_jdk": "18.0.2",
+      "specification_version": "3.0.4-SNAPSHOT",
+      "implementation_version": "3.0.4-SNAPSHOT",
+      "main_class": "org.opennars.main.Shell"
+    },
+    "classes": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\classes",
+    "test_classes": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\test-classes"
+  },
+  "build": {
+    "command": "mvn -Dmaven.test.failure.ignore=false clean verify",
+    "compatibility_command": "mvn -Djacoco.skip=true -Dmaven.test.failure.ignore=false clean verify",
+    "build_result": "success",
+    "jacoco_result": "JaCoCo 0.8.2 agent failed on Java 18 before test reports were produced",
+    "surefire_with_jacoco_skipped": {
+      "test_sources": 30,
+      "test_cases": 266,
+      "passed": 20,
+      "failures": 246,
+      "errors": 0,
+      "skipped": 0,
+      "failure_suites": {
+        "org.opennars.core.NALTest": 244,
+        "org.opennars.core.StabilityTest": 1,
+        "org.opennars.core.VariableTest": 1
+      },
+      "main_failure": "stampString should not be null"
+    }
+  },
+  "local_algorithm_parity": {
+    "rebuilt_artifact": {
+      "ok": true,
+      "tolerance": 0.00001,
+      "differences": 0
+    },
+    "legacy_jar_only": {
+      "ok": false,
+      "reason": "LocalAlgorithmParityRunner expects org.opennars.parameter.Parameters; legacy JAR exposes org.opennars.main.Parameters"
+    }
+  },
+  "rebuilt_java_nal_matrix": {
+    "file": "reports/evidence/java-304-new-nal-matrix.json",
+    "files": 245,
+    "cycles": 1,
+    "timeout_ms": 10000,
+    "passed": 202,
+    "failed": 43,
+    "timeouts": 2,
+    "errors": 0,
+    "unrun": 0,
+    "by_category": {
+      "application": {"files": 5, "passed": 4, "failed": 1},
+      "multi_step": {"files": 24, "passed": 23, "failed": 1},
+      "single_step": {"files": 215, "passed": 175, "failed": 40},
+      "stability": {"files": 1, "passed": 0, "failed": 1}
+    }
+  },
+  "canonical_decision": {
+    "gate_a_passed": false,
+    "canonical": "legacy-only-history-baseline; no switch",
+    "reason": [
+      "Java tests contain 246 failures hidden by testFailureIgnore",
+      "legacy JAR metadata is 3.1.0-SNAPSHOT and its API does not match current 3.0.4 source adapter",
+      "rebuilt Java matrix contains 43 failed rows and 2 timeouts",
+      "full old/new Java equivalence has not been established"
+    ]
+  }
+}

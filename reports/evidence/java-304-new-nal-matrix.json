@@ -1,0 +1,4485 @@
+{
+  "engine": "java",
+  "cycles": 1,
+  "timeoutMs": 10000,
+  "files": 245,
+  "passed": 202,
+  "failed": 43,
+  "java_artifact": {
+    "jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+    "classes": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\classes",
+    "testClasses": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\test-classes",
+    "sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+  },
+  "rows": [
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\detective.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\detective.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\detective2.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\detective2.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush2.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush2.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\vision.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\vision.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal1.multistep.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal1.multistep.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal3.subtermMapping1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal3.subtermMapping1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.everyday_reasoning.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.everyday_reasoning.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.small.2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.small.2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.small.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.small.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal6.mln1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal6.mln1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal7.implSeqABCsimple.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal7.implSeqABCsimple.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal7.predEquiv.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal7.predEquiv.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal7.seq3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal7.seq3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition2_parallel.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition2_parallel.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition2_sequential.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition2_sequential.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_sequence.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_sequence.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_var1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_var1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_var2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_var2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_var3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_var3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_1.nal",
+      "expected": 3,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_1.nal",
+        "cycles": 1,
+        "expected": 3,
+        "passed": 3,
+        "matched": [
+          true,
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_2.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_2.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_3.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_3.nal",
+        "cycles": 1,
+        "expected": null,
+        "passed": 0,
+        "matched": [],
+        "ok": false,
+        "error": "Java runner timed out after 10000 ms",
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_seqABC.nal",
+      "expected": 3,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_seqABC.nal",
+        "cycles": 1,
+        "expected": 3,
+        "passed": 3,
+        "matched": [
+          true,
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_spatialSeq1.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_spatialSeq1.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_transitivity.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_transitivity.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\stresstest_bird1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\stresstest_bird1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\desire.1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\desire.1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.0.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.0.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.2.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.2.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.3.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.3.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.4.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.4.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.5.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.5.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.6.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.6.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.7.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.7.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.8.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.8.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 0,
+        "matched": [
+          false,
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.0.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.0.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.10.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.10.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.11.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.11.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.12.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.12.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.13.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.13.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.14.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.14.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.15.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.15.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.16.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.16.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.17.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.17.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.18.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.18.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 0,
+        "matched": [
+          false,
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.19.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.19.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 0,
+        "matched": [
+          false,
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.4.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.4.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.5.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.5.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.6.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.6.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.7.nal",
+      "expected": 3,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.7.nal",
+        "cycles": 1,
+        "expected": 3,
+        "passed": 0,
+        "matched": [
+          false,
+          false,
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.8.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.8.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.9.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.9.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.0.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.0.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.1.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.1.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.10.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.10.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.11.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.11.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.12.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.12.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.13.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.13.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.14.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.14.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.15.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.15.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.4.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.4.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.5.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.5.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.6.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.6.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.7.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.7.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.8.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.8.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.9.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.9.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.0.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.0.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 1,
+        "matched": [
+          true,
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.1.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.1.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.2.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.2.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.3.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.3.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 1,
+        "matched": [
+          true,
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.4.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.4.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.5.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.5.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.6.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.6.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.7.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.7.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.8.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.8.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.0.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.0.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.10.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.10.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.11.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.11.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.12.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.12.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.13.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.13.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.14.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.14.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.15.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.15.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.16.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.16.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.17.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.17.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.18.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.18.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.19.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.19.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.20.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.20.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.21.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.21.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.22.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.22.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.23.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.23.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.24.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.24.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.25.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.25.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.26.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.26.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.27.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.27.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.28.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.28.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.29.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.29.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.3.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.3.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.4.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.4.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.5.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.5.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.6.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.6.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.7.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.7.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.8.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.8.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.9.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.9.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.0.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.0.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.1.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.1.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.10.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.10.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.11.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.11.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.12.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.12.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.13.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.13.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.14.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.14.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.15.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.15.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.16.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.16.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.17.nal",
+      "expected": 4,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.17.nal",
+        "cycles": 1,
+        "expected": 4,
+        "passed": 4,
+        "matched": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.18.nal",
+      "expected": 4,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.18.nal",
+        "cycles": 1,
+        "expected": 4,
+        "passed": 4,
+        "matched": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.19.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.19.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.2.nal",
+      "expected": 5,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.2.nal",
+        "cycles": 1,
+        "expected": 5,
+        "passed": 5,
+        "matched": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.20.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.20.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.21.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.21.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 0,
+        "matched": [
+          false,
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.22.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.22.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.23.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.23.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.24.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.24.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.25.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.25.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.26.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.26.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.27.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.27.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.3.nal",
+      "expected": 5,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.3.nal",
+        "cycles": 1,
+        "expected": 5,
+        "passed": 5,
+        "matched": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.4.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.4.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.5.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.5.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.6.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.6.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.7.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.7.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.8.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.8.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.9.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.9.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.birdClaimedByBob.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.birdClaimedByBob.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.can_of_worms.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.can_of_worms.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.nlp1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.nlp1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.nlp2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.nlp2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.redundant.nal",
+      "expected": 0,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.redundant.nal",
+        "cycles": 1,
+        "expected": 0,
+        "passed": 0,
+        "matched": [],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.symmetry.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.symmetry.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.uncle.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.uncle.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.0.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.0.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.1.nal",
+      "expected": 3,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.1.nal",
+        "cycles": 1,
+        "expected": 3,
+        "passed": 3,
+        "matched": [
+          true,
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.15.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.15.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.18.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.18.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.19.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.19.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.35.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.35.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.36.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.36.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.6.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.6.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.7.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.7.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.8.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.8.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 1,
+        "matched": [
+          true,
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentEqual.res.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentEqual.res.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.abd.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.abd.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.ded.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.ded.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.goal.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.goal.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.ind.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.ind.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.conj.decompose.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.conj.decompose.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.decomposeCompound.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.decomposeCompound.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.eventInduction1.nal",
+      "expected": 2,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.eventInduction1.nal",
+        "cycles": 1,
+        "expected": 2,
+        "passed": 2,
+        "matched": [
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.eventInduction2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.eventInduction2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.par.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.par.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.predictiveImpl.goal.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.predictiveImpl.goal.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.retroImplSeq.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.retroImplSeq.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.retrospectiveImpl.goal.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.retrospectiveImpl.goal.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.revrev.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.revrev.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach4.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach4.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.0.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.0.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.10.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.10.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.11.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.11.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.13.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.13.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.14.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.14.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.16.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.16.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.17.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.17.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.18.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.18.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.19.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.19.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.20.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.20.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.21.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.21.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.23.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.23.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.24.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.24.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.25.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.25.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.27.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.27.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.4.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.4.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.5.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.5.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.7.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.7.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.8.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.8.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.9.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.9.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.4.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.4.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.0.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.0.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.4.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.4.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.0.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.0.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.4.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.4.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.6.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.6.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.7.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.7.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.0.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.0.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 0,
+        "matched": [
+          false
+        ],
+        "ok": false,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.3.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.3.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.4.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.4.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.5.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.5.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.6.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.6.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.7.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.7.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.add.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.add.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.count.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.count.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.reflect.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.reflect.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8_list.nal",
+      "expected": 6,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8_list.nal",
+        "cycles": 1,
+        "expected": 6,
+        "passed": 6,
+        "matched": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.4.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.4.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.anticipate1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.anticipate1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.believe1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.believe1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.believe2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.believe2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.doubt.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.doubt.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.evaluate1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.evaluate1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.evaluate2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.evaluate2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.hesitate.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.hesitate.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.want1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.want1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.want12.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.want12.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.want2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.want2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.wonder1.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.wonder1.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.wonder2.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.wonder2.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\notcontain.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\notcontain.nal",
+        "cycles": 1,
+        "expected": 1,
+        "passed": 1,
+        "matched": [
+          true
+        ],
+        "ok": true,
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\stability\\long_term_stability.nal",
+      "expected": 1,
+      "java": {
+        "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\stability\\long_term_stability.nal",
+        "cycles": 1,
+        "expected": null,
+        "passed": 0,
+        "matched": [],
+        "ok": false,
+        "error": "Java runner timed out after 10000 ms",
+        "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+        "artifact_sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41"
+      },
+      "ts": null,
+      "parity": null
+    }
+  ]
+}

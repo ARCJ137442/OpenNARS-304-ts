@@ -42,9 +42,9 @@ transitions:
      - IMPLEMENTATION.md 用于详细实现
      - 参考 .lean-spec\references\sub-spec-files.md 的拆分指南 -->
 
-- [ ] 固化历史 artifact，核验 Java/Maven/JDK，建立隔离 worktree 并完成 `clean verify`。
-- [ ] 记录新 artifact manifest、哈希、commit、环境和 Surefire 汇总；解析 failure/error/skipped。
-- [ ] 为局部算法和 NAL runner 增加显式 artifact 选择、路径校验、默认值和哈希输出。
+- [x] 固化历史 artifact，核验 Java/Maven/JDK，建立隔离 worktree 并完成 `clean verify`。
+- [x] 记录新 artifact manifest、哈希、commit、环境和 Surefire 汇总；解析 failure/error/skipped。
+- [x] 为局部算法和 NAL runner 增加显式 artifact 选择、路径校验、默认值和哈希输出。
 - [ ] 完成 Java 自测、局部算法、代表性 NAL 与 245 主资源分层矩阵，形成新旧 Java/TS 证据。
 - [ ] 按门槛决定 canonical 或保留双基线，更新文档、报告和可复现清单。
 
@@ -53,10 +53,10 @@ transitions:
 <!-- 如何验证完成？ -->
 
 - [ ] Java `clean verify` 成功，Surefire 无未解释 failure/error，并记录 skipped。
-- [ ] 局部算法快照数值容差为 `1e-5`，类型、文本、布尔值和集合形状精确一致。
+- [x] 局部算法快照数值容差为 `1e-5`，类型、文本、布尔值和集合形状精确一致。
 - [ ] 代表性 NAL 覆盖 single_step、multi_step、toothbrush、detective2、vision 有界运行和 stability 短周期。
 - [ ] 245 个主资源按 215/24/5/1 分层、逐文件超时、可恢复地记录 matched、异常、超时和未运行。
-- [ ] runner 参数、默认路径、不存在路径和实际 artifact 哈希有自动化回归覆盖。
+- [x] runner 参数、默认路径、不存在路径和实际 artifact 哈希有自动化回归覆盖。
 
 ## 备注
 
