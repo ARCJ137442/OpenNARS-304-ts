@@ -360,3 +360,24 @@ test("NAL runner resumes after a real middle-file timeout and preserves the tail
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test("NAL trace describes ExecutionResult with Java-equivalent operation feedback", () => {
+  const traceRunner = join(process.cwd(), "scripts", "e2e", "NalTraceRunner.mjs");
+  const file = join(process.cwd(), "java-master", "src", "main", "resources", "nal", "single_step", "nal8.add.nal");
+  const result = spawnSync(process.execPath, [
+    "--loader", "./scripts/ts-loader.mjs", traceRunner, "32", file, "--skip-embedded",
+  ], {
+    cwd: process.cwd(),
+    encoding: "utf8",
+    maxBuffer: 16 * 1024 * 1024,
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  const rows = result.stdout.split(/\r?\n/)
+    .filter((line) => line.trim().startsWith("{"))
+    .map((line) => JSON.parse(line));
+  const execution = rows.find((row) => row.event === "EXE");
+  assert.ok(execution);
+  assert.match(execution.args[0], /\$0\.45;0\.90;0\.95\$ \^add\(\[\{SELF\}, 2, 3, \?1\]\)=\[/);
+  assert.doesNotMatch(execution.args[0], /ExecutionResult@/);
+});

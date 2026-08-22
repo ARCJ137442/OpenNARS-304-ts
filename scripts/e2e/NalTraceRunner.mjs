@@ -37,6 +37,20 @@ function termText(value) {
     return String(value);
 }
 
+function executionResultText(value, nar) {
+    const task = value.getTask();
+    const budget = task === null || task === undefined ? null : task.budget;
+    const operation = value.operation;
+    const args = Array.from(operation.getArguments().term).map(termText).join(", ");
+    const operator = termText(operation.getOperator());
+    const feedback = value.feedback === null || value.feedback === undefined
+        ? "null"
+        : `[${Array.from(value.feedback).map((item) => item instanceof Task
+            ? String(item.toString())
+            : termText(item)).join(", ")}]`;
+    return `${budget === null ? "" : `${String(budget.toStringExternal())} `}${operator}([${args}])=${feedback}`;
+}
+
 function sentenceText(value, nar) {
     return String(value.sentence.toString(nar, true));
 }
@@ -47,6 +61,11 @@ function indexText(index) {
 
 function describe(value, nar) {
     if (value === null || value === undefined) return null;
+    if (value.constructor?.name === "ExecutionResult"
+        && typeof value.getTask === "function"
+        && value.operation !== undefined) {
+        return executionResultText(value, nar);
+    }
     if (value instanceof Task) return sentenceText(value, nar);
     if (value instanceof Sentence) return String(value.toString(nar, true));
     if (value instanceof Concept) return termText(value.getTerm());
