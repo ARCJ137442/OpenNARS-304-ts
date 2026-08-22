@@ -1,6 +1,6 @@
 # Java → TypeScript 迁移纠正模式库
 
-版本：0.4（2026-08-22）
+版本：0.5（2026-08-22）
 
 本文件把当前 OpenNARS 转写中反复出现的纠正归纳为可检索、可验证、可批量处理的模式。它不是“看到字符串就替换”的规则表：每条模式都必须同时说明识别条件、正确的 TypeScript 语义、验证门禁和自动化边界。
 
@@ -13,6 +13,8 @@
 - 扫描器还识别出 1,926 处 jree 运行时类型边界、68 处匿名 Java 类和 7 处静态初始化模式。
 
 这说明迁移的首要问题是“重复的语义转换模式没有固化”，不是单个文件的偶然手工错误。
+
+本轮新增证据：局部单元测试为 28/28，Java/TypeScript 局部算法联测为 `ok: true`；新增时态、变量替换和操作参数回归。`toothbrush.nal` 在相同输入下 Java 为 2/2 marker、TypeScript 仍为 1/2，说明局部边界修复已经生效，但应用级任务派发尚未完成，不能把局部通过外推为整库通过。
 
 ## 2. 模式分级
 
@@ -198,6 +200,36 @@ Java 代码中的 `String.equals` 在 TypeScript 目标对象变成原生 `strin
 
 涉及文件示例：`src/language/CompoundTerm.ts`、`test/node/core-runtime.test.ts`。
 
+#### B13. Java `Map.get` 的缺失值必须归一为 `null`
+
+Java `Map.get(key)` 在没有键时返回 `null`，而原生 TypeScript `Map.get(key)` 返回 `undefined`。如果迁移后的业务代码仍按 Java 习惯使用 `value === null` 判断“没有值”，缺失值就会落入错误分支。`Tense.tense("")` 曾把未写时态解释成当前时刻，而 Java 将其解释为无时态/永恒时态，进一步影响 `Stamp` 和可执行前提登记。
+
+纠正方式是在 Java 语义边界做显式归一化，例如 `return map.get(key) ?? null`；不要在业务层把所有 `undefined` 盲目当作 `null`，因为 TypeScript 的可选参数和真正的 Java null 语义可能不同。
+
+验证要求：缺失键、已知键和显式空值分别测试；至少检查一个依赖 `=== null` 的后续算法状态，并用 Java/TypeScript 对照确认结果。
+
+涉及文件示例：`src/language/Tense.ts`、`test/node/narsese-temporal.test.ts`。
+
+#### B14. Java 继承重载必须在 TypeScript 中保留替换入口
+
+Java 子类可以覆写无参 `clone()`，同时继承父类的 `clone(Term[])`。TypeScript/JavaScript 没有按签名自动分派；若只实现一个无参方法，变量替换路径传入的替换数组会被静默忽略，操作参数仍保留 `$1`。
+
+纠正方式是在同一个 TypeScript 方法中按参数形态分派：无参调用创建同类对象，带替换数组的调用显式委托给父类替换实现。不能只为通过类型检查而删除父类入口，也不能把替换逻辑复制到每个子类。
+
+验证要求：同时覆盖 `clone()` 和 `clone(Term[])`；检查返回对象的运行时类型、操作参数是否替换以及替换后是否残留变量。
+
+涉及文件示例：`src/operator/Operation.ts`、`test/node/variables-substitution.test.ts`。
+
+#### B15. Java `instanceof` 类族判断不能退化为单一运行时名称比较
+
+Java 的 `instanceof Equivalence`、`instanceof Implication` 和 `instanceof Conjunction` 包含子类/时间关系类族；TypeScript 迁移若只比较 `getType()` 文本，就会漏掉 `=/>`、`=|>`、`&/` 等运行时名称不同但属于同一 Java 类族的对象。结果是 `prepareComponentLinks` 少建条件链接，后续规则无法获得与 Java 相同的前提结构。
+
+纠正方式是先建立集中式的运行时类型映射，明确记录“具体名称 → Java 类族”的关系；存在循环依赖时，通过注册运行时谓词等窄接口延迟判断，不能把业务类强行互相静态导入。
+
+验证要求：普通类、时间子类、序列/并行/空间子类分别检查 `instanceof` 等价关系；至少比较一条 `COMPOUND_CONDITION` 链接的数量和类型。
+
+涉及文件示例：`src/language/Terms.ts`、`src/language/Inheritance.ts`、`src/operator/Operator.ts`、`test/node/narsese-temporal.test.ts`。
+
 ### C 级：必须做语义重写，禁止自动替换
 
 #### C1. Java 包装类型与原生类型
@@ -272,6 +304,8 @@ Node import smoke
 3. 自动修复与人工决策的边界；
 4. 编译、模块加载、单元和端到端测试结果；
 5. 尚未解决的 Java/TS 行为差异。
+
+本轮还验证了一个过程约束：单个局部修复应先进入最小回归，再进入完整 NAL；完整 NAL 只用于证明该修复是否足以穿过更大的行为边界，不能反过来替代局部契约。
 
 ### 3.1 局部算法对照联测
 
