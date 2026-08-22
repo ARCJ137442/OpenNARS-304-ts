@@ -1,6 +1,7 @@
 //! Java source: opennars/entity/Item.java
 import { java, JavaObject, type int, type float, S } from "jree";
 import {BudgetValue} from './BudgetValue.ts'
+import { javaStringLength } from "../runtime/jree-compat.ts";
 
 
 /**
@@ -173,7 +174,7 @@ export abstract  class Item<K> implements JavaObject, java.io.Serializable {
 
          let  budgetStr: java.lang.String = this.budget !== null ? this.budget.toString() : "";
          let  n: java.lang.String = this.name().toString();
-        return new  java.lang.StringBuilder(budgetStr.length() + n.length() + 1).append(budgetStr).append(' ').append(n)
+        return new  java.lang.StringBuilder(javaStringLength(budgetStr) + javaStringLength(n) + 1).append(budgetStr).append(' ').append(n)
                 .toString();
     }
 
@@ -185,7 +186,7 @@ export abstract  class Item<K> implements JavaObject, java.io.Serializable {
     public  toStringExternal():  java.lang.String {
          let  briefBudget: java.lang.String = this.budget.toStringExternal();
          let  n: java.lang.String = this.name().toString();
-        return new  java.lang.StringBuilder(briefBudget.length() + n.length() + 1).append(briefBudget).append(' ').append(n)
+        return new  java.lang.StringBuilder(javaStringLength(briefBudget) + javaStringLength(n) + 1).append(briefBudget).append(' ').append(n)
                 .toString();
     }
 
@@ -193,7 +194,7 @@ export abstract  class Item<K> implements JavaObject, java.io.Serializable {
     public  toStringExternal2():  java.lang.String {
          let  briefBudget: java.lang.String = this.budget.toStringExternal();
          let  n: java.lang.String = this.name().toString();
-        return new  java.lang.StringBuilder(briefBudget.length() + n.length() + 1).append(n).append(' ').append(briefBudget)
+        return new  java.lang.StringBuilder(javaStringLength(briefBudget) + javaStringLength(n) + 1).append(n).append(' ').append(briefBudget)
                 .toString();
     }
 

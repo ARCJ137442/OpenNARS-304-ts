@@ -24,6 +24,7 @@ import { FunctionOperator } from "../../operator/FunctionOperator.ts";
 import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
+import { javaStringValue } from "../../runtime/jree-compat.ts";
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
 
@@ -319,7 +320,7 @@ export class ProcessGoal extends JavaObject {
                     op.allowBabbling = false;
                     /* } */
                 }
-                java.lang.System.out.println("Executed based on: " + bestOpWithMeta.executable_precondition);
+                java.lang.System.out.println(`Executed based on: ${javaStringValue(bestOpWithMeta.executable_precondition)}`);
                 for (let precon of anticipationsToMake.get(bestOpWithMeta.bestOp)) {
                     let distance: float = precon.timeOffset - nal.time.time();
                     let urgency: float = 2.0 + 1.0 / distance;

@@ -63,20 +63,26 @@ export class Product extends CompoundTerm {
             }
 
             case 3: {
-                const [image, component, index] = args as [CompoundTerm, Term, int];
+                if (args[0] instanceof CompoundTerm && typeof args[2] === "number") {
+                    const [image, component, index] = args as [CompoundTerm, Term, int];
+                    const argument: Term[] = image.cloneTerms();
+                    argument[index] = component;
+                    return new Product(argument);
+                }
 
-
-                let argument: Term[] = image.cloneTerms();
-                argument[index] = component;
-                return new Product(argument);
+                return new Product(args as Term[]);
 
 
                 break;
             }
 
             default: {
+                if (args.length > 0) {
+                    return new Product(args as Term[]);
+                }
                 throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
             }
+
         }
     }
 

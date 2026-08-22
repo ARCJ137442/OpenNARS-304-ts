@@ -4,6 +4,12 @@ import test from "node:test";
 test("Narsese preserves temporal statement order from Java relation dispatch", async () => {
     const { java } = await import("jree");
     const { Narsese } = await import("../../src/io/Narsese.ts");
+    const { CompoundTerm } = await import("../../src/language/CompoundTerm.ts");
+    const { ImageExt } = await import("../../src/language/ImageExt.ts");
+    const { ImageInt } = await import("../../src/language/ImageInt.ts");
+    const { Product } = await import("../../src/language/Product.ts");
+    const { Operation } = await import("../../src/operator/Operation.ts");
+    const { Anticipate } = await import("../../src/operator/mental/Anticipate.ts");
     const { TermLink } = await import("../../src/entity/TermLink.ts");
     const { TemporalRules } = await import("../../src/inference/TemporalRules.ts");
     const { Tense } = await import("../../src/language/Tense.ts");
@@ -25,4 +31,22 @@ test("Narsese preserves temporal statement order from Java relation dispatch", a
     assert.equal(conditional.containedTemporalRelations(), 1);
     const links = conditional.prepareComponentLinks();
     assert.ok(Array.from(links).some((link) => link.type === TermLink.COMPOUND_CONDITION));
+
+    const intervalConditional = parser.parseTerm(new java.lang.String("<(&/,a,+8,b) =/> c>"));
+    const intervals = CompoundTerm.extractIntervals(null, intervalConditional);
+    assert.deepEqual(Array.from(intervals).map(Number), [8]);
+
+    const self = parser.parseTerm(new java.lang.String("SELF"));
+    const extImage = parser.parseTerm(new java.lang.String("(/,at,_,{t003})"));
+    const extReplaced = ImageExt.make(extImage, self, 1);
+    assert.equal(String(extReplaced.toString()), "(/,at,SELF,_)");
+    const intImage = parser.parseTerm(new java.lang.String("(\\,at,_,{t003})"));
+    const intReplaced = ImageInt.make(intImage, self, 1);
+    assert.equal(String(intReplaced.toString()), "(\\,at,SELF,_)");
+
+    const product = Product.make(self, forward);
+    assert.equal(String(product.toString()), "(*,SELF,<a =/> b>)");
+
+    const operation = Operation.make(Product.make(self, parser.parseTerm(new java.lang.String("<b --> B>"))), new Anticipate());
+    assert.equal(String(operation.toString()), "(^anticipate,SELF,<b --> B>)");
 });

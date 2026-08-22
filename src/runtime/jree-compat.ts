@@ -1,5 +1,27 @@
 import { Class, JavaObject, java } from "jree";
 
+/**
+ * Java string concatenation can produce either a jree JavaString or a native
+ * JavaScript string after migration. Both use UTF-16 code units for length.
+ */
+export const javaStringLength = (value: unknown): number => String(value).length;
+
+/**
+ * Java's `+` operator invokes toString on reference values; JavaScript's `+`
+ * does not do that for jree JavaObject instances. Normalize that boundary
+ * before composing Java-facing diagnostic or output text.
+ */
+export const javaStringValue = (value: unknown): string => {
+    if (value === null || value === undefined || typeof value === "string") {
+        return String(value);
+    }
+    const toString = (value as { toString?: unknown }).toString;
+    if (typeof toString === "function") {
+        return String(toString.call(value));
+    }
+    return String(value);
+};
+
 // jree 1.3.0 uses Java's 48-bit LCG but applies JavaScript bitwise operators
 // to the 48-bit state.  That truncates next(>16) to 32 bits, and its
 // nextDouble additionally performs integer BigInt division.  OpenNARS uses
@@ -60,6 +82,29 @@ if (randomPrototype.next && randomPrototype.nextInt && randomPrototype.nextDoubl
             + nextRandomBits(this as unknown as object, 27)) / 2 ** 53;
     };
 }
+
+// jree 1.3.0's Charset static initializer asynchronously assigns a Charset
+// instance to the defaultCharset method.  PrintStream calls that method after
+// the timer fires, so the assignment becomes a process-wide runtime failure.
+// Keep this external-runtime workaround at the compatibility boundary rather
+// than replacing Java-facing output calls throughout the reasoning core.
+type CharsetConstructor = {
+    new (name: string): unknown;
+    defaultCharset: unknown;
+};
+
+const charsetClass = java.nio.charset.Charset as unknown as CharsetConstructor;
+const defaultCharset = charsetClass.defaultCharset;
+const stableDefaultCharset = typeof defaultCharset === "function"
+    ? (defaultCharset as () => unknown).bind(charsetClass)
+    : () => new charsetClass("utf-8");
+
+Object.defineProperty(charsetClass, "defaultCharset", {
+    configurable: true,
+    get: () => stableDefaultCharset,
+    // jree's delayed initializer writes the broken instance here.
+    set: () => undefined,
+});
 
 // jree 1.3.0's published JavaObject.class getter passes Function instead of
 // the receiver class to Class.fromConstructor(). That collapses every

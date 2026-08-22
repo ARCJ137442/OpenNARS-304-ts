@@ -77,8 +77,18 @@ export class Operation extends Inheritance {
      * @param addSelf include SELF term at end of product terms
      * @return A compound generated or null
      */
-    public static make(oper: Operator, arg: Term[], addSelf: boolean): Operation {
-        return new Operation(new Product(arg), oper);
+    public static make(argProduct: Term, operator: Term): Operation;
+    public static make(oper: Operator, arg: Term[], addSelf: boolean): Operation;
+    public static make(...args: unknown[]): Operation {
+        if (args.length === 2) {
+            const [argProduct, operator] = args as [Term, Term];
+            return super.make(argProduct, operator) as Operation;
+        }
+        if (args.length === 3) {
+            const [oper, arg] = args as [Operator, Term[], boolean];
+            return new Operation(new Product(arg), oper);
+        }
+        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
     }
 
     public getOperator(): Operator {

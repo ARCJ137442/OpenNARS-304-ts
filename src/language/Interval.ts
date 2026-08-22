@@ -42,9 +42,10 @@ export class Interval extends Term {
         }
         const value = args[0] as long | java.lang.String;
         super();
-        const time = typeof value === "number"
-            ? value as long
-            : java.lang.Long.parseLong(value.substring(1)) - 1;
+        const hasStringOperations = typeof (value as { substring?: unknown } | null)?.substring === "function";
+        const time = hasStringOperations
+            ? Number(java.lang.Long.parseLong((value as java.lang.String).substring(1))) - 1
+            : Number(value);
         this.time = time;
         this.setName(Symbols.INTERVAL_PREFIX + java.lang.String.valueOf(time));
     }

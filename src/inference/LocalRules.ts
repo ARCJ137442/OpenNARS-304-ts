@@ -154,8 +154,8 @@ export class LocalRules extends JavaObject {
         oldBeliefTerm: Term, recent_ivals: java.util.List<java.lang.Float>, newTruth: TruthValue): boolean {
         let useNewBeliefTerm: boolean = false;
         if (newBeliefTerm.hasInterval()) {
-            let ivalOld: java.util.List<java.lang.Long> = extractIntervals(nal.memory, oldBeliefTerm);
-            let ivalNew: java.util.List<java.lang.Long> = extractIntervals(nal.memory, newBeliefTerm);
+            let ivalOld: java.util.List<java.lang.Long> = CompoundTerm.extractIntervals(nal.memory, oldBeliefTerm);
+            let ivalNew: java.util.List<java.lang.Long> = CompoundTerm.extractIntervals(nal.memory, newBeliefTerm);
             let AbsDiffSumNew: long = 0;
             let AbsDiffSumOld: long = 0;
             /* synchronized (recent_ivals) { */
@@ -183,7 +183,7 @@ export class LocalRules extends JavaObject {
             for (let i: int = 0; i < ivalNew.size(); i++) {
                 AbsDiffSum += java.lang.Math.abs(ivalNew.get(i) - ivalOld.get(i));
             }
-            let a: float = temporalProjection(0, AbsDiffSum, 0, nal.memory.narParameters);
+            let a: float = TruthFunctions.temporalProjection(0, AbsDiffSum, 0, nal.memory.narParameters);
             // re-project, and it's safe:
             // we won't count more confidence than
             // when the second premise would have been shifted

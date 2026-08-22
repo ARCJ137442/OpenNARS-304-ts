@@ -133,9 +133,17 @@ export class ImageExt extends Image {
             }
 
             case 3: {
+                if (args[0] instanceof ImageExt) {
+                    const [oldImage, component, index] = args as [ImageExt, Term, short];
+                    let argList: Term[] = oldImage.cloneTerms();
+                    let oldIndex: int = oldImage.relationIndex;
+                    let relation: Term = argList[oldIndex];
+                    argList[oldIndex] = component;
+                    argList[index] = relation;
+                    return new ImageExt(argList, index);
+                }
+
                 const [product, relation, index] = args as [Product, Term, short];
-
-
                 if (relation instanceof Product) {
                     let p2: Product = relation as Product;
                     if ((product.size() === 2) && (p2.size() === 2)) {
@@ -150,24 +158,6 @@ export class ImageExt extends Image {
                 let argument: Term[] = product.cloneTerms(); // TODO is this clone needed?
                 argument[index] = relation;
                 return new ImageExt(argument, index);
-
-
-                break;
-            }
-
-            case 3: {
-                const [oldImage, component, index] = args as [ImageExt, Term, short];
-
-
-                let argList: Term[] = oldImage.cloneTerms();
-                let oldIndex: int = oldImage.relationIndex;
-                let relation: Term = argList[oldIndex];
-                argList[oldIndex] = component;
-                argList[index] = relation;
-                return new ImageExt(argList, index);
-
-
-                break;
             }
 
             default: {

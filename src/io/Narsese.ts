@@ -455,7 +455,9 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         }
 
         let c: char = s.charAt(0);
-        if (c === Symbols.INTERVAL_PREFIX) {
+        // jree's Java String charAt boundary is not a native JS string value.
+        // Normalize it before comparing with the wire-level interval prefix.
+        if (String.fromCharCode(Number(c)) === Symbols.INTERVAL_PREFIX) {
             return Interval.interval(s);
         }
 
