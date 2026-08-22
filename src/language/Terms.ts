@@ -235,6 +235,18 @@ export class Terms extends JavaObject {
                     ? rawComponents
                     : rawComponents.toArray(new Array<Term>(0));
                 if (source instanceof CompoundTerm) {
+                    // Java preserves the image template's relation index when
+                    // rebuilding its components. Re-entering the one-argument
+                    // parser form treats the first component as the relation
+                    // and changes ImageInt/ImageExt semantics.
+                    const runtime = Terms.getRuntime();
+                    const relationIndex = (source as CompoundTerm & { relationIndex?: short }).relationIndex;
+                    if (source.operator() === IMAGE_EXT && relationIndex !== undefined) {
+                        return new runtime.ImageExt(componentList, relationIndex);
+                    }
+                    if (source.operator() === IMAGE_INT && relationIndex !== undefined) {
+                        return runtime.ImageInt.make(componentList, relationIndex);
+                    }
                     return Terms.term(source.operator(), componentList);
                 }
                 const copula = source as Symbols.NativeOperator;
