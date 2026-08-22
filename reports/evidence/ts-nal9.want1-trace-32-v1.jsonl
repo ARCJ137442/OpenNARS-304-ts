@@ -1,0 +1,744 @@
+(node:52948) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("./scripts/ts-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\scripts\e2e\NalTraceRunner.mjs.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\Concept.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\Sentence.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\Task.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\TaskLink.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\TermLink.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\DerivationContext.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\events\Events.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\events\OutputHandler.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\main\Debug.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\main\Nar.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\Item.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\storage\Bag.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\CompoundTerm.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\UtilityFunctions.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\BudgetFunctions.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\LocalRules.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\concept\ProcessQuestion.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\Symbols.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Term.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Conjunction.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Implication.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Equivalence.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Interval.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Variable.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\Stamp.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\TruthFunctions.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\TemporalRules.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\plugin\mental\InternalExperience.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\Operation.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\runtime\jree-compat.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\events\EventHandler.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\main\Parameters.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\Narsese.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\ConfigReader.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\Parser.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\events\EventEmitter.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Inheritance.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\SetExt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\SetInt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Tense.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\plugin\mental\Emotions.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\Operator.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\plugin\perception\SensoryChannel.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\storage\Memory.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\BudgetValue.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Terms.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Statement.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Similarity.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Variables.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Product.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\ImageExt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\IntersectionInt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\ImageInt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\IntersectionExt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\DifferenceExt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\DifferenceInt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Instance.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Property.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\InstanceProperty.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Negation.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Disjunction.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\CompositionalRules.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\TemporalInferenceControl.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\NullOperator.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\misc\Add.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\misc\Count.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\misc\Reflect.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\mental\Anticipate.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\mental\Believe.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\mental\Evaluate.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\mental\Want.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\mental\Wonder.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\SetTensional.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\concept\ProcessTask.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\GeneralInferenceControl.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Image.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\FunctionOperator.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\concept\ProcessJudgment.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\concept\ProcessGoal.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\concept\ProcessAnticipation.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\RuleTables.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\StructuralRules.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:52948) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\SyllogisticRules.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+{"seq":0,"event":"TaskAdd","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {0 : (5449747053713427,0)} ","Perceived"]}
+{"seq":1,"event":"OUT","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {0 : (5449747053713427,0)} "]}
+{"seq":2,"event":"ConceptNew","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":3,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=0|index=null","(^want,{SELF},<a --> b>)"]}
+{"seq":4,"event":"ConceptNew","args":["(*,{SELF},<a --> b>)"]}
+{"seq":5,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[0]","(*,{SELF},<a --> b>)"]}
+{"seq":6,"event":"ConceptNew","args":["{SELF}"]}
+{"seq":7,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":8,"event":"ConceptNew","args":["<a --> b>"]}
+{"seq":9,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=8|index=[0, 1]","<a --> b>"]}
+{"seq":10,"event":"ConceptNew","args":["^want"]}
+{"seq":11,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[1]","^want"]}
+{"seq":12,"event":"TermLinkAdd","args":["(*,{SELF},<a --> b>)|type=3|index=[0]","(^want,{SELF},<a --> b>)"]}
+{"seq":13,"event":"TermLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[0]","(*,{SELF},<a --> b>)"]}
+{"seq":14,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},<a --> b>)"]}
+{"seq":15,"event":"TermLinkAdd","args":["(*,{SELF},<a --> b>)|type=2|index=[0]","{SELF}"]}
+{"seq":16,"event":"ConceptNew","args":["SELF"]}
+{"seq":17,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":18,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":19,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<a --> b>)"]}
+{"seq":20,"event":"TermLinkAdd","args":["(*,{SELF},<a --> b>)|type=2|index=[0, 0]","SELF"]}
+{"seq":21,"event":"TermLinkAdd","args":["<a --> b>|type=1|index=[1]","(*,{SELF},<a --> b>)"]}
+{"seq":22,"event":"TermLinkAdd","args":["(*,{SELF},<a --> b>)|type=2|index=[1]","<a --> b>"]}
+{"seq":23,"event":"ConceptNew","args":["a"]}
+{"seq":24,"event":"TermLinkAdd","args":["a|type=3|index=[0]","<a --> b>"]}
+{"seq":25,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":26,"event":"ConceptNew","args":["b"]}
+{"seq":27,"event":"TermLinkAdd","args":["b|type=3|index=[1]","<a --> b>"]}
+{"seq":28,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":29,"event":"TermLinkAdd","args":["a|type=1|index=[1, 0]","(*,{SELF},<a --> b>)"]}
+{"seq":30,"event":"TermLinkAdd","args":["(*,{SELF},<a --> b>)|type=2|index=[1, 0]","a"]}
+{"seq":31,"event":"TermLinkAdd","args":["b|type=1|index=[1, 1]","(*,{SELF},<a --> b>)"]}
+{"seq":32,"event":"TermLinkAdd","args":["(*,{SELF},<a --> b>)|type=2|index=[1, 1]","b"]}
+{"seq":33,"event":"TermLinkAdd","args":["^want|type=3|index=[1]","(^want,{SELF},<a --> b>)"]}
+{"seq":34,"event":"TermLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[1]","^want"]}
+{"seq":35,"event":"ConceptDirectProcessedTask","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {0 : (5449747053713427,0)} "]}
+{"seq":36,"event":"TaskImmediateProcess","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {0 : (5449747053713427,0)} ","(^want,{SELF},<a --> b>)"]}
+{"seq":37,"event":"TermLinkSelect","args":["(*,{SELF},<a --> b>)|type=3|index=[0]","(^want,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":38,"event":"TermLinkSelect","args":["^want|type=3|index=[1]","(^want,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":39,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":40,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":41,"event":"TaskDerive","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {2 : (5449747053713427,0)} ","false","true"]}
+{"seq":42,"event":"TaskAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {2 : (5449747053713427,0)} ","Derived"]}
+{"seq":43,"event":"OUT","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {2 : (5449747053713427,0)} "]}
+{"seq":44,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":45,"event":"ConceptNew","args":["<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":46,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=0|index=null","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":47,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":48,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":49,"event":"ConceptNew","args":["(/,^want,_,<a --> b>)"]}
+{"seq":50,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":51,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 0]","^want"]}
+{"seq":52,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 1]","<a --> b>"]}
+{"seq":53,"event":"TermLinkAdd","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":54,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":55,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":56,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":57,"event":"TermLinkAdd","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":58,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":59,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":60,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":61,"event":"TermLinkAdd","args":["^want|type=1|index=[0]","(/,^want,_,<a --> b>)"]}
+{"seq":62,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[0]","^want"]}
+{"seq":63,"event":"TermLinkAdd","args":["<a --> b>|type=1|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":64,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1]","<a --> b>"]}
+{"seq":65,"event":"TermLinkAdd","args":["a|type=3|index=[0]","<a --> b>"]}
+{"seq":66,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":67,"event":"TermLinkAdd","args":["b|type=3|index=[1]","<a --> b>"]}
+{"seq":68,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":69,"event":"TermLinkAdd","args":["a|type=1|index=[1, 0]","(/,^want,_,<a --> b>)"]}
+{"seq":70,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 0]","a"]}
+{"seq":71,"event":"TermLinkAdd","args":["b|type=1|index=[1, 1]","(/,^want,_,<a --> b>)"]}
+{"seq":72,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 1]","b"]}
+{"seq":73,"event":"ConceptDirectProcessedTask","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {2 : (5449747053713427,0)} "]}
+{"seq":74,"event":"TaskImmediateProcess","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {2 : (5449747053713427,0)} ","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":75,"event":"TaskDerive","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {3 : (5449747053713427,0)} ","false","true"]}
+{"seq":76,"event":"TaskAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {3 : (5449747053713427,0)} ","Derived"]}
+{"seq":77,"event":"OUT","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {3 : (5449747053713427,0)} "]}
+{"seq":78,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":79,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=0|index=null","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":80,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":81,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":82,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":83,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 0]","^want"]}
+{"seq":84,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 1]","<a --> b>"]}
+{"seq":85,"event":"TermLinkAdd","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":86,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":87,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":88,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":89,"event":"TermLinkAdd","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":90,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":91,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":92,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":93,"event":"TermLinkAdd","args":["^want|type=1|index=[0]","(/,^want,_,<a --> b>)"]}
+{"seq":94,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[0]","^want"]}
+{"seq":95,"event":"TermLinkAdd","args":["<a --> b>|type=1|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":96,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1]","<a --> b>"]}
+{"seq":97,"event":"TermLinkAdd","args":["a|type=3|index=[0]","<a --> b>"]}
+{"seq":98,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":99,"event":"TermLinkAdd","args":["b|type=3|index=[1]","<a --> b>"]}
+{"seq":100,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":101,"event":"TermLinkAdd","args":["a|type=1|index=[1, 0]","(/,^want,_,<a --> b>)"]}
+{"seq":102,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 0]","a"]}
+{"seq":103,"event":"TermLinkAdd","args":["b|type=1|index=[1, 1]","(/,^want,_,<a --> b>)"]}
+{"seq":104,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 1]","b"]}
+{"seq":105,"event":"ConceptDirectProcessedTask","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {3 : (5449747053713427,0)} "]}
+{"seq":106,"event":"TaskImmediateProcess","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {3 : (5449747053713427,0)} ","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":107,"event":"TaskDerive","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} ","false","true"]}
+{"seq":108,"event":"TaskAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} ","Derived"]}
+{"seq":109,"event":"OUT","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} "]}
+{"seq":110,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":111,"event":"ConceptNew","args":["<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":112,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=0|index=null","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":113,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0]","<a --> b>"]}
+{"seq":114,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 0]","a"]}
+{"seq":115,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 1]","b"]}
+{"seq":116,"event":"ConceptNew","args":["(/,^want,{SELF},_)"]}
+{"seq":117,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":118,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=8|index=[1, 0]","{SELF}"]}
+{"seq":119,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=8|index=[1, 1]","^want"]}
+{"seq":120,"event":"TermLinkAdd","args":["<a --> b>|type=3|index=[0]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":121,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0]","<a --> b>"]}
+{"seq":122,"event":"TermLinkAdd","args":["a|type=3|index=[0]","<a --> b>"]}
+{"seq":123,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":124,"event":"TermLinkAdd","args":["b|type=3|index=[1]","<a --> b>"]}
+{"seq":125,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":126,"event":"TermLinkAdd","args":["a|type=3|index=[0, 0]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":127,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 0]","a"]}
+{"seq":128,"event":"TermLinkAdd","args":["b|type=3|index=[0, 1]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":129,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 1]","b"]}
+{"seq":130,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=3|index=[1]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":131,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":132,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(/,^want,{SELF},_)"]}
+{"seq":133,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[0]","{SELF}"]}
+{"seq":134,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":135,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":136,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(/,^want,{SELF},_)"]}
+{"seq":137,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[0, 0]","SELF"]}
+{"seq":138,"event":"TermLinkAdd","args":["^want|type=1|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":139,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[1]","^want"]}
+{"seq":140,"event":"ConceptDirectProcessedTask","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} "]}
+{"seq":141,"event":"TaskImmediateProcess","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} ","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":142,"event":"TaskDerive","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {5 : (5449747053713427,0)} ","false","true"]}
+{"seq":143,"event":"TaskAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {5 : (5449747053713427,0)} ","Derived"]}
+{"seq":144,"event":"OUT","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {5 : (5449747053713427,0)} "]}
+{"seq":145,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":146,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=0|index=null","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":147,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0]","<a --> b>"]}
+{"seq":148,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 0]","a"]}
+{"seq":149,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 1]","b"]}
+{"seq":150,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":151,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=8|index=[1, 0]","{SELF}"]}
+{"seq":152,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=8|index=[1, 1]","^want"]}
+{"seq":153,"event":"TermLinkAdd","args":["<a --> b>|type=3|index=[0]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":154,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0]","<a --> b>"]}
+{"seq":155,"event":"TermLinkAdd","args":["a|type=3|index=[0]","<a --> b>"]}
+{"seq":156,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":157,"event":"TermLinkAdd","args":["b|type=3|index=[1]","<a --> b>"]}
+{"seq":158,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":159,"event":"TermLinkAdd","args":["a|type=3|index=[0, 0]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":160,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 0]","a"]}
+{"seq":161,"event":"TermLinkAdd","args":["b|type=3|index=[0, 1]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":162,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 1]","b"]}
+{"seq":163,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=3|index=[1]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":164,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":165,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(/,^want,{SELF},_)"]}
+{"seq":166,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[0]","{SELF}"]}
+{"seq":167,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":168,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":169,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(/,^want,{SELF},_)"]}
+{"seq":170,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[0, 0]","SELF"]}
+{"seq":171,"event":"TermLinkAdd","args":["^want|type=1|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":172,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[1]","^want"]}
+{"seq":173,"event":"ConceptDirectProcessedTask","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {5 : (5449747053713427,0)} "]}
+{"seq":174,"event":"TaskImmediateProcess","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {5 : (5449747053713427,0)} ","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":175,"event":"TermLinkSelect","args":["{SELF}|type=1|index=[0]","(*,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":176,"event":"TermLinkSelect","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":177,"event":"TaskDerive","args":["<a --> b>! %1.00;0.81% {6 : (5449747053713427,0)} ","false","true"]}
+{"seq":178,"event":"TaskAdd","args":["<a --> b>! %1.00;0.81% {6 : (5449747053713427,0)} ","Derived"]}
+{"seq":179,"event":"OUT","args":["<a --> b>! %1.00;0.81% {6 : (5449747053713427,0)} "]}
+{"seq":180,"event":"TermLinkSelect","args":["<a --> b>|type=1|index=[1]","(*,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":181,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":182,"event":"TaskLinkAdd","args":["<a --> b>|type=0|index=null","<a --> b>"]}
+{"seq":183,"event":"TaskLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":184,"event":"TaskLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":185,"event":"TermLinkAdd","args":["a|type=3|index=[0]","<a --> b>"]}
+{"seq":186,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":187,"event":"TermLinkAdd","args":["b|type=3|index=[1]","<a --> b>"]}
+{"seq":188,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":189,"event":"ConceptDirectProcessedTask","args":["<a --> b>! %1.00;0.81% {6 : (5449747053713427,0)} "]}
+{"seq":190,"event":"TaskImmediateProcess","args":["<a --> b>! %1.00;0.81% {6 : (5449747053713427,0)} ","<a --> b>"]}
+{"seq":191,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":192,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":193,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":194,"event":"before-cycles","args":[]}
+{"seq":195,"event":"TaskDerive","args":["<a --> b>! %1.00;0.81% {10 : (5449747053713427,0)} ","false","true"]}
+{"seq":196,"event":"TaskAdd","args":["<a --> b>! %1.00;0.81% {10 : (5449747053713427,0)} ","Derived"]}
+{"seq":197,"event":"OUT","args":["<a --> b>! %1.00;0.81% {10 : (5449747053713427,0)} "]}
+{"seq":198,"event":"TermLinkSelect","args":["a|type=1|index=[1, 0]","(*,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":199,"event":"TaskDerive","args":["<a --> b>! %1.00;0.81% {10 : (5449747053713427,0)} ","false","true"]}
+{"seq":200,"event":"TaskAdd","args":["<a --> b>! %1.00;0.81% {10 : (5449747053713427,0)} ","Derived"]}
+{"seq":201,"event":"OUT","args":["<a --> b>! %1.00;0.81% {10 : (5449747053713427,0)} "]}
+{"seq":202,"event":"TermLinkSelect","args":["b|type=1|index=[1, 1]","(*,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":203,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":204,"event":"TaskLinkAdd","args":["<a --> b>|type=0|index=null","<a --> b>"]}
+{"seq":205,"event":"TaskLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":206,"event":"TaskLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":207,"event":"TermLinkAdd","args":["a|type=3|index=[0]","<a --> b>"]}
+{"seq":208,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":209,"event":"TermLinkAdd","args":["b|type=3|index=[1]","<a --> b>"]}
+{"seq":210,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":211,"event":"ConceptDirectProcessedTask","args":["<a --> b>! %1.00;0.81% {10 : (5449747053713427,0)} "]}
+{"seq":212,"event":"TaskImmediateProcess","args":["<a --> b>! %1.00;0.81% {10 : (5449747053713427,0)} ","<a --> b>"]}
+{"seq":213,"event":"TermLinkSelect","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^want,_,<a --> b>)>","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":214,"event":"TermLinkSelect","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^want,_,<a --> b>)>","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":215,"event":"TermLinkSelect","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<{SELF} --> (/,^want,_,<a --> b>)>","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":216,"event":"ConceptFire","args":["<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":217,"event":"TermLinkSelect","args":["^want|type=1|index=[0]","(/,^want,_,<a --> b>)","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":218,"event":"TermLinkSelect","args":["<a --> b>|type=1|index=[1]","(/,^want,_,<a --> b>)","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":219,"event":"TermLinkSelect","args":["a|type=1|index=[1, 0]","(/,^want,_,<a --> b>)","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":220,"event":"ConceptFire","args":["<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":221,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":222,"event":"TermLinkSelect","args":["(*,{SELF},<a --> b>)|type=2|index=[1]","<a --> b>","<a --> b>"]}
+{"seq":223,"event":"TermLinkSelect","args":["a|type=3|index=[0]","<a --> b>","<a --> b>"]}
+{"seq":224,"event":"TermLinkSelect","args":["(/,^want,_,<a --> b>)|type=2|index=[1]","<a --> b>","<a --> b>"]}
+{"seq":225,"event":"ConceptFire","args":["<a --> b>"]}
+{"seq":226,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":227,"event":"TaskDerive","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {16 : (5449747053713427,0)} ","false","true"]}
+{"seq":228,"event":"TaskAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {16 : (5449747053713427,0)} ","Derived"]}
+{"seq":229,"event":"OUT","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {16 : (5449747053713427,0)} "]}
+{"seq":230,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":231,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=0|index=null","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":232,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":233,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":234,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":235,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 0]","^want"]}
+{"seq":236,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 1]","<a --> b>"]}
+{"seq":237,"event":"TermLinkAdd","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":238,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":239,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":240,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":241,"event":"TermLinkAdd","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":242,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":243,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":244,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":245,"event":"TermLinkAdd","args":["^want|type=1|index=[0]","(/,^want,_,<a --> b>)"]}
+{"seq":246,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[0]","^want"]}
+{"seq":247,"event":"TermLinkAdd","args":["<a --> b>|type=1|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":248,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1]","<a --> b>"]}
+{"seq":249,"event":"TermLinkAdd","args":["a|type=3|index=[0]","<a --> b>"]}
+{"seq":250,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":251,"event":"TermLinkAdd","args":["b|type=3|index=[1]","<a --> b>"]}
+{"seq":252,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":253,"event":"TermLinkAdd","args":["a|type=1|index=[1, 0]","(/,^want,_,<a --> b>)"]}
+{"seq":254,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 0]","a"]}
+{"seq":255,"event":"TermLinkAdd","args":["b|type=1|index=[1, 1]","(/,^want,_,<a --> b>)"]}
+{"seq":256,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 1]","b"]}
+{"seq":257,"event":"ConceptDirectProcessedTask","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {16 : (5449747053713427,0)} "]}
+{"seq":258,"event":"TaskImmediateProcess","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {16 : (5449747053713427,0)} ","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":259,"event":"TermLinkSelect","args":["b|type=3|index=[1]","<a --> b>","<a --> b>"]}
+{"seq":260,"event":"BeliefSelect","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} "]}
+{"seq":261,"event":"BeliefReason","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} ","<<a --> b> --> (/,^want,{SELF},_)>","<a --> b>","<a --> b>"]}
+{"seq":262,"event":"TermLinkSelect","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0]","<a --> b>","<a --> b>"]}
+{"seq":263,"event":"ConceptFire","args":["<a --> b>"]}
+{"seq":264,"event":"TaskDerive","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>. %1.00;0.81% {18 : (5449747053713427,0)} ","false","true"]}
+{"seq":265,"event":"TaskAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>. %1.00;0.81% {18 : (5449747053713427,0)} ","Derived"]}
+{"seq":266,"event":"OUT","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>. %1.00;0.81% {18 : (5449747053713427,0)} "]}
+{"seq":267,"event":"TermLinkSelect","args":["(/,^want,{SELF},_)|type=2|index=[1]","^want","(^want,{SELF},<a --> b>)"]}
+{"seq":268,"event":"TaskDerive","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>. %1.00;0.81% {18 : (5449747053713427,0)} ","false","true"]}
+{"seq":269,"event":"TaskAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>. %1.00;0.81% {18 : (5449747053713427,0)} ","Derived"]}
+{"seq":270,"event":"OUT","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>. %1.00;0.81% {18 : (5449747053713427,0)} "]}
+{"seq":271,"event":"TermLinkSelect","args":["(/,^want,_,<a --> b>)|type=2|index=[0]","^want","(^want,{SELF},<a --> b>)"]}
+{"seq":272,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":273,"event":"ConceptNew","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>"]}
+{"seq":274,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=0|index=null","<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>"]}
+{"seq":275,"event":"ConceptNew","args":["(/,(*,{SELF},<a --> b>),{SELF},_)"]}
+{"seq":276,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=4|index=[0]","(/,(*,{SELF},<a --> b>),{SELF},_)"]}
+{"seq":277,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[0, 0]","{SELF}"]}
+{"seq":278,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[0, 1]","(*,{SELF},<a --> b>)"]}
+{"seq":279,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[0, 1, 0]","{SELF}"]}
+{"seq":280,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[0, 1, 1]","<a --> b>"]}
+{"seq":281,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=4|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":282,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[1, 0]","{SELF}"]}
+{"seq":283,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[1, 1]","^want"]}
+{"seq":284,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),{SELF},_)|type=3|index=[0]","<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>"]}
+{"seq":285,"event":"TermLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=4|index=[0]","(/,(*,{SELF},<a --> b>),{SELF},_)"]}
+{"seq":286,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=3|index=[1]","<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>"]}
+{"seq":287,"event":"TermLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=4|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":288,"event":"ConceptDirectProcessedTask","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>. %1.00;0.81% {18 : (5449747053713427,0)} "]}
+{"seq":289,"event":"TaskImmediateProcess","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>. %1.00;0.81% {18 : (5449747053713427,0)} ","<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>"]}
+{"seq":290,"event":"ConceptNew","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":291,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=0|index=null","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":292,"event":"ConceptNew","args":["(/,(*,{SELF},<a --> b>),_,<a --> b>)"]}
+{"seq":293,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=4|index=[0]","(/,(*,{SELF},<a --> b>),_,<a --> b>)"]}
+{"seq":294,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[0, 0]","(*,{SELF},<a --> b>)"]}
+{"seq":295,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[0, 0, 0]","{SELF}"]}
+{"seq":296,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[0, 0, 1]","<a --> b>"]}
+{"seq":297,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[0, 1]","<a --> b>"]}
+{"seq":298,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":299,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[1, 0]","^want"]}
+{"seq":300,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[1, 1]","<a --> b>"]}
+{"seq":301,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),_,<a --> b>)|type=3|index=[0]","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":302,"event":"TermLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=4|index=[0]","(/,(*,{SELF},<a --> b>),_,<a --> b>)"]}
+{"seq":303,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":304,"event":"TermLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":305,"event":"ConceptDirectProcessedTask","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>. %1.00;0.81% {18 : (5449747053713427,0)} "]}
+{"seq":306,"event":"TaskImmediateProcess","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>. %1.00;0.81% {18 : (5449747053713427,0)} ","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":307,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":308,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":309,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":310,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":311,"event":"TaskDerive","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {23 : (5449747053713427,0)} ","false","true"]}
+{"seq":312,"event":"TaskAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {23 : (5449747053713427,0)} ","Derived"]}
+{"seq":313,"event":"OUT","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {23 : (5449747053713427,0)} "]}
+{"seq":314,"event":"TaskDerive","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {23 : (5449747053713427,0)} ","false","true"]}
+{"seq":315,"event":"TaskAdd","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {23 : (5449747053713427,0)} ","Derived"]}
+{"seq":316,"event":"OUT","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {23 : (5449747053713427,0)} "]}
+{"seq":317,"event":"ConceptFire","args":["<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":318,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=0|index=null","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":319,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":320,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":321,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":322,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 0]","^want"]}
+{"seq":323,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 1]","<a --> b>"]}
+{"seq":324,"event":"TermLinkAdd","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":325,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":326,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":327,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":328,"event":"TermLinkAdd","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":329,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":330,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":331,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":332,"event":"ConceptDirectProcessedTask","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {23 : (5449747053713427,0)} "]}
+{"seq":333,"event":"TaskImmediateProcess","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {23 : (5449747053713427,0)} ","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":334,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=0|index=null","(^want,{SELF},<a --> b>)"]}
+{"seq":335,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[0]","(*,{SELF},<a --> b>)"]}
+{"seq":336,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":337,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=8|index=[0, 1]","<a --> b>"]}
+{"seq":338,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[1]","^want"]}
+{"seq":339,"event":"TermLinkAdd","args":["(*,{SELF},<a --> b>)|type=3|index=[0]","(^want,{SELF},<a --> b>)"]}
+{"seq":340,"event":"TermLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[0]","(*,{SELF},<a --> b>)"]}
+{"seq":341,"event":"TermLinkAdd","args":["^want|type=3|index=[1]","(^want,{SELF},<a --> b>)"]}
+{"seq":342,"event":"TermLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[1]","^want"]}
+{"seq":343,"event":"ConceptDirectProcessedTask","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {23 : (5449747053713427,0)} "]}
+{"seq":344,"event":"TaskImmediateProcess","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {23 : (5449747053713427,0)} ","(^want,{SELF},<a --> b>)"]}
+{"seq":345,"event":"TermLinkSelect","args":["(*,{SELF},<a --> b>)|type=3|index=[0]","(^want,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":346,"event":"TermLinkSelect","args":["^want|type=3|index=[1]","(^want,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":347,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":348,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":349,"event":"TermLinkSelect","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^want,_,<a --> b>)>","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":350,"event":"TermLinkSelect","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^want,_,<a --> b>)>","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":351,"event":"TermLinkSelect","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<{SELF} --> (/,^want,_,<a --> b>)>","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":352,"event":"ConceptFire","args":["<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":353,"event":"TermLinkSelect","args":["(*,{SELF},<a --> b>)|type=2|index=[1, 0]","a","<a --> b>"]}
+{"seq":354,"event":"BeliefSelect","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} "]}
+{"seq":355,"event":"BeliefReason","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} ","<<a --> b> --> (/,^want,{SELF},_)>","<a --> b>","<a --> b>"]}
+{"seq":356,"event":"TermLinkSelect","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 0]","a","<a --> b>"]}
+{"seq":357,"event":"TermLinkSelect","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 0]","a","<a --> b>"]}
+{"seq":358,"event":"ConceptFire","args":["<a --> b>"]}
+{"seq":359,"event":"TaskDerive","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {28 : (5449747053713427,0)} ","false","true"]}
+{"seq":360,"event":"TaskAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {28 : (5449747053713427,0)} ","Derived"]}
+{"seq":361,"event":"OUT","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {28 : (5449747053713427,0)} "]}
+{"seq":362,"event":"TaskDerive","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {28 : (5449747053713427,0)} ","false","true"]}
+{"seq":363,"event":"TaskAdd","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {28 : (5449747053713427,0)} ","Derived"]}
+{"seq":364,"event":"OUT","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {28 : (5449747053713427,0)} "]}
+{"seq":365,"event":"ConceptFire","args":["<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":366,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=0|index=null","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":367,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":368,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":369,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":370,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 0]","^want"]}
+{"seq":371,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 1]","<a --> b>"]}
+{"seq":372,"event":"TermLinkAdd","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":373,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":374,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":375,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":376,"event":"TermLinkAdd","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":377,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":378,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":379,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":380,"event":"ConceptDirectProcessedTask","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {28 : (5449747053713427,0)} "]}
+{"seq":381,"event":"TaskImmediateProcess","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {28 : (5449747053713427,0)} ","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":382,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=0|index=null","(^want,{SELF},<a --> b>)"]}
+{"seq":383,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[0]","(*,{SELF},<a --> b>)"]}
+{"seq":384,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":385,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=8|index=[0, 1]","<a --> b>"]}
+{"seq":386,"event":"TaskLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[1]","^want"]}
+{"seq":387,"event":"TermLinkAdd","args":["(*,{SELF},<a --> b>)|type=3|index=[0]","(^want,{SELF},<a --> b>)"]}
+{"seq":388,"event":"TermLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[0]","(*,{SELF},<a --> b>)"]}
+{"seq":389,"event":"TermLinkAdd","args":["^want|type=3|index=[1]","(^want,{SELF},<a --> b>)"]}
+{"seq":390,"event":"TermLinkAdd","args":["(^want,{SELF},<a --> b>)|type=4|index=[1]","^want"]}
+{"seq":391,"event":"ConceptDirectProcessedTask","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {28 : (5449747053713427,0)} "]}
+{"seq":392,"event":"TaskImmediateProcess","args":["(^want,{SELF},<a --> b>). %1.00;0.90% {28 : (5449747053713427,0)} ","(^want,{SELF},<a --> b>)"]}
+{"seq":393,"event":"TaskDerive","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {29 : (5449747053713427,0)} ","false","true"]}
+{"seq":394,"event":"TaskAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {29 : (5449747053713427,0)} ","Derived"]}
+{"seq":395,"event":"OUT","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {29 : (5449747053713427,0)} "]}
+{"seq":396,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":397,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=0|index=null","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":398,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0]","<a --> b>"]}
+{"seq":399,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 0]","a"]}
+{"seq":400,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 1]","b"]}
+{"seq":401,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":402,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=8|index=[1, 0]","{SELF}"]}
+{"seq":403,"event":"TaskLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=8|index=[1, 1]","^want"]}
+{"seq":404,"event":"TermLinkAdd","args":["<a --> b>|type=3|index=[0]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":405,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0]","<a --> b>"]}
+{"seq":406,"event":"TermLinkAdd","args":["a|type=3|index=[0]","<a --> b>"]}
+{"seq":407,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":408,"event":"TermLinkAdd","args":["b|type=3|index=[1]","<a --> b>"]}
+{"seq":409,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":410,"event":"TermLinkAdd","args":["a|type=3|index=[0, 0]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":411,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 0]","a"]}
+{"seq":412,"event":"TermLinkAdd","args":["b|type=3|index=[0, 1]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":413,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 1]","b"]}
+{"seq":414,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=3|index=[1]","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":415,"event":"TermLinkAdd","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":416,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(/,^want,{SELF},_)"]}
+{"seq":417,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[0]","{SELF}"]}
+{"seq":418,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":419,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":420,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(/,^want,{SELF},_)"]}
+{"seq":421,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[0, 0]","SELF"]}
+{"seq":422,"event":"TermLinkAdd","args":["^want|type=1|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":423,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[1]","^want"]}
+{"seq":424,"event":"ConceptDirectProcessedTask","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {29 : (5449747053713427,0)} "]}
+{"seq":425,"event":"TaskImmediateProcess","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {29 : (5449747053713427,0)} ","<<a --> b> --> (/,^want,{SELF},_)>"]}
+{"seq":426,"event":"ConceptFire","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>"]}
+{"seq":427,"event":"ConceptFire","args":["<a --> b>"]}
+{"seq":428,"event":"TermLinkSelect","args":["^want|type=1|index=[0]","(/,^want,_,<a --> b>)","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":429,"event":"TermLinkSelect","args":["<a --> b>|type=1|index=[1]","(/,^want,_,<a --> b>)","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":430,"event":"TermLinkSelect","args":["a|type=1|index=[1, 0]","(/,^want,_,<a --> b>)","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":431,"event":"ConceptFire","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":432,"event":"TaskDerive","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {33 : (5449747053713427,0)} ","false","true"]}
+{"seq":433,"event":"TaskAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {33 : (5449747053713427,0)} ","Derived"]}
+{"seq":434,"event":"OUT","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {33 : (5449747053713427,0)} "]}
+{"seq":435,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":436,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=0|index=null","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":437,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":438,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":439,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":440,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 0]","^want"]}
+{"seq":441,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=8|index=[1, 1]","<a --> b>"]}
+{"seq":442,"event":"TermLinkAdd","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":443,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0]","{SELF}"]}
+{"seq":444,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":445,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":446,"event":"TermLinkAdd","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":447,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":448,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":449,"event":"TermLinkAdd","args":["<{SELF} --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":450,"event":"TermLinkAdd","args":["^want|type=1|index=[0]","(/,^want,_,<a --> b>)"]}
+{"seq":451,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[0]","^want"]}
+{"seq":452,"event":"TermLinkAdd","args":["<a --> b>|type=1|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":453,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1]","<a --> b>"]}
+{"seq":454,"event":"TermLinkAdd","args":["a|type=3|index=[0]","<a --> b>"]}
+{"seq":455,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[0]","a"]}
+{"seq":456,"event":"TermLinkAdd","args":["b|type=3|index=[1]","<a --> b>"]}
+{"seq":457,"event":"TermLinkAdd","args":["<a --> b>|type=4|index=[1]","b"]}
+{"seq":458,"event":"TermLinkAdd","args":["a|type=1|index=[1, 0]","(/,^want,_,<a --> b>)"]}
+{"seq":459,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 0]","a"]}
+{"seq":460,"event":"TermLinkAdd","args":["b|type=1|index=[1, 1]","(/,^want,_,<a --> b>)"]}
+{"seq":461,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 1]","b"]}
+{"seq":462,"event":"ConceptDirectProcessedTask","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {33 : (5449747053713427,0)} "]}
+{"seq":463,"event":"TaskImmediateProcess","args":["<{SELF} --> (/,^want,_,<a --> b>)>. %1.00;0.90% {33 : (5449747053713427,0)} ","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":464,"event":"TermLinkSelect","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^want,_,<a --> b>)>","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":465,"event":"TermLinkSelect","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^want,_,<a --> b>)>","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":466,"event":"TermLinkSelect","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<{SELF} --> (/,^want,_,<a --> b>)>","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":467,"event":"ConceptFire","args":["<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":468,"event":"TaskDerive","args":["<(*,{SELF},<a --> b>) --> (*,(/,^want,_,<a --> b>),<a --> b>)>. %1.00;0.81% {35 : (5449747053713427,0)} ","false","true"]}
+{"seq":469,"event":"TaskAdd","args":["<(*,{SELF},<a --> b>) --> (*,(/,^want,_,<a --> b>),<a --> b>)>. %1.00;0.81% {35 : (5449747053713427,0)} ","Derived"]}
+{"seq":470,"event":"OUT","args":["<(*,{SELF},<a --> b>) --> (*,(/,^want,_,<a --> b>),<a --> b>)>. %1.00;0.81% {35 : (5449747053713427,0)} "]}
+{"seq":471,"event":"TermLinkSelect","args":["(*,{SELF},<a --> b>)|type=2|index=[0, 0]","SELF","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":472,"event":"TermLinkSelect","args":["{SELF}|type=2|index=[0]","SELF","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":473,"event":"TermLinkSelect","args":["(/,^want,{SELF},_)|type=2|index=[0, 0]","SELF","<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":474,"event":"ConceptFire","args":["<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":475,"event":"ConceptNew","args":["<(*,{SELF},<a --> b>) --> (*,(/,^want,_,<a --> b>),<a --> b>)>"]}
+{"seq":476,"event":"TaskLinkAdd","args":["<(*,{SELF},<a --> b>) --> (*,(/,^want,_,<a --> b>),<a --> b>)>|type=0|index=null","<(*,{SELF},<a --> b>) --> (*,(/,^want,_,<a --> b>),<a --> b>)>"]}
+{"seq":477,"event":"ConceptDirectProcessedTask","args":["<(*,{SELF},<a --> b>) --> (*,(/,^want,_,<a --> b>),<a --> b>)>. %1.00;0.81% {35 : (5449747053713427,0)} "]}
+{"seq":478,"event":"TaskImmediateProcess","args":["<(*,{SELF},<a --> b>) --> (*,(/,^want,_,<a --> b>),<a --> b>)>. %1.00;0.81% {35 : (5449747053713427,0)} ","<(*,{SELF},<a --> b>) --> (*,(/,^want,_,<a --> b>),<a --> b>)>"]}
+{"seq":479,"event":"TermLinkSelect","args":["(*,{SELF},<a --> b>)|type=2|index=[1, 1]","b","<a --> b>"]}
+{"seq":480,"event":"BeliefSelect","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} "]}
+{"seq":481,"event":"BeliefReason","args":["<<a --> b> --> (/,^want,{SELF},_)>. %1.00;0.90% {4 : (5449747053713427,0)} ","<<a --> b> --> (/,^want,{SELF},_)>","<a --> b>","<a --> b>"]}
+{"seq":482,"event":"TermLinkSelect","args":["<<a --> b> --> (/,^want,{SELF},_)>|type=4|index=[0, 1]","b","<a --> b>"]}
+{"seq":483,"event":"TermLinkSelect","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 1]","b","<a --> b>"]}
+{"seq":484,"event":"ConceptFire","args":["<a --> b>"]}
+{"seq":485,"event":"TermLinkSelect","args":["(*,{SELF},<a --> b>)|type=3|index=[0]","(^want,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":486,"event":"TermLinkSelect","args":["^want|type=3|index=[1]","(^want,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":487,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":488,"event":"TaskDerive","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>. %1.00;0.81% {38 : (5449747053713427,0)} ","false","true"]}
+{"seq":489,"event":"TaskAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>. %1.00;0.81% {38 : (5449747053713427,0)} ","Derived"]}
+{"seq":490,"event":"OUT","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>. %1.00;0.81% {38 : (5449747053713427,0)} "]}
+{"seq":491,"event":"TermLinkSelect","args":["(/,^want,{SELF},_)|type=2|index=[1]","^want","(^want,{SELF},<a --> b>)"]}
+{"seq":492,"event":"TaskDerive","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>. %1.00;0.81% {38 : (5449747053713427,0)} ","false","true"]}
+{"seq":493,"event":"TaskAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>. %1.00;0.81% {38 : (5449747053713427,0)} ","Derived"]}
+{"seq":494,"event":"OUT","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>. %1.00;0.81% {38 : (5449747053713427,0)} "]}
+{"seq":495,"event":"TermLinkSelect","args":["(/,^want,_,<a --> b>)|type=2|index=[0]","^want","(^want,{SELF},<a --> b>)"]}
+{"seq":496,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":497,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=0|index=null","<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>"]}
+{"seq":498,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=4|index=[0]","(/,(*,{SELF},<a --> b>),{SELF},_)"]}
+{"seq":499,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[0, 0]","{SELF}"]}
+{"seq":500,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[0, 1]","(*,{SELF},<a --> b>)"]}
+{"seq":501,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[0, 1, 0]","{SELF}"]}
+{"seq":502,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[0, 1, 1]","<a --> b>"]}
+{"seq":503,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=4|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":504,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[1, 0]","{SELF}"]}
+{"seq":505,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=8|index=[1, 1]","^want"]}
+{"seq":506,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),{SELF},_)|type=3|index=[0]","<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>"]}
+{"seq":507,"event":"TermLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=4|index=[0]","(/,(*,{SELF},<a --> b>),{SELF},_)"]}
+{"seq":508,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(/,(*,{SELF},<a --> b>),{SELF},_)"]}
+{"seq":509,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),{SELF},_)|type=2|index=[0]","{SELF}"]}
+{"seq":510,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":511,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":512,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(/,(*,{SELF},<a --> b>),{SELF},_)"]}
+{"seq":513,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),{SELF},_)|type=2|index=[0, 0]","SELF"]}
+{"seq":514,"event":"TermLinkAdd","args":["(*,{SELF},<a --> b>)|type=1|index=[1]","(/,(*,{SELF},<a --> b>),{SELF},_)"]}
+{"seq":515,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),{SELF},_)|type=2|index=[1]","(*,{SELF},<a --> b>)"]}
+{"seq":516,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=3|index=[1]","<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>"]}
+{"seq":517,"event":"TermLinkAdd","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>|type=4|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":518,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(/,^want,{SELF},_)"]}
+{"seq":519,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[0]","{SELF}"]}
+{"seq":520,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":521,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":522,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(/,^want,{SELF},_)"]}
+{"seq":523,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[0, 0]","SELF"]}
+{"seq":524,"event":"TermLinkAdd","args":["^want|type=1|index=[1]","(/,^want,{SELF},_)"]}
+{"seq":525,"event":"TermLinkAdd","args":["(/,^want,{SELF},_)|type=2|index=[1]","^want"]}
+{"seq":526,"event":"ConceptDirectProcessedTask","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>. %1.00;0.81% {38 : (5449747053713427,0)} "]}
+{"seq":527,"event":"TaskImmediateProcess","args":["<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>. %1.00;0.81% {38 : (5449747053713427,0)} ","<(/,(*,{SELF},<a --> b>),{SELF},_) --> (/,^want,{SELF},_)>"]}
+{"seq":528,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=0|index=null","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":529,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=4|index=[0]","(/,(*,{SELF},<a --> b>),_,<a --> b>)"]}
+{"seq":530,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[0, 0]","(*,{SELF},<a --> b>)"]}
+{"seq":531,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[0, 0, 0]","{SELF}"]}
+{"seq":532,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[0, 0, 1]","<a --> b>"]}
+{"seq":533,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[0, 1]","<a --> b>"]}
+{"seq":534,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":535,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[1, 0]","^want"]}
+{"seq":536,"event":"TaskLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=8|index=[1, 1]","<a --> b>"]}
+{"seq":537,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),_,<a --> b>)|type=3|index=[0]","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":538,"event":"TermLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=4|index=[0]","(/,(*,{SELF},<a --> b>),_,<a --> b>)"]}
+{"seq":539,"event":"TermLinkAdd","args":["(*,{SELF},<a --> b>)|type=1|index=[0]","(/,(*,{SELF},<a --> b>),_,<a --> b>)"]}
+{"seq":540,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),_,<a --> b>)|type=2|index=[0]","(*,{SELF},<a --> b>)"]}
+{"seq":541,"event":"TermLinkAdd","args":["<a --> b>|type=1|index=[1]","(/,(*,{SELF},<a --> b>),_,<a --> b>)"]}
+{"seq":542,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),_,<a --> b>)|type=2|index=[1]","<a --> b>"]}
+{"seq":543,"event":"TermLinkAdd","args":["a|type=1|index=[1, 0]","(/,(*,{SELF},<a --> b>),_,<a --> b>)"]}
+{"seq":544,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),_,<a --> b>)|type=2|index=[1, 0]","a"]}
+{"seq":545,"event":"TermLinkAdd","args":["b|type=1|index=[1, 1]","(/,(*,{SELF},<a --> b>),_,<a --> b>)"]}
+{"seq":546,"event":"TermLinkAdd","args":["(/,(*,{SELF},<a --> b>),_,<a --> b>)|type=2|index=[1, 1]","b"]}
+{"seq":547,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=3|index=[1]","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":548,"event":"TermLinkAdd","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>|type=4|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":549,"event":"TermLinkAdd","args":["^want|type=1|index=[0]","(/,^want,_,<a --> b>)"]}
+{"seq":550,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[0]","^want"]}
+{"seq":551,"event":"TermLinkAdd","args":["<a --> b>|type=1|index=[1]","(/,^want,_,<a --> b>)"]}
+{"seq":552,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1]","<a --> b>"]}
+{"seq":553,"event":"TermLinkAdd","args":["a|type=1|index=[1, 0]","(/,^want,_,<a --> b>)"]}
+{"seq":554,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 0]","a"]}
+{"seq":555,"event":"TermLinkAdd","args":["b|type=1|index=[1, 1]","(/,^want,_,<a --> b>)"]}
+{"seq":556,"event":"TermLinkAdd","args":["(/,^want,_,<a --> b>)|type=2|index=[1, 1]","b"]}
+{"seq":557,"event":"ConceptDirectProcessedTask","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>. %1.00;0.81% {38 : (5449747053713427,0)} "]}
+{"seq":558,"event":"TaskImmediateProcess","args":["<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>. %1.00;0.81% {38 : (5449747053713427,0)} ","<(/,(*,{SELF},<a --> b>),_,<a --> b>) --> (/,^want,_,<a --> b>)>"]}
+{"seq":559,"event":"ConceptFire","args":["<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":560,"event":"ConceptFire","args":["<{SELF} --> (/,^want,_,<a --> b>)>"]}
+{"seq":561,"event":"TermLinkSelect","args":["{SELF}|type=1|index=[0]","(*,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":562,"event":"TaskDerive","args":["<a --> b>! %1.00;0.81% {41 : (5449747053713427,0)} ","false","true"]}
+{"seq":563,"event":"TaskAdd","args":["<a --> b>! %1.00;0.81% {41 : (5449747053713427,0)} ","Derived"]}
+{"seq":564,"event":"OUT","args":["<a --> b>! %1.00;0.81% {41 : (5449747053713427,0)} "]}
+{"seq":565,"event":"TermLinkSelect","args":["a|type=1|index=[1, 0]","(*,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":566,"event":"TaskDerive","args":["<a --> b>! %1.00;0.81% {41 : (5449747053713427,0)} ","false","true"]}
+{"seq":567,"event":"TaskAdd","args":["<a --> b>! %1.00;0.81% {41 : (5449747053713427,0)} ","Derived"]}
+{"seq":568,"event":"OUT","args":["<a --> b>! %1.00;0.81% {41 : (5449747053713427,0)} "]}
+{"seq":569,"event":"TermLinkSelect","args":["<a --> b>|type=1|index=[1]","(*,{SELF},<a --> b>)","(^want,{SELF},<a --> b>)"]}
+{"seq":570,"event":"ConceptFire","args":["(^want,{SELF},<a --> b>)"]}
+{"seq":571,"event":"after-cycles","args":[]}

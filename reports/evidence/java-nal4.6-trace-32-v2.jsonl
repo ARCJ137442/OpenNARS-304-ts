@@ -1,0 +1,522 @@
+Got relative path for loading the config: ./config/defaultConfig.xml
+Loading config config/defaultConfig.xml from resources
+{"seq":0,"event":"TaskAdd","args":["<bird --> animal>. %1.00;0.90% {0 : (-6025417149867541339,0)} |seq=false|input=true","Perceived"]}
+{"seq":1,"event":"OUT","args":["<bird --> animal>. %1.00;0.90% {0 : (-6025417149867541339,0)} |seq=false|input=true"]}
+{"seq":2,"event":"TaskAdd","args":["<(*,bird,plant) --> ?1>? {0 : (-6025417149867541339,1)} |seq=false|input=true","Perceived"]}
+{"seq":3,"event":"OUT","args":["<(*,bird,plant) --> ?1>? {0 : (-6025417149867541339,1)} |seq=false|input=true"]}
+{"seq":4,"event":"ConceptNew","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":5,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> ?1>|type=0|index=null","<(*,bird,plant) --> ?1>"]}
+{"seq":6,"event":"ConceptNew","args":["(*,bird,plant)"]}
+{"seq":7,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> ?1>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":8,"event":"ConceptNew","args":["bird"]}
+{"seq":9,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> ?1>|type=8|index=[0, 0]","bird"]}
+{"seq":10,"event":"ConceptNew","args":["plant"]}
+{"seq":11,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> ?1>|type=8|index=[0, 1]","plant"]}
+{"seq":12,"event":"TermLinkAdd","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> ?1>"]}
+{"seq":13,"event":"TermLinkAdd","args":["<(*,bird,plant) --> ?1>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":14,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":15,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":16,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":17,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":18,"event":"TaskAdd","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>). :!0: %1.00;0.90% {0|0 : (-6025417149867541339,1)} |seq=true|input=true","Reflected mental operation (Internal Experience)"]}
+{"seq":19,"event":"OUT","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>). :!0: %1.00;0.90% {0|0 : (-6025417149867541339,1)} |seq=true|input=true"]}
+{"seq":20,"event":"ConceptDirectProcessedTask","args":["<(*,bird,plant) --> ?1>? {0 : (-6025417149867541339,1)} |seq=false|input=true"]}
+{"seq":21,"event":"TaskImmediateProcess","args":["<(*,bird,plant) --> ?1>? {0 : (-6025417149867541339,1)} |seq=false|input=true","<(*,bird,plant) --> ?1>"]}
+{"seq":22,"event":"ConceptNew","args":["<bird --> animal>"]}
+{"seq":23,"event":"TaskLinkAdd","args":["<bird --> animal>|type=0|index=null","<bird --> animal>"]}
+{"seq":24,"event":"TaskLinkAdd","args":["<bird --> animal>|type=4|index=[0]","bird"]}
+{"seq":25,"event":"ConceptNew","args":["animal"]}
+{"seq":26,"event":"TaskLinkAdd","args":["<bird --> animal>|type=4|index=[1]","animal"]}
+{"seq":27,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> animal>"]}
+{"seq":28,"event":"TermLinkAdd","args":["<bird --> animal>|type=4|index=[0]","bird"]}
+{"seq":29,"event":"TermLinkAdd","args":["animal|type=3|index=[1]","<bird --> animal>"]}
+{"seq":30,"event":"TermLinkAdd","args":["<bird --> animal>|type=4|index=[1]","animal"]}
+{"seq":31,"event":"ConceptDirectProcessedTask","args":["<bird --> animal>. %1.00;0.90% {0 : (-6025417149867541339,0)} |seq=false|input=true"]}
+{"seq":32,"event":"TaskImmediateProcess","args":["<bird --> animal>. %1.00;0.90% {0 : (-6025417149867541339,0)} |seq=false|input=true","<bird --> animal>"]}
+{"seq":33,"event":"ConceptNew","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":34,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)|type=0|index=null","(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":35,"event":"ConceptNew","args":["(*,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":36,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)|type=4|index=[0]","(*,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":37,"event":"ConceptNew","args":["{SELF}"]}
+{"seq":38,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":39,"event":"ConceptNew","args":["^wonder"]}
+{"seq":40,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)|type=4|index=[1]","^wonder"]}
+{"seq":41,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> ?1>)|type=3|index=[0]","(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":42,"event":"TermLinkAdd","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)|type=4|index=[0]","(*,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":43,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":44,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> ?1>)|type=2|index=[0]","{SELF}"]}
+{"seq":45,"event":"ConceptNew","args":["SELF"]}
+{"seq":46,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":47,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":48,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":49,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> ?1>)|type=2|index=[0, 0]","SELF"]}
+{"seq":50,"event":"TermLinkAdd","args":["<(*,bird,plant) --> ?1>|type=1|index=[1]","(*,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":51,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> ?1>)|type=2|index=[1]","<(*,bird,plant) --> ?1>"]}
+{"seq":52,"event":"TermLinkAdd","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> ?1>"]}
+{"seq":53,"event":"TermLinkAdd","args":["<(*,bird,plant) --> ?1>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":54,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":55,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":56,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":57,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":58,"event":"TermLinkAdd","args":["(*,bird,plant)|type=1|index=[1, 0]","(*,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":59,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> ?1>)|type=2|index=[1, 0]","(*,bird,plant)"]}
+{"seq":60,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":61,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":62,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":63,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":64,"event":"TermLinkAdd","args":["^wonder|type=3|index=[1]","(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":65,"event":"TermLinkAdd","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)|type=4|index=[1]","^wonder"]}
+{"seq":66,"event":"ConceptDirectProcessedTask","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>). :!0: %1.00;0.90% {0|0 : (-6025417149867541339,1)} |seq=true|input=true"]}
+{"seq":67,"event":"TaskImmediateProcess","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>). :!0: %1.00;0.90% {0|0 : (-6025417149867541339,1)} |seq=true|input=true","(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":68,"event":"TaskDerive","args":["<bird --> (/,?1,_,plant)>? {0 : (-6025417149867541339,1)} |seq=false|input=false","false","true"]}
+{"seq":69,"event":"TaskAdd","args":["<bird --> (/,?1,_,plant)>? {0 : (-6025417149867541339,1)} |seq=false|input=false","Derived"]}
+{"seq":70,"event":"OUT","args":["<bird --> (/,?1,_,plant)>? {0 : (-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":71,"event":"ConceptFire","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":72,"event":"ConceptNew","args":["<bird --> (/,?1,_,plant)>"]}
+{"seq":73,"event":"TaskLinkAdd","args":["<bird --> (/,?1,_,plant)>|type=0|index=null","<bird --> (/,?1,_,plant)>"]}
+{"seq":74,"event":"TaskLinkAdd","args":["<bird --> (/,?1,_,plant)>|type=4|index=[0]","bird"]}
+{"seq":75,"event":"ConceptNew","args":["(/,?1,_,plant)"]}
+{"seq":76,"event":"TaskLinkAdd","args":["<bird --> (/,?1,_,plant)>|type=4|index=[1]","(/,?1,_,plant)"]}
+{"seq":77,"event":"TaskLinkAdd","args":["<bird --> (/,?1,_,plant)>|type=8|index=[1, 1]","plant"]}
+{"seq":78,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> (/,?1,_,plant)>"]}
+{"seq":79,"event":"TermLinkAdd","args":["<bird --> (/,?1,_,plant)>|type=4|index=[0]","bird"]}
+{"seq":80,"event":"TermLinkAdd","args":["(/,?1,_,plant)|type=3|index=[1]","<bird --> (/,?1,_,plant)>"]}
+{"seq":81,"event":"TermLinkAdd","args":["<bird --> (/,?1,_,plant)>|type=4|index=[1]","(/,?1,_,plant)"]}
+{"seq":82,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(/,?1,_,plant)"]}
+{"seq":83,"event":"TermLinkAdd","args":["(/,?1,_,plant)|type=2|index=[1]","plant"]}
+{"seq":84,"event":"ConceptDirectProcessedTask","args":["<bird --> (/,?1,_,plant)>? {0 : (-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":85,"event":"TaskImmediateProcess","args":["<bird --> (/,?1,_,plant)>? {0 : (-6025417149867541339,1)} |seq=false|input=false","<bird --> (/,?1,_,plant)>"]}
+{"seq":86,"event":"TermLinkSelect","args":["bird|type=3|index=[0]","<bird --> animal>","<bird --> animal>"]}
+{"seq":87,"event":"TermLinkSelect","args":["animal|type=3|index=[1]","<bird --> animal>","<bird --> animal>"]}
+{"seq":88,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":89,"event":"TermLinkSelect","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> ?1>","<(*,bird,plant) --> ?1>"]}
+{"seq":90,"event":"TermLinkSelect","args":["(*,{SELF},<(*,bird,plant) --> ?1>)|type=2|index=[1]","<(*,bird,plant) --> ?1>","<(*,bird,plant) --> ?1>"]}
+{"seq":91,"event":"ConceptFire","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":92,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":93,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":94,"event":"ConceptFire","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":95,"event":"before-cycles","args":[]}
+{"seq":96,"event":"TermLinkSelect","args":["bird|type=1|index=[0]","(*,bird,plant)","<(*,bird,plant) --> ?1>"]}
+{"seq":97,"event":"TermLinkSelect","args":["plant|type=1|index=[1]","(*,bird,plant)","<(*,bird,plant) --> ?1>"]}
+{"seq":98,"event":"TermLinkSelect","args":["(*,{SELF},<(*,bird,plant) --> ?1>)|type=2|index=[1, 0]","(*,bird,plant)","<(*,bird,plant) --> ?1>"]}
+{"seq":99,"event":"ConceptFire","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":100,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":101,"event":"TermLinkSelect","args":["{SELF}|type=1|index=[0]","(*,{SELF},<(*,bird,plant) --> ?1>)","(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":102,"event":"TermLinkSelect","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<(*,bird,plant) --> ?1>)","(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":103,"event":"TermLinkSelect","args":["<(*,bird,plant) --> ?1>|type=1|index=[1]","(*,{SELF},<(*,bird,plant) --> ?1>)","(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":104,"event":"ConceptFire","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":105,"event":"TermLinkSelect","args":["(*,bird,plant)|type=1|index=[1, 0]","(*,{SELF},<(*,bird,plant) --> ?1>)","(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":106,"event":"ConceptFire","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":107,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":108,"event":"TaskDerive","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>. :!0: %1.00;0.90% {11|0 : (-6025417149867541339,1)} |seq=false|input=false","false","true"]}
+{"seq":109,"event":"TaskAdd","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>. :!0: %1.00;0.90% {11|0 : (-6025417149867541339,1)} |seq=false|input=false","Derived"]}
+{"seq":110,"event":"OUT","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>. :!0: %1.00;0.90% {11|0 : (-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":111,"event":"ConceptFire","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":112,"event":"ConceptNew","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>"]}
+{"seq":113,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>|type=0|index=null","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>"]}
+{"seq":114,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>|type=4|index=[0]","{SELF}"]}
+{"seq":115,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":116,"event":"ConceptNew","args":["(/,^wonder,_,<(*,bird,plant) --> ?1>)"]}
+{"seq":117,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>|type=4|index=[1]","(/,^wonder,_,<(*,bird,plant) --> ?1>)"]}
+{"seq":118,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>|type=8|index=[1, 0]","^wonder"]}
+{"seq":119,"event":"TermLinkAdd","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>"]}
+{"seq":120,"event":"TermLinkAdd","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>|type=4|index=[0]","{SELF}"]}
+{"seq":121,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":122,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":123,"event":"TermLinkAdd","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>"]}
+{"seq":124,"event":"TermLinkAdd","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>|type=4|index=[0, 0]","SELF"]}
+{"seq":125,"event":"TermLinkAdd","args":["(/,^wonder,_,<(*,bird,plant) --> ?1>)|type=3|index=[1]","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>"]}
+{"seq":126,"event":"TermLinkAdd","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>|type=4|index=[1]","(/,^wonder,_,<(*,bird,plant) --> ?1>)"]}
+{"seq":127,"event":"TermLinkAdd","args":["^wonder|type=1|index=[0]","(/,^wonder,_,<(*,bird,plant) --> ?1>)"]}
+{"seq":128,"event":"TermLinkAdd","args":["(/,^wonder,_,<(*,bird,plant) --> ?1>)|type=2|index=[0]","^wonder"]}
+{"seq":129,"event":"TermLinkAdd","args":["<(*,bird,plant) --> ?1>|type=1|index=[1]","(/,^wonder,_,<(*,bird,plant) --> ?1>)"]}
+{"seq":130,"event":"TermLinkAdd","args":["(/,^wonder,_,<(*,bird,plant) --> ?1>)|type=2|index=[1]","<(*,bird,plant) --> ?1>"]}
+{"seq":131,"event":"TermLinkAdd","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> ?1>"]}
+{"seq":132,"event":"TermLinkAdd","args":["<(*,bird,plant) --> ?1>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":133,"event":"TermLinkAdd","args":["(*,bird,plant)|type=1|index=[1, 0]","(/,^wonder,_,<(*,bird,plant) --> ?1>)"]}
+{"seq":134,"event":"TermLinkAdd","args":["(/,^wonder,_,<(*,bird,plant) --> ?1>)|type=2|index=[1, 0]","(*,bird,plant)"]}
+{"seq":135,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":136,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":137,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":138,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":139,"event":"ConceptDirectProcessedTask","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>. :!0: %1.00;0.90% {11|0 : (-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":140,"event":"TaskImmediateProcess","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>. :!0: %1.00;0.90% {11|0 : (-6025417149867541339,1)} |seq=false|input=false","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>"]}
+{"seq":141,"event":"TermLinkSelect","args":["(/,^wonder,_,<(*,bird,plant) --> ?1>)|type=2|index=[1]","<(*,bird,plant) --> ?1>","<(*,bird,plant) --> ?1>"]}
+{"seq":142,"event":"ConceptFire","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":143,"event":"ConceptFire","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":144,"event":"ConceptFire","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":145,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":146,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":147,"event":"TermLinkSelect","args":["<bird --> (/,?1,_,plant)>|type=4|index=[0]","bird","<bird --> animal>"]}
+{"seq":148,"event":"TaskDerive","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false","false","true"]}
+{"seq":149,"event":"TaskAdd","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false","Derived"]}
+{"seq":150,"event":"OUT","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":151,"event":"TermLinkSelect","args":["(*,bird,plant)|type=2|index=[0]","bird","<bird --> animal>"]}
+{"seq":152,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":153,"event":"ConceptNew","args":["<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":154,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=0|index=null","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":155,"event":"TaskAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE). :!18: %1.00;0.90% {17|18 : (-6025417149867541339,0)} |seq=true|input=true","Reflected mental operation (Internal Experience)"]}
+{"seq":156,"event":"OUT","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE). :!18: %1.00;0.90% {17|18 : (-6025417149867541339,0)} |seq=true|input=true"]}
+{"seq":157,"event":"TaskAdd","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false","Activated"]}
+{"seq":158,"event":"OUT","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":159,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":160,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[0, 0]","bird"]}
+{"seq":161,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[0, 1]","plant"]}
+{"seq":162,"event":"ConceptNew","args":["(*,animal,plant)"]}
+{"seq":163,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":164,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[1, 0]","animal"]}
+{"seq":165,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[1, 1]","plant"]}
+{"seq":166,"event":"TermLinkAdd","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":167,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":168,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":169,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":170,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":171,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":172,"event":"TermLinkAdd","args":["(*,animal,plant)|type=3|index=[1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":173,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":174,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":175,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":176,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":177,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":178,"event":"ConceptDirectProcessedTask","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":179,"event":"TaskImmediateProcess","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":180,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=0|index=null","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":181,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":182,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[0, 0]","bird"]}
+{"seq":183,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[0, 1]","plant"]}
+{"seq":184,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":185,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[1, 0]","animal"]}
+{"seq":186,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[1, 1]","plant"]}
+{"seq":187,"event":"TermLinkAdd","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":188,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":189,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":190,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":191,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":192,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":193,"event":"TermLinkAdd","args":["(*,animal,plant)|type=3|index=[1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":194,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":195,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":196,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":197,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":198,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":199,"event":"ConceptDirectProcessedTask","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":200,"event":"TaskImmediateProcess","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":201,"event":"ConceptNew","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":202,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=0|index=null","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":203,"event":"ConceptNew","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":204,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=4|index=[0]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":205,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":206,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=8|index=[0, 1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":207,"event":"ConceptNew","args":["TRUE"]}
+{"seq":208,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=8|index=[0, 2]","TRUE"]}
+{"seq":209,"event":"ConceptNew","args":["^believe"]}
+{"seq":210,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=4|index=[1]","^believe"]}
+{"seq":211,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=3|index=[0]","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":212,"event":"TermLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=4|index=[0]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":213,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":214,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[0]","{SELF}"]}
+{"seq":215,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":216,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":217,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":218,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[0, 0]","SELF"]}
+{"seq":219,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=1|index=[1]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":220,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":221,"event":"TermLinkAdd","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":222,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":223,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":224,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":225,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":226,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":227,"event":"TermLinkAdd","args":["(*,animal,plant)|type=3|index=[1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":228,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":229,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":230,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":231,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":232,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":233,"event":"TermLinkAdd","args":["(*,bird,plant)|type=1|index=[1, 0]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":234,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[1, 0]","(*,bird,plant)"]}
+{"seq":235,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":236,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":237,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":238,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":239,"event":"TermLinkAdd","args":["(*,animal,plant)|type=1|index=[1, 1]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":240,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[1, 1]","(*,animal,plant)"]}
+{"seq":241,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":242,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":243,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":244,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":245,"event":"TermLinkAdd","args":["TRUE|type=1|index=[2]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":246,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[2]","TRUE"]}
+{"seq":247,"event":"TermLinkAdd","args":["^believe|type=3|index=[1]","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":248,"event":"TermLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=4|index=[1]","^believe"]}
+{"seq":249,"event":"ConceptDirectProcessedTask","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE). :!18: %1.00;0.90% {17|18 : (-6025417149867541339,0)} |seq=true|input=true"]}
+{"seq":250,"event":"TaskImmediateProcess","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE). :!18: %1.00;0.90% {17|18 : (-6025417149867541339,0)} |seq=true|input=true","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":251,"event":"TermLinkSelect","args":["(*,{SELF},<(*,bird,plant) --> ?1>)|type=3|index=[0]","(^wonder,{SELF},<(*,bird,plant) --> ?1>)","(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":252,"event":"TermLinkSelect","args":["^wonder|type=3|index=[1]","(^wonder,{SELF},<(*,bird,plant) --> ?1>)","(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":253,"event":"ConceptFire","args":["(^wonder,{SELF},<(*,bird,plant) --> ?1>)"]}
+{"seq":254,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":255,"event":"ConceptFire","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":256,"event":"ConceptFire","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":257,"event":"BeliefSelect","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} "]}
+{"seq":258,"event":"BeliefReason","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} ","<(*,bird,plant) --> (*,animal,plant)>","<(*,bird,plant) --> ?1>","<(*,bird,plant) --> ?1>"]}
+{"seq":259,"event":"TaskDerive","args":["<(*,animal,plant) --> ?1>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","false","false"]}
+{"seq":260,"event":"TaskAdd","args":["<(*,animal,plant) --> ?1>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","Derived"]}
+{"seq":261,"event":"OUT","args":["<(*,animal,plant) --> ?1>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":262,"event":"TaskDerive","args":["<?1 --> (*,animal,plant)>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","false","false"]}
+{"seq":263,"event":"TaskAdd","args":["<?1 --> (*,animal,plant)>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","Derived"]}
+{"seq":264,"event":"OUT","args":["<?1 --> (*,animal,plant)>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":265,"event":"TaskDerive","args":["<?1 <-> (*,animal,plant)>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","false","false"]}
+{"seq":266,"event":"TaskAdd","args":["<?1 <-> (*,animal,plant)>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","Derived"]}
+{"seq":267,"event":"OUT","args":["<?1 <-> (*,animal,plant)>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":268,"event":"TermLinkSelect","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)","<(*,bird,plant) --> ?1>"]}
+{"seq":269,"event":"TermLinkSelect","args":["(/,^wonder,_,<(*,bird,plant) --> ?1>)|type=2|index=[1, 0]","(*,bird,plant)","<(*,bird,plant) --> ?1>"]}
+{"seq":270,"event":"ConceptFire","args":["<(*,bird,plant) --> ?1>"]}
+{"seq":271,"event":"ConceptNew","args":["<?1 --> (*,animal,plant)>"]}
+{"seq":272,"event":"TaskLinkAdd","args":["<?1 --> (*,animal,plant)>|type=0|index=null","<?1 --> (*,animal,plant)>"]}
+{"seq":273,"event":"TaskAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE). :!23: %1.00;0.90% {17|23 : (-6025417149867541339,0)} |seq=true|input=true","Reflected mental operation (Internal Experience)"]}
+{"seq":274,"event":"OUT","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE). :!23: %1.00;0.90% {17|23 : (-6025417149867541339,0)} |seq=true|input=true"]}
+{"seq":275,"event":"TaskAdd","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false","Activated"]}
+{"seq":276,"event":"OUT","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":277,"event":"TaskLinkAdd","args":["<?1 --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":278,"event":"TaskLinkAdd","args":["<?1 --> (*,animal,plant)>|type=8|index=[1, 0]","animal"]}
+{"seq":279,"event":"TaskLinkAdd","args":["<?1 --> (*,animal,plant)>|type=8|index=[1, 1]","plant"]}
+{"seq":280,"event":"TermLinkAdd","args":["(*,animal,plant)|type=3|index=[1]","<?1 --> (*,animal,plant)>"]}
+{"seq":281,"event":"TermLinkAdd","args":["<?1 --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":282,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":283,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":284,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":285,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":286,"event":"ConceptDirectProcessedTask","args":["<?1 --> (*,animal,plant)>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":287,"event":"TaskImmediateProcess","args":["<?1 --> (*,animal,plant)>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","<?1 --> (*,animal,plant)>"]}
+{"seq":288,"event":"ConceptNew","args":["<(*,animal,plant) --> ?1>"]}
+{"seq":289,"event":"TaskLinkAdd","args":["<(*,animal,plant) --> ?1>|type=0|index=null","<(*,animal,plant) --> ?1>"]}
+{"seq":290,"event":"TaskLinkAdd","args":["<(*,animal,plant) --> ?1>|type=4|index=[0]","(*,animal,plant)"]}
+{"seq":291,"event":"TaskLinkAdd","args":["<(*,animal,plant) --> ?1>|type=8|index=[0, 0]","animal"]}
+{"seq":292,"event":"TaskLinkAdd","args":["<(*,animal,plant) --> ?1>|type=8|index=[0, 1]","plant"]}
+{"seq":293,"event":"TermLinkAdd","args":["(*,animal,plant)|type=3|index=[0]","<(*,animal,plant) --> ?1>"]}
+{"seq":294,"event":"TermLinkAdd","args":["<(*,animal,plant) --> ?1>|type=4|index=[0]","(*,animal,plant)"]}
+{"seq":295,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":296,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":297,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":298,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":299,"event":"ConceptDirectProcessedTask","args":["<(*,animal,plant) --> ?1>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":300,"event":"TaskImmediateProcess","args":["<(*,animal,plant) --> ?1>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","<(*,animal,plant) --> ?1>"]}
+{"seq":301,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=0|index=null","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":302,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":303,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[0, 0]","bird"]}
+{"seq":304,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[0, 1]","plant"]}
+{"seq":305,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":306,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[1, 0]","animal"]}
+{"seq":307,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[1, 1]","plant"]}
+{"seq":308,"event":"TermLinkAdd","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":309,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":310,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":311,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":312,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":313,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":314,"event":"TermLinkAdd","args":["(*,animal,plant)|type=3|index=[1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":315,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":316,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":317,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":318,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":319,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":320,"event":"ConceptDirectProcessedTask","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":321,"event":"TaskImmediateProcess","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {17 : (-6025417149867541339,0)} |seq=false|input=false","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":322,"event":"ConceptNew","args":["<?1 <-> (*,animal,plant)>"]}
+{"seq":323,"event":"TaskLinkAdd","args":["<?1 <-> (*,animal,plant)>|type=0|index=null","<?1 <-> (*,animal,plant)>"]}
+{"seq":324,"event":"TaskLinkAdd","args":["<?1 <-> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":325,"event":"TaskLinkAdd","args":["<?1 <-> (*,animal,plant)>|type=8|index=[1, 0]","animal"]}
+{"seq":326,"event":"TaskLinkAdd","args":["<?1 <-> (*,animal,plant)>|type=8|index=[1, 1]","plant"]}
+{"seq":327,"event":"TermLinkAdd","args":["(*,animal,plant)|type=3|index=[1]","<?1 <-> (*,animal,plant)>"]}
+{"seq":328,"event":"TermLinkAdd","args":["<?1 <-> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":329,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":330,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":331,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":332,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":333,"event":"TaskAdd","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>). :!23: %1.00;0.90% {22|23 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=true|input=true","Reflected mental operation (Internal Experience)"]}
+{"seq":334,"event":"OUT","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>). :!23: %1.00;0.90% {22|23 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=true|input=true"]}
+{"seq":335,"event":"ConceptDirectProcessedTask","args":["<?1 <-> (*,animal,plant)>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":336,"event":"TaskImmediateProcess","args":["<?1 <-> (*,animal,plant)>? {22 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","<?1 <-> (*,animal,plant)>"]}
+{"seq":337,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=0|index=null","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":338,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=4|index=[0]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":339,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":340,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=8|index=[0, 1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":341,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=8|index=[0, 2]","TRUE"]}
+{"seq":342,"event":"TaskLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=4|index=[1]","^believe"]}
+{"seq":343,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=3|index=[0]","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":344,"event":"TermLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=4|index=[0]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":345,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":346,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[0]","{SELF}"]}
+{"seq":347,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":348,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":349,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":350,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[0, 0]","SELF"]}
+{"seq":351,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=1|index=[1]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":352,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":353,"event":"TermLinkAdd","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":354,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":355,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":356,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":357,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":358,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":359,"event":"TermLinkAdd","args":["(*,animal,plant)|type=3|index=[1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":360,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":361,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":362,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":363,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":364,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":365,"event":"TermLinkAdd","args":["(*,bird,plant)|type=1|index=[1, 0]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":366,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[1, 0]","(*,bird,plant)"]}
+{"seq":367,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":368,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":369,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":370,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":371,"event":"TermLinkAdd","args":["(*,animal,plant)|type=1|index=[1, 1]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":372,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[1, 1]","(*,animal,plant)"]}
+{"seq":373,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":374,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":375,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":376,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":377,"event":"TermLinkAdd","args":["TRUE|type=1|index=[2]","(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":378,"event":"TermLinkAdd","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[2]","TRUE"]}
+{"seq":379,"event":"TermLinkAdd","args":["^believe|type=3|index=[1]","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":380,"event":"TermLinkAdd","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=4|index=[1]","^believe"]}
+{"seq":381,"event":"ConceptDirectProcessedTask","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE). :!23: %1.00;0.90% {17|23 : (-6025417149867541339,0)} |seq=true|input=true"]}
+{"seq":382,"event":"TaskImmediateProcess","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE). :!23: %1.00;0.90% {17|23 : (-6025417149867541339,0)} |seq=true|input=true","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":383,"event":"ConceptNew","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":384,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>)|type=0|index=null","(^wonder,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":385,"event":"ConceptNew","args":["(*,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":386,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>)|type=4|index=[0]","(*,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":387,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":388,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>)|type=4|index=[1]","^wonder"]}
+{"seq":389,"event":"TermLinkAdd","args":["(*,{SELF},<?1 <-> (*,animal,plant)>)|type=3|index=[0]","(^wonder,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":390,"event":"TermLinkAdd","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>)|type=4|index=[0]","(*,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":391,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":392,"event":"TermLinkAdd","args":["(*,{SELF},<?1 <-> (*,animal,plant)>)|type=2|index=[0]","{SELF}"]}
+{"seq":393,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":394,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":395,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":396,"event":"TermLinkAdd","args":["(*,{SELF},<?1 <-> (*,animal,plant)>)|type=2|index=[0, 0]","SELF"]}
+{"seq":397,"event":"TermLinkAdd","args":["<?1 <-> (*,animal,plant)>|type=1|index=[1]","(*,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":398,"event":"TermLinkAdd","args":["(*,{SELF},<?1 <-> (*,animal,plant)>)|type=2|index=[1]","<?1 <-> (*,animal,plant)>"]}
+{"seq":399,"event":"TermLinkAdd","args":["(*,animal,plant)|type=3|index=[1]","<?1 <-> (*,animal,plant)>"]}
+{"seq":400,"event":"TermLinkAdd","args":["<?1 <-> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":401,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":402,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":403,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":404,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":405,"event":"TermLinkAdd","args":["(*,animal,plant)|type=1|index=[1, 1]","(*,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":406,"event":"TermLinkAdd","args":["(*,{SELF},<?1 <-> (*,animal,plant)>)|type=2|index=[1, 1]","(*,animal,plant)"]}
+{"seq":407,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":408,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":409,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":410,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":411,"event":"TermLinkAdd","args":["^wonder|type=3|index=[1]","(^wonder,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":412,"event":"TermLinkAdd","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>)|type=4|index=[1]","^wonder"]}
+{"seq":413,"event":"ConceptDirectProcessedTask","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>). :!23: %1.00;0.90% {22|23 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=true|input=true"]}
+{"seq":414,"event":"TaskImmediateProcess","args":["(^wonder,{SELF},<?1 <-> (*,animal,plant)>). :!23: %1.00;0.90% {22|23 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=true|input=true","(^wonder,{SELF},<?1 <-> (*,animal,plant)>)"]}
+{"seq":415,"event":"TermLinkSelect","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>"]}
+{"seq":416,"event":"TermLinkSelect","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>"]}
+{"seq":417,"event":"TermLinkSelect","args":["(/,^wonder,_,<(*,bird,plant) --> ?1>)|type=3|index=[1]","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>","<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>"]}
+{"seq":418,"event":"ConceptFire","args":["<{SELF} --> (/,^wonder,_,<(*,bird,plant) --> ?1>)>"]}
+{"seq":419,"event":"TermLinkSelect","args":["(*,animal,plant)|type=3|index=[1]","<?1 --> (*,animal,plant)>","<?1 --> (*,animal,plant)>"]}
+{"seq":420,"event":"ConceptFire","args":["<?1 --> (*,animal,plant)>"]}
+{"seq":421,"event":"TermLinkSelect","args":["<(*,bird,plant) --> ?1>|type=4|index=[0]","(*,bird,plant)","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":422,"event":"TermLinkSelect","args":["(*,{SELF},<(*,bird,plant) --> ?1>)|type=2|index=[1, 0]","(*,bird,plant)","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":423,"event":"TaskDerive","args":["<bird --> animal>. %1.00;0.81% {25 : (-6025417149867541339,0)} |seq=false|input=false","false","true"]}
+{"seq":424,"event":"TaskAdd","args":["<bird --> animal>. %1.00;0.81% {25 : (-6025417149867541339,0)} |seq=false|input=false","Derived"]}
+{"seq":425,"event":"OUT","args":["<bird --> animal>. %1.00;0.81% {25 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":426,"event":"TermLinkSelect","args":["bird|type=1|index=[0]","(*,bird,plant)","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":427,"event":"ConceptFire","args":["<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":428,"event":"TaskLinkAdd","args":["<bird --> animal>|type=0|index=null","<bird --> animal>"]}
+{"seq":429,"event":"TaskLinkAdd","args":["<bird --> animal>|type=4|index=[0]","bird"]}
+{"seq":430,"event":"TaskLinkAdd","args":["<bird --> animal>|type=4|index=[1]","animal"]}
+{"seq":431,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> animal>"]}
+{"seq":432,"event":"TermLinkAdd","args":["<bird --> animal>|type=4|index=[0]","bird"]}
+{"seq":433,"event":"TermLinkAdd","args":["animal|type=3|index=[1]","<bird --> animal>"]}
+{"seq":434,"event":"TermLinkAdd","args":["<bird --> animal>|type=4|index=[1]","animal"]}
+{"seq":435,"event":"ConceptDirectProcessedTask","args":["<bird --> animal>. %1.00;0.81% {25 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":436,"event":"TaskImmediateProcess","args":["<bird --> animal>. %1.00;0.81% {25 : (-6025417149867541339,0)} |seq=false|input=false","<bird --> animal>"]}
+{"seq":437,"event":"TaskDerive","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {26 : (-6025417149867541339,0)} |seq=false|input=false","false","true"]}
+{"seq":438,"event":"TaskAdd","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {26 : (-6025417149867541339,0)} |seq=false|input=false","Derived"]}
+{"seq":439,"event":"OUT","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {26 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":440,"event":"TermLinkSelect","args":["(*,animal,plant)|type=2|index=[0]","animal","<bird --> animal>"]}
+{"seq":441,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":442,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=0|index=null","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":443,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":444,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[0, 0]","bird"]}
+{"seq":445,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[0, 1]","plant"]}
+{"seq":446,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":447,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[1, 0]","animal"]}
+{"seq":448,"event":"TaskLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=8|index=[1, 1]","plant"]}
+{"seq":449,"event":"TermLinkAdd","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":450,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[0]","(*,bird,plant)"]}
+{"seq":451,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(*,bird,plant)"]}
+{"seq":452,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[0]","bird"]}
+{"seq":453,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,bird,plant)"]}
+{"seq":454,"event":"TermLinkAdd","args":["(*,bird,plant)|type=2|index=[1]","plant"]}
+{"seq":455,"event":"TermLinkAdd","args":["(*,animal,plant)|type=3|index=[1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":456,"event":"TermLinkAdd","args":["<(*,bird,plant) --> (*,animal,plant)>|type=4|index=[1]","(*,animal,plant)"]}
+{"seq":457,"event":"TermLinkAdd","args":["animal|type=1|index=[0]","(*,animal,plant)"]}
+{"seq":458,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[0]","animal"]}
+{"seq":459,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(*,animal,plant)"]}
+{"seq":460,"event":"TermLinkAdd","args":["(*,animal,plant)|type=2|index=[1]","plant"]}
+{"seq":461,"event":"ConceptDirectProcessedTask","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {26 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":462,"event":"TaskImmediateProcess","args":["<(*,bird,plant) --> (*,animal,plant)>. %1.00;0.81% {26 : (-6025417149867541339,0)} |seq=false|input=false","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":463,"event":"ConceptFire","args":["<?1 --> (*,animal,plant)>"]}
+{"seq":464,"event":"TermLinkSelect","args":["plant|type=1|index=[1]","(/,?1,_,plant)","<bird --> (/,?1,_,plant)>"]}
+{"seq":465,"event":"ConceptFire","args":["<bird --> (/,?1,_,plant)>"]}
+{"seq":466,"event":"TermLinkSelect","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=3|index=[0]","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":467,"event":"TermLinkSelect","args":["^believe|type=3|index=[1]","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)","(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":468,"event":"ConceptFire","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":469,"event":"TermLinkSelect","args":["bird|type=3|index=[0]","<bird --> animal>","<bird --> animal>"]}
+{"seq":470,"event":"TermLinkSelect","args":["animal|type=3|index=[1]","<bird --> animal>","<bird --> animal>"]}
+{"seq":471,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":472,"event":"TermLinkSelect","args":["(*,animal,plant)|type=3|index=[1]","<?1 <-> (*,animal,plant)>","<?1 <-> (*,animal,plant)>"]}
+{"seq":473,"event":"TermLinkSelect","args":["(*,{SELF},<?1 <-> (*,animal,plant)>)|type=2|index=[1]","<?1 <-> (*,animal,plant)>","<?1 <-> (*,animal,plant)>"]}
+{"seq":474,"event":"ConceptFire","args":["<?1 <-> (*,animal,plant)>"]}
+{"seq":475,"event":"ConceptFire","args":["<bird --> animal>"]}
+{"seq":476,"event":"TaskDerive","args":["<animal --> (/,?1,_,plant)>? {33 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","false","true"]}
+{"seq":477,"event":"TaskAdd","args":["<animal --> (/,?1,_,plant)>? {33 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","Derived"]}
+{"seq":478,"event":"OUT","args":["<animal --> (/,?1,_,plant)>? {33 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":479,"event":"ConceptFire","args":["<(*,animal,plant) --> ?1>"]}
+{"seq":480,"event":"ConceptNew","args":["<animal --> (/,?1,_,plant)>"]}
+{"seq":481,"event":"TaskLinkAdd","args":["<animal --> (/,?1,_,plant)>|type=0|index=null","<animal --> (/,?1,_,plant)>"]}
+{"seq":482,"event":"TaskLinkAdd","args":["<animal --> (/,?1,_,plant)>|type=4|index=[0]","animal"]}
+{"seq":483,"event":"TaskLinkAdd","args":["<animal --> (/,?1,_,plant)>|type=4|index=[1]","(/,?1,_,plant)"]}
+{"seq":484,"event":"TaskLinkAdd","args":["<animal --> (/,?1,_,plant)>|type=8|index=[1, 1]","plant"]}
+{"seq":485,"event":"TermLinkAdd","args":["animal|type=3|index=[0]","<animal --> (/,?1,_,plant)>"]}
+{"seq":486,"event":"TermLinkAdd","args":["<animal --> (/,?1,_,plant)>|type=4|index=[0]","animal"]}
+{"seq":487,"event":"TermLinkAdd","args":["(/,?1,_,plant)|type=3|index=[1]","<animal --> (/,?1,_,plant)>"]}
+{"seq":488,"event":"TermLinkAdd","args":["<animal --> (/,?1,_,plant)>|type=4|index=[1]","(/,?1,_,plant)"]}
+{"seq":489,"event":"TermLinkAdd","args":["plant|type=1|index=[1]","(/,?1,_,plant)"]}
+{"seq":490,"event":"TermLinkAdd","args":["(/,?1,_,plant)|type=2|index=[1]","plant"]}
+{"seq":491,"event":"ConceptDirectProcessedTask","args":["<animal --> (/,?1,_,plant)>? {33 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false"]}
+{"seq":492,"event":"TaskImmediateProcess","args":["<animal --> (/,?1,_,plant)>? {33 : (-6025417149867541339,0);(-6025417149867541339,1)} |seq=false|input=false","<animal --> (/,?1,_,plant)>"]}
+{"seq":493,"event":"TermLinkSelect","args":["(*,bird,plant)|type=3|index=[0]","<(*,bird,plant) --> (*,animal,plant)>","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":494,"event":"TermLinkSelect","args":["(*,animal,plant)|type=3|index=[1]","<(*,bird,plant) --> (*,animal,plant)>","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":495,"event":"TermLinkSelect","args":["(*,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)|type=2|index=[1]","<(*,bird,plant) --> (*,animal,plant)>","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":496,"event":"ConceptFire","args":["<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":497,"event":"TaskDerive","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>. :!18: %1.00;0.90% {35|18 : (-6025417149867541339,0)} |seq=false|input=false","false","true"]}
+{"seq":498,"event":"TaskAdd","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>. :!18: %1.00;0.90% {35|18 : (-6025417149867541339,0)} |seq=false|input=false","Derived"]}
+{"seq":499,"event":"OUT","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>. :!18: %1.00;0.90% {35|18 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":500,"event":"ConceptFire","args":["(^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,TRUE)"]}
+{"seq":501,"event":"ConceptNew","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>"]}
+{"seq":502,"event":"TaskLinkAdd","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>|type=0|index=null","<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>"]}
+{"seq":503,"event":"TaskLinkAdd","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>|type=4|index=[0]","TRUE"]}
+{"seq":504,"event":"ConceptNew","args":["(/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)"]}
+{"seq":505,"event":"TaskLinkAdd","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>|type=4|index=[1]","(/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)"]}
+{"seq":506,"event":"TaskLinkAdd","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>|type=8|index=[1, 0]","{SELF}"]}
+{"seq":507,"event":"TaskLinkAdd","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>|type=8|index=[1, 1]","<(*,bird,plant) --> (*,animal,plant)>"]}
+{"seq":508,"event":"TaskLinkAdd","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>|type=8|index=[1, 2]","^believe"]}
+{"seq":509,"event":"TermLinkAdd","args":["TRUE|type=3|index=[0]","<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>"]}
+{"seq":510,"event":"TermLinkAdd","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>|type=4|index=[0]","TRUE"]}
+{"seq":511,"event":"TermLinkAdd","args":["(/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)|type=3|index=[1]","<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>"]}
+{"seq":512,"event":"TermLinkAdd","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>|type=4|index=[1]","(/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)"]}
+{"seq":513,"event":"ConceptDirectProcessedTask","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>. :!18: %1.00;0.90% {35|18 : (-6025417149867541339,0)} |seq=false|input=false"]}
+{"seq":514,"event":"TaskImmediateProcess","args":["<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>. :!18: %1.00;0.90% {35|18 : (-6025417149867541339,0)} |seq=false|input=false","<TRUE --> (/,^believe,{SELF},<(*,bird,plant) --> (*,animal,plant)>,_)>"]}
+{"seq":515,"event":"TermLinkSelect","args":["<animal --> (/,?1,_,plant)>|type=4|index=[1]","(/,?1,_,plant)","<bird --> (/,?1,_,plant)>"]}
+{"seq":516,"event":"ConceptFire","args":["<bird --> (/,?1,_,plant)>"]}
+{"seq":517,"event":"TermLinkSelect","args":["(*,animal,plant)|type=3|index=[0]","<(*,animal,plant) --> ?1>","<(*,animal,plant) --> ?1>"]}
+{"seq":518,"event":"ConceptFire","args":["<(*,animal,plant) --> ?1>"]}
+{"seq":519,"event":"after-cycles","args":[]}

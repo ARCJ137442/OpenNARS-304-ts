@@ -1,0 +1,1422 @@
+(node:45992) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("./scripts/ts-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\scripts\e2e\NalTraceRunner.mjs.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\Concept.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\Task.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\Sentence.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\TaskLink.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\TermLink.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\DerivationContext.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\events\Events.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\events\OutputHandler.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\main\Debug.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\main\Nar.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\Item.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\storage\Bag.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\CompoundTerm.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\BudgetFunctions.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\UtilityFunctions.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\LocalRules.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\concept\ProcessQuestion.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\plugin\mental\InternalExperience.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\Symbols.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Term.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Conjunction.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Implication.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Equivalence.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Interval.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Variable.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\Stamp.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\TruthFunctions.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\TemporalRules.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\Operation.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\runtime\jree-compat.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\events\EventHandler.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\main\Parameters.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\ConfigReader.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\Parser.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\Narsese.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\events\EventEmitter.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Inheritance.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\SetExt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\SetInt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Tense.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\Operator.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\plugin\mental\Emotions.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\plugin\perception\SensoryChannel.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\storage\Memory.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\BudgetValue.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Terms.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Statement.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Similarity.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Variables.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Product.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\NullOperator.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\misc\Add.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\misc\Count.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\misc\Reflect.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\mental\Anticipate.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\mental\Believe.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\mental\Evaluate.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\mental\Want.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\mental\Wonder.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\IntersectionExt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\IntersectionInt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\ImageInt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\ImageExt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\DifferenceExt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\DifferenceInt.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Instance.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Property.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\InstanceProperty.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Negation.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Disjunction.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\CompositionalRules.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\TemporalInferenceControl.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\SetTensional.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\concept\ProcessTask.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\GeneralInferenceControl.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\operator\FunctionOperator.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\language\Image.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\concept\ProcessJudgment.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\concept\ProcessGoal.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\control\concept\ProcessAnticipation.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\RuleTables.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\SyllogisticRules.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:45992) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\StructuralRules.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+{"seq":0,"event":"TaskAdd","args":["(^add,{SELF},2,3,?1)! %1.00;0.90% {0 : (3153837435639683,0)} ","Perceived"]}
+{"seq":1,"event":"OUT","args":["(^add,{SELF},2,3,?1)! %1.00;0.90% {0 : (3153837435639683,0)} "]}
+{"seq":2,"event":"before-cycles","args":[]}
+{"seq":3,"event":"ConceptNew","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":4,"event":"EXE","args":["ExecutionResult@b41"]}
+{"seq":5,"event":"TaskAdd","args":["(^add,{SELF},2,3,5). :!0: %1.00;0.90% {0|0 : (3153837435639683,1)} ","Perceived"]}
+{"seq":6,"event":"OUT","args":["(^add,{SELF},2,3,5). :!0: %1.00;0.90% {0|0 : (3153837435639683,1)} "]}
+{"seq":7,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,?1)|type=0|index=null","(^add,{SELF},2,3,?1)"]}
+{"seq":8,"event":"ConceptNew","args":["(*,{SELF},2,3,?1)"]}
+{"seq":9,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,?1)|type=4|index=[0]","(*,{SELF},2,3,?1)"]}
+{"seq":10,"event":"ConceptNew","args":["{SELF}"]}
+{"seq":11,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,?1)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":12,"event":"ConceptNew","args":["2"]}
+{"seq":13,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,?1)|type=8|index=[0, 1]","2"]}
+{"seq":14,"event":"ConceptNew","args":["3"]}
+{"seq":15,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,?1)|type=8|index=[0, 2]","3"]}
+{"seq":16,"event":"ConceptNew","args":["^add"]}
+{"seq":17,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,?1)|type=4|index=[1]","^add"]}
+{"seq":18,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=3|index=[0]","(^add,{SELF},2,3,?1)"]}
+{"seq":19,"event":"TermLinkAdd","args":["(^add,{SELF},2,3,?1)|type=4|index=[0]","(*,{SELF},2,3,?1)"]}
+{"seq":20,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,?1)"]}
+{"seq":21,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[0]","{SELF}"]}
+{"seq":22,"event":"ConceptNew","args":["SELF"]}
+{"seq":23,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":24,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":25,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,?1)"]}
+{"seq":26,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[0, 0]","SELF"]}
+{"seq":27,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,?1)"]}
+{"seq":28,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[1]","2"]}
+{"seq":29,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,?1)"]}
+{"seq":30,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[2]","3"]}
+{"seq":31,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},2,3,?1)"]}
+{"seq":32,"event":"TermLinkAdd","args":["(^add,{SELF},2,3,?1)|type=4|index=[1]","^add"]}
+{"seq":33,"event":"ConceptDirectProcessedTask","args":["(^add,{SELF},2,3,?1)! %1.00;0.90% {0 : (3153837435639683,0)} "]}
+{"seq":34,"event":"TaskImmediateProcess","args":["(^add,{SELF},2,3,?1)! %1.00;0.90% {0 : (3153837435639683,0)} ","(^add,{SELF},2,3,?1)"]}
+{"seq":35,"event":"ConceptNew","args":["(^add,{SELF},2,3,5)"]}
+{"seq":36,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=0|index=null","(^add,{SELF},2,3,5)"]}
+{"seq":37,"event":"ConceptNew","args":["(*,{SELF},2,3,5)"]}
+{"seq":38,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=4|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":39,"event":"TaskAdd","args":["(^add,{SELF},2,3,5). :!0: %1.00;0.90% {0|0 : (3153837435639683,1)} ","Activated"]}
+{"seq":40,"event":"OUT","args":["(^add,{SELF},2,3,5). :!0: %1.00;0.90% {0|0 : (3153837435639683,1)} "]}
+{"seq":41,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":42,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=8|index=[0, 1]","2"]}
+{"seq":43,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=8|index=[0, 2]","3"]}
+{"seq":44,"event":"ConceptNew","args":["5"]}
+{"seq":45,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=8|index=[0, 3]","5"]}
+{"seq":46,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=4|index=[1]","^add"]}
+{"seq":47,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=3|index=[0]","(^add,{SELF},2,3,5)"]}
+{"seq":48,"event":"TermLinkAdd","args":["(^add,{SELF},2,3,5)|type=4|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":49,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":50,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0]","{SELF}"]}
+{"seq":51,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":52,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":53,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,5)"]}
+{"seq":54,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":55,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,5)"]}
+{"seq":56,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[1]","2"]}
+{"seq":57,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,5)"]}
+{"seq":58,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[2]","3"]}
+{"seq":59,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},2,3,5)"]}
+{"seq":60,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[3]","5"]}
+{"seq":61,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},2,3,5)"]}
+{"seq":62,"event":"TermLinkAdd","args":["(^add,{SELF},2,3,5)|type=4|index=[1]","^add"]}
+{"seq":63,"event":"ConceptDirectProcessedTask","args":["(^add,{SELF},2,3,5). :!0: %1.00;0.90% {0|0 : (3153837435639683,1)} "]}
+{"seq":64,"event":"TaskImmediateProcess","args":["(^add,{SELF},2,3,5). :!0: %1.00;0.90% {0|0 : (3153837435639683,1)} ","(^add,{SELF},2,3,5)"]}
+{"seq":65,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=0|index=null","(^add,{SELF},2,3,5)"]}
+{"seq":66,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=4|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":67,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":68,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=8|index=[0, 1]","2"]}
+{"seq":69,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=8|index=[0, 2]","3"]}
+{"seq":70,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=8|index=[0, 3]","5"]}
+{"seq":71,"event":"TaskLinkAdd","args":["(^add,{SELF},2,3,5)|type=4|index=[1]","^add"]}
+{"seq":72,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=3|index=[0]","(^add,{SELF},2,3,5)"]}
+{"seq":73,"event":"TermLinkAdd","args":["(^add,{SELF},2,3,5)|type=4|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":74,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":75,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0]","{SELF}"]}
+{"seq":76,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":77,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":78,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,5)"]}
+{"seq":79,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":80,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,5)"]}
+{"seq":81,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[1]","2"]}
+{"seq":82,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,5)"]}
+{"seq":83,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[2]","3"]}
+{"seq":84,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},2,3,5)"]}
+{"seq":85,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[3]","5"]}
+{"seq":86,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},2,3,5)"]}
+{"seq":87,"event":"TermLinkAdd","args":["(^add,{SELF},2,3,5)|type=4|index=[1]","^add"]}
+{"seq":88,"event":"ConceptDirectProcessedTask","args":["(^add,{SELF},2,3,5). :!0: %1.00;0.90% {0|0 : (3153837435639683,1)} "]}
+{"seq":89,"event":"TaskImmediateProcess","args":["(^add,{SELF},2,3,5). :!0: %1.00;0.90% {0|0 : (3153837435639683,1)} ","(^add,{SELF},2,3,5)"]}
+{"seq":90,"event":"BeliefSelect","args":["(^add,{SELF},2,3,5). :!0: %1.00;0.90% {0|0 : (3153837435639683,1)} "]}
+{"seq":91,"event":"BeliefReason","args":["(^add,{SELF},2,3,5). %1.00;0.47% {0 : (3153837435639683,1)} ","(^add,{SELF},2,3,5)","(^add,{SELF},2,3,?1)","(^add,{SELF},2,3,?1)"]}
+{"seq":92,"event":"TaskDerive","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":93,"event":"TaskAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":94,"event":"OUT","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":95,"event":"TaskDerive","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>! %1.00;0.21% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":96,"event":"TaskAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>! %1.00;0.21% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":97,"event":"OUT","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>! %1.00;0.21% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":98,"event":"TaskDerive","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":99,"event":"TaskAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":100,"event":"OUT","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":101,"event":"TaskDerive","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))! %1.00;0.31% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":102,"event":"TaskAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))! %1.00;0.31% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":103,"event":"OUT","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))! %1.00;0.31% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":104,"event":"TaskDerive","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":105,"event":"TaskAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":106,"event":"OUT","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":107,"event":"TaskDerive","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":108,"event":"TaskAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":109,"event":"OUT","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":110,"event":"TaskDerive","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":111,"event":"TaskAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":112,"event":"OUT","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":113,"event":"TaskDerive","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":114,"event":"TaskAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":115,"event":"OUT","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":116,"event":"TaskDerive","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":117,"event":"TaskAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":118,"event":"OUT","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":119,"event":"TaskDerive","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":120,"event":"TaskAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":121,"event":"OUT","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":122,"event":"TaskDerive","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":123,"event":"TaskAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":124,"event":"OUT","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":125,"event":"TaskDerive","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":126,"event":"TaskAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":127,"event":"OUT","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":128,"event":"TaskDerive","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":129,"event":"TaskAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":130,"event":"OUT","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":131,"event":"TaskDerive","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":132,"event":"TaskAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":133,"event":"OUT","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":134,"event":"TaskDerive","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":135,"event":"TaskAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":136,"event":"OUT","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":137,"event":"TaskDerive","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":138,"event":"TaskAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":139,"event":"OUT","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":140,"event":"TaskDerive","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":141,"event":"TaskAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":142,"event":"OUT","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":143,"event":"TaskDerive","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":144,"event":"TaskAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":145,"event":"OUT","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":146,"event":"TaskDerive","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","false","false"]}
+{"seq":147,"event":"TaskAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":148,"event":"OUT","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":149,"event":"TermLinkSelect","args":["(^add,{SELF},2,3,5)|type=4|index=[1]","^add","(^add,{SELF},2,3,?1)"]}
+{"seq":150,"event":"ConceptFire","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":151,"event":"ConceptNew","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>"]}
+{"seq":152,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=0|index=null","<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>"]}
+{"seq":153,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=4|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":154,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=8|index=[0, 0]","{SELF}"]}
+{"seq":155,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=8|index=[0, 1]","2"]}
+{"seq":156,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=8|index=[0, 2]","3"]}
+{"seq":157,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=8|index=[0, 3]","5"]}
+{"seq":158,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=4|index=[1]","(*,{SELF},2,3,?1)"]}
+{"seq":159,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=8|index=[1, 0]","{SELF}"]}
+{"seq":160,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=8|index=[1, 1]","2"]}
+{"seq":161,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=8|index=[1, 2]","3"]}
+{"seq":162,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=3|index=[0]","<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>"]}
+{"seq":163,"event":"TermLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=4|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":164,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":165,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0]","{SELF}"]}
+{"seq":166,"event":"ConceptNew","args":["SELF"]}
+{"seq":167,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":168,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":169,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,5)"]}
+{"seq":170,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":171,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,5)"]}
+{"seq":172,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[1]","2"]}
+{"seq":173,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,5)"]}
+{"seq":174,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[2]","3"]}
+{"seq":175,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},2,3,5)"]}
+{"seq":176,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[3]","5"]}
+{"seq":177,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=3|index=[1]","<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>"]}
+{"seq":178,"event":"TermLinkAdd","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=4|index=[1]","(*,{SELF},2,3,?1)"]}
+{"seq":179,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,?1)"]}
+{"seq":180,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[0]","{SELF}"]}
+{"seq":181,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":182,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":183,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,?1)"]}
+{"seq":184,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[0, 0]","SELF"]}
+{"seq":185,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,?1)"]}
+{"seq":186,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[1]","2"]}
+{"seq":187,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,?1)"]}
+{"seq":188,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[2]","3"]}
+{"seq":189,"event":"ConceptDirectProcessedTask","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>! %1.00;0.21% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":190,"event":"TaskImmediateProcess","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>! %1.00;0.21% {1 : (3153837435639683,1);(3153837435639683,0)} ","<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>"]}
+{"seq":191,"event":"ConceptNew","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>"]}
+{"seq":192,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=0|index=null","<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>"]}
+{"seq":193,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=4|index=[0]","(*,{SELF},2,3,?1)"]}
+{"seq":194,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=8|index=[0, 0]","{SELF}"]}
+{"seq":195,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=8|index=[0, 1]","2"]}
+{"seq":196,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=8|index=[0, 2]","3"]}
+{"seq":197,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=4|index=[1]","(*,{SELF},2,3,5)"]}
+{"seq":198,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=8|index=[1, 0]","{SELF}"]}
+{"seq":199,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=8|index=[1, 1]","2"]}
+{"seq":200,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=8|index=[1, 2]","3"]}
+{"seq":201,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=8|index=[1, 3]","5"]}
+{"seq":202,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=3|index=[0]","<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>"]}
+{"seq":203,"event":"TermLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=4|index=[0]","(*,{SELF},2,3,?1)"]}
+{"seq":204,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,?1)"]}
+{"seq":205,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[0]","{SELF}"]}
+{"seq":206,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":207,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":208,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,?1)"]}
+{"seq":209,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[0, 0]","SELF"]}
+{"seq":210,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,?1)"]}
+{"seq":211,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[1]","2"]}
+{"seq":212,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,?1)"]}
+{"seq":213,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[2]","3"]}
+{"seq":214,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=3|index=[1]","<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>"]}
+{"seq":215,"event":"TermLinkAdd","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>|type=4|index=[1]","(*,{SELF},2,3,5)"]}
+{"seq":216,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":217,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0]","{SELF}"]}
+{"seq":218,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":219,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":220,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,5)"]}
+{"seq":221,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":222,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,5)"]}
+{"seq":223,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[1]","2"]}
+{"seq":224,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,5)"]}
+{"seq":225,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[2]","3"]}
+{"seq":226,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},2,3,5)"]}
+{"seq":227,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[3]","5"]}
+{"seq":228,"event":"ConceptDirectProcessedTask","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":229,"event":"TaskImmediateProcess","args":["<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","<(*,{SELF},2,3,?1) --> (*,{SELF},2,3,5)>"]}
+{"seq":230,"event":"ConceptNew","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>"]}
+{"seq":231,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=0|index=null","<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>"]}
+{"seq":232,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=4|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":233,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=8|index=[0, 0]","{SELF}"]}
+{"seq":234,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=8|index=[0, 1]","2"]}
+{"seq":235,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=8|index=[0, 2]","3"]}
+{"seq":236,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=8|index=[0, 3]","5"]}
+{"seq":237,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=4|index=[1]","(*,{SELF},2,3,?1)"]}
+{"seq":238,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=8|index=[1, 0]","{SELF}"]}
+{"seq":239,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=8|index=[1, 1]","2"]}
+{"seq":240,"event":"TaskLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=8|index=[1, 2]","3"]}
+{"seq":241,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=3|index=[0]","<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>"]}
+{"seq":242,"event":"TermLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=4|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":243,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":244,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0]","{SELF}"]}
+{"seq":245,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":246,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":247,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,5)"]}
+{"seq":248,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":249,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,5)"]}
+{"seq":250,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[1]","2"]}
+{"seq":251,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,5)"]}
+{"seq":252,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[2]","3"]}
+{"seq":253,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},2,3,5)"]}
+{"seq":254,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[3]","5"]}
+{"seq":255,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=3|index=[1]","<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>"]}
+{"seq":256,"event":"TermLinkAdd","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>|type=4|index=[1]","(*,{SELF},2,3,?1)"]}
+{"seq":257,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,?1)"]}
+{"seq":258,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[0]","{SELF}"]}
+{"seq":259,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":260,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":261,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,?1)"]}
+{"seq":262,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[0, 0]","SELF"]}
+{"seq":263,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,?1)"]}
+{"seq":264,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[1]","2"]}
+{"seq":265,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,?1)"]}
+{"seq":266,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[2]","3"]}
+{"seq":267,"event":"ConceptDirectProcessedTask","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":268,"event":"TaskImmediateProcess","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>"]}
+{"seq":269,"event":"ConceptNew","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":270,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=0|index=null","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":271,"event":"ConceptNew","args":["(^add,#1,#2,#3,5)"]}
+{"seq":272,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[0]","(^add,#1,#2,#3,5)"]}
+{"seq":273,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=8|index=[0, 0, 3]","5"]}
+{"seq":274,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[0, 1]","^add"]}
+{"seq":275,"event":"ConceptNew","args":["(^add,#1,#2,#3,?4)"]}
+{"seq":276,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[1]","(^add,#1,#2,#3,?4)"]}
+{"seq":277,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[1, 1]","^add"]}
+{"seq":278,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,5)|type=1|index=[0]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":279,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[0]","(^add,#1,#2,#3,5)"]}
+{"seq":280,"event":"ConceptNew","args":["(*,#1,#2,#3,5)"]}
+{"seq":281,"event":"TermLinkAdd","args":["(*,#1,#2,#3,5)|type=3|index=[0]","(^add,#1,#2,#3,5)"]}
+{"seq":282,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,5)|type=4|index=[0]","(*,#1,#2,#3,5)"]}
+{"seq":283,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,#1,#2,#3,5)"]}
+{"seq":284,"event":"TermLinkAdd","args":["(*,#1,#2,#3,5)|type=2|index=[3]","5"]}
+{"seq":285,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,#2,#3,5)"]}
+{"seq":286,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,5)|type=4|index=[1]","^add"]}
+{"seq":287,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":288,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[0, 1]","^add"]}
+{"seq":289,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,?4)|type=1|index=[1]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":290,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[1]","(^add,#1,#2,#3,?4)"]}
+{"seq":291,"event":"ConceptNew","args":["(*,#1,#2,#3,?4)"]}
+{"seq":292,"event":"TermLinkAdd","args":["(*,#1,#2,#3,?4)|type=3|index=[0]","(^add,#1,#2,#3,?4)"]}
+{"seq":293,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,?4)|type=4|index=[0]","(*,#1,#2,#3,?4)"]}
+{"seq":294,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,#2,#3,?4)"]}
+{"seq":295,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,?4)|type=4|index=[1]","^add"]}
+{"seq":296,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":297,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[1, 1]","^add"]}
+{"seq":298,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))! %1.00;0.31% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":299,"event":"TaskImmediateProcess","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))! %1.00;0.31% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":300,"event":"ConceptNew","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":301,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=0|index=null","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":302,"event":"ConceptNew","args":["(^add,#1,2,3,5)"]}
+{"seq":303,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[0]","(^add,#1,2,3,5)"]}
+{"seq":304,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=8|index=[0, 0, 1]","2"]}
+{"seq":305,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=8|index=[0, 0, 2]","3"]}
+{"seq":306,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=8|index=[0, 0, 3]","5"]}
+{"seq":307,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[0, 1]","^add"]}
+{"seq":308,"event":"ConceptNew","args":["(^add,#1,2,3,?2)"]}
+{"seq":309,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[1]","(^add,#1,2,3,?2)"]}
+{"seq":310,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=8|index=[1, 0, 1]","2"]}
+{"seq":311,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=8|index=[1, 0, 2]","3"]}
+{"seq":312,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[1, 1]","^add"]}
+{"seq":313,"event":"TermLinkAdd","args":["(^add,#1,2,3,5)|type=1|index=[0]","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":314,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[0]","(^add,#1,2,3,5)"]}
+{"seq":315,"event":"ConceptNew","args":["(*,#1,2,3,5)"]}
+{"seq":316,"event":"TermLinkAdd","args":["(*,#1,2,3,5)|type=3|index=[0]","(^add,#1,2,3,5)"]}
+{"seq":317,"event":"TermLinkAdd","args":["(^add,#1,2,3,5)|type=4|index=[0]","(*,#1,2,3,5)"]}
+{"seq":318,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,#1,2,3,5)"]}
+{"seq":319,"event":"TermLinkAdd","args":["(*,#1,2,3,5)|type=2|index=[1]","2"]}
+{"seq":320,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,#1,2,3,5)"]}
+{"seq":321,"event":"TermLinkAdd","args":["(*,#1,2,3,5)|type=2|index=[2]","3"]}
+{"seq":322,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,#1,2,3,5)"]}
+{"seq":323,"event":"TermLinkAdd","args":["(*,#1,2,3,5)|type=2|index=[3]","5"]}
+{"seq":324,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,2,3,5)"]}
+{"seq":325,"event":"TermLinkAdd","args":["(^add,#1,2,3,5)|type=4|index=[1]","^add"]}
+{"seq":326,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":327,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[0, 1]","^add"]}
+{"seq":328,"event":"TermLinkAdd","args":["(^add,#1,2,3,?2)|type=1|index=[1]","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":329,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[1]","(^add,#1,2,3,?2)"]}
+{"seq":330,"event":"ConceptNew","args":["(*,#1,2,3,?2)"]}
+{"seq":331,"event":"TermLinkAdd","args":["(*,#1,2,3,?2)|type=3|index=[0]","(^add,#1,2,3,?2)"]}
+{"seq":332,"event":"TermLinkAdd","args":["(^add,#1,2,3,?2)|type=4|index=[0]","(*,#1,2,3,?2)"]}
+{"seq":333,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,#1,2,3,?2)"]}
+{"seq":334,"event":"TermLinkAdd","args":["(*,#1,2,3,?2)|type=2|index=[1]","2"]}
+{"seq":335,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,#1,2,3,?2)"]}
+{"seq":336,"event":"TermLinkAdd","args":["(*,#1,2,3,?2)|type=2|index=[2]","3"]}
+{"seq":337,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,2,3,?2)"]}
+{"seq":338,"event":"TermLinkAdd","args":["(^add,#1,2,3,?2)|type=4|index=[1]","^add"]}
+{"seq":339,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":340,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[1, 1]","^add"]}
+{"seq":341,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":342,"event":"TaskImmediateProcess","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":343,"event":"ConceptNew","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":344,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=0|index=null","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":345,"event":"ConceptNew","args":["(^add,#1,2,#2,5)"]}
+{"seq":346,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[0]","(^add,#1,2,#2,5)"]}
+{"seq":347,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=8|index=[0, 0, 1]","2"]}
+{"seq":348,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=8|index=[0, 0, 3]","5"]}
+{"seq":349,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":350,"event":"ConceptNew","args":["(^add,#1,2,#2,?3)"]}
+{"seq":351,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[1]","(^add,#1,2,#2,?3)"]}
+{"seq":352,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=8|index=[1, 0, 1]","2"]}
+{"seq":353,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":354,"event":"TermLinkAdd","args":["(^add,#1,2,#2,5)|type=1|index=[0]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":355,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[0]","(^add,#1,2,#2,5)"]}
+{"seq":356,"event":"ConceptNew","args":["(*,#1,2,#2,5)"]}
+{"seq":357,"event":"TermLinkAdd","args":["(*,#1,2,#2,5)|type=3|index=[0]","(^add,#1,2,#2,5)"]}
+{"seq":358,"event":"TermLinkAdd","args":["(^add,#1,2,#2,5)|type=4|index=[0]","(*,#1,2,#2,5)"]}
+{"seq":359,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,#1,2,#2,5)"]}
+{"seq":360,"event":"TermLinkAdd","args":["(*,#1,2,#2,5)|type=2|index=[1]","2"]}
+{"seq":361,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,#1,2,#2,5)"]}
+{"seq":362,"event":"TermLinkAdd","args":["(*,#1,2,#2,5)|type=2|index=[3]","5"]}
+{"seq":363,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,2,#2,5)"]}
+{"seq":364,"event":"TermLinkAdd","args":["(^add,#1,2,#2,5)|type=4|index=[1]","^add"]}
+{"seq":365,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":366,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":367,"event":"TermLinkAdd","args":["(^add,#1,2,#2,?3)|type=1|index=[1]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":368,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[1]","(^add,#1,2,#2,?3)"]}
+{"seq":369,"event":"ConceptNew","args":["(*,#1,2,#2,?3)"]}
+{"seq":370,"event":"TermLinkAdd","args":["(*,#1,2,#2,?3)|type=3|index=[0]","(^add,#1,2,#2,?3)"]}
+{"seq":371,"event":"TermLinkAdd","args":["(^add,#1,2,#2,?3)|type=4|index=[0]","(*,#1,2,#2,?3)"]}
+{"seq":372,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,#1,2,#2,?3)"]}
+{"seq":373,"event":"TermLinkAdd","args":["(*,#1,2,#2,?3)|type=2|index=[1]","2"]}
+{"seq":374,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,2,#2,?3)"]}
+{"seq":375,"event":"TermLinkAdd","args":["(^add,#1,2,#2,?3)|type=4|index=[1]","^add"]}
+{"seq":376,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":377,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":378,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":379,"event":"TaskImmediateProcess","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":380,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=0|index=null","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":381,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[0]","(^add,#1,2,#2,5)"]}
+{"seq":382,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=8|index=[0, 0, 1]","2"]}
+{"seq":383,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=8|index=[0, 0, 3]","5"]}
+{"seq":384,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":385,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[1]","(^add,#1,2,#2,?3)"]}
+{"seq":386,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=8|index=[1, 0, 1]","2"]}
+{"seq":387,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":388,"event":"TermLinkAdd","args":["(^add,#1,2,#2,5)|type=1|index=[0]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":389,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[0]","(^add,#1,2,#2,5)"]}
+{"seq":390,"event":"TermLinkAdd","args":["(*,#1,2,#2,5)|type=3|index=[0]","(^add,#1,2,#2,5)"]}
+{"seq":391,"event":"TermLinkAdd","args":["(^add,#1,2,#2,5)|type=4|index=[0]","(*,#1,2,#2,5)"]}
+{"seq":392,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,#1,2,#2,5)"]}
+{"seq":393,"event":"TermLinkAdd","args":["(*,#1,2,#2,5)|type=2|index=[1]","2"]}
+{"seq":394,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,#1,2,#2,5)"]}
+{"seq":395,"event":"TermLinkAdd","args":["(*,#1,2,#2,5)|type=2|index=[3]","5"]}
+{"seq":396,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,2,#2,5)"]}
+{"seq":397,"event":"TermLinkAdd","args":["(^add,#1,2,#2,5)|type=4|index=[1]","^add"]}
+{"seq":398,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":399,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":400,"event":"TermLinkAdd","args":["(^add,#1,2,#2,?3)|type=1|index=[1]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":401,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[1]","(^add,#1,2,#2,?3)"]}
+{"seq":402,"event":"TermLinkAdd","args":["(*,#1,2,#2,?3)|type=3|index=[0]","(^add,#1,2,#2,?3)"]}
+{"seq":403,"event":"TermLinkAdd","args":["(^add,#1,2,#2,?3)|type=4|index=[0]","(*,#1,2,#2,?3)"]}
+{"seq":404,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,#1,2,#2,?3)"]}
+{"seq":405,"event":"TermLinkAdd","args":["(*,#1,2,#2,?3)|type=2|index=[1]","2"]}
+{"seq":406,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,2,#2,?3)"]}
+{"seq":407,"event":"TermLinkAdd","args":["(^add,#1,2,#2,?3)|type=4|index=[1]","^add"]}
+{"seq":408,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":409,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":410,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":411,"event":"TaskImmediateProcess","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":412,"event":"ConceptNew","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":413,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=0|index=null","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":414,"event":"ConceptNew","args":["(^add,{SELF},#1,3,5)"]}
+{"seq":415,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=2|index=[0]","(^add,{SELF},#1,3,5)"]}
+{"seq":416,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=8|index=[0, 0, 0]","{SELF}"]}
+{"seq":417,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=8|index=[0, 0, 2]","3"]}
+{"seq":418,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=8|index=[0, 0, 3]","5"]}
+{"seq":419,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=2|index=[0, 1]","^add"]}
+{"seq":420,"event":"ConceptNew","args":["(^add,{SELF},#1,3,?2)"]}
+{"seq":421,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=2|index=[1]","(^add,{SELF},#1,3,?2)"]}
+{"seq":422,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=8|index=[1, 0, 0]","{SELF}"]}
+{"seq":423,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=8|index=[1, 0, 2]","3"]}
+{"seq":424,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=2|index=[1, 1]","^add"]}
+{"seq":425,"event":"TermLinkAdd","args":["(^add,{SELF},#1,3,5)|type=1|index=[0]","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":426,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=2|index=[0]","(^add,{SELF},#1,3,5)"]}
+{"seq":427,"event":"ConceptNew","args":["(*,{SELF},#1,3,5)"]}
+{"seq":428,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,5)|type=3|index=[0]","(^add,{SELF},#1,3,5)"]}
+{"seq":429,"event":"TermLinkAdd","args":["(^add,{SELF},#1,3,5)|type=4|index=[0]","(*,{SELF},#1,3,5)"]}
+{"seq":430,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},#1,3,5)"]}
+{"seq":431,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,5)|type=2|index=[0]","{SELF}"]}
+{"seq":432,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":433,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":434,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},#1,3,5)"]}
+{"seq":435,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":436,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},#1,3,5)"]}
+{"seq":437,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,5)|type=2|index=[2]","3"]}
+{"seq":438,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},#1,3,5)"]}
+{"seq":439,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,5)|type=2|index=[3]","5"]}
+{"seq":440,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},#1,3,5)"]}
+{"seq":441,"event":"TermLinkAdd","args":["(^add,{SELF},#1,3,5)|type=4|index=[1]","^add"]}
+{"seq":442,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":443,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=2|index=[0, 1]","^add"]}
+{"seq":444,"event":"TermLinkAdd","args":["(^add,{SELF},#1,3,?2)|type=1|index=[1]","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":445,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=2|index=[1]","(^add,{SELF},#1,3,?2)"]}
+{"seq":446,"event":"ConceptNew","args":["(*,{SELF},#1,3,?2)"]}
+{"seq":447,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,?2)|type=3|index=[0]","(^add,{SELF},#1,3,?2)"]}
+{"seq":448,"event":"TermLinkAdd","args":["(^add,{SELF},#1,3,?2)|type=4|index=[0]","(*,{SELF},#1,3,?2)"]}
+{"seq":449,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},#1,3,?2)"]}
+{"seq":450,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,?2)|type=2|index=[0]","{SELF}"]}
+{"seq":451,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":452,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":453,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},#1,3,?2)"]}
+{"seq":454,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,?2)|type=2|index=[0, 0]","SELF"]}
+{"seq":455,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},#1,3,?2)"]}
+{"seq":456,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,?2)|type=2|index=[2]","3"]}
+{"seq":457,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},#1,3,?2)"]}
+{"seq":458,"event":"TermLinkAdd","args":["(^add,{SELF},#1,3,?2)|type=4|index=[1]","^add"]}
+{"seq":459,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":460,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))|type=2|index=[1, 1]","^add"]}
+{"seq":461,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":462,"event":"TaskImmediateProcess","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":463,"event":"ConceptNew","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":464,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=0|index=null","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":465,"event":"ConceptNew","args":["(^add,{#1},2,#2,5)"]}
+{"seq":466,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=2|index=[0]","(^add,{#1},2,#2,5)"]}
+{"seq":467,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=8|index=[0, 0, 1]","2"]}
+{"seq":468,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=8|index=[0, 0, 3]","5"]}
+{"seq":469,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":470,"event":"ConceptNew","args":["(^add,{#1},2,#2,?3)"]}
+{"seq":471,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=2|index=[1]","(^add,{#1},2,#2,?3)"]}
+{"seq":472,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=8|index=[1, 0, 1]","2"]}
+{"seq":473,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":474,"event":"TermLinkAdd","args":["(^add,{#1},2,#2,5)|type=1|index=[0]","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":475,"event":"TermLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=2|index=[0]","(^add,{#1},2,#2,5)"]}
+{"seq":476,"event":"ConceptNew","args":["(*,{#1},2,#2,5)"]}
+{"seq":477,"event":"TermLinkAdd","args":["(*,{#1},2,#2,5)|type=3|index=[0]","(^add,{#1},2,#2,5)"]}
+{"seq":478,"event":"TermLinkAdd","args":["(^add,{#1},2,#2,5)|type=4|index=[0]","(*,{#1},2,#2,5)"]}
+{"seq":479,"event":"ConceptNew","args":["{#1}"]}
+{"seq":480,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},2,#2,5)"]}
+{"seq":481,"event":"TermLinkAdd","args":["(*,{#1},2,#2,5)|type=2|index=[0]","{#1}"]}
+{"seq":482,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{#1},2,#2,5)"]}
+{"seq":483,"event":"TermLinkAdd","args":["(*,{#1},2,#2,5)|type=2|index=[1]","2"]}
+{"seq":484,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{#1},2,#2,5)"]}
+{"seq":485,"event":"TermLinkAdd","args":["(*,{#1},2,#2,5)|type=2|index=[3]","5"]}
+{"seq":486,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},2,#2,5)"]}
+{"seq":487,"event":"TermLinkAdd","args":["(^add,{#1},2,#2,5)|type=4|index=[1]","^add"]}
+{"seq":488,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":489,"event":"TermLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":490,"event":"TermLinkAdd","args":["(^add,{#1},2,#2,?3)|type=1|index=[1]","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":491,"event":"TermLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=2|index=[1]","(^add,{#1},2,#2,?3)"]}
+{"seq":492,"event":"ConceptNew","args":["(*,{#1},2,#2,?3)"]}
+{"seq":493,"event":"TermLinkAdd","args":["(*,{#1},2,#2,?3)|type=3|index=[0]","(^add,{#1},2,#2,?3)"]}
+{"seq":494,"event":"TermLinkAdd","args":["(^add,{#1},2,#2,?3)|type=4|index=[0]","(*,{#1},2,#2,?3)"]}
+{"seq":495,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},2,#2,?3)"]}
+{"seq":496,"event":"TermLinkAdd","args":["(*,{#1},2,#2,?3)|type=2|index=[0]","{#1}"]}
+{"seq":497,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{#1},2,#2,?3)"]}
+{"seq":498,"event":"TermLinkAdd","args":["(*,{#1},2,#2,?3)|type=2|index=[1]","2"]}
+{"seq":499,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},2,#2,?3)"]}
+{"seq":500,"event":"TermLinkAdd","args":["(^add,{#1},2,#2,?3)|type=4|index=[1]","^add"]}
+{"seq":501,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":502,"event":"TermLinkAdd","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":503,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":504,"event":"TaskImmediateProcess","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":505,"event":"ConceptNew","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":506,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=0|index=null","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":507,"event":"ConceptNew","args":["(^add,#1,#2,3,5)"]}
+{"seq":508,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[0]","(^add,#1,#2,3,5)"]}
+{"seq":509,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=8|index=[0, 0, 2]","3"]}
+{"seq":510,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=8|index=[0, 0, 3]","5"]}
+{"seq":511,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":512,"event":"ConceptNew","args":["(^add,#1,#2,3,?3)"]}
+{"seq":513,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[1]","(^add,#1,#2,3,?3)"]}
+{"seq":514,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=8|index=[1, 0, 2]","3"]}
+{"seq":515,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":516,"event":"TermLinkAdd","args":["(^add,#1,#2,3,5)|type=1|index=[0]","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":517,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[0]","(^add,#1,#2,3,5)"]}
+{"seq":518,"event":"ConceptNew","args":["(*,#1,#2,3,5)"]}
+{"seq":519,"event":"TermLinkAdd","args":["(*,#1,#2,3,5)|type=3|index=[0]","(^add,#1,#2,3,5)"]}
+{"seq":520,"event":"TermLinkAdd","args":["(^add,#1,#2,3,5)|type=4|index=[0]","(*,#1,#2,3,5)"]}
+{"seq":521,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,#1,#2,3,5)"]}
+{"seq":522,"event":"TermLinkAdd","args":["(*,#1,#2,3,5)|type=2|index=[2]","3"]}
+{"seq":523,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,#1,#2,3,5)"]}
+{"seq":524,"event":"TermLinkAdd","args":["(*,#1,#2,3,5)|type=2|index=[3]","5"]}
+{"seq":525,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,#2,3,5)"]}
+{"seq":526,"event":"TermLinkAdd","args":["(^add,#1,#2,3,5)|type=4|index=[1]","^add"]}
+{"seq":527,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":528,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":529,"event":"TermLinkAdd","args":["(^add,#1,#2,3,?3)|type=1|index=[1]","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":530,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[1]","(^add,#1,#2,3,?3)"]}
+{"seq":531,"event":"ConceptNew","args":["(*,#1,#2,3,?3)"]}
+{"seq":532,"event":"TermLinkAdd","args":["(*,#1,#2,3,?3)|type=3|index=[0]","(^add,#1,#2,3,?3)"]}
+{"seq":533,"event":"TermLinkAdd","args":["(^add,#1,#2,3,?3)|type=4|index=[0]","(*,#1,#2,3,?3)"]}
+{"seq":534,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,#1,#2,3,?3)"]}
+{"seq":535,"event":"TermLinkAdd","args":["(*,#1,#2,3,?3)|type=2|index=[2]","3"]}
+{"seq":536,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,#2,3,?3)"]}
+{"seq":537,"event":"TermLinkAdd","args":["(^add,#1,#2,3,?3)|type=4|index=[1]","^add"]}
+{"seq":538,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":539,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":540,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":541,"event":"TaskImmediateProcess","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":542,"event":"ConceptNew","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))"]}
+{"seq":543,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=0|index=null","(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))"]}
+{"seq":544,"event":"ConceptNew","args":["(^add,{#1},#2,3,5)"]}
+{"seq":545,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=2|index=[0]","(^add,{#1},#2,3,5)"]}
+{"seq":546,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=8|index=[0, 0, 2]","3"]}
+{"seq":547,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=8|index=[0, 0, 3]","5"]}
+{"seq":548,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":549,"event":"ConceptNew","args":["(^add,{#1},#2,3,?3)"]}
+{"seq":550,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=2|index=[1]","(^add,{#1},#2,3,?3)"]}
+{"seq":551,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=8|index=[1, 0, 2]","3"]}
+{"seq":552,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":553,"event":"TermLinkAdd","args":["(^add,{#1},#2,3,5)|type=1|index=[0]","(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))"]}
+{"seq":554,"event":"TermLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=2|index=[0]","(^add,{#1},#2,3,5)"]}
+{"seq":555,"event":"ConceptNew","args":["(*,{#1},#2,3,5)"]}
+{"seq":556,"event":"TermLinkAdd","args":["(*,{#1},#2,3,5)|type=3|index=[0]","(^add,{#1},#2,3,5)"]}
+{"seq":557,"event":"TermLinkAdd","args":["(^add,{#1},#2,3,5)|type=4|index=[0]","(*,{#1},#2,3,5)"]}
+{"seq":558,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},#2,3,5)"]}
+{"seq":559,"event":"TermLinkAdd","args":["(*,{#1},#2,3,5)|type=2|index=[0]","{#1}"]}
+{"seq":560,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{#1},#2,3,5)"]}
+{"seq":561,"event":"TermLinkAdd","args":["(*,{#1},#2,3,5)|type=2|index=[2]","3"]}
+{"seq":562,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{#1},#2,3,5)"]}
+{"seq":563,"event":"TermLinkAdd","args":["(*,{#1},#2,3,5)|type=2|index=[3]","5"]}
+{"seq":564,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},#2,3,5)"]}
+{"seq":565,"event":"TermLinkAdd","args":["(^add,{#1},#2,3,5)|type=4|index=[1]","^add"]}
+{"seq":566,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))"]}
+{"seq":567,"event":"TermLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":568,"event":"TermLinkAdd","args":["(^add,{#1},#2,3,?3)|type=1|index=[1]","(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))"]}
+{"seq":569,"event":"TermLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=2|index=[1]","(^add,{#1},#2,3,?3)"]}
+{"seq":570,"event":"ConceptNew","args":["(*,{#1},#2,3,?3)"]}
+{"seq":571,"event":"TermLinkAdd","args":["(*,{#1},#2,3,?3)|type=3|index=[0]","(^add,{#1},#2,3,?3)"]}
+{"seq":572,"event":"TermLinkAdd","args":["(^add,{#1},#2,3,?3)|type=4|index=[0]","(*,{#1},#2,3,?3)"]}
+{"seq":573,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},#2,3,?3)"]}
+{"seq":574,"event":"TermLinkAdd","args":["(*,{#1},#2,3,?3)|type=2|index=[0]","{#1}"]}
+{"seq":575,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{#1},#2,3,?3)"]}
+{"seq":576,"event":"TermLinkAdd","args":["(*,{#1},#2,3,?3)|type=2|index=[2]","3"]}
+{"seq":577,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},#2,3,?3)"]}
+{"seq":578,"event":"TermLinkAdd","args":["(^add,{#1},#2,3,?3)|type=4|index=[1]","^add"]}
+{"seq":579,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))"]}
+{"seq":580,"event":"TermLinkAdd","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":581,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":582,"event":"TaskImmediateProcess","args":["(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,{#1},#2,3,5),(^add,{#1},#2,3,?3))"]}
+{"seq":583,"event":"ConceptNew","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":584,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))|type=0|index=null","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":585,"event":"ConceptNew","args":["(^add,{#1},#2,#3,5)"]}
+{"seq":586,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))|type=2|index=[0]","(^add,{#1},#2,#3,5)"]}
+{"seq":587,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))|type=8|index=[0, 0, 3]","5"]}
+{"seq":588,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))|type=2|index=[0, 1]","^add"]}
+{"seq":589,"event":"ConceptNew","args":["(^add,{#1},#2,#3,?4)"]}
+{"seq":590,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))|type=2|index=[1]","(^add,{#1},#2,#3,?4)"]}
+{"seq":591,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))|type=2|index=[1, 1]","^add"]}
+{"seq":592,"event":"TermLinkAdd","args":["(^add,{#1},#2,#3,5)|type=1|index=[0]","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":593,"event":"TermLinkAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))|type=2|index=[0]","(^add,{#1},#2,#3,5)"]}
+{"seq":594,"event":"ConceptNew","args":["(*,{#1},#2,#3,5)"]}
+{"seq":595,"event":"TermLinkAdd","args":["(*,{#1},#2,#3,5)|type=3|index=[0]","(^add,{#1},#2,#3,5)"]}
+{"seq":596,"event":"TermLinkAdd","args":["(^add,{#1},#2,#3,5)|type=4|index=[0]","(*,{#1},#2,#3,5)"]}
+{"seq":597,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},#2,#3,5)"]}
+{"seq":598,"event":"TermLinkAdd","args":["(*,{#1},#2,#3,5)|type=2|index=[0]","{#1}"]}
+{"seq":599,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{#1},#2,#3,5)"]}
+{"seq":600,"event":"TermLinkAdd","args":["(*,{#1},#2,#3,5)|type=2|index=[3]","5"]}
+{"seq":601,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},#2,#3,5)"]}
+{"seq":602,"event":"TermLinkAdd","args":["(^add,{#1},#2,#3,5)|type=4|index=[1]","^add"]}
+{"seq":603,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":604,"event":"TermLinkAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))|type=2|index=[0, 1]","^add"]}
+{"seq":605,"event":"TermLinkAdd","args":["(^add,{#1},#2,#3,?4)|type=1|index=[1]","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":606,"event":"TermLinkAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))|type=2|index=[1]","(^add,{#1},#2,#3,?4)"]}
+{"seq":607,"event":"ConceptNew","args":["(*,{#1},#2,#3,?4)"]}
+{"seq":608,"event":"TermLinkAdd","args":["(*,{#1},#2,#3,?4)|type=3|index=[0]","(^add,{#1},#2,#3,?4)"]}
+{"seq":609,"event":"TermLinkAdd","args":["(^add,{#1},#2,#3,?4)|type=4|index=[0]","(*,{#1},#2,#3,?4)"]}
+{"seq":610,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},#2,#3,?4)"]}
+{"seq":611,"event":"TermLinkAdd","args":["(*,{#1},#2,#3,?4)|type=2|index=[0]","{#1}"]}
+{"seq":612,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},#2,#3,?4)"]}
+{"seq":613,"event":"TermLinkAdd","args":["(^add,{#1},#2,#3,?4)|type=4|index=[1]","^add"]}
+{"seq":614,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":615,"event":"TermLinkAdd","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))|type=2|index=[1, 1]","^add"]}
+{"seq":616,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":617,"event":"TaskImmediateProcess","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":618,"event":"ConceptNew","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))"]}
+{"seq":619,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=0|index=null","(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))"]}
+{"seq":620,"event":"ConceptNew","args":["(^add,{SELF},2,#1,5)"]}
+{"seq":621,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=2|index=[0]","(^add,{SELF},2,#1,5)"]}
+{"seq":622,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=8|index=[0, 0, 0]","{SELF}"]}
+{"seq":623,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=8|index=[0, 0, 1]","2"]}
+{"seq":624,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=8|index=[0, 0, 3]","5"]}
+{"seq":625,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=2|index=[0, 1]","^add"]}
+{"seq":626,"event":"ConceptNew","args":["(^add,{SELF},2,#1,?2)"]}
+{"seq":627,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=2|index=[1]","(^add,{SELF},2,#1,?2)"]}
+{"seq":628,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=8|index=[1, 0, 0]","{SELF}"]}
+{"seq":629,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=8|index=[1, 0, 1]","2"]}
+{"seq":630,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=2|index=[1, 1]","^add"]}
+{"seq":631,"event":"TermLinkAdd","args":["(^add,{SELF},2,#1,5)|type=1|index=[0]","(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))"]}
+{"seq":632,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=2|index=[0]","(^add,{SELF},2,#1,5)"]}
+{"seq":633,"event":"ConceptNew","args":["(*,{SELF},2,#1,5)"]}
+{"seq":634,"event":"TermLinkAdd","args":["(*,{SELF},2,#1,5)|type=3|index=[0]","(^add,{SELF},2,#1,5)"]}
+{"seq":635,"event":"TermLinkAdd","args":["(^add,{SELF},2,#1,5)|type=4|index=[0]","(*,{SELF},2,#1,5)"]}
+{"seq":636,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,#1,5)"]}
+{"seq":637,"event":"TermLinkAdd","args":["(*,{SELF},2,#1,5)|type=2|index=[0]","{SELF}"]}
+{"seq":638,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":639,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":640,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,#1,5)"]}
+{"seq":641,"event":"TermLinkAdd","args":["(*,{SELF},2,#1,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":642,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,#1,5)"]}
+{"seq":643,"event":"TermLinkAdd","args":["(*,{SELF},2,#1,5)|type=2|index=[1]","2"]}
+{"seq":644,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},2,#1,5)"]}
+{"seq":645,"event":"TermLinkAdd","args":["(*,{SELF},2,#1,5)|type=2|index=[3]","5"]}
+{"seq":646,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},2,#1,5)"]}
+{"seq":647,"event":"TermLinkAdd","args":["(^add,{SELF},2,#1,5)|type=4|index=[1]","^add"]}
+{"seq":648,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))"]}
+{"seq":649,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=2|index=[0, 1]","^add"]}
+{"seq":650,"event":"TermLinkAdd","args":["(^add,{SELF},2,#1,?2)|type=1|index=[1]","(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))"]}
+{"seq":651,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=2|index=[1]","(^add,{SELF},2,#1,?2)"]}
+{"seq":652,"event":"ConceptNew","args":["(*,{SELF},2,#1,?2)"]}
+{"seq":653,"event":"TermLinkAdd","args":["(*,{SELF},2,#1,?2)|type=3|index=[0]","(^add,{SELF},2,#1,?2)"]}
+{"seq":654,"event":"TermLinkAdd","args":["(^add,{SELF},2,#1,?2)|type=4|index=[0]","(*,{SELF},2,#1,?2)"]}
+{"seq":655,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,#1,?2)"]}
+{"seq":656,"event":"TermLinkAdd","args":["(*,{SELF},2,#1,?2)|type=2|index=[0]","{SELF}"]}
+{"seq":657,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":658,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":659,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,#1,?2)"]}
+{"seq":660,"event":"TermLinkAdd","args":["(*,{SELF},2,#1,?2)|type=2|index=[0, 0]","SELF"]}
+{"seq":661,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,#1,?2)"]}
+{"seq":662,"event":"TermLinkAdd","args":["(*,{SELF},2,#1,?2)|type=2|index=[1]","2"]}
+{"seq":663,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},2,#1,?2)"]}
+{"seq":664,"event":"TermLinkAdd","args":["(^add,{SELF},2,#1,?2)|type=4|index=[1]","^add"]}
+{"seq":665,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))"]}
+{"seq":666,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))|type=2|index=[1, 1]","^add"]}
+{"seq":667,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":668,"event":"TaskImmediateProcess","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))"]}
+{"seq":669,"event":"ConceptNew","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))"]}
+{"seq":670,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=0|index=null","(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))"]}
+{"seq":671,"event":"ConceptNew","args":["(^add,{SELF},#1,#2,5)"]}
+{"seq":672,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=2|index=[0]","(^add,{SELF},#1,#2,5)"]}
+{"seq":673,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=8|index=[0, 0, 0]","{SELF}"]}
+{"seq":674,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=8|index=[0, 0, 3]","5"]}
+{"seq":675,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":676,"event":"ConceptNew","args":["(^add,{SELF},#1,#2,?3)"]}
+{"seq":677,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=2|index=[1]","(^add,{SELF},#1,#2,?3)"]}
+{"seq":678,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=8|index=[1, 0, 0]","{SELF}"]}
+{"seq":679,"event":"TaskLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":680,"event":"TermLinkAdd","args":["(^add,{SELF},#1,#2,5)|type=1|index=[0]","(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))"]}
+{"seq":681,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=2|index=[0]","(^add,{SELF},#1,#2,5)"]}
+{"seq":682,"event":"ConceptNew","args":["(*,{SELF},#1,#2,5)"]}
+{"seq":683,"event":"TermLinkAdd","args":["(*,{SELF},#1,#2,5)|type=3|index=[0]","(^add,{SELF},#1,#2,5)"]}
+{"seq":684,"event":"TermLinkAdd","args":["(^add,{SELF},#1,#2,5)|type=4|index=[0]","(*,{SELF},#1,#2,5)"]}
+{"seq":685,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},#1,#2,5)"]}
+{"seq":686,"event":"TermLinkAdd","args":["(*,{SELF},#1,#2,5)|type=2|index=[0]","{SELF}"]}
+{"seq":687,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":688,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":689,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},#1,#2,5)"]}
+{"seq":690,"event":"TermLinkAdd","args":["(*,{SELF},#1,#2,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":691,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},#1,#2,5)"]}
+{"seq":692,"event":"TermLinkAdd","args":["(*,{SELF},#1,#2,5)|type=2|index=[3]","5"]}
+{"seq":693,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},#1,#2,5)"]}
+{"seq":694,"event":"TermLinkAdd","args":["(^add,{SELF},#1,#2,5)|type=4|index=[1]","^add"]}
+{"seq":695,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))"]}
+{"seq":696,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":697,"event":"TermLinkAdd","args":["(^add,{SELF},#1,#2,?3)|type=1|index=[1]","(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))"]}
+{"seq":698,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=2|index=[1]","(^add,{SELF},#1,#2,?3)"]}
+{"seq":699,"event":"ConceptNew","args":["(*,{SELF},#1,#2,?3)"]}
+{"seq":700,"event":"TermLinkAdd","args":["(*,{SELF},#1,#2,?3)|type=3|index=[0]","(^add,{SELF},#1,#2,?3)"]}
+{"seq":701,"event":"TermLinkAdd","args":["(^add,{SELF},#1,#2,?3)|type=4|index=[0]","(*,{SELF},#1,#2,?3)"]}
+{"seq":702,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},#1,#2,?3)"]}
+{"seq":703,"event":"TermLinkAdd","args":["(*,{SELF},#1,#2,?3)|type=2|index=[0]","{SELF}"]}
+{"seq":704,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":705,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":706,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},#1,#2,?3)"]}
+{"seq":707,"event":"TermLinkAdd","args":["(*,{SELF},#1,#2,?3)|type=2|index=[0, 0]","SELF"]}
+{"seq":708,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},#1,#2,?3)"]}
+{"seq":709,"event":"TermLinkAdd","args":["(^add,{SELF},#1,#2,?3)|type=4|index=[1]","^add"]}
+{"seq":710,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))"]}
+{"seq":711,"event":"TermLinkAdd","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":712,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":713,"event":"TaskImmediateProcess","args":["(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,{SELF},#1,#2,5),(^add,{SELF},#1,#2,?3))"]}
+{"seq":714,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=0|index=null","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":715,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[0]","(^add,#1,2,3,5)"]}
+{"seq":716,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=8|index=[0, 0, 1]","2"]}
+{"seq":717,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=8|index=[0, 0, 2]","3"]}
+{"seq":718,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=8|index=[0, 0, 3]","5"]}
+{"seq":719,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[0, 1]","^add"]}
+{"seq":720,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[1]","(^add,#1,2,3,?2)"]}
+{"seq":721,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=8|index=[1, 0, 1]","2"]}
+{"seq":722,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=8|index=[1, 0, 2]","3"]}
+{"seq":723,"event":"TaskLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[1, 1]","^add"]}
+{"seq":724,"event":"TermLinkAdd","args":["(^add,#1,2,3,5)|type=1|index=[0]","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":725,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[0]","(^add,#1,2,3,5)"]}
+{"seq":726,"event":"TermLinkAdd","args":["(*,#1,2,3,5)|type=3|index=[0]","(^add,#1,2,3,5)"]}
+{"seq":727,"event":"TermLinkAdd","args":["(^add,#1,2,3,5)|type=4|index=[0]","(*,#1,2,3,5)"]}
+{"seq":728,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,#1,2,3,5)"]}
+{"seq":729,"event":"TermLinkAdd","args":["(*,#1,2,3,5)|type=2|index=[1]","2"]}
+{"seq":730,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,#1,2,3,5)"]}
+{"seq":731,"event":"TermLinkAdd","args":["(*,#1,2,3,5)|type=2|index=[2]","3"]}
+{"seq":732,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,#1,2,3,5)"]}
+{"seq":733,"event":"TermLinkAdd","args":["(*,#1,2,3,5)|type=2|index=[3]","5"]}
+{"seq":734,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,2,3,5)"]}
+{"seq":735,"event":"TermLinkAdd","args":["(^add,#1,2,3,5)|type=4|index=[1]","^add"]}
+{"seq":736,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":737,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[0, 1]","^add"]}
+{"seq":738,"event":"TermLinkAdd","args":["(^add,#1,2,3,?2)|type=1|index=[1]","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":739,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[1]","(^add,#1,2,3,?2)"]}
+{"seq":740,"event":"TermLinkAdd","args":["(*,#1,2,3,?2)|type=3|index=[0]","(^add,#1,2,3,?2)"]}
+{"seq":741,"event":"TermLinkAdd","args":["(^add,#1,2,3,?2)|type=4|index=[0]","(*,#1,2,3,?2)"]}
+{"seq":742,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,#1,2,3,?2)"]}
+{"seq":743,"event":"TermLinkAdd","args":["(*,#1,2,3,?2)|type=2|index=[1]","2"]}
+{"seq":744,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,#1,2,3,?2)"]}
+{"seq":745,"event":"TermLinkAdd","args":["(*,#1,2,3,?2)|type=2|index=[2]","3"]}
+{"seq":746,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,2,3,?2)"]}
+{"seq":747,"event":"TermLinkAdd","args":["(^add,#1,2,3,?2)|type=4|index=[1]","^add"]}
+{"seq":748,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":749,"event":"TermLinkAdd","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[1, 1]","^add"]}
+{"seq":750,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":751,"event":"TaskImmediateProcess","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":752,"event":"ConceptNew","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))"]}
+{"seq":753,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=0|index=null","(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))"]}
+{"seq":754,"event":"ConceptNew","args":["(^add,{#1},2,3,5)"]}
+{"seq":755,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=2|index=[0]","(^add,{#1},2,3,5)"]}
+{"seq":756,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=8|index=[0, 0, 1]","2"]}
+{"seq":757,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=8|index=[0, 0, 2]","3"]}
+{"seq":758,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=8|index=[0, 0, 3]","5"]}
+{"seq":759,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=2|index=[0, 1]","^add"]}
+{"seq":760,"event":"ConceptNew","args":["(^add,{#1},2,3,?2)"]}
+{"seq":761,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=2|index=[1]","(^add,{#1},2,3,?2)"]}
+{"seq":762,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=8|index=[1, 0, 1]","2"]}
+{"seq":763,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=8|index=[1, 0, 2]","3"]}
+{"seq":764,"event":"TaskLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=2|index=[1, 1]","^add"]}
+{"seq":765,"event":"TermLinkAdd","args":["(^add,{#1},2,3,5)|type=1|index=[0]","(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))"]}
+{"seq":766,"event":"TermLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=2|index=[0]","(^add,{#1},2,3,5)"]}
+{"seq":767,"event":"ConceptNew","args":["(*,{#1},2,3,5)"]}
+{"seq":768,"event":"TermLinkAdd","args":["(*,{#1},2,3,5)|type=3|index=[0]","(^add,{#1},2,3,5)"]}
+{"seq":769,"event":"TermLinkAdd","args":["(^add,{#1},2,3,5)|type=4|index=[0]","(*,{#1},2,3,5)"]}
+{"seq":770,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},2,3,5)"]}
+{"seq":771,"event":"TermLinkAdd","args":["(*,{#1},2,3,5)|type=2|index=[0]","{#1}"]}
+{"seq":772,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{#1},2,3,5)"]}
+{"seq":773,"event":"TermLinkAdd","args":["(*,{#1},2,3,5)|type=2|index=[1]","2"]}
+{"seq":774,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{#1},2,3,5)"]}
+{"seq":775,"event":"TermLinkAdd","args":["(*,{#1},2,3,5)|type=2|index=[2]","3"]}
+{"seq":776,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{#1},2,3,5)"]}
+{"seq":777,"event":"TermLinkAdd","args":["(*,{#1},2,3,5)|type=2|index=[3]","5"]}
+{"seq":778,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},2,3,5)"]}
+{"seq":779,"event":"TermLinkAdd","args":["(^add,{#1},2,3,5)|type=4|index=[1]","^add"]}
+{"seq":780,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))"]}
+{"seq":781,"event":"TermLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=2|index=[0, 1]","^add"]}
+{"seq":782,"event":"TermLinkAdd","args":["(^add,{#1},2,3,?2)|type=1|index=[1]","(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))"]}
+{"seq":783,"event":"TermLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=2|index=[1]","(^add,{#1},2,3,?2)"]}
+{"seq":784,"event":"ConceptNew","args":["(*,{#1},2,3,?2)"]}
+{"seq":785,"event":"TermLinkAdd","args":["(*,{#1},2,3,?2)|type=3|index=[0]","(^add,{#1},2,3,?2)"]}
+{"seq":786,"event":"TermLinkAdd","args":["(^add,{#1},2,3,?2)|type=4|index=[0]","(*,{#1},2,3,?2)"]}
+{"seq":787,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},2,3,?2)"]}
+{"seq":788,"event":"TermLinkAdd","args":["(*,{#1},2,3,?2)|type=2|index=[0]","{#1}"]}
+{"seq":789,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{#1},2,3,?2)"]}
+{"seq":790,"event":"TermLinkAdd","args":["(*,{#1},2,3,?2)|type=2|index=[1]","2"]}
+{"seq":791,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{#1},2,3,?2)"]}
+{"seq":792,"event":"TermLinkAdd","args":["(*,{#1},2,3,?2)|type=2|index=[2]","3"]}
+{"seq":793,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},2,3,?2)"]}
+{"seq":794,"event":"TermLinkAdd","args":["(^add,{#1},2,3,?2)|type=4|index=[1]","^add"]}
+{"seq":795,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))"]}
+{"seq":796,"event":"TermLinkAdd","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))|type=2|index=[1, 1]","^add"]}
+{"seq":797,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":798,"event":"TaskImmediateProcess","args":["(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,{#1},2,3,5),(^add,{#1},2,3,?2))"]}
+{"seq":799,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=0|index=null","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":800,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[0]","(^add,#1,#2,#3,5)"]}
+{"seq":801,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=8|index=[0, 0, 3]","5"]}
+{"seq":802,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[0, 1]","^add"]}
+{"seq":803,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[1]","(^add,#1,#2,#3,?4)"]}
+{"seq":804,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[1, 1]","^add"]}
+{"seq":805,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,5)|type=1|index=[0]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":806,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[0]","(^add,#1,#2,#3,5)"]}
+{"seq":807,"event":"TermLinkAdd","args":["(*,#1,#2,#3,5)|type=3|index=[0]","(^add,#1,#2,#3,5)"]}
+{"seq":808,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,5)|type=4|index=[0]","(*,#1,#2,#3,5)"]}
+{"seq":809,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,#1,#2,#3,5)"]}
+{"seq":810,"event":"TermLinkAdd","args":["(*,#1,#2,#3,5)|type=2|index=[3]","5"]}
+{"seq":811,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,#2,#3,5)"]}
+{"seq":812,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,5)|type=4|index=[1]","^add"]}
+{"seq":813,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":814,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[0, 1]","^add"]}
+{"seq":815,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,?4)|type=1|index=[1]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":816,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[1]","(^add,#1,#2,#3,?4)"]}
+{"seq":817,"event":"TermLinkAdd","args":["(*,#1,#2,#3,?4)|type=3|index=[0]","(^add,#1,#2,#3,?4)"]}
+{"seq":818,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,?4)|type=4|index=[0]","(*,#1,#2,#3,?4)"]}
+{"seq":819,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,#2,#3,?4)"]}
+{"seq":820,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,?4)|type=4|index=[1]","^add"]}
+{"seq":821,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":822,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))|type=2|index=[1, 1]","^add"]}
+{"seq":823,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":824,"event":"TaskImmediateProcess","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))! %1.00;0.35% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":825,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=0|index=null","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":826,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[0]","(^add,#1,#2,3,5)"]}
+{"seq":827,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=8|index=[0, 0, 2]","3"]}
+{"seq":828,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=8|index=[0, 0, 3]","5"]}
+{"seq":829,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":830,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[1]","(^add,#1,#2,3,?3)"]}
+{"seq":831,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=8|index=[1, 0, 2]","3"]}
+{"seq":832,"event":"TaskLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":833,"event":"TermLinkAdd","args":["(^add,#1,#2,3,5)|type=1|index=[0]","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":834,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[0]","(^add,#1,#2,3,5)"]}
+{"seq":835,"event":"TermLinkAdd","args":["(*,#1,#2,3,5)|type=3|index=[0]","(^add,#1,#2,3,5)"]}
+{"seq":836,"event":"TermLinkAdd","args":["(^add,#1,#2,3,5)|type=4|index=[0]","(*,#1,#2,3,5)"]}
+{"seq":837,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,#1,#2,3,5)"]}
+{"seq":838,"event":"TermLinkAdd","args":["(*,#1,#2,3,5)|type=2|index=[2]","3"]}
+{"seq":839,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,#1,#2,3,5)"]}
+{"seq":840,"event":"TermLinkAdd","args":["(*,#1,#2,3,5)|type=2|index=[3]","5"]}
+{"seq":841,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,#2,3,5)"]}
+{"seq":842,"event":"TermLinkAdd","args":["(^add,#1,#2,3,5)|type=4|index=[1]","^add"]}
+{"seq":843,"event":"TermLinkAdd","args":["^add|type=1|index=[0, 1]","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":844,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[0, 1]","^add"]}
+{"seq":845,"event":"TermLinkAdd","args":["(^add,#1,#2,3,?3)|type=1|index=[1]","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":846,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[1]","(^add,#1,#2,3,?3)"]}
+{"seq":847,"event":"TermLinkAdd","args":["(*,#1,#2,3,?3)|type=3|index=[0]","(^add,#1,#2,3,?3)"]}
+{"seq":848,"event":"TermLinkAdd","args":["(^add,#1,#2,3,?3)|type=4|index=[0]","(*,#1,#2,3,?3)"]}
+{"seq":849,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,#1,#2,3,?3)"]}
+{"seq":850,"event":"TermLinkAdd","args":["(*,#1,#2,3,?3)|type=2|index=[2]","3"]}
+{"seq":851,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,#2,3,?3)"]}
+{"seq":852,"event":"TermLinkAdd","args":["(^add,#1,#2,3,?3)|type=4|index=[1]","^add"]}
+{"seq":853,"event":"TermLinkAdd","args":["^add|type=1|index=[1, 1]","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":854,"event":"TermLinkAdd","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))|type=2|index=[1, 1]","^add"]}
+{"seq":855,"event":"ConceptDirectProcessedTask","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":856,"event":"TaskImmediateProcess","args":["(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))! %1.00;0.38% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,(^add,#1,#2,3,5),(^add,#1,#2,3,?3))"]}
+{"seq":857,"event":"ConceptNew","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)"]}
+{"seq":858,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=0|index=null","(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)"]}
+{"seq":859,"event":"ConceptNew","args":["<(*,{SELF},2,3,5) --> #1>"]}
+{"seq":860,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=2|index=[0]","<(*,{SELF},2,3,5) --> #1>"]}
+{"seq":861,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=2|index=[0, 0]","(*,{SELF},2,3,5)"]}
+{"seq":862,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=8|index=[0, 0, 0]","{SELF}"]}
+{"seq":863,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=8|index=[0, 0, 1]","2"]}
+{"seq":864,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=8|index=[0, 0, 2]","3"]}
+{"seq":865,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=8|index=[0, 0, 3]","5"]}
+{"seq":866,"event":"ConceptNew","args":["<(*,{SELF},2,3,?1) --> #2>"]}
+{"seq":867,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=2|index=[1]","<(*,{SELF},2,3,?1) --> #2>"]}
+{"seq":868,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=8|index=[1, 0, 0]","{SELF}"]}
+{"seq":869,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=8|index=[1, 0, 1]","2"]}
+{"seq":870,"event":"TaskLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=8|index=[1, 0, 2]","3"]}
+{"seq":871,"event":"TermLinkAdd","args":["<(*,{SELF},2,3,5) --> #1>|type=1|index=[0]","(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)"]}
+{"seq":872,"event":"TermLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=2|index=[0]","<(*,{SELF},2,3,5) --> #1>"]}
+{"seq":873,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=3|index=[0]","<(*,{SELF},2,3,5) --> #1>"]}
+{"seq":874,"event":"TermLinkAdd","args":["<(*,{SELF},2,3,5) --> #1>|type=4|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":875,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":876,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0]","{SELF}"]}
+{"seq":877,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":878,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":879,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,5)"]}
+{"seq":880,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":881,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,5)"]}
+{"seq":882,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[1]","2"]}
+{"seq":883,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,5)"]}
+{"seq":884,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[2]","3"]}
+{"seq":885,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},2,3,5)"]}
+{"seq":886,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[3]","5"]}
+{"seq":887,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=1|index=[0, 0]","(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)"]}
+{"seq":888,"event":"TermLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=2|index=[0, 0]","(*,{SELF},2,3,5)"]}
+{"seq":889,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,5)"]}
+{"seq":890,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0]","{SELF}"]}
+{"seq":891,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":892,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":893,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,5)"]}
+{"seq":894,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":895,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,5)"]}
+{"seq":896,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[1]","2"]}
+{"seq":897,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,5)"]}
+{"seq":898,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[2]","3"]}
+{"seq":899,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},2,3,5)"]}
+{"seq":900,"event":"TermLinkAdd","args":["(*,{SELF},2,3,5)|type=2|index=[3]","5"]}
+{"seq":901,"event":"TermLinkAdd","args":["<(*,{SELF},2,3,?1) --> #2>|type=1|index=[1]","(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)"]}
+{"seq":902,"event":"TermLinkAdd","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)|type=2|index=[1]","<(*,{SELF},2,3,?1) --> #2>"]}
+{"seq":903,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=3|index=[0]","<(*,{SELF},2,3,?1) --> #2>"]}
+{"seq":904,"event":"TermLinkAdd","args":["<(*,{SELF},2,3,?1) --> #2>|type=4|index=[0]","(*,{SELF},2,3,?1)"]}
+{"seq":905,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,?1)"]}
+{"seq":906,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[0]","{SELF}"]}
+{"seq":907,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":908,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":909,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,?1)"]}
+{"seq":910,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[0, 0]","SELF"]}
+{"seq":911,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{SELF},2,3,?1)"]}
+{"seq":912,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[1]","2"]}
+{"seq":913,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},2,3,?1)"]}
+{"seq":914,"event":"TermLinkAdd","args":["(*,{SELF},2,3,?1)|type=2|index=[2]","3"]}
+{"seq":915,"event":"ConceptDirectProcessedTask","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":916,"event":"TaskImmediateProcess","args":["(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)! %1.00;0.43% {1 : (3153837435639683,1);(3153837435639683,0)} ","(&&,<(*,{SELF},2,3,5) --> #1>,<(*,{SELF},2,3,?2) --> #1>)"]}
+{"seq":917,"event":"TermLinkSelect","args":["(*,{SELF},2,3,5)|type=3|index=[0]","(^add,{SELF},2,3,5)","(^add,{SELF},2,3,5)"]}
+{"seq":918,"event":"TermLinkSelect","args":["^add|type=3|index=[1]","(^add,{SELF},2,3,5)","(^add,{SELF},2,3,5)"]}
+{"seq":919,"event":"ConceptFire","args":["(^add,{SELF},2,3,5)"]}
+{"seq":920,"event":"TermLinkSelect","args":["(^add,{SELF},2,3,?1)|type=4|index=[1]","^add","(^add,{SELF},2,3,5)"]}
+{"seq":921,"event":"TermLinkSelect","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[0, 1]","^add","(^add,{SELF},2,3,5)"]}
+{"seq":922,"event":"TermLinkSelect","args":["(^add,#1,2,#2,5)|type=4|index=[1]","^add","(^add,{SELF},2,3,5)"]}
+{"seq":923,"event":"ConceptFire","args":["(^add,{SELF},2,3,5)"]}
+{"seq":924,"event":"TaskDerive","args":["(^add,{#1},2,#2,5)! %1.00;0.35% {4 : (3153837435639683,1);(3153837435639683,0)} ","false","true"]}
+{"seq":925,"event":"TaskAdd","args":["(^add,{#1},2,#2,5)! %1.00;0.35% {4 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":926,"event":"OUT","args":["(^add,{#1},2,#2,5)! %1.00;0.35% {4 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":927,"event":"TermLinkSelect","args":["(^add,{#1},2,#2,5)|type=1|index=[0]","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":928,"event":"TermLinkSelect","args":["^add|type=1|index=[0, 1]","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":929,"event":"TaskDerive","args":["(^add,{#1},2,#2,?3)! %1.00;0.35% {4 : (3153837435639683,1);(3153837435639683,0)} ","false","true"]}
+{"seq":930,"event":"TaskAdd","args":["(^add,{#1},2,#2,?3)! %1.00;0.35% {4 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":931,"event":"OUT","args":["(^add,{#1},2,#2,?3)! %1.00;0.35% {4 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":932,"event":"TermLinkSelect","args":["(^add,{#1},2,#2,?3)|type=1|index=[1]","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":933,"event":"ConceptFire","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":934,"event":"TaskLinkAdd","args":["(^add,{#1},2,#2,5)|type=0|index=null","(^add,{#1},2,#2,5)"]}
+{"seq":935,"event":"TaskLinkAdd","args":["(^add,{#1},2,#2,5)|type=4|index=[0]","(*,{#1},2,#2,5)"]}
+{"seq":936,"event":"TaskLinkAdd","args":["(^add,{#1},2,#2,5)|type=8|index=[0, 1]","2"]}
+{"seq":937,"event":"TaskLinkAdd","args":["(^add,{#1},2,#2,5)|type=8|index=[0, 3]","5"]}
+{"seq":938,"event":"TaskLinkAdd","args":["(^add,{#1},2,#2,5)|type=4|index=[1]","^add"]}
+{"seq":939,"event":"TermLinkAdd","args":["(*,{#1},2,#2,5)|type=3|index=[0]","(^add,{#1},2,#2,5)"]}
+{"seq":940,"event":"TermLinkAdd","args":["(^add,{#1},2,#2,5)|type=4|index=[0]","(*,{#1},2,#2,5)"]}
+{"seq":941,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},2,#2,5)"]}
+{"seq":942,"event":"TermLinkAdd","args":["(*,{#1},2,#2,5)|type=2|index=[0]","{#1}"]}
+{"seq":943,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{#1},2,#2,5)"]}
+{"seq":944,"event":"TermLinkAdd","args":["(*,{#1},2,#2,5)|type=2|index=[1]","2"]}
+{"seq":945,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{#1},2,#2,5)"]}
+{"seq":946,"event":"TermLinkAdd","args":["(*,{#1},2,#2,5)|type=2|index=[3]","5"]}
+{"seq":947,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},2,#2,5)"]}
+{"seq":948,"event":"TermLinkAdd","args":["(^add,{#1},2,#2,5)|type=4|index=[1]","^add"]}
+{"seq":949,"event":"ConceptDirectProcessedTask","args":["(^add,{#1},2,#2,5)! %1.00;0.35% {4 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":950,"event":"TaskImmediateProcess","args":["(^add,{#1},2,#2,5)! %1.00;0.35% {4 : (3153837435639683,1);(3153837435639683,0)} ","(^add,{#1},2,#2,5)"]}
+{"seq":951,"event":"TaskLinkAdd","args":["(^add,{#1},2,#2,?3)|type=0|index=null","(^add,{#1},2,#2,?3)"]}
+{"seq":952,"event":"TaskLinkAdd","args":["(^add,{#1},2,#2,?3)|type=4|index=[0]","(*,{#1},2,#2,?3)"]}
+{"seq":953,"event":"TaskLinkAdd","args":["(^add,{#1},2,#2,?3)|type=8|index=[0, 1]","2"]}
+{"seq":954,"event":"TaskLinkAdd","args":["(^add,{#1},2,#2,?3)|type=4|index=[1]","^add"]}
+{"seq":955,"event":"TermLinkAdd","args":["(*,{#1},2,#2,?3)|type=3|index=[0]","(^add,{#1},2,#2,?3)"]}
+{"seq":956,"event":"TermLinkAdd","args":["(^add,{#1},2,#2,?3)|type=4|index=[0]","(*,{#1},2,#2,?3)"]}
+{"seq":957,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},2,#2,?3)"]}
+{"seq":958,"event":"TermLinkAdd","args":["(*,{#1},2,#2,?3)|type=2|index=[0]","{#1}"]}
+{"seq":959,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,{#1},2,#2,?3)"]}
+{"seq":960,"event":"TermLinkAdd","args":["(*,{#1},2,#2,?3)|type=2|index=[1]","2"]}
+{"seq":961,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},2,#2,?3)"]}
+{"seq":962,"event":"TermLinkAdd","args":["(^add,{#1},2,#2,?3)|type=4|index=[1]","^add"]}
+{"seq":963,"event":"ConceptDirectProcessedTask","args":["(^add,{#1},2,#2,?3)! %1.00;0.35% {4 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":964,"event":"TaskImmediateProcess","args":["(^add,{#1},2,#2,?3)! %1.00;0.35% {4 : (3153837435639683,1);(3153837435639683,0)} ","(^add,{#1},2,#2,?3)"]}
+{"seq":965,"event":"TermLinkSelect","args":["(*,{SELF},2,3,?1)|type=3|index=[0]","(^add,{SELF},2,3,?1)","(^add,{SELF},2,3,?1)"]}
+{"seq":966,"event":"TermLinkSelect","args":["^add|type=3|index=[1]","(^add,{SELF},2,3,?1)","(^add,{SELF},2,3,?1)"]}
+{"seq":967,"event":"ConceptFire","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":968,"event":"ConceptFire","args":["(^add,{SELF},2,3,5)"]}
+{"seq":969,"event":"ConceptFire","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":970,"event":"TaskDerive","args":["(^add,{#1},#2,#3,5)! %1.00;0.31% {9 : (3153837435639683,1);(3153837435639683,0)} ","false","true"]}
+{"seq":971,"event":"TaskAdd","args":["(^add,{#1},#2,#3,5)! %1.00;0.31% {9 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":972,"event":"OUT","args":["(^add,{#1},#2,#3,5)! %1.00;0.31% {9 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":973,"event":"TermLinkSelect","args":["(^add,{#1},#2,#3,5)|type=1|index=[0]","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":974,"event":"TermLinkSelect","args":["^add|type=1|index=[0, 1]","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":975,"event":"TaskDerive","args":["(^add,{#1},#2,#3,?4)! %1.00;0.31% {9 : (3153837435639683,1);(3153837435639683,0)} ","false","true"]}
+{"seq":976,"event":"TaskAdd","args":["(^add,{#1},#2,#3,?4)! %1.00;0.31% {9 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":977,"event":"OUT","args":["(^add,{#1},#2,#3,?4)! %1.00;0.31% {9 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":978,"event":"TermLinkSelect","args":["(^add,{#1},#2,#3,?4)|type=1|index=[1]","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))","(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":979,"event":"ConceptFire","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":980,"event":"TaskLinkAdd","args":["(^add,{#1},#2,#3,5)|type=0|index=null","(^add,{#1},#2,#3,5)"]}
+{"seq":981,"event":"TaskLinkAdd","args":["(^add,{#1},#2,#3,5)|type=4|index=[0]","(*,{#1},#2,#3,5)"]}
+{"seq":982,"event":"TaskLinkAdd","args":["(^add,{#1},#2,#3,5)|type=8|index=[0, 3]","5"]}
+{"seq":983,"event":"TaskLinkAdd","args":["(^add,{#1},#2,#3,5)|type=4|index=[1]","^add"]}
+{"seq":984,"event":"TermLinkAdd","args":["(*,{#1},#2,#3,5)|type=3|index=[0]","(^add,{#1},#2,#3,5)"]}
+{"seq":985,"event":"TermLinkAdd","args":["(^add,{#1},#2,#3,5)|type=4|index=[0]","(*,{#1},#2,#3,5)"]}
+{"seq":986,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},#2,#3,5)"]}
+{"seq":987,"event":"TermLinkAdd","args":["(*,{#1},#2,#3,5)|type=2|index=[0]","{#1}"]}
+{"seq":988,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{#1},#2,#3,5)"]}
+{"seq":989,"event":"TermLinkAdd","args":["(*,{#1},#2,#3,5)|type=2|index=[3]","5"]}
+{"seq":990,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},#2,#3,5)"]}
+{"seq":991,"event":"TermLinkAdd","args":["(^add,{#1},#2,#3,5)|type=4|index=[1]","^add"]}
+{"seq":992,"event":"ConceptDirectProcessedTask","args":["(^add,{#1},#2,#3,5)! %1.00;0.31% {9 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":993,"event":"TaskImmediateProcess","args":["(^add,{#1},#2,#3,5)! %1.00;0.31% {9 : (3153837435639683,1);(3153837435639683,0)} ","(^add,{#1},#2,#3,5)"]}
+{"seq":994,"event":"TaskLinkAdd","args":["(^add,{#1},#2,#3,?4)|type=0|index=null","(^add,{#1},#2,#3,?4)"]}
+{"seq":995,"event":"TaskLinkAdd","args":["(^add,{#1},#2,#3,?4)|type=4|index=[0]","(*,{#1},#2,#3,?4)"]}
+{"seq":996,"event":"TaskLinkAdd","args":["(^add,{#1},#2,#3,?4)|type=4|index=[1]","^add"]}
+{"seq":997,"event":"TermLinkAdd","args":["(*,{#1},#2,#3,?4)|type=3|index=[0]","(^add,{#1},#2,#3,?4)"]}
+{"seq":998,"event":"TermLinkAdd","args":["(^add,{#1},#2,#3,?4)|type=4|index=[0]","(*,{#1},#2,#3,?4)"]}
+{"seq":999,"event":"TermLinkAdd","args":["{#1}|type=1|index=[0]","(*,{#1},#2,#3,?4)"]}
+{"seq":1000,"event":"TermLinkAdd","args":["(*,{#1},#2,#3,?4)|type=2|index=[0]","{#1}"]}
+{"seq":1001,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{#1},#2,#3,?4)"]}
+{"seq":1002,"event":"TermLinkAdd","args":["(^add,{#1},#2,#3,?4)|type=4|index=[1]","^add"]}
+{"seq":1003,"event":"ConceptDirectProcessedTask","args":["(^add,{#1},#2,#3,?4)! %1.00;0.31% {9 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1004,"event":"TaskImmediateProcess","args":["(^add,{#1},#2,#3,?4)! %1.00;0.31% {9 : (3153837435639683,1);(3153837435639683,0)} ","(^add,{#1},#2,#3,?4)"]}
+{"seq":1005,"event":"ConceptFire","args":["(^add,{SELF},2,3,5)"]}
+{"seq":1006,"event":"ConceptFire","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":1007,"event":"ConceptFire","args":["(&&,(^add,{#1},#2,#3,5),(^add,{#1},#2,#3,?4))"]}
+{"seq":1008,"event":"ConceptFire","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":1009,"event":"ConceptFire","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":1010,"event":"ConceptFire","args":["(^add,{SELF},2,3,5)"]}
+{"seq":1011,"event":"TermLinkSelect","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,5)","(^add,{SELF},2,3,5)"]}
+{"seq":1012,"event":"TermLinkSelect","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,5)","(^add,{SELF},2,3,5)"]}
+{"seq":1013,"event":"TermLinkSelect","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=4|index=[0]","(*,{SELF},2,3,5)","(^add,{SELF},2,3,5)"]}
+{"seq":1014,"event":"ConceptFire","args":["(^add,{SELF},2,3,5)"]}
+{"seq":1015,"event":"ConceptFire","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":1016,"event":"TermLinkSelect","args":["{SELF}|type=1|index=[0]","(*,{SELF},2,3,?1)","(^add,{SELF},2,3,?1)"]}
+{"seq":1017,"event":"TermLinkSelect","args":["SELF|type=1|index=[0, 0]","(*,{SELF},2,3,?1)","(^add,{SELF},2,3,?1)"]}
+{"seq":1018,"event":"TermLinkSelect","args":["<(*,{SELF},2,3,5) --> (*,{SELF},2,3,?1)>|type=4|index=[1]","(*,{SELF},2,3,?1)","(^add,{SELF},2,3,?1)"]}
+{"seq":1019,"event":"ConceptFire","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":1020,"event":"TermLinkSelect","args":["(*,{SELF},2,3,5)|type=3|index=[0]","<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>","<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>"]}
+{"seq":1021,"event":"TermLinkSelect","args":["(*,{SELF},2,3,?1)|type=3|index=[1]","<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>","<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>"]}
+{"seq":1022,"event":"ConceptFire","args":["<(*,{SELF},2,3,5) <-> (*,{SELF},2,3,?1)>"]}
+{"seq":1023,"event":"TermLinkSelect","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))|type=2|index=[1, 1]","^add","(^add,{SELF},2,3,5)"]}
+{"seq":1024,"event":"TermLinkSelect","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))|type=2|index=[0, 1]","^add","(^add,{SELF},2,3,5)"]}
+{"seq":1025,"event":"TermLinkSelect","args":["(^add,#1,2,#2,?3)|type=4|index=[1]","^add","(^add,{SELF},2,3,5)"]}
+{"seq":1026,"event":"ConceptFire","args":["(^add,{SELF},2,3,5)"]}
+{"seq":1027,"event":"TaskDerive","args":["<{SELF} --> (/,^add,_,2,3,?1)>! %1.00;0.90% {21 : (3153837435639683,0)} ","false","true"]}
+{"seq":1028,"event":"TaskAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>! %1.00;0.90% {21 : (3153837435639683,0)} ","Derived"]}
+{"seq":1029,"event":"OUT","args":["<{SELF} --> (/,^add,_,2,3,?1)>! %1.00;0.90% {21 : (3153837435639683,0)} "]}
+{"seq":1030,"event":"ConceptFire","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":1031,"event":"ConceptNew","args":["<{SELF} --> (/,^add,_,2,3,?1)>"]}
+{"seq":1032,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>|type=0|index=null","<{SELF} --> (/,^add,_,2,3,?1)>"]}
+{"seq":1033,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>|type=4|index=[0]","{SELF}"]}
+{"seq":1034,"event":"ConceptNew","args":["SELF"]}
+{"seq":1035,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>|type=4|index=[0, 0]","SELF"]}
+{"seq":1036,"event":"ConceptNew","args":["(/,^add,_,2,3,?1)"]}
+{"seq":1037,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>|type=4|index=[1]","(/,^add,_,2,3,?1)"]}
+{"seq":1038,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>|type=8|index=[1, 0]","^add"]}
+{"seq":1039,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>|type=8|index=[1, 1]","2"]}
+{"seq":1040,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>|type=8|index=[1, 2]","3"]}
+{"seq":1041,"event":"TermLinkAdd","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^add,_,2,3,?1)>"]}
+{"seq":1042,"event":"TermLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>|type=4|index=[0]","{SELF}"]}
+{"seq":1043,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":1044,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":1045,"event":"TermLinkAdd","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^add,_,2,3,?1)>"]}
+{"seq":1046,"event":"TermLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>|type=4|index=[0, 0]","SELF"]}
+{"seq":1047,"event":"TermLinkAdd","args":["(/,^add,_,2,3,?1)|type=3|index=[1]","<{SELF} --> (/,^add,_,2,3,?1)>"]}
+{"seq":1048,"event":"TermLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,?1)>|type=4|index=[1]","(/,^add,_,2,3,?1)"]}
+{"seq":1049,"event":"TermLinkAdd","args":["^add|type=1|index=[0]","(/,^add,_,2,3,?1)"]}
+{"seq":1050,"event":"TermLinkAdd","args":["(/,^add,_,2,3,?1)|type=2|index=[0]","^add"]}
+{"seq":1051,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(/,^add,_,2,3,?1)"]}
+{"seq":1052,"event":"TermLinkAdd","args":["(/,^add,_,2,3,?1)|type=2|index=[1]","2"]}
+{"seq":1053,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(/,^add,_,2,3,?1)"]}
+{"seq":1054,"event":"TermLinkAdd","args":["(/,^add,_,2,3,?1)|type=2|index=[2]","3"]}
+{"seq":1055,"event":"ConceptDirectProcessedTask","args":["<{SELF} --> (/,^add,_,2,3,?1)>! %1.00;0.90% {21 : (3153837435639683,0)} "]}
+{"seq":1056,"event":"TaskImmediateProcess","args":["<{SELF} --> (/,^add,_,2,3,?1)>! %1.00;0.90% {21 : (3153837435639683,0)} ","<{SELF} --> (/,^add,_,2,3,?1)>"]}
+{"seq":1057,"event":"TaskDerive","args":["<{SELF} --> (/,^add,_,2,3,5)>. :!0: %1.00;0.90% {22|0 : (3153837435639683,1)} ","false","true"]}
+{"seq":1058,"event":"TaskAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>. :!0: %1.00;0.90% {22|0 : (3153837435639683,1)} ","Derived"]}
+{"seq":1059,"event":"OUT","args":["<{SELF} --> (/,^add,_,2,3,5)>. :!0: %1.00;0.90% {22|0 : (3153837435639683,1)} "]}
+{"seq":1060,"event":"ConceptFire","args":["(^add,{SELF},2,3,5)"]}
+{"seq":1061,"event":"ConceptNew","args":["<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1062,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=0|index=null","<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1063,"event":"TaskAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>. :!0: %1.00;0.90% {22|0 : (3153837435639683,1)} ","Activated"]}
+{"seq":1064,"event":"OUT","args":["<{SELF} --> (/,^add,_,2,3,5)>. :!0: %1.00;0.90% {22|0 : (3153837435639683,1)} "]}
+{"seq":1065,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[0]","{SELF}"]}
+{"seq":1066,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[0, 0]","SELF"]}
+{"seq":1067,"event":"ConceptNew","args":["(/,^add,_,2,3,5)"]}
+{"seq":1068,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[1]","(/,^add,_,2,3,5)"]}
+{"seq":1069,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=8|index=[1, 0]","^add"]}
+{"seq":1070,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=8|index=[1, 1]","2"]}
+{"seq":1071,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=8|index=[1, 2]","3"]}
+{"seq":1072,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=8|index=[1, 3]","5"]}
+{"seq":1073,"event":"TermLinkAdd","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1074,"event":"TermLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[0]","{SELF}"]}
+{"seq":1075,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":1076,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":1077,"event":"TermLinkAdd","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1078,"event":"TermLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[0, 0]","SELF"]}
+{"seq":1079,"event":"TermLinkAdd","args":["(/,^add,_,2,3,5)|type=3|index=[1]","<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1080,"event":"TermLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[1]","(/,^add,_,2,3,5)"]}
+{"seq":1081,"event":"TermLinkAdd","args":["^add|type=1|index=[0]","(/,^add,_,2,3,5)"]}
+{"seq":1082,"event":"TermLinkAdd","args":["(/,^add,_,2,3,5)|type=2|index=[0]","^add"]}
+{"seq":1083,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(/,^add,_,2,3,5)"]}
+{"seq":1084,"event":"TermLinkAdd","args":["(/,^add,_,2,3,5)|type=2|index=[1]","2"]}
+{"seq":1085,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(/,^add,_,2,3,5)"]}
+{"seq":1086,"event":"TermLinkAdd","args":["(/,^add,_,2,3,5)|type=2|index=[2]","3"]}
+{"seq":1087,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(/,^add,_,2,3,5)"]}
+{"seq":1088,"event":"TermLinkAdd","args":["(/,^add,_,2,3,5)|type=2|index=[3]","5"]}
+{"seq":1089,"event":"ConceptDirectProcessedTask","args":["<{SELF} --> (/,^add,_,2,3,5)>. :!0: %1.00;0.90% {22|0 : (3153837435639683,1)} "]}
+{"seq":1090,"event":"TaskImmediateProcess","args":["<{SELF} --> (/,^add,_,2,3,5)>. :!0: %1.00;0.90% {22|0 : (3153837435639683,1)} ","<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1091,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=0|index=null","<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1092,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[0]","{SELF}"]}
+{"seq":1093,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[0, 0]","SELF"]}
+{"seq":1094,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[1]","(/,^add,_,2,3,5)"]}
+{"seq":1095,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=8|index=[1, 0]","^add"]}
+{"seq":1096,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=8|index=[1, 1]","2"]}
+{"seq":1097,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=8|index=[1, 2]","3"]}
+{"seq":1098,"event":"TaskLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=8|index=[1, 3]","5"]}
+{"seq":1099,"event":"TermLinkAdd","args":["{SELF}|type=3|index=[0]","<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1100,"event":"TermLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[0]","{SELF}"]}
+{"seq":1101,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":1102,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":1103,"event":"TermLinkAdd","args":["SELF|type=3|index=[0, 0]","<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1104,"event":"TermLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[0, 0]","SELF"]}
+{"seq":1105,"event":"TermLinkAdd","args":["(/,^add,_,2,3,5)|type=3|index=[1]","<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1106,"event":"TermLinkAdd","args":["<{SELF} --> (/,^add,_,2,3,5)>|type=4|index=[1]","(/,^add,_,2,3,5)"]}
+{"seq":1107,"event":"TermLinkAdd","args":["^add|type=1|index=[0]","(/,^add,_,2,3,5)"]}
+{"seq":1108,"event":"TermLinkAdd","args":["(/,^add,_,2,3,5)|type=2|index=[0]","^add"]}
+{"seq":1109,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(/,^add,_,2,3,5)"]}
+{"seq":1110,"event":"TermLinkAdd","args":["(/,^add,_,2,3,5)|type=2|index=[1]","2"]}
+{"seq":1111,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(/,^add,_,2,3,5)"]}
+{"seq":1112,"event":"TermLinkAdd","args":["(/,^add,_,2,3,5)|type=2|index=[2]","3"]}
+{"seq":1113,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(/,^add,_,2,3,5)"]}
+{"seq":1114,"event":"TermLinkAdd","args":["(/,^add,_,2,3,5)|type=2|index=[3]","5"]}
+{"seq":1115,"event":"ConceptDirectProcessedTask","args":["<{SELF} --> (/,^add,_,2,3,5)>. :!0: %1.00;0.90% {22|0 : (3153837435639683,1)} "]}
+{"seq":1116,"event":"TaskImmediateProcess","args":["<{SELF} --> (/,^add,_,2,3,5)>. :!0: %1.00;0.90% {22|0 : (3153837435639683,1)} ","<{SELF} --> (/,^add,_,2,3,5)>"]}
+{"seq":1117,"event":"TaskDerive","args":["(^add,#1,#2,#3,5)! %1.00;0.28% {23 : (3153837435639683,1);(3153837435639683,0)} ","false","true"]}
+{"seq":1118,"event":"TaskAdd","args":["(^add,#1,#2,#3,5)! %1.00;0.28% {23 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":1119,"event":"OUT","args":["(^add,#1,#2,#3,5)! %1.00;0.28% {23 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1120,"event":"TermLinkSelect","args":["(^add,#1,#2,#3,5)|type=1|index=[0]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":1121,"event":"TermLinkSelect","args":["^add|type=1|index=[0, 1]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":1122,"event":"TaskDerive","args":["(^add,#1,#2,#3,?4)! %1.00;0.28% {23 : (3153837435639683,1);(3153837435639683,0)} ","false","true"]}
+{"seq":1123,"event":"TaskAdd","args":["(^add,#1,#2,#3,?4)! %1.00;0.28% {23 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":1124,"event":"OUT","args":["(^add,#1,#2,#3,?4)! %1.00;0.28% {23 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1125,"event":"TermLinkSelect","args":["(^add,#1,#2,#3,?4)|type=1|index=[1]","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))","(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":1126,"event":"ConceptFire","args":["(&&,(^add,#1,#2,#3,5),(^add,#1,#2,#3,?4))"]}
+{"seq":1127,"event":"TaskLinkAdd","args":["(^add,#1,#2,#3,5)|type=0|index=null","(^add,#1,#2,#3,5)"]}
+{"seq":1128,"event":"TaskLinkAdd","args":["(^add,#1,#2,#3,5)|type=4|index=[0]","(*,#1,#2,#3,5)"]}
+{"seq":1129,"event":"TaskLinkAdd","args":["(^add,#1,#2,#3,5)|type=8|index=[0, 3]","5"]}
+{"seq":1130,"event":"TaskLinkAdd","args":["(^add,#1,#2,#3,5)|type=4|index=[1]","^add"]}
+{"seq":1131,"event":"TermLinkAdd","args":["(*,#1,#2,#3,5)|type=3|index=[0]","(^add,#1,#2,#3,5)"]}
+{"seq":1132,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,5)|type=4|index=[0]","(*,#1,#2,#3,5)"]}
+{"seq":1133,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,#1,#2,#3,5)"]}
+{"seq":1134,"event":"TermLinkAdd","args":["(*,#1,#2,#3,5)|type=2|index=[3]","5"]}
+{"seq":1135,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,#2,#3,5)"]}
+{"seq":1136,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,5)|type=4|index=[1]","^add"]}
+{"seq":1137,"event":"ConceptDirectProcessedTask","args":["(^add,#1,#2,#3,5)! %1.00;0.28% {23 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1138,"event":"TaskImmediateProcess","args":["(^add,#1,#2,#3,5)! %1.00;0.28% {23 : (3153837435639683,1);(3153837435639683,0)} ","(^add,#1,#2,#3,5)"]}
+{"seq":1139,"event":"TaskLinkAdd","args":["(^add,#1,#2,#3,?4)|type=0|index=null","(^add,#1,#2,#3,?4)"]}
+{"seq":1140,"event":"TaskLinkAdd","args":["(^add,#1,#2,#3,?4)|type=4|index=[0]","(*,#1,#2,#3,?4)"]}
+{"seq":1141,"event":"TaskLinkAdd","args":["(^add,#1,#2,#3,?4)|type=4|index=[1]","^add"]}
+{"seq":1142,"event":"TermLinkAdd","args":["(*,#1,#2,#3,?4)|type=3|index=[0]","(^add,#1,#2,#3,?4)"]}
+{"seq":1143,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,?4)|type=4|index=[0]","(*,#1,#2,#3,?4)"]}
+{"seq":1144,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,#2,#3,?4)"]}
+{"seq":1145,"event":"TermLinkAdd","args":["(^add,#1,#2,#3,?4)|type=4|index=[1]","^add"]}
+{"seq":1146,"event":"ConceptDirectProcessedTask","args":["(^add,#1,#2,#3,?4)! %1.00;0.28% {23 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1147,"event":"TaskImmediateProcess","args":["(^add,#1,#2,#3,?4)! %1.00;0.28% {23 : (3153837435639683,1);(3153837435639683,0)} ","(^add,#1,#2,#3,?4)"]}
+{"seq":1148,"event":"TermLinkSelect","args":["(*,#1,2,3,5)|type=3|index=[0]","(^add,#1,2,3,5)","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":1149,"event":"TermLinkSelect","args":["^add|type=3|index=[1]","(^add,#1,2,3,5)","(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":1150,"event":"ConceptFire","args":["(&&,(^add,#1,2,3,5),(^add,#1,2,3,?2))"]}
+{"seq":1151,"event":"ConceptFire","args":["(^add,{SELF},2,3,5)"]}
+{"seq":1152,"event":"ConceptFire","args":["(^add,{SELF},2,3,?1)"]}
+{"seq":1153,"event":"TaskDerive","args":["(^add,#1,2,#2,5)! %1.00;0.31% {27 : (3153837435639683,1);(3153837435639683,0)} ","false","true"]}
+{"seq":1154,"event":"TaskAdd","args":["(^add,#1,2,#2,5)! %1.00;0.31% {27 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":1155,"event":"OUT","args":["(^add,#1,2,#2,5)! %1.00;0.31% {27 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1156,"event":"TermLinkSelect","args":["(^add,#1,2,#2,5)|type=1|index=[0]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":1157,"event":"TermLinkSelect","args":["^add|type=1|index=[0, 1]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":1158,"event":"TaskDerive","args":["(^add,#1,2,#2,?3)! %1.00;0.31% {27 : (3153837435639683,1);(3153837435639683,0)} ","false","true"]}
+{"seq":1159,"event":"TaskAdd","args":["(^add,#1,2,#2,?3)! %1.00;0.31% {27 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":1160,"event":"OUT","args":["(^add,#1,2,#2,?3)! %1.00;0.31% {27 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1161,"event":"TermLinkSelect","args":["(^add,#1,2,#2,?3)|type=1|index=[1]","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))","(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":1162,"event":"ConceptFire","args":["(&&,(^add,#1,2,#2,5),(^add,#1,2,#2,?3))"]}
+{"seq":1163,"event":"TaskLinkAdd","args":["(^add,#1,2,#2,5)|type=0|index=null","(^add,#1,2,#2,5)"]}
+{"seq":1164,"event":"TaskLinkAdd","args":["(^add,#1,2,#2,5)|type=4|index=[0]","(*,#1,2,#2,5)"]}
+{"seq":1165,"event":"TaskLinkAdd","args":["(^add,#1,2,#2,5)|type=8|index=[0, 1]","2"]}
+{"seq":1166,"event":"TaskLinkAdd","args":["(^add,#1,2,#2,5)|type=8|index=[0, 3]","5"]}
+{"seq":1167,"event":"TaskLinkAdd","args":["(^add,#1,2,#2,5)|type=4|index=[1]","^add"]}
+{"seq":1168,"event":"TermLinkAdd","args":["(*,#1,2,#2,5)|type=3|index=[0]","(^add,#1,2,#2,5)"]}
+{"seq":1169,"event":"TermLinkAdd","args":["(^add,#1,2,#2,5)|type=4|index=[0]","(*,#1,2,#2,5)"]}
+{"seq":1170,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,#1,2,#2,5)"]}
+{"seq":1171,"event":"TermLinkAdd","args":["(*,#1,2,#2,5)|type=2|index=[1]","2"]}
+{"seq":1172,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,#1,2,#2,5)"]}
+{"seq":1173,"event":"TermLinkAdd","args":["(*,#1,2,#2,5)|type=2|index=[3]","5"]}
+{"seq":1174,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,2,#2,5)"]}
+{"seq":1175,"event":"TermLinkAdd","args":["(^add,#1,2,#2,5)|type=4|index=[1]","^add"]}
+{"seq":1176,"event":"ConceptDirectProcessedTask","args":["(^add,#1,2,#2,5)! %1.00;0.31% {27 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1177,"event":"TaskImmediateProcess","args":["(^add,#1,2,#2,5)! %1.00;0.31% {27 : (3153837435639683,1);(3153837435639683,0)} ","(^add,#1,2,#2,5)"]}
+{"seq":1178,"event":"TaskLinkAdd","args":["(^add,#1,2,#2,?3)|type=0|index=null","(^add,#1,2,#2,?3)"]}
+{"seq":1179,"event":"TaskLinkAdd","args":["(^add,#1,2,#2,?3)|type=4|index=[0]","(*,#1,2,#2,?3)"]}
+{"seq":1180,"event":"TaskLinkAdd","args":["(^add,#1,2,#2,?3)|type=8|index=[0, 1]","2"]}
+{"seq":1181,"event":"TaskLinkAdd","args":["(^add,#1,2,#2,?3)|type=4|index=[1]","^add"]}
+{"seq":1182,"event":"TermLinkAdd","args":["(*,#1,2,#2,?3)|type=3|index=[0]","(^add,#1,2,#2,?3)"]}
+{"seq":1183,"event":"TermLinkAdd","args":["(^add,#1,2,#2,?3)|type=4|index=[0]","(*,#1,2,#2,?3)"]}
+{"seq":1184,"event":"TermLinkAdd","args":["2|type=1|index=[1]","(*,#1,2,#2,?3)"]}
+{"seq":1185,"event":"TermLinkAdd","args":["(*,#1,2,#2,?3)|type=2|index=[1]","2"]}
+{"seq":1186,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,#1,2,#2,?3)"]}
+{"seq":1187,"event":"TermLinkAdd","args":["(^add,#1,2,#2,?3)|type=4|index=[1]","^add"]}
+{"seq":1188,"event":"ConceptDirectProcessedTask","args":["(^add,#1,2,#2,?3)! %1.00;0.31% {27 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1189,"event":"TaskImmediateProcess","args":["(^add,#1,2,#2,?3)! %1.00;0.31% {27 : (3153837435639683,1);(3153837435639683,0)} ","(^add,#1,2,#2,?3)"]}
+{"seq":1190,"event":"TaskDerive","args":["(^add,{SELF},#1,3,5)! %1.00;0.38% {28 : (3153837435639683,1);(3153837435639683,0)} ","false","true"]}
+{"seq":1191,"event":"TaskAdd","args":["(^add,{SELF},#1,3,5)! %1.00;0.38% {28 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":1192,"event":"OUT","args":["(^add,{SELF},#1,3,5)! %1.00;0.38% {28 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1193,"event":"TermLinkSelect","args":["(^add,{SELF},#1,3,5)|type=1|index=[0]","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":1194,"event":"TermLinkSelect","args":["^add|type=1|index=[0, 1]","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":1195,"event":"TaskDerive","args":["(^add,{SELF},#1,3,?2)! %1.00;0.38% {28 : (3153837435639683,1);(3153837435639683,0)} ","false","true"]}
+{"seq":1196,"event":"TaskAdd","args":["(^add,{SELF},#1,3,?2)! %1.00;0.38% {28 : (3153837435639683,1);(3153837435639683,0)} ","Derived"]}
+{"seq":1197,"event":"OUT","args":["(^add,{SELF},#1,3,?2)! %1.00;0.38% {28 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1198,"event":"TermLinkSelect","args":["(^add,{SELF},#1,3,?2)|type=1|index=[1]","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))","(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":1199,"event":"ConceptFire","args":["(&&,(^add,{SELF},#1,3,5),(^add,{SELF},#1,3,?2))"]}
+{"seq":1200,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,5)|type=0|index=null","(^add,{SELF},#1,3,5)"]}
+{"seq":1201,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,5)|type=4|index=[0]","(*,{SELF},#1,3,5)"]}
+{"seq":1202,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,5)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":1203,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,5)|type=8|index=[0, 2]","3"]}
+{"seq":1204,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,5)|type=8|index=[0, 3]","5"]}
+{"seq":1205,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,5)|type=4|index=[1]","^add"]}
+{"seq":1206,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,5)|type=3|index=[0]","(^add,{SELF},#1,3,5)"]}
+{"seq":1207,"event":"TermLinkAdd","args":["(^add,{SELF},#1,3,5)|type=4|index=[0]","(*,{SELF},#1,3,5)"]}
+{"seq":1208,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},#1,3,5)"]}
+{"seq":1209,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,5)|type=2|index=[0]","{SELF}"]}
+{"seq":1210,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":1211,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":1212,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},#1,3,5)"]}
+{"seq":1213,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,5)|type=2|index=[0, 0]","SELF"]}
+{"seq":1214,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},#1,3,5)"]}
+{"seq":1215,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,5)|type=2|index=[2]","3"]}
+{"seq":1216,"event":"TermLinkAdd","args":["5|type=1|index=[3]","(*,{SELF},#1,3,5)"]}
+{"seq":1217,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,5)|type=2|index=[3]","5"]}
+{"seq":1218,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},#1,3,5)"]}
+{"seq":1219,"event":"TermLinkAdd","args":["(^add,{SELF},#1,3,5)|type=4|index=[1]","^add"]}
+{"seq":1220,"event":"ConceptDirectProcessedTask","args":["(^add,{SELF},#1,3,5)! %1.00;0.38% {28 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1221,"event":"TaskImmediateProcess","args":["(^add,{SELF},#1,3,5)! %1.00;0.38% {28 : (3153837435639683,1);(3153837435639683,0)} ","(^add,{SELF},#1,3,5)"]}
+{"seq":1222,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,?2)|type=0|index=null","(^add,{SELF},#1,3,?2)"]}
+{"seq":1223,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,?2)|type=4|index=[0]","(*,{SELF},#1,3,?2)"]}
+{"seq":1224,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,?2)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":1225,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,?2)|type=8|index=[0, 2]","3"]}
+{"seq":1226,"event":"TaskLinkAdd","args":["(^add,{SELF},#1,3,?2)|type=4|index=[1]","^add"]}
+{"seq":1227,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,?2)|type=3|index=[0]","(^add,{SELF},#1,3,?2)"]}
+{"seq":1228,"event":"TermLinkAdd","args":["(^add,{SELF},#1,3,?2)|type=4|index=[0]","(*,{SELF},#1,3,?2)"]}
+{"seq":1229,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},#1,3,?2)"]}
+{"seq":1230,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,?2)|type=2|index=[0]","{SELF}"]}
+{"seq":1231,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":1232,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":1233,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},#1,3,?2)"]}
+{"seq":1234,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,?2)|type=2|index=[0, 0]","SELF"]}
+{"seq":1235,"event":"TermLinkAdd","args":["3|type=1|index=[2]","(*,{SELF},#1,3,?2)"]}
+{"seq":1236,"event":"TermLinkAdd","args":["(*,{SELF},#1,3,?2)|type=2|index=[2]","3"]}
+{"seq":1237,"event":"TermLinkAdd","args":["^add|type=3|index=[1]","(^add,{SELF},#1,3,?2)"]}
+{"seq":1238,"event":"TermLinkAdd","args":["(^add,{SELF},#1,3,?2)|type=4|index=[1]","^add"]}
+{"seq":1239,"event":"ConceptDirectProcessedTask","args":["(^add,{SELF},#1,3,?2)! %1.00;0.38% {28 : (3153837435639683,1);(3153837435639683,0)} "]}
+{"seq":1240,"event":"TaskImmediateProcess","args":["(^add,{SELF},#1,3,?2)! %1.00;0.38% {28 : (3153837435639683,1);(3153837435639683,0)} ","(^add,{SELF},#1,3,?2)"]}
+{"seq":1241,"event":"TermLinkSelect","args":["(*,{SELF},2,#1,5)|type=3|index=[0]","(^add,{SELF},2,#1,5)","(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))"]}
+{"seq":1242,"event":"TermLinkSelect","args":["^add|type=3|index=[1]","(^add,{SELF},2,#1,5)","(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))"]}
+{"seq":1243,"event":"ConceptFire","args":["(&&,(^add,{SELF},2,#1,5),(^add,{SELF},2,#1,?2))"]}
+{"seq":1244,"event":"TermLinkSelect","args":["5|type=1|index=[3]","(*,#1,#2,#3,5)","(^add,#1,#2,#3,5)"]}
+{"seq":1245,"event":"ConceptFire","args":["(^add,#1,#2,#3,5)"]}
+{"seq":1246,"event":"TermLinkSelect","args":["(*,{#1},2,#2,5)|type=3|index=[0]","(^add,{#1},2,#2,5)","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":1247,"event":"TermLinkSelect","args":["^add|type=3|index=[1]","(^add,{#1},2,#2,5)","(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":1248,"event":"ConceptFire","args":["(&&,(^add,{#1},2,#2,5),(^add,{#1},2,#2,?3))"]}
+{"seq":1249,"event":"after-cycles","args":[]}

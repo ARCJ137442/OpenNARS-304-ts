@@ -94,7 +94,11 @@ function main() {
 
     for (const rawLine of readFileSync(file, "utf8").split(/\r?\n/)) {
         const line = rawLine.trim();
-        if (line.length === 0 || line.startsWith("'") || /^[0-9]+$/.test(line)) break;
+        if (line.length === 0 || line.startsWith("'")) continue;
+        if (/^[0-9]+$/.test(line)) {
+            nar.cycles(Number(line));
+            continue;
+        }
         nar.addInput(new java.lang.String(line));
     }
     process.stdout.write(`${JSON.stringify({ seq: sequence++, event: "before-cycles", args: [] })}\n`);
