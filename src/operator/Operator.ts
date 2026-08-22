@@ -3,6 +3,8 @@ import { java, type float, JavaObject, S } from "jree";
 import { Term } from "../language/Term.ts";
 import { Inheritance } from "../language/Inheritance.ts";
 import { Operation } from "./Operation.ts";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { OutputHandler } from "../io/events/OutputHandler.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Task } from "../entity/Task.ts";
@@ -89,24 +91,24 @@ export abstract class Operator extends Term implements Plugin {
                 if (!op.isExecutable(memory)) {
                     return false;
                 }
-                let args: Product = op.getArguments();
-                return this.call(op, args.term, memory, time);
+                let operationArgs: Product = op.getArguments();
+                return this.call(op, operationArgs.term, memory, time);
 
 
                 break;
             }
 
             case 4: {
-                const [operation, args, memory, time] = args as [Operation, Term[], Memory, Timable];
+                const [operation, operationArgs, memory, time] = args as [Operation, Term[], Memory, Timable];
 
 
                 let feedback: java.util.List<Task> = null;
                 try {
-                    feedback = this.execute(operation, args, memory, time);
+                    feedback = this.execute(operation, operationArgs, memory, time);
                 } catch (ex) {
                     if (ex instanceof java.lang.Exception) {// peripherie, maybe used incorrectly, failure is unavoidable
                         if (Debug.SHOW_EXECUTION_ERRORS) {
-                            memory.event.emit(ERR.class, ex);
+                            memory.event.emit(OutputHandler.ERR.class, ex);
                         }
                         if (!Debug.EXECUTION_ERRORS_CONTINUE) {
                             throw new java.lang.IllegalStateException("Execution error:\n", ex);
@@ -123,7 +125,7 @@ export abstract class Operator extends Term implements Plugin {
                     memory.executedTask(time, operation, TruthValue.fromFrequencyConfidence(1, executionConfidence, memory.narParameters));
                 }
 
-                Operator.reportExecution(operation, args, feedback, memory);
+                Operator.reportExecution(operation, operationArgs, feedback, memory);
 
                 if (feedback !== null) {
                     for (let t of feedback) {
@@ -170,13 +172,13 @@ export abstract class Operator extends Term implements Plugin {
             return;
         }
 
-        if (memory.emitting(EXE.class)) {
+        if (memory.emitting(OutputHandler.EXE.class)) {
             // final Operator operator = (Operator) opT;
 
             if (feedback instanceof java.lang.Exception)
                 feedback = feedback.getClass().getSimpleName() + ": " + (feedback as java.lang.Throwable).getMessage();
 
-            memory.emit(EXE.class, new Operator.ExecutionResult(operation, feedback));
+            memory.emit(OutputHandler.EXE.class, new Operator.ExecutionResult(operation, feedback));
         }
     }
 

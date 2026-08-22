@@ -31,6 +31,11 @@ export abstract class SetTensional extends CompoundTerm {
             Terms.verifySortedAndUnique(arg, true);
         }
 
+        // Java initializes the compound metrics in this constructor. Without
+        // this call, sets keep CompoundTerm's zero complexity in TypeScript,
+        // which makes Concept.getQuality return Infinity once Emotions is on.
+        this.init(arg);
+
     }
 
     /**

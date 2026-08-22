@@ -15,7 +15,9 @@ import type { Task } from "../entity/Task.ts";
  */
 export class Operation extends Inheritance {
     private task: Task;
-    public static readonly SELF_TERM_ARRAY: Term[] = [Term.SELF];
+    public static get SELF_TERM_ARRAY(): Term[] {
+        return [Term.SELF];
+    }
 
     protected constructor(t: Term[]);
 

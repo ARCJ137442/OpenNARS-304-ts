@@ -12,6 +12,7 @@ import { TruthValue } from "./TruthValue.ts";
 import { Stamp } from "./Stamp.ts";
 import { CompoundTerm } from "../language/CompoundTerm.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { LocalRules } from "../inference/LocalRules.ts";
 import { Events } from "../io/events/Events.ts";
 import { ProcessQuestion } from "../control/concept/ProcessQuestion.ts";
@@ -45,7 +46,9 @@ export class Concept extends Item<Term> {
 
     // recent events that happened before the operation the
     // concept represents was executed
-    public seq_before: Bag<Task, Sentence>;
+    // Java reference fields default to null; keep the null guard in
+    // TemporalInferenceControl meaningful before the first operation frame.
+    public seq_before: Bag<Task, Sentence> = null;
 
     /**
      * Task links for indirect processing
@@ -496,7 +499,7 @@ export class Concept extends Item<Term> {
     public getQuality(): float {
         let linkPriority: float = this.termLinks.getAveragePriority();
         let termComplexityFactor: float = 1.0 / (this.term.getComplexity() * this.memory.narParameters.COMPLEXITY_UNIT);
-        let result: float = java.math.BigInteger.or(this.acquiredQuality, linkPriority, termComplexityFactor);
+        let result: float = UtilityFunctions.or(this.acquiredQuality, linkPriority, termComplexityFactor);
         if (result < 0) {
             throw new java.lang.IllegalStateException("Concept.getQuality < 0:  result=" + result + ", linkPriority="
                 + linkPriority + " ,termComplexityFactor=" + termComplexityFactor + ", termLinks.size="

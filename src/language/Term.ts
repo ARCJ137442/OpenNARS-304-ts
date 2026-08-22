@@ -32,9 +32,17 @@ export class Term extends JavaObject {
     public imagination: any = null;
     private static readonly atoms: java.util.Map<java.lang.CharSequence, Term> = new java.util.LinkedHashMap();
 
-    // Keep atomic SELF initialization independent from the SetExt -> Term
-    // module cycle.
-    public static readonly SELF: Term = Term.get("SELF");
+    // Java defines SELF as the singleton extension set {SELF}, not as the
+    // atomic term SELF.  SetExt registers that value after the module cycle has
+    // initialized; the atomic fallback only exists during module loading.
+    private static selfValue: Term = null;
+    public static get SELF(): Term {
+        return Term.selfValue ?? Term.get("SELF");
+    }
+
+    public static installSelf(value: Term): void {
+        Term.selfValue = value;
+    }
     public static readonly SEQ_SPATIAL: Term = Term.get("#");
     public static readonly SEQ_TEMPORAL: Term = Term.get("&/");
 

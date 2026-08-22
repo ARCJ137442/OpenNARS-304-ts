@@ -127,3 +127,7 @@ export class SetExt extends SetTensional {
         return SetExt.makeSetName(SET_EXT_OPENER.ch, this.term, SET_EXT_CLOSER.ch);
     }
 }
+
+// Match Java's Term.SELF = SetExt.make(Term.get("SELF") without importing
+// SetExt from Term.ts, which would re-enter the CompoundTerm -> Interval cycle.
+Term.installSelf(SetExt.make(Term.get("SELF")));

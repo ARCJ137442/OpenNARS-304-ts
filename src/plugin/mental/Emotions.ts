@@ -1,5 +1,18 @@
 //! Java source: opennars/plugin/mental/Emotions.java
 import { java, JavaObject, type float, type int, type double, type long, S } from "jree";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
+import { Symbols } from "../../io/Symbols.ts";
+import { Inheritance } from "../../language/Inheritance.ts";
+import { SetInt } from "../../language/SetInt.ts";
+import { Term } from "../../language/Term.ts";
+import type { DerivationContext } from "../../control/DerivationContext.ts";
+import type { Nar } from "../../main/Nar.ts";
+import type { Plugin } from "../Plugin.ts";
 
 
 
@@ -20,10 +33,13 @@ export class Emotions extends JavaObject implements Plugin {
     public last_happy_time: long = 0;
     public last_busy_time: long = 0;
 
-    /** average desire-value */
-    private happy: float;
-    /** average priority */
-    private busy: float;
+    /**
+     * Java permits a private field and an accessor method to share a name.
+     * Keep the public method names while avoiding a TypeScript instance field
+     * shadowing happy() and busy().
+     */
+    private happyValue: float;
+    private busyValue: float;
 
     public setHAPPY_EVENT_HIGHER_THRESHOLD(val: double): void {
         this.HAPPY_EVENT_HIGHER_THRESHOLD = val as float;
@@ -66,8 +82,8 @@ export class Emotions extends JavaObject implements Plugin {
     }
 
     public resetEmotions(): void {
-        this.happy = 0.5;
-        this.busy = 0.5;
+        this.happyValue = 0.5;
+        this.busyValue = 0.5;
         this.lastbusy = 0.5;
         this.lasthappy = 0.5;
     }
@@ -109,38 +125,38 @@ export class Emotions extends JavaObject implements Plugin {
 
 
     public set(happy: float, busy: float): void {
-        this.happy = happy;
-        this.busy = busy;
+        this.happyValue = happy;
+        this.busyValue = busy;
     }
 
     public happy(): float {
-        return this.happy;
+        return this.happyValue;
     }
 
     public busy(): float {
-        return this.busy;
+        return this.busyValue;
     }
 
     public adjustSatisfaction(newValue: float, weight: float, nal: DerivationContext): void {
 
         // float oldV = happyValue;
-        this.happy += newValue * weight;
-        this.happy /= 1.0 + weight;
+        this.happyValue += newValue * weight;
+        this.happyValue /= 1.0 + weight;
 
         if (!this.enabled) {
             return;
         }
 
         let frequency: float = -1;
-        if (java.lang.Math.abs(this.happy - this.lasthappy) > this.CHANGE_THRESHOLD
+        if (java.lang.Math.abs(this.happyValue - this.lasthappy) > this.CHANGE_THRESHOLD
             && nal.time.time() - this.last_happy_time > this.CHANGE_STEPS_DEMANDED) {
-            if (this.happy > this.HAPPY_EVENT_HIGHER_THRESHOLD && this.lasthappy <= this.HAPPY_EVENT_HIGHER_THRESHOLD) {
+            if (this.happyValue > this.HAPPY_EVENT_HIGHER_THRESHOLD && this.lasthappy <= this.HAPPY_EVENT_HIGHER_THRESHOLD) {
                 frequency = 1.0;
             }
-            if (this.happy < this.HAPPY_EVENT_LOWER_THRESHOLD && this.lasthappy >= this.HAPPY_EVENT_LOWER_THRESHOLD) {
+            if (this.happyValue < this.HAPPY_EVENT_LOWER_THRESHOLD && this.lasthappy >= this.HAPPY_EVENT_LOWER_THRESHOLD) {
                 frequency = 0.0;
             }
-            this.lasthappy = this.happy;
+            this.lasthappy = this.happyValue;
             this.last_happy_time = nal.time.time();
         }
 
@@ -148,7 +164,7 @@ export class Emotions extends JavaObject implements Plugin {
             let predicate: Term = SetInt.make(new Term("satisfied"));
             let subject: Term = Term.SELF;
             let inh: Inheritance = Inheritance.make(subject, predicate);
-            let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.happy, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
+            let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.happyValue, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
                 nal.narParameters);
             let s: Sentence = new Sentence(inh, Symbols.JUDGMENT_MARK, truth, new Stamp(nal.time, nal.memory));
             s.stamp.setOccurrenceTime(nal.time.time());
@@ -213,22 +229,22 @@ export class Emotions extends JavaObject implements Plugin {
 
     public adjustBusy(newValue: float, weight: float, nal: DerivationContext): void {
 
-        this.busy += newValue * weight;
-        this.busy /= (1.0 + weight);
+        this.busyValue += newValue * weight;
+        this.busyValue /= (1.0 + weight);
 
         if (!this.enabled) {
             return;
         }
 
         let frequency: float = -1;
-        if (java.lang.Math.abs(this.busy - this.lastbusy) > this.CHANGE_THRESHOLD && nal.time.time() - this.last_busy_time > this.CHANGE_STEPS_DEMANDED) {
-            if (this.busy > this.BUSY_EVENT_HIGHER_THRESHOLD && this.lastbusy <= this.BUSY_EVENT_HIGHER_THRESHOLD) {
+        if (java.lang.Math.abs(this.busyValue - this.lastbusy) > this.CHANGE_THRESHOLD && nal.time.time() - this.last_busy_time > this.CHANGE_STEPS_DEMANDED) {
+            if (this.busyValue > this.BUSY_EVENT_HIGHER_THRESHOLD && this.lastbusy <= this.BUSY_EVENT_HIGHER_THRESHOLD) {
                 frequency = 1.0;
             }
-            if (this.busy < this.BUSY_EVENT_LOWER_THRESHOLD && this.lastbusy >= this.BUSY_EVENT_LOWER_THRESHOLD) {
+            if (this.busyValue < this.BUSY_EVENT_LOWER_THRESHOLD && this.lastbusy >= this.BUSY_EVENT_LOWER_THRESHOLD) {
                 frequency = 0.0;
             }
-            this.lastbusy = this.busy;
+            this.lastbusy = this.busyValue;
             this.last_busy_time = nal.time.time();
         }
 
@@ -236,7 +252,7 @@ export class Emotions extends JavaObject implements Plugin {
             let predicate: Term = SetInt.make(new Term("busy"));
             let subject: Term = new Term("SELF");
             let inh: Inheritance = Inheritance.make(subject, predicate);
-            let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.busy, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
+            let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.busyValue, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
                 nal.narParameters);
             let s: Sentence = new Sentence(
                 inh,

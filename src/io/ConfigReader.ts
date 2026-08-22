@@ -18,6 +18,7 @@ import { Hesitate } from "../operator/mental/Hesitate.ts";
 import { Want } from "../operator/mental/Want.ts";
 import { Wonder } from "../operator/mental/Wonder.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
+import { Emotions } from "../plugin/mental/Emotions.ts";
 
 
 
@@ -74,6 +75,13 @@ export class ConfigReader extends JavaObject {
                 true,
                 false,
                 false,
+            )],
+            ["org.opennars.plugin.mental.Emotions", () => new Emotions(
+                0.25,
+                0.75,
+                0.1,
+                0.9,
+                1000,
             )],
         ]);
         ConfigReader.lastUnsupportedPluginClasspaths = [];

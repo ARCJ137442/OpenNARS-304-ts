@@ -17,6 +17,12 @@ type char = string
  */
 export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>, java.io.Serializable {
 
+    // Java stores these fields as float.  Keep the narrowing at write
+    // boundaries; rounding getters or every consumer would change ordering.
+    private static float(value: number): float {
+        return Math.fround(value) as float;
+    }
+
     /** character that marks the two ends of a budget value */
     private static readonly MARK: char = Symbols.BUDGET_VALUE_MARK;
     /** character that separates the factors in a budget value */
@@ -71,21 +77,21 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
         } else if (args.length === 4) {
             const [p, d, third, narParameters] = args as [float, float, float | TruthValue, Parameters];
             this.narParameters = narParameters;
-            this.priority = p;
-            this.durability = d;
+            this.priority = BudgetValue.float(p);
+            this.durability = BudgetValue.float(d);
             this.quality = third instanceof TruthValue
-                ? Math.max(third.getExpectation(), (1 - third.getExpectation()) * 0.75) as float
-                : third;
+                ? BudgetValue.float(Math.max(third.getExpectation(), (1 - third.getExpectation()) * 0.75))
+                : BudgetValue.float(third);
         } else {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
 
         if (this.durability >= 1.0) {
-            this.durability = (1.0 - this.narParameters.TRUTH_EPSILON) as float;
+            this.durability = BudgetValue.float(1.0 - this.narParameters.TRUTH_EPSILON);
             // throw new IllegalStateException("durability value above or equal 1");
         }
         if (this.priority > 1.0) {
-            this.priority = 1.0;
+            this.priority = BudgetValue.float(1.0);
             // throw new IllegalStateException("priority value above 1");
         }
     }
@@ -117,7 +123,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
             throw new java.lang.IllegalStateException("Priority > 1.0: " + v);
             // v=1.0f;
         }
-        this.priority = v;
+        this.priority = BudgetValue.float(v);
     }
 
     /**
@@ -161,7 +167,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
         if (d >= 1.0) {
             d = 1.0 - this.narParameters.TRUTH_EPSILON;
         }
-        this.durability = d;
+        this.durability = BudgetValue.float(d);
     }
 
     /**
@@ -201,7 +207,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      * @param v The new quality
      */
     public setQuality(v: float): void {
-        this.quality = v;
+        this.quality = BudgetValue.float(v);
     }
 
     /**

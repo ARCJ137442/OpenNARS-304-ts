@@ -1,6 +1,19 @@
 //! Java source: opennars/control/TemporalInferenceControl.java
 import { java, JavaObject, type int, type long, type float } from "jree";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { Stamp } from "../entity/Stamp.ts";
+import { Task } from "../entity/Task.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
+import { Events } from "../io/events/Events.ts";
+import { Symbols } from "../io/Symbols.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { Operation } from "../operator/Operation.ts";
+import { Bag } from "../storage/Bag.ts";
+import type { Sentence } from "../entity/Sentence.ts";
+import type { Concept } from "../entity/Concept.ts";
+import type { DerivationContext } from "./DerivationContext.ts";
+import type { Memory } from "../storage/Memory.ts";
 
 
 
