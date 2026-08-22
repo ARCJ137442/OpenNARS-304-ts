@@ -32,7 +32,10 @@ export class Tense extends java.lang.Enum<Tense> {
     }
 
     public static tense(s: java.lang.String): Tense {
-        return Tense.stringToTense.get(s) ?? null;
+        // Java String keys and native JavaScript strings are not interchangeable
+        // in jree-backed maps. Normalize at this parser boundary so Narsese
+        // preserves the Java tense lookup contract.
+        return Tense.stringToTense.get(s) ?? Tense.stringToTense.get(String(s)) ?? null;
     }
 
 }

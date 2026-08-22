@@ -310,14 +310,18 @@ export class BudgetFunctions extends UtilityFunctions {
     private static budgetInference(qual: float, complexity: float,
         nal: DerivationContext): BudgetValue {
         let t: Item<unknown> = nal.getCurrentTaskLink();
-        if (t === null) {
+        // Java returns null for an unset task link; the translated field is
+        // undefined until first assignment, so both values mean "use task".
+        if (t === null || t === undefined) {
             t = nal.getCurrentTask();
         }
         let priority: float = t.getPriority();
         let durability: float = t.getDurability() / complexity;
         let quality: float = qual / complexity;
         let bLink: TermLink = nal.getCurrentBeliefLink();
-        if (bLink !== null) {
+        // Java returns null for an unset belief link; the translated field is
+        // undefined until first assignment, so both values mean "no link".
+        if (bLink !== null && bLink !== undefined) {
             priority = UtilityFunctions.or(priority, bLink.getPriority());
             durability = UtilityFunctions.and(durability, bLink.getDurability()) as float;
             let targetActivation: float = BudgetFunctions.conceptActivation(nal.memory, bLink.target);

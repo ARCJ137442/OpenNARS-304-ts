@@ -54,7 +54,9 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     /** Whether contains a variable */
     private hasIntervals: boolean;
 
-    protected containedTemporalRelations: int = -1;
+    // Java permits a cache field and accessor method to share a name; a JS
+    // instance field would shadow the method, so keep the cache distinct.
+    protected containedTemporalRelationsCache: int = -1;
     protected hash: int;
     private normalized: boolean;
 
@@ -305,17 +307,21 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     }
 
     public containedTemporalRelations(): int {
-        if (this.containedTemporalRelations === -1) {
+        if (this.containedTemporalRelationsCache === -1) {
 
-            this.containedTemporalRelations = 0;
+            this.containedTemporalRelationsCache = 0;
 
-            if ((this instanceof Equivalence) || (this instanceof Implication)) {
-                let temporalOrder: int = this.getTemporalOrder();
+            // Keep CompoundTerm independent from statement subclasses. Java's
+            // instanceof checks are narrowed by the relation operator here;
+            // Conjunction also exposes getTemporalOrder but is not a statement.
+            const operatorName = String(this.operator()?.name?.() ?? this.operator());
+            if (operatorName.startsWith("IMPLICATION") || operatorName.startsWith("EQUIVALENCE")) {
+                const temporalOrder = (this as unknown as { getTemporalOrder: () => int }).getTemporalOrder();
                 switch (temporalOrder) {
                     case TemporalRules.ORDER_FORWARD:
                     case TemporalRules.ORDER_CONCURRENT:
                     case TemporalRules.ORDER_BACKWARD:
-                        this.containedTemporalRelations = 1;
+                        this.containedTemporalRelationsCache = 1;
 
                     default:
 
@@ -323,9 +329,9 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
             }
 
             for (let t of this.term)
-                this.containedTemporalRelations += t.containedTemporalRelations();
+                this.containedTemporalRelationsCache += t.containedTemporalRelations();
         }
-        return this.containedTemporalRelations;
+        return this.containedTemporalRelationsCache;
     }
 
     /**

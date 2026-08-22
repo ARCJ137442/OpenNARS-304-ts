@@ -37,6 +37,9 @@ import { Implication } from "../language/Implication.ts";
 import { Equivalence } from "../language/Equivalence.ts";
 import { Similarity } from "../language/Similarity.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import { CompositionalRules } from "../inference/CompositionalRules.ts";
+import { TruthFunctions } from "../inference/TruthFunctions.ts";
+import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Nar } from "../main/Nar.ts";
 
@@ -92,6 +95,22 @@ Statement.registerRuntime({
     Similarity,
     Implication,
     Equivalence,
+});
+
+// Keep the inference-rule layer from importing language subclasses during
+// module initialization. All runtime classes are ready at this parser boundary.
+TemporalRules.registerRuntime({
+    BudgetFunctions,
+    CompositionalRules,
+    Conjunction,
+    Equivalence,
+    Implication,
+    Inheritance,
+    Interval,
+    Similarity,
+    Statement,
+    TemporalInferenceControl,
+    TruthFunctions,
 });
 
 

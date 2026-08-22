@@ -1,6 +1,14 @@
 //! Java source: opennars/inference/TemporalRules.java
 import { java, JavaObject, type int, type long, S } from "jree";
+import { Symbols } from "../io/Symbols.ts";
 import { Stamp } from "../entity/Stamp.ts";
+import type { BudgetValue } from "../entity/BudgetValue.ts";
+import type { Sentence } from "../entity/Sentence.ts";
+import type { Task } from "../entity/Task.ts";
+import type { Term } from "../language/Term.ts";
+import type { TruthValue } from "../entity/TruthValue.ts";
+
+type TemporalRuntime = Record<string, any>;
 
 
 
@@ -10,6 +18,19 @@ import { Stamp } from "../entity/Stamp.ts";
  * @author Patrick Hammer
  */
 export class TemporalRules extends JavaObject {
+
+    private static runtime: TemporalRuntime | null = null;
+
+    public static registerRuntime(runtime: TemporalRuntime): void {
+        TemporalRules.runtime = runtime;
+    }
+
+    private static getRuntime(): TemporalRuntime {
+        if (TemporalRules.runtime === null) {
+            throw new java.lang.IllegalStateException("Temporal rules runtime classes are not registered");
+        }
+        return TemporalRules.runtime;
+    }
 
     public static readonly ORDER_NONE: int = 2;
     public static readonly ORDER_FORWARD: int = 1;
@@ -123,6 +144,7 @@ export class TemporalRules extends JavaObject {
 
     /** whether a term can be used in temoralInduction(,,) */
     protected static termForTemporalInduction(t: Term): boolean {
+        const { Inheritance, Similarity } = TemporalRules.getRuntime();
         return (t instanceof Inheritance) || (t instanceof Similarity);
     }
 
@@ -130,6 +152,18 @@ export class TemporalRules extends JavaObject {
     public static temporalInduction(s1: Sentence, s2: Sentence,
         nal: org.opennars.control.DerivationContext, SucceedingEventsInduction: boolean,
         addToMemory: boolean, allowSequence: boolean): java.util.List<Task> {
+
+        const {
+            BudgetFunctions,
+            CompositionalRules,
+            Conjunction,
+            Equivalence,
+            Implication,
+            Interval,
+            Statement,
+            TemporalInferenceControl,
+            TruthFunctions,
+        } = TemporalRules.getRuntime();
 
         if ((s1.truth === null) || (s2.truth === null) || s1.punctuation !== Symbols.JUDGMENT_MARK
             || s2.punctuation !== Symbols.JUDGMENT_MARK
@@ -157,7 +191,7 @@ export class TemporalRules extends JavaObject {
                 t2 = Conjunction.make(t2, interval, TemporalRules.ORDER_FORWARD);
             }
         }
-        let order: int = order(timeDiff, durationCycles);
+        let order: int = TemporalRules.order(timeDiff, durationCycles);
         let givenTruth1: TruthValue = s1.truth;
         let givenTruth2: TruthValue = s2.truth;
 
