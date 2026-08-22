@@ -112,17 +112,66 @@
       "nal_test": 244,
       "stability_test": 1
     },
-    "canonical_effect": "probe_only; not canonical and not committed as Java source",
-    "decision_required": "是否批准对当前 Java 源码移除该错误断言并以修复后的源码重新建立候选 canonical"
+    "canonical_effect": "probe_only; not canonical; the authorized source fix was committed separately as Java commit 8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+    "decision_required": "已获得授权；修复、提交、重建和前后 JAR 一致性验证见 post_fix_baseline 与 java-304-jar-consistency.json",
+    "host_stability": "此前高周期测试中的 EXCEPTION_ACCESS_VIOLATION 已由用户确认是本机主机内存不稳定，不归因于 JVM、JDK 或 OpenNARS 源码。"
+  },
+  "post_fix_baseline": {
+    "java_source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+    "java_commit_message": "fix: 修复 showStamp=false 的句子格式化断言",
+    "source_change": "移除 Sentence.toString(Nar, boolean) 中与 showStamp=false 契约冲突的无条件 stampString 断言，并在 TestStamp 增加直接回归测试。",
+    "artifact": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+    "artifact_size": 4092945,
+    "artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "manifest": {
+      "created_by": "Apache Maven 3.9.9",
+      "build_jdk": "18.0.2",
+      "specification_version": "3.0.4-SNAPSHOT",
+      "implementation_version": "3.0.4-SNAPSHOT",
+      "main_class": "org.opennars.main.Shell"
+    },
+    "stable_java_test_run": {
+      "command": "mvn -Djacoco.skip=true -Dmaven.test.failure.ignore=false -DargLine=-XX:+UseSerialGC test",
+      "jdk": "16",
+      "maven": "3.9.9",
+      "test_cases": 267,
+      "passed": 267,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "jar_consistency": {
+    "evidence": "reports/evidence/java-304-jar-consistency.json",
+    "local_algorithm_snapshot": {
+      "pre_fix_ok": true,
+      "post_fix_ok": true,
+      "pre_fix_differences": 0,
+      "post_fix_differences": 0,
+      "tolerance": 0.00001
+    },
+    "nal_matrix": {
+      "pre_fix_file": "reports/evidence/java-304-new-nal-matrix.json",
+      "post_fix_file": "reports/evidence/java-304-fixed-nal-matrix.json",
+      "pre_fix_rows": 245,
+      "post_fix_rows": 245,
+      "same_behavior_rows": 245,
+      "changed_behavior_rows": 0,
+      "missing_rows": 0,
+      "pre_fix_summary": {"passed": 202, "failed": 43},
+      "post_fix_summary": {"passed": 202, "failed": 43}
+    }
   },
   "canonical_decision": {
-    "gate_a_passed": false,
-    "canonical": "legacy-only-history-baseline; no switch",
+    "gate_a_passed": true,
+    "canonical": "post-fix-java-304-artifact",
+    "canonical_artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
     "reason": [
-      "Java tests contain 246 failures hidden by testFailureIgnore",
-      "legacy JAR metadata is 3.1.0-SNAPSHOT and its API does not match current 3.0.4 source adapter",
-      "rebuilt Java matrix contains 43 failed rows and 2 timeouts",
-      "full old/new Java equivalence has not been established"
+      "授权后的 Java 修复已提交为 8675b76fe8c21ee20a7b8c1b63408fb05327210d，并通过 267/267 稳定测试",
+      "局部算法快照前后均通过，数值容差为 1e-5 且差异数为 0",
+      "245 个 NAL 资源前后行为字段逐行一致，202 通过、43 未通过的资源集合没有变化",
+      "历史 3.1.0 JAR 保留为 legacy，不替代当前 3.0.4 源码基线",
+      "高周期 EXCEPTION_ACCESS_VIOLATION 记录为本机主机内存不稳定，不作为 Java/JDK/OpenNARS 语义差异"
     ]
   }
 }

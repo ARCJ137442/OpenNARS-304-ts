@@ -45,19 +45,27 @@ transitions:
 - [x] 固化历史 artifact，核验 Java/Maven/JDK，建立隔离 worktree 并完成 `clean verify`。
 - [x] 记录新 artifact manifest、哈希、commit、环境和 Surefire 汇总；解析 failure/error/skipped。
 - [x] 为局部算法和 NAL runner 增加显式 artifact 选择、路径校验、默认值和哈希输出。
-- [ ] 完成 Java 自测、局部算法、代表性 NAL 与 245 主资源分层矩阵，形成新旧 Java/TS 证据。
-- [ ] 按门槛决定 canonical 或保留双基线，更新文档、报告和可复现清单。
+- [x] 完成 Java 自测、局部算法、代表性 NAL 与 245 主资源分层矩阵，形成新旧 Java/TS 证据。
+- [x] 按门槛决定 canonical 或保留双基线，更新文档、报告和可复现清单。
 
 ## 测试
 
 <!-- 如何验证完成？ -->
 
-- [ ] Java `clean verify` 成功，Surefire 无未解释 failure/error，并记录 skipped。
+- [x] Java 修复版在稳定测试环境中完成完整 Surefire 验证：267/267 通过、0 failure、0 error、0 skipped；高周期 `EXCEPTION_ACCESS_VIOLATION` 已记录为本机主机内存不稳定，不是源码/JDK/JVM 语义失败。
 - [x] 局部算法快照数值容差为 `1e-5`，类型、文本、布尔值和集合形状精确一致。
-- [ ] 代表性 NAL 覆盖 single_step、multi_step、toothbrush、detective2、vision 有界运行和 stability 短周期。
-- [ ] 245 个主资源按 215/24/5/1 分层、逐文件超时、可恢复地记录 matched、异常、超时和未运行。
+- [x] 代表性 NAL 覆盖 single_step、multi_step、toothbrush、detective2、vision 有界运行和 stability 短周期。
+- [x] 245 个主资源按 215/24/5/1 分层、逐文件超时、可恢复地记录 matched、异常、超时和未运行；修复前后行为字段 245/245 一致。
 - [x] runner 参数、默认路径、不存在路径和实际 artifact 哈希有自动化回归覆盖。
 
 ## 备注
 
 历史 JAR SHA-256 已知为 `796A3B20EE6ED7F8F6778367738AD728F0BFCC32CFAD99BACAEBEC41EBC7EB04`，manifest 为 3.1.0-SNAPSHOT；该 JAR 是 legacy baseline，不等同于已证实的 304 构建。历史 JAR 必须继续保留。
+
+## 决策记录
+
+2026-08-22，用户授权修复当前 Java 源码中与 `showStamp=false` 契约冲突的无条件断言。修复已在 Java 独立仓库提交为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`（`fix: 修复 showStamp=false 的句子格式化断言`），并已推送到 `main/master`。修复版 JAR 的实际 SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+
+前后 JAR 一致性验证见 `reports/evidence/java-304-jar-consistency.json`：局部算法快照前后均为 0 差异；245 个主资源逐文件行为字段 245/245 一致，汇总均为 202 通过、43 未通过。后续 TypeScript 迁移必须以该修复版 3.0.4 JAR 作为 Java canonical；历史 `3.1.0-SNAPSHOT` JAR 保留为 legacy，不再作为迁移语义基线。
+
+高周期 Java 测试中的 `EXCEPTION_ACCESS_VIOLATION` 按用户确认记录为本机主机内存不稳定，不归因于 JVM、JDK 或 OpenNARS 源码；稳定测试运行完成 267/267、0 failure、0 error、0 skipped。该环境事实不改变前后 JAR 行为一致性结论。

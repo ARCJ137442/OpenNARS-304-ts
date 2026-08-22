@@ -1,0 +1,101 @@
+{
+  "purpose": "在进入 TypeScript 推理链迁移前，验证 Java 修复前后 JAR 在已定义观测面上的行为一致性。",
+  "pre_fix": {
+    "source_commit": "a2d76a246d830671142c61793e0c6aac058ba033",
+    "jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+    "size": 4092984,
+    "sha256": "19479F8FA1FC5FBD73C52A3B3F646B2A9405AF7A3961EC36F4279EDC35CFBC41",
+    "manifest": {
+      "created_by": "Apache Maven 3.9.9",
+      "build_jdk": "18.0.2",
+      "specification_version": "3.0.4-SNAPSHOT",
+      "implementation_version": "3.0.4-SNAPSHOT",
+      "main_class": "org.opennars.main.Shell"
+    }
+  },
+  "post_fix": {
+    "source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+    "jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+    "size": 4092945,
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "manifest": {
+      "created_by": "Apache Maven 3.9.9",
+      "build_jdk": "18.0.2",
+      "specification_version": "3.0.4-SNAPSHOT",
+      "implementation_version": "3.0.4-SNAPSHOT",
+      "main_class": "org.opennars.main.Shell"
+    }
+  },
+  "conditions": {
+    "local_algorithm_tolerance": 0.00001,
+    "nal_cycles": 1,
+    "nal_timeout_ms": 10000,
+    "corpus_files": 245,
+    "comparison_rule": "逐文件比较行为字段；忽略 java.artifact_path 与 java.artifact_sha256 这两个预期不同的 provenance 字段。"
+  },
+  "local_algorithm": {
+    "pre_fix_ok": true,
+    "post_fix_ok": true,
+    "pre_fix_difference_count": 0,
+    "post_fix_difference_count": 0,
+    "snapshot_behavior_exact": true
+  },
+  "nal_matrix": {
+    "pre_fix_file": "reports/evidence/java-304-new-nal-matrix.json",
+    "post_fix_file": "reports/evidence/java-304-fixed-nal-matrix.json",
+    "pre_fix_rows": 245,
+    "post_fix_rows": 245,
+    "same_behavior_rows": 245,
+    "changed_behavior_rows": 0,
+    "missing_rows": 0,
+    "pre_fix_summary": {
+      "passed": 202,
+      "failed": 43,
+      "timeouts": 2,
+      "errors": 0,
+      "unrun": 0
+    },
+    "post_fix_summary": {
+      "passed": 202,
+      "failed": 43,
+      "timeouts": 2,
+      "errors": 0,
+      "unrun": 0
+    }
+  },
+  "post_fix_java_tests": {
+    "source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+    "artifact_build": {
+      "jdk": "18.0.2",
+      "maven": "3.9.9",
+      "command": "mvn -Djacoco.skip=true -Dmaven.test.failure.ignore=false clean verify",
+      "artifact_sha256_at_consistency_run": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5"
+    },
+    "stable_test_run": {
+      "jdk": "16",
+      "maven": "3.9.9",
+      "arg_line": "-XX:+UseSerialGC",
+      "command": "mvn -Djacoco.skip=true -Dmaven.test.failure.ignore=false -DargLine=-XX:+UseSerialGC test",
+      "test_cases": 267,
+      "passed": 267,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "host_note": "高周期 Java 测试中的 EXCEPTION_ACCESS_VIOLATION 已由用户确认源于本机主机内存不稳定，不是 JVM、JDK 或 OpenNARS 源码问题；该事件不作为前后 JAR 行为差异。"
+  },
+  "historical_legacy": {
+    "jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\target\\opennars-3.1.0-SNAPSHOT.jar",
+    "sha256": "796A3B20EE6ED7F8F6778367738AD728F0BFCC32CFAD99BACAEBEC41EBC7EB04",
+    "manifest_version": "3.1.0-SNAPSHOT",
+    "retained": true,
+    "current_adapter_compatible": false,
+    "reason": "历史 JAR 暴露 org.opennars.main.Parameters，而当前 3.0.4 adapter 需要 org.opennars.parameter.Parameters。"
+  },
+  "decision": {
+    "gate_a_semantic_consistency": true,
+    "canonical_candidate": "post_fix",
+    "rationale": "授权修复后的 3.0.4 源码已提交；局部算法快照和 245 个 NAL 行为字段均与修复前 JAR 完全一致。后续 TypeScript 迁移只能使用 post_fix 作为 Java canonical。",
+    "boundary": "该结论证明的是前后 Java JAR 在当前观测面上的一致性，不等于 TypeScript 已完成等价，也不把 202/245 的 Java corpus marker 结果宣称为全量功能通过。"
+  }
+}
