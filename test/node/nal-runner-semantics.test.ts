@@ -1,12 +1,21 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { readFileSync, mkdtempSync, rmSync } from "node:fs";
+import { readFileSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { java } from "jree";
 
-import { evaluateRow, extractNalMetadata, isProcessTimeout, normalizeResult, parseArgs, parseJsonLines } from "../../scripts/e2e/run-nal-corpus.mjs";
+import {
+  completeProcessFailureRows,
+  evaluateRow,
+  extractNalMetadata,
+  isProcessTimeout,
+  loadCheckpoint,
+  normalizeResult,
+  parseArgs,
+  parseJsonLines,
+} from "../../scripts/e2e/run-nal-corpus.mjs";
 import { Tense } from "../../src/language/Tense.ts";
 
 test("NAL runner counts final matched markers even when an exception occurs", () => {
@@ -38,6 +47,17 @@ test("NAL runner keeps timeout and marker absence as separate observations", () 
   assert.equal(result.exception, false);
   assert.equal(result.marker_missing, true);
   assert.equal(result.marker_missing_count, 1);
+});
+
+test("NAL runner distinguishes a process crash from a single-file timeout", () => {
+  const crash = completeProcessFailureRows(["crashed.nal"], 1, [], {
+    status: 1,
+    error: { message: "loader crashed" },
+  }, "TypeScript")[0];
+
+  assert.equal(crash.error_type, "exception");
+  assert.equal(crash.timed_out, false);
+  assert.equal(crash.not_run, undefined);
 });
 
 test("NAL runner keeps files after a timeout separate from the timed-out file", () => {
@@ -161,6 +181,107 @@ test("NAL runner validates and resumes a persisted per-file result", () => {
       .trim()
       .split(/\r?\n/);
     assert.equal(resumedRows.length, 2);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("NAL runner records an explicit TypeScript process mode and separates run keys", () => {
+  assert.equal(parseArgs([]).tsMode, "hot");
+  assert.equal(parseArgs(["--ts-mode", "cold"]).tsMode, "cold");
+  assert.equal(parseArgs(["--ts-process-mode", "hot"]).tsMode, "hot");
+  assert.throws(() => parseArgs(["--ts-mode", "warm"]), /--ts-mode must be hot or cold/);
+});
+
+test("NAL runner rejects duplicate checkpoint rows for one run", () => {
+  const directory = mkdtempSync(join(tmpdir(), "opennars-nal-checkpoint-"));
+  const resultFile = join(directory, "matrix.jsonl");
+  const file = join(directory, "fixture.nal");
+  const row = { run_key: "run-1", file, functional_pass: true };
+  writeFileSync(resultFile, `${JSON.stringify(row)}\n${JSON.stringify(row)}\n`, "utf8");
+  try {
+    assert.throws(() => loadCheckpoint(resultFile, "run-1"), /duplicate checkpoint row/);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("NAL runner persists cold and hot results without overwriting either run", () => {
+  const directory = mkdtempSync(join(tmpdir(), "opennars-nal-mode-"));
+  const resultFile = join(directory, "matrix.jsonl");
+  const fixture = join(directory, "fixture.nal");
+  writeFileSync(fixture, "<a --> b>.\n''outputMustContain('<a --> b>.')\n", "utf8");
+  const runner = join(process.cwd(), "scripts", "e2e", "run-nal-corpus.mjs");
+  const baseArgs = [
+    runner,
+    "--engine", "ts",
+    "--cycles", "1",
+    "--timeout-ms", "30000",
+    "--chunk-size", "1",
+    "--result-file", resultFile,
+    "--file", fixture,
+  ];
+  try {
+    const cold = spawnSync(process.execPath, [...baseArgs, "--ts-mode", "cold"], {
+      cwd: process.cwd(),
+      encoding: "utf8",
+      maxBuffer: 4 * 1024 * 1024,
+    });
+    assert.ok(cold.status === 0 || cold.status === 1, cold.stderr);
+    const hot = spawnSync(process.execPath, [...baseArgs, "--ts-mode", "hot", "--resume"], {
+      cwd: process.cwd(),
+      encoding: "utf8",
+      maxBuffer: 4 * 1024 * 1024,
+    });
+    assert.ok(hot.status === 0 || hot.status === 1, hot.stderr);
+    const rows = readFileSync(resultFile, "utf8").trim().split(/\r?\n/).map((line) => JSON.parse(line));
+    assert.equal(rows.length, 2);
+    assert.deepEqual(new Set(rows.map((row) => row.ts_process_mode)), new Set(["cold", "hot"]));
+    assert.notEqual(rows[0].run_key, rows[1].run_key);
+    assert.deepEqual(rows.map((row) => row.sequence), [0, 0]);
+    assert.deepEqual(rows.map((row) => row.chunk_index), [0, 0]);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("NAL runner resumes after a real middle-file timeout and preserves the tail", () => {
+  const directory = mkdtempSync(join(tmpdir(), "opennars-nal-timeout-tail-"));
+  const resultFile = join(directory, "matrix.jsonl");
+  const first = join(directory, "first.nal");
+  const slow = join(directory, "slow.nal");
+  const last = join(directory, "last.nal");
+  const source = "<a --> b>.\n''outputMustContain('<a --> b>.')\n";
+  writeFileSync(first, source, "utf8");
+  writeFileSync(slow, "100000000\n", "utf8");
+  writeFileSync(last, source, "utf8");
+  const runner = join(process.cwd(), "scripts", "e2e", "run-nal-corpus.mjs");
+  try {
+    const result = spawnSync(process.execPath, [
+      runner,
+      "--engine", "ts",
+      "--ts-mode", "hot",
+      "--cycles", "1",
+      "--timeout-ms", "5000",
+      "--chunk-size", "3",
+      "--result-file", resultFile,
+      "--file", first,
+      "--file", slow,
+      "--file", last,
+    ], {
+      cwd: process.cwd(),
+      encoding: "utf8",
+      maxBuffer: 4 * 1024 * 1024,
+    });
+    assert.equal(result.status, 1, result.stderr);
+    const rows = readFileSync(resultFile, "utf8").trim().split(/\r?\n/).map((line) => JSON.parse(line));
+    assert.equal(rows.length, 3);
+    assert.deepEqual(rows.map((row) => row.sequence), [0, 1, 2]);
+    assert.deepEqual(rows.map((row) => row.ts_process_mode), ["hot", "hot", "hot"]);
+    assert.equal(rows[0].ts.error_type, "none");
+    assert.equal(rows[1].ts.error_type, "timeout");
+    assert.equal(rows[2].ts.error_type, "none");
+    assert.deepEqual(rows.map((row) => row.ts_not_run), [false, false, false]);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }

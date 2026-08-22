@@ -28,6 +28,7 @@ function parseArgs(argv) {
     limit: null,
     chunkSize: null,
     timeoutMs: null,
+    tsMode: "hot",
     javaJar: defaultJavaJar,
     javaClasses: defaultJavaClasses,
     javaTestClasses: defaultJavaTestClasses,
@@ -45,6 +46,7 @@ function parseArgs(argv) {
     else if (argument === "--limit") options.limit = Number(argv[++i]);
     else if (argument === "--chunk-size") options.chunkSize = Number(argv[++i]);
     else if (argument === "--timeout-ms") options.timeoutMs = Number(argv[++i]);
+    else if (argument === "--ts-mode" || argument === "--ts-process-mode") options.tsMode = argv[++i];
     else if (argument === "--java-jar") options.javaJar = argv[++i];
     else if (argument === "--java-classes") options.javaClasses = argv[++i];
     else if (argument === "--java-test-classes") options.javaTestClasses = argv[++i];
@@ -69,6 +71,9 @@ function parseArgs(argv) {
   }
   if (options.timeoutMs !== null && (!Number.isInteger(options.timeoutMs) || options.timeoutMs < 1)) {
     throw new Error("--timeout-ms must be a positive integer");
+  }
+  if (options.tsMode !== "hot" && options.tsMode !== "cold") {
+    throw new Error("--ts-mode must be hot or cold");
   }
   if (options.resume && options.resultFile === null) {
     throw new Error("--resume requires --result-file PATH");
@@ -373,6 +378,12 @@ async function runTs(files, cycles, timeoutMs) {
   });
 }
 
+async function runTsCold(files, cycles, timeoutMs) {
+  const rows = [];
+  for (const file of files) rows.push(...await runTs([file], cycles, timeoutMs));
+  return rows;
+}
+
 function completeProcessFailureRows(files, cycles, parsed, processResult, engine) {
   const rowsByFile = new Map(parsed.map((row) => [resolve(row.file), row]));
   const processError = processResult.error?.message
@@ -472,6 +483,7 @@ function resultKey(options, javaArtifact) {
     engine: options.engine,
     cycles: options.cycles,
     timeoutMs: options.timeoutMs,
+    tsMode: options.engine === "java" ? null : options.tsMode,
     javaArtifactSha256: javaArtifact?.sha256 ?? null,
   });
 }
@@ -482,13 +494,27 @@ function loadCheckpoint(resultFile, runKey) {
     .split(/\r?\n/)
     .filter(Boolean)
     .map((line) => JSON.parse(line));
-  return new Map(rows
-    .filter((row) => row.run_key === runKey && typeof row.file === "string")
-    .map((row) => [resolve(row.file), row]));
+  const checkpoint = new Map();
+  for (const row of rows) {
+    if (row.run_key !== runKey || typeof row.file !== "string") continue;
+    const key = resolve(row.file);
+    if (checkpoint.has(key)) {
+      throw new Error(`duplicate checkpoint row for run key and file: ${key}`);
+    }
+    checkpoint.set(key, row);
+  }
+  return checkpoint;
 }
 
 function appendCheckpoint(resultFile, runKey, rows) {
   if (resultFile === null || rows.length === 0) return;
+  const keys = new Set();
+  for (const row of rows) {
+    if (typeof row.file !== "string") throw new Error("checkpoint row is missing file");
+    const key = resolve(row.file);
+    if (keys.has(key)) throw new Error(`duplicate rows in checkpoint batch: ${key}`);
+    keys.add(key);
+  }
   appendFileSync(resultFile, rows
     .map((row) => JSON.stringify({ ...row, run_key: runKey }))
     .join("\n") + "\n", "utf8");
@@ -530,7 +556,10 @@ async function main() {
         console.error(`running chunk ${index + 1}/${chunks.length} (${pending.length} files)`);
       }
       if (options.engine !== "ts") javaResults.push(...runJava(pending, options.cycles, options.timeoutMs, javaArtifact, javaAdapter));
-      if (options.engine !== "java") tsResults.push(...await runTs(pending, options.cycles, options.timeoutMs));
+      if (options.engine !== "java") {
+        const runTsFiles = options.tsMode === "cold" ? runTsCold : runTs;
+        tsResults.push(...await runTsFiles(pending, options.cycles, options.timeoutMs));
+      }
       const javaByFile = new Map(javaResults.map((row) => [resolve(row.file), row]));
       const tsByFile = new Map(tsResults.map((row) => [resolve(row.file), row]));
       const completedRows = pending.map((file) => {
@@ -543,6 +572,10 @@ async function main() {
             tsByFile.get(key) ?? null,
             options.engine,
           ),
+          java_process_mode: options.engine === "ts" ? null : "cold",
+          ts_process_mode: options.engine === "java" ? null : options.tsMode,
+          chunk_index: index,
+          sequence: files.indexOf(file),
           timeout_ms: options.timeoutMs,
           embedded_cycles: sources.get(file).embeddedCycles,
           extra_cycles: options.cycles,
@@ -559,6 +592,10 @@ async function main() {
     const expected = sources.get(file).expected;
     return checkpoint.get(key) ?? {
       ...evaluateRow(key, expected, null, null, options.engine),
+      java_process_mode: options.engine === "ts" ? null : "cold",
+      ts_process_mode: options.engine === "java" ? null : options.tsMode,
+      chunk_index: null,
+      sequence: files.indexOf(file),
       timeout_ms: options.timeoutMs,
       embedded_cycles: sources.get(file).embeddedCycles,
       extra_cycles: options.cycles,
@@ -570,6 +607,7 @@ async function main() {
     engine: options.engine,
     cycles: options.cycles,
     timeoutMs: options.timeoutMs,
+    tsProcessMode: options.engine === "java" ? null : options.tsMode,
     files: rows.length,
     passed: rows.length - failures.length,
     failed: failures.length,
@@ -604,7 +642,17 @@ async function main() {
   if (failures.length > 0) process.exitCode = 1;
 }
 
-export { evaluateRow, extractNalMetadata, isProcessTimeout, normalizeResult, parseArgs, parseJsonLines };
+export {
+  appendCheckpoint,
+  completeProcessFailureRows,
+  evaluateRow,
+  extractNalMetadata,
+  isProcessTimeout,
+  loadCheckpoint,
+  normalizeResult,
+  parseArgs,
+  parseJsonLines,
+};
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   main().catch((error) => {

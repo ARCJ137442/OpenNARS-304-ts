@@ -21,6 +21,9 @@ function parseArgs(argv) {
   let output = null;
   let manifestOutput = null;
   let summaryOutput = null;
+  let javaProcessMode = null;
+  let tsProcessMode = null;
+  let evidenceVersion = null;
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--result-file") resultFiles.push(argv[++index]);
@@ -29,10 +32,23 @@ function parseArgs(argv) {
     else if (argument === "--output") output = argv[++index];
     else if (argument === "--manifest-output") manifestOutput = argv[++index];
     else if (argument === "--summary-output") summaryOutput = argv[++index];
+    else if (argument === "--java-process-mode") javaProcessMode = argv[++index];
+    else if (argument === "--ts-process-mode") tsProcessMode = argv[++index];
+    else if (argument === "--evidence-version") evidenceVersion = argv[++index];
     else throw new Error(`Unknown argument: ${argument}`);
   }
   if (resultFiles.length === 0) throw new Error("at least one --result-file is required");
-  return { resultFiles, extraFiles, supplementFiles, output, manifestOutput, summaryOutput };
+  return {
+    resultFiles,
+    extraFiles,
+    supplementFiles,
+    output,
+    manifestOutput,
+    summaryOutput,
+    javaProcessMode,
+    tsProcessMode,
+    evidenceVersion,
+  };
 }
 
 function readJsonl(file) {
@@ -154,7 +170,7 @@ function hypothesisFor(row, errorType, supplement) {
   };
 }
 
-function classify(row, sourceFile, supplement = null) {
+function classify(row, sourceFile, supplement = null, provenance = {}) {
   const source = sourceFile ?? row.file;
   const errorType = primaryErrorType(row);
   const hypothesis = hypothesisFor(row, errorType, supplement);
@@ -192,6 +208,9 @@ function classify(row, sourceFile, supplement = null) {
     root_cause_cluster: cluster,
     hypothesis,
     long_budget_evidence: supplement,
+    java_process_mode: row.java_process_mode ?? provenance.javaProcessMode ?? null,
+    ts_process_mode: row.ts_process_mode ?? provenance.tsProcessMode ?? null,
+    evidence_version: row.evidence_version ?? provenance.evidenceVersion ?? null,
     source_row: row,
   };
 }
@@ -235,6 +254,11 @@ function main() {
     row,
     index < mainRows.length ? row.file : row.file,
     supplements.get(normalizedPath(row.file)) ?? null,
+    {
+      javaProcessMode: options.javaProcessMode,
+      tsProcessMode: options.tsProcessMode,
+      evidenceVersion: options.evidenceVersion,
+    },
   ));
   const mainKeys = mainRows.map((row) => normalizedPath(row.file));
   const allKeys = allRows.map((row) => normalizedPath(row.file));
