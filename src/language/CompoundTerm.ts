@@ -8,6 +8,15 @@ import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Terms } from "./Terms.ts";
 
+const javaStringHashCode = (value: java.lang.CharSequence): int => {
+    let hash = 0;
+    const text = String(value);
+    for (let index = 0; index < text.length; index += 1) {
+        hash = Math.imul(31, hash) + text.charCodeAt(index);
+    }
+    return hash;
+};
+
 const NativeOperator = Symbols.NativeOperator;
 const COMPOUND_TERM_OPENER = NativeOperator.COMPOUND_TERM_OPENER;
 const COMPOUND_TERM_CLOSER = NativeOperator.COMPOUND_TERM_CLOSER;
@@ -784,7 +793,8 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     }
 
     public hashCode(): int {
-        return this.name().hashCode();
+        // jree JavaString.equals/hashCode may fold case; Java String does not.
+        return javaStringHashCode(this.name());
     }
 
     public compareTo(that: AbstractTerm): int {
@@ -799,7 +809,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
             return true;
         if (!(that instanceof Term))
             return false;
-        return this.name().equals((that as Term).name());
+        return String(this.name()) === String((that as Term).name());
     }
 
     public setNormalized(b: boolean): void {

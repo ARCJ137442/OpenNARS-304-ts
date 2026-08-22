@@ -272,13 +272,14 @@ Java 的 `float` 不是“最后赋值时才取单精度”。如果两个操作
 
 迁移代码不能假定 Java 运行时适配层的 `java.lang.String.equals/hashCode/compareTo` 已经完全等价于 Java。当前 jree 版本的 JavaString 使用 UTF-16 typed array 和 locale 比较路径，可能把大小写不同的字符串当成相等值，并产生相同 hash；这会直接破坏 Narsese 中 `a` 与 `A` 的项区分、Statement 合法性和 Java 集合 key。
 
-纠正方式是在领域对象的语义边界使用明确的原生文本比较，并实现与 Java 一致的 hash；不要全局修改第三方包，也不要把所有字符串都降级为 `any`。例如 `Term.equals` 应比较 `String(name)` 的精确值，`Term.hashCode` 应按 Java String 的 31 进制规则计算。
+纠正方式是在领域对象的语义边界使用明确的原生文本比较，并实现与 Java 一致的 hash；不要全局修改第三方包，也不要把所有字符串都降级为 `any`。例如 `Term.equals` 与 `CompoundTerm.equals` 都应比较 `String(name)` 的精确值，`Term.hashCode` 与 `CompoundTerm.hashCode` 都应按 Java String 的 31 进制规则计算。子类覆写不能只修父类，否则复合项仍可能在集合 key 和概念索引处折叠大小写。
 
 验证要求：
 
 - `a` 与 `A` 不相等且 hash 不相同；
 - 相同文本的不同 Term 实例仍相等；
 - 用不同大小写项构造的继承关系不被错误判为自反关系；
+- `CompoundTerm` 的大小写不同实例能进入不同概念，并保持 `TaskLink`/`TermLink` 的 key 区分；
 - Java/TypeScript 局部算法对照和 NAL 语料继续通过。
 
 ### C2.2 配置插件的迁移状态必须显式表达

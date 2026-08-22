@@ -77,3 +77,29 @@ test("Nar explicit long overload accepts JavaScript number and bigint values", a
     assert.equal(new Nar(0n).memory.narId, 0n);
     assert.equal(new Nar(7 as never).memory.narId, 7);
 });
+
+test("CompoundTerm equality preserves Java case-sensitive key identity", async () => {
+    const { java } = await import("jree");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Narsese } = await import("../../src/io/Narsese.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { Parameters } = await import("../../src/main/Parameters.ts");
+
+    const nar = new Nar(304);
+    const parser = new Narsese(nar);
+    const lower = parser.parseTerm(new java.lang.String(
+        "<cat --> (/,(/,REPRESENT,_,<(*,CAT,FISH) --> FOOD>),_,eat,fish)>",
+    ));
+    const upper = parser.parseTerm(new java.lang.String(
+        "<CAT --> (/,(/,REPRESENT,_,<(*,CAT,FISH) --> FOOD>),_,eat,fish)>",
+    ));
+
+    assert.equal(lower.equals(upper), false);
+    assert.notEqual(lower.hashCode(), upper.hashCode());
+
+    const budget = new BudgetValue(0.9, 0.9, 0.9, new Parameters());
+    const lowerConcept = nar.memory.conceptualize(budget, lower);
+    const upperConcept = nar.memory.conceptualize(budget, upper);
+    assert.notEqual(lowerConcept, upperConcept);
+    assert.equal(nar.memory.concepts.size(), 2);
+});
