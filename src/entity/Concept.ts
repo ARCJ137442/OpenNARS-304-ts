@@ -498,7 +498,11 @@ export class Concept extends Item<Term> {
      */
     public getQuality(): float {
         let linkPriority: float = this.termLinks.getAveragePriority();
-        let termComplexityFactor: float = 1.0 / (this.term.getComplexity() * this.memory.narParameters.COMPLEXITY_UNIT);
+        // Java evaluates and stores this reciprocal as a float before the
+        // disjunctive quality combination.
+        let termComplexityFactor: float = Math.fround(
+            1.0 / (this.term.getComplexity() * this.memory.narParameters.COMPLEXITY_UNIT),
+        ) as float;
         let result: float = UtilityFunctions.or(this.acquiredQuality, linkPriority, termComplexityFactor);
         if (result < 0) {
             throw new java.lang.IllegalStateException("Concept.getQuality < 0:  result=" + result + ", linkPriority="

@@ -147,8 +147,16 @@ export class DerivationContext extends JavaObject {
 
                 task.setElemOfSequenceBuffer(false);
                 if (!revised) {
-                    task.getBudget().setDurability(task.getBudget().getDurability() * this.narParameters.DERIVATION_DURABILITY_LEAK);
-                    task.getBudget().setPriority(task.getBudget().getPriority() * this.narParameters.DERIVATION_PRIORITY_LEAK);
+                    // Java narrows both float operands before the multiplication;
+                    // narrowing only the final JavaScript result changes Bag levels.
+                    const durabilityLeak: float = Math.fround(this.narParameters.DERIVATION_DURABILITY_LEAK) as float;
+                    const priorityLeak: float = Math.fround(this.narParameters.DERIVATION_PRIORITY_LEAK) as float;
+                    task.getBudget().setDurability(Math.fround(
+                        task.getBudget().getDurability() * durabilityLeak,
+                    ) as float);
+                    task.getBudget().setPriority(Math.fround(
+                        task.getBudget().getPriority() * priorityLeak,
+                    ) as float);
                 }
                 this.memory.event.emit(Events.TaskDerive.class, task, revised, single);
                 // memory.logic.TASK_DERIVED.commit(task.budget.getPriority());

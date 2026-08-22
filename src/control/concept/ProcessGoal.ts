@@ -128,7 +128,10 @@ export class ProcessGoal extends JavaObject {
             AntiSatisfaction = task.sentence.truth.getExpDifAbs(projectedBelief.truth);
         }
 
-        task.setPriority(task.getPriority() * AntiSatisfaction as float);
+        // Java casts AntiSatisfaction to float before multiplying two float
+        // operands; casting only the final result can cross a Bag level.
+        const antiSatisfaction: float = Math.fround(AntiSatisfaction) as float;
+        task.setPriority(Math.fround(task.getPriority() * antiSatisfaction) as float);
         if (!task.aboveThreshold()) {
             return;
         }

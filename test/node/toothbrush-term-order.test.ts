@@ -114,6 +114,31 @@ test("forgetting narrows Java float parameters before the exponent boundary", as
     assert.equal(budget.getPriority(), Math.fround(0.2370000034570694));
 });
 
+test("derived task applies Java float leak operands before multiplication", async () => {
+    const { java } = await import("jree");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Narsese } = await import("../../src/io/Narsese.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+
+    const nar = new Nar(304);
+    const task = new Narsese(nar).parseTask(new java.lang.String(
+        "<toothbrush --> object>.",
+    ));
+    task.getBudget().setPriority(Math.fround(0.4));
+    task.getBudget().setDurability(Math.fround(0.1));
+
+    const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+    assert.equal(context.derivedTask(task, false, true, true, false), true);
+    assert.equal(
+        task.getBudget().getPriority(),
+        Math.fround(Math.fround(0.4) * Math.fround(0.4)),
+    );
+    assert.equal(
+        task.getBudget().getDurability(),
+        Math.fround(Math.fround(0.1) * Math.fround(0.4)),
+    );
+});
+
 test("mental operation feedback does not create a Java operation frame", async () => {
     const { java } = await import("jree");
     const { Nar } = await import("../../src/main/Nar.ts");

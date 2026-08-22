@@ -79,9 +79,14 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
             this.narParameters = narParameters;
             this.priority = BudgetValue.float(p);
             this.durability = BudgetValue.float(d);
-            this.quality = third instanceof TruthValue
-                ? BudgetValue.float(Math.max(third.getExpectation(), (1 - third.getExpectation()) * 0.75))
-                : BudgetValue.float(third);
+            if (third instanceof TruthValue) {
+                // Java's TruthValue-to-quality constructor path uses the
+                // float evaluation before applying the quality formula.
+                const expectation: float = third.getExpectationAsFloat() as float;
+                this.quality = BudgetValue.float(Math.max(expectation, (1 - expectation) * 0.75));
+            } else {
+                this.quality = BudgetValue.float(third);
+            }
         } else {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }

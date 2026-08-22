@@ -75,7 +75,7 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
         if (this.nameTable.isEmpty()) {
             return 0.01;
         }
-        let f: float = this.mass as float / (this.nameTable.size() * this.TOTAL_LEVEL);
+        let f: float = Math.fround(this.mass / (this.nameTable.size() * this.TOTAL_LEVEL)) as float;
         if (f > 1) {
             return 1.0;
         }

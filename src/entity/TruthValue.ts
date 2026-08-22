@@ -86,6 +86,19 @@ export class TruthValue {
         return this.confidence * (this.frequency - 0.5) + 0.5;
     }
 
+    /**
+     * Return the Java float evaluation used by budget-quality consumers.
+     * Keep getExpectation()'s existing public precision for callers that use
+     * the mathematical value directly.
+     */
+    public getExpectationAsFloat(): number {
+        const confidence: number = Math.fround(this.confidence);
+        const frequency: number = Math.fround(this.frequency);
+        const centeredFrequency: number = Math.fround(frequency - 0.5);
+        const product: number = Math.fround(confidence * centeredFrequency);
+        return Math.fround(product + 0.5);
+    }
+
     public getExpDifAbs(value: TruthValue): number {
         return Math.abs(this.getExpectation() - value.getExpectation());
     }

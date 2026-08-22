@@ -1,20 +1,20 @@
 # Java → TypeScript 迁移纠正模式库
 
-版本：0.5（2026-08-22）
+版本：0.6（2026-08-22）
 
 本文件把当前 OpenNARS 转写中反复出现的纠正归纳为可检索、可验证、可批量处理的模式。它不是“看到字符串就替换”的规则表：每条模式都必须同时说明识别条件、正确的 TypeScript 语义、验证门禁和自动化边界。
 
 ## 1. 当前证据
 
-使用本仓库的 TypeScript 5.4.5 编译器检查当前 `src` 与 `test`，并用迁移扫描器屏蔽注释和字符串后统计源码，得到：
+使用本仓库的 TypeScript 5.4.5 编译器检查当前 `src` 与 `test`，并用迁移扫描器屏蔽注释和字符串后统计源码，得到本批扫描结果：
 
-- `tsc --noEmit --pretty false` 输出 4,403 行，其中 3,674 条 `error TS`，包括 1,613 条 TS2304 和 15 条 TS17009；
-- 迁移扫描器覆盖 163 个 TypeScript 文件，识别出 11 处构造器委托、189 处 `.class`、241 处 Java 字符串方法和 458 处 Java 集合方法调用习惯；
-- 扫描器还识别出 1,926 处 jree 运行时类型边界、68 处匿名 Java 类和 7 处静态初始化模式。
+- `tsc --noEmit` 输出 3,513 条 `error TS`；这是全局既有迁移诊断，不能作为本批语义修复通过的替代品；
+- 迁移扫描器覆盖 169 个 TypeScript 文件，识别出 11 处构造器委托、190 处 `.class`、240 处 Java 字符串方法和 468 处 Java 集合方法调用习惯；
+- 扫描器还识别出 1,951 处 jree 运行时类型边界、68 处匿名 Java 类和 7 处静态初始化模式。
 
 这说明迁移的首要问题是“重复的语义转换模式没有固化”，不是单个文件的偶然手工错误。
 
-本轮新增证据：局部单元测试为 28/28，Java/TypeScript 局部算法联测为 `ok: true`；新增时态、变量替换和操作参数回归。`toothbrush.nal` 在相同输入下 Java 为 2/2 marker、TypeScript 仍为 1/2，说明局部边界修复已经生效，但应用级任务派发尚未完成，不能把局部通过外推为整库通过。
+本轮新增证据：局部单元测试为 50/50，Java/TypeScript 局部算法联测仍需随本批次命令复核；`toothbrush.nal` 在 1000 个追加周期下 Java/TypeScript 均为 2/2 marker。应用级任务派发仍有 detective2、vision 的 TypeScript 超时，不能把单个夹具通过外推为整库通过。
 
 ## 2. 模式分级
 
@@ -229,6 +229,27 @@ Java 的 `instanceof Equivalence`、`instanceof Implication` 和 `instanceof Con
 验证要求：普通类、时间子类、序列/并行/空间子类分别检查 `instanceof` 等价关系；至少比较一条 `COMPOUND_CONDITION` 链接的数量和类型。
 
 涉及文件示例：`src/language/Terms.ts`、`src/language/Inheritance.ts`、`src/operator/Operator.ts`、`test/node/narsese-temporal.test.ts`。
+
+#### B16. Java `float` 运算必须保留操作数收窄的位置
+
+Java 的 `float` 不是“最后赋值时才取单精度”。如果两个操作数本身都是 `float`，Java 会先以单精度保存它们，再执行乘法，最后再把结果写回 `float`。迁移到 TypeScript 时只写 `Math.fround(left * right)`，会让 JavaScript 先以双精度相乘，随后得到不同的单精度值；在 Bag 的离散 level 边界上，这个 ULP 差异会改变任务或概念的取出顺序。
+
+纠正方式是在运算边界分别收窄 Java 的 `float` 操作数，再收窄结果：
+
+    const left: float = Math.fround(javaLeft) as float;
+    const right: float = Math.fround(javaRight) as float;
+    const result: float = Math.fround(left * right) as float;
+
+不能把所有算术都机械包上 `Math.fround`：若 Java 原式有 `double` 操作数，Java 会先提升为 `double`，此时应保留 double 运算后只在 Java 赋值点收窄。必须先回看 Java 变量声明、显式 cast 和赋值类型，再决定收窄位置。
+
+验证要求：
+
+- 直接回归覆盖真实推理路径，例如 `DerivationContext.derivedTask` 的 derivation leak；
+- 覆盖会把预算映射到 Bag level 的边界输入；
+- 用 Java/TypeScript 事件或 Bag 轨迹确认首次分叉消失，而不是只比较最终 marker；
+- 若同一模式在多个模块出现，先记录每个 Java 操作数类型，再决定是否可以批量应用。
+
+涉及文件示例：`src/control/DerivationContext.ts`、`src/control/concept/ProcessGoal.ts`、`src/storage/Bag.ts`、`test/node/toothbrush-term-order.test.ts`。
 
 ### C 级：必须做语义重写，禁止自动替换
 
