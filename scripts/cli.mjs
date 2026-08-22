@@ -70,7 +70,6 @@ function failureText(failure) {
 async function runFile(file, cycles) {
   const expectations = extractExpectations(await readFile(file, "utf8"));
   const matched = new Array(expectations.length).fill(false);
-  let passed = 0;
   let error = null;
 
   try {
@@ -93,11 +92,11 @@ async function runFile(file, cycles) {
     nar.on(executeChannel, observer);
     nar.addInputFile(file);
     nar.cycles(cycles);
-    passed = matched.filter(Boolean).length;
   } catch (failure) {
     error = failureText(failure);
   }
 
+  const passed = matched.filter(Boolean).length;
   const ok = expectations.length === passed;
   return {
     file,
@@ -106,6 +105,11 @@ async function runFile(file, cycles) {
     passed,
     matched,
     ok,
+    error_type: error ? "exception" : "none",
+    exception: Boolean(error),
+    timed_out: false,
+    marker_missing: passed < expectations.length,
+    marker_missing_count: expectations.length - passed,
     ...(error ? { error } : {}),
   };
 }

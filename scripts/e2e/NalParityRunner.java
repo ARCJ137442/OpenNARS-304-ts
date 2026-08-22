@@ -57,12 +57,20 @@ public final class NalParityRunner {
                 System.setOut(output);
             }
 
+            passedCount = capture == null ? 0 : capture.passedCount();
+            ok = error == null && expectedCount == passedCount;
+
             output.println("{\"file\":" + quote(file)
                     + ",\"cycles\":" + cycles
                     + ",\"expected\":" + expectedCount
                     + ",\"passed\":" + passedCount
                     + ",\"matched\":" + booleanArray(capture == null ? new boolean[expectedCount] : capture.matched())
                     + ",\"ok\":" + ok
+                    + ",\"error_type\":" + quote(error == null ? "none" : "exception")
+                    + ",\"exception\":" + (error != null)
+                    + ",\"timed_out\":false"
+                    + ",\"marker_missing\":" + (expectedCount != passedCount)
+                    + ",\"marker_missing_count\":" + (expectedCount - passedCount)
                     + (error == null ? "" : ",\"error\":" + quote(error))
                     + "}");
         }

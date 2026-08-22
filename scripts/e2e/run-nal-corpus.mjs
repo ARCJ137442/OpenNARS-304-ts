@@ -139,6 +139,8 @@ function timeoutRows(files, cycles, engine, timeoutMs) {
     matched: [],
     ok: false,
     error: `${engine} runner timed out after ${timeoutMs} ms`,
+    error_type: "timeout",
+    timed_out: true,
   }));
 }
 
@@ -159,13 +161,14 @@ function runJava(files, cycles, timeoutMs, artifact, adapter = null) {
       maxBuffer: 32 * 1024 * 1024,
       ...(timeoutMs === null ? {} : { timeout: timeoutMs }),
     });
-    if (result.error?.code === "ETIMEDOUT" || result.signal != null) {
+    if (result.error?.code === "ETIMEDOUT") {
       return addArtifactMetadata(timeoutRows(files, cycles, "Java", timeoutMs), artifact);
     }
-    if (result.status !== 0) {
-      throw new Error(`Java parity runner failed:\n${result.stdout}\n${result.stderr}`);
-    }
-    return addArtifactMetadata(result.stdout.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line)), artifact);
+    const stdout = typeof result.stdout === "string" ? result.stdout : "";
+    const parsed = stdout.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line));
+    if (result.signal != null) return addArtifactMetadata(completeProcessFailureRows(files, cycles, parsed, result, "Java"), artifact);
+    if (result.status === 0) return addArtifactMetadata(parsed, artifact);
+    return addArtifactMetadata(completeProcessFailureRows(files, cycles, parsed, result, "Java"), artifact);
   } finally {
     if (adapter === null) rmSync(activeAdapter.outputDirectory, { recursive: true, force: true });
   }
@@ -179,13 +182,91 @@ function runTs(files, cycles, timeoutMs) {
     maxBuffer: 32 * 1024 * 1024,
     ...(timeoutMs === null ? {} : { timeout: timeoutMs }),
   });
-  if (result.error?.code === "ETIMEDOUT" || result.signal != null) {
+  if (result.error?.code === "ETIMEDOUT") {
     return timeoutRows(files, cycles, "TypeScript", timeoutMs);
   }
-  if (result.status !== 0) {
-    throw new Error(`TypeScript CLI failed:\n${result.stdout}\n${result.stderr}`);
-  }
-  return result.stdout.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line));
+  const stdout = typeof result.stdout === "string" ? result.stdout : "";
+  const parsed = stdout.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line));
+  if (result.signal != null) return completeProcessFailureRows(files, cycles, parsed, result, "TypeScript");
+  if (result.status === 0) return parsed;
+  return completeProcessFailureRows(files, cycles, parsed, result, "TypeScript");
+}
+
+function completeProcessFailureRows(files, cycles, parsed, processResult, engine) {
+  const rowsByFile = new Map(parsed.map((row) => [resolve(row.file), row]));
+  const processError = processResult.error?.message
+    ?? processResult.stderr?.trim()
+    ?? `${engine} runner exited with status ${processResult.status}`;
+  return files.map((file) => rowsByFile.get(resolve(file)) ?? {
+    file,
+    cycles,
+    expected: null,
+    passed: 0,
+    matched: [],
+    ok: false,
+    error: processError,
+    error_type: "exception",
+    timed_out: false,
+  });
+}
+
+function normalizeResult(result, expectedOverride = null) {
+  if (result === null || result === undefined) return null;
+  const matched = Array.isArray(result.matched) ? result.matched.map(Boolean) : [];
+  const expected = Number.isInteger(expectedOverride)
+    ? expectedOverride
+    : Number.isInteger(result.expected) ? result.expected : matched.length;
+  const timedOut = result.timed_out === true || result.error_type === "timeout";
+  const error = result.error ?? null;
+  const errorType = result.error_type ?? (timedOut ? "timeout" : error === null ? "none" : "exception");
+  const passed = matched.filter(Boolean).length;
+  const markerMissing = passed < expected;
+  return {
+    ...result,
+    expected,
+    passed,
+    matched,
+    ok: !timedOut && error === null && !markerMissing,
+    error_type: errorType,
+    exception: errorType === "exception",
+    timed_out: timedOut,
+    marker_missing: markerMissing,
+    marker_missing_count: expected - passed,
+  };
+}
+
+function evaluateRow(file, expected, javaResult, tsResult, engine) {
+  const java = normalizeResult(javaResult, expected);
+  const ts = normalizeResult(tsResult, expected);
+  const parity = java && ts
+    ? java.ok === ts.ok
+      && java.expected === ts.expected
+      && java.passed === ts.passed
+      && JSON.stringify(java.matched) === JSON.stringify(ts.matched)
+    : null;
+  const bothWrong = java && ts ? java.ok === false && ts.ok === false : null;
+  const javaTsDiff = java && ts ? parity !== true : null;
+  const functionalPass = engine === "java"
+    ? java?.ok === true
+    : engine === "ts"
+      ? ts?.ok === true
+      : parity === true && bothWrong !== true;
+  return {
+    file,
+    expected,
+    java,
+    ts,
+    parity,
+    java_ts_diff: javaTsDiff,
+    both_wrong: bothWrong,
+    functional_pass: functionalPass,
+    java_exception: java?.exception ?? null,
+    java_timeout: java?.timed_out ?? null,
+    java_marker_missing: java?.marker_missing ?? null,
+    ts_exception: ts?.exception ?? null,
+    ts_timeout: ts?.timed_out ?? null,
+    ts_marker_missing: ts?.marker_missing ?? null,
+  };
 }
 
 function splitIntoChunks(files, chunkSize) {
@@ -230,18 +311,10 @@ async function main() {
   const rows = files.map((file) => {
     const key = resolve(file);
     const expected = sources.get(file).length;
-    const java = javaByFile.get(key) ?? null;
-    const ts = tsByFile.get(key) ?? null;
-    const parity = java && ts
-      ? java.ok === ts.ok
-        && java.expected === ts.expected
-        && java.passed === ts.passed
-        && JSON.stringify(java.matched ?? []) === JSON.stringify(ts.matched ?? [])
-      : null;
-    return { file: key, expected, java, ts, parity };
+    return evaluateRow(key, expected, javaByFile.get(key) ?? null, tsByFile.get(key) ?? null, options.engine);
   });
 
-  const failures = rows.filter((row) => options.engine === "java" ? !row.java?.ok : options.engine === "ts" ? !row.ts?.ok : row.parity !== true);
+  const failures = rows.filter((row) => row.functional_pass !== true);
   const summary = {
     engine: options.engine,
     cycles: options.cycles,
@@ -269,11 +342,9 @@ async function main() {
       failed: summary.failed,
       java_artifact: summary.java_artifact,
       failures: failures.map((row) => ({
-        file: row.file,
-        expected: row.expected,
+        ...row,
         java: compact(row.java),
         ts: compact(row.ts),
-        parity: row.parity,
       })),
     }, null, 2));
   } else {
@@ -282,7 +353,11 @@ async function main() {
   if (failures.length > 0) process.exitCode = 1;
 }
 
-main().catch((error) => {
-  console.error(error.stack ?? error);
-  process.exitCode = 1;
-});
+export { evaluateRow, normalizeResult, parseArgs };
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    console.error(error.stack ?? error);
+    process.exitCode = 1;
+  });
+}
