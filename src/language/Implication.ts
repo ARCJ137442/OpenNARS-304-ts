@@ -94,7 +94,7 @@ export class Implication extends Statement {
         switch (args.length) {
             case 0: {
 
-                return new Implication(term, this.getTemporalOrder(), this.counter);
+                return new Implication(this.term, this.getTemporalOrder(), this.counter);
 
 
                 break;
