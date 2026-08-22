@@ -56,6 +56,87 @@ test("budget fields narrow at Java float write boundaries", async () => {
     assert.equal(budget.getPriority(), Math.fround(0.17));
 });
 
+test("novel-task Bag preserves Java float level selection at the 0.8 boundary", async () => {
+    const { Bag } = await import("../../src/storage/Bag.ts");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Narsese } = await import("../../src/io/Narsese.ts");
+    const { java } = await import("jree");
+
+    const nar = new Nar();
+    const parser = new Narsese(nar);
+    const fact = parser.parseTask(new java.lang.String("<toothbrush --> object>."));
+    const goal = parser.parseTask(new java.lang.String(
+        "(&&,<#1 --> [unscrewing]>,<#1 --> object>)!",
+    ));
+    const bag = new Bag(100, 1000, nar.narParameters);
+    bag.putIn(fact);
+    bag.putIn(goal);
+
+    assert.equal(
+        String(bag.takeOut().sentence.term.name()),
+        "(&&,<#1 --> [unscrewing]>,<#1 --> object>)",
+    );
+});
+
+test("utility float accumulators narrow at each Java assignment boundary", async () => {
+    const { UtilityFunctions } = await import("../../src/inference/UtilityFunctions.ts");
+
+    assert.equal(
+        UtilityFunctions.or(Math.fround(0.237), Math.fround(0.379314035)),
+        Math.fround(1 - Math.fround(Math.fround(1 - Math.fround(0.237)) * Math.fround(1 - Math.fround(0.379314035)))),
+    );
+    assert.equal(
+        UtilityFunctions.aveAri(Math.fround(0.10480499), Math.fround(0.001283688)),
+        Math.fround((Math.fround(0.10480499) + Math.fround(0.001283688)) / 2),
+    );
+});
+
+test("forgetting narrows Java float parameters before the exponent boundary", async () => {
+    const { BudgetFunctions } = await import("../../src/inference/BudgetFunctions.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { Parameters } = await import("../../src/main/Parameters.ts");
+
+    const budget = new BudgetValue(
+        Math.fround(0.240752711892128),
+        Math.fround(0.10480499267578125),
+        Math.fround(0.7899999618530273),
+        new Parameters(),
+    );
+    BudgetFunctions.applyForgetting(budget, 10, 0.3);
+
+    const quality = Math.fround(Math.fround(0.7899999618530273) * Math.fround(0.3));
+    const priority = Math.fround(Math.fround(0.240752711892128) - quality);
+    const expected = Math.fround(quality + priority * Math.pow(
+        Math.fround(0.10480499267578125),
+        1 / Math.fround(Math.fround(10) * priority),
+    ));
+    assert.equal(budget.getPriority(), expected);
+    assert.equal(budget.getPriority(), Math.fround(0.2370000034570694));
+});
+
+test("mental operation feedback does not create a Java operation frame", async () => {
+    const { java } = await import("jree");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Narsese } = await import("../../src/io/Narsese.ts");
+    const { ProcessJudgment } = await import("../../src/control/concept/ProcessJudgment.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+
+    const nar = new Nar();
+    const task = new Narsese(nar).parseTask(new java.lang.String(
+        "(^want,{SELF},toothbrush,TRUE).",
+    ));
+    task.sentence.stamp.setOccurrenceTime(0);
+    const priority = task.getPriority();
+
+    assert.equal(task.isInput(), true);
+    assert.equal(task.sentence.isEternal(), false);
+    const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+    ProcessJudgment.handleOperationFeedback(task, context);
+
+    assert.equal(task.getPriority(), priority);
+    assert.equal(nar.memory.recent_operations.size(), 0);
+});
+
 test("sentence rendering converts Java String.length() for visual indices", async () => {
     const { java } = await import("jree");
     const { Nar } = await import("../../src/main/Nar.ts");

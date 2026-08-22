@@ -35,7 +35,7 @@ export class BudgetFunctions extends UtilityFunctions {
      */
     public static truthToQuality(t: TruthValue): float {
         let exp: float = t.getExpectation();
-        return Math.max(exp, (1 - exp) * 0.75) as float;
+        return Math.fround(Math.max(exp, (1 - exp) * 0.75)) as float;
     }
 
     /**
@@ -135,7 +135,8 @@ export class BudgetFunctions extends UtilityFunctions {
      * @return Budget value for each link
      */
     public static distributeAmongLinks(b: BudgetValue, n: int, narParameters: Parameters): BudgetValue {
-        let priority: float = (b.getPriority() / java.lang.Math.sqrt(n)) as float;
+        // Java narrows the division result at the float local-variable write.
+        let priority: float = Math.fround(b.getPriority() / java.lang.Math.sqrt(n)) as float;
         return new BudgetValue(priority, b.getDurability(), b.getQuality(), narParameters);
     }
 
@@ -186,10 +187,15 @@ export class BudgetFunctions extends UtilityFunctions {
      */
     public static applyForgetting(budget: BudgetValue, forgetCycles: float,
         relativeThreshold: float): void {
-        let quality: float = budget.getQuality() * relativeThreshold; // re-scaled quality
-        let p: float = budget.getPriority() - quality; // priority above quality
+        const javaForgetCycles: float = Math.fround(forgetCycles) as float;
+        const javaRelativeThreshold: float = Math.fround(relativeThreshold) as float;
+        let quality: float = Math.fround(budget.getQuality() * javaRelativeThreshold) as float; // re-scaled quality
+        let p: float = Math.fround(budget.getPriority() - quality) as float; // priority above quality
         if (p > 0) {
-            quality += p * java.lang.Math.pow(budget.getDurability(), 1.0 / (forgetCycles * p));
+            quality = Math.fround(quality + p * java.lang.Math.pow(
+                budget.getDurability(),
+                1.0 / Math.fround(javaForgetCycles * p),
+            )) as float;
         } // priority Durability
         budget.setPriority(quality);
     }

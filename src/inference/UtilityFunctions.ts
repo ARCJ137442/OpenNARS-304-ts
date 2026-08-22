@@ -10,6 +10,10 @@ import { Parameters } from "../main/Parameters.ts";
  */
 export class UtilityFunctions extends JavaObject {
 
+    private static float(value: number): float {
+        return Math.fround(value) as float;
+    }
+
     /**
      * A function where the output is conjunctively determined by the inputs
      *
@@ -19,7 +23,7 @@ export class UtilityFunctions extends JavaObject {
     public static and(...arr: double[]): double {
         let product: float = 1;
         for (let f of arr) {
-            product *= f;
+            product = UtilityFunctions.float(product * f);
         }
         return product;
     }
@@ -33,9 +37,9 @@ export class UtilityFunctions extends JavaObject {
     public static or(...arr: float[]): float {
         let product: float = 1;
         for (let f of arr) {
-            product *= (1 - f);
+            product = UtilityFunctions.float(product * UtilityFunctions.float(1 - f));
         }
-        return 1 - product;
+        return UtilityFunctions.float(1 - product);
     }
 
     /**
@@ -47,9 +51,9 @@ export class UtilityFunctions extends JavaObject {
     public static aveAri(...arr: float[]): float {
         let sum: float = 0;
         for (let f of arr) {
-            sum += f;
+            sum = UtilityFunctions.float(sum + f);
         }
-        return sum / arr.length;
+        return UtilityFunctions.float(sum / arr.length);
     }
 
     /**
@@ -61,13 +65,13 @@ export class UtilityFunctions extends JavaObject {
     public static aveGeo(...arr: float[]): float {
         let product: float = 1;
         for (let f of arr) {
-            product *= f;
+            product = UtilityFunctions.float(product * f);
         }
 
         if (arr.length === 2) {
-            return java.lang.Math.sqrt(arr[0] * arr[1]) as float;
+            return UtilityFunctions.float(Math.sqrt(UtilityFunctions.float(arr[0] * arr[1])));
         }
-        return java.lang.Math.pow(product, 1.00 / arr.length) as float;
+        return UtilityFunctions.float(Math.pow(product, 1.00 / arr.length));
     }
 
     /**

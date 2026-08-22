@@ -98,10 +98,13 @@ export class ProcessJudgment extends JavaObject {
         if (task.isInput() && !task.sentence.isEternal() && task.sentence.term instanceof Operation) {
             let op: Operation = task.sentence.term as Operation;
             let o: Operator = op.getPredicate() as Operator;
-            // The Java version excludes a small set of mental operators here. Keep
-            // the operation-frame side effect explicit; operator plugins are loaded
-            // separately and must not be required just to process ordinary beliefs.
-            TemporalInferenceControl.NewOperationFrame(nal.memory, task);
+            // Java excludes mental operators from operation-frame feedback. Keep
+            // this name-based boundary local so the core does not import the
+            // operator plugin classes and recreate their initialization cycle.
+            const mentalOperatorNames = ["^believe", "^want", "^wonder", "^evaluate", "^anticipate"];
+            if (!mentalOperatorNames.includes(String(o.name()))) {
+                TemporalInferenceControl.NewOperationFrame(nal.memory, task);
+            }
         }
     }
 

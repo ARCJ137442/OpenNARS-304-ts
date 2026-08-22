@@ -220,7 +220,10 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
      * @return The put-in level
      */
     private getLevel(item: Type): int {
-        let fl: float = item.getPriority() * this.TOTAL_LEVEL;
+        // Java evaluates this multiplication as float before Math.ceil. Keep
+        // the write boundary here or priorities such as 0.8 would become
+        // 80.000001... in JavaScript and move to the next level.
+        let fl: float = Math.fround(item.getPriority() * this.TOTAL_LEVEL) as float;
         let level: int = java.lang.Math.ceil(fl) as int - 1;
         return (level < 0) ? 0 : level; // cannot be -1
     }
