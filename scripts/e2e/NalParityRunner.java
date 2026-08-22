@@ -52,7 +52,7 @@ public final class NalParityRunner {
                 passedCount = capture.passedCount();
                 ok = expectedCount == passedCount;
             } catch (final Throwable failure) {
-                error = failure.toString();
+                error = failureText(failure);
             } finally {
                 System.setOut(output);
             }
@@ -86,6 +86,12 @@ public final class NalParityRunner {
             }
         }
         return values;
+    }
+
+    private static String failureText(final Throwable failure) {
+        final String className = failure.getClass().getName();
+        final String message = failure.getMessage();
+        return message == null || message.isEmpty() ? className : className + ": " + message;
     }
 
     private static final class Capture extends OutputHandler {
