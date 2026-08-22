@@ -1,0 +1,172 @@
+{
+  "rows": 246,
+  "scopes": {
+    "main": 245,
+    "extra": 1
+  },
+  "unique_files": 246,
+  "functional_pass": 214,
+  "parity": 215,
+  "error_type": {
+    "none": 214,
+    "timeout": 31,
+    "both_wrong": 1
+  },
+  "root_cause_cluster": {
+    "startup_overhead": 0,
+    "correct_but_slower": 6,
+    "cross_file_state_leak": 0,
+    "scheduler_divergence": 0,
+    "task_explosion": 0,
+    "term_link_divergence": 0,
+    "rule_dispatch_divergence": 0,
+    "numeric_ordering_divergence": 0,
+    "unsupported_operator": 0,
+    "unknown": 26,
+    "none": 214
+  },
+  "unknown_rows": [
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\detective2.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush2.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\vision.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal1.multistep.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.everyday_reasoning.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.small.2.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.small.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal6.mln1.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_1.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_2.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_3.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_seqABC.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_spatialSeq1.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_transitivity.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\stresstest_bird1.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.12.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.14.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.19.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.22.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.nlp2.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.count.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8_list.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.want1.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\stability\\long_term_stability.nal",
+      "error_type": "both_wrong",
+      "next_experiment": "Separate canonical Java exception, TypeScript timeout and marker state, then replay with the same input and bounded diagnostics."
+    },
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\test\\simpleOperationTest.nal",
+      "error_type": "timeout",
+      "next_experiment": "Run one representative with bounded event counters and a longer budget; compare the last completed stage and output digest before changing code."
+    }
+  ],
+  "cluster_catalog": [
+    "startup_overhead",
+    "correct_but_slower",
+    "cross_file_state_leak",
+    "scheduler_divergence",
+    "task_explosion",
+    "term_link_divergence",
+    "rule_dispatch_divergence",
+    "numeric_ordering_divergence",
+    "unsupported_operator",
+    "unknown"
+  ]
+}

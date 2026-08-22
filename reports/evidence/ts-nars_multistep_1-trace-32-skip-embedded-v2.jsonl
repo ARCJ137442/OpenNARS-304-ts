@@ -1,0 +1,1389 @@
+{"seq":0,"event":"TaskAdd","args":["<swan --> bird>. %1.00;0.90% {0 : (5960054063616661,0)} ","Perceived"]}
+{"seq":1,"event":"OUT","args":["<swan --> bird>. %1.00;0.90% {0 : (5960054063616661,0)} "]}
+{"seq":2,"event":"TaskAdd","args":["<swan --> swimmer>. %1.00;0.90% {0 : (5960054063616661,1)} ","Perceived"]}
+{"seq":3,"event":"OUT","args":["<swan --> swimmer>. %1.00;0.90% {0 : (5960054063616661,1)} "]}
+{"seq":4,"event":"TaskAdd","args":["<bird --> swimmer>? {0 : (5960054063616661,2)} ","Perceived"]}
+{"seq":5,"event":"OUT","args":["<bird --> swimmer>? {0 : (5960054063616661,2)} "]}
+{"seq":6,"event":"TaskAdd","args":["<gull --> bird>. %1.00;0.90% {0 : (5960054063616661,3)} ","Perceived"]}
+{"seq":7,"event":"OUT","args":["<gull --> bird>. %1.00;0.90% {0 : (5960054063616661,3)} "]}
+{"seq":8,"event":"TaskAdd","args":["<gull --> swimmer>. %1.00;0.90% {0 : (5960054063616661,4)} ","Perceived"]}
+{"seq":9,"event":"OUT","args":["<gull --> swimmer>. %1.00;0.90% {0 : (5960054063616661,4)} "]}
+{"seq":10,"event":"TaskAdd","args":["<bird --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,5)} ","Perceived"]}
+{"seq":11,"event":"OUT","args":["<bird --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,5)} "]}
+{"seq":12,"event":"TaskAdd","args":["<robin --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,6)} ","Perceived"]}
+{"seq":13,"event":"OUT","args":["<robin --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,6)} "]}
+{"seq":14,"event":"TaskAdd","args":["<robin --> bird>? {0 : (5960054063616661,7)} ","Perceived"]}
+{"seq":15,"event":"OUT","args":["<robin --> bird>? {0 : (5960054063616661,7)} "]}
+{"seq":16,"event":"TaskAdd","args":["<robin --> swimmer>? {0 : (5960054063616661,8)} ","Perceived"]}
+{"seq":17,"event":"OUT","args":["<robin --> swimmer>? {0 : (5960054063616661,8)} "]}
+{"seq":18,"event":"before-cycles","args":[]}
+{"seq":19,"event":"ConceptNew","args":["<bird --> swimmer>"]}
+{"seq":20,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=0|index=null","<bird --> swimmer>"]}
+{"seq":21,"event":"ConceptNew","args":["bird"]}
+{"seq":22,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=4|index=[0]","bird"]}
+{"seq":23,"event":"ConceptNew","args":["swimmer"]}
+{"seq":24,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":25,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> swimmer>"]}
+{"seq":26,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=4|index=[0]","bird"]}
+{"seq":27,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<bird --> swimmer>"]}
+{"seq":28,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":29,"event":"TaskAdd","args":["(^wonder,{SELF},<bird --> swimmer>). :!0: %1.00;0.90% {0|0 : (5960054063616661,2)} ","Reflected mental operation (Internal Experience)"]}
+{"seq":30,"event":"OUT","args":["(^wonder,{SELF},<bird --> swimmer>). :!0: %1.00;0.90% {0|0 : (5960054063616661,2)} "]}
+{"seq":31,"event":"ConceptDirectProcessedTask","args":["<bird --> swimmer>? {0 : (5960054063616661,2)} "]}
+{"seq":32,"event":"TaskImmediateProcess","args":["<bird --> swimmer>? {0 : (5960054063616661,2)} ","<bird --> swimmer>"]}
+{"seq":33,"event":"ConceptNew","args":["<swan --> bird>"]}
+{"seq":34,"event":"TaskLinkAdd","args":["<swan --> bird>|type=0|index=null","<swan --> bird>"]}
+{"seq":35,"event":"ConceptNew","args":["swan"]}
+{"seq":36,"event":"TaskLinkAdd","args":["<swan --> bird>|type=4|index=[0]","swan"]}
+{"seq":37,"event":"TaskLinkAdd","args":["<swan --> bird>|type=4|index=[1]","bird"]}
+{"seq":38,"event":"TermLinkAdd","args":["swan|type=3|index=[0]","<swan --> bird>"]}
+{"seq":39,"event":"TermLinkAdd","args":["<swan --> bird>|type=4|index=[0]","swan"]}
+{"seq":40,"event":"TermLinkAdd","args":["bird|type=3|index=[1]","<swan --> bird>"]}
+{"seq":41,"event":"TermLinkAdd","args":["<swan --> bird>|type=4|index=[1]","bird"]}
+{"seq":42,"event":"ConceptDirectProcessedTask","args":["<swan --> bird>. %1.00;0.90% {0 : (5960054063616661,0)} "]}
+{"seq":43,"event":"TaskImmediateProcess","args":["<swan --> bird>. %1.00;0.90% {0 : (5960054063616661,0)} ","<swan --> bird>"]}
+{"seq":44,"event":"ConceptNew","args":["<robin --> bird>"]}
+{"seq":45,"event":"TaskLinkAdd","args":["<robin --> bird>|type=0|index=null","<robin --> bird>"]}
+{"seq":46,"event":"ConceptNew","args":["robin"]}
+{"seq":47,"event":"TaskLinkAdd","args":["<robin --> bird>|type=4|index=[0]","robin"]}
+{"seq":48,"event":"TaskLinkAdd","args":["<robin --> bird>|type=4|index=[1]","bird"]}
+{"seq":49,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> bird>"]}
+{"seq":50,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[0]","robin"]}
+{"seq":51,"event":"TermLinkAdd","args":["bird|type=3|index=[1]","<robin --> bird>"]}
+{"seq":52,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[1]","bird"]}
+{"seq":53,"event":"TaskAdd","args":["(^wonder,{SELF},<robin --> bird>). :!0: %1.00;0.90% {0|0 : (5960054063616661,7)} ","Reflected mental operation (Internal Experience)"]}
+{"seq":54,"event":"OUT","args":["(^wonder,{SELF},<robin --> bird>). :!0: %1.00;0.90% {0|0 : (5960054063616661,7)} "]}
+{"seq":55,"event":"ConceptDirectProcessedTask","args":["<robin --> bird>? {0 : (5960054063616661,7)} "]}
+{"seq":56,"event":"TaskImmediateProcess","args":["<robin --> bird>? {0 : (5960054063616661,7)} ","<robin --> bird>"]}
+{"seq":57,"event":"ConceptNew","args":["<swan --> swimmer>"]}
+{"seq":58,"event":"TaskLinkAdd","args":["<swan --> swimmer>|type=0|index=null","<swan --> swimmer>"]}
+{"seq":59,"event":"TaskLinkAdd","args":["<swan --> swimmer>|type=4|index=[0]","swan"]}
+{"seq":60,"event":"TaskLinkAdd","args":["<swan --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":61,"event":"TermLinkAdd","args":["swan|type=3|index=[0]","<swan --> swimmer>"]}
+{"seq":62,"event":"TermLinkAdd","args":["<swan --> swimmer>|type=4|index=[0]","swan"]}
+{"seq":63,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<swan --> swimmer>"]}
+{"seq":64,"event":"TermLinkAdd","args":["<swan --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":65,"event":"ConceptDirectProcessedTask","args":["<swan --> swimmer>. %1.00;0.90% {0 : (5960054063616661,1)} "]}
+{"seq":66,"event":"TaskImmediateProcess","args":["<swan --> swimmer>. %1.00;0.90% {0 : (5960054063616661,1)} ","<swan --> swimmer>"]}
+{"seq":67,"event":"ConceptNew","args":["<robin --> swimmer>"]}
+{"seq":68,"event":"TaskLinkAdd","args":["<robin --> swimmer>|type=0|index=null","<robin --> swimmer>"]}
+{"seq":69,"event":"TaskLinkAdd","args":["<robin --> swimmer>|type=4|index=[0]","robin"]}
+{"seq":70,"event":"TaskLinkAdd","args":["<robin --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":71,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> swimmer>"]}
+{"seq":72,"event":"TermLinkAdd","args":["<robin --> swimmer>|type=4|index=[0]","robin"]}
+{"seq":73,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<robin --> swimmer>"]}
+{"seq":74,"event":"TermLinkAdd","args":["<robin --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":75,"event":"TaskAdd","args":["(^wonder,{SELF},<robin --> swimmer>). :!0: %1.00;0.90% {0|0 : (5960054063616661,8)} ","Reflected mental operation (Internal Experience)"]}
+{"seq":76,"event":"OUT","args":["(^wonder,{SELF},<robin --> swimmer>). :!0: %1.00;0.90% {0|0 : (5960054063616661,8)} "]}
+{"seq":77,"event":"ConceptDirectProcessedTask","args":["<robin --> swimmer>? {0 : (5960054063616661,8)} "]}
+{"seq":78,"event":"TaskImmediateProcess","args":["<robin --> swimmer>? {0 : (5960054063616661,8)} ","<robin --> swimmer>"]}
+{"seq":79,"event":"ConceptNew","args":["<gull --> bird>"]}
+{"seq":80,"event":"TaskLinkAdd","args":["<gull --> bird>|type=0|index=null","<gull --> bird>"]}
+{"seq":81,"event":"ConceptNew","args":["gull"]}
+{"seq":82,"event":"TaskLinkAdd","args":["<gull --> bird>|type=4|index=[0]","gull"]}
+{"seq":83,"event":"TaskLinkAdd","args":["<gull --> bird>|type=4|index=[1]","bird"]}
+{"seq":84,"event":"TermLinkAdd","args":["gull|type=3|index=[0]","<gull --> bird>"]}
+{"seq":85,"event":"TermLinkAdd","args":["<gull --> bird>|type=4|index=[0]","gull"]}
+{"seq":86,"event":"TermLinkAdd","args":["bird|type=3|index=[1]","<gull --> bird>"]}
+{"seq":87,"event":"TermLinkAdd","args":["<gull --> bird>|type=4|index=[1]","bird"]}
+{"seq":88,"event":"ConceptDirectProcessedTask","args":["<gull --> bird>. %1.00;0.90% {0 : (5960054063616661,3)} "]}
+{"seq":89,"event":"TaskImmediateProcess","args":["<gull --> bird>. %1.00;0.90% {0 : (5960054063616661,3)} ","<gull --> bird>"]}
+{"seq":90,"event":"ConceptNew","args":["<gull --> swimmer>"]}
+{"seq":91,"event":"TaskLinkAdd","args":["<gull --> swimmer>|type=0|index=null","<gull --> swimmer>"]}
+{"seq":92,"event":"TaskLinkAdd","args":["<gull --> swimmer>|type=4|index=[0]","gull"]}
+{"seq":93,"event":"TaskLinkAdd","args":["<gull --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":94,"event":"TermLinkAdd","args":["gull|type=3|index=[0]","<gull --> swimmer>"]}
+{"seq":95,"event":"TermLinkAdd","args":["<gull --> swimmer>|type=4|index=[0]","gull"]}
+{"seq":96,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<gull --> swimmer>"]}
+{"seq":97,"event":"TermLinkAdd","args":["<gull --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":98,"event":"ConceptDirectProcessedTask","args":["<gull --> swimmer>. %1.00;0.90% {0 : (5960054063616661,4)} "]}
+{"seq":99,"event":"TaskImmediateProcess","args":["<gull --> swimmer>. %1.00;0.90% {0 : (5960054063616661,4)} ","<gull --> swimmer>"]}
+{"seq":100,"event":"ConceptNew","args":["<bird --> [feathered]>"]}
+{"seq":101,"event":"TaskLinkAdd","args":["<bird --> [feathered]>|type=0|index=null","<bird --> [feathered]>"]}
+{"seq":102,"event":"TaskLinkAdd","args":["<bird --> [feathered]>|type=4|index=[0]","bird"]}
+{"seq":103,"event":"ConceptNew","args":["[feathered]"]}
+{"seq":104,"event":"TaskLinkAdd","args":["<bird --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":105,"event":"ConceptNew","args":["feathered"]}
+{"seq":106,"event":"TaskLinkAdd","args":["<bird --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":107,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> [feathered]>"]}
+{"seq":108,"event":"TermLinkAdd","args":["<bird --> [feathered]>|type=4|index=[0]","bird"]}
+{"seq":109,"event":"TermLinkAdd","args":["[feathered]|type=3|index=[1]","<bird --> [feathered]>"]}
+{"seq":110,"event":"TermLinkAdd","args":["<bird --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":111,"event":"TermLinkAdd","args":["feathered|type=1|index=[0]","[feathered]"]}
+{"seq":112,"event":"TermLinkAdd","args":["[feathered]|type=2|index=[0]","feathered"]}
+{"seq":113,"event":"TermLinkAdd","args":["feathered|type=3|index=[1, 0]","<bird --> [feathered]>"]}
+{"seq":114,"event":"TermLinkAdd","args":["<bird --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":115,"event":"ConceptDirectProcessedTask","args":["<bird --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,5)} "]}
+{"seq":116,"event":"TaskImmediateProcess","args":["<bird --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,5)} ","<bird --> [feathered]>"]}
+{"seq":117,"event":"ConceptNew","args":["<robin --> [feathered]>"]}
+{"seq":118,"event":"TaskLinkAdd","args":["<robin --> [feathered]>|type=0|index=null","<robin --> [feathered]>"]}
+{"seq":119,"event":"TaskLinkAdd","args":["<robin --> [feathered]>|type=4|index=[0]","robin"]}
+{"seq":120,"event":"TaskLinkAdd","args":["<robin --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":121,"event":"TaskLinkAdd","args":["<robin --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":122,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> [feathered]>"]}
+{"seq":123,"event":"TermLinkAdd","args":["<robin --> [feathered]>|type=4|index=[0]","robin"]}
+{"seq":124,"event":"TermLinkAdd","args":["[feathered]|type=3|index=[1]","<robin --> [feathered]>"]}
+{"seq":125,"event":"TermLinkAdd","args":["<robin --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":126,"event":"TermLinkAdd","args":["feathered|type=1|index=[0]","[feathered]"]}
+{"seq":127,"event":"TermLinkAdd","args":["[feathered]|type=2|index=[0]","feathered"]}
+{"seq":128,"event":"TermLinkAdd","args":["feathered|type=3|index=[1, 0]","<robin --> [feathered]>"]}
+{"seq":129,"event":"TermLinkAdd","args":["<robin --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":130,"event":"ConceptDirectProcessedTask","args":["<robin --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,6)} "]}
+{"seq":131,"event":"TaskImmediateProcess","args":["<robin --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,6)} ","<robin --> [feathered]>"]}
+{"seq":132,"event":"ConceptNew","args":["(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":133,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<bird --> swimmer>)|type=0|index=null","(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":134,"event":"ConceptNew","args":["(*,{SELF},<bird --> swimmer>)"]}
+{"seq":135,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<bird --> swimmer>)|type=4|index=[0]","(*,{SELF},<bird --> swimmer>)"]}
+{"seq":136,"event":"ConceptNew","args":["{SELF}"]}
+{"seq":137,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<bird --> swimmer>)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":138,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<bird --> swimmer>)|type=8|index=[0, 1]","<bird --> swimmer>"]}
+{"seq":139,"event":"ConceptNew","args":["^wonder"]}
+{"seq":140,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<bird --> swimmer>)|type=4|index=[1]","^wonder"]}
+{"seq":141,"event":"TermLinkAdd","args":["(*,{SELF},<bird --> swimmer>)|type=3|index=[0]","(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":142,"event":"TermLinkAdd","args":["(^wonder,{SELF},<bird --> swimmer>)|type=4|index=[0]","(*,{SELF},<bird --> swimmer>)"]}
+{"seq":143,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},<bird --> swimmer>)"]}
+{"seq":144,"event":"TermLinkAdd","args":["(*,{SELF},<bird --> swimmer>)|type=2|index=[0]","{SELF}"]}
+{"seq":145,"event":"ConceptNew","args":["SELF"]}
+{"seq":146,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":147,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":148,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<bird --> swimmer>)"]}
+{"seq":149,"event":"TermLinkAdd","args":["(*,{SELF},<bird --> swimmer>)|type=2|index=[0, 0]","SELF"]}
+{"seq":150,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=1|index=[1]","(*,{SELF},<bird --> swimmer>)"]}
+{"seq":151,"event":"TermLinkAdd","args":["(*,{SELF},<bird --> swimmer>)|type=2|index=[1]","<bird --> swimmer>"]}
+{"seq":152,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> swimmer>"]}
+{"seq":153,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=4|index=[0]","bird"]}
+{"seq":154,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<bird --> swimmer>"]}
+{"seq":155,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":156,"event":"TermLinkAdd","args":["bird|type=1|index=[1, 0]","(*,{SELF},<bird --> swimmer>)"]}
+{"seq":157,"event":"TermLinkAdd","args":["(*,{SELF},<bird --> swimmer>)|type=2|index=[1, 0]","bird"]}
+{"seq":158,"event":"TermLinkAdd","args":["swimmer|type=1|index=[1, 1]","(*,{SELF},<bird --> swimmer>)"]}
+{"seq":159,"event":"TermLinkAdd","args":["(*,{SELF},<bird --> swimmer>)|type=2|index=[1, 1]","swimmer"]}
+{"seq":160,"event":"TermLinkAdd","args":["^wonder|type=3|index=[1]","(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":161,"event":"TermLinkAdd","args":["(^wonder,{SELF},<bird --> swimmer>)|type=4|index=[1]","^wonder"]}
+{"seq":162,"event":"ConceptDirectProcessedTask","args":["(^wonder,{SELF},<bird --> swimmer>). :!0: %1.00;0.90% {0|0 : (5960054063616661,2)} "]}
+{"seq":163,"event":"TaskImmediateProcess","args":["(^wonder,{SELF},<bird --> swimmer>). :!0: %1.00;0.90% {0|0 : (5960054063616661,2)} ","(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":164,"event":"ConceptNew","args":["(^wonder,{SELF},<robin --> bird>)"]}
+{"seq":165,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<robin --> bird>)|type=0|index=null","(^wonder,{SELF},<robin --> bird>)"]}
+{"seq":166,"event":"ConceptNew","args":["(*,{SELF},<robin --> bird>)"]}
+{"seq":167,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<robin --> bird>)|type=4|index=[0]","(*,{SELF},<robin --> bird>)"]}
+{"seq":168,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<robin --> bird>)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":169,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<robin --> bird>)|type=8|index=[0, 1]","<robin --> bird>"]}
+{"seq":170,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<robin --> bird>)|type=4|index=[1]","^wonder"]}
+{"seq":171,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>)|type=3|index=[0]","(^wonder,{SELF},<robin --> bird>)"]}
+{"seq":172,"event":"TermLinkAdd","args":["(^wonder,{SELF},<robin --> bird>)|type=4|index=[0]","(*,{SELF},<robin --> bird>)"]}
+{"seq":173,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},<robin --> bird>)"]}
+{"seq":174,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>)|type=2|index=[0]","{SELF}"]}
+{"seq":175,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":176,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":177,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<robin --> bird>)"]}
+{"seq":178,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>)|type=2|index=[0, 0]","SELF"]}
+{"seq":179,"event":"TermLinkAdd","args":["<robin --> bird>|type=1|index=[1]","(*,{SELF},<robin --> bird>)"]}
+{"seq":180,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>)|type=2|index=[1]","<robin --> bird>"]}
+{"seq":181,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> bird>"]}
+{"seq":182,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[0]","robin"]}
+{"seq":183,"event":"TermLinkAdd","args":["bird|type=3|index=[1]","<robin --> bird>"]}
+{"seq":184,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[1]","bird"]}
+{"seq":185,"event":"TermLinkAdd","args":["robin|type=1|index=[1, 0]","(*,{SELF},<robin --> bird>)"]}
+{"seq":186,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>)|type=2|index=[1, 0]","robin"]}
+{"seq":187,"event":"TermLinkAdd","args":["bird|type=1|index=[1, 1]","(*,{SELF},<robin --> bird>)"]}
+{"seq":188,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>)|type=2|index=[1, 1]","bird"]}
+{"seq":189,"event":"TermLinkAdd","args":["^wonder|type=3|index=[1]","(^wonder,{SELF},<robin --> bird>)"]}
+{"seq":190,"event":"TermLinkAdd","args":["(^wonder,{SELF},<robin --> bird>)|type=4|index=[1]","^wonder"]}
+{"seq":191,"event":"ConceptDirectProcessedTask","args":["(^wonder,{SELF},<robin --> bird>). :!0: %1.00;0.90% {0|0 : (5960054063616661,7)} "]}
+{"seq":192,"event":"TaskImmediateProcess","args":["(^wonder,{SELF},<robin --> bird>). :!0: %1.00;0.90% {0|0 : (5960054063616661,7)} ","(^wonder,{SELF},<robin --> bird>)"]}
+{"seq":193,"event":"ConceptNew","args":["(^wonder,{SELF},<robin --> swimmer>)"]}
+{"seq":194,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<robin --> swimmer>)|type=0|index=null","(^wonder,{SELF},<robin --> swimmer>)"]}
+{"seq":195,"event":"ConceptNew","args":["(*,{SELF},<robin --> swimmer>)"]}
+{"seq":196,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<robin --> swimmer>)|type=4|index=[0]","(*,{SELF},<robin --> swimmer>)"]}
+{"seq":197,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<robin --> swimmer>)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":198,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<robin --> swimmer>)|type=8|index=[0, 1]","<robin --> swimmer>"]}
+{"seq":199,"event":"TaskLinkAdd","args":["(^wonder,{SELF},<robin --> swimmer>)|type=4|index=[1]","^wonder"]}
+{"seq":200,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> swimmer>)|type=3|index=[0]","(^wonder,{SELF},<robin --> swimmer>)"]}
+{"seq":201,"event":"TermLinkAdd","args":["(^wonder,{SELF},<robin --> swimmer>)|type=4|index=[0]","(*,{SELF},<robin --> swimmer>)"]}
+{"seq":202,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},<robin --> swimmer>)"]}
+{"seq":203,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> swimmer>)|type=2|index=[0]","{SELF}"]}
+{"seq":204,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":205,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":206,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<robin --> swimmer>)"]}
+{"seq":207,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> swimmer>)|type=2|index=[0, 0]","SELF"]}
+{"seq":208,"event":"TermLinkAdd","args":["<robin --> swimmer>|type=1|index=[1]","(*,{SELF},<robin --> swimmer>)"]}
+{"seq":209,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> swimmer>)|type=2|index=[1]","<robin --> swimmer>"]}
+{"seq":210,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> swimmer>"]}
+{"seq":211,"event":"TermLinkAdd","args":["<robin --> swimmer>|type=4|index=[0]","robin"]}
+{"seq":212,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<robin --> swimmer>"]}
+{"seq":213,"event":"TermLinkAdd","args":["<robin --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":214,"event":"TermLinkAdd","args":["robin|type=1|index=[1, 0]","(*,{SELF},<robin --> swimmer>)"]}
+{"seq":215,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> swimmer>)|type=2|index=[1, 0]","robin"]}
+{"seq":216,"event":"TermLinkAdd","args":["swimmer|type=1|index=[1, 1]","(*,{SELF},<robin --> swimmer>)"]}
+{"seq":217,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> swimmer>)|type=2|index=[1, 1]","swimmer"]}
+{"seq":218,"event":"TermLinkAdd","args":["^wonder|type=3|index=[1]","(^wonder,{SELF},<robin --> swimmer>)"]}
+{"seq":219,"event":"TermLinkAdd","args":["(^wonder,{SELF},<robin --> swimmer>)|type=4|index=[1]","^wonder"]}
+{"seq":220,"event":"ConceptDirectProcessedTask","args":["(^wonder,{SELF},<robin --> swimmer>). :!0: %1.00;0.90% {0|0 : (5960054063616661,8)} "]}
+{"seq":221,"event":"TaskImmediateProcess","args":["(^wonder,{SELF},<robin --> swimmer>). :!0: %1.00;0.90% {0|0 : (5960054063616661,8)} ","(^wonder,{SELF},<robin --> swimmer>)"]}
+{"seq":222,"event":"TermLinkSelect","args":["<bird --> swimmer>|type=4|index=[1]","swimmer","<swan --> swimmer>"]}
+{"seq":223,"event":"BeliefSelect","args":["<gull --> swimmer>. %1.00;0.90% {0 : (5960054063616661,4)} "]}
+{"seq":224,"event":"BeliefReason","args":["<gull --> swimmer>. %1.00;0.90% {0 : (5960054063616661,4)} ","<gull --> swimmer>","<swan --> swimmer>","<swan --> swimmer>"]}
+{"seq":225,"event":"TaskDerive","args":["<swan --> gull>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","false","false"]}
+{"seq":226,"event":"TaskAdd","args":["<swan --> gull>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":227,"event":"OUT","args":["<swan --> gull>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":228,"event":"TaskDerive","args":["<gull --> swan>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","false","false"]}
+{"seq":229,"event":"TaskAdd","args":["<gull --> swan>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":230,"event":"OUT","args":["<gull --> swan>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":231,"event":"TaskDerive","args":["<gull <-> swan>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","false","false"]}
+{"seq":232,"event":"TaskAdd","args":["<gull <-> swan>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":233,"event":"OUT","args":["<gull <-> swan>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":234,"event":"TaskDerive","args":["<(&,gull,swan) --> swimmer>. %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} ","false","false"]}
+{"seq":235,"event":"TaskAdd","args":["<(&,gull,swan) --> swimmer>. %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":236,"event":"OUT","args":["<(&,gull,swan) --> swimmer>. %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":237,"event":"TaskDerive","args":["<(|,gull,swan) --> swimmer>. %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} ","false","false"]}
+{"seq":238,"event":"TaskAdd","args":["<(|,gull,swan) --> swimmer>. %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":239,"event":"OUT","args":["<(|,gull,swan) --> swimmer>. %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":240,"event":"TaskDerive","args":["<<swan --> $1> ==> <gull --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","false","false"]}
+{"seq":241,"event":"TaskAdd","args":["<<swan --> $1> ==> <gull --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":242,"event":"OUT","args":["<<swan --> $1> ==> <gull --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":243,"event":"TaskDerive","args":["<<gull --> $1> ==> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","false","false"]}
+{"seq":244,"event":"TaskAdd","args":["<<gull --> $1> ==> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":245,"event":"OUT","args":["<<gull --> $1> ==> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":246,"event":"TaskDerive","args":["<<gull --> $1> <=> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","false","false"]}
+{"seq":247,"event":"TaskAdd","args":["<<gull --> $1> <=> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":248,"event":"OUT","args":["<<gull --> $1> <=> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":249,"event":"TaskDerive","args":["(&&,<gull --> #1>,<swan --> #1>). %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} ","false","false"]}
+{"seq":250,"event":"TaskAdd","args":["(&&,<gull --> #1>,<swan --> #1>). %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":251,"event":"OUT","args":["(&&,<gull --> #1>,<swan --> #1>). %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":252,"event":"TermLinkSelect","args":["<gull --> swimmer>|type=4|index=[1]","swimmer","<swan --> swimmer>"]}
+{"seq":253,"event":"TermLinkSelect","args":["<robin --> swimmer>|type=4|index=[1]","swimmer","<swan --> swimmer>"]}
+{"seq":254,"event":"ConceptFire","args":["<swan --> swimmer>"]}
+{"seq":255,"event":"ConceptNew","args":["<swan --> gull>"]}
+{"seq":256,"event":"TaskLinkAdd","args":["<swan --> gull>|type=0|index=null","<swan --> gull>"]}
+{"seq":257,"event":"TaskLinkAdd","args":["<swan --> gull>|type=4|index=[0]","swan"]}
+{"seq":258,"event":"TaskLinkAdd","args":["<swan --> gull>|type=4|index=[1]","gull"]}
+{"seq":259,"event":"TermLinkAdd","args":["swan|type=3|index=[0]","<swan --> gull>"]}
+{"seq":260,"event":"TermLinkAdd","args":["<swan --> gull>|type=4|index=[0]","swan"]}
+{"seq":261,"event":"TermLinkAdd","args":["gull|type=3|index=[1]","<swan --> gull>"]}
+{"seq":262,"event":"TermLinkAdd","args":["<swan --> gull>|type=4|index=[1]","gull"]}
+{"seq":263,"event":"ConceptDirectProcessedTask","args":["<swan --> gull>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":264,"event":"TaskImmediateProcess","args":["<swan --> gull>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","<swan --> gull>"]}
+{"seq":265,"event":"ConceptNew","args":["<gull --> swan>"]}
+{"seq":266,"event":"TaskLinkAdd","args":["<gull --> swan>|type=0|index=null","<gull --> swan>"]}
+{"seq":267,"event":"TaskLinkAdd","args":["<gull --> swan>|type=4|index=[0]","gull"]}
+{"seq":268,"event":"TaskLinkAdd","args":["<gull --> swan>|type=4|index=[1]","swan"]}
+{"seq":269,"event":"TermLinkAdd","args":["gull|type=3|index=[0]","<gull --> swan>"]}
+{"seq":270,"event":"TermLinkAdd","args":["<gull --> swan>|type=4|index=[0]","gull"]}
+{"seq":271,"event":"TermLinkAdd","args":["swan|type=3|index=[1]","<gull --> swan>"]}
+{"seq":272,"event":"TermLinkAdd","args":["<gull --> swan>|type=4|index=[1]","swan"]}
+{"seq":273,"event":"ConceptDirectProcessedTask","args":["<gull --> swan>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":274,"event":"TaskImmediateProcess","args":["<gull --> swan>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","<gull --> swan>"]}
+{"seq":275,"event":"ConceptNew","args":["<gull <-> swan>"]}
+{"seq":276,"event":"TaskLinkAdd","args":["<gull <-> swan>|type=0|index=null","<gull <-> swan>"]}
+{"seq":277,"event":"TaskLinkAdd","args":["<gull <-> swan>|type=4|index=[0]","gull"]}
+{"seq":278,"event":"TaskLinkAdd","args":["<gull <-> swan>|type=4|index=[1]","swan"]}
+{"seq":279,"event":"TermLinkAdd","args":["gull|type=3|index=[0]","<gull <-> swan>"]}
+{"seq":280,"event":"TermLinkAdd","args":["<gull <-> swan>|type=4|index=[0]","gull"]}
+{"seq":281,"event":"TermLinkAdd","args":["swan|type=3|index=[1]","<gull <-> swan>"]}
+{"seq":282,"event":"TermLinkAdd","args":["<gull <-> swan>|type=4|index=[1]","swan"]}
+{"seq":283,"event":"ConceptDirectProcessedTask","args":["<gull <-> swan>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":284,"event":"TaskImmediateProcess","args":["<gull <-> swan>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","<gull <-> swan>"]}
+{"seq":285,"event":"ConceptNew","args":["<(&,gull,swan) --> swimmer>"]}
+{"seq":286,"event":"TaskLinkAdd","args":["<(&,gull,swan) --> swimmer>|type=0|index=null","<(&,gull,swan) --> swimmer>"]}
+{"seq":287,"event":"ConceptNew","args":["(&,gull,swan)"]}
+{"seq":288,"event":"TaskLinkAdd","args":["<(&,gull,swan) --> swimmer>|type=4|index=[0]","(&,gull,swan)"]}
+{"seq":289,"event":"TaskLinkAdd","args":["<(&,gull,swan) --> swimmer>|type=4|index=[0, 0]","gull"]}
+{"seq":290,"event":"TaskLinkAdd","args":["<(&,gull,swan) --> swimmer>|type=4|index=[0, 1]","swan"]}
+{"seq":291,"event":"TaskLinkAdd","args":["<(&,gull,swan) --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":292,"event":"TermLinkAdd","args":["(&,gull,swan)|type=3|index=[0]","<(&,gull,swan) --> swimmer>"]}
+{"seq":293,"event":"TermLinkAdd","args":["<(&,gull,swan) --> swimmer>|type=4|index=[0]","(&,gull,swan)"]}
+{"seq":294,"event":"TermLinkAdd","args":["gull|type=1|index=[0]","(&,gull,swan)"]}
+{"seq":295,"event":"TermLinkAdd","args":["(&,gull,swan)|type=2|index=[0]","gull"]}
+{"seq":296,"event":"TermLinkAdd","args":["swan|type=1|index=[1]","(&,gull,swan)"]}
+{"seq":297,"event":"TermLinkAdd","args":["(&,gull,swan)|type=2|index=[1]","swan"]}
+{"seq":298,"event":"TermLinkAdd","args":["gull|type=3|index=[0, 0]","<(&,gull,swan) --> swimmer>"]}
+{"seq":299,"event":"TermLinkAdd","args":["<(&,gull,swan) --> swimmer>|type=4|index=[0, 0]","gull"]}
+{"seq":300,"event":"TermLinkAdd","args":["swan|type=3|index=[0, 1]","<(&,gull,swan) --> swimmer>"]}
+{"seq":301,"event":"TermLinkAdd","args":["<(&,gull,swan) --> swimmer>|type=4|index=[0, 1]","swan"]}
+{"seq":302,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<(&,gull,swan) --> swimmer>"]}
+{"seq":303,"event":"TermLinkAdd","args":["<(&,gull,swan) --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":304,"event":"ConceptDirectProcessedTask","args":["<(&,gull,swan) --> swimmer>. %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":305,"event":"TaskImmediateProcess","args":["<(&,gull,swan) --> swimmer>. %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} ","<(&,gull,swan) --> swimmer>"]}
+{"seq":306,"event":"ConceptNew","args":["<(|,gull,swan) --> swimmer>"]}
+{"seq":307,"event":"TaskLinkAdd","args":["<(|,gull,swan) --> swimmer>|type=0|index=null","<(|,gull,swan) --> swimmer>"]}
+{"seq":308,"event":"ConceptNew","args":["(|,gull,swan)"]}
+{"seq":309,"event":"TaskLinkAdd","args":["<(|,gull,swan) --> swimmer>|type=4|index=[0]","(|,gull,swan)"]}
+{"seq":310,"event":"TaskLinkAdd","args":["<(|,gull,swan) --> swimmer>|type=4|index=[0, 0]","gull"]}
+{"seq":311,"event":"TaskLinkAdd","args":["<(|,gull,swan) --> swimmer>|type=4|index=[0, 1]","swan"]}
+{"seq":312,"event":"TaskLinkAdd","args":["<(|,gull,swan) --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":313,"event":"TermLinkAdd","args":["(|,gull,swan)|type=3|index=[0]","<(|,gull,swan) --> swimmer>"]}
+{"seq":314,"event":"TermLinkAdd","args":["<(|,gull,swan) --> swimmer>|type=4|index=[0]","(|,gull,swan)"]}
+{"seq":315,"event":"TermLinkAdd","args":["gull|type=1|index=[0]","(|,gull,swan)"]}
+{"seq":316,"event":"TermLinkAdd","args":["(|,gull,swan)|type=2|index=[0]","gull"]}
+{"seq":317,"event":"TermLinkAdd","args":["swan|type=1|index=[1]","(|,gull,swan)"]}
+{"seq":318,"event":"TermLinkAdd","args":["(|,gull,swan)|type=2|index=[1]","swan"]}
+{"seq":319,"event":"TermLinkAdd","args":["gull|type=3|index=[0, 0]","<(|,gull,swan) --> swimmer>"]}
+{"seq":320,"event":"TermLinkAdd","args":["<(|,gull,swan) --> swimmer>|type=4|index=[0, 0]","gull"]}
+{"seq":321,"event":"TermLinkAdd","args":["swan|type=3|index=[0, 1]","<(|,gull,swan) --> swimmer>"]}
+{"seq":322,"event":"TermLinkAdd","args":["<(|,gull,swan) --> swimmer>|type=4|index=[0, 1]","swan"]}
+{"seq":323,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<(|,gull,swan) --> swimmer>"]}
+{"seq":324,"event":"TermLinkAdd","args":["<(|,gull,swan) --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":325,"event":"ConceptDirectProcessedTask","args":["<(|,gull,swan) --> swimmer>. %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":326,"event":"TaskImmediateProcess","args":["<(|,gull,swan) --> swimmer>. %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} ","<(|,gull,swan) --> swimmer>"]}
+{"seq":327,"event":"ConceptNew","args":["<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":328,"event":"TaskLinkAdd","args":["<<swan --> $1> ==> <gull --> $1>>|type=0|index=null","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":329,"event":"ConceptNew","args":["<swan --> $1>"]}
+{"seq":330,"event":"TaskLinkAdd","args":["<<swan --> $1> ==> <gull --> $1>>|type=4|index=[0]","<swan --> $1>"]}
+{"seq":331,"event":"TaskLinkAdd","args":["<<swan --> $1> ==> <gull --> $1>>|type=4|index=[0, 0]","swan"]}
+{"seq":332,"event":"ConceptNew","args":["<gull --> $1>"]}
+{"seq":333,"event":"TaskLinkAdd","args":["<<swan --> $1> ==> <gull --> $1>>|type=4|index=[1]","<gull --> $1>"]}
+{"seq":334,"event":"TaskLinkAdd","args":["<<swan --> $1> ==> <gull --> $1>>|type=4|index=[1, 0]","gull"]}
+{"seq":335,"event":"TermLinkAdd","args":["<swan --> $1>|type=3|index=[0]","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":336,"event":"TermLinkAdd","args":["<<swan --> $1> ==> <gull --> $1>>|type=4|index=[0]","<swan --> $1>"]}
+{"seq":337,"event":"TermLinkAdd","args":["swan|type=3|index=[0]","<swan --> $1>"]}
+{"seq":338,"event":"TermLinkAdd","args":["<swan --> $1>|type=4|index=[0]","swan"]}
+{"seq":339,"event":"TermLinkAdd","args":["swan|type=3|index=[0, 0]","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":340,"event":"TermLinkAdd","args":["<<swan --> $1> ==> <gull --> $1>>|type=4|index=[0, 0]","swan"]}
+{"seq":341,"event":"TermLinkAdd","args":["<gull --> $1>|type=3|index=[1]","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":342,"event":"TermLinkAdd","args":["<<swan --> $1> ==> <gull --> $1>>|type=4|index=[1]","<gull --> $1>"]}
+{"seq":343,"event":"TermLinkAdd","args":["gull|type=3|index=[0]","<gull --> $1>"]}
+{"seq":344,"event":"TermLinkAdd","args":["<gull --> $1>|type=4|index=[0]","gull"]}
+{"seq":345,"event":"TermLinkAdd","args":["gull|type=3|index=[1, 0]","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":346,"event":"TermLinkAdd","args":["<<swan --> $1> ==> <gull --> $1>>|type=4|index=[1, 0]","gull"]}
+{"seq":347,"event":"ConceptDirectProcessedTask","args":["<<swan --> $1> ==> <gull --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":348,"event":"TaskImmediateProcess","args":["<<swan --> $1> ==> <gull --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":349,"event":"ConceptNew","args":["<<gull --> $1> ==> <swan --> $1>>"]}
+{"seq":350,"event":"TaskLinkAdd","args":["<<gull --> $1> ==> <swan --> $1>>|type=0|index=null","<<gull --> $1> ==> <swan --> $1>>"]}
+{"seq":351,"event":"TaskLinkAdd","args":["<<gull --> $1> ==> <swan --> $1>>|type=4|index=[0]","<gull --> $1>"]}
+{"seq":352,"event":"TaskLinkAdd","args":["<<gull --> $1> ==> <swan --> $1>>|type=4|index=[0, 0]","gull"]}
+{"seq":353,"event":"TaskLinkAdd","args":["<<gull --> $1> ==> <swan --> $1>>|type=4|index=[1]","<swan --> $1>"]}
+{"seq":354,"event":"TaskLinkAdd","args":["<<gull --> $1> ==> <swan --> $1>>|type=4|index=[1, 0]","swan"]}
+{"seq":355,"event":"TermLinkAdd","args":["<gull --> $1>|type=3|index=[0]","<<gull --> $1> ==> <swan --> $1>>"]}
+{"seq":356,"event":"TermLinkAdd","args":["<<gull --> $1> ==> <swan --> $1>>|type=4|index=[0]","<gull --> $1>"]}
+{"seq":357,"event":"TermLinkAdd","args":["gull|type=3|index=[0]","<gull --> $1>"]}
+{"seq":358,"event":"TermLinkAdd","args":["<gull --> $1>|type=4|index=[0]","gull"]}
+{"seq":359,"event":"TermLinkAdd","args":["gull|type=3|index=[0, 0]","<<gull --> $1> ==> <swan --> $1>>"]}
+{"seq":360,"event":"TermLinkAdd","args":["<<gull --> $1> ==> <swan --> $1>>|type=4|index=[0, 0]","gull"]}
+{"seq":361,"event":"TermLinkAdd","args":["<swan --> $1>|type=3|index=[1]","<<gull --> $1> ==> <swan --> $1>>"]}
+{"seq":362,"event":"TermLinkAdd","args":["<<gull --> $1> ==> <swan --> $1>>|type=4|index=[1]","<swan --> $1>"]}
+{"seq":363,"event":"TermLinkAdd","args":["swan|type=3|index=[0]","<swan --> $1>"]}
+{"seq":364,"event":"TermLinkAdd","args":["<swan --> $1>|type=4|index=[0]","swan"]}
+{"seq":365,"event":"TermLinkAdd","args":["swan|type=3|index=[1, 0]","<<gull --> $1> ==> <swan --> $1>>"]}
+{"seq":366,"event":"TermLinkAdd","args":["<<gull --> $1> ==> <swan --> $1>>|type=4|index=[1, 0]","swan"]}
+{"seq":367,"event":"ConceptDirectProcessedTask","args":["<<gull --> $1> ==> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":368,"event":"TaskImmediateProcess","args":["<<gull --> $1> ==> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","<<gull --> $1> ==> <swan --> $1>>"]}
+{"seq":369,"event":"ConceptNew","args":["<<gull --> $1> <=> <swan --> $1>>"]}
+{"seq":370,"event":"TaskLinkAdd","args":["<<gull --> $1> <=> <swan --> $1>>|type=0|index=null","<<gull --> $1> <=> <swan --> $1>>"]}
+{"seq":371,"event":"TaskLinkAdd","args":["<<gull --> $1> <=> <swan --> $1>>|type=4|index=[0]","<gull --> $1>"]}
+{"seq":372,"event":"TaskLinkAdd","args":["<<gull --> $1> <=> <swan --> $1>>|type=4|index=[0, 0]","gull"]}
+{"seq":373,"event":"TaskLinkAdd","args":["<<gull --> $1> <=> <swan --> $1>>|type=4|index=[1]","<swan --> $1>"]}
+{"seq":374,"event":"TaskLinkAdd","args":["<<gull --> $1> <=> <swan --> $1>>|type=4|index=[1, 0]","swan"]}
+{"seq":375,"event":"TermLinkAdd","args":["<gull --> $1>|type=3|index=[0]","<<gull --> $1> <=> <swan --> $1>>"]}
+{"seq":376,"event":"TermLinkAdd","args":["<<gull --> $1> <=> <swan --> $1>>|type=4|index=[0]","<gull --> $1>"]}
+{"seq":377,"event":"TermLinkAdd","args":["gull|type=3|index=[0]","<gull --> $1>"]}
+{"seq":378,"event":"TermLinkAdd","args":["<gull --> $1>|type=4|index=[0]","gull"]}
+{"seq":379,"event":"TermLinkAdd","args":["gull|type=3|index=[0, 0]","<<gull --> $1> <=> <swan --> $1>>"]}
+{"seq":380,"event":"TermLinkAdd","args":["<<gull --> $1> <=> <swan --> $1>>|type=4|index=[0, 0]","gull"]}
+{"seq":381,"event":"TermLinkAdd","args":["<swan --> $1>|type=3|index=[1]","<<gull --> $1> <=> <swan --> $1>>"]}
+{"seq":382,"event":"TermLinkAdd","args":["<<gull --> $1> <=> <swan --> $1>>|type=4|index=[1]","<swan --> $1>"]}
+{"seq":383,"event":"TermLinkAdd","args":["swan|type=3|index=[0]","<swan --> $1>"]}
+{"seq":384,"event":"TermLinkAdd","args":["<swan --> $1>|type=4|index=[0]","swan"]}
+{"seq":385,"event":"TermLinkAdd","args":["swan|type=3|index=[1, 0]","<<gull --> $1> <=> <swan --> $1>>"]}
+{"seq":386,"event":"TermLinkAdd","args":["<<gull --> $1> <=> <swan --> $1>>|type=4|index=[1, 0]","swan"]}
+{"seq":387,"event":"ConceptDirectProcessedTask","args":["<<gull --> $1> <=> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":388,"event":"TaskImmediateProcess","args":["<<gull --> $1> <=> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","<<gull --> $1> <=> <swan --> $1>>"]}
+{"seq":389,"event":"ConceptNew","args":["(&&,<gull --> #1>,<swan --> #1>)"]}
+{"seq":390,"event":"TaskLinkAdd","args":["(&&,<gull --> #1>,<swan --> #1>)|type=0|index=null","(&&,<gull --> #1>,<swan --> #1>)"]}
+{"seq":391,"event":"ConceptNew","args":["<gull --> #1>"]}
+{"seq":392,"event":"TaskLinkAdd","args":["(&&,<gull --> #1>,<swan --> #1>)|type=2|index=[0]","<gull --> #1>"]}
+{"seq":393,"event":"TaskLinkAdd","args":["(&&,<gull --> #1>,<swan --> #1>)|type=2|index=[0, 0]","gull"]}
+{"seq":394,"event":"ConceptNew","args":["<swan --> #1>"]}
+{"seq":395,"event":"TaskLinkAdd","args":["(&&,<gull --> #1>,<swan --> #1>)|type=2|index=[1]","<swan --> #1>"]}
+{"seq":396,"event":"TaskLinkAdd","args":["(&&,<gull --> #1>,<swan --> #1>)|type=2|index=[1, 0]","swan"]}
+{"seq":397,"event":"TermLinkAdd","args":["<gull --> #1>|type=1|index=[0]","(&&,<gull --> #1>,<swan --> #1>)"]}
+{"seq":398,"event":"TermLinkAdd","args":["(&&,<gull --> #1>,<swan --> #1>)|type=2|index=[0]","<gull --> #1>"]}
+{"seq":399,"event":"TermLinkAdd","args":["gull|type=3|index=[0]","<gull --> #1>"]}
+{"seq":400,"event":"TermLinkAdd","args":["<gull --> #1>|type=4|index=[0]","gull"]}
+{"seq":401,"event":"TermLinkAdd","args":["gull|type=1|index=[0, 0]","(&&,<gull --> #1>,<swan --> #1>)"]}
+{"seq":402,"event":"TermLinkAdd","args":["(&&,<gull --> #1>,<swan --> #1>)|type=2|index=[0, 0]","gull"]}
+{"seq":403,"event":"TermLinkAdd","args":["<swan --> #1>|type=1|index=[1]","(&&,<gull --> #1>,<swan --> #1>)"]}
+{"seq":404,"event":"TermLinkAdd","args":["(&&,<gull --> #1>,<swan --> #1>)|type=2|index=[1]","<swan --> #1>"]}
+{"seq":405,"event":"TermLinkAdd","args":["swan|type=3|index=[0]","<swan --> #1>"]}
+{"seq":406,"event":"TermLinkAdd","args":["<swan --> #1>|type=4|index=[0]","swan"]}
+{"seq":407,"event":"TermLinkAdd","args":["swan|type=1|index=[1, 0]","(&&,<gull --> #1>,<swan --> #1>)"]}
+{"seq":408,"event":"TermLinkAdd","args":["(&&,<gull --> #1>,<swan --> #1>)|type=2|index=[1, 0]","swan"]}
+{"seq":409,"event":"ConceptDirectProcessedTask","args":["(&&,<gull --> #1>,<swan --> #1>). %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":410,"event":"TaskImmediateProcess","args":["(&&,<gull --> #1>,<swan --> #1>). %1.00;0.81% {0 : (5960054063616661,4);(5960054063616661,1)} ","(&&,<gull --> #1>,<swan --> #1>)"]}
+{"seq":411,"event":"TermLinkSelect","args":["bird|type=3|index=[0]","<bird --> swimmer>","<bird --> swimmer>"]}
+{"seq":412,"event":"TermLinkSelect","args":["swimmer|type=3|index=[1]","<bird --> swimmer>","<bird --> swimmer>"]}
+{"seq":413,"event":"TermLinkSelect","args":["(*,{SELF},<bird --> swimmer>)|type=2|index=[1]","<bird --> swimmer>","<bird --> swimmer>"]}
+{"seq":414,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":415,"event":"TaskDerive","args":["<gull --> swimmer>. %1.00;0.73% {2 : (5960054063616661,4);(5960054063616661,1)} ","false","true"]}
+{"seq":416,"event":"TaskAdd","args":["<gull --> swimmer>. %1.00;0.73% {2 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":417,"event":"OUT","args":["<gull --> swimmer>. %1.00;0.73% {2 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":418,"event":"TermLinkSelect","args":["gull|type=1|index=[0]","(|,gull,swan)","<(|,gull,swan) --> swimmer>"]}
+{"seq":419,"event":"TaskDerive","args":["<swan --> swimmer>. %1.00;0.73% {2 : (5960054063616661,4);(5960054063616661,1)} ","false","true"]}
+{"seq":420,"event":"TaskAdd","args":["<swan --> swimmer>. %1.00;0.73% {2 : (5960054063616661,4);(5960054063616661,1)} ","Derived"]}
+{"seq":421,"event":"OUT","args":["<swan --> swimmer>. %1.00;0.73% {2 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":422,"event":"TermLinkSelect","args":["swan|type=1|index=[1]","(|,gull,swan)","<(|,gull,swan) --> swimmer>"]}
+{"seq":423,"event":"ConceptFire","args":["<(|,gull,swan) --> swimmer>"]}
+{"seq":424,"event":"TaskLinkAdd","args":["<gull --> swimmer>|type=0|index=null","<gull --> swimmer>"]}
+{"seq":425,"event":"TaskLinkAdd","args":["<gull --> swimmer>|type=4|index=[0]","gull"]}
+{"seq":426,"event":"TaskLinkAdd","args":["<gull --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":427,"event":"TermLinkAdd","args":["gull|type=3|index=[0]","<gull --> swimmer>"]}
+{"seq":428,"event":"TermLinkAdd","args":["<gull --> swimmer>|type=4|index=[0]","gull"]}
+{"seq":429,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<gull --> swimmer>"]}
+{"seq":430,"event":"TermLinkAdd","args":["<gull --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":431,"event":"ConceptDirectProcessedTask","args":["<gull --> swimmer>. %1.00;0.73% {2 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":432,"event":"TaskImmediateProcess","args":["<gull --> swimmer>. %1.00;0.73% {2 : (5960054063616661,4);(5960054063616661,1)} ","<gull --> swimmer>"]}
+{"seq":433,"event":"TaskLinkAdd","args":["<swan --> swimmer>|type=0|index=null","<swan --> swimmer>"]}
+{"seq":434,"event":"TaskLinkAdd","args":["<swan --> swimmer>|type=4|index=[0]","swan"]}
+{"seq":435,"event":"TaskLinkAdd","args":["<swan --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":436,"event":"TermLinkAdd","args":["swan|type=3|index=[0]","<swan --> swimmer>"]}
+{"seq":437,"event":"TermLinkAdd","args":["<swan --> swimmer>|type=4|index=[0]","swan"]}
+{"seq":438,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<swan --> swimmer>"]}
+{"seq":439,"event":"TermLinkAdd","args":["<swan --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":440,"event":"ConceptDirectProcessedTask","args":["<swan --> swimmer>. %1.00;0.73% {2 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":441,"event":"TaskImmediateProcess","args":["<swan --> swimmer>. %1.00;0.73% {2 : (5960054063616661,4);(5960054063616661,1)} ","<swan --> swimmer>"]}
+{"seq":442,"event":"BeliefSelect","args":["<robin --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,6)} "]}
+{"seq":443,"event":"BeliefReason","args":["<robin --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,6)} ","<robin --> [feathered]>","<bird --> [feathered]>","<bird --> [feathered]>"]}
+{"seq":444,"event":"TaskDerive","args":["<bird --> robin>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":445,"event":"TaskAdd","args":["<bird --> robin>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":446,"event":"OUT","args":["<bird --> robin>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":447,"event":"TaskDerive","args":["<robin --> bird>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":448,"event":"TaskAdd","args":["<robin --> bird>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":449,"event":"OUT","args":["<robin --> bird>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":450,"event":"TaskDerive","args":["<bird <-> robin>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":451,"event":"TaskAdd","args":["<bird <-> robin>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":452,"event":"OUT","args":["<bird <-> robin>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":453,"event":"TaskDerive","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":454,"event":"TaskAdd","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":455,"event":"OUT","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":456,"event":"TaskDerive","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":457,"event":"TaskAdd","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":458,"event":"OUT","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":459,"event":"TaskDerive","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":460,"event":"TaskAdd","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":461,"event":"OUT","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":462,"event":"TaskDerive","args":["<<bird --> [$1]> ==> <robin --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":463,"event":"TaskAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":464,"event":"OUT","args":["<<bird --> [$1]> ==> <robin --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":465,"event":"TaskDerive","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":466,"event":"TaskAdd","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":467,"event":"OUT","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":468,"event":"TaskDerive","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":469,"event":"TaskAdd","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":470,"event":"OUT","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":471,"event":"TaskDerive","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":472,"event":"TaskAdd","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":473,"event":"OUT","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":474,"event":"TaskDerive","args":["<<robin --> [$1]> ==> <bird --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":475,"event":"TaskAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":476,"event":"OUT","args":["<<robin --> [$1]> ==> <bird --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":477,"event":"TaskDerive","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":478,"event":"TaskAdd","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":479,"event":"OUT","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":480,"event":"TaskDerive","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":481,"event":"TaskAdd","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":482,"event":"OUT","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":483,"event":"TaskDerive","args":["<<bird --> [$1]> <=> <robin --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":484,"event":"TaskAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":485,"event":"OUT","args":["<<bird --> [$1]> <=> <robin --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":486,"event":"TaskDerive","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.73% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":487,"event":"TaskAdd","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.73% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":488,"event":"OUT","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.73% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":489,"event":"TaskDerive","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":490,"event":"TaskAdd","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":491,"event":"OUT","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":492,"event":"TaskDerive","args":["(&&,<bird --> [#1]>,<robin --> [#1]>). %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","false","false"]}
+{"seq":493,"event":"TaskAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>). %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","Derived"]}
+{"seq":494,"event":"OUT","args":["(&&,<bird --> [#1]>,<robin --> [#1]>). %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":495,"event":"TermLinkSelect","args":["<robin --> [feathered]>|type=4|index=[1]","[feathered]","<bird --> [feathered]>"]}
+{"seq":496,"event":"TermLinkSelect","args":["feathered|type=1|index=[0]","[feathered]","<bird --> [feathered]>"]}
+{"seq":497,"event":"ConceptFire","args":["<bird --> [feathered]>"]}
+{"seq":498,"event":"TaskAdd","args":["(^believe,{SELF},<robin --> bird>,TRUE). :!4: %1.00;0.90% {3|4 : (5960054063616661,6);(5960054063616661,5)} ","Reflected mental operation (Internal Experience)"]}
+{"seq":499,"event":"OUT","args":["(^believe,{SELF},<robin --> bird>,TRUE). :!4: %1.00;0.90% {3|4 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":500,"event":"TaskAdd","args":["<robin --> bird>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","Activated"]}
+{"seq":501,"event":"OUT","args":["<robin --> bird>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":502,"event":"TaskLinkAdd","args":["<robin --> bird>|type=0|index=null","<robin --> bird>"]}
+{"seq":503,"event":"TaskLinkAdd","args":["<robin --> bird>|type=4|index=[0]","robin"]}
+{"seq":504,"event":"TaskLinkAdd","args":["<robin --> bird>|type=4|index=[1]","bird"]}
+{"seq":505,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> bird>"]}
+{"seq":506,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[0]","robin"]}
+{"seq":507,"event":"TermLinkAdd","args":["bird|type=3|index=[1]","<robin --> bird>"]}
+{"seq":508,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[1]","bird"]}
+{"seq":509,"event":"ConceptDirectProcessedTask","args":["<robin --> bird>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":510,"event":"TaskImmediateProcess","args":["<robin --> bird>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","<robin --> bird>"]}
+{"seq":511,"event":"TaskLinkAdd","args":["<robin --> bird>|type=0|index=null","<robin --> bird>"]}
+{"seq":512,"event":"TaskLinkAdd","args":["<robin --> bird>|type=4|index=[0]","robin"]}
+{"seq":513,"event":"TaskLinkAdd","args":["<robin --> bird>|type=4|index=[1]","bird"]}
+{"seq":514,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> bird>"]}
+{"seq":515,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[0]","robin"]}
+{"seq":516,"event":"TermLinkAdd","args":["bird|type=3|index=[1]","<robin --> bird>"]}
+{"seq":517,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[1]","bird"]}
+{"seq":518,"event":"ConceptDirectProcessedTask","args":["<robin --> bird>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":519,"event":"TaskImmediateProcess","args":["<robin --> bird>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","<robin --> bird>"]}
+{"seq":520,"event":"ConceptNew","args":["<bird --> robin>"]}
+{"seq":521,"event":"TaskLinkAdd","args":["<bird --> robin>|type=0|index=null","<bird --> robin>"]}
+{"seq":522,"event":"TaskLinkAdd","args":["<bird --> robin>|type=4|index=[0]","bird"]}
+{"seq":523,"event":"TaskLinkAdd","args":["<bird --> robin>|type=4|index=[1]","robin"]}
+{"seq":524,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> robin>"]}
+{"seq":525,"event":"TermLinkAdd","args":["<bird --> robin>|type=4|index=[0]","bird"]}
+{"seq":526,"event":"TermLinkAdd","args":["robin|type=3|index=[1]","<bird --> robin>"]}
+{"seq":527,"event":"TermLinkAdd","args":["<bird --> robin>|type=4|index=[1]","robin"]}
+{"seq":528,"event":"ConceptDirectProcessedTask","args":["<bird --> robin>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":529,"event":"TaskImmediateProcess","args":["<bird --> robin>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","<bird --> robin>"]}
+{"seq":530,"event":"ConceptNew","args":["<bird <-> robin>"]}
+{"seq":531,"event":"TaskLinkAdd","args":["<bird <-> robin>|type=0|index=null","<bird <-> robin>"]}
+{"seq":532,"event":"TaskLinkAdd","args":["<bird <-> robin>|type=4|index=[0]","bird"]}
+{"seq":533,"event":"TaskLinkAdd","args":["<bird <-> robin>|type=4|index=[1]","robin"]}
+{"seq":534,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird <-> robin>"]}
+{"seq":535,"event":"TermLinkAdd","args":["<bird <-> robin>|type=4|index=[0]","bird"]}
+{"seq":536,"event":"TermLinkAdd","args":["robin|type=3|index=[1]","<bird <-> robin>"]}
+{"seq":537,"event":"TermLinkAdd","args":["<bird <-> robin>|type=4|index=[1]","robin"]}
+{"seq":538,"event":"ConceptDirectProcessedTask","args":["<bird <-> robin>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":539,"event":"TaskImmediateProcess","args":["<bird <-> robin>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","<bird <-> robin>"]}
+{"seq":540,"event":"ConceptNew","args":["(^believe,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":541,"event":"TaskLinkAdd","args":["(^believe,{SELF},<robin --> bird>,TRUE)|type=0|index=null","(^believe,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":542,"event":"ConceptNew","args":["(*,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":543,"event":"TaskLinkAdd","args":["(^believe,{SELF},<robin --> bird>,TRUE)|type=4|index=[0]","(*,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":544,"event":"TaskLinkAdd","args":["(^believe,{SELF},<robin --> bird>,TRUE)|type=8|index=[0, 0]","{SELF}"]}
+{"seq":545,"event":"TaskLinkAdd","args":["(^believe,{SELF},<robin --> bird>,TRUE)|type=8|index=[0, 1]","<robin --> bird>"]}
+{"seq":546,"event":"ConceptNew","args":["TRUE"]}
+{"seq":547,"event":"TaskLinkAdd","args":["(^believe,{SELF},<robin --> bird>,TRUE)|type=8|index=[0, 2]","TRUE"]}
+{"seq":548,"event":"ConceptNew","args":["^believe"]}
+{"seq":549,"event":"TaskLinkAdd","args":["(^believe,{SELF},<robin --> bird>,TRUE)|type=4|index=[1]","^believe"]}
+{"seq":550,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>,TRUE)|type=3|index=[0]","(^believe,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":551,"event":"TermLinkAdd","args":["(^believe,{SELF},<robin --> bird>,TRUE)|type=4|index=[0]","(*,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":552,"event":"TermLinkAdd","args":["{SELF}|type=1|index=[0]","(*,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":553,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>,TRUE)|type=2|index=[0]","{SELF}"]}
+{"seq":554,"event":"TermLinkAdd","args":["SELF|type=1|index=[0]","{SELF}"]}
+{"seq":555,"event":"TermLinkAdd","args":["{SELF}|type=2|index=[0]","SELF"]}
+{"seq":556,"event":"TermLinkAdd","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":557,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>,TRUE)|type=2|index=[0, 0]","SELF"]}
+{"seq":558,"event":"TermLinkAdd","args":["<robin --> bird>|type=1|index=[1]","(*,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":559,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>,TRUE)|type=2|index=[1]","<robin --> bird>"]}
+{"seq":560,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> bird>"]}
+{"seq":561,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[0]","robin"]}
+{"seq":562,"event":"TermLinkAdd","args":["bird|type=3|index=[1]","<robin --> bird>"]}
+{"seq":563,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[1]","bird"]}
+{"seq":564,"event":"TermLinkAdd","args":["robin|type=1|index=[1, 0]","(*,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":565,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>,TRUE)|type=2|index=[1, 0]","robin"]}
+{"seq":566,"event":"TermLinkAdd","args":["bird|type=1|index=[1, 1]","(*,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":567,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>,TRUE)|type=2|index=[1, 1]","bird"]}
+{"seq":568,"event":"TermLinkAdd","args":["TRUE|type=1|index=[2]","(*,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":569,"event":"TermLinkAdd","args":["(*,{SELF},<robin --> bird>,TRUE)|type=2|index=[2]","TRUE"]}
+{"seq":570,"event":"TermLinkAdd","args":["^believe|type=3|index=[1]","(^believe,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":571,"event":"TermLinkAdd","args":["(^believe,{SELF},<robin --> bird>,TRUE)|type=4|index=[1]","^believe"]}
+{"seq":572,"event":"ConceptDirectProcessedTask","args":["(^believe,{SELF},<robin --> bird>,TRUE). :!4: %1.00;0.90% {3|4 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":573,"event":"TaskImmediateProcess","args":["(^believe,{SELF},<robin --> bird>,TRUE). :!4: %1.00;0.90% {3|4 : (5960054063616661,6);(5960054063616661,5)} ","(^believe,{SELF},<robin --> bird>,TRUE)"]}
+{"seq":574,"event":"ConceptNew","args":["<(&,bird,robin) --> [feathered]>"]}
+{"seq":575,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=0|index=null","<(&,bird,robin) --> [feathered]>"]}
+{"seq":576,"event":"ConceptNew","args":["(&,bird,robin)"]}
+{"seq":577,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0]","(&,bird,robin)"]}
+{"seq":578,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0, 0]","bird"]}
+{"seq":579,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0, 1]","robin"]}
+{"seq":580,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":581,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":582,"event":"TermLinkAdd","args":["(&,bird,robin)|type=3|index=[0]","<(&,bird,robin) --> [feathered]>"]}
+{"seq":583,"event":"TermLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0]","(&,bird,robin)"]}
+{"seq":584,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(&,bird,robin)"]}
+{"seq":585,"event":"TermLinkAdd","args":["(&,bird,robin)|type=2|index=[0]","bird"]}
+{"seq":586,"event":"TermLinkAdd","args":["robin|type=1|index=[1]","(&,bird,robin)"]}
+{"seq":587,"event":"TermLinkAdd","args":["(&,bird,robin)|type=2|index=[1]","robin"]}
+{"seq":588,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<(&,bird,robin) --> [feathered]>"]}
+{"seq":589,"event":"TermLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0, 0]","bird"]}
+{"seq":590,"event":"TermLinkAdd","args":["robin|type=3|index=[0, 1]","<(&,bird,robin) --> [feathered]>"]}
+{"seq":591,"event":"TermLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0, 1]","robin"]}
+{"seq":592,"event":"TermLinkAdd","args":["[feathered]|type=3|index=[1]","<(&,bird,robin) --> [feathered]>"]}
+{"seq":593,"event":"TermLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":594,"event":"TermLinkAdd","args":["feathered|type=1|index=[0]","[feathered]"]}
+{"seq":595,"event":"TermLinkAdd","args":["[feathered]|type=2|index=[0]","feathered"]}
+{"seq":596,"event":"TermLinkAdd","args":["feathered|type=3|index=[1, 0]","<(&,bird,robin) --> [feathered]>"]}
+{"seq":597,"event":"TermLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":598,"event":"ConceptDirectProcessedTask","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":599,"event":"TaskImmediateProcess","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","<(&,bird,robin) --> [feathered]>"]}
+{"seq":600,"event":"ConceptNew","args":["<(|,bird,robin) --> [feathered]>"]}
+{"seq":601,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=0|index=null","<(|,bird,robin) --> [feathered]>"]}
+{"seq":602,"event":"ConceptNew","args":["(|,bird,robin)"]}
+{"seq":603,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0]","(|,bird,robin)"]}
+{"seq":604,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0, 0]","bird"]}
+{"seq":605,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0, 1]","robin"]}
+{"seq":606,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":607,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":608,"event":"TermLinkAdd","args":["(|,bird,robin)|type=3|index=[0]","<(|,bird,robin) --> [feathered]>"]}
+{"seq":609,"event":"TermLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0]","(|,bird,robin)"]}
+{"seq":610,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(|,bird,robin)"]}
+{"seq":611,"event":"TermLinkAdd","args":["(|,bird,robin)|type=2|index=[0]","bird"]}
+{"seq":612,"event":"TermLinkAdd","args":["robin|type=1|index=[1]","(|,bird,robin)"]}
+{"seq":613,"event":"TermLinkAdd","args":["(|,bird,robin)|type=2|index=[1]","robin"]}
+{"seq":614,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<(|,bird,robin) --> [feathered]>"]}
+{"seq":615,"event":"TermLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0, 0]","bird"]}
+{"seq":616,"event":"TermLinkAdd","args":["robin|type=3|index=[0, 1]","<(|,bird,robin) --> [feathered]>"]}
+{"seq":617,"event":"TermLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0, 1]","robin"]}
+{"seq":618,"event":"TermLinkAdd","args":["[feathered]|type=3|index=[1]","<(|,bird,robin) --> [feathered]>"]}
+{"seq":619,"event":"TermLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":620,"event":"TermLinkAdd","args":["feathered|type=1|index=[0]","[feathered]"]}
+{"seq":621,"event":"TermLinkAdd","args":["[feathered]|type=2|index=[0]","feathered"]}
+{"seq":622,"event":"TermLinkAdd","args":["feathered|type=3|index=[1, 0]","<(|,bird,robin) --> [feathered]>"]}
+{"seq":623,"event":"TermLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":624,"event":"ConceptDirectProcessedTask","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":625,"event":"TaskImmediateProcess","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","<(|,bird,robin) --> [feathered]>"]}
+{"seq":626,"event":"ConceptNew","args":["<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":627,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=0|index=null","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":628,"event":"ConceptNew","args":["<bird --> $1>"]}
+{"seq":629,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":630,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":631,"event":"ConceptNew","args":["<robin --> $1>"]}
+{"seq":632,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":633,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":634,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":635,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":636,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":637,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":638,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":639,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":640,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[1]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":641,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":642,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":643,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":644,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":645,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":646,"event":"ConceptDirectProcessedTask","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":647,"event":"TaskImmediateProcess","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":648,"event":"ConceptNew","args":["<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":649,"event":"TaskLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=0|index=null","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":650,"event":"ConceptNew","args":["<bird --> [$1]>"]}
+{"seq":651,"event":"TaskLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[0]","<bird --> [$1]>"]}
+{"seq":652,"event":"TaskLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[0, 0]","bird"]}
+{"seq":653,"event":"ConceptNew","args":["<robin --> [$1]>"]}
+{"seq":654,"event":"TaskLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[1]","<robin --> [$1]>"]}
+{"seq":655,"event":"TaskLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[1, 0]","robin"]}
+{"seq":656,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=3|index=[0]","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":657,"event":"TermLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[0]","<bird --> [$1]>"]}
+{"seq":658,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> [$1]>"]}
+{"seq":659,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[0]","bird"]}
+{"seq":660,"event":"ConceptNew","args":["[$1]"]}
+{"seq":661,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<bird --> [$1]>"]}
+{"seq":662,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":663,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":664,"event":"TermLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[0, 0]","bird"]}
+{"seq":665,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=3|index=[1]","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":666,"event":"TermLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[1]","<robin --> [$1]>"]}
+{"seq":667,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> [$1]>"]}
+{"seq":668,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[0]","robin"]}
+{"seq":669,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<robin --> [$1]>"]}
+{"seq":670,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":671,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":672,"event":"TermLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[1, 0]","robin"]}
+{"seq":673,"event":"ConceptDirectProcessedTask","args":["<<bird --> [$1]> ==> <robin --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":674,"event":"TaskImmediateProcess","args":["<<bird --> [$1]> ==> <robin --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":675,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=0|index=null","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":676,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":677,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":678,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":679,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":680,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":681,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":682,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":683,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":684,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":685,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":686,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[1]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":687,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":688,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":689,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":690,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":691,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":692,"event":"ConceptDirectProcessedTask","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":693,"event":"TaskImmediateProcess","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":694,"event":"ConceptNew","args":["<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":695,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=0|index=null","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":696,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0]","<robin --> $1>"]}
+{"seq":697,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0, 0]","robin"]}
+{"seq":698,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1]","<bird --> $1>"]}
+{"seq":699,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1, 0]","bird"]}
+{"seq":700,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":701,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0]","<robin --> $1>"]}
+{"seq":702,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":703,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":704,"event":"TermLinkAdd","args":["robin|type=3|index=[0, 0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":705,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0, 0]","robin"]}
+{"seq":706,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[1]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":707,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1]","<bird --> $1>"]}
+{"seq":708,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":709,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":710,"event":"TermLinkAdd","args":["bird|type=3|index=[1, 0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":711,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1, 0]","bird"]}
+{"seq":712,"event":"ConceptDirectProcessedTask","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":713,"event":"TaskImmediateProcess","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":714,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=0|index=null","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":715,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0]","<robin --> $1>"]}
+{"seq":716,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0, 0]","robin"]}
+{"seq":717,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1]","<bird --> $1>"]}
+{"seq":718,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1, 0]","bird"]}
+{"seq":719,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":720,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0]","<robin --> $1>"]}
+{"seq":721,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":722,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":723,"event":"TermLinkAdd","args":["robin|type=3|index=[0, 0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":724,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0, 0]","robin"]}
+{"seq":725,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[1]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":726,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1]","<bird --> $1>"]}
+{"seq":727,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":728,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":729,"event":"TermLinkAdd","args":["bird|type=3|index=[1, 0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":730,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1, 0]","bird"]}
+{"seq":731,"event":"ConceptDirectProcessedTask","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":732,"event":"TaskImmediateProcess","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":733,"event":"ConceptNew","args":["<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":734,"event":"TaskLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=0|index=null","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":735,"event":"TaskLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[0]","<robin --> [$1]>"]}
+{"seq":736,"event":"TaskLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[0, 0]","robin"]}
+{"seq":737,"event":"TaskLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[1]","<bird --> [$1]>"]}
+{"seq":738,"event":"TaskLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[1, 0]","bird"]}
+{"seq":739,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=3|index=[0]","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":740,"event":"TermLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[0]","<robin --> [$1]>"]}
+{"seq":741,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> [$1]>"]}
+{"seq":742,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[0]","robin"]}
+{"seq":743,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<robin --> [$1]>"]}
+{"seq":744,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":745,"event":"TermLinkAdd","args":["robin|type=3|index=[0, 0]","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":746,"event":"TermLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[0, 0]","robin"]}
+{"seq":747,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=3|index=[1]","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":748,"event":"TermLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[1]","<bird --> [$1]>"]}
+{"seq":749,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> [$1]>"]}
+{"seq":750,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[0]","bird"]}
+{"seq":751,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<bird --> [$1]>"]}
+{"seq":752,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":753,"event":"TermLinkAdd","args":["bird|type=3|index=[1, 0]","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":754,"event":"TermLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[1, 0]","bird"]}
+{"seq":755,"event":"ConceptDirectProcessedTask","args":["<<robin --> [$1]> ==> <bird --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":756,"event":"TaskImmediateProcess","args":["<<robin --> [$1]> ==> <bird --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":757,"event":"ConceptNew","args":["<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":758,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=0|index=null","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":759,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":760,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":761,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":762,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":763,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":764,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":765,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":766,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":767,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":768,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":769,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[1]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":770,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":771,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":772,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":773,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":774,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":775,"event":"ConceptDirectProcessedTask","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":776,"event":"TaskImmediateProcess","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":777,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=0|index=null","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":778,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":779,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":780,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":781,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":782,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":783,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":784,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":785,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":786,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":787,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":788,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[1]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":789,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":790,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":791,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":792,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":793,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":794,"event":"ConceptDirectProcessedTask","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":795,"event":"TaskImmediateProcess","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":796,"event":"ConceptNew","args":["<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":797,"event":"TaskLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=0|index=null","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":798,"event":"TaskLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[0]","<bird --> [$1]>"]}
+{"seq":799,"event":"TaskLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[0, 0]","bird"]}
+{"seq":800,"event":"TaskLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[1]","<robin --> [$1]>"]}
+{"seq":801,"event":"TaskLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[1, 0]","robin"]}
+{"seq":802,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=3|index=[0]","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":803,"event":"TermLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[0]","<bird --> [$1]>"]}
+{"seq":804,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> [$1]>"]}
+{"seq":805,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[0]","bird"]}
+{"seq":806,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<bird --> [$1]>"]}
+{"seq":807,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":808,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":809,"event":"TermLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[0, 0]","bird"]}
+{"seq":810,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=3|index=[1]","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":811,"event":"TermLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[1]","<robin --> [$1]>"]}
+{"seq":812,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> [$1]>"]}
+{"seq":813,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[0]","robin"]}
+{"seq":814,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<robin --> [$1]>"]}
+{"seq":815,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":816,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":817,"event":"TermLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[1, 0]","robin"]}
+{"seq":818,"event":"ConceptDirectProcessedTask","args":["<<bird --> [$1]> <=> <robin --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":819,"event":"TaskImmediateProcess","args":["<<bird --> [$1]> <=> <robin --> [$1]>>. %1.00;0.45% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":820,"event":"ConceptNew","args":["(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":821,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=0|index=null","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":822,"event":"ConceptNew","args":["<bird --> #1>"]}
+{"seq":823,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0]","<bird --> #1>"]}
+{"seq":824,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0, 0]","bird"]}
+{"seq":825,"event":"ConceptNew","args":["<robin --> #1>"]}
+{"seq":826,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1]","<robin --> #1>"]}
+{"seq":827,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1, 0]","robin"]}
+{"seq":828,"event":"TermLinkAdd","args":["<bird --> #1>|type=1|index=[0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":829,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0]","<bird --> #1>"]}
+{"seq":830,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> #1>"]}
+{"seq":831,"event":"TermLinkAdd","args":["<bird --> #1>|type=4|index=[0]","bird"]}
+{"seq":832,"event":"TermLinkAdd","args":["bird|type=1|index=[0, 0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":833,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0, 0]","bird"]}
+{"seq":834,"event":"TermLinkAdd","args":["<robin --> #1>|type=1|index=[1]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":835,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1]","<robin --> #1>"]}
+{"seq":836,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> #1>"]}
+{"seq":837,"event":"TermLinkAdd","args":["<robin --> #1>|type=4|index=[0]","robin"]}
+{"seq":838,"event":"TermLinkAdd","args":["robin|type=1|index=[1, 0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":839,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1, 0]","robin"]}
+{"seq":840,"event":"ConceptDirectProcessedTask","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.73% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":841,"event":"TaskImmediateProcess","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.73% {3 : (5960054063616661,6);(5960054063616661,5)} ","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":842,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=0|index=null","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":843,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0]","<bird --> #1>"]}
+{"seq":844,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0, 0]","bird"]}
+{"seq":845,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1]","<robin --> #1>"]}
+{"seq":846,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1, 0]","robin"]}
+{"seq":847,"event":"TermLinkAdd","args":["<bird --> #1>|type=1|index=[0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":848,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0]","<bird --> #1>"]}
+{"seq":849,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> #1>"]}
+{"seq":850,"event":"TermLinkAdd","args":["<bird --> #1>|type=4|index=[0]","bird"]}
+{"seq":851,"event":"TermLinkAdd","args":["bird|type=1|index=[0, 0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":852,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0, 0]","bird"]}
+{"seq":853,"event":"TermLinkAdd","args":["<robin --> #1>|type=1|index=[1]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":854,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1]","<robin --> #1>"]}
+{"seq":855,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> #1>"]}
+{"seq":856,"event":"TermLinkAdd","args":["<robin --> #1>|type=4|index=[0]","robin"]}
+{"seq":857,"event":"TermLinkAdd","args":["robin|type=1|index=[1, 0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":858,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1, 0]","robin"]}
+{"seq":859,"event":"ConceptDirectProcessedTask","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":860,"event":"TaskImmediateProcess","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":861,"event":"ConceptNew","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":862,"event":"TaskLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=0|index=null","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":863,"event":"ConceptNew","args":["<bird --> [#1]>"]}
+{"seq":864,"event":"TaskLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[0]","<bird --> [#1]>"]}
+{"seq":865,"event":"TaskLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[0, 0]","bird"]}
+{"seq":866,"event":"ConceptNew","args":["<robin --> [#1]>"]}
+{"seq":867,"event":"TaskLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[1]","<robin --> [#1]>"]}
+{"seq":868,"event":"TaskLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[1, 0]","robin"]}
+{"seq":869,"event":"TermLinkAdd","args":["<bird --> [#1]>|type=1|index=[0]","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":870,"event":"TermLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[0]","<bird --> [#1]>"]}
+{"seq":871,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> [#1]>"]}
+{"seq":872,"event":"TermLinkAdd","args":["<bird --> [#1]>|type=4|index=[0]","bird"]}
+{"seq":873,"event":"ConceptNew","args":["[#1]"]}
+{"seq":874,"event":"TermLinkAdd","args":["[#1]|type=3|index=[1]","<bird --> [#1]>"]}
+{"seq":875,"event":"TermLinkAdd","args":["<bird --> [#1]>|type=4|index=[1]","[#1]"]}
+{"seq":876,"event":"TermLinkAdd","args":["bird|type=1|index=[0, 0]","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":877,"event":"TermLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[0, 0]","bird"]}
+{"seq":878,"event":"TermLinkAdd","args":["<robin --> [#1]>|type=1|index=[1]","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":879,"event":"TermLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[1]","<robin --> [#1]>"]}
+{"seq":880,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> [#1]>"]}
+{"seq":881,"event":"TermLinkAdd","args":["<robin --> [#1]>|type=4|index=[0]","robin"]}
+{"seq":882,"event":"TermLinkAdd","args":["[#1]|type=3|index=[1]","<robin --> [#1]>"]}
+{"seq":883,"event":"TermLinkAdd","args":["<robin --> [#1]>|type=4|index=[1]","[#1]"]}
+{"seq":884,"event":"TermLinkAdd","args":["robin|type=1|index=[1, 0]","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":885,"event":"TermLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[1, 0]","robin"]}
+{"seq":886,"event":"ConceptDirectProcessedTask","args":["(&&,<bird --> [#1]>,<robin --> [#1]>). %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":887,"event":"TaskImmediateProcess","args":["(&&,<bird --> [#1]>,<robin --> [#1]>). %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":888,"event":"TermLinkSelect","args":["<bird --> [$1]>|type=3|index=[0]","<<bird --> [$1]> ==> <robin --> [$1]>>","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":889,"event":"TermLinkSelect","args":["bird|type=3|index=[0, 0]","<<bird --> [$1]> ==> <robin --> [$1]>>","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":890,"event":"TermLinkSelect","args":["<robin --> [$1]>|type=3|index=[1]","<<bird --> [$1]> ==> <robin --> [$1]>>","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":891,"event":"ConceptFire","args":["<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":892,"event":"BeliefSelect","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":893,"event":"BeliefReason","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<robin --> $1> ==> <bird --> $1>>","<<bird --> $1> ==> <robin --> $1>>","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":894,"event":"TermLinkSelect","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1]","<bird --> $1>","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":895,"event":"BeliefSelect","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":896,"event":"BeliefReason","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {3 : (5960054063616661,6);(5960054063616661,5)} ","<<bird --> $1> <=> <robin --> $1>>","<<bird --> $1> ==> <robin --> $1>>","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":897,"event":"TermLinkSelect","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0]","<bird --> $1>","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":898,"event":"TermLinkSelect","args":["bird|type=3|index=[0]","<bird --> $1>","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":899,"event":"ConceptFire","args":["<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":900,"event":"TermLinkSelect","args":["swan|type=3|index=[0]","<swan --> bird>","<swan --> bird>"]}
+{"seq":901,"event":"TermLinkSelect","args":["bird|type=3|index=[1]","<swan --> bird>","<swan --> bird>"]}
+{"seq":902,"event":"ConceptFire","args":["<swan --> bird>"]}
+{"seq":903,"event":"TermLinkSelect","args":["gull|type=3|index=[0]","<gull --> swimmer>","<gull --> swimmer>"]}
+{"seq":904,"event":"TermLinkSelect","args":["swimmer|type=3|index=[1]","<gull --> swimmer>","<gull --> swimmer>"]}
+{"seq":905,"event":"ConceptFire","args":["<gull --> swimmer>"]}
+{"seq":906,"event":"ConceptFire","args":["<swan --> bird>"]}
+{"seq":907,"event":"BeliefSelect","args":["<bird --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,5)} "]}
+{"seq":908,"event":"BeliefReason","args":["<bird --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,5)} ","<bird --> [feathered]>","<robin --> [feathered]>","<robin --> [feathered]>"]}
+{"seq":909,"event":"TaskDerive","args":["<robin --> bird>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":910,"event":"TaskAdd","args":["<robin --> bird>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":911,"event":"OUT","args":["<robin --> bird>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":912,"event":"TaskDerive","args":["<bird --> robin>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":913,"event":"TaskAdd","args":["<bird --> robin>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":914,"event":"OUT","args":["<bird --> robin>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":915,"event":"TaskDerive","args":["<bird <-> robin>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":916,"event":"TaskAdd","args":["<bird <-> robin>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":917,"event":"OUT","args":["<bird <-> robin>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":918,"event":"TaskDerive","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":919,"event":"TaskAdd","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":920,"event":"OUT","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":921,"event":"TaskDerive","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":922,"event":"TaskAdd","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":923,"event":"OUT","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":924,"event":"TaskDerive","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":925,"event":"TaskAdd","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":926,"event":"OUT","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":927,"event":"TaskDerive","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":928,"event":"TaskAdd","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":929,"event":"OUT","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":930,"event":"TaskDerive","args":["<<robin --> [$1]> ==> <bird --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":931,"event":"TaskAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":932,"event":"OUT","args":["<<robin --> [$1]> ==> <bird --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":933,"event":"TaskDerive","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":934,"event":"TaskAdd","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":935,"event":"OUT","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":936,"event":"TaskDerive","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":937,"event":"TaskAdd","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":938,"event":"OUT","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":939,"event":"TaskDerive","args":["<<bird --> [$1]> ==> <robin --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":940,"event":"TaskAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":941,"event":"OUT","args":["<<bird --> [$1]> ==> <robin --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":942,"event":"TaskDerive","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":943,"event":"TaskAdd","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":944,"event":"OUT","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":945,"event":"TaskDerive","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":946,"event":"TaskAdd","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":947,"event":"OUT","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":948,"event":"TaskDerive","args":["<<bird --> [$1]> <=> <robin --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":949,"event":"TaskAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":950,"event":"OUT","args":["<<bird --> [$1]> <=> <robin --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":951,"event":"TaskDerive","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.73% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":952,"event":"TaskAdd","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.73% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":953,"event":"OUT","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.73% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":954,"event":"TaskDerive","args":["(&&,<bird --> [#1]>,<robin --> [#1]>). %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":955,"event":"TaskAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>). %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":956,"event":"OUT","args":["(&&,<bird --> [#1]>,<robin --> [#1]>). %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":957,"event":"TaskDerive","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","false","false"]}
+{"seq":958,"event":"TaskAdd","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":959,"event":"OUT","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":960,"event":"TermLinkSelect","args":["<bird --> [feathered]>|type=4|index=[1]","[feathered]","<robin --> [feathered]>"]}
+{"seq":961,"event":"TermLinkSelect","args":["feathered|type=1|index=[0]","[feathered]","<robin --> [feathered]>"]}
+{"seq":962,"event":"BeliefSelect","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":963,"event":"BeliefReason","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","<(&,bird,robin) --> [feathered]>","<robin --> [feathered]>","<robin --> [feathered]>"]}
+{"seq":964,"event":"TermLinkSelect","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]","<robin --> [feathered]>"]}
+{"seq":965,"event":"ConceptFire","args":["<robin --> [feathered]>"]}
+{"seq":966,"event":"TaskLinkAdd","args":["<robin --> bird>|type=0|index=null","<robin --> bird>"]}
+{"seq":967,"event":"TaskLinkAdd","args":["<robin --> bird>|type=4|index=[0]","robin"]}
+{"seq":968,"event":"TaskLinkAdd","args":["<robin --> bird>|type=4|index=[1]","bird"]}
+{"seq":969,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> bird>"]}
+{"seq":970,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[0]","robin"]}
+{"seq":971,"event":"TermLinkAdd","args":["bird|type=3|index=[1]","<robin --> bird>"]}
+{"seq":972,"event":"TermLinkAdd","args":["<robin --> bird>|type=4|index=[1]","bird"]}
+{"seq":973,"event":"ConceptDirectProcessedTask","args":["<robin --> bird>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":974,"event":"TaskImmediateProcess","args":["<robin --> bird>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","<robin --> bird>"]}
+{"seq":975,"event":"TaskLinkAdd","args":["<bird --> robin>|type=0|index=null","<bird --> robin>"]}
+{"seq":976,"event":"TaskLinkAdd","args":["<bird --> robin>|type=4|index=[0]","bird"]}
+{"seq":977,"event":"TaskLinkAdd","args":["<bird --> robin>|type=4|index=[1]","robin"]}
+{"seq":978,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> robin>"]}
+{"seq":979,"event":"TermLinkAdd","args":["<bird --> robin>|type=4|index=[0]","bird"]}
+{"seq":980,"event":"TermLinkAdd","args":["robin|type=3|index=[1]","<bird --> robin>"]}
+{"seq":981,"event":"TermLinkAdd","args":["<bird --> robin>|type=4|index=[1]","robin"]}
+{"seq":982,"event":"ConceptDirectProcessedTask","args":["<bird --> robin>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":983,"event":"TaskImmediateProcess","args":["<bird --> robin>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","<bird --> robin>"]}
+{"seq":984,"event":"TaskLinkAdd","args":["<bird <-> robin>|type=0|index=null","<bird <-> robin>"]}
+{"seq":985,"event":"TaskLinkAdd","args":["<bird <-> robin>|type=4|index=[0]","bird"]}
+{"seq":986,"event":"TaskLinkAdd","args":["<bird <-> robin>|type=4|index=[1]","robin"]}
+{"seq":987,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird <-> robin>"]}
+{"seq":988,"event":"TermLinkAdd","args":["<bird <-> robin>|type=4|index=[0]","bird"]}
+{"seq":989,"event":"TermLinkAdd","args":["robin|type=3|index=[1]","<bird <-> robin>"]}
+{"seq":990,"event":"TermLinkAdd","args":["<bird <-> robin>|type=4|index=[1]","robin"]}
+{"seq":991,"event":"ConceptDirectProcessedTask","args":["<bird <-> robin>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":992,"event":"TaskImmediateProcess","args":["<bird <-> robin>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","<bird <-> robin>"]}
+{"seq":993,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=0|index=null","<(&,bird,robin) --> [feathered]>"]}
+{"seq":994,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0]","(&,bird,robin)"]}
+{"seq":995,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0, 0]","bird"]}
+{"seq":996,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0, 1]","robin"]}
+{"seq":997,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":998,"event":"TaskLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":999,"event":"TermLinkAdd","args":["(&,bird,robin)|type=3|index=[0]","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1000,"event":"TermLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0]","(&,bird,robin)"]}
+{"seq":1001,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(&,bird,robin)"]}
+{"seq":1002,"event":"TermLinkAdd","args":["(&,bird,robin)|type=2|index=[0]","bird"]}
+{"seq":1003,"event":"TermLinkAdd","args":["robin|type=1|index=[1]","(&,bird,robin)"]}
+{"seq":1004,"event":"TermLinkAdd","args":["(&,bird,robin)|type=2|index=[1]","robin"]}
+{"seq":1005,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1006,"event":"TermLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0, 0]","bird"]}
+{"seq":1007,"event":"TermLinkAdd","args":["robin|type=3|index=[0, 1]","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1008,"event":"TermLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[0, 1]","robin"]}
+{"seq":1009,"event":"TermLinkAdd","args":["[feathered]|type=3|index=[1]","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1010,"event":"TermLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":1011,"event":"TermLinkAdd","args":["feathered|type=1|index=[0]","[feathered]"]}
+{"seq":1012,"event":"TermLinkAdd","args":["[feathered]|type=2|index=[0]","feathered"]}
+{"seq":1013,"event":"TermLinkAdd","args":["feathered|type=3|index=[1, 0]","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1014,"event":"TermLinkAdd","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":1015,"event":"ConceptDirectProcessedTask","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1016,"event":"TaskImmediateProcess","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1017,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=0|index=null","<(|,bird,robin) --> [feathered]>"]}
+{"seq":1018,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0]","(|,bird,robin)"]}
+{"seq":1019,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0, 0]","bird"]}
+{"seq":1020,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0, 1]","robin"]}
+{"seq":1021,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":1022,"event":"TaskLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":1023,"event":"TermLinkAdd","args":["(|,bird,robin)|type=3|index=[0]","<(|,bird,robin) --> [feathered]>"]}
+{"seq":1024,"event":"TermLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0]","(|,bird,robin)"]}
+{"seq":1025,"event":"TermLinkAdd","args":["bird|type=1|index=[0]","(|,bird,robin)"]}
+{"seq":1026,"event":"TermLinkAdd","args":["(|,bird,robin)|type=2|index=[0]","bird"]}
+{"seq":1027,"event":"TermLinkAdd","args":["robin|type=1|index=[1]","(|,bird,robin)"]}
+{"seq":1028,"event":"TermLinkAdd","args":["(|,bird,robin)|type=2|index=[1]","robin"]}
+{"seq":1029,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<(|,bird,robin) --> [feathered]>"]}
+{"seq":1030,"event":"TermLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0, 0]","bird"]}
+{"seq":1031,"event":"TermLinkAdd","args":["robin|type=3|index=[0, 1]","<(|,bird,robin) --> [feathered]>"]}
+{"seq":1032,"event":"TermLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[0, 1]","robin"]}
+{"seq":1033,"event":"TermLinkAdd","args":["[feathered]|type=3|index=[1]","<(|,bird,robin) --> [feathered]>"]}
+{"seq":1034,"event":"TermLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]"]}
+{"seq":1035,"event":"TermLinkAdd","args":["feathered|type=1|index=[0]","[feathered]"]}
+{"seq":1036,"event":"TermLinkAdd","args":["[feathered]|type=2|index=[0]","feathered"]}
+{"seq":1037,"event":"TermLinkAdd","args":["feathered|type=3|index=[1, 0]","<(|,bird,robin) --> [feathered]>"]}
+{"seq":1038,"event":"TermLinkAdd","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[1, 0]","feathered"]}
+{"seq":1039,"event":"ConceptDirectProcessedTask","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1040,"event":"TaskImmediateProcess","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","<(|,bird,robin) --> [feathered]>"]}
+{"seq":1041,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=0|index=null","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1042,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0]","<robin --> $1>"]}
+{"seq":1043,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0, 0]","robin"]}
+{"seq":1044,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1]","<bird --> $1>"]}
+{"seq":1045,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1, 0]","bird"]}
+{"seq":1046,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1047,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0]","<robin --> $1>"]}
+{"seq":1048,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":1049,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":1050,"event":"TermLinkAdd","args":["robin|type=3|index=[0, 0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1051,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0, 0]","robin"]}
+{"seq":1052,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[1]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1053,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1]","<bird --> $1>"]}
+{"seq":1054,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":1055,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":1056,"event":"TermLinkAdd","args":["bird|type=3|index=[1, 0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1057,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1, 0]","bird"]}
+{"seq":1058,"event":"ConceptDirectProcessedTask","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1059,"event":"TaskImmediateProcess","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} ","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1060,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=0|index=null","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1061,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0]","<robin --> $1>"]}
+{"seq":1062,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0, 0]","robin"]}
+{"seq":1063,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1]","<bird --> $1>"]}
+{"seq":1064,"event":"TaskLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1, 0]","bird"]}
+{"seq":1065,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1066,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0]","<robin --> $1>"]}
+{"seq":1067,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":1068,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":1069,"event":"TermLinkAdd","args":["robin|type=3|index=[0, 0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1070,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[0, 0]","robin"]}
+{"seq":1071,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[1]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1072,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1]","<bird --> $1>"]}
+{"seq":1073,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":1074,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":1075,"event":"TermLinkAdd","args":["bird|type=3|index=[1, 0]","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1076,"event":"TermLinkAdd","args":["<<robin --> $1> ==> <bird --> $1>>|type=4|index=[1, 0]","bird"]}
+{"seq":1077,"event":"ConceptDirectProcessedTask","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1078,"event":"TaskImmediateProcess","args":["<<robin --> $1> ==> <bird --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1079,"event":"TaskLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=0|index=null","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":1080,"event":"TaskLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[0]","<robin --> [$1]>"]}
+{"seq":1081,"event":"TaskLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[0, 0]","robin"]}
+{"seq":1082,"event":"TaskLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[1]","<bird --> [$1]>"]}
+{"seq":1083,"event":"TaskLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[1, 0]","bird"]}
+{"seq":1084,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=3|index=[0]","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":1085,"event":"TermLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[0]","<robin --> [$1]>"]}
+{"seq":1086,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> [$1]>"]}
+{"seq":1087,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[0]","robin"]}
+{"seq":1088,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<robin --> [$1]>"]}
+{"seq":1089,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":1090,"event":"TermLinkAdd","args":["robin|type=3|index=[0, 0]","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":1091,"event":"TermLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[0, 0]","robin"]}
+{"seq":1092,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=3|index=[1]","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":1093,"event":"TermLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[1]","<bird --> [$1]>"]}
+{"seq":1094,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> [$1]>"]}
+{"seq":1095,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[0]","bird"]}
+{"seq":1096,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<bird --> [$1]>"]}
+{"seq":1097,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":1098,"event":"TermLinkAdd","args":["bird|type=3|index=[1, 0]","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":1099,"event":"TermLinkAdd","args":["<<robin --> [$1]> ==> <bird --> [$1]>>|type=4|index=[1, 0]","bird"]}
+{"seq":1100,"event":"ConceptDirectProcessedTask","args":["<<robin --> [$1]> ==> <bird --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1101,"event":"TaskImmediateProcess","args":["<<robin --> [$1]> ==> <bird --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","<<robin --> [$1]> ==> <bird --> [$1]>>"]}
+{"seq":1102,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=0|index=null","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1103,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":1104,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":1105,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":1106,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":1107,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1108,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":1109,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":1110,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":1111,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1112,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":1113,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[1]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1114,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":1115,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":1116,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":1117,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1118,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":1119,"event":"ConceptDirectProcessedTask","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1120,"event":"TaskImmediateProcess","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} ","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1121,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=0|index=null","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1122,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":1123,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":1124,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":1125,"event":"TaskLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":1126,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1127,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":1128,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":1129,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":1130,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1131,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":1132,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[1]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1133,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":1134,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":1135,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":1136,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1137,"event":"TermLinkAdd","args":["<<bird --> $1> ==> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":1138,"event":"ConceptDirectProcessedTask","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1139,"event":"TaskImmediateProcess","args":["<<bird --> $1> ==> <robin --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","<<bird --> $1> ==> <robin --> $1>>"]}
+{"seq":1140,"event":"TaskLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=0|index=null","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":1141,"event":"TaskLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[0]","<bird --> [$1]>"]}
+{"seq":1142,"event":"TaskLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[0, 0]","bird"]}
+{"seq":1143,"event":"TaskLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[1]","<robin --> [$1]>"]}
+{"seq":1144,"event":"TaskLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[1, 0]","robin"]}
+{"seq":1145,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=3|index=[0]","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":1146,"event":"TermLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[0]","<bird --> [$1]>"]}
+{"seq":1147,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> [$1]>"]}
+{"seq":1148,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[0]","bird"]}
+{"seq":1149,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<bird --> [$1]>"]}
+{"seq":1150,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":1151,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":1152,"event":"TermLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[0, 0]","bird"]}
+{"seq":1153,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=3|index=[1]","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":1154,"event":"TermLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[1]","<robin --> [$1]>"]}
+{"seq":1155,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> [$1]>"]}
+{"seq":1156,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[0]","robin"]}
+{"seq":1157,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<robin --> [$1]>"]}
+{"seq":1158,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":1159,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":1160,"event":"TermLinkAdd","args":["<<bird --> [$1]> ==> <robin --> [$1]>>|type=4|index=[1, 0]","robin"]}
+{"seq":1161,"event":"ConceptDirectProcessedTask","args":["<<bird --> [$1]> ==> <robin --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1162,"event":"TaskImmediateProcess","args":["<<bird --> [$1]> ==> <robin --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","<<bird --> [$1]> ==> <robin --> [$1]>>"]}
+{"seq":1163,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=0|index=null","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1164,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":1165,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":1166,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":1167,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":1168,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1169,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":1170,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":1171,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":1172,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1173,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":1174,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[1]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1175,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":1176,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":1177,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":1178,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1179,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":1180,"event":"ConceptDirectProcessedTask","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1181,"event":"TaskImmediateProcess","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.40% {9 : (5960054063616661,5);(5960054063616661,6)} ","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1182,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=0|index=null","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1183,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":1184,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":1185,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":1186,"event":"TaskLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":1187,"event":"TermLinkAdd","args":["<bird --> $1>|type=3|index=[0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1188,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0]","<bird --> $1>"]}
+{"seq":1189,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> $1>"]}
+{"seq":1190,"event":"TermLinkAdd","args":["<bird --> $1>|type=4|index=[0]","bird"]}
+{"seq":1191,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1192,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[0, 0]","bird"]}
+{"seq":1193,"event":"TermLinkAdd","args":["<robin --> $1>|type=3|index=[1]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1194,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1]","<robin --> $1>"]}
+{"seq":1195,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> $1>"]}
+{"seq":1196,"event":"TermLinkAdd","args":["<robin --> $1>|type=4|index=[0]","robin"]}
+{"seq":1197,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1198,"event":"TermLinkAdd","args":["<<bird --> $1> <=> <robin --> $1>>|type=4|index=[1, 0]","robin"]}
+{"seq":1199,"event":"ConceptDirectProcessedTask","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1200,"event":"TaskImmediateProcess","args":["<<bird --> $1> <=> <robin --> $1>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","<<bird --> $1> <=> <robin --> $1>>"]}
+{"seq":1201,"event":"TaskLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=0|index=null","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":1202,"event":"TaskLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[0]","<bird --> [$1]>"]}
+{"seq":1203,"event":"TaskLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[0, 0]","bird"]}
+{"seq":1204,"event":"TaskLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[1]","<robin --> [$1]>"]}
+{"seq":1205,"event":"TaskLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[1, 0]","robin"]}
+{"seq":1206,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=3|index=[0]","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":1207,"event":"TermLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[0]","<bird --> [$1]>"]}
+{"seq":1208,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> [$1]>"]}
+{"seq":1209,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[0]","bird"]}
+{"seq":1210,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<bird --> [$1]>"]}
+{"seq":1211,"event":"TermLinkAdd","args":["<bird --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":1212,"event":"TermLinkAdd","args":["bird|type=3|index=[0, 0]","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":1213,"event":"TermLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[0, 0]","bird"]}
+{"seq":1214,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=3|index=[1]","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":1215,"event":"TermLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[1]","<robin --> [$1]>"]}
+{"seq":1216,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> [$1]>"]}
+{"seq":1217,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[0]","robin"]}
+{"seq":1218,"event":"TermLinkAdd","args":["[$1]|type=3|index=[1]","<robin --> [$1]>"]}
+{"seq":1219,"event":"TermLinkAdd","args":["<robin --> [$1]>|type=4|index=[1]","[$1]"]}
+{"seq":1220,"event":"TermLinkAdd","args":["robin|type=3|index=[1, 0]","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":1221,"event":"TermLinkAdd","args":["<<bird --> [$1]> <=> <robin --> [$1]>>|type=4|index=[1, 0]","robin"]}
+{"seq":1222,"event":"ConceptDirectProcessedTask","args":["<<bird --> [$1]> <=> <robin --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1223,"event":"TaskImmediateProcess","args":["<<bird --> [$1]> <=> <robin --> [$1]>>. %1.00;0.45% {9 : (5960054063616661,5);(5960054063616661,6)} ","<<bird --> [$1]> <=> <robin --> [$1]>>"]}
+{"seq":1224,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=0|index=null","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1225,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0]","<bird --> #1>"]}
+{"seq":1226,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0, 0]","bird"]}
+{"seq":1227,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1]","<robin --> #1>"]}
+{"seq":1228,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1, 0]","robin"]}
+{"seq":1229,"event":"TermLinkAdd","args":["<bird --> #1>|type=1|index=[0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1230,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0]","<bird --> #1>"]}
+{"seq":1231,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> #1>"]}
+{"seq":1232,"event":"TermLinkAdd","args":["<bird --> #1>|type=4|index=[0]","bird"]}
+{"seq":1233,"event":"TermLinkAdd","args":["bird|type=1|index=[0, 0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1234,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0, 0]","bird"]}
+{"seq":1235,"event":"TermLinkAdd","args":["<robin --> #1>|type=1|index=[1]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1236,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1]","<robin --> #1>"]}
+{"seq":1237,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> #1>"]}
+{"seq":1238,"event":"TermLinkAdd","args":["<robin --> #1>|type=4|index=[0]","robin"]}
+{"seq":1239,"event":"TermLinkAdd","args":["robin|type=1|index=[1, 0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1240,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1, 0]","robin"]}
+{"seq":1241,"event":"ConceptDirectProcessedTask","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.73% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1242,"event":"TaskImmediateProcess","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.73% {9 : (5960054063616661,5);(5960054063616661,6)} ","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1243,"event":"TaskLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=0|index=null","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":1244,"event":"TaskLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[0]","<bird --> [#1]>"]}
+{"seq":1245,"event":"TaskLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[0, 0]","bird"]}
+{"seq":1246,"event":"TaskLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[1]","<robin --> [#1]>"]}
+{"seq":1247,"event":"TaskLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[1, 0]","robin"]}
+{"seq":1248,"event":"TermLinkAdd","args":["<bird --> [#1]>|type=1|index=[0]","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":1249,"event":"TermLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[0]","<bird --> [#1]>"]}
+{"seq":1250,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> [#1]>"]}
+{"seq":1251,"event":"TermLinkAdd","args":["<bird --> [#1]>|type=4|index=[0]","bird"]}
+{"seq":1252,"event":"TermLinkAdd","args":["[#1]|type=3|index=[1]","<bird --> [#1]>"]}
+{"seq":1253,"event":"TermLinkAdd","args":["<bird --> [#1]>|type=4|index=[1]","[#1]"]}
+{"seq":1254,"event":"TermLinkAdd","args":["bird|type=1|index=[0, 0]","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":1255,"event":"TermLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[0, 0]","bird"]}
+{"seq":1256,"event":"TermLinkAdd","args":["<robin --> [#1]>|type=1|index=[1]","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":1257,"event":"TermLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[1]","<robin --> [#1]>"]}
+{"seq":1258,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> [#1]>"]}
+{"seq":1259,"event":"TermLinkAdd","args":["<robin --> [#1]>|type=4|index=[0]","robin"]}
+{"seq":1260,"event":"TermLinkAdd","args":["[#1]|type=3|index=[1]","<robin --> [#1]>"]}
+{"seq":1261,"event":"TermLinkAdd","args":["<robin --> [#1]>|type=4|index=[1]","[#1]"]}
+{"seq":1262,"event":"TermLinkAdd","args":["robin|type=1|index=[1, 0]","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":1263,"event":"TermLinkAdd","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)|type=2|index=[1, 0]","robin"]}
+{"seq":1264,"event":"ConceptDirectProcessedTask","args":["(&&,<bird --> [#1]>,<robin --> [#1]>). %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1265,"event":"TaskImmediateProcess","args":["(&&,<bird --> [#1]>,<robin --> [#1]>). %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":1266,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=0|index=null","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1267,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0]","<bird --> #1>"]}
+{"seq":1268,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0, 0]","bird"]}
+{"seq":1269,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1]","<robin --> #1>"]}
+{"seq":1270,"event":"TaskLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1, 0]","robin"]}
+{"seq":1271,"event":"TermLinkAdd","args":["<bird --> #1>|type=1|index=[0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1272,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0]","<bird --> #1>"]}
+{"seq":1273,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> #1>"]}
+{"seq":1274,"event":"TermLinkAdd","args":["<bird --> #1>|type=4|index=[0]","bird"]}
+{"seq":1275,"event":"TermLinkAdd","args":["bird|type=1|index=[0, 0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1276,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[0, 0]","bird"]}
+{"seq":1277,"event":"TermLinkAdd","args":["<robin --> #1>|type=1|index=[1]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1278,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1]","<robin --> #1>"]}
+{"seq":1279,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> #1>"]}
+{"seq":1280,"event":"TermLinkAdd","args":["<robin --> #1>|type=4|index=[0]","robin"]}
+{"seq":1281,"event":"TermLinkAdd","args":["robin|type=1|index=[1, 0]","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1282,"event":"TermLinkAdd","args":["(&&,<bird --> #1>,<robin --> #1>)|type=2|index=[1, 0]","robin"]}
+{"seq":1283,"event":"ConceptDirectProcessedTask","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1284,"event":"TaskImmediateProcess","args":["(&&,<bird --> #1>,<robin --> #1>). %1.00;0.81% {9 : (5960054063616661,5);(5960054063616661,6)} ","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1285,"event":"TermLinkSelect","args":["gull|type=3|index=[0]","<gull <-> swan>","<gull <-> swan>"]}
+{"seq":1286,"event":"TermLinkSelect","args":["swan|type=3|index=[1]","<gull <-> swan>","<gull <-> swan>"]}
+{"seq":1287,"event":"ConceptFire","args":["<gull <-> swan>"]}
+{"seq":1288,"event":"TermLinkSelect","args":["bird|type=3|index=[0]","<bird --> #1>","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1289,"event":"ConceptFire","args":["(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1290,"event":"ConceptFire","args":["<swan --> bird>"]}
+{"seq":1291,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":1292,"event":"TermLinkSelect","args":["{SELF}|type=1|index=[0]","(*,{SELF},<bird --> swimmer>)","(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":1293,"event":"TermLinkSelect","args":["SELF|type=1|index=[0, 0]","(*,{SELF},<bird --> swimmer>)","(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":1294,"event":"TermLinkSelect","args":["<bird --> swimmer>|type=1|index=[1]","(*,{SELF},<bird --> swimmer>)","(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":1295,"event":"ConceptFire","args":["(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":1296,"event":"TermLinkSelect","args":["bird|type=3|index=[0]","<bird --> #1>","(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1297,"event":"ConceptFire","args":["(&&,<bird --> #1>,<robin --> #1>)"]}
+{"seq":1298,"event":"TermLinkSelect","args":["bird|type=1|index=[1, 0]","(*,{SELF},<bird --> swimmer>)","(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":1299,"event":"TermLinkSelect","args":["swimmer|type=1|index=[1, 1]","(*,{SELF},<bird --> swimmer>)","(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":1300,"event":"ConceptFire","args":["(^wonder,{SELF},<bird --> swimmer>)"]}
+{"seq":1301,"event":"BeliefSelect","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":1302,"event":"BeliefReason","args":["<(&,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","<(&,bird,robin) --> [feathered]>","<bird --> [feathered]>","<bird --> [feathered]>"]}
+{"seq":1303,"event":"TermLinkSelect","args":["<(&,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]","<bird --> [feathered]>"]}
+{"seq":1304,"event":"BeliefSelect","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} "]}
+{"seq":1305,"event":"BeliefReason","args":["<(|,bird,robin) --> [feathered]>. %1.00;0.81% {3 : (5960054063616661,6);(5960054063616661,5)} ","<(|,bird,robin) --> [feathered]>","<bird --> [feathered]>","<bird --> [feathered]>"]}
+{"seq":1306,"event":"TermLinkSelect","args":["<(|,bird,robin) --> [feathered]>|type=4|index=[1]","[feathered]","<bird --> [feathered]>"]}
+{"seq":1307,"event":"ConceptFire","args":["<bird --> [feathered]>"]}
+{"seq":1308,"event":"ConceptFire","args":["<swan --> bird>"]}
+{"seq":1309,"event":"TermLinkSelect","args":["robin|type=3|index=[0]","<robin --> bird>","<robin --> bird>"]}
+{"seq":1310,"event":"TermLinkSelect","args":["bird|type=3|index=[1]","<robin --> bird>","<robin --> bird>"]}
+{"seq":1311,"event":"TermLinkSelect","args":["(*,{SELF},<robin --> bird>)|type=2|index=[1]","<robin --> bird>","<robin --> bird>"]}
+{"seq":1312,"event":"ConceptFire","args":["<robin --> bird>"]}
+{"seq":1313,"event":"BeliefSelect","args":["<<gull --> $1> ==> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":1314,"event":"BeliefReason","args":["<<gull --> $1> ==> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","<<gull --> $1> ==> <swan --> $1>>","<<swan --> $1> ==> <gull --> $1>>","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":1315,"event":"TermLinkSelect","args":["<<gull --> $1> ==> <swan --> $1>>|type=4|index=[0]","<gull --> $1>","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":1316,"event":"BeliefSelect","args":["<<gull --> $1> <=> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} "]}
+{"seq":1317,"event":"BeliefReason","args":["<<gull --> $1> <=> <swan --> $1>>. %1.00;0.45% {0 : (5960054063616661,4);(5960054063616661,1)} ","<<gull --> $1> <=> <swan --> $1>>","<<swan --> $1> ==> <gull --> $1>>","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":1318,"event":"TermLinkSelect","args":["<<gull --> $1> <=> <swan --> $1>>|type=4|index=[0]","<gull --> $1>","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":1319,"event":"TermLinkSelect","args":["gull|type=3|index=[0]","<gull --> $1>","<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":1320,"event":"ConceptFire","args":["<<swan --> $1> ==> <gull --> $1>>"]}
+{"seq":1321,"event":"TermLinkSelect","args":["<robin --> $1>|type=3|index=[0]","<<robin --> $1> ==> <bird --> $1>>","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1322,"event":"TermLinkSelect","args":["robin|type=3|index=[0, 0]","<<robin --> $1> ==> <bird --> $1>>","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1323,"event":"TermLinkSelect","args":["<bird --> $1>|type=3|index=[1]","<<robin --> $1> ==> <bird --> $1>>","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1324,"event":"ConceptFire","args":["<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1325,"event":"TaskDerive","args":["<bird --> [#1]>. %1.00;0.73% {22 : (5960054063616661,5);(5960054063616661,6)} ","false","true"]}
+{"seq":1326,"event":"TaskAdd","args":["<bird --> [#1]>. %1.00;0.73% {22 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":1327,"event":"OUT","args":["<bird --> [#1]>. %1.00;0.73% {22 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1328,"event":"TermLinkSelect","args":["<bird --> [#1]>|type=1|index=[0]","(&&,<bird --> [#1]>,<robin --> [#1]>)","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":1329,"event":"TermLinkSelect","args":["bird|type=1|index=[0, 0]","(&&,<bird --> [#1]>,<robin --> [#1]>)","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":1330,"event":"TaskDerive","args":["<robin --> [#1]>. %1.00;0.73% {22 : (5960054063616661,5);(5960054063616661,6)} ","false","true"]}
+{"seq":1331,"event":"TaskAdd","args":["<robin --> [#1]>. %1.00;0.73% {22 : (5960054063616661,5);(5960054063616661,6)} ","Derived"]}
+{"seq":1332,"event":"OUT","args":["<robin --> [#1]>. %1.00;0.73% {22 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1333,"event":"TermLinkSelect","args":["<robin --> [#1]>|type=1|index=[1]","(&&,<bird --> [#1]>,<robin --> [#1]>)","(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":1334,"event":"ConceptFire","args":["(&&,<bird --> [#1]>,<robin --> [#1]>)"]}
+{"seq":1335,"event":"TaskLinkAdd","args":["<bird --> [#1]>|type=0|index=null","<bird --> [#1]>"]}
+{"seq":1336,"event":"TaskLinkAdd","args":["<bird --> [#1]>|type=4|index=[0]","bird"]}
+{"seq":1337,"event":"TaskLinkAdd","args":["<bird --> [#1]>|type=4|index=[1]","[#1]"]}
+{"seq":1338,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> [#1]>"]}
+{"seq":1339,"event":"TermLinkAdd","args":["<bird --> [#1]>|type=4|index=[0]","bird"]}
+{"seq":1340,"event":"TermLinkAdd","args":["[#1]|type=3|index=[1]","<bird --> [#1]>"]}
+{"seq":1341,"event":"TermLinkAdd","args":["<bird --> [#1]>|type=4|index=[1]","[#1]"]}
+{"seq":1342,"event":"ConceptDirectProcessedTask","args":["<bird --> [#1]>. %1.00;0.73% {22 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1343,"event":"TaskImmediateProcess","args":["<bird --> [#1]>. %1.00;0.73% {22 : (5960054063616661,5);(5960054063616661,6)} ","<bird --> [#1]>"]}
+{"seq":1344,"event":"TaskLinkAdd","args":["<robin --> [#1]>|type=0|index=null","<robin --> [#1]>"]}
+{"seq":1345,"event":"TaskLinkAdd","args":["<robin --> [#1]>|type=4|index=[0]","robin"]}
+{"seq":1346,"event":"TaskLinkAdd","args":["<robin --> [#1]>|type=4|index=[1]","[#1]"]}
+{"seq":1347,"event":"TermLinkAdd","args":["robin|type=3|index=[0]","<robin --> [#1]>"]}
+{"seq":1348,"event":"TermLinkAdd","args":["<robin --> [#1]>|type=4|index=[0]","robin"]}
+{"seq":1349,"event":"TermLinkAdd","args":["[#1]|type=3|index=[1]","<robin --> [#1]>"]}
+{"seq":1350,"event":"TermLinkAdd","args":["<robin --> [#1]>|type=4|index=[1]","[#1]"]}
+{"seq":1351,"event":"ConceptDirectProcessedTask","args":["<robin --> [#1]>. %1.00;0.73% {22 : (5960054063616661,5);(5960054063616661,6)} "]}
+{"seq":1352,"event":"TaskImmediateProcess","args":["<robin --> [#1]>. %1.00;0.73% {22 : (5960054063616661,5);(5960054063616661,6)} ","<robin --> [#1]>"]}
+{"seq":1353,"event":"TermLinkSelect","args":["robin|type=3|index=[0]","<robin --> swimmer>","<robin --> swimmer>"]}
+{"seq":1354,"event":"TermLinkSelect","args":["swimmer|type=3|index=[1]","<robin --> swimmer>","<robin --> swimmer>"]}
+{"seq":1355,"event":"TermLinkSelect","args":["(*,{SELF},<robin --> swimmer>)|type=2|index=[1]","<robin --> swimmer>","<robin --> swimmer>"]}
+{"seq":1356,"event":"ConceptFire","args":["<robin --> swimmer>"]}
+{"seq":1357,"event":"TermLinkSelect","args":["bird|type=3|index=[0]","<bird --> robin>","<bird --> robin>"]}
+{"seq":1358,"event":"TermLinkSelect","args":["robin|type=3|index=[1]","<bird --> robin>","<bird --> robin>"]}
+{"seq":1359,"event":"ConceptFire","args":["<bird --> robin>"]}
+{"seq":1360,"event":"TermLinkSelect","args":["bird|type=3|index=[1, 0]","<<robin --> $1> ==> <bird --> $1>>","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1361,"event":"TermLinkSelect","args":["<robin --> $1>|type=3|index=[0]","<<robin --> $1> ==> <bird --> $1>>","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1362,"event":"TermLinkSelect","args":["robin|type=3|index=[0, 0]","<<robin --> $1> ==> <bird --> $1>>","<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1363,"event":"ConceptFire","args":["<<robin --> $1> ==> <bird --> $1>>"]}
+{"seq":1364,"event":"BeliefSelect","args":["<bird --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,5)} "]}
+{"seq":1365,"event":"BeliefReason","args":["<bird --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,5)} ","<bird --> [feathered]>","<(&,bird,robin) --> [feathered]>","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1366,"event":"TermLinkSelect","args":["<bird --> [feathered]>|type=4|index=[1, 0]","feathered","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1367,"event":"BeliefSelect","args":["<robin --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,6)} "]}
+{"seq":1368,"event":"BeliefReason","args":["<robin --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,6)} ","<robin --> [feathered]>","<(&,bird,robin) --> [feathered]>","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1369,"event":"TermLinkSelect","args":["<robin --> [feathered]>|type=4|index=[1, 0]","feathered","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1370,"event":"TermLinkSelect","args":["[feathered]|type=2|index=[0]","feathered","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1371,"event":"ConceptFire","args":["<(&,bird,robin) --> [feathered]>"]}
+{"seq":1372,"event":"TermLinkSelect","args":["gull|type=3|index=[0]","<gull --> bird>","<gull --> bird>"]}
+{"seq":1373,"event":"TermLinkSelect","args":["bird|type=3|index=[1]","<gull --> bird>","<gull --> bird>"]}
+{"seq":1374,"event":"ConceptFire","args":["<gull --> bird>"]}
+{"seq":1375,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":1376,"event":"ConceptFire","args":["<gull --> bird>"]}
+{"seq":1377,"event":"TermLinkSelect","args":["(&,bird,robin)|type=2|index=[0]","bird","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1378,"event":"BeliefSelect","args":["<swan --> bird>. %1.00;0.90% {0 : (5960054063616661,0)} "]}
+{"seq":1379,"event":"BeliefReason","args":["<swan --> bird>. %1.00;0.90% {0 : (5960054063616661,0)} ","<swan --> bird>","<(&,bird,robin) --> [feathered]>","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1380,"event":"TermLinkSelect","args":["<swan --> bird>|type=4|index=[1]","bird","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1381,"event":"BeliefSelect","args":["<bird --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,5)} "]}
+{"seq":1382,"event":"BeliefReason","args":["<bird --> [feathered]>. %1.00;0.90% {0 : (5960054063616661,5)} ","<bird --> [feathered]>","<(&,bird,robin) --> [feathered]>","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1383,"event":"TermLinkSelect","args":["<bird --> [feathered]>|type=4|index=[0]","bird","<(&,bird,robin) --> [feathered]>"]}
+{"seq":1384,"event":"ConceptFire","args":["<(&,bird,robin) --> [feathered]>"]}
+{"seq":1385,"event":"TermLinkSelect","args":["swan|type=3|index=[0]","<swan --> swimmer>","<swan --> swimmer>"]}
+{"seq":1386,"event":"TermLinkSelect","args":["swimmer|type=3|index=[1]","<swan --> swimmer>","<swan --> swimmer>"]}
+{"seq":1387,"event":"ConceptFire","args":["<swan --> swimmer>"]}
+{"seq":1388,"event":"after-cycles","args":[]}
