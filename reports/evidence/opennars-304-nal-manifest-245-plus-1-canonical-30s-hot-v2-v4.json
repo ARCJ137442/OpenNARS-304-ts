@@ -1,0 +1,1724 @@
+[
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\detective.nal",
+    "scope": "main",
+    "stratum": "application",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\detective2.nal",
+    "scope": "main",
+    "stratum": "application",
+    "expected_count": 2,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush.nal",
+    "scope": "main",
+    "stratum": "application",
+    "expected_count": 2,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush2.nal",
+    "scope": "main",
+    "stratum": "application",
+    "expected_count": 2,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\vision.nal",
+    "scope": "main",
+    "stratum": "application",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal1.multistep.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal3.subtermMapping1.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "correct_but_slower"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.everyday_reasoning.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.small.2.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.small.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal6.mln1.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal7.implSeqABCsimple.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal7.predEquiv.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal7.seq3.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition2_parallel.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition2_sequential.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_sequence.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_var1.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_var2.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_memorize_precondition_var3.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_1.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 3,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_2.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 2,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_multistep_3.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 2,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_seqABC.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 3,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_spatialSeq1.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 2,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_transitivity.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 2,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\stresstest_bird1.nal",
+    "scope": "main",
+    "stratum": "multi_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\desire.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.5.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.6.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.7.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal1.8.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.10.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.11.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.12.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.13.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.14.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.15.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.16.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.17.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.18.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.19.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.5.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.6.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.7.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 3,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.8.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal2.9.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.10.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.11.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.12.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.13.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.14.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.15.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.5.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.6.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.7.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.8.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal3.9.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.5.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.6.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.7.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.8.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.10.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.11.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.12.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.13.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.14.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.15.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.16.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.17.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.18.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.19.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.20.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.21.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.22.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.23.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.24.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.25.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.26.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.27.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.28.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.29.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.5.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.6.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.7.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.8.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal5.9.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.10.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.11.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.12.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.13.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.14.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.15.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.16.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.17.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 4,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.18.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 4,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.19.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 5,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.20.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.21.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.22.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.23.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.24.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.25.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.26.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.27.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 5,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.5.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.6.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.7.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.8.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.9.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.birdClaimedByBob.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.can_of_worms.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.nlp1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.nlp2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.redundant.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 0,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.symmetry.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal6.uncle.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 3,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.15.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.18.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.19.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.35.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.36.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.6.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.7.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.8.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentEqual.res.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.abd.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.ded.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.goal.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.concurrentImpl.ind.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.conj.decompose.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.decomposeCompound.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.eventInduction1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 2,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.eventInduction2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.par.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.predictiveImpl.goal.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.retroImplSeq.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.retrospectiveImpl.goal.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.revrev.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal7.vardetach4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.10.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.11.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.13.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.14.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.16.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.17.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.18.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.19.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.20.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.21.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.23.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.24.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.25.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.27.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.5.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.7.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.8.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.1.9.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.2.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.3.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.6.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.4.7.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.0.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.3.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.5.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.6.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.5.7.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.add.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "correct_but_slower"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.count.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "correct_but_slower"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8.reflect.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "correct_but_slower"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8_list.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 6,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.4.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.anticipate1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.believe1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.believe2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.doubt.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.evaluate1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.evaluate2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.hesitate.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.want1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.want12.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.want2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.wonder1.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal9.wonder2.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\notcontain.nal",
+    "scope": "main",
+    "stratum": "single_step",
+    "expected_count": 1,
+    "root_cause_cluster": "none"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\stability\\long_term_stability.nal",
+    "scope": "main",
+    "stratum": "stability",
+    "expected_count": 1,
+    "root_cause_cluster": "unknown"
+  },
+  {
+    "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\test\\simpleOperationTest.nal",
+    "scope": "extra",
+    "stratum": "src_test",
+    "expected_count": 0,
+    "root_cause_cluster": "unknown"
+  }
+]

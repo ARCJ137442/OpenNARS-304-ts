@@ -1,0 +1,79 @@
+Got relative path for loading the config: ./config/defaultConfig.xml
+Loading config config/defaultConfig.xml from resources
+{"seq":0,"event":"TaskAdd","args":["<bird --> swimmer>. %1.00;0.90% {0 : (-7687914857042592234,0)} |seq=false|input=true","Perceived"]}
+{"seq":1,"event":"OUT","args":["<bird --> swimmer>. %1.00;0.90% {0 : (-7687914857042592234,0)} |seq=false|input=true"]}
+{"seq":2,"event":"TaskAdd","args":["<bird --> swimmer>. %0.10;0.60% {0 : (-7687914857042592234,1)} |seq=false|input=true","Perceived"]}
+{"seq":3,"event":"OUT","args":["<bird --> swimmer>. %0.10;0.60% {0 : (-7687914857042592234,1)} |seq=false|input=true"]}
+{"seq":4,"event":"before-cycles","args":[]}
+{"seq":5,"event":"ConceptNew","args":["<bird --> swimmer>"]}
+{"seq":6,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=0|index=null","<bird --> swimmer>"]}
+{"seq":7,"event":"ConceptNew","args":["bird"]}
+{"seq":8,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=4|index=[0]","bird"]}
+{"seq":9,"event":"ConceptNew","args":["swimmer"]}
+{"seq":10,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":11,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> swimmer>"]}
+{"seq":12,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=4|index=[0]","bird"]}
+{"seq":13,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<bird --> swimmer>"]}
+{"seq":14,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":15,"event":"ConceptDirectProcessedTask","args":["<bird --> swimmer>. %1.00;0.90% {0 : (-7687914857042592234,0)} |seq=false|input=true"]}
+{"seq":16,"event":"TaskImmediateProcess","args":["<bird --> swimmer>. %1.00;0.90% {0 : (-7687914857042592234,0)} |seq=false|input=true","<bird --> swimmer>"]}
+{"seq":17,"event":"TaskDerive","args":["<bird --> swimmer>. %0.87;0.91% {0 : (-7687914857042592234,0);(-7687914857042592234,1)} |seq=false|input=false","true","false"]}
+{"seq":18,"event":"TaskAdd","args":["<bird --> swimmer>. %0.87;0.91% {0 : (-7687914857042592234,0);(-7687914857042592234,1)} |seq=false|input=false","Derived"]}
+{"seq":19,"event":"OUT","args":["<bird --> swimmer>. %0.87;0.91% {0 : (-7687914857042592234,0);(-7687914857042592234,1)} |seq=false|input=false"]}
+{"seq":20,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=0|index=null","<bird --> swimmer>"]}
+{"seq":21,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=4|index=[0]","bird"]}
+{"seq":22,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":23,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> swimmer>"]}
+{"seq":24,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=4|index=[0]","bird"]}
+{"seq":25,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<bird --> swimmer>"]}
+{"seq":26,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":27,"event":"ConceptDirectProcessedTask","args":["<bird --> swimmer>. %0.10;0.60% {0 : (-7687914857042592234,1)} |seq=false|input=true"]}
+{"seq":28,"event":"TaskImmediateProcess","args":["<bird --> swimmer>. %0.10;0.60% {0 : (-7687914857042592234,1)} |seq=false|input=true","<bird --> swimmer>"]}
+{"seq":29,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=0|index=null","<bird --> swimmer>"]}
+{"seq":30,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=4|index=[0]","bird"]}
+{"seq":31,"event":"TaskLinkAdd","args":["<bird --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":32,"event":"TermLinkAdd","args":["bird|type=3|index=[0]","<bird --> swimmer>"]}
+{"seq":33,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=4|index=[0]","bird"]}
+{"seq":34,"event":"TermLinkAdd","args":["swimmer|type=3|index=[1]","<bird --> swimmer>"]}
+{"seq":35,"event":"TermLinkAdd","args":["<bird --> swimmer>|type=4|index=[1]","swimmer"]}
+{"seq":36,"event":"ConceptDirectProcessedTask","args":["<bird --> swimmer>. %0.87;0.91% {0 : (-7687914857042592234,0);(-7687914857042592234,1)} |seq=false|input=false"]}
+{"seq":37,"event":"TaskImmediateProcess","args":["<bird --> swimmer>. %0.87;0.91% {0 : (-7687914857042592234,0);(-7687914857042592234,1)} |seq=false|input=false","<bird --> swimmer>"]}
+{"seq":38,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":39,"event":"TermLinkSelect","args":["bird|type=3|index=[0]","<bird --> swimmer>","<bird --> swimmer>"]}
+{"seq":40,"event":"TermLinkSelect","args":["swimmer|type=3|index=[1]","<bird --> swimmer>","<bird --> swimmer>"]}
+{"seq":41,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":42,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":43,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":44,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":45,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":46,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":47,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":48,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":49,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":50,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":51,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":52,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":53,"event":"TermLinkSelect","args":["bird|type=3|index=[0]","<bird --> swimmer>","<bird --> swimmer>"]}
+{"seq":54,"event":"TermLinkSelect","args":["swimmer|type=3|index=[1]","<bird --> swimmer>","<bird --> swimmer>"]}
+{"seq":55,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":56,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":57,"event":"TermLinkSelect","args":["bird|type=3|index=[0]","<bird --> swimmer>","<bird --> swimmer>"]}
+{"seq":58,"event":"TermLinkSelect","args":["swimmer|type=3|index=[1]","<bird --> swimmer>","<bird --> swimmer>"]}
+{"seq":59,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":60,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":61,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":62,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":63,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":64,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":65,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":66,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":67,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":68,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":69,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":70,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":71,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":72,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":73,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":74,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":75,"event":"ConceptFire","args":["<bird --> swimmer>"]}
+{"seq":76,"event":"after-cycles","args":[]}
