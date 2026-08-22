@@ -3,7 +3,7 @@ import { appendFileSync, existsSync, mkdtempSync, readFileSync, rmSync, statSync
 import { readdir, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { delimiter, dirname, join, resolve } from "node:path";
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
@@ -164,6 +164,25 @@ function timeoutRows(files, cycles, engine, timeoutMs) {
   }));
 }
 
+function notRunRows(files, cycles, engine, reason) {
+  return files.map((file) => ({
+    file,
+    cycles,
+    expected: null,
+    passed: 0,
+    matched: [],
+    ok: false,
+    error: `${engine} runner did not run this file: ${reason}`,
+    error_type: "not_run",
+    exception: false,
+    timed_out: false,
+    not_run: true,
+    marker_missing: false,
+    marker_missing_count: 0,
+    duration_ms: 0,
+  }));
+}
+
 function isProcessTimeout(result) {
   return result?.error?.code === "ETIMEDOUT"
     || result?.error?.message?.includes("ETIMEDOUT") === true;
@@ -229,26 +248,116 @@ function runJava(files, cycles, timeoutMs, artifact, adapter = null) {
   }
 }
 
-function runTs(files, cycles, timeoutMs) {
+async function runTs(files, cycles, timeoutMs) {
+  if (files.length === 0) return [];
   const cli = join(projectRoot, "scripts", "cli.mjs");
-  return files.flatMap((file) => {
+  return new Promise((resolveRows) => {
     const startedAt = Date.now();
-    const result = spawnSync(process.execPath, ["--loader", "./scripts/ts-loader.mjs", cli, "--cycles", String(cycles), file], {
+    const fileKeys = new Set(files.map((file) => resolve(file)));
+    const completedKeys = new Set();
+    const parsedRows = [];
+    const nonJsonLines = [];
+    let stdoutBuffer = "";
+    let stderr = "";
+    let lastBoundary = startedAt;
+    let timeoutHandle = null;
+    let timedOutFile = null;
+    let processError = null;
+    let settled = false;
+
+    const currentFile = () => files.find((file) => !completedKeys.has(resolve(file)));
+    const armTimeout = () => {
+      if (timeoutMs === null || settled) return;
+      if (timeoutHandle !== null) clearTimeout(timeoutHandle);
+      const pendingFile = currentFile();
+      if (pendingFile === undefined) return;
+      timeoutHandle = setTimeout(() => {
+        timedOutFile = pendingFile;
+        child.kill();
+      }, timeoutMs);
+    };
+    const consumeLine = (line) => {
+      if (line.length === 0) return;
+      let row;
+      try {
+        row = JSON.parse(line);
+      } catch {
+        nonJsonLines.push(line);
+        return;
+      }
+      if (typeof row.file !== "string" || !fileKeys.has(resolve(row.file))) {
+        nonJsonLines.push(line);
+        return;
+      }
+      const durationMs = Date.now() - lastBoundary;
+      lastBoundary = Date.now();
+      const key = resolve(row.file);
+      completedKeys.add(key);
+      parsedRows.push({ ...row, duration_ms: durationMs });
+      armTimeout();
+    };
+
+    const child = spawn(process.execPath, [
+      "--loader", "./scripts/ts-loader.mjs", cli, "--cycles", String(cycles), ...files,
+    ], {
       cwd: projectRoot,
-      encoding: "utf8",
-      maxBuffer: 32 * 1024 * 1024,
-      ...(timeoutMs === null ? {} : { timeout: timeoutMs }),
+      windowsHide: true,
+      stdio: ["ignore", "pipe", "pipe"],
     });
-    if (isProcessTimeout(result)) {
-      return timeoutRows([file], cycles, "TypeScript", timeoutMs);
-    }
-    const durationMs = Date.now() - startedAt;
-    const stdout = typeof result.stdout === "string" ? result.stdout : "";
-    const parsedOutput = parseJsonLines(stdout);
-    const parsed = parsedOutput.rows;
-    if (result.signal != null) return withDuration(completeProcessFailureRows([file], cycles, parsed, result, "TypeScript"), durationMs);
-    if (result.status === 0 && parsed.length > 0) return withOutputWarning(withDuration(parsed, durationMs), parsedOutput.nonJsonLines);
-    return withDuration(completeProcessFailureRows([file], cycles, parsed, result, "TypeScript"), durationMs);
+    child.stdout.on("data", (chunk) => {
+      stdoutBuffer += chunk.toString();
+      const lines = stdoutBuffer.split(/\r?\n/);
+      stdoutBuffer = lines.pop() ?? "";
+      for (const line of lines) consumeLine(line);
+    });
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk.toString();
+    });
+    child.on("error", (error) => {
+      processError = error;
+    });
+    child.on("close", async (status, signal) => {
+      if (settled) return;
+      settled = true;
+      if (timeoutHandle !== null) clearTimeout(timeoutHandle);
+      if (stdoutBuffer.length > 0) consumeLine(stdoutBuffer);
+
+      const unresolved = files.filter((file) => !completedKeys.has(resolve(file)));
+      const rows = [...parsedRows];
+      if (timedOutFile !== null) {
+        rows.push(...timeoutRows([timedOutFile], cycles, "TypeScript", timeoutMs));
+        const timedOutIndex = files.indexOf(timedOutFile);
+        const remainingFiles = files.slice(timedOutIndex + 1)
+          .filter((file) => !completedKeys.has(resolve(file)));
+        rows.push(...await runTs(remainingFiles, cycles, timeoutMs));
+      } else if (unresolved.length > 0) {
+        const failedFile = unresolved[0];
+        const errorMessage = processError?.message
+          || stderr.trim()
+          || `TypeScript runner exited with status ${status}${signal ? ` (${signal})` : ""}`;
+        rows.push(...completeProcessFailureRows([failedFile], cycles, [], {
+          status,
+          signal,
+          error: { message: errorMessage },
+        }, "TypeScript"));
+        rows.push(...notRunRows(
+          unresolved.slice(1),
+          cycles,
+          "TypeScript",
+          "the TypeScript process exited before this file",
+        ));
+      }
+
+      const withWarnings = nonJsonLines.length === 0
+        ? rows
+        : rows.map((row) => parsedRows.includes(row)
+          ? { ...row, output_warning: `ignored ${nonJsonLines.length} non-JSON stdout line(s)` }
+          : row);
+      const rowsByFile = new Map(withWarnings.map((row) => [resolve(row.file), row]));
+      resolveRows(files.map((file) => rowsByFile.get(resolve(file))
+        ?? notRunRows([file], cycles, "TypeScript", "no result was emitted")[0]));
+    });
+    armTimeout();
   });
 }
 
@@ -277,6 +386,7 @@ function normalizeResult(result, expectedOverride = null) {
     ? expectedOverride
     : Number.isInteger(result.expected) ? result.expected : matched.length;
   const timedOut = result.timed_out === true || result.error_type === "timeout";
+  const notRun = result.not_run === true || result.error_type === "not_run";
   const error = result.error ?? null;
   const errorType = result.error_type ?? (timedOut ? "timeout" : error === null ? "none" : "exception");
   const passed = matched.filter(Boolean).length;
@@ -290,6 +400,7 @@ function normalizeResult(result, expectedOverride = null) {
     error_type: errorType,
     exception: errorType === "exception",
     timed_out: timedOut,
+    not_run: notRun,
     marker_missing: markerMissing,
     marker_missing_count: expected - passed,
   };
@@ -326,9 +437,11 @@ function evaluateRow(file, expected, javaResult, tsResult, engine) {
     functional_pass: functionalPass,
     java_exception: java?.exception ?? null,
     java_timeout: java?.timed_out ?? null,
+    java_not_run: java?.not_run ?? null,
     java_marker_missing: java?.marker_missing ?? null,
     ts_exception: ts?.exception ?? null,
     ts_timeout: ts?.timed_out ?? null,
+    ts_not_run: ts?.not_run ?? null,
     ts_marker_missing: ts?.marker_missing ?? null,
   };
 }
@@ -405,7 +518,7 @@ async function main() {
         console.error(`running chunk ${index + 1}/${chunks.length} (${pending.length} files)`);
       }
       if (options.engine !== "ts") javaResults.push(...runJava(pending, options.cycles, options.timeoutMs, javaArtifact, javaAdapter));
-      if (options.engine !== "java") tsResults.push(...runTs(pending, options.cycles, options.timeoutMs));
+      if (options.engine !== "java") tsResults.push(...await runTs(pending, options.cycles, options.timeoutMs));
       const javaByFile = new Map(javaResults.map((row) => [resolve(row.file), row]));
       const tsByFile = new Map(tsResults.map((row) => [resolve(row.file), row]));
       const completedRows = pending.map((file) => {

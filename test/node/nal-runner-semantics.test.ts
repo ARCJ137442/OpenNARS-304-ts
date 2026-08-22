@@ -40,6 +40,22 @@ test("NAL runner keeps timeout and marker absence as separate observations", () 
   assert.equal(result.marker_missing_count, 1);
 });
 
+test("NAL runner keeps files after a timeout separate from the timed-out file", () => {
+  const result = normalizeResult({
+    expected: null,
+    matched: [],
+    error: "not run after preceding timeout",
+    error_type: "not_run",
+    not_run: true,
+  }, 1);
+
+  assert.equal(result.error_type, "not_run");
+  assert.equal(result.not_run, true);
+  assert.equal(result.timed_out, false);
+  assert.equal(result.exception, false);
+  assert.equal(result.marker_missing, true);
+});
+
 test("parity does not become functional pass when both engines miss the marker", () => {
   const row = evaluateRow("fixture.nal", 1,
     { expected: 1, matched: [false], error: "java marker missing" },
@@ -116,8 +132,9 @@ test("NAL runner validates and resumes a persisted per-file result", () => {
     "--engine", "ts",
     "--cycles", "1",
     "--start", "29",
-    "--limit", "1",
-    "--chunk-size", "1",
+    "--limit", "2",
+    "--chunk-size", "2",
+    "--timeout-ms", "30000",
     "--result-file", resultFile,
   ];
   try {
@@ -131,7 +148,7 @@ test("NAL runner validates and resumes a persisted per-file result", () => {
       .trim()
       .split(/\r?\n/)
       .map((line) => JSON.parse(line));
-    assert.equal(firstRows.length, 1);
+    assert.equal(firstRows.length, 2);
     assert.equal(typeof firstRows[0].run_key, "string");
 
     const resumed = spawnSync(process.execPath, [...args, "--resume"], {
@@ -143,7 +160,7 @@ test("NAL runner validates and resumes a persisted per-file result", () => {
     const resumedRows = readFileSync(resultFile, "utf8")
       .trim()
       .split(/\r?\n/);
-    assert.equal(resumedRows.length, 1);
+    assert.equal(resumedRows.length, 2);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
