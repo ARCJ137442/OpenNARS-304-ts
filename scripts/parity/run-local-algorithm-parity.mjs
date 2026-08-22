@@ -1,4 +1,5 @@
-import { mkdtempSync, rmSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
 import { delimiter, dirname, join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
@@ -6,10 +7,55 @@ import { fileURLToPath } from "node:url";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const javaRoot = join(projectRoot, "java-master");
-const javaJar = join(javaRoot, "target", "opennars-3.1.0-SNAPSHOT.jar");
-const javaTestClasses = join(javaRoot, "target", "test-classes");
-const javaClasses = join(javaRoot, "target", "classes");
+const defaultJavaJar = join(javaRoot, "target", "opennars-3.1.0-SNAPSHOT.jar");
+const defaultJavaTestClasses = join(javaRoot, "target", "test-classes");
+const defaultJavaClasses = join(javaRoot, "target", "classes");
 const javaSource = join(projectRoot, "scripts", "parity", "LocalAlgorithmParityRunner.java");
+
+function requirePath(value, option, kind) {
+  const path = resolve(value);
+  let stats;
+  try {
+    stats = statSync(path);
+  } catch {
+    throw new Error(`${option} path does not exist: ${path}`);
+  }
+  if (kind === "file" && !stats.isFile()) throw new Error(`${option} path is not a file: ${path}`);
+  if (kind === "directory" && !stats.isDirectory()) throw new Error(`${option} path is not a directory: ${path}`);
+  return path;
+}
+
+function sha256(path) {
+  return createHash("sha256").update(readFileSync(path)).digest("hex").toUpperCase();
+}
+
+function parseArgs(argv) {
+  const options = {
+    javaJar: defaultJavaJar,
+    javaClasses: defaultJavaClasses,
+    javaTestClasses: defaultJavaTestClasses,
+  };
+  for (let index = 0; index < argv.length; index += 1) {
+    const argument = argv[index];
+    if (argument === "--java-jar") options.javaJar = argv[++index];
+    else if (argument === "--java-classes") options.javaClasses = argv[++index];
+    else if (argument === "--java-test-classes") options.javaTestClasses = argv[++index];
+    else if (argument === "--help" || argument === "-h") {
+      console.error("usage: node scripts/parity/run-local-algorithm-parity.mjs [--java-jar PATH] [--java-classes PATH] [--java-test-classes PATH]");
+      process.exit(0);
+    } else throw new Error(`Unknown argument: ${argument}`);
+  }
+  options.javaJar = requirePath(options.javaJar, "--java-jar", "file");
+  options.javaClasses = requirePath(options.javaClasses, "--java-classes", "directory");
+  options.javaTestClasses = requirePath(options.javaTestClasses, "--java-test-classes", "directory");
+  options.javaArtifact = {
+    jar: options.javaJar,
+    sha256: sha256(options.javaJar),
+    classes: options.javaClasses,
+    testClasses: options.javaTestClasses,
+  };
+  return options;
+}
 
 function run(command, args, options = {}) {
   const result = spawnSync(command, args, {
@@ -24,9 +70,9 @@ function run(command, args, options = {}) {
   return result.stdout.trim();
 }
 
-function javaSnapshot() {
+function javaSnapshot(options) {
   const outputDirectory = mkdtempSync(join(tmpdir(), "opennars-local-parity-"));
-  const classpath = [javaTestClasses, javaClasses, javaJar].join(delimiter);
+  const classpath = [options.javaTestClasses, options.javaClasses, options.javaJar].join(delimiter);
   try {
     run("javac", ["-encoding", "UTF-8", "-cp", classpath, "-d", outputDirectory, javaSource]);
     return JSON.parse(run("java", ["-cp", [outputDirectory, classpath].join(delimiter), "LocalAlgorithmParityRunner"]));
@@ -141,9 +187,17 @@ function compare(expected, actual, path = "", differences = []) {
   return differences;
 }
 
-const java = javaSnapshot();
+const options = parseArgs(process.argv.slice(2));
+const java = javaSnapshot(options);
 const ts = await tsSnapshot();
 const differences = compare(java, ts);
-const result = { ok: differences.length === 0, tolerance: 1e-5, differences, java, ts };
+const result = {
+  ok: differences.length === 0,
+  tolerance: 1e-5,
+  javaArtifact: options.javaArtifact,
+  differences,
+  java,
+  ts,
+};
 console.log(JSON.stringify(result, null, 2));
 if (!result.ok) process.exitCode = 1;

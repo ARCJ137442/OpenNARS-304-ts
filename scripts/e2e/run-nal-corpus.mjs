@@ -1,4 +1,5 @@
-import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { delimiter, dirname, join, resolve } from "node:path";
@@ -7,9 +8,9 @@ import { fileURLToPath } from "node:url";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const javaRoot = join(projectRoot, "java-master");
-const javaJar = join(javaRoot, "target", "opennars-3.1.0-SNAPSHOT.jar");
-const javaTestClasses = join(javaRoot, "target", "test-classes");
-const javaClasses = join(javaRoot, "target", "classes");
+const defaultJavaJar = join(javaRoot, "target", "opennars-3.1.0-SNAPSHOT.jar");
+const defaultJavaTestClasses = join(javaRoot, "target", "test-classes");
+const defaultJavaClasses = join(javaRoot, "target", "classes");
 const javaAdapterSource = join(projectRoot, "scripts", "e2e", "NalParityRunner.java");
 
 const corpusDirectories = [
@@ -27,6 +28,9 @@ function parseArgs(argv) {
     limit: null,
     chunkSize: null,
     timeoutMs: null,
+    javaJar: defaultJavaJar,
+    javaClasses: defaultJavaClasses,
+    javaTestClasses: defaultJavaTestClasses,
     all: false,
     summary: false,
   };
@@ -38,6 +42,9 @@ function parseArgs(argv) {
     else if (argument === "--limit") options.limit = Number(argv[++i]);
     else if (argument === "--chunk-size") options.chunkSize = Number(argv[++i]);
     else if (argument === "--timeout-ms") options.timeoutMs = Number(argv[++i]);
+    else if (argument === "--java-jar") options.javaJar = argv[++i];
+    else if (argument === "--java-classes") options.javaClasses = argv[++i];
+    else if (argument === "--java-test-classes") options.javaTestClasses = argv[++i];
     else if (argument === "--all") options.all = true;
     else if (argument === "--summary") options.summary = true;
     else throw new Error(`Unknown argument: ${argument}`);
@@ -58,6 +65,32 @@ function parseArgs(argv) {
     throw new Error("--timeout-ms must be a positive integer");
   }
   return options;
+}
+
+function requirePath(value, option, kind) {
+  const path = resolve(value);
+  let stats;
+  try {
+    stats = statSync(path);
+  } catch {
+    throw new Error(`${option} path does not exist: ${path}`);
+  }
+  if (kind === "file" && !stats.isFile()) throw new Error(`${option} path is not a file: ${path}`);
+  if (kind === "directory" && !stats.isDirectory()) throw new Error(`${option} path is not a directory: ${path}`);
+  return path;
+}
+
+function resolveJavaArtifact(options) {
+  if (options.engine === "ts") return null;
+  const jar = requirePath(options.javaJar, "--java-jar", "file");
+  const classes = requirePath(options.javaClasses, "--java-classes", "directory");
+  const testClasses = requirePath(options.javaTestClasses, "--java-test-classes", "directory");
+  return {
+    jar,
+    classes,
+    testClasses,
+    sha256: createHash("sha256").update(readFileSync(jar)).digest("hex").toUpperCase(),
+  };
 }
 
 async function findNalFiles(directory) {
@@ -82,9 +115,9 @@ function extractExpectations(source) {
   return expectations;
 }
 
-function compileJavaAdapter() {
+function compileJavaAdapter(artifact) {
   const outputDirectory = mkdtempSync(join(tmpdir(), "opennars-java-parity-"));
-  const classpath = [javaTestClasses, javaClasses, javaJar].join(delimiter);
+  const classpath = [artifact.testClasses, artifact.classes, artifact.jar].join(delimiter);
   const result = spawnSync("javac", ["-encoding", "UTF-8", "-cp", classpath, "-d", outputDirectory, javaAdapterSource], {
     cwd: projectRoot,
     encoding: "utf8",
@@ -109,8 +142,16 @@ function timeoutRows(files, cycles, engine, timeoutMs) {
   }));
 }
 
-function runJava(files, cycles, timeoutMs) {
-  const adapter = compileJavaAdapter();
+function addArtifactMetadata(rows, artifact) {
+  return rows.map((row) => ({
+    ...row,
+    artifact_path: artifact.jar,
+    artifact_sha256: artifact.sha256,
+  }));
+}
+
+function runJava(files, cycles, timeoutMs, artifact) {
+  const adapter = compileJavaAdapter(artifact);
   try {
     const result = spawnSync("java", ["-cp", adapter.classpath, "NalParityRunner", String(cycles), ...files], {
       cwd: projectRoot,
@@ -119,12 +160,12 @@ function runJava(files, cycles, timeoutMs) {
       ...(timeoutMs === null ? {} : { timeout: timeoutMs }),
     });
     if (result.error?.code === "ETIMEDOUT" || result.signal != null) {
-      return timeoutRows(files, cycles, "Java", timeoutMs);
+      return addArtifactMetadata(timeoutRows(files, cycles, "Java", timeoutMs), artifact);
     }
     if (result.status !== 0) {
       throw new Error(`Java parity runner failed:\n${result.stdout}\n${result.stderr}`);
     }
-    return result.stdout.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line));
+    return addArtifactMetadata(result.stdout.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line)), artifact);
   } finally {
     rmSync(adapter.outputDirectory, { recursive: true, force: true });
   }
@@ -158,6 +199,7 @@ function splitIntoChunks(files, chunkSize) {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
+  const javaArtifact = resolveJavaArtifact(options);
   let files = (await Promise.all(corpusDirectories.map(findNalFiles))).flat().sort();
   files = files.slice(options.start);
   if (options.limit !== null) files = files.slice(0, options.limit);
@@ -174,7 +216,7 @@ async function main() {
     if (options.chunkSize !== null) {
       console.error(`running chunk ${index + 1}/${chunks.length} (${chunk.length} files)`);
     }
-    if (options.engine !== "ts") javaResults.push(...runJava(chunk, options.cycles, options.timeoutMs));
+    if (options.engine !== "ts") javaResults.push(...runJava(chunk, options.cycles, options.timeoutMs, javaArtifact));
     if (options.engine !== "java") tsResults.push(...runTs(chunk, options.cycles, options.timeoutMs));
   }
   const byFile = (rows) => new Map(rows.map((row) => [resolve(row.file), row]));
@@ -202,6 +244,7 @@ async function main() {
     files: rows.length,
     passed: rows.length - failures.length,
     failed: failures.length,
+    java_artifact: javaArtifact,
     rows,
   };
   if (options.summary) {
@@ -219,6 +262,7 @@ async function main() {
       files: summary.files,
       passed: summary.passed,
       failed: summary.failed,
+      java_artifact: summary.java_artifact,
       failures: failures.map((row) => ({
         file: row.file,
         expected: row.expected,
