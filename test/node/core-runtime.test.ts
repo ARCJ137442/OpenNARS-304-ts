@@ -70,3 +70,10 @@ test("translated term and sentence constructors preserve Java delegation contrac
     assert.equal(rectangle.index_variable, "M1");
     assert.deepEqual(Array.from(rectangle.term_indices ?? []), [1, 1, -1, 0, 1, 1]);
 });
+
+test("Nar explicit long overload accepts JavaScript number and bigint values", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+
+    assert.equal(new Nar(0n).memory.narId, 0n);
+    assert.equal(new Nar(7 as never).memory.narId, 7);
+});

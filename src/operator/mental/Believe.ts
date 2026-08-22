@@ -5,7 +5,7 @@ import { Operation } from "../Operation.ts";
 import { Task } from "../../entity/Task.ts";
 import { truthFromWordTerm } from "../../entity/TruthValueTerm.ts";
 import { Memory } from "../../storage/Memory.ts";
-import { Timable } from "../../interfaces/Timable.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
 
 
 

@@ -247,23 +247,29 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             // defaults above
         } else if (args.length === 1) {
             const value = args[0];
-            if (typeof value === "number" || value instanceof java.lang.Number) {
-                narId = (value as java.lang.Number).longValue();
+            if (typeof value === "number" || typeof value === "bigint" || value instanceof java.lang.Number) {
+                narId = typeof value === "number" || typeof value === "bigint"
+                    ? value as long
+                    : (value as java.lang.Number).longValue();
             } else if (value !== null && typeof (value as java.lang.Object).toString === "function") {
                 relativeConfigFilePath = value as java.lang.String;
             } else {
                 parameterOverrides = value as java.util.Map<java.lang.String, java.lang.Object>;
             }
         } else if (args.length === 2) {
-            if (typeof args[0] === "number" || args[0] instanceof java.lang.Number) {
-                narId = (args[0] as java.lang.Number).longValue();
+            if (typeof args[0] === "number" || typeof args[0] === "bigint" || args[0] instanceof java.lang.Number) {
+                narId = typeof args[0] === "number" || typeof args[0] === "bigint"
+                    ? args[0] as long
+                    : (args[0] as java.lang.Number).longValue();
                 relativeConfigFilePath = args[1] as java.lang.String;
             } else {
                 relativeConfigFilePath = args[0] as java.lang.String;
                 parameterOverrides = args[1] as java.util.Map<java.lang.String, java.lang.Object>;
             }
         } else if (args.length === 3) {
-            narId = (args[0] as java.lang.Number).longValue();
+            narId = typeof args[0] === "number" || typeof args[0] === "bigint"
+                ? args[0] as long
+                : (args[0] as java.lang.Number).longValue();
             relativeConfigFilePath = args[1] as java.lang.String;
             parameterOverrides = args[2] as java.util.Map<java.lang.String, java.lang.Object>;
         } else {
