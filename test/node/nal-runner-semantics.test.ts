@@ -7,6 +7,7 @@ import test from "node:test";
 import { java } from "jree";
 
 import {
+  assertUniqueFiles,
   completeProcessFailureRows,
   evaluateRow,
   extractNalMetadata,
@@ -206,6 +207,13 @@ test("NAL runner rejects duplicate checkpoint rows for one run", () => {
   }
 });
 
+test("NAL runner rejects duplicate input files before execution", () => {
+  assert.throws(
+    () => assertUniqueFiles(["fixture.nal", "fixture.nal"]),
+    /duplicate input file/,
+  );
+});
+
 test("NAL runner persists cold and hot results without overwriting either run", () => {
   const directory = mkdtempSync(join(tmpdir(), "opennars-nal-mode-"));
   const resultFile = join(directory, "matrix.jsonl");
@@ -240,6 +248,72 @@ test("NAL runner persists cold and hot results without overwriting either run", 
     assert.notEqual(rows[0].run_key, rows[1].run_key);
     assert.deepEqual(rows.map((row) => row.sequence), [0, 0]);
     assert.deepEqual(rows.map((row) => row.chunk_index), [0, 0]);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("NAL runner keeps hot results isolated from order and cold-process boundaries", () => {
+  const directory = mkdtempSync(join(tmpdir(), "opennars-nal-isolation-"));
+  const first = join(directory, "first.nal");
+  const second = join(directory, "second.nal");
+  const repeat = join(directory, "repeat.nal");
+  const source = (subject, predicate) => `<${subject} --> ${predicate}>.\n''outputMustContain('<${subject} --> ${predicate}>.')\n`;
+  writeFileSync(first, source("a", "b"), "utf8");
+  writeFileSync(second, source("b", "c"), "utf8");
+  writeFileSync(repeat, source("a", "b"), "utf8");
+
+  const runner = join(process.cwd(), "scripts", "e2e", "run-nal-corpus.mjs");
+  const run = (resultFile, mode, files) => spawnSync(process.execPath, [
+    runner,
+    "--engine", "ts",
+    "--ts-mode", mode,
+    "--cycles", "1",
+    "--timeout-ms", "5000",
+    "--chunk-size", String(files.length),
+    "--result-file", resultFile,
+    ...files.flatMap((file) => ["--file", file]),
+  ], { cwd: process.cwd(), encoding: "utf8", maxBuffer: 4 * 1024 * 1024 });
+  const readRows = (resultFile) => readFileSync(resultFile, "utf8")
+    .trim()
+    .split(/\r?\n/)
+    .map((line) => JSON.parse(line));
+  const semantic = (row) => ({
+    expected: row.expected,
+    passed: row.passed,
+    matched: row.matched,
+    ok: row.ok,
+    error_type: row.error_type,
+    exception: row.exception,
+    timed_out: row.timed_out,
+    not_run: row.not_run,
+    marker_missing: row.marker_missing,
+  });
+  const byFile = (rows) => new Map(rows.map((row) => [row.file, semantic(row)]));
+  const assertRunSucceeded = (result) => assert.ok(result.status === 0, result.stderr || result.stdout);
+
+  try {
+    const hotResultFile = join(directory, "hot.jsonl");
+    const coldResultFile = join(directory, "cold.jsonl");
+    const reverseResultFile = join(directory, "reverse.jsonl");
+    const hot = run(hotResultFile, "hot", [first, second, repeat]);
+    const cold = run(coldResultFile, "cold", [first, second]);
+    const reverse = run(reverseResultFile, "hot", [second, first]);
+    assertRunSucceeded(hot);
+    assertRunSucceeded(cold);
+    assertRunSucceeded(reverse);
+
+    const hotRows = readRows(hotResultFile);
+    const coldRows = readRows(coldResultFile);
+    const reverseRows = readRows(reverseResultFile);
+    const hotByFile = byFile(hotRows);
+    const coldByFile = byFile(coldRows);
+    const reverseByFile = byFile(reverseRows);
+    assert.deepEqual(hotByFile.get(first), hotByFile.get(repeat));
+    assert.deepEqual(hotByFile.get(first), coldByFile.get(first));
+    assert.deepEqual(hotByFile.get(second), coldByFile.get(second));
+    assert.deepEqual(hotByFile.get(first), reverseByFile.get(first));
+    assert.deepEqual(hotByFile.get(second), reverseByFile.get(second));
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }

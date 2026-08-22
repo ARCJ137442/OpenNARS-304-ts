@@ -478,6 +478,15 @@ function splitIntoChunks(files, chunkSize) {
   return chunks;
 }
 
+function assertUniqueFiles(files) {
+  const seen = new Set();
+  for (const file of files) {
+    const key = resolve(file);
+    if (seen.has(key)) throw new Error(`duplicate input file: ${key}`);
+    seen.add(key);
+  }
+}
+
 function resultKey(options, javaArtifact) {
   return JSON.stringify({
     engine: options.engine,
@@ -539,6 +548,7 @@ async function main() {
     else if (!options.all) files = files.slice(0, 10);
   }
   if (files.length === 0) throw new Error("No NAL files found");
+  assertUniqueFiles(files);
 
   const sources = new Map();
   for (const file of files) sources.set(file, extractNalMetadata(await readFile(file, "utf8")));
@@ -644,6 +654,7 @@ async function main() {
 
 export {
   appendCheckpoint,
+  assertUniqueFiles,
   completeProcessFailureRows,
   evaluateRow,
   extractNalMetadata,
