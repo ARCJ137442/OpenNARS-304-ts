@@ -150,10 +150,10 @@ function addArtifactMetadata(rows, artifact) {
   }));
 }
 
-function runJava(files, cycles, timeoutMs, artifact) {
-  const adapter = compileJavaAdapter(artifact);
+function runJava(files, cycles, timeoutMs, artifact, adapter = null) {
+  const activeAdapter = adapter ?? compileJavaAdapter(artifact);
   try {
-    const result = spawnSync("java", ["-cp", adapter.classpath, "NalParityRunner", String(cycles), ...files], {
+    const result = spawnSync("java", ["-cp", activeAdapter.classpath, "NalParityRunner", String(cycles), ...files], {
       cwd: projectRoot,
       encoding: "utf8",
       maxBuffer: 32 * 1024 * 1024,
@@ -167,7 +167,7 @@ function runJava(files, cycles, timeoutMs, artifact) {
     }
     return addArtifactMetadata(result.stdout.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line)), artifact);
   } finally {
-    rmSync(adapter.outputDirectory, { recursive: true, force: true });
+    if (adapter === null) rmSync(activeAdapter.outputDirectory, { recursive: true, force: true });
   }
 }
 
@@ -200,6 +200,7 @@ function splitIntoChunks(files, chunkSize) {
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   const javaArtifact = resolveJavaArtifact(options);
+  const javaAdapter = javaArtifact === null ? null : compileJavaAdapter(javaArtifact);
   let files = (await Promise.all(corpusDirectories.map(findNalFiles))).flat().sort();
   files = files.slice(options.start);
   if (options.limit !== null) files = files.slice(0, options.limit);
@@ -212,12 +213,16 @@ async function main() {
   const javaResults = [];
   const tsResults = [];
   const chunks = splitIntoChunks(files, options.chunkSize);
-  for (const [index, chunk] of chunks.entries()) {
-    if (options.chunkSize !== null) {
-      console.error(`running chunk ${index + 1}/${chunks.length} (${chunk.length} files)`);
+  try {
+    for (const [index, chunk] of chunks.entries()) {
+      if (options.chunkSize !== null) {
+        console.error(`running chunk ${index + 1}/${chunks.length} (${chunk.length} files)`);
+      }
+      if (options.engine !== "ts") javaResults.push(...runJava(chunk, options.cycles, options.timeoutMs, javaArtifact, javaAdapter));
+      if (options.engine !== "java") tsResults.push(...runTs(chunk, options.cycles, options.timeoutMs));
     }
-    if (options.engine !== "ts") javaResults.push(...runJava(chunk, options.cycles, options.timeoutMs, javaArtifact));
-    if (options.engine !== "java") tsResults.push(...runTs(chunk, options.cycles, options.timeoutMs));
+  } finally {
+    if (javaAdapter !== null) rmSync(javaAdapter.outputDirectory, { recursive: true, force: true });
   }
   const byFile = (rows) => new Map(rows.map((row) => [resolve(row.file), row]));
   const javaByFile = byFile(javaResults);
