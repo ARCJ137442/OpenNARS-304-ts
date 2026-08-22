@@ -1,5 +1,5 @@
 //! Java source: opennars/language/CompoundTerm.java
-import { java, type short, type int, JavaObject } from "jree";
+import { java, type short, type int, type char, JavaObject, S } from "jree";
 import { Term } from "./Term.ts";
 import { Interval } from "./Interval.ts";
 import { Variable } from "./Variable.ts";
@@ -672,8 +672,18 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      *
      * @return Whether the name contains a variable
      */
-    public hasVar(): boolean {
-        return this.hasVariables;
+    public hasVar(): boolean;
+    public hasVar(type: char): boolean;
+    public hasVar(...args: unknown[]): boolean {
+        // Java overload dispatch is part of the contract: hasVar(type) must
+        // reach Term.hasVar(type), rather than the cached any-variable flag.
+        if (args.length === 0) {
+            return this.hasVariables;
+        }
+        if (args.length === 1) {
+            return super.hasVar(args[0] as char);
+        }
+        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
     }
 
     public hasVarDep(): boolean {

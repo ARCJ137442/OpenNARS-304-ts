@@ -35,6 +35,7 @@ import { BudgetFunctions } from "./BudgetFunctions.ts";
 import { TemporalRules } from "./TemporalRules.ts";
 import { TruthFunctions } from "./TruthFunctions.ts";
 import type { DerivationContext } from "../control/DerivationContext.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 
 type Pair<L, R> = {
     getLeft(): L;
@@ -851,8 +852,10 @@ export class CompositionalRules extends JavaObject {
                 mapping.put(vIntro, app.get(vIntro));
             }
             if (mapping.size() > 0) {
-                let generalizationPenalty: java.lang.Float = java.lang.Math.pow(nal.narParameters.VARIABLE_INTRODUCTION_CONFIDENCE_MUL,
-                    mapping.size() - 1) as float;
+                let generalizationPenalty: java.lang.Float = Float32Math.pow(
+                    nal.narParameters.VARIABLE_INTRODUCTION_CONFIDENCE_MUL,
+                    mapping.size() - 1,
+                );
                 result.add(
                     pair((implicationEquivalenceOrJunction as CompoundTerm).applySubstitute(mapping),
                         generalizationPenalty));

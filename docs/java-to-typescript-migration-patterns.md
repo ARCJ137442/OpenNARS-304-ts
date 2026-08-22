@@ -171,7 +171,7 @@ Java 的 `emit(c, o)`、事件处理器和构造器数组参数在 TypeScript �
 
 #### B10. 继承方法被同名业务重载遮蔽
 
-Java 子类可以继承 `equals(Object)`，同时声明 `equals(Term, Term)`；TypeScript/JavaScript 没有按签名自动重载，后声明的方法会覆盖前者。`FunctionOperator.equals` 因此曾在 TermLink 的单参数比较中把第二个参数读成 `undefined`，使普通链接构造直接崩溃。
+Java 子类可以继承 `equals(Object)`，同时声明 `equals(Term, Term)`；TypeScript/JavaScript 没有按签名自动重载，后声明的方法会覆盖前者。`FunctionOperator.equals` 因此曾在 TermLink 的单参数比较中把第二个参数读成 `undefined`，使普通链接构造直接崩溃。相同问题也会把 `CompoundTerm.hasVar(type)` 错误地落到无参的“是否存在任意变量”缓存上，使变量统一额外消耗随机数。
 
 纠正方式是保留所有公开入口，在一个实现中按 `args.length` 分派：单参数转发到 `super.equals`，双参数执行领域相似度计算；不要只改调用方，也不要把领域相似度改名后遗漏 Java API 兼容层。
 
@@ -234,11 +234,11 @@ Java 的 `instanceof Equivalence`、`instanceof Implication` 和 `instanceof Con
 
 Java 的 `float` 不是“最后赋值时才取单精度”。如果两个操作数本身都是 `float`，Java 会先以单精度保存它们，再执行乘法，最后再把结果写回 `float`。迁移到 TypeScript 时只写 `Math.fround(left * right)`，会让 JavaScript 先以双精度相乘，随后得到不同的单精度值；在 Bag 的离散 level 边界上，这个 ULP 差异会改变任务或概念的取出顺序。
 
-纠正方式是在运算边界分别收窄 Java 的 `float` 操作数，再收窄结果：
+纠正方式是在运算边界分别收窄 Java 的 `float` 操作数，再收窄结果。项目用 `src/runtime/Float32.ts` 的 `Float32Math` 聚合这条规则：
 
-    const left: float = Math.fround(javaLeft) as float;
-    const right: float = Math.fround(javaRight) as float;
-    const result: float = Math.fround(left * right) as float;
+    const result: Float32 = Float32Math.multiply(javaLeft, javaRight);
+
+它不是把所有 `number` 都包装成新类型，而是作为 Java `float` 计算的窄边界。新调用点必须先由 Java 声明、显式 cast 和赋值位置证明其操作数确实是 `float`，再接入 `Float32Math`；因此可以逐点迁移和对照测试，避免一次性全局替换。
 
 不能把所有算术都机械包上 `Math.fround`：若 Java 原式有 `double` 操作数，Java 会先提升为 `double`，此时应保留 double 运算后只在 Java 赋值点收窄。必须先回看 Java 变量声明、显式 cast 和赋值类型，再决定收窄位置。
 
