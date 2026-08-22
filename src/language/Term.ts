@@ -380,7 +380,10 @@ export class Term extends JavaObject {
         } else if (isVariableTerm(this) && !isVariableTerm(that)) {
             return -1;
         }
-        return Texts.compareTo(this.name().toString(), that.name().toString());
+        // jree's java.lang.String.toString() is not a native string at this
+        // boundary. Convert explicitly so Texts.compareTo receives the same
+        // UTF-16 text that Java's String.compareTo compares.
+        return Texts.compareTo(String(this.name()), String(that.name()));
     }
 
     public containedTemporalRelations(): int {

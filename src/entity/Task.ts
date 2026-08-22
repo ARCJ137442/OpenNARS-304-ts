@@ -1,6 +1,7 @@
 //! Java source: opennars/entity/Task.java
 import { java, type int, type long, S } from "jree";
 import { Item } from "./Item.ts";
+import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
 
 
 

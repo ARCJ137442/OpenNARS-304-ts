@@ -1,5 +1,6 @@
 //! Java source: opennars/control/TemporalInferenceControl.java
 import { java, JavaObject, type int, type long, type float } from "jree";
+import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 
 
 

@@ -131,7 +131,9 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 super(null);
                 this.target = target;
                 this.type = type;
-                this.index = [i0, i1] as unknown as Int16Array;
+                this.index = type === TermLink.COMPOUND_CONDITION
+                    ? [0, i0, i1] as unknown as Int16Array
+                    : [i0, i1] as unknown as Int16Array;
                 this.hash = this.init();
 
 
@@ -145,7 +147,9 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 super(null);
                 this.target = target;
                 this.type = type;
-                this.index = [i0, i1, i2] as unknown as Int16Array;
+                this.index = type === TermLink.COMPOUND_CONDITION
+                    ? [0, i0, i1, i2] as unknown as Int16Array
+                    : [i0, i1, i2] as unknown as Int16Array;
                 this.hash = this.init();
 
 
@@ -159,7 +163,9 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 super(null);
                 this.target = target;
                 this.type = type;
-                this.index = [i0, i1, i2, i3] as unknown as Int16Array;
+                this.index = type === TermLink.COMPOUND_CONDITION
+                    ? [0, i0, i1, i2, i3] as unknown as Int16Array
+                    : [i0, i1, i2, i3] as unknown as Int16Array;
                 this.hash = this.init();
 
 

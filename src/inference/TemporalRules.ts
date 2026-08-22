@@ -1,5 +1,6 @@
 //! Java source: opennars/inference/TemporalRules.java
 import { java, JavaObject, type int, type long, S } from "jree";
+import { Stamp } from "../entity/Stamp.ts";
 
 
 

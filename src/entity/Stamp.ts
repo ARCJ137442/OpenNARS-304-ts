@@ -2,6 +2,7 @@
 import { java, JavaObject, type int, type long, type float, S } from "jree";
 import { Tense } from "../language/Tense.ts";
 import { Symbols } from "../io/Symbols.ts";
+import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 
 const hashLong = (value: long): int => {
@@ -70,13 +71,13 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     public before(s: Stamp, duration: int): boolean {
         if (this.isEternal() || s.isEternal())
             return false;
-        return java.nio.ByteBuffer.order(s.occurrenceTime, this.occurrenceTime, duration) === TemporalRules.ORDER_BACKWARD;
+        return TemporalRules.order(s.occurrenceTime, this.occurrenceTime, duration) === TemporalRules.ORDER_BACKWARD;
     }
 
     public after(s: Stamp, duration: int): boolean {
         if (this.isEternal() || s.isEternal())
             return false;
-        return java.nio.ByteBuffer.order(s.occurrenceTime, this.occurrenceTime, duration) === TemporalRules.ORDER_FORWARD;
+        return TemporalRules.order(s.occurrenceTime, this.occurrenceTime, duration) === TemporalRules.ORDER_FORWARD;
     }
 
     public getOriginality(): float {

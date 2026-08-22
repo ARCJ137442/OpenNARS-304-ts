@@ -17,6 +17,7 @@ import { Evaluate } from "../operator/mental/Evaluate.ts";
 import { Hesitate } from "../operator/mental/Hesitate.ts";
 import { Want } from "../operator/mental/Want.ts";
 import { Wonder } from "../operator/mental/Wonder.ts";
+import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
 
 
 
@@ -63,6 +64,17 @@ export class ConfigReader extends JavaObject {
             ["org.opennars.operator.mental.Hesitate", () => new Hesitate()],
             ["org.opennars.operator.mental.Want", () => new Want()],
             ["org.opennars.operator.mental.Wonder", () => new Wonder()],
+            ["org.opennars.plugin.mental.InternalExperience", () => new InternalExperience(
+                0.3,
+                0.3,
+                0.0001,
+                0.000025,
+                0.1,
+                0.1,
+                true,
+                false,
+                false,
+            )],
         ]);
         ConfigReader.lastUnsupportedPluginClasspaths = [];
         ConfigReader.lastCompatibilityStubPluginClasspaths = [];

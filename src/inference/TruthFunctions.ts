@@ -570,7 +570,7 @@ export class TruthFunctions extends UtilityFunctions {
      */
     public static readonly EternalizedTruthValue = class EternalizedTruthValue extends TruthValue {
         public constructor(f: float, c: double, narParameters: Parameters) {
-            super(f, c, narParameters);
+            super(f, c, false, narParameters);
         }
     };
 

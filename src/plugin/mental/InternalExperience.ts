@@ -1,6 +1,22 @@
 //! Java source: opennars/plugin/mental/InternalExperience.java
 import { java, JavaObject, type float, type double, type int, S } from "jree";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
+import { TemporalRules } from "../../inference/TemporalRules.ts";
+import { Symbols } from "../../io/Symbols.ts";
+import { Conjunction } from "../../language/Conjunction.ts";
+import { Implication } from "../../language/Implication.ts";
+import { Inheritance } from "../../language/Inheritance.ts";
+import { Interval } from "../../language/Interval.ts";
+import { Product } from "../../language/Product.ts";
+import { Term } from "../../language/Term.ts";
 import { truthToWordTerm } from "../../entity/TruthValueTerm.ts";
+import { Events } from "../../io/events/Events.ts";
+import { Operation } from "../../operator/Operation.ts";
 
 
 
