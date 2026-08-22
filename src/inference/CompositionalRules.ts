@@ -39,11 +39,43 @@ import type { DerivationContext } from "../control/DerivationContext.ts";
 type Pair<L, R> = {
     getLeft(): L;
     getRight(): R;
+    equals(other: unknown): boolean;
+    hashCode(): number;
+};
+
+const pairValueEquals = (left: unknown, right: unknown): boolean => {
+    if (left === right) return true;
+    const equals = (left as { equals?: unknown } | null)?.equals;
+    return typeof equals === "function" && Boolean(equals.call(left, right));
+};
+
+const javaStringHashCode = (value: string): number => {
+    let hash = 0;
+    for (let i = 0; i < value.length; i++) {
+        hash = ((hash * 31) + value.charCodeAt(i)) | 0;
+    }
+    return hash;
+};
+
+const pairValueHashCode = (value: unknown): number => {
+    if (value === null || value === undefined) return 0;
+    const hashCode = (value as { hashCode?: unknown }).hashCode;
+    if (typeof hashCode === "function") return Number(hashCode.call(value));
+    return javaStringHashCode(String(value));
 };
 
 const pair = <L, R>(left: L, right: R): Pair<L, R> => ({
     getLeft: () => left,
     getRight: () => right,
+    equals: (other: unknown): boolean => {
+        if (other === null || typeof other !== "object") return false;
+        const otherPair = other as Partial<Pair<L, R>>;
+        return typeof otherPair.getLeft === "function"
+            && typeof otherPair.getRight === "function"
+            && pairValueEquals(left, otherPair.getLeft())
+            && pairValueEquals(right, otherPair.getRight());
+    },
+    hashCode: (): number => pairValueHashCode(left) ^ pairValueHashCode(right),
 });
 
 const union = TruthFunctions.union;

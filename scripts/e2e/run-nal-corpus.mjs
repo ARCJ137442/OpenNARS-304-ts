@@ -183,6 +183,18 @@ function notRunRows(files, cycles, engine, reason) {
   }));
 }
 
+function terminateChildProcess(child) {
+  if (child?.pid === undefined) return;
+  if (process.platform === "win32") {
+    spawnSync("taskkill", ["/PID", String(child.pid), "/T", "/F"], {
+      windowsHide: true,
+      stdio: "ignore",
+    });
+    return;
+  }
+  child.kill();
+}
+
 function isProcessTimeout(result) {
   return result?.error?.code === "ETIMEDOUT"
     || result?.error?.message?.includes("ETIMEDOUT") === true;
@@ -273,7 +285,7 @@ async function runTs(files, cycles, timeoutMs) {
       if (pendingFile === undefined) return;
       timeoutHandle = setTimeout(() => {
         timedOutFile = pendingFile;
-        child.kill();
+        terminateChildProcess(child);
       }, timeoutMs);
     };
     const consumeLine = (line) => {

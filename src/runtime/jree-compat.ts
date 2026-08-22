@@ -83,6 +83,122 @@ if (randomPrototype.next && randomPrototype.nextInt && randomPrototype.nextDoubl
     };
 }
 
+// jree 1.3.0's LinkedHashSet inherits HashSet's immutable hash backend, so
+// iteration of values with Java hashCode methods is not insertion ordered.
+// OpenNARS relies on LinkedHashSet order for powersets and deterministic rule
+// dispatch; keep the backend for membership/hash semantics and add an explicit
+// insertion-order view at this compatibility boundary.
+type LinkedHashSetCompat = {
+    add?: (value: unknown) => boolean;
+    addAll?: (collection: Iterable<unknown>) => boolean;
+    clear?: () => void;
+    clone?: () => unknown;
+    contains?: (value: unknown) => boolean;
+    iterator?: () => unknown;
+    remove?: (value: unknown) => boolean;
+    removeAll?: (collection: Iterable<unknown>) => boolean;
+    retainAll?: (collection: Iterable<unknown>) => boolean;
+    toArray?: (array?: unknown[]) => unknown[];
+    [Symbol.iterator]?: () => IterableIterator<unknown>;
+};
+
+const linkedHashSetPrototype = java.util.LinkedHashSet.prototype as unknown as LinkedHashSetCompat;
+const linkedHashSetOrder = new WeakMap<object, unknown[]>();
+const originalLinkedHashSetAdd = linkedHashSetPrototype.add;
+const originalLinkedHashSetClear = linkedHashSetPrototype.clear;
+const originalLinkedHashSetClone = linkedHashSetPrototype.clone;
+const originalLinkedHashSetContains = linkedHashSetPrototype.contains;
+const originalLinkedHashSetIterator = linkedHashSetPrototype.iterator;
+const originalLinkedHashSetRemove = linkedHashSetPrototype.remove;
+const originalLinkedHashSetRemoveAll = linkedHashSetPrototype.removeAll;
+const originalLinkedHashSetRetainAll = linkedHashSetPrototype.retainAll;
+
+const javaValuesEqual = (left: unknown, right: unknown): boolean => {
+    if (left === right) return true;
+    const equals = (left as { equals?: unknown } | null)?.equals;
+    return typeof equals === "function" && Boolean(equals.call(left, right));
+};
+
+const linkedHashSetValues = (set: object): unknown[] => {
+    const current = linkedHashSetOrder.get(set);
+    if (current !== undefined) return current;
+    const values = originalLinkedHashSetIterator === undefined
+        ? []
+        : Array.from(originalLinkedHashSetIterator.call(set) as Iterable<unknown>);
+    linkedHashSetOrder.set(set, values);
+    return values;
+};
+
+if (originalLinkedHashSetAdd && originalLinkedHashSetContains && originalLinkedHashSetIterator && originalLinkedHashSetRemove
+    && originalLinkedHashSetClear && originalLinkedHashSetRemoveAll && originalLinkedHashSetRetainAll) {
+    linkedHashSetPrototype.add = function add(value: unknown): boolean {
+        if (!linkedHashSetOrder.has(this as object)) linkedHashSetOrder.set(this as object, []);
+        const alreadyPresent = originalLinkedHashSetContains.call(this, value);
+        const added = originalLinkedHashSetAdd.call(this, value);
+        if (added && !alreadyPresent) linkedHashSetValues(this as object).push(value);
+        return added && !alreadyPresent;
+    };
+    linkedHashSetPrototype.addAll = function addAll(collection: Iterable<unknown>): boolean {
+        let changed = false;
+        for (const value of collection) {
+            changed = this.add!(value) || changed;
+        }
+        return changed;
+    };
+    linkedHashSetPrototype.clear = function clear(): void {
+        originalLinkedHashSetClear.call(this);
+        linkedHashSetValues(this as object).length = 0;
+    };
+    linkedHashSetPrototype.remove = function remove(value: unknown): boolean {
+        const removed = originalLinkedHashSetRemove.call(this, value);
+        if (removed) {
+            const values = linkedHashSetValues(this as object);
+            const index = values.findIndex((candidate) => javaValuesEqual(candidate, value));
+            if (index >= 0) values.splice(index, 1);
+        }
+        return removed;
+    };
+    linkedHashSetPrototype.removeAll = function removeAll(collection: Iterable<unknown>): boolean {
+        let changed = false;
+        for (const value of Array.from(collection)) {
+            changed = this.remove!(value) || changed;
+        }
+        return changed;
+    };
+    linkedHashSetPrototype.retainAll = function retainAll(collection: Iterable<unknown>): boolean {
+        const candidates = Array.from(collection);
+        let changed = false;
+        for (const value of [...linkedHashSetValues(this as object)]) {
+            const retained = candidates.some((candidate) => javaValuesEqual(candidate, value));
+            if (!retained) changed = this.remove!(value) || changed;
+        }
+        return changed;
+    };
+    linkedHashSetPrototype.iterator = function iterator(): unknown {
+        const values = [...linkedHashSetValues(this as object)];
+        let index = 0;
+        const result = {
+            hasNext: () => index < values.length,
+            next: () => values[index++],
+            [Symbol.iterator]() {
+                return this;
+            },
+        };
+        return result;
+    };
+    linkedHashSetPrototype[Symbol.iterator] = function* iterator(): IterableIterator<unknown> {
+        yield* linkedHashSetValues(this as object);
+    };
+    linkedHashSetPrototype.toArray = function toArray(): unknown[] {
+        return [...linkedHashSetValues(this as object)];
+    };
+    if (originalLinkedHashSetClone) {
+        linkedHashSetPrototype.clone = function clone(): unknown {
+            return new java.util.LinkedHashSet(this as never);
+        };
+    }
+}
+
 // jree 1.3.0's Charset static initializer asynchronously assigns a Charset
 // instance to the defaultCharset method.  PrintStream calls that method after
 // the timer fires, so the assignment becomes a process-wide runtime failure.

@@ -66,16 +66,16 @@ function describe(value, nar) {
 }
 
 function parseArgs(argv) {
-    if (argv.length !== 2) {
-        throw new Error("usage: node --loader ./scripts/ts-loader.mjs scripts/e2e/NalTraceRunner.mjs <cycles> <nal-file>");
+    if (argv.length < 2 || argv.slice(2).some((value) => value !== "--skip-embedded")) {
+        throw new Error("usage: node --loader ./scripts/ts-loader.mjs scripts/e2e/NalTraceRunner.mjs <cycles> <nal-file> [--skip-embedded]");
     }
     const cycles = Number(argv[0]);
     if (!Number.isInteger(cycles) || cycles < 1) throw new Error("cycles must be a positive integer");
-    return { cycles, file: argv[1] };
+    return { cycles, file: argv[1], skipEmbedded: argv.slice(2).includes("--skip-embedded") };
 }
 
 function main() {
-    const { cycles, file } = parseArgs(process.argv.slice(2));
+    const { cycles, file, skipEmbedded } = parseArgs(process.argv.slice(2));
     Debug.TEST = true;
     const nar = new Nar();
     const classNames = new Map(eventDefinitions.map(([name, eventClass]) => [eventClass, name]));
@@ -96,7 +96,7 @@ function main() {
         const line = rawLine.trim();
         if (line.length === 0 || line.startsWith("'")) continue;
         if (/^[0-9]+$/.test(line)) {
-            nar.cycles(Number(line));
+            if (!skipEmbedded) nar.cycles(Number(line));
             continue;
         }
         nar.addInput(new java.lang.String(line));

@@ -17,6 +17,7 @@ const CLUSTER_CATALOG = [
 function parseArgs(argv) {
   const resultFiles = [];
   const extraFiles = [];
+  const supplementFiles = [];
   let output = null;
   let manifestOutput = null;
   let summaryOutput = null;
@@ -24,13 +25,14 @@ function parseArgs(argv) {
     const argument = argv[index];
     if (argument === "--result-file") resultFiles.push(argv[++index]);
     else if (argument === "--extra-file") extraFiles.push(argv[++index]);
+    else if (argument === "--supplement-file") supplementFiles.push(argv[++index]);
     else if (argument === "--output") output = argv[++index];
     else if (argument === "--manifest-output") manifestOutput = argv[++index];
     else if (argument === "--summary-output") summaryOutput = argv[++index];
     else throw new Error(`Unknown argument: ${argument}`);
   }
   if (resultFiles.length === 0) throw new Error("at least one --result-file is required");
-  return { resultFiles, extraFiles, output, manifestOutput, summaryOutput };
+  return { resultFiles, extraFiles, supplementFiles, output, manifestOutput, summaryOutput };
 }
 
 function readJsonl(file) {
@@ -74,12 +76,24 @@ function primaryErrorType(row) {
   return "none";
 }
 
-function hypothesisFor(row, errorType) {
+function hypothesisFor(row, errorType, supplement) {
   const file = normalizedPath(row.file);
   const java = row.java ?? {};
   const ts = row.ts ?? {};
 
   if (row.functional_pass === true) return null;
+
+  if (supplement?.functional_pass === true
+    && supplement?.parity === true
+    && supplement?.ts?.ok === true) {
+    return {
+      status: "confirmed_long_budget",
+      observation: "The TypeScript run satisfies all expected markers under a longer independent budget; the fixed screening row remains a timeout.",
+      evidence: supplement.source_file,
+      next_experiment: "Compare bounded event counts and per-cycle digests before changing inference semantics.",
+      root_cause_cluster: "correct_but_slower",
+    };
+  }
 
   if (file.endsWith("\\nal3.subtermmapping1.nal")
     && java.ok === true && ts.timed_out === true) {
@@ -140,10 +154,10 @@ function hypothesisFor(row, errorType) {
   };
 }
 
-function classify(row, sourceFile) {
+function classify(row, sourceFile, supplement = null) {
   const source = sourceFile ?? row.file;
   const errorType = primaryErrorType(row);
-  const hypothesis = hypothesisFor(row, errorType);
+  const hypothesis = hypothesisFor(row, errorType, supplement);
   const cluster = hypothesis?.root_cause_cluster ?? (row.functional_pass === true ? "none" : "unknown");
   return {
     file: row.file,
@@ -177,6 +191,7 @@ function classify(row, sourceFile) {
     artifact_sha256: row.java?.artifact_sha256 ?? null,
     root_cause_cluster: cluster,
     hypothesis,
+    long_budget_evidence: supplement,
     source_row: row,
   };
 }
@@ -210,8 +225,17 @@ function main() {
   const options = parseArgs(process.argv.slice(2));
   const mainRows = options.resultFiles.flatMap(readJsonl);
   const extraRows = options.extraFiles.flatMap(readJsonl);
+  const supplementRows = options.supplementFiles.flatMap((file) => readJsonl(file).map((row) => ({
+    source_file: file,
+    ...row,
+  })));
+  const supplements = new Map(supplementRows.map((row) => [normalizedPath(row.file), row]));
   const allRows = [...mainRows, ...extraRows];
-  const classified = allRows.map((row, index) => classify(row, index < mainRows.length ? row.file : row.file));
+  const classified = allRows.map((row, index) => classify(
+    row,
+    index < mainRows.length ? row.file : row.file,
+    supplements.get(normalizedPath(row.file)) ?? null,
+  ));
   const mainKeys = mainRows.map((row) => normalizedPath(row.file));
   const allKeys = allRows.map((row) => normalizedPath(row.file));
   if (mainRows.length !== 245) throw new Error(`expected 245 main rows, got ${mainRows.length}`);
