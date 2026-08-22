@@ -1,5 +1,8 @@
 //! Java source: opennars/operator/mental/Consider.java
 import { java } from "jree";
+import { Operator } from "../Operator.ts";
+import { DerivationContext } from "../../control/DerivationContext.ts";
+import { GeneralInferenceControl } from "../../control/GeneralInferenceControl.ts";
 
 
 

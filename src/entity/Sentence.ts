@@ -530,7 +530,8 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
                     for (let i: int = 0; i < 4; i++) { // skip min sizes
                         conv += java.lang.String.valueOf(this.term.term_indices[i]) + ",";
                     }
-                    conv = conv.substring(0, conv.length() - 1) + "]";
+                    // Java String.length() becomes the JS string length property.
+                    conv = conv.substring(0, conv.length - 1) + "]";
                 }
 
                 let buffer: java.lang.StringBuilder = new java.lang.StringBuilder(stringLength).append(contentName).append(this.punctuation)

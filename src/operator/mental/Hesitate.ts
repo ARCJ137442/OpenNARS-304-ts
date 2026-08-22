@@ -1,6 +1,7 @@
 //! Java source: opennars/operator/mental/Hesitate.java
 import { java } from "jree";
 import { Operator } from "../Operator.ts";
+import { Consider } from "./Consider.ts";
 
 
 

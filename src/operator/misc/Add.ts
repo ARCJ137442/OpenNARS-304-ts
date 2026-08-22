@@ -1,6 +1,11 @@
 //! Java source: opennars/operator/misc/Add.java
 import { java, type int } from "jree";
 import { FunctionOperator } from "../FunctionOperator.ts";
+import { Term } from "../../language/Term.ts";
+
+// Java's StringUtils.isNumeric accepts an integer composed only of digits.
+// Keep this check local so the operator does not depend on the main entrypoint.
+const isNumeric = (value: unknown): boolean => /^\d+$/.test(String(value).trim());
 
 
 
@@ -21,13 +26,13 @@ export class Add extends FunctionOperator {
         let n1: int;
         let n2: int;
 
-        if (StringUtils.isNumeric(x[0].name())) {
+        if (isNumeric(x[0].name())) {
             n1 = java.lang.Integer.parseInt(java.lang.String.valueOf(x[0].name()));
         } else {
             throw new java.lang.IllegalArgumentException("1st parameter not an integer");
         }
 
-        if (StringUtils.isNumeric((x[1].name()))) {
+        if (isNumeric(x[1].name())) {
             n2 = java.lang.Integer.parseInt(java.lang.String.valueOf(x[1].name()));
         } else {
             throw new java.lang.IllegalArgumentException("2nd parameter not an integer");

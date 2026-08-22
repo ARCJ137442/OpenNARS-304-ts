@@ -26,6 +26,8 @@ import { Conjunction } from "../language/Conjunction.ts";
 import { Implication } from "../language/Implication.ts";
 import { Disjunction } from "../language/Disjunction.ts";
 import { Equivalence } from "../language/Equivalence.ts";
+import { Negation } from "../language/Negation.ts";
+import { Symbols } from "../io/Symbols.ts";
 
 
 

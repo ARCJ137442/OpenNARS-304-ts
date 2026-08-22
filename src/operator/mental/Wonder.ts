@@ -1,6 +1,11 @@
 //! Java source: opennars/operator/mental/Wonder.java
 import { java } from "jree";
 import { Operator } from "../Operator.ts";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { Symbols } from "../../io/Symbols.ts";
 
 
 
@@ -34,7 +39,9 @@ export class Wonder extends Operator {
             memory.narParameters.DEFAULT_QUESTION_DURABILITY, 1, memory.narParameters);
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-        return Lists.newArrayList(newTask);
+        let result: java.util.List<Task> = new java.util.ArrayList();
+        result.add(newTask);
+        return result;
     }
 
 }

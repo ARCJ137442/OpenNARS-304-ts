@@ -1,6 +1,19 @@
 //! Java source: opennars/operator/FunctionOperator.java
 import { java, type int, type float } from "jree";
 import { Operator } from "./Operator.ts";
+import { BudgetValue } from "../entity/BudgetValue.ts";
+import { Sentence } from "../entity/Sentence.ts";
+import { Stamp } from "../entity/Stamp.ts";
+import { Task } from "../entity/Task.ts";
+import { TruthValue } from "../entity/TruthValue.ts";
+import { Symbols } from "../io/Symbols.ts";
+
+// Keep FunctionOperator below the inference layer. Importing BudgetFunctions
+// here would close the FunctionOperator -> Memory -> BudgetFunctions cycle.
+const truthToQuality = (truth: any): float => {
+    const expectation: float = truth.getExpectation();
+    return Math.max(expectation, (1 - expectation) * 0.75) as float;
+};
 
 
 
@@ -97,7 +110,9 @@ export abstract class FunctionOperator extends Operator {
             m.narParameters.DEFAULT_FEEDBACK_DURABILITY,
             truthToQuality(s.getTruth()), m.narParameters);
         let newTask: Task = new Task(s, budgetForNewTask, Task.EnumType.INPUT);
-        return Lists.newArrayList(newTask);
+        let result: java.util.List<Task> = new java.util.ArrayList();
+        result.add(newTask);
+        return result;
     }
 
     /**

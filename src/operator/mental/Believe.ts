@@ -4,6 +4,11 @@ import { Operator } from "../Operator.ts";
 import { Operation } from "../Operation.ts";
 import { Task } from "../../entity/Task.ts";
 import { truthFromWordTerm } from "../../entity/TruthValueTerm.ts";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
+import { Symbols } from "../../io/Symbols.ts";
 import { Memory } from "../../storage/Memory.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 
@@ -44,7 +49,9 @@ export class Believe extends Operator {
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
 
-        return Lists.newArrayList(newTask);
+        let result: java.util.List<Task> = new java.util.ArrayList();
+        result.add(newTask);
+        return result;
 
     }
 }

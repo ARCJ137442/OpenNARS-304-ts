@@ -5,6 +5,7 @@ import { Inheritance } from "../language/Inheritance.ts";
 import { Operation } from "./Operation.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { OutputHandler } from "../io/events/OutputHandler.ts";
+import { Debug } from "../main/Debug.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Task } from "../entity/Task.ts";

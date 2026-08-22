@@ -1,6 +1,12 @@
 //! Java source: opennars/operator/mental/Want.java
 import { java } from "jree";
 import { Operator } from "../Operator.ts";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { Symbols } from "../../io/Symbols.ts";
 
 
 
@@ -37,7 +43,9 @@ export class Want extends Operator {
             memory.narParameters.DEFAULT_GOAL_DURABILITY, truth, memory.narParameters);
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-        return Lists.newArrayList(newTask);
+        let result: java.util.List<Task> = new java.util.ArrayList();
+        result.add(newTask);
+        return result;
     }
 
 }

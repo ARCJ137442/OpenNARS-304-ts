@@ -1,6 +1,15 @@
 //! Java source: opennars/operator/misc/Reflect.java
 import { java, type int, S } from "jree";
 import { FunctionOperator } from "../FunctionOperator.ts";
+import { CompoundTerm } from "../../language/CompoundTerm.ts";
+import { Inheritance } from "../../language/Inheritance.ts";
+import { Product } from "../../language/Product.ts";
+import { Similarity } from "../../language/Similarity.ts";
+import type { Statement } from "../../language/Statement.ts";
+import { Term } from "../../language/Term.ts";
+import { Symbols } from "../../io/Symbols.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 
@@ -48,39 +57,25 @@ export class Reflect extends FunctionOperator {
     public static sop(...args: unknown[]): Term {
         switch (args.length) {
             case 2: {
-                const [s, operatorName] = args as [Statement, java.lang.String];
-
-
-                return Inheritance.make(Product.make(Reflect.getMetaTerm(s.getSubject()), Reflect.getMetaTerm(s.getPredicate())),
-                    Term.get(operatorName));
-
-
-                break;
-            }
-
-            case 2: {
-                const [s, predicate] = args as [Statement, Term];
-
-
-                return Inheritance.make(Product.make(Reflect.getMetaTerm(s.getSubject()), Reflect.getMetaTerm(s.getPredicate())), predicate);
-
-
-                break;
-            }
-
-            case 2: {
-                const [operatorName, t] = args as [java.lang.String, Term[]];
-
-
-                let m: Term[] = new Array<Term>(t.length);
+                const [first, second] = args;
+                const isStatement = first !== null
+                    && typeof (first as { getSubject?: unknown }).getSubject === "function"
+                    && typeof (first as { getPredicate?: unknown }).getPredicate === "function";
+                if (isStatement) {
+                    const s = first as Statement;
+                    const product = Product.make(Reflect.getMetaTerm(s.getSubject()), Reflect.getMetaTerm(s.getPredicate()));
+                    const predicate = second instanceof Term
+                        ? second
+                        : Term.get(second as java.lang.String);
+                    return Inheritance.make(product, predicate);
+                }
+                const operatorName = String(first);
+                const terms = second as Term[];
+                let m: Term[] = new Array<Term>(terms.length);
                 let i: int = 0;
-                for (let x of t)
+                for (let x of terms)
                     m[i++] = Reflect.getMetaTerm(x);
-
                 return Inheritance.make(Product.make(m), Term.get(operatorName));
-
-
-                break;
             }
 
             case 3: {
@@ -106,9 +101,9 @@ export class Reflect extends FunctionOperator {
         }
         let t: CompoundTerm = node as CompoundTerm;
         switch (t.operator()) {
-            case INHERITANCE:
+            case NativeOperator.INHERITANCE:
                 return Reflect.sop(t as Inheritance, "inheritance");
-            case SIMILARITY:
+            case NativeOperator.SIMILARITY:
                 return Reflect.sop(t as Similarity, "similarity");
             default:
                 return Reflect.sop(t.operator().toString(), t.term);

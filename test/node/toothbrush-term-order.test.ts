@@ -56,6 +56,22 @@ test("budget fields narrow at Java float write boundaries", async () => {
     assert.equal(budget.getPriority(), Math.fround(0.17));
 });
 
+test("sentence rendering converts Java String.length() for visual indices", async () => {
+    const { java } = await import("jree");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Narsese } = await import("../../src/io/Narsese.ts");
+
+    const nar = new Nar();
+    const task = new Narsese(nar).parseTask(new java.lang.String(
+        "<{M1[-1.0,0.0]} --> [BRIGHT]>. ",
+    ));
+
+    assert.match(
+        String(task.sentence.toString(nar, true)),
+        /\[i,j,k,l\]=\[1,1,-1,0\]/,
+    );
+});
+
 test("compound-condition TermLink overload preserves Java's leading condition index", async () => {
     const { java } = await import("jree");
     const { Nar } = await import("../../src/main/Nar.ts");
