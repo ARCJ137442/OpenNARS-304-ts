@@ -94,6 +94,27 @@
       "stability": {"files": 1, "passed": 0, "failed": 1}
     }
   },
+  "stamp_assertion_probe": {
+    "purpose": "在不修改当前 Java worktree 和不替换 canonical artifact 的前提下验证共同失败根因",
+    "source_commit": "a2d76a246d830671142c61793e0c6aac058ba033",
+    "temporary_worktree": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-stamp-probe",
+    "change": "仅移除 Sentence.toString(Nar, boolean) 中对 showStamp=false 必然产生的 stampString 空值的无条件 AssertionError",
+    "source_origin": "断言由 Java commit bb55159efba1d3c9d6cbe9ea79241f65bf35b0e1 引入；OutputContainsCondition 以 showStamp=false 调用该方法",
+    "artifact_sha256": "A6805E837F494474BE9172C27F21C0DF7A8ABD4FC75D29385C92320D3FC4BCE4",
+    "artifact_size": 4092945,
+    "build_command": "mvn -Djacoco.skip=true -Dmaven.test.failure.ignore=false clean verify",
+    "surefire": {
+      "test_cases": 266,
+      "passed": 266,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "nal_test": 244,
+      "stability_test": 1
+    },
+    "canonical_effect": "probe_only; not canonical and not committed as Java source",
+    "decision_required": "是否批准对当前 Java 源码移除该错误断言并以修复后的源码重新建立候选 canonical"
+  },
   "canonical_decision": {
     "gate_a_passed": false,
     "canonical": "legacy-only-history-baseline; no switch",
