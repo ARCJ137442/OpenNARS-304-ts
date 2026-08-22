@@ -72,3 +72,27 @@ test("TruthValue string key is stable and usable in maps", () => {
     map.set(keyA, a);
     assert.equal(map.get(keyB), a);
 });
+
+test("TruthValue hashCode preserves Java float/double operand boundaries", () => {
+    const params = new Parameters();
+    const cases = [
+        [0.4, 0.4, 1717986918],
+        [0.73, 0.4, -1159698842],
+        [0.9, 0.9, -429529499],
+    ] as const;
+
+    for (const [frequency, confidence, expected] of cases) {
+        const truth = TruthValue.fromFrequencyConfidence(frequency, confidence, params);
+        assert.equal(truth.hashCode(), expected);
+    }
+});
+
+test("TruthValue equals uses Java epsilon and ignores analytic metadata", () => {
+    const params = new Parameters();
+    const base = TruthValue.fromFrequencyConfidence(0.4, 0.4, params, false);
+    const near = TruthValue.fromFrequencyConfidence(0.4 + 0.001, 0.4 - 0.001, params, true);
+    const far = TruthValue.fromFrequencyConfidence(0.4 + params.TRUTH_EPSILON, 0.4, params);
+
+    assert.equal(base.equals(near), true);
+    assert.equal(base.equals(far), false);
+});

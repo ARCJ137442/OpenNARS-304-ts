@@ -249,7 +249,11 @@ Java 的 `float` 不是“最后赋值时才取单精度”。如果两个操作
 - 用 Java/TypeScript 事件或 Bag 轨迹确认首次分叉消失，而不是只比较最终 marker；
 - 若同一模式在多个模块出现，先记录每个 Java 操作数类型，再决定是否可以批量应用。
 
-涉及文件示例：`src/control/DerivationContext.ts`、`src/control/concept/ProcessGoal.ts`、`src/storage/Bag.ts`、`test/node/toothbrush-term-order.test.ts`。
+补充边界：`float` 语义不仅影响预算算术，也可能参与领域对象的 `hashCode`。本轮在 `TruthValue` 中确认了两个相邻契约：Java 的频率哈希乘法使用 `float`，置信度哈希乘法使用 `double`；`TruthValue.equals` 则按 `TRUTH_EPSILON` 近似比较且忽略 `analytic` 标志。若只保留字符串哈希或 TypeScript 严格相等，`Sentence`/`Task` 作为 Bag key 时会把 Java 应合并的任务拆成多个条目，随后改变 TaskLink 选择和 TermLink 轨迹。
+
+纠正方式是把哈希中的单精度乘法收敛到 `Float32Math`，把相等判断直接按 Java 源码的 epsilon 契约实现；不要把 `analytic` 元数据擅自加入集合身份。验证必须同时覆盖固定数值 hash 快照、epsilon 两侧边界，以及一个真实 NAL 中由相等任务合并触发的 Bag 数量。
+
+涉及文件示例：`src/entity/TruthValue.ts`、`src/runtime/Float32.ts`、`src/control/DerivationContext.ts`、`src/control/concept/ProcessGoal.ts`、`src/storage/Bag.ts`、`test/node/toothbrush-term-order.test.ts`、`test/node/tasklink-key.test.ts`。
 
 ### C 级：必须做语义重写，禁止自动替换
 

@@ -1,4 +1,6 @@
 //! Java source: opennars/entity/TruthValue.java
+import { Float32Math } from "../runtime/Float32.ts";
+
 export interface TruthParameters {
     TRUTH_EPSILON: number;
     DEFAULT_CREATION_EXPECTATION: number;
@@ -138,13 +140,17 @@ export class TruthValue {
 
     public equals(other: unknown): boolean {
         return other instanceof TruthValue
-            && this.frequency === other.frequency
-            && this.confidence === other.confidence
-            && this.analytic === other.analytic;
+            && TruthValue.isEqual(this.frequency, other.frequency, this.narParameters.TRUTH_EPSILON)
+            && TruthValue.isEqual(this.confidence, other.confidence, this.narParameters.TRUTH_EPSILON);
     }
 
     public hashCode(): number {
-        return this.toKey().split("").reduce((hash, character) => ((hash * 31) + character.charCodeAt(0)) | 0, 1);
+        // Java stores frequency as float, so the multiplication is performed
+        // with binary32 operands. Confidence is Java double and remains a
+        // binary64 operation until the explicit int conversion.
+        const frequencyPart: number = Math.trunc(Float32Math.multiply(0xFFFF, this.frequency));
+        const confidencePart: number = Math.trunc(0xFFFF * this.confidence);
+        return (frequencyPart << 16) | confidencePart;
     }
 
     public clone(): TruthValue {
