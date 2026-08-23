@@ -20,6 +20,33 @@ test("commutative conjunction follows Java term ordering for toothbrush goal", a
     assert.notEqual(Number.isNaN(term.term[0].compareTo(term.term[1])), true);
 });
 
+test("scoped variable ordering uses Java code-unit order for commutative intersections", async () => {
+    const { java } = await import("jree");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Narsese } = await import("../../src/io/Narsese.ts");
+    const { IntersectionInt } = await import("../../src/language/IntersectionInt.ts");
+
+    const parser = new Narsese(new Nar());
+    const task = parser.parseTask(new java.lang.String(
+        "<(|,#1,#2,cup) --> (|,#1,[unscrewing],cup)>.",
+    ));
+    const belief = parser.parseTask(new java.lang.String(
+        "<(|,#1,#2,cup) --> (|,#1,#2,[heated])>.",
+    ));
+    const taskVariable = task.sentence.term.getPredicate().term[0];
+    const beliefVariable = belief.sentence.term.getPredicate().term[0];
+
+    assert.ok(taskVariable.compareTo(beliefVariable) > 0);
+    assert.ok(beliefVariable.compareTo(taskVariable) < 0);
+    assert.equal(
+        String(IntersectionInt.make(
+            task.sentence.term.getPredicate(),
+            belief.sentence.term.getPredicate(),
+        ).name()),
+        "(|,#1,#1,#2,[heated],[unscrewing],cup)",
+    );
+});
+
 test("default NAR loads the internal experience plugin used by Java toothbrush", async () => {
     const { InternalExperience } = await import("../../src/plugin/mental/InternalExperience.ts");
     const { Emotions } = await import("../../src/plugin/mental/Emotions.ts");

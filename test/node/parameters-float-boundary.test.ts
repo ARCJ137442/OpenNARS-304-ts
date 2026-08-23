@@ -1,9 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { java } from "jree";
 
 import { Nar } from "../../src/main/Nar.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import { TruthValue } from "../../src/entity/TruthValue.ts";
+import { Narsese } from "../../src/io/Narsese.ts";
+import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 
 test("Nar config preserves Java float parameters at the TruthValue clamp boundary", () => {
     const nar = new Nar();
@@ -17,6 +20,41 @@ test("Nar config preserves Java float parameters at the TruthValue clamp boundar
         nar.narParameters,
     );
     assert.equal(truth.confidence, 1 - Math.fround(0.01));
+});
+
+test("Memory.cycles narrows the duration before the Java multiplication", () => {
+    const nar = new Nar();
+    const durations = 897.7854144473307;
+    const expected = Math.fround(Math.fround(nar.narParameters.DURATION) * Math.fround(durations));
+
+    assert.equal(nar.memory.cycles(durations), expected);
+    assert.notEqual(
+        nar.memory.cycles(durations),
+        Math.fround(nar.narParameters.DURATION * durations),
+    );
+});
+
+test("Memory.output narrows the volume ratio before the Java subtraction", () => {
+    const nar = new Nar();
+    nar.narParameters.VOLUME = 9;
+    const task = new Narsese(nar).parseTask(new java.lang.String("<volume-test --> object>."));
+    const expected = Math.fround(
+        Math.fround(1) - Math.fround(Math.fround(nar.narParameters.VOLUME) / Math.fround(100)),
+    );
+    task.getBudget().setPriority(expected);
+    task.getBudget().setDurability(expected);
+    task.getBudget().setQuality(expected);
+
+    let outputCount = 0;
+    nar.on(OutputHandler.OUT.class, {
+        event() {
+            outputCount += 1;
+        },
+    });
+    nar.memory.output(task);
+
+    assert.equal(outputCount, 1);
+    assert.notEqual(expected, Math.fround(1 - nar.narParameters.VOLUME / 100));
 });
 
 test("Parameters keeps every Java float default in binary32", () => {

@@ -334,7 +334,10 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     public output(t: Task): void {
 
         let budget: float = t.budget.summary();
-        let noiseLevel: float = Float32Math.from(1.0 - (this.narParameters.VOLUME / 100.0)) as float;
+        // Java evaluates both the division and subtraction as float because
+        // VOLUME is converted to the 100.0f operand type before the divide.
+        const volumeRatio: float = Float32Math.divide(this.narParameters.VOLUME, 100) as float;
+        let noiseLevel: float = Float32Math.subtract(1.0, volumeRatio) as float;
 
         if (budget >= noiseLevel) { // only report significant derived Tasks
             this.emit(OUT.class, t);
@@ -434,7 +437,10 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
 
     /** converts durations to cycles */
     public cycles(durations: double): float {
-        return Float32Math.from(this.narParameters.DURATION * durations) as float;
+        // Java narrows the double duration before multiplying by the integer
+        // DURATION; keep that operand boundary instead of narrowing only the
+        // final binary64 product.
+        return Float32Math.multiply(this.narParameters.DURATION, Float32Math.from(durations)) as float;
     }
 
     public iterator(): java.util.Iterator<Concept> {

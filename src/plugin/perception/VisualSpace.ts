@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/perception/VisualSpace.java
-import { java, JavaObject, type int, type double, type float } from "jree";
+import { java, JavaObject, type int, type double } from "jree";
+import { Float32Math } from "../../runtime/Float32.ts";
 
 
 
@@ -49,8 +50,10 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
             return TruthValue.fromFrequencyConfidence(1.0, 0.0, this.nar.narParameters);
         }
         let other: VisualSpace = obj as VisualSpace;
-        let kh: double = (other.height as float) / (this.height as double);
-        let kw: double = (other.width as float) / (this.width as double);
+        // Java casts the integer dimensions to float before promoting them to
+        // double for this ratio. A TypeScript `as float` is compile-time only.
+        let kh: double = Float32Math.from(other.height) / this.height;
+        let kw: double = Float32Math.from(other.width) / this.width;
         let bestShiftTruth: TruthValue = TruthValue.fromFrequencyConfidence(0.5, 0.01, this.nar.narParameters);
         for (let oj: int = -this.height; oj < this.height; oj++) {
             for (let oi: int = -this.width; oi < this.width; oi++) {

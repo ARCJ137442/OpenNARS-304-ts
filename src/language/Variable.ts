@@ -208,7 +208,11 @@ export class Variable extends Term {
         }
 
         let thatVar: Variable = that as Variable;
-        let nameCmp: int = java.lang.String.valueOf(this.name()).compareTo(java.lang.String.valueOf(thatVar.name()));
+        // Java compares these names with String.compareTo (UTF-16 code-unit
+        // order). jree's JavaString comparator applies locale punctuation
+        // ordering, which reverses terms such as `#` and `[` and changes the
+        // TreeSet order used by commutative compound terms.
+        let nameCmp: int = Texts.compareTo(String(this.name()), String(thatVar.name()));
         if (nameCmp !== 0) {
             return nameCmp;
         }
@@ -218,7 +222,7 @@ export class Variable extends Term {
         if (this.getScope() !== this && thatVar.getScope() === thatVar) {
             return -1;
         }
-        return java.lang.String.valueOf(this.getScope().name()).compareTo(java.lang.String.valueOf(thatVar.getScope().name()));
+        return Texts.compareTo(String(this.getScope().name()), String(thatVar.getScope().name()));
     }
 
     /*
