@@ -1,0 +1,16 @@
+{
+  "sample": "nal6.22.nal",
+  "canonical_java_artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "skip_embedded": true,
+  "requested_cycles": 32768,
+  "window_cycles": 1024,
+  "windows": 32,
+  "java_cycles_observed": 32768,
+  "typescript_cycles_observed": 32768,
+  "java_total_events": 183961,
+  "typescript_total_events": 183961,
+  "incomplete": false,
+  "equal": true,
+  "first_difference": null,
+  "interpretation": "The low-overhead stage digest remains equal through cycle 32768; no semantic repair is justified by this sample."
+}
