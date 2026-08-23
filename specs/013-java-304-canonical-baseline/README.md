@@ -1,18 +1,21 @@
 ---
-status: in-progress
-created: '2026-08-22'
-tags: []
+status: complete
+created: 2026-08-22
 priority: medium
-created_at: '2026-08-22T01:54:49.696Z'
-updated_at: '2026-08-22T01:55:28.194Z'
+created_at: 2026-08-22T01:54:49.696Z
+updated_at: 2026-08-23T08:16:52.593284800Z
+completed_at: 2026-08-23T08:16:52.593284800Z
 transitions:
-  - status: in-progress
-    at: '2026-08-22T01:55:28.194Z'
+- status: in-progress
+  at: 2026-08-22T01:55:28.194Z
+- status: complete
+  at: 2026-08-23T08:16:52.593284800Z
 ---
+
 
 # java-304-canonical-baseline
 
-> **Status**: ⏳ In progress · **Priority**: Medium · **Created**: 2026-08-22
+> **Status**: ✅ Complete · **Priority**: Medium · **Created**: 2026-08-22
 
 ## 概述
 
