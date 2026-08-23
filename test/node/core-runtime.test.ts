@@ -65,10 +65,18 @@ test("translated term and sentence constructors preserve Java delegation contrac
     assert.equal(String(clonedConjunction.toString()), "(&&,a,b)");
 
     const { CompoundTerm } = await import("../../src/language/CompoundTerm.ts");
-    const indexedTerm = Term.get("M1[-1.0,0.0]");
+    const indexedTerm = Term.get("M1[1,0]");
     const rectangle = CompoundTerm.UpdateConvRectangle([indexedTerm]);
     assert.equal(rectangle.index_variable, "M1");
-    assert.deepEqual(Array.from(rectangle.term_indices ?? []), [1, 1, -1, 0, 1, 1]);
+    assert.deepEqual(Array.from(rectangle.term_indices ?? []), [1, 1, 1, 0, 1, 1]);
+});
+
+test("decimal perception coordinates remain conceptual like Java Term.get", async () => {
+    const { Term } = await import("../../src/language/Term.ts");
+    const indexedTerm = Term.get("M1[-1.0,0.0]");
+
+    assert.equal(indexedTerm.term_indices, null);
+    assert.equal(indexedTerm.index_variable, "M1");
 });
 
 test("Nar explicit long overload accepts JavaScript number and bigint values", async () => {

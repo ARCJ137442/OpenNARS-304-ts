@@ -1,8 +1,16 @@
 //! Java source: opennars/plugin/perception/VisualSpace.java
 import { java, JavaObject, type int, type double } from "jree";
 import { Float32Math } from "../../runtime/Float32.ts";
-
-
+import { TruthFunctions } from "../../inference/TruthFunctions.ts";
+import { TemporalRules } from "../../inference/TemporalRules.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { NullOperator } from "../../operator/NullOperator.ts";
+import { Operation } from "../../operator/Operation.ts";
+import { Operator } from "../../operator/Operator.ts";
+import { Conjunction } from "../../language/Conjunction.ts";
+import type { ImaginationSpace } from "../../operator/ImaginationSpace.ts";
+import type { Nar } from "../../main/Nar.ts";
+import type { Term } from "../../language/Term.ts";
 
 /**
  *
@@ -28,18 +36,18 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
         this.nar = nar;
         this.height = height;
         this.width = width;
-        this.cropped = new [[]];
-        this.source = new [[]];
+        this.cropped = Array.from({ length: height }, () => new Float64Array(width));
+        this.source = source.map((row) => new Float64Array(row));
         this.py = py;
         this.px = px;
         for (let i: int = 0; i < source.length; i++) { // "snapshot" from source
-            java.lang.System.arraycopy(source[i], 0, this.source[i], 0, source[0].length);
+            this.source[i].set(source[i]);
         }
         // now copy into data
         for (let i: int = 0; i < height; i++) {
             let relIndexY: int = 0; // was py, px but sensory device already does the shifting
             let relIndexX: int = 0;
-            java.lang.System.arraycopy(source[relIndexY + i], relIndexX + 0, this.cropped[i], 0, width);
+            this.cropped[i].set(source[relIndexY + i].subarray(relIndexX, relIndexX + width));
         }
         nar.addPlugin(VisualSpace.move);
         nar.addPlugin(VisualSpace.zoom);

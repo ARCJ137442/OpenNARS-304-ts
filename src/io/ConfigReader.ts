@@ -19,6 +19,7 @@ import { Want } from "../operator/mental/Want.ts";
 import { Wonder } from "../operator/mental/Wonder.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
 import { Emotions } from "../plugin/mental/Emotions.ts";
+import { VisionChannel } from "../plugin/perception/VisionChannel.ts";
 
 // These fields are Java `float` values. Node's XML path parses numbers as
 // binary64, so make the narrowing explicit at the configuration boundary.
@@ -64,7 +65,7 @@ export class ConfigReader extends JavaObject {
         return candidates.find(candidate => existsSync(candidate)) ?? null;
     }
 
-    private static loadNodeConfig(filepath: string, parameters: Parameters): java.util.List<Plugin> {
+    private static loadNodeConfig(filepath: string, reasoner: Reasoner, parameters: Parameters): java.util.List<Plugin> {
         const path = ConfigReader.nodeConfigPath(filepath);
         if (path === null) {
             throw new Error(`Configuration file not found: ${filepath}`);
@@ -103,6 +104,16 @@ export class ConfigReader extends JavaObject {
                 0.1,
                 0.9,
                 1000,
+            )],
+            ["org.opennars.plugin.perception.VisionChannel", () => new VisionChannel(
+                "BRIGHT",
+                reasoner,
+                reasoner,
+                5,
+                5,
+                25,
+                0.1,
+                0,
             )],
         ]);
         ConfigReader.lastUnsupportedPluginClasspaths = [];
@@ -155,7 +166,7 @@ export class ConfigReader extends JavaObject {
         parameters: Parameters): java.util.List<Plugin> {
 
         if (typeof process !== "undefined" && process.versions?.node !== undefined) {
-            return ConfigReader.loadNodeConfig(String(filepath), parameters);
+            return ConfigReader.loadNodeConfig(String(filepath), reasoner, parameters);
         }
 
         java.lang.System.out.println("Got relative path for loading the config: " + filepath);

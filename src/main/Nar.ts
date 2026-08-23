@@ -500,10 +500,20 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                     let subj: SetExt = (t as Inheritance).getSubject() as SetExt;
                     // map to pei's -1 to 1 indexing schema
                     if (subj.term[0].term_indices === null) {
-                        let variable: java.lang.String = subj.toString().split("\\[")[0];
-                        let vals: java.lang.String[] = subj.toString().split("\\[")[1].split("\\]")[0].split(",");
-                        let height: double = java.lang.Double.parseDouble(vals[0]);
-                        let width: double = java.lang.Double.parseDouble(vals[1]);
+                        const subjectText = String(subj.name());
+                        const openingBracket = subjectText.indexOf("[");
+                        const closingBracket = subjectText.lastIndexOf("]");
+                        if (openingBracket < 0 || closingBracket <= openingBracket) {
+                            throw new java.lang.IllegalArgumentException(
+                                "Sensory input is missing coordinates: " + subjectText,
+                            );
+                        }
+                        let variable: java.lang.String = subjectText.slice(0, openingBracket);
+                        let vals: java.lang.String[] = subjectText
+                            .slice(openingBracket + 1, closingBracket)
+                            .split(",");
+                        let height: double = Number.parseFloat(vals[0]);
+                        let width: double = Number.parseFloat(vals[1]);
                         let wval: int = java.lang.Math
                             .round((width + 1.0) / 2.0 * (this.sensoryChannels.get(predicate).width - 1)) as int;
                         let hval: int = java.lang.Math

@@ -160,7 +160,10 @@ export class Term extends JavaObject {
                     }
                     term_indices = new Int32Array(ind_s.length);
                     for (let i: int = 0; i < ind_s.length; i++) {
-                        if (/^[-+]?\d+(?:\.\d+)?$/.test(String(ind_s[i]).trim()))
+                        // Java StringUtils.isNumeric accepts only unsigned decimal digits.
+                        // Decimal coordinates such as -1.0 therefore stay conceptual and
+                        // are mapped by Nar.dispatchToSensoryChannel before matrix access.
+                        if (/^\d+$/.test(String(ind_s[i]).trim()))
                             term_indices[i] = java.lang.Integer.valueOf(ind_s[i]);
                         else {
                             term_indices = null;

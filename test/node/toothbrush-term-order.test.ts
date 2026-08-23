@@ -189,7 +189,7 @@ test("mental operation feedback does not create a Java operation frame", async (
     assert.equal(nar.memory.recent_operations.size(), 0);
 });
 
-test("sentence rendering converts Java String.length() for visual indices", async () => {
+test("sentence rendering preserves Java conceptual decimal visual indices", async () => {
     const { java } = await import("jree");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
@@ -199,10 +199,7 @@ test("sentence rendering converts Java String.length() for visual indices", asyn
         "<{M1[-1.0,0.0]} --> [BRIGHT]>. ",
     ));
 
-    assert.match(
-        String(task.sentence.toString(nar, true)),
-        /\[i,j,k,l\]=\[1,1,-1,0\]/,
-    );
+    assert.match(String(task.sentence.toString(nar, true)), /\{M1\[-1\.0,0\.0\]\}/);
 });
 
 test("compound-condition TermLink overload preserves Java's leading condition index", async () => {

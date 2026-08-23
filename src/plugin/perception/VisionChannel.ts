@@ -2,9 +2,26 @@
 import { java, type float, type int, JavaObject } from "jree";
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-
-
-
+import { Events } from "../../io/events/Events.ts";
+import type { EventEmitter } from "../../io/events/EventEmitter.ts";
+import { Narsese } from "../../io/Narsese.ts";
+import { Symbols } from "../../io/Symbols.ts";
+import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { Inheritance } from "../../language/Inheritance.ts";
+import { SetExt } from "../../language/SetExt.ts";
+import { SetInt } from "../../language/SetInt.ts";
+import { Term } from "../../language/Term.ts";
+import { Tense } from "../../language/Tense.ts";
+import { SensoryChannel } from "./SensoryChannel.ts";
+import { VisualSpace } from "./VisualSpace.ts";
+import type { Task } from "../../entity/Task.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
+import type { Reasoner } from "../../interfaces/pub/Reasoner.ts";
+import type { Nar } from "../../main/Nar.ts";
 export class VisionChannel extends SensoryChannel {
     public defaultOutputConfidence: float = Float32Math.from(0.5) as float;
     public nPrototypes: int = 0;
@@ -28,19 +45,19 @@ export class VisionChannel extends SensoryChannel {
         this.label = SetInt.make(new Term(label));
         this.defaultOutputConfidence = Float32Math.from(defaultOutputConfidence) as float;
         this.nPrototypes = nPrototypes;
-        this.prototypes = new java.util.ArrayList<Prototype>();
-        this.inputs = new [[]];
-        this.updated = new [[]];
-        this.obs = (ev, a) => {
-            if (this.HadNewInput && ev === CycleEnd.class) {
+        this.prototypes = new java.util.ArrayList<VisionChannel.Prototype>();
+        this.inputs = VisionChannel.emptyInputs(height, width);
+        this.updated = VisionChannel.emptyUpdated(height, width);
+        this.obs = { event: (ev, _args) => {
+            if (this.HadNewInput && ev === Events.CycleEnd.class) {
                 this.empty_cycles++;
                 if (this.empty_cycles > duration) { // a deadline, pixels can't appear more than duration after each other
                     this.step_start(nar); // so we know we can input, not only when all pixels were re-set.
                 }
-            } else if (ev === ResetEnd.class) {
+            } else if (ev === Events.ResetEnd.class) {
                 this.resetChannel();
             }
-        };
+        } };
 
     }
 
@@ -51,8 +68,8 @@ export class VisionChannel extends SensoryChannel {
     }
 
     public resetChannel(): void {
-        this.inputs = new [[]];
-        this.updated = new [[]];
+        this.inputs = VisionChannel.emptyInputs(this.height, this.width);
+        this.updated = VisionChannel.emptyUpdated(this.height, this.width);
         this.cnt_updated = 0;
         this.px = 0;
         this.py = 0;
@@ -60,18 +77,18 @@ export class VisionChannel extends SensoryChannel {
         this.subj = "";
     }
 
-    protected subj: java.lang.String = "";
+    protected subj: string = "";
     protected empty_cycles: int = 0;
 
     public AddToMatrix(t: Task, time: Timable): boolean {
         let inh: Inheritance = t.getTerm() as Inheritance; // channels receive inheritances
-        let cur_subj: java.lang.String = (inh.getSubject() as SetExt).term[0].index_variable;
-        if (!cur_subj.equals(this.subj)) { // when subject changes, we start to collect from scratch,
-            if (!this.subj.isEmpty()) { // but only if subj isn't empty
+        let cur_subj = String((inh.getSubject() as SetExt).term[0].index_variable);
+        if (cur_subj !== this.subj) { // when subject changes, we start to collect from scratch,
+            if (this.subj.length > 0) { // but only if subj isn't empty
                 this.step_start(time); // flush to upper level what we so far had
             }
             this.cnt_updated = 0; // this way multiple matrices can be processed by the same vision channel
-            this.updated = new [[]];
+            this.updated = VisionChannel.emptyUpdated(this.height, this.width);
             this.subj = cur_subj;
         }
         this.HadNewInput = true;
@@ -86,7 +103,7 @@ export class VisionChannel extends SensoryChannel {
             // revision wouldn't be proper as each sensory point can just have 1 vote
             this.inputs[y][x] = (this.inputs[y][x] + t.sentence.getTruth().frequency) / 2.0;
         }
-        return this.cnt_updated === height * width;
+        return this.cnt_updated === this.height * this.width;
     }
 
     protected isEternal: boolean = false; // don't use increasing ID if eternal
@@ -111,16 +128,16 @@ export class VisionChannel extends SensoryChannel {
             V = SetExt.make(new Term(this.subj + this.termid));
         }
         // the visual space has to be a copy.
-        let cpy: Float64Array[] = new [[]];
-        for (let i: int = 0; i < height; i++) {
-            for (let j: int = 0; j < width; j++) {
+        let cpy: Float64Array[] = VisionChannel.emptyInputs(this.height, this.width);
+        for (let i: int = 0; i < this.height; i++) {
+            for (let j: int = 0; j < this.width; j++) {
                 cpy[i][j] = Float32Math.from(this.inputs[i][j]) as float;
             }
         }
-        this.updated = new [[]];
-        this.inputs = new [[]];
+        this.updated = VisionChannel.emptyUpdated(this.height, this.width);
         this.subj = "";
-        let vspace: VisualSpace = new VisualSpace(this.nar, cpy, this.py, this.px, height, width);
+        this.inputs = VisionChannel.emptyInputs(this.height, this.width);
+        let vspace: VisualSpace = new VisualSpace(this.nar, cpy, this.py, this.px, this.height, this.width);
         // attach sensation to term:
         V.imagination = vspace;
         let stamp: Stamp = this.isEternal ? new Stamp(time, this.nar.memory, Tense.Eternal) : new Stamp(time, this.nar.memory);
@@ -142,7 +159,7 @@ export class VisionChannel extends SensoryChannel {
         } else {
             // if there is no other prototype yet we return
             if (this.prototypes.isEmpty()) {
-                this.prototypes.add(new Prototype(newTask));
+                this.prototypes.add(new this.Prototype(newTask));
                 this.results.add(newTask);// feeds results into "upper" sensory channels:
                 this.step_finished(time);
             } else {
@@ -173,11 +190,11 @@ export class VisionChannel extends SensoryChannel {
                         }
                     }
                     if (similarity < 0.8) {
-                        this.prototypes.set(lowestIndex, new Prototype(newTask));
+                        this.prototypes.set(lowestIndex, new this.Prototype(newTask));
                     }
                 } else {
                     if (similarity < 0.8) {
-                        this.prototypes.add(new Prototype(newTask));
+                        this.prototypes.add(new this.Prototype(newTask));
                     }
                 }
 
@@ -257,6 +274,14 @@ export class VisionChannel extends SensoryChannel {
     }
 
     protected lastPrototype: VisionChannel.Prototype = null;
+
+    private static emptyInputs(height: int, width: int): Float64Array[] {
+        return Array.from({ length: height }, () => new Float64Array(width));
+    }
+
+    private static emptyUpdated(height: int, width: int): boolean[][] {
+        return Array.from({ length: height }, () => Array<boolean>(width).fill(false));
+    }
 
     public setFocus(px: int, py: int): void {
         this.px = px;

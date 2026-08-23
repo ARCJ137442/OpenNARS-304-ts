@@ -65,27 +65,24 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
             }
 
             case 6: {
-                const [nar, reportResultsTo, width, height, duration, label] = args as [Nar, java.util.Collection<SensoryChannel>, int, int, int, Term];
-
+                const [nar, reportResultsTo, width, height, duration, label] = args as [
+                    Nar,
+                    java.util.Collection<SensoryChannel> | SensoryChannel,
+                    int,
+                    int,
+                    int,
+                    Term,
+                ];
 
                 super();
-                this.reportResultsTo = reportResultsTo;
+                this.reportResultsTo = reportResultsTo instanceof SensoryChannel
+                    ? java.util.Collections.singletonList(reportResultsTo)
+                    : reportResultsTo;
                 this.nar = nar;
                 this.width = width;
                 this.height = height;
                 this.duration = duration;
                 this.label = label;
-
-
-                break;
-            }
-
-            case 6: {
-                const [nar, reportResultsTo, width, height, duration, label] = args as [Nar, SensoryChannel, int, int, int, Term];
-
-
-                this(nar, java.util.Collections.singletonList(reportResultsTo), width, height, duration, label);
-
 
                 break;
             }
