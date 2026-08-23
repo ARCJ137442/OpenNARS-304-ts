@@ -33,6 +33,7 @@ function parseArgs(argv) {
     limit: null,
     chunkSize: null,
     timeoutMs: null,
+    processLimitMs: null,
     tsMode: "hot",
     javaJar: defaultJavaJar,
     javaClasses: defaultJavaClasses,
@@ -51,6 +52,7 @@ function parseArgs(argv) {
     else if (argument === "--limit") options.limit = Number(argv[++i]);
     else if (argument === "--chunk-size") options.chunkSize = Number(argv[++i]);
     else if (argument === "--timeout-ms") options.timeoutMs = Number(argv[++i]);
+    else if (argument === "--process-limit-ms") options.processLimitMs = Number(argv[++i]);
     else if (argument === "--ts-mode" || argument === "--ts-process-mode") options.tsMode = argv[++i];
     else if (argument === "--java-jar") options.javaJar = argv[++i];
     else if (argument === "--java-classes") options.javaClasses = argv[++i];
@@ -76,6 +78,9 @@ function parseArgs(argv) {
   }
   if (options.timeoutMs !== null && (!Number.isInteger(options.timeoutMs) || options.timeoutMs < 1)) {
     throw new Error("--timeout-ms must be a positive integer");
+  }
+  if (options.processLimitMs !== null && (!Number.isInteger(options.processLimitMs) || options.processLimitMs < 1)) {
+    throw new Error("--process-limit-ms must be a positive integer");
   }
   if (options.tsMode !== "hot" && options.tsMode !== "cold") {
     throw new Error("--ts-mode must be hot or cold");
@@ -189,6 +194,29 @@ function timeoutRows(files, cycles, engine, timeoutMs, {
   }));
 }
 
+function processLimitRows(files, cycles, engine, processLimitMs, {
+  durationMs = processLimitMs,
+  lastProgressCycle = null,
+} = {}) {
+  return files.map((file) => ({
+    file,
+    cycles,
+    expected: null,
+    passed: 0,
+    matched: [],
+    ok: false,
+    error: `${engine} runner stopped at process safety limit of ${processLimitMs} ms`,
+    error_type: "process_limit",
+    timed_out: false,
+    process_limited: true,
+    stall_detected: false,
+    termination_reason: "process_limit",
+    last_progress_cycle: lastProgressCycle,
+    progress_interval_cycles: progressIntervalCycles(),
+    duration_ms: durationMs,
+  }));
+}
+
 function notRunRows(files, cycles, engine, reason) {
   return files.map((file) => ({
     file,
@@ -273,7 +301,7 @@ function addArtifactMetadata(rows, artifact) {
   }));
 }
 
-function runJavaProcess(file, cycles, timeoutMs, classpath) {
+function runJavaProcess(file, cycles, timeoutMs, processLimitMs, classpath) {
   return new Promise((resolveProcess) => {
     const startedAt = Date.now();
     const progressInterval = progressIntervalCycles();
@@ -291,7 +319,9 @@ function runJavaProcess(file, cycles, timeoutMs, classpath) {
     let processError = null;
     let lastProgressCycle = null;
     let timeoutHandle = null;
+    let processLimitHandle = null;
     let stalled = false;
+    let processLimited = false;
     let settled = false;
 
     const consumeStderrLine = (line) => {
@@ -313,6 +343,14 @@ function runJavaProcess(file, cycles, timeoutMs, classpath) {
         terminateChildProcess(child);
       }, timeoutMs);
     };
+    const armProcessLimit = () => {
+      if (processLimitMs === null || settled) return;
+      if (processLimitHandle !== null) clearTimeout(processLimitHandle);
+      processLimitHandle = setTimeout(() => {
+        processLimited = true;
+        terminateChildProcess(child);
+      }, processLimitMs);
+    };
 
     child.stdout.on("data", (chunk) => {
       stdout += chunk.toString();
@@ -330,6 +368,7 @@ function runJavaProcess(file, cycles, timeoutMs, classpath) {
       if (settled) return;
       settled = true;
       if (timeoutHandle !== null) clearTimeout(timeoutHandle);
+      if (processLimitHandle !== null) clearTimeout(processLimitHandle);
       if (stderrBuffer.length > 0) consumeStderrLine(stderrBuffer);
       resolveProcess({
         status,
@@ -338,22 +377,31 @@ function runJavaProcess(file, cycles, timeoutMs, classpath) {
         stdout,
         stderr: stderrLines.join("\n"),
         stalled,
+        processLimited,
         lastProgressCycle,
         durationMs: Date.now() - startedAt,
       });
     });
     armTimeout();
+    armProcessLimit();
   });
 }
 
-async function runJava(files, cycles, timeoutMs, artifact, adapter = null) {
+async function runJava(files, cycles, timeoutMs, processLimitMs, artifact, adapter = null) {
   const activeAdapter = adapter ?? compileJavaAdapter(artifact);
   try {
     const rows = [];
     for (const file of files) {
-      const result = await runJavaProcess(file, cycles, timeoutMs, activeAdapter.classpath);
+      const result = await runJavaProcess(file, cycles, timeoutMs, processLimitMs, activeAdapter.classpath);
       if (result.stalled) {
         rows.push(...addArtifactMetadata(timeoutRows([file], cycles, "Java", timeoutMs, {
+          durationMs: result.durationMs,
+          lastProgressCycle: result.lastProgressCycle,
+        }), artifact));
+        continue;
+      }
+      if (result.processLimited) {
+        rows.push(...addArtifactMetadata(processLimitRows([file], cycles, "Java", processLimitMs, {
           durationMs: result.durationMs,
           lastProgressCycle: result.lastProgressCycle,
         }), artifact));
@@ -385,7 +433,7 @@ async function runJava(files, cycles, timeoutMs, artifact, adapter = null) {
   }
 }
 
-async function runTs(files, cycles, timeoutMs) {
+async function runTs(files, cycles, timeoutMs, processLimitMs) {
   if (files.length === 0) return [];
   const cli = join(projectRoot, "scripts", "cli.mjs");
   return new Promise((resolveRows) => {
@@ -401,7 +449,10 @@ async function runTs(files, cycles, timeoutMs) {
     let lastBoundary = startedAt;
     let lastProgressCycle = null;
     let timeoutHandle = null;
+    let processLimitHandle = null;
     let timedOutFile = null;
+    let processLimitedFile = null;
+    let processLimitedDurationMs = null;
     let timedOutCycle = null;
     let timedOutDurationMs = null;
     let processError = null;
@@ -419,6 +470,16 @@ async function runTs(files, cycles, timeoutMs) {
         timedOutDurationMs = Date.now() - startedAt;
         terminateChildProcess(child);
       }, timeoutMs);
+    };
+    const armProcessLimit = () => {
+      if (processLimitMs === null || settled) return;
+      if (processLimitHandle !== null) clearTimeout(processLimitHandle);
+      if (currentFile() === undefined) return;
+      processLimitHandle = setTimeout(() => {
+        processLimitedFile = currentFile();
+        processLimitedDurationMs = Date.now() - lastBoundary;
+        terminateChildProcess(child);
+      }, processLimitMs);
     };
     const consumeProgressLine = (line) => {
       const progress = parseProgressLine(line);
@@ -454,6 +515,7 @@ async function runTs(files, cycles, timeoutMs) {
       completedKeys.add(key);
       parsedRows.push({ ...row, duration_ms: durationMs });
       armTimeout();
+      armProcessLimit();
     };
 
     const child = spawn(process.execPath, [
@@ -484,6 +546,7 @@ async function runTs(files, cycles, timeoutMs) {
       if (settled) return;
       settled = true;
       if (timeoutHandle !== null) clearTimeout(timeoutHandle);
+      if (processLimitHandle !== null) clearTimeout(processLimitHandle);
       if (stdoutBuffer.length > 0) consumeLine(stdoutBuffer);
       if (stderrBuffer.length > 0) consumeStderrLine(stderrBuffer);
 
@@ -497,7 +560,17 @@ async function runTs(files, cycles, timeoutMs) {
         const timedOutIndex = files.indexOf(timedOutFile);
         const remainingFiles = files.slice(timedOutIndex + 1)
           .filter((file) => !completedKeys.has(resolve(file)));
-        rows.push(...await runTs(remainingFiles, cycles, timeoutMs));
+        rows.push(...await runTs(remainingFiles, cycles, timeoutMs, processLimitMs));
+      } else if (processLimitedFile !== null
+        && !completedKeys.has(resolve(processLimitedFile))) {
+        rows.push(...processLimitRows([processLimitedFile], cycles, "TypeScript", processLimitMs, {
+          durationMs: processLimitedDurationMs,
+          lastProgressCycle,
+        }));
+        const processLimitedIndex = files.indexOf(processLimitedFile);
+        const remainingFiles = files.slice(processLimitedIndex + 1)
+          .filter((file) => !completedKeys.has(resolve(file)));
+        rows.push(...await runTs(remainingFiles, cycles, timeoutMs, processLimitMs));
       } else if (unresolved.length > 0) {
         const failedFile = unresolved[0];
         const errorMessage = processError?.message
@@ -526,12 +599,13 @@ async function runTs(files, cycles, timeoutMs) {
         ?? notRunRows([file], cycles, "TypeScript", "no result was emitted")[0]));
     });
     armTimeout();
+    armProcessLimit();
   });
 }
 
-async function runTsCold(files, cycles, timeoutMs) {
+async function runTsCold(files, cycles, timeoutMs, processLimitMs) {
   const rows = [];
-  for (const file of files) rows.push(...await runTs([file], cycles, timeoutMs));
+  for (const file of files) rows.push(...await runTs([file], cycles, timeoutMs, processLimitMs));
   return rows;
 }
 
@@ -666,6 +740,8 @@ function evaluateRuntimePerformance(javaResult, tsResult, totalCycles) {
   const tsRuntimeObservation = tsResult?.stall_detected === true
     || (tsResult?.timed_out === true && tsResult?.timeout_reason !== "process_limit")
     ? "stalled_lower_bound"
+    : tsResult?.process_limited === true
+      ? "process_limited"
     : tsResult?.exception === true
       ? "exception"
     : tsRuntimeMs === null
@@ -674,6 +750,8 @@ function evaluateRuntimePerformance(javaResult, tsResult, totalCycles) {
   const javaRuntimeObservation = javaResult?.stall_detected === true
     || (javaResult?.timed_out === true && javaResult?.timeout_reason !== "process_limit")
     ? "stalled_lower_bound"
+    : javaResult?.process_limited === true
+      ? "process_limited"
     : javaResult?.exception === true
       ? "exception"
     : javaRuntimeMs === null
@@ -841,6 +919,9 @@ function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles =
     ts_last_progress_cycle: ts?.last_progress_cycle ?? null,
     ts_not_run: ts?.not_run ?? null,
     ts_marker_missing: ts?.marker_missing ?? null,
+    process_limited: java?.process_limited === true || ts?.process_limited === true,
+    java_process_limited: java?.process_limited ?? false,
+    ts_process_limited: ts?.process_limited ?? false,
   };
 }
 
@@ -867,6 +948,7 @@ function resultKey(options, javaArtifact) {
     engine: options.engine,
     cycles: options.cycles,
     timeoutMs: options.timeoutMs,
+    processLimitMs: options.processLimitMs,
     tsMode: options.engine === "java" ? null : options.tsMode,
     javaArtifactSha256: javaArtifact?.sha256 ?? null,
   });
@@ -940,10 +1022,10 @@ async function main() {
       if (options.chunkSize !== null) {
         console.error(`running chunk ${index + 1}/${chunks.length} (${pending.length} files)`);
       }
-      if (options.engine !== "ts") javaResults.push(...await runJava(pending, options.cycles, options.timeoutMs, javaArtifact, javaAdapter));
+      if (options.engine !== "ts") javaResults.push(...await runJava(pending, options.cycles, options.timeoutMs, options.processLimitMs, javaArtifact, javaAdapter));
       if (options.engine !== "java") {
         const runTsFiles = options.tsMode === "cold" ? runTsCold : runTs;
-        tsResults.push(...await runTsFiles(pending, options.cycles, options.timeoutMs));
+        tsResults.push(...await runTsFiles(pending, options.cycles, options.timeoutMs, options.processLimitMs));
       }
       const javaByFile = new Map(javaResults.map((row) => [resolve(row.file), row]));
       const tsByFile = new Map(tsResults.map((row) => [resolve(row.file), row]));
@@ -964,6 +1046,7 @@ async function main() {
           chunk_index: index,
           sequence: files.indexOf(file),
           timeout_ms: options.timeoutMs,
+          process_limit_ms: options.processLimitMs,
           embedded_cycles: sources.get(file).embeddedCycles,
           extra_cycles: options.cycles,
         };
@@ -984,6 +1067,7 @@ async function main() {
       chunk_index: null,
       sequence: files.indexOf(file),
       timeout_ms: options.timeoutMs,
+      process_limit_ms: options.processLimitMs,
       embedded_cycles: sources.get(file).embeddedCycles,
       extra_cycles: options.cycles,
     };
@@ -994,6 +1078,7 @@ async function main() {
     engine: options.engine,
     cycles: options.cycles,
     timeoutMs: options.timeoutMs,
+    processLimitMs: options.processLimitMs,
     tsProcessMode: options.engine === "java" ? null : options.tsMode,
     files: rows.length,
     passed: rows.length - failures.length,
@@ -1013,6 +1098,7 @@ async function main() {
       engine: summary.engine,
       cycles: summary.cycles,
       timeoutMs: summary.timeoutMs,
+      processLimitMs: summary.processLimitMs,
       files: summary.files,
       passed: summary.passed,
       failed: summary.failed,

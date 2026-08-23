@@ -206,6 +206,35 @@ test("NAL runner keeps a slow completed process as performance data, not a timeo
   });
 });
 
+test("NAL runner keeps a process safety limit separate from a no-progress timeout", () => {
+  const limited = normalizeResult({
+    expected: null,
+    matched: [],
+    error: "process safety limit reached",
+    error_type: "process_limit",
+    timed_out: false,
+    process_limited: true,
+    termination_reason: "process_limit",
+  }, 1);
+
+  assert.equal(limited.error_type, "process_limit");
+  assert.equal(limited.timed_out, false);
+  assert.equal(limited.stall_detected, false);
+  assert.equal(limited.ok, false);
+  assert.equal(classifyTimeoutObservation({
+    timeoutMs: 30000,
+    ts: limited,
+  }).timeout_classification, null);
+
+  const runtime = evaluateRuntimePerformance(
+    { duration_ms: 500, timed_out: false },
+    { duration_ms: 600000, timed_out: false, process_limited: true },
+    1550,
+  );
+  assert.equal(runtime.ts_runtime_observation, "process_limited");
+  assert.equal(runtime.ts_runtime_within_budget, false);
+});
+
 test("NAL runner keeps performance observations separate when a marker is missing", () => {
   const result = evaluateMarkerPerformance(
     { marker_time_ms: [10, null] },
@@ -384,6 +413,8 @@ test("NAL runner records an explicit TypeScript process mode and separates run k
   assert.equal(parseArgs([]).tsMode, "hot");
   assert.equal(parseArgs(["--ts-mode", "cold"]).tsMode, "cold");
   assert.equal(parseArgs(["--ts-process-mode", "hot"]).tsMode, "hot");
+  assert.equal(parseArgs(["--process-limit-ms", "600000"]).processLimitMs, 600000);
+  assert.throws(() => parseArgs(["--process-limit-ms", "0"]), /--process-limit-ms must be a positive integer/);
   assert.throws(() => parseArgs(["--ts-mode", "warm"]), /--ts-mode must be hot or cold/);
 });
 
