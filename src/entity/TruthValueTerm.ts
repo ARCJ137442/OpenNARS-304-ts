@@ -1,6 +1,7 @@
 import { Term } from "../language/Term.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { TruthValue } from "./TruthValue.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 
 const TRUTH_TRUE: Term = new Term("TRUE");
 const TRUTH_FALSE: Term = new Term("FALSE");
@@ -12,7 +13,7 @@ export function truthToWordTerm(truth: TruthValue): Term {
     if (e > t) {
         return TRUTH_TRUE;
     }
-    if (e < 1 - t) {
+    if (e < Float32Math.subtract(1, t)) {
         return TRUTH_FALSE;
     }
     return TRUTH_UNSURE;

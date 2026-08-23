@@ -6,6 +6,7 @@ import { BudgetValue } from "../../src/entity/BudgetValue.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import { Term } from "../../src/language/Term.ts";
 import { UtilityFunctions } from "../../src/inference/UtilityFunctions.ts";
+import { TruthValue } from "../../src/entity/TruthValue.ts";
 import type { Sentence } from "../../src/entity/Sentence.ts";
 
 type RankableSentence = Pick<Sentence, "truth"> & {
@@ -87,4 +88,20 @@ test("rankBelief narrows Java float return values at the budget boundary", () =>
         BudgetFunctions.rankBelief(olderBelief, true),
         Math.fround(0.14211009442806244),
     );
+});
+
+test("truthToQuality and the TruthValue budget constructor share Java float semantics", () => {
+    const parameters = new Parameters();
+    const expectation = 0.3672657907009125;
+    const truth = new TruthValue(0.25, 0.5, false, parameters);
+    truth.getExpectationAsFloat = () => expectation;
+
+    const quality = BudgetFunctions.truthToQuality(truth);
+    const budget = new BudgetValue(0.4, 0.6, truth, parameters);
+
+    assert.equal(quality, Math.fround(Math.max(
+        Math.fround(expectation),
+        Math.fround(1 - Math.fround(expectation)) * 0.75,
+    )));
+    assert.equal(budget.getQuality(), quality);
 });

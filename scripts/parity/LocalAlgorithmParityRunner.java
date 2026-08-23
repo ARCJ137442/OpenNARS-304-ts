@@ -66,6 +66,16 @@ public final class LocalAlgorithmParityRunner {
         out.append(",\"or\":").append(UtilityFunctions.or(0.7f, 0.4f));
         out.append(",\"aveGeo\":").append(UtilityFunctions.aveGeo(0.4f, 0.6f, 0.8f));
         out.append(",\"truthToQuality\":").append(BudgetFunctions.truthToQuality(a));
+        out.append(",\"truthToQualityFloatEdges\":[");
+        final float[] qualityEdges = { 0.3672657907009125f, 0.07869549840688705f, 0.4010399281978607f };
+        for (int i = 0; i < qualityEdges.length; i++) {
+            if (i > 0) {
+                out.append(',');
+            }
+            final float expectation = qualityEdges[i];
+            out.append((float) Math.max(expectation, (1 - expectation) * 0.75));
+        }
+        out.append(']');
         out.append("}}\n");
         System.out.print(out);
     }

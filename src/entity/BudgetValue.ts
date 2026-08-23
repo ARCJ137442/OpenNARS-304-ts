@@ -83,8 +83,9 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
             if (third instanceof TruthValue) {
                 // Java's TruthValue-to-quality constructor path uses the
                 // float evaluation before applying the quality formula.
-                const expectation: float = third.getExpectationAsFloat() as float;
-                this.quality = BudgetValue.float(Math.max(expectation, (1 - expectation) * 0.75));
+                this.quality = BudgetValue.float(Float32Math.truthToQuality(
+                    third.getExpectationAsFloat(),
+                ));
             } else {
                 this.quality = BudgetValue.float(third);
             }

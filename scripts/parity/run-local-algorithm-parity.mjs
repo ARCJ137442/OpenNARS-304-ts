@@ -106,12 +106,13 @@ function budget(value) {
 }
 
 async function tsSnapshot() {
-  const [{ Parameters }, { TruthValue }, { TruthFunctions }, { BudgetValue }, { UtilityFunctions }] = await Promise.all([
+  const [{ Parameters }, { TruthValue }, { TruthFunctions }, { BudgetValue }, { UtilityFunctions }, { Float32Math }] = await Promise.all([
     import("../../src/main/Parameters.ts"),
     import("../../src/entity/TruthValue.ts"),
     import("../../src/inference/TruthFunctions.ts"),
     import("../../src/entity/BudgetValue.ts"),
     import("../../src/inference/UtilityFunctions.ts"),
+    import("../../src/runtime/Float32.ts"),
   ]);
   const parameters = new Parameters();
   const a = new TruthValue(0.7, 0.6, false, parameters);
@@ -168,13 +169,22 @@ async function tsSnapshot() {
     and: UtilityFunctions.and(0.7, 0.4),
     or: UtilityFunctions.or(0.7, 0.4),
     aveGeo: UtilityFunctions.aveGeo(0.4, 0.6, 0.8),
-    truthToQuality: Math.max(a.getExpectation(), (1 - a.getExpectation()) * 0.75),
+    truthToQuality: Float32Math.truthToQuality(a.getExpectation()),
+    truthToQualityFloatEdges: [
+      0.3672657907009125,
+      0.07869549840688705,
+      0.4010399281978607,
+    ].map((expectation) => Float32Math.truthToQuality(expectation)),
   };
   return snapshot;
 }
 
 function compare(expected, actual, path = "", differences = []) {
   if (typeof expected === "number" && typeof actual === "number") {
+    if (path.includes("truthToQualityFloatEdges")) {
+      if (Math.fround(expected) !== Math.fround(actual)) differences.push(`${path}: ${expected} !== ${actual}`);
+      return differences;
+    }
     if (Math.abs(expected - actual) > 1e-5) differences.push(`${path}: ${expected} !== ${actual}`);
     return differences;
   }

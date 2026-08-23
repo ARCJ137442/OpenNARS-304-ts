@@ -37,8 +37,7 @@ export class BudgetFunctions extends UtilityFunctions {
     public static truthToQuality(t: TruthValue): float {
         // Java evaluates the expectation with float operands in this budget
         // consumer; keep TruthValue's public precision unchanged.
-        let exp: float = t.getExpectationAsFloat() as float;
-        return Math.fround(Math.max(exp, (1 - exp) * 0.75)) as float;
+        return Float32Math.truthToQuality(t.getExpectationAsFloat()) as float;
     }
 
     /**

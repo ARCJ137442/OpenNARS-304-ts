@@ -38,4 +38,15 @@ export const Float32Math = {
     sqrt(value: number): Float32 {
         return narrow(Math.sqrt(narrow(value)));
     },
+
+    /**
+     * Java BudgetFunctions.truthToQuality translated with the same operand
+     * boundaries as the source expression:
+     * (float) max(exp, (1 - exp) * 0.75).
+     */
+    truthToQuality(expectation: number): Float32 {
+        const exp = narrow(expectation);
+        const complement = narrow(narrow(1) - exp);
+        return narrow(Math.max(exp, complement * narrow(0.75)));
+    },
 };

@@ -30,3 +30,19 @@ test("Float32Math.pow matches Java float storage after Math.pow", () => {
     assert.equal(Float32Math.pow(0.9, 2), Math.fround(Math.pow(Math.fround(0.9), 2)));
     assert.equal(Float32Math.pow(0.9, 2), 0.809999942779541);
 });
+
+test("Float32Math.truthToQuality preserves Java float complement boundaries", () => {
+    const cases = [
+        0.3672657907009125,
+        0.07869549840688705,
+        0.4010399281978607,
+    ];
+
+    for (const expectation of cases) {
+        const javaQuality = Math.fround(Math.max(
+            Math.fround(expectation),
+            Math.fround(1 - Math.fround(expectation)) * 0.75,
+        ));
+        assert.equal(Float32Math.truthToQuality(expectation), javaQuality);
+    }
+});

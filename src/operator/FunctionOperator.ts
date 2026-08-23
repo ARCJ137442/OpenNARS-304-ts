@@ -12,8 +12,7 @@ import { Float32Math } from "../runtime/Float32.ts";
 // Keep FunctionOperator below the inference layer. Importing BudgetFunctions
 // here would close the FunctionOperator -> Memory -> BudgetFunctions cycle.
 const truthToQuality = (truth: any): float => {
-    const expectation: float = truth.getExpectation();
-    return Float32Math.from(Math.max(expectation, (1 - expectation) * 0.75)) as float;
+    return Float32Math.truthToQuality(truth.getExpectation()) as float;
 };
 
 
