@@ -285,6 +285,10 @@ function parseProgressLine(line) {
   }
 }
 
+function isProgressHeartbeat(progress) {
+  return progress !== null;
+}
+
 function withOutputWarning(rows, nonJsonLines) {
   if (nonJsonLines.length === 0) return rows;
   return rows.map((row) => ({
@@ -327,8 +331,7 @@ function runJavaProcess(file, cycles, timeoutMs, processLimitMs, classpath) {
     const consumeStderrLine = (line) => {
       if (line.length === 0) return;
       const progress = parseProgressLine(line);
-      if (progress !== null && resolve(progress.file) === resolve(file)) {
-        if (progress.kind === "cycle") return;
+      if (isProgressHeartbeat(progress) && resolve(progress.file) === resolve(file)) {
         lastProgressCycle = progress.cycle;
         armTimeout();
       } else {
@@ -433,9 +436,9 @@ async function runJava(files, cycles, timeoutMs, processLimitMs, artifact, adapt
   }
 }
 
-async function runTs(files, cycles, timeoutMs, processLimitMs) {
+async function runTs(files, cycles, timeoutMs, processLimitMs, cliPath = join(projectRoot, "scripts", "cli.mjs")) {
   if (files.length === 0) return [];
-  const cli = join(projectRoot, "scripts", "cli.mjs");
+  const cli = cliPath;
   return new Promise((resolveRows) => {
     const startedAt = Date.now();
     const progressInterval = progressIntervalCycles();
@@ -483,10 +486,9 @@ async function runTs(files, cycles, timeoutMs, processLimitMs) {
     };
     const consumeProgressLine = (line) => {
       const progress = parseProgressLine(line);
-      if (progress === null) return false;
+      if (!isProgressHeartbeat(progress)) return false;
       const pendingFile = currentFile();
       if (pendingFile === undefined || resolve(progress.file) !== resolve(pendingFile)) return false;
-      if (progress.kind === "cycle") return true;
       lastProgressCycle = progress.cycle;
       armTimeout();
       return true;
@@ -560,7 +562,7 @@ async function runTs(files, cycles, timeoutMs, processLimitMs) {
         const timedOutIndex = files.indexOf(timedOutFile);
         const remainingFiles = files.slice(timedOutIndex + 1)
           .filter((file) => !completedKeys.has(resolve(file)));
-        rows.push(...await runTs(remainingFiles, cycles, timeoutMs, processLimitMs));
+        rows.push(...await runTs(remainingFiles, cycles, timeoutMs, processLimitMs, cli));
       } else if (processLimitedFile !== null
         && !completedKeys.has(resolve(processLimitedFile))) {
         rows.push(...processLimitRows([processLimitedFile], cycles, "TypeScript", processLimitMs, {
@@ -570,7 +572,7 @@ async function runTs(files, cycles, timeoutMs, processLimitMs) {
         const processLimitedIndex = files.indexOf(processLimitedFile);
         const remainingFiles = files.slice(processLimitedIndex + 1)
           .filter((file) => !completedKeys.has(resolve(file)));
-        rows.push(...await runTs(remainingFiles, cycles, timeoutMs, processLimitMs));
+        rows.push(...await runTs(remainingFiles, cycles, timeoutMs, processLimitMs, cli));
       } else if (unresolved.length > 0) {
         const failedFile = unresolved[0];
         const errorMessage = processError?.message
@@ -866,8 +868,11 @@ function evaluateLongCycleEquivalence({
 }
 
 function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles = null, timeoutMs = null) {
-  const java = normalizeResult(javaResult, expected);
-  const ts = normalizeResult(tsResult, expected);
+  const expectedCount = Array.isArray(expected)
+    ? expected.length
+    : Number.isInteger(expected) ? expected : null;
+  const java = normalizeResult(javaResult, expectedCount);
+  const ts = normalizeResult(tsResult, expectedCount);
   const parity = java && ts
     ? java.ok === ts.ok
       && java.expected === ts.expected
@@ -896,7 +901,7 @@ function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles =
     functional_pass: functionalPass,
     long_cycle_equivalence: evaluateLongCycleEquivalence({
       cycles: totalCycles,
-      expectedCount: Array.isArray(expected) ? expected.length : null,
+      expectedCount,
       java,
       ts,
     }),
@@ -1129,6 +1134,8 @@ export {
   normalizeResult,
   parseArgs,
   parseProgressLine,
+  isProgressHeartbeat,
+  runTs,
   parseJsonLines,
   classifyTimeoutObservation,
 };

@@ -20,6 +20,8 @@ import {
   normalizeResult,
   parseArgs,
   parseProgressLine,
+  isProgressHeartbeat,
+  runTs,
   parseJsonLines,
 } from "../../scripts/e2e/run-nal-corpus.mjs";
 import { Tense } from "../../src/language/Tense.ts";
@@ -330,6 +332,29 @@ test("NAL runner accepts only structured progress heartbeats", () => {
   assert.equal(parseProgressLine('@progress {"file":"fixture.nal","cycle":-1}'), null);
 });
 
+test("NAL runner resets the no-progress watchdog for cycle, command, and marker heartbeats", () => {
+  for (const kind of ["cycle", "command", "marker"]) {
+    const progress = parseProgressLine(`@progress {"file":"fixture.nal","cycle":256,"kind":"${kind}"}`);
+    assert.equal(isProgressHeartbeat(progress), true);
+  }
+  assert.equal(isProgressHeartbeat(parseProgressLine("warning: slow")), false);
+});
+
+test("NAL runner preserves expected marker count on timeout rows", () => {
+  const row = evaluateRow("fixture.nal", ["<a --> b>."],
+    { error_type: "timeout", timed_out: true, timeout_reason: "no_progress", matched: [] },
+    { error_type: "timeout", timed_out: true, timeout_reason: "no_progress", matched: [] },
+    "parity", 1, 5000);
+
+  assert.equal(row.java.expected, 1);
+  assert.equal(row.java.marker_missing, true);
+  assert.equal(row.java.marker_missing_count, 1);
+  assert.equal(row.ts.expected, 1);
+  assert.equal(row.ts.marker_missing, true);
+  assert.equal(row.ts.marker_missing_count, 1);
+  assert.equal(row.functional_pass, false);
+});
+
 test("NAL runner recognizes Windows timeout results with signal and message", () => {
   assert.equal(isProcessTimeout({ signal: "SIGTERM", error: { message: "spawnSync node ETIMEDOUT" } }), true);
   assert.equal(isProcessTimeout({ signal: "SIGTERM", error: { message: "process terminated" } }), false);
@@ -543,45 +568,49 @@ test("NAL runner keeps hot results isolated from order and cold-process boundari
   }
 });
 
-test("NAL runner resumes after a real middle-file timeout and preserves the tail", () => {
+test("NAL runner resumes after a real middle-file timeout and preserves the tail", async () => {
   const directory = mkdtempSync(join(tmpdir(), "opennars-nal-timeout-tail-"));
-  const resultFile = join(directory, "matrix.jsonl");
   const first = join(directory, "first.nal");
   const slow = join(directory, "slow.nal");
   const last = join(directory, "last.nal");
-  const source = "<a --> b>.\n''outputMustContain('<a --> b>.')\n";
-  writeFileSync(first, source, "utf8");
-  writeFileSync(slow, "100000000\n", "utf8");
-  writeFileSync(last, source, "utf8");
-  const runner = join(process.cwd(), "scripts", "e2e", "run-nal-corpus.mjs");
+  const heartbeat = join(directory, "heartbeat.nal");
+  const fakeCli = join(directory, "fake-cli.mjs");
+  const fakeCliSource = [
+    "import { basename } from 'node:path';",
+    "const files = process.argv.slice(2).filter((argument) => argument.endsWith('.nal'));",
+    "for (const file of files) {",
+    "  if (basename(file) === 'slow.nal') {",
+    "    setInterval(() => {}, 1000);",
+    "    await new Promise(() => {});",
+    "  }",
+    "  if (basename(file) === 'heartbeat.nal') {",
+    "    let cycle = 0;",
+    "    const timer = setInterval(() => process.stderr.write(`@progress ${JSON.stringify({ file, cycle: ++cycle, kind: 'cycle' })}\\n`), 50);",
+    "    await new Promise((resolve) => setTimeout(resolve, 500));",
+    "    clearInterval(timer);",
+    "  }",
+    "  console.log(JSON.stringify({ file, cycles: 1, expected: 1, passed: 1, matched: [true], ok: true, error_type: 'none', exception: false, timed_out: false }));",
+    "}",
+  ].join("\n");
+  writeFileSync(first, "first", "utf8");
+  writeFileSync(slow, "slow", "utf8");
+  writeFileSync(last, "last", "utf8");
+  writeFileSync(heartbeat, "heartbeat", "utf8");
+  writeFileSync(fakeCli, fakeCliSource, "utf8");
   try {
-    const result = spawnSync(process.execPath, [
-      runner,
-      "--engine", "ts",
-      "--ts-mode", "hot",
-      "--cycles", "1",
-      "--timeout-ms", "5000",
-      "--chunk-size", "3",
-      "--result-file", resultFile,
-      "--file", first,
-      "--file", slow,
-      "--file", last,
-    ], {
-      cwd: process.cwd(),
-      encoding: "utf8",
-      maxBuffer: 4 * 1024 * 1024,
-    });
-    assert.equal(result.status, 1, result.stderr);
-    const rows = readFileSync(resultFile, "utf8").trim().split(/\r?\n/).map((line) => JSON.parse(line));
+    const rows = await runTs([first, slow, last], 1, 1000, null, fakeCli);
     assert.equal(rows.length, 3);
-    assert.deepEqual(rows.map((row) => row.sequence), [0, 1, 2]);
-    assert.deepEqual(rows.map((row) => row.ts_process_mode), ["hot", "hot", "hot"]);
-    assert.equal(rows[0].ts.error_type, "none");
-    assert.equal(rows[1].ts.error_type, "timeout");
-    assert.equal(rows[1].ts.stall_detected, true);
-    assert.equal(rows[1].ts.timeout_reason, "no_progress");
-    assert.equal(rows[2].ts.error_type, "none");
-    assert.deepEqual(rows.map((row) => row.ts_not_run), [false, false, false]);
+    assert.deepEqual(rows.map((row) => row.file), [first, slow, last]);
+    assert.equal(rows[0].error_type, "none");
+    assert.equal(rows[1].error_type, "timeout");
+    assert.equal(rows[1].stall_detected, true);
+    assert.equal(rows[1].timeout_reason, "no_progress");
+    assert.equal(rows[2].error_type, "none");
+    assert.deepEqual(rows.map((row) => row.not_run === true), [false, false, false]);
+
+    const heartbeatRows = await runTs([heartbeat], 1, 1000, null, fakeCli);
+    assert.equal(heartbeatRows[0].error_type, "none");
+    assert.equal(heartbeatRows[0].timed_out, false);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
