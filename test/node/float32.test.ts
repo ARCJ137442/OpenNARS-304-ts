@@ -14,6 +14,18 @@ test("Float32Math narrows Java float operands and results", () => {
     );
 });
 
+test("Float32Math covers Java float operation boundaries", () => {
+    const left = 16777217;
+    const right = 3.25;
+    const javaLeft = Math.fround(left);
+    const javaRight = Math.fround(right);
+    assert.equal(Float32Math.add(left, right), Math.fround(javaLeft + javaRight));
+    assert.equal(Float32Math.subtract(left, right), Math.fround(javaLeft - javaRight));
+    assert.equal(Float32Math.multiply(left, right), Math.fround(javaLeft * javaRight));
+    assert.equal(Float32Math.divide(left, right), Math.fround(javaLeft / javaRight));
+    assert.equal(Float32Math.sqrt(left), Math.fround(Math.sqrt(javaLeft)));
+});
+
 test("Float32Math.pow matches Java float storage after Math.pow", () => {
     assert.equal(Float32Math.pow(0.9, 2), Math.fround(Math.pow(Math.fround(0.9), 2)));
     assert.equal(Float32Math.pow(0.9, 2), 0.809999942779541);

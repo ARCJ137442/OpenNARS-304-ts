@@ -292,8 +292,14 @@ export class LocalRules extends JavaObject {
              * increases if it has a high truth expecation
              */
 
+            // Java materializes the int * float product as float before the
+            // first Math.sqrt; a TypeScript `as float` cast would be erased.
+            const complexityFactor: float = Float32Math.multiply(
+                solution.term.getComplexity(),
+                memory.narParameters.COMPLEXITY_UNIT,
+            ) as float;
             return Float32Math.from(truth.getExpectation() / java.lang.Math
-                .sqrt(java.lang.Math.sqrt(java.lang.Math.sqrt(solution.term.getComplexity() * memory.narParameters.COMPLEXITY_UNIT)))) as float;
+                .sqrt(java.lang.Math.sqrt(java.lang.Math.sqrt(complexityFactor)))) as float;
         } else {
             return Float32Math.from(truth.confidence) as float;
         }

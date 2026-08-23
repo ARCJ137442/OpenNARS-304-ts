@@ -4,6 +4,7 @@ import { Item } from "../entity/Item.ts";
 import { Distributor } from "./Distributor.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 import type { Memory } from "./Memory.ts";
 
 
@@ -75,7 +76,12 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
         if (this.nameTable.isEmpty()) {
             return 0.01;
         }
-        let f: float = Math.fround(this.mass / (this.nameTable.size() * this.TOTAL_LEVEL)) as float;
+        // Java casts mass to float before dividing by the integer denominator.
+        // Narrow the numerator and the result at the same operation boundary.
+        let f: float = Float32Math.divide(
+            Float32Math.from(this.mass),
+            this.nameTable.size() * this.TOTAL_LEVEL,
+        ) as float;
         if (f > 1) {
             return 1.0;
         }
@@ -223,7 +229,8 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
         // Java evaluates this multiplication as float before Math.ceil. Keep
         // the write boundary here or priorities such as 0.8 would become
         // 80.000001... in JavaScript and move to the next level.
-        let fl: float = Math.fround(item.getPriority() * this.TOTAL_LEVEL) as float;
+        // Java multiplies two float operands here before Math.ceil.
+        let fl: float = Float32Math.multiply(item.getPriority(), this.TOTAL_LEVEL) as float;
         let level: int = java.lang.Math.ceil(fl) as int - 1;
         return (level < 0) ? 0 : level; // cannot be -1
     }
