@@ -6,10 +6,11 @@ import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
-const javaRoot = join(projectRoot, "java-master");
-const defaultJavaJar = join(javaRoot, "target", "opennars-3.1.0-SNAPSHOT.jar");
-const defaultJavaTestClasses = join(javaRoot, "target", "test-classes");
-const defaultJavaClasses = join(javaRoot, "target", "classes");
+const canonicalJavaRoot = join(projectRoot, "..", "OpenNARS-304-java-canonical-fixed-build");
+const defaultJavaJar = join(canonicalJavaRoot, "target", "opennars-3.0.4-SNAPSHOT.jar");
+const defaultJavaTestClasses = join(canonicalJavaRoot, "target", "test-classes");
+const defaultJavaClasses = join(canonicalJavaRoot, "target", "classes");
+const LEGACY_JAR_SHA256 = "796A3B20EE6ED7F8F6778367738AD728F0BFCC32CFAD99BACAEBEC41EBC7EB04";
 const javaSource = join(projectRoot, "scripts", "parity", "LocalAlgorithmParityRunner.java");
 
 function requirePath(value, option, kind) {
@@ -54,6 +55,9 @@ function parseArgs(argv) {
     classes: options.javaClasses,
     testClasses: options.javaTestClasses,
   };
+  if (options.javaArtifact.sha256 === LEGACY_JAR_SHA256) {
+    throw new Error(`--java-jar points to the legacy 3.1.0 artifact; use the canonical 3.0.4 artifact: ${options.javaJar}`);
+  }
   return options;
 }
 

@@ -4,8 +4,10 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 
 const projectRoot = process.cwd();
-const javaArtifactsAvailable = existsSync(`${projectRoot}/java-master/target/opennars-3.1.0-SNAPSHOT.jar`)
-    && existsSync(`${projectRoot}/java-master/target/classes`);
+const canonicalRoot = `${projectRoot}/../OpenNARS-304-java-canonical-fixed-build/target`;
+const javaArtifactsAvailable = existsSync(`${canonicalRoot}/opennars-3.0.4-SNAPSHOT.jar`)
+    && existsSync(`${canonicalRoot}/classes`)
+    && existsSync(`${canonicalRoot}/test-classes`);
 
 test("Java and TypeScript local algorithm fixtures remain in parity", { skip: !javaArtifactsAvailable }, () => {
     const result = spawnSync(process.execPath, [

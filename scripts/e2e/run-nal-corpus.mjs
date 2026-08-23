@@ -8,9 +8,11 @@ import { fileURLToPath } from "node:url";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const javaRoot = join(projectRoot, "java-master");
-const defaultJavaJar = join(javaRoot, "target", "opennars-3.1.0-SNAPSHOT.jar");
-const defaultJavaTestClasses = join(javaRoot, "target", "test-classes");
-const defaultJavaClasses = join(javaRoot, "target", "classes");
+const canonicalJavaRoot = join(projectRoot, "..", "OpenNARS-304-java-canonical-fixed-build");
+const defaultJavaJar = join(canonicalJavaRoot, "target", "opennars-3.0.4-SNAPSHOT.jar");
+const defaultJavaTestClasses = join(canonicalJavaRoot, "target", "test-classes");
+const defaultJavaClasses = join(canonicalJavaRoot, "target", "classes");
+const LEGACY_JAR_SHA256 = "796A3B20EE6ED7F8F6778367738AD728F0BFCC32CFAD99BACAEBEC41EBC7EB04";
 const javaAdapterSource = join(projectRoot, "scripts", "e2e", "NalParityRunner.java");
 const PERFORMANCE_BUDGET_MS_PER_1024_CYCLES = 120_000;
 const LONG_CYCLE_EQUIVALENCE_TARGET = 131_072;
@@ -101,11 +103,15 @@ function resolveJavaArtifact(options) {
   const jar = requirePath(options.javaJar, "--java-jar", "file");
   const classes = requirePath(options.javaClasses, "--java-classes", "directory");
   const testClasses = requirePath(options.javaTestClasses, "--java-test-classes", "directory");
+  const sha256 = createHash("sha256").update(readFileSync(jar)).digest("hex").toUpperCase();
+  if (sha256 === LEGACY_JAR_SHA256) {
+    throw new Error(`--java-jar points to the legacy 3.1.0 artifact; use the canonical 3.0.4 artifact: ${jar}`);
+  }
   return {
     jar,
     classes,
     testClasses,
-    sha256: createHash("sha256").update(readFileSync(jar)).digest("hex").toUpperCase(),
+    sha256,
   };
 }
 
@@ -493,6 +499,56 @@ function evaluateMarkerPerformance(javaResult, tsResult, totalCycles) {
   };
 }
 
+function evaluateRuntimePerformance(javaResult, tsResult, totalCycles) {
+  const javaRuntimeMs = Number.isFinite(javaResult?.duration_ms) ? javaResult.duration_ms : null;
+  const tsRuntimeMs = Number.isFinite(tsResult?.duration_ms) ? tsResult.duration_ms : null;
+  const javaRuntimeMsPerCycle = javaRuntimeMs !== null && Number.isFinite(totalCycles) && totalCycles > 0
+    ? javaRuntimeMs / totalCycles
+    : null;
+  const tsRuntimeMsPerCycle = tsRuntimeMs !== null && Number.isFinite(totalCycles) && totalCycles > 0
+    ? tsRuntimeMs / totalCycles
+    : null;
+  const runtimeDeltaMs = javaRuntimeMs !== null && tsRuntimeMs !== null
+    ? tsRuntimeMs - javaRuntimeMs
+    : null;
+  const runtimeDeltaMsPerCycle = javaRuntimeMsPerCycle !== null && tsRuntimeMsPerCycle !== null
+    ? tsRuntimeMsPerCycle - javaRuntimeMsPerCycle
+    : null;
+  const tsRuntimeSlowdownRatio = javaRuntimeMs !== null && javaRuntimeMs > 0 && tsRuntimeMs !== null
+    ? tsRuntimeMs / javaRuntimeMs
+    : null;
+  const tsRuntimeObservation = tsResult?.timed_out === true
+    ? "timeout_lower_bound"
+    : tsResult?.exception === true
+      ? "exception"
+    : tsRuntimeMs === null
+      ? "missing"
+      : "completed";
+  const javaRuntimeObservation = javaResult?.timed_out === true
+    ? "timeout_lower_bound"
+    : javaResult?.exception === true
+      ? "exception"
+    : javaRuntimeMs === null
+      ? "missing"
+      : "completed";
+  return {
+    java_runtime_ms: javaRuntimeMs,
+    ts_runtime_ms: tsRuntimeMs,
+    java_runtime_observation: javaRuntimeObservation,
+    ts_runtime_observation: tsRuntimeObservation,
+    reasoning_cycles: Number.isFinite(totalCycles) ? totalCycles : null,
+    runtime_budget_ms_per_cycle: PERFORMANCE_BUDGET_MS_PER_1024_CYCLES / 1024,
+    java_runtime_ms_per_cycle: javaRuntimeMsPerCycle,
+    ts_runtime_ms_per_cycle: tsRuntimeMsPerCycle,
+    runtime_delta_ms: runtimeDeltaMs,
+    runtime_delta_ms_per_cycle: runtimeDeltaMsPerCycle,
+    ts_runtime_slowdown_ratio: tsRuntimeSlowdownRatio,
+    ts_runtime_within_budget: tsRuntimeObservation === "completed"
+      && tsRuntimeMsPerCycle !== null
+      && tsRuntimeMsPerCycle <= PERFORMANCE_BUDGET_MS_PER_1024_CYCLES / 1024,
+  };
+}
+
 function canonicalizeTraceValue(value) {
   if (Array.isArray(value)) return value.map(canonicalizeTraceValue);
   if (value !== null && typeof value === "object") {
@@ -539,13 +595,20 @@ function evaluateLongCycleEquivalence({
       ? "passed"
       : "failed";
   const cycleTargetReached = observedCycles !== null && observedCycles >= LONG_CYCLE_EQUIVALENCE_TARGET;
-  const markerSatisfied = markerStandard === "passed" || markerStandard === "not_applicable";
-  const equivalent = cycleTargetReached && markerSatisfied && internalEventStandard === "passed";
+  // Marker-bearing fixtures use marker parity; marker-free fixtures use the long-cycle trace route.
+  const markerRoute = expected !== null && expected > 0 && markerStandard === "passed";
+  const cycleRoute = expected === 0 && cycleTargetReached && internalEventStandard === "passed";
+  const equivalent = markerRoute || cycleRoute;
+  const equivalenceRoute = markerRoute ? "marker" : cycleRoute ? "cycle" : "unverified";
   let status = "not_reached";
-  if (cycleTargetReached) {
-    if (!markerSatisfied) status = "marker_failed";
-    else if (internalEventStandard !== "passed") status = internalEventsAvailable ? "internal_event_failed" : "internal_event_unverified";
-    else status = "equivalent";
+  if (equivalent) {
+    status = "equivalent";
+  } else if (expected !== null && expected > 0) {
+    status = markerStandard === "failed" ? "marker_failed" : "marker_unverified";
+  } else if (expected === 0 && cycleTargetReached) {
+    status = internalEventStandard !== "passed"
+      ? internalEventsAvailable ? "internal_event_failed" : "internal_event_unverified"
+      : "not_reached";
   }
   return {
     target_cycles: LONG_CYCLE_EQUIVALENCE_TARGET,
@@ -553,6 +616,7 @@ function evaluateLongCycleEquivalence({
     cycle_target_reached: cycleTargetReached,
     marker_standard: markerStandard,
     internal_event_standard: internalEventStandard,
+    equivalence_route: equivalenceRoute,
     equivalent,
     status,
   };
@@ -594,6 +658,7 @@ function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles =
       ts,
     }),
     ...evaluateMarkerPerformance(java, ts, totalCycles),
+    ...evaluateRuntimePerformance(java, ts, totalCycles),
     java_thread_mode: java?.thread_mode ?? null,
     ts_thread_mode: ts?.thread_mode ?? null,
     java_exception: java?.exception ?? null,
@@ -797,6 +862,7 @@ export {
   completeProcessFailureRows,
   evaluateRow,
   evaluateMarkerPerformance,
+  evaluateRuntimePerformance,
   evaluateLongCycleEquivalence,
   extractNalMetadata,
   isProcessTimeout,

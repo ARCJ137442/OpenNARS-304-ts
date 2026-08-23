@@ -11,6 +11,7 @@ import {
   completeProcessFailureRows,
   evaluateMarkerPerformance,
   evaluateLongCycleEquivalence,
+  evaluateRuntimePerformance,
   evaluateRow,
   extractNalMetadata,
   isProcessTimeout,
@@ -125,6 +126,37 @@ test("NAL runner reports marker timing against a 120-second-per-1024-cycle budge
   assert.equal(over.marker_delta_within_budget, false);
 });
 
+test("NAL runner records runtime per reasoning cycle and relative slowdown", () => {
+  const result = evaluateRuntimePerformance(
+    { duration_ms: 500, timed_out: false },
+    { duration_ms: 40000, timed_out: false },
+    1550,
+  );
+
+  assert.equal(result.reasoning_cycles, 1550);
+  assert.equal(result.java_runtime_ms, 500);
+  assert.equal(result.ts_runtime_ms, 40000);
+  assert.equal(result.java_runtime_observation, "completed");
+  assert.equal(result.ts_runtime_observation, "completed");
+  assert.equal(result.java_runtime_ms_per_cycle, 500 / 1550);
+  assert.equal(result.ts_runtime_ms_per_cycle, 40000 / 1550);
+  assert.equal(result.runtime_delta_ms, 39500);
+  assert.equal(result.ts_runtime_slowdown_ratio, 80);
+  assert.equal(result.ts_runtime_within_budget, true);
+});
+
+test("NAL runner marks timeout runtime as a lower bound instead of a functional verdict", () => {
+  const result = evaluateRuntimePerformance(
+    { duration_ms: 500, timed_out: false },
+    { duration_ms: 30000, timed_out: true },
+    1550,
+  );
+
+  assert.equal(result.ts_runtime_observation, "timeout_lower_bound");
+  assert.equal(result.ts_runtime_slowdown_ratio, 60);
+  assert.equal(result.ts_runtime_within_budget, false);
+});
+
 test("NAL runner keeps performance observations separate when a marker is missing", () => {
   const result = evaluateMarkerPerformance(
     { marker_time_ms: [10, null] },
@@ -138,25 +170,24 @@ test("NAL runner keeps performance observations separate when a marker is missin
   assert.equal(result.marker_delta_within_budget, null);
 });
 
-test("131072-cycle equivalence requires every marker and normalized internal event", () => {
+test("marker parity is an equivalence route without requiring 131072 cycles or an internal trace", () => {
   const java = { ok: true, matched: [true, true] };
   const ts = { ok: true, matched: [true, true] };
   const equal = evaluateLongCycleEquivalence({
-    cycles: 131072,
+    cycles: 1550,
     expectedCount: 2,
     java,
     ts,
-    javaEvents: [{ stage: "OUT", term: "<a --> b>." }],
-    tsEvents: [{ term: "<a --> b>.", stage: "OUT" }],
   });
 
   assert.equal(equal.marker_standard, "passed");
-  assert.equal(equal.internal_event_standard, "passed");
+  assert.equal(equal.internal_event_standard, "unverified");
+  assert.equal(equal.equivalence_route, "marker");
   assert.equal(equal.status, "equivalent");
   assert.equal(equal.equivalent, true);
 });
 
-test("131072-cycle marker parity does not pass when an internal event differs", () => {
+test("marker parity remains equivalent when an optional internal trace differs", () => {
   const result = evaluateLongCycleEquivalence({
     cycles: 131072,
     expectedCount: 1,
@@ -168,25 +199,29 @@ test("131072-cycle marker parity does not pass when an internal event differs", 
 
   assert.equal(result.marker_standard, "passed");
   assert.equal(result.internal_event_standard, "failed");
-  assert.equal(result.status, "internal_event_failed");
-  assert.equal(result.equivalent, false);
+  assert.equal(result.equivalence_route, "marker");
+  assert.equal(result.status, "equivalent");
+  assert.equal(result.equivalent, true);
 });
 
-test("131072-cycle marker success without an internal trace remains unverified", () => {
+test("131072-cycle equivalence is available for inputs without Java markers", () => {
   const result = evaluateLongCycleEquivalence({
     cycles: 131072,
-    expectedCount: 1,
-    java: { ok: true, matched: [true] },
-    ts: { ok: true, matched: [true] },
+    expectedCount: 0,
+    java: { ok: true, matched: [] },
+    ts: { ok: true, matched: [] },
+    javaEvents: [{ stage: "OUT", term: "<a --> b>." }],
+    tsEvents: [{ term: "<a --> b>.", stage: "OUT" }],
   });
 
-  assert.equal(result.marker_standard, "passed");
-  assert.equal(result.internal_event_standard, "unverified");
-  assert.equal(result.status, "internal_event_unverified");
-  assert.equal(result.equivalent, false);
+  assert.equal(result.marker_standard, "not_applicable");
+  assert.equal(result.internal_event_standard, "passed");
+  assert.equal(result.equivalence_route, "cycle");
+  assert.equal(result.status, "equivalent");
+  assert.equal(result.equivalent, true);
 });
 
-test("NAL parity rows expose the long-cycle gate without treating it as a marker pass", () => {
+test("NAL parity rows expose marker equivalence independently of the long-cycle target", () => {
   const row = evaluateRow("fixture.nal", ["marker"],
     { expected: 1, matched: [true] },
     { expected: 1, matched: [true] },
@@ -195,8 +230,9 @@ test("NAL parity rows expose the long-cycle gate without treating it as a marker
 
   assert.equal(row.functional_pass, true);
   assert.equal(row.long_cycle_equivalence.marker_standard, "passed");
-  assert.equal(row.long_cycle_equivalence.status, "internal_event_unverified");
-  assert.equal(row.long_cycle_equivalence.equivalent, false);
+  assert.equal(row.long_cycle_equivalence.equivalence_route, "marker");
+  assert.equal(row.long_cycle_equivalence.status, "equivalent");
+  assert.equal(row.long_cycle_equivalence.equivalent, true);
 });
 
 test("NAL runner preserves valid rows when stdout contains a diagnostic line", () => {
