@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/mental/ComplexEmotions.java
 import { java, JavaObject, type float } from "jree";
+import { Float32Math } from "../../runtime/Float32.ts";
 
 
 
@@ -10,7 +11,7 @@ import { java, JavaObject, type float } from "jree";
 export class ComplexEmotions extends JavaObject implements Plugin {
 
     public obs: EventEmitter.EventObserver;
-    protected fear: float = 0.5;
+    protected fear: float = Float32Math.from(0.5) as float;
 
     public setEnabled(n: Nar, enabled: boolean): boolean {
         if (enabled) {
@@ -37,9 +38,9 @@ export class ComplexEmotions extends JavaObject implements Plugin {
                                     let weight: float = future_task.getPriority();
                                     let fear: float = solutionQuality(true, c.desires.get(0), future_task.sentence, memory,
                                         n);
-                                    let newValue: float = fear * weight;
-                                    fear += newValue * weight;
-                                    fear /= 1.0 + weight;
+                                    let newValue: float = Float32Math.multiply(fear, weight) as float;
+                                    fear = Float32Math.add(fear, Float32Math.multiply(newValue, weight)) as float;
+                                    fear = Float32Math.divide(fear, Float32Math.add(1.0, weight)) as float;
                                     // incrase concept priority by fear value:
                                     let C1: Concept = memory.concept(future_task.getTerm());
                                     if (C1 !== null) {

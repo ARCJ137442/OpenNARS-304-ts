@@ -1,4 +1,6 @@
 //! Java source: opennars/io/Texts.java
+import { Float32Math } from "../runtime/Float32.ts";
+
 /**
  * Utilities for processing text input/output, including formatting and comparison.
  */
@@ -25,22 +27,23 @@ export class Texts {
     }
 
     public static n4(x: number): string {
-        return Texts.formatFixed(x, 4);
+        return Texts.formatFixed(Float32Math.from(x), 4);
     }
 
     public static n2Slow(x: number): string {
-        return Texts.formatFixed(x, 2);
+        return Texts.formatFixed(Float32Math.from(x), 2);
     }
 
     public static thousandths(d: number): number {
-        return Math.floor(d * 1000 + 0.5);
+        return Math.trunc(Float32Math.add(Float32Math.multiply(d, 1000), 0.5));
     }
 
     public static hundredths(d: number): number {
-        return Math.floor(d * 100 + 0.5);
+        return Math.trunc(Float32Math.add(Float32Math.multiply(d, 100), 0.5));
     }
 
     public static n2(x: number): string {
+        x = Float32Math.from(x);
         if (x < 0 || x > 1.0) {
             throw new Error("Invalid value for Texts.n2");
         }
@@ -67,7 +70,7 @@ export class Texts {
     }
 
     public static n1(x: number): string {
-        return Texts.formatFixed(x, 1);
+        return Texts.formatFixed(Float32Math.from(x), 1);
     }
 
     public static compareTo(s: string, t: string): number {

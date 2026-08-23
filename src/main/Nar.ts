@@ -1,6 +1,6 @@
 //! Java source: opennars/main/Nar.java
 import { readFileSync } from "node:fs";
-import { java, type long, JavaObject, S, type int, type double, closeResources, handleResourceError, throwResourceError } from "jree";
+import { java, type long, JavaObject, S, type int, type double, type float, closeResources, handleResourceError, throwResourceError } from "jree";
 import { Parameters } from "./Parameters.ts";
 import { Debug } from "./Debug.ts";
 import { ConfigReader } from "../io/ConfigReader.ts";
@@ -26,6 +26,7 @@ import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
 import { Stamp } from "../entity/Stamp.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 import { Task } from "../entity/Task.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
 import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
@@ -332,7 +333,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         else if (text.startsWith("*decisionthreshold=")) { // TODO use reflection for narParameters, allow to set
             // others too
             let value: java.lang.Double = java.lang.Double.valueOf(text.split("decisionthreshold=")[1]);
-            this.narParameters.DECISION_THRESHOLD = value.floatValue();
+            this.narParameters.DECISION_THRESHOLD = Float32Math.from(value.floatValue()) as float;
             return true;
         } // 音量
         else if (text.startsWith("*volume=")) {

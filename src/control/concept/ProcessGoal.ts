@@ -24,6 +24,7 @@ import { FunctionOperator } from "../../operator/FunctionOperator.ts";
 import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
+import { Float32Math } from "../../runtime/Float32.ts";
 import { javaStringValue } from "../../runtime/jree-compat.ts";
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
@@ -322,8 +323,11 @@ export class ProcessGoal extends JavaObject {
                 }
                 java.lang.System.out.println(`Executed based on: ${javaStringValue(bestOpWithMeta.executable_precondition)}`);
                 for (let precon of anticipationsToMake.get(bestOpWithMeta.bestOp)) {
-                    let distance: float = precon.timeOffset - nal.time.time();
-                    let urgency: float = 2.0 + 1.0 / distance;
+                    let distance: float = Float32Math.subtract(precon.timeOffset, nal.time.time()) as float;
+                    let urgency: float = Float32Math.add(
+                        2.0,
+                        Float32Math.divide(1.0, distance),
+                    ) as float;
 
                     ProcessAnticipation.anticipate(nal, precon.executable_precondition.sentence,
                         precon.executable_precondition.budget, precon.minTime, precon.maxTime, urgency,
@@ -354,15 +358,18 @@ export class ProcessGoal extends JavaObject {
             let prec: Term[] = precTerm.term;
             let newprec: Term[] = new Array<Term>(prec.length - 3);
             java.lang.System.arraycopy(prec, 0, newprec, 0, prec.length - 3);
-            let timeOffset: float = ((prec[prec.length - 1] as Interval).time) as long;
-            let timeWindowHalf: float = timeOffset * nal.narParameters.ANTICIPATION_TOLERANCE;
+            let timeOffset: float = Float32Math.from((prec[prec.length - 1] as Interval).time) as float;
+            let timeWindowHalf: float = Float32Math.multiply(
+                timeOffset,
+                nal.narParameters.ANTICIPATION_TOLERANCE,
+            ) as float;
             let op: Operation = prec[prec.length - 2] as Operation;
             let precondition: Term = Conjunction.make(newprec, TemporalRules.ORDER_FORWARD);
             let newesttime: long = -1;
             let bestsofar: Task = null;
             let prec_intervals: java.util.List<java.lang.Float> = new java.util.ArrayList();
             for (let l of CompoundTerm.extractIntervals(nal.memory, precTerm)) {
-                prec_intervals.add(l as float);
+                prec_intervals.add(Float32Math.from(l) as float);
             }
             let subsconc: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
             let conclusionMatches: boolean = Variables.findSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,

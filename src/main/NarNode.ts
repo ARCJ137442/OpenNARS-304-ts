@@ -1,5 +1,6 @@
 //! Java source: opennars/main/NarNode.java
 import { java, JavaObject, type int, type float, closeResources, handleResourceError, throwResourceError, S } from "jree";
+import { Float32Math } from "../runtime/Float32.ts";
 
 
 
@@ -217,7 +218,7 @@ export class NarNode extends JavaObject implements EventObserver {
             super();
             this.targetAddress = java.net.InetAddress.getByName(targetIP);
             this.sendSocket = new java.net.DatagramSocket();
-            this.threshold = threshold;
+            this.threshold = Float32Math.from(threshold) as float;
             this.targetPort = targetPort;
             this.mustContainTerm = mustContainTerm;
             this.sendInput = sendInput;

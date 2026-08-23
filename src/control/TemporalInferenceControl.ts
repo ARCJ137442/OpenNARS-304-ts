@@ -4,6 +4,7 @@ import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Stamp } from "../entity/Stamp.ts";
 import { Task } from "../entity/Task.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Events } from "../io/events/Events.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -206,7 +207,7 @@ export class TemporalInferenceControl extends JavaObject {
                 event_priority = java.lang.Math.max(event_quality, c.getPriority());
             }
             let t2: Task = new Task(newEvent.sentence,
-                new BudgetValue(event_priority, 1.0 / newEvent.sentence.term.getComplexity() as float,
+                new BudgetValue(event_priority, Float32Math.divide(1.0, newEvent.sentence.term.getComplexity()) as float,
                     event_quality, nal.narParameters),
                 newEvent.getParentBelief(),
                 newEvent.getBestSolution());

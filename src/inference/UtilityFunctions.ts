@@ -37,7 +37,8 @@ export class UtilityFunctions extends JavaObject {
     public static or(...arr: float[]): float {
         let product: float = 1;
         for (let f of arr) {
-            product = UtilityFunctions.float(product * UtilityFunctions.float(1 - f));
+            const javaF = UtilityFunctions.float(f);
+            product = UtilityFunctions.float(product * UtilityFunctions.float(1 - javaF));
         }
         return UtilityFunctions.float(1 - product);
     }
@@ -51,7 +52,7 @@ export class UtilityFunctions extends JavaObject {
     public static aveAri(...arr: float[]): float {
         let sum: float = 0;
         for (let f of arr) {
-            sum = UtilityFunctions.float(sum + f);
+            sum = UtilityFunctions.float(sum + UtilityFunctions.float(f));
         }
         return UtilityFunctions.float(sum / arr.length);
     }
@@ -65,11 +66,13 @@ export class UtilityFunctions extends JavaObject {
     public static aveGeo(...arr: float[]): float {
         let product: float = 1;
         for (let f of arr) {
-            product = UtilityFunctions.float(product * f);
+            product = UtilityFunctions.float(product * UtilityFunctions.float(f));
         }
 
         if (arr.length === 2) {
-            return UtilityFunctions.float(Math.sqrt(UtilityFunctions.float(arr[0] * arr[1])));
+            return UtilityFunctions.float(Math.sqrt(UtilityFunctions.float(
+                UtilityFunctions.float(arr[0]) * UtilityFunctions.float(arr[1]),
+            )));
         }
         return UtilityFunctions.float(Math.pow(product, 1.00 / arr.length));
     }

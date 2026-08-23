@@ -1,5 +1,6 @@
 //! Java source: opennars/storage/Memory.java
 import { java, JavaObject, type long, type float, type int, type double, S } from "jree";
+import { Float32Math } from "../runtime/Float32.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -333,7 +334,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
     public output(t: Task): void {
 
         let budget: float = t.budget.summary();
-        let noiseLevel: float = 1.0 - (this.narParameters.VOLUME / 100.0);
+        let noiseLevel: float = Float32Math.from(1.0 - (this.narParameters.VOLUME / 100.0)) as float;
 
         if (budget >= noiseLevel) { // only report significant derived Tasks
             this.emit(OUT.class, t);
@@ -433,7 +434,7 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
 
     /** converts durations to cycles */
     public cycles(durations: double): float {
-        return this.narParameters.DURATION * durations as float;
+        return Float32Math.from(this.narParameters.DURATION * durations) as float;
     }
 
     public iterator(): java.util.Iterator<Concept> {

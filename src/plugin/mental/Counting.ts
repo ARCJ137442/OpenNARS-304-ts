@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/mental/Counting.java
 import { java, JavaObject, type float, type double, type int, S } from "jree";
+import { Float32Math } from "../../runtime/Float32.ts";
 
 
 
@@ -11,10 +12,10 @@ export class Counting extends JavaObject implements Plugin {
     public obs: EventObserver;
 
     protected static readonly CARDINALITY: Term = Term.get("CARDINALITY");
-    public MINIMUM_PRIORITY: float = 0.3;
+    public MINIMUM_PRIORITY: float = Float32Math.from(0.3) as float;
 
     public setMINIMUM_PRIORITY(val: double): void {
-        this.MINIMUM_PRIORITY = val as float;
+        this.MINIMUM_PRIORITY = Float32Math.from(val) as float;
     }
 
     public getMINIMUM_PRIORITY(): double {
@@ -39,7 +40,7 @@ export class Counting extends JavaObject implements Plugin {
 
 
                 super();
-                this.MINIMUM_PRIORITY = MINIMUM_PRIORITY;
+                this.MINIMUM_PRIORITY = Float32Math.from(MINIMUM_PRIORITY) as float;
 
 
                 break;

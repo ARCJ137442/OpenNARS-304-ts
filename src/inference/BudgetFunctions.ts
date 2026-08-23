@@ -197,7 +197,7 @@ export class BudgetFunctions extends UtilityFunctions {
         if (p > 0) {
             quality = Math.fround(quality + p * java.lang.Math.pow(
                 budget.getDurability(),
-                1.0 / Math.fround(javaForgetCycles * p),
+                1.0 / Float32Math.multiply(javaForgetCycles, p),
             )) as float;
         } // priority Durability
         budget.setPriority(quality);
@@ -246,7 +246,10 @@ export class BudgetFunctions extends UtilityFunctions {
      * @return The budget value of the conclusion
      */
     public static backwardWeak(truth: TruthValue, nal: DerivationContext): BudgetValue {
-        return BudgetFunctions.budgetInference(BudgetFunctions.w2c(1, nal.narParameters) as float * BudgetFunctions.truthToQuality(truth), 1, nal);
+        return BudgetFunctions.budgetInference(Float32Math.multiply(
+            BudgetFunctions.w2c(1, nal.narParameters),
+            BudgetFunctions.truthToQuality(truth),
+        ) as float, 1, nal);
     }
 
     /* ----- Task derivation in CompositionalRules and StructuralRules ----- */
@@ -261,7 +264,7 @@ export class BudgetFunctions extends UtilityFunctions {
     public static compoundForward(truth: TruthValue, content: Term,
         nal: DerivationContext): BudgetValue {
         let complexity: float = (content === null) ? nal.narParameters.COMPLEXITY_UNIT
-            : nal.narParameters.COMPLEXITY_UNIT * content.getComplexity();
+            : Float32Math.multiply(nal.narParameters.COMPLEXITY_UNIT, content.getComplexity());
         return BudgetFunctions.budgetInference(BudgetFunctions.truthToQuality(truth), complexity, nal);
     }
 
@@ -273,7 +276,11 @@ export class BudgetFunctions extends UtilityFunctions {
      * @return The budget of the conclusion
      */
     public static compoundBackward(content: Term, nal: DerivationContext): BudgetValue {
-        return BudgetFunctions.budgetInference(1, content.getComplexity() * nal.narParameters.COMPLEXITY_UNIT, nal);
+        return BudgetFunctions.budgetInference(
+            1,
+            Float32Math.multiply(content.getComplexity(), nal.narParameters.COMPLEXITY_UNIT),
+            nal,
+        );
     }
 
     /**
@@ -286,7 +293,7 @@ export class BudgetFunctions extends UtilityFunctions {
     public static compoundBackwardWeak(content: Term,
         nal: DerivationContext): BudgetValue {
         return BudgetFunctions.budgetInference(BudgetFunctions.w2c(1, nal.narParameters) as float,
-            content.getComplexity() * nal.narParameters.COMPLEXITY_UNIT, nal);
+            Float32Math.multiply(content.getComplexity(), nal.narParameters.COMPLEXITY_UNIT), nal);
     }
 
     /**

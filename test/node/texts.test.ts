@@ -7,6 +7,7 @@ test("Texts.n2 formats values with two decimals and rounding", () => {
     assert.equal(Texts.n2(1.0), "1.00");
     assert.equal(Texts.n2(0.5), "0.50");
     assert.equal(Texts.n2(0.09), "0.09");
+    assert.equal(Texts.n2(0.145), "0.15");
     assert.equal(Texts.n2(0.1), "0.10");
     assert.equal(Texts.n2(0.009), "0.01");
     assert.equal(Texts.n2(0.001), "0.00");

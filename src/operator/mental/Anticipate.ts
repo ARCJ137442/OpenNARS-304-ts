@@ -7,6 +7,7 @@ import { Stamp } from "../../entity/Stamp.ts";
 import { Task } from "../../entity/Task.ts";
 import { TruthValue } from "../../entity/TruthValue.ts";
 import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
+import { Float32Math } from "../../runtime/Float32.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { Events } from "../../io/events/Events.ts";
@@ -40,9 +41,9 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
     private expiredBudget: BudgetValue = null;
 
     // internal experience has less durability?
-    public ANTICIPATION_DURABILITY_MUL: float = 0.1; // 0.1
+    public ANTICIPATION_DURABILITY_MUL: float = Float32Math.from(0.1) as float; // 0.1
     // internal experience has less priority?
-    public ANTICIPATION_PRIORITY_MUL: float = 0.1; // 0.1
+    public ANTICIPATION_PRIORITY_MUL: float = Float32Math.from(0.1) as float; // 0.1
 
     private nal: DerivationContext; // don't serialize, it will be re-set after deserialization
 
@@ -64,8 +65,8 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
 
                 super("^anticipate");
-                this.ANTICIPATION_DURABILITY_MUL = ANTICIPATION_DURABILITY_MUL;
-                this.ANTICIPATION_PRIORITY_MUL = ANTICIPATION_PRIORITY_MUL;
+                this.ANTICIPATION_DURABILITY_MUL = Float32Math.from(ANTICIPATION_DURABILITY_MUL) as float;
+                this.ANTICIPATION_PRIORITY_MUL = Float32Math.from(ANTICIPATION_PRIORITY_MUL) as float;
 
 
                 break;

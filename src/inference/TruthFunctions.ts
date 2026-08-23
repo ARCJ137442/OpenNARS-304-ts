@@ -3,6 +3,7 @@ import { java, S, type int, type float, type double, type long } from "jree";
 import { UtilityFunctions } from "./UtilityFunctions.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Parameters } from "../main/Parameters.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 
 
 
@@ -160,7 +161,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static negation(v1: TruthValue, narParameters: Parameters): TruthValue {
-        let f: float = 1 - v1.frequency;
+        let f: float = Float32Math.subtract(1, v1.frequency) as float;
         let c: double = v1.confidence;
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
@@ -399,7 +400,7 @@ export class TruthFunctions extends UtilityFunctions {
         let c1: double = v1.confidence;
         let c2: double = v2.confidence;
         let f0: float = or(f1, f2);
-        let f: float = (f0 === 0) ? 0 : (and(f1, f2) as float / f0);
+        let f: float = (f0 === 0) ? 0 : Float32Math.divide(and(f1, f2), f0) as float;
         let w: double = and(f0, c1, c2);
         let c: double = w2c(w, narParameters);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
@@ -592,8 +593,13 @@ export class TruthFunctions extends UtilityFunctions {
         param: Parameters): float {
         let a: double = 100000.0 * param.PROJECTION_DECAY; // projection less strict as we changed in v2.0.0 10000.0
         // slower decay than 100000.0
-        return 1.0 - java.lang.Math.abs(sourceTime - targetTime)
-            / (java.lang.Math.abs(sourceTime - currentTime) + java.lang.Math.abs(targetTime - currentTime) + a) as float;
+        const denominator = Float32Math.from(
+            java.lang.Math.abs(sourceTime - currentTime)
+            + java.lang.Math.abs(targetTime - currentTime)
+            + a,
+        );
+        const ratio = Float32Math.divide(java.lang.Math.abs(sourceTime - targetTime), denominator);
+        return Float32Math.subtract(1, ratio) as float;
     }
 }
 

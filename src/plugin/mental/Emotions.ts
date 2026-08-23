@@ -13,6 +13,7 @@ import { Term } from "../../language/Term.ts";
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
+import { Float32Math } from "../../runtime/Float32.ts";
 
 
 
@@ -22,11 +23,11 @@ import type { Plugin } from "../Plugin.ts";
  */
 export class Emotions extends JavaObject implements Plugin {
 
-    public HAPPY_EVENT_HIGHER_THRESHOLD: float = 0.75;
-    public HAPPY_EVENT_LOWER_THRESHOLD: float = 0.25;
-    public BUSY_EVENT_HIGHER_THRESHOLD: float = 0.9; // 1.6.4, step by step^, there is already enough new
+    public HAPPY_EVENT_HIGHER_THRESHOLD: float = Float32Math.from(0.75) as float;
+    public HAPPY_EVENT_LOWER_THRESHOLD: float = Float32Math.from(0.25) as float;
+    public BUSY_EVENT_HIGHER_THRESHOLD: float = Float32Math.from(0.9) as float; // 1.6.4, step by step^, there is already enough new
     // things ^^
-    public BUSY_EVENT_LOWER_THRESHOLD: float = 0.1;
+    public BUSY_EVENT_LOWER_THRESHOLD: float = Float32Math.from(0.1) as float;
     public CHANGE_STEPS_DEMANDED: int = 1000;
 
     public lasthappy: double = 0.5;
@@ -42,7 +43,7 @@ export class Emotions extends JavaObject implements Plugin {
     private busyValue: float;
 
     public setHAPPY_EVENT_HIGHER_THRESHOLD(val: double): void {
-        this.HAPPY_EVENT_HIGHER_THRESHOLD = val as float;
+        this.HAPPY_EVENT_HIGHER_THRESHOLD = Float32Math.from(val) as float;
     }
 
     public getHAPPY_EVENT_HIGHER_THRESHOLD(): double {
@@ -50,7 +51,7 @@ export class Emotions extends JavaObject implements Plugin {
     }
 
     public setHAPPY_EVENT_LOWER_THRESHOLD(val: double): void {
-        this.HAPPY_EVENT_LOWER_THRESHOLD = val as float;
+        this.HAPPY_EVENT_LOWER_THRESHOLD = Float32Math.from(val) as float;
     }
 
     public getHAPPY_EVENT_LOWER_THRESHOLD(): double {
@@ -58,7 +59,7 @@ export class Emotions extends JavaObject implements Plugin {
     }
 
     public setBUSY_EVENT_HIGHER_THRESHOLD(val: double): void {
-        this.BUSY_EVENT_HIGHER_THRESHOLD = val as float;
+        this.BUSY_EVENT_HIGHER_THRESHOLD = Float32Math.from(val) as float;
     }
 
     public getBUSY_EVENT_HIGHER_THRESHOLD(): double {
@@ -66,7 +67,7 @@ export class Emotions extends JavaObject implements Plugin {
     }
 
     public setBUSY_EVENT_LOWER_THRESHOLD(val: double): void {
-        this.BUSY_EVENT_LOWER_THRESHOLD = val as float;
+        this.BUSY_EVENT_LOWER_THRESHOLD = Float32Math.from(val) as float;
     }
 
     public getBUSY_EVENT_LOWER_THRESHOLD(): double {
@@ -82,8 +83,8 @@ export class Emotions extends JavaObject implements Plugin {
     }
 
     public resetEmotions(): void {
-        this.happyValue = 0.5;
-        this.busyValue = 0.5;
+        this.happyValue = Float32Math.from(0.5) as float;
+        this.busyValue = Float32Math.from(0.5) as float;
         this.lastbusy = 0.5;
         this.lasthappy = 0.5;
     }
@@ -107,10 +108,10 @@ export class Emotions extends JavaObject implements Plugin {
 
 
                 super();
-                this.BUSY_EVENT_LOWER_THRESHOLD = BUSY_EVENT_LOWER_THRESHOLD;
-                this.BUSY_EVENT_HIGHER_THRESHOLD = BUSY_EVENT_HIGHER_THRESHOLD;
-                this.HAPPY_EVENT_LOWER_THRESHOLD = HAPPY_EVENT_LOWER_THRESHOLD;
-                this.HAPPY_EVENT_HIGHER_THRESHOLD = HAPPY_EVENT_HIGHER_THRESHOLD;
+                this.BUSY_EVENT_LOWER_THRESHOLD = Float32Math.from(BUSY_EVENT_LOWER_THRESHOLD) as float;
+                this.BUSY_EVENT_HIGHER_THRESHOLD = Float32Math.from(BUSY_EVENT_HIGHER_THRESHOLD) as float;
+                this.HAPPY_EVENT_LOWER_THRESHOLD = Float32Math.from(HAPPY_EVENT_LOWER_THRESHOLD) as float;
+                this.HAPPY_EVENT_HIGHER_THRESHOLD = Float32Math.from(HAPPY_EVENT_HIGHER_THRESHOLD) as float;
                 this.CHANGE_STEPS_DEMANDED = CHANGE_STEPS_DEMANDED;
 
 
@@ -125,8 +126,8 @@ export class Emotions extends JavaObject implements Plugin {
 
 
     public set(happy: float, busy: float): void {
-        this.happyValue = happy;
-        this.busyValue = busy;
+        this.happyValue = Float32Math.from(happy) as float;
+        this.busyValue = Float32Math.from(busy) as float;
     }
 
     public happy(): float {
@@ -140,8 +141,14 @@ export class Emotions extends JavaObject implements Plugin {
     public adjustSatisfaction(newValue: float, weight: float, nal: DerivationContext): void {
 
         // float oldV = happyValue;
-        this.happyValue += newValue * weight;
-        this.happyValue /= 1.0 + weight;
+        this.happyValue = Float32Math.add(
+            this.happyValue,
+            Float32Math.multiply(newValue, weight),
+        ) as float;
+        this.happyValue = Float32Math.divide(
+            this.happyValue,
+            Float32Math.add(1.0, weight),
+        ) as float;
 
         if (!this.enabled) {
             return;
@@ -229,8 +236,14 @@ export class Emotions extends JavaObject implements Plugin {
 
     public adjustBusy(newValue: float, weight: float, nal: DerivationContext): void {
 
-        this.busyValue += newValue * weight;
-        this.busyValue /= (1.0 + weight);
+        this.busyValue = Float32Math.add(
+            this.busyValue,
+            Float32Math.multiply(newValue, weight),
+        ) as float;
+        this.busyValue = Float32Math.divide(
+            this.busyValue,
+            Float32Math.add(1.0, weight),
+        ) as float;
 
         if (!this.enabled) {
             return;

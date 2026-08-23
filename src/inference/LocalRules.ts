@@ -21,6 +21,7 @@ import { TruthFunctions } from "./TruthFunctions.ts";
 import { UtilityFunctions } from "./UtilityFunctions.ts";
 import { OutputHandler } from "../io/events/OutputHandler.ts";
 import { Events } from "../io/events/Events.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 
 const matchingOrder = TemporalRules.matchingOrder;
 const reverseOrder = TemporalRules.reverseOrder;
@@ -161,16 +162,27 @@ export class LocalRules extends JavaObject {
             /* synchronized (recent_ivals) { */
             if (recent_ivals.isEmpty()) {
                 for (let l of ivalOld) {
-                    recent_ivals.add(l as float);
+                    recent_ivals.add(Float32Math.from(l) as float);
                 }
             }
             for (let i: int = 0; i < ivalNew.size(); i++) {
-                let inBetween: float = (recent_ivals.get(i) + ivalNew.get(i)) / 2.0;
+                let inBetween: float = Float32Math.divide(
+                    Float32Math.add(recent_ivals.get(i), ivalNew.get(i)),
+                    2.0,
+                ) as float;
                 // vote as one new entry, turtle style
-                let speed: float = 1.0
-                    / (nal.narParameters.INTERVAL_ADAPT_SPEED * (1.0 - newTruth.getExpectation()));
+                let speed: float = Float32Math.divide(
+                    1.0,
+                    Float32Math.multiply(
+                        nal.narParameters.INTERVAL_ADAPT_SPEED,
+                        Float32Math.subtract(1.0, newTruth.getExpectation()),
+                    ),
+                ) as float;
                 // less truth expectation, slower
-                recent_ivals.set(i, recent_ivals.get(i) + speed * (inBetween - recent_ivals.get(i)));
+                recent_ivals.set(i, Float32Math.add(
+                    recent_ivals.get(i),
+                    Float32Math.multiply(speed, Float32Math.subtract(inBetween, recent_ivals.get(i))),
+                ) as float);
             }
             for (let i: int = 0; i < ivalNew.size(); i++) {
                 AbsDiffSumNew += java.lang.Math.abs(ivalNew.get(i) - recent_ivals.get(i));
@@ -280,10 +292,10 @@ export class LocalRules extends JavaObject {
              * increases if it has a high truth expecation
              */
 
-            return (truth.getExpectation() / java.lang.Math
+            return Float32Math.from(truth.getExpectation() / java.lang.Math
                 .sqrt(java.lang.Math.sqrt(java.lang.Math.sqrt(solution.term.getComplexity() * memory.narParameters.COMPLEXITY_UNIT)))) as float;
         } else {
-            return truth.confidence as float;
+            return Float32Math.from(truth.confidence) as float;
         }
     }
 
@@ -326,11 +338,17 @@ export class LocalRules extends JavaObject {
             // https://groups.google.com/forum/#!topic/open-nars/ZfCM416Dx1M
             budget = new BudgetValue(UtilityFunctions.or(taskPriority, quality), task.getDurability(),
                 BudgetFunctions.truthToQuality(solution.truth), nal.narParameters);
-            task.setPriority(java.lang.Math.min(1 - quality, taskPriority));
+            task.setPriority(Float32Math.from(java.lang.Math.min(
+                Float32Math.subtract(1, quality),
+                taskPriority,
+            )) as float);
         }
         if (feedbackToLinks) {
             let tLink: TaskLink = nal.getCurrentTaskLink();
-            tLink.setPriority(java.lang.Math.min(1 - quality, tLink.getPriority()));
+            tLink.setPriority(Float32Math.from(java.lang.Math.min(
+                Float32Math.subtract(1, quality),
+                tLink.getPriority(),
+            )) as float);
             let bLink: TermLink = nal.getCurrentBeliefLink();
             bLink.incPriority(quality);
         }

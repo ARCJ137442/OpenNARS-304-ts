@@ -15,10 +15,11 @@ const DELIMITER: string = "%";
 const SEPARATOR: string = ";";
 
 function formatN2(value: number): string {
+    value = Float32Math.from(value);
     if (value < 0 || value > 1.0) {
         throw new Error("Invalid value for TruthValue formatN2");
     }
-    const hundredths = Math.floor(value * 100 + 0.5);
+    const hundredths = Math.trunc(Float32Math.add(Float32Math.multiply(value, 100), 0.5));
     switch (hundredths) {
         case 100:
             return "1.00";
@@ -42,7 +43,7 @@ function formatN2(value: number): string {
  */
 export class TruthValue {
     private _confidence!: number;
-    public frequency: number;
+    private _frequency!: number;
     public analytic: boolean;
     public readonly narParameters: TruthParameters;
 
@@ -79,13 +80,28 @@ export class TruthValue {
         this._confidence = confidence < maxConfidence ? confidence : maxConfidence;
     }
 
+    public get frequency(): number {
+        return this._frequency;
+    }
+
+    public set frequency(frequency: number) {
+        // Java stores frequency in a float field.  This setter is also the
+        // boundary for translated code that still assigns the public field
+        // directly, so an `as float` cast cannot silently bypass narrowing.
+        this._frequency = Float32Math.from(frequency);
+    }
+
     public mulConfidence(mul: number): TruthValue {
         this.confidence = this.confidence * mul;
         return this;
     }
 
     public getExpectation(): number {
-        return this.confidence * (this.frequency - 0.5) + 0.5;
+        // Java: ((float) confidence * (frequency - 0.5f) + 0.5f).
+        const confidence = Float32Math.from(this.confidence);
+        const centeredFrequency = Float32Math.subtract(this.frequency, 0.5);
+        const product = Float32Math.multiply(confidence, centeredFrequency);
+        return Float32Math.add(product, 0.5);
     }
 
     /**
@@ -94,15 +110,11 @@ export class TruthValue {
      * the mathematical value directly.
      */
     public getExpectationAsFloat(): number {
-        const confidence: number = Math.fround(this.confidence);
-        const frequency: number = Math.fround(this.frequency);
-        const centeredFrequency: number = Math.fround(frequency - 0.5);
-        const product: number = Math.fround(confidence * centeredFrequency);
-        return Math.fround(product + 0.5);
+        return this.getExpectation();
     }
 
     public getExpDifAbs(value: TruthValue): number {
-        return Math.abs(this.getExpectation() - value.getExpectation());
+        return Float32Math.from(Math.abs(Float32Math.subtract(this.getExpectation(), value.getExpectation())));
     }
 
     public isNegative(): boolean {

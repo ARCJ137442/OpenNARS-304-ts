@@ -23,12 +23,12 @@ test("TruthValue factory methods map to expected defaults", () => {
     assert.equal(empty.analytic, false);
 
     const simple = TruthValue.fromFrequencyConfidence(0.4, 0.6, params);
-    assert.equal(simple.frequency, 0.4);
+    assert.equal(simple.frequency, Math.fround(0.4));
     assert.equal(simple.confidence, 0.6);
     assert.equal(simple.analytic, false);
 
     const cloned = TruthValue.fromTruthValue(simple);
-    assert.equal(cloned.frequency, 0.4);
+    assert.equal(cloned.frequency, Math.fround(0.4));
     assert.equal(cloned.confidence, 0.6);
     assert.equal(cloned.analytic, false);
     assert.notEqual(cloned, simple);
@@ -51,7 +51,10 @@ test("TruthValue expectation and negativity follow formula", () => {
     const truth = new TruthValue(0.2, 0.8, false, params);
 
     const expectation = truth.getExpectation();
-    assert.ok(Math.abs(expectation - (0.8 * (0.2 - 0.5) + 0.5)) < 1e-9);
+    const expectedExpectation = Math.fround(
+        Math.fround(Math.fround(0.8) * Math.fround(Math.fround(0.2) - 0.5)) + 0.5,
+    );
+    assert.equal(expectation, expectedExpectation);
     assert.equal(truth.isNegative(), true);
 });
 
@@ -91,8 +94,32 @@ test("TruthValue equals uses Java epsilon and ignores analytic metadata", () => 
     const params = new Parameters();
     const base = TruthValue.fromFrequencyConfidence(0.4, 0.4, params, false);
     const near = TruthValue.fromFrequencyConfidence(0.4 + 0.001, 0.4 - 0.001, params, true);
-    const far = TruthValue.fromFrequencyConfidence(0.4 + params.TRUTH_EPSILON, 0.4, params);
+    const far = TruthValue.fromFrequencyConfidence(
+        0.4 + 2 * params.TRUTH_EPSILON,
+        0.4,
+        params,
+    );
 
     assert.equal(base.equals(near), true);
     assert.equal(base.equals(far), false);
+});
+
+test("TruthValue direct frequency writes preserve Java float storage", () => {
+    const params = new Parameters();
+    const truth = TruthValue.fromFrequencyConfidence(0, 0, params);
+
+    truth.frequency = 0.1;
+
+    assert.equal(truth.frequency, Math.fround(0.1));
+});
+
+test("TruthValue expectation difference is a Java float result", () => {
+    const params = new Parameters();
+    const left = TruthValue.fromFrequencyConfidence(0.123456789, 0.87654321, params);
+    const right = TruthValue.fromFrequencyConfidence(0.987654321, 0.23456789, params);
+    const expected = Math.fround(Math.abs(
+        Math.fround(left.getExpectation()) - Math.fround(right.getExpectation()),
+    ));
+
+    assert.equal(left.getExpDifAbs(right), expected);
 });

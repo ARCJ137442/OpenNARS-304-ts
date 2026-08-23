@@ -1,5 +1,6 @@
 //! Java source: opennars/parameter/Parameters.java
 import { java, JavaObject, type int, type float, type double } from "jree";
+import { Float32Math } from "../runtime/Float32.ts";
 
 
 
@@ -23,7 +24,7 @@ export class Parameters extends JavaObject implements java.io.Serializable {
      * Minimum expectation for a desire value to execute an operation.
      * the range of "now" is [-DURATION, DURATION];
      */
-    public DECISION_THRESHOLD: float = 0.51;
+    public DECISION_THRESHOLD: float = Float32Math.from(0.51) as float;
 
     /** Size of ConceptBag and level amount */
     // not changeable at runtime as bags would have to be re-constructed
@@ -45,7 +46,7 @@ export class Parameters extends JavaObject implements java.io.Serializable {
      * Must be >=1.0, usually 1 .. 2, not changeable at runtime as evidence
      * measurement would change
      */
-    public HORIZON: float = 1;
+    public HORIZON: float = Float32Math.from(1) as float;
 
     /**
      * determines the internal precision used for TruthValue calculations.
@@ -55,54 +56,54 @@ export class Parameters extends JavaObject implements java.io.Serializable {
      */
     // Java declares this threshold as 0.01f. Keep the binary32 value because
     // TruthValue's confidence clamp performs double arithmetic with it.
-    public TRUTH_EPSILON: float = Math.fround(0.01) as float;
+    public TRUTH_EPSILON: float = Float32Math.from(0.01) as float;
 
-    public BUDGET_EPSILON: float = 0.0001;
+    public BUDGET_EPSILON: float = Float32Math.from(0.0001) as float;
 
     /* ---------- budget thresholds ---------- */
     /** The budget threshold rate for task to be accepted. */
-    public BUDGET_THRESHOLD: float = 0.01 as float;
+    public BUDGET_THRESHOLD: float = Float32Math.from(0.01) as float;
 
     /* ---------- default input values ---------- */
     /** Default expectation for confirmation on anticipation. */
-    public DEFAULT_CONFIRMATION_EXPECTATION: float = 0.6 as float;
+    public DEFAULT_CONFIRMATION_EXPECTATION: float = Float32Math.from(0.6) as float;
     /** Ignore expectation for creation of concept. */
     public ALWAYS_CREATE_CONCEPT: boolean = true;
     /** Default expectation for creation of concept. */
-    public DEFAULT_CREATION_EXPECTATION: float = 0.66 as float; // 0.66
+    public DEFAULT_CREATION_EXPECTATION: float = Float32Math.from(0.66) as float; // 0.66
     /** Default expectation for creation of concept for goals. */
-    public DEFAULT_CREATION_EXPECTATION_GOAL: float = 0.6 as float; // 0.66
+    public DEFAULT_CREATION_EXPECTATION_GOAL: float = Float32Math.from(0.6) as float; // 0.66
     /** Default confidence of input judgment. */
-    public DEFAULT_JUDGMENT_CONFIDENCE: float = 0.9 as float;
+    public DEFAULT_JUDGMENT_CONFIDENCE: float = Float32Math.from(0.9) as float;
     /** Default priority of input judgment */
-    public DEFAULT_JUDGMENT_PRIORITY: float = 0.8 as float;
+    public DEFAULT_JUDGMENT_PRIORITY: float = Float32Math.from(0.8) as float;
     /** Default durability of input judgment */
-    public DEFAULT_JUDGMENT_DURABILITY: float = 0.5 as float; // was 0.8 in 1.5.5; 0.5 after
+    public DEFAULT_JUDGMENT_DURABILITY: float = Float32Math.from(0.5) as float; // was 0.8 in 1.5.5; 0.5 after
     /** Default priority of input question */
-    public DEFAULT_QUESTION_PRIORITY: float = 0.9 as float;
+    public DEFAULT_QUESTION_PRIORITY: float = Float32Math.from(0.9) as float;
     /** Default durability of input question */
-    public DEFAULT_QUESTION_DURABILITY: float = 0.9 as float;
+    public DEFAULT_QUESTION_DURABILITY: float = Float32Math.from(0.9) as float;
 
     /** Default confidence of input goal. */
-    public DEFAULT_GOAL_CONFIDENCE: float = 0.9 as float;
+    public DEFAULT_GOAL_CONFIDENCE: float = Float32Math.from(0.9) as float;
     /** Default priority of input judgment */
-    public DEFAULT_GOAL_PRIORITY: float = 0.9 as float;
+    public DEFAULT_GOAL_PRIORITY: float = Float32Math.from(0.9) as float;
     /** Default durability of input judgment */
-    public DEFAULT_GOAL_DURABILITY: float = 0.9 as float;
+    public DEFAULT_GOAL_DURABILITY: float = Float32Math.from(0.9) as float;
     /** Default priority of input question */
-    public DEFAULT_QUEST_PRIORITY: float = 0.9 as float;
+    public DEFAULT_QUEST_PRIORITY: float = Float32Math.from(0.9) as float;
     /** Default durability of input question */
-    public DEFAULT_QUEST_DURABILITY: float = 0.9 as float;
+    public DEFAULT_QUEST_DURABILITY: float = Float32Math.from(0.9) as float;
 
     /* ---------- space management ---------- */
 
     /**
      * Level separation in LevelBag, one digit
      */
-    public BAG_THRESHOLD: float = 1.0;
+    public BAG_THRESHOLD: float = Float32Math.from(1.0) as float;
 
     /** (see its use in budgetfunctions iterative forgetting) */
-    public FORGET_QUALITY_RELATIVE: float = 0.3;
+    public FORGET_QUALITY_RELATIVE: float = Float32Math.from(0.3) as float;
 
     public REVISION_MAX_OCCURRENCE_DISTANCE: int = 10;
 
@@ -152,13 +153,13 @@ export class Parameters extends JavaObject implements java.io.Serializable {
      * Reliance factor, the empirical confidence of analytical truth.
      * the same as default confidence
      */
-    public reliance: float = 0.9;
+    public reliance: float = Float32Math.from(0.9) as float;
 
     /**
      * The rate of confidence decrease in mental operations Doubt and Hesitate
      * set to zero to disable this feature.
      */
-    public DISCOUNT_RATE: float = 0.5;
+    public DISCOUNT_RATE: float = Float32Math.from(0.5) as float;
 
     // RUNTIME PERFORMANCE (should not affect logic):
     // ----------------------------------
@@ -200,21 +201,21 @@ export class Parameters extends JavaObject implements java.io.Serializable {
     public SEQUENCE_BAG_ATTEMPTS: int = 10; // 5 //20
     public CONDITION_BAG_ATTEMPTS: int = 10; // 5 //20
 
-    public DERIVATION_PRIORITY_LEAK: float = 0.4; // https://groups.google.com/forum/#!topic/open-nars/y0XDrs2dTVs
+    public DERIVATION_PRIORITY_LEAK: float = Float32Math.from(0.4) as float; // https://groups.google.com/forum/#!topic/open-nars/y0XDrs2dTVs
 
-    public DERIVATION_DURABILITY_LEAK: float = 0.4; // https://groups.google.com/forum/#!topic/open-nars/y0XDrs2dTVs
+    public DERIVATION_DURABILITY_LEAK: float = Float32Math.from(0.4) as float; // https://groups.google.com/forum/#!topic/open-nars/y0XDrs2dTVs
 
     /**
      * how much risk is the system allowed to take just to fullfill its hunger for
      * knowledge?
      */
-    public CURIOSITY_DESIRE_CONFIDENCE_MUL: float = 0.1;
+    public CURIOSITY_DESIRE_CONFIDENCE_MUL: float = Float32Math.from(0.1) as float;
 
     /** how much priority should curiosity have? */
-    public CURIOSITY_DESIRE_PRIORITY_MUL: float = 0.1;
+    public CURIOSITY_DESIRE_PRIORITY_MUL: float = Float32Math.from(0.1) as float;
 
     /** how much durability should curiosity have? */
-    public CURIOSITY_DESIRE_DURABILITY_MUL: float = 0.3;
+    public CURIOSITY_DESIRE_DURABILITY_MUL: float = Float32Math.from(0.3) as float;
 
     public CURIOSITY_FOR_OPERATOR_ONLY: boolean = false; // for Peis concern that it may be overkill to allow it
     // for all <a =/> b> statement, so that a has
@@ -227,9 +228,9 @@ export class Parameters extends JavaObject implements java.io.Serializable {
     public HOW_QUESTION_GENERATION_ON_DECISION_MAKING: boolean = false;
 
     /** eternalized induction confidence to revise A =/> B beliefs */
-    public ANTICIPATION_CONFIDENCE: float = 0.1;
+    public ANTICIPATION_CONFIDENCE: float = Float32Math.from(0.1) as float;
 
-    public ANTICIPATION_TOLERANCE: float = 100.0;
+    public ANTICIPATION_TOLERANCE: float = Float32Math.from(100.0) as float;
 
     /**
      * Retrospective anticipation, allow to check memory for content in case of
@@ -237,18 +238,18 @@ export class Parameters extends JavaObject implements java.io.Serializable {
      */
     public RETROSPECTIVE_ANTICIPATIONS: boolean = false;
 
-    public SATISFACTION_THRESHOLD: float = 0.0; // decision threshold is enough for now
+    public SATISFACTION_THRESHOLD: float = Float32Math.from(0.0) as float; // decision threshold is enough for now
 
-    public COMPLEXITY_UNIT: float = 1.0; // 1.0 - oo
+    public COMPLEXITY_UNIT: float = Float32Math.from(1.0) as float; // 1.0 - oo
 
-    public INTERVAL_ADAPT_SPEED: float = 4.0;
+    public INTERVAL_ADAPT_SPEED: float = Float32Math.from(4.0) as float;
 
     public TASKLINK_PER_CONTENT: int = 4; // eternal/event are also seen extra
 
     /** Default priority of execution feedback */
-    public DEFAULT_FEEDBACK_PRIORITY: float = 0.9 as float;
+    public DEFAULT_FEEDBACK_PRIORITY: float = Float32Math.from(0.9) as float;
     /** Default durability of execution feedback */
-    public DEFAULT_FEEDBACK_DURABILITY: float = 0.5 as float; // was 0.8 in 1.5.5; 0.5 after
+    public DEFAULT_FEEDBACK_DURABILITY: float = Float32Math.from(0.5) as float; // was 0.8 in 1.5.5; 0.5 after
 
     /**
      * Concept decay rate in ConceptBag, in [1, 99]. originally:
@@ -257,28 +258,28 @@ export class Parameters extends JavaObject implements java.io.Serializable {
      * (ex: 0.1).
      * Lower means faster rate of decay.
      */
-    public CONCEPT_FORGET_DURATIONS: float = 2.0;
+    public CONCEPT_FORGET_DURATIONS: float = Float32Math.from(2.0) as float;
 
     /**
      * TermLink decay rate in TermLinkBag, in [1, 99]. originally:
      * TERM_LINK_FORGETTING_CYCLE
      */
-    public TERMLINK_FORGET_DURATIONS: float = 10.0;
+    public TERMLINK_FORGET_DURATIONS: float = Float32Math.from(10.0) as float;
 
     /**
      * TaskLink decay rate in TaskLinkBag, in [1, 99]. originally:
      * TASK_LINK_FORGETTING_CYCLE
      */
-    public TASKLINK_FORGET_DURATIONS: float = 4.0;
+    public TASKLINK_FORGET_DURATIONS: float = Float32Math.from(4.0) as float;
 
     /** Sequence bag forget durations */
-    public EVENT_FORGET_DURATIONS: float = 4.0;
+    public EVENT_FORGET_DURATIONS: float = Float32Math.from(4.0) as float;
 
     /** Maximum attempted combinations in variable introduction. */
     public VARIABLE_INTRODUCTION_COMBINATIONS_MAX: int = 8;
 
     /** How much confidence should be penalized per introduced var */
-    public VARIABLE_INTRODUCTION_CONFIDENCE_MUL: float = 0.9;
+    public VARIABLE_INTRODUCTION_CONFIDENCE_MUL: float = Float32Math.from(0.9) as float;
 
     /** Maximum anticipations about its content stored in a concept */
     public ANTICIPATIONS_PER_CONCEPT_MAX: int = 8;
@@ -287,7 +288,7 @@ export class Parameters extends JavaObject implements java.io.Serializable {
      * operations having used procedure knowledge above the confidence threshold
      * will not babble
      */
-    public MOTOR_BABBLING_CONFIDENCE_THRESHOLD: float = 0.8;
+    public MOTOR_BABBLING_CONFIDENCE_THRESHOLD: float = Float32Math.from(0.8) as float;
 
     /** Default threads amount at startup */
     public THREADS_AMOUNT: int = 1;

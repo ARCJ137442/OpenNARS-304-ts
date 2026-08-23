@@ -1,5 +1,6 @@
 //! Java source: opennars/entity/Item.java
 import { java, JavaObject, type int, type float, S } from "jree";
+import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
 import { javaStringLength } from "../runtime/jree-compat.ts";
 
@@ -250,7 +251,7 @@ export abstract  class Item<K> implements JavaObject, java.io.Serializable {
     public static  getPrioritySum(c: java.lang.Iterable< Item<unknown>>):  float {
         let  totalPriority: float = 0;
         for (let i of c)
-            totalPriority += i.getPriority();
+            totalPriority = Float32Math.add(totalPriority, i.getPriority()) as float;
         return totalPriority;
     }
 

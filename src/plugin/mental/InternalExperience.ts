@@ -17,6 +17,7 @@ import { Term } from "../../language/Term.ts";
 import { truthToWordTerm } from "../../entity/TruthValueTerm.ts";
 import { Events } from "../../io/events/Events.ts";
 import { Operation } from "../../operator/Operation.ts";
+import { Float32Math } from "../../runtime/Float32.ts";
 
 
 
@@ -32,20 +33,20 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
 
     private nar: Nar;
 
-    public MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC: float = 0.3;
-    public MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE: float = 0.3;
+    public MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC: float = Float32Math.from(0.3) as float;
+    public MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE: float = Float32Math.from(0.3) as float;
 
     // internal experience has less durability?
-    public INTERNAL_EXPERIENCE_PROBABILITY: float = 0.0001;
+    public INTERNAL_EXPERIENCE_PROBABILITY: float = Float32Math.from(0.0001) as float;
 
     // internal experience has less durability?
-    public INTERNAL_EXPERIENCE_DURABILITY_MUL: float = 0.1; // 0.1
+    public INTERNAL_EXPERIENCE_DURABILITY_MUL: float = Float32Math.from(0.1) as float; // 0.1
 
     // internal experience has less priority?
-    public INTERNAL_EXPERIENCE_PRIORITY_MUL: float = 0.1; // 0.1
+    public INTERNAL_EXPERIENCE_PRIORITY_MUL: float = Float32Math.from(0.1) as float; // 0.1
 
     /** less probable form */
-    public INTERNAL_EXPERIENCE_RARE_PROBABILITY: float = 0.000025;
+    public INTERNAL_EXPERIENCE_RARE_PROBABILITY: float = Float32Math.from(0.000025) as float;
 
     /** dont use internal experience for want and believe if this setting is true */
     public ALLOW_WANT_BELIEF: boolean = true;
@@ -56,7 +57,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
     public FULL_REFLECTION: boolean = false;
 
     public setMINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC(val: double): void {
-        this.MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC = val as float;
+        this.MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC = Float32Math.from(val) as float;
     }
 
     public getMINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC(): double {
@@ -64,7 +65,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
     }
 
     public setMINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE(val: double): void {
-        this.MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE = val as float;
+        this.MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE = Float32Math.from(val) as float;
     }
 
     public getMINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE(): double {
@@ -72,7 +73,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
     }
 
     public setINTERNAL_EXPERIENCE_PROBABILITY(val: double): void {
-        this.INTERNAL_EXPERIENCE_PROBABILITY = val as float;
+        this.INTERNAL_EXPERIENCE_PROBABILITY = Float32Math.from(val) as float;
     }
 
     public getINTERNAL_EXPERIENCE_PROBABILITY(): double {
@@ -80,7 +81,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
     }
 
     public setINTERNAL_EXPERIENCE_RARE_PROBABILITY(val: double): void {
-        this.INTERNAL_EXPERIENCE_RARE_PROBABILITY = val as float;
+        this.INTERNAL_EXPERIENCE_RARE_PROBABILITY = Float32Math.from(val) as float;
     }
 
     public getINTERNAL_EXPERIENCE_RARE_PROBABILITY(): double {
@@ -88,7 +89,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
     }
 
     public setINTERNAL_EXPERIENCE_DURABILITY_MUL(val: double): void {
-        this.INTERNAL_EXPERIENCE_DURABILITY_MUL = val as float;
+        this.INTERNAL_EXPERIENCE_DURABILITY_MUL = Float32Math.from(val) as float;
     }
 
     public getINTERNAL_EXPERIENCE_DURABILITY_MUL(): double {
@@ -96,7 +97,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
     }
 
     public setINTERNAL_EXPERIENCE_PRIORITY_MUL(val: double): void {
-        this.INTERNAL_EXPERIENCE_PRIORITY_MUL = val as float;
+        this.INTERNAL_EXPERIENCE_PRIORITY_MUL = Float32Math.from(val) as float;
     }
 
     public getINTERNAL_EXPERIENCE_PRIORITY_MUL(): double {
@@ -153,12 +154,12 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
 
 
                 super();
-                this.MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC = MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC;
-                this.MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE = MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE;
-                this.INTERNAL_EXPERIENCE_PROBABILITY = INTERNAL_EXPERIENCE_PROBABILITY;
-                this.INTERNAL_EXPERIENCE_RARE_PROBABILITY = INTERNAL_EXPERIENCE_RARE_PROBABILITY;
-                this.INTERNAL_EXPERIENCE_DURABILITY_MUL = INTERNAL_EXPERIENCE_DURABILITY_MUL;
-                this.INTERNAL_EXPERIENCE_PRIORITY_MUL = INTERNAL_EXPERIENCE_PRIORITY_MUL;
+                this.MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC = Float32Math.from(MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC) as float;
+                this.MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE = Float32Math.from(MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE) as float;
+                this.INTERNAL_EXPERIENCE_PROBABILITY = Float32Math.from(INTERNAL_EXPERIENCE_PROBABILITY) as float;
+                this.INTERNAL_EXPERIENCE_RARE_PROBABILITY = Float32Math.from(INTERNAL_EXPERIENCE_RARE_PROBABILITY) as float;
+                this.INTERNAL_EXPERIENCE_DURABILITY_MUL = Float32Math.from(INTERNAL_EXPERIENCE_DURABILITY_MUL) as float;
+                this.INTERNAL_EXPERIENCE_PRIORITY_MUL = Float32Math.from(INTERNAL_EXPERIENCE_PRIORITY_MUL) as float;
                 this.ALLOW_WANT_BELIEF = ALLOW_WANT_BELIEF;
                 this.OLD_BELIEVE_WANT_EVALUATE_WONDER_STRATEGY = OLD_BELIEVE_WANT_EVALUATE_WONDER_STRATEGY;
                 this.FULL_REFLECTION = FULL_REFLECTION;

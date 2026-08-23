@@ -11,6 +11,7 @@ import { TruthValue } from "../../entity/TruthValue.ts";
 import { RuleTables } from "../../inference/RuleTables.ts";
 import { TemporalRules } from "../../inference/TemporalRules.ts";
 import { UtilityFunctions } from "../../inference/UtilityFunctions.ts";
+import { Float32Math } from "../../runtime/Float32.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { OutputHandler } from "../../io/events/OutputHandler.ts";
@@ -198,7 +199,7 @@ export class ProcessAnticipation extends JavaObject {
                     // compute confidence by negative evidence
                     let w: double = UtilityFunctions.c2w(truthOfBeliefWithTerm.confidence, narParameters);
                     w *= negativeEvidenceRatio;
-                    let c: double = UtilityFunctions.w2c(w as float, narParameters);
+                    let c: double = UtilityFunctions.w2c(Float32Math.from(w), narParameters);
 
                     let truth: TruthValue = TruthValue.fromFrequencyConfidence(0.0, c, narParameters); // frequency of negative
                     // confirmation is 0.0

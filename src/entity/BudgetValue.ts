@@ -5,6 +5,7 @@ import { Texts } from "../io/Texts.ts";
 import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { TruthValue } from "./TruthValue.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 
 type char = string
 
@@ -124,11 +125,12 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      * @param v The new priority
      */
     public setPriority(v: float): void {
-        if (v > 1.0) {
-            throw new java.lang.IllegalStateException("Priority > 1.0: " + v);
+        const javaV = BudgetValue.float(v);
+        if (javaV > 1.0) {
+            throw new java.lang.IllegalStateException("Priority > 1.0: " + javaV);
             // v=1.0f;
         }
-        this.priority = BudgetValue.float(v);
+        this.priority = javaV;
     }
 
     /**
@@ -169,8 +171,9 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      * @param d The new durability
      */
     public setDurability(d: float): void {
+        d = BudgetValue.float(d);
         if (d >= 1.0) {
-            d = 1.0 - this.narParameters.TRUTH_EPSILON;
+            d = BudgetValue.float(1.0 - this.narParameters.TRUTH_EPSILON);
         }
         this.durability = BudgetValue.float(d);
     }
@@ -185,7 +188,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
         if (durability2 >= 1.0) {
             durability2 = 1.0 - this.narParameters.TRUTH_EPSILON; // put into allowed range
         }
-        this.durability = durability2;
+        this.durability = BudgetValue.float(durability2);
     }
 
     /**
@@ -250,9 +253,9 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      */
     // used to prevent a merge that would have no consequence
     public greaterThan(rhs: BudgetValue): boolean {
-        return (this.getPriority() - rhs.getPriority() > this.narParameters.BUDGET_THRESHOLD) &&
-            (this.getDurability() - rhs.getDurability() > this.narParameters.BUDGET_THRESHOLD) &&
-            (this.getQuality() - rhs.getQuality() > this.narParameters.BUDGET_THRESHOLD);
+        return (Float32Math.subtract(this.getPriority(), rhs.getPriority()) > this.narParameters.BUDGET_THRESHOLD) &&
+            (Float32Math.subtract(this.getDurability(), rhs.getDurability()) > this.narParameters.BUDGET_THRESHOLD) &&
+            (Float32Math.subtract(this.getQuality(), rhs.getQuality()) > this.narParameters.BUDGET_THRESHOLD);
     }
 
     /**
@@ -267,13 +270,13 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
     public equalsByPrecision(that: java.lang.Object): boolean {
         if (that instanceof BudgetValue) {
             let t: BudgetValue = (that as BudgetValue);
-            let dPrio: float = java.lang.Math.abs(this.getPriority() - t.getPriority());
+            let dPrio: float = Float32Math.from(Math.abs(Float32Math.subtract(this.getPriority(), t.getPriority()))) as float;
             if (dPrio >= this.narParameters.TRUTH_EPSILON)
                 return false;
-            let dDura: float = java.lang.Math.abs(this.getDurability() - t.getDurability());
+            let dDura: float = Float32Math.from(Math.abs(Float32Math.subtract(this.getDurability(), t.getDurability()))) as float;
             if (dDura >= this.narParameters.TRUTH_EPSILON)
                 return false;
-            let dQual: float = java.lang.Math.abs(this.getQuality() - t.getQuality());
+            let dQual: float = Float32Math.from(Math.abs(Float32Math.subtract(this.getQuality(), t.getQuality()))) as float;
             return dQual < this.narParameters.TRUTH_EPSILON;
         }
         return false;

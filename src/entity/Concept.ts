@@ -13,6 +13,7 @@ import { Stamp } from "./Stamp.ts";
 import { CompoundTerm } from "../language/CompoundTerm.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 import { LocalRules } from "../inference/LocalRules.ts";
 import { Events } from "../io/events/Events.ts";
 import { ProcessQuestion } from "../control/concept/ProcessQuestion.ts";
@@ -315,7 +316,7 @@ export class Concept extends Item<Term> {
         public constructor(negConfirmationPriority: float, negConfirmation: Task, negConfirm_abort_minTime: long,
             negConfirm_abort_maxTime: long) {
             super();
-            this.negConfirmationPriority = negConfirmationPriority;
+            this.negConfirmationPriority = Float32Math.from(negConfirmationPriority) as float;
             this.negConfirmation = negConfirmation;
             this.negConfirm_abort_minTime = negConfirm_abort_minTime;
             this.negConfirm_abort_maxTime = negConfirm_abort_maxTime;
@@ -484,7 +485,7 @@ export class Concept extends Item<Term> {
     public acquiredQuality: float = 0.0;
 
     public incAcquiredQuality(): void {
-        this.acquiredQuality += 0.1;
+        this.acquiredQuality = Float32Math.add(this.acquiredQuality, 0.1) as float;
         if (this.acquiredQuality > 1.0) {
             this.acquiredQuality = 1.0;
         }
@@ -500,8 +501,9 @@ export class Concept extends Item<Term> {
         let linkPriority: float = this.termLinks.getAveragePriority();
         // Java evaluates and stores this reciprocal as a float before the
         // disjunctive quality combination.
-        let termComplexityFactor: float = Math.fround(
-            1.0 / (this.term.getComplexity() * this.memory.narParameters.COMPLEXITY_UNIT),
+        let termComplexityFactor: float = Float32Math.divide(
+            1.0,
+            Float32Math.multiply(this.term.getComplexity(), this.memory.narParameters.COMPLEXITY_UNIT),
         ) as float;
         let result: float = UtilityFunctions.or(this.acquiredQuality, linkPriority, termComplexityFactor);
         if (result < 0) {

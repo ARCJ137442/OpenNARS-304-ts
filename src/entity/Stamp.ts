@@ -4,6 +4,7 @@ import { Tense } from "../language/Tense.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 
 const hashLong = (value: long): int => {
     const numeric = Number(value);
@@ -81,7 +82,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     }
 
     public getOriginality(): float {
-        return 1.0 / (this.evidentialBase.length + 1);
+        return Float32Math.divide(1.0, this.evidentialBase.length + 1) as float;
     }
 
     /**

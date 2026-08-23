@@ -20,6 +20,7 @@ import { TruthFunctions } from "./TruthFunctions.ts";
 import { TemporalRules } from "./TemporalRules.ts";
 import type { DerivationContext } from "../control/DerivationContext.ts";
 import { ProcessAnticipation } from "../control/concept/ProcessAnticipation.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 const { ORDER_NONE, ORDER_FORWARD, ORDER_BACKWARD, ORDER_INVALID } = TemporalRules;
@@ -687,7 +688,10 @@ export class SyllogisticRules extends JavaObject {
                 delta = (newCondition as Interval).time;
                 if (taskSentence.getOccurrenceTime() !== Stamp.ETERNAL) {
                     let timeOffset: float = (newCondition as Interval).time;
-                    let timeWindowHalf: float = timeOffset * nal.narParameters.ANTICIPATION_TOLERANCE;
+                    let timeWindowHalf: float = Float32Math.multiply(
+                        timeOffset,
+                        nal.narParameters.ANTICIPATION_TOLERANCE,
+                    ) as float;
                     minTime = java.lang.Math.max(taskSentence.getOccurrenceTime(),
                         (taskSentence.getOccurrenceTime() + timeOffset - timeWindowHalf)) as long;
                     maxTime = (taskSentence.getOccurrenceTime() + timeOffset + timeWindowHalf) as long;

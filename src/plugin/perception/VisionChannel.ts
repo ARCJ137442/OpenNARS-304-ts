@@ -1,11 +1,12 @@
 //! Java source: opennars/plugin/perception/VisionChannel.java
 import { java, type float, type int, JavaObject } from "jree";
 import { Texts } from "../../io/Texts.ts";
+import { Float32Math } from "../../runtime/Float32.ts";
 
 
 
 export class VisionChannel extends SensoryChannel {
-    public defaultOutputConfidence: float = 0.5;
+    public defaultOutputConfidence: float = Float32Math.from(0.5) as float;
     public nPrototypes: int = 0;
     public prototypes: java.util.ArrayList<VisionChannel.Prototype>;
     protected inputs: Float64Array[];
@@ -25,7 +26,7 @@ export class VisionChannel extends SensoryChannel {
         super(nar as Nar, reportResultsTo as SensoryChannel, width, height, duration, SetInt.make(new Term(label)));
         this.nar = nar as Nar;
         this.label = SetInt.make(new Term(label));
-        this.defaultOutputConfidence = defaultOutputConfidence;
+        this.defaultOutputConfidence = Float32Math.from(defaultOutputConfidence) as float;
         this.nPrototypes = nPrototypes;
         this.prototypes = new java.util.ArrayList<Prototype>();
         this.inputs = new [[]];
@@ -113,7 +114,7 @@ export class VisionChannel extends SensoryChannel {
         let cpy: Float64Array[] = new [[]];
         for (let i: int = 0; i < height; i++) {
             for (let j: int = 0; j < width; j++) {
-                cpy[i][j] = this.inputs[i][j] as float;
+                cpy[i][j] = Float32Math.from(this.inputs[i][j]) as float;
             }
         }
         this.updated = new [[]];
@@ -209,8 +210,8 @@ export class VisionChannel extends SensoryChannel {
                         minusY = "-";
                         dy = oldFocusY - newFocusY;
                     }
-                    let xParam: float = dx / this.width as float;
-                    let yParam: float = dy / this.height as float;
+                    let xParam: float = Float32Math.divide(dx, this.width) as float;
+                    let yParam: float = Float32Math.divide(dy, this.height) as float;
                     try {
                         // timing to make sure procedure learning observes the operation after the last
                         // prototype
