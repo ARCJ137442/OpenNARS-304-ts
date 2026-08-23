@@ -15,6 +15,7 @@ const defaultJavaClasses = join(canonicalJavaRoot, "target", "classes");
 const LEGACY_JAR_SHA256 = "796A3B20EE6ED7F8F6778367738AD728F0BFCC32CFAD99BACAEBEC41EBC7EB04";
 const javaAdapterSource = join(projectRoot, "scripts", "e2e", "NalParityRunner.java");
 const PERFORMANCE_BUDGET_MS_PER_1024_CYCLES = 120_000;
+const HARD_TIMEOUT_THRESHOLD_MS = 180_000;
 const LONG_CYCLE_EQUIVALENCE_TARGET = 131_072;
 
 const corpusDirectories = [
@@ -549,6 +550,23 @@ function evaluateRuntimePerformance(javaResult, tsResult, totalCycles) {
   };
 }
 
+function classifyTimeoutObservation({ timeoutMs = null, java = null, ts = null } = {}) {
+  const timedOut = java?.timed_out === true || ts?.timed_out === true;
+  if (!timedOut) {
+    return { performance_warning: false, timeout_classification: null };
+  }
+  const hasException = java?.exception === true || ts?.exception === true;
+  if (hasException) {
+    return { performance_warning: false, timeout_classification: "timeout_with_exception" };
+  }
+  if (!Number.isFinite(timeoutMs)) {
+    return { performance_warning: false, timeout_classification: "timeout_budget_unknown" };
+  }
+  return timeoutMs > HARD_TIMEOUT_THRESHOLD_MS
+    ? { performance_warning: false, timeout_classification: "hard_timeout_candidate" }
+    : { performance_warning: true, timeout_classification: "performance_warning" };
+}
+
 function canonicalizeTraceValue(value) {
   if (Array.isArray(value)) return value.map(canonicalizeTraceValue);
   if (value !== null && typeof value === "object") {
@@ -622,7 +640,7 @@ function evaluateLongCycleEquivalence({
   };
 }
 
-function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles = null) {
+function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles = null, timeoutMs = null) {
   const java = normalizeResult(javaResult, expected);
   const ts = normalizeResult(tsResult, expected);
   const parity = java && ts
@@ -659,6 +677,7 @@ function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles =
     }),
     ...evaluateMarkerPerformance(java, ts, totalCycles),
     ...evaluateRuntimePerformance(java, ts, totalCycles),
+    ...classifyTimeoutObservation({ timeoutMs, java, ts }),
     java_thread_mode: java?.thread_mode ?? null,
     ts_thread_mode: ts?.thread_mode ?? null,
     java_exception: java?.exception ?? null,
@@ -785,6 +804,7 @@ async function main() {
             tsByFile.get(key) ?? null,
             options.engine,
             sources.get(file).embeddedCycles + options.cycles,
+            options.timeoutMs,
           ),
           java_process_mode: options.engine === "ts" ? null : "cold",
           ts_process_mode: options.engine === "java" ? null : options.tsMode,
@@ -870,6 +890,7 @@ export {
   normalizeResult,
   parseArgs,
   parseJsonLines,
+  classifyTimeoutObservation,
 };
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

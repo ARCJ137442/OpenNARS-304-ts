@@ -20,6 +20,27 @@ import { Wonder } from "../operator/mental/Wonder.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
 import { Emotions } from "../plugin/mental/Emotions.ts";
 
+// These fields are Java `float` values. Node's XML path parses numbers as
+// binary64, so make the narrowing explicit at the configuration boundary.
+const FLOAT_PARAMETER_NAMES = new Set([
+    "DECISION_THRESHOLD", "HORIZON", "TRUTH_EPSILON", "BUDGET_EPSILON",
+    "BUDGET_THRESHOLD", "DEFAULT_CONFIRMATION_EXPECTATION",
+    "DEFAULT_CREATION_EXPECTATION", "DEFAULT_CREATION_EXPECTATION_GOAL",
+    "DEFAULT_JUDGMENT_CONFIDENCE", "DEFAULT_JUDGMENT_PRIORITY",
+    "DEFAULT_JUDGMENT_DURABILITY", "DEFAULT_QUESTION_PRIORITY",
+    "DEFAULT_QUESTION_DURABILITY", "DEFAULT_GOAL_CONFIDENCE",
+    "DEFAULT_GOAL_PRIORITY", "DEFAULT_GOAL_DURABILITY", "DEFAULT_QUEST_PRIORITY",
+    "DEFAULT_QUEST_DURABILITY", "BAG_THRESHOLD", "FORGET_QUALITY_RELATIVE",
+    "reliance", "DISCOUNT_RATE", "DERIVATION_PRIORITY_LEAK",
+    "DERIVATION_DURABILITY_LEAK", "CURIOSITY_DESIRE_CONFIDENCE_MUL",
+    "CURIOSITY_DESIRE_PRIORITY_MUL", "CURIOSITY_DESIRE_DURABILITY_MUL",
+    "ANTICIPATION_CONFIDENCE", "ANTICIPATION_TOLERANCE", "SATISFACTION_THRESHOLD",
+    "COMPLEXITY_UNIT", "INTERVAL_ADAPT_SPEED", "DEFAULT_FEEDBACK_PRIORITY",
+    "DEFAULT_FEEDBACK_DURABILITY", "CONCEPT_FORGET_DURATIONS",
+    "TERMLINK_FORGET_DURATIONS", "TASKLINK_FORGET_DURATIONS", "EVENT_FORGET_DURATIONS",
+    "VARIABLE_INTRODUCTION_CONFIDENCE_MUL", "MOTOR_BABBLING_CONFIDENCE_THRESHOLD",
+]);
+
 
 
 /**
@@ -95,6 +116,12 @@ export class ConfigReader extends JavaObject {
                 value = Number.parseInt(rawValue, 10);
             } else if (/^[-+]?(?:\d+\.\d*|\.\d+)(?:[eE][-+]?\d+)?$/.test(rawValue)) {
                 value = Number.parseFloat(rawValue);
+            }
+
+            // Preserve binary32 values before inference uses them in binary64
+            // expressions, while leaving Java double parameters unchanged.
+            if (FLOAT_PARAMETER_NAMES.has(name) && typeof value === "number") {
+                value = Math.fround(value);
             }
 
             if (Object.prototype.hasOwnProperty.call(parameterTarget, name)) {

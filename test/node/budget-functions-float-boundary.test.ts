@@ -6,6 +6,16 @@ import { BudgetValue } from "../../src/entity/BudgetValue.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import { Term } from "../../src/language/Term.ts";
 import { UtilityFunctions } from "../../src/inference/UtilityFunctions.ts";
+import type { Sentence } from "../../src/entity/Sentence.ts";
+
+type RankableSentence = Pick<Sentence, "truth"> & {
+    getTruth: () => { getExpectation: () => number };
+};
+
+const rankableSentence = (confidence: number, expectation: number): Sentence => ({
+    truth: { confidence },
+    getTruth: () => ({ getExpectation: () => expectation }),
+} as unknown as RankableSentence as Sentence);
 
 test("budget inference narrows Java float parameters before belief feedback", () => {
     const parameters = new Parameters();
@@ -60,5 +70,21 @@ test("budget inference narrows Java float parameters before belief feedback", ()
     assert.equal(
         beliefBudget.getDurability(),
         UtilityFunctions.or(beliefDurability, expectedQuality),
+    );
+});
+
+test("rankBelief narrows Java float return values at the budget boundary", () => {
+    const olderBelief = rankableSentence(0.14211009442806244, 0.14211009442806244);
+    const newerBelief = rankableSentence(0.14211007952690125, 0.14211007952690125);
+
+    const olderRank = BudgetFunctions.rankBelief(olderBelief, false);
+    const newerRank = BudgetFunctions.rankBelief(newerBelief, false);
+
+    assert.equal(olderRank, Math.fround(0.14211009442806244));
+    assert.equal(newerRank, Math.fround(0.14211007952690125));
+    assert.notEqual(olderRank, newerRank);
+    assert.equal(
+        BudgetFunctions.rankBelief(olderBelief, true),
+        Math.fround(0.14211009442806244),
     );
 });

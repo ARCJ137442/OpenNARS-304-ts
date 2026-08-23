@@ -196,6 +196,8 @@ function classify(row, sourceFile, supplement = null, provenance = {}) {
     ts_timeout: row.ts_timeout === true,
     ts_not_run: row.ts_not_run === true,
     ts_marker_missing: row.ts_marker_missing === true,
+    performance_warning: row.performance_warning === true,
+    timeout_classification: row.timeout_classification ?? null,
     functional_pass: row.functional_pass === true,
     parity: row.parity === true,
     java_ts_diff: row.java_ts_diff === true,

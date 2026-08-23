@@ -11,6 +11,7 @@ import { Memory } from "../storage/Memory.ts";
 import { Item } from "../entity/Item.ts";
 import { TermLink } from "../entity/TermLink.ts";
 import { Concept } from "../entity/Concept.ts";
+import { Float32Math } from "../runtime/Float32.ts";
 import { UtilityFunctions } from "./UtilityFunctions.ts";
 import type { Parameters } from "../main/Parameters.ts";
 
@@ -49,11 +50,11 @@ export class BudgetFunctions extends UtilityFunctions {
      */
     public static rankBelief(judg: Sentence, rankTruthExpectation: boolean): float {
         if (rankTruthExpectation) {
-            return judg.getTruth().getExpectation();
+            return Float32Math.from(judg.getTruth().getExpectation());
         }
         let confidence: double = judg.truth.confidence;
         // final float originality = judg.stamp.getOriginality();
-        return confidence as float; // or(confidence, originality);
+        return Float32Math.from(confidence); // or(confidence, originality);
     }
 
     /**

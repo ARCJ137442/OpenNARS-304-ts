@@ -53,7 +53,9 @@ export class Parameters extends JavaObject implements java.io.Serializable {
      * other values may be used, for example, 0.02 for 50, 0.10 for 10, etc.
      * Change at your own risk, but can't be changed at runtime
      */
-    public TRUTH_EPSILON: float = 0.01;
+    // Java declares this threshold as 0.01f. Keep the binary32 value because
+    // TruthValue's confidence clamp performs double arithmetic with it.
+    public TRUTH_EPSILON: float = Math.fround(0.01) as float;
 
     public BUDGET_EPSILON: float = 0.0001;
 

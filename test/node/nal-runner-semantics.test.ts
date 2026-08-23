@@ -8,6 +8,7 @@ import { java } from "jree";
 
 import {
   assertUniqueFiles,
+  classifyTimeoutObservation,
   completeProcessFailureRows,
   evaluateMarkerPerformance,
   evaluateLongCycleEquivalence,
@@ -155,6 +156,38 @@ test("NAL runner marks timeout runtime as a lower bound instead of a functional 
   assert.equal(result.ts_runtime_observation, "timeout_lower_bound");
   assert.equal(result.ts_runtime_slowdown_ratio, 60);
   assert.equal(result.ts_runtime_within_budget, false);
+});
+
+test("NAL runner labels sub-three-minute timeouts as performance warnings", () => {
+  const warning = classifyTimeoutObservation({
+    timeoutMs: 120000,
+    java: { timed_out: false, exception: false },
+    ts: { timed_out: true, exception: false },
+  });
+  assert.deepEqual(warning, {
+    performance_warning: true,
+    timeout_classification: "performance_warning",
+  });
+
+  const hardCandidate = classifyTimeoutObservation({
+    timeoutMs: 180001,
+    java: { timed_out: false, exception: false },
+    ts: { timed_out: true, exception: false },
+  });
+  assert.deepEqual(hardCandidate, {
+    performance_warning: false,
+    timeout_classification: "hard_timeout_candidate",
+  });
+
+  const exception = classifyTimeoutObservation({
+    timeoutMs: 120000,
+    java: { timed_out: false, exception: true },
+    ts: { timed_out: true, exception: false },
+  });
+  assert.deepEqual(exception, {
+    performance_warning: false,
+    timeout_classification: "timeout_with_exception",
+  });
 });
 
 test("NAL runner keeps performance observations separate when a marker is missing", () => {
