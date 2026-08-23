@@ -1,0 +1,34 @@
+{
+  "schema": "opennars-304-ts.stage-digest-evidence.v1",
+  "file": "java-master/src/main/resources/nal/single_step/nal8_list.nal",
+  "java_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+  "java_artifact": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+  "java_artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "thread_mode": "single",
+  "embedded_cycles": 300000,
+  "marker_run": {
+    "timeout_ms": 120000,
+    "java_markers": "6/6",
+    "typescript_markers": "not_reached",
+    "java_runtime_ms": 10402,
+    "typescript_runtime_ms": 120000,
+    "typescript_runtime_observation": "timeout_lower_bound",
+    "interpretation": "performance_warning; no semantic divergence established"
+  },
+  "bounded_prefix_run": {
+    "cycles": 1024,
+    "skip_embedded": true,
+    "window_size": 128,
+    "java_cycles_observed": 1024,
+    "typescript_cycles_observed": 1024,
+    "java_windows": 8,
+    "typescript_windows": 8,
+    "java_total_events": 15451,
+    "typescript_total_events": 15451,
+    "java_pre_events": 2,
+    "typescript_pre_events": 2,
+    "comparison": "equal",
+    "first_difference": null
+  },
+  "decision": "Do not modify inference logic from this sample; keep it in the performance queue."
+}
