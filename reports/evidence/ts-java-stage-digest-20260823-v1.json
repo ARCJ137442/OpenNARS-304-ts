@@ -1,0 +1,122 @@
+{
+  "schema": "opennars-304-ts.stage-digest.v1",
+  "java_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+  "java_artifact": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+  "java_artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "thread_mode": "single",
+  "window_cycles": 128,
+  "normalization": [
+    "remove runtime-generated Stamp long identifiers while preserving stamp positions",
+    "use Term.name() instead of JavaScript object identity for jree terms",
+    "compare pre-cycle input segments separately when embedded cycle lines divide the fixture"
+  ],
+  "completed_prefix_runs": [
+    {
+      "file": "java-master/src/main/resources/nal/application/toothbrush2.nal",
+      "requested_cycles": 32,
+      "skip_embedded": true,
+      "window_cycles": 8,
+      "java_events": 2028,
+      "typescript_events": 2028,
+      "java_pre_events": 22,
+      "typescript_pre_events": 22,
+      "comparison": {"equal": true, "first_difference": null}
+    },
+    {
+      "file": "java-master/src/main/resources/nal/application/detective2.nal",
+      "requested_cycles": 32,
+      "skip_embedded": true,
+      "window_cycles": 8,
+      "java_events": 1611,
+      "typescript_events": 1611,
+      "java_pre_events": 16,
+      "typescript_pre_events": 16,
+      "comparison": {"equal": true, "first_difference": null}
+    },
+    {
+      "file": "java-master/src/main/resources/nal/application/toothbrush2.nal",
+      "requested_cycles": 256,
+      "skip_embedded": true,
+      "window_cycles": 32,
+      "java_events": 8882,
+      "typescript_events": 8882,
+      "java_pre_events": 22,
+      "typescript_pre_events": 22,
+      "comparison": {"equal": true, "first_difference": null}
+    },
+    {
+      "file": "java-master/src/main/resources/nal/application/toothbrush2.nal",
+      "requested_cycles": 1024,
+      "skip_embedded": true,
+      "window_cycles": 128,
+      "java_events": 21497,
+      "typescript_events": 21497,
+      "java_pre_events": 22,
+      "typescript_pre_events": 22,
+      "comparison": {"equal": true, "first_difference": null}
+    },
+    {
+      "file": "java-master/src/main/resources/nal/application/detective2.nal",
+      "requested_cycles": 1024,
+      "skip_embedded": true,
+      "window_cycles": 128,
+      "java_events": 20844,
+      "typescript_events": 20844,
+      "java_pre_events": 16,
+      "typescript_pre_events": 16,
+      "comparison": {"equal": true, "first_difference": null}
+    }
+  ],
+  "full_fixture_stream_run": {
+    "file": "java-master/src/main/resources/nal/application/detective2.nal",
+    "requested_cycles": 1024,
+    "embedded_cycles": 10100,
+    "total_configured_cycles": 11124,
+    "window_cycles": 128,
+    "java": {
+      "completed": true,
+      "cycles": 11124,
+      "windows": 87,
+      "events": 187618,
+      "pre_segments": 2,
+      "result_dir": "C:/Users/56506/AppData/Local/Temp/opennars-detective2-stream-71860cf3bdc04571b0df9af062f95068"
+    },
+    "typescript": {
+      "completed": false,
+      "timeout_ms": 120000,
+      "completed_windows": 24,
+      "completed_cycles": 3072,
+      "pre_segments": 2,
+      "result_dir": "C:/Users/56506/AppData/Local/Temp/opennars-detective2-stream-71860cf3bdc04571b0df9af062f95068"
+    },
+    "common_prefix": {
+      "prefix_equal": true,
+      "observed_windows": 24,
+      "expected_windows": 87,
+      "first_difference": null,
+      "complete": false
+    }
+  },
+  "marker_runner_reference": {
+    "file": "java-master/src/main/resources/nal/application/detective2.nal",
+    "requested_cycles": 1024,
+    "embedded_cycles": 10100,
+    "timeout_ms": 120000,
+    "java_markers": [true, true],
+    "typescript_error_type": "timeout",
+    "typescript_markers": [],
+    "long_cycle_status": "not_reached",
+    "result_file": "C:/Users/56506/AppData/Local/Temp/opennars-detective2-marker-1024-8148d4d2eed24da890cfa727645371dc.jsonl"
+  },
+  "test_metrics": {
+    "npm_test": {"passed": 95, "failed": 0, "skipped": 0},
+    "stage_digest_test": {"passed": 6, "failed": 0},
+    "local_algorithm_parity": {"ok": true, "differences": [], "tolerance": 0.00001},
+    "tsc_no_emit": {"exit_code": 2, "diagnostics": 3209},
+    "programmatic_blocking_supported": true,
+    "model_visible_poll_count": 3,
+    "empty_poll_count": 0,
+    "early_stop_count": 0,
+    "productive_wait_tasks_completed": 0
+  }
+}
