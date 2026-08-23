@@ -1,0 +1,58 @@
+{
+  "file": "java-master/src/main/resources/nal/application/detective2.nal",
+  "scope": "representative-long-budget",
+  "engine": "both",
+  "cycles": 1550,
+  "timeout_ms": 300000,
+  "embedded_cycles": 10100,
+  "extra_cycles": 1550,
+  "observed_cycles": 11650,
+  "thread_mode": "single",
+  "ts_mode": "hot",
+  "java_process_mode": "cold",
+  "artifact": {
+    "path": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "java_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d"
+  },
+  "java": {
+    "ok": true,
+    "expected": 2,
+    "passed": 2,
+    "matched": [true, true],
+    "error_type": "none",
+    "timed_out": false,
+    "marker_missing": false,
+    "duration_ms": 1723,
+    "marker_time_ms": [119.3908, 218.5934]
+  },
+  "typescript": {
+    "ok": false,
+    "expected": 0,
+    "passed": 0,
+    "matched": [],
+    "error_type": "timeout",
+    "timed_out": true,
+    "marker_missing": false,
+    "duration_ms": 300000,
+    "error": "TypeScript runner timed out after 300000 ms"
+  },
+  "long_cycle_equivalence": {
+    "target_cycles": 131072,
+    "cycle_target_reached": false,
+    "marker_standard": "failed",
+    "internal_event_standard": "unverified",
+    "equivalent": false,
+    "status": "not_reached"
+  },
+  "performance_budget_ms_per_1024_cycles": 120000,
+  "internal_trace": {
+    "available": false,
+    "reason": "run-nal-corpus marker runner did not collect paired internal events"
+  },
+  "programmatic_blocking_supported": true,
+  "model_visible_poll_count": 0,
+  "empty_poll_count": 0,
+  "early_stop_count": 0,
+  "recorded_at": "2026-08-23T09:47:00+08:00"
+}
