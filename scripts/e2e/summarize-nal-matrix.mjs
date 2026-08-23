@@ -81,6 +81,10 @@ function primaryErrorType(row) {
   if (java.exception === true || ts.exception === true || row.java_exception === true || row.ts_exception === true) {
     return "exception";
   }
+  if (java.process_limited === true || ts.process_limited === true
+    || row.process_limited === true || row.java_process_limited === true || row.ts_process_limited === true) {
+    return "process_limit";
+  }
   if (java.timed_out === true || ts.timed_out === true || row.java_timeout === true || row.ts_timeout === true) {
     return "timeout";
   }
@@ -143,6 +147,15 @@ function hypothesisFor(row, errorType, supplement) {
       root_cause_cluster: "unknown",
     };
   }
+  if (errorType === "process_limit") {
+    return {
+      status: "unverified",
+      observation: "The runner stopped the active process at an explicit resource safety limit; this is neither a no-progress timeout nor a semantic verdict.",
+      evidence: "30-second canonical hot matrix row with an explicit process safety limit.",
+      next_experiment: "Replay the sample with bounded event counters and a larger safety limit, then compare marker and stage digests.",
+      root_cause_cluster: "unknown",
+    };
+  }
   if (errorType === "marker_missing" || errorType === "difference") {
     return {
       status: "unverified",
@@ -196,6 +209,11 @@ function classify(row, sourceFile, supplement = null, provenance = {}) {
     ts_timeout: row.ts_timeout === true,
     ts_not_run: row.ts_not_run === true,
     ts_marker_missing: row.ts_marker_missing === true,
+    process_limited: row.process_limited === true
+      || row.java_process_limited === true
+      || row.ts_process_limited === true
+      || row.java?.process_limited === true
+      || row.ts?.process_limited === true,
     performance_warning: row.performance_warning === true,
     timeout_classification: row.timeout_classification ?? null,
     functional_pass: row.functional_pass === true,

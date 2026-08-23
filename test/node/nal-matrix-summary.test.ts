@@ -29,6 +29,39 @@ test("NAL matrix summary separates timeout from an unverified semantic cause", a
     assert.match(classified.hypothesis.next_experiment, /bounded event counters/);
 });
 
+test("NAL matrix summary keeps a process safety limit separate from timeout", async () => {
+    const { classify, primaryErrorType } = await import("../../scripts/e2e/summarize-nal-matrix.mjs");
+    const row = {
+        file: "H:\\repo\\java-master\\src\\main\\resources\\nal\\multi_step\\stresstest_bird1.nal",
+        expected: ["marker"],
+        functional_pass: false,
+        parity: false,
+        java_ts_diff: true,
+        both_wrong: false,
+        process_limited: true,
+        java_process_limited: false,
+        ts_process_limited: true,
+        java_exception: false,
+        java_timeout: false,
+        java_not_run: false,
+        java_marker_missing: false,
+        ts_exception: false,
+        ts_timeout: false,
+        ts_not_run: false,
+        ts_marker_missing: false,
+        java: { ok: true, process_limited: false },
+        ts: { ok: false, process_limited: true, timed_out: false },
+    };
+
+    assert.equal(primaryErrorType(row), "process_limit");
+    const classified = classify(row, row.file);
+    assert.equal(classified.error_type, "process_limit");
+    assert.equal(classified.timed_out, false);
+    assert.equal(classified.process_limited, true);
+    assert.equal(classified.root_cause_cluster, "unknown");
+    assert.match(classified.hypothesis.next_experiment, /larger safety limit/);
+});
+
 test("NAL matrix summary records the observed nal4.7 rule-dispatch hypothesis", async () => {
     const { classify } = await import("../../scripts/e2e/summarize-nal-matrix.mjs");
     const file = "H:\\repo\\java-master\\src\\main\\resources\\nal\\single_step\\nal4.7.nal";
