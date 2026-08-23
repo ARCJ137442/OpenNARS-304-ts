@@ -13,6 +13,7 @@ const defaultJavaTestClasses = join(javaRoot, "target", "test-classes");
 const defaultJavaClasses = join(javaRoot, "target", "classes");
 const javaAdapterSource = join(projectRoot, "scripts", "e2e", "NalParityRunner.java");
 const PERFORMANCE_BUDGET_MS_PER_1024_CYCLES = 120_000;
+const LONG_CYCLE_EQUIVALENCE_TARGET = 131_072;
 
 const corpusDirectories = [
   join(javaRoot, "src", "main", "resources", "nal", "single_step"),
@@ -492,6 +493,71 @@ function evaluateMarkerPerformance(javaResult, tsResult, totalCycles) {
   };
 }
 
+function canonicalizeTraceValue(value) {
+  if (Array.isArray(value)) return value.map(canonicalizeTraceValue);
+  if (value !== null && typeof value === "object") {
+    return Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonicalizeTraceValue(value[key])]));
+  }
+  return value;
+}
+
+function cleanResultForLongCycle(result) {
+  return result !== null && result !== undefined
+    && result.ok === true
+    && result.exception !== true
+    && result.timed_out !== true
+    && result.not_run !== true;
+}
+
+function evaluateLongCycleEquivalence({
+  cycles,
+  expectedCount,
+  java,
+  ts,
+  javaEvents = null,
+  tsEvents = null,
+} = {}) {
+  const observedCycles = Number.isInteger(cycles) ? cycles : null;
+  const expected = Number.isInteger(expectedCount) && expectedCount >= 0 ? expectedCount : null;
+  const javaMatched = Array.isArray(java?.matched) ? java.matched.map(Boolean) : null;
+  const tsMatched = Array.isArray(ts?.matched) ? ts.matched.map(Boolean) : null;
+  const markerStandard = expected === null
+    ? "unverified"
+    : cleanResultForLongCycle(java) && cleanResultForLongCycle(ts)
+      && javaMatched !== null && tsMatched !== null
+      && javaMatched.length === expected
+      && tsMatched.length === expected
+      && javaMatched.every(Boolean)
+      && tsMatched.every(Boolean)
+      && JSON.stringify(javaMatched) === JSON.stringify(tsMatched)
+      ? expected === 0 ? "not_applicable" : "passed"
+      : "failed";
+  const internalEventsAvailable = Array.isArray(javaEvents) && Array.isArray(tsEvents);
+  const internalEventStandard = !internalEventsAvailable
+    ? "unverified"
+    : JSON.stringify(canonicalizeTraceValue(javaEvents)) === JSON.stringify(canonicalizeTraceValue(tsEvents))
+      ? "passed"
+      : "failed";
+  const cycleTargetReached = observedCycles !== null && observedCycles >= LONG_CYCLE_EQUIVALENCE_TARGET;
+  const markerSatisfied = markerStandard === "passed" || markerStandard === "not_applicable";
+  const equivalent = cycleTargetReached && markerSatisfied && internalEventStandard === "passed";
+  let status = "not_reached";
+  if (cycleTargetReached) {
+    if (!markerSatisfied) status = "marker_failed";
+    else if (internalEventStandard !== "passed") status = internalEventsAvailable ? "internal_event_failed" : "internal_event_unverified";
+    else status = "equivalent";
+  }
+  return {
+    target_cycles: LONG_CYCLE_EQUIVALENCE_TARGET,
+    observed_cycles: observedCycles,
+    cycle_target_reached: cycleTargetReached,
+    marker_standard: markerStandard,
+    internal_event_standard: internalEventStandard,
+    equivalent,
+    status,
+  };
+}
+
 function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles = null) {
   const java = normalizeResult(javaResult, expected);
   const ts = normalizeResult(tsResult, expected);
@@ -521,6 +587,12 @@ function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles =
     java_ts_diff: javaTsDiff,
     both_wrong: bothWrong,
     functional_pass: functionalPass,
+    long_cycle_equivalence: evaluateLongCycleEquivalence({
+      cycles: totalCycles,
+      expectedCount: Array.isArray(expected) ? expected.length : null,
+      java,
+      ts,
+    }),
     ...evaluateMarkerPerformance(java, ts, totalCycles),
     java_thread_mode: java?.thread_mode ?? null,
     ts_thread_mode: ts?.thread_mode ?? null,
@@ -725,6 +797,7 @@ export {
   completeProcessFailureRows,
   evaluateRow,
   evaluateMarkerPerformance,
+  evaluateLongCycleEquivalence,
   extractNalMetadata,
   isProcessTimeout,
   loadCheckpoint,
