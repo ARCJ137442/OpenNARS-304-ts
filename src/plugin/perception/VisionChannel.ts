@@ -18,7 +18,7 @@ import { Term } from "../../language/Term.ts";
 import { Tense } from "../../language/Tense.ts";
 import { SensoryChannel } from "./SensoryChannel.ts";
 import { VisualSpace } from "./VisualSpace.ts";
-import type { Task } from "../../entity/Task.ts";
+import { Task } from "../../entity/Task.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import type { Reasoner } from "../../interfaces/pub/Reasoner.ts";
 import type { Nar } from "../../main/Nar.ts";

@@ -1,0 +1,459 @@
+
+> opennars-304-ts@0.1.0 test:parity:local
+> node --loader ./scripts/ts-loader.mjs scripts/parity/run-local-algorithm-parity.mjs
+
+(node:46592) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("./scripts/ts-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:46592) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\main\Parameters.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:46592) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\TruthFunctions.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:46592) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\entity\BudgetValue.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:46592) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\inference\UtilityFunctions.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:46592) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\io\Symbols.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+{
+  "ok": true,
+  "tolerance": 0.00001,
+  "javaArtifact": {
+    "jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "classes": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\classes",
+    "testClasses": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\test-classes"
+  },
+  "differences": [],
+  "java": {
+    "truth": {
+      "a": {
+        "frequency": 0.7,
+        "confidence": 0.6,
+        "expectation": 0.62,
+        "analytic": false,
+        "external": "%0.70;0.60%"
+      },
+      "b": {
+        "frequency": 0.3,
+        "confidence": 0.4,
+        "expectation": 0.42000002,
+        "analytic": false,
+        "external": "%0.30;0.40%"
+      },
+      "negation": {
+        "frequency": 0.3,
+        "confidence": 0.6,
+        "expectation": 0.38,
+        "analytic": false,
+        "external": "%0.30;0.60%"
+      },
+      "conversion": {
+        "frequency": 1,
+        "confidence": 0.29577464138413906,
+        "expectation": 0.64788735,
+        "analytic": false,
+        "external": "%1.00;0.30%"
+      },
+      "contraposition": {
+        "frequency": 0,
+        "confidence": 0.15254237801821124,
+        "expectation": 0.42372882,
+        "analytic": false,
+        "external": "%0.00;0.15%"
+      },
+      "revision": {
+        "frequency": 0.5769231,
+        "confidence": 0.6842105263157895,
+        "expectation": 0.55263156,
+        "analytic": false,
+        "external": "%0.58;0.68%"
+      },
+      "deduction": {
+        "frequency": 0.21000001,
+        "confidence": 0.05040000379085541,
+        "expectation": 0.485384,
+        "analytic": false,
+        "external": "%0.21;0.05%"
+      },
+      "induction": {
+        "frequency": 0.3,
+        "confidence": 0.14383561477808887,
+        "expectation": 0.4712329,
+        "analytic": false,
+        "external": "%0.30;0.14%"
+      },
+      "abduction": {
+        "frequency": 0.7,
+        "confidence": 0.06716418289076341,
+        "expectation": 0.51343286,
+        "analytic": false,
+        "external": "%0.70;0.07%"
+      },
+      "analogy": {
+        "frequency": 0.21000001,
+        "confidence": 0.07200000435113907,
+        "expectation": 0.47912,
+        "analytic": false,
+        "external": "%0.21;0.07%"
+      },
+      "resemblance": {
+        "frequency": 0.21000001,
+        "confidence": 0.18960000574588776,
+        "expectation": 0.445016,
+        "analytic": false,
+        "external": "%0.21;0.19%"
+      },
+      "exemplification": {
+        "frequency": 1,
+        "confidence": 0.04798172130847218,
+        "expectation": 0.52399087,
+        "analytic": false,
+        "external": "%1.00;0.05%"
+      },
+      "comparison": {
+        "frequency": 0.2658228,
+        "confidence": 0.15938129817073465,
+        "expectation": 0.46267653,
+        "analytic": false,
+        "external": "%0.27;0.16%"
+      },
+      "desireStrong": {
+        "frequency": 0.21000001,
+        "confidence": 0.07200000435113907,
+        "expectation": 0.47912,
+        "analytic": false,
+        "external": "%0.21;0.07%"
+      },
+      "desireWeak": {
+        "frequency": 0.21000001,
+        "confidence": 0.036000002175569534,
+        "expectation": 0.48956,
+        "analytic": false,
+        "external": "%0.21;0.04%"
+      },
+      "desireDed": {
+        "frequency": 0.21000001,
+        "confidence": 0.24000000953674316,
+        "expectation": 0.4304,
+        "analytic": false,
+        "external": "%0.21;0.24%"
+      },
+      "desireInd": {
+        "frequency": 0.7,
+        "confidence": 0.06716418289076341,
+        "expectation": 0.51343286,
+        "analytic": false,
+        "external": "%0.70;0.07%"
+      },
+      "union": {
+        "frequency": 0.78999996,
+        "confidence": 0.24000000953674316,
+        "expectation": 0.5696,
+        "analytic": false,
+        "external": "%0.79;0.24%"
+      },
+      "intersection": {
+        "frequency": 0.21000001,
+        "confidence": 0.24000000953674316,
+        "expectation": 0.4304,
+        "analytic": false,
+        "external": "%0.21;0.24%"
+      },
+      "anonymousAnalogy": {
+        "frequency": 0.21000001,
+        "confidence": 0.10500000417232513,
+        "expectation": 0.46955,
+        "analytic": false,
+        "external": "%0.21;0.11%"
+      },
+      "reduceDisjunction": {
+        "frequency": 0.48999998,
+        "confidence": 0.11760000139474869,
+        "expectation": 0.498824,
+        "analytic": true,
+        "external": "%0.49;0.12%"
+      },
+      "reduceConjunction": {
+        "frequency": 0.90999997,
+        "confidence": 0.02160000242292881,
+        "expectation": 0.508856,
+        "analytic": false,
+        "external": "%0.91;0.02%"
+      },
+      "reduceConjunctionNeg": {
+        "frequency": 0.78999996,
+        "confidence": 0.05040000379085541,
+        "expectation": 0.514616,
+        "analytic": false,
+        "external": "%0.79;0.05%"
+      },
+      "lookupTruthOrNull": {
+        "frequency": 0.7,
+        "confidence": 0.06716418289076341,
+        "expectation": 0.51343286,
+        "analytic": false,
+        "external": "%0.70;0.07%"
+      }
+    },
+    "budget": {
+      "normal": {
+        "priority": 0.4,
+        "durability": 0.6,
+        "quality": 0.8,
+        "summary": 0.5768998,
+        "external": "$0.40;0.60;0.80$"
+      },
+      "fromTruth": {
+        "priority": 0.4,
+        "durability": 0.6,
+        "quality": 0.62,
+        "summary": 0.5299086,
+        "external": "$0.40;0.60;0.62$"
+      },
+      "bounded": {
+        "priority": 1,
+        "durability": 0.99,
+        "quality": 0.2,
+        "summary": 0.58284765,
+        "external": "$1.00;0.99;0.20$"
+      },
+      "mutated": {
+        "priority": 0.52,
+        "durability": 0.3,
+        "quality": 0.82000005,
+        "summary": 0.50386345,
+        "external": "$0.52;0.30;0.82$"
+      },
+      "merged": {
+        "priority": 0.7,
+        "durability": 0.6,
+        "quality": 0.8,
+        "summary": 0.69520533,
+        "external": "$0.70;0.60;0.80$"
+      }
+    },
+    "utility": {
+      "and": 0.2800000011920929,
+      "or": 0.82,
+      "aveGeo": 0.5768998,
+      "truthToQuality": 0.62
+    }
+  },
+  "ts": {
+    "truth": {
+      "a": {
+        "frequency": 0.699999988079071,
+        "confidence": 0.6,
+        "expectation": 0.6200000047683716,
+        "analytic": false,
+        "external": "%0.70;0.60%"
+      },
+      "b": {
+        "frequency": 0.30000001192092896,
+        "confidence": 0.4,
+        "expectation": 0.42000001668930054,
+        "analytic": false,
+        "external": "%0.30;0.40%"
+      },
+      "negation": {
+        "frequency": 0.30000001192092896,
+        "confidence": 0.6,
+        "expectation": 0.3799999952316284,
+        "analytic": false,
+        "external": "%0.30;0.60%"
+      },
+      "conversion": {
+        "frequency": 1,
+        "confidence": 0.29577464138413906,
+        "expectation": 0.6478873491287231,
+        "analytic": false,
+        "external": "%1.00;0.30%"
+      },
+      "contraposition": {
+        "frequency": 0,
+        "confidence": 0.15254237801821124,
+        "expectation": 0.4237288236618042,
+        "analytic": false,
+        "external": "%0.00;0.15%"
+      },
+      "revision": {
+        "frequency": 0.5769230723381042,
+        "confidence": 0.6842105263157895,
+        "expectation": 0.5526315569877625,
+        "analytic": false,
+        "external": "%0.58;0.68%"
+      },
+      "deduction": {
+        "frequency": 0.21000000834465027,
+        "confidence": 0.05040000379085541,
+        "expectation": 0.4853839874267578,
+        "analytic": false,
+        "external": "%0.21;0.05%"
+      },
+      "induction": {
+        "frequency": 0.30000001192092896,
+        "confidence": 0.14383561477808887,
+        "expectation": 0.47123289108276367,
+        "analytic": false,
+        "external": "%0.30;0.14%"
+      },
+      "abduction": {
+        "frequency": 0.699999988079071,
+        "confidence": 0.06716418289076341,
+        "expectation": 0.5134328603744507,
+        "analytic": false,
+        "external": "%0.70;0.07%"
+      },
+      "analogy": {
+        "frequency": 0.21000000834465027,
+        "confidence": 0.07200000435113907,
+        "expectation": 0.4791199862957001,
+        "analytic": false,
+        "external": "%0.21;0.07%"
+      },
+      "resemblance": {
+        "frequency": 0.21000000834465027,
+        "confidence": 0.18960000574588776,
+        "expectation": 0.4450159966945648,
+        "analytic": false,
+        "external": "%0.21;0.19%"
+      },
+      "exemplification": {
+        "frequency": 1,
+        "confidence": 0.04798172130847218,
+        "expectation": 0.5239908695220947,
+        "analytic": false,
+        "external": "%1.00;0.05%"
+      },
+      "comparison": {
+        "frequency": 0.26582279801368713,
+        "confidence": 0.15938129817073465,
+        "expectation": 0.4626765251159668,
+        "analytic": false,
+        "external": "%0.27;0.16%"
+      },
+      "desireStrong": {
+        "frequency": 0.21000000834465027,
+        "confidence": 0.07200000435113907,
+        "expectation": 0.4791199862957001,
+        "analytic": false,
+        "external": "%0.21;0.07%"
+      },
+      "desireWeak": {
+        "frequency": 0.21000000834465027,
+        "confidence": 0.036000002175569534,
+        "expectation": 0.48956000804901123,
+        "analytic": false,
+        "external": "%0.21;0.04%"
+      },
+      "desireDed": {
+        "frequency": 0.21000000834465027,
+        "confidence": 0.24000000953674316,
+        "expectation": 0.430400013923645,
+        "analytic": false,
+        "external": "%0.21;0.24%"
+      },
+      "desireInd": {
+        "frequency": 0.699999988079071,
+        "confidence": 0.06716418289076341,
+        "expectation": 0.5134328603744507,
+        "analytic": false,
+        "external": "%0.70;0.07%"
+      },
+      "union": {
+        "frequency": 0.7899999618530273,
+        "confidence": 0.24000000953674316,
+        "expectation": 0.569599986076355,
+        "analytic": false,
+        "external": "%0.79;0.24%"
+      },
+      "intersection": {
+        "frequency": 0.21000000834465027,
+        "confidence": 0.24000000953674316,
+        "expectation": 0.430400013923645,
+        "analytic": false,
+        "external": "%0.21;0.24%"
+      },
+      "anonymousAnalogy": {
+        "frequency": 0.21000000834465027,
+        "confidence": 0.10500000417232513,
+        "expectation": 0.4695500135421753,
+        "analytic": false,
+        "external": "%0.21;0.11%"
+      },
+      "reduceDisjunction": {
+        "frequency": 0.4899999797344208,
+        "confidence": 0.11760000139474869,
+        "expectation": 0.49882400035858154,
+        "analytic": true,
+        "external": "%0.49;0.12%"
+      },
+      "reduceConjunction": {
+        "frequency": 0.9099999666213989,
+        "confidence": 0.02160000242292881,
+        "expectation": 0.5088559985160828,
+        "analytic": false,
+        "external": "%0.91;0.02%"
+      },
+      "reduceConjunctionNeg": {
+        "frequency": 0.7899999618530273,
+        "confidence": 0.05040000379085541,
+        "expectation": 0.5146160125732422,
+        "analytic": false,
+        "external": "%0.79;0.05%"
+      },
+      "lookupTruthOrNull": {
+        "frequency": 0.699999988079071,
+        "confidence": 0.06716418289076341,
+        "expectation": 0.5134328603744507,
+        "analytic": false,
+        "external": "%0.70;0.07%"
+      }
+    },
+    "budget": {
+      "normal": {
+        "priority": 0.4000000059604645,
+        "durability": 0.6000000238418579,
+        "quality": 0.800000011920929,
+        "summary": 0.5768998265266418,
+        "external": "$0.40;0.60;0.80$"
+      },
+      "fromTruth": {
+        "priority": 0.4000000059604645,
+        "durability": 0.6000000238418579,
+        "quality": 0.6200000047683716,
+        "summary": 0.5299085974693298,
+        "external": "$0.40;0.60;0.62$"
+      },
+      "bounded": {
+        "priority": 1,
+        "durability": 0.9900000095367432,
+        "quality": 0.20000000298023224,
+        "summary": 0.5828476548194885,
+        "external": "$1.00;0.99;0.20$"
+      },
+      "mutated": {
+        "priority": 0.5199999809265137,
+        "durability": 0.30000001192092896,
+        "quality": 0.8200000524520874,
+        "summary": 0.5038634538650513,
+        "external": "$0.52;0.30;0.82$"
+      },
+      "merged": {
+        "priority": 0.699999988079071,
+        "durability": 0.6000000238418579,
+        "quality": 0.800000011920929,
+        "summary": 0.6952053308486938,
+        "external": "$0.70;0.60;0.80$"
+      }
+    },
+    "utility": {
+      "and": 0.2800000011920929,
+      "or": 0.8199999928474426,
+      "aveGeo": 0.5768998265266418,
+      "truthToQuality": 0.6200000047683716
+    }
+  }
+}

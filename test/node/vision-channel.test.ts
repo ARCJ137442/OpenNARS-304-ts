@@ -13,10 +13,17 @@ test("default NAR registers VisionChannel and maps decimal coordinates", async (
     assert.ok(vision);
     assert.equal(vision.width, 5);
     assert.equal(vision.height, 5);
+    assert.doesNotThrow(() => {
+        nar.addInput(new java.lang.String("<{M1[-1.0,0.0]} --> [BRIGHT]>."));
+    });
+    assert.equal((vision as any).cnt_updated, 1);
+    assert.equal((vision as any).subj, "M1");
+
     const coordinates = [-1, -0.5, 0, 0.5, 1];
     assert.doesNotThrow(() => {
         for (const y of coordinates) {
             for (const x of coordinates) {
+                if (y === -1 && x === 0) continue;
                 nar.addInput(new java.lang.String(
                     `<{M1[${y.toFixed(1)},${x.toFixed(1)}]} --> [BRIGHT]>.`,
                 ));
