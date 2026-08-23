@@ -1,6 +1,8 @@
 import org.opennars.main.Nar;
 import org.opennars.entity.Task;
 import org.opennars.io.events.EventEmitter;
+import org.opennars.io.events.EventEmitter.EventObserver;
+import org.opennars.io.events.Events;
 import org.opennars.io.events.OutputHandler;
 import org.opennars.parameter.Debug;
 
@@ -23,17 +25,28 @@ public final class NalParityRunner {
 
     public static void main(final String[] args) throws Exception {
         if (args.length < 2) {
-            throw new IllegalArgumentException("usage: NalParityRunner <cycles> <nal-file>...");
+            throw new IllegalArgumentException("usage: NalParityRunner <cycles> <nal-file>... [--progress-interval N]");
         }
 
         final int cycles = Integer.parseInt(args[0]);
+        int progressInterval = 0;
+        final List<String> files = new ArrayList<>();
+        for (int i = 1; i < args.length; i++) {
+            if ("--progress-interval".equals(args[i])) {
+                progressInterval = Integer.parseInt(args[++i]);
+            } else {
+                files.add(args[i]);
+            }
+        }
+        if (progressInterval < 0) {
+            throw new IllegalArgumentException("--progress-interval must be non-negative");
+        }
         // Match java-master's NALTest static setup: deterministic occurrence times.
         Debug.TEST = true;
         final PrintStream output = System.out;
         final PrintStream quiet = new PrintStream(new ByteArrayOutputStream());
 
-        for (int i = 1; i < args.length; i++) {
-            final String file = args[i];
+        for (final String file : files) {
             boolean ok = false;
             String error = null;
             int expectedCount = 0;
@@ -47,6 +60,10 @@ public final class NalParityRunner {
                 // Keep parity runs synchronous and independent of Nar.start() thread scheduling.
                 nar.narParameters.THREADS_AMOUNT = 1;
                 nar.setThreadYield(false);
+                if (progressInterval > 0) {
+                    nar.event(new ProgressObserver(file, progressInterval), true,
+                            Events.CycleEnd.class, OutputHandler.OUT.class, OutputHandler.EXE.class);
+                }
                 final List<String> expectations = expectations(source);
                 capture = new Capture(nar, expectations);
                 expectedCount = expectations.size();
@@ -154,6 +171,37 @@ public final class NalParityRunner {
 
         private double[] markerTimeMs() {
             return markerTimeMs;
+        }
+    }
+
+    private static final class ProgressObserver implements EventObserver {
+        private final String file;
+        private final int interval;
+        private int cycles;
+        private int lastCommandCycle = -1;
+
+        private ProgressObserver(final String file, final int interval) {
+            this.file = file;
+            this.interval = interval;
+        }
+
+        @Override
+        public void event(final Class<?> channel, final Object[] args) {
+            if (channel == Events.CycleEnd.class) {
+                cycles++;
+                if (cycles % interval == 0) {
+                    System.err.println("@progress {\"file\":" + quote(file)
+                            + ",\"cycle\":" + cycles + ",\"kind\":\"cycle\"}");
+                    System.err.flush();
+                }
+                return;
+            }
+            if (lastCommandCycle != cycles) {
+                lastCommandCycle = cycles;
+                System.err.println("@progress {\"file\":" + quote(file)
+                        + ",\"cycle\":" + cycles + ",\"kind\":\"command\"}");
+                System.err.flush();
+            }
         }
     }
 

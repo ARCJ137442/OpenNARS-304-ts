@@ -19,6 +19,7 @@ import {
   loadCheckpoint,
   normalizeResult,
   parseArgs,
+  parseProgressLine,
   parseJsonLines,
 } from "../../scripts/e2e/run-nal-corpus.mjs";
 import { Tense } from "../../src/language/Tense.ts";
@@ -45,6 +46,8 @@ test("NAL runner keeps timeout and marker absence as separate observations", () 
     error: "timed out",
     error_type: "timeout",
     timed_out: true,
+    stall_detected: true,
+    timeout_reason: "no_progress",
   }, 1);
 
   assert.equal(result.error_type, "timeout");
@@ -52,6 +55,7 @@ test("NAL runner keeps timeout and marker absence as separate observations", () 
   assert.equal(result.exception, false);
   assert.equal(result.marker_missing, true);
   assert.equal(result.marker_missing_count, 1);
+  assert.equal(result.stall_detected, true);
 });
 
 test("NAL runner distinguishes a process crash from a single-file timeout", () => {
@@ -146,37 +150,37 @@ test("NAL runner records runtime per reasoning cycle and relative slowdown", () 
   assert.equal(result.ts_runtime_within_budget, true);
 });
 
-test("NAL runner marks timeout runtime as a lower bound instead of a functional verdict", () => {
+test("NAL runner marks stalled runtime as a lower bound instead of a functional verdict", () => {
   const result = evaluateRuntimePerformance(
     { duration_ms: 500, timed_out: false },
-    { duration_ms: 30000, timed_out: true },
+    { duration_ms: 30000, timed_out: true, stall_detected: true, timeout_reason: "no_progress" },
     1550,
   );
 
-  assert.equal(result.ts_runtime_observation, "timeout_lower_bound");
+  assert.equal(result.ts_runtime_observation, "stalled_lower_bound");
   assert.equal(result.ts_runtime_slowdown_ratio, 60);
   assert.equal(result.ts_runtime_within_budget, false);
 });
 
-test("NAL runner labels sub-three-minute timeouts as performance warnings", () => {
-  const warning = classifyTimeoutObservation({
+test("NAL runner classifies no-progress watchdog termination independently of performance", () => {
+  const stalled = classifyTimeoutObservation({
     timeoutMs: 120000,
     java: { timed_out: false, exception: false },
-    ts: { timed_out: true, exception: false },
+    ts: { timed_out: true, stall_detected: true, timeout_reason: "no_progress", exception: false },
   });
-  assert.deepEqual(warning, {
-    performance_warning: true,
-    timeout_classification: "performance_warning",
+  assert.deepEqual(stalled, {
+    performance_warning: false,
+    timeout_classification: "stalled_no_progress",
   });
 
-  const hardCandidate = classifyTimeoutObservation({
+  const stalledAfterLongWatchdog = classifyTimeoutObservation({
     timeoutMs: 180001,
     java: { timed_out: false, exception: false },
-    ts: { timed_out: true, exception: false },
+    ts: { timed_out: true, stall_detected: true, timeout_reason: "no_progress", exception: false },
   });
-  assert.deepEqual(hardCandidate, {
+  assert.deepEqual(stalledAfterLongWatchdog, {
     performance_warning: false,
-    timeout_classification: "hard_timeout_candidate",
+    timeout_classification: "stalled_no_progress",
   });
 
   const exception = classifyTimeoutObservation({
@@ -187,6 +191,18 @@ test("NAL runner labels sub-three-minute timeouts as performance warnings", () =
   assert.deepEqual(exception, {
     performance_warning: false,
     timeout_classification: "timeout_with_exception",
+  });
+});
+
+test("NAL runner keeps a slow completed process as performance data, not a timeout", () => {
+  const result = classifyTimeoutObservation({
+    timeoutMs: 5000,
+    java: { duration_ms: 100, timed_out: false, exception: false },
+    ts: { duration_ms: 30000, timed_out: false, exception: false },
+  });
+  assert.deepEqual(result, {
+    performance_warning: false,
+    timeout_classification: null,
   });
 });
 
@@ -273,6 +289,16 @@ test("NAL runner preserves valid rows when stdout contains a diagnostic line", (
     rows: [{ file: "x", matched: [true] }],
     nonJsonLines: ["# diagnostic"],
   });
+});
+
+test("NAL runner accepts only structured progress heartbeats", () => {
+  assert.deepEqual(parseProgressLine('@progress {"file":"fixture.nal","cycle":256,"kind":"cycle"}'), {
+    file: "fixture.nal",
+    cycle: 256,
+    kind: "cycle",
+  });
+  assert.equal(parseProgressLine("warning: slow"), null);
+  assert.equal(parseProgressLine('@progress {"file":"fixture.nal","cycle":-1}'), null);
 });
 
 test("NAL runner recognizes Windows timeout results with signal and message", () => {
@@ -521,6 +547,8 @@ test("NAL runner resumes after a real middle-file timeout and preserves the tail
     assert.deepEqual(rows.map((row) => row.ts_process_mode), ["hot", "hot", "hot"]);
     assert.equal(rows[0].ts.error_type, "none");
     assert.equal(rows[1].ts.error_type, "timeout");
+    assert.equal(rows[1].ts.stall_detected, true);
+    assert.equal(rows[1].ts.timeout_reason, "no_progress");
     assert.equal(rows[2].ts.error_type, "none");
     assert.deepEqual(rows.map((row) => row.ts_not_run), [false, false, false]);
   } finally {

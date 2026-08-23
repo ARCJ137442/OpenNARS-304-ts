@@ -3,6 +3,7 @@ import { performance } from "node:perf_hooks";
 import { resolve } from "node:path";
 
 import { OutputHandler } from "../src/io/events/OutputHandler.ts";
+import { Events } from "../src/io/events/Events.ts";
 import { Nar } from "../src/main/Nar.ts";
 import { Debug } from "../src/main/Debug.ts";
 
@@ -11,13 +12,16 @@ Debug.TEST = true;
 
 function parseArgs(argv) {
   let cycles = 1550;
+  let progressInterval = 0;
   const files = [];
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--cycles") {
       cycles = Number(argv[++index]);
+    } else if (argument === "--progress-interval") {
+      progressInterval = Number(argv[++index]);
     } else if (argument === "--help" || argument === "-h") {
-      console.error("usage: node scripts/cli.mjs [--cycles N] <nal-file>...");
+      console.error("usage: node scripts/cli.mjs [--cycles N] [--progress-interval N] <nal-file>...");
       process.exit(0);
     } else {
       files.push(resolve(argument));
@@ -26,10 +30,13 @@ function parseArgs(argv) {
   if (!Number.isInteger(cycles) || cycles < 1) {
     throw new Error("--cycles must be a positive integer");
   }
+  if (!Number.isInteger(progressInterval) || progressInterval < 0) {
+    throw new Error("--progress-interval must be a non-negative integer");
+  }
   if (files.length === 0) {
     throw new Error("at least one NAL file is required");
   }
-  return { cycles, files };
+  return { cycles, progressInterval, files };
 }
 
 function extractExpectations(source) {
@@ -68,10 +75,16 @@ function failureText(failure) {
   return stack && !stack.includes(summary) ? `${summary}\n${stack}` : stack ?? summary;
 }
 
-async function runFile(file, cycles) {
+function emitProgress(file, cycle, kind = "cycle") {
+  process.stderr.write(`@progress ${JSON.stringify({ file, cycle, kind })}\n`);
+}
+
+async function runFile(file, cycles, progressInterval) {
   const expectations = extractExpectations(await readFile(file, "utf8"));
   const matched = new Array(expectations.length).fill(false);
   const markerTimeMs = new Array(expectations.length).fill(null);
+  let cycleCount = 0;
+  let lastCommandCycle = -1;
   let error = null;
 
   try {
@@ -81,19 +94,32 @@ async function runFile(file, cycles) {
     const executeChannel = OutputHandler.EXE.class;
     const observer = {
       event(channel, args) {
+        if (channel === Events.CycleEnd.class) {
+          cycleCount += 1;
+          if (progressInterval > 0 && (cycleCount % progressInterval === 0 || cycleCount === cycles)) {
+            emitProgress(file, cycleCount);
+          }
+          return;
+        }
         if (channel !== outputChannel && channel !== executeChannel) return;
+        if (progressInterval > 0 && lastCommandCycle !== cycleCount) {
+          lastCommandCycle = cycleCount;
+          emitProgress(file, cycleCount, "command");
+        }
         const signal = args[0];
         const text = signalText(signal, nar);
         for (let index = 0; index < expectations.length; index += 1) {
           if (!matched[index] && text.includes(expectations[index])) {
             matched[index] = true;
             markerTimeMs[index] = performance.now() - startedAt;
+            if (progressInterval > 0) emitProgress(file, cycleCount, "marker");
           }
         }
       },
     };
     nar.on(outputChannel, observer);
     nar.on(executeChannel, observer);
+    nar.on(Events.CycleEnd.class, observer);
     nar.addInputFile(file);
     nar.cycles(cycles);
   } catch (failure) {
@@ -121,9 +147,9 @@ async function runFile(file, cycles) {
 }
 
 async function main() {
-  const { cycles, files } = parseArgs(process.argv.slice(2));
+  const { cycles, progressInterval, files } = parseArgs(process.argv.slice(2));
   for (const file of files) {
-    console.log(JSON.stringify(await runFile(file, cycles)));
+    console.log(JSON.stringify(await runFile(file, cycles, progressInterval)));
   }
 }
 
