@@ -1,0 +1,42 @@
+{
+  "schema": "opennars-304-ts.toothbrush-stage-comparison.v1",
+  "artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "java_thread_mode": "single",
+  "ts_thread_mode": "single",
+  "prefix_without_embedded_cycles": {
+    "cycles": 256,
+    "java_json_events": 6131,
+    "ts_json_events": 6131,
+    "first_normalized_difference": null,
+    "result": "equal"
+  },
+  "full_input_trace": {
+    "embedded_cycles": 10000,
+    "java_json_events_capped": 100002,
+    "ts_json_events": 115453,
+    "first_normalized_difference": 82777,
+    "java_event": "TaskLinkAdd",
+    "ts_event": "TaskAdd",
+    "interpretation": "unresolved_event_order_difference"
+  },
+  "formal_marker_run": {
+    "embedded_cycles": 10000,
+    "extra_cycles": 1550,
+    "observed_cycles": 11550,
+    "java_markers": "2/2",
+    "ts_markers": "2/2",
+    "equivalence_route": "marker",
+    "equivalent": true,
+    "java_runtime_ms": 877,
+    "ts_runtime_ms": 89845,
+    "ts_runtime_ms_per_cycle": 7.778787878787878,
+    "ts_runtime_observation": "completed"
+  },
+  "raw_trace_files": [
+    "reports/evidence/java-toothbrush-trace-256-skip-embedded-v1.jsonl",
+    "reports/evidence/ts-toothbrush-trace-256-skip-embedded-v1.jsonl",
+    "reports/evidence/java-toothbrush-trace-10000-v1.jsonl",
+    "reports/evidence/ts-toothbrush-trace-10000-v1.jsonl"
+  ],
+  "formal_result_file": "reports/evidence/ts-java-parity-20260823-toothbrush-120s-canonical-v1.jsonl"
+}
