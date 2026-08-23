@@ -1,0 +1,25 @@
+{
+  "sample": "nal6.22.nal",
+  "canonical_java_artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "java_thread_mode": "single",
+  "ts_thread_mode": "single",
+  "marker_result": {
+    "java": "1/1",
+    "typescript": "timeout_after_120000_ms",
+    "embedded_cycles": 70000,
+    "extra_cycles": 1
+  },
+  "trace_window": {
+    "cycles": 4096,
+    "java_events": 33191,
+    "typescript_events": 33191,
+    "first_normalized_diff": -1,
+    "normalization": [
+      "stamp creation time",
+      "stamp occurrence time",
+      "stamp input ids",
+      "truth frequency and confidence text"
+    ]
+  },
+  "interpretation": "No observable Java/TypeScript event divergence through cycle 4096; the 120-second marker failure remains an unresolved high-cost performance or later-cycle question, not a confirmed semantic fix target."
+}
