@@ -242,18 +242,18 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         if ((type === QUESTION_MARK) || (type === QUEST_MARK)) {
             return null;
         }
-        let frequency: float = 1.0;
-        let confidence: float = this.memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE;
+        let frequency: float = Math.fround(1.0) as float;
+        let confidence: float = Math.fround(this.memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE) as float;
         if (type === GOAL_MARK) {
-            confidence = this.memory.narParameters.DEFAULT_GOAL_CONFIDENCE;
+            confidence = Math.fround(this.memory.narParameters.DEFAULT_GOAL_CONFIDENCE) as float;
         }
         if (s !== null) {
             let i: int = s.indexOf(VALUE_SEPARATOR.charCodeAt(0));
             if (i < 0) {
-                frequency = Number.parseFloat(String(s));
+                frequency = Math.fround(Number.parseFloat(String(s))) as float;
             } else {
-                frequency = Number.parseFloat(String(s.substring(0, i)));
-                confidence = Number.parseFloat(String(s.substring(i + 1)));
+                frequency = Math.fround(Number.parseFloat(String(s.substring(0, i)))) as float;
+                confidence = Math.fround(Number.parseFloat(String(s.substring(i + 1)))) as float;
             }
         }
         return TruthValue.fromFrequencyConfidence(frequency, confidence, this.memory.narParameters);

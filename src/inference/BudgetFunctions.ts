@@ -315,9 +315,13 @@ export class BudgetFunctions extends UtilityFunctions {
         if (t === null || t === undefined) {
             t = nal.getCurrentTask();
         }
-        let priority: float = t.getPriority();
-        let durability: float = t.getDurability() / complexity;
-        let quality: float = qual / complexity;
+        // Java receives both parameters as float and stores each local result
+        // back into a float before the belief-link feedback is applied.
+        const javaQual: float = Math.fround(qual) as float;
+        const javaComplexity: float = Math.fround(complexity) as float;
+        let priority: float = Math.fround(t.getPriority()) as float;
+        let durability: float = Math.fround(t.getDurability() / javaComplexity) as float;
+        let quality: float = Math.fround(javaQual / javaComplexity) as float;
         let bLink: TermLink = nal.getCurrentBeliefLink();
         // Java returns null for an unset belief link; the translated field is
         // undefined until first assignment, so both values mean "no link".

@@ -103,3 +103,18 @@ test("CompoundTerm equality preserves Java case-sensitive key identity", async (
     assert.notEqual(lowerConcept, upperConcept);
     assert.equal(nar.memory.concepts.size(), 2);
 });
+
+test("Narsese truth parsing preserves Java Float.parseFloat boundaries", async () => {
+    const { java } = await import("jree");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Narsese } = await import("../../src/io/Narsese.ts");
+
+    const nar = new Nar(304);
+    const task = new Narsese(nar).parseTask(new java.lang.String(
+        "<heated --> pliable>. %1.00;0.90%",
+    ));
+
+    assert.equal(task.sentence.truth.frequency, Math.fround(1.0));
+    assert.equal(task.sentence.truth.confidence, Math.fround(0.9));
+    assert.notEqual(task.sentence.truth.confidence, 0.9);
+});
