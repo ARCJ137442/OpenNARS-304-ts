@@ -44,9 +44,13 @@ public final class NalParityRunner {
                 System.setOut(quiet);
                 final String source = Files.readString(Path.of(file));
                 final Nar nar = new Nar();
+                // Keep parity runs synchronous and independent of Nar.start() thread scheduling.
+                nar.narParameters.THREADS_AMOUNT = 1;
+                nar.setThreadYield(false);
                 final List<String> expectations = expectations(source);
                 capture = new Capture(nar, expectations);
                 expectedCount = expectations.size();
+                capture.start(System.nanoTime());
                 nar.addInputFile(file);
                 nar.cycles(cycles);
                 passedCount = capture.passedCount();
@@ -69,8 +73,10 @@ public final class NalParityRunner {
                     + ",\"error_type\":" + quote(error == null ? "none" : "exception")
                     + ",\"exception\":" + (error != null)
                     + ",\"timed_out\":false"
+                    + ",\"thread_mode\":\"single\""
                     + ",\"marker_missing\":" + (expectedCount != passedCount)
                     + ",\"marker_missing_count\":" + (expectedCount - passedCount)
+                    + ",\"marker_time_ms\":" + numberArray(capture == null ? new double[expectedCount] : capture.markerTimeMs())
                     + (error == null ? "" : ",\"error\":" + quote(error))
                     + "}");
         }
@@ -98,12 +104,20 @@ public final class NalParityRunner {
         private final Nar nar;
         private final List<String> expectations;
         private final boolean[] matched;
+        private final double[] markerTimeMs;
+        private long startNanos;
 
         private Capture(final Nar nar, final List<String> expectations) {
             super(nar);
             this.nar = nar;
             this.expectations = expectations;
             this.matched = new boolean[expectations.size()];
+            this.markerTimeMs = new double[expectations.size()];
+            java.util.Arrays.fill(this.markerTimeMs, Double.NaN);
+        }
+
+        private void start(final long startNanos) {
+            this.startNanos = startNanos;
         }
 
         @Override
@@ -121,6 +135,7 @@ public final class NalParityRunner {
             for (int i = 0; i < expectations.size(); i++) {
                 if (!matched[i] && text.contains(expectations.get(i))) {
                     matched[i] = true;
+                    markerTimeMs[i] = (System.nanoTime() - startNanos) / 1_000_000.0;
                 }
             }
         }
@@ -136,6 +151,10 @@ public final class NalParityRunner {
         private boolean[] matched() {
             return matched;
         }
+
+        private double[] markerTimeMs() {
+            return markerTimeMs;
+        }
     }
 
     private static String booleanArray(final boolean[] values) {
@@ -143,6 +162,16 @@ public final class NalParityRunner {
         for (int i = 0; i < values.length; i++) {
             if (i > 0) out.append(',');
             out.append(values[i]);
+        }
+        return out.append(']').toString();
+    }
+
+    private static String numberArray(final double[] values) {
+        final StringBuilder out = new StringBuilder("[");
+        for (int i = 0; i < values.length; i++) {
+            if (i > 0) out.append(',');
+            if (Double.isNaN(values[i])) out.append("null");
+            else out.append(values[i]);
         }
         return out.append(']').toString();
     }

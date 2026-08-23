@@ -12,6 +12,7 @@ const defaultJavaJar = join(javaRoot, "target", "opennars-3.1.0-SNAPSHOT.jar");
 const defaultJavaTestClasses = join(javaRoot, "target", "test-classes");
 const defaultJavaClasses = join(javaRoot, "target", "classes");
 const javaAdapterSource = join(projectRoot, "scripts", "e2e", "NalParityRunner.java");
+const PERFORMANCE_BUDGET_MS_PER_1024_CYCLES = 120_000;
 
 const corpusDirectories = [
   join(javaRoot, "src", "main", "resources", "nal", "single_step"),
@@ -429,7 +430,69 @@ function normalizeResult(result, expectedOverride = null) {
   };
 }
 
-function evaluateRow(file, expected, javaResult, tsResult, engine) {
+function evaluateMarkerPerformance(javaResult, tsResult, totalCycles) {
+  const javaTimes = Array.isArray(javaResult?.marker_time_ms) ? javaResult.marker_time_ms : null;
+  const tsTimes = Array.isArray(tsResult?.marker_time_ms) ? tsResult.marker_time_ms : null;
+  if (javaTimes === null && tsTimes === null) {
+    return {
+      performance_budget_ms_per_1024_cycles: PERFORMANCE_BUDGET_MS_PER_1024_CYCLES,
+      java_marker_time_per_1024_ms: null,
+      ts_marker_time_per_1024_ms: null,
+      marker_time_delta_ms: null,
+      marker_time_delta_per_1024_ms: null,
+      java_marker_timing_complete: null,
+      ts_marker_timing_complete: null,
+      marker_delta_timing_complete: null,
+      ts_performance_within_budget: null,
+      marker_delta_within_budget: null,
+    };
+  }
+  const scale = Number.isFinite(totalCycles) && totalCycles > 0 ? 1024 / totalCycles : null;
+  const count = Math.max(javaTimes?.length ?? 0, tsTimes?.length ?? 0);
+  const javaMarkerTimePer1024 = javaTimes === null || scale === null
+    ? null
+    : javaTimes.map((value) => Number.isFinite(value) ? value * scale : null);
+  const tsMarkerTimePer1024 = tsTimes === null || scale === null
+    ? null
+    : tsTimes.map((value) => Number.isFinite(value) ? value * scale : null);
+  const markerTimeDelta = javaTimes !== null && tsTimes !== null
+    ? Array.from({ length: count }, (_, index) => {
+      const javaTime = javaTimes[index];
+      const tsTime = tsTimes[index];
+      return Number.isFinite(javaTime) && Number.isFinite(tsTime) ? tsTime - javaTime : null;
+    })
+    : null;
+  const markerTimeDeltaPer1024 = markerTimeDelta === null || scale === null
+    ? null
+    : markerTimeDelta.map((value) => Number.isFinite(value) ? value * scale : null);
+  const observed = (values) => values?.filter((value) => Number.isFinite(value)) ?? [];
+  const tsObserved = observed(tsMarkerTimePer1024);
+  const deltaObserved = observed(markerTimeDeltaPer1024);
+  const timingComplete = (values) => values === null || values.length === 0
+    ? null
+    : values.every((value) => Number.isFinite(value));
+  const javaTimingComplete = timingComplete(javaMarkerTimePer1024);
+  const tsTimingComplete = timingComplete(tsMarkerTimePer1024);
+  const deltaTimingComplete = timingComplete(markerTimeDeltaPer1024);
+  return {
+    performance_budget_ms_per_1024_cycles: PERFORMANCE_BUDGET_MS_PER_1024_CYCLES,
+    java_marker_time_per_1024_ms: javaMarkerTimePer1024,
+    ts_marker_time_per_1024_ms: tsMarkerTimePer1024,
+    marker_time_delta_ms: markerTimeDelta,
+    marker_time_delta_per_1024_ms: markerTimeDeltaPer1024,
+    java_marker_timing_complete: javaTimingComplete,
+    ts_marker_timing_complete: tsTimingComplete,
+    marker_delta_timing_complete: deltaTimingComplete,
+    ts_performance_within_budget: tsTimingComplete !== true || tsObserved.length === 0
+      ? null
+      : tsObserved.every((value) => value <= PERFORMANCE_BUDGET_MS_PER_1024_CYCLES),
+    marker_delta_within_budget: deltaTimingComplete !== true || deltaObserved.length === 0
+      ? null
+      : deltaObserved.every((value) => Math.abs(value) <= PERFORMANCE_BUDGET_MS_PER_1024_CYCLES),
+  };
+}
+
+function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles = null) {
   const java = normalizeResult(javaResult, expected);
   const ts = normalizeResult(tsResult, expected);
   const parity = java && ts
@@ -458,6 +521,9 @@ function evaluateRow(file, expected, javaResult, tsResult, engine) {
     java_ts_diff: javaTsDiff,
     both_wrong: bothWrong,
     functional_pass: functionalPass,
+    ...evaluateMarkerPerformance(java, ts, totalCycles),
+    java_thread_mode: java?.thread_mode ?? null,
+    ts_thread_mode: ts?.thread_mode ?? null,
     java_exception: java?.exception ?? null,
     java_timeout: java?.timed_out ?? null,
     java_not_run: java?.not_run ?? null,
@@ -581,6 +647,7 @@ async function main() {
             javaByFile.get(key) ?? null,
             tsByFile.get(key) ?? null,
             options.engine,
+            sources.get(file).embeddedCycles + options.cycles,
           ),
           java_process_mode: options.engine === "ts" ? null : "cold",
           ts_process_mode: options.engine === "java" ? null : options.tsMode,
@@ -657,6 +724,7 @@ export {
   assertUniqueFiles,
   completeProcessFailureRows,
   evaluateRow,
+  evaluateMarkerPerformance,
   extractNalMetadata,
   isProcessTimeout,
   loadCheckpoint,

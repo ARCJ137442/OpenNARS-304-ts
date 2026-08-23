@@ -9,6 +9,7 @@ import { java } from "jree";
 import {
   assertUniqueFiles,
   completeProcessFailureRows,
+  evaluateMarkerPerformance,
   evaluateRow,
   extractNalMetadata,
   isProcessTimeout,
@@ -99,6 +100,41 @@ test("parity exposes Java/TypeScript result differences independently", () => {
   assert.equal(row.java_ts_diff, true);
   assert.equal(row.both_wrong, false);
   assert.equal(row.functional_pass, false);
+});
+
+test("NAL runner reports marker timing against a 120-second-per-1024-cycle budget", () => {
+  const within = evaluateMarkerPerformance(
+    { marker_time_ms: [1000] },
+    { marker_time_ms: [120000] },
+    1024,
+  );
+  assert.deepEqual(within.marker_time_delta_ms, [119000]);
+  assert.deepEqual(within.marker_time_delta_per_1024_ms, [119000]);
+  assert.equal(within.ts_marker_timing_complete, true);
+  assert.equal(within.marker_delta_timing_complete, true);
+  assert.equal(within.ts_performance_within_budget, true);
+  assert.equal(within.marker_delta_within_budget, true);
+
+  const over = evaluateMarkerPerformance(
+    { marker_time_ms: [0] },
+    { marker_time_ms: [120001] },
+    1024,
+  );
+  assert.equal(over.ts_performance_within_budget, false);
+  assert.equal(over.marker_delta_within_budget, false);
+});
+
+test("NAL runner keeps performance observations separate when a marker is missing", () => {
+  const result = evaluateMarkerPerformance(
+    { marker_time_ms: [10, null] },
+    { marker_time_ms: [20, null] },
+    2048,
+  );
+  assert.deepEqual(result.marker_time_delta_ms, [10, null]);
+  assert.deepEqual(result.marker_time_delta_per_1024_ms, [5, null]);
+  assert.equal(result.ts_marker_timing_complete, false);
+  assert.equal(result.marker_delta_timing_complete, false);
+  assert.equal(result.marker_delta_within_budget, null);
 });
 
 test("NAL runner preserves valid rows when stdout contains a diagnostic line", () => {

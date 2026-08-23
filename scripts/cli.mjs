@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { performance } from "node:perf_hooks";
 import { resolve } from "node:path";
 
 import { OutputHandler } from "../src/io/events/OutputHandler.ts";
@@ -70,10 +71,12 @@ function failureText(failure) {
 async function runFile(file, cycles) {
   const expectations = extractExpectations(await readFile(file, "utf8"));
   const matched = new Array(expectations.length).fill(false);
+  const markerTimeMs = new Array(expectations.length).fill(null);
   let error = null;
 
   try {
     const nar = new Nar();
+    const startedAt = performance.now();
     const outputChannel = OutputHandler.OUT.class;
     const executeChannel = OutputHandler.EXE.class;
     const observer = {
@@ -84,6 +87,7 @@ async function runFile(file, cycles) {
         for (let index = 0; index < expectations.length; index += 1) {
           if (!matched[index] && text.includes(expectations[index])) {
             matched[index] = true;
+            markerTimeMs[index] = performance.now() - startedAt;
           }
         }
       },
@@ -108,8 +112,10 @@ async function runFile(file, cycles) {
     error_type: error ? "exception" : "none",
     exception: Boolean(error),
     timed_out: false,
+    thread_mode: "single",
     marker_missing: passed < expectations.length,
     marker_missing_count: expectations.length - passed,
+    marker_time_ms: markerTimeMs,
     ...(error ? { error } : {}),
   };
 }
