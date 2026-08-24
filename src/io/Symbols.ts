@@ -184,24 +184,24 @@ export class Symbols extends JavaObject {
         /** closer? */
         public readonly closer: boolean;
 
-        protected constructor(string: string, $name$: string, $index$: number);
+        protected constructor(string: string, $name$: java.lang.String, $index$: number);
 
-        protected constructor(string: string, relation: boolean, $name$: string, $index$: number);
+        protected constructor(string: string, relation: boolean, $name$: java.lang.String, $index$: number);
 
-        protected constructor(string: string, relation: boolean, innate: boolean, $name$: string, $index$: number);
+        protected constructor(string: string, relation: boolean, innate: boolean, $name$: java.lang.String, $index$: number);
         protected constructor(...args: unknown[]) {
             let string: string;
             let relation = false;
             let innate = false;
-            let name: string;
+            let name: java.lang.String;
             let index: number;
             if (args.length === 5) {
-                [string, relation, innate, name, index] = args as [string, boolean, boolean, string, number];
+                [string, relation, innate, name, index] = args as [string, boolean, boolean, java.lang.String, number];
             } else if (args.length === 4) {
-                [string, relation, name, index] = args as [string, boolean, string, number];
+                [string, relation, name, index] = args as [string, boolean, java.lang.String, number];
                 innate = !relation;
             } else if (args.length === 3) {
-                [string, name, index] = args as [string, string, number];
+                [string, name, index] = args as [string, java.lang.String, number];
             } else {
                 throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
             }
@@ -221,29 +221,29 @@ export class Symbols extends JavaObject {
         }
     };
 
-    protected static readonly stringToOperator: java.util.Map<string, Symbols.NativeOperator> = new java.util.LinkedHashMap(
+    protected static readonly stringToOperator: java.util.Map<string, Symbols.NativeOperator> = new java.util.LinkedHashMap<string, Symbols.NativeOperator>(
         Symbols.NativeOperator.values().length * 2);
-    protected static readonly charToOperator: java.util.Map<java.lang.Character, Symbols.NativeOperator> = new java.util.LinkedHashMap(
+    protected static readonly charToOperator: java.util.Map<string, Symbols.NativeOperator> = new java.util.LinkedHashMap<string, Symbols.NativeOperator>(
         Symbols.NativeOperator.values().length * 2);
 
 
     static {
         // Setup NativeOperator String index hashtable
-        for (let r of Symbols.NativeOperator.values())
-            Symbols.stringToOperator.put(r.toString(), r);
+        for (const r of Symbols.NativeOperator.values<Symbols.NativeOperator>())
+            Symbols.stringToOperator.put(r.symbol, r);
 
         // Setup NativeOperator Character index hashtable
-        for (let r of Symbols.NativeOperator.values()) {
+        for (const r of Symbols.NativeOperator.values<Symbols.NativeOperator>()) {
             let c: string = r.ch;
-            if (c !== 0)
+            if (c !== "")
                 Symbols.charToOperator.put(c, r);
         }
     }
 
-    public static getOperator(c: string): Symbols.NativeOperator;
+    public static getOperator(c: string): Symbols.NativeOperator | null;
 
-    public static getOperator(s: string): Symbols.NativeOperator;
-    public static getOperator(...args: unknown[]): Symbols.NativeOperator {
+    public static getOperator(s: string): Symbols.NativeOperator | null;
+    public static getOperator(...args: unknown[]): Symbols.NativeOperator | null {
         switch (args.length) {
             case 1: {
                 const [value] = args as [string];
@@ -264,8 +264,8 @@ export class Symbols extends JavaObject {
     }
 
 
-    public static getRelation(s: string): Symbols.NativeOperator {
-        let o: Symbols.NativeOperator = Symbols.getOperator(s);
+    public static getRelation(s: string): Symbols.NativeOperator | null {
+        let o: Symbols.NativeOperator | null = Symbols.getOperator(s);
         if (o === null)
             return null;
         if (o.relation)
@@ -273,8 +273,8 @@ export class Symbols extends JavaObject {
         return null;
     }
 
-    public static getOpener(c: string): Symbols.NativeOperator {
-        let o: Symbols.NativeOperator = Symbols.getOperator(c);
+    public static getOpener(c: string): Symbols.NativeOperator | null {
+        let o: Symbols.NativeOperator | null = Symbols.getOperator(c);
         if (o === null)
             return null;
         if (o.opener)
@@ -282,8 +282,8 @@ export class Symbols extends JavaObject {
         return null;
     }
 
-    public static getCloser(c: string): Symbols.NativeOperator {
-        let o: Symbols.NativeOperator = Symbols.getOperator(c);
+    public static getCloser(c: string): Symbols.NativeOperator | null {
+        let o: Symbols.NativeOperator | null = Symbols.getOperator(c);
         if (o === null)
             return null;
         if (o.closer)
@@ -304,7 +304,15 @@ export class Symbols extends JavaObject {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Symbols {
-    export type NativeOperator = InstanceType<typeof Symbols.NativeOperator>;
+    export type NativeOperator = java.lang.Enum<NativeOperator> & {
+        symbol: string;
+        ch: string;
+        relation: boolean;
+        isNative: boolean;
+        opener: boolean;
+        closer: boolean;
+        toString(): string;
+    };
 }
 
 
