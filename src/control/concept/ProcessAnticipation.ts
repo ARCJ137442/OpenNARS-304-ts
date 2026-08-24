@@ -100,7 +100,7 @@ export class ProcessAnticipation extends JavaObject {
             let impOrEqu: Statement = toInsert.negConfirmation.sentence.term as Statement;
             let cTarget: Concept = nal.memory.concept(impOrEqu.getPredicate());
             if (cTarget !== null) {
-                let anticipate_op: Operator = (c.memory.getOperator("^anticipate") as Anticipate);
+                let anticipate_op: Operator = (c.memory.getOperator(new java.lang.String("^anticipate")) as Anticipate);
                 if (anticipate_op !== null && anticipate_op instanceof Anticipate) {
                     (anticipate_op as Anticipate).anticipationFeedback(impOrEqu.getPredicate(), null, c.memory,
                         nal.time);
@@ -194,7 +194,7 @@ export class ProcessAnticipation extends JavaObject {
                     // we just take the counter and don't add one because we want to compute a w
                     // "unit" which will be revised
                     let countWithNegativeEvidence: long = (term as Implication).counter;
-                    let negativeEvidenceRatio: double = 1.0 / countWithNegativeEvidence as double;
+                    let negativeEvidenceRatio: double = 1.0 / Number(countWithNegativeEvidence);
 
                     // compute confidence by negative evidence
                     let w: double = UtilityFunctions.c2w(truthOfBeliefWithTerm.confidence, narParameters);
