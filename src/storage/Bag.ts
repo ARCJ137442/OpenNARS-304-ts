@@ -5,6 +5,7 @@ import { Distributor } from "./Distributor.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { javaValuesEqual } from "../runtime/jree-compat.ts";
 import type { Memory } from "./Memory.ts";
 
 
@@ -105,7 +106,8 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
      * @return The Item with the given key
      */
     public get(key: K): Type {
-        return this.nameTable.get(key);
+        const existingKey = this.findEquivalentKey(key);
+        return existingKey === null ? null : this.nameTable.get(existingKey);
     }
 
     /**
@@ -116,15 +118,17 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
      */
     public putIn(newItem: Type): Type {
         let newKey: K = newItem.name();
-        let oldItem: Type = this.nameTable.put(newKey, newItem);
+        const existingKey = this.findEquivalentKey(newKey);
+        let oldItem: Type = existingKey === null
+            ? this.nameTable.put(newKey, newItem)
+            : this.nameTable.put(existingKey, newItem);
         if (oldItem !== null) { // merge duplications
             this.outOfBase(oldItem);
             newItem.merge(oldItem);
         }
         let overflowItem: Type = this.intoBase(newItem); // put the (new or merged) item into itemTable
         if (overflowItem !== null) { // remove overflow
-            let overflowKey: K = overflowItem.name();
-            this.nameTable.remove(overflowKey);
+            this.removeByEquivalentKey(overflowItem.name());
             return overflowItem;
         } else {
             return null;
@@ -200,12 +204,29 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
         const key = value instanceof Item
             ? (value as Type).name()
             : value as K;
-        const picked: Type = this.nameTable.get(key);
+        const existingKey = this.findEquivalentKey(key);
+        const picked: Type = existingKey === null ? null : this.nameTable.get(existingKey);
         if (picked !== null) {
             this.outOfBase(picked);
-            this.nameTable.remove(key);
+            this.nameTable.remove(existingKey);
         }
         return picked;
+    }
+
+    /** Resolve Java equals/hashCode key identity before using jree's JS-backed map. */
+    private findEquivalentKey(key: K): K {
+        for (const entry of this.nameTable.entrySet()) {
+            const existingKey = entry.getKey();
+            if (javaValuesEqual(existingKey, key)) {
+                return existingKey;
+            }
+        }
+        return null;
+    }
+
+    private removeByEquivalentKey(key: K): Type {
+        const existingKey = this.findEquivalentKey(key);
+        return existingKey === null ? null : this.nameTable.remove(existingKey);
     }
 
 

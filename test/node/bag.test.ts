@@ -71,3 +71,53 @@ test("Bag.pickOut keeps a key object with name() on the key overload", () => {
     assert.equal(bag.pickOut(Term.get("a")), item);
     assert.equal(bag.size(), 0);
 });
+
+test("Bag merges distinct object keys through Java equals semantics", () => {
+    class EqualKey {
+        public readonly value: string;
+
+        public constructor(value: string) {
+            this.value = value;
+        }
+
+        public equals(other: unknown): boolean {
+            return other instanceof EqualKey && other.value === this.value;
+        }
+
+        public hashCode(): number {
+            return this.value.length;
+        }
+    }
+
+    class EqualKeyItem extends Item<EqualKey> {
+        private readonly key: EqualKey;
+
+        public constructor(key: EqualKey) {
+            super();
+            this.key = key;
+        }
+
+        public name(): EqualKey {
+            return this.key;
+        }
+
+        public getPriority(): number {
+            return 0.8;
+        }
+
+        public merge(): Item<unknown> {
+            return this;
+        }
+    }
+
+    const bag = new Bag<EqualKeyItem, EqualKey>(4, 10, new Parameters());
+    const first = new EqualKeyItem(new EqualKey("same"));
+    const second = new EqualKeyItem(new EqualKey("same"));
+
+    bag.putIn(first);
+    bag.putIn(second);
+
+    assert.equal(bag.size(), 1);
+    assert.equal(bag.pickOut(new EqualKey("same")), second);
+    assert.equal(bag.size(), 0);
+});

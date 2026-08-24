@@ -61,7 +61,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      */
     private key: string | null = null;
 
-    private readonly hash: int;
+    private hash: int;
 
     public constructor(term: Term, punctuation: char, newTruth: TruthValue, newStamp: Stamp);
 
@@ -251,12 +251,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
                 } else {
                     this.term = _content;
                 }
-                if (this.isNotTermlinkNormalizer()) {
-                    if (stamp === null)
-                        throw new java.lang.AssertionError("Stamp should not be null");
-                    this.hash = java.util.Objects.hash(this.term, punctuation, truth, stamp.getOccurrenceTime());
-                } else
-                    this.hash = java.util.Objects.hash(this.term, punctuation, truth);
+                this.refreshHash();
 
     }
 
@@ -318,6 +313,18 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      */
     public override  hashCode(): int {
         return this.hash;
+    }
+
+    /** Keep the cached Java hash aligned after Memory assigns an input occurrence time. */
+    public refreshHash(): void {
+        if (this.isNotTermlinkNormalizer()) {
+            if (this.stamp === null)
+                throw new java.lang.AssertionError("Stamp should not be null");
+            this.hash = java.util.Objects.hash(this.term, this.punctuation, this.truth,
+                this.stamp.getOccurrenceTime());
+        } else {
+            this.hash = java.util.Objects.hash(this.term, this.punctuation, this.truth);
+        }
     }
 
     /**

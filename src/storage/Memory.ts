@@ -276,8 +276,10 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
                 }
                 if (task !== null) {
                     let s: Stamp = task.sentence.stamp;
-                    if (s.getCreationTime() === -1)
+                    if (s.getCreationTime() === -1) {
                         s.setCreationTime(time.time(), this.narParameters.DURATION);
+                        task.sentence.refreshHash();
+                    }
 
                     if (emitIn) {
             this.emit(IN.class, task);

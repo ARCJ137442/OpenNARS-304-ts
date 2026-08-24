@@ -11,6 +11,7 @@ import { Events } from "../../src/io/events/Events.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
+import { javaValuesEqual } from "../../src/runtime/jree-compat.ts";
 
 const eventDefinitions = [
     ["TaskAdd", Events.TaskAdd.class],
@@ -19,6 +20,7 @@ const eventDefinitions = [
     ["TaskImmediateProcess", Events.TaskImmediateProcess.class],
     ["TermLinkAdd", Events.TermLinkAdd.class],
     ["TaskLinkAdd", Events.TaskLinkAdd.class],
+    ["TaskLinkRemove", Events.TaskLinkRemove.class],
     ["ConceptFire", Events.ConceptFire.class],
     ["TermLinkSelect", Events.TermLinkSelect.class],
     ["BeliefSelect", Events.BeliefSelect.class],
@@ -84,6 +86,53 @@ function describe(value, nar) {
     return termText(value);
 }
 
+function contextSummary(args) {
+    const targetConcept = args.find((value) => value instanceof Concept
+        && String(value.getTerm().name()) === "(^left,{SELF})");
+    if (targetConcept !== undefined) {
+        const focusedTaskLink = args.find((value) => value instanceof TaskLink);
+        const taskLinks = Array.from(targetConcept.taskLinks ?? [])
+            .map((taskLink) => `${String(taskLink.getTarget().sentence.term.name())}`
+                + ` keyHash=${taskLink.name().hashCode()}`
+                + ` equalsFocus=${focusedTaskLink === undefined ? "n/a" : javaValuesEqual(taskLink.name(), focusedTaskLink.name())}`
+                + ` sentenceHash=${taskLink.getTarget().sentence.hashCode()}`
+                + ` punctuation=${String(taskLink.getTarget().sentence.punctuation)}`
+                + ` occurrence=${taskLink.getTarget().sentence.stamp.getOccurrenceTime()}`
+                + ` truth=${taskLink.getTarget().sentence.truth === null ? "null" : taskLink.getTarget().sentence.truth.toKey()}`
+                + ` records=`
+                + `[${Array.from(taskLink.records ?? [])
+                    .map((record) => `${String(record.link?.target?.name?.() ?? record.link)}@${record.getTime()}`)
+                    .join(", ")}]`);
+        return `concept=${String(targetConcept.getTerm().name())}|taskLinks=[${taskLinks.join(", ")}]`;
+    }
+    const context = args.find((value) => value instanceof DerivationContext);
+    if (context === undefined) return null;
+    const concept = context.getCurrentConcept?.();
+    const link = context.getCurrentTaskLink?.();
+    const conceptText = concept === null || concept === undefined
+        ? "null"
+        : String(concept.getTerm().name());
+    if (link === null || link === undefined) return `concept=${conceptText}|taskLink=null`;
+    const index = link.index === null || link.index === undefined
+        ? "null"
+        : `[${Array.from(link.index).join(", ")}]`;
+    let summary = `time=${context.getTime()}|noveltyHorizon=${context.narParameters.NOVELTY_HORIZON}`
+        + `|concept=${conceptText}|taskLink=${String(link.getTarget().sentence.term.name())}`
+        + `|type=${link.type}|index=${index}|priority=${link.getPriority()}`
+        + `|durability=${link.getDurability()}|quality=${link.getQuality()}`
+        + `|conceptPriority=${concept.getPriority()}|conceptDurability=${concept.getDurability()}`
+        + `|conceptQuality=${concept.getQuality()}`;
+    if (conceptText === "(^left,{SELF})") {
+        const records = Array.from(link.records ?? [])
+            .map((record) => `${String(record.link?.target?.name?.() ?? record.link)}@${record.getTime()}`);
+        const termLinks = Array.from(concept.termLinks ?? [])
+            .map((termLink) => `${String(termLink.target.name())}|type=${termLink.type}`
+                + `|index=${indexText(termLink.index)}`);
+        summary += `|records=[${records.join(", ")}]|termLinks=[${termLinks.join(", ")}]`;
+    }
+    return summary;
+}
+
 function parseArgs(argv) {
     if (argv.length < 2 || argv.slice(2).some((value) => value !== "--skip-embedded")) {
         throw new Error("usage: node --loader ./scripts/ts-loader.mjs scripts/e2e/NalTraceRunner.mjs <cycles> <nal-file> [--skip-embedded]");
@@ -106,6 +155,7 @@ function main() {
                 seq: sequence++,
                 event: classNames.get(eventClass) ?? String(eventClass),
                 args: values,
+                ...(contextSummary(args) === null ? {} : { context: contextSummary(args) }),
             })}\n`);
         },
     };

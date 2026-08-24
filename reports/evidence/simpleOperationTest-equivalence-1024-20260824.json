@@ -1,0 +1,37 @@
+{
+  "format_version": 1,
+  "fixture": "java-master/src/test/simpleOperationTest.nal",
+  "contract": "bounded single-thread trace diagnosis; not the final markerless 131072-cycle acceptance",
+  "thread_mode": "single",
+  "skip_embedded": true,
+  "requested_cycles": 1024,
+  "canonical_java": {
+    "artifact": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d"
+  },
+  "java": {
+    "events": 15382,
+    "out_events": 569,
+    "exe_events": 0
+  },
+  "typescript": {
+    "events": 15382,
+    "out_events": 569,
+    "exe_events": 0
+  },
+  "comparison": {
+    "event_type_sequence_equal": true,
+    "normalized_out_sequence_equal": true,
+    "first_difference": null,
+    "normalization": "remove engine-specific stamp text and Java task sequence suffix from OUT text"
+  },
+  "classification": {
+    "functional_short_trace": "converged",
+    "watchdog_timeout": false,
+    "progress_observed": true,
+    "performance_class": "not assessed by this diagnostic",
+    "markerless_131072": "not yet verified"
+  },
+  "command": "javac -encoding UTF-8 -cp <canonical-test-classes>;<canonical-classes>;<canonical-jar> -d <temp-classes> scripts/e2e/NalTraceRunner.java; java -cp <temp-classes>;<canonical-test-classes>;<canonical-classes>;<canonical-jar> NalTraceRunner 1024 java-master/src/test/simpleOperationTest.nal --skip-embedded; node --loader ./scripts/ts-loader.mjs scripts/e2e/NalTraceRunner.mjs 1024 java-master/src/test/simpleOperationTest.nal --skip-embedded"
+}

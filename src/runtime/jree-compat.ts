@@ -113,10 +113,12 @@ const originalLinkedHashSetRemove = linkedHashSetPrototype.remove;
 const originalLinkedHashSetRemoveAll = linkedHashSetPrototype.removeAll;
 const originalLinkedHashSetRetainAll = linkedHashSetPrototype.retainAll;
 
-const javaValuesEqual = (left: unknown, right: unknown): boolean => {
+export const javaValuesEqual = (left: unknown, right: unknown): boolean => {
     if (left === right) return true;
-    const equals = (left as { equals?: unknown } | null)?.equals;
-    return typeof equals === "function" && Boolean(equals.call(left, right));
+    const leftEquals = (left as { equals?: unknown } | null)?.equals;
+    if (typeof leftEquals === "function" && Boolean(leftEquals.call(left, right))) return true;
+    const rightEquals = (right as { equals?: unknown } | null)?.equals;
+    return typeof rightEquals === "function" && Boolean(rightEquals.call(right, left));
 };
 
 const linkedHashSetValues = (set: object): unknown[] => {
