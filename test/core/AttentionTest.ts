@@ -1,4 +1,7 @@
-import { java, JavaObject, type int } from "jree";
+import { java, JavaObject, type int, S } from "jree";
+import { Concept } from "../../src/entity/Concept.ts";
+import { Nar } from "../../src/main/Nar.ts";
+import { assertEquals, assertTrue } from "../util/junit-assert.ts";
 
 
 
@@ -13,11 +16,11 @@ export class AttentionTest extends JavaObject {
         let numConcepts: int = 32;
         let n: Nar = new Nar();
         for (let i: int = 0; i < numConcepts; i++)
-            n.addInput("<x" + i + " <-> x" + (i + 1) + ">.");
+            n.addInput(S`<x${i} <-> x${i + 1}>.`);
 
         n.cycles(100);
 
-        let c: int = Iterables.size(n.memory.concepts);
+        let c: int = n.memory.concepts.size();
         assertTrue(c > 32);
 
         let uniqueconcepts: java.util.Set<Concept> = new java.util.LinkedHashSet();
@@ -30,7 +33,7 @@ export class AttentionTest extends JavaObject {
 
         assertTrue(uniqueconcepts.size() > 1);
 
-        let c2: int = Iterables.size(n.memory.concepts);
+        let c2: int = n.memory.concepts.size();
         assertEquals("does not affect # of concepts", c, c2);
     }
 
