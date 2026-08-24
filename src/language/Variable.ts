@@ -2,6 +2,7 @@
 import { java, type int, type short, S } from "jree";
 import { Texts } from "../io/Texts.ts";
 import { Term } from "./Term.ts";
+import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { javaIdentityHashCode, javaStringHashCode, javaStringValue, type JavaChar } from "../runtime/jree-compat.ts";
 
@@ -196,7 +197,7 @@ export class Variable extends Term {
         return this.hash;
     }
 
-    public compareTo(that: Term): int {
+    public compareTo(that: AbstractTerm): int {
         if (this === that) {
             return 0;
         }

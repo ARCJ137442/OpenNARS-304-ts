@@ -1,0 +1,15 @@
+command: npx tsc --noEmit --pretty false --incremental false
+exit_code: 2
+baseline_total: 1469
+baseline_production: 573
+baseline_tests: 896
+after_total: 1464
+after_production: 568
+after_tests: 896
+reduction_total: 5
+reduction_production: 5
+reduction_tests: 0
+root_cause: Java AbstractTerm interface was translated as an abstract class with invalid interface inheritance and abstract method body
+remaining_related_diagnostic: src/language/Image.ts(65,40): error TS2749: 'NativeOperator' refers to a value, but is being used as a type here.
+artifact_sha256: 2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
+java_commit: 8675b76fe8c21ee20a7b8c1b63408fb05327210d

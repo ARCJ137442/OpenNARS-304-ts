@@ -1,6 +1,7 @@
 //! Java source: opennars/language/CompoundTerm.java
 import { java, type short, type int, JavaObject, S } from "jree";
 import { Term } from "./Term.ts";
+import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Interval } from "./Interval.ts";
 import { Variable } from "./Variable.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -796,7 +797,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return javaStringHashCode(this.name());
     }
 
-    public compareTo(that: Term): int {
+    public compareTo(that: AbstractTerm): int {
         if (that === this) {
             return 0;
         }

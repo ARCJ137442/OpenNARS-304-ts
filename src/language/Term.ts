@@ -1,5 +1,6 @@
 //! Java source: opennars/language/Term.java
 import { java, JavaObject, type JavaString, type int, type short, S } from "jree";
+import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
@@ -29,7 +30,7 @@ const compoundTerms = (value: unknown): Term[] | null => {
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class Term extends JavaObject {
+export class Term extends JavaObject implements AbstractTerm {
     // Java initializes this reference to null; keeping that default matters for
     // inference branches that test whether a term has an imagination space.
     public imagination: any = null;
@@ -380,7 +381,7 @@ export class Term extends JavaObject {
      * @param that The Term to be compared with the current Term
      * @return The same as compareTo as defined on Strings
      */
-    public compareTo(that: Term): int {
+    public compareTo(that: AbstractTerm): int {
         if (that === this) {
             return 0;
         }
