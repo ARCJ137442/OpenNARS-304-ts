@@ -126,12 +126,12 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         return ret;
     }
 
-    protected minCyclePeriodMS: long;
+    protected minCyclePeriodMS: long = 0n;
 
     /**
      * The name of the reasoner
      */
-    protected name: java.lang.String;
+    protected name: java.lang.String | null = null;
     /**
      * The memory of the reasoner
      */
@@ -180,7 +180,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     private running: boolean = false;
     /** used by stop() to signal that a running loop should be interrupted */
     private stopped: boolean = false;
-    private threadYield: boolean;
+    private threadYield: boolean = false;
 
     public static readonly DEFAULTCONFIG_FILEPATH: java.lang.String = S`./config/defaultConfig.xml`;
 
