@@ -342,7 +342,7 @@ export class Variable extends Term {
             name += (index % 16).toString(16);
             index = Math.trunc(index / 16);
         } while (index !== 0);
-        return name;
+        return new java.lang.String(name);
     }
 
     public countTermRecursively(map: java.util.Map<Term, java.lang.Integer> | null): java.util.Map<Term, java.lang.Integer> {
