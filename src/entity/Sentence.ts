@@ -183,7 +183,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                     if (Debug.DETAILED && Debug.DETAILED_SENTENCES && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
                         if (!Term.valid(_content)) {
                             let ntc: CompoundTerm.UnableToCloneException = new CompoundTerm.UnableToCloneException(
-                                "Invalid term discovered " + _content);
+                                new java.lang.String("Invalid term discovered " + _content));
                             ntc.printStackTrace();
                             throw ntc;
                         }
@@ -226,7 +226,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                     for (let v of vars) {
                         let vname: java.lang.CharSequence = v.name();
                         if (!v.hasVarIndep())
-                            vname = vname + " " + v.getScope().name();
+                            vname = new java.lang.String(String(vname) + " " + String(v.getScope().name()));
                         let n: java.lang.CharSequence = rename.get(vname);
                         // jree maps return undefined for a missing key, while Java
                         // Map.get returns null. Treat both as the absent value.
@@ -246,8 +246,8 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                         if (Debug.DETAILED && Debug.DETAILED_SENTENCES) {
                             if (!Term.valid(c)) {
                                 let ntc: CompoundTerm.UnableToCloneException = new CompoundTerm.UnableToCloneException(
-                                    "Invalid term discovered after normalization: " + c + " ; prior to normalization: "
-                                    + _content);
+                                    new java.lang.String("Invalid term discovered after normalization: " + c + " ; prior to normalization: "
+                                    + _content));
                                 ntc.printStackTrace();
                                 throw ntc;
                             }
@@ -496,7 +496,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
         switch (args.length) {
             case 0: {
 
-                return this.getKey().toString();
+                return new java.lang.String(this.getKey());
 
 
                 break;
@@ -514,11 +514,11 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                 let diff: long = this.stamp.getOccurrenceTime() - nar.time();
                 let diffabs: long = java.lang.Math.abs(diff);
 
-                let timediff: java.lang.String = "";
+                let timediff: string = "";
                 if (diffabs < nar.narParameters.DURATION) {
                     timediff = "|";
                 } else {
-                    let Int: java.lang.Long = diffabs;
+                    let Int: java.lang.Long = new java.lang.Long(diffabs);
                     timediff = diff > 0 ? "+" + java.lang.String.valueOf(Int) : "-" + java.lang.String.valueOf(Int);
                 }
 
@@ -526,23 +526,21 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                     timediff = "!" + java.lang.String.valueOf(this.stamp.getOccurrenceTime());
                 }
 
-                let tenseString: java.lang.String = ":" + timediff + ":";
+                let tenseString: string = ":" + timediff + ":";
                 if (this.stamp.getOccurrenceTime() === Stamp.ETERNAL)
                     tenseString = "";
 
-                let stampString: java.lang.CharSequence = showStamp ? this.stamp.name() : null;
+                let stampString: java.lang.CharSequence | null = showStamp ? this.stamp.name() : null;
 
                 let stringLength: int = String(contentName).length + String(tenseString).length + 1 + 1;
 
                 if (this.truth !== null)
                     stringLength += 11;
 
-                if (stampString === null)
-                    throw new JavaAssertionError("stampString should not be null");
-                if (showStamp)
+                if (showStamp && stampString !== null)
                     stringLength += String(stampString).length + 1;
 
-                let conv: java.lang.String = "";
+                let conv: string = "";
                 if (this.term.term_indices !== null) {
                     conv = " [i,j,k,l]=[";
                     for (let i: int = 0; i < 4; i++) { // skip min sizes
@@ -587,7 +585,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
     public getKey(): string {
         // key must be invalidated if content or truth change
         if (this.key === null) {
-            let contentName: string = this.term.name().toString();
+            let contentName: string = String(this.term.name().toString());
 
             let showOcurrenceTime: boolean = ((this.punctuation === Symbols.JUDGMENT_MARK)
                 || (this.punctuation === Symbols.QUESTION_MARK));
@@ -597,13 +595,13 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                 stringLength += (showOcurrenceTime ? 8 : 0) + 11 /* truthString.length() */;
             }
 
-            let conv: java.lang.String = "";
+            let conv: string = "";
             if (this.term.term_indices !== null) {
                 conv = " [i,j,k,l]=[";
                 for (let i: int = 0; i < 4; i++) { // skip min sizes
                     conv += java.lang.String.valueOf(this.term.term_indices[i]) + ",";
                 }
-                conv = conv.substring(0, conv.length() - 1) + "]";
+                conv = conv.substring(0, conv.length - 1) + "]";
             }
 
             // suffix = [punctuation][ ][truthString][ ][occurenceTimeString]
@@ -620,7 +618,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
 
             this.key = Texts.yarn(
                 contentName,
-                suffix.toString()) ?? "";
+                String(suffix.toString())) ?? "";
         }
         return this.key;
     }

@@ -1,0 +1,7 @@
+command=npm run test:serial --silent
+script=node --test --test-concurrency=1 --experimental-strip-types test/node/*.test.ts
+tests=132
+passed=132
+failed=0
+duration_ms=37291.4446
+process_mode=single-process

@@ -1,0 +1,7 @@
+command=npx tsc --noEmit --pretty false --incremental false
+head=826eafb
+before=diagnostics:1556 production:659 tests:897 other:0
+after=diagnostics:1533 production:636 tests:897 other:0
+exit=2_expected_typecheck_errors_remaining
+scope=Sentence JavaString/CharSequence/StringBuilder boundary
+notes=No tsconfig changes; no excludes; no diagnostics suppressed.

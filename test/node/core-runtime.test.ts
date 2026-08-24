@@ -22,6 +22,12 @@ test("translated term and sentence constructors preserve Java delegation contrac
     assert.equal(String(sentence.getTruth().toStringExternal()), "%0.70;0.60%");
     assert.match(String(sentence.getKey()), /^A\. %0\.70;0\.60%/);
 
+    const narForSentenceText = {
+        time: () => 0,
+        narParameters: parameters,
+    } as unknown as import("../../src/main/Nar.ts").Nar;
+    assert.doesNotThrow(() => String(sentence.toString(narForSentenceText, false)));
+
     assert.equal(Term.get("a").equals(Term.get("A")), false);
     assert.notEqual(Term.get("a").hashCode(), Term.get("A").hashCode());
 
