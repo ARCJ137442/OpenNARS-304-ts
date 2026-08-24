@@ -35,7 +35,7 @@ export class DerivationContext extends JavaObject {
     public currentTerm: Term;
     public currentConcept: Concept;
     public currentTask: Task;
-    public currentBeliefLink: TermLink;
+    public currentBeliefLink: TermLink | null = null;
     public currentTaskLink: TaskLink;
     public currentBelief: Sentence | null = null;
     public newStamp: Stamp;
@@ -525,14 +525,14 @@ export class DerivationContext extends JavaObject {
     /**
      * @return the currentBeliefLink
      */
-    public getCurrentBeliefLink(): TermLink {
+    public getCurrentBeliefLink(): TermLink | null {
         return this.currentBeliefLink;
     }
 
     /**
      * @param currentBeliefLink the currentBeliefLink to set
      */
-    public setCurrentBeliefLink(currentBeliefLink: TermLink): void {
+    public setCurrentBeliefLink(currentBeliefLink: TermLink | null): void {
         this.currentBeliefLink = currentBeliefLink;
     }
 

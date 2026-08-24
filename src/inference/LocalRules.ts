@@ -361,8 +361,10 @@ export class LocalRules extends JavaObject {
                 Float32Math.subtract(1, quality),
                 tLink.getPriority(),
             )) as float);
-            let bLink: TermLink = nal.getCurrentBeliefLink();
-            bLink.incPriority(quality);
+            const bLink = nal.getCurrentBeliefLink();
+            if (bLink !== null) {
+                bLink.incPriority(quality);
+            }
         }
         return budget;
     }

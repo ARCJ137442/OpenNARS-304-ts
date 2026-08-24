@@ -78,10 +78,12 @@ export class BudgetFunctions extends UtilityFunctions {
             let tLink: TaskLink = nal.getCurrentTaskLink();
             tLink.decPriority(1 - difT);
             tLink.decDurability(1 - difT);
-            let bLink: TermLink = nal.getCurrentBeliefLink();
-            let difB: float = truth.getExpDifAbs(bTruth);
-            bLink.decPriority(1 - difB);
-            bLink.decDurability(1 - difB);
+            const bLink = nal.getCurrentBeliefLink();
+            if (bLink !== null) {
+                let difB: float = truth.getExpDifAbs(bTruth);
+                bLink.decPriority(1 - difB);
+                bLink.decDurability(1 - difB);
+            }
         }
         let dif: double = truth.confidence - Math.max(tTruth.confidence, bTruth.confidence);
         let priority: float = UtilityFunctions.or(dif as float, task.getPriority());
@@ -333,7 +335,7 @@ export class BudgetFunctions extends UtilityFunctions {
         let priority: float = Math.fround(t.getPriority()) as float;
         let durability: float = Math.fround(t.getDurability() / javaComplexity) as float;
         let quality: float = Math.fround(javaQual / javaComplexity) as float;
-        let bLink: TermLink = nal.getCurrentBeliefLink();
+        const bLink = nal.getCurrentBeliefLink();
         // Java returns null for an unset belief link; the translated field is
         // undefined until first assignment, so both values mean "no link".
         if (bLink !== null && bLink !== undefined) {
