@@ -1,0 +1,10 @@
+batch=20260825-025202
+command=node scripts/e2e/run-nal-corpus.mjs --engine parity --cycles 1550 --timeout-ms 30000 --process-limit-ms 180000 --ts-mode cold --chunk-size 1 --summary --java-jar <canonical> --java-classes <canonical-classes> --java-test-classes <canonical-test-classes> --file nal1.0.nal --file nal3.12.nal --file nal8.add.nal
+mode=serial-files-and-processes
+exit=0
+files=3
+passed=3
+failed=0
+timeout=0
+exception=0
+java_sha256=2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5

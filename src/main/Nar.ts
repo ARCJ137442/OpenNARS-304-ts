@@ -75,20 +75,17 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     /**
      * The information about the version of the project
      */
-    public static readonly VERSION: java.lang.String = "v3.0.4";
+    public static readonly VERSION: java.lang.String = S`v3.0.4`;
 
     /**
      * Name of the reasoner of the project
      */
-    public static readonly NAME: java.lang.String = "Open-NARS";
+    public static readonly NAME: java.lang.String = S`Open-NARS`;
 
     /**
      * The project web sites.
      */
-    public static readonly WEBSITE: java.lang.String = " Open-NARS website:  http://code.google.com/p/open-org.opennars/ \n"
-        + "      NARS website:  http://sites.google.com/site/narswang/ \n" +
-        "    Github website:  http://github.com/opennars/ \n" +
-        "    IRC:  http://webchat.freenode.net/?channels=org.opennars \n";
+    public static readonly WEBSITE: java.lang.String = S` Open-NARS website:  http://code.google.com/p/open-org.opennars/ \n      NARS website:  http://sites.google.com/site/narswang/ \n    Github website:  http://github.com/opennars/ \n    IRC:  http://webchat.freenode.net/?channels=org.opennars \n`;
 
     private threads: ThreadCompat[] | null = null;
     protected sensoryChannels: java.util.Map<Term, SensoryChannel> = new java.util.LinkedHashMap();
@@ -185,7 +182,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     private stopped: boolean = false;
     private threadYield: boolean;
 
-    public static readonly DEFAULTCONFIG_FILEPATH: java.lang.String = "./config/defaultConfig.xml";
+    public static readonly DEFAULTCONFIG_FILEPATH: java.lang.String = S`./config/defaultConfig.xml`;
 
     /**
      * constructs the NAR and loads a config from the default filepath
@@ -301,7 +298,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
 
-    public usedConfigFilePath: java.lang.String = "";
+    public usedConfigFilePath: java.lang.String = S``;
 
     /**
      * Reset the system with an empty memory and reset clock. Called locally.
@@ -330,27 +327,27 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     private addCommand(text: java.lang.String): boolean {
         // 重置
-        if (text.startsWith("**") || text.startsWith("*reset")) {
+        if (text.startsWith(S`**`) || text.startsWith(S`*reset`)) {
             this.reset();
             return true;
         } // 决策阈值
-        else if (text.startsWith("*decisionthreshold=")) { // TODO use reflection for narParameters, allow to set
+        else if (text.startsWith(S`*decisionthreshold=`)) { // TODO use reflection for narParameters, allow to set
             // others too
             let value: JavaDoubleCompat = JavaDoubleCompat.valueOf(text.split("decisionthreshold=")[1]);
             this.narParameters.DECISION_THRESHOLD = Float32Math.from(value.floatValue()) as float;
             return true;
         } // 音量
-        else if (text.startsWith("*volume=")) {
+        else if (text.startsWith(S`*volume=`)) {
             let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("volume=")[1]);
             this.narParameters.VOLUME = value;
             return true;
         } // 线程数
-        else if (text.startsWith("*threads=")) {
+        else if (text.startsWith(S`*threads=`)) {
             let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("threads=")[1]);
             this.narParameters.THREADS_AMOUNT = value;
             return true;
         } // 保存
-        else if (text.startsWith("*save=")) {
+        else if (text.startsWith(S`*save=`)) {
             let filename: java.lang.String = text.split("save=")[1];
             let wasRunning: boolean = this.isRunning();
             if (wasRunning) {
@@ -363,11 +360,11 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             return true;
         }
         // 设置运行速度（负数为关闭）
-        else if (text.startsWith("*speed")) {
+        else if (text.startsWith(S`*speed`)) {
             let split: java.lang.String[] = text.split("speed");
-            let stripped: java.lang.String = split.length > 1 ? split[1] : "";
+            let stripped: java.lang.String = split.length > 1 ? split[1] : S``;
             // 若带等号⇒修改
-            if (stripped.startsWith("=")) {
+            if (stripped.startsWith(S`=`)) {
                 let value: java.lang.Long = java.lang.Long.valueOf(stripped.split("=")[1]);
                 this.minCyclePeriodMS = value;
             }
@@ -381,7 +378,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             return true;
         }
         // 设置运行速度（负数为关闭）
-        else if (text.startsWith("*speed=")) {
+        else if (text.startsWith(S`*speed=`)) {
             let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("speed=")[1]);
             this.minCyclePeriodMS = value;
             return true;
@@ -512,8 +509,8 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                                 "Sensory input is missing coordinates: " + subjectText,
                             );
                         }
-                        let variable: java.lang.String = subjectText.slice(0, openingBracket);
-                        let vals: java.lang.String[] = subjectText
+                        let variable: string = subjectText.slice(0, openingBracket);
+                        let vals: string[] = subjectText
                             .slice(openingBracket + 1, closingBracket)
                             .split(",");
                         let height: double = Number.parseFloat(vals[0]);
@@ -522,12 +519,12 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                             .round((width + 1.0) / 2.0 * (this.sensoryChannels.get(predicate).width - 1)) as int;
                         let hval: int = java.lang.Math
                             .round(((height + 1.0) / 2.0 * (this.sensoryChannels.get(predicate).height - 1))) as int;
-                        let ev: java.lang.String = task.sentence.isEternal() ? " " : " :|: ";
-                        let newInput: java.lang.String = "<" + variable + "[" + hval + "," + wval + "]} --> " + predicate.toString() + ">" +
+                        let ev: string = task.sentence.isEternal() ? " " : " :|: ";
+                        let newInput: string = "<" + variable + "[" + hval + "," + wval + "]} --> " + predicate.toString() + ">" +
                             task.sentence.punctuation + ev + task.sentence.getTruth().toString();
                         // this.emit(OutputHandler.IN.class, task); too expensive to print each input
                         // task, consider vision :)
-                        this.addInput(newInput);
+                        this.addInput(new java.lang.String(newInput));
                         return true;
                     }
                 }
@@ -571,7 +568,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                             // Loading experience file lines, or else just normal input lines
                             if (line.matches("([A-Za-z])+:(.*)")) {
                                 // Extract creation time:
-                                if (!line.startsWith("IN:")) {
+                                if (!line.startsWith(S`IN:`)) {
                                     continue; // ignore
                                 }
                                 let spl: java.lang.String[] = line.replace("IN:", "").split("\\{");
@@ -579,7 +576,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                                 while (this.time() < creationTime) {
                                     this.cycles(1);
                                 }
-                                let lineReconstructed: java.lang.String = ""; // the line but without the stamp info at the end
+                                let lineReconstructed: java.lang.String = S``; // the line but without the stamp info at the end
                                 for (let i: int = 0; i < spl.length - 1; i++) {
                                     lineReconstructed += spl[i] + "{";
                                 }
@@ -832,7 +829,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
     public toString(): java.lang.String {
-        return this.memory.toString();
+        return new java.lang.String(this.memory.toString());
     }
 
     public time(): long {

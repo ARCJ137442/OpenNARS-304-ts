@@ -1,0 +1,15 @@
+batch=20260825-025202
+command=npx tsc --noEmit --pretty false --incremental false
+mode=single-process
+baseline_total=1592
+baseline_production=695
+baseline_tests=897
+final_exit=2
+final_total=1568
+final_production=671
+final_tests=897
+delta_total=-24
+delta_production=-24
+delta_tests=0
+scope=src/main/Nar.ts JavaString and native string boundary
+note=Remaining diagnostics are unrelated Nar API, boxed-number, nullability, and interface clusters.
