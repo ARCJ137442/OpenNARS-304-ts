@@ -11,6 +11,8 @@ import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { Memory } from "../../storage/Memory.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
+import type { Term } from "../../language/Term.ts";
+import type { TruthValue } from "../../entity/TruthValue.ts";
 
 
 
@@ -32,7 +34,7 @@ export class Believe extends Operator {
      *               + * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): Task[] {
+        time: Timable): java.util.List<Task> | null {
 
         let content: Term = args[1];
 
@@ -49,7 +51,7 @@ export class Believe extends Operator {
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
 
-        let result: java.util.List<Task> = new java.util.ArrayList();
+        let result: java.util.List<Task> = new java.util.ArrayList<Task>();
         result.add(newTask);
         return result;
 

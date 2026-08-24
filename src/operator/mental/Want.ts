@@ -7,6 +7,10 @@ import { Stamp } from "../../entity/Stamp.ts";
 import { Task } from "../../entity/Task.ts";
 import { TruthValue } from "../../entity/TruthValue.ts";
 import { Symbols } from "../../io/Symbols.ts";
+import type { Operation } from "../Operation.ts";
+import type { Term } from "../../language/Term.ts";
+import type { Memory } from "../../storage/Memory.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
 
 
 
@@ -27,7 +31,7 @@ export class Want extends Operator {
      * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> {
+        time: Timable): java.util.List<Task> | null {
 
         let content: Term = args[1];
 
@@ -43,7 +47,7 @@ export class Want extends Operator {
             memory.narParameters.DEFAULT_GOAL_DURABILITY, truth, memory.narParameters);
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-        let result: java.util.List<Task> = new java.util.ArrayList();
+        let result: java.util.List<Task> = new java.util.ArrayList<Task>();
         result.add(newTask);
         return result;
     }

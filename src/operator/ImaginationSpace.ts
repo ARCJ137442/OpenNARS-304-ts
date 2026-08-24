@@ -1,5 +1,8 @@
 //! Java source: opennars/operator/ImaginationSpace.java
 import { java } from "jree";
+import type { TruthValue } from "../entity/TruthValue.ts";
+import type { Conjunction } from "../language/Conjunction.ts";
+import type { Operation } from "./Operation.ts";
 
 
 
