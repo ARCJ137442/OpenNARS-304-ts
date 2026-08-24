@@ -40,7 +40,7 @@ export abstract class AnswerHandler extends JavaObject implements EventObserver 
         if (event === Answer.class) {
             let task: Task = args[0] as unknown as Task;
             let belief: Sentence = args[1] as unknown as Sentence;
-            if (task.equals(this.question)) {
+            if (task.equals(this.question as unknown as JavaObject)) {
                 this.onSolution(belief);
             }
         }

@@ -89,7 +89,7 @@ export class EventEmitter extends JavaObject {
         if (!this.pendingOps.isEmpty()) {
             for (let o of this.pendingOps) {
                 let c: java.lang.Class<unknown> = o[1] as java.lang.Class<unknown>;
-                let d: EventEmitter.EventObserver = o[2] as EventEmitter.EventObserver;
+                let d: EventEmitter.EventObserver = o[2] as unknown as EventEmitter.EventObserver;
                 if (o[0] as java.lang.Boolean) {
                     this.on(c, d);
                 } else {

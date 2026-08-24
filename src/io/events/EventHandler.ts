@@ -12,9 +12,9 @@ export abstract class EventHandler extends JavaObject implements EventEmitter.Ev
     protected active: boolean = false;
     private readonly events: java.lang.Class<unknown>[];
 
-    public constructor(n: Nar, active: boolean, ...events: java.lang.Class<unknown>[]);
+    public constructor(n: Nar, active: boolean, events: java.lang.Class<unknown>[]);
 
-    public constructor(source: EventEmitter, active: boolean, ...events: java.lang.Class<unknown>[]);
+    public constructor(source: EventEmitter, active: boolean, events: java.lang.Class<unknown>[]);
     public constructor(...args: unknown[]) {
         if (args.length !== 3) {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
