@@ -17,6 +17,7 @@ import { Float32Math } from "../runtime/Float32.ts";
 import { LocalRules } from "../inference/LocalRules.ts";
 import { Events } from "../io/events/Events.ts";
 import { ProcessQuestion } from "../control/concept/ProcessQuestion.ts";
+import type { Symbols } from "../io/Symbols.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Parameters } from "../main/Parameters.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -622,7 +623,7 @@ export class Concept extends Item<Term> {
         }
     }
 
-    public operator(): NativeOperator {
+    public operator(): Symbols.NativeOperator {
         return this.term.operator();
     }
 

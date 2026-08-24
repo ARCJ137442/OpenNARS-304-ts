@@ -5,6 +5,9 @@ import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import type { Timable } from "../interfaces/Timable.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Parameters } from "../main/Parameters.ts";
 
 const hashLong = (value: long): int => {
     const numeric = Number(value);
@@ -461,9 +464,9 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
             return "";
         }
         switch (TemporalRules.order(currentTime, this.occurrenceTime, duration)) {
-            case ORDER_FORWARD:
+            case TemporalRules.ORDER_FORWARD:
                 return Symbols.TENSE_FUTURE;
-            case ORDER_BACKWARD:
+            case TemporalRules.ORDER_BACKWARD:
                 return Symbols.TENSE_PAST;
             default:
                 return Symbols.TENSE_PRESENT;

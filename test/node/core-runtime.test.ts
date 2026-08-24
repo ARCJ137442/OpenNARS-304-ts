@@ -79,6 +79,19 @@ test("decimal perception coordinates remain conceptual like Java Term.get", asyn
     assert.equal(indexedTerm.index_variable, "M1");
 });
 
+test("Stamp tense lookup uses Java temporal order constants", async () => {
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+    const { Symbols } = await import("../../src/io/Symbols.ts");
+
+    const stamp = new Stamp(0, Tense.Present, new Stamp.BaseEntry(0, 1), 2);
+    stamp.setOccurrenceTime(10);
+
+    assert.equal(String(stamp.getTense(20, 2)), Symbols.TENSE_PAST);
+    assert.equal(String(stamp.getTense(0, 2)), Symbols.TENSE_FUTURE);
+    assert.equal(String(stamp.getTense(10, 2)), Symbols.TENSE_PRESENT);
+});
+
 test("Nar explicit long overload accepts JavaScript number and bigint values", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
 

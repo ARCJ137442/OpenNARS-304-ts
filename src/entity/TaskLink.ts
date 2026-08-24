@@ -4,6 +4,9 @@ import { Item } from "./Item.ts";
 import { Task } from "./Task.ts";
 import { TermLink } from "./TermLink.ts";
 import { BudgetValue } from "./BudgetValue.ts";
+import type { TLink } from "./TLink.ts";
+import type { Parameters } from "../main/Parameters.ts";
+import type { Term } from "../language/Term.ts";
 
 
 

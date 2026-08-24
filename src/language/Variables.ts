@@ -12,6 +12,7 @@ import { ImageInt } from "./ImageInt.ts";
 import { Inheritance } from "./Inheritance.ts";
 import { Similarity } from "./Similarity.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
+import type { Term } from "./Term.ts";
 
 
 

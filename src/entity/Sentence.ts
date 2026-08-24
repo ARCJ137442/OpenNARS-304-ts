@@ -15,6 +15,9 @@ import { TruthValue } from "./TruthValue.ts";
 import { Debug } from "../main/Debug.ts";
 import { TruthFunctions } from "../inference/TruthFunctions.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Nar } from "../main/Nar.ts";
+import type { Parameters } from "../main/Parameters.ts";
 
 
 

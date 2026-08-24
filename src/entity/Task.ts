@@ -2,6 +2,11 @@
 import { java, type int, type long, S } from "jree";
 import { Item } from "./Item.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
+import type { Sentence } from "./Sentence.ts";
+import type { BudgetValue } from "./BudgetValue.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Timable } from "../interfaces/Timable.ts";
+import type { Term } from "../language/Term.ts";
 
 
 
