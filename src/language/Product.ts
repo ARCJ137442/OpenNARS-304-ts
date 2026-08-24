@@ -22,6 +22,7 @@ export class Product extends CompoundTerm {
      *
      * @param arg The component list of the term
      */
+    public constructor(arg: Term[]);
     public constructor(...arg: Term[]);
 
     public constructor(x: java.util.List<Term>);
@@ -39,6 +40,7 @@ export class Product extends CompoundTerm {
     }
 
 
+    public static make(arg: Term[]): Product;
     public static make(...arg: Term[]): Product;
 
     /**

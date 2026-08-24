@@ -1,0 +1,14 @@
+command: npx tsc --noEmit --pretty false --incremental false
+exit_code: 2
+baseline_total: 1481
+baseline_production: 584
+baseline_tests: 897
+after_total: 1469
+after_production: 573
+after_tests: 896
+reduction_total: 12
+reduction_production: 11
+reduction_tests: 1
+remaining_product_diagnostic: src/language/Product.ts(117,21): error TS2322: Type 'null' is not assignable to type 'CompoundTerm | Product'.
+artifact_sha256: 2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
+java_commit: 8675b76fe8c21ee20a7b8c1b63408fb05327210d
