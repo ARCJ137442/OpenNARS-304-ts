@@ -16,7 +16,8 @@ export class EventEmitter extends JavaObject {
 
     // jree's ArrayDeque constructor mishandles both an omitted argument and a
     // numeric capacity; an empty Java collection preserves the no-argument form.
-    private readonly pendingOps: java.util.Deque<java.lang.Object[]> = new java.util.ArrayDeque(new java.util.ArrayList());
+    private readonly pendingOps: java.util.Deque<java.lang.Object[]> =
+        new java.util.ArrayDeque<java.lang.Object[]>(new java.util.ArrayList<java.lang.Object[]>());
 
     /**
      * EventEmitter that allows unknown events; must use concurrent collection
@@ -68,7 +69,7 @@ export class EventEmitter extends JavaObject {
 
 
     protected newObserverList(): java.util.List<EventEmitter.EventObserver> {
-        return new java.util.ArrayList();
+        return new java.util.ArrayList<EventEmitter.EventObserver>();
         /*
          * return Parameters.THREADS == 1 ?
          * new ArrayList<>() : Collections.synchronizedList(new ArrayList<>());
@@ -76,8 +77,9 @@ export class EventEmitter extends JavaObject {
     }
 
     public isActive(event: java.lang.Class<unknown>): boolean {
-        if (this.events.get(event) !== null)
-            return !this.events.get(event).isEmpty();
+        const observers = this.events.get(event);
+        if (observers !== null)
+            return !observers.isEmpty();
         return false;
     }
 
@@ -87,7 +89,7 @@ export class EventEmitter extends JavaObject {
         if (!this.pendingOps.isEmpty()) {
             for (let o of this.pendingOps) {
                 let c: java.lang.Class<unknown> = o[1] as java.lang.Class<unknown>;
-                let d: EventEmitter.EventObserver = o[2] as EventObserver;
+                let d: EventEmitter.EventObserver = o[2] as EventEmitter.EventObserver;
                 if (o[0] as java.lang.Boolean) {
                     this.on(c, d);
                 } else {
@@ -100,9 +102,10 @@ export class EventEmitter extends JavaObject {
     }
 
     public on(event: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void {
-        if (this.events.containsKey(event))
-            this.events.get(event).add(o);
-        else {
+        const observers = this.events.get(event);
+        if (observers !== null) {
+            observers.add(o);
+        } else {
             let a: java.util.List<EventEmitter.EventObserver> = this.newObserverList();
             a.add(o);
             this.events.put(event, a);
@@ -124,6 +127,9 @@ export class EventEmitter extends JavaObject {
         // instances. jree's List.remove(value) only compares Java-style
         // equatable objects, so preserve Java's registration identity here.
         const observers = this.events.get(event);
+        if (observers === null) {
+            throw new java.lang.IllegalStateException("Unknown event: " + event);
+        }
         for (let index = 0; index < observers.size(); index += 1) {
             if (observers.get(index) === o) {
                 observers.remove(index);
@@ -149,7 +155,7 @@ export class EventEmitter extends JavaObject {
     }
 
     public emit(eventClass: java.lang.Class<unknown>, ...params: java.lang.Object[]): void {
-        let observers: java.util.List<EventEmitter.EventObserver> = this.events.get(eventClass);
+        let observers: java.util.List<EventEmitter.EventObserver> | null = this.events.get(eventClass);
 
         if ((observers === null) || (observers.isEmpty()))
             return;
