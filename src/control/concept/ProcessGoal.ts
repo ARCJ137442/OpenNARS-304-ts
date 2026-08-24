@@ -112,7 +112,7 @@ export class ProcessGoal extends JavaObject {
             if (projGoal !== null && projGoal.getTruth().getExpectation() > nal.narParameters.DECISION_THRESHOLD) {
 
                 // keep goal updated
-                nal.singlePremiseTask(projGoal, task.budget.clone());
+                nal.singlePremiseTask(projGoal, task.getBudget().clone());
 
                 // we don't return here, allowing "roundtrips now", relevant for executing
                 // multiple steps of learned implication chains
@@ -331,7 +331,7 @@ export class ProcessGoal extends JavaObject {
                     ) as float;
 
                     ProcessAnticipation.anticipate(nal, precon.executable_precondition.sentence,
-                        precon.executable_precondition.budget, precon.minTime, precon.maxTime, urgency,
+                        precon.executable_precondition.getBudget(), precon.minTime, precon.maxTime, urgency,
                         precon.substitution);
                 }
                 return; // don't try the other table as a specific solution was already used
@@ -390,7 +390,7 @@ export class ProcessGoal extends JavaObject {
                         CompoundTerm.replaceIntervals(precondition),
                         CompoundTerm.replaceIntervals(p.sentence.term), subs, new java.util.LinkedHashMap());
                     if (preconditionMatches && conclusionMatches) {
-                        let pNew: Task = new Task(p.sentence.clone(), p.budget.clone(),
+                        let pNew: Task = new Task(p.sentence.clone(), p.getBudget().clone(),
                             p.isInput() ? Task.EnumType.INPUT : Task.EnumType.DERIVED);
                         newesttime = p.sentence.getOccurrenceTime();
                         // Apply interval penalty for interval differences in the precondition

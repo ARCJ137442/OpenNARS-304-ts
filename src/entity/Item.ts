@@ -2,11 +2,19 @@
 import { java, JavaObject, type int, type float, S } from "jree";
 import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
-import { javaStringLength } from "../runtime/jree-compat.ts";
+import { javaStringHashCode, javaStringLength, javaValuesEqual } from "../runtime/jree-compat.ts";
 
 interface ItemComparator<E> {
     compare(a: E, b: E): int;
 }
+
+const javaObjectHashCode = (value: unknown): int => {
+    const hashCode = (value as { hashCode?: unknown } | null)?.hashCode;
+    if (typeof hashCode === "function") {
+        return hashCode.call(value) as int;
+    }
+    return javaStringHashCode(value) as int;
+};
 
 
 /**
@@ -38,7 +46,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
 
 
     /** The budget of the Item, consisting of 3 numbers */
-    public readonly  budget:  BudgetValue ;
+    public readonly  budget:  BudgetValue | null ;
 
     public  constructor();
 
@@ -47,7 +55,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      *
      * @param budget The initial budget
      */
-    public  constructor(budget: BudgetValue);
+    public  constructor(budget: BudgetValue | null);
     public constructor(...args: unknown[]) {
         super();
         if (args.length === 0) {
@@ -75,7 +83,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @return Current priority value
      */
     public  getPriority():  float {
-        return this.budget.getPriority();
+        return this.requireBudget().getPriority();
     }
 
     /**
@@ -84,7 +92,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @param v Set a new priority value
      */
     public  setPriority(v: float):  void {
-        this.budget.setPriority(v);
+        this.requireBudget().setPriority(v);
     }
 
     /**
@@ -93,7 +101,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @param v The amount of increase
      */
     public  incPriority(v: float):  void {
-        this.budget.incPriority(v);
+        this.requireBudget().incPriority(v);
     }
 
     /**
@@ -102,7 +110,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @param v The amount of decrease
      */
     public  decPriority(v: float):  void {
-        this.budget.decPriority(v);
+        this.requireBudget().decPriority(v);
     }
 
     /**
@@ -111,7 +119,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @return Current durability value
      */
     public  getDurability():  float {
-        return this.budget.getDurability();
+        return this.requireBudget().getDurability();
     }
 
     /**
@@ -120,7 +128,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @param v The new durability value
      */
     public  setDurability(v: float):  void {
-        this.budget.setDurability(v);
+        this.requireBudget().setDurability(v);
     }
 
     /**
@@ -129,7 +137,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @param v The amount of increase
      */
     public  incDurability(v: float):  void {
-        this.budget.incDurability(v);
+        this.requireBudget().incDurability(v);
     }
 
     /**
@@ -138,7 +146,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @param v The amount of decrease
      */
     public  decDurability(v: float):  void {
-        this.budget.decDurability(v);
+        this.requireBudget().decDurability(v);
     }
 
     /**
@@ -147,7 +155,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @return The quality value
      */
     public  getQuality():  float {
-        return this.budget.getQuality();
+        return this.requireBudget().getQuality();
     }
 
     /**
@@ -156,7 +164,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @param v The new quality value
      */
     public  setQuality(v: float):  void {
-        this.budget.setQuality(v);
+        this.requireBudget().setQuality(v);
     }
 
     /**
@@ -166,7 +174,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @return the resulting Item: this or that
      */
     public  merge(that: Item<unknown>):  Item<unknown> {
-        this.budget.merge(that.budget);
+        this.requireBudget().merge(that.requireBudget());
         return this;
     }
 
@@ -178,8 +186,8 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
     public toString():  java.lang.String {
         // return budget + " " + key ;
 
-         let  budgetStr: java.lang.String = this.budget !== null ? this.budget.toString() : "";
-         let  n: java.lang.String = this.name().toString();
+         let  budgetStr: java.lang.String = this.budget !== null ? this.budget.toString() : new java.lang.String();
+         let  n: java.lang.String = java.lang.String.valueOf(this.name());
         return new  java.lang.StringBuilder(javaStringLength(budgetStr) + javaStringLength(n) + 1).append(budgetStr).append(' ').append(n)
                 .toString();
     }
@@ -190,16 +198,16 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      * @return A simplified String representation of the content
      */
     public  toStringExternal():  java.lang.String {
-         let  briefBudget: java.lang.String = this.budget.toStringExternal();
-         let  n: java.lang.String = this.name().toString();
+         let  briefBudget: java.lang.String = this.requireBudget().toStringExternal();
+         let  n: java.lang.String = java.lang.String.valueOf(this.name());
         return new  java.lang.StringBuilder(javaStringLength(briefBudget) + javaStringLength(n) + 1).append(briefBudget).append(' ').append(n)
                 .toString();
     }
 
     /** similar to toStringExternal but includes budget afterward */
     public  toStringExternal2():  java.lang.String {
-         let  briefBudget: java.lang.String = this.budget.toStringExternal();
-         let  n: java.lang.String = this.name().toString();
+         let  briefBudget: java.lang.String = this.requireBudget().toStringExternal();
+         let  n: java.lang.String = java.lang.String.valueOf(this.name());
         return new  java.lang.StringBuilder(javaStringLength(briefBudget) + javaStringLength(n) + 1).append(n).append(' ').append(briefBudget)
                 .toString();
     }
@@ -219,38 +227,19 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      */
 
     public hashCode():  int {
-        return this.name().hashCode();
+        return javaObjectHashCode(this.name());
     }
 
     public equals(obj: java.lang.Object):  boolean {
         if (obj === this)
             return true;
         if (obj instanceof Item) {
-            return ( obj as Item<unknown>).name().equals(this.name());
+            return javaValuesEqual((obj as Item<unknown>).name(), this.name());
         }
         return false;
     }
 
-    public static StringKeyItem =  class StringKeyItem extends Item<java.lang.CharSequence> {
-
-        public  constructor(budget: BudgetValue) {
-            super(budget);
-        }
-
-        public  hashCode():  int {
-            return this.name().hashCode();
-        }
-
-        public  equals(obj: java.lang.Object):  boolean {
-            if (obj === this)
-                return true;
-            if (obj instanceof Item) {
-                return ( obj as Item<unknown>).name().equals(this.name());
-            }
-            return false;
-        }
-
-    };
+    public static StringKeyItem: typeof StringKeyItem;
 
 
     public static  getPrioritySum(c: java.lang.Iterable< Item<unknown>>):  float {
@@ -260,10 +249,39 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
         return totalPriority;
     }
 
-    public  getBudget():  BudgetValue {
+    protected requireBudget(): BudgetValue {
+        if (this.budget === null) {
+            throw new java.lang.NullPointerException(S`Item has no budget`);
+        }
         return this.budget;
     }
+
+    public  getBudget():  BudgetValue {
+        return this.requireBudget();
+    }
 }
+
+abstract class StringKeyItem extends Item<java.lang.CharSequence> {
+
+    public constructor(budget: BudgetValue) {
+        super(budget);
+    }
+
+    public hashCode(): int {
+        return javaObjectHashCode(this.name());
+    }
+
+    public equals(obj: java.lang.Object): boolean {
+        if (obj === this)
+            return true;
+        if (obj instanceof Item) {
+            return javaValuesEqual((obj as Item<unknown>).name(), this.name());
+        }
+        return false;
+    }
+}
+
+Item.StringKeyItem = StringKeyItem;
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Item {

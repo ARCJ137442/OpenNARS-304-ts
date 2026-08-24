@@ -204,7 +204,7 @@ export abstract class Operator extends Term implements Plugin {
         public override  toString(): java.lang.String {
             let b: BudgetValue = null;
             if (this.getTask() !== null) {
-                b = this.getTask().budget;
+                b = this.getTask().getBudget();
             }
             let args: Term[] = this.operation.getArguments().term;
             let operator: Operator = this.operation.getOperator();

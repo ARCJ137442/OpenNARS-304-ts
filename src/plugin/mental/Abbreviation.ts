@@ -101,7 +101,7 @@ export class Abbreviation extends JavaObject implements Plugin {
     public canAbbreviate(task: Task): boolean {
         return !(task.sentence.term instanceof Operation) &&
             (task.sentence.term.getComplexity() > this.abbreviationComplexityMin) &&
-            (task.budget.getQuality() > this.abbreviationQualityMin);
+            (task.getBudget().getQuality() > this.abbreviationQualityMin);
     }
 
     public setEnabled(n: Nar, enabled: boolean): boolean {

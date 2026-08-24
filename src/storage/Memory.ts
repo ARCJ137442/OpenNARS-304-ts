@@ -183,7 +183,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         } else if (concept !== null) {
             // apply budget to existing concept
             // memory.logic.CONCEPT_ACTIVATE.commit(term.getComplexity());
-            BudgetFunctions.activate(concept.budget, budget, BudgetFunctions.Activating.TaskLink);
+            BudgetFunctions.activate(concept.getBudget(), budget, BudgetFunctions.Activating.TaskLink);
         } else {
             // unable to create, ex: has variables
             return null;
@@ -286,7 +286,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
             this.emit(IN.class, task);
                     }
 
-                    if (task.budget.aboveThreshold()) {
+                    if (task.getBudget().aboveThreshold()) {
                         this.addNewTask(task, "Perceived");
                     } else {
                         this.removeTask(task, "Neglected");
@@ -336,7 +336,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
 
     public output(t: Task): void {
 
-        let budget: float = t.budget.summary();
+        let budget: float = t.getBudget().summary();
         // Java evaluates both the division and subtraction as float because
         // VOLUME is converted to the 100.0f operand type before the divide.
         const volumeRatio: float = Float32Math.divide(this.narParameters.VOLUME, 100) as float;
@@ -387,7 +387,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         let cont: DerivationContext = new DerivationContext(this, narParameters, time);
         cont.setCurrentTask(task);
         cont.setCurrentTerm(task.getTerm());
-        cont.setCurrentConcept(this.conceptualize(task.budget, cont.getCurrentTerm()));
+        cont.setCurrentConcept(this.conceptualize(task.getBudget(), cont.getCurrentTerm()));
         if (cont.getCurrentConcept() !== null) {
             let processed: boolean = ProcessTask.processTask(cont.getCurrentConcept(), cont, task, time);
             if (processed) {

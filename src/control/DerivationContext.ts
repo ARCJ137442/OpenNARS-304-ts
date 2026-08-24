@@ -91,7 +91,7 @@ export class DerivationContext extends JavaObject {
                     task.sentence.term instanceof Equivalence)) {
                     return false; // implication and equivalence goals and quests are not supported anymore
                 }
-                if (!task.budget.aboveThreshold()) {
+                if (!task.getBudget().aboveThreshold()) {
                     this.memory.removeTask(task, "Insufficient Budget");
                     return false;
                 }

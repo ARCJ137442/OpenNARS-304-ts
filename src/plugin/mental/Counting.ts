@@ -118,7 +118,7 @@ export class Counting extends JavaObject implements Plugin {
                                 Symbols.JUDGMENT_MARK,
                                 truth,
                                 stampi);
-                            let budg: BudgetValue = task.budget.clone();
+                            let budg: BudgetValue = task.getBudget().clone();
 
                             let newTask: Task = new Task(j, budg, Task.EnumType.INPUT);
 

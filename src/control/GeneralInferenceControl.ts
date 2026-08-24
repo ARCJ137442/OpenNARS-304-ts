@@ -75,7 +75,7 @@ export class GeneralInferenceControl extends JavaObject {
             if (nal.currentTaskLink === null) {
                 return false;
             }
-            if (nal.currentTaskLink.budget.aboveThreshold()) {
+            if (nal.currentTaskLink.getBudget().aboveThreshold()) {
                 GeneralInferenceControl.fireTaskLink(nal, nal.memory.narParameters.TERMLINK_MAX_REASONED);
             }
             nal.currentConcept.taskLinks.putBack(nal.currentTaskLink,

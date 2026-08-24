@@ -262,7 +262,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
 
     public static InternalExperienceFromBelief(memory: Memory, task: Task, belief: Sentence,
         time: Timable): void {
-        let newTask: Task = new Task(belief.clone(), task.budget.clone(), Task.EnumType.INPUT);
+        let newTask: Task = new Task(belief.clone(), task.getBudget().clone(), Task.EnumType.INPUT);
 
         InternalExperience.InternalExperienceFromTask(memory, newTask, false, time);
     }

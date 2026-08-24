@@ -185,7 +185,7 @@ export class Concept extends Item<Term> {
      * @param content The content of the task
      */
     public linkToTask(task: Task, content: DerivationContext): TaskLink {
-        let taskBudget: BudgetValue = task.budget;
+        let taskBudget: BudgetValue = task.getBudget();
 
         let retLink: TaskLink = new TaskLink(task, null, taskBudget, content.narParameters.TERM_LINK_RECORD_LENGTH);
         this.insertTaskLink(retLink, content); // link type: SELF

@@ -154,7 +154,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
      */
     public putBack(oldItem: Type, forgetCycles: float, m: Memory): Type {
         let relativeThreshold: float = m.narParameters.FORGET_QUALITY_RELATIVE;
-        BudgetFunctions.applyForgetting(oldItem.budget, forgetCycles, relativeThreshold);
+        BudgetFunctions.applyForgetting(oldItem.getBudget(), forgetCycles, relativeThreshold);
         return this.putIn(oldItem);
     }
 

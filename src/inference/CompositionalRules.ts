@@ -361,7 +361,7 @@ export class CompositionalRules extends JavaObject {
                     return;
                 }
 
-                let contentTask: Task = new Task(contentBelief, task.budget, Task.EnumType.DERIVED);
+                let contentTask: Task = new Task(contentBelief, task.getBudget(), Task.EnumType.DERIVED);
 
                 nal.setCurrentTask(contentTask);
                 let conj: Term = Conjunction.make(component, content);

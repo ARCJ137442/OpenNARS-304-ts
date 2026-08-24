@@ -24,7 +24,7 @@ export class Remind extends Operator {
 
     public activate(memory: Memory, c: Concept, b: BudgetValue, mode: BudgetFunctions.Activating): void {
         memory.concepts.pickOut(c.name());
-        BudgetFunctions.activate(c.budget, b, mode);
+        BudgetFunctions.activate(c.getBudget(), b, mode);
         memory.concepts.putBack(c, memory.cycles(memory.narParameters.CONCEPT_FORGET_DURATIONS), memory);
     }
 

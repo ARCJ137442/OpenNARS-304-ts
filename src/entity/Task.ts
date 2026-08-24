@@ -23,6 +23,9 @@ import type { Term } from "../language/Term.ts";
  */
 export class Task extends Item<Sentence> {
 
+    /** Every Java Task constructor requires a budget; refine Item's nullable base field here. */
+    public declare readonly budget: BudgetValue;
+
     /* The sentence of the Task */
     public readonly sentence: Sentence;
     /* Belief from which the Task is derived, or null if derived from a theorem */
@@ -139,7 +142,7 @@ export class Task extends Item<Sentence> {
     }
 
     public aboveThreshold(): boolean {
-        return this.budget.aboveThreshold();
+        return this.getBudget().aboveThreshold();
     }
 
     /**
