@@ -196,7 +196,7 @@ export class Variable extends Term {
         return this.hash;
     }
 
-    public compareTo(that: AbstractTerm): int {
+    public compareTo(that: Term): int {
         if (this === that) {
             return 0;
         }

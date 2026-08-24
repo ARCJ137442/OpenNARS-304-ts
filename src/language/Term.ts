@@ -5,6 +5,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { javaStringHashCode, javaStringValue } from "../runtime/jree-compat.ts";
+import type { Memory } from "../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 const isVariableTerm = (value: unknown): boolean =>
@@ -377,7 +378,7 @@ export class Term extends JavaObject {
      * @param that The Term to be compared with the current Term
      * @return The same as compareTo as defined on Strings
      */
-    public compareTo(that: AbstractTerm): int {
+    public compareTo(that: Term): int {
         if (that === this) {
             return 0;
         }

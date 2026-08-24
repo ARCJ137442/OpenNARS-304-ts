@@ -7,6 +7,8 @@ import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Terms } from "./Terms.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { TermLink } from "../entity/TermLink.ts";
 
 const javaStringHashCode = (value: java.lang.CharSequence): int => {
     let hash = 0;
@@ -797,7 +799,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
         return javaStringHashCode(this.name());
     }
 
-    public compareTo(that: AbstractTerm): int {
+    public compareTo(that: Term): int {
         if (that === this) {
             return 0;
         }
@@ -832,7 +834,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
     }
 
     public iterator(): java.util.Iterator<Term> {
-        return Iterators.forArray(this.term);
+        return new java.util.ArrayList<Term>(this.term).iterator();
     }
 
 }
