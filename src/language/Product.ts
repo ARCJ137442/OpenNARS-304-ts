@@ -99,7 +99,7 @@ export class Product extends CompoundTerm {
     public clone(): Product;
 
     public clone(replaced: Term[]): CompoundTerm;
-    public clone(...args: unknown[]): Product | CompoundTerm {
+    public clone(...args: unknown[]): Product | CompoundTerm | null {
         switch (args.length) {
             case 0: {
 

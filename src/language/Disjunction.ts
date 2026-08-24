@@ -42,7 +42,7 @@ export class Disjunction extends CompoundTerm {
     public clone(): Disjunction;
 
     public clone(x: Term[]): Term;
-    public clone(...args: unknown[]): Disjunction | Term {
+    public clone(...args: unknown[]): Disjunction | Term | null {
         switch (args.length) {
             case 0: {
 

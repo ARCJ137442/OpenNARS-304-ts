@@ -43,7 +43,7 @@ export class SetExt extends SetTensional {
     public clone(): SetExt;
 
     public clone(replaced: Term[]): SetExt;
-    public clone(...args: unknown[]): SetExt {
+    public clone(...args: unknown[]): SetExt | null {
         switch (args.length) {
             case 0: {
 

@@ -42,7 +42,7 @@ export class ImageExt extends Image {
     public clone(): ImageExt;
 
     public clone(replaced: Term[]): Term;
-    public clone(...args: unknown[]): ImageExt | Term {
+    public clone(...args: unknown[]): ImageExt | Term | null {
         switch (args.length) {
             case 0: {
 

@@ -91,7 +91,7 @@ export class Implication extends Statement {
     public clone(): Implication;
 
     public clone(t: Term[]): Implication;
-    public clone(...args: unknown[]): Implication {
+    public clone(...args: unknown[]): Implication | null {
         switch (args.length) {
             case 0: {
 

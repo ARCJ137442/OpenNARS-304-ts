@@ -41,7 +41,7 @@ export class SetInt extends SetTensional {
     public clone(): SetInt;
 
     public clone(replaced: Term[]): SetInt;
-    public clone(...args: unknown[]): SetInt {
+    public clone(...args: unknown[]): SetInt | null {
         switch (args.length) {
             case 0: {
 

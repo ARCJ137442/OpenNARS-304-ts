@@ -48,7 +48,7 @@ export class Equivalence extends Statement {
     public clone(): Equivalence;
 
     public clone(t: Term[]): Equivalence;
-    public clone(...args: unknown[]): Equivalence {
+    public clone(...args: unknown[]): Equivalence | null {
         switch (args.length) {
             case 0: {
 

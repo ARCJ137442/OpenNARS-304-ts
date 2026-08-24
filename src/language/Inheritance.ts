@@ -62,7 +62,7 @@ export class Inheritance extends Statement {
     public clone(): Inheritance;
 
     public clone(t: Term[]): Inheritance;
-    public clone(...args: unknown[]): Inheritance {
+    public clone(...args: unknown[]): Inheritance | null {
         switch (args.length) {
             case 0: {
 

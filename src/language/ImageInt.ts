@@ -42,7 +42,7 @@ export class ImageInt extends Image {
     public clone(): ImageInt;
 
     public clone(replaced: Term[]): Term;
-    public clone(...args: unknown[]): ImageInt | Term {
+    public clone(...args: unknown[]): ImageInt | Term | null {
         switch (args.length) {
             case 0: {
 

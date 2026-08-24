@@ -85,7 +85,7 @@ export class Conjunction extends CompoundTerm {
     public clone(): Conjunction;
 
     public clone(t: Term[]): Term;
-    public clone(...args: unknown[]): Conjunction | Term {
+    public clone(...args: unknown[]): Conjunction | Term | null {
         switch (args.length) {
             case 0: {
 

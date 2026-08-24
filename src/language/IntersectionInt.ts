@@ -44,7 +44,7 @@ export class IntersectionInt extends CompoundTerm {
     public clone(): IntersectionInt;
 
     public clone(replaced: Term[]): Term;
-    public clone(...args: unknown[]): IntersectionInt | Term {
+    public clone(...args: unknown[]): IntersectionInt | Term | null {
         switch (args.length) {
             case 0: {
 

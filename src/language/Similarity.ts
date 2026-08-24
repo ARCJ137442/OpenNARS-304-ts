@@ -66,7 +66,7 @@ export class Similarity extends Statement {
     public clone(): Similarity;
 
     public clone(replaced: Term[]): Similarity;
-    public clone(...args: unknown[]): Similarity {
+    public clone(...args: unknown[]): Similarity | null {
         switch (args.length) {
             case 0: {
                 return new Similarity(this.term);

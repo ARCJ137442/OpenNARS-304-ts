@@ -1,0 +1,13 @@
+command: npx tsc --noEmit --pretty false --incremental false
+exit: 2
+baseline_before: 1460
+baseline_before_production: 564
+baseline_before_tests: 896
+diagnostics_after: 1444
+diagnostics_after_production: 548
+diagnostics_after_tests: 896
+delta: -16
+root_cause: Java clone(Term[]) implementations return null, while TypeScript clone implementation signatures excluded null
+java_sources: java-master/src/main/java/org/opennars/language/{Conjunction,DifferenceExt,DifferenceInt,Disjunction,Equivalence,ImageExt,ImageInt,Implication,Inheritance,IntersectionExt,IntersectionInt,Negation,Product,SetExt,SetInt,Similarity}.java
+typescript_fix: add null to the 16 corresponding clone implementation return unions
+probe_reverted: making CompoundTerm.clone(Term[]) nullable propagated new Term|null errors into the deep-copy chain, so it was not included

@@ -41,7 +41,7 @@ export class Negation extends CompoundTerm {
     public clone(): Negation;
 
     public clone(replaced: Term[]): Term;
-    public clone(...args: unknown[]): Negation | Term {
+    public clone(...args: unknown[]): Negation | Term | null {
         switch (args.length) {
             case 0: {
 

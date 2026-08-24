@@ -52,7 +52,7 @@ export class DifferenceInt extends CompoundTerm {
     public clone(): DifferenceInt;
 
     public clone(replaced: Term[]): Term;
-    public clone(...args: unknown[]): DifferenceInt | Term {
+    public clone(...args: unknown[]): DifferenceInt | Term | null {
         switch (args.length) {
             case 0: {
 

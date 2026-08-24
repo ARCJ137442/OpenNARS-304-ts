@@ -43,7 +43,7 @@ export class DifferenceExt extends CompoundTerm {
     public clone(): DifferenceExt;
 
     public clone(replaced: Term[]): Term;
-    public clone(...args: unknown[]): DifferenceExt | Term {
+    public clone(...args: unknown[]): DifferenceExt | Term | null {
         switch (args.length) {
             case 0: {
 
