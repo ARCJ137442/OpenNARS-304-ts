@@ -2,6 +2,12 @@
 import { java } from "jree";
 import { Operator } from "../Operator.ts";
 import { Consider } from "./Consider.ts";
+import type { Operation } from "../Operation.ts";
+import type { Term } from "../../language/Term.ts";
+import type { Memory } from "../../storage/Memory.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
+import type { Task } from "../../entity/Task.ts";
+import type { Concept } from "../../entity/Concept.ts";
 
 
 
@@ -22,7 +28,7 @@ export class Doubt extends Operator {
      * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> {
+        time: Timable): java.util.List<Task> | null {
         let term: Term = args[1];
         let concept: Concept = memory.conceptualize(Consider.budgetMentalConcept(operation), term);
         concept.discountConfidence(true);

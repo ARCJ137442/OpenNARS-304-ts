@@ -14,6 +14,7 @@ import { Tense } from "../../language/Tense.ts";
 import { Operator } from "../Operator.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
+import { javaStringValue } from "../../runtime/jree-compat.ts";
 
 
 
@@ -23,11 +24,11 @@ import type { Timable } from "../../interfaces/Timable.ts";
 export abstract class Feel extends Operator {
     private readonly feelingTerm: Term;
 
-    public constructor(name: java.lang.String) {
-        super(name);
+    public constructor(name: java.lang.String | string) {
+        super(javaStringValue(name));
 
         // remove the "^feel" prefix from name
-        this.feelingTerm = Term.get((name() as java.lang.String).substring(5).toLowerCase());
+        this.feelingTerm = Term.get(java.lang.String.valueOf(javaStringValue(name).substring(5).toLowerCase()));
     }
 
     protected static readonly selfSubject: Term = Term.SELF;
@@ -58,7 +59,7 @@ export abstract class Feel extends Operator {
             memory.narParameters.DEFAULT_JUDGMENT_DURABILITY, quality, memory.narParameters);
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-        return new java.util.ArrayList([newTask]);
+        return new java.util.ArrayList<Task>([newTask]);
 
     }
 }

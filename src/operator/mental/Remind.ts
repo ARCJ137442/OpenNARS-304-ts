@@ -1,5 +1,15 @@
 //! Java source: opennars/operator/mental/Remind.java
 import { java } from "jree";
+import { Operator } from "../Operator.ts";
+import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import type { Memory } from "../../storage/Memory.ts";
+import type { Concept } from "../../entity/Concept.ts";
+import type { Operation } from "../Operation.ts";
+import type { Term } from "../../language/Term.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
+import type { Task } from "../../entity/Task.ts";
+import { Consider } from "./Consider.ts";
 
 
 
@@ -12,7 +22,7 @@ export class Remind extends Operator {
         super("^remind");
     }
 
-    public activate(memory: Memory, c: Concept, b: BudgetValue, mode: Activating): void {
+    public activate(memory: Memory, c: Concept, b: BudgetValue, mode: BudgetFunctions.Activating): void {
         memory.concepts.pickOut(c.name());
         BudgetFunctions.activate(c.budget, b, mode);
         memory.concepts.putBack(c, memory.cycles(memory.narParameters.CONCEPT_FORGET_DURATIONS), memory);
@@ -26,12 +36,12 @@ export class Remind extends Operator {
      * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> {
+        time: Timable): java.util.List<Task> | null {
         let term: Term = args[1];
         let concept: Concept = memory.conceptualize(Consider.budgetMentalConcept(operation), term);
         let budget: BudgetValue = new BudgetValue(memory.narParameters.DEFAULT_QUESTION_PRIORITY,
             memory.narParameters.DEFAULT_QUESTION_DURABILITY, 1, memory.narParameters);
-        this.activate(memory, concept, budget, Activating.TaskLink);
+        this.activate(memory, concept, budget, BudgetFunctions.Activating.TaskLink);
         return null;
     }
 

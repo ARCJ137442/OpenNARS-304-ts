@@ -6,6 +6,10 @@ import { Operation } from "./Operation.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { OutputHandler } from "../io/events/OutputHandler.ts";
 import { Debug } from "../main/Debug.ts";
+import type { Product } from "../language/Product.ts";
+import type { Statement } from "../language/Statement.ts";
+import type { BudgetValue } from "../entity/BudgetValue.ts";
+import { javaStringValue } from "../runtime/jree-compat.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Task } from "../entity/Task.ts";
@@ -39,8 +43,8 @@ export abstract class Operator extends Term implements Plugin {
                 const [name] = args as [java.lang.String];
 
 
-                super(name);
-                if (!name.startsWith("^"))
+                super(java.lang.String.valueOf(name));
+                if (!javaStringValue(name).startsWith("^"))
                     throw new java.lang.IllegalStateException("Operator name needs ^ prefix");
 
 
@@ -68,7 +72,7 @@ export abstract class Operator extends Term implements Plugin {
      * @return The direct collectable results and feedback of the
      *         reportExecution
      */
-    protected abstract execute(operation: Operation, args: Term[], memory: Memory, time: Timable): Task[];
+    protected abstract execute(operation: Operation, args: Term[], memory: Memory, time: Timable): java.util.List<Task> | null;
 
     public call(op: Operation, memory: Memory, time: Timable): boolean;
 
@@ -103,7 +107,7 @@ export abstract class Operator extends Term implements Plugin {
                 const [operation, operationArgs, memory, time] = args as [Operation, Term[], Memory, Timable];
 
 
-                let feedback: java.util.List<Task> = null;
+                let feedback: java.util.List<Task> | null = null;
                 try {
                     feedback = this.execute(operation, operationArgs, memory, time);
                 } catch (ex) {
