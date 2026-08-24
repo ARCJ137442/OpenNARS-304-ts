@@ -1,5 +1,17 @@
 //! Java source: opennars/operator/mental/Name.java
 import { java } from "jree";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { Symbols } from "../../io/Symbols.ts";
+import { Similarity } from "../../language/Similarity.ts";
+import { Term } from "../../language/Term.ts";
+import { Operation } from "../../operator/Operation.ts";
+import { Operator } from "../../operator/Operator.ts";
+import type { Memory } from "../../storage/Memory.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
 
 
 
@@ -36,6 +48,6 @@ export class Name extends Operator {
             memory.narParameters.DEFAULT_JUDGMENT_DURABILITY, truth, memory.narParameters);
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-        return Lists.newArrayList(newTask);
+        return new java.util.ArrayList([newTask]);
     }
 }

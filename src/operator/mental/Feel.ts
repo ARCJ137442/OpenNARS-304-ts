@@ -1,5 +1,19 @@
 //! Java source: opennars/operator/mental/Feel.java
 import { java, type float } from "jree";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
+import { Symbols } from "../../io/Symbols.ts";
+import { Inheritance } from "../../language/Inheritance.ts";
+import { SetInt } from "../../language/SetInt.ts";
+import { Term } from "../../language/Term.ts";
+import { Tense } from "../../language/Tense.ts";
+import { Operator } from "../Operator.ts";
+import type { Memory } from "../../storage/Memory.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
 
 
 
@@ -44,7 +58,7 @@ export abstract class Feel extends Operator {
             memory.narParameters.DEFAULT_JUDGMENT_DURABILITY, quality, memory.narParameters);
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-        return Lists.newArrayList(newTask);
+        return new java.util.ArrayList([newTask]);
 
     }
 }
