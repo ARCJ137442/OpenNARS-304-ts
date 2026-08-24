@@ -1,5 +1,5 @@
 //! Java source: opennars/control/concept/ProcessJudgment.java
-import { java, JavaObject, type int } from "jree";
+import { java, JavaObject, S, type int } from "jree";
 import { Events } from "../../io/events/Events.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
 import { LocalRules } from "../../inference/LocalRules.ts";
@@ -19,13 +19,13 @@ import type { Term } from "../../language/Term.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 import type { Parameters } from "../../main/Parameters.ts";
 
-const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean) => {
+const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): java.util.Optional<T> => {
     for (const item of items) {
         if (predicate(item)) {
-            return { isPresent: () => true, get: () => item };
+            return java.util.Optional.of(item);
         }
     }
-    return { isPresent: () => false, get: () => { throw new java.util.NoSuchElementException(); } };
+    return java.util.Optional.empty();
 };
 
 
@@ -50,15 +50,15 @@ export class ProcessJudgment extends JavaObject {
         let oldBeliefT: Task = concept.selectCandidate(task, concept.beliefs, nal.time); // only revise with the
         // strongest -- how about
         // projection?
-        let oldBelief: Sentence = null;
+        let oldBelief: Sentence | null = null;
         if (oldBeliefT !== null) {
             oldBelief = oldBeliefT.sentence;
             let newStamp: Stamp = judg.stamp;
             let oldStamp: Stamp = oldBelief.stamp; // when table is full, the latter check is especially important too
             if (newStamp.equals(oldStamp, false, false, true)) {
-                concept.memory.removeTask(task, "Duplicated");
+                concept.memory.removeTask(task, S`Duplicated`);
                 return;
-            } else if (LocalRules.revisable(judg, oldBelief, nal.narParameters)) {
+            } else if (oldBelief !== null && LocalRules.revisable(judg, oldBelief, nal.narParameters)) {
                 nal.setTheNewStamp(newStamp, oldStamp, nal.time.time());
                 let projectedBelief: Sentence = oldBelief.projection(nal.time.time(), newStamp.getOccurrenceTime(),
                     concept.memory);
@@ -164,7 +164,7 @@ export class ProcessJudgment extends JavaObject {
             return;
         }
         // get the first eternal. the highest confident one (due to the sorted order):
-        let strongest_target: java.util.Optional<Task> = null;
+        let strongest_target: java.util.Optional<Task> = java.util.Optional.empty();
         /* synchronized (origin_concept) { */
         strongest_target = tryFind(origin_concept.beliefs, iTask => iTask.sentence.isEternal());
         /* } */

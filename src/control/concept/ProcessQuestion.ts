@@ -12,13 +12,13 @@ import type { Term } from "../../language/Term.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 
 const trySolution = LocalRules.trySolution;
-const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean) => {
+const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): java.util.Optional<T> => {
     for (const item of items) {
         if (predicate(item)) {
-            return { isPresent: () => true, get: () => item };
+            return java.util.Optional.of(item);
         }
     }
-    return { isPresent: () => false, get: () => { throw new java.util.NoSuchElementException(); } };
+    return java.util.Optional.empty();
 };
 
 
@@ -52,7 +52,10 @@ export class ProcessQuestion extends JavaObject {
             }
         }
         if (questions.size() + 1 > concept.memory.narParameters.CONCEPT_QUESTIONS_MAX) {
-            let removed: Task = questions.remove(0); // FIFO
+            const removed = questions.remove(0); // FIFO
+            if (removed === null || removed === undefined) {
+                throw new java.lang.IllegalStateException("Question table removal returned no task");
+            }
             concept.memory.event.emit(Events.ConceptQuestionRemove.class, concept, removed);
         }
 
@@ -104,7 +107,7 @@ export class ProcessQuestion extends JavaObject {
                     let answers: java.util.List<Task> = ques.sentence.isQuest() ? c.desires : c.beliefs;
                     if (c !== null && answers.size() > 0) {
                         let taskAnswer: Task = answers.get(0);
-                        if (taskAnswer !== null) {
+                        if (taskAnswer !== null && taskAnswer !== undefined) {
                             const solutionFound = trySolution(taskAnswer.sentence, ques, nal, false); // order important here
                             newAnswer = newAnswer || solutionFound;
                         }
@@ -148,7 +151,7 @@ export class ProcessQuestion extends JavaObject {
                         let answers: java.util.List<Task> = ques.sentence.isQuest() ? c.desires : c.beliefs;
                         if (c !== null && answers.size() > 0) {
                             let taskAnswer: Task = answers.get(0);
-                            if (taskAnswer !== null) {
+                            if (taskAnswer !== null && taskAnswer !== undefined) {
                                 const solutionFound = trySolution(taskAnswer.sentence, ques, nal, false); // order important
                                 newAnswer = newAnswer || solutionFound;
                                 // here
