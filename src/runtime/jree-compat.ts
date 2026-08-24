@@ -94,6 +94,14 @@ export const javaIdentityHashCode = (value: object | null): number => {
     return assigned;
 };
 
+/** Java System.exit(), mapped to the host process boundary for the Node CLI. */
+export const javaSystemExit = (status: number): never => {
+    if (typeof process !== "undefined" && typeof process.exit === "function") {
+        process.exit(status);
+    }
+    throw new Error(`Process exit requested with status ${status}`);
+};
+
 // jree 1.3.0 uses Java's 48-bit LCG but applies JavaScript bitwise operators
 // to the 48-bit state.  That truncates next(>16) to 32 bits, and its
 // nextDouble additionally performs integer BigInt division.  OpenNARS uses

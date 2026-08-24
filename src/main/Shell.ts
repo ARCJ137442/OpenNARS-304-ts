@@ -6,6 +6,7 @@ import { Term } from "../language/Term.ts";
 import { Debug } from "./Debug.ts";
 import { TextOutputHandler } from "../io/events/TextOutputHandler.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
+import { javaSystemExit } from "../runtime/jree-compat.ts";
 
 
 
@@ -42,7 +43,7 @@ export class Shell extends JavaObject {
             if (id !== null) {
                 java.lang.System.out.println(
                     "Identity of loaded nar can not be changed, set idOrNull to null if Nar from file should be used!");
-                java.lang.System.exit(1);
+                javaSystemExit(1);
             }
             nar = Nar.LoadFromFile(args[0]);
         }
@@ -80,7 +81,7 @@ export class Shell extends JavaObject {
         }
         if (args.length !== 4 && ((args.length - 5) % 5 !== 0 || args.length < 5)) { // args length check
             Shell.argInfo();
-            java.lang.System.exit(0);
+            javaSystemExit(0);
         }
 
         Shell.log("creating Nar with args [" + java.lang.String.join(", ", args) + "] ...");
@@ -183,7 +184,7 @@ export class Shell extends JavaObject {
 
         if (hasNumberOfSteps) {
             this.nar.cycles(numberOfSteps);
-            java.lang.System.exit(0);
+            javaSystemExit(0);
         } else {
             this.nar.start(-1); // 现在使用「-1」默认关闭「自动步进」功能
         }
