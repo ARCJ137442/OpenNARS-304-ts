@@ -25,7 +25,7 @@ import type { Memory } from "../storage/Memory.ts";
 export class TemporalInferenceControl extends JavaObject {
     public static proceedWithTemporalInduction(newEvent: Sentence, stmLast: Sentence,
         controllerTask: Task, nal: DerivationContext, SucceedingEventsInduction: boolean,
-        addToMemory: boolean, allowSequence: boolean): java.util.List<Task> {
+        addToMemory: boolean, allowSequence: boolean): java.util.List<Task> | null {
 
         if (SucceedingEventsInduction && !controllerTask.isElemOfSequenceBuffer()) { // todo refine, add directbool in
             // task
@@ -135,19 +135,21 @@ export class TemporalInferenceControl extends JavaObject {
                             java.lang.System.out.println("analyze case in TemporalInferenceControl!");
                             continue;
                         }
-                        let seq_op: java.util.List<Task> = TemporalInferenceControl.proceedWithTemporalInduction(Toperation.sentence, takeout.sentence,
+                        let seq_op: java.util.List<Task> | null = TemporalInferenceControl.proceedWithTemporalInduction(Toperation.sentence, takeout.sentence,
                             nal.memory.lastDecision, nal, true, false, true);
-                        for (let t of seq_op) {
-                            if (!t.sentence.isEternal()) {
-                                // TODO do not return the eternal here probably..;
-                                /* final List<Task> res = */ TemporalInferenceControl.proceedWithTemporalInduction(newEvent.sentence,
-                                t.sentence,
-                                newEvent, nal, true, true, false); // only =/> </> ..
-                                /*
-                                 * DETAILED: for(Task seq_op_cons : res) {
-                                 * System.out.println(seq_op_cons.toString());
-                                 * }
-                                 */
+                        if (seq_op !== null) {
+                            for (let t of seq_op) {
+                                if (!t.sentence.isEternal()) {
+                                    // TODO do not return the eternal here probably..;
+                                    /* final List<Task> res = */ TemporalInferenceControl.proceedWithTemporalInduction(newEvent.sentence,
+                                    t.sentence,
+                                    newEvent, nal, true, true, false); // only =/> </> ..
+                                    /*
+                                     * DETAILED: for(Task seq_op_cons : res) {
+                                     * System.out.println(seq_op_cons.toString());
+                                     * }
+                                     */
+                                }
                             }
                         }
 
@@ -169,7 +171,7 @@ export class TemporalInferenceControl extends JavaObject {
 
     public static addToSequenceTasks(nal: DerivationContext, newEvent: Task): void {
         // multiple versions are necessary, but we do not allow duplicates
-        let removal: Task = null;
+        let removal: Task | null = null;
         /* synchronized (nal.memory.seq_current) { */
         for (let s of nal.memory.seq_current) {
             if (CompoundTerm.replaceIntervals(s.getTerm()).equals(
@@ -178,10 +180,12 @@ export class TemporalInferenceControl extends JavaObject {
                 // s.sentence.stamp.equals(newEvent.sentence.stamp,false,true,true,false) ) {
                 // && newEvent.sentence.getOccurenceTime()>s.sentence.getOccurenceTime() ) {
                 // check term indices
-                if (s.getTerm().term_indices !== null && newEvent.getTerm().term_indices !== null) {
+                const currentTermIndices = s.getTerm().term_indices;
+                const newTermIndices = newEvent.getTerm().term_indices;
+                if (currentTermIndices !== null && newTermIndices !== null) {
                     let differentTermIndices: boolean = false;
-                    for (let i: int = 0; i < s.getTerm().term_indices.length; i++) {
-                        if (s.getTerm().term_indices[i] !== newEvent.getTerm().term_indices[i]) {
+                    for (let i: int = 0; i < currentTermIndices.length; i++) {
+                        if (currentTermIndices[i] !== newTermIndices[i]) {
                             differentTermIndices = true;
                         }
                     }
@@ -217,7 +221,7 @@ export class TemporalInferenceControl extends JavaObject {
     }
 
     public static NewOperationFrame(mem: Memory, task: Task): void {
-        let toRemove: java.util.List<Task> = new java.util.LinkedList(); // can there be more than one? I don't think so..
+        let toRemove: java.util.List<Task> = new java.util.LinkedList<Task>(); // can there be more than one? I don't think so..
         let priorityGain: float = 0.0;
         for (let t of mem.recent_operations) { // when made sure, make single element and add break
             if (t.getTerm().equals(task.getTerm())) {
