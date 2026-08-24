@@ -22,6 +22,12 @@ import { UtilityFunctions } from "./UtilityFunctions.ts";
 import { OutputHandler } from "../io/events/OutputHandler.ts";
 import { Events } from "../io/events/Events.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import type { DerivationContext } from "../control/DerivationContext.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Timable } from "../interfaces/Timable.ts";
+import type { TaskLink } from "../entity/TaskLink.ts";
+import type { TermLink } from "../entity/TermLink.ts";
+import type { Parameters } from "../main/Parameters.ts";
 
 const matchingOrder = TemporalRules.matchingOrder;
 const reverseOrder = TemporalRules.reverseOrder;
@@ -318,7 +324,7 @@ export class LocalRules extends JavaObject {
      *         necessary
      */
     public static solutionEval(problem: Task, solution: Sentence, task: Task,
-        nal: org.opennars.control.DerivationContext): BudgetValue {
+        nal: DerivationContext): BudgetValue {
         if (problem.sentence.punctuation !== solution.punctuation && solution.term.hasVarQuery()) {
             return null;
         }

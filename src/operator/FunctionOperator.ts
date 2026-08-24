@@ -8,6 +8,11 @@ import { Task } from "../entity/Task.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Term } from "../language/Term.ts";
+import type { Operation } from "./Operation.ts";
+import type { Timable } from "../interfaces/Timable.ts";
+import type { CompoundTerm } from "../language/CompoundTerm.ts";
 
 // Keep FunctionOperator below the inference layer. Importing BudgetFunctions
 // here would close the FunctionOperator -> Memory -> BudgetFunctions cycle.

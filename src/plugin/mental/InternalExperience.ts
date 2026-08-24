@@ -18,6 +18,15 @@ import { truthToWordTerm } from "../../entity/TruthValueTerm.ts";
 import { Events } from "../../io/events/Events.ts";
 import { Operation } from "../../operator/Operation.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
+import type { Memory } from "../../storage/Memory.ts";
+import type { Nar } from "../../main/Nar.ts";
+import type { DerivationContext } from "../../control/DerivationContext.ts";
+import type { Operator } from "../../operator/Operator.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
+import type { Plugin } from "../Plugin.ts";
+import type { EventEmitter } from "../../io/events/EventEmitter.ts";
+
+type EventObserver = EventEmitter.EventObserver;
 
 
 
