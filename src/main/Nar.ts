@@ -32,6 +32,8 @@ import type { Plugin } from "../plugin/Plugin.ts";
 import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 
+type EventObserver = EventEmitter.EventObserver;
+
 const isNumeric = (value: unknown): boolean => /^[-+]?\d+(?:\.\d+)?$/.test(String(value).trim());
 const CyclesStart = Events.CyclesStart;
 const CyclesEnd = Events.CyclesEnd;

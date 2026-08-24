@@ -1,5 +1,10 @@
 //! Java source: opennars/main/Shell.java
 import { java, JavaObject, type int } from "jree";
+import { Nar } from "./Nar.ts";
+import { NarNode } from "./NarNode.ts";
+import { Term } from "../language/Term.ts";
+import { Debug } from "./Debug.ts";
+import { TextOutputHandler } from "../io/events/TextOutputHandler.ts";
 
 
 

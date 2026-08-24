@@ -1,6 +1,14 @@
 //! Java source: opennars/main/NarNode.java
 import { java, JavaObject, type int, type float, closeResources, handleResourceError, throwResourceError, S } from "jree";
 import { Float32Math } from "../runtime/Float32.ts";
+import { Nar } from "./Nar.ts";
+import { Events } from "../io/events/Events.ts";
+import type { EventEmitter } from "../io/events/EventEmitter.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { Term } from "../language/Term.ts";
+import { Task } from "../entity/Task.ts";
+
+type EventObserver = EventEmitter.EventObserver;
 
 
 
@@ -67,7 +75,7 @@ export class NarNode extends JavaObject implements EventObserver {
                                 let ret: java.lang.Object = THIS.receiveObject();
                                 if (ret !== null) {
                                     if (ret instanceof Task) {
-                                        nar.memory.event.emit(EventReceivedTask.class, [ret]);
+                                        nar.memory.event.emit(THIS.EventReceivedTask.class, [ret]);
                                         nar.addInput(ret as Task, nar);
                                     } else if (ret instanceof java.lang.String) { // emits IN.class anyway
                                         nar.addInput(ret as java.lang.String);
