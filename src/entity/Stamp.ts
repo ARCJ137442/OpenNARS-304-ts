@@ -14,6 +14,9 @@ const hashLong = (value: long): int => {
     return (numeric ^ Math.trunc(numeric / 0x100000000)) | 0;
 };
 
+/** jree types Java long as bigint, while this translated 3.0.4 runtime keeps time values as numbers. */
+const runtimeLong = (value: number): long => value as unknown as long;
+
 
 
 /**
@@ -22,35 +25,35 @@ const hashLong = (value: long): int => {
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Serializable {
+export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, java.io.Serializable {
     /**
      * serial numbers. not to be modified after Stamp constructor has initialized it
      */
-    public evidentialBase: Stamp.BaseEntry[];
+    public evidentialBase!: Stamp.BaseEntry[];
 
     /** the length of @see evidentialBase */
-    public baseLength: int;
+    public baseLength!: int;
 
     /** creation time of the stamp */
-    private creationTime: long;
+    private creationTime!: long;
 
     /** estimated occurrence time of the event */
-    private occurrenceTime: long;
+    private occurrenceTime!: long;
 
     /**
      * default for atemporal events means "always" in Judgment/Question, but
      * "current" in Goal/Quest
      */
-    public static readonly ETERNAL: long = java.lang.Integer.MIN_VALUE;
+    public static readonly ETERNAL: long = runtimeLong(java.lang.Integer.MIN_VALUE);
 
     /**
      * caches evidentialBase as a set for comparisons and hashcode, stores the
      * unique Long's in-order for efficiency
      */
-    private evidentialSet: Stamp.BaseEntry[] = null;
+    private evidentialSet: Stamp.BaseEntry[] | null = null;
 
     /** Tense of the item */
-    private tense: Tense;
+    private tense!: Tense;
 
     /** is it a neg confirmation task that was already checked */
     public alreadyAnticipatedNegConfirmation: boolean = false;
@@ -58,7 +61,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     /** caches */
     // Keep the cache separate from name(); otherwise the Java-to-TypeScript
     // translation creates an instance field that shadows the method.
-    protected nameCache: java.lang.CharSequence = null;
+    protected nameCache: java.lang.CharSequence | null = null;
 
     /**
      * derivation chain containing the used premises and conclusions which made
@@ -70,7 +73,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     /** cache of hashcode of evidential base */
     // Keep the field distinct from evidentialHash(); otherwise the translated
     // instance field shadows the method at runtime.
-    private evidentialHashValue: int;
+    private evidentialHashValue!: int;
 
     public before(s: Stamp, duration: int): boolean {
         if (this.isEternal() || s.isEternal())
@@ -105,7 +108,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * used for when the ocrrence time will be set later; so should not be called
      * from externally but through another Stamp constructor
      */
-    protected constructor(tense: Tense, serial: Stamp.BaseEntry);
+    public constructor(tense: Tense, serial: Stamp.BaseEntry);
 
     /**
      * Generate a new stamp from an existing one, with the same evidentialBase
@@ -140,7 +143,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      * @param second The second Stamp
      */
     public constructor(first: Stamp, second: Stamp, time: long, narParameters: Parameters);
-    protected constructor(...args: unknown[]) {
+    public constructor(...args: unknown[]) {
         // Java constructor delegation (`this(...)`) is not legal in TypeScript.
         // Resolve the overload first, then call `super()` exactly once.
         super();
@@ -175,7 +178,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
             this.baseLength = 1;
             this.evidentialBase = [serial];
             this.tense = tense;
-            this.creationTime = -1;
+            this.creationTime = runtimeLong(-1);
             return;
         }
 
@@ -287,9 +290,9 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         if (this.tense === null) {
             this.occurrenceTime = Stamp.ETERNAL;
         } else if (this.tense === Tense.Past) {
-            this.occurrenceTime = time - duration;
+            this.occurrenceTime = time - runtimeLong(duration);
         } else if (this.tense === Tense.Future) {
-            this.occurrenceTime = time + duration;
+            this.occurrenceTime = time + runtimeLong(duration);
         } else if (this.tense === Tense.Present) {
             this.occurrenceTime = time;
         } else {
@@ -319,7 +322,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         // 4. create new array
 
         java.util.Arrays.sort(set);
-        let lastValue: Stamp.BaseEntry = null;
+        let lastValue: Stamp.BaseEntry | null = null;
         let j: int = 0; // # of unique items
         for (let v of set) {
             if (lastValue === null || !lastValue.equals(v)) {
@@ -458,7 +461,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      */
     public getOccurrenceTimeString(): java.lang.String {
         if (this.isEternal()) {
-            return "";
+            return S``;
         } else {
             return this.appendOcurrenceTime(new java.lang.StringBuilder()).toString();
         }
@@ -467,15 +470,15 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
     public getTense(currentTime: long, duration: int): java.lang.String {
 
         if (this.isEternal()) {
-            return "";
+            return S``;
         }
         switch (TemporalRules.order(currentTime, this.occurrenceTime, duration)) {
             case TemporalRules.ORDER_FORWARD:
-                return Symbols.TENSE_FUTURE;
+                return S`${Symbols.TENSE_FUTURE}`;
             case TemporalRules.ORDER_BACKWARD:
-                return Symbols.TENSE_PAST;
+                return S`${Symbols.TENSE_PAST}`;
             default:
-                return Symbols.TENSE_PRESENT;
+                return S`${Symbols.TENSE_PRESENT}`;
         }
     }
 
@@ -557,7 +560,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         }
 
         public override  toString(): java.lang.String {
-            return "(" + this.narId + "," + this.inputId + ")";
+            return S`(${this.narId},${this.inputId})`;
         }
 
         public override  equals(other: java.lang.Object): boolean {
@@ -580,9 +583,11 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
         }
 
         public compareTo(o: BaseEntry): int {
-            return java.util.Comparator.comparing(BaseEntry.getNarId)
-                .thenComparing(BaseEntry.getInputId)
-                .compare(this, o);
+            if (this.narId < o.narId) return -1;
+            if (this.narId > o.narId) return 1;
+            if (this.inputId < o.inputId) return -1;
+            if (this.inputId > o.inputId) return 1;
+            return 0;
         }
     };
 
