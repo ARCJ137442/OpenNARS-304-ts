@@ -35,6 +35,12 @@ export class Variable extends Term {
      */
     public constructor(name: java.lang.CharSequence, scope: Term);
     public constructor(...args: unknown[]) {
+        super();
+        // Java exposes the object only after setScope establishes this invariant;
+        // initialize the fields here so strict TypeScript records that invariant.
+        this.scope = this;
+        this.hash = 0;
+
         switch (args.length) {
             case 1: {
                 const [name] = args as [java.lang.CharSequence];
@@ -43,7 +49,6 @@ export class Variable extends Term {
                 // Java constructor delegation (`this(name, null)`) is not legal
                 // in TypeScript; initialize the base class once and reuse the
                 // shared scope setup.
-                super();
                 this.setScope(null, name);
 
 
@@ -54,7 +59,6 @@ export class Variable extends Term {
                 const [name, scope] = args as [java.lang.CharSequence, Term];
 
 
-                super();
                 this.setScope(scope, name);
 
 
