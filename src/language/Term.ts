@@ -427,7 +427,7 @@ export class Term extends JavaObject implements AbstractTerm {
         if (map === null) {
             map = new java.util.LinkedHashMap<Term, java.lang.Integer>();
         }
-        map.put(this, map.getOrDefault(this, 0) + 1);
+        map.put(this, java.lang.Integer.valueOf(map.getOrDefault(this, java.lang.Integer.valueOf(0)).valueOf() + 1));
         return map;
     }
 

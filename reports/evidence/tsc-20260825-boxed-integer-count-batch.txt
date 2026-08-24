@@ -1,0 +1,17 @@
+batch=20260825-boxed-integer-count
+base_commit=91feed4e9827f71ff8635b5c158dea913f7ec585
+command=NODE_OPTIONS=--max-old-space-size=1024 npx tsc --noEmit --pretty false --incremental false
+exit_code=2
+diagnostics_total=1375
+production_diagnostics=508
+test_diagnostics=867
+previous_batch_total=1379
+previous_batch_production=512
+previous_batch_tests=867
+delta_total=-4
+delta_production=-4
+delta_tests=0
+previous_error_codes=TS2304:485,TS2322:292,TS2345:194,TS2339:81,TS2769:55,TS2564:48,TS2365:28
+current_error_codes=TS2304:485,TS2322:292,TS2345:192,TS2339:81,TS2769:55,TS2564:48,TS2365:26
+root_cause=Java Integer auto-unboxing and re-boxing at Map getOrDefault and put were implicit in Java but missing in TypeScript
+scope=Term and CompoundTerm countTermRecursively only; no NAL matrix run
