@@ -423,7 +423,7 @@ export class Term extends JavaObject implements AbstractTerm {
      *            occurs
      * @return The counts of the terms
      */
-    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer>): java.util.Map<Term, java.lang.Integer> {
+    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer> | null): java.util.Map<Term, java.lang.Integer> {
         if (map === null) {
             map = new java.util.LinkedHashMap<Term, java.lang.Integer>();
         }

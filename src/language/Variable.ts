@@ -343,7 +343,7 @@ export class Variable extends Term {
         return name;
     }
 
-    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer>): java.util.Map<Term, java.lang.Integer> {
+    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer> | null): java.util.Map<Term, java.lang.Integer> {
         if (map === null) {
             map = new java.util.LinkedHashMap<Term, java.lang.Integer>();
         }

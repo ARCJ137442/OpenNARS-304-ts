@@ -599,7 +599,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      *            occurs
      * @return The counts of the terms
      */
-    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer>): java.util.Map<Term, java.lang.Integer> {
+    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer> | null): java.util.Map<Term, java.lang.Integer> {
         if (map === null) {
             map = new java.util.LinkedHashMap<Term, java.lang.Integer>();
         }

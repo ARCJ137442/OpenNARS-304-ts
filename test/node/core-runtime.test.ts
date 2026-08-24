@@ -89,6 +89,19 @@ test("decimal perception coordinates remain conceptual like Java Term.get", asyn
     assert.equal(indexedTerm.index_variable, "M1");
 });
 
+test("countTermRecursively accepts a null accumulator like Java", async () => {
+    const { Inheritance } = await import("../../src/language/Inheritance.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+
+    const term = Inheritance.make(Term.get("subject"), Term.get("predicate"));
+    const counts = term.countTermRecursively(null);
+
+    assert.equal(counts.size(), 3);
+    assert.equal(counts.get(term)?.valueOf(), 1);
+    assert.equal(counts.get(Term.get("subject"))?.valueOf(), 1);
+    assert.equal(counts.get(Term.get("predicate"))?.valueOf(), 1);
+});
+
 test("Stamp tense lookup uses Java temporal order constants", async () => {
     const { Stamp } = await import("../../src/entity/Stamp.ts");
     const { Tense } = await import("../../src/language/Tense.ts");
