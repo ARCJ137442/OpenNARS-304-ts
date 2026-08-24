@@ -1,0 +1,12 @@
+command=npm run test:serial --silent
+exit=0
+test_command=node --test --test-concurrency=1 --experimental-strip-types test/node/*.test.ts
+tests=132
+passed=132
+failed=0
+cancelled=0
+skipped=0
+duration_ms=36082.9705
+execution=single-process
+transient_first_run=language-runtime.test.ts exit 3221225477 EXCEPTION_ACCESS_VIOLATION
+isolated_replay=node --test --test-concurrency=1 --experimental-strip-types test/node/language-runtime.test.ts exit 0 tests=3 passed=3

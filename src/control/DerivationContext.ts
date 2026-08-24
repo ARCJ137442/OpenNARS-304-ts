@@ -92,21 +92,21 @@ export class DerivationContext extends JavaObject {
                     return false; // implication and equivalence goals and quests are not supported anymore
                 }
                 if (!task.getBudget().aboveThreshold()) {
-                    this.memory.removeTask(task, "Insufficient Budget");
+                    this.memory.removeTask(task, S`Insufficient Budget`);
                     return false;
                 }
                 if (task.sentence !== null && task.sentence.truth !== null) {
                     let conf: double = task.sentence.truth.confidence;
                     if (conf < this.narParameters.TRUTH_EPSILON) {
                         // no confidence - we can delete the wrongs out that way.
-                        this.memory.removeTask(task, "Ignored (zero confidence)");
+                        this.memory.removeTask(task, S`Ignored (zero confidence)`);
                         return false;
                     }
                 }
                 if (task.sentence.term instanceof Operation) {
                     let op: Operation = task.sentence.term as Operation;
                     if (op.getSubject() instanceof Variable || op.getPredicate() instanceof Variable) {
-                        this.memory.removeTask(task, "Operation with variable as subject or predicate");
+                        this.memory.removeTask(task, S`Operation with variable as subject or predicate`);
                         return false;
                     }
                 }
@@ -115,7 +115,7 @@ export class DerivationContext extends JavaObject {
                     // while the term was constructed optimistically
                     // example: (&,a,b) --> (&,b,a) which gets normalized to (&,a,b) --> (&,a,b)
                     // which is invalid.
-                    this.memory.removeTask(task, "Wrong Format");
+                    this.memory.removeTask(task, S`Wrong Format`);
                     return false;
                 }
 
@@ -127,13 +127,13 @@ export class DerivationContext extends JavaObject {
                     // belief or not!!
                     let doublePremiseEvidentialBaseOverlap: boolean = !single && this.evidentialOverlap;
                     if (doublePremiseEvidentialBaseOverlap) {
-                        this.memory.removeTask(task, "overlapping evidential base");
+                        this.memory.removeTask(task, S`overlapping evidential base`);
                         return false;
                     }
 
                     let selfOverlap: boolean = stamp.evidenceIsCyclic();
                     if (selfOverlap) {
-                        this.memory.removeTask(task, "overlapping evidential base");
+                        this.memory.removeTask(task, S`overlapping evidential base`);
                         return false;
                     }
                 }
@@ -170,7 +170,7 @@ export class DerivationContext extends JavaObject {
                 // memory.logic.TASK_DERIVED.commit(task.budget.getPriority());
 
                 if (addToMemory) {
-                    this.addTask(task, "Derived");
+                    this.addTask(task, S`Derived`);
                 }
                 return true;
 
@@ -610,7 +610,7 @@ export class DerivationContext extends JavaObject {
                 const [currentTask, budget, sentence, candidateBelief] = args as [Task, BudgetValue, Sentence, Sentence];
 
 
-                this.addTask(new Task(sentence, budget, sentence, candidateBelief), "Activated");
+                this.addTask(new Task(sentence, budget, sentence, candidateBelief), S`Activated`);
 
 
                 break;
@@ -624,7 +624,7 @@ export class DerivationContext extends JavaObject {
 
 
     public override  toString(): java.lang.String {
-        return "DerivationContext[" + this.currentConcept + "," + this.currentTaskLink + "]";
+        return S`DerivationContext[${this.currentConcept},${this.currentTaskLink}]`;
     }
 }
 
