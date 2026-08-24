@@ -18,7 +18,7 @@ interface ItemComparator<E> {
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export abstract  class Item<K> implements JavaObject, java.io.Serializable {
+export abstract  class Item<K> extends JavaObject implements java.io.Serializable {
 
     public static ItemPriorityComparator =  class ItemPriorityComparator<E extends Item<unknown>> extends JavaObject implements ItemComparator<E> {
 
@@ -49,6 +49,7 @@ export abstract  class Item<K> implements JavaObject, java.io.Serializable {
      */
     protected  constructor(budget: BudgetValue);
     public constructor(...args: unknown[]) {
+        super();
         if (args.length === 0) {
             // Items without a budget are valid (for example StringKeyItem).
             this.budget = null;

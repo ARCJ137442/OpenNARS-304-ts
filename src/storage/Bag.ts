@@ -13,7 +13,7 @@ import type { Memory } from "./Memory.ts";
  * Original Bag implementation which distributes items into
  * discrete levels (queues) according to priority
  */
-export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Serializable {
+export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.Serializable {
 
     /** priority levels */
     private readonly TOTAL_LEVEL: int;
@@ -43,6 +43,7 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
     /** thresholdLevel = 0 disables "fire level completely" threshold effect */
     public constructor(levels: int, capacity: int, thresholdLevel: int);
     public constructor(...args: unknown[]) {
+        super();
         if (args.length !== 3) {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }

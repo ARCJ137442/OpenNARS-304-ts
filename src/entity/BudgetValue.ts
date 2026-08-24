@@ -16,7 +16,7 @@ type char = string
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>, java.io.Serializable {
+export class BudgetValue extends JavaObject implements java.lang.Cloneable<BudgetValue>, java.io.Serializable {
 
     // Java stores these fields as float.  Keep the narrowing at write
     // boundaries; rounding getters or every consumer would change ordering.
@@ -69,6 +69,7 @@ export class BudgetValue implements JavaObject, java.lang.Cloneable<BudgetValue>
      */
     public constructor(p: float, d: float, q: float, narParameters: Parameters);
     public constructor(...args: unknown[]) {
+        super();
         if (args.length === 1) {
             const [v] = args as [BudgetValue];
             this.narParameters = v.narParameters;
