@@ -6,6 +6,7 @@ import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 
 const NativeOperator = Symbols.NativeOperator;
+type NativeOperator = Symbols.NativeOperator;
 const COMPOUND_TERM_OPENER = NativeOperator.COMPOUND_TERM_OPENER;
 const COMPOUND_TERM_CLOSER = NativeOperator.COMPOUND_TERM_CLOSER;
 

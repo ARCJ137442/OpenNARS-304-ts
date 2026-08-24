@@ -1,0 +1,14 @@
+command: npx tsc --noEmit --pretty false --incremental false
+exit: 2
+baseline_before: 1464
+baseline_before_production: 568
+baseline_before_tests: 896
+diagnostics_after: 1463
+diagnostics_after_production: 567
+diagnostics_after_tests: 896
+delta: -1
+root_cause: TS2749 in src/language/Image.ts caused by a value-only NativeOperator binding
+java_source: java-master/src/main/java/org/opennars/language/Image.java:61
+java_signature: protected static String makeImageName(final NativeOperator op, final Term[] arg, final int relationIndex)
+typescript_fix: add type NativeOperator = Symbols.NativeOperator
+image_remaining_diagnostic: src/language/Image.ts(113,13): error TS2322: Type 'null' is not assignable to type 'Term'.
