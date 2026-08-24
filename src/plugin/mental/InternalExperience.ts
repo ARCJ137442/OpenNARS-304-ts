@@ -202,22 +202,22 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         let opName: java.lang.String;
         switch (s.punctuation) {
             case Symbols.JUDGMENT_MARK:
-                opName = "^believe";
+                opName = S`^believe`;
                 if (!mem.internalExperience.ALLOW_WANT_BELIEF) {
                     return null;
                 }
                 break;
             case Symbols.GOAL_MARK:
-                opName = "^want";
+                opName = S`^want`;
                 if (!mem.internalExperience.ALLOW_WANT_BELIEF) {
                     return null;
                 }
                 break;
             case Symbols.QUESTION_MARK:
-                opName = "^wonder";
+                opName = S`^wonder`;
                 break;
             case Symbols.QUEST_MARK:
-                opName = "^evaluate";
+                opName = S`^evaluate`;
                 break;
             default:
                 return null;
@@ -234,7 +234,8 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         // Operation.make ?
         let operation: Term = Inheritance.make(new Product(arg), opTerm);
         if (operation === null) {
-            throw new java.lang.IllegalStateException("Unable to create Inheritance: " + opTerm + ", " + java.util.Arrays.toString(arg));
+            throw new java.lang.IllegalStateException(
+                S`Unable to create Inheritance: ${opTerm}, ${java.util.Arrays.toString(arg)}`);
         }
         return operation;
     }
@@ -335,12 +336,12 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
 
         let newTask: Task = new Task(j, newbudget, Task.EnumType.INPUT);
 
-        memory.addNewTask(newTask, "Reflected mental operation (Internal Experience)");
+        memory.addNewTask(newTask, S`Reflected mental operation (Internal Experience)`);
         return false;
     }
 
     protected static readonly nonInnateBeliefOperators: java.lang.String[] = [
-        "^remind", "^doubt", "^consider", "^evaluate", "hestitate", "^wonder", "^belief", "^want"
+        S`^remind`, S`^doubt`, S`^consider`, S`^evaluate`, S`hestitate`, S`^wonder`, S`^belief`, S`^want`
     ];
 
     /** used in full internal experience mode only */
@@ -405,9 +406,9 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
                 }
 
                 if (valid) {
-                    let op: Operator = memory.getOperator("^anticipate");
+                    let op: Operator = memory.getOperator(S`^anticipate`);
                     if (op === null)
-                        throw new java.lang.IllegalStateException(this + " requires ^anticipate operator");
+                        throw new java.lang.IllegalStateException(S`${this} requires ^anticipate operator`);
 
                     let args: Product = new Product(imp.getPredicate());
                     let new_term: Term = Operation.make(args, op);

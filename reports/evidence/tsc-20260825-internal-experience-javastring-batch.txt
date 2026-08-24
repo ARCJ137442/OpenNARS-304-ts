@@ -1,0 +1,8 @@
+command=npx tsc --noEmit --pretty false --incremental false
+head=641a59f
+before=diagnostics:1533 production:636 tests:897 other:0
+after=diagnostics:1519 production:622 tests:897 other:0
+exit=2_expected_typecheck_errors_remaining
+scope=InternalExperience JavaString boundaries
+remaining_in_scope=nullable returns, strict initialization, Inheritance.make overload
+notes=No strict/exclude/any/ignore changes.
