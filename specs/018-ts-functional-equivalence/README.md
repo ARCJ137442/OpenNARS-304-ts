@@ -1,15 +1,19 @@
 ---
-status: in-progress
+status: complete
 created: 2026-08-24
 priority: medium
 depends_on:
 - 013-java-304-canonical-baseline
 created_at: 2026-08-24T01:48:40.661749500Z
-updated_at: 2026-08-24T01:49:20.448020Z
+updated_at: 2026-08-24T09:29:18.424771700Z
+completed_at: 2026-08-24T09:29:18.424771700Z
 transitions:
 - status: in-progress
   at: 2026-08-24T01:49:01.124331600Z
+- status: complete
+  at: 2026-08-24T09:29:18.424771700Z
 ---
+
 # TypeScript functional equivalence
 
 ## 概述
@@ -25,11 +29,11 @@ transitions:
 ## 计划
 
 - [x] 生成 toothbrush2 周期 47286 的 Java/TypeScript 紧凑证据。
-- [ ] 定位并修复首个语义分歧，补充直接命中的回归测试。
-- [ ] 重新分类剩余 unknown，并冻结 245+1 矩阵。
+- [x] 定位并修复首个语义分歧，补充直接命中的回归测试。
+- [x] 重新分类剩余 unknown，并冻结 245+1 矩阵。
 
 ## 测试
 
-- [ ] npm test 和局部算法 parity 通过。
-- [ ] toothbrush2 有界检查点及代表性回归通过。
-- [ ] unknown 数量降为零。
+- [x] npm test 和局部算法 parity 通过。
+- [x] toothbrush2 有界检查点及代表性回归通过。
+- [x] unknown 数量降为零。

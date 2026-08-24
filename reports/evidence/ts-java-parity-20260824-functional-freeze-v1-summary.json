@@ -1,0 +1,69 @@
+{
+  "format_version": 1,
+  "batch": "20260824-functional-freeze-v1",
+  "contract": {
+    "marker_priority": true,
+    "markerless_cycle_target": 131072,
+    "watchdog_is_functional_error": true,
+    "process_limit_with_progress_is_performance_warning": true,
+    "thread_mode": "single"
+  },
+  "canonical_java": {
+    "source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+    "artifact": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5"
+  },
+  "corpus": {
+    "main_resources": 245,
+    "additional_fixture": "java-master/src/test/simpleOperationTest.nal",
+    "total_rows": 246,
+    "unique_files": 246
+  },
+  "raw_matrix": {
+    "functional_pass": 233,
+    "parity_true": 234,
+    "process_limit_rows": 12,
+    "no_progress_watchdog_rows": 0,
+    "distinct_exception_rows": 2,
+    "marker_missing_rows": 12,
+    "both_wrong_rows": 1,
+    "source": "reports/evidence/ts-java-parity-20260824-functional-freeze-v1.jsonl",
+    "note": "该矩阵在 runner 观测合同修复前启动；过程限时行按独立证据重新分类。"
+  },
+  "independent_acceptance": {
+    "marker_bearing_total": 244,
+    "marker_bearing_passed": 244,
+    "markerless_total": 2,
+    "markerless_131072_passed": 2,
+    "functional_passed": 246,
+    "functional_total": 246,
+    "unresolved": 0,
+    "nal4_recursion_replay": {
+      "passed": true,
+      "observed_cycles": 51550,
+      "java_runtime_ms": 1381,
+      "typescript_runtime_ms": 143832,
+      "process_limited": false,
+      "watchdog_timeout": false,
+      "evidence": "reports/evidence/ts-java-parity-20260824-nal4-recursion-runner-v2.jsonl"
+    },
+    "marker_evidence": [
+      "detective2.nal",
+      "toothbrush2.nal",
+      "vision.nal",
+      "nal1.multistep.nal",
+      "nars_multistep_2.nal",
+      "nars_multistep_3.nal",
+      "nars_spatialSeq1.nal",
+      "nars_transitivity.nal",
+      "stresstest_bird1.nal",
+      "nal8_list.nal"
+    ],
+    "markerless_evidence": [
+      "simpleOperationTest.nal",
+      "long_term_stability.nal"
+    ]
+  },
+  "next_gate": "019-tsc-zero-error-build",
+  "performance_note": "功能证据闭环不等于性能等价；TS 运行时长/推理步数继续作为 020 的优化输入。"
+}
