@@ -47,7 +47,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      *
      * @param budget The initial budget
      */
-    protected  constructor(budget: BudgetValue);
+    public  constructor(budget: BudgetValue);
     public constructor(...args: unknown[]) {
         super();
         if (args.length === 0) {

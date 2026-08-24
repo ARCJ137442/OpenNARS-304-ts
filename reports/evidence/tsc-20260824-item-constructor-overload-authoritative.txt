@@ -1,0 +1,36 @@
+batch=20260824-item-constructor-overload
+spec=019-tsc-zero-error-build
+base_commit=bb46518
+canonical_java_commit=8675b76fe8c21ee20a7b8c1b63408fb05327210d
+canonical_java_jar_sha256=2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
+
+command=npx tsc --noEmit --pretty false --incremental false
+diagnostics_before=2011
+production_before=1097
+tests_before=914
+change=make the Item budget overload public because TypeScript requires consistent visibility across overload signatures
+diagnostics_after=2010
+production_after=1096
+tests_after=914
+diagnostics_delta=-1
+production_delta=-1
+tests_delta=0
+ts2385_before=1
+ts2385_after=0
+
+npm_test_command=npm test --silent
+npm_test_exit=0
+npm_test_total=127
+npm_test_pass=127
+npm_test_fail=0
+
+local_parity_command=npm run test:parity:local --silent
+local_parity_exit=0
+local_parity_ok=true
+local_parity_differences=0
+
+m1_drift_test=not_triggered
+m1_drift_reason=diagnostics remain in 20xx; 2118 to 2010 is cumulative reduction 108 and does not cross the 18xx threshold
+functional_semantics_changed=false
+known_warning=jree package main-field extension-resolution deprecation warning remains
+reverted_experiment=abstract class expression syntax was rejected by TypeScript and reverted before final validation
