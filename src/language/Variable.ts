@@ -255,7 +255,10 @@ export class Variable extends Term {
     protected isCommon(): boolean {
         let n: java.lang.CharSequence = this.name();
         let l: int = n.length();
-        return n.charAt(l - 1) === '$';
+        const last = n.charAt(l - 1);
+        // jree exposes Java charAt() as a numeric code unit in this runtime;
+        // normalize it before applying the Java character comparison.
+        return (typeof last === "number" ? String.fromCharCode(last) : String(last)) === '$';
     }
 
     public getScope(): Term {

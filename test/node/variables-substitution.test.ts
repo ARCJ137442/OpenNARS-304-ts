@@ -39,3 +39,40 @@ test("变量统一会替换操作参数并保留 Operation 运行时类型", asy
     assert.equal(String(operation.getArguments().term[1].name()), "toothbrush");
     assert.equal(String(result.getPredicate().name()).includes(variable), false);
 });
+
+test("common variable propagation matches Java for commutative unification", async () => {
+    const { java } = await import("jree");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Narsese } = await import("../../src/io/Narsese.ts");
+    const { Symbols } = await import("../../src/io/Symbols.ts");
+    const { Variables } = await import("../../src/language/Variables.ts");
+
+    const nar = new Nar(304);
+    const parser = new Narsese(nar);
+    const asym = parser.parseTerm(new java.lang.String(
+        "<(|,$1,[unscrewing]) --> (&,(|,#2,$1),(|,$1,object))>",
+    )) as any;
+    const sym = parser.parseTerm(new java.lang.String(
+        "<(&,(|,#1,$2),(|,$2,object)) <-> (|,$2,[unscrewing])>",
+    )) as any;
+    const compound = [asym, sym] as any[];
+
+    assert.equal(
+        Variables.unify(
+            new java.util.Random(0),
+            Symbols.VAR_INDEPENDENT,
+            asym.getPredicate(),
+            sym.getSubject(),
+            compound,
+        ),
+        true,
+    );
+    assert.equal(
+        String(compound[0].name()),
+        "<(|,[unscrewing],object) --> (&,(|,#1#2$,object),object)>",
+    );
+    assert.equal(
+        String(compound[1].name()),
+        "<(&,(|,#1#2$,object),object) <-> (|,[unscrewing],object)>",
+    );
+});

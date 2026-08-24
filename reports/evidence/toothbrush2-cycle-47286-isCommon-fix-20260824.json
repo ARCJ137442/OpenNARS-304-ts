@@ -1,0 +1,48 @@
+{
+  "sample": "toothbrush2",
+  "cycle": 47286,
+  "kind": "direct-local-contract",
+  "seed": 0,
+  "input": {
+    "asym": "<(|,$1,[unscrewing]) --> (&,(|,#2,$1),(|,$1,object))>",
+    "sym": "<(&,(|,#1,$2),(|,$2,object)) <-> (|,$2,[unscrewing])>"
+  },
+  "java_reference": {
+    "unified": true,
+    "terms": [
+      "<(|,[unscrewing],object) --> (&,(|,#1#2$,object),object)>",
+      "<(&,(|,#1#2$,object),object) <-> (|,[unscrewing],object)>"
+    ],
+    "branch": "LocalRules.matchAsymSym/inferToAsym",
+    "common_variable_map": "$2$1$ -> object"
+  },
+  "typescript_before_fix": {
+    "unified": true,
+    "terms": [
+      "<(|,[unscrewing],object) --> (&,(|,#1#2$,object),object)>",
+      "<(&,(|,#1#2$,$2$1$),(|,$2$1$,object)) <-> (|,$2$1$,[unscrewing])>"
+    ],
+    "branch": "SyllogisticRules.analogy",
+    "missing_common_variable_map": "$2$1$ -> object"
+  },
+  "typescript_after_fix": {
+    "unified": true,
+    "terms": [
+      "<(|,[unscrewing],object) --> (&,(|,#1#2$,object),object)>",
+      "<(&,(|,#1#2$,object),object) <-> (|,[unscrewing],object)>"
+    ],
+    "branch_expected": "LocalRules.matchAsymSym/inferToAsym"
+  },
+  "first_difference": "Variable.isCommon: jree charAt() returns a numeric code unit, so comparing it directly with '$' skipped map[1] common-variable propagation.",
+  "fix": "Normalize the charAt() result before the Java character comparison.",
+  "regression": "test/node/variables-substitution.test.ts",
+  "bounded_stage_recheck": {
+    "cycles": 1024,
+    "window_size": 256,
+    "skip_embedded": true,
+    "java_stage_counts_match": true,
+    "typescript_after_fix_stage_counts_match": true,
+    "marker_events": 600,
+    "performance_note": "Java 361 ms; TypeScript 9971 ms. Recorded separately; not a semantic failure."
+  }
+}
