@@ -147,15 +147,16 @@ export class Term extends JavaObject implements AbstractTerm {
 
 
                 const nativeName = String(name);
-                let x: Term | null = Term.atoms.get(nativeName); // only
+                const nativeNameKey = nativeName as unknown as java.lang.CharSequence;
+                let x: Term | null = Term.atoms.get(nativeNameKey); // only
                 if (x !== null && !String(x).endsWith("]")) { // return only if it isn't an index term
                     return x;
                 }
 
                 let nameStr: java.lang.String = nativeName as unknown as java.lang.String;
                 // p[s,i,j]
-                let term_indices: Int32Array = null;
-                let before_indices_str: java.lang.String = null;
+                let term_indices: Int32Array | null = null;
+                let before_indices_str: java.lang.String | null = null;
                 if (javaStringValue(nameStr).endsWith("]") && javaStringValue(nameStr).includes("[")) { // simple check, failing for most terms
                     let indices_str: java.lang.String = nameStr.split("[")[1].split("]")[0];
                     before_indices_str = nameStr.split("[")[0];
@@ -170,7 +171,7 @@ export class Term extends JavaObject implements AbstractTerm {
                         // Decimal coordinates such as -1.0 therefore stay conceptual and
                         // are mapped by Nar.dispatchToSensoryChannel before matrix access.
                         if (/^\d+$/.test(String(ind_s[i]).trim()))
-                            term_indices[i] = java.lang.Integer.valueOf(ind_s[i]);
+                            term_indices[i] = java.lang.Integer.valueOf(ind_s[i]).valueOf();
                         else {
                             term_indices = null;
                             break;
@@ -178,13 +179,13 @@ export class Term extends JavaObject implements AbstractTerm {
                     }
                 }
 
-                let name2: java.lang.CharSequence = nativeName;
+                let name2: java.lang.CharSequence = nativeName as unknown as java.lang.CharSequence;
                 if (term_indices !== null) { // only on conceptual level not
-                    name2 = before_indices_str + "[i,j,k,l]";
+                    name2 = (String(before_indices_str) + "[i,j,k,l]") as unknown as java.lang.CharSequence;
                 }
                 x = new Term(name2);
                 x.term_indices = term_indices;
-                x.index_variable = before_indices_str;
+                x.index_variable = before_indices_str === null ? null : String(before_indices_str);
                 Term.atoms.put(name2, x);
 
                 return x;
@@ -223,8 +224,8 @@ export class Term extends JavaObject implements AbstractTerm {
         return this.nameValue;
     }
 
-    public term_indices: int[] = null;
-    public index_variable: string = "";
+    public term_indices: Int32Array | null = null;
+    public index_variable: string | null = "";
 
     /**
      * Make a new Term with the same name.
@@ -300,7 +301,7 @@ export class Term extends JavaObject implements AbstractTerm {
         return false;
     }
 
-    public recurseTerms(v: Term.TermVisitor | ((term: Term, parent: Term) => void), parent: Term): void {
+    public recurseTerms(v: Term.TermVisitor | ((term: Term, parent: Term | null) => void), parent: Term | null): void {
         if (typeof v === "function") {
             v(this, parent);
         } else {
@@ -314,13 +315,13 @@ export class Term extends JavaObject implements AbstractTerm {
         }
     }
 
-    public recurseSubtermsContainingVariables(v: Term.TermVisitor | ((term: Term, parent: Term) => void)): void;
+    public recurseSubtermsContainingVariables(v: Term.TermVisitor | ((term: Term, parent: Term | null) => void)): void;
 
-    public recurseSubtermsContainingVariables(v: Term.TermVisitor | ((term: Term, parent: Term) => void), parent: Term): void;
+    public recurseSubtermsContainingVariables(v: Term.TermVisitor | ((term: Term, parent: Term | null) => void), parent: Term | null): void;
     public recurseSubtermsContainingVariables(...args: unknown[]): void {
         switch (args.length) {
             case 1: {
-                const [v] = args as [Term.TermVisitor | ((term: Term, parent: Term) => void)];
+                const [v] = args as [Term.TermVisitor | ((term: Term, parent: Term | null) => void)];
 
 
                 this.recurseTerms(v, null);
@@ -330,7 +331,7 @@ export class Term extends JavaObject implements AbstractTerm {
             }
 
             case 2: {
-                const [v, parent] = args as [Term.TermVisitor | ((term: Term, parent: Term) => void), Term];
+                const [v, parent] = args as [Term.TermVisitor | ((term: Term, parent: Term | null) => void), Term | null];
 
 
                 if (!this.hasVar())
@@ -610,7 +611,7 @@ export class Term extends JavaObject implements AbstractTerm {
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Term {
     export interface TermVisitor {
-        visit(t: Term, superterm: Term): void;
+        visit(t: Term, superterm: Term | null): void;
     }
 
 }

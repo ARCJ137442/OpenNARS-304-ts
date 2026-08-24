@@ -1,0 +1,15 @@
+batch=20260825-term-array-visitor
+command=NODE_OPTIONS=--max-old-space-size=1024 npx tsc --noEmit --pretty false --incremental false
+exit_code=2
+diagnostics_total=1379
+production_diagnostics=512
+test_diagnostics=867
+previous_batch_total=1389
+previous_batch_production=522
+previous_batch_tests=867
+delta_total=-10
+delta_production=-10
+delta_tests=0
+root_causes=Java int[] maps to the existing Int32Array runtime; Integer.valueOf requires primitive unboxing; Java root visitor parent may be null
+first_attempt=exit -1073741819 (0xC0000005) before diagnostics; classified as host/runtime access violation, not source result
+scope=static diagnostic batch; no NAL matrix run
