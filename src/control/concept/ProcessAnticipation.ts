@@ -70,7 +70,7 @@ export class ProcessAnticipation extends JavaObject {
         if (c !== null /* && minTime > nal.memory.time() */ && c.observable
             && (mainSentence.getTerm() instanceof Implication || mainSentence.getTerm() instanceof Equivalence) &&
             mainSentence.getTerm().getTemporalOrder() === TemporalRules.ORDER_FORWARD) {
-            let toDelete: Concept.AnticipationEntry = null;
+            let toDelete: Concept.AnticipationEntry | null = null;
             let toInsert: Concept.AnticipationEntry = new Concept.AnticipationEntry(urgency, t, minTime, maxTime);
             let fullCapacity: boolean = c.anticipations.size() >= nal.narParameters.ANTICIPATIONS_PER_CONCEPT_MAX;
             // choose an element to replace with the new, in case that we are already at
@@ -124,8 +124,8 @@ export class ProcessAnticipation extends JavaObject {
     public static maintainDisappointedAnticipations(narParameters: Parameters, concept: Concept,
         nar: Nar): void {
         // here we can check the expiration of the feedback:
-        let confirmed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList();
-        let disappointed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList();
+        let confirmed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList<Concept.AnticipationEntry>();
+        let disappointed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList<Concept.AnticipationEntry>();
         for (let entry of concept.anticipations) {
             if (entry.negConfirmation === null || nar.time() <= entry.negConfirm_abort_maxTime) {
                 continue;
@@ -169,7 +169,7 @@ export class ProcessAnticipation extends JavaObject {
             let termWithReplacedIntervals: Term = CompoundTerm.replaceIntervals(term);
 
             { // revise with negative evidence
-                let truthOfBeliefWithTerm: TruthValue = null;
+                let truthOfBeliefWithTerm: TruthValue | null = null;
                 {
                     let targetConcept: Concept = nar.memory.concept(termWithReplacedIntervals);
                     if (targetConcept === null) { // target concept does not exist
@@ -231,7 +231,7 @@ export class ProcessAnticipation extends JavaObject {
         let satisfiesAnticipation: boolean = task.isInput() && !task.sentence.isEternal();
         let isExpectationAboveThreshold: boolean = task.sentence.getTruth()
             .getExpectation() > nal.narParameters.DEFAULT_CONFIRMATION_EXPECTATION;
-        let confirmed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList();
+        let confirmed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList<Concept.AnticipationEntry>();
         for (let entry of concept.anticipations) {
             if (satisfiesAnticipation && isExpectationAboveThreshold
                 && task.sentence.getOccurrenceTime() >= entry.negConfirm_abort_minTime

@@ -249,7 +249,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         this.anticipationFeedback(content, t, memory, time);
     }
 
-    public anticipationFeedback(content: Term, t: Task, memory: Memory, time: Timable): void {
+    public anticipationFeedback(content: Term, t: Task | null, memory: Memory, time: Timable): void {
         if (this.anticipationOperator) {
             let op: Operation = Operation.make(Product.make(Term.SELF, content), this) as Operation;
             let truth: TruthValue = TruthValue.fromFrequencyConfidence(1.0, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
