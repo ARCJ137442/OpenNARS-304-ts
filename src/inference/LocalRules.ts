@@ -447,7 +447,7 @@ export class LocalRules extends JavaObject {
         let sub: Term = statement.getPredicate();
         let pre: Term = statement.getSubject();
 
-        let content: Statement = Statement.make(statement, sub, pre, statement.getTemporalOrder());
+        let content: Statement | null = Statement.make(statement, sub, pre, statement.getTemporalOrder());
         if (content === null)
             return;
 
@@ -500,7 +500,7 @@ export class LocalRules extends JavaObject {
      */
     private static convertedJudgment(newTruth: TruthValue, newBudget: BudgetValue,
         nal: DerivationContext): void {
-        let content: Statement = nal.getCurrentTask().getTerm() as Statement;
+        let content: Statement | null = nal.getCurrentTask().getTerm() as Statement;
         let beliefContent: Statement = nal.getCurrentBelief().term as Statement;
         let order: int = TemporalRules.reverseOrder(beliefContent.getTemporalOrder());
         let subjT: Term = content.getSubject();
@@ -513,6 +513,9 @@ export class LocalRules extends JavaObject {
             content = Statement.make(content, otherTerm, predT, order);
         }
         if (predT.hasVarQuery()) {
+            if (content === null) {
+                return;
+            }
             otherTerm = (subjT.equals(subjB)) ? predB : subjB;
             content = Statement.make(content, subjT, otherTerm, order);
         }

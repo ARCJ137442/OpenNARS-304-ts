@@ -88,7 +88,7 @@ export class StructuralRules extends JavaObject {
         if (sub.cloneDeep().equals(pred.cloneDeep())) {
             return;
         }
-        let content: Statement;
+        let content: Statement | null;
         let order: int = statement.getTemporalOrder();
         if (StructuralRules.switchOrder(compound, index)) {
             content = Statement.make(statement, pred, sub, TemporalRules.reverseOrder(order));
@@ -132,7 +132,7 @@ export class StructuralRules extends JavaObject {
 
         let t1: Term = sub.term[index];
         let t2: Term = pre.term[index];
-        let content: Statement;
+        let content: Statement | null;
         let order: int = statement.getTemporalOrder();
         if (StructuralRules.switchOrder(sub, index as short)) {
             content = Statement.make(statement, t2, t1, TemporalRules.reverseOrder(order));
@@ -294,7 +294,7 @@ export class StructuralRules extends JavaObject {
         let task: Task = nal.getCurrentTask();
         let oldContent: Term = task.getTerm();
         if (oldContent instanceof Statement) {
-            let content: Statement = Statement.make(oldContent as Statement, subject, predicate, order);
+            let content: Statement | null = Statement.make(oldContent as Statement, subject, predicate, order);
             if (content !== null) {
                 let budget: BudgetValue = BudgetFunctions.compoundForward(truth, content, nal);
                 nal.singlePremiseTask(content, truth, budget);
@@ -429,7 +429,7 @@ export class StructuralRules extends JavaObject {
         if (newInh === null)
             return;
 
-        let content: CompoundTerm = null;
+        let content: CompoundTerm | null = null;
         if (indices.length === 2) {
             content = newInh;
         } else if ((oldContent instanceof Statement) && (indices[0] === 1)) {
@@ -990,7 +990,7 @@ export class StructuralRules extends JavaObject {
         let subj: Term = statement.getSubject();
         let pred: Term = statement.getPredicate();
 
-        let content: Statement = Statement.make(statement,
+        let content: Statement | null = Statement.make(statement,
             Negation.make(pred),
             Negation.make(subj),
             TemporalRules.reverseOrder(statement.getTemporalOrder()));

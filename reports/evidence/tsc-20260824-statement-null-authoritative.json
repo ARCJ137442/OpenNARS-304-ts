@@ -1,0 +1,48 @@
+{
+  "batch": "statement-null-contract",
+  "baseCommit": "a4e45a97a2b1b184c0e6b7d315808d28cc1ffba5",
+  "canonicalJavaCommit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+  "canonicalJavaJarSha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "command": "npx tsc --noEmit --pretty false --incremental false",
+  "before": {
+    "diagnostics": 1916,
+    "production": 977,
+    "tests": 939
+  },
+  "after": {
+    "diagnostics": 1915,
+    "production": 976,
+    "tests": 939,
+    "exitCode": 2,
+    "statementDiagnostics": 0,
+    "topCodes": {
+      "TS2304": 495,
+      "TS2322": 433,
+      "TS2345": 241,
+      "TS2339": 145,
+      "TS2769": 108,
+      "TS2445": 88,
+      "TS2564": 55,
+      "TS2694": 43,
+      "TS18046": 35,
+      "TS2365": 30
+    }
+  },
+  "tests": {
+    "command": "npm test --silent",
+    "passed": 127,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "localParity": {
+    "command": "npm run test:parity:local --silent",
+    "ok": true,
+    "differences": [],
+    "exitCode": 0
+  },
+  "m1Trigger": {
+    "diagnostic18xx": false,
+    "full245Plus1Run": false,
+    "reason": "M1 freeze was completed before M2; this batch remained at 1915 diagnostics and did not cross the 18xx trigger."
+  }
+}

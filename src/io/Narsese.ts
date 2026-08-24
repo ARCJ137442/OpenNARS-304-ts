@@ -493,7 +493,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         const relationOperator = getRelation(relation);
         if (relationOperator === null)
             throw new Parser.InvalidInputException(S`invalid statement: relation missing`);
-        let t: Statement = Statement.make(relationOperator, subject, predicate, false, 0);
+        let t: Statement | null = Statement.make(relationOperator, subject, predicate, false, 0);
         if (t === null) {
             throw new Parser.InvalidInputException(S`invalid statement: statement unable to create: ${getOperator(relation)} ${subject} ${predicate}`);
         }

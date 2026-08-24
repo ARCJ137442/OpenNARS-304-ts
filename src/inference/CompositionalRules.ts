@@ -207,7 +207,7 @@ export class CompositionalRules extends JavaObject {
         if ((subject === null) || (predicate === null)) {
             return;
         }
-        let content: Term = Statement.make(statement, subject, predicate, order);
+        let content: Term | null = Statement.make(statement, subject, predicate, order);
         if ((content === null) || statement === null || content.equals(statement)
             || content.equals(nal.getCurrentBelief().term)) {
             return;
@@ -253,7 +253,7 @@ export class CompositionalRules extends JavaObject {
         let v1: TruthValue = compoundTask ? sentence.getTruth() : belief.getTruth();
         let v2: TruthValue = compoundTask ? belief.getTruth() : sentence.getTruth();
 
-        let content: Term = Statement.make(oldContent, index === 0 ? term1 : term2, index === 0 ? term2 : term1, order);
+        let content: Term | null = Statement.make(oldContent, index === 0 ? term1 : term2, index === 0 ? term2 : term1, order);
         if (content === null) {
             return;
         }

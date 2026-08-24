@@ -9,7 +9,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 
 type StatementFactory = (subject: Term, predicate: Term, order: int) => Statement;
 type StatementRuntime = Record<string, any>;
-type NativeOperator = InstanceType<typeof Symbols.NativeOperator>;
+type NativeOperator = Symbols.NativeOperator;
 
 
 
@@ -102,7 +102,7 @@ export abstract class Statement extends CompoundTerm {
      * @param pred      The second component
      * @param statement A sample statement providing the class type
      */
-    public static make(statement: Statement, subj: Term, pred: Term): Statement;
+    public static make(statement: Statement, subj: Term, pred: Term): Statement | null;
 
     /**
      * Make a Statement from given term, called by the rules
@@ -112,9 +112,9 @@ export abstract class Statement extends CompoundTerm {
      * @param subj The first component
      * @param pred The second component
      */
-    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement;
+    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
 
-    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement;
+    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
 
     /**
      * Make a Statement from String, called by StringParser
@@ -125,8 +125,8 @@ export abstract class Statement extends CompoundTerm {
      * @return The Statement built
      */
     public static make(o: NativeOperator, subject: Term, predicate: Term,
-        customOrder: boolean, order: int): Statement;
-    public static make(...args: unknown[]): Statement {
+        customOrder: boolean, order: int): Statement | null;
+    public static make(...args: unknown[]): Statement | null {
         switch (args.length) {
             case 3: {
                 const [statement, subj, pred] = args as [Statement, Term, Term];
@@ -219,7 +219,7 @@ export abstract class Statement extends CompoundTerm {
      * @return The Statement built
      */
     public static makeSym(statement: Statement, subj: Term, pred: Term,
-        order: int): Statement {
+        order: int): Statement | null {
         const runtime = Statement.getRuntime();
         if (statement instanceof runtime.Inheritance) {
             return runtime.Similarity.make(subj, pred);

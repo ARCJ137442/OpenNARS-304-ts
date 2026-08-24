@@ -96,8 +96,8 @@ export class SyllogisticRules extends JavaObject {
         }
 
         let content: Statement = sentence.term as Statement;
-        let content1: Statement = Statement.make(content, term1, term2, order);
-        let content2: Statement = Statement.make(content, term2, term1, TemporalRules.reverseOrder(order));
+        let content1: Statement | null = Statement.make(content, term1, term2, order);
+        let content2: Statement | null = Statement.make(content, term2, term1, TemporalRules.reverseOrder(order));
 
         if ((content1 === null) || (content2 === null))
             return;
@@ -164,17 +164,20 @@ export class SyllogisticRules extends JavaObject {
 
         if (term1.imagination !== null && term2.imagination !== null) {
             let T: TruthValue = term1.imagination.AbductionOrComparisonTo(term2.imagination, true);
-            nal.doublePremiseTask(
-                Statement.make(NativeOperator.SIMILARITY, term1, term2, TemporalRules.ORDER_NONE),
-                T, BudgetFunctions.forward(T, nal), false, false);
+            const similarity = Statement.make(NativeOperator.SIMILARITY, term1, term2, TemporalRules.ORDER_NONE);
+            if (similarity !== null) {
+                nal.doublePremiseTask(similarity, T, BudgetFunctions.forward(T, nal), false, false);
+            }
             let T2: TruthValue = term1.imagination.AbductionOrComparisonTo(term2.imagination, false);
-            nal.doublePremiseTask(
-                Statement.make(NativeOperator.INHERITANCE, term1, term2, TemporalRules.ORDER_NONE),
-                T2, BudgetFunctions.forward(T2, nal), false, false);
+            const inheritanceForward = Statement.make(NativeOperator.INHERITANCE, term1, term2, TemporalRules.ORDER_NONE);
+            if (inheritanceForward !== null) {
+                nal.doublePremiseTask(inheritanceForward, T2, BudgetFunctions.forward(T2, nal), false, false);
+            }
             let T3: TruthValue = term2.imagination.AbductionOrComparisonTo(term1.imagination, false);
-            nal.doublePremiseTask(
-                Statement.make(NativeOperator.INHERITANCE, term2, term1, TemporalRules.ORDER_NONE),
-                T3, BudgetFunctions.forward(T3, nal), false, false);
+            const inheritanceBackward = Statement.make(NativeOperator.INHERITANCE, term2, term1, TemporalRules.ORDER_NONE);
+            if (inheritanceBackward !== null) {
+                nal.doublePremiseTask(inheritanceBackward, T3, BudgetFunctions.forward(T3, nal), false, false);
+            }
 
             /**
              * no need for other syllogistic inference, it were sensational terms,
@@ -204,17 +207,20 @@ export class SyllogisticRules extends JavaObject {
 
         if (order !== ORDER_INVALID) {
             nal.getTheNewStamp().setOccurrenceTime(occurrence_time1);
-            nal.doublePremiseTask(
-                Statement.make(taskContent, term1, term2, order),
-                truth1, budget1, false, false);
+            const forward = Statement.make(taskContent, term1, term2, order);
+            if (forward !== null) {
+                nal.doublePremiseTask(forward, truth1, budget1, false, false);
+            }
             nal.getTheNewStamp().setOccurrenceTime(occurrence_time2);
-            nal.doublePremiseTask(
-                Statement.make(taskContent, term2, term1, TemporalRules.reverseOrder(order)),
-                truth2, budget2, false, false);
+            const backward = Statement.make(taskContent, term2, term1, TemporalRules.reverseOrder(order));
+            if (backward !== null) {
+                nal.doublePremiseTask(backward, truth2, budget2, false, false);
+            }
             nal.getTheNewStamp().setOccurrenceTime(occurrence_time1);
-            nal.doublePremiseTask(
-                Statement.makeSym(taskContent, term1, term2, order),
-                truth3, budget3, false, false);
+            const symmetric = Statement.makeSym(taskContent, term1, term2, order);
+            if (symmetric !== null) {
+                nal.doublePremiseTask(symmetric, truth3, budget3, false, false);
+            }
         }
         if (nal.narParameters.BREAK_NAL_HOL_BOUNDARY && order1 === order2 && taskContent.isHigherOrderStatement()
             && sentence2.term.isHigherOrderStatement()) { //
@@ -245,9 +251,10 @@ export class SyllogisticRules extends JavaObject {
              * Statement.make(NativeOperator.INHERITANCE, term2, term1),
              * truth2, budget2.clone(),false, false);
              */
-            nal.doublePremiseTask(
-                Statement.make(NativeOperator.SIMILARITY, term1, term2, TemporalRules.ORDER_NONE),
-                truth3, budget3.clone(), false, false);
+            const similarity = Statement.make(NativeOperator.SIMILARITY, term1, term2, TemporalRules.ORDER_NONE);
+            if (similarity !== null) {
+                nal.doublePremiseTask(similarity, truth3, budget3.clone(), false, false);
+            }
         }
         return false;
     }
@@ -303,7 +310,10 @@ export class SyllogisticRules extends JavaObject {
         }
 
         // nal.mem().logic.ANALOGY.commit();
-        nal.doublePremiseTask(Statement.make(st, subj, pred, order), truth, budget, false, false); // (allow overlap)
+        const content = Statement.make(st, subj, pred, order);
+        if (content !== null) {
+            nal.doublePremiseTask(content, truth, budget, false, false); // (allow overlap)
+        }
         // but not needed
         // here, isn't
         // detachment
@@ -358,9 +368,11 @@ export class SyllogisticRules extends JavaObject {
                 order = sentence.term.getTemporalOrder();
             }
         }
-        let s: Statement = Statement.make(higherOrder ? NativeOperator.EQUIVALENCE : NativeOperator.SIMILARITY, term1,
+        let s: Statement | null = Statement.make(higherOrder ? NativeOperator.EQUIVALENCE : NativeOperator.SIMILARITY, term1,
             term2, order);
-        nal.doublePremiseTask(s, truth, budget, false, false); // (allow overlap) but not needed here, isn't detachment
+        if (s !== null) {
+            nal.doublePremiseTask(s, truth, budget, false, false); // (allow overlap) but not needed here, isn't detachment
+        }
 
         if (nal.narParameters.BREAK_NAL_HOL_BOUNDARY && !sentence.term.hasVarIndep() && (st instanceof Equivalence)
             && order1 === order2 && belief.term.isHigherOrderStatement() && sentence.term.isHigherOrderStatement()) {
@@ -430,9 +442,10 @@ export class SyllogisticRules extends JavaObject {
              * Statement.make(NativeOperator.INHERITANCE, term2, term1),
              * truth2, budget2.clone(),false, false);
              */
-            nal.doublePremiseTask(
-                Statement.make(NativeOperator.SIMILARITY, term1, term2, TemporalRules.ORDER_NONE),
-                truth3, budget3.clone(), false, false);
+            const similarity = Statement.make(NativeOperator.SIMILARITY, term1, term2, TemporalRules.ORDER_NONE);
+            if (similarity !== null) {
+                nal.doublePremiseTask(similarity, truth3, budget3.clone(), false, false);
+            }
         }
     }
 
@@ -675,7 +688,7 @@ export class SyllogisticRules extends JavaObject {
         } else {
             newCondition = oldCondition.setComponent(index, newComponent, nal.mem());
         }
-        let content: Term;
+        let content: Term | null;
 
         let delta: long = 0;
         let minTime: long = 0;
@@ -844,7 +857,7 @@ export class SyllogisticRules extends JavaObject {
         } else {
             newCondition = oldCondition.setComponent(index, newComponent, nal.mem());
         }
-        let content: Term;
+        let content: Term | null;
         if (newCondition !== null) {
             content = Statement.make(premise1, newCondition, premise1.getPredicate(), premise1.getTemporalOrder());
         } else {
@@ -937,7 +950,7 @@ export class SyllogisticRules extends JavaObject {
             if (term1InLoop === null) {
                 continue;
             }
-            let content: Term;
+            let content: Term | null;
             let truth: TruthValue = null;
             let budget: BudgetValue;
 
