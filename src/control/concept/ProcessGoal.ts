@@ -28,6 +28,7 @@ import { Float32Math } from "../../runtime/Float32.ts";
 import { javaStringValue } from "../../runtime/jree-compat.ts";
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
+import type { DerivationContext } from "../DerivationContext.ts";
 
 const revisable = LocalRules.revisable;
 const revision = LocalRules.revision;
@@ -175,7 +176,7 @@ export class ProcessGoal extends JavaObject {
             // execute
             // as execution for this reason already happened (or did not since there was
             // evidence against it)
-            let oldEvidence: java.util.Set<BaseEntry> = new java.util.LinkedHashSet();
+            let oldEvidence: java.util.Set<Stamp.BaseEntry> = new java.util.LinkedHashSet();
             let Subset: boolean = false;
             if (oldGoalT !== null) {
                 Subset = true;

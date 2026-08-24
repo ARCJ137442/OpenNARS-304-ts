@@ -1,5 +1,5 @@
 //! Java source: opennars/control/DerivationContext.java
-import { java, JavaObject, type double, type long, type char, S } from "jree";
+import { java, JavaObject, type double, type long, type char, type float, S } from "jree";
 import { Stamp } from "../entity/Stamp.ts";
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -13,6 +13,13 @@ import { Interval } from "../language/Interval.ts";
 import { Debug } from "../main/Debug.ts";
 import { Operation } from "../operator/Operation.ts";
 import { Variable } from "../language/Variable.ts";
+import type { Memory } from "../storage/Memory.ts";
+import type { Term } from "../language/Term.ts";
+import type { Concept } from "../entity/Concept.ts";
+import type { TermLink } from "../entity/TermLink.ts";
+import type { TaskLink } from "../entity/TaskLink.ts";
+import type { Parameters } from "../main/Parameters.ts";
+import type { Timable } from "../interfaces/Timable.ts";
 
 
 
