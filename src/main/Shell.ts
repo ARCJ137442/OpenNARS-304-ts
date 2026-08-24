@@ -111,7 +111,7 @@ export class Shell extends JavaObject {
             private readonly bufIn: java.io.BufferedReader;
             protected readonly nar: Nar;
 
-            protected constructor(input: java.io.InputStream, nar: Nar) {
+            public constructor(input: java.io.InputStream, nar: Nar) {
                 super();
                 this.bufIn = new java.io.BufferedReader(new java.io.InputStreamReader(input));
                 this.nar = nar;
