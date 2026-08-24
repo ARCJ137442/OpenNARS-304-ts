@@ -368,7 +368,7 @@ export class ProcessGoal extends JavaObject {
             let precondition: Term = Conjunction.make(newprec, TemporalRules.ORDER_FORWARD);
             let newesttime: long = -1;
             let bestsofar: Task = null;
-            let prec_intervals: java.util.List<java.lang.Float> = new java.util.ArrayList();
+            let prec_intervals: java.util.List<float> = new java.util.ArrayList<float>();
             for (let l of CompoundTerm.extractIntervals(nal.memory, precTerm)) {
                 prec_intervals.add(Float32Math.from(l) as float);
             }

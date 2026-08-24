@@ -229,7 +229,7 @@ export class ConfigReader extends JavaObject {
                     if (fieldOfProperty.getType() === int.class) {
                         fieldOfProperty.set(parameters, java.lang.Integer.parseInt(propertyValueAsString));
                     } else if (fieldOfProperty.getType() === float.class) {
-                        fieldOfProperty.set(parameters, java.lang.Float.parseFloat(propertyValueAsString));
+                        fieldOfProperty.set(parameters, Math.fround(Number.parseFloat(String(propertyValueAsString))));
                     } else if (fieldOfProperty.getType() === double.class) {
                         fieldOfProperty.set(parameters, java.lang.Double.parseDouble(propertyValueAsString));
                     } else if (fieldOfProperty.getType() === boolean.class) {
@@ -254,7 +254,7 @@ export class ConfigReader extends JavaObject {
                         if (fieldOfProperty.getType() === int.class) {
                             fieldOfProperty.set(null, java.lang.Integer.parseInt(propertyValueAsString));
                         } else if (fieldOfProperty.getType() === float.class) {
-                            fieldOfProperty.set(null, java.lang.Float.parseFloat(propertyValueAsString));
+                            fieldOfProperty.set(null, Math.fround(Number.parseFloat(String(propertyValueAsString))));
                         } else {
                             throw new java.text.ParseException("Unknown type", 0);
                         }
@@ -304,7 +304,7 @@ export class ConfigReader extends JavaObject {
                 values.add(java.lang.Integer.parseInt(valueString));
             } else if (typeString.equals("float.class")) {
                 types.add(float.class);
-                values.add(java.lang.Float.parseFloat(valueString));
+                values.add(Math.fround(Number.parseFloat(String(valueString))));
             } else if (typeString.equals("boolean.class")) {
                 types.add(boolean.class);
                 values.add(java.lang.Boolean.parseBoolean(valueString));

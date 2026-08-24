@@ -437,7 +437,7 @@ export class CompositionalRules extends JavaObject {
             return;
         }
         for (let subjectIntroduction of [true, false]) {
-            let contents: java.util.Set<Pair<Term, java.lang.Float>> = CompositionalRules.introduceVariables(nal,
+            let contents: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal,
                 Implication.make(state1, state2), subjectIntroduction);
             for (let content_penalty of contents) {
                 let truth: TruthValue = induction(truthT, truthB, nal.narParameters)
@@ -505,7 +505,7 @@ export class CompositionalRules extends JavaObject {
                 return false;
             }
             for (let subjectIntro of [true, false]) {
-                let conts: java.util.Set<Pair<Term, java.lang.Float>> = CompositionalRules.introduceVariables(nal, content, subjectIntro);
+                let conts: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, content, subjectIntro);
                 for (let content_penalty of conts) {
                     let truth: TruthValue = intersection(taskSentence.truth, belief.truth, nal.narParameters)
                         .mulConfidence(content_penalty.getRight());
@@ -521,7 +521,7 @@ export class CompositionalRules extends JavaObject {
                 return false;
             }
             for (let subjectIntro of [true, false]) {
-                let conts: java.util.Set<Pair<Term, java.lang.Float>> = CompositionalRules.introduceVariables(nal, content, subjectIntro);
+                let conts: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, content, subjectIntro);
                 for (let content_penalty of conts) {
                     let truth: TruthValue;
                     if (premise1.equals(taskSentence.term)) {
@@ -736,7 +736,7 @@ export class CompositionalRules extends JavaObject {
             }
             let truth: TruthValue = induction(originalMainSentence.truth, subSentence.truth, nal.narParameters);
             for (let subjectIntro of [true, false]) {
-                let conts: java.util.Set<Pair<Term, java.lang.Float>> = CompositionalRules.introduceVariables(nal, T, subjectIntro);
+                let conts: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, T, subjectIntro);
                 for (let content_penalty of conts) {
                     let budget: BudgetValue = BudgetFunctions.compoundForward(truth, content_penalty.getLeft(), nal);
                     let truthVal: TruthValue = truth.clone();
@@ -785,8 +785,8 @@ export class CompositionalRules extends JavaObject {
      *         the amount of vars introduced
      */
     public static introduceVariables(nal: DerivationContext,
-        implicationEquivalenceOrJunction: Term, subject: boolean): java.util.Set<Pair<Term, java.lang.Float>> {
-        let result: java.util.Set<Pair<Term, java.lang.Float>> = new java.util.LinkedHashSet();
+        implicationEquivalenceOrJunction: Term, subject: boolean): java.util.Set<Pair<Term, float>> {
+        let result: java.util.Set<Pair<Term, float>> = new java.util.LinkedHashSet<Pair<Term, float>>();
         let validForIntroduction: boolean = implicationEquivalenceOrJunction instanceof Conjunction ||
             implicationEquivalenceOrJunction instanceof Disjunction ||
             implicationEquivalenceOrJunction instanceof Equivalence ||
@@ -852,7 +852,7 @@ export class CompositionalRules extends JavaObject {
                 mapping.put(vIntro, app.get(vIntro));
             }
             if (mapping.size() > 0) {
-                let generalizationPenalty: java.lang.Float = Float32Math.pow(
+                let generalizationPenalty: float = Float32Math.pow(
                     nal.narParameters.VARIABLE_INTRODUCTION_CONFIDENCE_MUL,
                     mapping.size() - 1,
                 );

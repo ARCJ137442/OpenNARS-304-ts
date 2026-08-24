@@ -102,7 +102,7 @@ export class Concept extends Item<Term> {
     // use to create averaging stats of occurring intervals
     // so that revision can decide whether to use the new or old term
     // based on which intervals are closer to the average
-    public readonly recent_intervals: java.util.List<java.lang.Float> = new java.util.ArrayList();
+    public readonly recent_intervals: java.util.List<float> = new java.util.ArrayList<float>();
 
     public observable: boolean = false; // whether it received a "native" input task
     public allowBabbling: boolean = true; // for operations, becomes false if sufficiently

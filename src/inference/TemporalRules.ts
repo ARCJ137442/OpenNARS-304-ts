@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/TemporalRules.java
-import { java, JavaObject, type int, type long, S } from "jree";
+import { java, JavaObject, type int, type long, type float, S } from "jree";
 import { Symbols } from "../io/Symbols.ts";
 import { Stamp } from "../entity/Stamp.ts";
 import type { BudgetValue } from "../entity/BudgetValue.ts";
@@ -228,12 +228,12 @@ export class TemporalRules extends JavaObject {
 
         let t11s: java.util.List<Term> = new java.util.ArrayList();
         let t22s: java.util.List<Term> = new java.util.ArrayList();
-        let penalties: java.util.List<java.lang.Float> = new java.util.ArrayList();
+        let penalties: java.util.List<float> = new java.util.ArrayList<float>();
         // "Perception Variable Introduction Rule" -
         // https://groups.google.com/forum/#!topic/open-nars/uoJBa8j7ryE
         if (!deriveSequenceOnly && statement2 !== null) {
             for (let subjectIntro of [true, false]) {
-                let ress: java.util.Set<Pair<Term, java.lang.Float>> = CompositionalRules.introduceVariables(nal, statement2, subjectIntro);
+                let ress: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, statement2, subjectIntro);
                 for (let content_penalty of ress) { // ok we applied it, all we have to do now is to use it
                     t11s.add((content_penalty.getLeft() as Statement).getPredicate());
                     t22s.add((content_penalty.getLeft() as Statement).getSubject());
@@ -247,7 +247,7 @@ export class TemporalRules extends JavaObject {
             for (let i: int = 0; i < t11s.size(); i++) {
                 let t11: Term = t11s.get(i);
                 let t22: Term = t22s.get(i);
-                let penalty: java.lang.Float = penalties.get(i);
+                let penalty: float = penalties.get(i);
                 let statement11: Statement = Implication.make(t11, t22, order);
                 let statement22: Statement = Implication.make(t22, t11, TemporalRules.reverseOrder(order));
                 let statement33: Statement = Equivalence.make(t11, t22, order);

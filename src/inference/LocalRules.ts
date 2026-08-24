@@ -152,7 +152,7 @@ export class LocalRules extends JavaObject {
      * @return
      */
     public static intervalProjection(nal: DerivationContext, newBeliefTerm: Term,
-        oldBeliefTerm: Term, recent_ivals: java.util.List<java.lang.Float>, newTruth: TruthValue): boolean {
+        oldBeliefTerm: Term, recent_ivals: java.util.List<float>, newTruth: TruthValue): boolean {
         let useNewBeliefTerm: boolean = false;
         if (newBeliefTerm.hasInterval()) {
             let ivalOld: java.util.List<java.lang.Long> = CompoundTerm.extractIntervals(nal.memory, oldBeliefTerm);
