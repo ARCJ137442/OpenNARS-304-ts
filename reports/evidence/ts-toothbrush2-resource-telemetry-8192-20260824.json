@@ -1,0 +1,230 @@
+{
+  "file": "java-master/src/main/resources/nal/application/toothbrush2.nal",
+  "thread_mode": "single",
+  "embedded_cycles": 200000,
+  "target_cycles": 8192,
+  "observed_cycles": 4096,
+  "chunk_cycles": 1024,
+  "rss_limit_mb": 1800,
+  "stopped_reason": "markers_reached",
+  "expected_markers": [
+    "(^lighter,{SELF},cup)! %1.00;0.39%",
+    "(^reshape,{SELF},cup)! %1.00;0.24%"
+  ],
+  "matched": [
+    true,
+    true
+  ],
+  "marker_time_ms": [
+    21265.287300000004,
+    31743.5181
+  ],
+  "sample_count": 4,
+  "final": {
+    "cycle": 4096,
+    "chunk_cycles": 1024,
+    "chunk_duration_ms": 8720.554300000003,
+    "elapsed_ms": 36980.2762,
+    "cycle_end_events": 4096,
+    "out_events": 1737,
+    "exe_events": 2,
+    "expected_markers": [
+      "(^lighter,{SELF},cup)! %1.00;0.39%",
+      "(^reshape,{SELF},cup)! %1.00;0.24%"
+    ],
+    "matched": [
+      true,
+      true
+    ],
+    "marker_time_ms": [
+      21265.287300000004,
+      31743.5181
+    ],
+    "rss_bytes": 291831808,
+    "heap_used_bytes": 156025304,
+    "heap_total_bytes": 183992320,
+    "external_bytes": 3172419,
+    "array_buffers_bytes": 1032413,
+    "bags": {
+      "concepts": 658,
+      "novel_tasks": 0,
+      "sequence_current": 0,
+      "recent_operations": 2
+    },
+    "concept_state": {
+      "concepts": 658,
+      "task_links": 3145,
+      "term_links": 3702,
+      "beliefs": 572,
+      "desires": 106,
+      "questions": 0,
+      "quests": 0
+    }
+  },
+  "samples": [
+    {
+      "cycle": 1024,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 10049.1623,
+      "elapsed_ms": 10082.0018,
+      "cycle_end_events": 1024,
+      "out_events": 611,
+      "exe_events": 0,
+      "expected_markers": [
+        "(^lighter,{SELF},cup)! %1.00;0.39%",
+        "(^reshape,{SELF},cup)! %1.00;0.24%"
+      ],
+      "matched": [
+        true,
+        true
+      ],
+      "marker_time_ms": [
+        21265.287300000004,
+        31743.5181
+      ],
+      "rss_bytes": 269213696,
+      "heap_used_bytes": 91191528,
+      "heap_total_bytes": 164069376,
+      "external_bytes": 2730400,
+      "array_buffers_bytes": 586283,
+      "bags": {
+        "concepts": 311,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 311,
+        "task_links": 1382,
+        "term_links": 1704,
+        "beliefs": 237,
+        "desires": 40,
+        "questions": 0,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 2048,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 9575.1329,
+      "elapsed_ms": 19657.2436,
+      "cycle_end_events": 2048,
+      "out_events": 1022,
+      "exe_events": 0,
+      "expected_markers": [
+        "(^lighter,{SELF},cup)! %1.00;0.39%",
+        "(^reshape,{SELF},cup)! %1.00;0.24%"
+      ],
+      "matched": [
+        true,
+        true
+      ],
+      "marker_time_ms": [
+        21265.287300000004,
+        31743.5181
+      ],
+      "rss_bytes": 271683584,
+      "heap_used_bytes": 91970192,
+      "heap_total_bytes": 150962176,
+      "external_bytes": 2751678,
+      "array_buffers_bytes": 599259,
+      "bags": {
+        "concepts": 468,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 468,
+        "task_links": 2046,
+        "term_links": 2602,
+        "beliefs": 371,
+        "desires": 49,
+        "questions": 0,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 3072,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 8602.3216,
+      "elapsed_ms": 28259.646,
+      "cycle_end_events": 3072,
+      "out_events": 1375,
+      "exe_events": 1,
+      "expected_markers": [
+        "(^lighter,{SELF},cup)! %1.00;0.39%",
+        "(^reshape,{SELF},cup)! %1.00;0.24%"
+      ],
+      "matched": [
+        true,
+        true
+      ],
+      "marker_time_ms": [
+        21265.287300000004,
+        31743.5181
+      ],
+      "rss_bytes": 277389312,
+      "heap_used_bytes": 115343800,
+      "heap_total_bytes": 170622976,
+      "external_bytes": 2968527,
+      "array_buffers_bytes": 828521,
+      "bags": {
+        "concepts": 530,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 1
+      },
+      "concept_state": {
+        "concepts": 530,
+        "task_links": 2495,
+        "term_links": 2988,
+        "beliefs": 467,
+        "desires": 74,
+        "questions": 0,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 4096,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 8720.554300000003,
+      "elapsed_ms": 36980.2762,
+      "cycle_end_events": 4096,
+      "out_events": 1737,
+      "exe_events": 2,
+      "expected_markers": [
+        "(^lighter,{SELF},cup)! %1.00;0.39%",
+        "(^reshape,{SELF},cup)! %1.00;0.24%"
+      ],
+      "matched": [
+        true,
+        true
+      ],
+      "marker_time_ms": [
+        21265.287300000004,
+        31743.5181
+      ],
+      "rss_bytes": 291831808,
+      "heap_used_bytes": 156025304,
+      "heap_total_bytes": 183992320,
+      "external_bytes": 3172419,
+      "array_buffers_bytes": 1032413,
+      "bags": {
+        "concepts": 658,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 2
+      },
+      "concept_state": {
+        "concepts": 658,
+        "task_links": 3145,
+        "term_links": 3702,
+        "beliefs": 572,
+        "desires": 106,
+        "questions": 0,
+        "quests": 0
+      }
+    }
+  ]
+}
