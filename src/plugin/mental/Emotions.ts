@@ -168,7 +168,7 @@ export class Emotions extends JavaObject implements Plugin {
         }
 
         if (frequency !== -1) { // ok lets add an event now
-            let predicate: Term = SetInt.make(new Term("satisfied"));
+            let predicate: Term = SetInt.make(new Term(java.lang.String.valueOf("satisfied")));
             let subject: Term = Term.SELF;
             let inh: Inheritance = Inheritance.make(subject, predicate);
             let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.happyValue, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
@@ -262,8 +262,8 @@ export class Emotions extends JavaObject implements Plugin {
         }
 
         if (frequency !== -1) { // ok lets add an event now
-            let predicate: Term = SetInt.make(new Term("busy"));
-            let subject: Term = new Term("SELF");
+            let predicate: Term = SetInt.make(new Term(java.lang.String.valueOf("busy")));
+            let subject: Term = new Term(java.lang.String.valueOf("SELF"));
             let inh: Inheritance = Inheritance.make(subject, predicate);
             let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.busyValue, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
                 nal.narParameters);

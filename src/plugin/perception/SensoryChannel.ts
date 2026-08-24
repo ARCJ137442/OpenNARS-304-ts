@@ -148,7 +148,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
     }
 
     public setName(val: java.lang.String): void {
-        this.label = new Term(val);
+        this.label = new Term(java.lang.String.valueOf(val));
         this.nar.removePlugin(new this.nar.PluginState(this));
         this.nar.addPlugin(this);
     }

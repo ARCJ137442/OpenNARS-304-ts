@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Term.java
-import { java, JavaObject, type int, type short, S } from "jree";
+import { java, JavaObject, type JavaString, type int, type short, S } from "jree";
 import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
@@ -96,15 +96,16 @@ export class Term extends JavaObject {
     /**
      * Default constructor that build an internal Term
      */
-    protected constructor();
+    public constructor();
 
     /**
      * Constructor with a given name
      *
      * @param name A String as the name of the Term
      */
+    public constructor(name: JavaString);
     public constructor(name: java.lang.CharSequence);
-    protected constructor(...args: unknown[]) {
+    public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
 

@@ -1,0 +1,19 @@
+running chunk 1/3 (1 files)
+running chunk 2/3 (1 files)
+running chunk 3/3 (1 files)
+{
+  "engine": "parity",
+  "cycles": 1550,
+  "timeoutMs": 30000,
+  "processLimitMs": 180000,
+  "files": 3,
+  "passed": 3,
+  "failed": 0,
+  "java_artifact": {
+    "jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+    "classes": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\classes",
+    "testClasses": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\test-classes",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5"
+  },
+  "failures": []
+}

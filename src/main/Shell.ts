@@ -91,7 +91,7 @@ export class Shell extends JavaObject {
             let nar1port: int = java.lang.Integer.parseInt(args[4]);
             let nar1: NarNode = new NarNode(nar, nar1port);
             for (let i: int = 5; i < args.length; i += 5) {
-                let T: Term = args[i + 3].toLowerCase().equals("null") ? null : new Term(args[i + 3]);
+                let T: Term = args[i + 3].toLowerCase().equals("null") ? null : new Term(java.lang.String.valueOf(args[i + 3]));
                 nar1.addRedirectionTo(args[i], java.lang.Integer.parseInt(args[i + 1]), Math.fround(Number.parseFloat(String(args[i + 2]))), T,
                     java.lang.Boolean.parseBoolean(args[i + 4]));
             }
