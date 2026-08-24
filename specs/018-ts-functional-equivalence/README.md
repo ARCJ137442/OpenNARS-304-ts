@@ -10,7 +10,6 @@ transitions:
 - status: in-progress
   at: 2026-08-24T01:49:01.124331600Z
 ---
-
 # TypeScript functional equivalence
 
 ## 概述
@@ -25,7 +24,7 @@ transitions:
 
 ## 计划
 
-- [ ] 生成 toothbrush2 周期 47286 的 Java/TypeScript 紧凑证据。
+- [x] 生成 toothbrush2 周期 47286 的 Java/TypeScript 紧凑证据。
 - [ ] 定位并修复首个语义分歧，补充直接命中的回归测试。
 - [ ] 重新分类剩余 unknown，并冻结 245+1 矩阵。
 

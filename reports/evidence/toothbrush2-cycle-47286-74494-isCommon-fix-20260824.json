@@ -1,0 +1,81 @@
+{
+  "sample": "toothbrush2",
+  "kind": "post-fix-target-chain",
+  "java_artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "input": "java-master/src/main/resources/nal/application/toothbrush2.nal",
+  "single_thread": true,
+  "runner": "scripts/e2e/ConceptBudgetTraceRunner",
+  "target_cycles": 74494,
+  "checkpoints": [47286, 73130, 74494],
+  "cycle_47286": {
+    "java": {
+      "term_link_select": "<(|,$1,[unscrewing]) --> (&,(|,#2,$1),(|,$1,object))>",
+      "term_link_type": 4,
+      "term_link_index": [1],
+      "term_link_priority": 0.9834816,
+      "term_link_durability": 0.9516631,
+      "term_link_quality": 0.5473613,
+      "concept_fire": true,
+      "concept_budget": {
+        "priority": 0.2606071,
+        "durability": 0.00070990797,
+        "quality": 0.73214287,
+        "term_link_average_priority": 0.64285713
+      }
+    },
+    "typescript_after_fix": {
+      "variables_unify_count": 4,
+      "unified_terms": [
+        "<(|,[unscrewing],object) --> (&,(|,#1#2$,object),object)>",
+        "<(&,(|,#1#2$,object),object) <-> (|,[unscrewing],object)>"
+      ],
+      "reduce_conjunction": {
+        "first_frequency": 1,
+        "first_confidence": 0.09472261361229604,
+        "second_frequency": 1,
+        "second_confidence": 0.09472261361229604,
+        "output_expectation": 0.5473613142967224
+      },
+      "budget_forward": {
+        "method": "forward",
+        "qual": 0.5,
+        "result_quality": 0.5
+      },
+      "term_link_select": "<(|,$1,[unscrewing]) --> (&,(|,#2,$1),(|,$1,object))>",
+      "term_link_type": 4,
+      "term_link_index": [1],
+      "term_link_priority": 0.9834815859794617,
+      "term_link_durability": 0.951663076877594,
+      "term_link_quality": 0.5473613142967224,
+      "concept_fire": true,
+      "concept_budget": {
+        "priority": 0.2606070935726166,
+        "durability": 0.0007099079666659236,
+        "quality": 0.7321428656578064,
+        "term_link_average_priority": 0.6428571343421936
+      }
+    },
+    "branch": "LocalRules.matchAsymSym/inferToAsym"
+  },
+  "later_checkpoints": {
+    "java": {
+      "73130_term_link_targets": [
+        "object",
+        "<(|,$1,cup) --> (&,(|,#2,$1),(|,$1,object))>",
+        "<(&,(|,#1,$2),(|,$2,object)) --> (|,$2,[unscrewing])>"
+      ],
+      "73130_concept_fire": true,
+      "74494_concept_fire": true
+    },
+    "typescript_after_fix": {
+      "73130_term_link_targets": [
+        "object",
+        "<(|,$1,cup) --> (&,(|,#2,$1),(|,$1,object))>",
+        "<(&,(|,#1,$2),(|,$2,object)) --> (|,$2,[unscrewing])>"
+      ],
+      "73130_concept_fire": true,
+      "74494_concept_fire": true
+    }
+  },
+  "conclusion": "The previously observed 74494 ConceptFire absence disappeared after the isCommon fix; no new target-chain semantic divergence was observed through 74494."
+}

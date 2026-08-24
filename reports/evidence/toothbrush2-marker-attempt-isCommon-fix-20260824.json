@@ -1,0 +1,37 @@
+{
+  "sample": "toothbrush2",
+  "kind": "marker-attempt",
+  "java_artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "input": "java-master/src/main/resources/nal/application/toothbrush2.nal",
+  "expected_markers": [
+    "(^lighter,{SELF},cup)! %1.00;0.39%",
+    "(^reshape,{SELF},cup)! %1.00;0.24%"
+  ],
+  "contract": {
+    "engine": "parity",
+    "cycles": 1550,
+    "embedded_cycles": 200000,
+    "timeout_ms": 180000,
+    "timeout_meaning": "no-progress watchdog only",
+    "process_limit_ms": 1200000,
+    "single_thread": true,
+    "ts_mode": "hot"
+  },
+  "java": {
+    "started": true,
+    "expected": 2,
+    "status": "not_persisted_before_manual_safety_stop"
+  },
+  "typescript": {
+    "started": true,
+    "status": "manual_safety_stop",
+    "marker_verified": false,
+    "no_progress_timeout": false,
+    "exception": false,
+    "observed_working_set_bytes": 2730680320,
+    "stop_reason": "The single TS child reached approximately 2.73 GB working set; it was stopped to protect the host from memory instability.",
+    "functional_conclusion": "unverified",
+    "performance_conclusion": "separate resource-growth observation"
+  },
+  "conclusion": "This attempt does not prove marker equivalence or marker mismatch. It records a host-safety interruption separately from no-progress timeout, process-limit classification, and semantic divergence."
+}
