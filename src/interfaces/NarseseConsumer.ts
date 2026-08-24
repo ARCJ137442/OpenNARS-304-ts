@@ -9,7 +9,7 @@ import { java } from "jree";
  *
  * @author Robert Wünsche
  */
-interface NarseseConsumer {
+export interface NarseseConsumer {
     // TODO< split this and refactor to interface which can be used by the parser
     // too >
 

@@ -9,7 +9,7 @@ import { java, type long, type int } from "jree";
  *
  * @author Robert Wünsche
  */
-interface Multistepable {
+export interface Multistepable {
     start(minCyclePeriodMS: long): void;
 
     start(): void;

@@ -9,7 +9,7 @@ import type { EventEmitter } from "../io/events/EventEmitter.ts";
  *
  * @author Robert Wünsche
  */
-interface Eventable {
+export interface Eventable {
     on(c: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void;
 
     off(c: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void;

@@ -1,5 +1,7 @@
 //! Java source: opennars/interfaces/TaskConsumer.java
 import { java } from "jree";
+import type { Task } from "../entity/Task.ts";
+import type { Timable } from "./Timable.ts";
 
 
 
@@ -10,7 +12,7 @@ import { java } from "jree";
  *
  * @author Robert Wünsche
  */
-interface TaskConsumer<R> {
+export interface TaskConsumer<R> {
     /**
      * consumes a task
      *

@@ -1,5 +1,16 @@
 //! Java source: opennars/interfaces/pub/Reasoner.java
 import { java, type long } from "jree";
+import type { SensoryChannelConsumer } from "../SensoryChannelConsumer.ts";
+import type { Resettable } from "../Resettable.ts";
+import type { NarseseConsumer } from "../NarseseConsumer.ts";
+import type { InputFileConsumer } from "../InputFileConsumer.ts";
+import type { Eventable } from "../Eventable.ts";
+import type { Pluggable } from "../Pluggable.ts";
+import type { Multistepable } from "../Multistepable.ts";
+import type { Timable } from "../Timable.ts";
+import type { AnswerHandler } from "../../io/events/AnswerHandler.ts";
+import type { Concept } from "../../entity/Concept.ts";
+import type { Task } from "../../entity/Task.ts";
 
 
 
@@ -13,11 +24,13 @@ export interface Reasoner extends
     Resettable,
     NarseseConsumer,
     InputFileConsumer,
-    TaskConsumer<Reasoner>,
     Eventable,
     Pluggable,
     Multistepable,
     Timable {
+    addInput(narsese: java.lang.String): void;
+    addInput(task: Task, time: Timable): Reasoner;
+
     /**
      * ask reasoner a eternal question
      *

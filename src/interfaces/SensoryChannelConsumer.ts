@@ -1,5 +1,6 @@
 //! Java source: opennars/interfaces/SensoryChannelConsumer.java
 import { java } from "jree";
+import type { SensoryChannel } from "../plugin/perception/SensoryChannel.ts";
 
 
 
@@ -8,7 +9,7 @@ import { java } from "jree";
  *
  * @author Robert Wünsche
  */
-interface SensoryChannelConsumer {
+export interface SensoryChannelConsumer {
     /**
      * registers a sensory channel by/for the term
      *

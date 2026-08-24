@@ -9,7 +9,7 @@ import { java } from "jree";
  *
  * @author Robert Wünsche
  */
-interface InputFileConsumer {
+export interface InputFileConsumer {
     /**
      * consumes a file
      *

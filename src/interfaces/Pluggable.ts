@@ -1,5 +1,7 @@
 //! Java source: opennars/interfaces/Pluggable.java
 import { java } from "jree";
+import type { Plugin } from "../plugin/Plugin.ts";
+import type { Nar } from "../main/Nar.ts";
 
 
 
@@ -8,7 +10,7 @@ import { java } from "jree";
  *
  * @author Robert Wünsche
  */
-interface Pluggable {
+export interface Pluggable {
     /**
      * adds/registers a plugin
      *
