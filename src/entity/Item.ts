@@ -238,14 +238,14 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
         }
 
         public  hashCode():  int {
-            return $outer.name().hashCode();
+            return this.name().hashCode();
         }
 
         public  equals(obj: java.lang.Object):  boolean {
             if (obj === this)
                 return true;
             if (obj instanceof Item) {
-                return ( obj as Item<unknown>).name().equals($outer.name());
+                return ( obj as Item<unknown>).name().equals(this.name());
             }
             return false;
         }

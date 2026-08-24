@@ -1,0 +1,37 @@
+batch=20260824-item-inner-class
+spec=019-tsc-zero-error-build
+base_commit=62326ae
+canonical_java_commit=8675b76fe8c21ee20a7b8c1b63408fb05327210d
+canonical_java_jar_sha256=2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
+
+command=npx tsc --noEmit --pretty false --incremental false
+diagnostics_before=2012
+production_before=1098
+tests_before=914
+change=replace translated $outer references in Item.StringKeyItem with this, matching Java inner-class methods
+diagnostics_after=2011
+production_after=1097
+tests_after=914
+diagnostics_delta=-1
+production_delta=-1
+tests_delta=0
+ts2304_before=497
+ts2304_after=495
+ts2339_before=153
+ts2339_after=154
+
+npm_test_command=npm test --silent
+npm_test_exit=0
+npm_test_total=127
+npm_test_pass=127
+npm_test_fail=0
+
+local_parity_command=npm run test:parity:local --silent
+local_parity_exit=0
+local_parity_ok=true
+local_parity_differences=0
+
+m1_drift_test=not_triggered
+m1_drift_reason=diagnostics remain in 20xx; 2118 to 2011 is cumulative reduction 107 and does not cross the 18xx threshold
+functional_semantics_changed=inner-class hashCode and equals now invoke the receiving item's name, as in Java
+known_warning=jree package main-field extension-resolution deprecation warning remains
