@@ -375,7 +375,10 @@ export class LocalRules extends JavaObject {
      */
     public static matchReverse(nal: DerivationContext): void {
         let task: Task = nal.getCurrentTask();
-        let belief: Sentence = nal.getCurrentBelief();
+        const belief = nal.getCurrentBelief();
+        if (belief === null) {
+            return;
+        }
         let sentence: Sentence = task.sentence;
         if (matchingOrder(sentence.getTemporalOrder(), reverseOrder(belief.getTemporalOrder()))) {
             if (sentence.isJudgment()) {
@@ -465,7 +468,11 @@ export class LocalRules extends JavaObject {
      * @param nal Reference to the memory
      */
     private static conversion(nal: DerivationContext): void {
-        let truth: TruthValue = TruthFunctions.conversion(nal.getCurrentBelief().getTruth(), nal.narParameters);
+        const belief = nal.getCurrentBelief();
+        if (belief === null) {
+            return;
+        }
+        let truth: TruthValue = TruthFunctions.conversion(belief.getTruth(), nal.narParameters);
         let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
         LocalRules.convertedJudgment(truth, budget, nal);
     }
@@ -479,7 +486,11 @@ export class LocalRules extends JavaObject {
      * @param nal Reference to the memory
      */
     private static convertRelation(nal: DerivationContext): void {
-        let truth: TruthValue = nal.getCurrentBelief().getTruth();
+        const belief = nal.getCurrentBelief();
+        if (belief === null) {
+            return;
+        }
+        let truth: TruthValue = belief.getTruth();
         if ((nal.getCurrentTask().getTerm() as CompoundTerm).isCommutative()) {
             truth = TruthFunctions.abduction(truth, 1.0, nal.narParameters);
         } else {
@@ -501,7 +512,11 @@ export class LocalRules extends JavaObject {
     private static convertedJudgment(newTruth: TruthValue, newBudget: BudgetValue,
         nal: DerivationContext): void {
         let content: Statement | null = nal.getCurrentTask().getTerm() as Statement;
-        let beliefContent: Statement = nal.getCurrentBelief().term as Statement;
+        const belief = nal.getCurrentBelief();
+        if (belief === null) {
+            return;
+        }
+        let beliefContent: Statement = belief.term as Statement;
         let order: int = TemporalRules.reverseOrder(beliefContent.getTemporalOrder());
         let subjT: Term = content.getSubject();
         let predT: Term = content.getPredicate();

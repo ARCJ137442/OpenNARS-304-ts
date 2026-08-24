@@ -37,7 +37,7 @@ export class DerivationContext extends JavaObject {
     public currentTask: Task;
     public currentBeliefLink: TermLink;
     public currentTaskLink: TaskLink;
-    public currentBelief: Sentence;
+    public currentBelief: Sentence | null = null;
     public newStamp: Stamp;
     public newStampBuilder: DerivationContext.StampBuilder;
 
@@ -377,11 +377,12 @@ export class DerivationContext extends JavaObject {
                     return false;
 
                 let taskSentence: Sentence = this.getCurrentTask().sentence;
-                if (taskSentence.isGoal() || taskSentence.isJudgment() || this.getCurrentBelief() === null) {
+                const currentBelief = this.getCurrentBelief();
+                if (taskSentence.isGoal() || taskSentence.isJudgment() || currentBelief === null) {
                     this.setTheNewStamp(new Stamp(taskSentence.stamp, this.getTime()));
                 } else {
                     // to answer a question with negation in NAL-5 --- move to activated task?
-                    this.setTheNewStamp(new Stamp(this.getCurrentBelief().stamp, this.getTime()));
+                    this.setTheNewStamp(new Stamp(currentBelief.stamp, this.getTime()));
                 }
 
                 if (newContent.subjectOrPredicateIsIndependentVar()) {
@@ -510,14 +511,14 @@ export class DerivationContext extends JavaObject {
     /**
      * @return the currentBelief
      */
-    public getCurrentBelief(): Sentence {
+    public getCurrentBelief(): Sentence | null {
         return this.currentBelief;
     }
 
     /**
      * @param currentBelief the currentBelief to set
      */
-    public setCurrentBelief(currentBelief: Sentence): void {
+    public setCurrentBelief(currentBelief: Sentence | null): void {
         this.currentBelief = currentBelief;
     }
 
@@ -590,7 +591,7 @@ export class DerivationContext extends JavaObject {
      *                        forward/backward correspondence
      */
     public addTask(currentTask: Task, budget: BudgetValue, sentence: Sentence,
-        candidateBelief: Sentence): void;
+        candidateBelief: Sentence | null): void;
     public addTask(...args: unknown[]): void {
         switch (args.length) {
             case 2: {
@@ -607,7 +608,7 @@ export class DerivationContext extends JavaObject {
             }
 
             case 4: {
-                const [currentTask, budget, sentence, candidateBelief] = args as [Task, BudgetValue, Sentence, Sentence];
+                const [currentTask, budget, sentence, candidateBelief] = args as [Task, BudgetValue, Sentence, Sentence | null];
 
 
                 this.addTask(new Task(sentence, budget, sentence, candidateBelief), S`Activated`);

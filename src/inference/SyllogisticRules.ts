@@ -509,7 +509,7 @@ export class SyllogisticRules extends JavaObject {
                 }
 
                 let taskSentence: Sentence = nal.getCurrentTask().sentence;
-                let beliefSentence: Sentence = nal.getCurrentBelief();
+                let beliefSentence: Sentence | null = nal.getCurrentBelief();
 
                 if (beliefSentence === null)
                     return;
@@ -617,7 +617,10 @@ export class SyllogisticRules extends JavaObject {
         side: int, nal: DerivationContext): void {
         let task: Task = nal.getCurrentTask();
         let taskSentence: Sentence = task.sentence;
-        let belief: Sentence = nal.getCurrentBelief();
+        const belief = nal.getCurrentBelief();
+        if (belief === null) {
+            return;
+        }
         let deduction: boolean = (side !== 0);
         let conditionalTask: boolean = Variables.hasSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,
             premise2, belief.term);
@@ -802,7 +805,10 @@ export class SyllogisticRules extends JavaObject {
         nal: DerivationContext): void {
         let task: Task = nal.getCurrentTask();
         let taskSentence: Sentence = task.sentence;
-        let belief: Sentence = nal.getCurrentBelief();
+        const belief = nal.getCurrentBelief();
+        if (belief === null) {
+            return;
+        }
         let conditionalTask: boolean = Variables.hasSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,
             premise2, belief.term);
         let commonComponent: Term;
@@ -934,7 +940,10 @@ export class SyllogisticRules extends JavaObject {
         }
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
-        let belief: Sentence = nal.getCurrentBelief();
+        const belief = nal.getCurrentBelief();
+        if (belief === null) {
+            return false;
+        }
         let value1: TruthValue = sentence.getTruth();
         let value2: TruthValue = belief.getTruth();
 
@@ -1018,7 +1027,10 @@ export class SyllogisticRules extends JavaObject {
         }
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
-        let belief: Sentence = nal.getCurrentBelief();
+        const belief = nal.getCurrentBelief();
+        if (belief === null) {
+            return;
+        }
         let v1: TruthValue = sentence.getTruth();
         let v2: TruthValue = belief.getTruth();
         let truth: TruthValue = null;

@@ -121,6 +121,10 @@ export class CompositionalRules extends JavaObject {
         if ((!nal.getCurrentTask().sentence.isJudgment()) || (taskContent.getClass() !== beliefContent.getClass())) {
             return;
         }
+        const currentBelief = nal.getCurrentBelief();
+        if (currentBelief === null) {
+            return;
+        }
         let componentT: Term = taskContent.term[1 - index];
         let componentB: Term = beliefContent.term[1 - index];
         let componentCommon: Term = taskContent.term[index];
@@ -138,7 +142,7 @@ export class CompositionalRules extends JavaObject {
             return;
         }
         let truthT: TruthValue = nal.getCurrentTask().sentence.getTruth();
-        let truthB: TruthValue = nal.getCurrentBelief().getTruth();
+        let truthB: TruthValue = currentBelief.getTruth();
         let truthOr: TruthValue = union(truthT, truthB, nal.narParameters);
         let truthAnd: TruthValue = intersection(truthT, truthB, nal.narParameters);
         let truthDif: TruthValue = null;
@@ -207,9 +211,13 @@ export class CompositionalRules extends JavaObject {
         if ((subject === null) || (predicate === null)) {
             return;
         }
+        const currentBelief = nal.getCurrentBelief();
+        if (currentBelief === null) {
+            return;
+        }
         let content: Term | null = Statement.make(statement, subject, predicate, order);
         if ((content === null) || statement === null || content.equals(statement)
-            || content.equals(nal.getCurrentBelief().term)) {
+            || content.equals(currentBelief.term)) {
             return;
         }
         let budget: BudgetValue = BudgetFunctions.compoundForward(truth, content, nal);
@@ -233,6 +241,10 @@ export class CompositionalRules extends JavaObject {
         if ((compound instanceof Statement) || (compound instanceof ImageExt) || (compound instanceof ImageInt)) {
             return;
         }
+        const currentBelief = nal.getCurrentBelief();
+        if (currentBelief === null) {
+            return;
+        }
         let term2: Term = reduceComponents(compound, component, nal.mem());
         if (term2 === null) {
             return;
@@ -247,7 +259,7 @@ export class CompositionalRules extends JavaObject {
 
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
-        let belief: Sentence = nal.getCurrentBelief();
+        let belief: Sentence = currentBelief;
         let oldContent: Statement = task.getTerm() as Statement;
 
         let v1: TruthValue = compoundTask ? sentence.getTruth() : belief.getTruth();
@@ -325,6 +337,10 @@ export class CompositionalRules extends JavaObject {
      */
     public static decomposeStatement(compound: CompoundTerm, component: Term, compoundTask: boolean,
         index: int, nal: DerivationContext): void {
+        const currentBelief = nal.getCurrentBelief();
+        if (currentBelief === null) {
+            return;
+        }
         let isTemporalConjunction: boolean = (compound instanceof Conjunction) && !(compound as Conjunction).isSpatial;
         if (isTemporalConjunction && (compound.getTemporalOrder() === TemporalRules.ORDER_FORWARD) && (index !== 0)) {
             return;
@@ -339,7 +355,7 @@ export class CompositionalRules extends JavaObject {
 
         let task: Task = nal.getCurrentTask();
         let taskSentence: Sentence = task.sentence;
-        let belief: Sentence = nal.getCurrentBelief();
+        let belief: Sentence = currentBelief;
         let content: Term = reduceComponents(compound, component, nal.mem());
         if (content === null) {
             return;
@@ -356,7 +372,7 @@ export class CompositionalRules extends JavaObject {
                 if (contentConcept === null) {
                     return;
                 }
-                let contentBelief: Sentence = contentConcept.getBelief(nal, task);
+                let contentBelief: Sentence | null = contentConcept.getBelief(nal, task);
                 if (contentBelief === null) {
                     return;
                 }
@@ -421,6 +437,10 @@ export class CompositionalRules extends JavaObject {
         if (!(taskContent instanceof Inheritance)) {
             return;
         }
+        const currentBelief = nal.getCurrentBelief();
+        if (currentBelief === null) {
+            return;
+        }
 
         let term11: Term = taskContent.getSubject();
         let term21: Term = beliefContent.getSubject();
@@ -429,7 +449,7 @@ export class CompositionalRules extends JavaObject {
         let state1: Statement = Inheritance.make(term11, term12);
         let state2: Statement = Inheritance.make(term21, term22);
         let truthT: TruthValue | null = nal.getCurrentTask().sentence.truth;
-        let truthB: TruthValue | null = nal.getCurrentBelief().truth;
+        let truthB: TruthValue | null = currentBelief.truth;
         if ((truthT === null) || (truthB === null)) {
             if (Debug.DETAILED) {
                 java.lang.System.out.println("ERROR: Belief with null truth value. (introVarOuter)");
@@ -494,7 +514,11 @@ export class CompositionalRules extends JavaObject {
             || oldCompound.containsTerm(premise1)) {
             return false;
         }
-        let belief: Sentence = nal.getCurrentBelief();
+        const currentBelief = nal.getCurrentBelief();
+        if (currentBelief === null) {
+            return false;
+        }
+        let belief: Sentence = currentBelief;
 
         let b1: boolean = false;
         let b2: boolean = false;

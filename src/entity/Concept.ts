@@ -526,7 +526,7 @@ export class Concept extends Item<Term> {
      * @param task The selected task
      * @return The selected isBelief
      */
-    public getBelief(nal: DerivationContext, task: Task): Sentence {
+    public getBelief(nal: DerivationContext, task: Task): Sentence | null {
         let taskStamp: Stamp = task.sentence.stamp;
         let currentTime: long = nal.time.time();
 

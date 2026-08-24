@@ -74,7 +74,7 @@ export class RuleTables extends JavaObject {
 
         let beliefConcept: Concept = memory.concept(beliefTerm);
 
-        let belief: Sentence = null;
+        let belief: Sentence | null = null;
         if (beliefConcept !== null) {
             /* synchronized (beliefConcept) { */ // we only need the target concept to select a belief
             belief = beliefConcept.getBelief(nal, task);
@@ -142,7 +142,7 @@ export class RuleTables extends JavaObject {
     }
 
     private static applyRuleTable(tLink: TaskLink, bLink: TermLink, nal: DerivationContext, task: Task,
-        taskSentence: Sentence, taskTerm: Term, beliefTerm: Term, belief: Sentence): void {
+        taskSentence: Sentence, taskTerm: Term, beliefTerm: Term, belief: Sentence | null): void {
         let tIndex: short = tLink.getIndex(0);
         let bIndex: short = bLink.getIndex(0);
         switch (tLink.type) { // dispatch first by TaskLink type
@@ -403,7 +403,10 @@ export class RuleTables extends JavaObject {
     private static syllogisms(tLink: TaskLink, bLink: TermLink, taskTerm: Term,
         beliefTerm: Term, nal: DerivationContext): void {
         let taskSentence: Sentence = nal.getCurrentTask().sentence;
-        let belief: Sentence = nal.getCurrentBelief();
+        const belief = nal.getCurrentBelief();
+        if (belief === null) {
+            return;
+        }
         let figure: int;
         if (taskTerm instanceof Inheritance) {
             if (beliefTerm instanceof Inheritance) {
@@ -982,7 +985,11 @@ export class RuleTables extends JavaObject {
             if (index === 0) {
                 StructuralRules.contraposition(statement, nal.getCurrentTask().sentence, nal);
             } else {
-                StructuralRules.contraposition(statement, nal.getCurrentBelief(), nal);
+                const belief = nal.getCurrentBelief();
+                if (belief === null) {
+                    return;
+                }
+                StructuralRules.contraposition(statement, belief, nal);
             }
         }
 

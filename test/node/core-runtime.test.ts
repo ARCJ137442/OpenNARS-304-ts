@@ -105,6 +105,34 @@ test("countTermRecursively accepts a null accumulator like Java", async () => {
     assert.equal(counts.get(Term.get("predicate"))?.valueOf(), 1);
 });
 
+test("Concept.getBelief returns null when Java belief selection has no candidate", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { Concept } = await import("../../src/entity/Concept.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Task } = await import("../../src/entity/Task.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+
+    const nar = new Nar();
+    const stamp = new Stamp(0n, Tense.Present, new Stamp.BaseEntry(0n, 1n), nar.narParameters.DURATION);
+    const task = new Task(
+        new Sentence(Term.get("query"), "?", null, stamp),
+        new BudgetValue(0.5, 0.5, 0.5, nar.narParameters),
+        Task.EnumType.INPUT,
+    );
+    const concept = new Concept(
+        new BudgetValue(0.5, 0.5, 0.5, nar.narParameters),
+        Term.get("empty-belief"),
+        nar.memory,
+    );
+    const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+
+    assert.equal(concept.getBelief(context, task), null);
+});
+
 test("Stamp tense lookup uses Java temporal order constants", async () => {
     const { Stamp } = await import("../../src/entity/Stamp.ts");
     const { Tense } = await import("../../src/language/Tense.ts");

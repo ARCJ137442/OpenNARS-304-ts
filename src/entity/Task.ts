@@ -29,7 +29,7 @@ export class Task extends Item<Sentence> {
     /* The sentence of the Task */
     public readonly sentence: Sentence;
     /* Belief from which the Task is derived, or null if derived from a theorem */
-    public readonly parentBelief: Sentence;
+    public readonly parentBelief: Sentence | null;
     /*
      * Tasklink from which the Task is derived, null unless Debug.PARENTS is turned
      * on
@@ -57,7 +57,7 @@ export class Task extends Item<Sentence> {
      * @param b            The budget
      * @param parentBelief The belief used for deriving the task
      */
-    public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence);
+    public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence | null);
 
     /***
      * Constructors for solved double premise derived task
@@ -67,7 +67,7 @@ export class Task extends Item<Sentence> {
      * @param parentBelief The belief used for deriving the task
      * @param solution     The solution to the task
      */
-    public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence, solution: Sentence);
+    public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence | null, solution: Sentence);
     public constructor(...args: unknown[]) {
         if (args.length !== 3 && args.length !== 4) {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
@@ -77,17 +77,17 @@ export class Task extends Item<Sentence> {
 
         switch (args.length) {
             case 3: {
-                const [s, _b, third] = args as [Sentence, BudgetValue, Task.EnumType | Sentence];
+                const [s, _b, third] = args as [Sentence, BudgetValue, Task.EnumType | Sentence | null];
                 this.sentence = s;
                 const isType = third === Task.EnumType.INPUT || third === Task.EnumType.DERIVED;
-                this.parentBelief = isType ? null : third as Sentence;
+                this.parentBelief = isType ? null : third as Sentence | null;
                 this.bestSolution = null;
                 this.inputTask = third === Task.EnumType.INPUT;
                 break;
             }
 
             case 4: {
-                const [s, b, parentBelief, solution] = args as [Sentence, BudgetValue, Sentence, Sentence];
+                const [s, b, parentBelief, solution] = args as [Sentence, BudgetValue, Sentence | null, Sentence];
 
 
                 this.sentence = s;
@@ -185,7 +185,7 @@ export class Task extends Item<Sentence> {
      *
      * @return The belief from which the task is derived
      */
-    public getParentBelief(): Sentence {
+    public getParentBelief(): Sentence | null {
         if (this.parentBelief === null)
             return null;
         return this.parentBelief;
