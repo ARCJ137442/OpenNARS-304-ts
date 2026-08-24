@@ -1,6 +1,23 @@
 //! Java source: opennars/plugin/mental/Counting.java
 import { java, JavaObject, type float, type double, type int, S } from "jree";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { Events } from "../../io/events/Events.ts";
+import { Symbols } from "../../io/Symbols.ts";
+import { Inheritance } from "../../language/Inheritance.ts";
+import { Product } from "../../language/Product.ts";
+import { SetExt } from "../../language/SetExt.ts";
+import { Term } from "../../language/Term.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
+import type { Memory } from "../../storage/Memory.ts";
+import type { Nar } from "../../main/Nar.ts";
+import type { Plugin } from "../Plugin.ts";
+import type { EventEmitter } from "../../io/events/EventEmitter.ts";
+
+type EventObserver = EventEmitter.EventObserver;
 
 
 

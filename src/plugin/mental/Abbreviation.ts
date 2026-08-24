@@ -1,5 +1,26 @@
 //! Java source: opennars/plugin/mental/Abbreviation.java
 import { java, JavaObject, type double, type int, type char, type float, S } from "jree";
+import { BudgetValue } from "../../entity/BudgetValue.ts";
+import { Sentence } from "../../entity/Sentence.ts";
+import { Stamp } from "../../entity/Stamp.ts";
+import { Task } from "../../entity/Task.ts";
+import { TruthValue } from "../../entity/TruthValue.ts";
+import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
+import { Symbols } from "../../io/Symbols.ts";
+import { Events } from "../../io/events/Events.ts";
+import { CompoundTerm } from "../../language/CompoundTerm.ts";
+import { Term } from "../../language/Term.ts";
+import { Similarity } from "../../language/Similarity.ts";
+import { Operation } from "../../operator/Operation.ts";
+import { Operator } from "../../operator/Operator.ts";
+import type { Timable } from "../../interfaces/Timable.ts";
+import type { Memory } from "../../storage/Memory.ts";
+import type { Nar } from "../../main/Nar.ts";
+import type { Plugin } from "../Plugin.ts";
+import type { EventEmitter } from "../../io/events/EventEmitter.ts";
+
+type EventObserver = EventEmitter.EventObserver;
+const TaskDerive = Events.TaskDerive;
 
 
 
@@ -105,7 +126,7 @@ export class Abbreviation extends JavaObject implements Plugin {
                 if (this.canAbbreviate(task)) {
 
                     let operation: Operation = Operation.make(
-                        abbreviate, termArray(task.sentence.term),
+                        abbreviate, CompoundTerm.termArray(task.sentence.term),
                         false);
 
                     operation.setTask(task);
@@ -169,7 +190,7 @@ export class Abbreviation extends JavaObject implements Plugin {
                 quality, memory.narParameters);
 
             let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-            return Lists.newArrayList(newTask);
+            return new java.util.ArrayList([newTask]);
 
         }
 
