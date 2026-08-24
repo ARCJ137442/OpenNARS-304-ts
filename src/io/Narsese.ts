@@ -45,6 +45,7 @@ import type { Memory } from "../storage/Memory.ts";
 import type { Nar } from "../main/Nar.ts";
 
 const NativeOperator = Symbols.NativeOperator;
+type NativeOperator = Symbols.NativeOperator;
 const BUDGET_VALUE_MARK = Symbols.BUDGET_VALUE_MARK;
 const TRUTH_VALUE_MARK = Symbols.TRUTH_VALUE_MARK;
 const VALUE_SEPARATOR = Symbols.VALUE_SEPARATOR;
@@ -61,11 +62,11 @@ const SET_INT_OPENER = NativeOperator.SET_INT_OPENER;
 const SET_INT_CLOSER = NativeOperator.SET_INT_CLOSER;
 const STATEMENT_OPENER = NativeOperator.STATEMENT_OPENER;
 const STATEMENT_CLOSER = NativeOperator.STATEMENT_CLOSER;
-const getOperator = (value: string) => Symbols.getOperator(value);
-const getRelation = (value: string) => Symbols.getRelation(value);
-const getOpener = (value: string) => Symbols.getOpener(value);
-const getCloser = (value: string) => Symbols.getCloser(value);
-const isRelation = (value: string) => Symbols.isRelation(value);
+const getOperator = (value: java.lang.String | string) => Symbols.getOperator(String(value));
+const getRelation = (value: java.lang.String | string) => Symbols.getRelation(String(value));
+const getOpener = (value: java.lang.String | string) => Symbols.getOpener(String(value));
+const getCloser = (value: java.lang.String | string) => Symbols.getCloser(String(value));
+const isRelation = (value: java.lang.String | string) => Symbols.isRelation(String(value));
 
 Terms.registerRuntime({
     SetExt,
@@ -150,8 +151,8 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
     public parseTask(s: java.lang.String): Task {
         let buffer: java.lang.StringBuilder = new java.lang.StringBuilder(s);
 
-        let budgetString: java.lang.String = Narsese.getBudgetString(buffer);
-        let truthString: java.lang.String = Narsese.getTruthString(buffer);
+        let budgetString: java.lang.String | null = Narsese.getBudgetString(buffer);
+        let truthString: java.lang.String | null = Narsese.getTruthString(buffer);
         let tense: Tense = Narsese.parseTense(buffer);
         let str: java.lang.String = buffer.toString().trim();
         let last: int = str.length() - 1;
@@ -160,10 +161,10 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         let stamp: Stamp = new Stamp(-1 /* if -1, will be set right before the Task is input */,
             tense, this.memory.newStampSerial(), this.memory.narParameters.DURATION);
 
-        let truth: TruthValue = this.parseTruth(truthString, punc);
-        let content: Term = this.parseTerm(str.substring(0, last));
+        let truth: TruthValue | null = this.parseTruth(truthString, punc);
+        let content: Term | null = this.parseTerm(str.substring(0, last));
         if (content === null)
-            throw new Parser.InvalidInputException("Content term missing");
+            throw new Parser.InvalidInputException(S`Content term missing`);
 
         let sentence: Sentence = new Sentence(
             content,
@@ -189,17 +190,17 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException if the addInput cannot be parsed into a
      *                                      BudgetValue
      */
-    private static getBudgetString(s: java.lang.StringBuilder): java.lang.String {
+    private static getBudgetString(s: java.lang.StringBuilder): java.lang.String | null {
         if (s.length() === 0 || String.fromCharCode(s.charAt(0)) !== BUDGET_VALUE_MARK) {
             return null;
         }
         let i: int = s.indexOf(BUDGET_VALUE_MARK, 1); // looking for the end
         if (i < 0) {
-            throw new Parser.InvalidInputException("missing budget closer");
+            throw new Parser.InvalidInputException(S`missing budget closer`);
         }
         let budgetString: java.lang.String = s.substring(1, i).trim();
         if (budgetString.length() === 0) {
-            throw new Parser.InvalidInputException("empty budget");
+            throw new Parser.InvalidInputException(S`empty budget`);
         }
         s.delete(0, i + 1);
         return budgetString;
@@ -214,18 +215,18 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException if the addInput cannot be parsed into a
      *                                      TruthValue
      */
-    private static getTruthString(s: java.lang.StringBuilder): java.lang.String {
+    private static getTruthString(s: java.lang.StringBuilder): java.lang.String | null {
         let last: int = s.length() - 1;
         if (s.length() === 0 || String.fromCharCode(s.charAt(last)) !== TRUTH_VALUE_MARK) { // use default
             return null;
         }
         let first: int = s.indexOf(TRUTH_VALUE_MARK); // looking for the beginning
         if (first === last) { // no matching closer
-            throw new Parser.InvalidInputException("missing truth mark");
+            throw new Parser.InvalidInputException(S`missing truth mark`);
         }
         let truthString: java.lang.String = s.substring(first + 1, last).trim();
         if (truthString.length() === 0) { // empty usage
-            throw new Parser.InvalidInputException("empty truth");
+            throw new Parser.InvalidInputException(S`empty truth`);
         }
         s.delete(first, last + 1); // remaining addInput to be processed outside
         s.trimToSize();
@@ -239,7 +240,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param type Task type
      * @return the addInput TruthValue
      */
-    private parseTruth(s: java.lang.String, type: JavaChar): TruthValue {
+    private parseTruth(s: java.lang.String | null, type: JavaChar): TruthValue | null {
         if ((type === QUESTION_MARK) || (type === QUEST_MARK)) {
             return null;
         }
@@ -270,7 +271,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException If the String cannot be parsed into a
      *                                      BudgetValue
      */
-    private parseBudget(s: java.lang.String, punctuation: JavaChar, truth: TruthValue): BudgetValue {
+    private parseBudget(s: java.lang.String | null, punctuation: JavaChar, truth: TruthValue | null): BudgetValue {
         let priority: float;
         let durability: float;
         switch (punctuation) {
@@ -291,7 +292,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
                 durability = this.memory.narParameters.DEFAULT_QUEST_DURABILITY;
                 break;
             default:
-                throw new Parser.InvalidInputException("unknown punctuation: '" + punctuation + "'");
+                throw new Parser.InvalidInputException(S`unknown punctuation: '${punctuation}'`);
         }
         if (s !== null) { // override default
             let i: int = s.indexOf(VALUE_SEPARATOR.charCodeAt(0));
@@ -317,7 +318,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      */
     public static parseTense(s: java.lang.StringBuilder): Tense {
         let i: int = s.indexOf(Symbols.TENSE_MARK);
-        let t: java.lang.String = "";
+        let t: java.lang.String = S``;
         if (i > 0) {
             t = s.substring(i).trim();
             s.delete(i, s.length());
@@ -342,7 +343,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException if the String couldn't get parsed to a
      *                                      term
      */
-    public parseTerm(s: java.lang.String): Term {
+    public parseTerm(s: java.lang.String): Term | null {
         s = s.trim();
 
         if (s.length() === 0)
@@ -352,35 +353,35 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         let first: JavaChar = String.fromCharCode(s.charAt(0));
         let last: JavaChar = String.fromCharCode(s.charAt(index));
 
-        let opener: NativeOperator = getOpener(first);
+        let opener: NativeOperator | null = getOpener(first);
         if (opener !== null) {
             switch (opener) {
                 case COMPOUND_TERM_OPENER:
                     if (last === COMPOUND_TERM_CLOSER.ch) {
                         return this.parseCompoundTerm(s.substring(1, index));
                     } else {
-                        throw new Parser.InvalidInputException("missing CompoundTerm closer");
+                        throw new Parser.InvalidInputException(S`missing CompoundTerm closer`);
                     }
                 case SET_EXT_OPENER:
                     if (last === SET_EXT_CLOSER.ch) {
                         return SetExt.make(this.parseArguments(new java.lang.String(String(s.substring(1, index)) + ARGUMENT_SEPARATOR)));
                     } else {
-                        throw new Parser.InvalidInputException("missing ExtensionSet closer");
+                        throw new Parser.InvalidInputException(S`missing ExtensionSet closer`);
                     }
                 case SET_INT_OPENER:
                     if (last === SET_INT_CLOSER.ch) {
                         return SetInt.make(this.parseArguments(new java.lang.String(String(s.substring(1, index)) + ARGUMENT_SEPARATOR)));
                     } else {
-                        throw new Parser.InvalidInputException("missing IntensionSet closer");
+                        throw new Parser.InvalidInputException(S`missing IntensionSet closer`);
                     }
                 case STATEMENT_OPENER:
                     if (last === STATEMENT_CLOSER.ch) {
                         return this.parseStatement(s.substring(1, index));
                     } else {
-                        throw new Parser.InvalidInputException("missing Statement closer");
+                        throw new Parser.InvalidInputException(S`missing Statement closer`);
                     }
                 default: // ! 📌【2025-08-25 23:36:31】还有其它一些类型没被解析
-                    throw new Parser.InvalidInputException("unknown opener");
+                    throw new Parser.InvalidInputException(S`unknown opener`);
             }
         } else {
 
@@ -400,7 +401,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
 
                 if (operator === null) {
                     // ???
-                    throw new Parser.InvalidInputException("Unknown operator: " + operatorString);
+                    throw new Parser.InvalidInputException(S`Unknown operator: ${operatorString}`);
                 }
 
                 let argString: java.lang.String = s.substring(pOpen + 1, pClose + 1);
@@ -443,7 +444,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
     private parseAtomicTerm(s0: java.lang.String): Term {
         let s: java.lang.String = s0.trim();
         if (s.length() === 0) {
-            throw new Parser.InvalidInputException("missing term");
+            throw new Parser.InvalidInputException(S`missing term`);
         }
 
         let op: Operator = this.memory.getOperator(s0);
@@ -452,7 +453,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         }
 
         if (s.indexOf(" ".charCodeAt(0)) >= 0) { // invalid characters in a name
-            throw new Parser.InvalidInputException("invalid term: " + s);
+            throw new Parser.InvalidInputException(S`invalid term: ${s}`);
         }
 
         let c: JavaChar = String.fromCharCode(s.charAt(0));
@@ -482,15 +483,19 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         let s: java.lang.String = s0.trim();
         let i: int = Narsese.topRelation(s);
         if (i < 0) {
-            throw new Parser.InvalidInputException("invalid statement: topRelation(s) < 0");
+            throw new Parser.InvalidInputException(S`invalid statement: topRelation(s) < 0`);
         }
         let relation: java.lang.String = s.substring(i, i + 3);
-        let subject: Term = this.parseTerm(s.substring(0, i));
-        let predicate: Term = this.parseTerm(s.substring(i + 3));
-        let t: Statement = Statement.make(getRelation(relation), subject, predicate, false, 0);
+        let subject: Term | null = this.parseTerm(s.substring(0, i));
+        let predicate: Term | null = this.parseTerm(s.substring(i + 3));
+        if (subject === null || predicate === null)
+            throw new Parser.InvalidInputException(S`invalid statement: missing subject or predicate`);
+        const relationOperator = getRelation(relation);
+        if (relationOperator === null)
+            throw new Parser.InvalidInputException(S`invalid statement: relation missing`);
+        let t: Statement = Statement.make(relationOperator, subject, predicate, false, 0);
         if (t === null) {
-            throw new Parser.InvalidInputException("invalid statement: statement unable to create: "
-                + getOperator(relation) + " " + subject + " " + predicate);
+            throw new Parser.InvalidInputException(S`invalid statement: statement unable to create: ${getOperator(relation)} ${subject} ${predicate}`);
         }
         return t;
     }
@@ -507,22 +512,22 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
     private parseCompoundTerm(s0: java.lang.String): Term {
         let s: java.lang.String = s0.trim();
         if (s.isEmpty()) {
-            throw new Parser.InvalidInputException("Empty compound term: " + s);
+            throw new Parser.InvalidInputException(S`Empty compound term: ${s}`);
         }
         let firstSeparator: int = s.indexOf(ARGUMENT_SEPARATOR.charCodeAt(0));
         if (firstSeparator === -1) {
-            throw new Parser.InvalidInputException("Invalid compound term (missing ARGUMENT_SEPARATOR): " + s);
+            throw new Parser.InvalidInputException(S`Invalid compound term (missing ARGUMENT_SEPARATOR): ${s}`);
         }
 
         let op: java.lang.String = (firstSeparator < 0) ? s : s.substring(0, firstSeparator).trim();
-        let oNative: NativeOperator = getOperator(op);
+        let oNative: NativeOperator | null = getOperator(op);
         let oRegistered: Operator = this.memory.getOperator(op);
 
         if ((oRegistered === null) && (oNative === null)) {
-            throw new Parser.InvalidInputException("Unknown operator: " + op);
+            throw new Parser.InvalidInputException(S`Unknown operator: ${op}`);
         }
 
-        let arg: java.util.List<Term> = (firstSeparator < 0) ? new java.util.ArrayList(0)
+        let arg: java.util.List<Term> = (firstSeparator < 0) ? new java.util.ArrayList<Term>(0)
             : this.parseArguments(new java.lang.String(String(s.substring(firstSeparator + 1)) + ARGUMENT_SEPARATOR));
 
         let argA: Term[] = arg.toArray(new Array<Term>(0));
@@ -550,7 +555,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         } else if (oRegistered !== null) {
             t = Operation.make(oRegistered, argA, true);
         } else {
-            throw new Parser.InvalidInputException("Invalid compound term");
+            throw new Parser.InvalidInputException(S`Invalid compound term`);
         }
 
         return t;
@@ -567,7 +572,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      */
     private parseArguments(s0: java.lang.String): java.util.List<Term> {
         let s: java.lang.String = s0.trim();
-        let list: java.util.List<Term> = new java.util.ArrayList();
+        let list: java.util.List<Term> = new java.util.ArrayList<Term>();
         let start: int = 0;
         let end: int = 0;
         let t: Term;
@@ -575,12 +580,14 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             end = Narsese.nextSeparator(s, start);
             if (end === start)
                 break;
-            t = this.parseTerm(s.substring(start, end)); // recursive call
-            list.add(t);
+            const parsed = this.parseTerm(s.substring(start, end)); // recursive call
+            if (parsed === null)
+                throw new Parser.InvalidInputException(S`null argument`);
+            list.add(parsed);
             start = end + 1;
         }
         if (list.isEmpty()) {
-            throw new Parser.InvalidInputException("null argument");
+            throw new Parser.InvalidInputException(S`null argument`);
         }
         return list;
     }
