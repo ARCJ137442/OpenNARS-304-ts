@@ -108,7 +108,7 @@ export abstract class Image extends CompoundTerm {
      *
      * @return The term related
      */
-    public getTheOtherComponent(): Term {
+    public getTheOtherComponent(): Term | null {
         if (this.term.length !== 2) {
             return null;
         }

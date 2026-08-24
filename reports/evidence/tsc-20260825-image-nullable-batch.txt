@@ -1,0 +1,12 @@
+command: npx tsc --noEmit --pretty false --incremental false
+exit: 2
+baseline_before: 1463
+baseline_before_production: 567
+baseline_before_tests: 896
+diagnostics_after: 1462
+diagnostics_after_production: 566
+diagnostics_after_tests: 896
+delta: -1
+root_cause: Image.getTheOtherComponent returned null in Java but was typed as Term in TypeScript
+java_source: java-master/src/main/java/org/opennars/language/Image.java:107-110
+typescript_fix: getTheOtherComponent(): Term | null
