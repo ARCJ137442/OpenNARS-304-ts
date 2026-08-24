@@ -180,8 +180,6 @@ export class Conjunction extends CompoundTerm {
      * @param set a set of Term as term
      * @return the Term generated from the arguments
      */
-    private static make(set: java.util.Collection<Term>, temporalOrder: int, spatial: boolean): Term;
-
     public static make(term1: Term, term2: Term, temporalOrder: int): Term;
 
     public static make(prefix: Term, ival: Interval, suffix: Term, temporalOrder: int): Term;
@@ -325,7 +323,7 @@ export class Conjunction extends CompoundTerm {
                         set.add(term2);
                     }
 
-                    return Conjunction.make(set, temporalOrder, spatial);
+                    return Conjunction.makeFromCollection(set, temporalOrder, spatial);
                 }
 
 
@@ -336,6 +334,11 @@ export class Conjunction extends CompoundTerm {
                 throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
             }
         }
+    }
+
+    private static makeFromCollection(set: java.util.Collection<Term>, temporalOrder: int, spatial: boolean): Term {
+        const argument = set.toArray(new Array<Term>(0));
+        return Conjunction.make(argument, temporalOrder, spatial);
     }
 
 
