@@ -6,6 +6,7 @@ import { Product } from "./Product.ts";
 import { Symbols } from "../io/Symbols.ts";
 
 const NativeOperator = Symbols.NativeOperator;
+type NativeOperator = Symbols.NativeOperator;
 const isPlaceHolder = Image.isPlaceHolder;
 
 

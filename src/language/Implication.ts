@@ -8,6 +8,7 @@ import { Interval } from "./Interval.ts";
 import { Symbols } from "../io/Symbols.ts";
 
 const NativeOperator = Symbols.NativeOperator;
+type NativeOperator = Symbols.NativeOperator;
 
 const operatorName = (value: unknown): string => {
     const operator = (value as { operator?: () => unknown } | null)?.operator?.();

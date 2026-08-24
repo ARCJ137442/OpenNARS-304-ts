@@ -8,6 +8,7 @@ import { javaStringHashCode, javaStringValue, type JavaChar } from "../runtime/j
 import type { Memory } from "../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
+type NativeOperator = Symbols.NativeOperator;
 const isVariableTerm = (value: unknown): boolean =>
     typeof (value as { getType?: unknown } | null)?.getType === "function";
 const compoundTerms = (value: unknown): Term[] | null => {

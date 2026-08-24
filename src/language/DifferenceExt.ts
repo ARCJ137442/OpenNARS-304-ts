@@ -9,6 +9,7 @@ import { SetExt } from "./SetExt.ts";
 import { DifferenceInt } from "./DifferenceInt.ts";
 
 const NativeOperator = Symbols.NativeOperator;
+type NativeOperator = Symbols.NativeOperator;
 
 
 

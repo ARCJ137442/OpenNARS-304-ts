@@ -9,6 +9,7 @@ import { Debug } from "../main/Debug.ts";
 import { Terms } from "./Terms.ts";
 
 const NativeOperator = Symbols.NativeOperator;
+type NativeOperator = Symbols.NativeOperator;
 
 
 

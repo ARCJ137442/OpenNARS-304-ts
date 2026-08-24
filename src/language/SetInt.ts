@@ -5,6 +5,7 @@ import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
 
 const NativeOperator = Symbols.NativeOperator;
+type NativeOperator = Symbols.NativeOperator;
 const SET_INT_OPENER = NativeOperator.SET_INT_OPENER;
 const SET_INT_CLOSER = NativeOperator.SET_INT_CLOSER;
 

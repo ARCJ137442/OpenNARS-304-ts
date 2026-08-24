@@ -7,6 +7,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 
 const NativeOperator = Symbols.NativeOperator;
+type NativeOperator = Symbols.NativeOperator;
 
 
 
