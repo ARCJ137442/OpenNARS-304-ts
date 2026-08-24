@@ -81,6 +81,19 @@ export const javaStringHashCode = (value: unknown): number => {
     return hash;
 };
 
+/** Java System.identityHashCode(), stable for the lifetime of an object. */
+const identityHashCodes = new WeakMap<object, number>();
+let nextIdentityHashCode = 1;
+
+export const javaIdentityHashCode = (value: object | null): number => {
+    if (value === null) return 0;
+    const existing = identityHashCodes.get(value);
+    if (existing !== undefined) return existing;
+    const assigned = nextIdentityHashCode++;
+    identityHashCodes.set(value, assigned);
+    return assigned;
+};
+
 // jree 1.3.0 uses Java's 48-bit LCG but applies JavaScript bitwise operators
 // to the 48-bit state.  That truncates next(>16) to 32 bits, and its
 // nextDouble additionally performs integer BigInt division.  OpenNARS uses

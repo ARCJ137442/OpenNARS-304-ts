@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { java } from "jree";
-import { JavaDoubleCompat, javaStringLength, javaStringValue } from "../../src/runtime/jree-compat.ts";
+import { JavaDoubleCompat, javaIdentityHashCode, javaStringLength, javaStringValue } from "../../src/runtime/jree-compat.ts";
 
 test("javaStringLength normalizes jree and native string representations", () => {
     const boxed = new java.lang.String("abc");
@@ -25,4 +25,13 @@ test("jree Double compatibility preserves boxed numeric operations", () => {
     assert.equal(value.floatValue(), Math.fround(1.5));
     assert.equal(String(JavaDoubleCompat.toString(value.doubleValue())), "1.5");
     assert.equal(JavaDoubleCompat.POSITIVE_INFINITY, Number.POSITIVE_INFINITY);
+});
+
+test("identity hash compatibility is stable and distinguishes object identity", () => {
+    const first = {};
+    const second = {};
+
+    assert.equal(javaIdentityHashCode(null), 0);
+    assert.equal(javaIdentityHashCode(first), javaIdentityHashCode(first));
+    assert.notEqual(javaIdentityHashCode(first), javaIdentityHashCode(second));
 });

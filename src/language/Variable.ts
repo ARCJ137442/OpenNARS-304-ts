@@ -3,7 +3,7 @@ import { java, type int, type short, S } from "jree";
 import { Texts } from "../io/Texts.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { javaStringHashCode, javaStringValue, type JavaChar } from "../runtime/jree-compat.ts";
+import { javaIdentityHashCode, javaStringHashCode, javaStringValue, type JavaChar } from "../runtime/jree-compat.ts";
 
 const VAR_INDEPENDENT = Symbols.VAR_INDEPENDENT;
 const VAR_DEPENDENT = Symbols.VAR_DEPENDENT;
@@ -276,8 +276,8 @@ export class Variable extends Term {
             if (!ascoped && !bscoped) {
                 // if the two variables are each without scope, they are not equal.
                 // so use their identityHashCode to determine a stable ordering
-                let as: int = java.lang.System.identityHashCode(a.scope);
-                let bs: int = java.lang.System.identityHashCode(b.scope);
+                let as: int = javaIdentityHashCode(a.scope);
+                let bs: int = javaIdentityHashCode(b.scope);
                 return java.lang.Integer.compare(as, bs);
             } else if (ascoped && !bscoped) {
                 return -1;
