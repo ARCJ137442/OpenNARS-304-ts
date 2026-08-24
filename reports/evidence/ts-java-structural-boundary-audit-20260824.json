@@ -1,0 +1,39 @@
+{
+  "date": "2026-08-24",
+  "java_source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+  "java_float_source_file_count": 45,
+  "java_map_set_source_file_count": 37,
+  "typescript_float_adapter": "src/runtime/Float32.ts",
+  "typescript_float_adapter_operations": [
+    "from",
+    "add",
+    "subtract",
+    "multiply",
+    "divide",
+    "pow",
+    "sqrt",
+    "truthToQuality"
+  ],
+  "typescript_native_map_set_hotspots": [
+    "src/storage/Bag.ts",
+    "src/language/Statement.ts",
+    "src/io/ConfigReader.ts",
+    "src/language/Terms.ts"
+  ],
+  "typescript_java_collection_reference_count": 180,
+  "typescript_native_collection_reference_count": 73,
+  "tsc_diagnostic_line_count": 3143,
+  "tsc_top_error_codes": {
+    "TS2304": 1233,
+    "TS2322": 466,
+    "TS2345": 314,
+    "TS2339": 192,
+    "TS2769": 97,
+    "TS1323": 90,
+    "TS2445": 89,
+    "TS2694": 58,
+    "TS2307": 57,
+    "TS2367": 54
+  },
+  "scope": "static inventory only; no production semantic changes"
+}
