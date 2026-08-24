@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Sentence.java
-import { java, JavaObject, type char, type int, type long, type float, type double, S } from "jree";
+import { java, JavaObject, type int, type long, type float, type double, S } from "jree";
 import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Term } from "../language/Term.ts";
@@ -18,6 +18,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Nar } from "../main/Nar.ts";
 import type { Parameters } from "../main/Parameters.ts";
+import type { JavaChar } from "../runtime/jree-compat.ts";
 
 
 
@@ -42,7 +43,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      * The punctuation indicates the type of the Sentence:
      * Judgment '.', Question '?', Goal '!', or Quest '@'
      */
-    public readonly punctuation: char;
+    public readonly punctuation: JavaChar;
 
     /**
      * The truth value of Judgment, or desire value of Goal
@@ -66,7 +67,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
 
     private hash: int;
 
-    public constructor(term: Term, punctuation: char, newTruth: TruthValue, newStamp: Stamp);
+    public constructor(term: Term, punctuation: JavaChar, newTruth: TruthValue, newStamp: Stamp);
 
     /**
      * Create a Sentence with the given fields
@@ -78,19 +79,19 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *                    and
      *                    base
      */
-    private constructor(_content: Term, punctuation: char, truth: TruthValue, stamp: Stamp,
+    private constructor(_content: Term, punctuation: JavaChar, truth: TruthValue, stamp: Stamp,
         normalize: boolean);
     public constructor(...args: unknown[]) {
         let _content: Term;
-        let punctuation: char;
+        let punctuation: JavaChar;
         let truth: TruthValue;
         let stamp: Stamp;
         let normalize: boolean;
         if (args.length === 4) {
-            [_content, punctuation, truth, stamp] = args as [Term, char, TruthValue, Stamp];
+            [_content, punctuation, truth, stamp] = args as [Term, JavaChar, TruthValue, Stamp];
             normalize = true;
         } else if (args.length === 5) {
-            [_content, punctuation, truth, stamp, normalize] = args as [Term, char, TruthValue, Stamp, boolean];
+            [_content, punctuation, truth, stamp, normalize] = args as [Term, JavaChar, TruthValue, Stamp, boolean];
         } else {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }

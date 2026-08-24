@@ -1,5 +1,5 @@
 //! Java source: opennars/control/concept/ProcessTask.java
-import { java, JavaObject, type char } from "jree";
+import { java, JavaObject } from "jree";
 import { Symbols } from "../../io/Symbols.ts";
 import { ProcessJudgment } from "./ProcessJudgment.ts";
 import { ProcessGoal } from "./ProcessGoal.ts";
@@ -10,6 +10,7 @@ import type { Concept } from "../../entity/Concept.ts";
 import type { Task } from "../../entity/Task.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
+import type { JavaChar } from "../../runtime/jree-compat.ts";
 
 
 
@@ -43,7 +44,7 @@ export class ProcessTask extends JavaObject {
         time: Timable): boolean {
         /* synchronized (concept) { */
         concept.observable |= task.isInput();
-        let type: char = task.sentence.punctuation;
+        let type: JavaChar = task.sentence.punctuation;
         switch (type) {
             case Symbols.JUDGMENT_MARK:
                 ProcessJudgment.processJudgment(concept, nal, task);

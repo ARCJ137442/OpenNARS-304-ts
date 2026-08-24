@@ -1,5 +1,5 @@
 //! Java source: opennars/io/Narsese.java
-import { java, JavaObject, type int, type char, type float, S } from "jree";
+import { java, JavaObject, type int, type float, S } from "jree";
 import { Parser } from "./Parser.ts";
 import { Symbols } from "./Symbols.ts";
 import { Tense } from "../language/Tense.ts";
@@ -37,6 +37,7 @@ import { Implication } from "../language/Implication.ts";
 import { Equivalence } from "../language/Equivalence.ts";
 import { Similarity } from "../language/Similarity.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
+import type { JavaChar } from "../runtime/jree-compat.ts";
 import { CompositionalRules } from "../inference/CompositionalRules.ts";
 import { TruthFunctions } from "../inference/TruthFunctions.ts";
 import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts";
@@ -154,7 +155,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         let tense: Tense = Narsese.parseTense(buffer);
         let str: java.lang.String = buffer.toString().trim();
         let last: int = str.length() - 1;
-        let punc: char = String.fromCharCode(str.charAt(last)) as unknown as char;
+        let punc: JavaChar = String.fromCharCode(str.charAt(last));
 
         let stamp: Stamp = new Stamp(-1 /* if -1, will be set right before the Task is input */,
             tense, this.memory.newStampSerial(), this.memory.narParameters.DURATION);
@@ -238,7 +239,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param type Task type
      * @return the addInput TruthValue
      */
-    private parseTruth(s: java.lang.String, type: char): TruthValue {
+    private parseTruth(s: java.lang.String, type: JavaChar): TruthValue {
         if ((type === QUESTION_MARK) || (type === QUEST_MARK)) {
             return null;
         }
@@ -269,7 +270,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException If the String cannot be parsed into a
      *                                      BudgetValue
      */
-    private parseBudget(s: java.lang.String, punctuation: char, truth: TruthValue): BudgetValue {
+    private parseBudget(s: java.lang.String, punctuation: JavaChar, truth: TruthValue): BudgetValue {
         let priority: float;
         let durability: float;
         switch (punctuation) {
@@ -348,8 +349,8 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             return null;
 
         let index: int = s.length() - 1;
-        let first: char = String.fromCharCode(s.charAt(0)) as unknown as char;
-        let last: char = String.fromCharCode(s.charAt(index)) as unknown as char;
+        let first: JavaChar = String.fromCharCode(s.charAt(0));
+        let last: JavaChar = String.fromCharCode(s.charAt(index));
 
         let opener: NativeOperator = getOpener(first);
         if (opener !== null) {
@@ -454,10 +455,10 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             throw new Parser.InvalidInputException("invalid term: " + s);
         }
 
-        let c: char = s.charAt(0);
+        let c: JavaChar = String.fromCharCode(s.charAt(0));
         // jree's Java String charAt boundary is not a native JS string value.
         // Normalize it before comparing with the wire-level interval prefix.
-        if (String.fromCharCode(Number(c)) === Symbols.INTERVAL_PREFIX) {
+        if (c === Symbols.INTERVAL_PREFIX) {
             return Interval.interval(s);
         }
 
@@ -642,7 +643,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param i The starting index
      */
     private static isOpener(s: java.lang.String, i: int): boolean {
-        let c: char = String.fromCharCode(s.charAt(i)) as unknown as char;
+        let c: JavaChar = String.fromCharCode(s.charAt(i));
 
         let b: boolean = (getOpener(c) !== null);
         if (!b)
@@ -659,7 +660,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param i The starting index
      */
     private static isCloser(s: java.lang.String, i: int): boolean {
-        let c: char = String.fromCharCode(s.charAt(i)) as unknown as char;
+        let c: JavaChar = String.fromCharCode(s.charAt(i));
 
         let b: boolean = (getCloser(c) !== null);
         if (!b)

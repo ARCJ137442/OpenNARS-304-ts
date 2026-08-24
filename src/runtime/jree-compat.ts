@@ -1,5 +1,8 @@
 import { Class, JavaObject, java } from "jree";
 
+/** jree declares primitive char as a number, while translated Narsese uses string code units at runtime. */
+export type JavaChar = string;
+
 /**
  * Java string concatenation can produce either a jree JavaString or a native
  * JavaScript string after migration. Both use UTF-16 code units for length.

@@ -1,5 +1,5 @@
 //! Java source: opennars/control/DerivationContext.java
-import { java, JavaObject, type double, type long, type char, type float, S } from "jree";
+import { java, JavaObject, type double, type long, type float, S } from "jree";
 import { Stamp } from "../entity/Stamp.ts";
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -19,6 +19,7 @@ import type { Concept } from "../entity/Concept.ts";
 import type { TermLink } from "../entity/TermLink.ts";
 import type { TaskLink } from "../entity/TaskLink.ts";
 import type { Parameters } from "../main/Parameters.ts";
+import type { JavaChar } from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 
 
@@ -339,7 +340,7 @@ export class DerivationContext extends JavaObject {
      * @param newTruth    The truth value of the sentence in task
      * @param newBudget   The budget value in task
      */
-    public singlePremiseTask(newContent: Term, punctuation: char, newTruth: TruthValue,
+    public singlePremiseTask(newContent: Term, punctuation: JavaChar, newTruth: TruthValue,
         newBudget: BudgetValue): boolean;
     public singlePremiseTask(...args: unknown[]): boolean {
         switch (args.length) {
@@ -369,7 +370,7 @@ export class DerivationContext extends JavaObject {
             }
 
             case 4: {
-                const [newContent, punctuation, newTruth, newBudget] = args as [Term, char, TruthValue, BudgetValue];
+                const [newContent, punctuation, newTruth, newBudget] = args as [Term, JavaChar, TruthValue, BudgetValue];
 
 
                 if (!newBudget.aboveThreshold())
