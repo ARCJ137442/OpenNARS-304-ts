@@ -1,0 +1,10 @@
+batch=20260825-024158
+command=npm run test:serial --silent
+mode=node-test-concurrency-1
+exit=0
+tests=132
+passed=132
+failed=0
+cancelled=0
+skipped=0
+duration_ms=37737.6842

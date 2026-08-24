@@ -1,0 +1,15 @@
+batch=20260825-024158
+command=npx tsc --noEmit --pretty false --incremental false
+mode=single-process
+baseline_total=1601
+baseline_production=704
+baseline_tests=897
+final_exit=2
+final_total=1592
+final_production=695
+final_tests=897
+delta_total=-9
+delta_production=-9
+delta_tests=0
+tense_diagnostics=0
+note=TypeScript still has unrelated diagnostics; this batch only removed the Tense Enum/String cluster.

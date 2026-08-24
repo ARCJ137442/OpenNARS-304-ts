@@ -10,23 +10,23 @@ export class Tense extends java.lang.Enum<Tense> {
     public static readonly Future: Tense = new class extends Tense {
     }(":/:", S`Future`, 2);
 
-    public readonly symbol: java.lang.String;
+    public readonly symbol: string;
 
-    public static readonly Eternal: Tense = null;
+    public static readonly Eternal: Tense = null!;
 
-    protected constructor(string: java.lang.String, $name$: java.lang.String, $index$: number) {
+    protected constructor(string: string, $name$: java.lang.String, $index$: number) {
         super($name$, $index$);
         this.symbol = string;
     }
 
-    public toString(): java.lang.String {
+    public toString(): string {
         return this.symbol;
     }
 
-    protected static readonly stringToTense: java.util.Map<java.lang.String, Tense> = new java.util.LinkedHashMap(Tense.values().length * 2);
+    protected static readonly stringToTense: java.util.Map<string, Tense> = new java.util.LinkedHashMap<string, Tense>(Tense.values<Tense>().length * 2);
 
     static {
-        for (let t of Tense.values()) {
+        for (let t of Tense.values<Tense>()) {
             Tense.stringToTense.put(t.toString(), t);
         }
     }
@@ -35,7 +35,7 @@ export class Tense extends java.lang.Enum<Tense> {
         // Java String keys and native JavaScript strings are not interchangeable
         // in jree-backed maps. Normalize at this parser boundary so Narsese
         // preserves the Java tense lookup contract.
-        return Tense.stringToTense.get(s) ?? Tense.stringToTense.get(String(s)) ?? null;
+        return Tense.stringToTense.get(String(s)) ?? null!;
     }
 
 }
