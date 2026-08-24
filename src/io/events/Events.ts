@@ -1,6 +1,14 @@
 //! Java source: opennars/io/events/Events.java
 import "../../runtime/jree-compat.ts";
 import { java, JavaObject, type long, type int, S } from "jree";
+import type { Concept } from "../../entity/Concept.ts";
+import type { Sentence } from "../../entity/Sentence.ts";
+import type { Task } from "../../entity/Task.ts";
+import type { DerivationContext } from "../../control/DerivationContext.ts";
+import type { GeneralInferenceControl } from "../../control/GeneralInferenceControl.ts";
+import type { EventEmitter } from "./EventEmitter.ts";
+
+type EventObserver = EventEmitter.EventObserver;
 
 
 

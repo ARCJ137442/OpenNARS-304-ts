@@ -2,6 +2,7 @@
 import { java, type int, S } from "jree";
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
+import type { Term } from "./Term.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 

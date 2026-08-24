@@ -28,6 +28,8 @@ import { Disjunction } from "../language/Disjunction.ts";
 import { Equivalence } from "../language/Equivalence.ts";
 import { Negation } from "../language/Negation.ts";
 import { Symbols } from "../io/Symbols.ts";
+import type { DerivationContext } from "../control/DerivationContext.ts";
+import type { Task } from "../entity/Task.ts";
 
 
 
