@@ -68,7 +68,7 @@ export class BudgetFunctions extends UtilityFunctions {
      * @param truth  The truth value of the conclusion of revision
      * @return The budget for the new task
      */
-    protected static revise(tTruth: TruthValue, bTruth: TruthValue, truth: TruthValue,
+    public static revise(tTruth: TruthValue, bTruth: TruthValue, truth: TruthValue,
         feedbackToLinks: boolean, nal: DerivationContext): BudgetValue {
         let difT: float = truth.getExpDifAbs(tTruth);
         let task: Task = nal.getCurrentTask();

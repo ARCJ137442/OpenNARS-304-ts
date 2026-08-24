@@ -233,11 +233,11 @@ export class NarNode extends JavaObject implements EventObserver {
             this.sendInput = sendInput;
         }
 
-        protected readonly threshold: float;
-        protected readonly sendSocket: java.net.DatagramSocket;
-        protected readonly targetPort: int;
-        protected readonly targetAddress: java.net.InetAddress;
-        protected readonly mustContainTerm: Term;
+        public readonly threshold: float;
+        public readonly sendSocket: java.net.DatagramSocket;
+        public readonly targetPort: int;
+        public readonly targetAddress: java.net.InetAddress;
+        public readonly mustContainTerm: Term;
         protected readonly sendInput: boolean;
     };
 

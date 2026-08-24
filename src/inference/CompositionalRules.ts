@@ -116,7 +116,7 @@ export class CompositionalRules extends JavaObject {
      * @param index         The location of the shared term
      * @param nal           Reference to the memory
      */
-    protected static composeCompound(taskContent: Statement, beliefContent: Statement, index: int,
+    public static composeCompound(taskContent: Statement, beliefContent: Statement, index: int,
         nal: DerivationContext): void {
         if ((!nal.getCurrentTask().sentence.isJudgment()) || (taskContent.getClass() !== beliefContent.getClass())) {
             return;
@@ -323,7 +323,7 @@ export class CompositionalRules extends JavaObject {
      * @param compoundTask Whether the implication comes from the task
      * @param nal          Reference to the memory
      */
-    protected static decomposeStatement(compound: CompoundTerm, component: Term, compoundTask: boolean,
+    public static decomposeStatement(compound: CompoundTerm, component: Term, compoundTask: boolean,
         index: int, nal: DerivationContext): void {
         let isTemporalConjunction: boolean = (compound instanceof Conjunction) && !(compound as Conjunction).isSpatial;
         if (isTemporalConjunction && (compound.getTemporalOrder() === TemporalRules.ORDER_FORWARD) && (index !== 0)) {
@@ -486,7 +486,7 @@ export class CompositionalRules extends JavaObject {
      *                    or Conjunction
      * @param nal         Reference to the memory
      */
-    protected static introVarInner(premise1: Statement, premise2: Statement, oldCompound: CompoundTerm,
+    public static introVarInner(premise1: Statement, premise2: Statement, oldCompound: CompoundTerm,
         nal: DerivationContext): boolean {
         let task: Task = nal.getCurrentTask();
         let taskSentence: Sentence = task.sentence;
@@ -700,7 +700,7 @@ export class CompositionalRules extends JavaObject {
         }
     }
 
-    protected static IntroVarSameSubjectOrPredicate(originalMainSentence: Sentence, subSentence: Sentence,
+    public static IntroVarSameSubjectOrPredicate(originalMainSentence: Sentence, subSentence: Sentence,
         component: Term, content: Term, index: int, nal: DerivationContext): void {
         let T1: Term = originalMainSentence.term;
         if (!(T1 instanceof CompoundTerm) || !(content instanceof CompoundTerm)) {

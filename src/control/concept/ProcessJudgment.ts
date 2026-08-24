@@ -116,7 +116,7 @@ export class ProcessJudgment extends JavaObject {
      * @param nal  The derivation context
      * @return Whether task is an executable precondition
      */
-    protected static isExecutableHypothesis(task: Task, nal: DerivationContext): boolean {
+    public static isExecutableHypothesis(task: Task, nal: DerivationContext): boolean {
         let term: Term = task.getTerm();
         if (!task.sentence.isEternal() ||
             !(term instanceof Implication)) {
@@ -147,7 +147,7 @@ export class ProcessJudgment extends JavaObject {
      * @param task The potential implication task
      * @param nal  The derivation context
      */
-    protected static addToTargetConceptsPreconditions(task: Task, nal: DerivationContext): void {
+    public static addToTargetConceptsPreconditions(task: Task, nal: DerivationContext): void {
         let targets: java.util.Set<Term> = new java.util.LinkedHashSet();
         // add to all components, unless it doesn't have vars
         if (!(task.getTerm() as Implication).getPredicate().hasVar()) {

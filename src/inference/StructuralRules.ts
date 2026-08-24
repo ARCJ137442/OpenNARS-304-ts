@@ -57,7 +57,7 @@ export class StructuralRules extends JavaObject {
      * @param side      The location of the indicated term in the premise
      * @param nal       Reference to the memory
      */
-    protected static structuralCompose2(compound: CompoundTerm, index: short, statement: Statement,
+    public static structuralCompose2(compound: CompoundTerm, index: short, statement: Statement,
         side: short, nal: DerivationContext): void {
         if (compound.equals(statement.term[side])) {
             return;
@@ -113,7 +113,7 @@ export class StructuralRules extends JavaObject {
      * @param statement The premise
      * @param nal       Reference to the memory
      */
-    protected static structuralDecompose2(statement: Statement, index: int, nal: DerivationContext): void {
+    public static structuralDecompose2(statement: Statement, index: int, nal: DerivationContext): void {
         let subj: Term = statement.getSubject();
         let pred: Term = statement.getPredicate();
         if (subj.getClass() !== pred.getClass()) {
@@ -175,7 +175,7 @@ export class StructuralRules extends JavaObject {
      * @param statement The premise
      * @param nal       Reference to the memory
      */
-    protected static structuralCompose1(compound: CompoundTerm, index: short, statement: Statement,
+    public static structuralCompose1(compound: CompoundTerm, index: short, statement: Statement,
         nal: DerivationContext): void {
         if (!nal.getCurrentTask().sentence.isJudgment()) {
             return; // forward inference only
@@ -231,7 +231,7 @@ export class StructuralRules extends JavaObject {
      * @param statement The premise
      * @param nal       Reference to the memory
      */
-    protected static structuralDecompose1(compound: CompoundTerm, index: short, statement: Statement,
+    public static structuralDecompose1(compound: CompoundTerm, index: short, statement: Statement,
         nal: DerivationContext): void {
         if (index >= compound.term.length) {
             return;
@@ -311,7 +311,7 @@ export class StructuralRules extends JavaObject {
      * @param side      The location of the indicated term in the premise
      * @param nal       Reference to the memory
      */
-    protected static transformSetRelation(compound: CompoundTerm, statement: Statement, side: short,
+    public static transformSetRelation(compound: CompoundTerm, statement: Statement, side: short,
         nal: DerivationContext): void {
         if (compound.size() > 1) {
             return;
@@ -365,7 +365,7 @@ export class StructuralRules extends JavaObject {
      * @param indices    The indices of the TaskLink
      * @param nal        Reference to the memory
      */
-    protected static transformProductImage(inh: Inheritance, oldContent: CompoundTerm, indices: Int16Array,
+    public static transformProductImage(inh: Inheritance, oldContent: CompoundTerm, indices: Int16Array,
         nal: DerivationContext): void {
         // final Memory memory = nal.mem();
         let subject: Term = inh.getSubject();
@@ -636,7 +636,7 @@ export class StructuralRules extends JavaObject {
      * @param compoundTask Whether the compound comes from the task
      * @param nal          Reference to the memory
      */
-    protected static flattenSequence(compound: CompoundTerm, component: Term, compoundTask: boolean,
+    public static flattenSequence(compound: CompoundTerm, component: Term, compoundTask: boolean,
         index: int, nal: DerivationContext): void {
         if (compound instanceof Conjunction && component instanceof Conjunction) {
             let conjCompound: Conjunction = compound as Conjunction;
@@ -670,7 +670,7 @@ export class StructuralRules extends JavaObject {
      * @param compoundTask Whether the compound comes from the task
      * @param nal          Reference to the memory
      */
-    protected static takeOutFromConjunction(compound: CompoundTerm, component: Term, compoundTask: boolean,
+    public static takeOutFromConjunction(compound: CompoundTerm, component: Term, compoundTask: boolean,
         index: int, nal: DerivationContext): void {
         if (compound instanceof Conjunction) {
             let conjCompound: Conjunction = compound as Conjunction;
@@ -704,7 +704,7 @@ export class StructuralRules extends JavaObject {
      * @param compoundTask Whether the compound comes from the task
      * @param nal          Reference to the memory
      */
-    protected static splitConjunctionApart(compound: CompoundTerm, component: Term, compoundTask: boolean,
+    public static splitConjunctionApart(compound: CompoundTerm, component: Term, compoundTask: boolean,
         index: int, nal: DerivationContext): void {
         if (compound instanceof Conjunction) {
             let conjCompound: Conjunction = compound as Conjunction;
@@ -751,7 +751,7 @@ export class StructuralRules extends JavaObject {
      * @author Patrick Hammer
      * @author Robert Wünsche
      */
-    protected static groupSequence(compound: CompoundTerm, component: Term, compoundTask: boolean,
+    public static groupSequence(compound: CompoundTerm, component: Term, compoundTask: boolean,
         index: int, nal: DerivationContext): void {
         if (!(compound instanceof Conjunction) || index >= compound.size()) {
             return;
@@ -888,7 +888,7 @@ export class StructuralRules extends JavaObject {
      * @param compoundTask Whether the compound comes from the task
      * @param nal          Reference to the memory
      */
-    protected static structuralCompound(compound: CompoundTerm, component: Term, compoundTask: boolean,
+    public static structuralCompound(compound: CompoundTerm, component: Term, compoundTask: boolean,
         index: int, nal: DerivationContext): boolean {
 
         if (compound instanceof Conjunction) {
@@ -982,7 +982,7 @@ export class StructuralRules extends JavaObject {
      * @param statement The premise
      * @param nal       Reference to the memory
      */
-    protected static contraposition(statement: Statement, sentence: Sentence,
+    public static contraposition(statement: Statement, sentence: Sentence,
         nal: DerivationContext): boolean {
         // final Memory memory = nal.mem();
         // memory.logic.CONTRAPOSITION.commit(statement.complexity);

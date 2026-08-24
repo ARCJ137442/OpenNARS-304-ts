@@ -32,13 +32,13 @@ import type { Timable } from "../interfaces/Timable.ts";
 export class DerivationContext extends JavaObject {
     public evidentialOverlap: boolean = false;
     public readonly memory: Memory;
-    protected currentTerm: Term;
-    protected currentConcept: Concept;
-    protected currentTask: Task;
-    protected currentBeliefLink: TermLink;
-    protected currentTaskLink: TaskLink;
-    protected currentBelief: Sentence;
-    protected newStamp: Stamp;
+    public currentTerm: Term;
+    public currentConcept: Concept;
+    public currentTask: Task;
+    public currentBeliefLink: TermLink;
+    public currentTaskLink: TaskLink;
+    public currentBelief: Sentence;
+    public newStamp: Stamp;
     public newStampBuilder: DerivationContext.StampBuilder;
 
     public narParameters: Parameters;

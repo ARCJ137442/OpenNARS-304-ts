@@ -249,11 +249,11 @@ export class Variable extends Term {
         return this.getType() === VAR_DEPENDENT;
     }
 
-    protected isIndependentVariable(): boolean {
+    public isIndependentVariable(): boolean {
         return this.getType() === VAR_INDEPENDENT;
     }
 
-    protected isCommon(): boolean {
+    public isCommon(): boolean {
         let n: java.lang.CharSequence = this.name();
         let l: int = n.length();
         const last = n.charAt(l - 1);

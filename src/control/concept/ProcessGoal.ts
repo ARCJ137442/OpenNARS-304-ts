@@ -50,7 +50,7 @@ export class ProcessGoal extends JavaObject {
      * @param nal     The derivation context
      * @param task    The goal task to be processed
      */
-    protected static processGoal(concept: Concept, nal: DerivationContext, task: Task): void {
+    public static processGoal(concept: Concept, nal: DerivationContext, task: Task): void {
         let goal: Sentence = task.sentence;
         let oldGoalT: Task = concept.selectCandidate(task, concept.desires, nal.time); // revise with the existing
         // desire values

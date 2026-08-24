@@ -1,0 +1,21 @@
+{
+  "format_version": 1,
+  "command": "npm run test:e2e:parity:serial:smoke --silent",
+  "engine": "parity",
+  "files": 5,
+  "cycles": 1550,
+  "timeout_ms": 30000,
+  "process_limit_ms": 180000,
+  "ts_mode": "cold",
+  "chunk_size": 1,
+  "passed": 2,
+  "failed": 3,
+  "failure_classification": {
+    "process_limit": 3,
+    "exception": 0,
+    "watchdog_timeout": 0,
+    "not_run": 0
+  },
+  "canonical_java_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "interpretation": "串行入口验证通过；3 个失败是高成本样本触发进程安全上限，保留为性能警告，不改写为功能通过。"
+}

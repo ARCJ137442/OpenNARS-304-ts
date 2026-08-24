@@ -541,7 +541,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return l;
     }
 
-    protected static shuffle(ar: Term[], randomNumber: java.util.Random): void {
+    public static shuffle(ar: Term[], randomNumber: java.util.Random): void {
         if (ar.length < 2) {
             return;
         }

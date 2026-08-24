@@ -656,7 +656,7 @@ export class RuleTables extends JavaObject {
         throw new java.lang.IllegalArgumentException("figure is invalid");
     }
 
-    protected static EnumFigureSide = class EnumFigureSide extends java.lang.Enum<EnumFigureSide> {
+    public static EnumFigureSide = class EnumFigureSide extends java.lang.Enum<EnumFigureSide> {
         public static readonly LEFT: EnumFigureSide = new class extends EnumFigureSide {
         }(S`LEFT`, 0);
         public static readonly RIGHT: EnumFigureSide = new class extends EnumFigureSide {

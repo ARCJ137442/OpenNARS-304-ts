@@ -35,7 +35,7 @@ export class ProcessQuestion extends JavaObject {
      * @param nal     The derivation context
      * @param task    The task to be processed
      */
-    protected static processQuestion(concept: Concept, nal: DerivationContext, task: Task): void {
+    public static processQuestion(concept: Concept, nal: DerivationContext, task: Task): void {
         let quesTask: Task = task;
         let questions: java.util.List<Task> = concept.questions;
         if (task.sentence.punctuation === Symbols.QUEST_MARK) {
