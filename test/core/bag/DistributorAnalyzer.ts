@@ -19,12 +19,12 @@ export class DistributorAnalyzer extends JavaObject {
             total++;
         }
 
-        let probability: java.util.List<java.lang.Double> = new java.util.ArrayList(levels);
+        let probability: java.util.List<double> = new java.util.ArrayList(levels);
         for (let i: int = 0; i < levels; i++) {
             probability.add(count[i] / total);
         }
 
-        let probabilityActiveAdjusted: java.util.List<java.lang.Double> = new java.util.ArrayList(levels);
+        let probabilityActiveAdjusted: java.util.List<double> = new java.util.ArrayList(levels);
         let activeIncrease: double = 0.009;
         let dormantDecrease: double = ((0.1 * levels) * activeIncrease) / ((1.0 - 0.1) * levels);
         for (let i: int = 0; i < levels; i++) {

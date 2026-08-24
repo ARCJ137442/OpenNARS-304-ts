@@ -1,4 +1,5 @@
 import { java, JavaObject, type double, type int } from "jree";
+import { JavaDoubleCompat } from "../../src/runtime/jree-compat.ts";
 
 
 
@@ -8,14 +9,14 @@ import { java, JavaObject, type double, type int } from "jree";
  * Metrics are numeric values which indicate how fast NARS could solve problems
  */
 export class NalTestMetrics extends JavaObject {
-    public static computeMetric(scores: java.util.Map<java.lang.String, java.util.List<java.lang.Double>>): double {
+    public static computeMetric(scores: java.util.Map<java.lang.String, java.util.List<double>>): double {
         let metric: double = 0;
 
         // compute median of (valid) samples
         for (let iValues of scores.values()) {
             // remove infinities because they indicate failed tests and would mess up the
             // metric
-            let valuesWithoutInfinities: java.util.List<java.lang.Double> = NalTestMetrics.removeInfinities(iValues);
+            let valuesWithoutInfinities: java.util.List<double> = NalTestMetrics.removeInfinities(iValues);
 
             let medianOfThisTest: double = NalTestMetrics.calcMedian(valuesWithoutInfinities);
 
@@ -29,11 +30,11 @@ export class NalTestMetrics extends JavaObject {
     }
 
     // helper
-    public static removeInfinities(values: java.util.List<java.lang.Double>): java.util.List<java.lang.Double> {
-        let result: java.util.List<java.lang.Double> = new java.util.ArrayList();
+    public static removeInfinities(values: java.util.List<double>): java.util.List<double> {
+        let result: java.util.List<double> = new java.util.ArrayList();
 
         for (let iValue of values) {
-            if (iValue !== java.lang.Double.POSITIVE_INFINITY) {
+            if (iValue !== Number.POSITIVE_INFINITY) {
                 result.add(iValue);
             }
         }
@@ -42,7 +43,7 @@ export class NalTestMetrics extends JavaObject {
     }
 
     // helper
-    public static calcMedian(values: java.util.List<java.lang.Double>): double {
+    public static calcMedian(values: java.util.List<double>): double {
         return values.get(values.size() / 2);
     }
 
@@ -59,7 +60,7 @@ export class NalTestMetrics extends JavaObject {
         NALTest.runTests(NALTest.class);
 
         let metric: double = NalTestMetrics.computeMetric(NALTest.scores);
-        java.lang.System.out.println("metric=" + java.lang.Double.toString(metric));
+        java.lang.System.out.println("metric=" + JavaDoubleCompat.toString(metric));
         let debugHere: int = 5;
     }
 }

@@ -27,6 +27,7 @@ import { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
 import { Stamp } from "../entity/Stamp.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { JavaDoubleCompat } from "../runtime/jree-compat.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { Task } from "../entity/Task.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
@@ -335,7 +336,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         } // 决策阈值
         else if (text.startsWith("*decisionthreshold=")) { // TODO use reflection for narParameters, allow to set
             // others too
-            let value: java.lang.Double = java.lang.Double.valueOf(text.split("decisionthreshold=")[1]);
+            let value: JavaDoubleCompat = JavaDoubleCompat.valueOf(text.split("decisionthreshold=")[1]);
             this.narParameters.DECISION_THRESHOLD = Float32Math.from(value.floatValue()) as float;
             return true;
         } // 音量

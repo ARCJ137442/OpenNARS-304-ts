@@ -1,5 +1,51 @@
 import { Class, JavaObject, java } from "jree";
 
+/**
+ * jree 1.3.0 does not ship java.lang.Double. Keep the boxed-number contract
+ * at this compatibility boundary instead of replacing translated Java APIs
+ * with native numbers at every call site.
+ */
+export class JavaDoubleCompat extends java.lang.Number {
+    public static readonly POSITIVE_INFINITY = Number.POSITIVE_INFINITY;
+    public static readonly NEGATIVE_INFINITY = Number.NEGATIVE_INFINITY;
+    public static readonly NaN = Number.NaN;
+
+    private readonly value: number;
+
+    public constructor(value: number | string | java.lang.String) {
+        super();
+        this.value = Number(String(value));
+    }
+
+    public static toString(value: number): java.lang.String {
+        return new java.lang.String(String(value));
+    }
+
+    public static valueOf(value: number | string | java.lang.String): JavaDoubleCompat {
+        return new JavaDoubleCompat(value);
+    }
+
+    public doubleValue(): number {
+        return this.value;
+    }
+
+    public floatValue(): number {
+        return Math.fround(this.value);
+    }
+
+    public intValue(): number {
+        return Math.trunc(this.value);
+    }
+
+    public longValue(): bigint {
+        return BigInt(Math.trunc(this.value));
+    }
+
+    public valueOf(): number {
+        return this.value;
+    }
+}
+
 /** jree declares primitive char as a number, while translated Narsese uses string code units at runtime. */
 export type JavaChar = string;
 

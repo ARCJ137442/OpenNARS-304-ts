@@ -271,9 +271,9 @@ export class BagPerf extends JavaObject {
     public static compare(iterations: int,
         randomAccesses: int,
         insertRatio: float,
-        repeats: int, warmups: int, ...B: Bag<BagPerf.NullItem, java.lang.CharSequence>[]): java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, java.lang.Double> {
+        repeats: int, warmups: int, ...B: Bag<BagPerf.NullItem, java.lang.CharSequence>[]): java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, double> {
 
-        let t: java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, java.lang.Double> = new java.util.LinkedHashMap();
+        let t: java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, double> = new java.util.LinkedHashMap();
 
         for (let X of B) {
             X.clear();
@@ -341,7 +341,7 @@ export class BagPerf extends JavaObject {
                 let bags: Bag<BagPerf.NullItem, java.lang.CharSequence>[] = new Array<Bag>(1);
                 bags[0] = new Bag(levels, items, BagPerf.narParameters);
 
-                let t: java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, java.lang.Double> = BagPerf.compare(
+                let t: java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, double> = BagPerf.compare(
                     iterations, randomAccesses, insertRatio, repeats, warmups,
                     bags);
 

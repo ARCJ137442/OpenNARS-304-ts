@@ -20,7 +20,7 @@ export class StabilityTest extends JavaObject {
     // instrumentation
     protected static readonly examples: java.util.Map<java.lang.String, java.lang.String> = new java.util.LinkedHashMap(); // path -> script data
     public static readonly tests: java.util.Map<java.lang.String, java.lang.Boolean> = new java.util.LinkedHashMap();
-    public static readonly scores: java.util.Map<java.lang.String, java.lang.Double> = new java.util.LinkedHashMap();
+    public static readonly scores: java.util.Map<java.lang.String, double> = new java.util.LinkedHashMap();
     protected readonly scriptPath: java.lang.String;
 
     public static getExample(path: java.lang.String): java.lang.String {
@@ -174,7 +174,7 @@ export class StabilityTest extends JavaObject {
                 success = false;
         }
 
-        let score: double = java.lang.Double.POSITIVE_INFINITY;
+        let score: double = Number.POSITIVE_INFINITY;
         if (success) {
             let lastSuccess: long = -1;
             for (let e of expects) {
@@ -189,7 +189,7 @@ export class StabilityTest extends JavaObject {
                 StabilityTest.scores.put(path, score);
             }
         } else {
-            StabilityTest.scores.put(path, java.lang.Double.POSITIVE_INFINITY);
+            StabilityTest.scores.put(path, Number.POSITIVE_INFINITY);
         }
 
         // System.out.println(lastSuccess + " , " + path + " \t excess cycles=" +

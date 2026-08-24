@@ -18,7 +18,7 @@ export class NALTest extends JavaObject {
     public static readonly tests: java.util.Map<java.lang.String, java.lang.Boolean> = new java.util.LinkedHashMap();
 
     // we store a list of scores to keep track of each sample
-    public static readonly scores: java.util.Map<java.lang.String, java.util.List<java.lang.Double>> = new java.util.LinkedHashMap();
+    public static readonly scores: java.util.Map<java.lang.String, java.util.List<double>> = new java.util.LinkedHashMap();
     protected readonly scriptPath: java.lang.String;
 
     /** how many times should one test be run (to collect run scores) */
@@ -201,7 +201,7 @@ export class NALTest extends JavaObject {
             if (NALTest.scores.containsKey(path)) {
                 NALTest.scores.get(path).add(score);
             } else {
-                let scoresList: java.util.List<java.lang.Double> = new java.util.ArrayList();
+                let scoresList: java.util.List<double> = new java.util.ArrayList();
                 scoresList.add(score);
                 NALTest.scores.put(path, scoresList);
             }
@@ -210,7 +210,7 @@ export class NALTest extends JavaObject {
             if (NALTest.scores.containsKey(path)) {
                 NALTest.scores.get(path).add(0.0);
             } else {
-                let scoresList: java.util.List<java.lang.Double> = new java.util.ArrayList();
+                let scoresList: java.util.List<double> = new java.util.ArrayList();
                 scoresList.add(0.0);
                 NALTest.scores.put(path, scoresList);
             }
