@@ -145,6 +145,24 @@ test("DerivationContext currentBeliefLink preserves Java null lifecycle", async 
     assert.equal(context.getCurrentBeliefLink(), null);
 });
 
+test("DerivationContext delayed execution state starts null and requires explicit registration", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+
+    const nar = new Nar();
+    const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+
+    assert.equal(context.currentTerm, null);
+    assert.equal(context.currentConcept, null);
+    assert.equal(context.currentTask, null);
+    assert.equal(context.currentTaskLink, null);
+    assert.equal(context.getCurrentConcept(), null);
+    assert.throws(() => context.requireCurrentTerm());
+    assert.throws(() => context.requireCurrentConcept());
+    assert.throws(() => context.requireCurrentTask());
+    assert.throws(() => context.requireCurrentTaskLink());
+});
+
 test("DerivationContext lazily builds and caches the Java newStamp", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
     const { DerivationContext } = await import("../../src/control/DerivationContext.ts");

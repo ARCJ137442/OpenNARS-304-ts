@@ -387,9 +387,10 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         let cont: DerivationContext = new DerivationContext(this, narParameters, time);
         cont.setCurrentTask(task);
         cont.setCurrentTerm(task.getTerm());
-        cont.setCurrentConcept(this.conceptualize(task.getBudget(), cont.getCurrentTerm()));
-        if (cont.getCurrentConcept() !== null) {
-            let processed: boolean = ProcessTask.processTask(cont.getCurrentConcept(), cont, task, time);
+        cont.setCurrentConcept(this.conceptualize(task.getBudget(), cont.requireCurrentTerm()));
+        const currentConcept = cont.getCurrentConcept();
+        if (currentConcept !== null) {
+            let processed: boolean = ProcessTask.processTask(currentConcept, cont, task, time);
             if (processed) {
                 this.event.emit(Events.ConceptDirectProcessedTask.class, task);
             }

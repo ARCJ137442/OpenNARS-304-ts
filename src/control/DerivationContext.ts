@@ -32,11 +32,11 @@ import type { Timable } from "../interfaces/Timable.ts";
 export class DerivationContext extends JavaObject {
     public evidentialOverlap: boolean = false;
     public readonly memory: Memory;
-    public currentTerm: Term;
-    public currentConcept: Concept;
-    public currentTask: Task;
+    public currentTerm: Term | null = null;
+    public currentConcept: Concept | null = null;
+    public currentTask: Task | null = null;
     public currentBeliefLink: TermLink | null = null;
-    public currentTaskLink: TaskLink;
+    public currentTaskLink: TaskLink | null = null;
     public currentBelief: Sentence | null = null;
     public newStamp: Stamp | null = null;
     public newStampBuilder: DerivationContext.StampBuilder | null = null;
@@ -432,7 +432,15 @@ export class DerivationContext extends JavaObject {
      * @return the currentTask
      */
     public getCurrentTask(): Task {
-        return this.currentTask;
+        return this.requireCurrentTask();
+    }
+
+    public requireCurrentTask(): Task {
+        const currentTask = this.currentTask;
+        if (currentTask === null) {
+            throw new java.lang.IllegalStateException("DerivationContext.currentTask is not initialized");
+        }
+        return currentTask;
     }
 
     /**
@@ -550,7 +558,15 @@ export class DerivationContext extends JavaObject {
      * @return the currentTaskLink
      */
     public getCurrentTaskLink(): TaskLink {
-        return this.currentTaskLink;
+        return this.requireCurrentTaskLink();
+    }
+
+    public requireCurrentTaskLink(): TaskLink {
+        const currentTaskLink = this.currentTaskLink;
+        if (currentTaskLink === null) {
+            throw new java.lang.IllegalStateException("DerivationContext.currentTaskLink is not initialized");
+        }
+        return currentTaskLink;
     }
 
     /**
@@ -564,7 +580,15 @@ export class DerivationContext extends JavaObject {
      * @return the currentTerm
      */
     public getCurrentTerm(): Term {
-        return this.currentTerm;
+        return this.requireCurrentTerm();
+    }
+
+    public requireCurrentTerm(): Term {
+        const currentTerm = this.currentTerm;
+        if (currentTerm === null) {
+            throw new java.lang.IllegalStateException("DerivationContext.currentTerm is not initialized");
+        }
+        return currentTerm;
     }
 
     /**
@@ -577,8 +601,16 @@ export class DerivationContext extends JavaObject {
     /**
      * @return the currentConcept
      */
-    public getCurrentConcept(): Concept {
+    public getCurrentConcept(): Concept | null {
         return this.currentConcept;
+    }
+
+    public requireCurrentConcept(): Concept {
+        const currentConcept = this.currentConcept;
+        if (currentConcept === null) {
+            throw new java.lang.IllegalStateException("DerivationContext.currentConcept is not initialized");
+        }
+        return currentConcept;
     }
 
     public mem(): Memory {

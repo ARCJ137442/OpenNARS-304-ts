@@ -53,63 +53,67 @@ export class GeneralInferenceControl extends JavaObject {
         if (putBackConcept) {
             forgetCycles = nal.memory.cycles(nal.memory.narParameters.CONCEPT_FORGET_DURATIONS);
             if (nal.memory.emotion !== null) {
-                nal.currentConcept.setQuality(
-                    BudgetFunctions.or(nal.currentConcept.getQuality(), nal.memory.emotion.happy()));
+                currentConcept.setQuality(
+                    BudgetFunctions.or(currentConcept.getQuality(), nal.memory.emotion.happy()));
             }
         }
         /* } */
         if (putBackConcept) { // put back into bag (bag is the resource)
             /* synchronized (nal.memory.concepts) { */
-            nal.memory.concepts.putBack(nal.currentConcept, forgetCycles, nal.memory);
+            nal.memory.concepts.putBack(currentConcept, forgetCycles, nal.memory);
             /* } */
         }
     }
 
     // /return true if concept must be put back
     public static fireConcept(nal: DerivationContext, numTaskLinks: int): boolean {
+        const currentConcept = nal.requireCurrentConcept();
         for (let i: int = 0; i < numTaskLinks; i++) {
-            if (nal.currentConcept.taskLinks.size() === 0) {
+            if (currentConcept.taskLinks.size() === 0) {
                 return false;
             }
-            nal.currentTaskLink = nal.currentConcept.taskLinks.takeOut();
-            if (nal.currentTaskLink === null) {
+            const currentTaskLink = currentConcept.taskLinks.takeOut();
+            nal.currentTaskLink = currentTaskLink;
+            if (currentTaskLink === null) {
                 return false;
             }
-            if (nal.currentTaskLink.getBudget().aboveThreshold()) {
+            if (currentTaskLink.getBudget().aboveThreshold()) {
                 GeneralInferenceControl.fireTaskLink(nal, nal.memory.narParameters.TERMLINK_MAX_REASONED);
             }
-            nal.currentConcept.taskLinks.putBack(nal.currentTaskLink,
+            currentConcept.taskLinks.putBack(currentTaskLink,
                 nal.memory.cycles(nal.memory.narParameters.TASKLINK_FORGET_DURATIONS), nal.memory);
         }
         return true;
     }
 
     protected static fireTaskLink(nal: DerivationContext, termLinks: int): void {
-        let task: Task = nal.currentTaskLink.getTarget();
-        nal.setCurrentTerm(nal.currentConcept.term);
-        nal.setCurrentTaskLink(nal.currentTaskLink);
+        const currentTaskLink = nal.requireCurrentTaskLink();
+        const currentConcept = nal.requireCurrentConcept();
+        let task: Task = currentTaskLink.getTarget();
+        nal.setCurrentTerm(currentConcept.term);
+        nal.setCurrentTaskLink(currentTaskLink);
         nal.setCurrentBeliefLink(null);
         nal.setCurrentTask(task); // one of the two places where this variable is set
         if (nal.memory.emotion !== null) {
-            nal.memory.emotion.adjustBusy(nal.currentTaskLink.getPriority(), nal.currentTaskLink.getDurability(), nal);
+            nal.memory.emotion.adjustBusy(currentTaskLink.getPriority(), currentTaskLink.getDurability(), nal);
         }
-        if (nal.currentTaskLink.type === TermLink.TRANSFORM) {
+        if (currentTaskLink.type === TermLink.TRANSFORM) {
             nal.setCurrentBelief(null);
             // TermLink taskLink_as_termLink = new TermLink(nal.currentTaskLink.getTerm(),
             // TermLink.TRANSFORM, nal.getCurrentTaskLink().index);
             // if(nal.currentTaskLink.novel(taskLink_as_termLink, nal.memory.time(), true))
             // { //then record yourself, but also here novelty counts
-            RuleTables.transformTask(nal.currentTaskLink, nal); // to turn this into structural inference as below?
+            RuleTables.transformTask(currentTaskLink, nal); // to turn this into structural inference as below?
             // }
         } else {
             while (termLinks > 0) {
-                let termLink: TermLink | null = nal.currentConcept.selectTermLink(nal.currentTaskLink, nal.time.time(),
+                let termLink: TermLink | null = currentConcept.selectTermLink(currentTaskLink, nal.time.time(),
                     nal.narParameters);
                 if (termLink === null) {
                     break;
                 }
                 GeneralInferenceControl.fireTermlink(termLink, nal);
-                nal.currentConcept.returnTermLink(termLink);
+                currentConcept.returnTermLink(termLink);
                 termLinks--;
             }
         }
@@ -120,8 +124,8 @@ export class GeneralInferenceControl extends JavaObject {
 
     public static fireTermlink(termLink: TermLink, nal: DerivationContext): boolean {
         nal.setCurrentBeliefLink(termLink);
-        RuleTables.reason(nal.currentTaskLink, termLink, nal);
-        nal.memory.emit(Events.TermLinkSelect.class, termLink, nal.currentConcept, nal);
+        RuleTables.reason(nal.requireCurrentTaskLink(), termLink, nal);
+        nal.memory.emit(Events.TermLinkSelect.class, termLink, nal.requireCurrentConcept(), nal);
         return true;
     }
 }
