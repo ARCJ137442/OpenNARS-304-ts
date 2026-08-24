@@ -1,4 +1,16 @@
 import { java, JavaObject, type int } from "jree";
+import { Concept } from "../../src/entity/Concept.ts";
+import { Narsese } from "../../src/io/Narsese.ts";
+import { Symbols } from "../../src/io/Symbols.ts";
+import { Nar } from "../../src/main/Nar.ts";
+import { Operation } from "../../src/operator/Operation.ts";
+import { CompoundTerm } from "../../src/language/CompoundTerm.ts";
+import { Inheritance } from "../../src/language/Inheritance.ts";
+import { Statement } from "../../src/language/Statement.ts";
+import { Term } from "../../src/language/Term.ts";
+import { assertEquals, assertTrue } from "../util/junit-assert.ts";
+
+const NativeOperator = Symbols.NativeOperator;
 
 
 
