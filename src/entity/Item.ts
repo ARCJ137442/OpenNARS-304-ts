@@ -4,6 +4,10 @@ import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
 import { javaStringLength } from "../runtime/jree-compat.ts";
 
+interface ItemComparator<E> {
+    compare(a: E, b: E): int;
+}
+
 
 /**
  * An item is an object that can be put into a Bag,
@@ -16,7 +20,7 @@ import { javaStringLength } from "../runtime/jree-compat.ts";
  */
 export abstract  class Item<K> implements JavaObject, java.io.Serializable {
 
-    public static ItemPriorityComparator =  class ItemPriorityComparator<E extends Item<unknown>> extends JavaObject implements java.util.Comparator<java.lang.Math.E> {
+    public static ItemPriorityComparator =  class ItemPriorityComparator<E extends Item<unknown>> extends JavaObject implements ItemComparator<E> {
 
         public  compare(a: E, b: E):  int {
              let  ap: float = a.getPriority();

@@ -1,5 +1,6 @@
 //! Java source: opennars/io/Parser.java
 import { java } from "jree";
+import type { Task } from "../entity/Task.ts";
 
 
 
@@ -8,28 +9,23 @@ import { java } from "jree";
  *
  * @author Robert Wünsche
  */
-export abstract class Parser {
-    protected abstract parseTask(narsese: java.lang.String): Task;
+export interface Parser {
+    parseTask(narsese: java.lang.String): Task;
+}
 
+class ParserInvalidInputException extends java.lang.Exception {
     /**
-     * All kinds of invalid addInput lines
+     * An invalid addInput line.
+     *
+     * @param s type of error
      */
-    public static InvalidInputException = class InvalidInputException extends java.lang.Exception {
-            /**
-             * An invalid addInput line.
-             *
-             * @param s type of error
-             */
-            public constructor(s: java.lang.String) {
-                super(s);
-            }
-    };
-
+    public constructor(s: java.lang.String) {
+        super(s);
+    }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
-export namespace Parser {
-    export type InvalidInputException = InstanceType<typeof Parser.InvalidInputException>;
-}
+export const Parser = {
+    InvalidInputException: ParserInvalidInputException,
+};
 
 

@@ -39,4 +39,6 @@ export abstract class EventHandler extends JavaObject implements EventEmitter.Ev
     public isActive(): boolean {
         return this.active;
     }
+
+    public abstract event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void;
 }

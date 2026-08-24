@@ -32,7 +32,7 @@ const COMPOUND_TERM_CLOSER = NativeOperator.COMPOUND_TERM_CLOSER;
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export abstract class CompoundTerm extends Term implements java.lang.Iterable<Term> {
+export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     /**
      * list of (direct) term
@@ -836,6 +836,19 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
 
     public iterator(): java.util.Iterator<Term> {
         return new java.util.ArrayList<Term>(this.term).iterator();
+    }
+
+    public [Symbol.iterator](): IterableIterator<Term> {
+        let index = 0;
+        const terms = this.term;
+        return {
+            next: (): IteratorResult<Term> => index < terms.length
+                ? { value: terms[index++], done: false }
+                : { value: undefined as unknown as Term, done: true },
+            [Symbol.iterator](): IterableIterator<Term> {
+                return this;
+            },
+        };
     }
 
 }

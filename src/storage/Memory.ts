@@ -53,7 +53,7 @@ const BaseEntry = Stamp.BaseEntry;
  * <br>
  * Memory is serializable so it can be persisted and transported.
  */
-export class Memory extends JavaObject implements java.io.Serializable, java.lang.Iterable<Concept>, Resettable {
+export class Memory extends JavaObject implements java.io.Serializable, Iterable<Concept>, Resettable {
 
     /* Nar parameters */
     public readonly narParameters: Parameters;
@@ -447,5 +447,17 @@ export class Memory extends JavaObject implements java.io.Serializable, java.lan
 
     public iterator(): java.util.Iterator<Concept> {
         return this.concepts.iterator();
+    }
+
+    public [Symbol.iterator](): IterableIterator<Concept> {
+        const iterator = this.iterator();
+        return {
+            next: (): IteratorResult<Concept> => iterator.hasNext()
+                ? { value: iterator.next(), done: false }
+                : { value: undefined as unknown as Concept, done: true },
+            [Symbol.iterator](): IterableIterator<Concept> {
+                return this;
+            },
+        };
     }
 }

@@ -11,6 +11,8 @@ import type { Timable } from "../../interfaces/Timable.ts";
 
 
 export abstract class SensoryChannel extends JavaObject implements Plugin {
+    public abstract setEnabled(n: Nar, enabled: boolean): boolean;
+
     private reportResultsTo: java.util.Collection<SensoryChannel>;
     public nar: Nar; // for top-down influence of concept budgets
     public readonly results: java.util.List<Task> = new java.util.ArrayList();
