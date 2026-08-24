@@ -2,6 +2,7 @@
 import { java, type float, type int, JavaObject } from "jree";
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
+import { JavaSystemLoggerCompat } from "../../runtime/jree-compat.ts";
 import { Events } from "../../io/events/Events.ts";
 import type { EventEmitter } from "../../io/events/EventEmitter.ts";
 import { Narsese } from "../../io/Narsese.ts";
@@ -247,7 +248,7 @@ export class VisionChannel extends SensoryChannel {
                         }
                     } catch (ex) {
                         if (ex instanceof Narsese.InvalidInputException) {
-                            java.lang.System.Logger.getLogger(VisionChannel.class.getName()).log(java.lang.System.Logger.Level.SEVERE, null, ex);
+                            JavaSystemLoggerCompat.getLogger(VisionChannel.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                         } else {
                             throw ex;
                         }

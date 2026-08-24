@@ -27,7 +27,7 @@ import { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
 import { Stamp } from "../entity/Stamp.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-import { JavaDoubleCompat } from "../runtime/jree-compat.ts";
+import { JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { Task } from "../entity/Task.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
@@ -95,7 +95,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             this.sensoryChannels.put(new Narsese(this).parseTerm(term), channel);
         } catch (ex) {
             if (ex instanceof Parser.InvalidInputException) {
-                java.lang.System.Logger.getLogger(Nar.class.getName()).log(java.lang.System.Logger.Level.SEVERE, null, ex);
+                JavaSystemLoggerCompat.getLogger(Nar.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                 throw new java.lang.IllegalStateException("Could not add sensory channel.", ex);
             } else {
                 throw ex;
@@ -599,7 +599,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         }
         catch (ex) {
             if (ex instanceof java.lang.Exception) {
-                java.lang.System.Logger.getLogger(Nar.class.getName()).log(java.lang.System.Logger.Level.SEVERE, null, ex);
+                JavaSystemLoggerCompat.getLogger(Nar.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                 throw new java.lang.IllegalStateException("Loading experience file failed ", ex);
             } else {
                 throw ex;

@@ -8,6 +8,7 @@ import { CompoundTerm } from "../language/CompoundTerm.ts";
 import { Term } from "../language/Term.ts";
 import { Task } from "../entity/Task.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
+import { JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 
@@ -85,7 +86,7 @@ export class NarNode extends JavaObject implements EventObserver {
                             } catch (ex) {
                                 if (ex instanceof java.lang.Exception) { // log any type of exception, also parsing exceptions, because it shouldn't
                                     // crash on wrong parses or temporary network issues
-                                    java.lang.System.Logger.getLogger(NarNode.class.getName()).log(java.lang.System.Logger.Level.SEVERE, null, ex);
+                                    JavaSystemLoggerCompat.getLogger(NarNode.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                                 } else {
                                     throw ex;
                                 }
@@ -118,7 +119,7 @@ export class NarNode extends JavaObject implements EventObserver {
                 this.sendTask(t);
             } catch (ex) {
                 if (ex instanceof java.lang.Exception) {
-                    java.lang.System.Logger.getLogger(NarNode.class.getName()).log(java.lang.System.Logger.Level.SEVERE, null, ex);
+                    JavaSystemLoggerCompat.getLogger(NarNode.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                 } else {
                     throw ex;
                 }

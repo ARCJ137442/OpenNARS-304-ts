@@ -79,6 +79,37 @@ export const javaStringValue = (value: unknown): string => {
     return String(value);
 };
 
+/** Compatibility boundary for java.util.logging.Logger, which jree 1.3.0 omits. */
+export class JavaSystemLoggerCompat {
+    public static readonly Level = { SEVERE: "SEVERE" } as const;
+    private readonly name: string;
+
+    private constructor(name: string) {
+        this.name = name;
+    }
+
+    public static getLogger(name: java.lang.String | string): JavaSystemLoggerCompat {
+        return new JavaSystemLoggerCompat(javaStringValue(name));
+    }
+
+    public log(level: string, message: unknown, error: unknown): void {
+        const prefix = `${level} ${this.name}`;
+        if (message === null || message === undefined) {
+            console.error(prefix);
+        } else {
+            console.error(prefix, javaStringValue(message));
+        }
+        if (error !== null && error !== undefined) {
+            const printStackTrace = (error as { printStackTrace?: unknown }).printStackTrace;
+            if (typeof printStackTrace === "function") {
+                printStackTrace.call(error);
+            } else {
+                console.error(error);
+            }
+        }
+    }
+}
+
 /** Java String.hashCode(), applied after crossing a jree/native string boundary. */
 export const javaStringHashCode = (value: unknown): number => {
     const text = javaStringValue(value);

@@ -1,0 +1,11 @@
+batch=20260825-025939
+command=npm run test:serial --silent
+mode=node-test-concurrency-1
+initial_attempt=112 tests, 76 passed, 36 failed, Node strip-only parameter-property syntax error
+final_exit=0
+tests=132
+passed=132
+failed=0
+cancelled=0
+skipped=0
+duration_ms=36336.5194

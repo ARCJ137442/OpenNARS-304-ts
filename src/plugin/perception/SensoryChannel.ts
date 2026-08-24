@@ -1,6 +1,7 @@
 //! Java source: opennars/plugin/perception/SensoryChannel.java
 import { java, JavaObject, type int, type double, S } from "jree";
 import { Narsese } from "../../io/Narsese.ts";
+import { JavaSystemLoggerCompat } from "../../runtime/jree-compat.ts";
 import { Term } from "../../language/Term.ts";
 import { Concept } from "../../entity/Concept.ts";
 import type { Plugin } from "../Plugin.ts";
@@ -102,7 +103,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
             this.addInput(t, time);
         } catch (ex) {
             if (ex instanceof Narsese.InvalidInputException) {
-                java.lang.System.Logger.getLogger(SensoryChannel.class.getName()).log(java.lang.System.Logger.Level.SEVERE, null, ex);
+                JavaSystemLoggerCompat.getLogger(SensoryChannel.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                 throw new java.lang.IllegalStateException("Could not parse input", ex);
             } else {
                 throw ex;

@@ -1,0 +1,15 @@
+batch=20260825-025939
+command=npx tsc --noEmit --pretty false --incremental false
+mode=single-process
+baseline_total=1568
+baseline_production=671
+baseline_tests=897
+final_exit=2
+final_total=1556
+final_production=659
+final_tests=897
+delta_total=-12
+delta_production=-12
+delta_tests=0
+logger_production_errors=0
+note=18 remaining Logger diagnostics are in test/perf/BagPerf.ts and are deferred to the test type-closure cluster.

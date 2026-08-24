@@ -1,0 +1,8 @@
+batch=20260825-025939
+command=npm run test:parity:local --silent
+mode=single-process
+exit=0
+ok=true
+differences=[]
+java_jar=H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar
+java_sha256=2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
