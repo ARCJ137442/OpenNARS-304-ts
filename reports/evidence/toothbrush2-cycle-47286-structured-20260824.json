@@ -33,6 +33,18 @@
         "observations": {
           "independent": 1,
           "query": 1
+        },
+        "targetShuffle": {
+          "count": 6,
+          "indices": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "before": "[(|,#2,$1), (|,$1,object)]"
         }
       },
       "branch": "LocalRules.matchAsymSym/inferToAsym (from diagnostic stack)",
@@ -106,6 +118,24 @@
         "TargetConceptFire": 1
       }
     }
+  },
+  "randomObservation": {
+    "javaTargetShuffleCount": 6,
+    "javaTargetShuffleIndices": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "typescriptCycleBound2Count": 3,
+    "typescriptCycleBound2Values": [
+      1,
+      1,
+      0
+    ],
+    "interpretation": "These counters are diagnostic observations from different hooks; they identify an upstream call-path/random-state discrepancy but are not an isomorphic event proof."
   },
   "firstObservedDifference": "independent_unification.after.sym",
   "interpretation": "The structured cycle-47286 comparison diverges after independent unification; this is not yet proof of the globally earliest divergence."

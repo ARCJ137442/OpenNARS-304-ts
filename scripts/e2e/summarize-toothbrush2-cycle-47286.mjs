@@ -72,11 +72,22 @@ function parseJava(unifyStderr, budgetStderr, cycle) {
   const independent = [];
   const query = [];
   const budgets = [];
+  const shuffles = [];
   let currentBudgetStack = [];
   let activeBudget = null;
 
   for (const line of lines) {
-    let match = line.match(/^JAVA_INDEPENDENT\s+time=(\d+)\s+figure=(\d+)\s+left=(.*?)\s+right=(.*?)\s+unified=(\w+)\s+asym=(.*?)\s+sym=(.*)$/);
+    let match = line.match(/^JAVA_SHUFFLE\s+before=(.*?)\s+i=(\d+)\s+index=(\d+)$/);
+    if (match) {
+      shuffles.push({
+        before: match[1],
+        iteration: Number(match[2]),
+        index: Number(match[3]),
+      });
+      continue;
+    }
+
+    match = line.match(/^JAVA_INDEPENDENT\s+time=(\d+)\s+figure=(\d+)\s+left=(.*?)\s+right=(.*?)\s+unified=(\w+)\s+asym=(.*?)\s+sym=(.*)$/);
     if (match && Number(match[1]) === cycle) {
       independent.push({
         time: Number(match[1]),
@@ -173,7 +184,7 @@ function parseJava(unifyStderr, budgetStderr, cycle) {
     };
     break;
   }
-  return { independent, query, budget };
+  return { independent, query, budget, shuffles };
 }
 
 function stackBranch(stack) {
@@ -256,6 +267,11 @@ function main() {
             result: java.query[0].result,
           } : null,
           observations: { independent: java.independent.length, query: java.query.length },
+          targetShuffle: {
+            count: java.shuffles.length,
+            indices: java.shuffles.map((shuffle) => shuffle.index),
+            before: java.shuffles[0]?.before ?? null,
+          },
         },
         branch: java.budget?.branch ?? "LocalRules.matchAsymSym/inferToAsym (from diagnostic stack)",
         inferToAsym: java.budget ? {
@@ -291,6 +307,13 @@ function main() {
         randomNextInt2: typescript.randomNextInt2,
         eventCounts: typescript.eventCounts,
       },
+    },
+    randomObservation: {
+      javaTargetShuffleCount: java.shuffles.length,
+      javaTargetShuffleIndices: java.shuffles.map((shuffle) => shuffle.index),
+      typescriptCycleBound2Count: typescript.randomNextInt2.length,
+      typescriptCycleBound2Values: typescript.randomNextInt2,
+      interpretation: "These counters are diagnostic observations from different hooks; they identify an upstream call-path/random-state discrepancy but are not an isomorphic event proof.",
     },
     firstObservedDifference,
     interpretation: firstObservedDifference
