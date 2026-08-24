@@ -21,3 +21,15 @@ test("EventEmitter.set subscribes only to the requested event classes", () => {
     emitter.emit(Events.CycleEnd.class);
     assert.deepEqual(received, [Events.CycleEnd.class]);
 });
+
+test("Events.ConceptNew preserves the Java InferenceEvent constructor contract", () => {
+    const concept = {
+        toString: () => "fake-concept",
+    } as never;
+    const event = new Events.ConceptNew(concept, 3n);
+
+    assert.equal(event.when, 3n);
+    assert.equal(event.stack, null);
+    assert.equal(event.getType(), event.getClass());
+    assert.equal(String(event.toString()), "Concept Created: fake-concept");
+});

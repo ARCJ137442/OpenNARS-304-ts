@@ -10,6 +10,112 @@ import type { EventEmitter } from "./EventEmitter.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 
+abstract class ConceptBeliefAdd extends JavaObject implements EventObserver {
+    public abstract onBeliefAdd(c: Concept, t: Task, extra: java.lang.Object[]): void;
+
+    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+        this.onBeliefAdd(args[0] as unknown as Concept, args[1] as unknown as Task,
+            args[2] as unknown as java.lang.Object[]);
+    }
+}
+
+abstract class ConceptBeliefRemove extends JavaObject implements EventObserver {
+    public abstract onBeliefRemove(c: Concept, removed: Sentence, t: Task, extra: java.lang.Object[]): void;
+
+    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+        this.onBeliefRemove(args[0] as unknown as Concept, args[1] as unknown as Sentence,
+            args[2] as unknown as Task, args[3] as unknown as java.lang.Object[]);
+    }
+}
+
+abstract class ConceptFire extends JavaObject implements EventObserver {
+    public abstract onFire(n: GeneralInferenceControl): void;
+
+    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+        this.onFire(args[0] as unknown as GeneralInferenceControl);
+    }
+}
+
+abstract class TaskImmediateProcess extends JavaObject implements EventObserver {
+    public abstract onProcessed(t: Task, n: DerivationContext): void;
+
+    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+        this.onProcessed(args[0] as unknown as Task, args[1] as unknown as DerivationContext);
+    }
+}
+
+abstract class TaskAdd extends JavaObject implements EventObserver {
+    public abstract onTaskAdd(t: Task, reason: java.lang.String): void;
+
+    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+        this.onTaskAdd(args[0] as unknown as Task, args[1] as unknown as java.lang.String);
+    }
+}
+
+abstract class InferenceEvent extends JavaObject {
+    public readonly when: long;
+    public readonly stack: java.util.List<java.lang.StackTraceElement> | null;
+
+    // how many stack frames down to record from; we don't need to include the
+    // current and the previous (InferenceEvent subclass's constructor
+    protected readonly STACK_PREFIX: int = 4;
+
+    protected constructor(when: long);
+    protected constructor(when: long, stackFrames: int);
+    protected constructor(...args: unknown[]) {
+        super();
+        if (args.length !== 1 && args.length !== 2) {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        }
+
+        const when = args[0] as long;
+        const stackFrames = args.length === 2 ? args[1] as int : 0;
+        this.when = when;
+
+        if (stackFrames > 0) {
+            const sl: java.util.List<java.lang.StackTraceElement> =
+                java.util.Arrays.asList(new java.lang.Throwable().getStackTrace());
+            let frame: int = 0;
+
+            for (const e of sl) {
+                frame++;
+                if (e.getClassName() === "org.opennars.core.Nar") {
+                    break;
+                }
+            }
+            if (frame - this.STACK_PREFIX > stackFrames)
+                frame = this.STACK_PREFIX + stackFrames;
+            this.stack = sl.subList(this.STACK_PREFIX, frame);
+        } else {
+            this.stack = null;
+        }
+    }
+
+    public getType(): java.lang.Class<unknown> {
+        return this.getClass();
+    }
+}
+
+abstract class ParametricInferenceEvent<O> extends InferenceEvent {
+    public readonly object: O;
+
+    public constructor(object: O, when: long) {
+        super(when);
+        this.object = object;
+    }
+}
+
+class ConceptNew extends ParametricInferenceEvent<Concept> {
+    public constructor(c: Concept, when: long) {
+        super(c, when);
+    }
+
+    public override toString(): java.lang.String {
+        return new java.lang.StringBuilder().append(S`Concept Created: `)
+            .append(java.lang.String.valueOf(this.object)).toString();
+    }
+}
+
 
 
 /**
@@ -74,26 +180,10 @@ export abstract  class Events extends JavaObject {
     };
 
 
-    public static ConceptBeliefAdd =  class ConceptBeliefAdd extends JavaObject implements EventObserver {
-
-        public abstract  onBeliefAdd(c: Concept, t: Task, extra: java.lang.Object[]):  void;
-
-        public  event(event: java.lang.Class<unknown>, args: java.lang.Object[]):  void {
-            this.onBeliefAdd( args[0] as Concept,  args[1] as Task,  args[2] as java.lang.Object[]);
-        }
-
-    };
+    public static ConceptBeliefAdd = ConceptBeliefAdd;
 
 
-    public static ConceptBeliefRemove =  class ConceptBeliefRemove extends JavaObject implements EventObserver {
-
-        public abstract  onBeliefRemove(c: Concept, removed: Sentence, t: Task, extra: java.lang.Object[]):  void;
-
-        public  event(event: java.lang.Class<unknown>, args: java.lang.Object[]):  void {
-            this.onBeliefRemove( args[0] as Concept,  args[1] as Sentence,  args[2] as Task,  args[3] as java.lang.Object[]);
-        }
-
-    };
+    public static ConceptBeliefRemove = ConceptBeliefRemove;
 
 
     public static ConceptGoalAdd =  class ConceptGoalAdd extends JavaObject {
@@ -157,31 +247,10 @@ export abstract  class Events extends JavaObject {
     };
 
 
-    public static ConceptFire =  class ConceptFire extends JavaObject implements EventObserver {
-
-        /**
-         * use:
-         * Concept n.getCurrentConcept()
-         * TaskLink n.getCurrentTaskLink()
-         */
-        public abstract  onFire(n: GeneralInferenceControl):  void;
-
-        public  event(event: java.lang.Class<unknown>, args: java.lang.Object[]):  void {
-            this.onFire( args[0] as GeneralInferenceControl);
-        }
-
-    };
+    public static ConceptFire = ConceptFire;
 
 
-    public static TaskImmediateProcess =  class TaskImmediateProcess extends JavaObject implements EventObserver {
-
-        public abstract  onProcessed(t: Task, n: DerivationContext):  void;
-
-        public  event(event: java.lang.Class<unknown>, args: java.lang.Object[]):  void {
-            this.onProcessed( args[0] as Task,  args[1] as DerivationContext);
-        }
-
-    };
+    public static TaskImmediateProcess = TaskImmediateProcess;
 
 
     public static TermLinkSelect =  class TermLinkSelect extends JavaObject {
@@ -201,14 +270,7 @@ export abstract  class Events extends JavaObject {
     };
  // 2nd level unification in CompositionalRules
 
-    public static TaskAdd =  class TaskAdd extends JavaObject implements EventObserver {
-
-        public abstract  onTaskAdd(t: Task, reason: java.lang.String):  void;
-
-        public  event(event: java.lang.Class<unknown>, args: java.lang.Object[]):  void {
-            this.onTaskAdd( args[0] as Task,  args[1] as java.lang.String);
-        }
-    };
+    public static TaskAdd = TaskAdd;
 
 
     public static TaskRemove =  class TaskRemove extends JavaObject {
@@ -229,93 +291,13 @@ export abstract  class Events extends JavaObject {
     };
 
 
-    public static InferenceEvent =  class InferenceEvent extends JavaObject {
-
-        public readonly  when:  long;
-        public readonly  stack:  java.util.List<java.lang.StackTraceElement>;
-
-        // how many stack frames down to record from; we don't need to include the
-        // current and the previous (InferenceEvent subclass's constructor
-        protected readonly  STACK_PREFIX:  int = 4;
-
-        protected  constructor(when: long);
-
-        protected  constructor(when: long, stackFrames: int);
-    protected constructor(...args: unknown[]) {
-		switch (args.length) {
-			case 1: {
-				const [when] = args as [long];
+    public static InferenceEvent = InferenceEvent;
 
 
-            this(when, 0);
-        
-
-				break;
-			}
-
-			case 2: {
-				const [when, stackFrames] = args as [long, int];
+    public static ParametricInferenceEvent = ParametricInferenceEvent;
 
 
-            super();
-this.when = when;
-
-            if (stackFrames > 0) {
-                 let  sl: java.util.List<java.lang.StackTraceElement> = java.util.Arrays.asList(java.lang.Thread.currentThread().getStackTrace());
-
-                let  frame: int = 0;
-
-                for (let e of sl) {
-                    frame++;
-                    if (e.getClassName().equals("org.opennars.core.Nar")) {
-                        break;
-                    }
-                }
-                if (frame - this.STACK_PREFIX > stackFrames)
-                    frame = this.STACK_PREFIX + stackFrames;
-                this.stack = sl.subList(this.STACK_PREFIX, frame);
-            } else {
-                this.stack = null;
-            }
-        
-
-				break;
-			}
-
-			default: {
-				throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-			}
-		}
-	}
-
-
-        public  getType():  java.lang.Class<unknown> {
-            return this.getClass();
-        }
-
-    };
-
-
-    public static ParametricInferenceEvent =  class ParametricInferenceEvent<O> extends Events.InferenceEvent {
-        public readonly  object:  O;
-
-        public  constructor(object: O, when: long) {
-            super(when);
-            this.object = object;
-        }
-
-    };
-
-
-    public static ConceptNew =  class ConceptNew extends Events.ParametricInferenceEvent<Concept> {
-        public  constructor(c: Concept, when: long) {
-            super(c, when);
-        }
-
-        public override  toString():  java.lang.String {
-            return "Concept Created: " + this.object;
-        }
-    };
+    public static ConceptNew = ConceptNew;
 
 
 }
@@ -363,8 +345,12 @@ export namespace Events {
 	export type TaskDerive = InstanceType<typeof Events.TaskDerive>;
 	export type PluginsChange = InstanceType<typeof Events.PluginsChange>;
 	export type ConceptDirectProcessedTask = InstanceType<typeof Events.ConceptDirectProcessedTask>;
-	export type InferenceEvent = InstanceType<typeof Events.InferenceEvent>;
-	export type ParametricInferenceEvent<O> = InstanceType<typeof Events.ParametricInferenceEvent<O>>;
+	export type InferenceEvent = {
+		readonly when: long;
+		readonly stack: java.util.List<java.lang.StackTraceElement> | null;
+		getType(): java.lang.Class<unknown>;
+	};
+	export type ParametricInferenceEvent<O> = InferenceEvent & { readonly object: O };
 }
 
 
