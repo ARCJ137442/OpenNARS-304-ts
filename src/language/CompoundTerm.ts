@@ -21,6 +21,7 @@ const javaStringHashCode = (value: java.lang.CharSequence): int => {
 };
 
 const NativeOperator = Symbols.NativeOperator;
+type NativeOperator = Symbols.NativeOperator;
 const COMPOUND_TERM_OPENER = NativeOperator.COMPOUND_TERM_OPENER;
 const COMPOUND_TERM_CLOSER = NativeOperator.COMPOUND_TERM_CLOSER;
 
@@ -48,29 +49,29 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     public complexity: short = 0;
 
     /** Whether contains a variable */
-    private hasVariables: boolean;
+    private hasVariables: boolean = false;
 
 
     /** Whether contains a variable */
-    private hasVarQueries: boolean;
+    private hasVarQueries: boolean = false;
 
 
     /** Whether contains a variable */
-    private hasVarIndeps: boolean;
+    private hasVarIndeps: boolean = false;
 
 
     /** Whether contains a variable */
-    private hasVarDeps: boolean;
+    private hasVarDeps: boolean = false;
 
 
     /** Whether contains a variable */
-    private hasIntervals: boolean;
+    private hasIntervals: boolean = false;
 
     // Java permits a cache field and accessor method to share a name; a JS
     // instance field would shadow the method, so keep the cache distinct.
     protected containedTemporalRelationsCache: int = -1;
-    protected hash: int;
-    private normalized: boolean;
+    protected hash: int = 0;
+    private normalized: boolean = false;
 
     /**
      * method to get the operator of the compound
@@ -83,6 +84,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * @return A clone of the compound term
      */
     public abstract clone(): CompoundTerm;
+    public abstract clone(replaced: Term[]): Term;
 
     /**
      * subclasses should be sure to call init() in their constructors;
@@ -95,8 +97,8 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     public static ConvRectangle = class ConvRectangle extends JavaObject {
-        public index_variable: java.lang.String = null;
-        public term_indices: Int32Array = null; // size X, size Y, pos X, pos Y, min size X, min size Y
+        public index_variable: string | null = null;
+        public term_indices: Int32Array | null = null; // size X, size Y, pos X, pos Y, min size X, min size Y
 
         public constructor() {
             super();
@@ -105,7 +107,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
 
     public static UpdateConvRectangle(term: Term[]): CompoundTerm.ConvRectangle {
-        let index_last_var: java.lang.String = null;
+        let index_last_var: string | null = null;
         let minX: int = java.lang.Integer.MAX_VALUE;
         let minY: int = java.lang.Integer.MAX_VALUE;
         let maxX: int = 0;
@@ -174,11 +176,11 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         for (let t of term) {
 
             this.complexity += t.getComplexity();
-            this.hasVariables |= t.hasVar();
-            this.hasVarDeps |= t.hasVarDep();
-            this.hasVarIndeps |= t.hasVarIndep();
-            this.hasVarQueries |= t.hasVarQuery();
-            this.hasIntervals |= t.hasInterval();
+            this.hasVariables ||= t.hasVar();
+            this.hasVarDeps ||= t.hasVarDep();
+            this.hasVarIndeps ||= t.hasVarIndep();
+            this.hasVarQueries ||= t.hasVarQuery();
+            this.hasIntervals ||= t.hasInterval();
         }
 
         this.invalidateName();
@@ -196,12 +198,6 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         }
         this.setNormalized(false);
     }
-
-    /**
-     * Must be Term return type because the type of Term may change with different
-     * arguments
-     */
-    public abstract clone(replaced: Term[]): Term;
 
     public cloneDeep(): CompoundTerm {
         let c: Term = this.clone(this.cloneTermsDeep());
