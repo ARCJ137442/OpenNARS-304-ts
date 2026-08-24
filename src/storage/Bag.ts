@@ -22,21 +22,21 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
     /** shared DISTRIBUTOR that produce the probability distribution */
     private readonly DISTRIBUTOR: Distributor;
     /** mapping from key to item */
-    private nameTable: java.util.HashMap<K, Type>;
+    private nameTable: java.util.HashMap<K, Type> = new java.util.LinkedHashMap<K, Type>();
     /** Java hash buckets used to avoid scanning every logical key on each lookup. */
-    private equalityBuckets: Map<number, K[]>;
+    private equalityBuckets: Map<number, K[]> = new Map<number, K[]>();
     /** array of lists of items, for items on different level */
-    private itemTable: java.util.ArrayList<java.util.ArrayList<Type>>;
+    private itemTable: java.util.ArrayList<java.util.ArrayList<Type>> = new java.util.ArrayList<java.util.ArrayList<Type>>();
     /** defined in different bags */
     private readonly capacity: int;
     /** current sum of occupied level */
-    private mass: int;
+    private mass: int = 0;
     /** index to get next level, kept in individual objects */
-    private levelIndex: int;
+    private levelIndex: int = 0;
     /** current take out level */
-    private currentLevel: int;
+    private currentLevel: int = 0;
     /** maximum number of items to be taken out at current level */
-    private currentCounter: int;
+    private currentCounter: int = 0;
 
     public constructor(levels: int, capacity: int, narParameters: Parameters);
 

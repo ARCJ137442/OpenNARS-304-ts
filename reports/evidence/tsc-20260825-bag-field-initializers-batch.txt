@@ -1,0 +1,12 @@
+command: $env:NODE_OPTIONS='--max-old-space-size=1024'; npx tsc --noEmit --pretty false --incremental false
+base_commit: 5c97f549caefa5c6de03f8e35d06c353873c8780
+exit_code: 2 (expected while diagnostics remain)
+diagnostics: 1368
+production: 501
+tests: 867
+previous_diagnostics: 1375
+previous_production: 508
+previous_tests: 867
+delta: -7 total, -7 production, 0 tests
+top_codes: TS2304=485, TS2322=292, TS2345=192, TS2339=81, TS2769=55, TS2564=41, TS2365=26, TS7006=24, TS18046=23, TS18047=19, TS2694=15, TS2531=14
+root_cause: TypeScript strict property initialization cannot infer that Bag.clear initializes fields which Java initializes through default field state followed by the constructor call.
