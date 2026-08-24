@@ -115,7 +115,7 @@ export abstract class FunctionOperator extends Operator {
             m.narParameters.DEFAULT_FEEDBACK_DURABILITY,
             truthToQuality(s.getTruth()), m.narParameters);
         let newTask: Task = new Task(s, budgetForNewTask, Task.EnumType.INPUT);
-        let result: java.util.List<Task> = new java.util.ArrayList();
+        let result: java.util.List<Task> = new java.util.ArrayList<Task>();
         result.add(newTask);
         return result;
     }

@@ -1,0 +1,4 @@
+command: npm run test:serial --silent
+mode: one serial test process (--test-concurrency=1)
+result: tests=132 pass=132 fail=0 skipped=0 todo=0 duration_ms=36627.7007
+host_failure: none

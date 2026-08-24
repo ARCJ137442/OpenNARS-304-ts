@@ -208,7 +208,7 @@ export class ProcessGoal extends JavaObject {
         if (nal.narParameters.QUESTION_GENERATION_ON_DECISION_MAKING
             || nal.narParameters.HOW_QUESTION_GENERATION_ON_DECISION_MAKING) {
             // ok, how can we achieve it? add a question of whether it is fulfilled
-            let qu: java.util.List<Term> = new java.util.ArrayList();
+            let qu: java.util.List<Term> = new java.util.ArrayList<Term>();
             if (nal.narParameters.HOW_QUESTION_GENERATION_ON_DECISION_MAKING) {
                 if (!(task.sentence.term instanceof Equivalence) && !(task.sentence.term instanceof Implication)) {
                     let how: Variable = new Variable("?how");
@@ -277,7 +277,7 @@ export class ProcessGoal extends JavaObject {
         // 1. pull up variable based preconditions from component concepts without
         // replacing them
         let ret: java.util.Map<Term, java.lang.Integer> = (projectedGoal.getTerm()).countTermRecursively(null);
-        let generalPreconditions: java.util.List<Task> = new java.util.ArrayList();
+        let generalPreconditions: java.util.List<Task> = new java.util.ArrayList<Task>();
         for (let t of ret.keySet()) {
             let get_concept: Concept = nal.memory.concept(t); // the concept to pull preconditions from
             if (get_concept === null || get_concept === concept) { // target concept does not exist or is the same as the

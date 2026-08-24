@@ -118,7 +118,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         let stream: java.io.ObjectInputStream = new java.io.ObjectInputStream(inStream);
         let ret: Nar = stream.readObject() as Nar;
         ret.memory.event = new EventEmitter();
-        ret.plugins = new java.util.ArrayList();
+        ret.plugins = new java.util.ArrayList<Nar.PluginState>();
         ret.sensoryChannels = new java.util.LinkedHashMap();
         let pluginsToAdd: java.util.List<Plugin> = ConfigReader.loadParamsFromFileAndReturnPlugins(ret.usedConfigFilePath, ret,
             ret.narParameters);
@@ -177,7 +177,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     })(this);
 
 
-    protected plugins: java.util.List<Nar.PluginState> = new java.util.ArrayList(); // was CopyOnWriteArrayList
+    protected plugins: java.util.List<Nar.PluginState> = new java.util.ArrayList<Nar.PluginState>(); // was CopyOnWriteArrayList
 
     /** Flag for running continuously */
     private running: boolean = false;

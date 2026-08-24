@@ -275,7 +275,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     public static extractIntervals(mem: Memory, T: Term): java.util.List<java.lang.Long> {
-        let ret: java.util.List<java.lang.Long> = new java.util.ArrayList();
+        let ret: java.util.List<java.lang.Long> = new java.util.ArrayList<java.lang.Long>();
         if (T instanceof CompoundTerm) {
             CompoundTerm.ExtractIntervals(mem, ret, T as CompoundTerm);
         }
@@ -501,7 +501,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     public asTermList(): java.util.List<Term> {
-        let l: java.util.List<Term> = new java.util.ArrayList(this.term.length);
+        let l: java.util.List<Term> = new java.util.ArrayList<Term>(this.term.length);
         this.addTermsTo(l);
         return l;
     }
@@ -535,7 +535,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     /** forced deep clone of terms */
     public cloneTermsListDeep(): java.util.List<Term> {
-        let l: java.util.List<Term> = new java.util.ArrayList(this.term.length);
+        let l: java.util.List<Term> = new java.util.ArrayList<Term>(this.term.length);
         for (let t of this.term)
             l.add(t.clone());
         return l;
@@ -781,7 +781,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         // componentLinks.
         // Capacity is only an optimization; avoid passing a Java short through
         // jree's native ArrayList length constructor.
-        let componentLinks: java.util.List<TermLink> = new java.util.ArrayList();
+        let componentLinks: java.util.List<TermLink> = new java.util.ArrayList<TermLink>();
         return Terms.prepareComponentLinks(componentLinks, this);
     }
 

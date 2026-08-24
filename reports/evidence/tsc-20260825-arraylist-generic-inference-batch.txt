@@ -1,0 +1,9 @@
+command: npx tsc --noEmit --pretty false --incremental false
+mode: one process, non-incremental, serial retry policy
+canonical_java_sha256: 2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
+baseline: total=1628 production=731 tests=897
+result: TSC_EXIT=2 TOTAL=1601 PRODUCTION=704 TESTS=897
+delta: total=-27 production=-27 tests=0
+target_cluster: production ArrayList<unknown>=23 -> 0
+remaining_same_pattern: tests ArrayList<unknown>=8
+host_observation: first invocation yielded an incomplete 783-line stream with exit=1; exact serial retry yielded the complete 1628 baseline and was used.

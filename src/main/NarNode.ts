@@ -242,7 +242,7 @@ export class NarNode extends JavaObject implements EventObserver {
     };
 
 
-    private targets: java.util.List<NarNode.TargetNar> = new java.util.ArrayList();
+    private targets: java.util.List<NarNode.TargetNar> = new java.util.ArrayList<NarNode.TargetNar>();
 
     public addRedirectionTo(target: NarNode.TargetNar): void;
 

@@ -255,7 +255,7 @@ export class DerivationContext extends JavaObject {
 
 
 
-                let ret: java.util.List<Task> = new java.util.ArrayList();
+                let ret: java.util.List<Task> = new java.util.ArrayList<Task>();
                 if (newContent === null || !newBudget.aboveThreshold()) {
                     return null;
                 }

@@ -277,7 +277,7 @@ export class Conjunction extends CompoundTerm {
 
                         let cterm1: CompoundTerm = term1 as CompoundTerm;
 
-                        let list: java.util.List<Term> = new java.util.ArrayList(cterm1.size());
+                        let list: java.util.List<Term> = new java.util.ArrayList<Term>(cterm1.size());
                         cterm1.addTermsTo(list);
 
                         if ((term2 instanceof Conjunction) &&
@@ -304,7 +304,7 @@ export class Conjunction extends CompoundTerm {
 
                 } else {
 
-                    let set: java.util.List<Term> = new java.util.ArrayList();
+                    let set: java.util.List<Term> = new java.util.ArrayList<Term>();
                     if (term1 instanceof Conjunction) {
                         (term1 as CompoundTerm).addTermsTo(set);
                         if (term2 instanceof Conjunction) {

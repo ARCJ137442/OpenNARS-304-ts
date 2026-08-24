@@ -120,12 +120,12 @@ export class Concept extends Item<Term> {
         this.term = tm;
         this.memory = memory;
 
-        this.questions = new java.util.ArrayList();
-        this.beliefs = new java.util.ArrayList();
-        this.executable_preconditions = new java.util.ArrayList();
-        this.general_executable_preconditions = new java.util.ArrayList();
-        this.quests = new java.util.ArrayList();
-        this.desires = new java.util.ArrayList();
+        this.questions = new java.util.ArrayList<Task>();
+        this.beliefs = new java.util.ArrayList<Task>();
+        this.executable_preconditions = new java.util.ArrayList<Task>();
+        this.general_executable_preconditions = new java.util.ArrayList<Task>();
+        this.quests = new java.util.ArrayList<Task>();
+        this.desires = new java.util.ArrayList<Task>();
 
         this.taskLinks = new Bag(memory.narParameters.TASK_LINK_BAG_LEVELS, memory.narParameters.TASK_LINK_BAG_SIZE,
             memory.narParameters);
@@ -325,7 +325,7 @@ export class Concept extends Item<Term> {
     };
 
 
-    public anticipations: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList();
+    public anticipations: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList<Concept.AnticipationEntry>();
 
     /* ---------- insert Links for indirect processing ---------- */
     /**

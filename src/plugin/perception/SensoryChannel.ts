@@ -15,7 +15,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
 
     private reportResultsTo: java.util.Collection<SensoryChannel>;
     public nar: Nar; // for top-down influence of concept budgets
-    public readonly results: java.util.List<Task> = new java.util.ArrayList();
+    public readonly results: java.util.List<Task> = new java.util.ArrayList<Task>();
     public height: int = 0; // 1D channels have height 1
     public width: int = 0;
     public duration: int = -1;

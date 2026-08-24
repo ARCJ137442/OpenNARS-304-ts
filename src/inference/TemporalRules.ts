@@ -229,8 +229,8 @@ export class TemporalRules extends JavaObject {
                 break;
         }
 
-        let t11s: java.util.List<Term> = new java.util.ArrayList();
-        let t22s: java.util.List<Term> = new java.util.ArrayList();
+            let t11s: java.util.List<Term> = new java.util.ArrayList<Term>();
+            let t22s: java.util.List<Term> = new java.util.ArrayList<Term>();
         let penalties: java.util.List<float> = new java.util.ArrayList<float>();
         // "Perception Variable Introduction Rule" -
         // https://groups.google.com/forum/#!topic/open-nars/uoJBa8j7ryE
@@ -245,7 +245,7 @@ export class TemporalRules extends JavaObject {
             }
         }
 
-        let derivations: java.util.List<Task> = new java.util.ArrayList();
+            let derivations: java.util.List<Task> = new java.util.ArrayList<Task>();
         if (!deriveSequenceOnly) {
             for (let i: int = 0; i < t11s.size(); i++) {
                 let t11: Term = t11s.get(i);

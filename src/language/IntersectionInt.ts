@@ -129,7 +129,7 @@ export class IntersectionInt extends CompoundTerm {
                     return SetInt.make(set.toArray(new Array<Term>(0)));
                 }
 
-                let se: java.util.List<Term> = new java.util.ArrayList();
+            let se: java.util.List<Term> = new java.util.ArrayList<Term>();
                 if (term1 instanceof IntersectionInt) {
                     (term1 as CompoundTerm).addTermsTo(se);
                     if (term2 instanceof IntersectionInt) {
