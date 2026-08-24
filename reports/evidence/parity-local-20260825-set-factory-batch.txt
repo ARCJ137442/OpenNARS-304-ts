@@ -1,0 +1,7 @@
+command: node --loader ./scripts/ts-loader.mjs scripts/parity/run-local-algorithm-parity.mjs --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes
+exit: 0
+ok: true
+tolerance: 0.00001
+differences: []
+java_artifact_sha256: 2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
+execution: serial

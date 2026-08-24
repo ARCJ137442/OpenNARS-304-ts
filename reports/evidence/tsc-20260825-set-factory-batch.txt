@@ -1,0 +1,13 @@
+command: npx tsc --noEmit --pretty false --incremental false
+exit: 2
+baseline_before: 1444
+baseline_before_production: 548
+baseline_before_tests: 896
+diagnostics_after: 1430
+diagnostics_after_production: 534
+diagnostics_after_tests: 896
+delta: -14
+root_cause: Java SetExt/SetInt varargs and collection factories accept arrays and return null for empty sorted input; TypeScript lacked the array overload and non-null implementation signatures
+java_sources: java-master/src/main/java/org/opennars/language/SetExt.java:39-54; java-master/src/main/java/org/opennars/language/SetInt.java:39-55
+typescript_fix: add Term[] overloads, return SetExt|SetInt|null from implementations, and preserve non-array compatibility casts
+remaining_set_diagnostic: src/language/SetExt.ts(135,39): error TS2769: Term.get("SELF") still passes string to a CharSequence overload

@@ -71,10 +71,11 @@ export class SetInt extends SetTensional {
     }
 
 
+    public static make(t: Term[]): SetInt;
     public static make(l: java.util.Collection<Term>): SetInt;
 
     public static make(...t: Term[]): SetInt;
-    public static make(...args: unknown[]): SetInt {
+    public static make(...args: unknown[]): SetInt | null {
         switch (args.length) {
             case 1: {
                 const [l] = args as [java.util.Collection<Term> | Term[]];
@@ -86,7 +87,7 @@ export class SetInt extends SetTensional {
                 if (typeof (l as { toArray?: unknown }).toArray === "function") {
                     return SetInt.make((l as java.util.Collection<Term>).toArray(new Array<Term>(0)));
                 }
-                return new SetInt(l as Term);
+                return new SetInt(l as unknown as Term);
 
 
                 break;

@@ -73,10 +73,11 @@ export class SetExt extends SetTensional {
     }
 
 
+    public static make(t: Term[]): SetExt;
     public static make(...t: Term[]): SetExt;
 
     public static make(l: java.util.Collection<Term>): SetExt;
-    public static make(...args: unknown[]): SetExt {
+    public static make(...args: unknown[]): SetExt | null {
         switch (args.length) {
             case 1: {
                 const [t] = args as [Term[] | java.util.Collection<Term>];
@@ -84,7 +85,7 @@ export class SetExt extends SetTensional {
                     if (typeof (t as { toArray?: unknown }).toArray === "function") {
                         return SetExt.make((t as java.util.Collection<Term>).toArray(new Array<Term>(0)));
                     }
-                    return new SetExt(t as Term);
+                    return new SetExt(t as unknown as Term);
                 }
                 const sorted = Term.toSortedSetArray(...t);
                 if (sorted.length === 0)
