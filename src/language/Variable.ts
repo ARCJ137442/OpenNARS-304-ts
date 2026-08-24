@@ -1,9 +1,9 @@
 //! Java source: opennars/language/Variable.java
-import { java, type char, type int, type short, S } from "jree";
+import { java, type int, type short, S } from "jree";
 import { Texts } from "../io/Texts.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { javaStringHashCode, javaStringValue } from "../runtime/jree-compat.ts";
+import { javaStringHashCode, javaStringValue, type JavaChar } from "../runtime/jree-compat.ts";
 
 const VAR_INDEPENDENT = Symbols.VAR_INDEPENDENT;
 const VAR_DEPENDENT = Symbols.VAR_DEPENDENT;
@@ -19,7 +19,7 @@ const VAR_QUERY = Symbols.VAR_QUERY;
  */
 export class Variable extends Term {
     /** caches the type character for faster lookup than charAt(0) */
-    private type: char = 0;
+    private type: JavaChar = "";
 
     private scope: Term;
 
@@ -70,7 +70,7 @@ export class Variable extends Term {
     public setScope(scope: Term, n: java.lang.CharSequence): Variable {
         this.setName(n);
         const first = java.lang.String.valueOf(n).charAt(0);
-        this.type = (typeof first === "number" ? String.fromCharCode(first) : first) as unknown as char;
+        this.type = typeof first === "number" ? String.fromCharCode(first) : first;
         this.scope = scope !== null ? scope : this;
         this.hash = 0; // calculate lazily
         if (!Variable.validVariableType(this.type))
@@ -95,7 +95,7 @@ export class Variable extends Term {
      *
      * @return The variable type
      */
-    public getType(): char {
+    public getType(): JavaChar {
         return this.type;
     }
 
@@ -291,7 +291,7 @@ export class Variable extends Term {
         return i;
     }
 
-    public static validVariableType(c: char): boolean {
+    public static validVariableType(c: JavaChar): boolean {
         return (c === VAR_QUERY) || (c === VAR_DEPENDENT) || (c === VAR_INDEPENDENT);
     }
 
@@ -300,7 +300,7 @@ export class Variable extends Term {
     private static readonly vn2: java.lang.CharSequence[] = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
     private static readonly vn3: java.lang.CharSequence[] = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
 
-    public static getName(type: char, index: int): java.lang.CharSequence {
+    public static getName(type: JavaChar, index: int): java.lang.CharSequence {
         if (index > Variable.MAX_CACHED_VARNAME_INDEXES)
             return Variable.newName(type, index);
 
@@ -328,7 +328,7 @@ export class Variable extends Term {
         return c;
     }
 
-    protected static newName(type: char, index: int): java.lang.CharSequence {
+    protected static newName(type: JavaChar, index: int): java.lang.CharSequence {
         const typeText = typeof type === "number" ? String.fromCharCode(type) : String(type);
         let name = typeText;
         do {

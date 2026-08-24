@@ -1,10 +1,11 @@
 //! Java source: opennars/language/SetTensional.java
-import { java, type char, type int } from "jree";
+import { java, type int } from "jree";
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { Terms } from "./Terms.ts";
 import type { Term } from "./Term.ts";
+import type { JavaChar } from "../runtime/jree-compat.ts";
 
 const ARGUMENT_SEPARATOR = Symbols.ARGUMENT_SEPARATOR;
 
@@ -46,7 +47,7 @@ export abstract class SetTensional extends CompoundTerm {
      * @param arg    the list of term
      * @return the oldName of the term
      */
-    protected static makeSetName(opener: char, arg: Term[], closer: char): java.lang.CharSequence {
+    protected static makeSetName(opener: JavaChar, arg: Term[], closer: JavaChar): java.lang.CharSequence {
         const names = arg.map((t) => String(t.name()));
         return new java.lang.String(`${String(opener)}${names.join(Symbols.ARGUMENT_SEPARATOR)}${String(closer)}`);
     }

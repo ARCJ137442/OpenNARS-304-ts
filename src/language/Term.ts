@@ -1,10 +1,10 @@
 //! Java source: opennars/language/Term.java
-import { java, JavaObject, type int, type short, type char, S } from "jree";
+import { java, JavaObject, type int, type short, S } from "jree";
 import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
-import { javaStringHashCode, javaStringValue } from "../runtime/jree-compat.ts";
+import { javaStringHashCode, javaStringValue, type JavaChar } from "../runtime/jree-compat.ts";
 import type { Memory } from "../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -455,7 +455,7 @@ export class Term extends JavaObject {
      */
     public hasVar(): boolean;
 
-    public hasVar(type: char): boolean;
+    public hasVar(type: JavaChar): boolean;
     public hasVar(...args: unknown[]): boolean {
         switch (args.length) {
             case 0: {
@@ -467,7 +467,7 @@ export class Term extends JavaObject {
             }
 
             case 1: {
-                const [type] = args as [char];
+                const [type] = args as [JavaChar];
 
 
                 switch (type) {

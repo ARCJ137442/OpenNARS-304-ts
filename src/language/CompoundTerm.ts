@@ -1,5 +1,5 @@
 //! Java source: opennars/language/CompoundTerm.java
-import { java, type short, type int, type char, JavaObject, S } from "jree";
+import { java, type short, type int, JavaObject, S } from "jree";
 import { Term } from "./Term.ts";
 import { Interval } from "./Interval.ts";
 import { Variable } from "./Variable.ts";
@@ -9,6 +9,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Terms } from "./Terms.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
+import type { JavaChar } from "../runtime/jree-compat.ts";
 
 const javaStringHashCode = (value: java.lang.CharSequence): int => {
     let hash = 0;
@@ -684,7 +685,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
      * @return Whether the name contains a variable
      */
     public hasVar(): boolean;
-    public hasVar(type: char): boolean;
+    public hasVar(type: JavaChar): boolean;
     public hasVar(...args: unknown[]): boolean {
         // Java overload dispatch is part of the contract: hasVar(type) must
         // reach Term.hasVar(type), rather than the cached any-variable flag.
@@ -692,7 +693,7 @@ export abstract class CompoundTerm extends Term implements java.lang.Iterable<Te
             return this.hasVariables;
         }
         if (args.length === 1) {
-            return super.hasVar(args[0] as char);
+            return super.hasVar(args[0] as JavaChar);
         }
         throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
     }

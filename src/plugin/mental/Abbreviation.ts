@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/Abbreviation.java
-import { java, JavaObject, type double, type int, type char, type float, S } from "jree";
+import { java, JavaObject, type double, type int, type float, S } from "jree";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Stamp } from "../../entity/Stamp.ts";
@@ -14,6 +14,7 @@ import { Similarity } from "../../language/Similarity.ts";
 import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
+import type { JavaChar } from "../../runtime/jree-compat.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
@@ -153,7 +154,7 @@ export class Abbreviation extends JavaObject implements Plugin {
 
         private static currentTermSerial: java.lang.Integer = 1;
 
-        public newSerialTerm(prefix: char): Term {
+        public newSerialTerm(prefix: JavaChar): Term {
             /* synchronized (currentTermSerial) { */
             Abbreviate.currentTermSerial++;
             /* } */

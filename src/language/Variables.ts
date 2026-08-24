@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Variables.java
-import { java, JavaObject, type char, type int, S } from "jree";
+import { java, JavaObject, type int, S } from "jree";
 import { Symbols } from "../io/Symbols.ts";
 import { Variable } from "./Variable.ts";
 import { CompoundTerm } from "./CompoundTerm.ts";
@@ -13,6 +13,7 @@ import { Inheritance } from "./Inheritance.ts";
 import { Similarity } from "./Similarity.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import type { Term } from "./Term.ts";
+import type { JavaChar } from "../runtime/jree-compat.ts";
 
 
 
@@ -30,18 +31,18 @@ export class Variables extends JavaObject {
      * this is to delay the instantiation of the 2 Map until necessary to avoid
      * wasting them if they are not used.
      */
-    public static findSubstitute(rnd: java.util.Random, type: char, term1: Term, term2: Term,
+    public static findSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term,
         map: java.util.Map<Term, Term>[]): boolean;
 
-    public static findSubstitute(rnd: java.util.Random, type: char, term1: Term, term2: Term,
+    public static findSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term,
         map1: java.util.Map<Term, Term>, map2: java.util.Map<Term, Term>): boolean;
 
-    public static findSubstitute(rnd: java.util.Random, type: char, term1: Term, term2: Term,
+    public static findSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term,
         map: java.util.Map<Term, Term>[], allowPartial: boolean): boolean;
     public static findSubstitute(...args: unknown[]): boolean {
         switch (args.length) {
             case 5: {
-                const [rnd, type, term1, term2, map] = args as [java.util.Random, char, Term, Term, java.util.Map<Term, Term>[]];
+                const [rnd, type, term1, term2, map] = args as [java.util.Random, JavaChar, Term, Term, java.util.Map<Term, Term>[]];
 
 
                 return Variables.findSubstitute(rnd, type, term1, term2, map, false);
@@ -52,11 +53,11 @@ export class Variables extends JavaObject {
 
             case 6: {
                 if (typeof args[5] !== "boolean") {
-                    const [rnd, type, term1, term2, map1, map2] = args as [java.util.Random, char, Term, Term, java.util.Map<Term, Term>, java.util.Map<Term, Term>];
+                    const [rnd, type, term1, term2, map1, map2] = args as [java.util.Random, JavaChar, Term, Term, java.util.Map<Term, Term>, java.util.Map<Term, Term>];
                     return Variables.findSubstitute(rnd, type, term1, term2, [map1, map2]);
                 }
 
-                const [rnd, type, term1, term2, map, allowPartial] = args as [java.util.Random, char, Term, Term, java.util.Map<Term, Term>[], boolean];
+                const [rnd, type, term1, term2, map, allowPartial] = args as [java.util.Random, JavaChar, Term, Term, java.util.Map<Term, Term>[], boolean];
 
 
 
@@ -278,7 +279,7 @@ export class Variables extends JavaObject {
     }
 
 
-    public static allowUnification(type: char, uniType: char): boolean { // it is valid to allow dependent var
+    public static allowUnification(type: JavaChar, uniType: JavaChar): boolean { // it is valid to allow dependent var
         // unification in case that a
         // independent var unification is
         // happening,
@@ -396,7 +397,7 @@ export class Variables extends JavaObject {
      * @return Whether the unification is possible. 't' will refer to the unified
      *         terms
      */
-    public static unify(rnd: java.util.Random, type: char, t: Term[]): boolean;
+    public static unify(rnd: java.util.Random, type: JavaChar, t: Term[]): boolean;
 
     /**
      * To unify two terms
@@ -409,14 +410,14 @@ export class Variables extends JavaObject {
      * @return Whether the unification is possible. 't' will refer to the unified
      *         terms
      */
-    public static unify(rnd: java.util.Random, type: char, t1: Term, t2: Term, compound: Term[]): boolean;
+    public static unify(rnd: java.util.Random, type: JavaChar, t1: Term, t2: Term, compound: Term[]): boolean;
 
-    public static unify(rnd: java.util.Random, type: char, t1: Term, t2: Term, compound: Term[],
+    public static unify(rnd: java.util.Random, type: JavaChar, t1: Term, t2: Term, compound: Term[],
         allowPartial: boolean): boolean;
     public static unify(...args: unknown[]): boolean {
         switch (args.length) {
             case 3: {
-                const [rnd, type, t] = args as [java.util.Random, char, Term[]];
+                const [rnd, type, t] = args as [java.util.Random, JavaChar, Term[]];
 
 
                 return Variables.unify(rnd, type, t[0], t[1], t);
@@ -426,7 +427,7 @@ export class Variables extends JavaObject {
             }
 
             case 5: {
-                const [rnd, type, t1, t2, compound] = args as [java.util.Random, char, Term, Term, Term[]];
+                const [rnd, type, t1, t2, compound] = args as [java.util.Random, JavaChar, Term, Term, Term[]];
 
 
                 return Variables.unify(rnd, type, t1, t2, compound, false);
@@ -436,7 +437,7 @@ export class Variables extends JavaObject {
             }
 
             case 6: {
-                const [rnd, type, t1, t2, compound, allowPartial] = args as [java.util.Random, char, Term, Term, Term[], boolean];
+                const [rnd, type, t1, t2, compound, allowPartial] = args as [java.util.Random, JavaChar, Term, Term, Term[], boolean];
 
 
                 let map: java.util.Map<Term, Term>[] = [null, null]; // begins empty: null,null
@@ -542,7 +543,7 @@ export class Variables extends JavaObject {
      * @param term2 The second term to be unified
      * @return Whether there is a substitution
      */
-    public static hasSubstitute(rnd: java.util.Random, type: char, term1: Term, term2: Term): boolean {
+    public static hasSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term): boolean {
         return Variables.findSubstitute(rnd, type, term1, term2, new java.util.LinkedHashMap(), new java.util.LinkedHashMap());
     }
 
