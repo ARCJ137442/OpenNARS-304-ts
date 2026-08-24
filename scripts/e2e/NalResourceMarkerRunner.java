@@ -28,7 +28,7 @@ public final class NalResourceMarkerRunner {
         if (maxCycles < 1 || chunk < 1) throw new IllegalArgumentException("max-cycles and chunk must be positive");
 
         final String source = Files.readString(file);
-        final List<String> inputs = new ArrayList<>();
+        final List<Step> steps = new ArrayList<>();
         int embeddedCycles = 0;
         final List<String> expectations = new ArrayList<>();
         final String marker = "''outputMustContain('";
@@ -40,9 +40,11 @@ public final class NalResourceMarkerRunner {
             }
             if (line.isEmpty() || line.startsWith("'") || line.startsWith("//")) continue;
             if (line.matches("[0-9]+")) {
-                embeddedCycles += Integer.parseInt(line);
+                final int cycles = Integer.parseInt(line);
+                embeddedCycles += cycles;
+                steps.add(Step.cycles(cycles));
             } else {
-                inputs.add(line);
+                steps.add(Step.input(line));
             }
         }
 
@@ -59,7 +61,6 @@ public final class NalResourceMarkerRunner {
             nar.setThreadYield(false);
             capture = new Capture(nar, expectations);
             nar.event(capture, true, Events.CycleEnd.class, OutputHandler.OUT.class, OutputHandler.EXE.class);
-            for (final String input : inputs) nar.addInput(input);
         } finally {
             System.setOut(output);
         }
@@ -67,40 +68,70 @@ public final class NalResourceMarkerRunner {
         final long startedAt = System.nanoTime();
         int cycles = 0;
         String stoppedReason = "completed";
-        while (cycles < Math.min(maxCycles, embeddedCycles)) {
-            final int next = Math.min(chunk, Math.min(maxCycles, embeddedCycles) - cycles);
-            final long chunkStartedAt = System.nanoTime();
-            System.setOut(quiet);
-            try {
-                nar.cycles(next);
-            } finally {
-                System.setOut(output);
+        final int targetCycles = Math.min(maxCycles, embeddedCycles);
+        boolean stopRequested = false;
+        for (final Step step : steps) {
+            if (stopRequested || cycles >= targetCycles) break;
+            if (step.input != null) {
+                System.setOut(quiet);
+                try {
+                    nar.addInput(step.input);
+                } finally {
+                    System.setOut(output);
+                }
+                continue;
             }
-            cycles += next;
-            final String sample = "{\"type\":\"sample\",\"cycle\":" + cycles
-                    + ",\"chunk_cycles\":" + next
-                    + ",\"chunk_duration_ms\":" + ((System.nanoTime() - chunkStartedAt) / 1_000_000.0)
-                    + ",\"elapsed_ms\":" + ((System.nanoTime() - startedAt) / 1_000_000.0)
-                    + ",\"matched\":" + booleanArray(capture.matched())
-                    + ",\"marker_time_ms\":" + numberArray(capture.markerTimeMs())
-                    + ",\"out_events\":" + capture.outEvents
-                    + ",\"exe_events\":" + capture.exeEvents + "}";
-            samples.add(sample);
-            output.println(sample);
-            if (capture.passedCount() == expectations.size() && !expectations.isEmpty()) {
-                stoppedReason = "markers_reached";
-                break;
+            int remaining = Math.min(step.cycles, targetCycles - cycles);
+            while (remaining > 0 && !stopRequested) {
+                final int next = Math.min(chunk, remaining);
+                final long chunkStartedAt = System.nanoTime();
+                System.setOut(quiet);
+                try {
+                    nar.cycles(next);
+                } finally {
+                    System.setOut(output);
+                }
+                cycles += next;
+                final String sample = "{\"type\":\"sample\",\"cycle\":" + cycles
+                        + ",\"chunk_cycles\":" + next
+                        + ",\"chunk_duration_ms\":" + ((System.nanoTime() - chunkStartedAt) / 1_000_000.0)
+                        + ",\"elapsed_ms\":" + ((System.nanoTime() - startedAt) / 1_000_000.0)
+                        + ",\"matched\":" + booleanArray(capture.matched())
+                        + ",\"marker_time_ms\":" + numberArray(capture.markerTimeMs())
+                        + ",\"out_events\":" + capture.outEvents
+                        + ",\"exe_events\":" + capture.exeEvents + "}";
+                samples.add(sample);
+                output.println(sample);
+                if (capture.passedCount() == expectations.size() && !expectations.isEmpty()) {
+                    stoppedReason = "markers_reached";
+                    stopRequested = true;
+                }
+                remaining -= next;
             }
         }
+        if (!stopRequested && cycles >= targetCycles && targetCycles < embeddedCycles) stoppedReason = "cycle_budget_reached";
         output.println("{\"type\":\"result\",\"file\":" + quote(file.toString())
                 + ",\"thread_mode\":\"single\",\"embedded_cycles\":" + embeddedCycles
-                + ",\"target_cycles\":" + Math.min(maxCycles, embeddedCycles)
+                + ",\"target_cycles\":" + targetCycles
                 + ",\"observed_cycles\":" + cycles
                 + ",\"stopped_reason\":" + quote(stoppedReason)
                 + ",\"expected_markers\":" + stringArray(expectations)
                 + ",\"matched\":" + booleanArray(capture.matched())
                 + ",\"marker_time_ms\":" + numberArray(capture.markerTimeMs())
                 + ",\"sample_count\":" + samples.size() + "}");
+    }
+
+    private static final class Step {
+        private final String input;
+        private final int cycles;
+
+        private Step(final String input, final int cycles) {
+            this.input = input;
+            this.cycles = cycles;
+        }
+
+        private static Step input(final String value) { return new Step(value, 0); }
+        private static Step cycles(final int value) { return new Step(null, value); }
     }
 
     private static final class Capture implements EventObserver {

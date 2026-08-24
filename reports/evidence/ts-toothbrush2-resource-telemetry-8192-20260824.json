@@ -16,15 +16,15 @@
     true
   ],
   "marker_time_ms": [
-    21265.287300000004,
-    31743.5181
+    20666.650299999998,
+    30946.8904
   ],
   "sample_count": 4,
   "final": {
     "cycle": 4096,
     "chunk_cycles": 1024,
-    "chunk_duration_ms": 8720.554300000003,
-    "elapsed_ms": 36980.2762,
+    "chunk_duration_ms": 8741.928200000002,
+    "elapsed_ms": 36261.7174,
     "cycle_end_events": 4096,
     "out_events": 1737,
     "exe_events": 2,
@@ -37,14 +37,14 @@
       true
     ],
     "marker_time_ms": [
-      21265.287300000004,
-      31743.5181
+      20666.650299999998,
+      30946.8904
     ],
-    "rss_bytes": 291831808,
-    "heap_used_bytes": 156025304,
-    "heap_total_bytes": 183992320,
-    "external_bytes": 3172419,
-    "array_buffers_bytes": 1032413,
+    "rss_bytes": 305709056,
+    "heap_used_bytes": 117828376,
+    "heap_total_bytes": 196837376,
+    "external_bytes": 2936037,
+    "array_buffers_bytes": 796031,
     "bags": {
       "concepts": 658,
       "novel_tasks": 0,
@@ -65,8 +65,8 @@
     {
       "cycle": 1024,
       "chunk_cycles": 1024,
-      "chunk_duration_ms": 10049.1623,
-      "elapsed_ms": 10082.0018,
+      "chunk_duration_ms": 9730.8027,
+      "elapsed_ms": 9762.8069,
       "cycle_end_events": 1024,
       "out_events": 611,
       "exe_events": 0,
@@ -75,18 +75,18 @@
         "(^reshape,{SELF},cup)! %1.00;0.24%"
       ],
       "matched": [
-        true,
-        true
+        false,
+        false
       ],
       "marker_time_ms": [
-        21265.287300000004,
-        31743.5181
+        null,
+        null
       ],
-      "rss_bytes": 269213696,
-      "heap_used_bytes": 91191528,
-      "heap_total_bytes": 164069376,
-      "external_bytes": 2730400,
-      "array_buffers_bytes": 586283,
+      "rss_bytes": 353873920,
+      "heap_used_bytes": 84554240,
+      "heap_total_bytes": 159612928,
+      "external_bytes": 2756196,
+      "array_buffers_bytes": 612079,
       "bags": {
         "concepts": 311,
         "novel_tasks": 0,
@@ -106,8 +106,8 @@
     {
       "cycle": 2048,
       "chunk_cycles": 1024,
-      "chunk_duration_ms": 9575.1329,
-      "elapsed_ms": 19657.2436,
+      "chunk_duration_ms": 9328.017000000002,
+      "elapsed_ms": 19090.933999999997,
       "cycle_end_events": 2048,
       "out_events": 1022,
       "exe_events": 0,
@@ -116,18 +116,18 @@
         "(^reshape,{SELF},cup)! %1.00;0.24%"
       ],
       "matched": [
-        true,
-        true
+        false,
+        false
       ],
       "marker_time_ms": [
-        21265.287300000004,
-        31743.5181
+        null,
+        null
       ],
-      "rss_bytes": 271683584,
-      "heap_used_bytes": 91970192,
-      "heap_total_bytes": 150962176,
-      "external_bytes": 2751678,
-      "array_buffers_bytes": 599259,
+      "rss_bytes": 280469504,
+      "heap_used_bytes": 92294944,
+      "heap_total_bytes": 173506560,
+      "external_bytes": 2674786,
+      "array_buffers_bytes": 530629,
       "bags": {
         "concepts": 468,
         "novel_tasks": 0,
@@ -147,8 +147,8 @@
     {
       "cycle": 3072,
       "chunk_cycles": 1024,
-      "chunk_duration_ms": 8602.3216,
-      "elapsed_ms": 28259.646,
+      "chunk_duration_ms": 8428.696,
+      "elapsed_ms": 27519.7186,
       "cycle_end_events": 3072,
       "out_events": 1375,
       "exe_events": 1,
@@ -158,17 +158,17 @@
       ],
       "matched": [
         true,
-        true
+        false
       ],
       "marker_time_ms": [
-        21265.287300000004,
-        31743.5181
+        20666.650299999998,
+        null
       ],
-      "rss_bytes": 277389312,
-      "heap_used_bytes": 115343800,
-      "heap_total_bytes": 170622976,
-      "external_bytes": 2968527,
-      "array_buffers_bytes": 828521,
+      "rss_bytes": 303747072,
+      "heap_used_bytes": 160834096,
+      "heap_total_bytes": 197099520,
+      "external_bytes": 3408718,
+      "array_buffers_bytes": 1264561,
       "bags": {
         "concepts": 530,
         "novel_tasks": 0,
@@ -188,8 +188,8 @@
     {
       "cycle": 4096,
       "chunk_cycles": 1024,
-      "chunk_duration_ms": 8720.554300000003,
-      "elapsed_ms": 36980.2762,
+      "chunk_duration_ms": 8741.928200000002,
+      "elapsed_ms": 36261.7174,
       "cycle_end_events": 4096,
       "out_events": 1737,
       "exe_events": 2,
@@ -202,14 +202,14 @@
         true
       ],
       "marker_time_ms": [
-        21265.287300000004,
-        31743.5181
+        20666.650299999998,
+        30946.8904
       ],
-      "rss_bytes": 291831808,
-      "heap_used_bytes": 156025304,
-      "heap_total_bytes": 183992320,
-      "external_bytes": 3172419,
-      "array_buffers_bytes": 1032413,
+      "rss_bytes": 305709056,
+      "heap_used_bytes": 117828376,
+      "heap_total_bytes": 196837376,
+      "external_bytes": 2936037,
+      "array_buffers_bytes": 796031,
       "bags": {
         "concepts": 658,
         "novel_tasks": 0,

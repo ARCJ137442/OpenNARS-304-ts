@@ -91,23 +91,25 @@ function signalText(signal, nar) {
 }
 
 function readInputs(file) {
-  const inputs = [];
+  const steps = [];
   let embeddedCycles = 0;
   for (const rawLine of readFileSync(file, "utf8").split(/\r?\n/)) {
     const line = rawLine.trim();
     if (line.length === 0 || line.startsWith("'") || line.startsWith("//")) continue;
     if (/^[0-9]+$/.test(line)) {
-      embeddedCycles += Number(line);
-      continue;
+      const cycles = Number(line);
+      embeddedCycles += cycles;
+      steps.push({ kind: "cycles", value: cycles });
+    } else {
+      steps.push({ kind: "input", value: line });
     }
-    inputs.push(line);
   }
-  return { inputs, embeddedCycles };
+  return { steps, embeddedCycles };
 }
 
 function main() {
   const options = parseArgs(process.argv.slice(2));
-  const { inputs, embeddedCycles } = readInputs(options.file);
+  const { steps, embeddedCycles } = readInputs(options.file);
   Debug.TEST = true;
   const nar = new Nar();
   const startedAt = performance.now();
@@ -144,17 +146,17 @@ function main() {
   nar.on(OutputHandler.OUT.class, observer);
   nar.on(OutputHandler.EXE.class, observer);
   nar.on(Events.CycleEnd.class, observer);
-  for (const input of inputs) nar.addInput(new java.lang.String(input));
-
   const targetCycles = Math.min(options.maxCycles ?? embeddedCycles, embeddedCycles);
   const samples = [];
   let stoppedReason = "completed";
-  while (cycles < targetCycles) {
-    const next = Math.min(options.chunk, targetCycles - cycles);
+  let stopRequested = false;
+  const runChunk = (next) => {
     const before = performance.now();
     nar.cycles(next);
     cycles += next;
     const state = memoryState(nar);
+    const matchedSnapshot = [...matched];
+    const markerTimesSnapshot = [...markerTimes];
     const sample = {
       cycle: cycles,
       chunk_cycles: next,
@@ -164,20 +166,35 @@ function main() {
       out_events: outEvents,
       exe_events: exeEvents,
       expected_markers: expectedMarkers,
-      matched,
-      marker_time_ms: markerTimes,
+      matched: matchedSnapshot,
+      marker_time_ms: markerTimesSnapshot,
       ...state,
     };
     samples.push(sample);
     process.stdout.write(`${JSON.stringify({ type: "sample", ...sample })}\n`);
     if (matched.length > 0 && matched.every(Boolean)) {
       stoppedReason = "markers_reached";
-      break;
-    }
-    if (state.rss_bytes >= options.rssLimitMb * 1024 * 1024) {
+      stopRequested = true;
+    } else if (state.rss_bytes >= options.rssLimitMb * 1024 * 1024) {
       stoppedReason = "rss_safety_limit";
-      break;
+      stopRequested = true;
     }
+  };
+  for (const step of steps) {
+    if (stopRequested || cycles >= targetCycles) break;
+    if (step.kind === "input") {
+      nar.addInput(new java.lang.String(step.value));
+      continue;
+    }
+    let remaining = Math.min(step.value, targetCycles - cycles);
+    while (remaining > 0 && !stopRequested) {
+      const next = Math.min(options.chunk, remaining);
+      runChunk(next);
+      remaining -= next;
+    }
+  }
+  if (!stopRequested && cycles >= targetCycles && targetCycles < embeddedCycles) {
+    stoppedReason = "cycle_budget_reached";
   }
   const result = {
     file: options.file,
@@ -189,8 +206,8 @@ function main() {
     rss_limit_mb: options.rssLimitMb,
     stopped_reason: stoppedReason,
     expected_markers: expectedMarkers,
-    matched,
-    marker_time_ms: markerTimes,
+    matched: [...matched],
+    marker_time_ms: [...markerTimes],
     sample_count: samples.length,
     final: samples.at(-1) ?? null,
   };

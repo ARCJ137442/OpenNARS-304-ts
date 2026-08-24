@@ -19,19 +19,19 @@
   ],
   "java": {
     "matched": [true, true],
-    "marker_time_ms": [190.1702, 233.9598],
+    "marker_time_ms": [198.582, 246.0948],
     "out_events": 1737,
     "exe_events": 2,
-    "chunk_duration_ms": [116.322, 46.9182, 37.7226, 33.9152],
+    "chunk_duration_ms": [121.1717, 50.2613, 41.3078, 34.8329],
     "runner": "scripts/e2e/NalResourceMarkerRunner.java"
   },
   "typescript": {
     "matched": [true, true],
-    "marker_time_ms": [21265.287300000004, 31743.5181],
+    "marker_time_ms": [20666.650299999998, 30946.8904],
     "out_events": 1737,
     "exe_events": 2,
-    "chunk_duration_ms": [10049.1623, 9575.1329, 8602.3216, 8720.5543],
-    "rss_bytes": [269213696, 271683584, 277389312, 291831808],
+    "chunk_duration_ms": [9730.8027, 9328.017000000002, 8428.696, 8741.9282],
+    "rss_bytes": [353873920, 280469504, 303747072, 305709056],
     "concept_counts": [311, 468, 530, 658],
     "runner": "scripts/e2e/NalResourceTelemetryRunner.mjs"
   },
