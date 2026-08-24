@@ -239,7 +239,7 @@ export class Concept extends Item<Term> {
             let judgment2: Sentence = table.get(i).sentence;
             rank2 = BudgetFunctions.rankBelief(judgment2, rankTruthExpectation);
             if (rank1 >= rank2) {
-                if (newSentence.truth.equals(judgment2.truth)
+                if (newSentence.getTruth().equals(judgment2.getTruth())
                     && newSentence.stamp.equals(judgment2.stamp, false, true, true)) {
                     // System.out.println(" ---------- Equivalent Belief: " + newSentence + " == " +
                     // judgment2);
@@ -564,7 +564,7 @@ export class Concept extends Item<Term> {
         if (this.desires.isEmpty()) {
             return null;
         }
-        let topValue: TruthValue = this.desires.get(0).sentence.truth;
+        let topValue: TruthValue = this.desires.get(0).sentence.getTruth();
         return topValue;
     }
 

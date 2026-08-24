@@ -30,7 +30,7 @@ import type { JavaChar } from "../runtime/jree-compat.ts";
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class Sentence extends JavaObject implements java.lang.Cloneable, java.io.Serializable {
+export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence>, java.io.Serializable {
 
     public producedByTemporalInduction: boolean = false;
 
@@ -48,7 +48,9 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
     /**
      * The truth value of Judgment, or desire value of Goal
      */
-    public readonly truth: TruthValue;
+    // Java permits null here for questions and quests; judgments and goals are
+    // checked in the constructor before inference consumes the value.
+    public readonly truth: TruthValue | null;
 
     /**
      * Partial record of the derivation path
@@ -65,9 +67,9 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      */
     private key: string | null = null;
 
-    private hash: int;
+    private hash: int = 0;
 
-    public constructor(term: Term, punctuation: JavaChar, newTruth: TruthValue, newStamp: Stamp);
+    public constructor(term: Term, punctuation: JavaChar, newTruth: TruthValue | null, newStamp: Stamp);
 
     /**
      * Create a Sentence with the given fields
@@ -79,19 +81,19 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *                    and
      *                    base
      */
-    private constructor(_content: Term, punctuation: JavaChar, truth: TruthValue, stamp: Stamp,
+    public constructor(_content: Term, punctuation: JavaChar, truth: TruthValue | null, stamp: Stamp,
         normalize: boolean);
     public constructor(...args: unknown[]) {
         let _content: Term;
         let punctuation: JavaChar;
-        let truth: TruthValue;
+        let truth: TruthValue | null;
         let stamp: Stamp;
         let normalize: boolean;
         if (args.length === 4) {
-            [_content, punctuation, truth, stamp] = args as [Term, JavaChar, TruthValue, Stamp];
+            [_content, punctuation, truth, stamp] = args as [Term, JavaChar, TruthValue | null, Stamp];
             normalize = true;
         } else if (args.length === 5) {
-            [_content, punctuation, truth, stamp, normalize] = args as [Term, JavaChar, TruthValue, Stamp, boolean];
+            [_content, punctuation, truth, stamp, normalize] = args as [Term, JavaChar, TruthValue | null, Stamp, boolean];
         } else {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
@@ -404,23 +406,27 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
     }
 
     public projectionTruth(targetTime: long, currentTime: long, mem: Memory): TruthValue {
+        if (this.truth === null) {
+            throw new java.lang.IllegalStateException(S`Cannot project a sentence without a truth value`);
+        }
+        const truth = this.truth;
         let newTruth: TruthValue = null;
 
         if (!this.stamp.isEternal()) {
-            newTruth = TruthFunctions.eternalize(this.truth, mem.narParameters);
+            newTruth = TruthFunctions.eternalize(truth, mem.narParameters);
             if (targetTime !== Stamp.ETERNAL) {
                 let occurrenceTime: long = this.stamp.getOccurrenceTime();
                 let factor: float = TruthFunctions.temporalProjection(occurrenceTime, targetTime, currentTime,
                     mem.narParameters);
-                let projectedConfidence: double = factor * this.truth.confidence;
+                let projectedConfidence: double = factor * truth.confidence;
                 if (projectedConfidence > newTruth.confidence) {
-                    newTruth = TruthValue.fromFrequencyConfidence(this.truth.frequency, projectedConfidence, mem.narParameters);
+                    newTruth = TruthValue.fromFrequencyConfidence(truth.frequency, projectedConfidence, mem.narParameters);
                 }
             }
         }
 
         if (newTruth === null)
-            newTruth = this.truth.clone();
+            newTruth = truth.clone();
 
         return newTruth;
     }
@@ -623,6 +629,9 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      *
      */
     public discountConfidence(narParameters: Parameters): void {
+        if (this.truth === null) {
+            throw new java.lang.IllegalStateException(S`Cannot discount a sentence without a truth value`);
+        }
         this.truth.confidence = this.truth.confidence * narParameters.DISCOUNT_RATE;
         this.truth.analytic = false;
     }
@@ -648,6 +657,9 @@ export class Sentence extends JavaObject implements java.lang.Cloneable, java.io
      * @return truth of the sentence, truths are properties of sentences
      */
     public getTruth(): TruthValue {
+        if (this.truth === null) {
+            throw new java.lang.IllegalStateException(S`Sentence has no truth value`);
+        }
         return this.truth;
     }
 }

@@ -150,7 +150,7 @@ export class VisionChannel extends SensoryChannel {
 
         let budgetForNewTask: BudgetValue = new BudgetValue(this.nar.narParameters.DEFAULT_JUDGMENT_PRIORITY,
             this.nar.narParameters.DEFAULT_JUDGMENT_DURABILITY,
-            BudgetFunctions.truthToQuality(s.truth), this.nar.narParameters);
+            BudgetFunctions.truthToQuality(s.getTruth()), this.nar.narParameters);
         let newTask: Task = new Task(s, budgetForNewTask, Task.EnumType.INPUT);
         newTask.setElemOfSequenceBuffer(true);
         if (this.nPrototypes === 0) { // report directly to NARS as there are no prototypes

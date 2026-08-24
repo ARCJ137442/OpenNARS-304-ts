@@ -66,8 +66,8 @@ export class SyllogisticRules extends JavaObject {
         if (order === ORDER_INVALID) {
             return;
         }
-        let value1: TruthValue = sentence.truth;
-        let value2: TruthValue = belief.truth;
+        let value1: TruthValue | null = sentence.truth;
+        let value2: TruthValue = belief.getTruth();
         let truth1: TruthValue = null;
         let truth2: TruthValue = null;
         let budget1: BudgetValue;
@@ -75,12 +75,12 @@ export class SyllogisticRules extends JavaObject {
 
         if (!(sentence.isQuestion() || sentence.isQuest())) {
             if (sentence.isGoal()) {
-                truth1 = TruthFunctions.desireWeak(value1, value2, nal.narParameters);
-                truth2 = TruthFunctions.desireWeak(value1, value2, nal.narParameters);
+                truth1 = TruthFunctions.desireWeak(sentence.getTruth(), value2, nal.narParameters);
+                truth2 = TruthFunctions.desireWeak(sentence.getTruth(), value2, nal.narParameters);
             } else {
                 // isJudgment
-                truth1 = TruthFunctions.deduction(value1, value2, nal.narParameters);
-                truth2 = TruthFunctions.exemplification(value1, value2, nal.narParameters);
+                truth1 = TruthFunctions.deduction(sentence.getTruth(), value2, nal.narParameters);
+                truth2 = TruthFunctions.exemplification(sentence.getTruth(), value2, nal.narParameters);
             }
         }
 
@@ -135,17 +135,17 @@ export class SyllogisticRules extends JavaObject {
         let budget1: BudgetValue;
         let budget2: BudgetValue;
         let budget3: BudgetValue;
-        let value1: TruthValue = sentence1.truth;
-        let value2: TruthValue = sentence2.truth;
+        let value1: TruthValue | null = sentence1.truth;
+        let value2: TruthValue = sentence2.getTruth();
 
         if (sentence1.isGoal()) {
-            truth1 = TruthFunctions.desireStrong(value1, value2, nal.narParameters); // P --> S
-            truth2 = TruthFunctions.desireWeak(value2, value1, nal.narParameters); // S --> P
-            truth3 = TruthFunctions.desireStrong(value1, value2, nal.narParameters); // S <-> P
+            truth1 = TruthFunctions.desireStrong(sentence1.getTruth(), value2, nal.narParameters); // P --> S
+            truth2 = TruthFunctions.desireWeak(value2, sentence1.getTruth(), nal.narParameters); // S --> P
+            truth3 = TruthFunctions.desireStrong(sentence1.getTruth(), value2, nal.narParameters); // S <-> P
         } else if (sentence1.isJudgment()) {
-            truth1 = TruthFunctions.abduction(value1, value2, nal.narParameters); // P --> S
-            truth2 = TruthFunctions.abduction(value2, value1, nal.narParameters); // S --> P
-            truth3 = TruthFunctions.comparison(value1, value2, nal.narParameters); // S <-> P
+            truth1 = TruthFunctions.abduction(sentence1.getTruth(), value2, nal.narParameters); // P --> S
+            truth2 = TruthFunctions.abduction(value2, sentence1.getTruth(), nal.narParameters); // S --> P
+            truth3 = TruthFunctions.comparison(sentence1.getTruth(), value2, nal.narParameters); // S <-> P
         }
 
         if (sentence1.isQuestion()) {
@@ -283,20 +283,20 @@ export class SyllogisticRules extends JavaObject {
                 if (asym.truth === null) { // a question for example
                     return;
                 }
-                budget = BudgetFunctions.backwardWeak(asym.truth, nal);
+                budget = BudgetFunctions.backwardWeak(asym.getTruth(), nal);
             } else {
                 if (sym.truth === null) { // a question for example
                     return;
                 }
-                budget = BudgetFunctions.backward(sym.truth, nal);
+                budget = BudgetFunctions.backward(sym.getTruth(), nal);
             }
         } else {
             if (sentence.isGoal()) {
                 truth = TruthFunctions.lookupTruthFunctionByBoolAndCompute(taskTerm.isCommutative(),
-                    TruthFunctions.EnumType.DESIREWEAK, TruthFunctions.EnumType.DESIRESTRONG, asym.truth, sym.truth,
+                    TruthFunctions.EnumType.DESIREWEAK, TruthFunctions.EnumType.DESIRESTRONG, asym.getTruth(), sym.getTruth(),
                     nal.narParameters);
             } else {
-                truth = TruthFunctions.analogy(asym.truth, sym.truth, nal.narParameters);
+                truth = TruthFunctions.analogy(asym.getTruth(), sym.getTruth(), nal.narParameters);
             }
 
             budget = BudgetFunctions.forward(truth, nal);
@@ -335,15 +335,15 @@ export class SyllogisticRules extends JavaObject {
         let budget: BudgetValue;
         if (!(sentence.isQuestion() || sentence.isQuest())) {
             if (sentence.isGoal()) {
-                truth = TruthFunctions.desireStrong(sentence.truth, belief.truth, nal.narParameters);
+                truth = TruthFunctions.desireStrong(sentence.getTruth(), belief.getTruth(), nal.narParameters);
             } else {
                 // NOTE< this must be Judgement again ? >
-                truth = TruthFunctions.resemblance(belief.truth, sentence.truth, nal.narParameters);
+                truth = TruthFunctions.resemblance(belief.getTruth(), sentence.getTruth(), nal.narParameters);
             }
         }
 
         if (sentence.isQuestion() || sentence.isQuest()) {
-            budget = BudgetFunctions.backward(belief.truth, nal);
+            budget = BudgetFunctions.backward(belief.getTruth(), nal);
         } else {
             budget = BudgetFunctions.forward(truth, nal);
         }
@@ -371,8 +371,8 @@ export class SyllogisticRules extends JavaObject {
             // final TruthValue truth1 = null;
             // final TruthValue truth2 = null;
             let truth3: TruthValue = null;
-            let value1: TruthValue = sentence.truth;
-            let value2: TruthValue = belief.truth;
+            let value1: TruthValue = sentence.getTruth();
+            let value2: TruthValue = belief.getTruth();
 
             if (sentence.isQuestion()) {
                 /*
@@ -511,9 +511,9 @@ export class SyllogisticRules extends JavaObject {
                     }
                 }
 
-                let beliefTruth: TruthValue = beliefSentence.truth;
-                let truth1: TruthValue = mainSentence.truth;
-                let truth2: TruthValue = subSentence.truth;
+                let beliefTruth: TruthValue = beliefSentence.getTruth();
+                let truth1: TruthValue = mainSentence.getTruth();
+                let truth2: TruthValue = subSentence.getTruth();
                 let truth: TruthValue = null;
                 let strong: boolean = false;
                 let budget: BudgetValue;
@@ -724,8 +724,8 @@ export class SyllogisticRules extends JavaObject {
             }
         }
 
-        let truth1: TruthValue = taskSentence.truth;
-        let truth2: TruthValue = belief.truth;
+        let truth1: TruthValue = taskSentence.getTruth();
+        let truth2: TruthValue = belief.getTruth();
         let truth: TruthValue = null;
         let budget: BudgetValue;
 
@@ -854,8 +854,8 @@ export class SyllogisticRules extends JavaObject {
         if (content === null)
             return;
 
-        let truth1: TruthValue = taskSentence.truth;
-        let truth2: TruthValue = belief.truth;
+        let truth1: TruthValue = taskSentence.getTruth();
+        let truth2: TruthValue = belief.getTruth();
         let truth: TruthValue = null;
         let budget: BudgetValue;
         if (!(taskSentence.isQuestion() || taskSentence.isQuest())) {
@@ -922,8 +922,8 @@ export class SyllogisticRules extends JavaObject {
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
         let belief: Sentence = nal.getCurrentBelief();
-        let value1: TruthValue = sentence.truth;
-        let value2: TruthValue = belief.truth;
+        let value1: TruthValue = sentence.getTruth();
+        let value2: TruthValue = belief.getTruth();
 
         let keepOrder: boolean = Variables.hasSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT, st1,
             task.getTerm());
@@ -1006,8 +1006,8 @@ export class SyllogisticRules extends JavaObject {
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
         let belief: Sentence = nal.getCurrentBelief();
-        let v1: TruthValue = sentence.truth;
-        let v2: TruthValue = belief.truth;
+        let v1: TruthValue = sentence.getTruth();
+        let v2: TruthValue = belief.getTruth();
         let truth: TruthValue = null;
         let budget: BudgetValue;
 

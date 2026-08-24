@@ -232,7 +232,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
     public anticipate(content: Term, memory: Memory, occurenceTime: long, t: Task,
         time: Timable): void {
-        if (t !== null && t.sentence.truth.getExpectation() < memory.narParameters.DEFAULT_CONFIRMATION_EXPECTATION) {
+        if (t !== null && t.sentence.getTruth().getExpectation() < memory.narParameters.DEFAULT_CONFIRMATION_EXPECTATION) {
             return;
         }
 

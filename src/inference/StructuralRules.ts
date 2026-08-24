@@ -101,7 +101,7 @@ export class StructuralRules extends JavaObject {
         }
 
         let sentence: Sentence = nal.getCurrentTask().sentence;
-        let truth: TruthValue = TruthFunctions.deduction(sentence.truth, nal.narParameters.reliance,
+        let truth: TruthValue = TruthFunctions.deduction(sentence.getTruth(), nal.narParameters.reliance,
             nal.narParameters);
         let budget: BudgetValue = BudgetFunctions.compoundForward(truth, content, nal);
         nal.singlePremiseTask(content, truth, budget);
@@ -144,12 +144,12 @@ export class StructuralRules extends JavaObject {
         }
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
-        let truth: TruthValue = sentence.truth;
+        let truth: TruthValue | null = sentence.truth;
         let budget: BudgetValue;
         if (sentence.isQuestion() || sentence.isQuest()) {
             budget = BudgetFunctions.compoundBackward(content, nal);
         } else {
-            budget = BudgetFunctions.compoundForward(truth, content, nal);
+            budget = BudgetFunctions.compoundForward(sentence.getTruth(), content, nal);
         }
         nal.singlePremiseTask(content, truth, budget);
     }
@@ -184,7 +184,7 @@ export class StructuralRules extends JavaObject {
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
         let order: int = sentence.getTemporalOrder();
-        let truth: TruthValue = sentence.truth;
+        let truth: TruthValue = sentence.getTruth();
 
         let reliance: float = nal.narParameters.reliance;
         let truthDed: TruthValue = TruthFunctions.deduction(truth, reliance, nal.narParameters);
@@ -240,7 +240,7 @@ export class StructuralRules extends JavaObject {
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
         let order: int = sentence.getTemporalOrder();
-        let truth: TruthValue = sentence.truth;
+        let truth: TruthValue | null = sentence.truth;
 
         if (truth === null) {
             return;
@@ -339,10 +339,10 @@ export class StructuralRules extends JavaObject {
 
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
-        let truth: TruthValue = sentence.truth;
+        let truth: TruthValue | null = sentence.truth;
         let budget: BudgetValue;
         if (sentence.isJudgment()) {
-            budget = BudgetFunctions.compoundForward(truth, content, nal);
+            budget = BudgetFunctions.compoundForward(sentence.getTruth(), content, nal);
         } else {
             budget = BudgetFunctions.compoundBackward(content, nal);
         }
@@ -473,12 +473,12 @@ export class StructuralRules extends JavaObject {
             return;
 
         let sentence: Sentence = nal.getCurrentTask().sentence;
-        let truth: TruthValue = sentence.truth;
+        let truth: TruthValue | null = sentence.truth;
         let budget: BudgetValue;
         if (sentence.isQuestion() || sentence.isQuest()) {
             budget = BudgetFunctions.compoundBackward(content, nal);
         } else {
-            budget = BudgetFunctions.compoundForward(truth, content, nal);
+            budget = BudgetFunctions.compoundForward(sentence.getTruth(), content, nal);
         }
 
         nal.singlePremiseTask(content, truth, budget);
@@ -501,7 +501,7 @@ export class StructuralRules extends JavaObject {
      */
     private static transformSubjectPI(index: short, subject: CompoundTerm, predicate: Term,
         nal: DerivationContext): void {
-        let truth: TruthValue = nal.getCurrentTask().sentence.truth;
+        let truth: TruthValue | null = nal.getCurrentTask().sentence.truth;
         let budget: BudgetValue;
         let inheritance: Inheritance;
         let newSubj: Term;
@@ -566,7 +566,7 @@ export class StructuralRules extends JavaObject {
      */
     private static transformPredicatePI(index: short, subject: Term, predicate: CompoundTerm,
         nal: DerivationContext): void {
-        let truth: TruthValue = nal.getCurrentTask().sentence.truth;
+        let truth: TruthValue | null = nal.getCurrentTask().sentence.truth;
         let budget: BudgetValue;
         let inheritance: Inheritance;
         let newSubj: Term;
@@ -652,7 +652,7 @@ export class StructuralRules extends JavaObject {
                     index + conjComponent.size(), newTerm.length - (index + conjComponent.size()));
                 let cont: Conjunction = Conjunction.make(newTerm, conjCompound.getTemporalOrder(),
                     conjCompound.getIsSpatial()) as Conjunction;
-                let truth: TruthValue = nal.getCurrentTask().sentence.truth.clone();
+                let truth: TruthValue = nal.getCurrentTask().sentence.getTruth().clone();
                 let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
                 nal.singlePremiseTask(cont, truth, budget);
             }
@@ -681,11 +681,11 @@ export class StructuralRules extends JavaObject {
             let curS: Sentence = nal.getCurrentTask().sentence;
             let truth: TruthValue = null;
             if (curS.isJudgment()) {
-                truth = TruthFunctions.deduction(nal.getCurrentTask().sentence.truth, nal.narParameters.reliance,
+                truth = TruthFunctions.deduction(nal.getCurrentTask().sentence.getTruth(), nal.narParameters.reliance,
                     nal.narParameters);
             }
             if (curS.isGoal()) {
-                truth = TruthFunctions.desireStrong(nal.getCurrentTask().sentence.truth,
+                truth = TruthFunctions.desireStrong(nal.getCurrentTask().sentence.getTruth(),
                     TruthValue.fromFrequencyConfidence(1.0, nal.narParameters.reliance, nal.narParameters), nal.narParameters);
             }
             let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
@@ -725,10 +725,10 @@ export class StructuralRules extends JavaObject {
             let curS: Sentence = nal.getCurrentTask().sentence;
             let truth: TruthValue = null;
             if (curS.isJudgment()) {
-                truth = TruthFunctions.deduction(curS.truth, nal.narParameters.reliance, nal.narParameters);
+                truth = TruthFunctions.deduction(curS.getTruth(), nal.narParameters.reliance, nal.narParameters);
             }
             if (curS.isGoal()) {
-                truth = TruthFunctions.desireStrong(curS.truth,
+                truth = TruthFunctions.desireStrong(curS.getTruth(),
                     TruthValue.fromFrequencyConfidence(1.0, nal.narParameters.reliance, nal.narParameters), nal.narParameters);
             }
             StructuralRules.deriveSequenceTask(nal, conjCompound, newTermLeft, truth);
@@ -842,7 +842,7 @@ export class StructuralRules extends JavaObject {
         // derive sourceConjunction, inheriting the type of conjunction from
         // sourceConjunction
         let curS: Sentence = nal.getCurrentTask().sentence;
-        let truth: TruthValue = curS.truth !== null ? curS.truth.clone() : null;
+        let truth: TruthValue | null = curS.truth !== null ? curS.getTruth().clone() : null;
         StructuralRules.deriveSequenceTask(nal, sourceConjunction, destination, truth);
     }
 
@@ -920,7 +920,7 @@ export class StructuralRules extends JavaObject {
         let task: Task = nal.getCurrentTask();
 
         let sentence: Sentence = task.sentence;
-        let truth: TruthValue = sentence.truth;
+        let truth: TruthValue | null = sentence.truth;
 
         let reliance: float = nal.narParameters.reliance;
 
@@ -939,11 +939,12 @@ export class StructuralRules extends JavaObject {
             if ((sentence.isJudgment() || sentence.isGoal()) &&
                 ((!compoundTask && compound instanceof Disjunction) ||
                     (compoundTask && compound instanceof Conjunction))) {
-                truth = TruthFunctions.deduction(truth, reliance, nal.narParameters);
+                truth = TruthFunctions.deduction(sentence.getTruth(), reliance, nal.narParameters);
             } else {
                 let v1: TruthValue;
                 let v2: TruthValue;
-                v1 = TruthFunctions.negation(truth, nal.narParameters);
+                const sourceTruth = sentence.getTruth();
+                v1 = TruthFunctions.negation(sourceTruth, nal.narParameters);
                 v2 = TruthFunctions.deduction(v1, reliance, nal.narParameters);
                 truth = TruthFunctions.negation(v2, nal.narParameters);
             }
@@ -962,12 +963,12 @@ export class StructuralRules extends JavaObject {
     public static transformNegation(content: CompoundTerm, nal: DerivationContext): void {
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
-        let truth: TruthValue = sentence.truth;
+        let truth: TruthValue | null = sentence.truth;
 
         let budget: BudgetValue;
 
         if (sentence.isJudgment() || sentence.isGoal()) {
-            truth = TruthFunctions.negation(truth, nal.narParameters);
+            truth = TruthFunctions.negation(sentence.getTruth(), nal.narParameters);
             budget = BudgetFunctions.compoundForward(truth, content, nal);
         } else {
             budget = BudgetFunctions.compoundBackward(content, nal);
@@ -997,7 +998,7 @@ export class StructuralRules extends JavaObject {
         if (content === null)
             return false;
 
-        let truth: TruthValue = sentence.truth;
+        let truth: TruthValue | null = sentence.truth;
         let budget: BudgetValue;
         if (sentence.isQuestion() || sentence.isQuest()) {
             if (content instanceof Implication) {
@@ -1008,7 +1009,7 @@ export class StructuralRules extends JavaObject {
             return nal.singlePremiseTask(content, Symbols.QUESTION_MARK, truth, budget);
         } else {
             if (content instanceof Implication) {
-                truth = TruthFunctions.contraposition(truth, nal.narParameters);
+                truth = TruthFunctions.contraposition(sentence.getTruth(), nal.narParameters);
             }
             budget = BudgetFunctions.compoundForward(truth, content, nal);
             return nal.singlePremiseTask(content, Symbols.JUDGMENT_MARK, truth, budget);

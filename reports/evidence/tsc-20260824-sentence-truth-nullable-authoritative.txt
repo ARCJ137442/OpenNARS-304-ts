@@ -1,0 +1,16 @@
+batch=sentence-truth-nullable
+command=npx tsc --noEmit --pretty false --incremental false
+npx_exit=2
+host_status=normal
+diagnostics=2118
+production=1204
+tests=914
+other=0
+previous_committed_events_diagnostics=2110
+delta_from_previous_committed_events=8
+intermediate_after_nullable_field_before_propagation=2193
+error_codes=TS1174=1,TS1245=1,TS1361=1,TS17009=3,TS18046=35,TS18047=4,TS18052=2,TS2304=547,TS2314=5,TS2322=462,TS2339=165,TS2344=6,TS2345=325,TS2349=3,TS2352=15,TS2356=2,TS2362=4,TS2363=1,TS2365=32,TS2367=15,TS2385=13,TS2394=1,TS2416=17,TS2445=88,TS2447=15,TS2459=1,TS2503=3,TS2512=1,TS2516=1,TS2531=10,TS2551=22,TS2554=7,TS2564=60,TS2571=2,TS2588=1,TS2662=1,TS2663=3,TS2674=14,TS2689=1,TS2693=10,TS2694=45,TS2724=1,TS2729=1,TS2740=5,TS2749=28,TS2769=105,TS4112=1,TS4113=1,TS7006=24,TS7016=7
+npm_test=127/127
+local_algorithm_parity=ok:true
+local_algorithm_parity_differences=0
+canonical_java_jar_sha256=2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5

@@ -137,8 +137,8 @@ export class CompositionalRules extends JavaObject {
             CompositionalRules.decomposeCompound(componentB as CompoundTerm, componentT, componentCommon, index, false, order, nal);
             return;
         }
-        let truthT: TruthValue = nal.getCurrentTask().sentence.truth;
-        let truthB: TruthValue = nal.getCurrentBelief().truth;
+        let truthT: TruthValue = nal.getCurrentTask().sentence.getTruth();
+        let truthB: TruthValue = nal.getCurrentBelief().getTruth();
         let truthOr: TruthValue = union(truthT, truthB, nal.narParameters);
         let truthAnd: TruthValue = intersection(truthT, truthB, nal.narParameters);
         let truthDif: TruthValue = null;
@@ -250,8 +250,8 @@ export class CompositionalRules extends JavaObject {
         let belief: Sentence = nal.getCurrentBelief();
         let oldContent: Statement = task.getTerm() as Statement;
 
-        let v1: TruthValue = compoundTask ? sentence.truth : belief.truth;
-        let v2: TruthValue = compoundTask ? belief.truth : sentence.truth;
+        let v1: TruthValue = compoundTask ? sentence.getTruth() : belief.getTruth();
+        let v2: TruthValue = compoundTask ? belief.getTruth() : sentence.getTruth();
 
         let content: Term = Statement.make(oldContent, index === 0 ? term1 : term2, index === 0 ? term2 : term1, order);
         if (content === null) {
@@ -365,14 +365,14 @@ export class CompositionalRules extends JavaObject {
 
                 nal.setCurrentTask(contentTask);
                 let conj: Term = Conjunction.make(component, content);
-                truth = intersection(contentBelief.truth, belief.truth, nal.narParameters);
+                truth = intersection(contentBelief.getTruth(), belief.getTruth(), nal.narParameters);
                 budget = BudgetFunctions.compoundForward(truth, conj, nal);
                 nal.getTheNewStamp().setOccurrenceTime(occurrence_time);
                 nal.doublePremiseTask(conj, truth, budget, false, false);
             }
         } else {
-            let v1: TruthValue = compoundTask ? taskSentence.truth : belief.truth;
-            let v2: TruthValue = compoundTask ? belief.truth : taskSentence.truth;
+            let v1: TruthValue = compoundTask ? taskSentence.getTruth() : belief.getTruth();
+            let v2: TruthValue = compoundTask ? belief.getTruth() : taskSentence.getTruth();
 
             if (compound instanceof Conjunction || compound instanceof Disjunction) {
                 if (taskSentence.isGoal() && !compoundTask) {
@@ -428,8 +428,8 @@ export class CompositionalRules extends JavaObject {
         let term22: Term = beliefContent.getPredicate();
         let state1: Statement = Inheritance.make(term11, term12);
         let state2: Statement = Inheritance.make(term21, term22);
-        let truthT: TruthValue = nal.getCurrentTask().sentence.truth;
-        let truthB: TruthValue = nal.getCurrentBelief().truth;
+        let truthT: TruthValue | null = nal.getCurrentTask().sentence.truth;
+        let truthB: TruthValue | null = nal.getCurrentBelief().truth;
         if ((truthT === null) || (truthB === null)) {
             if (Debug.DETAILED) {
                 java.lang.System.out.println("ERROR: Belief with null truth value. (introVarOuter)");
@@ -507,7 +507,7 @@ export class CompositionalRules extends JavaObject {
             for (let subjectIntro of [true, false]) {
                 let conts: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, content, subjectIntro);
                 for (let content_penalty of conts) {
-                    let truth: TruthValue = intersection(taskSentence.truth, belief.truth, nal.narParameters)
+                    let truth: TruthValue = intersection(taskSentence.getTruth(), belief.getTruth(), nal.narParameters)
                         .mulConfidence(content_penalty.getRight());
                     let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
                     b1 |= (nal.doublePremiseTask(content_penalty.getLeft(), truth, budget, false, false)) !== null;
@@ -525,9 +525,9 @@ export class CompositionalRules extends JavaObject {
                 for (let content_penalty of conts) {
                     let truth: TruthValue;
                     if (premise1.equals(taskSentence.term)) {
-                        truth = induction(belief.truth, taskSentence.truth, nal.narParameters);
+                        truth = induction(belief.getTruth(), taskSentence.getTruth(), nal.narParameters);
                     } else {
-                        truth = induction(taskSentence.truth, belief.truth, nal.narParameters);
+                        truth = induction(taskSentence.getTruth(), belief.getTruth(), nal.narParameters);
                     }
                     truth.mulConfidence(content_penalty.getRight());
                     let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
@@ -734,7 +734,7 @@ export class CompositionalRules extends JavaObject {
             if (T === null) {
                 return;
             }
-            let truth: TruthValue = induction(originalMainSentence.truth, subSentence.truth, nal.narParameters);
+            let truth: TruthValue = induction(originalMainSentence.getTruth(), subSentence.getTruth(), nal.narParameters);
             for (let subjectIntro of [true, false]) {
                 let conts: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, T, subjectIntro);
                 for (let content_penalty of conts) {

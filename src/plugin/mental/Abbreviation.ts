@@ -183,7 +183,7 @@ export class Abbreviation extends JavaObject implements Plugin {
                 // convension
                 new Stamp(time, memory));
 
-            let quality: float = BudgetFunctions.truthToQuality(sentence.truth);
+            let quality: float = BudgetFunctions.truthToQuality(sentence.getTruth());
 
             let budget: BudgetValue = new BudgetValue(
                 memory.narParameters.DEFAULT_JUDGMENT_PRIORITY,

@@ -51,7 +51,11 @@ export class BudgetFunctions extends UtilityFunctions {
         if (rankTruthExpectation) {
             return Float32Math.from(judg.getTruth().getExpectation());
         }
-        let confidence: double = judg.truth.confidence;
+        const truth = judg.truth;
+        if (truth === null) {
+            throw new java.lang.IllegalStateException(S`Cannot rank a sentence without a truth value`);
+        }
+        let confidence: double = truth.confidence;
         // final float originality = judg.stamp.getOriginality();
         return Float32Math.from(confidence); // or(confidence, originality);
     }
@@ -120,7 +124,7 @@ export class BudgetFunctions extends UtilityFunctions {
      * @return Budget value of the updating task
      */
     public static update(task: Task, bTruth: TruthValue, narParameters: Parameters): BudgetValue {
-        let tTruth: TruthValue = task.sentence.truth;
+        let tTruth: TruthValue = task.sentence.getTruth();
         let dif: float = tTruth.getExpDifAbs(bTruth);
         let priority: float = UtilityFunctions.or(dif, task.getPriority());
         let durability: float = UtilityFunctions.aveAri(dif, task.getDurability());

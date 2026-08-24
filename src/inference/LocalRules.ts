@@ -121,8 +121,8 @@ export class LocalRules extends JavaObject {
         }
 
         newBelief.stamp.alreadyAnticipatedNegConfirmation = oldBelief.stamp.alreadyAnticipatedNegConfirmation;
-        let newTruth: TruthValue = newBelief.truth.clone();
-        let oldTruth: TruthValue = oldBelief.truth;
+        let newTruth: TruthValue = newBelief.getTruth().clone();
+        let oldTruth: TruthValue = oldBelief.getTruth();
         let useNewBeliefTerm: boolean = LocalRules.intervalProjection(nal, newBelief.getTerm(), oldBelief.getTerm(),
             beliefConcept.recent_intervals, newTruth);
 
@@ -281,7 +281,7 @@ export class LocalRules extends JavaObject {
             return 0.0;
         }
 
-        let truth: TruthValue = solution.truth;
+        let truth: TruthValue = solution.getTruth();
         if (problem.getOccurrenceTime() !== solution.getOccurrenceTime()) {
             truth = solution.projectionTruth(problem.getOccurrenceTime(), time.time(), memory);
         }
@@ -349,7 +349,7 @@ export class LocalRules extends JavaObject {
             let taskPriority: float = task.getPriority(); // +goal satisfication is a matter of degree -
             // https://groups.google.com/forum/#!topic/open-nars/ZfCM416Dx1M
             budget = new BudgetValue(UtilityFunctions.or(taskPriority, quality), task.getDurability(),
-                BudgetFunctions.truthToQuality(solution.truth), nal.narParameters);
+                BudgetFunctions.truthToQuality(solution.getTruth()), nal.narParameters);
             task.setPriority(Float32Math.from(java.lang.Math.min(
                 Float32Math.subtract(1, quality),
                 taskPriority,
@@ -424,8 +424,8 @@ export class LocalRules extends JavaObject {
         } else {
             content = Equivalence.make(t1, t2, s1.getTemporalOrder());
         }
-        let value1: TruthValue = judgment1.truth;
-        let value2: TruthValue = judgment2.truth;
+        let value1: TruthValue = judgment1.getTruth();
+        let value2: TruthValue = judgment2.getTruth();
         let truth: TruthValue = TruthFunctions.intersection(value1, value2, nal.narParameters);
         let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
         nal.doublePremiseTask(content, truth, budget, false, false); // (allow overlap) but not needed here, isn't
@@ -451,7 +451,7 @@ export class LocalRules extends JavaObject {
         if (content === null)
             return;
 
-        let truth: TruthValue = TruthFunctions.reduceConjunction(sym.truth, asym.truth, nal.narParameters);
+        let truth: TruthValue = TruthFunctions.reduceConjunction(sym.getTruth(), asym.getTruth(), nal.narParameters);
         let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
         nal.doublePremiseTask(content, truth, budget, false, false);
     }
@@ -465,7 +465,7 @@ export class LocalRules extends JavaObject {
      * @param nal Reference to the memory
      */
     private static conversion(nal: DerivationContext): void {
-        let truth: TruthValue = TruthFunctions.conversion(nal.getCurrentBelief().truth, nal.narParameters);
+        let truth: TruthValue = TruthFunctions.conversion(nal.getCurrentBelief().getTruth(), nal.narParameters);
         let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
         LocalRules.convertedJudgment(truth, budget, nal);
     }
@@ -479,7 +479,7 @@ export class LocalRules extends JavaObject {
      * @param nal Reference to the memory
      */
     private static convertRelation(nal: DerivationContext): void {
-        let truth: TruthValue = nal.getCurrentBelief().truth;
+        let truth: TruthValue = nal.getCurrentBelief().getTruth();
         if ((nal.getCurrentTask().getTerm() as CompoundTerm).isCommutative()) {
             truth = TruthFunctions.abduction(truth, 1.0, nal.narParameters);
         } else {

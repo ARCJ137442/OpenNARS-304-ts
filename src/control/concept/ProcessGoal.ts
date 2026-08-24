@@ -109,7 +109,7 @@ export class ProcessGoal extends JavaObject {
             // this task is not up to date we have to project it first
 
             let projGoal: Sentence = task.sentence.projection(nal.time.time(), nal.narParameters.DURATION, nal.memory);
-            if (projGoal !== null && projGoal.truth.getExpectation() > nal.narParameters.DECISION_THRESHOLD) {
+            if (projGoal !== null && projGoal.getTruth().getExpectation() > nal.narParameters.DECISION_THRESHOLD) {
 
                 // keep goal updated
                 nal.singlePremiseTask(projGoal, task.budget.clone());
@@ -128,7 +128,7 @@ export class ProcessGoal extends JavaObject {
             let belief: Sentence = beliefT.sentence;
             let projectedBelief: Sentence = belief.projection(task.sentence.getOccurrenceTime(),
                 nal.narParameters.DURATION, nal.memory);
-            AntiSatisfaction = task.sentence.truth.getExpDifAbs(projectedBelief.truth);
+            AntiSatisfaction = task.sentence.getTruth().getExpDifAbs(projectedBelief.getTruth());
         }
 
         // Java casts AntiSatisfaction to float before multiplying two float
@@ -171,7 +171,7 @@ export class ProcessGoal extends JavaObject {
      */
     protected static processOperationGoal(projectedGoal: Sentence, nal: DerivationContext,
         concept: Concept, oldGoalT: Task, task: Task): void {
-        if (projectedGoal.truth.getExpectation() > nal.narParameters.DECISION_THRESHOLD) {
+        if (projectedGoal.getTruth().getExpectation() > nal.narParameters.DECISION_THRESHOLD) {
             // see whether the goal evidence is fully included in the old goal, if yes don't
             // execute
             // as execution for this reason already happened (or did not since there was
@@ -316,7 +316,7 @@ export class ProcessGoal extends JavaObject {
             // 5. And executing it, also forming an expectation about the result
             if (ProcessGoal.executePrecondition(nal, bestOpWithMeta, concept, projectedGoal, task)) {
                 let op: Concept = nal.memory.concept(bestOpWithMeta.bestOp);
-                if (op !== null && bestOpWithMeta.executable_precondition.sentence.truth
+                if (op !== null && bestOpWithMeta.executable_precondition.sentence.getTruth()
                     .confidence > nal.narParameters.MOTOR_BABBLING_CONFIDENCE_THRESHOLD) {
                     /* synchronized (op) { */
                     op.allowBabbling = false;
@@ -395,7 +395,7 @@ export class ProcessGoal extends JavaObject {
                         newesttime = p.sentence.getOccurrenceTime();
                         // Apply interval penalty for interval differences in the precondition
                         LocalRules.intervalProjection(nal, pNew.sentence.term, precondition, prec_intervals,
-                            pNew.sentence.truth);
+                            pNew.sentence.getTruth());
                         bestsofar = pNew;
                         subsBest = subs;
                     }
@@ -408,7 +408,7 @@ export class ProcessGoal extends JavaObject {
             // ok now we can take the desire value:
             let A: TruthValue = projectedGoal.getTruth();
             // and the truth of the hypothesis:
-            let Hyp: TruthValue = t.sentence.truth;
+            let Hyp: TruthValue = t.sentence.getTruth();
             // and derive the conjunction of the left side:
             let leftside: TruthValue = TruthFunctions.desireDed(A, Hyp, concept.memory.narParameters);
             // overlap will almost never happen, but to make sure
@@ -423,7 +423,7 @@ export class ProcessGoal extends JavaObject {
             if (projectedPrecon.isEternal()) {
                 continue; // projection wasn't better than eternalization, too long in the past
             }
-            let precon: TruthValue = projectedPrecon.truth;
+            let precon: TruthValue = projectedPrecon.getTruth();
 
             // in order to derive the operator desire value:
             let opdesire: TruthValue = TruthFunctions.desireDed(precon, leftside, concept.memory.narParameters);

@@ -228,7 +228,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         arg[0] = Term.SELF;
         arg[1] = s.getTerm();
         if (s.truth !== null) {
-            arg[2] = truthToWordTerm(s.projection(time.time(), time.time(), mem).truth);
+            arg[2] = truthToWordTerm(s.projection(time.time(), time.time(), mem).getTruth());
         }
 
         // Operation.make ?
@@ -369,7 +369,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
                     // convension
                     new Stamp(nal.time, memory));
 
-                let quality: float = BudgetFunctions.truthToQuality(sentence.truth);
+                let quality: float = BudgetFunctions.truthToQuality(sentence.getTruth());
                 let budget: BudgetValue = new BudgetValue(
                     memory.narParameters.DEFAULT_GOAL_PRIORITY * this.INTERNAL_EXPERIENCE_PRIORITY_MUL,
                     memory.narParameters.DEFAULT_GOAL_DURABILITY * this.INTERNAL_EXPERIENCE_DURABILITY_MUL,
@@ -420,7 +420,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
                         // convension
                         new Stamp(nal.time, memory));
 
-                    let quality: float = BudgetFunctions.truthToQuality(sentence.truth);
+                let quality: float = BudgetFunctions.truthToQuality(sentence.getTruth());
                     let budget: BudgetValue = new BudgetValue(
                         memory.narParameters.DEFAULT_GOAL_PRIORITY * this.INTERNAL_EXPERIENCE_PRIORITY_MUL,
                         memory.narParameters.DEFAULT_GOAL_DURABILITY * this.INTERNAL_EXPERIENCE_DURABILITY_MUL,

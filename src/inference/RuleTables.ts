@@ -303,7 +303,7 @@ export class RuleTables extends JavaObject {
         if (task.sentence.isJudgment() && tIndex === 0 && bIndex === 1 && taskTerm instanceof Operation) {
             let op: Operation = taskTerm as Operation;
             if (op.getPredicate() === nal.memory.getOperator("^want")) {
-                let newTruth: TruthValue = TruthFunctions.deduction(task.sentence.truth, nal.narParameters.reliance,
+                let newTruth: TruthValue = TruthFunctions.deduction(task.sentence.getTruth(), nal.narParameters.reliance,
                     nal.narParameters);
                 nal.singlePremiseTask((taskTerm as Operation).getArguments().term[1], Symbols.GOAL_MARK, newTruth,
                     BudgetFunctions.forward(newTruth, nal));

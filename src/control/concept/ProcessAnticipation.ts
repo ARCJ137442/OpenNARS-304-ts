@@ -137,7 +137,7 @@ export class ProcessAnticipation extends JavaObject {
                     // take temporality into account as the eternals will win)
                     let t: Task = tl.targetTask;
                     if (t !== null && t.sentence.isJudgment() && /* t.isInput() && */ !t.sentence.isEternal()
-                        && t.sentence.truth
+                        && t.sentence.getTruth()
                             .getExpectation() > concept.memory.narParameters.DEFAULT_CONFIRMATION_EXPECTATION
                         &&
                         CompoundTerm.replaceIntervals(t.sentence.term)
@@ -182,7 +182,7 @@ export class ProcessAnticipation extends JavaObject {
 
                         let found: boolean = iBeliefTerm.equals(term);
                         if (found) {
-                            truthOfBeliefWithTerm = iBeliefTask.sentence.truth;
+                            truthOfBeliefWithTerm = iBeliefTask.sentence.getTruth();
                             break;
                         }
                     }
@@ -229,7 +229,7 @@ export class ProcessAnticipation extends JavaObject {
      */
     public static confirmAnticipation(task: Task, concept: Concept, nal: DerivationContext): void {
         let satisfiesAnticipation: boolean = task.isInput() && !task.sentence.isEternal();
-        let isExpectationAboveThreshold: boolean = task.sentence.truth
+        let isExpectationAboveThreshold: boolean = task.sentence.getTruth()
             .getExpectation() > nal.narParameters.DEFAULT_CONFIRMATION_EXPECTATION;
         let confirmed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList();
         for (let entry of concept.anticipations) {

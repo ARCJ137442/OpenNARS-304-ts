@@ -195,12 +195,12 @@ export class TemporalRules extends JavaObject {
             }
         }
         let order: int = TemporalRules.order(timeDiff, durationCycles);
-        let givenTruth1: TruthValue = s1.truth;
-        let givenTruth2: TruthValue = s2.truth;
+        let givenTruth1: TruthValue = s1.getTruth();
+        let givenTruth2: TruthValue = s2.getTruth();
 
         // This code adds a penalty for large time distance (TODO probably revise)
         let s3: Sentence = s2.projection(s1.getOccurrenceTime(), nal.time.time(), nal.memory);
-        givenTruth2 = s3.truth;
+        givenTruth2 = s3.getTruth();
 
         // Truth and priority calculations
         let truth1: TruthValue = TruthFunctions.induction(givenTruth1, givenTruth2, nal.narParameters);

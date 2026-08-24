@@ -111,7 +111,7 @@ export class Counting extends JavaObject implements Plugin {
                                 return;
                             }
 
-                            let truth: TruthValue = task.sentence.truth.clone();
+                            let truth: TruthValue = task.sentence.getTruth().clone();
                             let stampi: Stamp = task.sentence.stamp.clone();
                             let j: Sentence = new Sentence(
                                 new_term,

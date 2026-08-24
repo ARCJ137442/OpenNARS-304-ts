@@ -520,7 +520,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                             .round(((height + 1.0) / 2.0 * (this.sensoryChannels.get(predicate).height - 1))) as int;
                         let ev: java.lang.String = task.sentence.isEternal() ? " " : " :|: ";
                         let newInput: java.lang.String = "<" + variable + "[" + hval + "," + wval + "]} --> " + predicate.toString() + ">" +
-                            task.sentence.punctuation + ev + task.sentence.truth.toString();
+                            task.sentence.punctuation + ev + task.sentence.getTruth().toString();
                         // this.emit(OutputHandler.IN.class, task); too expensive to print each input
                         // task, consider vision :)
                         this.addInput(newInput);

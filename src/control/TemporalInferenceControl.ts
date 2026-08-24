@@ -201,7 +201,7 @@ export class TemporalInferenceControl extends JavaObject {
         // making sure we do not mess with budget of the task:
         if (!(newEvent.sentence.getTerm() instanceof Operation)) {
             let c: Concept = nal.memory.concept(newEvent.getTerm());
-            let event_quality: float = BudgetFunctions.truthToQuality(newEvent.sentence.truth);
+            let event_quality: float = BudgetFunctions.truthToQuality(newEvent.sentence.getTruth());
             let event_priority: float = event_quality;
             if (c !== null) {
                 event_priority = java.lang.Math.max(event_quality, c.getPriority());

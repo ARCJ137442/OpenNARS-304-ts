@@ -43,8 +43,8 @@ export class ComplexEmotions extends JavaObject implements Plugin {
                         if (c !== null) {
                             if (c.desires.size() > 0 && c.beliefs.size() > 0) {
                                 // Fear:
-                                if (future_task.sentence.truth.getExpectation() > true_expectation &&
-                                    c.desires.get(0).sentence.truth.getExpectation() < false_expectation) {
+                                if (future_task.sentence.getTruth().getExpectation() > true_expectation &&
+                                    c.desires.get(0).sentence.getTruth().getExpectation() < false_expectation) {
                                     // n.addInput("<(*,{SELF},fear) --> ^feel>. :|:");
                                     let weight: float = future_task.getPriority();
                                     let fear: float = LocalRules.solutionQuality(true, c.desires.get(0), future_task.sentence, memory,
