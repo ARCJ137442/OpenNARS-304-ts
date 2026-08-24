@@ -33,6 +33,7 @@ import type { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
 import { Task } from "../entity/Task.ts";
 import { TaskLink } from "../entity/TaskLink.ts";
+import type { TLink } from "../entity/TLink.ts";
 import { TermLink } from "../entity/TermLink.ts";
 import type { Term } from "../language/Term.ts";
 

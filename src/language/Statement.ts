@@ -9,6 +9,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 
 type StatementFactory = (subject: Term, predicate: Term, order: int) => Statement;
 type StatementRuntime = Record<string, any>;
+type NativeOperator = InstanceType<typeof Symbols.NativeOperator>;
 
 
 

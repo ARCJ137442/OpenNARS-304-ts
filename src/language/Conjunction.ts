@@ -6,6 +6,7 @@ import { Interval } from "./Interval.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
+import { Terms } from "./Terms.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 

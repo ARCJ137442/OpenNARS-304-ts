@@ -37,7 +37,7 @@ import { TruthFunctions } from "./TruthFunctions.ts";
 import type { DerivationContext } from "../control/DerivationContext.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 
-type Pair<L, R> = {
+export type Pair<L, R> = {
     getLeft(): L;
     getRight(): R;
     equals(other: unknown): boolean;

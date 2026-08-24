@@ -3,6 +3,7 @@ import { java, type short, type int, S } from "jree";
 import { Item } from "./Item.ts";
 import { Term } from "../language/Term.ts";
 import { BudgetValue } from "./BudgetValue.ts";
+import { Symbols } from "../io/Symbols.ts";
 import type { TLink } from "./TLink.ts";
 
 

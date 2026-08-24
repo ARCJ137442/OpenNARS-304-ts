@@ -7,6 +7,9 @@ import type { Sentence } from "../entity/Sentence.ts";
 import type { Task } from "../entity/Task.ts";
 import type { Term } from "../language/Term.ts";
 import type { TruthValue } from "../entity/TruthValue.ts";
+import type { Pair } from "./CompositionalRules.ts";
+import type { DerivationContext } from "../control/DerivationContext.ts";
+import type { Statement } from "../language/Statement.ts";
 
 type TemporalRuntime = Record<string, any>;
 

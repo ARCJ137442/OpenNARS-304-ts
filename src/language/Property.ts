@@ -3,6 +3,7 @@
 import { java, JavaObject } from "jree";
 import { Inheritance } from "./Inheritance.ts";
 import { SetInt } from "./SetInt.ts";
+import type { Term } from "./Term.ts";
 
 
 
