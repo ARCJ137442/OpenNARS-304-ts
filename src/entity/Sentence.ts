@@ -109,7 +109,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                         let c: Conjunction = _content as Conjunction;
                         if (c.getTemporalOrder() === TemporalRules.ORDER_FORWARD) {
                             if (c.term[c.term.length - 1] instanceof Interval) {
-                                let time: long = 0;
+                                let time: long = 0n;
                                 // refined:
                                 let u: int = 0;
                                 while (c.term.length - 1 - u >= 0 && c.term[c.term.length - 1 - u] instanceof Interval) {
@@ -128,7 +128,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                                     stamp.setOccurrenceTime(stamp.getOccurrenceTime() - time);
                             }
                             if (c.term[0] instanceof Interval) {
-                                let time: long = 0;
+                                let time: long = 0n;
                                 // refined:
                                 let u: int = 0;
                                 while (u < c.term.length && (c.term[u] instanceof Interval)) {
@@ -201,7 +201,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                 this.stamp = stamp;
                 this.revisable = _content instanceof Implication || _content instanceof Equivalence || !(_content.hasVarDep());
 
-                let newTerm: Term = null;
+                let newTerm: Term | null = null;
                 if (_content instanceof CompoundTerm)
                     newTerm = (_content as CompoundTerm).cloneDeepVariables();
 
@@ -227,7 +227,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                         let vname: java.lang.CharSequence = v.name();
                         if (!v.hasVarIndep())
                             vname = new java.lang.String(String(vname) + " " + String(v.getScope().name()));
-                        let n: java.lang.CharSequence = rename.get(vname);
+                        let n: java.lang.CharSequence | null = rename.get(vname);
                         // jree maps return undefined for a missing key, while Java
                         // Map.get returns null. Treat both as the absent value.
                         if (n == null) {
@@ -411,7 +411,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
             throw new java.lang.IllegalStateException(S`Cannot project a sentence without a truth value`);
         }
         const truth = this.truth;
-        let newTruth: TruthValue = null;
+        let newTruth: TruthValue | null = null;
 
         if (!this.stamp.isEternal()) {
             newTruth = TruthFunctions.eternalize(truth, mem.narParameters);
