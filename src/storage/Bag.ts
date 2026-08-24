@@ -23,6 +23,8 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
     private readonly DISTRIBUTOR: Distributor;
     /** mapping from key to item */
     private nameTable: java.util.HashMap<K, Type>;
+    /** Java hash buckets used to avoid scanning every logical key on each lookup. */
+    private equalityBuckets: Map<number, K[]>;
     /** array of lists of items, for items on different level */
     private itemTable: java.util.ArrayList<java.util.ArrayList<Type>>;
     /** defined in different bags */
@@ -62,6 +64,7 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
             this.itemTable.add(new java.util.ArrayList<Type>());
         }
         this.nameTable = new java.util.LinkedHashMap<K, Type>();
+        this.equalityBuckets = new Map<number, K[]>();
         this.currentLevel = this.TOTAL_LEVEL - 1;
         this.levelIndex = this.capacity % this.TOTAL_LEVEL; // so that different bags start at different point
         this.mass = 0;
@@ -119,9 +122,13 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
     public putIn(newItem: Type): Type {
         let newKey: K = newItem.name();
         const existingKey = this.findEquivalentKey(newKey);
-        let oldItem: Type = existingKey === null
-            ? this.nameTable.put(newKey, newItem)
-            : this.nameTable.put(existingKey, newItem);
+        let oldItem: Type;
+        if (existingKey === null) {
+            oldItem = this.nameTable.put(newKey, newItem);
+            this.addKeyToBucket(newKey);
+        } else {
+            oldItem = this.nameTable.put(existingKey, newItem);
+        }
         if (oldItem !== null) { // merge duplications
             this.outOfBase(oldItem);
             newItem.merge(oldItem);
@@ -179,7 +186,7 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
             return this.takeOut();
         }
         this.currentCounter--;
-        this.nameTable.remove(selected.name());
+        this.removeKey(selected.name());
         return selected;
     }
 
@@ -208,13 +215,33 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
         const picked: Type = existingKey === null ? null : this.nameTable.get(existingKey);
         if (picked !== null) {
             this.outOfBase(picked);
-            this.nameTable.remove(existingKey);
+            this.removeKey(existingKey);
         }
         return picked;
     }
 
     /** Resolve Java equals/hashCode key identity before using jree's JS-backed map. */
     private findEquivalentKey(key: K): K {
+        const directItem = this.nameTable.get(key);
+        if (directItem !== null && directItem !== undefined && directItem.name() === key) {
+            return key;
+        }
+
+        const hashCode = this.keyHashCode(key);
+        const candidates = hashCode === null ? null : this.equalityBuckets.get(hashCode);
+        if (candidates !== null && candidates !== undefined) {
+            for (const existingKey of candidates) {
+                if (javaValuesEqual(existingKey, key)) {
+                    return existingKey;
+                }
+            }
+            return null;
+        }
+
+        if (hashCode !== null) {
+            return null;
+        }
+
         for (const entry of this.nameTable.entrySet()) {
             const existingKey = entry.getKey();
             if (javaValuesEqual(existingKey, key)) {
@@ -226,7 +253,38 @@ export class Bag<Type extends Item<K>, K> implements JavaObject, java.io.Seriali
 
     private removeByEquivalentKey(key: K): Type {
         const existingKey = this.findEquivalentKey(key);
-        return existingKey === null ? null : this.nameTable.remove(existingKey);
+        return existingKey === null ? null : this.removeKey(existingKey);
+    }
+
+    private keyHashCode(key: K): number | null {
+        const hashCode = (key as unknown as { hashCode?: unknown })?.hashCode;
+        if (typeof hashCode !== "function") return null;
+        return Number(hashCode.call(key));
+    }
+
+    private addKeyToBucket(key: K): void {
+        const hashCode = this.keyHashCode(key);
+        if (hashCode === null) return;
+        const bucket = this.equalityBuckets.get(hashCode);
+        if (bucket === undefined) {
+            this.equalityBuckets.set(hashCode, [key]);
+        } else if (!bucket.some((existingKey) => existingKey === key)) {
+            bucket.push(key);
+        }
+    }
+
+    private removeKey(key: K): Type {
+        const item = this.nameTable.remove(key);
+        const hashCode = this.keyHashCode(key);
+        if (hashCode !== null) {
+            const bucket = this.equalityBuckets.get(hashCode);
+            if (bucket !== undefined) {
+                const index = bucket.indexOf(key);
+                if (index >= 0) bucket.splice(index, 1);
+                if (bucket.length === 0) this.equalityBuckets.delete(hashCode);
+            }
+        }
+        return item;
     }
 
 

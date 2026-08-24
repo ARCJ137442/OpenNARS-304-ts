@@ -62,16 +62,20 @@
       "classification": "functional_131072_standard_passed",
       "performance_class": "slow_but_progressing",
       "evidence": "reports/evidence/long-term-stability-131072-parity-20260824.json"
+    },
+    {
+      "file": "java-master/src/test/simpleOperationTest.nal",
+      "classification": "functional_131072_standard_passed",
+      "performance_class": "slow_but_progressing",
+      "evidence": "reports/evidence/simpleOperationTest-131072-parity-20260824-post-bucket.json"
     }
   ],
   "derived_classification": {
-    "functional_marker_or_fixed_budget_pass": 242,
+    "functional_marker_or_fixed_budget_pass": 243,
     "correct_but_slower": 9,
-    "explained_functional": 245,
-    "unknown": 1
+    "explained_functional": 246,
+    "unknown": 0
   },
-  "remaining_unknown": [
-    "java-master/src/test/simpleOperationTest.nal"
-  ],
-  "interpretation": "This is a derived classification overlay; it does not rewrite the original fixed-budget matrix. The eight overrides have direct marker or 131072-cycle evidence and are eligible for the next regenerated freeze matrix."
+  "remaining_unknown": [],
+  "interpretation": "This is a derived classification overlay; it does not rewrite the original fixed-budget matrix. The nine overrides have direct marker or 131072-cycle evidence and are eligible for the next regenerated freeze matrix."
 }

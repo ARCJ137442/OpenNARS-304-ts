@@ -1,0 +1,58 @@
+{
+  "format_version": 1,
+  "fixture": "java-master/src/test/simpleOperationTest.nal",
+  "contract": "marker-less fixture; same-thread/same-random 131072-cycle stage counter must match",
+  "thread_mode": "single",
+  "random_seed": 1,
+  "skip_embedded": true,
+  "canonical_java": {
+    "artifact": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d"
+  },
+  "java": {
+    "requested_cycles": 131072,
+    "observed_cycles": 131072,
+    "windows": 128,
+    "window_size": 1024,
+    "total_events": 2535960,
+    "duration_ms": 3844,
+    "incomplete": false
+  },
+  "typescript": {
+    "requested_cycles": 131072,
+    "observed_cycles": 131072,
+    "windows": 128,
+    "window_size": 1024,
+    "total_events": 2535960,
+    "duration_ms": 843888,
+    "incomplete": false
+  },
+  "comparison": {
+    "equal": true,
+    "window_count_equal": true,
+    "window_structure_equal": true,
+    "mismatch_count": 0,
+    "raw_window_evidence": {
+      "java": "C:/Users/56506/AppData/Local/Temp/opennars-simple-131072-post-bucket/java-windows.jsonl",
+      "typescript": "C:/Users/56506/AppData/Local/Temp/opennars-simple-131072-post-bucket/ts-windows.jsonl",
+      "retention": "local temporary evidence; compact comparison is committed"
+    }
+  },
+  "performance": {
+    "java_ms_per_1024_cycles": 30.03125,
+    "typescript_ms_per_1024_cycles": 6592.875,
+    "typescript_to_java_runtime_ratio": 219.534,
+    "classification": "slow_but_progressing"
+  },
+  "classification": {
+    "functional_131072_standard": "passed",
+    "watchdog_timeout": false,
+    "progress_observed_each_window": true,
+    "root_cause_status": "previous Sentence hash and Bag Java-equality key divergence fixed; no remaining window divergence observed"
+  },
+  "commands": {
+    "java": "NalStageCounterRunner 131072 java-master/src/test/simpleOperationTest.nal --skip-embedded --window-size 1024",
+    "typescript": "node --loader ./scripts/ts-loader.mjs scripts/e2e/NalStageCounterRunner.mjs 131072 java-master/src/test/simpleOperationTest.nal --skip-embedded --window-size 1024"
+  }
+}
