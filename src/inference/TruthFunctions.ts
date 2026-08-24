@@ -190,15 +190,13 @@ export class TruthFunctions extends UtilityFunctions {
      */
     public static revision(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue;
 
-    private static revision(v1: TruthValue, v2: TruthValue, result: TruthValue,
-        narParameters: Parameters): TruthValue;
     public static revision(...args: unknown[]): TruthValue {
         switch (args.length) {
             case 3: {
                 const [v1, v2, narParameters] = args as [TruthValue, TruthValue, Parameters];
 
 
-                return TruthFunctions.revision(v1, v2, TruthValue.fromParameters(narParameters), narParameters);
+                return TruthFunctions.revisionInto(v1, v2, TruthValue.fromParameters(narParameters), narParameters);
 
 
                 break;
@@ -208,14 +206,7 @@ export class TruthFunctions extends UtilityFunctions {
                 const [v1, v2, result, narParameters] = args as [TruthValue, TruthValue, TruthValue, Parameters];
 
 
-                let f1: float = v1.frequency;
-                let f2: float = v2.frequency;
-                let w1: double = c2w(v1.confidence, narParameters);
-                let w2: double = c2w(v2.confidence, narParameters);
-                let w: double = w1 + w2;
-                result.frequency = ((w1 * f1 + w2 * f2) / w) as float;
-                result.confidence = w2c(w, narParameters);
-                return result;
+                return TruthFunctions.revisionInto(v1, v2, result, narParameters);
 
 
                 break;
@@ -225,6 +216,18 @@ export class TruthFunctions extends UtilityFunctions {
                 throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
             }
         }
+    }
+
+    private static revisionInto(v1: TruthValue, v2: TruthValue, result: TruthValue,
+        narParameters: Parameters): TruthValue {
+        let f1: float = v1.frequency;
+        let f2: float = v2.frequency;
+        let w1: double = c2w(v1.confidence, narParameters);
+        let w2: double = c2w(v2.confidence, narParameters);
+        let w: double = w1 + w2;
+        result.frequency = ((w1 * f1 + w2 * f2) / w) as float;
+        result.confidence = w2c(w, narParameters);
+        return result;
     }
 
 
