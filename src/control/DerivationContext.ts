@@ -38,8 +38,8 @@ export class DerivationContext extends JavaObject {
     public currentBeliefLink: TermLink | null = null;
     public currentTaskLink: TaskLink;
     public currentBelief: Sentence | null = null;
-    public newStamp: Stamp;
-    public newStampBuilder: DerivationContext.StampBuilder;
+    public newStamp: Stamp | null = null;
+    public newStampBuilder: DerivationContext.StampBuilder | null = null;
 
     public narParameters: Parameters;
 
@@ -420,11 +420,11 @@ export class DerivationContext extends JavaObject {
         return this.time.time();
     }
 
-    public getNewStamp(): Stamp {
+    public getNewStamp(): Stamp | null {
         return this.newStamp;
     }
 
-    public setNewStamp(newStamp: Stamp): void {
+    public setNewStamp(newStamp: Stamp | null): void {
         this.newStamp = newStamp;
     }
 
@@ -452,18 +452,28 @@ export class DerivationContext extends JavaObject {
      * @return the created stamp
      */
     public getTheNewStamp(): Stamp {
-        if (this.newStamp === null) {
+        let stamp = this.newStamp;
+        if (stamp === null) {
             // if newStamp==null then newStampBuilder must be available. cache it's return
             // value as newStamp
-            this.newStamp = this.newStampBuilder.build();
-            this.original_time = this.newStamp.getOccurrenceTime();
+            const builder = this.newStampBuilder;
+            if (builder === null) {
+                throw new java.lang.IllegalStateException("Cannot build new stamp without a StampBuilder");
+            }
+            stamp = builder.build();
+            this.newStamp = stamp;
+            this.original_time = stamp.getOccurrenceTime();
             this.newStampBuilder = null;
         }
-        return this.newStamp;
+        return stamp;
     }
 
     public resetOccurrenceTime(): void {
-        this.newStamp.setOccurrenceTime(this.original_time);
+        const stamp = this.newStamp;
+        if (stamp === null) {
+            throw new java.lang.IllegalStateException("Cannot reset occurrence time without a new stamp");
+        }
+        stamp.setOccurrenceTime(this.original_time);
     }
 
     /**

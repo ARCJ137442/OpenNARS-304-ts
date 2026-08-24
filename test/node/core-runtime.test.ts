@@ -145,6 +145,27 @@ test("DerivationContext currentBeliefLink preserves Java null lifecycle", async 
     assert.equal(context.getCurrentBeliefLink(), null);
 });
 
+test("DerivationContext lazily builds and caches the Java newStamp", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+
+    const nar = new Nar();
+    const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+    const first = new Stamp(0n, Tense.Present, new Stamp.BaseEntry(0n, 1n), nar.narParameters.DURATION);
+    const second = new Stamp(1n, Tense.Present, new Stamp.BaseEntry(1n, 1n), nar.narParameters.DURATION);
+
+    assert.equal(context.getNewStamp(), null);
+    context.setTheNewStamp(first, second, 2n);
+    assert.equal(context.getNewStamp(), null);
+
+    const built = context.getTheNewStamp();
+    assert.ok(built instanceof Stamp);
+    assert.equal(context.getNewStamp(), built);
+    assert.equal(context.newStampBuilder, null);
+});
+
 test("Stamp tense lookup uses Java temporal order constants", async () => {
     const { Stamp } = await import("../../src/entity/Stamp.ts");
     const { Tense } = await import("../../src/language/Tense.ts");
