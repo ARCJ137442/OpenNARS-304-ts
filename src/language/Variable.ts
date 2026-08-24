@@ -32,7 +32,7 @@ export class Variable extends Term {
      *
      * @param name A String read from input
      */
-    protected constructor(name: java.lang.CharSequence, scope: Term);
+    public constructor(name: java.lang.CharSequence, scope: Term);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 1: {
