@@ -39,7 +39,7 @@ export class Term extends JavaObject implements AbstractTerm {
     // Java defines SELF as the singleton extension set {SELF}, not as the
     // atomic term SELF.  SetExt registers that value after the module cycle has
     // initialized; the atomic fallback only exists during module loading.
-    private static selfValue: Term = null;
+    private static selfValue: Term | null = null;
     public static get SELF(): Term {
         return Term.selfValue ?? Term.get("SELF");
     }
@@ -147,7 +147,7 @@ export class Term extends JavaObject implements AbstractTerm {
 
 
                 const nativeName = String(name);
-                let x: Term = Term.atoms.get(nativeName); // only
+                let x: Term | null = Term.atoms.get(nativeName); // only
                 if (x !== null && !String(x).endsWith("]")) { // return only if it isn't an index term
                     return x;
                 }

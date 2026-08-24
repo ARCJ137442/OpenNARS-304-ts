@@ -1,0 +1,14 @@
+batch=20260825-term-null-cache
+command=npx tsc --noEmit --pretty false --incremental false
+exit_code=2
+diagnostics_total=1389
+production_diagnostics=522
+test_diagnostics=867
+previous_batch_total=1391
+previous_batch_production=524
+previous_batch_tests=867
+delta_total=-2
+delta_production=-2
+delta_tests=0
+root_cause=Java Term.selfValue and Term.atoms.get may be null; TypeScript local declarations were too narrow
+scope=static diagnostic probe only; no NAL matrix run
