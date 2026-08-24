@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Concept.java
-import { java, type int, type float, JavaObject, type long } from "jree";
+import { java, type int, type float, JavaObject, type long, S } from "jree";
 import { Item } from "./Item.ts";
 import { Term } from "../language/Term.ts";
 import { Sentence } from "./Sentence.ts";
@@ -454,13 +454,7 @@ export class Concept extends Item<Term> {
      * called from {@link Shell}
      */
     public toStringLong(): java.lang.String {
-        let res: java.lang.String = toStringExternal() + " " + this.term.name()
-            + this.toStringIfNotNull(this.termLinks.size(), "termLinks")
-            + this.toStringIfNotNull(this.taskLinks.size(), "taskLinks")
-            + this.toStringIfNotNull(this.beliefs.size(), "beliefs")
-            + this.toStringIfNotNull(this.desires.size(), "desires")
-            + this.toStringIfNotNull(this.questions.size(), "questions")
-            + this.toStringIfNotNull(this.quests.size(), "quests");
+        const res: java.lang.String = S`${this.toStringExternal()} ${this.term.name()}${this.toStringIfNotNull(this.termLinks.size(), S`termLinks`)}${this.toStringIfNotNull(this.taskLinks.size(), S`taskLinks`)}${this.toStringIfNotNull(this.beliefs.size(), S`beliefs`)}${this.toStringIfNotNull(this.desires.size(), S`desires`)}${this.toStringIfNotNull(this.questions.size(), S`questions`)}${this.toStringIfNotNull(this.quests.size(), S`quests`)}`;
 
         // + toStringIfNotNull(null, "questions");
         /*
@@ -472,15 +466,12 @@ export class Concept extends Item<Term> {
         return res;
     }
 
-    private toStringIfNotNull(item: java.lang.Object, title: java.lang.String): java.lang.String {
+    private toStringIfNotNull(item: unknown, title: java.lang.String): java.lang.String {
         if (item === null) {
-            return "";
+            return S``;
         }
 
-        let itemString: java.lang.String = item.toString();
-
-        return new java.lang.StringBuilder(2 + title.length() + itemString.length() + 1).append(" ").append(title).append(':')
-            .append(itemString).toString();
+        return S` ${title}:${String(item)}`;
     }
 
     public acquiredQuality: float = 0.0;

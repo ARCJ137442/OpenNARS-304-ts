@@ -135,6 +135,24 @@ test("CompoundTerm equality preserves Java case-sensitive key identity", async (
     assert.equal(nar.memory.concepts.size(), 2);
 });
 
+test("Concept long text preserves Java field labels", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { Parameters } = await import("../../src/main/Parameters.ts");
+
+    const nar = new Nar();
+    const concept = nar.memory.conceptualize(
+        new BudgetValue(0.9, 0.9, 0.9, new Parameters()),
+        Term.get("concept"),
+    );
+    const text = String(concept.toStringLong());
+
+    assert.match(text, /termLinks/);
+    assert.match(text, /taskLinks/);
+    assert.match(text, /beliefs/);
+});
+
 test("Narsese truth parsing preserves Java Float.parseFloat boundaries", async () => {
     const { java } = await import("jree");
     const { Nar } = await import("../../src/main/Nar.ts");
