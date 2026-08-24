@@ -1,5 +1,9 @@
 //! Java source: opennars/operator/misc/System.java
-import { java, type int } from "jree";
+import { execFileSync } from "node:child_process";
+import { java } from "jree";
+import { FunctionOperator } from "../FunctionOperator.ts";
+import type { Memory } from "../../storage/Memory.ts";
+import { Term } from "../../language/Term.ts";
 
 
 
@@ -9,41 +13,26 @@ import { java, type int } from "jree";
 export class System extends FunctionOperator {
 
     public constructor() {
-        super("^system");
+        super(new java.lang.String("^system"));
     }
 
-    protected function(memory: Memory, x: Term[]): Term {
-        let cmd: java.lang.String = "";
-        for (let i: int = 0; i < x.length; ++i) {
-            cmd += x[i].name().toString() + " ";
+    protected function(_memory: Memory, x: Term[]): Term {
+        let cmd = "";
+        for (let i = 0; i < x.length; ++i) {
+            cmd += String(x[i].name()) + " ";
         }
-        let s: java.lang.String;
-        let ret: java.lang.String = "";
-        let cmds: java.lang.String[] = ["bash", "-c", cmd];
-        let r: java.lang.Runtime;
-        let p: java.lang.Process;
+        let ret = "";
         try {
-            r = java.lang.Runtime.getRuntime();
-            p = r.exec(cmds);
-            let br: java.io.BufferedReader = new java.io.BufferedReader(
-                new java.io.InputStreamReader(p.getInputStream()));
-            while ((s = br.readLine()) !== null)
-                ret += s;
-            // System.out.println("line: " + s);
-            p.waitFor();
-            // System.out.println ("exit: " + p.exitValue());
-            p.destroy();
-        } catch (e) {
-            if (e instanceof java.lang.Exception) {
-            } else {
-                throw e;
-            }
+            const output = execFileSync("bash", ["-c", cmd], { encoding: "utf8" });
+            ret = output.split(/\r?\n/).join("");
+        } catch {
+            // Java catches Exception here and returns an empty Term.
         }
-        return new Term(ret);
+        return new Term(new java.lang.String(ret));
     }
 
     protected getRange(): Term {
-        return Term.get("system_called");
+        return Term.get(new java.lang.String("system_called"));
     }
 
 }
