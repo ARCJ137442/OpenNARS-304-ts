@@ -27,9 +27,9 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
 
     private readonly nar: Nar;
 
-    private prefix: java.lang.String = "";
-    private outExp2: TextOutputHandler.LineOutput;
-    private outExp: java.io.PrintWriter;
+    private prefix: java.lang.String = S``;
+    private outExp2: TextOutputHandler.LineOutput | null = null;
+    private outExp: java.io.PrintWriter | null = null;
     private showErrors: boolean = true;
     private showStackTrace: boolean = false;
     private readonly showStamp: boolean = true;
@@ -55,79 +55,40 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
 
     public constructor(n: Nar, ps: java.io.PrintStream, minPriority: float);
     public constructor(...args: unknown[]) {
+        const n = args[0] as Nar;
+        super(n, true);
+        this.nar = n;
+
         switch (args.length) {
             case 1: {
-                const [n] = args as [Nar];
-
-
-                super(n, true);
-                this.nar = n;
-
-
                 break;
             }
 
             case 2: {
-                const [n, outExp2] = args as [Nar, TextOutputHandler.LineOutput];
-
-
-                this(n);
-                this.outExp2 = outExp2;
-
-
-                break;
-            }
-
-            case 2: {
-                const [n, outExp] = args as [Nar, java.io.PrintWriter];
-
-
-                this(n, outExp, 0.0);
-
-
-                break;
-            }
-
-            case 2: {
-                const [n, ps] = args as [Nar, java.io.PrintStream];
-
-
-                this(n, new java.io.PrintWriter(ps));
-
-
-                break;
-            }
-
-            case 2: {
-                const [n, s] = args as [Nar, java.io.StringWriter];
-
-
-                this(n, new java.io.PrintWriter(s));
-
-
+                const target = args[1];
+                if (target instanceof java.io.PrintWriter) {
+                    this.outExp = target;
+                } else if (target instanceof java.io.PrintStream) {
+                    this.outExp = new java.io.PrintWriter(target);
+                } else if (target instanceof java.io.StringWriter) {
+                    this.outExp = new java.io.PrintWriter(target);
+                } else {
+                    this.outExp2 = target as TextOutputHandler.LineOutput;
+                }
                 break;
             }
 
             case 3: {
-                const [n, outExp, minPriority] = args as [Nar, java.io.PrintWriter, float];
-
-
-                this(n);
-                this.outExp = outExp;
+                const target = args[1];
+                const minPriority = args[2] as float;
+                if (target instanceof java.io.PrintWriter) {
+                    this.outExp = target;
+                } else if (target instanceof java.io.PrintStream) {
+                    this.outExp = new java.io.PrintWriter(target);
+                } else {
+                    throw new java.lang.IllegalArgumentException(S`Invalid output target`);
+                }
                 this.minPriority = minPriority;
-
-
-                break;
-            }
-
-            case 3: {
-                const [n, ps, minPriority] = args as [Nar, java.io.PrintStream, float];
-
-
-                this(n, ps);
-                this.minPriority = minPriority;
-
-
                 break;
             }
 
@@ -157,8 +118,9 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
      * Close an output experience file
      */
     public closeSaveFile(): void {
-        this.outExp.close();
-        setActive(false);
+        if (this.outExp !== null)
+            this.outExp.close();
+        this.setActive(false);
     }
 
     /**
@@ -174,14 +136,15 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
 
         if ((this.outExp !== null) || (this.outExp2 !== null)) {
             let o: java.lang.Object = oo[0];
-            let s: java.lang.String = this.process(channel, o);
+            let s: java.lang.String | null = this.process(channel, o);
             if (s !== null) {
+                const line = new java.lang.StringBuilder().append(this.prefix).append(s).toString();
                 if (this.outExp !== null) {
-                    this.outExp.println(this.prefix + s);
+                    this.outExp.println(line);
                     this.outExp.flush();
                 }
                 if (this.outExp2 !== null) {
-                    this.outExp2.println(this.prefix + s);
+                    this.outExp2.println(line);
                 }
             }
         }
@@ -189,7 +152,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
 
     protected readonly result: java.lang.StringBuilder = new java.lang.StringBuilder(16 /* estimate */);
 
-    public process(c: java.lang.Class<unknown>, o: java.lang.Object): java.lang.String {
+    public process(c: java.lang.Class<unknown>, o: java.lang.Object): java.lang.String | null {
         return this.getOutputString(c, o, true, this.showStamp, this.nar, this.result, this.minPriority);
     }
 
@@ -214,12 +177,12 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
     }
 
     public getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
-        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String;
+        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String | null;
 
     /** generates a human-readable string from an output channel and signal */
     public getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
-        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder, minPriority: float): java.lang.String;
-    public getOutputString(...args: unknown[]): java.lang.String {
+        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder, minPriority: float): java.lang.String | null;
+    public getOutputString(...args: unknown[]): java.lang.String | null {
         switch (args.length) {
             case 6: {
                 const [channel, signal, showChannel, showStamp, nar, buffer] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, boolean, Nar, java.lang.StringBuilder];
