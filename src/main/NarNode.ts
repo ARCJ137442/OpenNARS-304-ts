@@ -145,8 +145,8 @@ export class NarNode extends JavaObject implements EventObserver {
                 let term: Term = t.getTerm();
                 let isCompound: boolean = (term instanceof CompoundTerm);
                 let searchTerm: boolean = target.mustContainTerm !== null;
-                let atomicEqualsSearched: boolean = searchTerm && !isCompound && target.mustContainTerm.equals(term);
-                let compoundContainsSearched: boolean = searchTerm && isCompound
+                let atomicEqualsSearched: boolean = target.mustContainTerm !== null && !isCompound && target.mustContainTerm.equals(term);
+                let compoundContainsSearched: boolean = target.mustContainTerm !== null && isCompound
                     && (term as CompoundTerm).containsTermRecursively(target.mustContainTerm);
                 if (!searchTerm || atomicEqualsSearched || compoundContainsSearched) {
                     let packet: java.net.DatagramPacket = new java.net.DatagramPacket(serializedMessage, serializedMessage.length,
@@ -168,7 +168,7 @@ export class NarNode extends JavaObject implements EventObserver {
     public static sendNarsese(input: java.lang.String, target: NarNode.TargetNar): void;
 
     public static sendNarsese(input: java.lang.String, targetIP: java.lang.String, targetPort: int, taskThreshold: float,
-        mustContainTerm: Term): void;
+        mustContainTerm: Term | null): void;
     public static sendNarsese(...args: unknown[]): void {
         switch (args.length) {
             case 2: {
@@ -181,7 +181,8 @@ export class NarNode extends JavaObject implements EventObserver {
                 oo.close();
                 let serializedMessage: Int8Array = bStream.toByteArray();
                 let searchTerm: boolean = target.mustContainTerm !== null;
-                let containsFound: boolean = searchTerm && input.contains(target.mustContainTerm.toString());
+                let containsFound: boolean = target.mustContainTerm !== null
+                    && input.contains(target.mustContainTerm.toString());
                 if (!searchTerm || containsFound) {
                     let packet: java.net.DatagramPacket = new java.net.DatagramPacket(serializedMessage, serializedMessage.length,
                         target.targetAddress, target.targetPort);
@@ -194,7 +195,7 @@ export class NarNode extends JavaObject implements EventObserver {
             }
 
             case 5: {
-                const [input, targetIP, targetPort, taskThreshold, mustContainTerm] = args as [java.lang.String, java.lang.String, int, float, Term];
+                const [input, targetIP, targetPort, taskThreshold, mustContainTerm] = args as [java.lang.String, java.lang.String, int, float, Term | null];
 
 
                 NarNode.sendNarsese(input, new NarNode.TargetNar(targetIP, targetPort, taskThreshold, mustContainTerm, true));
@@ -223,7 +224,7 @@ export class NarNode extends JavaObject implements EventObserver {
          * @throws SocketException
          * @throws UnknownHostException
          */
-        public constructor(targetIP: java.lang.String, targetPort: int, threshold: float, mustContainTerm: Term,
+        public constructor(targetIP: java.lang.String, targetPort: int, threshold: float, mustContainTerm: Term | null,
             sendInput: boolean) {
             super();
             this.targetAddress = java.net.InetAddress.getByName(targetIP);
@@ -238,7 +239,7 @@ export class NarNode extends JavaObject implements EventObserver {
         public readonly sendSocket: java.net.DatagramSocket;
         public readonly targetPort: int;
         public readonly targetAddress: java.net.InetAddress;
-        public readonly mustContainTerm: Term;
+        public readonly mustContainTerm: Term | null;
         protected readonly sendInput: boolean;
     };
 
@@ -260,7 +261,7 @@ export class NarNode extends JavaObject implements EventObserver {
      * @throws UnknownHostException
      */
     public addRedirectionTo(targetIP: java.lang.String, targetPort: int, taskThreshold: float,
-        mustContainTerm: Term, sendInput: boolean): void;
+        mustContainTerm: Term | null, sendInput: boolean): void;
     public addRedirectionTo(...args: unknown[]): void {
         switch (args.length) {
             case 1: {
@@ -274,7 +275,7 @@ export class NarNode extends JavaObject implements EventObserver {
             }
 
             case 5: {
-                const [targetIP, targetPort, taskThreshold, mustContainTerm, sendInput] = args as [java.lang.String, int, float, Term, boolean];
+                const [targetIP, targetPort, taskThreshold, mustContainTerm, sendInput] = args as [java.lang.String, int, float, Term | null, boolean];
 
 
                 this.addRedirectionTo(new NarNode.TargetNar(targetIP, targetPort, taskThreshold, mustContainTerm, sendInput));
