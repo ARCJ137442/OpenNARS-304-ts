@@ -1,0 +1,63 @@
+{
+  "format_version": 1,
+  "fixture": "java-master/src/test/simpleOperationTest.nal",
+  "contract": "marker-less fixture; same-thread/same-random 131072-cycle stage digest must match",
+  "thread_mode": "single",
+  "random_seed": 1,
+  "skip_embedded": true,
+  "canonical_java": {
+    "artifact": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d"
+  },
+  "java": {
+    "requested_cycles": 131072,
+    "observed_cycles": 131072,
+    "windows": 128,
+    "window_size": 1024,
+    "total_events": 2535970,
+    "incomplete": false,
+    "evidence": "reports/evidence/java-simpleOperationTest-stage-digest-131072-window1024-20260824.jsonl"
+  },
+  "typescript": {
+    "requested_cycles": 131072,
+    "observed_cycles": 131072,
+    "windows": 128,
+    "window_size": 1024,
+    "total_events": 2331693,
+    "incomplete": false,
+    "evidence": "reports/evidence/ts-simpleOperationTest-stage-digest-131072-window1024-20260824.jsonl"
+  },
+  "comparison": {
+    "equal": false,
+    "first_difference": {
+      "window_index": 0,
+      "start_cycle": 1,
+      "end_cycle": 1024,
+      "reason": "total_events",
+      "java": 15180,
+      "typescript": 15895
+    },
+    "trace_first_normalized_difference": {
+      "event_index": 3156,
+      "java": {
+        "event": "TermLinkSelect",
+        "args": ["(*,{SELF})|type=3|index=[0]", "(^left,{SELF})", "(^left,{SELF})"]
+      },
+      "typescript": {
+        "event": "ConceptFire",
+        "args": ["(^left,{SELF})"]
+      },
+      "java_trace": "reports/evidence/java-simpleOperationTest-trace-1024-skip-embedded-20260824.jsonl",
+      "typescript_trace": "reports/evidence/ts-simpleOperationTest-trace-1024-skip-embedded-20260824.jsonl"
+    },
+    "comparator": "scripts/e2e/compare-nal-stage-digest.mjs"
+  },
+  "classification": {
+    "functional_131072_standard": "not_passed",
+    "watchdog_timeout": false,
+    "progress_observed_each_window": true,
+    "performance_class": "functional_difference_precedes_performance_question",
+    "root_cause_status": "first_scheduler_task_link_selection_divergence_observed; cause_not_yet_proven"
+  }
+}

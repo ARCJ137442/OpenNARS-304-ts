@@ -1,0 +1,44 @@
+{
+  "format_version": 1,
+  "fixture": "java-master/src/main/resources/nal/multi_step/stresstest_bird1.nal",
+  "contract": "marker-bearing fixture; all expected Java markers must be matched; 131072 is not required",
+  "thread_mode": "single",
+  "canonical_java": {
+    "artifact": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d"
+  },
+  "expected_markers": [
+    "<{bA} --> fly>. %1.00;0.77%"
+  ],
+  "java": {
+    "target_cycles": 60000,
+    "observed_cycles": 17408,
+    "stopped_reason": "markers_reached",
+    "matched": [true],
+    "marker_time_ms": [960.1122],
+    "sample_count": 17,
+    "runner": "scripts/e2e/NalResourceMarkerRunner.java"
+  },
+  "typescript": {
+    "target_cycles": 20480,
+    "observed_cycles": 17408,
+    "stopped_reason": "markers_reached",
+    "matched": [true],
+    "marker_time_ms": [175865.6905],
+    "sample_count": 17,
+    "final_rss_bytes": 1231147008,
+    "final_out_events": 8846,
+    "final_exe_events": 0,
+    "runner": "scripts/e2e/NalResourceTelemetryRunner.mjs",
+    "full_trace": "reports/evidence/ts-stresstest-bird1-resource-telemetry-20480-20260824.json"
+  },
+  "classification": {
+    "functional_marker_standard": "passed",
+    "watchdog_timeout": false,
+    "progress_observed_each_chunk": true,
+    "performance_class": "slow_but_progressing",
+    "performance_budget_ms_per_1024_cycles": 120000,
+    "long_cycle_131072": "not_applicable_to_marker_bearing_fixture"
+  }
+}

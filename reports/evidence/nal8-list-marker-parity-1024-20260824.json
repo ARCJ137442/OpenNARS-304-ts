@@ -1,0 +1,49 @@
+{
+  "format_version": 1,
+  "fixture": "java-master/src/main/resources/nal/single_step/nal8_list.nal",
+  "contract": "marker-bearing fixture; all expected Java markers must be matched; 131072 is not required",
+  "thread_mode": "single",
+  "canonical_java": {
+    "artifact": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d"
+  },
+  "expected_markers": [
+    "(#,(#,a,b),c,d). %1.00;0.90%",
+    "(#,(#,a,b,c),d). %1.00;0.90%",
+    "(#,a,(#,b,c),d). %1.00;0.90%",
+    "(#,a,(#,b,c,d)). %1.00;0.90%",
+    "(#,a,b,c). %1.00;0.81%",
+    "(#,b,c,d). %1.00;0.81%"
+  ],
+  "java": {
+    "target_cycles": 300000,
+    "observed_cycles": 1024,
+    "stopped_reason": "markers_reached",
+    "matched": [true, true, true, true, true, true],
+    "marker_time_ms": [22.5801, 24.3089, 24.0841, 34.1418, 24.392, 24.1575],
+    "sample_count": 1,
+    "runner": "scripts/e2e/NalResourceMarkerRunner.java"
+  },
+  "typescript": {
+    "target_cycles": 4096,
+    "observed_cycles": 1024,
+    "stopped_reason": "markers_reached",
+    "matched": [true, true, true, true, true, true],
+    "marker_time_ms": [12.4946, 18.9931, 16.0179, 79.7694, 19.9549, 16.9248],
+    "sample_count": 1,
+    "final_rss_bytes": 352399360,
+    "final_out_events": 627,
+    "final_exe_events": 0,
+    "runner": "scripts/e2e/NalResourceTelemetryRunner.mjs",
+    "full_trace": "reports/evidence/ts-nal8-list-resource-telemetry-4096-20260824.json"
+  },
+  "classification": {
+    "functional_marker_standard": "passed",
+    "watchdog_timeout": false,
+    "progress_observed_each_chunk": true,
+    "performance_class": "within_short_run_observation",
+    "performance_budget_ms_per_1024_cycles": 120000,
+    "long_cycle_131072": "not_applicable_to_marker_bearing_fixture"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\single_step\\nal8_list.nal",
+  "thread_mode": "single",
+  "embedded_cycles": 300000,
+  "target_cycles": 4096,
+  "observed_cycles": 1024,
+  "chunk_cycles": 1024,
+  "rss_limit_mb": 1800,
+  "stopped_reason": "markers_reached",
+  "expected_markers": [
+    "(#,(#,a,b),c,d). %1.00;0.90%",
+    "(#,(#,a,b,c),d). %1.00;0.90%",
+    "(#,a,(#,b,c),d). %1.00;0.90%",
+    "(#,a,(#,b,c,d)). %1.00;0.90%",
+    "(#,a,b,c). %1.00;0.81%",
+    "(#,b,c,d). %1.00;0.81%"
+  ],
+  "matched": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "marker_time_ms": [
+    12.494599999999991,
+    18.993099999999913,
+    16.017899999999827,
+    79.7693999999999,
+    19.954899999999952,
+    16.924800000000005
+  ],
+  "sample_count": 1,
+  "final": {
+    "cycle": 1024,
+    "chunk_cycles": 1024,
+    "chunk_duration_ms": 12238.124499999998,
+    "elapsed_ms": 12242.5257,
+    "cycle_end_events": 1024,
+    "out_events": 627,
+    "exe_events": 0,
+    "expected_markers": [
+      "(#,(#,a,b),c,d). %1.00;0.90%",
+      "(#,(#,a,b,c),d). %1.00;0.90%",
+      "(#,a,(#,b,c),d). %1.00;0.90%",
+      "(#,a,(#,b,c,d)). %1.00;0.90%",
+      "(#,a,b,c). %1.00;0.81%",
+      "(#,b,c,d). %1.00;0.81%"
+    ],
+    "matched": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "marker_time_ms": [
+      12.494599999999991,
+      18.993099999999913,
+      16.017899999999827,
+      79.7693999999999,
+      19.954899999999952,
+      16.924800000000005
+    ],
+    "rss_bytes": 352399360,
+    "heap_used_bytes": 60558232,
+    "heap_total_bytes": 151363584,
+    "external_bytes": 2621237,
+    "array_buffers_bytes": 465791,
+    "bags": {
+      "concepts": 105,
+      "novel_tasks": 0,
+      "sequence_current": 0,
+      "recent_operations": 0
+    },
+    "concept_state": {
+      "concepts": 105,
+      "task_links": 440,
+      "term_links": 620,
+      "beliefs": 71,
+      "desires": 0,
+      "questions": 0,
+      "quests": 0
+    }
+  },
+  "samples": [
+    {
+      "cycle": 1024,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 12238.124499999998,
+      "elapsed_ms": 12242.5257,
+      "cycle_end_events": 1024,
+      "out_events": 627,
+      "exe_events": 0,
+      "expected_markers": [
+        "(#,(#,a,b),c,d). %1.00;0.90%",
+        "(#,(#,a,b,c),d). %1.00;0.90%",
+        "(#,a,(#,b,c),d). %1.00;0.90%",
+        "(#,a,(#,b,c,d)). %1.00;0.90%",
+        "(#,a,b,c). %1.00;0.81%",
+        "(#,b,c,d). %1.00;0.81%"
+      ],
+      "matched": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "marker_time_ms": [
+        12.494599999999991,
+        18.993099999999913,
+        16.017899999999827,
+        79.7693999999999,
+        19.954899999999952,
+        16.924800000000005
+      ],
+      "rss_bytes": 352399360,
+      "heap_used_bytes": 60558232,
+      "heap_total_bytes": 151363584,
+      "external_bytes": 2621237,
+      "array_buffers_bytes": 465791,
+      "bags": {
+        "concepts": 105,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 105,
+        "task_links": 440,
+        "term_links": 620,
+        "beliefs": 71,
+        "desires": 0,
+        "questions": 0,
+        "quests": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "format_version": 1,
+  "fixture": "java-master/src/main/resources/nal/stability/long_term_stability.nal",
+  "contract": "marker-less fixture; same-thread/same-random 131072-cycle stage digest must match",
+  "thread_mode": "single",
+  "random_seed": 1,
+  "skip_embedded": true,
+  "canonical_java": {
+    "artifact": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d"
+  },
+  "java": {
+    "requested_cycles": 131072,
+    "observed_cycles": 131072,
+    "windows": 128,
+    "window_size": 1024,
+    "total_events": 2279730,
+    "incomplete": false,
+    "evidence": "reports/evidence/java-long-term-stability-stage-digest-131072-window1024-20260824.jsonl"
+  },
+  "typescript": {
+    "requested_cycles": 131072,
+    "observed_cycles": 131072,
+    "windows": 128,
+    "window_size": 1024,
+    "total_events": 2279730,
+    "incomplete": false,
+    "evidence": "reports/evidence/ts-long-term-stability-stage-digest-131072-window1024-20260824.jsonl"
+  },
+  "comparison": {
+    "equal": true,
+    "first_difference": null,
+    "comparator": "scripts/e2e/compare-nal-stage-digest.mjs"
+  },
+  "classification": {
+    "functional_131072_standard": "passed",
+    "watchdog_timeout": false,
+    "progress_observed_each_window": true,
+    "performance_class": "slow_but_progressing",
+    "marker_contract": "not_applicable_no_expected_markers"
+  }
+}

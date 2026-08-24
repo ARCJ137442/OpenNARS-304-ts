@@ -1,0 +1,886 @@
+{
+  "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_spatialSeq1.nal",
+  "thread_mode": "single",
+  "embedded_cycles": 120000,
+  "target_cycles": 24576,
+  "observed_cycles": 20480,
+  "chunk_cycles": 1024,
+  "rss_limit_mb": 1800,
+  "stopped_reason": "markers_reached",
+  "expected_markers": [
+    "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+    "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+  ],
+  "matched": [
+    true,
+    true
+  ],
+  "marker_time_ms": [
+    211929.8044,
+    31321.4562
+  ],
+  "sample_count": 20,
+  "final": {
+    "cycle": 20480,
+    "chunk_cycles": 1024,
+    "chunk_duration_ms": 10441.039799999999,
+    "elapsed_ms": 217498.3059,
+    "cycle_end_events": 20480,
+    "out_events": 10099,
+    "exe_events": 0,
+    "expected_markers": [
+      "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+      "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+    ],
+    "matched": [
+      true,
+      true
+    ],
+    "marker_time_ms": [
+      211929.8044,
+      31321.4562
+    ],
+    "rss_bytes": 654536704,
+    "heap_used_bytes": 184251632,
+    "heap_total_bytes": 403410944,
+    "external_bytes": 3394218,
+    "array_buffers_bytes": 1255475,
+    "bags": {
+      "concepts": 1023,
+      "novel_tasks": 2,
+      "sequence_current": 0,
+      "recent_operations": 0
+    },
+    "concept_state": {
+      "concepts": 1023,
+      "task_links": 3397,
+      "term_links": 4706,
+      "beliefs": 721,
+      "desires": 0,
+      "questions": 175,
+      "quests": 0
+    }
+  },
+  "samples": [
+    {
+      "cycle": 1024,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 8402.6204,
+      "elapsed_ms": 8415.8498,
+      "cycle_end_events": 1024,
+      "out_events": 1051,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        false
+      ],
+      "marker_time_ms": [
+        null,
+        null
+      ],
+      "rss_bytes": 357273600,
+      "heap_used_bytes": 79076240,
+      "heap_total_bytes": 159088640,
+      "external_bytes": 2560696,
+      "array_buffers_bytes": 417755,
+      "bags": {
+        "concepts": 338,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 338,
+        "task_links": 1017,
+        "term_links": 1658,
+        "beliefs": 212,
+        "desires": 0,
+        "questions": 36,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 2048,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 14168.386700000001,
+      "elapsed_ms": 22584.522100000002,
+      "cycle_end_events": 2048,
+      "out_events": 1714,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        false
+      ],
+      "marker_time_ms": [
+        null,
+        null
+      ],
+      "rss_bytes": 328667136,
+      "heap_used_bytes": 191804496,
+      "heap_total_bytes": 221356032,
+      "external_bytes": 3433830,
+      "array_buffers_bytes": 1290849,
+      "bags": {
+        "concepts": 675,
+        "novel_tasks": 6,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 675,
+        "task_links": 1647,
+        "term_links": 3052,
+        "beliefs": 288,
+        "desires": 0,
+        "questions": 87,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 3072,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 11994.371,
+      "elapsed_ms": 34578.986300000004,
+      "cycle_end_events": 3072,
+      "out_events": 2502,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 447938560,
+      "heap_used_bytes": 122895864,
+      "heap_total_bytes": 312889344,
+      "external_bytes": 2724362,
+      "array_buffers_bytes": 581381,
+      "bags": {
+        "concepts": 782,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 782,
+        "task_links": 2007,
+        "term_links": 3411,
+        "beliefs": 369,
+        "desires": 0,
+        "questions": 116,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 4096,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 11433.297899999998,
+      "elapsed_ms": 46012.379,
+      "cycle_end_events": 4096,
+      "out_events": 3115,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 448352256,
+      "heap_used_bytes": 153554656,
+      "heap_total_bytes": 248926208,
+      "external_bytes": 3007775,
+      "array_buffers_bytes": 868945,
+      "bags": {
+        "concepts": 784,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 784,
+        "task_links": 2216,
+        "term_links": 3503,
+        "beliefs": 400,
+        "desires": 0,
+        "questions": 140,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 5120,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 9341.456100000003,
+      "elapsed_ms": 55353.9374,
+      "cycle_end_events": 5120,
+      "out_events": 3592,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 448327680,
+      "heap_used_bytes": 233959232,
+      "heap_total_bytes": 263081984,
+      "external_bytes": 3798739,
+      "array_buffers_bytes": 1659909,
+      "bags": {
+        "concepts": 746,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 746,
+        "task_links": 2237,
+        "term_links": 3542,
+        "beliefs": 406,
+        "desires": 0,
+        "questions": 136,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 6144,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 9193.664299999997,
+      "elapsed_ms": 64547.710300000006,
+      "cycle_end_events": 6144,
+      "out_events": 4063,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 449110016,
+      "heap_used_bytes": 181673728,
+      "heap_total_bytes": 266752000,
+      "external_bytes": 3420807,
+      "array_buffers_bytes": 1281977,
+      "bags": {
+        "concepts": 777,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 777,
+        "task_links": 2354,
+        "term_links": 3713,
+        "beliefs": 436,
+        "desires": 0,
+        "questions": 143,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 7168,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 8154.7359,
+      "elapsed_ms": 72702.5626,
+      "cycle_end_events": 7168,
+      "out_events": 4376,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 449449984,
+      "heap_used_bytes": 129674776,
+      "heap_total_bytes": 276189184,
+      "external_bytes": 2849508,
+      "array_buffers_bytes": 710765,
+      "bags": {
+        "concepts": 773,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 773,
+        "task_links": 2389,
+        "term_links": 3762,
+        "beliefs": 442,
+        "desires": 0,
+        "questions": 151,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 8192,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 21715.969299999997,
+      "elapsed_ms": 94418.6205,
+      "cycle_end_events": 8192,
+      "out_events": 5091,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 450719744,
+      "heap_used_bytes": 223712864,
+      "heap_total_bytes": 276189184,
+      "external_bytes": 3859328,
+      "array_buffers_bytes": 1720585,
+      "bags": {
+        "concepts": 795,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 795,
+        "task_links": 2446,
+        "term_links": 3806,
+        "beliefs": 448,
+        "desires": 0,
+        "questions": 154,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 9216,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 14198.853000000003,
+      "elapsed_ms": 108617.5995,
+      "cycle_end_events": 9216,
+      "out_events": 5602,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 473112576,
+      "heap_used_bytes": 320775488,
+      "heap_total_bytes": 355618816,
+      "external_bytes": 4744612,
+      "array_buffers_bytes": 2605869,
+      "bags": {
+        "concepts": 819,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 819,
+        "task_links": 2510,
+        "term_links": 3896,
+        "beliefs": 463,
+        "desires": 0,
+        "questions": 160,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 10240,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 10115.175699999993,
+      "elapsed_ms": 118732.9979,
+      "cycle_end_events": 10240,
+      "out_events": 6103,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 477753344,
+      "heap_used_bytes": 194432744,
+      "heap_total_bytes": 349327360,
+      "external_bytes": 3509770,
+      "array_buffers_bytes": 1371027,
+      "bags": {
+        "concepts": 825,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 825,
+        "task_links": 2518,
+        "term_links": 3899,
+        "beliefs": 461,
+        "desires": 0,
+        "questions": 163,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 11264,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 11458.690099999993,
+      "elapsed_ms": 130191.9136,
+      "cycle_end_events": 11264,
+      "out_events": 6698,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 477806592,
+      "heap_used_bytes": 305762496,
+      "heap_total_bytes": 349589504,
+      "external_bytes": 4421642,
+      "array_buffers_bytes": 2282899,
+      "bags": {
+        "concepts": 935,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 935,
+        "task_links": 2670,
+        "term_links": 4062,
+        "beliefs": 526,
+        "desires": 0,
+        "questions": 160,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 12288,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 10920.279800000018,
+      "elapsed_ms": 141112.2787,
+      "cycle_end_events": 12288,
+      "out_events": 7084,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 548589568,
+      "heap_used_bytes": 390759056,
+      "heap_total_bytes": 428777472,
+      "external_bytes": 5255736,
+      "array_buffers_bytes": 3116993,
+      "bags": {
+        "concepts": 914,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 914,
+        "task_links": 2697,
+        "term_links": 4050,
+        "beliefs": 526,
+        "desires": 0,
+        "questions": 163,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 13312,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 8619.525999999983,
+      "elapsed_ms": 149731.8975,
+      "cycle_end_events": 13312,
+      "out_events": 7361,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 613130240,
+      "heap_used_bytes": 132492640,
+      "heap_total_bytes": 472354816,
+      "external_bytes": 2865844,
+      "array_buffers_bytes": 727101,
+      "bags": {
+        "concepts": 898,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 898,
+        "task_links": 2723,
+        "term_links": 4081,
+        "beliefs": 526,
+        "desires": 0,
+        "questions": 163,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 14336,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 7473.548499999975,
+      "elapsed_ms": 157205.5235,
+      "cycle_end_events": 14336,
+      "out_events": 7686,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 613445632,
+      "heap_used_bytes": 204502616,
+      "heap_total_bytes": 472354816,
+      "external_bytes": 3445526,
+      "array_buffers_bytes": 1306783,
+      "bags": {
+        "concepts": 952,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 952,
+        "task_links": 2887,
+        "term_links": 4242,
+        "beliefs": 575,
+        "desires": 0,
+        "questions": 173,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 15360,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 10492.396999999997,
+      "elapsed_ms": 167697.9952,
+      "cycle_end_events": 15360,
+      "out_events": 8101,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 613916672,
+      "heap_used_bytes": 290303096,
+      "heap_total_bytes": 472354816,
+      "external_bytes": 4328674,
+      "array_buffers_bytes": 2189931,
+      "bags": {
+        "concepts": 944,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 944,
+        "task_links": 2899,
+        "term_links": 4253,
+        "beliefs": 580,
+        "desires": 0,
+        "questions": 172,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 16384,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 11386.536599999992,
+      "elapsed_ms": 179084.60940000002,
+      "cycle_end_events": 16384,
+      "out_events": 8613,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 613859328,
+      "heap_used_bytes": 391438696,
+      "heap_total_bytes": 472354816,
+      "external_bytes": 5237238,
+      "array_buffers_bytes": 3098495,
+      "bags": {
+        "concepts": 988,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 988,
+        "task_links": 3054,
+        "term_links": 4406,
+        "beliefs": 619,
+        "desires": 0,
+        "questions": 174,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 17408,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 6699.594699999987,
+      "elapsed_ms": 185784.2685,
+      "cycle_end_events": 17408,
+      "out_events": 8818,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 615481344,
+      "heap_used_bytes": 432700704,
+      "heap_total_bytes": 477335552,
+      "external_bytes": 5729480,
+      "array_buffers_bytes": 3590737,
+      "bags": {
+        "concepts": 971,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 971,
+        "task_links": 3069,
+        "term_links": 4417,
+        "beliefs": 620,
+        "desires": 0,
+        "questions": 174,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 18432,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 11446.381900000008,
+      "elapsed_ms": 197230.7269,
+      "cycle_end_events": 18432,
+      "out_events": 9347,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 653938688,
+      "heap_used_bytes": 175055504,
+      "heap_total_bytes": 518754304,
+      "external_bytes": 3250986,
+      "array_buffers_bytes": 1112243,
+      "bags": {
+        "concepts": 1011,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 1011,
+        "task_links": 3194,
+        "term_links": 4574,
+        "beliefs": 674,
+        "desires": 0,
+        "questions": 175,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 19456,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 9826.373099999997,
+      "elapsed_ms": 207057.1911,
+      "cycle_end_events": 19456,
+      "out_events": 9700,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        false,
+        true
+      ],
+      "marker_time_ms": [
+        null,
+        31321.4562
+      ],
+      "rss_bytes": 654438400,
+      "heap_used_bytes": 258019800,
+      "heap_total_bytes": 518754304,
+      "external_bytes": 4080866,
+      "array_buffers_bytes": 1942123,
+      "bags": {
+        "concepts": 1003,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 1003,
+        "task_links": 3222,
+        "term_links": 4579,
+        "beliefs": 677,
+        "desires": 0,
+        "questions": 175,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 20480,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 10441.039799999999,
+      "elapsed_ms": 217498.3059,
+      "cycle_end_events": 20480,
+      "out_events": 10099,
+      "exe_events": 0,
+      "expected_markers": [
+        "<(&,(#,a,a),(#,c,c)) --> (/,#,_,b,b)>. %1.00;0.81%",
+        "<(#,a,a) <-> (#,c,c)>. %1.00;0.45%"
+      ],
+      "matched": [
+        true,
+        true
+      ],
+      "marker_time_ms": [
+        211929.8044,
+        31321.4562
+      ],
+      "rss_bytes": 654536704,
+      "heap_used_bytes": 184251632,
+      "heap_total_bytes": 403410944,
+      "external_bytes": 3394218,
+      "array_buffers_bytes": 1255475,
+      "bags": {
+        "concepts": 1023,
+        "novel_tasks": 2,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 1023,
+        "task_links": 3397,
+        "term_links": 4706,
+        "beliefs": 721,
+        "desires": 0,
+        "questions": 175,
+        "quests": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "format_version": 1,
+  "base_summary": "reports/evidence/ts-java-parity-20260824-runner-fix-30s-hot-summary-v3.json",
+  "rows": 246,
+  "scopes": {
+    "main": 245,
+    "extra": 1
+  },
+  "base_fixed_budget": {
+    "functional_pass": 234,
+    "parity": 234,
+    "process_limit": 12,
+    "no_progress_timeout": 0,
+    "exception": 0,
+    "not_run": 0
+  },
+  "evidence_overrides": [
+    {
+      "file": "java-master/src/main/resources/nal/application/toothbrush2.nal",
+      "classification": "functional_marker_standard_passed",
+      "performance_class": "slow_but_progressing",
+      "evidence": "reports/evidence/toothbrush2-marker-parity-4096-20260824.json"
+    },
+    {
+      "file": "java-master/src/main/resources/nal/multi_step/nars_multistep_2.nal",
+      "classification": "functional_marker_standard_passed",
+      "performance_class": "slow_but_progressing",
+      "evidence": "reports/evidence/nars-multistep-2-marker-parity-9697-20260824.json"
+    },
+    {
+      "file": "java-master/src/main/resources/nal/multi_step/nars_multistep_3.nal",
+      "classification": "functional_marker_standard_passed",
+      "performance_class": "slow_but_progressing",
+      "evidence": "reports/evidence/nars-multistep-3-marker-parity-2036-20260824.json"
+    },
+    {
+      "file": "java-master/src/main/resources/nal/multi_step/nars_spatialSeq1.nal",
+      "classification": "functional_marker_standard_passed",
+      "performance_class": "slow_but_progressing",
+      "evidence": "reports/evidence/nars-spatialSeq1-marker-parity-20480-20260824.json"
+    },
+    {
+      "file": "java-master/src/main/resources/nal/multi_step/nars_transitivity.nal",
+      "classification": "functional_marker_standard_passed",
+      "performance_class": "slow_but_progressing",
+      "evidence": "reports/evidence/nars-transitivity-marker-parity-2048-20260824.json"
+    },
+    {
+      "file": "java-master/src/main/resources/nal/multi_step/stresstest_bird1.nal",
+      "classification": "functional_marker_standard_passed",
+      "performance_class": "slow_but_progressing",
+      "evidence": "reports/evidence/stresstest-bird1-marker-parity-17408-20260824.json"
+    },
+    {
+      "file": "java-master/src/main/resources/nal/single_step/nal8_list.nal",
+      "classification": "functional_marker_standard_passed",
+      "performance_class": "within_short_run_observation",
+      "evidence": "reports/evidence/nal8-list-marker-parity-1024-20260824.json"
+    },
+    {
+      "file": "java-master/src/main/resources/nal/stability/long_term_stability.nal",
+      "classification": "functional_131072_standard_passed",
+      "performance_class": "slow_but_progressing",
+      "evidence": "reports/evidence/long-term-stability-131072-parity-20260824.json"
+    }
+  ],
+  "derived_classification": {
+    "functional_marker_or_fixed_budget_pass": 242,
+    "correct_but_slower": 9,
+    "explained_functional": 245,
+    "unknown": 1
+  },
+  "remaining_unknown": [
+    "java-master/src/test/simpleOperationTest.nal"
+  ],
+  "interpretation": "This is a derived classification overlay; it does not rewrite the original fixed-budget matrix. The eight overrides have direct marker or 131072-cycle evidence and are eligible for the next regenerated freeze matrix."
+}

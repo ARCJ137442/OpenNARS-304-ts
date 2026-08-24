@@ -1,0 +1,148 @@
+{
+  "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nars_transitivity.nal",
+  "thread_mode": "single",
+  "embedded_cycles": 210000,
+  "target_cycles": 4096,
+  "observed_cycles": 2048,
+  "chunk_cycles": 1024,
+  "rss_limit_mb": 1800,
+  "stopped_reason": "markers_reached",
+  "expected_markers": [
+    "<<(*,b,$1) --> like> ==> <(*,a,$1) --> like>>. %1.00;0.45%",
+    "<(&&,<(*,#1,$2) --> like>,<(*,$3,#1) --> like>) ==> <(*,$3,$2) --> like>>. %1.00;0.26%"
+  ],
+  "matched": [
+    true,
+    true
+  ],
+  "marker_time_ms": [
+    3991.046,
+    13697.777399999999
+  ],
+  "sample_count": 2,
+  "final": {
+    "cycle": 2048,
+    "chunk_cycles": 1024,
+    "chunk_duration_ms": 7783.7633000000005,
+    "elapsed_ms": 14503.036399999999,
+    "cycle_end_events": 2048,
+    "out_events": 558,
+    "exe_events": 0,
+    "expected_markers": [
+      "<<(*,b,$1) --> like> ==> <(*,a,$1) --> like>>. %1.00;0.45%",
+      "<(&&,<(*,#1,$2) --> like>,<(*,$3,#1) --> like>) ==> <(*,$3,$2) --> like>>. %1.00;0.26%"
+    ],
+    "matched": [
+      true,
+      true
+    ],
+    "marker_time_ms": [
+      3991.046,
+      13697.777399999999
+    ],
+    "rss_bytes": 359895040,
+    "heap_used_bytes": 92192656,
+    "heap_total_bytes": 165257216,
+    "external_bytes": 2728914,
+    "array_buffers_bytes": 585933,
+    "bags": {
+      "concepts": 351,
+      "novel_tasks": 2,
+      "sequence_current": 0,
+      "recent_operations": 0
+    },
+    "concept_state": {
+      "concepts": 351,
+      "task_links": 1253,
+      "term_links": 1628,
+      "beliefs": 212,
+      "desires": 25,
+      "questions": 26,
+      "quests": 0
+    }
+  },
+  "samples": [
+    {
+      "cycle": 1024,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 6702.9299,
+      "elapsed_ms": 6718.936899999999,
+      "cycle_end_events": 1024,
+      "out_events": 304,
+      "exe_events": 0,
+      "expected_markers": [
+        "<<(*,b,$1) --> like> ==> <(*,a,$1) --> like>>. %1.00;0.45%",
+        "<(&&,<(*,#1,$2) --> like>,<(*,$3,#1) --> like>) ==> <(*,$3,$2) --> like>>. %1.00;0.26%"
+      ],
+      "matched": [
+        true,
+        false
+      ],
+      "marker_time_ms": [
+        3991.046,
+        null
+      ],
+      "rss_bytes": 324272128,
+      "heap_used_bytes": 104456920,
+      "heap_total_bytes": 133660672,
+      "external_bytes": 2865100,
+      "array_buffers_bytes": 722159,
+      "bags": {
+        "concepts": 217,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 217,
+        "task_links": 868,
+        "term_links": 980,
+        "beliefs": 126,
+        "desires": 12,
+        "questions": 11,
+        "quests": 0
+      }
+    },
+    {
+      "cycle": 2048,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 7783.7633000000005,
+      "elapsed_ms": 14503.036399999999,
+      "cycle_end_events": 2048,
+      "out_events": 558,
+      "exe_events": 0,
+      "expected_markers": [
+        "<<(*,b,$1) --> like> ==> <(*,a,$1) --> like>>. %1.00;0.45%",
+        "<(&&,<(*,#1,$2) --> like>,<(*,$3,#1) --> like>) ==> <(*,$3,$2) --> like>>. %1.00;0.26%"
+      ],
+      "matched": [
+        true,
+        true
+      ],
+      "marker_time_ms": [
+        3991.046,
+        13697.777399999999
+      ],
+      "rss_bytes": 359895040,
+      "heap_used_bytes": 92192656,
+      "heap_total_bytes": 165257216,
+      "external_bytes": 2728914,
+      "array_buffers_bytes": 585933,
+      "bags": {
+        "concepts": 351,
+        "novel_tasks": 2,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 351,
+        "task_links": 1253,
+        "term_links": 1628,
+        "beliefs": 212,
+        "desires": 25,
+        "questions": 26,
+        "quests": 0
+      }
+    }
+  ]
+}
