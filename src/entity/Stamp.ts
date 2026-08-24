@@ -93,7 +93,13 @@ export class Stamp extends JavaObject implements java.lang.Cloneable, java.io.Se
      *
      * @param old The stamp to be cloned
      */
-    private constructor(old: Stamp);
+    // TypeScript overload sets expose the accessibility of every declared
+    // signature when resolving `new Stamp(...)`.  Keeping this Java-private
+    // copy overload private therefore makes the unrelated public overloads
+    // inaccessible to callers.  The implementation still handles the copy
+    // form internally through `clone()`; expose the signature here so the
+    // public constructor overloads retain their Java-facing type contract.
+    public constructor(old: Stamp);
 
     /**
      * used for when the ocrrence time will be set later; so should not be called
