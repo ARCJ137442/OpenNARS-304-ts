@@ -120,7 +120,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                     // incompatible runtime boundary.
                     this.index.set(indices, 1);
                 } else {
-                    this.index = indices;
+                    this.index = new Int16Array(indices);
                 }
                 this.hash = this.init();
                 break;
@@ -133,9 +133,9 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 super(null);
                 this.target = target;
                 this.type = type;
-                this.index = type === TermLink.COMPOUND_CONDITION
-                    ? [0, i0, i1] as unknown as Int16Array
-                    : [i0, i1] as unknown as Int16Array;
+                this.index = new Int16Array(type === TermLink.COMPOUND_CONDITION
+                    ? [0, i0, i1]
+                    : [i0, i1]);
                 this.hash = this.init();
 
 
@@ -149,9 +149,9 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 super(null);
                 this.target = target;
                 this.type = type;
-                this.index = type === TermLink.COMPOUND_CONDITION
-                    ? [0, i0, i1, i2] as unknown as Int16Array
-                    : [i0, i1, i2] as unknown as Int16Array;
+                this.index = new Int16Array(type === TermLink.COMPOUND_CONDITION
+                    ? [0, i0, i1, i2]
+                    : [i0, i1, i2]);
                 this.hash = this.init();
 
 
@@ -165,9 +165,9 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 super(null);
                 this.target = target;
                 this.type = type;
-                this.index = type === TermLink.COMPOUND_CONDITION
-                    ? [0, i0, i1, i2, i3] as unknown as Int16Array
-                    : [i0, i1, i2, i3] as unknown as Int16Array;
+                this.index = new Int16Array(type === TermLink.COMPOUND_CONDITION
+                    ? [0, i0, i1, i2, i3]
+                    : [i0, i1, i2, i3]);
                 this.hash = this.init();
 
 

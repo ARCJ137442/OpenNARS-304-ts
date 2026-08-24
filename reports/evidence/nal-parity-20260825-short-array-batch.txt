@@ -1,0 +1,13 @@
+command=node scripts/e2e/run-nal-corpus.mjs --engine parity --cycles 1550 --timeout-ms 30000 --process-limit-ms 180000 --ts-mode cold --chunk-size 1 --summary
+exit=0
+engine=parity
+cycles=1550
+timeout_ms=30000
+process_limit_ms=180000
+files=3
+passed=3
+failed=0
+files_list=single_step/nal1.0.nal,single_step/nal3.12.nal,single_step/nal8.add.nal
+execution=single-process-per-file
+java_jar=H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar
+java_artifact_sha256=2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5

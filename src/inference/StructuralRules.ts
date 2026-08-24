@@ -865,7 +865,7 @@ export class StructuralRules extends JavaObject {
 
     public static seqToImage(conj: Conjunction, index: int, nal: DerivationContext): void {
         let side: int = 0; // extensional
-        let indices: Int16Array = [side as short, index as short];
+        let indices: Int16Array = new Int16Array([side as short, index as short]);
         let subject: Product = Product.make(conj.term);
         let predicate: Term = Term.SEQ_TEMPORAL;
         if (conj.isSpatial) {

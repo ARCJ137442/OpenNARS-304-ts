@@ -1,0 +1,14 @@
+command=npx tsc --noEmit --pretty false --incremental false
+exit=2
+diagnostics_error_ts=1481
+production_error_ts=584
+test_error_ts=897
+other_error_ts=0
+before_total=1483
+before_production=586
+before_tests=897
+reduction_total=2
+target=Java short[] to TypeScript Int16Array boundaries
+remaining_related=StructuralRules.ts Product.make(Term[]) overload mismatch
+canonical_java_commit=8675b76fe8c21ee20a7b8c1b63408fb05327210d
+canonical_java_jar_sha256=2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
