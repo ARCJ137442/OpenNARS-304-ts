@@ -1,0 +1,8 @@
+command: npx tsc --noEmit --pretty false --incremental false
+mode: one process, non-incremental, serial retry policy
+canonical_java_sha256: 2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
+baseline: total=1661 production=735 tests=926
+result: TSC_EXIT=2 TOTAL=1628 PRODUCTION=731 TESTS=897
+delta: total=-33 production=-4 tests=-29
+remaining_root_cluster: src/main/Nar.ts(887,51) still references java.lang.IllegalAccessException in the protected reflection path; left unchanged in this batch.
+host_failure: none

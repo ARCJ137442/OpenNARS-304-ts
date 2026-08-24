@@ -1,4 +1,10 @@
 import { java, JavaObject, type int, type double, closeResources, handleResourceError, throwResourceError } from "jree";
+import {
+    JavaClassNotFoundException,
+    JavaIllegalAccessException,
+    JavaInstantiationException,
+    JavaNoSuchMethodException,
+} from "../../src/runtime/jree-compat.ts";
 
 
 
@@ -106,19 +112,19 @@ export class AttentionMetric extends JavaObject {
         } catch (e) {
             if (e instanceof java.io.IOException) {
                 e.printStackTrace();
-            } else if (e instanceof java.lang.InstantiationException) {
+            } else if (e instanceof JavaInstantiationException) {
                 e.printStackTrace();
             } else if (e instanceof java.lang.reflect.InvocationTargetException) {
                 e.printStackTrace();
-            } else if (e instanceof java.lang.NoSuchMethodException) {
+            } else if (e instanceof JavaNoSuchMethodException) {
                 e.printStackTrace();
             } else if (e instanceof ParserConfigurationException) {
                 e.printStackTrace();
-            } else if (e instanceof java.lang.IllegalAccessException) {
+            } else if (e instanceof JavaIllegalAccessException) {
                 e.printStackTrace();
             } else if (e instanceof SAXException) {
                 e.printStackTrace();
-            } else if (e instanceof java.lang.ClassNotFoundException) {
+            } else if (e instanceof JavaClassNotFoundException) {
                 e.printStackTrace();
             } else if (e instanceof java.text.ParseException) {
                 e.printStackTrace();

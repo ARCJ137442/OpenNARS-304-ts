@@ -46,6 +46,14 @@ export class JavaDoubleCompat extends java.lang.Number {
     }
 }
 
+/** jree omits several Java exception classes used by the translated sources. */
+export class JavaAssertionError extends java.lang.Error {}
+export class JavaIllegalAccessError extends java.lang.Error {}
+export class JavaInstantiationException extends java.lang.Exception {}
+export class JavaNoSuchMethodException extends java.lang.Exception {}
+export class JavaIllegalAccessException extends java.lang.Exception {}
+export class JavaClassNotFoundException extends java.lang.Exception {}
+
 /** jree declares primitive char as a number, while translated Narsese uses string code units at runtime. */
 export type JavaChar = string;
 

@@ -1,0 +1,11 @@
+canonical_java_sha256: 2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
+mode: Java single-thread comparison; TypeScript cold process; chunk-size=1
+
+command: npm run test:e2e:parity:serial:smoke --silent
+result: files=5 passed=2 failed=3
+warning_rows: detective2.nal, toothbrush2.nal, vision.nal reached the 180000 ms process safety limit on TypeScript before their markers; these are performance/process-limit observations, not a new logic attribution.
+
+command: node scripts/e2e/run-nal-corpus.mjs --engine parity --file nal1.0.nal --file nal3.12.nal --file nal8.add.nal --cycles 1550 --timeout-ms 30000 --process-limit-ms 180000 --ts-mode cold --chunk-size 1 --summary
+result: files=3 passed=3 failed=0
+representative_files: nal1.0.nal, nal3.12.nal, nal8.add.nal
+host_failure: none

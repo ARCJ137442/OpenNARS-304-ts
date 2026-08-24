@@ -1,7 +1,15 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { java } from "jree";
-import { JavaDoubleCompat, javaIdentityHashCode, javaStringLength, javaStringValue } from "../../src/runtime/jree-compat.ts";
+import {
+    JavaAssertionError,
+    JavaClassNotFoundException,
+    JavaDoubleCompat,
+    JavaIllegalAccessException,
+    javaIdentityHashCode,
+    javaStringLength,
+    javaStringValue,
+} from "../../src/runtime/jree-compat.ts";
 
 test("javaStringLength normalizes jree and native string representations", () => {
     const boxed = new java.lang.String("abc");
@@ -34,4 +42,17 @@ test("identity hash compatibility is stable and distinguishes object identity", 
     assert.equal(javaIdentityHashCode(null), 0);
     assert.equal(javaIdentityHashCode(first), javaIdentityHashCode(first));
     assert.notEqual(javaIdentityHashCode(first), javaIdentityHashCode(second));
+});
+
+test("missing jree exception compatibility preserves Java inheritance", () => {
+    const assertion = new JavaAssertionError("invariant");
+    const access = new JavaIllegalAccessException("access");
+    const missing = new JavaClassNotFoundException("missing");
+
+    assert.ok(assertion instanceof java.lang.Error);
+    assert.ok(access instanceof java.lang.Exception);
+    assert.ok(missing instanceof java.lang.Exception);
+    assert.equal(assertion.getMessage(), "invariant");
+    assert.equal(access.getMessage(), "access");
+    assert.equal(missing.getMessage(), "missing");
 });

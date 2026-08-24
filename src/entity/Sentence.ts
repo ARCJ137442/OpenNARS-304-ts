@@ -18,6 +18,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Nar } from "../main/Nar.ts";
 import type { Parameters } from "../main/Parameters.ts";
+import { JavaAssertionError } from "../runtime/jree-compat.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
 
 
@@ -325,7 +326,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
     public refreshHash(): void {
         if (this.isNotTermlinkNormalizer()) {
             if (this.stamp === null)
-                throw new java.lang.AssertionError("Stamp should not be null");
+                throw new JavaAssertionError("Stamp should not be null");
             this.hash = java.util.Objects.hash(this.term, this.punctuation, this.truth,
                 this.stamp.getOccurrenceTime());
         } else {
@@ -537,7 +538,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                     stringLength += 11;
 
                 if (stampString === null)
-                    throw new java.lang.AssertionError("stampString should not be null");
+                    throw new JavaAssertionError("stampString should not be null");
                 if (showStamp)
                     stringLength += String(stampString).length + 1;
 

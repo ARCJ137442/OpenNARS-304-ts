@@ -1,4 +1,5 @@
 import { java, JavaObject, type int } from "jree";
+import { JavaAssertionError } from "../../../src/runtime/jree-compat.ts";
 
 
 
@@ -21,7 +22,7 @@ export class BagIteratorTest extends JavaObject {
         if (b.size() > 1) {
             // check correct order
             if (first === null || current === null)
-                throw new java.lang.AssertionError();
+                throw new JavaAssertionError();
             assertTrue(first.getPriority() > current.getPriority());
         }
 

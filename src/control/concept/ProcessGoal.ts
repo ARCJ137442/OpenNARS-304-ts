@@ -25,7 +25,7 @@ import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { javaStringValue } from "../../runtime/jree-compat.ts";
+import { JavaIllegalAccessError, javaStringValue } from "../../runtime/jree-compat.ts";
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
@@ -81,9 +81,9 @@ export class ProcessGoal extends JavaObject {
 
         if (oldGoalT !== null && revisable(goal, oldGoal, nal.narParameters)) {
             if (oldGoal === null)
-                throw new java.lang.IllegalAccessError("oldGoal == null");
+                throw new JavaIllegalAccessError("oldGoal == null");
             if (oldGoal.stamp === null)
-                throw new java.lang.IllegalAccessError("oldGoal.stamp ");
+                throw new JavaIllegalAccessError("oldGoal.stamp ");
             let oldStamp: Stamp = oldGoal.stamp;
             nal.setTheNewStamp(newStamp, oldStamp, nal.time.time());
             let projectedGoal: Sentence = oldGoal.projection(task.sentence.getOccurrenceTime(),

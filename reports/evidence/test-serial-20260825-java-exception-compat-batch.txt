@@ -1,0 +1,5 @@
+command: npm run test:serial --silent
+mode: one serial test process
+result: tests=132 pass=132 fail=0 skipped=0 todo=0 duration_ms=36634.3881
+new_regression: missing jree exception compatibility preserves Java inheritance
+host_failure: none
