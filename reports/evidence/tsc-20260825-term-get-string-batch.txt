@@ -1,0 +1,13 @@
+command: npx tsc --noEmit --pretty false --incremental false
+exit: 2
+baseline_before: 1430
+baseline_before_production: 534
+baseline_before_tests: 896
+diagnostics_after: 1391
+diagnostics_after_production: 524
+diagnostics_after_tests: 867
+delta: -39
+root_cause: Java Term.get(CharSequence) is called with native string literals in migrated TypeScript; implementation already normalizes input with String(name)
+java_source: java-master/src/main/java/org/opennars/language/Term.java:87-126
+typescript_fix: add public static get(name: string): Term overload
+scope_note: no change to Term atom cache, index parsing, or runtime implementation

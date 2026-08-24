@@ -135,6 +135,7 @@ export class Term extends JavaObject implements AbstractTerm {
 
 
     /** gets the atomic term given a name */
+    public static get(name: string): Term;
     public static get(name: java.lang.CharSequence): Term;
 
     /** gets the atomic term of an integer */
