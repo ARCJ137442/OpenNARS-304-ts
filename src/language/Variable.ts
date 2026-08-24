@@ -26,14 +26,14 @@ export class Variable extends Term {
 
     private hash: int;
 
-    public constructor(name: java.lang.CharSequence);
+    public constructor(name: java.lang.CharSequence | string);
 
     /**
      * Constructor, from a given variable name
      *
      * @param name A String read from input
      */
-    public constructor(name: java.lang.CharSequence, scope: Term);
+    public constructor(name: java.lang.CharSequence | string, scope: Term);
     public constructor(...args: unknown[]) {
         super();
         // Java exposes the object only after setScope establishes this invariant;
@@ -43,7 +43,8 @@ export class Variable extends Term {
 
         switch (args.length) {
             case 1: {
-                const [name] = args as [java.lang.CharSequence];
+                const [rawName] = args as [java.lang.CharSequence | string];
+                const name = typeof rawName === "string" ? new java.lang.String(rawName) : rawName;
 
 
                 // Java constructor delegation (`this(name, null)`) is not legal
@@ -56,7 +57,8 @@ export class Variable extends Term {
             }
 
             case 2: {
-                const [name, scope] = args as [java.lang.CharSequence, Term];
+                const [rawName, scope] = args as [java.lang.CharSequence | string, Term];
+                const name = typeof rawName === "string" ? new java.lang.String(rawName) : rawName;
 
 
                 this.setScope(scope, name);
