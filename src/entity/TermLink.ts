@@ -225,18 +225,19 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
     }
 
     public toString(): java.lang.String {
-        return new java.lang.StringBuilder().append(this.newKeyPrefix()).append(this.target !== null ? this.target.name() : "").toString();
+        return new java.lang.StringBuilder().append(this.newKeyPrefix()).append(
+            this.target !== null ? this.target.name() : S``).toString();
     }
 
     public newKeyPrefix(): java.lang.CharSequence {
         let at1: java.lang.String;
         let at2: java.lang.String;
         if ((this.type % 2) === 1) { // to component
-            at1 = Symbols.TO_COMPONENT_1;
-            at2 = Symbols.TO_COMPONENT_2;
+            at1 = S`${Symbols.TO_COMPONENT_1}`;
+            at2 = S`${Symbols.TO_COMPONENT_2}`;
         } else { // to compound
-            at1 = Symbols.TO_COMPOUND_1;
-            at2 = Symbols.TO_COMPOUND_2;
+            at1 = S`${Symbols.TO_COMPOUND_1}`;
+            at2 = S`${Symbols.TO_COMPOUND_2}`;
         }
         let MAX_INDEX_DIGITS: int = 2;
         let estimatedLength: int = 2 + 2 + 1 + MAX_INDEX_DIGITS * ((this.index !== null ? this.index.length : 0) + 1);
