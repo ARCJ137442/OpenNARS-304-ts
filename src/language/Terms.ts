@@ -658,7 +658,6 @@ export class Terms extends JavaObject {
 
     public static verifyNonNull(t: java.util.Collection<unknown>): void;
 
-    protected static verifyNonNull(...t: Term[]): void;
     public static verifyNonNull(...args: unknown[]): void {
         switch (args.length) {
             case 1: {
@@ -689,6 +688,12 @@ export class Terms extends JavaObject {
                 throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
             }
         }
+    }
+
+    public static verifyNonNullTerms(...t: Term[]): void {
+        for (let o of t)
+            if (o === null)
+                throw new java.lang.IllegalStateException("Element null in: " + java.util.Arrays.toString(t));
     }
 
 

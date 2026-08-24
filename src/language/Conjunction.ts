@@ -212,7 +212,7 @@ export class Conjunction extends CompoundTerm {
                     const temporalOrder = second as int;
                     const spatial = third as boolean;
                     if (Debug.DETAILED) {
-                        Terms.verifyNonNull(argList);
+                        Terms.verifyNonNullTerms(...argList);
                     }
                     if (argList === null || argList.length === 0) {
                         return null;
