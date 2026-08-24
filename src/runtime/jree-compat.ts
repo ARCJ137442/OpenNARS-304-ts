@@ -53,6 +53,10 @@ export class JavaInstantiationException extends java.lang.Exception {}
 export class JavaNoSuchMethodException extends java.lang.Exception {}
 export class JavaIllegalAccessException extends java.lang.Exception {}
 export class JavaClassNotFoundException extends java.lang.Exception {}
+export class JavaInvocationTargetException extends java.lang.Exception {}
+export class JavaParserConfigurationException extends java.lang.Exception {}
+export class JavaSAXException extends java.lang.Exception {}
+export class JavaParseException extends java.lang.Exception {}
 
 /** jree declares primitive char as a number, while translated Narsese uses string code units at runtime. */
 export type JavaChar = string;

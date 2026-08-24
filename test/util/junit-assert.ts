@@ -15,10 +15,15 @@ export function assertTrue(first: unknown, second?: unknown): void {
 }
 
 export function assertEquals(expected: unknown, actual: unknown): void;
+export function assertEquals(expected: number, actual: number, delta: number): void;
 export function assertEquals(message: string, expected: unknown, actual: unknown): void;
 export function assertEquals(first: unknown, second: unknown, third?: unknown): void {
     if (third === undefined) {
         assert.strictEqual(second, first);
+        return;
+    }
+    if (typeof first === "number" && typeof second === "number" && typeof third === "number") {
+        assert.ok(Math.abs(first - second) <= third, `Expected ${first} +/- ${third}, received ${second}`);
         return;
     }
     if (typeof first !== "string") {
