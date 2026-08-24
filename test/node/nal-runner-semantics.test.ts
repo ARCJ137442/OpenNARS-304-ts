@@ -226,7 +226,11 @@ test("NAL runner keeps a process safety limit separate from a no-progress timeou
   assert.equal(classifyTimeoutObservation({
     timeoutMs: 30000,
     ts: limited,
-  }).timeout_classification, null);
+  }).timeout_classification, "process_limit");
+  assert.equal(classifyTimeoutObservation({
+    timeoutMs: 30000,
+    ts: limited,
+  }).performance_warning, true);
 
   const runtime = evaluateRuntimePerformance(
     { duration_ms: 500, timed_out: false },

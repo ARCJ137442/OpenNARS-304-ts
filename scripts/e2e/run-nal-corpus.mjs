@@ -582,6 +582,7 @@ async function runTs(files, cycles, timeoutMs, processLimitMs, cliPath = join(pr
           status,
           signal,
           error: { message: errorMessage },
+          stderr,
         }, "TypeScript"));
         rows.push(...notRunRows(
           unresolved.slice(1),
@@ -626,6 +627,9 @@ function completeProcessFailureRows(files, cycles, parsed, processResult, engine
     error: processError,
     error_type: "exception",
     timed_out: false,
+    exit_code: processResult.status ?? null,
+    signal: processResult.signal ?? null,
+    stderr: processResult.stderr?.trim() || null,
   });
 }
 
@@ -778,7 +782,8 @@ function evaluateRuntimePerformance(javaResult, tsResult, totalCycles) {
 }
 
 function classifyTimeoutObservation({ timeoutMs = null, java = null, ts = null } = {}) {
-  const timedOut = java?.timed_out === true || ts?.timed_out === true;
+  const processLimited = java?.process_limited === true || ts?.process_limited === true;
+  const timedOut = java?.timed_out === true || ts?.timed_out === true || processLimited;
   if (!timedOut) {
     return { performance_warning: false, timeout_classification: null };
   }
@@ -786,12 +791,17 @@ function classifyTimeoutObservation({ timeoutMs = null, java = null, ts = null }
   if (hasException) {
     return { performance_warning: false, timeout_classification: "timeout_with_exception" };
   }
-  const stalled = java?.stall_detected === true || ts?.stall_detected === true
+  const stalled = !processLimited && (java?.stall_detected === true || ts?.stall_detected === true
     || java?.timeout_reason === "no_progress" || ts?.timeout_reason === "no_progress"
-    || (timedOut && java?.timeout_reason !== "process_limit" && ts?.timeout_reason !== "process_limit");
+    || (timedOut && java?.timeout_reason !== "process_limit" && ts?.timeout_reason !== "process_limit"));
   return stalled
     ? { performance_warning: false, timeout_classification: "stalled_no_progress" }
-    : { performance_warning: false, timeout_classification: Number.isFinite(timeoutMs) ? "process_limit" : "timeout_budget_unknown" };
+    : {
+      performance_warning: processLimited,
+      timeout_classification: processLimited
+        ? "process_limit"
+        : Number.isFinite(timeoutMs) ? "process_limit" : "timeout_budget_unknown",
+    };
 }
 
 function canonicalizeTraceValue(value) {
