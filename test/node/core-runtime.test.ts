@@ -184,6 +184,21 @@ test("DerivationContext lazily builds and caches the Java newStamp", async () =>
     assert.equal(context.newStampBuilder, null);
 });
 
+test("ProcessGoal executable precondition preserves Java default metadata", async () => {
+    const { ProcessGoal } = await import("../../src/control/concept/ProcessGoal.ts");
+
+    const metadata = new ProcessGoal.ExecutablePrecondition();
+
+    assert.equal(metadata.bestOp, null);
+    assert.equal(metadata.bestOp_truth, null);
+    assert.equal(metadata.executable_precondition, null);
+    assert.equal(metadata.bestOp_truthExp, 0);
+    assert.equal(metadata.minTime, -1n);
+    assert.equal(metadata.maxTime, -1n);
+    assert.equal(metadata.timeOffset, 0);
+    assert.equal(metadata.substitution, null);
+});
+
 test("Stamp tense lookup uses Java temporal order constants", async () => {
     const { Stamp } = await import("../../src/entity/Stamp.ts");
     const { Tense } = await import("../../src/language/Tense.ts");

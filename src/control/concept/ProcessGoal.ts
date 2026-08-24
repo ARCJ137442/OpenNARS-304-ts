@@ -54,7 +54,7 @@ export class ProcessGoal extends JavaObject {
         let goal: Sentence = task.sentence;
         let oldGoalT: Task = concept.selectCandidate(task, concept.desires, nal.time); // revise with the existing
         // desire values
-        let oldGoal: Sentence = null;
+        let oldGoal: Sentence | null = null;
         let newStamp: Stamp = goal.stamp;
         if (oldGoalT !== null) {
             oldGoal = oldGoalT.sentence;
@@ -64,7 +64,7 @@ export class ProcessGoal extends JavaObject {
             }
         }
 
-        let beliefT: Task = null;
+        let beliefT: Task | null = null;
         if (task.aboveThreshold()) {
             beliefT = concept.selectCandidate(task, concept.beliefs, nal.time);
 
@@ -79,7 +79,7 @@ export class ProcessGoal extends JavaObject {
             }
         }
 
-        if (oldGoalT !== null && revisable(goal, oldGoal, nal.narParameters)) {
+        if (oldGoalT !== null && oldGoal !== null && revisable(goal, oldGoal, nal.narParameters)) {
             if (oldGoal === null)
                 throw new JavaIllegalAccessError("oldGoal == null");
             if (oldGoal.stamp === null)
@@ -108,7 +108,7 @@ export class ProcessGoal extends JavaObject {
         if (s2.after(task.sentence.stamp, nal.narParameters.DURATION)) {
             // this task is not up to date we have to project it first
 
-            let projGoal: Sentence = task.sentence.projection(nal.time.time(), nal.narParameters.DURATION, nal.memory);
+            let projGoal: Sentence = task.sentence.projection(nal.time.time(), BigInt(nal.narParameters.DURATION), nal.memory);
             if (projGoal !== null && projGoal.getTruth().getExpectation() > nal.narParameters.DECISION_THRESHOLD) {
 
                 // keep goal updated
@@ -127,14 +127,14 @@ export class ProcessGoal extends JavaObject {
         if (beliefT !== null) {
             let belief: Sentence = beliefT.sentence;
             let projectedBelief: Sentence = belief.projection(task.sentence.getOccurrenceTime(),
-                nal.narParameters.DURATION, nal.memory);
+                BigInt(nal.narParameters.DURATION), nal.memory);
             AntiSatisfaction = task.sentence.getTruth().getExpDifAbs(projectedBelief.getTruth());
         }
 
         // Java casts AntiSatisfaction to float before multiplying two float
         // operands; casting only the final result can cross a Bag level.
         const antiSatisfaction: float = Math.fround(AntiSatisfaction) as float;
-        task.setPriority(Math.fround(task.getPriority() * antiSatisfaction) as float);
+        task.setPriority(Float32Math.multiply(task.getPriority(), antiSatisfaction) as float);
         if (!task.aboveThreshold()) {
             return;
         }
@@ -247,14 +247,14 @@ export class ProcessGoal extends JavaObject {
     }
 
     public static ExecutablePrecondition = class ExecutablePrecondition extends JavaObject {
-        public bestOp: Operation = null;
+        public bestOp: Operation | null = null;
         public bestOp_truthExp: float = 0.0;
-        public bestOp_truth: TruthValue = null;
-        public executable_precondition: Task = null;
-        public minTime: long = -1;
-        public maxTime: long = -1;
-        public timeOffset: float;
-        public substitution: java.util.Map<Term, Term>;
+        public bestOp_truth: TruthValue | null = null;
+        public executable_precondition: Task | null = null;
+        public minTime: long = -1n;
+        public maxTime: long = -1n;
+        public timeOffset: float = 0.0;
+        public substitution: java.util.Map<Term, Term> | null = null;
     };
 
 
@@ -315,24 +315,38 @@ export class ProcessGoal extends JavaObject {
                 anticipationsToMake);
             // 5. And executing it, also forming an expectation about the result
             if (ProcessGoal.executePrecondition(nal, bestOpWithMeta, concept, projectedGoal, task)) {
-                let op: Concept = nal.memory.concept(bestOpWithMeta.bestOp);
-                if (op !== null && bestOpWithMeta.executable_precondition.sentence.getTruth()
+                const bestOp = bestOpWithMeta.bestOp;
+                const executablePrecondition = bestOpWithMeta.executable_precondition;
+                if (bestOp === null || executablePrecondition === null) {
+                    throw new java.lang.IllegalStateException("Executable precondition metadata is incomplete");
+                }
+                let op: Concept = nal.memory.concept(bestOp);
+                if (op !== null && executablePrecondition.sentence.getTruth()
                     .confidence > nal.narParameters.MOTOR_BABBLING_CONFIDENCE_THRESHOLD) {
                     /* synchronized (op) { */
                     op.allowBabbling = false;
                     /* } */
                 }
-                java.lang.System.out.println(`Executed based on: ${javaStringValue(bestOpWithMeta.executable_precondition)}`);
-                for (let precon of anticipationsToMake.get(bestOpWithMeta.bestOp)) {
-                    let distance: float = Float32Math.subtract(precon.timeOffset, nal.time.time()) as float;
+                java.lang.System.out.println(`Executed based on: ${javaStringValue(executablePrecondition)}`);
+                const anticipations = anticipationsToMake.get(bestOp);
+                if (anticipations === null) {
+                    throw new java.lang.IllegalStateException("Executable precondition anticipation list is missing");
+                }
+                for (let precon of anticipations) {
+                    const preconditionTask = precon.executable_precondition;
+                    const substitution = precon.substitution;
+                    if (preconditionTask === null || substitution === null) {
+                        throw new java.lang.IllegalStateException("Executable precondition result is incomplete");
+                    }
+                    let distance: float = Float32Math.subtract(precon.timeOffset, Number(nal.time.time())) as float;
                     let urgency: float = Float32Math.add(
                         2.0,
                         Float32Math.divide(1.0, distance),
                     ) as float;
 
-                    ProcessAnticipation.anticipate(nal, precon.executable_precondition.sentence,
-                        precon.executable_precondition.getBudget(), precon.minTime, precon.maxTime, urgency,
-                        precon.substitution);
+                    ProcessAnticipation.anticipate(nal, preconditionTask.sentence,
+                        preconditionTask.getBudget(), precon.minTime, precon.maxTime, urgency,
+                        substitution);
                 }
                 return; // don't try the other table as a specific solution was already used
             }
@@ -359,18 +373,18 @@ export class ProcessGoal extends JavaObject {
             let prec: Term[] = precTerm.term;
             let newprec: Term[] = new Array<Term>(prec.length - 3);
             java.lang.System.arraycopy(prec, 0, newprec, 0, prec.length - 3);
-            let timeOffset: float = Float32Math.from((prec[prec.length - 1] as Interval).time) as float;
+            let timeOffset: float = Float32Math.from(Number((prec[prec.length - 1] as Interval).time)) as float;
             let timeWindowHalf: float = Float32Math.multiply(
                 timeOffset,
                 nal.narParameters.ANTICIPATION_TOLERANCE,
             ) as float;
             let op: Operation = prec[prec.length - 2] as Operation;
             let precondition: Term = Conjunction.make(newprec, TemporalRules.ORDER_FORWARD);
-            let newesttime: long = -1;
-            let bestsofar: Task = null;
+            let newesttime: long = -1n;
+            let bestsofar: Task | null = null;
             let prec_intervals: java.util.List<float> = new java.util.ArrayList<float>();
             for (let l of CompoundTerm.extractIntervals(nal.memory, precTerm)) {
-                prec_intervals.add(Float32Math.from(l) as float);
+                prec_intervals.add(Float32Math.from(Number(l)) as float);
             }
             let subsconc: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
             let conclusionMatches: boolean = Variables.findSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,
@@ -429,8 +443,13 @@ export class ProcessGoal extends JavaObject {
             let opdesire: TruthValue = TruthFunctions.desireDed(precon, leftside, concept.memory.narParameters);
             let expecdesire: float = opdesire.getExpectation();
             let bestOp: Operation = (op as CompoundTerm).applySubstitute(subsBest) as Operation;
-            let minTime: long = (nal.time.time() + timeOffset - timeWindowHalf) as long;
-            let maxTime: long = (nal.time.time() + timeOffset + timeWindowHalf) as long;
+            const timeNow: number = Number(nal.time.time());
+            const minTimeFloat: float = Float32Math.subtract(
+                Float32Math.add(timeNow, timeOffset), timeWindowHalf);
+            const maxTimeFloat: float = Float32Math.add(
+                Float32Math.add(timeNow, timeOffset), timeWindowHalf);
+            let minTime: long = BigInt(Math.trunc(minTimeFloat));
+            let maxTime: long = BigInt(Math.trunc(maxTimeFloat));
             if (expecdesire > result.bestOp_truthExp) {
                 result.bestOp = bestOp;
                 result.bestOp_truthExp = expecdesire;
@@ -440,10 +459,12 @@ export class ProcessGoal extends JavaObject {
                 result.minTime = minTime;
                 result.maxTime = maxTime;
                 result.timeOffset = timeOffset;
-                if (anticipationsToMake.get(result.bestOp) === null) {
-                    anticipationsToMake.put(result.bestOp, new java.util.ArrayList<ProcessGoal.ExecutablePrecondition>());
+                let anticipations = anticipationsToMake.get(bestOp);
+                if (anticipations === null) {
+                    anticipations = new java.util.ArrayList<ProcessGoal.ExecutablePrecondition>();
+                    anticipationsToMake.put(bestOp, anticipations);
                 }
-                anticipationsToMake.get(result.bestOp).add(result);
+                anticipations.add(result);
             }
         }
         return result;
@@ -460,14 +481,16 @@ export class ProcessGoal extends JavaObject {
      */
     private static executePrecondition(nal: DerivationContext, precon: ProcessGoal.ExecutablePrecondition,
         concept: Concept, projectedGoal: Sentence, task: Task): boolean {
-        if (precon.bestOp !== null && precon.bestOp_truthExp > nal.narParameters.DECISION_THRESHOLD /*
+        const bestOp = precon.bestOp;
+        const bestOpTruth = precon.bestOp_truth;
+        if (bestOp !== null && bestOpTruth !== null && precon.bestOp_truthExp > nal.narParameters.DECISION_THRESHOLD /*
                                                                                                     * && Math.random() <
                                                                                                     * bestOp_truthexp
                                                                                                     */) {
             let createdSentence: Sentence = new Sentence(
-                precon.bestOp,
+                bestOp,
                 Symbols.GOAL_MARK,
-                precon.bestOp_truth,
+                bestOpTruth,
                 projectedGoal.stamp);
             let t: Task = new Task(createdSentence,
                 new BudgetValue(1.0, 1.0, 1.0, nal.narParameters),
