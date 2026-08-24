@@ -63,11 +63,14 @@ export class Variables extends JavaObject {
 
                 let term1HasVar: boolean = term1.hasVar(type);
                 if (type === Symbols.VAR_INDEPENDENT) {
-                    term1HasVar |= term1.hasVarDep();
-                    term1HasVar |= term1.hasVarQuery();
+                    const hasDependentVar = term1.hasVarDep();
+                    term1HasVar = term1HasVar || hasDependentVar;
+                    const hasQueryVar = term1.hasVarQuery();
+                    term1HasVar = term1HasVar || hasQueryVar;
                 }
                 if (type === Symbols.VAR_DEPENDENT) {
-                    term1HasVar |= term1.hasVarQuery();
+                    const hasQueryVar = term1.hasVarQuery();
+                    term1HasVar = term1HasVar || hasQueryVar;
                 }
                 let term2HasVar: boolean = term2.hasVar(type);
 

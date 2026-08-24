@@ -510,7 +510,8 @@ export class CompositionalRules extends JavaObject {
                     let truth: TruthValue = intersection(taskSentence.getTruth(), belief.getTruth(), nal.narParameters)
                         .mulConfidence(content_penalty.getRight());
                     let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
-                    b1 |= (nal.doublePremiseTask(content_penalty.getLeft(), truth, budget, false, false)) !== null;
+                    const firstTask = nal.doublePremiseTask(content_penalty.getLeft(), truth, budget, false, false);
+                    b1 = b1 || firstTask !== null;
                 }
             }
         }
@@ -531,7 +532,8 @@ export class CompositionalRules extends JavaObject {
                     }
                     truth.mulConfidence(content_penalty.getRight());
                     let budget: BudgetValue = BudgetFunctions.forward(truth, nal);
-                    b2 |= nal.doublePremiseTask(content_penalty.getLeft(), truth, budget, false, false) !== null;
+                    const secondTask = nal.doublePremiseTask(content_penalty.getLeft(), truth, budget, false, false);
+                    b2 = b2 || secondTask !== null;
                 }
             }
         }

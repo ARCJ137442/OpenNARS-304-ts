@@ -43,7 +43,8 @@ export class ProcessTask extends JavaObject {
     public static processTask(concept: Concept, nal: DerivationContext, task: Task,
         time: Timable): boolean {
         /* synchronized (concept) { */
-        concept.observable |= task.isInput();
+        const inputTask = task.isInput();
+        concept.observable = concept.observable || inputTask;
         let type: JavaChar = task.sentence.punctuation;
         switch (type) {
             case Symbols.JUDGMENT_MARK:

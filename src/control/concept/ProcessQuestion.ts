@@ -105,7 +105,8 @@ export class ProcessQuestion extends JavaObject {
                     if (c !== null && answers.size() > 0) {
                         let taskAnswer: Task = answers.get(0);
                         if (taskAnswer !== null) {
-                            newAnswer |= trySolution(taskAnswer.sentence, ques, nal, false); // order important here
+                            const solutionFound = trySolution(taskAnswer.sentence, ques, nal, false); // order important here
+                            newAnswer = newAnswer || solutionFound;
                         }
                     }
                     /* } */
@@ -148,7 +149,8 @@ export class ProcessQuestion extends JavaObject {
                         if (c !== null && answers.size() > 0) {
                             let taskAnswer: Task = answers.get(0);
                             if (taskAnswer !== null) {
-                                newAnswer |= trySolution(taskAnswer.sentence, ques, nal, false); // order important
+                                const solutionFound = trySolution(taskAnswer.sentence, ques, nal, false); // order important
+                                newAnswer = newAnswer || solutionFound;
                                 // here
                             }
                         }
