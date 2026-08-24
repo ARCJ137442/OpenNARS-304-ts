@@ -3,6 +3,7 @@ import { java, type char, type int, type short, S } from "jree";
 import { Texts } from "../io/Texts.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
+import { javaStringHashCode, javaStringValue } from "../runtime/jree-compat.ts";
 
 const VAR_INDEPENDENT = Symbols.VAR_INDEPENDENT;
 const VAR_DEPENDENT = Symbols.VAR_DEPENDENT;
@@ -144,14 +145,14 @@ export class Variable extends Term {
             return false;
         }
         let v: Variable = that as Variable;
-        if (!this.name().equals(v.name())) {
+        if (javaStringValue(this.name()) !== javaStringValue(v.name())) {
             return false;
         }
         if ((this.getScope() === this && v.getScope() !== v) ||
             (this.getScope() !== this && v.getScope() === v)) {
             return false;
         }
-        return (v.getScope().name().equals(this.getScope().name()));
+        return javaStringValue(v.getScope().name()) === javaStringValue(this.getScope().name());
     }
 
     public equalsTerm(that: java.lang.Object): boolean {
@@ -159,13 +160,13 @@ export class Variable extends Term {
         let v: Variable = that as Variable;
         if ((v.scope === v) && (this.scope === this))
             // both are unscoped, so compare by name only
-            return this.name().equals(v.name());
+            return javaStringValue(this.name()) === javaStringValue(v.name());
         else if ((v.scope !== v) && (this.scope === this))
             return false;
         else if ((v.scope === v) && (this.scope !== this))
             return false;
         else {
-            if (!this.name().equals(v.name()))
+            if (javaStringValue(this.name()) !== javaStringValue(v.name()))
                 return false;
 
             if (this.scope === v.scope)
@@ -181,16 +182,16 @@ export class Variable extends Term {
             // until then, we'll use the name for comparison because it wont
             // invoke infinite recursion
 
-            return this.scope.name().equals(v.scope.name());
+            return javaStringValue(this.scope.name()) === javaStringValue(v.scope.name());
         }
     }
 
     public hashCode(): int {
         if (this.hash === 0) {
             if (this.scope !== this)
-                this.hash = 31 * this.name().hashCode() + this.scope.hashCode();
+                this.hash = 31 * javaStringHashCode(this.name()) + this.scope.hashCode();
             else
-                this.hash = this.name().hashCode();
+                this.hash = javaStringHashCode(this.name());
         }
         return this.hash;
     }

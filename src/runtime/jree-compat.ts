@@ -22,6 +22,16 @@ export const javaStringValue = (value: unknown): string => {
     return String(value);
 };
 
+/** Java String.hashCode(), applied after crossing a jree/native string boundary. */
+export const javaStringHashCode = (value: unknown): number => {
+    const text = javaStringValue(value);
+    let hash = 0;
+    for (let index = 0; index < text.length; index += 1) {
+        hash = Math.imul(31, hash) + text.charCodeAt(index);
+    }
+    return hash;
+};
+
 // jree 1.3.0 uses Java's 48-bit LCG but applies JavaScript bitwise operators
 // to the 48-bit state.  That truncates next(>16) to 32 bits, and its
 // nextDouble additionally performs integer BigInt division.  OpenNARS uses

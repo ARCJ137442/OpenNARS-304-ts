@@ -4,6 +4,7 @@ import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
+import { javaStringHashCode, javaStringValue } from "../runtime/jree-compat.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 const isVariableTerm = (value: unknown): boolean =>
@@ -146,16 +147,16 @@ export class Term extends JavaObject {
                     return x;
                 }
 
-                let nameStr: java.lang.String = nativeName;
+                let nameStr: java.lang.String = nativeName as unknown as java.lang.String;
                 // p[s,i,j]
                 let term_indices: Int32Array = null;
                 let before_indices_str: java.lang.String = null;
-                if (nameStr.endsWith("]") && nameStr.includes("[")) { // simple check, failing for most terms
+                if (javaStringValue(nameStr).endsWith("]") && javaStringValue(nameStr).includes("[")) { // simple check, failing for most terms
                     let indices_str: java.lang.String = nameStr.split("[")[1].split("]")[0];
                     before_indices_str = nameStr.split("[")[0];
                     let ind_s: java.lang.String[] = indices_str.split(",");
                     if (ind_s.length === 2) { // only position info given
-                        indices_str = "1,1," + indices_str;
+                        indices_str = java.lang.String.valueOf("1,1," + indices_str);
                         ind_s = indices_str.split(",");
                     }
                     term_indices = new Int32Array(ind_s.length);
@@ -267,12 +268,7 @@ export class Term extends JavaObject {
     public override  hashCode(): int {
         // Match java.lang.String.hashCode() instead of jree's typed-array hash
         // fallback, which otherwise gives unrelated term names the same hash.
-        let hash = 0;
-        const text = String(this.name());
-        for (let index = 0; index < text.length; index += 1) {
-            hash = Math.imul(31, hash) + text.charCodeAt(index);
-        }
-        return hash;
+        return javaStringHashCode(this.name());
     }
 
     /**

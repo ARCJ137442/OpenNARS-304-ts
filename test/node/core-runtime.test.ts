@@ -46,7 +46,11 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const { Product } = await import("../../src/language/Product.ts");
     const { SetInt } = await import("../../src/language/SetInt.ts");
     const { Implication } = await import("../../src/language/Implication.ts");
+    const { java } = await import("jree");
     const sharedVariable = new Variable("$1");
+    const javaStringVariable = new Variable(new java.lang.String("$1"));
+    assert.equal(javaStringVariable.equals(sharedVariable), true);
+    assert.equal(javaStringVariable.hashCode(), sharedVariable.hashCode());
     const condition = Inheritance.make(Product.make([sharedVariable, Term.get("sunglasses")]), Term.get("own"));
     const conclusion = Inheritance.make(sharedVariable, new SetInt(Term.get("aggressive")));
     const rule = Implication.make(condition, conclusion, 0);
