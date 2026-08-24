@@ -119,7 +119,7 @@ export class IntersectionExt extends CompoundTerm {
                 }
                 if ((term1 instanceof SetExt) && (term2 instanceof SetExt)) {
                     // set intersection
-                    let set: java.util.NavigableSet<Term> = Term.toSortedSet(...(term1 as CompoundTerm).term);
+                    let set: java.util.Set<Term> = Term.toSortedSet(...(term1 as CompoundTerm).term);
 
                     set.retainAll((term2 as CompoundTerm).asTermList());
 

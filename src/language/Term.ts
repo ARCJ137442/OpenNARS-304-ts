@@ -510,11 +510,11 @@ export class Term extends JavaObject {
         return false;
     }
 
-    public static toSortedSet(...arg: Term[]): java.util.NavigableSet<Term> {
+    public static toSortedSet(...arg: Term[]): java.util.Set<Term> {
         // jree does not provide java.util.TreeSet. An ArrayList with the same
         // sorted/unique contents is sufficient for the callers here, which only
         // use retainAll() and toArray().
-        return new java.util.ArrayList(Term.toSortedSetArray(...arg)) as unknown as java.util.NavigableSet<Term>;
+        return new java.util.ArrayList(Term.toSortedSetArray(...arg)) as unknown as java.util.Set<Term>;
     }
 
     public static readonly EmptyTermArray: Term[] = new Array<Term>(0);

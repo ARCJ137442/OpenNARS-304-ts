@@ -112,7 +112,7 @@ export class DifferenceInt extends CompoundTerm {
 
                 if ((arg[0] instanceof SetInt) && (arg[1] instanceof SetInt)) {
                     // TODO maybe a faster way to calculate:
-                    let set: java.util.NavigableSet<Term> = Term.toSortedSet(...(arg[0] as CompoundTerm).asTermList().toArray(new Array<Term>(0)));
+                    let set: java.util.Set<Term> = Term.toSortedSet(...(arg[0] as CompoundTerm).asTermList().toArray(new Array<Term>(0)));
                     set.removeAll((arg[1] as CompoundTerm).asTermList()); // set difference
                     return SetInt.make(set);
                 }
