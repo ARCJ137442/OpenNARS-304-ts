@@ -551,7 +551,7 @@ export class Concept extends Item<Term> {
     /**
      * Get the current overall desire value. TODO to be refined
      */
-    public getDesire(): TruthValue {
+    public getDesire(): TruthValue | null {
         if (this.desires.isEmpty()) {
             return null;
         }
@@ -566,7 +566,7 @@ export class Concept extends Item<Term> {
      * @param time     The current time
      * @return The selected TermLink
      */
-    public selectTermLink(taskLink: TaskLink, time: long, narParameters: Parameters): TermLink {
+    public selectTermLink(taskLink: TaskLink, time: long, narParameters: Parameters): TermLink | null {
         let toMatch: int = narParameters.TERM_LINK_MAX_MATCHED; // Math.min(memory.param.termLinkMaxMatched.get(),
         // termLinks.size());
         for (let i: int = 0; (i < toMatch) && (this.termLinks.size() > 0); i++) {

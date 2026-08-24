@@ -103,7 +103,7 @@ export class GeneralInferenceControl extends JavaObject {
             // }
         } else {
             while (termLinks > 0) {
-                let termLink: TermLink = nal.currentConcept.selectTermLink(nal.currentTaskLink, nal.time.time(),
+                let termLink: TermLink | null = nal.currentConcept.selectTermLink(nal.currentTaskLink, nal.time.time(),
                     nal.narParameters);
                 if (termLink === null) {
                     break;
