@@ -204,7 +204,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         let c: Term = this.clone(this.cloneTermsDeep());
         if (c === null)
             return null;
-        if (Debug.DETAILED && c.getClass() !== java.lang.Object.getClass()) // debug relevant, while it is natural due to interval
+        if (Debug.DETAILED && c.getClass() !== this.getClass()) // debug relevant, while it is natural due to interval
             // simplification to reduce to other term type,
             // other cases should not appear
             java.lang.System.out.println("cloneDeep resulted in different class: " + c + " from " + this);
@@ -307,7 +307,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         if (c === null)
             return null;
 
-        if (Debug.DETAILED && c.getClass() !== java.lang.Object.getClass())
+        if (Debug.DETAILED && c.getClass() !== this.getClass())
             java.lang.System.out.println("cloneDeepVariables resulted in different class: " + c + " from " + this);
 
         let cc: CompoundTerm = c as CompoundTerm;

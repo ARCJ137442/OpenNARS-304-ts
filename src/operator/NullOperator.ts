@@ -33,7 +33,7 @@ export class NullOperator extends Operator {
     protected execute(operation: Operation, args: Term[], memory: Memory,
         time: Timable): java.util.List<Task> {
         if (Debug.DETAILED) {
-            memory.emit(java.lang.Object.getClass(), args as java.lang.Object[]);
+            memory.emit(this.getClass(), args as java.lang.Object[]);
         }
         return null;
     }

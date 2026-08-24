@@ -1,0 +1,9 @@
+command: npm run test:serial
+test_command: node --test --test-concurrency=1 --experimental-strip-types test/node/*.test.ts
+exit_code: 0
+tests: 132
+pass: 132
+fail: 0
+skipped: 0
+duration_ms: 36481.2047
+warnings: jree ESM main-field deprecation warnings only

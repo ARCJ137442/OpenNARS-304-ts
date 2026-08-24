@@ -1,0 +1,12 @@
+command: $env:NODE_OPTIONS='--max-old-space-size=1024'; npx tsc --noEmit --pretty false --incremental false
+base_commit: d4435f71f8a7a603fed7e6cce8d3e3e16f16abd2
+exit_code: 2 (expected while diagnostics remain)
+diagnostics: 1364
+production: 497
+tests: 867
+previous_diagnostics: 1368
+previous_production: 501
+previous_tests: 867
+delta: -4 total, -4 production, 0 tests
+changed_code: TS2339 81 -> 77
+root_cause: Java instance getClass was translated as java.lang.Object.getClass static access in four methods.

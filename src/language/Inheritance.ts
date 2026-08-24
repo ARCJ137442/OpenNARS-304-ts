@@ -81,7 +81,7 @@ export class Inheritance extends Statement {
                 }
                 if (t.length !== 2)
                     throw new java.lang.IllegalArgumentException(
-                        "Invalid terms for " + java.lang.Object.getClass().getSimpleName() + ": " + java.util.Arrays.toString(t));
+                        "Invalid terms for " + this.getClass().getSimpleName() + ": " + java.util.Arrays.toString(t));
 
                 return Inheritance.make(t[0], t[1]);
 
