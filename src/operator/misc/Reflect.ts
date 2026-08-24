@@ -8,6 +8,7 @@ import { Similarity } from "../../language/Similarity.ts";
 import type { Statement } from "../../language/Statement.ts";
 import { Term } from "../../language/Term.ts";
 import { Symbols } from "../../io/Symbols.ts";
+import type { Memory } from "../../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 

@@ -2,6 +2,7 @@
 import { java, type short, type int } from "jree";
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
+import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 
 const NativeOperator = Symbols.NativeOperator;

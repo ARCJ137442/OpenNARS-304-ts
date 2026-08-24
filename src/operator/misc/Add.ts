@@ -2,6 +2,7 @@
 import { java, type int } from "jree";
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { Term } from "../../language/Term.ts";
+import type { Memory } from "../../storage/Memory.ts";
 
 // Java's StringUtils.isNumeric accepts an integer composed only of digits.
 // Keep this check local so the operator does not depend on the main entrypoint.

@@ -5,6 +5,7 @@ import { Term } from "../../language/Term.ts";
 import { SetExt } from "../../language/SetExt.ts";
 import { SetInt } from "../../language/SetInt.ts";
 import { CompoundTerm } from "../../language/CompoundTerm.ts";
+import type { Memory } from "../../storage/Memory.ts";
 
 
 

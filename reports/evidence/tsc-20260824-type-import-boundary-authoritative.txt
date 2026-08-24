@@ -1,0 +1,40 @@
+batch=20260824-type-import-boundary
+spec=019-tsc-zero-error-build
+base_commit=dbc8995
+canonical_java_commit=8675b76fe8c21ee20a7b8c1b63408fb05327210d
+canonical_java_jar_sha256=2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5
+
+command_baseline=npx tsc --noEmit --pretty false --incremental false
+diagnostics_before=2015
+production_before=1101
+tests_before=914
+
+change=type-only imports for Memory in Add Count Reflect and AbstractTerm in Image
+diagnostics_after=2012
+production_after=1098
+tests_after=914
+diagnostics_delta=-3
+production_delta=-3
+tests_delta=0
+ts2304_before=501
+ts2304_after=497
+
+npm_test_command=npm test --silent
+npm_test_exit=0
+npm_test_total=127
+npm_test_pass=127
+npm_test_fail=0
+
+local_parity_command=npm run test:parity:local --silent
+local_parity_exit=0
+local_parity_ok=true
+local_parity_differences=0
+
+m1_drift_test=not_triggered
+m1_drift_reason=diagnostics remain in 20xx; 2118 to 2012 is a cumulative reduction of 106 and does not cross the 18xx threshold
+functional_semantics_changed=false
+unrelated_user_changes_preserved=true
+known_warning=jree package main-field extension-resolution deprecation warning remains
+hanzi_check_command=python scripts/checking/check_hanzi_encoding.py --json-output scripts/checking/hanzi-report.json
+hanzi_check_exit=0
+git_diff_check_exit=0
