@@ -1,0 +1,55 @@
+{
+  "format_version": 1,
+  "batch": "20260824-compoundterm-m1-serial",
+  "fixture": "java-master/src/test/simpleOperationTest.nal",
+  "contract": "marker-less fixture; same-thread/same-random 131072-cycle window comparison",
+  "thread_mode": "single",
+  "random_seed": 1,
+  "skip_embedded": true,
+  "source_commit": "d41bf790c410c2f589148b1dffd6f38c8c96efae",
+  "canonical_java": {
+    "artifact": "H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar",
+    "sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d"
+  },
+  "java": {
+    "requested_cycles": 131072,
+    "observed_cycles": 131072,
+    "windows": 128,
+    "window_size": 1024,
+    "total_events": 2535960,
+    "duration_ms": 3841,
+    "summary": "reports/evidence/java-simpleOperationTest-stage-counter-131072-20260824-compoundterm-m1.summary.json",
+    "windows_evidence": "reports/evidence/java-simpleOperationTest-stage-counter-131072-20260824-compoundterm-m1.windows.jsonl"
+  },
+  "typescript": {
+    "requested_cycles": 131072,
+    "observed_cycles": 131072,
+    "windows": 128,
+    "window_size": 1024,
+    "total_events": 2535960,
+    "duration_ms": 973700,
+    "summary": "reports/evidence/ts-simpleOperationTest-stage-counter-131072-20260824-compoundterm-m1.summary.json",
+    "windows_evidence": "reports/evidence/ts-simpleOperationTest-stage-counter-131072-20260824-compoundterm-m1.windows.jsonl"
+  },
+  "comparison": {
+    "equal": true,
+    "window_count_equal": true,
+    "window_structure_equal": true,
+    "mismatch_count": 0,
+    "comparison_command": "PowerShell逐窗口比较 start_cycle、end_cycle、cycle_count、total_events、stage_counts、stage_cycles_with_events、event_counts"
+  },
+  "performance": {
+    "java_ms_per_1024_cycles": 30.0078125,
+    "typescript_ms_per_1024_cycles": 7607.03125,
+    "typescript_to_java_runtime_ratio": 253.5,
+    "budget_ms_per_1024_cycles": 120000,
+    "classification": "slow_but_progressing"
+  },
+  "classification": {
+    "functional_131072_standard": "passed",
+    "watchdog_timeout": false,
+    "progress_observed_each_window": true,
+    "root_cause_status": "本批未修改性能路径；运行速度列入 M3，不作为功能不等价"
+  }
+}
