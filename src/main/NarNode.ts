@@ -49,60 +49,48 @@ export class NarNode extends JavaObject implements EventObserver {
 
     public constructor(nar: Nar, listenPort: int);
     public constructor(...args: unknown[]) {
-        switch (args.length) {
-            case 1: {
-                const [listenPort] = args as [int];
+        super();
 
+        let nar: Nar;
+        let listenPort: int;
+        if (args.length === 1) {
+            listenPort = args[0] as int;
+            nar = new Nar();
+        } else if (args.length === 2) {
+            [nar, listenPort] = args as [Nar, int];
+        } else {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        }
 
-                this(new Nar(), listenPort);
-
-
-                break;
-            }
-
-            case 2: {
-                const [nar, listenPort] = args as [Nar, int];
-
-
-                super();
-                this.nar = nar;
-                // this.listenPort = listenPort;
-                this.receiveSocket = new java.net.DatagramSocket(listenPort, java.net.InetAddress.getByName("127.0.0.1"));
-                nar.event(this, true, Events.TaskAdd.class);
-                let THIS: NarNode = this;
-                new class extends ThreadCompat {
-                    public run(): void {
-                        for (; ;) {
-                            try {
-                                let ret: java.lang.Object = THIS.receiveObject();
-                                if (ret !== null) {
-                                    if (ret instanceof Task) {
-                                        nar.memory.event.emit(THIS.EventReceivedTask.class, [ret]);
-                                        nar.addInput(ret as Task, nar);
-                                    } else if (ret instanceof java.lang.String) { // emits IN.class anyway
-                                        nar.addInput(ret as java.lang.String);
-                                    }
-                                }
-                            } catch (ex) {
-                                if (ex instanceof java.lang.Exception) { // log any type of exception, also parsing exceptions, because it shouldn't
-                                    // crash on wrong parses or temporary network issues
-                                    JavaSystemLoggerCompat.getLogger(NarNode.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
-                                } else {
-                                    throw ex;
-                                }
+        this.nar = nar;
+        // this.listenPort = listenPort;
+        this.receiveSocket = new java.net.DatagramSocket(listenPort, java.net.InetAddress.getByName("127.0.0.1"));
+        nar.event(this, true, Events.TaskAdd.class);
+        let THIS: NarNode = this;
+        new class extends ThreadCompat {
+            public run(): void {
+                for (; ;) {
+                    try {
+                        let ret: java.lang.Object = THIS.receiveObject();
+                        if (ret !== null) {
+                            if (ret instanceof Task) {
+                                nar.memory.event.emit(THIS.EventReceivedTask.class, [ret]);
+                                nar.addInput(ret as Task, nar);
+                            } else if (ret instanceof java.lang.String) { // emits IN.class anyway
+                                nar.addInput(ret as java.lang.String);
                             }
                         }
+                    } catch (ex) {
+                        if (ex instanceof java.lang.Exception) { // log any type of exception, also parsing exceptions, because it shouldn't
+                            // crash on wrong parses or temporary network issues
+                            JavaSystemLoggerCompat.getLogger(NarNode.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                        } else {
+                            throw ex;
+                        }
                     }
-                }().start();
-
-
-                break;
+                }
             }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
-        }
+        }().start();
     }
 
 
