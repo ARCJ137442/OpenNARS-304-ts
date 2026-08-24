@@ -34,7 +34,7 @@ export class Task extends Item<Sentence> {
      * Tasklink from which the Task is derived, null unless Debug.PARENTS is turned
      * on
      */
-    public parentTask: Sentence;
+    public parentTask: Sentence | null = null;
     /* For Question and Goal: best solution found so far */
     private bestSolution: Sentence;
     /* Whether the task should go into event bag or not */
