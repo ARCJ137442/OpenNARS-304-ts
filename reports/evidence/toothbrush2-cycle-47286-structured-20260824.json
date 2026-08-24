@@ -1,0 +1,112 @@
+{
+  "formatVersion": 1,
+  "observation": {
+    "javaCycle": 47285,
+    "typescriptCycle": 47286
+  },
+  "sources": {
+    "javaStderr": "reports/evidence/java-toothbrush2-unify-47286-20260824-v3.stderr",
+    "javaBudgetStderr": "reports/evidence/java-toothbrush2-budget-forward-47286-20260824-v3.stderr",
+    "tsTrace": "reports/evidence/ts-toothbrush2-unify-47286-20260824-v3.jsonl"
+  },
+  "engines": {
+    "java": {
+      "unification": {
+        "independent": {
+          "before": {
+            "left": "(&,(|,#2,$1),(|,$1,object))",
+            "right": "(&,(|,#1,$2),(|,$2,object))"
+          },
+          "result": true,
+          "after": {
+            "asym": "<(|,[unscrewing],object) --> (&,(|,#1#2$,object),object)>",
+            "sym": "<(&,(|,#1#2$,object),object) <-> (|,[unscrewing],object)>"
+          }
+        },
+        "query": {
+          "before": {
+            "first": "(|,[unscrewing],object)",
+            "second": "(|,[unscrewing],object)"
+          },
+          "result": true
+        },
+        "observations": {
+          "independent": 1,
+          "query": 1
+        }
+      },
+      "branch": "LocalRules.matchAsymSym/inferToAsym (from diagnostic stack)",
+      "inferToAsym": {
+        "premise": {
+          "frequency": 1,
+          "confidence": 0,
+          "expectation": 0.5
+        },
+        "reducedOutputTruth": "%1.00;0.00%",
+        "taskTruth": "%1.00;0.09%",
+        "beliefTruth": "%1.00;0.09%",
+        "budgetMethod": "forward",
+        "budgetInput": {
+          "task": "<(&,(|,#1,$2),(|,$2,object)) <-> (|,$2,[unscrewing])>.",
+          "belief": "<(|,$1,[unscrewing]) --> (&,(|,#2,$1),(|,$1,object))>.",
+          "premiseTruth": "%1.00;0.00%"
+        }
+      }
+    },
+    "typescript": {
+      "unification": {
+        "independent": {
+          "before": {
+            "first": "(&,(|,#2,$1),(|,$1,object))",
+            "second": "(&,(|,#1,$2),(|,$2,object))"
+          },
+          "result": true,
+          "after": [
+            "<(|,[unscrewing],object) --> (&,(|,#1#2$,object),object)>",
+            "<(&,(|,#1#2$,$2$1$),(|,$2$1$,object)) <-> (|,$2$1$,[unscrewing])>"
+          ]
+        },
+        "query": {
+          "before": {
+            "first": "(|,[unscrewing],object)",
+            "second": "(|,$2$1$,[unscrewing])"
+          },
+          "result": false,
+          "after": [
+            "<(|,[unscrewing],object) --> (&,(|,#1#2$,object),object)>",
+            "<(&,(|,#1#2$,$2$1$),(|,$2$1$,object)) <-> (|,$2$1$,[unscrewing])>"
+          ]
+        }
+      },
+      "branch": "SyllogisticRules.analogy",
+      "inferToAsym": null,
+      "budget": {
+        "method": "forward",
+        "reducedOutputTruth": "%1.00;0.01%",
+        "expectation": 0.5044862031936646,
+        "branch": "SyllogisticRules.analogy"
+      },
+      "budgetInference": {
+        "quality": 0.5044862031936646,
+        "resultQuality": 0.5044862031936646,
+        "task": "<(&,(|,#1,$2),(|,$2,object)) <-> (|,$2,[unscrewing])>"
+      },
+      "randomNextInt2": [
+        1,
+        1,
+        0
+      ],
+      "eventCounts": {
+        "TargetBudgetChange": 1,
+        "TargetRandomNextInt": 3,
+        "TargetVariablesUnify": 4,
+        "TargetBudgetMethod": 1,
+        "TargetBudgetInference": 1,
+        "TargetTermLinkSelect": 1,
+        "TargetConceptFire": 1
+      }
+    }
+  },
+  "firstObservedDifference": "independent_unification.after.sym",
+  "interpretation": "The structured cycle-47286 comparison diverges after independent unification; this is not yet proof of the globally earliest divergence."
+}
