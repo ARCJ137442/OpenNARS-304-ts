@@ -28,6 +28,7 @@ import { GeneralInferenceControl } from "../control/GeneralInferenceControl.ts";
 import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import type { Nar } from "../main/Nar.ts";
+import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 import type { Resettable } from "../interfaces/Resettable.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 
@@ -221,7 +222,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         if (typeof process !== "undefined" && process.release?.name === "node") {
             return false;
         }
-        let stackTrace: java.lang.StackTraceElement[] = java.lang.Thread.currentThread().getStackTrace();
+        let stackTrace: java.lang.StackTraceElement[] = ThreadCompat.currentThread().getStackTrace();
         let list: java.lang.StackTraceElement[] = stackTrace;
         for (let element of list) {
             if (element.getClassName().startsWith("org.junit.")) {

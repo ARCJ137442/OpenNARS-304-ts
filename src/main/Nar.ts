@@ -27,6 +27,7 @@ import { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
 import { Stamp } from "../entity/Stamp.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { Task } from "../entity/Task.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
 import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
@@ -88,7 +89,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         "    Github website:  http://github.com/opennars/ \n" +
         "    IRC:  http://webchat.freenode.net/?channels=org.opennars \n";
 
-    private threads: java.lang.Thread[] = null;
+    private threads: ThreadCompat[] | null = null;
     protected sensoryChannels: java.util.Map<Term, SensoryChannel> = new java.util.LinkedHashMap();
 
     public addSensoryChannel(term: java.lang.String, channel: SensoryChannel): void {
@@ -724,9 +725,9 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                 this.minCyclePeriodMS = minCyclePeriodMS;
                 if (this.threads === null) {
                     let n_threads: int = this.narParameters.THREADS_AMOUNT;
-                    this.threads = new Array<java.lang.Thread>(n_threads);
+                    this.threads = new Array<ThreadCompat>(n_threads);
                     for (let i: int = 0; i < n_threads; i++) {
-                        this.threads[i] = new java.lang.Thread(this, "Inference" + i);
+                        this.threads[i] = new ThreadCompat(this, "Inference" + i);
                         this.threads[i].start();
                     }
                 }
@@ -785,15 +786,15 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
             if (this.minCyclePeriodMS > 0) {
                 try {
-                    java.lang.Thread.sleep(this.minCyclePeriodMS);
+                    ThreadCompat.sleep(this.minCyclePeriodMS);
                 } catch (e) {
-                    if (e instanceof java.lang.InterruptedException) {
+                    if (e instanceof InterruptedExceptionCompat) {
                     } else {
                         throw e;
                     }
                 }
             } else if (this.threadYield) {
-                java.lang.Thread.yield();
+                ThreadCompat.yield();
             }
         }
     }

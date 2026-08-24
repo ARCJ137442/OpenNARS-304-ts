@@ -5,6 +5,7 @@ import { NarNode } from "./NarNode.ts";
 import { Term } from "../language/Term.ts";
 import { Debug } from "./Debug.ts";
 import { TextOutputHandler } from "../io/events/TextOutputHandler.ts";
+import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 
 
 
@@ -106,7 +107,7 @@ export class Shell extends JavaObject {
     }
 
     public InputThread = (($outer) => {
-        return class InputThread extends java.lang.Thread {
+        return class InputThread extends ThreadCompat {
             private readonly bufIn: java.io.BufferedReader;
             protected readonly nar: Nar;
 
@@ -145,9 +146,9 @@ export class Shell extends JavaObject {
                     }
 
                     try {
-                        java.lang.Thread.sleep(1);
+                        ThreadCompat.sleep(1);
                     } catch (e) {
-                        if (e instanceof java.lang.InterruptedException) {
+                        if (e instanceof InterruptedExceptionCompat) {
                             throw new java.lang.IllegalStateException("ERROR: Unexpectedly interrupted while sleeping.", e);
                         } else {
                             throw e;
@@ -175,7 +176,7 @@ export class Shell extends JavaObject {
         if (hasInputFile) {
             this.nar.addInputFile(args[2]);
         }
-        it = new InputThread(java.lang.System.in, this.nar);
+        it = new this.InputThread(java.lang.System.in, this.nar);
         it.start();
 
         let numberOfSteps: int = hasNumberOfSteps ? java.lang.Integer.parseInt(args[3]) : -1;

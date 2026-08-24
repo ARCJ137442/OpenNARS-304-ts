@@ -7,6 +7,7 @@ import type { EventEmitter } from "../io/events/EventEmitter.ts";
 import { CompoundTerm } from "../language/CompoundTerm.ts";
 import { Term } from "../language/Term.ts";
 import { Task } from "../entity/Task.ts";
+import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 
@@ -68,7 +69,7 @@ export class NarNode extends JavaObject implements EventObserver {
                 this.receiveSocket = new java.net.DatagramSocket(listenPort, java.net.InetAddress.getByName("127.0.0.1"));
                 nar.event(this, true, Events.TaskAdd.class);
                 let THIS: NarNode = this;
-                new class extends java.lang.Thread {
+                new class extends ThreadCompat {
                     public run(): void {
                         for (; ;) {
                             try {
