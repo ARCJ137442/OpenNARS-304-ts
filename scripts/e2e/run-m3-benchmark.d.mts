@@ -5,6 +5,8 @@ export declare function statistics(values: number[]): {
   min: number | null;
   median: number | null;
   p95: number | null;
+  p95_exploratory: number | null;
+  p95_qualified: boolean;
   max: number | null;
   values: number[];
 };

@@ -87,11 +87,14 @@ function numericValues(values) {
 
 function statistics(values) {
   const numeric = numericValues(values);
+  const exploratoryP95 = percentile(numeric, 0.95);
   return {
     count: numeric.length,
     min: numeric.length === 0 ? null : Math.min(...numeric),
     median: median(numeric),
-    p95: percentile(numeric, 0.95),
+    p95: numeric.length >= 20 ? exploratoryP95 : null,
+    p95_exploratory: numeric.length > 0 && numeric.length < 20 ? exploratoryP95 : null,
+    p95_qualified: numeric.length >= 20,
     max: numeric.length === 0 ? null : Math.max(...numeric),
     values: numeric,
   };
@@ -163,7 +166,29 @@ function runOne(options, file, repetition, warmup) {
 
 function engineObservation(runs, engine) {
   const official = runs.filter((run) => !run.warmup);
-  const rows = official.map((run) => run.row?.[engine]).filter((row) => row !== null && row !== undefined);
+  const observations = official
+    .map((run) => ({
+      row: run.row?.[engine],
+      reasoningCycles: run.row?.reasoning_cycles ?? run.row?.[engine]?.cycles ?? null,
+    }))
+    .filter((observation) => observation.row !== null && observation.row !== undefined);
+  const rows = observations.map((observation) => observation.row);
+  const reasoningCycles = observations.map((observation) => observation.reasoningCycles);
+  const durations = rows.map((row) => row.duration_ms);
+  const cyclesPerSecond = observations.map((observation) => {
+    const cycles = observation.reasoningCycles;
+    const duration = observation.row.duration_ms;
+    return Number.isFinite(cycles) && cycles > 0 && Number.isFinite(duration) && duration > 0
+      ? cycles * 1000 / duration
+      : null;
+  });
+  const wallMsPer1024Cycles = observations.map((observation) => {
+    const cycles = observation.reasoningCycles;
+    const duration = observation.row.duration_ms;
+    return Number.isFinite(cycles) && cycles > 0 && Number.isFinite(duration) && duration >= 0
+      ? duration * 1024 / cycles
+      : null;
+  });
   const resource = rows.map((row) => row.resource_metrics ?? null);
   const cpu = resource.map((metrics) => {
     if (metrics === null) return null;
@@ -175,7 +200,10 @@ function engineObservation(runs, engine) {
   });
   const rss = resource.map((metrics) => metrics?.peak_rss_bytes ?? null);
   return {
-    wall_ms: statistics(rows.map((row) => row.duration_ms)),
+    reasoning_cycles: statistics(reasoningCycles),
+    wall_ms: statistics(durations),
+    cycles_per_second: statistics(cyclesPerSecond),
+    wall_ms_per_1024_cycles: statistics(wallMsPer1024Cycles),
     process_cpu_ms: statistics(cpu),
     peak_rss_bytes: statistics(rss),
     marker_time_ms: rows.map((row) => row.marker_time_ms ?? []),
@@ -188,11 +216,19 @@ function sampleSummary(file, runs) {
   const official = runs.filter((run) => !run.warmup);
   const functional = official.every((run) => run.row?.functional_pass === true);
   const parity = official.every((run) => run.row?.parity === true && run.row?.both_wrong !== true);
+  const tsToJavaWallRatios = official.map((run) => {
+    const javaDuration = run.row?.java?.duration_ms;
+    const tsDuration = run.row?.ts?.duration_ms;
+    return Number.isFinite(javaDuration) && javaDuration > 0 && Number.isFinite(tsDuration)
+      ? tsDuration / javaDuration
+      : null;
+  });
   return {
     file: resolve(file),
     repetitions: official.length,
     functional_pass_all: functional,
     parity_pass_all: parity,
+    ts_to_java_wall_ratio: statistics(tsToJavaWallRatios),
     java: engineObservation(runs, "java"),
     ts: engineObservation(runs, "ts"),
     runs,
