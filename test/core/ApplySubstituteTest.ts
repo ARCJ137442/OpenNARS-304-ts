@@ -1,4 +1,9 @@
 import { java, JavaObject, type int } from "jree";
+import { CompoundTerm } from "../../src/language/CompoundTerm.ts";
+import { Nar } from "../../src/main/Nar.ts";
+import { Narsese } from "../../src/io/Narsese.ts";
+import { Term } from "../../src/language/Term.ts";
+import { assertTrue } from "../util/junit-assert.ts";
 
 
 

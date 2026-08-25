@@ -1,4 +1,12 @@
 import { java, type long, type int } from "jree";
+import { Nar } from "../../../src/main/Nar.ts";
+import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
+import { OutputContainsCondition } from "./OutputContainsCondition.ts";
+import { OutputEmptyCondition } from "./OutputEmptyCondition.ts";
+import { OutputNotContainsCondition } from "./OutputNotContainsCondition.ts";
+
+const OUT = OutputHandler.OUT;
+const EXE = OutputHandler.EXE;
 
 
 

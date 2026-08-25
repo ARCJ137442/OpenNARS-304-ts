@@ -1,4 +1,11 @@
 import { java, JavaObject } from "jree";
+import { Nar } from "../../src/main/Nar.ts";
+import { EventHandler } from "../../src/io/events/EventHandler.ts";
+import { Events } from "../../src/io/events/Events.ts";
+import { OutputContainsCondition } from "../util/test/OutputContainsCondition.ts";
+import { assertTrue } from "../util/junit-assert.ts";
+
+const Answer = Events.Answer;
 
 
 
@@ -20,6 +27,7 @@ export class VariableTest extends JavaObject {
     }
 
     public testDepQueryVariableDistinct(): void {
+        const outer = this;
 
         this.n.addInput("<(&/,<a --> 3>,?what) =/> <a --> #wat>>?");
 
@@ -33,7 +41,7 @@ export class VariableTest extends JavaObject {
                 // nothing should arrive via Solved.class channel
                 assertTrue(false);
             }
-        }($outer.n, true, Answer.class);
+        }(outer.n, true, Answer.class);
 
         let e: OutputContainsCondition = new OutputContainsCondition(this.n, "=/> <a --> 4>>.", 5);
 
@@ -43,6 +51,7 @@ export class VariableTest extends JavaObject {
     }
 
     public testQueryVariableUnification(): void {
+        const outer = this;
         /*
          * <a --> 3>. :|:
          * <a --> 4>. :/:
@@ -59,9 +68,9 @@ export class VariableTest extends JavaObject {
         new class extends EventHandler {
             public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
                 solutionFound.set(true);
-                $outer.n.stop();
+                outer.n.stop();
             }
-        }($outer.n, true, Answer.class);
+        }(outer.n, true, Answer.class);
 
         this.n.cycles(1024);
 

@@ -1,4 +1,6 @@
 import { java, JavaObject, type long, type int } from "jree";
+import { Nar } from "../../src/main/Nar.ts";
+import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
 
 
 

@@ -1,4 +1,11 @@
 import { java, JavaObject, type int } from "jree";
+import { Debug } from "../../src/main/Debug.ts";
+import { Nar } from "../../src/main/Nar.ts";
+import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
+import { NALTest } from "../core/NALTest.ts";
+import { NALStressMeasure } from "./NALStressMeasure.ts";
+
+const perfNAL = NALStressMeasure.perfNAL;
 
 
 

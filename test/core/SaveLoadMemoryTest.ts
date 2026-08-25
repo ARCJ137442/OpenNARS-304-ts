@@ -1,4 +1,6 @@
 import { java, JavaObject } from "jree";
+import { Concept } from "../../src/entity/Concept.ts";
+import { Nar } from "../../src/main/Nar.ts";
 
 
 

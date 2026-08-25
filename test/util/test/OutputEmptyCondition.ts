@@ -1,4 +1,10 @@
 import { java } from "jree";
+import { Nar } from "../../../src/main/Nar.ts";
+import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
+import { OutputCondition } from "./OutputCondition.ts";
+
+const OUT = OutputHandler.OUT;
+const ERR = OutputHandler.ERR;
 
 
 
@@ -11,7 +17,7 @@ export class OutputEmptyCondition extends OutputCondition {
 
     public constructor(nar: Nar) {
         super(nar);
-        succeeded = true;
+        this.succeeded = true;
     }
 
     public getFalseReason(): java.lang.String {
@@ -22,7 +28,7 @@ export class OutputEmptyCondition extends OutputCondition {
         // any OUT or ERR output is a failure
         if ((channel === OUT.class) || (channel === ERR.class)) {
             this.output.add(channel.getSimpleName() + ": " + signal.toString());
-            succeeded = false;
+            this.succeeded = false;
             return false;
         }
         return false;

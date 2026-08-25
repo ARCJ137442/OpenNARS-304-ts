@@ -1,4 +1,12 @@
 import { java, JavaObject, type int } from "jree";
+import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
+import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
+import { NarNode } from "../../src/main/NarNode.ts";
+import { Task } from "../../src/entity/Task.ts";
+
+const IN = OutputHandler.IN;
+const TargetNar = NarNode.TargetNar;
+type TargetNar = InstanceType<typeof NarNode.TargetNar>;
 
 
 

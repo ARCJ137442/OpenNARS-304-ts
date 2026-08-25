@@ -4,7 +4,21 @@ import {
     JavaIllegalAccessException,
     JavaInstantiationException,
     JavaNoSuchMethodException,
+    JavaParserConfigurationException as ParserConfigurationException,
+    JavaSAXException as SAXException,
 } from "../../src/runtime/jree-compat.ts";
+import { Nar } from "../../src/main/Nar.ts";
+import { Parameters } from "../../src/main/Parameters.ts";
+import { Bag } from "../../src/storage/Bag.ts";
+import { Item } from "../../src/entity/Item.ts";
+import { BudgetValue } from "../../src/entity/BudgetValue.ts";
+import { Performance } from "./Performance.ts";
+
+const Lists = {
+    newArrayList<T>(...values: T[]): java.util.List<T> {
+        return new java.util.ArrayList<T>(values);
+    },
+};
 
 
 
@@ -92,6 +106,7 @@ export class BagPerf extends JavaObject {
     public totalMaxItemsPerLevel: float;
 
     public testBag(List: boolean, levels: int, capacity: int, forgetRate: float): void {
+        const outer = this;
 
         this.totalPriority = 0;
         this.totalMaxItemsPerLevel = this.totalMinItemsPerLevel = 0;
@@ -142,17 +157,17 @@ export class BagPerf extends JavaObject {
 
                 }(levels, capacity,
                     nar.narParameters);
-                BagPerf.randomBagIO(b, $outer.randomAccesses, $outer.insertRatio);
+                BagPerf.randomBagIO(b, outer.randomAccesses, outer.insertRatio);
 
                 if (!warmup) {
-                    $outer.totalPriority += b.getAveragePriority();
-                    $outer.totalMinItemsPerLevel += $outer.getMinItemsPerLevel(b);
-                    $outer.totalMaxItemsPerLevel += $outer.getMaxItemsPerLevel(b);
+                    outer.totalPriority += b.getAveragePriority();
+                    outer.totalMinItemsPerLevel += outer.getMinItemsPerLevel(b);
+                    outer.totalMaxItemsPerLevel += outer.getMaxItemsPerLevel(b);
                 }
             }
 
         }((List ? "DequeArray" : "LinkedList") + "," + levels + "," + capacity,
-            $outer.repeats, $outer.warmups).printCSV(true);
+            outer.repeats, outer.warmups).printCSV(true);
 
         // items per level min
         // items per lvel max

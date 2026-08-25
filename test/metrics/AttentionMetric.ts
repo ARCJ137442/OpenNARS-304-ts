@@ -5,6 +5,23 @@ import {
     JavaInstantiationException,
     JavaNoSuchMethodException,
 } from "../../src/runtime/jree-compat.ts";
+import { Nar } from "../../src/main/Nar.ts";
+import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
+import { Narsese } from "../../src/io/Narsese.ts";
+import { Parameters } from "../../src/main/Parameters.ts";
+import { Sentence } from "../../src/entity/Sentence.ts";
+import { Task } from "../../src/entity/Task.ts";
+import { TruthValue } from "../../src/entity/TruthValue.ts";
+import { TruthFunctions } from "../../src/inference/TruthFunctions.ts";
+import { Operator } from "../../src/operator/Operator.ts";
+import { EventHandler } from "../../src/io/events/EventHandler.ts";
+import { AnswerHandler as JavaAnswerHandler } from "../../src/io/events/AnswerHandler.ts";
+import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
+import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
+import {
+    JavaParserConfigurationException as ParserConfigurationException,
+    JavaSAXException as SAXException,
+} from "../../src/runtime/jree-compat.ts";
 
 
 
@@ -222,7 +239,7 @@ export class AttentionMetric extends JavaObject {
     };
 
 
-    public static AnswerHandler = class AnswerHandler extends org.opennars.io.events.AnswerHandler {
+    public static AnswerHandler = class AnswerHandler extends JavaAnswerHandler {
         private readonly execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>;
         private readonly reasoner: Reasoner;
 

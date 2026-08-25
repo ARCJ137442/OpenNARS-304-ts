@@ -15,3 +15,5 @@ export class TextsTest extends JavaObject {
         assertEquals("0.00", Texts.n2(0));
     }
 }
+import { Texts } from "../../src/io/Texts.ts";
+import { assertEquals } from "./junit-assert.ts";

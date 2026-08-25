@@ -1,4 +1,5 @@
 import { java } from "jree";
+import { NALTest } from "./NALTest.ts";
 
 
 
@@ -9,8 +10,8 @@ import { java } from "jree";
 export class NALTestSome extends NALTest {
 
     static {
-        showOutput = true;
-        showSuccess = showOutput;
+        NALTest.showOutput = true;
+        NALTest.showSuccess = NALTest.showOutput;
     }
 
     public static include(filename: java.lang.String): boolean {
@@ -43,7 +44,7 @@ export class NALTestSome extends NALTest {
     }
 
     public static main(args: java.lang.String[]): void {
-        org.junit.runner.JUnitCore.runClasses(NALTestSome.class);
+        NALTest.runTests(NALTestSome.class);
     }
 
     public constructor(scriptPath: java.lang.String) {

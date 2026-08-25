@@ -1,4 +1,11 @@
 import { java, JavaObject } from "jree";
+import { AnswerHandler } from "../../src/io/events/AnswerHandler.ts";
+import { Nar } from "../../src/main/Nar.ts";
+import { NarseseConsumer } from "../../src/interfaces/NarseseConsumer.ts";
+import { Sentence } from "../../src/entity/Sentence.ts";
+import { Term } from "../../src/language/Term.ts";
+import { assertTrue } from "../util/junit-assert.ts";
+import { System as SystemOperator } from "../../src/operator/misc/System.ts";
 
 
 
@@ -9,7 +16,7 @@ export class TestSystemOperator extends JavaObject {
     public testOpCall(): void {
         { // 0 parameters, boolean result
             let nar: Nar = new Nar();
-            nar.addPlugin(new org.opennars.operator.misc.System());
+            nar.addPlugin(new SystemOperator());
             TestSystemOperator.test0Ret(nar, "bool");
             nar.cycles(500);
 
@@ -22,7 +29,7 @@ export class TestSystemOperator extends JavaObject {
 
         { // 1 parameters, boolean result
             let nar: Nar = new Nar();
-            nar.addPlugin(new org.opennars.operator.misc.System());
+            nar.addPlugin(new SystemOperator());
             TestSystemOperator.test1Ret(nar, "bool");
             nar.cycles(500);
 
@@ -35,7 +42,7 @@ export class TestSystemOperator extends JavaObject {
 
         { // 2 parameters, boolean result
             let nar: Nar = new Nar();
-            nar.addPlugin(new org.opennars.operator.misc.System());
+            nar.addPlugin(new SystemOperator());
             TestSystemOperator.test2Ret(nar, "bool");
             nar.cycles(500);
 
@@ -48,7 +55,7 @@ export class TestSystemOperator extends JavaObject {
 
         { // 3 parameters, boolean result
             let nar: Nar = new Nar();
-            nar.addPlugin(new org.opennars.operator.misc.System());
+            nar.addPlugin(new SystemOperator());
             TestSystemOperator.test3Ret(nar, "bool");
             nar.cycles(700);
 

@@ -1,4 +1,16 @@
 import { java, type double, type long, JavaObject, type int, type char } from "jree";
+import { Nar } from "../../../src/main/Nar.ts";
+import { Sentence } from "../../../src/entity/Sentence.ts";
+import { Task } from "../../../src/entity/Task.ts";
+import { Operator } from "../../../src/operator/Operator.ts";
+import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
+import { TextOutputHandler } from "../../../src/io/events/TextOutputHandler.ts";
+import { OutputCondition } from "./OutputCondition.ts";
+
+const OUT = OutputHandler.OUT;
+const EXE = OutputHandler.EXE;
+const ExecutionResult = Operator.ExecutionResult;
+type ExecutionResult = InstanceType<typeof Operator.ExecutionResult>;
 
 
 
@@ -117,7 +129,7 @@ export class OutputContainsCondition extends OutputCondition {
                 // which also does unescaping, etc..
                 let t: Task = signal as Task;
                 let s: Sentence = t.sentence;
-                o = s.toString(nar, false).toString();
+                o = s.toString(this.nar, false).toString();
                 if (o.contains(this.containing)) {
                     if (this.saveSimilar) {
                         this.exact.add(t);
@@ -129,7 +141,7 @@ export class OutputContainsCondition extends OutputCondition {
                 if (signal instanceof ExecutionResult)
                     t = (signal as ExecutionResult).getTask();
 
-                o = TextOutputHandler.getOutputString(channel, signal, false, false, nar).toString();
+                o = TextOutputHandler.getOutputString(channel, signal, false, false, this.nar).toString();
 
                 if (o.contains(this.containing)) {
                     if ((this.saveSimilar) && (t !== null)) {
@@ -168,14 +180,14 @@ export class OutputContainsCondition extends OutputCondition {
                 let s: Sentence = t.sentence;
                 if (s.truth !== null) {
                     if (s.truth.confidence > this.confOfBestAnswer) {
-                        this.timeOfBestAnswer = nar.time();
+                        this.timeOfBestAnswer = this.nar.time();
                     }
                     this.confOfBestAnswer = java.lang.Math.max(this.confOfBestAnswer, s.truth.confidence);
                 }
             }
         }
 
-        if (succeeded) {
+        if (this.succeeded) {
             return true;
         }
         return this.cond(channel, signal);

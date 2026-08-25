@@ -1,4 +1,11 @@
 import { java, JavaObject, type int, type double, type long } from "jree";
+import { Debug } from "../../src/main/Debug.ts";
+import { Nar } from "../../src/main/Nar.ts";
+import { TextOutputHandler } from "../../src/io/events/TextOutputHandler.ts";
+import { OutputCondition } from "../util/test/OutputCondition.ts";
+import { OutputContainsCondition } from "../util/test/OutputContainsCondition.ts";
+import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
+import { assertTrue } from "../util/junit-assert.ts";
 
 
 

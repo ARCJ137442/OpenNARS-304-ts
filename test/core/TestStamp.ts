@@ -21,6 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */import { java, JavaObject, type long } from "jree";
+import { Stamp } from "../../src/entity/Stamp.ts";
+import { assertTrue } from "../util/junit-assert.ts";
+
+const BaseEntry = Stamp.BaseEntry;
+type BaseEntry = InstanceType<typeof Stamp.BaseEntry>;
+const toSetArray = Stamp.toSetArray;
 
 
 

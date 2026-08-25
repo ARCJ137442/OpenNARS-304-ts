@@ -1,4 +1,8 @@
 import { java, JavaObject, type double, type int, type long, type float } from "jree";
+import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
+import { NALTest } from "../core/NALTest.ts";
+import { Performance } from "./Performance.ts";
+import { Nar } from "../../src/main/Nar.ts";
 
 
 
