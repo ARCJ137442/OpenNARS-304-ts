@@ -1,11 +1,12 @@
 //! Java source: opennars/plugin/perception/VisionChannel.java
-import { java, type float, type int, JavaObject } from "jree";
+import { java, type float, type int, JavaObject, S } from "jree";
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import { JavaSystemLoggerCompat } from "../../runtime/jree-compat.ts";
 import { Events } from "../../io/events/Events.ts";
 import type { EventEmitter } from "../../io/events/EventEmitter.ts";
 import { Narsese } from "../../io/Narsese.ts";
+import { Parser } from "../../io/Parser.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -32,8 +33,6 @@ export class VisionChannel extends SensoryChannel {
     protected cnt_updated: int = 0;
     protected px: int = 0;
     protected py: int = 0;
-    protected readonly label: Term;
-    protected readonly nar: Nar;
     protected HadNewInput: boolean = false; // only generate frames if at least something was input since last "commit to
     // Nar"
     public readonly obs: EventEmitter.EventObserver;
@@ -41,7 +40,7 @@ export class VisionChannel extends SensoryChannel {
     public constructor(label: java.lang.String, nar: Reasoner, reportResultsTo: Reasoner, width: int,
         height: int, duration: int,
         defaultOutputConfidence: float, nPrototypes: int) {
-        super(nar as Nar, reportResultsTo as SensoryChannel, width, height, duration, SetInt.make(new Term(label)));
+        super(nar as Nar, reportResultsTo as unknown as SensoryChannel, width, height, duration, SetInt.make(new Term(label)));
         this.nar = nar as Nar;
         this.label = SetInt.make(new Term(label));
         this.defaultOutputConfidence = Float32Math.from(defaultOutputConfidence) as float;
@@ -94,8 +93,12 @@ export class VisionChannel extends SensoryChannel {
         }
         this.HadNewInput = true;
         this.empty_cycles = 0;
-        let x: int = t.getTerm().term_indices[2];
-        let y: int = t.getTerm().term_indices[3];
+        const termIndices = t.getTerm().term_indices;
+        if (termIndices === null) {
+            return false;
+        }
+        let x: int = termIndices[2];
+        let y: int = termIndices[3];
         if (!this.updated[y][x]) {
             this.inputs[y][x] = t.sentence.getTruth().frequency;
             this.cnt_updated++;
@@ -124,9 +127,9 @@ export class VisionChannel extends SensoryChannel {
         this.termid++;
         let V: Term;
         if (this.isEternal) {
-            V = SetExt.make(new Term(this.subj));
+            V = SetExt.make(new Term(new java.lang.String(this.subj)));
         } else {
-            V = SetExt.make(new Term(this.subj + this.termid));
+            V = SetExt.make(new Term(new java.lang.String(this.subj + this.termid)));
         }
         // the visual space has to be a copy.
         let cpy: Float64Array[] = VisionChannel.emptyInputs(this.height, this.width);
@@ -166,8 +169,8 @@ export class VisionChannel extends SensoryChannel {
             } else {
                 // 1. determine the most similar prototype
                 let similarity: float = 0;
-                let bestTruth: TruthValue = null;
-                let best: VisionChannel.Prototype = null;
+                let bestTruth: TruthValue = null as unknown as TruthValue;
+                let best: VisionChannel.Prototype = null as unknown as VisionChannel.Prototype;
                 for (let p of this.prototypes) {
                     let inh: Inheritance = p.task.getTerm() as Inheritance;
                     let simCur: TruthValue = inh.getSubject().imagination.AbductionOrComparisonTo(vspace, true);
@@ -214,18 +217,18 @@ export class VisionChannel extends SensoryChannel {
                     let newFocusY: int = newSpace.py;
                     let dx: float = 0;
                     let dy: float = 0;
-                    let minusX: java.lang.String = "";
-                    let minusY: java.lang.String = "";
+                    let minusX: java.lang.String = S``;
+                    let minusY: java.lang.String = S``;
                     if (newFocusX >= oldFocusX) {
                         dx = newFocusX - oldFocusX;
                     } else {
-                        minusX = "-";
+                        minusX = S`-`;
                         dx = oldFocusX - newFocusX;
                     }
                     if (newFocusY >= oldFocusY) {
                         dy = newFocusY - oldFocusY;
                     } else {
-                        minusY = "-";
+                        minusY = S`-`;
                         dy = oldFocusY - newFocusY;
                     }
                     let xParam: float = Float32Math.divide(dx, this.width) as float;
@@ -234,8 +237,8 @@ export class VisionChannel extends SensoryChannel {
                         // timing to make sure procedure learning observes the operation after the last
                         // prototype
                         this.nar.cycles(this.nar.narParameters.DURATION);
-                        let taskX: Task = new Narsese(this.nar).parseTask("(^move,{SELF}," + minusX + Texts.n1(xParam) + ","
-                            + minusY + Texts.n1(yParam) + "). :|:");
+                        let taskX: Task = new Narsese(this.nar).parseTask(new java.lang.String("(^move,{SELF}," + minusX + Texts.n1(xParam) + ","
+                            + minusY + Texts.n1(yParam) + "). :|:"));
                         taskX.setElemOfSequenceBuffer(true);
                         this.results.add(taskX);
                         this.step_finished(time);
@@ -247,7 +250,7 @@ export class VisionChannel extends SensoryChannel {
                             stamp = new Stamp(time, this.nar.memory);
                         }
                     } catch (ex) {
-                        if (ex instanceof Narsese.InvalidInputException) {
+                        if (ex instanceof Parser.InvalidInputException) {
                             JavaSystemLoggerCompat.getLogger(VisionChannel.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                         } else {
                             throw ex;
@@ -274,7 +277,7 @@ export class VisionChannel extends SensoryChannel {
         }
     }
 
-    protected lastPrototype: VisionChannel.Prototype = null;
+    protected lastPrototype: VisionChannel.Prototype = null as unknown as VisionChannel.Prototype;
 
     private static emptyInputs(height: int, width: int): Float64Array[] {
         return Array.from({ length: height }, () => new Float64Array(width));
@@ -292,7 +295,7 @@ export class VisionChannel extends SensoryChannel {
     public Prototype = (($outer) => {
         return class Prototype extends JavaObject {
             protected observationCount: int;
-            protected task: Task;
+            public readonly task: Task;
 
             public constructor(t: Task) {
                 super();

@@ -28,7 +28,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
     public height: int = 0; // 1D channels have height 1
     public width: int = 0;
     public duration: int = -1;
-    private label: Term = new Term();
+    protected label: Term = new Term();
 
     public resetChannel(): void {
     }
