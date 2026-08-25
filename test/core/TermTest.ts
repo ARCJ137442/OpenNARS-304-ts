@@ -1,6 +1,7 @@
 import { java, JavaObject, type int } from "jree";
 import { Concept } from "../../src/entity/Concept.ts";
 import { Narsese } from "../../src/io/Narsese.ts";
+import { Parser } from "../../src/io/Parser.ts";
 import { Symbols } from "../../src/io/Symbols.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { Operation } from "../../src/operator/Operation.ts";
@@ -8,9 +9,18 @@ import { CompoundTerm } from "../../src/language/CompoundTerm.ts";
 import { Inheritance } from "../../src/language/Inheritance.ts";
 import { Statement } from "../../src/language/Statement.ts";
 import { Term } from "../../src/language/Term.ts";
+import type { JavaStringInput } from "../../src/runtime/jree-compat.ts";
 import { assertEquals, assertTrue } from "../util/junit-assert.ts";
 
 const NativeOperator = Symbols.NativeOperator;
+
+const parseRequired = (parser: Narsese, input: JavaStringInput): Term => {
+    const term = parser.parseTerm(input);
+    if (term === null) {
+        throw new java.lang.IllegalStateException(new java.lang.String("Expected a term."));
+    }
+    return term;
+};
 
 
 
@@ -27,23 +37,24 @@ export class TermTest extends JavaObject {
         super();
     }
 
-    protected assertEquivalent(term1String: java.lang.String, term2String: java.lang.String): void {
+    protected assertEquivalent(term1String: JavaStringInput, term2String: JavaStringInput): void {
         // final Nar n = new Nar();
 
         try {
-            let term1: Term = this.np.parseTerm(term1String);
-            let term2: Term = this.np.parseTerm(term2String);
+            const term1 = parseRequired(this.np, term1String);
+            const term2 = parseRequired(this.np, term2String);
 
             assertTrue(term1 instanceof CompoundTerm);
             assertTrue(term2 instanceof CompoundTerm);
-            assertTrue(!term1String.equals(term2String));
+            assertTrue(String(term1String) !== String(term2String));
 
             assertTrue(term1.hashCode() === term2.hashCode());
             assertTrue(term1.equals(term2));
             assertTrue(term1.compareTo(term2) === 0);
         } catch (e) {
-            if (e instanceof Narsese.InvalidInputException) {
-                throw new java.lang.IllegalStateException("Invalid test string.", e);
+            if (e instanceof Parser.InvalidInputException) {
+                throw new java.lang.IllegalStateException(new java.lang.String("Invalid test string."),
+                    e instanceof java.lang.Throwable ? e : null);
             } else {
                 throw e;
             }
@@ -63,9 +74,9 @@ export class TermTest extends JavaObject {
         let n: Nar = new Nar();
 
         let m: Narsese = new Narsese(n);
-        let a: Term = m.parseTerm("a");
-        let b: Term = m.parseTerm("b");
-        let c: Term = m.parseTerm("c");
+        const a = parseRequired(m, "a");
+        const b = parseRequired(m, "b");
+        const c = parseRequired(m, "c");
 
         assertEquals(3, Term.toSortedSetArray(a, b, c).length);
         assertEquals(2, Term.toSortedSetArray(a, b, b).length);
@@ -78,13 +89,13 @@ export class TermTest extends JavaObject {
         // final Nar n = new Nar();
 
         // these 2 representations are equal, after natural ordering
-        let term1String: java.lang.String = "<#1 --> (&,boy,(/,taller_than,{Tom},_))>";
-        let term1: Term = this.np.parseTerm(term1String);
-        let term1Alternate: java.lang.String = "<#1 --> (&,(/,taller_than,{Tom},_),boy)>";
-        let term1a: Term = this.np.parseTerm(term1Alternate);
+        const term1String = new java.lang.String("<#1 --> (&,boy,(/,taller_than,{Tom},_))>");
+        const term1 = parseRequired(this.np, term1String);
+        const term1Alternate = new java.lang.String("<#1 --> (&,(/,taller_than,{Tom},_),boy)>");
+        const term1a = parseRequired(this.np, term1Alternate);
 
         // <#1 --> (|,boy,(/,taller_than,{Tom},_))>
-        let term2: Term = this.np.parseTerm("<#1 --> (|,boy,(/,taller_than,{Tom},_))>");
+        const term2 = parseRequired(this.np, "<#1 --> (|,boy,(/,taller_than,{Tom},_))>");
 
         assertTrue(term1.toString().equals(term1a.toString()));
         assertTrue(term1.getComplexity() > 1);
@@ -128,9 +139,9 @@ export class TermTest extends JavaObject {
     public testUnconceptualizedTermInstancing(): void {
         // final Nar n = new Nar();
 
-        let term1String: java.lang.String = "<a --> b>";
-        let term1: Term = this.np.parseTerm(term1String);
-        let term2: Term = this.np.parseTerm(term1String);
+        const term1String = new java.lang.String("<a --> b>");
+        const term1 = parseRequired(this.np, term1String);
+        const term2 = parseRequired(this.np, term1String);
 
         assertTrue(term1.equals(term2));
         assertTrue(term1.hashCode() === term2.hashCode());
@@ -146,11 +157,11 @@ export class TermTest extends JavaObject {
     public testConceptInstancing(): void {
         let n: Nar = new Nar();
 
-        let statement1: java.lang.String = "<a --> b>.";
+        const statement1 = "<a --> b>.";
 
-        let a: Term = this.np.parseTerm("a");
+        const a = parseRequired(this.np, "a");
         assertTrue(a !== null);
-        let a1: Term = this.np.parseTerm("a");
+        const a1 = parseRequired(this.np, "a");
         assertTrue(a.equals(a1));
 
         n.addInput(statement1);
@@ -161,11 +172,11 @@ export class TermTest extends JavaObject {
         n.addInput(" <a--> b>.  ");
         n.cycles(1);
 
-        let statement2: java.lang.String = "<a --> c>.";
+        const statement2 = "<a --> c>.";
         n.addInput(statement2);
         n.cycles(4);
 
-        let a2: Term = this.np.parseTerm("a");
+        const a2 = parseRequired(this.np, "a");
         assertTrue(a2 !== null);
 
         let ca: Concept = n.memory.concept(a2);
@@ -177,23 +188,20 @@ export class TermTest extends JavaObject {
 
     public invalidTermIndep(): void {
 
-        let t: java.lang.String = "<$1 --> (~,{place4},$1)>";
+        const t = "<$1 --> (~,{place4},$1)>";
         let n: Nar = new Nar();
         let p: Narsese = new Narsese(n);
 
-        let subj: Term = null;
-        let pred: Term = null;
+        const subj = parseRequired(p, "$1");
+        const pred = parseRequired(p, "(~,{place4},$1)");
 
-        subj = p.parseTerm("$1");
-        pred = p.parseTerm("(~,{place4},$1)");
-
-        let s: Statement = Statement.make(NativeOperator.INHERITANCE, subj, pred, false, 0);
+        const s: Statement | null = Statement.make(NativeOperator.INHERITANCE, subj, pred, false, 0);
         assertEquals(null, s);
 
         let i: Inheritance = Inheritance.make(subj, pred);
         assertEquals(null, i);
 
-        let forced: CompoundTerm = p.parseTerm("<a --> b>") as CompoundTerm;
+        const forced = parseRequired(p, "<a --> b>") as CompoundTerm;
         assertTrue(true);
 
         forced.term[0] = subj;
@@ -211,7 +219,7 @@ export class TermTest extends JavaObject {
         let n: Nar = new Nar();
         let p: Narsese = new Narsese(n);
 
-        let x: Term = p.parseTerm("wonder(a,b)");
+        const x = parseRequired(p, "wonder(a,b)");
         assertEquals(Operation.class, x.getClass());
         assertEquals("(^wonder,a,b)", x.toString());
     }
