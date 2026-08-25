@@ -14,7 +14,7 @@ import type { Task } from "../entity/Task.ts";
  * An operation is interpreted as an Inheritance relation.
  */
 export class Operation extends Inheritance {
-    private task: Task;
+    private task: Task | null = null;
     public static get SELF_TERM_ARRAY(): Term[] {
         return [Term.SELF];
     }
@@ -139,8 +139,16 @@ export class Operation extends Inheritance {
         this.task = task;
     }
 
-    public getTask(): Task {
+    public getTask(): Task | null {
         return this.task;
+    }
+
+    public requireTask(): Task {
+        const task = this.task;
+        if (task === null) {
+            throw new java.lang.NullPointerException(S`Operation task is not initialized`);
+        }
+        return task;
     }
 
     public getArguments(): Product {

@@ -197,14 +197,15 @@ export abstract class Operator extends Term implements Plugin {
             this.feedback = feedback;
         }
 
-        public getTask(): Task {
+        public getTask(): Task | null {
             return this.operation.getTask();
         }
 
         public override  toString(): java.lang.String {
             let b: BudgetValue = null as unknown as BudgetValue;
-            if (this.getTask() !== null) {
-                b = this.getTask().getBudget();
+            const task = this.getTask();
+            if (task !== null) {
+                b = task.getBudget();
             }
             let args: Term[] = this.operation.getArguments().term;
             let operator: Operator = this.operation.getOperator();

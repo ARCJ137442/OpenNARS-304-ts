@@ -36,7 +36,7 @@ export class Task extends Item<Sentence> {
      */
     public parentTask: Sentence | null = null;
     /* For Question and Goal: best solution found so far */
-    private bestSolution: Sentence;
+    private bestSolution: Sentence | null;
     /* Whether the task should go into event bag or not */
     private partOfSequenceBuffer: boolean = false;
     /* Whether it is an input task or not */
@@ -67,7 +67,7 @@ export class Task extends Item<Sentence> {
      * @param parentBelief The belief used for deriving the task
      * @param solution     The solution to the task
      */
-    public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence | null, solution: Sentence);
+    public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence | null, solution: Sentence | null);
     public constructor(...args: unknown[]) {
         if (args.length !== 3 && args.length !== 4) {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
@@ -87,7 +87,7 @@ export class Task extends Item<Sentence> {
             }
 
             case 4: {
-                const [s, b, parentBelief, solution] = args as [Sentence, BudgetValue, Sentence | null, Sentence];
+                const [s, b, parentBelief, solution] = args as [Sentence, BudgetValue, Sentence | null, Sentence | null];
 
 
                 this.sentence = s;
@@ -163,7 +163,7 @@ export class Task extends Item<Sentence> {
      *
      * @return The stored Sentence or null
      */
-    public getBestSolution(): Sentence {
+    public getBestSolution(): Sentence | null {
         return this.bestSolution;
     }
 

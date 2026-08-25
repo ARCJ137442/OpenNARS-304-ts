@@ -38,12 +38,15 @@ export class Believe extends Operator {
 
         let content: Term = args[1];
 
-        let truth: TruthValue = truthFromWordTerm(memory.narParameters, args[2]);
+        let truth: TruthValue | null = truthFromWordTerm(memory.narParameters, args[2]);
         let sentence: Sentence = new Sentence(
             content,
             Symbols.JUDGMENT_MARK,
             truth,
             new Stamp(time, memory));
+        if (truth === null) {
+            throw new java.lang.NullPointerException();
+        }
 
         let quality: float = BudgetFunctions.truthToQuality(truth);
         let budget: BudgetValue = new BudgetValue(memory.narParameters.DEFAULT_JUDGMENT_PRIORITY,

@@ -231,7 +231,7 @@ export class LocalRules extends JavaObject {
         report: boolean): boolean {
         let problem: Sentence = task.sentence;
         let memory: Memory = nal.mem();
-        let oldBest: Sentence = task.getBestSolution();
+        let oldBest: Sentence | null = task.getBestSolution();
 
         if (oldBest !== null) {
             let rateByConfidence: boolean = oldBest.getTerm().equals(belief.getTerm());

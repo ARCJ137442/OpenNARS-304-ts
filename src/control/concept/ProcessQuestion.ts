@@ -12,6 +12,7 @@ import type { Term } from "../../language/Term.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 
 const trySolution = LocalRules.trySolution;
+const asJavaObject = (value: unknown): JavaObject => value as JavaObject;
 const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): java.util.Optional<T> => {
     for (const item of items) {
         if (predicate(item)) {
@@ -78,7 +79,7 @@ export class ProcessQuestion extends JavaObject {
             // case
             // of
             // input
-            concept.memory.emit(Events.Answer.class, quesTask, quesTask.getBestSolution());
+            concept.memory.emit(Events.Answer.class, quesTask, asJavaObject(quesTask.getBestSolution()));
         }
     }
 
@@ -116,7 +117,7 @@ export class ProcessQuestion extends JavaObject {
                 }
             }
             if (newAnswer && ques.isInput()) {
-                nal.memory.emit(Events.Answer.class, ques, ques.getBestSolution());
+                nal.memory.emit(Events.Answer.class, ques, asJavaObject(ques.getBestSolution()));
             }
         }
     }
@@ -160,7 +161,7 @@ export class ProcessQuestion extends JavaObject {
                         /* } */
                     }
                     if (newAnswer && ques.isInput()) {
-                        nal.memory.emit(Events.Answer.class, ques, ques.getBestSolution());
+                        nal.memory.emit(Events.Answer.class, ques, asJavaObject(ques.getBestSolution()));
                     }
                 }
             }

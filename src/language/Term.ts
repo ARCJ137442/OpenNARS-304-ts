@@ -54,7 +54,7 @@ export class Term extends JavaObject implements AbstractTerm {
     // Java permits a field and a method to share a name; an instance property
     // with that name would shadow `name()` in JavaScript. Keep the cache under a
     // distinct name so the translated method remains callable at runtime.
-    private nameValue: java.lang.CharSequence = null;
+    private nameValue: java.lang.CharSequence | null = null;
 
     public static isSelf(t: Term): boolean {
         return Term.SELF.equals(t);
@@ -217,10 +217,12 @@ export class Term extends JavaObject implements AbstractTerm {
      * @return The name of the term as a String
      */
     public name(): java.lang.CharSequence {
-        return this.nameInternal();
+        // Java's internal field is nullable: CompoundTerm.name() relies on
+        // null to invalidate and lazily rebuild compound names.
+        return this.nameInternal() as java.lang.CharSequence;
     }
 
-    protected nameInternal(): java.lang.CharSequence {
+    protected nameInternal(): java.lang.CharSequence | null {
         return this.nameValue;
     }
 
@@ -371,10 +373,12 @@ export class Term extends JavaObject implements AbstractTerm {
      * set the name
      */
     // only method that should modify Term.name
-    protected setName(newName: java.lang.CharSequence): void {
+    protected setName(newName: java.lang.CharSequence | null): void {
         // Java callers expect CharSequence methods (hashCode/equals/etc.),
         // while translated literals arrive as native strings.
-        this.nameValue = typeof newName === "string"
+        this.nameValue = newName === null
+            ? null
+            : typeof newName === "string"
             ? java.lang.String.valueOf(newName)
             : newName;
     }

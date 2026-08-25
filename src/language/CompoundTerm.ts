@@ -368,10 +368,13 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     public name(): java.lang.CharSequence {
-        if (this.nameInternal() === null) {
-            this.setName(this.makeName());
+        const currentName = this.nameInternal();
+        if (currentName === null) {
+            const rebuiltName = this.makeName();
+            this.setName(rebuiltName);
+            return rebuiltName;
         }
-        return this.nameInternal();
+        return currentName;
     }
 
     /**

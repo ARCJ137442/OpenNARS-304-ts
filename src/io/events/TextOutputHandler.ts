@@ -233,7 +233,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
                             buffer.append(t.sentence.toString(nar, showStamp));
                         } else if (channel === Answer.class) {
                             let task: Task = t; // server / NARRun
-                            let answer: Sentence = task.getBestSolution();
+                            let answer: Sentence | null = task.getBestSolution();
                             if (answer !== null)
                                 buffer.append(answer.toString(nar, showStamp));
                             else

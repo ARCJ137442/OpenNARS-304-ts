@@ -19,7 +19,7 @@ import type { Concept } from "../../entity/Concept.ts";
 export class Consider extends Operator {
 
     public static budgetMentalConcept(o: Operation): BudgetValue {
-        return o.getTask().budget.clone();
+        return o.requireTask().budget.clone();
     }
 
     public constructor() {
