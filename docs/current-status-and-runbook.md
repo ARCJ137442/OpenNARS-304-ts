@@ -20,7 +20,7 @@ M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观�
 
 ## 当前已确认事实
 
-- Git 主线最新已推送提交：`29b326a`；`4d544a1` 修复 Node/jree 运行时入口警告，`29b326a` 固化 JavaString UTF-16 边界优化与单线程证据。
+- Git 主线最新已推送提交：`42b58fd`；`4d544a1` 修复 Node/jree 运行时入口警告，`29b326a` 固化 JavaString UTF-16 边界优化与 `42b58fd` 完成发布候选外部消费验收。
 - Java canonical JAR：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`。
 - canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 - Java 与 TypeScript 均按单线程运行；Java 测试使用 JDK 18.0.2。
@@ -72,11 +72,11 @@ M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观�
 
 ## M3 当前证据边界
 
-M3 已有 `node scripts/e2e/run-m3-benchmark.mjs` 串行工具和显式资源观测开关。当前 HEAD `29b326a` 的优化后样本证据位于 `reports/evidence/m3-formal-optimization-29b326a-representative-v1.json`；`nal8.add`、`nars_multistep_1`、`toothbrush`、`nal4.recursion.small` 的功能/parity 均通过，未出现 process limit 或性能预算警告。此前两次正式重复的 `nal4.recursion.small` 证据仍位于 `reports/evidence/m3-formal-optimization-4d544a1-string-boundary-v1.json`，TS 墙钟中位数 11,241 ms，Java 墙钟中位数 1,228 ms，TS 仍约 9.15 倍慢但在当前 120 秒/1024 周期宽限内。
+M3 已有 `node scripts/e2e/run-m3-benchmark.mjs` 串行工具和显式资源观测开关。当前代表样本的功能/parity 均通过，未出现 process limit 或 stall；证据仍主要是 1–2 次探索性重复，不能宣称稳定 median/p95。P1 预算提案位于 `reports/evidence/m3-performance-budget-proposal-20260826-v1.json`，状态为 `proposed`，包含保守（120 秒/1024 周期、32 倍）、平衡（60 秒/1024 周期、16 倍）和激进（30 秒/1024 周期、8 倍）三档。
 
 当前前后 profile 位于 `reports/evidence/m3-head-4d544a1-nal4-recursion-small-string-boundary-profile-comparison-v1.json`；热点为 jree `JavaString.valueOf` → `convertUTF16ToString` → Node `TextDecoder` 以及 GC。直接读取 Java-compatible UTF-16 code unit 后，单次 profile 总时长从 25,131.017 ms 降至 11,547.872 ms；该结果是单机单样本观测，不能外推为完整性能等价。
 
-这些证据只能证明代表样本可以在正式构建下运行，不能宣称完整性能等价或 M3 完成。Java 当前只能从管理接口提供进程 CPU、堆和 committed virtual memory proxy，Windows RSS 仍未直接取得；TypeScript 记录进程 CPU 与峰值 RSS。shell 的 `ExperimentalWarning` 与 `DEP0151` 已在 `4d544a1` 的 `--import`/resolver 方案和本批发布适配器中完成修复，并通过本批回归测试；测试宿主中的 `bash.exe: could not find /tmp` 仍是独立环境提示，不属于 Node/jree 启动链。
+这些证据只能证明代表样本可以在正式构建下运行，不能宣称完整性能等价或 M3 完成。Java 当前只能从管理接口提供进程 CPU、堆和 committed virtual memory proxy，Windows RSS 仍未直接取得；TypeScript 记录进程 CPU 与峰值 RSS。性能合同必须先由用户批准，再进入 P2 的重复基线；`120 秒/1024 周期` 目前只是提案中的保守档和安全宽限，不是已批准 SLA。shell 的 `ExperimentalWarning` 与 `DEP0151` 已在 `4d544a1` 的 `--import`/resolver 方案和 `42b58fd` 发布适配器中完成修复；测试宿主中的 `bash.exe: could not find /tmp` 仍是独立环境提示，不属于 Node/jree 启动链。
 
 ## 文档分层
 

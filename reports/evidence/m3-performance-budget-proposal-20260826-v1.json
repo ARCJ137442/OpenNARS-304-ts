@@ -1,0 +1,142 @@
+{
+  "schema": "opennars-304-ts/m3-performance-budget-proposal/v1",
+  "status": "proposed",
+  "approval_required": true,
+  "generated_at": "2026-08-26",
+  "purpose": "在功能等价先决条件成立后，为单线程 TypeScript 性能验收提供可审阅的绝对预算、相对 Java 预算和 stall 定义；不自动改变当前 runner 的通过结论。",
+  "baseline": {
+    "candidate_git_commit": "42b58fd",
+    "canonical_java_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+    "canonical_java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "node": "v22.17.0",
+    "jdk": "18.0.2",
+    "platform": "win32-x64",
+    "thread_mode": "single",
+    "comparison_mode": "cold-process wall time; warm-up and official repetitions must be recorded separately",
+    "evidence_replay_required": true
+  },
+  "equivalence_gate": {
+    "functional_before_performance": true,
+    "marker_samples": "all Java markers must be matched by TypeScript at the corresponding logical marker",
+    "markerless_samples": "131072 cycles with the defined internal stage digest remains the alternate equivalence route",
+    "performance_never_overrides_functional_failure": true
+  },
+  "measurement_contract": {
+    "primary_unit": "ts_wall_ms_per_1024_reasoning_cycles",
+    "normalization": "ts_wall_ms / reasoning_cycles * 1024; only completed, functional, non-stalled observations qualify",
+    "secondary_metrics": [
+      "java_wall_ms",
+      "ts_wall_ms",
+      "java_process_cpu_ms",
+      "ts_process_cpu_ms",
+      "ts_peak_rss_bytes",
+      "marker_time_ms",
+      "ts_to_java_wall_ratio"
+    ],
+    "fast_and_medium_sampling": {
+      "warmup_runs": 1,
+      "official_repetitions": 5,
+      "p95_minimum_repetitions": 20,
+      "p95_policy": "omit p95 below 20 official repetitions; report median and min/max range"
+    },
+    "high_cost_sampling": {
+      "warmup_runs": 1,
+      "official_repetitions": 3,
+      "p95_policy": "do not report p95; report every raw value, median and range"
+    },
+    "stall": {
+      "definition": "no progress event, cycle checkpoint, marker or digest update",
+      "no_progress_ms": 180000,
+      "classification": "error; ordinary slowness is not a functional failure"
+    },
+    "process_limit": {
+      "definition": "independent host safety ceiling, not a performance pass/fail result",
+      "standard_ms": 900000,
+      "high_cost_ms": 1800000,
+      "required_record": "process_limited, last_progress_cycle, elapsed_ms and whether the sample had functional evidence"
+    },
+    "rss": "TypeScript peak RSS is reportable; Java Windows RSS is unavailable in the current adapter and must remain explicitly incomparable"
+  },
+  "scenarios": [
+    {
+      "id": "conservative",
+      "label": "保守",
+      "status": "proposed",
+      "ts_wall_ms_per_1024_cycles_max": 120000,
+      "ts_to_java_wall_ratio_max": 32,
+      "interpretation": "优先保证持续可用和不把正常慢运行误判为卡死；不代表性能等价"
+    },
+    {
+      "id": "balanced",
+      "label": "平衡",
+      "status": "proposed",
+      "ts_wall_ms_per_1024_cycles_max": 60000,
+      "ts_to_java_wall_ratio_max": 16,
+      "interpretation": "保留较宽绝对安全余量，同时要求 TypeScript 不长期超过 Java 一个数量级以上的宽松边界"
+    },
+    {
+      "id": "aggressive",
+      "label": "激进",
+      "status": "proposed",
+      "ts_wall_ms_per_1024_cycles_max": 30000,
+      "ts_to_java_wall_ratio_max": 8,
+      "interpretation": "把性能差距纳入发布质量门槛；需要继续 profile 和优化，不能用当前证据直接承诺"
+    }
+  ],
+  "current_observations": {
+    "qualification": "exploratory_only; current repeated evidence is mostly 2 official runs and does not establish stable median/p95",
+    "source_evidence": [
+      "reports/evidence/m3-formal-resource-baseline-20260825-nal4-recursion-small-fqn-v1.json",
+      "reports/evidence/m3-formal-resource-baseline-20260825-nal8-fqn-v3-repeated.json",
+      "reports/evidence/m3-formal-resource-baseline-20260825-nars-multistep-1-fqn-v2-repeated.json",
+      "reports/evidence/m3-formal-resource-baseline-20260825-toothbrush-fqn-v2-repeated.json"
+    ],
+    "samples": [
+      {
+        "sample": "nal8.add.nal",
+        "official_repetitions": 2,
+        "functional_and_parity": true,
+        "java_wall_median_ms": 584,
+        "ts_wall_median_ms": 3124,
+        "ts_to_java_wall_ratio": 5.3493,
+        "ts_wall_ms_per_1024_cycles": 2063.9,
+        "observed_under": ["conservative", "balanced", "aggressive"]
+      },
+      {
+        "sample": "nars_multistep_1.nal",
+        "official_repetitions": 2,
+        "functional_and_parity": true,
+        "java_wall_median_ms": 844,
+        "ts_wall_median_ms": 15426.5,
+        "ts_to_java_wall_ratio": 18.2778,
+        "ts_wall_ms_per_1024_cycles": 1767.0,
+        "observed_under": ["conservative"],
+        "observed_over": ["balanced", "aggressive"]
+      },
+      {
+        "sample": "toothbrush.nal",
+        "official_repetitions": 2,
+        "functional_and_parity": true,
+        "java_wall_median_ms": 974.5,
+        "ts_wall_median_ms": 13805.5,
+        "ts_to_java_wall_ratio": 14.1668,
+        "ts_wall_ms_per_1024_cycles": 1224.0,
+        "observed_under": ["conservative", "balanced"],
+        "observed_over": ["aggressive"]
+      },
+      {
+        "sample": "nal4.recursion.small.nal",
+        "official_repetitions": 1,
+        "functional_and_parity": true,
+        "java_wall_median_ms": 1205,
+        "ts_wall_median_ms": 24860,
+        "ts_to_java_wall_ratio": 20.6307,
+        "ts_wall_ms_per_1024_cycles": 493.8,
+        "observed_under": ["conservative"],
+        "observed_over": ["balanced", "aggressive"],
+        "qualification_note": "one official run; repeat before any contract decision"
+      }
+    ]
+  },
+  "decision_rule": "用户批准一个 scenario 后，P2 才能按该 scenario 取得合格重复基线；在批准前所有 scenario 都是 proposed，不能用于标记 LeanSpec 020 complete。"
+}
