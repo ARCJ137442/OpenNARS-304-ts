@@ -2,7 +2,7 @@
 
 版本：0.7（2026-08-25）
 
-当前证据覆盖：代码主线 `eba42ea`（FQN 优化代码来自 `4d5435f`）。历史扫描数字保留用于比较，不作为当前质量门禁；当前权威门禁见 [`docs/current-status-and-runbook.md`](current-status-and-runbook.md)。
+当前证据覆盖：代码主线 `bf7dd22`（FQN 优化代码来自 `4d5435f`）。历史扫描数字保留用于比较，不作为当前质量门禁；当前权威门禁见 [`docs/current-status-and-runbook.md`](current-status-and-runbook.md)。
 
 本文件把当前 OpenNARS 转写中反复出现的纠正归纳为可检索、可验证、可批量处理的模式。它不是“看到字符串就替换”的规则表：每条模式都必须同时说明识别条件、正确的 TypeScript 语义、验证门禁和自动化边界。
 
@@ -16,7 +16,7 @@
 
 这说明迁移的首要问题是“重复的语义转换模式没有固化”，不是单个文件的偶然手工错误。
 
-当前新增证据：非增量 `tsc` 为 0 诊断，串行 `npm test` 为 155/155，局部算法 parity 为 `ok: true` 且 `differences: []`。四类代表 NAL 已完成单线程功能/parity 观测，但 M1 的 245 个主资源全量矩阵仍是后续 TypeScript/M3 工作的硬门禁；不能把代表样本外推为整库通过。
+当前新增证据：非增量 `tsc` 为 0 诊断，串行 `npm test` 为 159/159，局部算法 parity 为 `ok: true` 且 `differences: []`。四类代表 NAL 已完成单线程功能/parity 观测，但 M1 的 245+1 个资源仍有 stability 的 TypeScript 长周期 marker 未完成，是后续 TypeScript/M3 工作的硬门禁；不能把代表样本外推为整库通过。
 
 ## 2. 模式分级
 
