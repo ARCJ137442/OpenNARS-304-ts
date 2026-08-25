@@ -619,8 +619,11 @@ async function runTs(
       armProcessLimit();
     };
 
-    const sourceCli = resolve(join(projectRoot, "scripts", "cli.mjs"));
-    const cliInvocation = resolve(cli) === sourceCli
+    const localCliPaths = new Set([
+      resolve(join(projectRoot, "scripts", "cli.mjs")),
+      resolve(join(projectRoot, "dist", "cli.mjs")),
+    ]);
+    const cliInvocation = localCliPaths.has(resolve(cli))
       ? ["--import", "./scripts/register-ts-loader.mjs", cli]
       : [cli];
     const child = spawn(process.execPath, [

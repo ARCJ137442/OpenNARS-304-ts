@@ -10,16 +10,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Terms } from "./Terms.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
-import type { JavaChar } from "../runtime/jree-compat.ts";
-
-const javaStringHashCode = (value: java.lang.CharSequence): int => {
-    let hash = 0;
-    const text = String(value);
-    for (let index = 0; index < text.length; index += 1) {
-        hash = Math.imul(31, hash) + text.charCodeAt(index);
-    }
-    return hash;
-};
+import { javaStringHashCode, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -812,7 +803,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             return true;
         if (!(that instanceof Term))
             return false;
-        return String(this.name()) === String((that as Term).name());
+        return javaStringsEqual(this.name(), (that as Term).name());
     }
 
     public setNormalized(b: boolean): void {

@@ -117,6 +117,60 @@ export type JavaChar = string;
  */
 export const javaStringLength = (value: unknown): number => String(value).length;
 
+type JavaCharSequenceView = {
+    length: number;
+    charCodeAt(index: number): number;
+};
+
+/**
+ * Read Java-compatible UTF-16 code units without converting a jree String
+ * through TextDecoder. Java String equality and hashing are defined over code
+ * units, so this preserves the contract while avoiding repeated allocation at
+ * the compatibility boundary.
+ */
+const javaCharSequenceView = (value: unknown): JavaCharSequenceView | null => {
+    if (typeof value === "string") {
+        return {
+            length: value.length,
+            charCodeAt: (index: number) => value.charCodeAt(index),
+        };
+    }
+    const candidate = value as {
+        length?: unknown;
+        charAt?: unknown;
+    } | null;
+    if (typeof candidate?.length !== "function" || typeof candidate.charAt !== "function") {
+        return null;
+    }
+    const lengthMethod = candidate.length as () => unknown;
+    const charAtMethod = candidate.charAt as (index: number) => unknown;
+    const length = Number(lengthMethod.call(value));
+    if (!Number.isInteger(length) || length < 0) return null;
+    return {
+        length,
+        charCodeAt: (index: number) => {
+            const unit = charAtMethod.call(value, index);
+            if (typeof unit === "number") return unit;
+            return String(unit).charCodeAt(0);
+        },
+    };
+};
+
+/** Java String equality over UTF-16 code units, including native strings. */
+export const javaStringsEqual = (left: unknown, right: unknown): boolean => {
+    if (left === right) return true;
+    const leftView = javaCharSequenceView(left);
+    const rightView = javaCharSequenceView(right);
+    if (leftView !== null && rightView !== null) {
+        if (leftView.length !== rightView.length) return false;
+        for (let index = 0; index < leftView.length; index += 1) {
+            if (leftView.charCodeAt(index) !== rightView.charCodeAt(index)) return false;
+        }
+        return true;
+    }
+    return String(left) === String(right);
+};
+
 /**
  * Java's `+` operator invokes toString on reference values; JavaScript's `+`
  * does not do that for jree JavaObject instances. Normalize that boundary
@@ -229,8 +283,15 @@ export class JavaStringJoinerCompat {
 
 /** Java String.hashCode(), applied after crossing a jree/native string boundary. */
 export const javaStringHashCode = (value: unknown): number => {
-    const text = javaStringValue(value);
+    const view = javaCharSequenceView(value);
     let hash = 0;
+    if (view !== null) {
+        for (let index = 0; index < view.length; index += 1) {
+            hash = Math.imul(31, hash) + view.charCodeAt(index);
+        }
+        return hash;
+    }
+    const text = javaStringValue(value);
     for (let index = 0; index < text.length; index += 1) {
         hash = Math.imul(31, hash) + text.charCodeAt(index);
     }

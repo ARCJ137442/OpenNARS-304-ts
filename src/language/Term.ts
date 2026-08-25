@@ -5,7 +5,7 @@ import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
-import { javaStringHashCode, javaStringValue, type JavaChar } from "../runtime/jree-compat.ts";
+import { javaStringHashCode, javaStringValue, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
 import type { Memory } from "../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -265,7 +265,7 @@ export class Term extends JavaObject implements AbstractTerm {
         // a case-insensitive locale path. Term equality is Java's exact string
         // equality, so cross the boundary through the native text value here.
         return this.getComplexity() === (that as Term).getComplexity()
-            && String(this.name()) === String((that as Term).name());
+            && javaStringsEqual(this.name(), (that as Term).name());
     }
 
     /**

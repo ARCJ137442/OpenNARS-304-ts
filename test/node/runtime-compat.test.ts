@@ -7,8 +7,10 @@ import {
     JavaDoubleCompat,
     JavaIllegalAccessException,
     javaIdentityHashCode,
+    javaStringHashCode,
     javaStringLength,
     javaStringValue,
+    javaStringsEqual,
 } from "../../src/runtime/jree-compat.ts";
 
 test("javaStringLength normalizes jree and native string representations", () => {
@@ -24,6 +26,22 @@ test("javaStringValue applies Java toString before JS interpolation", () => {
     const value = new java.lang.StringBuilder("abc");
 
     assert.equal(javaStringValue(value), "abc");
+});
+
+test("Java string equality and hashing use exact UTF-16 code units", () => {
+    const first = new java.lang.String("A💡");
+    const same = new java.lang.String("A💡");
+    const differentCase = new java.lang.String("a💡");
+    let expected = 0;
+    const expectedText = "A💡";
+    for (let index = 0; index < expectedText.length; index += 1) {
+        expected = Math.imul(31, expected) + expectedText.charCodeAt(index);
+    }
+
+    assert.equal(javaStringsEqual(first, same), true);
+    assert.equal(javaStringsEqual(first, differentCase), false);
+    assert.equal(javaStringsEqual(first, "A💡"), true);
+    assert.equal(javaStringHashCode(first), expected);
 });
 
 test("jree Double compatibility preserves boxed numeric operations", () => {

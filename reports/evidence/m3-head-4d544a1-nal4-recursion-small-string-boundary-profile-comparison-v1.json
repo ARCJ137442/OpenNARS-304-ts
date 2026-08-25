@@ -1,0 +1,40 @@
+{
+  "schema": "opennars-304-ts/m3-profile-comparison/v1",
+  "base_git_commit": "4d544a1bb89372819f6e85e38d0cfacc61fba576",
+  "working_tree_state": "optimization changes were uncommitted when both profiles were collected",
+  "target": "java-master/src/main/resources/nal/multi_step/nal4.recursion.small.nal",
+  "cycles": 1550,
+  "thread_mode": "single",
+  "canonical_java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "command_template": "node --cpu-prof --cpu-prof-dir=reports/evidence --cpu-prof-name=<profile>.cpuprofile dist/cli.mjs --cycles 1550 <nal>",
+  "before": {
+    "profile": "reports/evidence/m3-head-4d544a1-nal4-recursion-small-before-string-boundary-v1.cpuprofile",
+    "sha256": "3B0C26B68A1BB0DF58712A4AD06CA93A74B48797365EC2FF7CE5756B76C830DB",
+    "samples": 13901,
+    "profile_time_ms": 25131.017,
+    "getConverter_ms": 6777.646,
+    "getConverter_percent": 26.97,
+    "gc_ms": 5041.054,
+    "gc_percent": 20.06,
+    "decode_ms": 1814.944,
+    "compound_term_equals_ms": 428.567
+  },
+  "after": {
+    "profile": "reports/evidence/m3-head-4d544a1-nal4-recursion-small-after-string-boundary-v1.cpuprofile",
+    "sha256": "E978CB7172FF0E6886116387231CF91B8689BE37E3820AEB3F9FCDA32EEA0190",
+    "samples": 6571,
+    "profile_time_ms": 11547.872,
+    "getConverter_ms": 1057.393,
+    "getConverter_percent": 9.16,
+    "gc_ms": 1257.077,
+    "gc_percent": 10.89,
+    "decode_ms": 209.832,
+    "compound_term_equals_ms": 193.952
+  },
+  "delta": {
+    "profile_time_reduction_percent": 54.03,
+    "getConverter_reduction_percent": 84.40,
+    "gc_reduction_percent": 75.06
+  },
+  "interpretation": "The measured hotspot was repeated conversion of already available UTF-16 code units through jree TextDecoder and String(value) at Term/CompoundTerm equality and hashing boundaries. The change uses a direct Java-compatible UTF-16 view and retains a conversion fallback; it does not modify node_modules/jree or change inference rules. The result is an observation from one before/after profile on one machine, not a claim of full M3 completion."
+}
