@@ -75,7 +75,7 @@ export class BudgetFunctions extends UtilityFunctions {
         task.decPriority(1 - difT);
         task.decDurability(1 - difT);
         if (feedbackToLinks) {
-            let tLink: TaskLink = nal.getCurrentTaskLink();
+            let tLink: TaskLink = nal.requireCurrentTaskLink();
             tLink.decPriority(1 - difT);
             tLink.decDurability(1 - difT);
             const bLink = nal.getCurrentBeliefLink();
@@ -322,12 +322,7 @@ export class BudgetFunctions extends UtilityFunctions {
      */
     private static budgetInference(qual: float, complexity: float,
         nal: DerivationContext): BudgetValue {
-        let t: Item<unknown> = nal.getCurrentTaskLink();
-        // Java returns null for an unset task link; the translated field is
-        // undefined until first assignment, so both values mean "use task".
-        if (t === null || t === undefined) {
-            t = nal.getCurrentTask();
-        }
+        let t: Item<unknown> = nal.getCurrentTaskLink() ?? nal.getCurrentTask();
         // Java receives both parameters as float and stores each local result
         // back into a float before the belief-link feedback is applied.
         const javaQual: float = Math.fround(qual) as float;

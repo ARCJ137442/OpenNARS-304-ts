@@ -356,7 +356,7 @@ export class LocalRules extends JavaObject {
             )) as float);
         }
         if (feedbackToLinks) {
-            let tLink: TaskLink = nal.getCurrentTaskLink();
+            let tLink: TaskLink = nal.requireCurrentTaskLink();
             tLink.setPriority(Float32Math.from(java.lang.Math.min(
                 Float32Math.subtract(1, quality),
                 tLink.getPriority(),

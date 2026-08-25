@@ -68,7 +68,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * The index of the component in the component list of the compound, may have up
      * to 4 levels
      */
-    public readonly index: Int16Array;
+    public readonly index: Int16Array | null;
 
     /**
      * Constructor
@@ -90,7 +90,8 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
         this.recordLength = recordLength;
         // jree's ArrayDeque constructor treats a numeric capacity as a
         // collection; initialize an empty deque explicitly instead.
-        this.records = new java.util.ArrayDeque(new java.util.ArrayList());
+        this.records = new java.util.ArrayDeque<TaskLink.Recording>(
+            new java.util.ArrayList<TaskLink.Recording>());
         this.hash = (((this.targetTask.hashCode() * 31) + this.type) * 31) + (this.index !== null ? java.util.Arrays.hashCode(this.index) : 0);
     }
 
@@ -107,7 +108,9 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
             return true;
         if (obj instanceof TaskLink) {
             let t: TaskLink = obj as TaskLink;
-            return this.hash === t.hash && this.type === t.type && java.util.Arrays.equals(this.index, t.index) && this.targetTask.equals(t.targetTask);
+            return this.hash === t.hash && this.type === t.type
+                && java.util.Arrays.equals(this.index ?? undefined, t.index ?? undefined)
+                && this.targetTask.equals(t.targetTask);
         }
         return false;
     }
@@ -154,6 +157,12 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
 
             case 4: {
                 const [termLink, currentTime, narParameters, transformTask] = args as [TermLink, long, Parameters, boolean];
+                // The translated long may arrive at this runtime boundary as a
+                // JavaScript number (for example from Nar.time()). Normalize it
+                // before reproducing Java long arithmetic and keep recordings
+                // consistently bigint-valued.
+                const currentTimeLong = BigInt(currentTime);
+                const noveltyHorizon = BigInt(narParameters.NOVELTY_HORIZON);
 
 
                 let bTerm: Term = termLink.target;
@@ -167,13 +176,13 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
                 while (ir.hasNext()) {
                     let r: TaskLink.Recording = ir.next();
                     if (linkKey.equals(r.link)) {
-                        if (currentTime < r.getTime() + narParameters.NOVELTY_HORIZON) {
+                        if (currentTimeLong < BigInt(r.getTime()) + noveltyHorizon) {
                             // too recent, not novel
                             return false;
                         } else {
                             // happened long enough ago that we have forgotten it somewhat, making it seem
                             // more novel
-                            r.setTime(currentTime);
+                            r.setTime(currentTimeLong);
                             ir.remove();
                             this.records.addLast(r);
                             return true;
@@ -182,9 +191,9 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
                 }
                 // keep recordedLinks queue a maximum finite size
                 while (this.records.size() + 1 >= this.recordLength)
-                    this.records.removeFirst();
+                    this.records.remove();
                 // add knowledge reference to recordedLinks
-                this.records.addLast(new TaskLink.Recording(linkKey, currentTime));
+                this.records.addLast(new TaskLink.Recording(linkKey, currentTimeLong));
                 return true;
 
 
@@ -199,7 +208,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
 
 
     public toString(): java.lang.String {
-        return super.toString() + " " + this.getTarget().sentence.stamp;
+        return S`${super.toString()} ${this.getTarget().sentence.stamp}`;
     }
 
     public toStringBrief(): java.lang.String {

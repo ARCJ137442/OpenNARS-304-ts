@@ -557,8 +557,8 @@ export class DerivationContext extends JavaObject {
     /**
      * @return the currentTaskLink
      */
-    public getCurrentTaskLink(): TaskLink {
-        return this.requireCurrentTaskLink();
+    public getCurrentTaskLink(): TaskLink | null {
+        return this.currentTaskLink;
     }
 
     public requireCurrentTaskLink(): TaskLink {
