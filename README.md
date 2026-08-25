@@ -1,6 +1,15 @@
 # OpenNARS-304-ts
 
-OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
+OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先保证 Java canonical 基线与 TypeScript 的功能证据一致，再进入性能与发布门禁。
+
+## 当前状态（2026-08-25）
+
+- M1：245 个主资源 NAL 的单线程 Java/TypeScript parity 全量矩阵正在串行运行；结果写入 `reports/evidence/m1-245-parity-20260825-fqn-fixed-v1.jsonl`，完成前不得宣称 M1 全量通过。
+- M2：非增量 `tsc` 为 0 诊断；固定提交上的 `npm test` 为 155/155，局部算法 parity 通过，正式构建与 CLI smoke 通过。
+- M3：资源观测与串行 benchmark 已建立，但在 M1 全量通过前暂停；四类代表样本已完成功能/parity 观测，重复 median/p95 和 Java RSS 边界仍未收尾。
+- 当前版本：`0.1.0`；当前 canonical Java JAR 使用 `OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+
+当前事实、门禁顺序和可复制命令见 [`docs/current-status-and-runbook.md`](docs/current-status-and-runbook.md)。
 
 ## 概况
 
@@ -28,6 +37,10 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
     npm ci
     npm test
 
+权威 TypeScript 编译检查（关闭增量，避免沿用旧诊断缓存）：
+
+    npx tsc --noEmit --pretty false --incremental false
+
 生成 `dist/` 正式产物并验证核心 API：
 
     npm run build
@@ -37,11 +50,19 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
 
     node dist/cli.mjs --cycles 1550 path/to/example.nal
 
+运行 Java canonical 与 TypeScript 的串行 NAL parity（全量命令会运行较久，建议使用 checkpoint）：
+
+    npm run test:e2e:parity:serial
+
+运行 M3 资源 benchmark 前，必须先确认 M1 全量矩阵已通过；benchmark 本身也应逐文件、单进程运行：
+
+    npm run benchmark:m3 -- --cycles 1550 --repetitions 2 --file java-master/src/main/resources/nal/single_step/nal8.add.nal
+
 构建产物提供 `dist/index.js` 入口，公开 `Nar`、`Narsese`、`Term`、`TruthValue` 和 `BudgetValue` 等核心 API。`npm test` 默认使用单并发模式，以降低测试期间的内存压力；`npm run test:unit` 保留为显式并发入口。
 
 ### 当前战略基线
 
-旧的逐文件转写计划已不足以指导主线推进。当前以[新战略基线与工作流](docs/strategic-baseline.md)为项目导航：优先恢复可重复工具链，打通最小 NARS 垂直切片，再逐层扩展到完整推理与 NAL 差分验证。
+旧的逐文件转写计划已不足以指导主线推进。当前以[新战略基线与工作流](docs/strategic-baseline.md)和[当前状态与运行手册](docs/current-status-and-runbook.md)为项目导航：先完成 M1 全量功能门禁，再推进 M2/M3 的后续工作。
 
 ## 目录 & 进度（历史文件清单）
 
@@ -185,7 +206,7 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
 - [ ] util
   - [ ] ListUtil
 
-### 最近转写完成
+### 历史转写完成
 
 - Texts（2026-01-12）
 - TruthValue（2026-01-11）

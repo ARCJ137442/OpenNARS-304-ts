@@ -1,12 +1,14 @@
 # Java → TypeScript 迁移纠正模式库
 
-版本：0.6（2026-08-22）
+版本：0.7（2026-08-25）
+
+当前证据覆盖：代码主线 `0acc192`（FQN 优化代码来自 `4d5435f`）。历史扫描数字保留用于比较，不作为当前质量门禁；当前权威门禁见 [`docs/current-status-and-runbook.md`](current-status-and-runbook.md)。
 
 本文件把当前 OpenNARS 转写中反复出现的纠正归纳为可检索、可验证、可批量处理的模式。它不是“看到字符串就替换”的规则表：每条模式都必须同时说明识别条件、正确的 TypeScript 语义、验证门禁和自动化边界。
 
 ## 1. 当前证据
 
-使用本仓库的 TypeScript 5.4.5 编译器检查当前 `src` 与 `test`，并用迁移扫描器屏蔽注释和字符串后统计源码，得到本批扫描结果：
+使用本仓库的 TypeScript 5.4.5 编译器检查当前 `src` 与 `test`，并用迁移扫描器屏蔽注释和字符串后统计源码，历史扫描结果为：
 
 - `tsc --noEmit` 输出 3,513 条 `error TS`；这是全局既有迁移诊断，不能作为本批语义修复通过的替代品；
 - 迁移扫描器覆盖 169 个 TypeScript 文件，识别出 11 处构造器委托、190 处 `.class`、240 处 Java 字符串方法和 468 处 Java 集合方法调用习惯；
@@ -14,7 +16,7 @@
 
 这说明迁移的首要问题是“重复的语义转换模式没有固化”，不是单个文件的偶然手工错误。
 
-本轮新增证据：局部单元测试为 50/50，Java/TypeScript 局部算法联测仍需随本批次命令复核；`toothbrush.nal` 在 1000 个追加周期下 Java/TypeScript 均为 2/2 marker。应用级任务派发仍有 detective2、vision 的 TypeScript 超时，不能把单个夹具通过外推为整库通过。
+当前新增证据：非增量 `tsc` 为 0 诊断，串行 `npm test` 为 155/155，局部算法 parity 为 `ok: true` 且 `differences: []`。四类代表 NAL 已完成单线程功能/parity 观测，但 M1 的 245 个主资源全量矩阵仍是后续 TypeScript/M3 工作的硬门禁；不能把代表样本外推为整库通过。
 
 ## 2. 模式分级
 
@@ -254,6 +256,12 @@ Java 的 `float` 不是“最后赋值时才取单精度”。如果两个操作
 纠正方式是把哈希中的单精度乘法收敛到 `Float32Math`，把相等判断直接按 Java 源码的 epsilon 契约实现；不要把 `analytic` 元数据擅自加入集合身份。验证必须同时覆盖固定数值 hash 快照、epsilon 两侧边界，以及一个真实 NAL 中由相等任务合并触发的 Bag 数量。
 
 涉及文件示例：`src/entity/TruthValue.ts`、`src/runtime/Float32.ts`、`src/control/DerivationContext.ts`、`src/control/concept/ProcessGoal.ts`、`src/storage/Bag.ts`、`test/node/toothbrush-term-order.test.ts`、`test/node/tasklink-key.test.ts`。
+
+#### B17. jree 无用 FQN 堆栈解析必须在兼容边界治理
+
+jree 1.3.0 的 `JavaObject` 构造器会为尚未继承 `"#fqn"` 标记的类解析 `Error` 堆栈；当前 jree/OpenNARS 代码只写入该标记，`Class.getName()/getSimpleName()` 使用构造器名称，业务代码没有读取它。兼容层在 `src/runtime/jree-compat.ts` 预置可继承标记，跳过这条无效堆栈路径，同时保留类名观测。
+
+验证必须同时覆盖：`JavaObject` 子类的 `getClass().getName()/getSimpleName()`、局部单测、局部算法 parity，以及至少一条 single-step 和一条 application/multi-step NAL。该优化只改变已证实的运行时开销，不改变 NAL 规则；若 jree 升级，必须重新审计 `#fqn` 的读写契约。
 
 ### C 级：必须做语义重写，禁止自动替换
 

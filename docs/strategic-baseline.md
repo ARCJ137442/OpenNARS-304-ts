@@ -1,8 +1,18 @@
 # OpenNARS-304-ts 新战略基线与工作流
 
-版本：v2.0（2026-08-21）
+版本：v2.1（2026-08-25）
 
 本文件取代旧的“按文件逐个转写”规划，作为当前项目的战略导航文档。旧规格、旧报告和 `specs/003-dependency-analyze-brief-plan/workflow/roadmap.md` 仍是历史证据，但不再单独作为当前排期依据。
+
+> 当前执行覆盖：本文件中的 2026-08-21 数量快照属于历史战略资料；当前事实、门禁顺序和可复制命令以 [`docs/current-status-and-runbook.md`](current-status-and-runbook.md) 为准。当前首先完成 M1 的 245 个主资源全量功能/parity，再推进 M2/M3；不能用旧的 244/244、旧 tsc 诊断数或旧 spec 完成率替代当前结果。
+
+## 当前战略覆盖（2026-08-25）
+
+1. M1 是 TypeScript 后续工作的硬门禁：canonical Java 与 TypeScript 必须在 245 个主资源上逐文件完成可解释的功能/parity 结果。
+2. M2 负责保持 TypeScript 可编译、可测试和可构建；任何 M2 改动若使 M1 回退，必须先修复回退。
+3. M3 只在 M1 全量通过后推进，采用单线程、串行、可恢复 benchmark；性能告警不替代逻辑差分结论。
+4. marker 标准优先：有 Java marker 时以对应 marker 的逻辑命中为等价路径；无 marker 的样本才使用 131072 周期长测作为补充路径。
+5. 当前代码已建立 `jree JavaObject` FQN 死堆栈解析的兼容层优化和回归测试，但它只是局部性能改动，不能扩大为整机等价结论。
 
 ## 一、先定项目到底要成为什么
 
