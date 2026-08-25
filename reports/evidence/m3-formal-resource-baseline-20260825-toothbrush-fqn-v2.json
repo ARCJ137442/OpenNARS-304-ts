@@ -1,0 +1,273 @@
+{
+  "schema": "opennars-304-ts/m3-benchmark/v1",
+  "git_commit": "4d5435f630cf1341b8f0a8236d7ccee40413ed50",
+  "node": "v22.17.0",
+  "java_version": "java version \"18.0.2\" 2022-07-19\r\nJava(TM) SE Runtime Environment (build 18.0.2+9-61)\r\nJava HotSpot(TM) 64-Bit Server VM (build 18.0.2+9-61, mixed mode, sharing)",
+  "platform": "win32",
+  "architecture": "x64",
+  "configuration": {
+    "cycles": 1550,
+    "timeout_ms": 30000,
+    "process_limit_ms": 300000,
+    "warmup_runs": 0,
+    "repetitions": 1,
+    "thread_mode": "single",
+    "ts_mode": "cold",
+    "ts_cli": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\dist\\cli.mjs",
+    "java_jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+    "java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "resource_metrics": true
+  },
+  "samples": [
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush.nal",
+      "repetitions": 1,
+      "functional_pass_all": true,
+      "parity_pass_all": true,
+      "java": {
+        "wall_ms": {
+          "count": 1,
+          "min": 896,
+          "median": 896,
+          "p95": 896,
+          "max": 896,
+          "values": [
+            896
+          ]
+        },
+        "process_cpu_ms": {
+          "count": 1,
+          "min": 1765.625,
+          "median": 1765.625,
+          "p95": 1765.625,
+          "max": 1765.625,
+          "values": [
+            1765.625
+          ]
+        },
+        "peak_rss_bytes": {
+          "count": 0,
+          "min": null,
+          "median": null,
+          "p95": null,
+          "max": null,
+          "values": []
+        },
+        "marker_time_ms": [
+          [
+            271.5012,
+            284.1304
+          ]
+        ],
+        "resource_sources": [
+          "java-management"
+        ],
+        "rss_observations": 0
+      },
+      "ts": {
+        "wall_ms": {
+          "count": 1,
+          "min": 12757,
+          "median": 12757,
+          "p95": 12757,
+          "max": 12757,
+          "values": [
+            12757
+          ]
+        },
+        "process_cpu_ms": {
+          "count": 1,
+          "min": 15234,
+          "median": 15234,
+          "p95": 15234,
+          "max": 15234,
+          "values": [
+            15234
+          ]
+        },
+        "peak_rss_bytes": {
+          "count": 1,
+          "min": 400818176,
+          "median": 400818176,
+          "p95": 400818176,
+          "max": 400818176,
+          "values": [
+            400818176
+          ]
+        },
+        "marker_time_ms": [
+          [
+            4633.8615,
+            4894.8579
+          ]
+        ],
+        "resource_sources": [
+          "node-process"
+        ],
+        "rss_observations": 1
+      },
+      "runs": [
+        {
+          "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush.nal",
+          "repetition": 0,
+          "warmup": false,
+          "runner_exit_code": 0,
+          "runner_wall_ms": 14424.4547,
+          "row": {
+            "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush.nal",
+            "expected": [
+              "(^lighter,{SELF},toothbrush)! %1.00;0.39%",
+              "(^reshape,{SELF},toothbrush)! %1.00;0.26%"
+            ],
+            "timeout_ms": 30000,
+            "embedded_cycles": 10000,
+            "extra_cycles": 1550,
+            "duration_ms": 13653,
+            "java": {
+              "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush.nal",
+              "cycles": 1550,
+              "expected": 2,
+              "passed": 2,
+              "matched": [
+                true,
+                true
+              ],
+              "ok": true,
+              "error_type": "none",
+              "exception": false,
+              "timed_out": false,
+              "thread_mode": "single",
+              "marker_missing": false,
+              "marker_missing_count": 0,
+              "marker_time_ms": [
+                271.5012,
+                284.1304
+              ],
+              "resource_metrics": {
+                "source": "java-management",
+                "process_cpu_ms": 1765.625,
+                "peak_rss_bytes": null,
+                "committed_virtual_memory_bytes": 893337600,
+                "heap_used_bytes": 219731280
+              },
+              "duration_ms": 896,
+              "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+              "artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+              "stall_detected": false,
+              "not_run": false
+            },
+            "ts": {
+              "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\application\\toothbrush.nal",
+              "cycles": 1550,
+              "expected": 2,
+              "passed": 2,
+              "matched": [
+                true,
+                true
+              ],
+              "ok": true,
+              "error_type": "none",
+              "exception": false,
+              "timed_out": false,
+              "thread_mode": "single",
+              "marker_missing": false,
+              "marker_missing_count": 0,
+              "marker_time_ms": [
+                4633.8615,
+                4894.8579
+              ],
+              "resource_metrics": {
+                "source": "node-process",
+                "user_cpu_ms": 14781,
+                "system_cpu_ms": 453,
+                "peak_rss_bytes": 400818176
+              },
+              "duration_ms": 12757,
+              "stall_detected": false,
+              "not_run": false
+            },
+            "parity": true,
+            "java_ts_diff": false,
+            "both_wrong": false,
+            "functional_pass": true,
+            "long_cycle_equivalence": {
+              "target_cycles": 131072,
+              "observed_cycles": 11550,
+              "cycle_target_reached": false,
+              "marker_standard": "passed",
+              "internal_event_standard": "unverified",
+              "equivalence_route": "marker",
+              "equivalent": true,
+              "status": "equivalent"
+            },
+            "performance_budget_ms_per_1024_cycles": 120000,
+            "java_marker_time_per_1024_ms": [
+              24.070755740259738,
+              25.190435463203464
+            ],
+            "ts_marker_time_per_1024_ms": [
+              410.828932987013,
+              433.9683540779221
+            ],
+            "marker_time_delta_ms": [
+              4362.3603,
+              4610.7275
+            ],
+            "marker_time_delta_per_1024_ms": [
+              386.7581772467533,
+              408.7779186147186
+            ],
+            "java_marker_timing_complete": true,
+            "ts_marker_timing_complete": true,
+            "marker_delta_timing_complete": true,
+            "ts_performance_within_budget": true,
+            "marker_delta_within_budget": true,
+            "java_runtime_ms": 896,
+            "ts_runtime_ms": 12757,
+            "java_runtime_observation": "completed",
+            "ts_runtime_observation": "completed",
+            "reasoning_cycles": 11550,
+            "runtime_budget_ms_per_cycle": 117.1875,
+            "java_runtime_ms_per_cycle": 0.07757575757575758,
+            "ts_runtime_ms_per_cycle": 1.1045021645021644,
+            "runtime_delta_ms": 11861,
+            "runtime_delta_ms_per_cycle": 1.0269264069264068,
+            "ts_runtime_slowdown_ratio": 14.237723214285714,
+            "ts_runtime_within_budget": true,
+            "performance_warning": false,
+            "timeout_classification": null,
+            "java_thread_mode": "single",
+            "ts_thread_mode": "single",
+            "java_exception": false,
+            "java_timeout": false,
+            "java_stalled": false,
+            "java_timeout_reason": null,
+            "java_last_progress_cycle": null,
+            "java_not_run": false,
+            "java_marker_missing": false,
+            "ts_exception": false,
+            "ts_timeout": false,
+            "ts_stalled": false,
+            "ts_timeout_reason": null,
+            "ts_last_progress_cycle": null,
+            "ts_not_run": false,
+            "ts_marker_missing": false,
+            "process_limited": false,
+            "java_process_limited": false,
+            "ts_process_limited": false,
+            "java_process_mode": "cold",
+            "ts_process_mode": "cold",
+            "chunk_index": 0,
+            "sequence": 0,
+            "process_limit_ms": 300000,
+            "run_key": "{\"engine\":\"parity\",\"cycles\":1550,\"timeoutMs\":30000,\"processLimitMs\":300000,\"tsMode\":\"cold\",\"tsCli\":\"H:\\\\A137442\\\\Develop\\\\AGI\\\\NARS\\\\_Project\\\\OpenNARS-304-ts\\\\dist\\\\cli.mjs\",\"resourceMetrics\":true,\"javaArtifactSha256\":\"2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5\"}"
+          },
+          "stderr": "running chunk 1/1 (1 files)"
+        }
+      ]
+    }
+  ],
+  "all_functional_pass": true,
+  "all_parity_pass": true,
+  "rss_status": "TypeScript reports peak RSS; Java adapter reports RSS unavailable and a committed-virtual-memory proxy."
+}
