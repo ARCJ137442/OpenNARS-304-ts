@@ -26,7 +26,7 @@ type EventObserver = EventEmitter.EventObserver;
  */
 export class Counting extends JavaObject implements Plugin {
 
-    public obs: EventObserver;
+    public obs: EventObserver | null = null;
 
     protected static readonly CARDINALITY: Term = Term.get("CARDINALITY");
     public MINIMUM_PRIORITY: float = Float32Math.from(0.3) as float;
@@ -74,7 +74,8 @@ export class Counting extends JavaObject implements Plugin {
         let memory: Memory = n.memory;
 
         if (this.obs === null) {
-            this.obs = (event, a) => {
+            this.obs = {
+                event: (event: java.lang.Class<unknown>, a: java.lang.Object[]): void => {
 
                 if ((event !== Events.TaskDerive.class && event !== Events.TaskAdd.class))
                     return;
@@ -122,14 +123,15 @@ export class Counting extends JavaObject implements Plugin {
 
                             let newTask: Task = new Task(j, budg, Task.EnumType.INPUT);
 
-                            memory.addNewTask(newTask, "Derived (Cardinality)");
+                            memory.addNewTask(newTask, S`Derived (Cardinality)`);
                         }
                     }
                 }
+                },
             };
         }
 
-        memory.event.set(this.obs, enabled, Events.TaskDerive.class);
+        memory.event.set(this.obs as EventObserver, enabled, Events.TaskDerive.class);
         return true;
     }
 

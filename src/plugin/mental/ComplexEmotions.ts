@@ -21,7 +21,7 @@ const Answer = Events.Answer;
  */
 export class ComplexEmotions extends JavaObject implements Plugin {
 
-    public obs: EventObserver;
+    public obs: EventObserver | null = null;
     protected fear: float = Float32Math.from(0.5) as float;
 
     public setEnabled(n: Nar, enabled: boolean): boolean {
@@ -30,7 +30,8 @@ export class ComplexEmotions extends JavaObject implements Plugin {
             let memory: Memory = n.memory;
 
             if (this.obs === null) {
-                this.obs = (event, a) => {
+                this.obs = {
+                    event: (event: java.lang.Class<unknown>, a: java.lang.Object[]): void => {
                     if (event !== Events.TaskDerive.class &&
                         event !== Events.InduceSucceedingEvent.class)
                         return;
@@ -57,15 +58,16 @@ export class ComplexEmotions extends JavaObject implements Plugin {
                                     if (C1 !== null) {
                                         C1.incPriority(fear);
                                     }
-                                    memory.emit(Answer.class, "Fear value=" + fear);
+                                    memory.emit(Answer.class, new java.lang.String("Fear value=" + fear));
                                     java.lang.System.out.println("Fear value=" + fear);
                                 }
                             }
                         }
                     }
+                    },
                 };
             }
-            memory.event.set(this.obs, enabled, Events.InduceSucceedingEvent.class, Events.TaskDerive.class);
+            memory.event.set(this.obs as EventObserver, enabled, Events.InduceSucceedingEvent.class, Events.TaskDerive.class);
         }
         return true;
     }
