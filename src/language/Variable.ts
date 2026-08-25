@@ -74,7 +74,7 @@ export class Variable extends Term {
     }
 
 
-    public setScope(scope: Term, n: java.lang.CharSequence): Variable {
+    public setScope(scope: Term | null, n: java.lang.CharSequence): Variable {
         this.setName(n);
         const first = java.lang.String.valueOf(n).charAt(0);
         this.type = typeof first === "number" ? String.fromCharCode(first) : first;
@@ -276,7 +276,7 @@ export class Variable extends Term {
     // ported back from 1.7, sehs addition
     public static compare(a: Variable, b: Variable): int {
         // int i = a.name().compareTo(b.name());
-        let i: int = Texts.compareTo(a.name().toString(), b.name().toString());
+        let i: int = Texts.compareTo(javaStringValue(a.name()), javaStringValue(b.name()));
         if (i === 0) {
             let ascoped: boolean = a.scope !== a;
             let bscoped: boolean = b.scope !== b;
@@ -291,7 +291,7 @@ export class Variable extends Term {
             } else if (bscoped && !ascoped) {
                 return 1;
             } else {
-                return Texts.compareTo(a.getScope().name().toString(), b.getScope().name().toString());
+                return Texts.compareTo(javaStringValue(a.getScope().name()), javaStringValue(b.getScope().name()));
                 // return Texts.compare(a.getScope().name(), b.getScope().name());
             }
         }
