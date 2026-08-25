@@ -38,7 +38,7 @@ const DEBUG = OutputHandler.DEBUG;
 const ResetStart = Events.ResetStart;
 const ResetEnd = Events.ResetEnd;
 const TaskRemove = Events.TaskRemove;
-const BaseEntry = Stamp.BaseEntry;
+const asJavaObject = (value: unknown): JavaObject => value as JavaObject;
 
 
 
@@ -59,11 +59,11 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
     /* Nar parameters */
     public readonly narParameters: Parameters;
 
-    public narId: long = 0;
+    public narId: long = 0 as unknown as long;
     // emotion meter keeping track of global emotion
-    public emotion: Emotions = null;
-    public internalExperience: InternalExperience = null;
-    public lastDecision: Task = null;
+    public emotion: Emotions = null as unknown as Emotions;
+    public internalExperience: InternalExperience = null as unknown as InternalExperience;
+    public lastDecision: Task = null as unknown as Task;
     public allowExecution: boolean = true;
 
     public readonly randomSeed: long = 1n;
@@ -125,7 +125,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
             this.emotion.resetEmotions();
         }
         this.recent_operations.clear();
-        this.lastDecision = null;
+        this.lastDecision = null as unknown as Task;
         this.randomNumber.setSeed(this.randomSeed);
         this.event.emit(ResetEnd.class);
     }
@@ -163,7 +163,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
      */
     public conceptualize(budget: BudgetValue, term: Term): Concept {
         if (term instanceof Interval) {
-            return null;
+            return null as unknown as Concept;
         }
         term = CompoundTerm.replaceIntervals(term);
 
@@ -186,7 +186,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
             BudgetFunctions.activate(concept.getBudget(), budget, BudgetFunctions.Activating.TaskLink);
         } else {
             // unable to create, ex: has variables
-            return null;
+            return null as unknown as Concept;
         }
 
         displaced = this.concepts.putBack(concept, this.cycles(this.narParameters.CONCEPT_FORGET_DURATIONS), this);
@@ -198,7 +198,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         } else if (displaced === concept) {
             // not able to insert
             this.conceptRemoved(displaced);
-            return null;
+            return null as unknown as Concept;
         } else {
             this.conceptRemoved(displaced);
             return concept;
@@ -277,7 +277,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
                 }
                 if (task !== null) {
                     let s: Stamp = task.sentence.stamp;
-                    if (s.getCreationTime() === -1) {
+                    if (s.getCreationTime() === (-1 as unknown as long)) {
                         s.setCreationTime(time.time(), this.narParameters.DURATION);
                         task.sentence.refreshHash();
                     }
@@ -287,9 +287,9 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
                     }
 
                     if (task.getBudget().aboveThreshold()) {
-                        this.addNewTask(task, "Perceived");
+                        this.addNewTask(task, S`Perceived`);
                     } else {
-                        this.removeTask(task, "Neglected");
+                        this.removeTask(task, S`Neglected`);
                     }
                 }
 
@@ -331,7 +331,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         let newTask: Task = new Task(sentence, budgetForNewTask, Task.EnumType.INPUT);
 
         newTask.setElemOfSequenceBuffer(true);
-        this.addNewTask(newTask, "Executed");
+        this.addNewTask(newTask, S`Executed`);
     }
 
     public output(t: Task): void {
@@ -345,8 +345,8 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         if (budget >= noiseLevel) { // only report significant derived Tasks
             this.emit(OUT.class, t);
             if (Debug.PARENTS) {
-                this.emit(DEBUG.class, "Parent Belief\t" + t.parentBelief);
-                this.emit(DEBUG.class, "Parent Task\t" + t.parentTask + "\n\n");
+                this.emit(DEBUG.class, asJavaObject("Parent Belief\t" + t.parentBelief));
+                this.emit(DEBUG.class, asJavaObject("Parent Task\t" + t.parentTask + "\n\n"));
             }
         }
     }
@@ -421,7 +421,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
     }
 
     public getOperator(op: java.lang.String): Operator {
-        return this.operators.get(op);
+        return this.operators.get(op) as unknown as Operator;
     }
 
     public addOperator(op: Operator): Operator {
@@ -430,13 +430,13 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
     }
 
     public removeOperator(op: Operator): Operator {
-        return this.operators.remove(op.name());
+        return this.operators.remove(op.name()) as unknown as Operator;
     }
 
-    private currentStampSerial: long = 0;
+    private currentStampSerial: long = 0 as unknown as long;
 
-    public newStampSerial(): BaseEntry {
-        return new BaseEntry(this.narId, this.currentStampSerial++);
+    public newStampSerial(): Stamp.BaseEntry {
+        return new Stamp.BaseEntry(this.narId, this.currentStampSerial++);
     }
 
     /** converts durations to cycles */
