@@ -1,0 +1,1 @@
+{"file":"H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\main\\resources\\nal\\multi_step\\nal4.recursion.nal","cycles":1550,"expected":1,"passed":1,"matched":[true],"ok":true,"error_type":"none","exception":false,"timed_out":false,"thread_mode":"single","marker_missing":false,"marker_missing_count":0,"marker_time_ms":[4.008399999999995]}

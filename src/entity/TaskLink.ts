@@ -7,6 +7,7 @@ import { BudgetValue } from "./BudgetValue.ts";
 import type { TLink } from "./TLink.ts";
 import type { Parameters } from "../main/Parameters.ts";
 import type { Term } from "../language/Term.ts";
+import { NativeDeque } from "../runtime/NativeDeque.ts";
 
 
 
@@ -59,7 +60,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
 
 
     /** The usage record **/
-    public readonly records: java.util.Deque<TaskLink.Recording>;
+    public readonly records: NativeDeque<TaskLink.Recording>;
 
     /** The type of link, one of the above */
     public readonly type: short;
@@ -88,10 +89,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
 
         this.targetTask = t;
         this.recordLength = recordLength;
-        // jree's ArrayDeque constructor treats a numeric capacity as a
-        // collection; initialize an empty deque explicitly instead.
-        this.records = new java.util.ArrayDeque<TaskLink.Recording>(
-            new java.util.ArrayList<TaskLink.Recording>());
+        this.records = new NativeDeque<TaskLink.Recording>();
         this.hash = (((this.targetTask.hashCode() * 31) + this.type) * 31) + (this.index !== null ? java.util.Arrays.hashCode(this.index) : 0);
     }
 
@@ -172,7 +170,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
                 let linkKey: TermLink = termLink.name();
 
                 // iterating the FIFO deque from oldest (first) to newest (last)
-                let ir: java.util.Iterator<TaskLink.Recording> = this.records.iterator();
+                const ir = this.records.iterator();
                 while (ir.hasNext()) {
                     let r: TaskLink.Recording = ir.next();
                     if (linkKey.equals(r.link)) {
