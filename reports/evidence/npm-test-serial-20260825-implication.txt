@@ -1657,11 +1657,11 @@ not ok 86 - NAL trace describes ExecutionResult with Java-equivalent operation f
         at Implication.make (file:///H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/src/language/Implication.ts:80:38)
         at Implication.make (file:///H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/src/language/Implication.ts:74:36)
         at CompositionalRules.introVarOuter (file:///H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/src/inference/CompositionalRules.ts:427:83)
-        at RuleTables.asymmetricAsymmetric (file:///H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/src/inference/RuleTables.ts:467:44)
-    
-    
+ at RuleTables.asymmetricAsymmetric (file:///H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/src/inference/RuleTables.ts:467:44)
+
+
     1 !== 0
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected: 0
