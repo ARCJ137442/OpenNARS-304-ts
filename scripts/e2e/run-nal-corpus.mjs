@@ -35,6 +35,7 @@ function parseArgs(argv) {
     timeoutMs: null,
     processLimitMs: null,
     tsMode: "hot",
+    tsCli: null,
     javaJar: defaultJavaJar,
     javaClasses: defaultJavaClasses,
     javaTestClasses: defaultJavaTestClasses,
@@ -54,6 +55,7 @@ function parseArgs(argv) {
     else if (argument === "--timeout-ms") options.timeoutMs = Number(argv[++i]);
     else if (argument === "--process-limit-ms") options.processLimitMs = Number(argv[++i]);
     else if (argument === "--ts-mode" || argument === "--ts-process-mode") options.tsMode = argv[++i];
+    else if (argument === "--ts-cli") options.tsCli = argv[++i];
     else if (argument === "--java-jar") options.javaJar = argv[++i];
     else if (argument === "--java-classes") options.javaClasses = argv[++i];
     else if (argument === "--java-test-classes") options.javaTestClasses = argv[++i];
@@ -520,8 +522,12 @@ async function runTs(files, cycles, timeoutMs, processLimitMs, cliPath = join(pr
       armProcessLimit();
     };
 
+    const sourceCli = resolve(join(projectRoot, "scripts", "cli.mjs"));
+    const cliInvocation = resolve(cli) === sourceCli
+      ? ["--loader", "./scripts/ts-loader.mjs", cli]
+      : [cli];
     const child = spawn(process.execPath, [
-      "--loader", "./scripts/ts-loader.mjs", cli, "--cycles", String(cycles),
+      ...cliInvocation, "--cycles", String(cycles),
       ...(timeoutMs === null ? [] : ["--progress-interval", String(progressInterval)]),
       ...files,
     ], {
@@ -606,9 +612,15 @@ async function runTs(files, cycles, timeoutMs, processLimitMs, cliPath = join(pr
   });
 }
 
-async function runTsCold(files, cycles, timeoutMs, processLimitMs) {
+async function runTsCold(
+  files,
+  cycles,
+  timeoutMs,
+  processLimitMs,
+  cliPath = join(projectRoot, "scripts", "cli.mjs"),
+) {
   const rows = [];
-  for (const file of files) rows.push(...await runTs([file], cycles, timeoutMs, processLimitMs));
+  for (const file of files) rows.push(...await runTs([file], cycles, timeoutMs, processLimitMs, cliPath));
   return rows;
 }
 
@@ -965,6 +977,7 @@ function resultKey(options, javaArtifact) {
     timeoutMs: options.timeoutMs,
     processLimitMs: options.processLimitMs,
     tsMode: options.engine === "java" ? null : options.tsMode,
+    tsCli: options.engine === "java" ? null : options.tsCli,
     javaArtifactSha256: javaArtifact?.sha256 ?? null,
   });
 }
@@ -1004,6 +1017,11 @@ function appendCheckpoint(resultFile, runKey, rows) {
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   const javaArtifact = resolveJavaArtifact(options);
+  if (options.engine !== "java") {
+    options.tsCli = options.tsCli === null
+      ? resolve(join(projectRoot, "scripts", "cli.mjs"))
+      : requirePath(options.tsCli, "--ts-cli", "file");
+  }
   const javaAdapter = javaArtifact === null ? null : compileJavaAdapter(javaArtifact);
   const resultFile = options.resultFile === null ? null : resolve(options.resultFile);
   if (resultFile !== null && existsSync(resultFile) && !options.resume) {
@@ -1040,7 +1058,13 @@ async function main() {
       if (options.engine !== "ts") javaResults.push(...await runJava(pending, options.cycles, options.timeoutMs, options.processLimitMs, javaArtifact, javaAdapter));
       if (options.engine !== "java") {
         const runTsFiles = options.tsMode === "cold" ? runTsCold : runTs;
-        tsResults.push(...await runTsFiles(pending, options.cycles, options.timeoutMs, options.processLimitMs));
+        tsResults.push(...await runTsFiles(
+          pending,
+          options.cycles,
+          options.timeoutMs,
+          options.processLimitMs,
+          options.tsCli,
+        ));
       }
       const javaByFile = new Map(javaResults.map((row) => [resolve(row.file), row]));
       const tsByFile = new Map(tsResults.map((row) => [resolve(row.file), row]));
@@ -1095,6 +1119,7 @@ async function main() {
     timeoutMs: options.timeoutMs,
     processLimitMs: options.processLimitMs,
     tsProcessMode: options.engine === "java" ? null : options.tsMode,
+    ts_cli: options.engine === "java" ? null : options.tsCli,
     files: rows.length,
     passed: rows.length - failures.length,
     failed: failures.length,
@@ -1114,6 +1139,7 @@ async function main() {
       cycles: summary.cycles,
       timeoutMs: summary.timeoutMs,
       processLimitMs: summary.processLimitMs,
+      ts_cli: summary.ts_cli,
       files: summary.files,
       passed: summary.passed,
       failed: summary.failed,
