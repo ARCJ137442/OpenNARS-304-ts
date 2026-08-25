@@ -1,6 +1,7 @@
 //! Java source: opennars/plugin/perception/SensoryChannel.java
 import { java, JavaObject, type int, type double, S } from "jree";
 import { Narsese } from "../../io/Narsese.ts";
+import { Parser } from "../../io/Parser.ts";
 import { JavaSystemLoggerCompat } from "../../runtime/jree-compat.ts";
 import { Term } from "../../language/Term.ts";
 import { Concept } from "../../entity/Concept.ts";
@@ -12,15 +13,22 @@ import type { Timable } from "../../interfaces/Timable.ts";
 
 
 export abstract class SensoryChannel extends JavaObject implements Plugin {
-    public abstract setEnabled(n: Nar, enabled: boolean): boolean;
+    /**
+     * Java Plugin provides this default implementation; SensoryChannel does
+     * not make the method abstract. Keeping the default here also lets Nar
+     * remain instantiable without forcing every channel to implement a no-op.
+     */
+    public setEnabled(_n: Nar, _enabled: boolean): boolean {
+        return true;
+    }
 
-    private reportResultsTo: java.util.Collection<SensoryChannel>;
-    public nar: Nar; // for top-down influence of concept budgets
+    private reportResultsTo: java.util.Collection<SensoryChannel> = new java.util.ArrayList<SensoryChannel>();
+    public nar!: Nar; // for top-down influence of concept budgets
     public readonly results: java.util.List<Task> = new java.util.ArrayList<Task>();
     public height: int = 0; // 1D channels have height 1
     public width: int = 0;
     public duration: int = -1;
-    private label: Term;
+    private label: Term = new Term();
 
     public resetChannel(): void {
     }
@@ -96,18 +104,21 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         }
     }
 
-
-    public addInput(text: java.lang.String, time: Timable): void {
+    /** Java's String overload is kept separate because the Task overload is abstract. */
+    public addInputText(text: java.lang.String, time: Timable): void {
         try {
-            let t: Task = new Narsese(this.nar).parseTask(text);
-            this.addInput(t, time);
+            let parsedTask: Task = new Narsese(this.nar).parseTask(text);
+            this.addInput(parsedTask, time);
         } catch (ex) {
-            if (ex instanceof Narsese.InvalidInputException) {
-                JavaSystemLoggerCompat.getLogger(SensoryChannel.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+            if (ex instanceof Parser.InvalidInputException) {
+                JavaSystemLoggerCompat.getLogger(SensoryChannel.class.getName()).log(
+                    JavaSystemLoggerCompat.Level.SEVERE,
+                    null,
+                    ex as java.lang.Throwable,
+                );
                 throw new java.lang.IllegalStateException("Could not parse input", ex);
-            } else {
-                throw ex;
             }
+            throw ex;
         }
     }
 

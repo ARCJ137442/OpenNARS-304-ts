@@ -35,13 +35,23 @@ import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 
 type EventObserver = EventEmitter.EventObserver;
+type ObjectOutputStreamCompat = {
+    writeObject(value: unknown): void;
+    close(): void;
+};
+type ObjectInputStreamCompat = {
+    readObject(): unknown;
+    close(): void;
+};
+
+const asJavaObject = (value: unknown): java.lang.Object => value as unknown as java.lang.Object;
 
 const isNumeric = (value: unknown): boolean => /^[-+]?\d+(?:\.\d+)?$/.test(String(value).trim());
 const CyclesStart = Events.CyclesStart;
 const CyclesEnd = Events.CyclesEnd;
 const printInfo = (message: unknown): void => {
     if (typeof process === "undefined" || process.release?.name !== "node") {
-        java.lang.System.out.println(message);
+        java.lang.System.out.println(S`${String(message)}`);
     }
 };
 
@@ -70,7 +80,10 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     /*
      * System clock, relatively defined to guarantee the repeatability of behaviors
      */
-    private cycleCounter: long = 0;
+    // Keep the existing runtime number representation; `long` here is the
+    // translated Java contract, while the project time adapter still uses
+    // numeric clock values at runtime.
+    private cycleCounter: long = 0 as unknown as long;
 
     /**
      * The information about the version of the project
@@ -92,7 +105,11 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     public addSensoryChannel(term: java.lang.String, channel: SensoryChannel): void {
         try {
-            this.sensoryChannels.put(new Narsese(this).parseTerm(term), channel);
+            const parsedTerm = new Narsese(this).parseTerm(term);
+            if (parsedTerm === null) {
+                throw new java.lang.IllegalArgumentException(S`Invalid sensory channel term`);
+            }
+            this.sensoryChannels.put(parsedTerm, channel);
         } catch (ex) {
             if (ex instanceof Parser.InvalidInputException) {
                 JavaSystemLoggerCompat.getLogger(Nar.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
@@ -105,14 +122,20 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     public SaveToFile(name: java.lang.String): void {
         let outStream: java.io.FileOutputStream = new java.io.FileOutputStream(name);
-        let stream: java.io.ObjectOutputStream = new java.io.ObjectOutputStream(outStream);
+        const ObjectOutputStream = (java.io as unknown as {
+            ObjectOutputStream: new (stream: java.io.FileOutputStream) => ObjectOutputStreamCompat;
+        }).ObjectOutputStream;
+        let stream: ObjectOutputStreamCompat = new ObjectOutputStream(outStream);
         stream.writeObject(this);
         outStream.close();
     }
 
     public static LoadFromFile(name: java.lang.String): Nar {
         let inStream: java.io.FileInputStream = new java.io.FileInputStream(name);
-        let stream: java.io.ObjectInputStream = new java.io.ObjectInputStream(inStream);
+        const ObjectInputStream = (java.io as unknown as {
+            ObjectInputStream: new (stream: java.io.FileInputStream) => ObjectInputStreamCompat;
+        }).ObjectInputStream;
+        let stream: ObjectInputStreamCompat = new ObjectInputStream(inStream);
         let ret: Nar = stream.readObject() as Nar;
         ret.memory.event = new EventEmitter();
         ret.plugins = new java.util.ArrayList<Nar.PluginState>();
@@ -164,7 +187,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
                 this.plugin.setEnabled($outer, enabled);
                 this.enabled = enabled;
-                $outer.emit(Events.PluginsChange.class, this.plugin, enabled);
+                    $outer.emit(Events.PluginsChange.class, asJavaObject(this.plugin), asJavaObject(enabled));
             }
 
             public isEnabled(): boolean {
@@ -243,7 +266,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         // TypeScript. Resolve all overloads before the one and only `super()`.
         let narId: long = Nar.randomId();
         let relativeConfigFilePath: java.lang.String = Nar.DEFAULTCONFIG_FILEPATH;
-        let parameterOverrides: java.util.Map<java.lang.String, java.lang.Object> = null;
+        let parameterOverrides: java.util.Map<java.lang.String, java.lang.Object> | null = null;
 
         if (args.length === 0) {
             // defaults above
@@ -304,7 +327,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      * Reset the system with an empty memory and reset clock. Called locally.
      */
     public reset(): void {
-        this.cycleCounter = 0 as long;
+        this.cycleCounter = 0 as unknown as long;
         this.memory.reset();
     }
 
@@ -339,12 +362,12 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         } // 音量
         else if (text.startsWith(S`*volume=`)) {
             let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("volume=")[1]);
-            this.narParameters.VOLUME = value;
+            this.narParameters.VOLUME = value.intValue();
             return true;
         } // 线程数
         else if (text.startsWith(S`*threads=`)) {
             let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("threads=")[1]);
-            this.narParameters.THREADS_AMOUNT = value;
+            this.narParameters.THREADS_AMOUNT = value.intValue();
             return true;
         } // 保存
         else if (text.startsWith(S`*save=`)) {
@@ -366,12 +389,12 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             // 若带等号⇒修改
             if (stripped.startsWith(S`=`)) {
                 let value: java.lang.Long = java.lang.Long.valueOf(stripped.split("=")[1]);
-                this.minCyclePeriodMS = value;
+                this.minCyclePeriodMS = value.longValue();
             }
             // 总是打印信息
-            if (this.minCyclePeriodMS > 0)
+            if (this.minCyclePeriodMS > 0n)
                 printInfo("INFO: Running at " + this.minCyclePeriodMS + "ms per cycle.");
-            else if (this.minCyclePeriodMS === 0)
+            else if (this.minCyclePeriodMS === 0n)
                 printInfo("INFO: Running at full speed.");
             else
                 printInfo("INFO: Auto-cycling off.");
@@ -380,12 +403,12 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         // 设置运行速度（负数为关闭）
         else if (text.startsWith(S`*speed=`)) {
             let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("speed=")[1]);
-            this.minCyclePeriodMS = value;
+            this.minCyclePeriodMS = BigInt(value.intValue());
             return true;
         }
         // 推理循环
         else if (isNumeric(text)) {
-            let retVal: java.lang.Integer = java.lang.Integer.parseInt(text);
+            let retVal: int = java.lang.Integer.parseInt(text);
             // * 🚩【2024-04-19 21:08:03】现在无论如何都要运行推理周期
             // if (!running) {
             printInfo("INFO: Running " + retVal + " cycles.");
@@ -416,7 +439,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                 // Ignore any input that is just a comment
                 if (inputText.startsWith("\'") || inputText.startsWith("//") || inputText.length <= 0) {
                     if (inputText.length > 0) {
-                        this.emit(OutputHandler.ECHO.class, inputText);
+                        this.emit(OutputHandler.ECHO.class, asJavaObject(inputText));
                     }
                     return;
                 }
@@ -431,7 +454,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                         throw ex;
                     }
                 }
-                let task: Task = null;
+                let task: Task | null = null;
                 try {
                     task = narsese.parseTask(new java.lang.String(inputText));
                 } catch (e) {
@@ -446,6 +469,9 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                     } else {
                         throw e;
                     }
+                }
+                if (task === null) {
+                    return;
                 }
                 // check if it should go to a sensory channel and dispatch to it instead
                 if (this.dispatchToSensoryChannel(task)) {
@@ -486,16 +512,20 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     private dispatchToSensoryChannel(task: Task): boolean {
         let t: Term = task.getTerm();
         if (t !== null) {
-            let predicate: Term = null;
+            let predicate: Term | null = null;
             if (t instanceof Inheritance) {
                 predicate = (t as Inheritance).getPredicate();
             } else {
-                predicate = SetInt.make(new Term("OBSERVED"));
+                predicate = SetInt.make(new Term(S`OBSERVED`));
             }
             if (this.sensoryChannels.containsKey(predicate)) {
+                const channel = this.sensoryChannels.get(predicate);
+                if (channel === null) {
+                    return false;
+                }
                 // transform to channel-specific coordinate if available.
-                let channelWidth: int = this.sensoryChannels.get(predicate).width;
-                let channelHeight: int = this.sensoryChannels.get(predicate).height;
+                let channelWidth: int = channel.width;
+                let channelHeight: int = channel.height;
                 if (channelWidth !== 0 && channelHeight !== 0 && (t instanceof Inheritance) &&
                     ((t as Inheritance).getSubject() instanceof SetExt)) {
                     let subj: SetExt = (t as Inheritance).getSubject() as SetExt;
@@ -515,10 +545,10 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                             .split(",");
                         let height: double = Number.parseFloat(vals[0]);
                         let width: double = Number.parseFloat(vals[1]);
-                        let wval: int = java.lang.Math
-                            .round((width + 1.0) / 2.0 * (this.sensoryChannels.get(predicate).width - 1)) as int;
-                        let hval: int = java.lang.Math
-                            .round(((height + 1.0) / 2.0 * (this.sensoryChannels.get(predicate).height - 1))) as int;
+                        let wval: int = Number(java.lang.Math
+                            .round((width + 1.0) / 2.0 * (channel.width - 1))) as int;
+                        let hval: int = Number(java.lang.Math
+                            .round(((height + 1.0) / 2.0 * (channel.height - 1)))) as int;
                         let ev: string = task.sentence.isEternal() ? " " : " :|: ";
                         let newInput: string = "<" + variable + "[" + hval + "," + wval + "]} --> " + predicate.toString() + ">" +
                             task.sentence.punctuation + ev + task.sentence.getTruth().toString();
@@ -528,7 +558,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                         return true;
                     }
                 }
-                this.sensoryChannels.get(predicate).addInput(task, this);
+                channel.addInput(task, this);
                 return true;
             }
         }
@@ -562,28 +592,31 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             const br: java.io.BufferedReader = new java.io.BufferedReader(new java.io.FileReader(s))
             try {
                 try {
-                    let line: java.lang.String;
+                    let line: java.lang.String | null;
                     while ((line = br.readLine()) !== null) {
-                        if (!line.isEmpty()) {
+                        const lineText = String(line);
+                        if (lineText.length > 0) {
                             // Loading experience file lines, or else just normal input lines
-                            if (line.matches("([A-Za-z])+:(.*)")) {
+                            if (/^[A-Za-z]+:.*$/.test(lineText)) {
                                 // Extract creation time:
-                                if (!line.startsWith(S`IN:`)) {
+                                if (!lineText.startsWith("IN:")) {
                                     continue; // ignore
                                 }
-                                let spl: java.lang.String[] = line.replace("IN:", "").split("\\{");
-                                let creationTime: int = java.lang.Integer.parseInt(spl[spl.length - 1].split(" :")[0].split("\\|")[0]);
+                                let spl: string[] = lineText.replace("IN:", "").split("\\{");
+                                let creationTime: int = java.lang.Integer.parseInt(
+                                    new java.lang.String(spl[spl.length - 1].split(" :")[0].split("\\|")[0]),
+                                );
                                 while (this.time() < creationTime) {
                                     this.cycles(1);
                                 }
-                                let lineReconstructed: java.lang.String = S``; // the line but without the stamp info at the end
+                                let lineReconstructed = ""; // the line but without the stamp info at the end
                                 for (let i: int = 0; i < spl.length - 1; i++) {
                                     lineReconstructed += spl[i] + "{";
                                 }
-                                lineReconstructed = lineReconstructed.substring(0, lineReconstructed.length() - 1);
-                                this.addInput(lineReconstructed.trim());
+                                lineReconstructed = lineReconstructed.substring(0, lineReconstructed.length - 1);
+                                this.addInput(new java.lang.String(lineReconstructed.trim()));
                             } else {
-                                this.addInput(line);
+                                this.addInput(new java.lang.String(lineText));
                             }
                         }
                     }
@@ -609,12 +642,20 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     /** gets a concept if it exists, or returns null if it does not */
     public concept(concept: java.lang.String): Concept {
-        return this.memory.concept(new Narsese(this).parseTerm(concept));
+        const parsedTerm = new Narsese(this).parseTerm(concept);
+        if (parsedTerm === null) {
+            throw new java.lang.IllegalArgumentException(S`Invalid concept term`);
+        }
+        return this.memory.concept(parsedTerm);
     }
 
     public ask(termString: java.lang.String, answered: AnswerHandler): Nar {
+        const parsedTerm = new Narsese(this).parseTerm(termString);
+        if (parsedTerm === null) {
+            throw new java.lang.IllegalArgumentException(S`Invalid question term`);
+        }
         let sentenceForNewTask: Sentence = new Sentence(
-            new Narsese(this).parseTerm(termString),
+            parsedTerm,
             Symbols.QUESTION_MARK,
             null,
             new Stamp(this, this.memory, Tense.Eternal));
@@ -634,8 +675,12 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
     public askNow(termString: java.lang.String, answered: AnswerHandler): Nar {
+        const parsedTerm = new Narsese(this).parseTerm(termString);
+        if (parsedTerm === null) {
+            throw new java.lang.IllegalArgumentException(S`Invalid question term`);
+        }
         let sentenceForNewTask: Sentence = new Sentence(
-            new Narsese(this).parseTerm(termString),
+            parsedTerm,
             Symbols.QUESTION_MARK,
             null,
             new Stamp(this, this.memory, Tense.Present));
@@ -681,7 +726,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         }
         let ps: Nar.PluginState = new this.PluginState(p);
         this.plugins.add(ps);
-        this.emit(Events.PluginsChange.class, p, null);
+        this.emit(Events.PluginsChange.class, asJavaObject(p), asJavaObject(null));
     }
 
     public removePlugin(ps: Nar.PluginState): void {
@@ -691,16 +736,19 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                 this.memory.removeOperator(p as Operator);
             }
             if (p instanceof SensoryChannel) {
-                this.sensoryChannels.remove(p as java.lang.Object);
+                const sensoryTerm = new Narsese(this).parseTerm(p.getName());
+                if (sensoryTerm !== null) {
+                    this.sensoryChannels.remove(sensoryTerm);
+                }
             }
             // TODO sensory channels can be plugins
             ps.setEnabled(false);
-            this.emit(Events.PluginsChange.class, null, p);
+            this.emit(Events.PluginsChange.class, asJavaObject(null), asJavaObject(p));
         }
     }
 
-    public getPlugins(): java.util.List<Nar.PluginState> {
-        return java.util.Collections.unmodifiableList(this.plugins);
+    public getPlugins(): java.util.List<unknown> {
+        return java.util.Collections.unmodifiableList(this.plugins) as unknown as java.util.List<unknown>;
     }
 
     public start(): void;
@@ -710,7 +758,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         switch (args.length) {
             case 0: {
 
-                this.start(this.narParameters.MILLISECONDS_PER_STEP);
+                this.start(this.narParameters.MILLISECONDS_PER_STEP as unknown as long);
 
 
                 break;
@@ -776,13 +824,13 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
         while (this.running && !this.stopped) {
             // * 🚩【2024-04-19 21:26:19】现在在「循环周期小于0」的时候跳过（但不停止循环）
-            if (this.minCyclePeriodMS < 0)
+            if (this.minCyclePeriodMS < 0n)
                 continue;
             this.emit(CyclesStart.class);
             this.cycle();
             this.emit(CyclesEnd.class);
 
-            if (this.minCyclePeriodMS > 0) {
+            if (this.minCyclePeriodMS > 0n) {
                 try {
                     ThreadCompat.sleep(this.minCyclePeriodMS);
                 } catch (e) {
@@ -828,8 +876,8 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         }
     }
 
-    public toString(): java.lang.String {
-        return new java.lang.String(this.memory.toString());
+    public toString(): string {
+        return String(this.memory.toString());
     }
 
     public time(): long {
@@ -852,7 +900,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         // jree does not expose java.util.UUID. A process-local numeric id is
         // sufficient here; persisted/inter-process identity is handled by the
         // explicit narId overload.
-        return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER) as long;
+        return BigInt(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)) as long;
     }
 
     /**
@@ -875,17 +923,10 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             let propertyName: java.lang.String = iOverride.getKey();
             let value: java.lang.Object = iOverride.getValue();
 
-            try {
-                let fieldOfProperty: java.lang.reflect.Field = Parameters.class.getField(propertyName);
-                fieldOfProperty.set(parameters, value);
-            } catch (e) {
-                if (e instanceof java.lang.NoSuchFieldException) {
-                    // ignore
-                } else if (e instanceof java.lang.IllegalAccessException) {
-                    // ignore
-                } else {
-                    throw e;
-                }
+            const key = String(propertyName);
+            const parameterRecord = parameters as unknown as Record<string, unknown>;
+            if (key in parameterRecord) {
+                parameterRecord[key] = value;
             }
         }
     }
