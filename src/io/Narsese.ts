@@ -1,5 +1,6 @@
 //! Java source: opennars/io/Narsese.java
 import { java, JavaObject, type int, type float, type long, S } from "jree";
+import { toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { Parser } from "./Parser.ts";
 import { Symbols } from "./Symbols.ts";
 import { Tense } from "../language/Tense.ts";
@@ -148,8 +149,8 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @param s the single-line addInput String
      * @return An experienced task
      */
-    public parseTask(s: java.lang.String): Task {
-        let buffer: java.lang.StringBuilder = new java.lang.StringBuilder(s);
+    public parseTask(s: JavaStringInput): Task {
+        let buffer: java.lang.StringBuilder = new java.lang.StringBuilder(toJavaString(s));
 
         let budgetString: java.lang.String | null = Narsese.getBudgetString(buffer);
         let truthString: java.lang.String | null = Narsese.getTruthString(buffer);
@@ -343,8 +344,8 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
      * @throws Parser.InvalidInputException if the String couldn't get parsed to a
      *                                      term
      */
-    public parseTerm(s: java.lang.String): Term | null {
-        s = s.trim();
+    public parseTerm(s: JavaStringInput): Term | null {
+        s = toJavaString(s).trim();
 
         if (s.length() === 0)
             return null;

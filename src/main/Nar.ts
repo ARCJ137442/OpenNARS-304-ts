@@ -1,6 +1,7 @@
 //! Java source: opennars/main/Nar.java
 import { readFileSync } from "node:fs";
 import { java, type long, JavaObject, S, type int, type double, type float, closeResources, handleResourceError, throwResourceError } from "jree";
+import type { JavaStringInput } from "../runtime/jree-compat.ts";
 import { Parameters } from "./Parameters.ts";
 import { Debug } from "./Debug.ts";
 import { ConfigReader } from "../io/ConfigReader.ts";
@@ -424,13 +425,13 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         }
     }
 
-    public addInput(text: java.lang.String): void;
+    public addInput(text: JavaStringInput): void;
 
     public addInput(t: Task, time: Timable): Nar;
     public addInput(...args: unknown[]): void | Nar {
         switch (args.length) {
             case 1: {
-                const [rawText] = args as [java.lang.String];
+                const [rawText] = args as [JavaStringInput];
                 const inputText = String(rawText).trim();
                 let narsese: Parser = new Narsese(this);
                 if (inputText.includes("\n") && this.addMultiLineInput(new java.lang.String(inputText))) {

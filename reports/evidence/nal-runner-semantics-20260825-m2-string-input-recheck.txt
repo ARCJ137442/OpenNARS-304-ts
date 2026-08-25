@@ -1,0 +1,208 @@
+TAP version 13
+# (node:19012) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:19012) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\test\\node\\nal-runner-semantics.test.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:19012) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Tense.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# Subtest: NAL runner counts final matched markers even when an exception occurs
+ok 1 - NAL runner counts final matched markers even when an exception occurs
+  ---
+  duration_ms: 1.3479
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps timeout and marker absence as separate observations
+ok 2 - NAL runner keeps timeout and marker absence as separate observations
+  ---
+  duration_ms: 0.1274
+  type: 'test'
+  ...
+# Subtest: NAL runner distinguishes a process crash from a single-file timeout
+ok 3 - NAL runner distinguishes a process crash from a single-file timeout
+  ---
+  duration_ms: 0.1289
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps files after a timeout separate from the timed-out file
+ok 4 - NAL runner keeps files after a timeout separate from the timed-out file
+  ---
+  duration_ms: 0.0665
+  type: 'test'
+  ...
+# Subtest: parity does not become functional pass when both engines miss the marker
+ok 5 - parity does not become functional pass when both engines miss the marker
+  ---
+  duration_ms: 0.6684
+  type: 'test'
+  ...
+# Subtest: parity exposes Java/TypeScript result differences independently
+ok 6 - parity exposes Java/TypeScript result differences independently
+  ---
+  duration_ms: 0.1163
+  type: 'test'
+  ...
+# Subtest: NAL runner reports marker timing against a 120-second-per-1024-cycle budget
+ok 7 - NAL runner reports marker timing against a 120-second-per-1024-cycle budget
+  ---
+  duration_ms: 0.1501
+  type: 'test'
+  ...
+# Subtest: NAL runner records runtime per reasoning cycle and relative slowdown
+ok 8 - NAL runner records runtime per reasoning cycle and relative slowdown
+  ---
+  duration_ms: 0.0722
+  type: 'test'
+  ...
+# Subtest: NAL runner marks stalled runtime as a lower bound instead of a functional verdict
+ok 9 - NAL runner marks stalled runtime as a lower bound instead of a functional verdict
+  ---
+  duration_ms: 0.175
+  type: 'test'
+  ...
+# Subtest: NAL runner classifies no-progress watchdog termination independently of performance
+ok 10 - NAL runner classifies no-progress watchdog termination independently of performance
+  ---
+  duration_ms: 0.26
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps a slow completed process as performance data, not a timeout
+ok 11 - NAL runner keeps a slow completed process as performance data, not a timeout
+  ---
+  duration_ms: 0.0959
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps a process safety limit separate from a no-progress timeout
+ok 12 - NAL runner keeps a process safety limit separate from a no-progress timeout
+  ---
+  duration_ms: 0.0836
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps performance observations separate when a marker is missing
+ok 13 - NAL runner keeps performance observations separate when a marker is missing
+  ---
+  duration_ms: 0.14
+  type: 'test'
+  ...
+# Subtest: marker parity is an equivalence route without requiring 131072 cycles or an internal trace
+ok 14 - marker parity is an equivalence route without requiring 131072 cycles or an internal trace
+  ---
+  duration_ms: 0.0569
+  type: 'test'
+  ...
+# Subtest: marker parity remains equivalent when an optional internal trace differs
+ok 15 - marker parity remains equivalent when an optional internal trace differs
+  ---
+  duration_ms: 0.0928
+  type: 'test'
+  ...
+# Subtest: 131072-cycle equivalence is available for inputs without Java markers
+ok 16 - 131072-cycle equivalence is available for inputs without Java markers
+  ---
+  duration_ms: 0.0579
+  type: 'test'
+  ...
+# Subtest: NAL parity rows expose marker equivalence independently of the long-cycle target
+ok 17 - NAL parity rows expose marker equivalence independently of the long-cycle target
+  ---
+  duration_ms: 0.0863
+  type: 'test'
+  ...
+# Subtest: NAL runner preserves valid rows when stdout contains a diagnostic line
+ok 18 - NAL runner preserves valid rows when stdout contains a diagnostic line
+  ---
+  duration_ms: 0.1832
+  type: 'test'
+  ...
+# Subtest: NAL runner accepts only structured progress heartbeats
+ok 19 - NAL runner accepts only structured progress heartbeats
+  ---
+  duration_ms: 0.1381
+  type: 'test'
+  ...
+# Subtest: NAL runner resets the no-progress watchdog for cycle, command, and marker heartbeats
+ok 20 - NAL runner resets the no-progress watchdog for cycle, command, and marker heartbeats
+  ---
+  duration_ms: 0.0662
+  type: 'test'
+  ...
+# Subtest: NAL runner preserves expected marker count on timeout rows
+ok 21 - NAL runner preserves expected marker count on timeout rows
+  ---
+  duration_ms: 0.0946
+  type: 'test'
+  ...
+# Subtest: NAL runner recognizes Windows timeout results with signal and message
+ok 22 - NAL runner recognizes Windows timeout results with signal and message
+  ---
+  duration_ms: 0.0477
+  type: 'test'
+  ...
+# Subtest: Tense lookup accepts Java String values at the parser boundary
+ok 23 - Tense lookup accepts Java String values at the parser boundary
+  ---
+  duration_ms: 0.2646
+  type: 'test'
+  ...
+# Subtest: NAL metadata separates embedded and runner-added cycles
+ok 24 - NAL metadata separates embedded and runner-added cycles
+  ---
+  duration_ms: 0.1389
+  type: 'test'
+  ...
+# Subtest: NAL runner validates and resumes a persisted per-file result
+ok 25 - NAL runner validates and resumes a persisted per-file result
+  ---
+  duration_ms: 2168.033
+  type: 'test'
+  ...
+# Subtest: NAL runner records an explicit TypeScript process mode and separates run keys
+ok 26 - NAL runner records an explicit TypeScript process mode and separates run keys
+  ---
+  duration_ms: 0.3007
+  type: 'test'
+  ...
+# Subtest: NAL runner rejects duplicate checkpoint rows for one run
+ok 27 - NAL runner rejects duplicate checkpoint rows for one run
+  ---
+  duration_ms: 2.1636
+  type: 'test'
+  ...
+# Subtest: NAL runner rejects duplicate input files before execution
+ok 28 - NAL runner rejects duplicate input files before execution
+  ---
+  duration_ms: 0.2912
+  type: 'test'
+  ...
+# Subtest: NAL runner persists cold and hot results without overwriting either run
+ok 29 - NAL runner persists cold and hot results without overwriting either run
+  ---
+  duration_ms: 3745.1155
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps hot results isolated from order and cold-process boundaries
+ok 30 - NAL runner keeps hot results isolated from order and cold-process boundaries
+  ---
+  duration_ms: 7410.0755
+  type: 'test'
+  ...
+# Subtest: NAL runner resumes after a real middle-file timeout and preserves the tail
+ok 31 - NAL runner resumes after a real middle-file timeout and preserves the tail
+  ---
+  duration_ms: 2698.2647
+  type: 'test'
+  ...
+# Subtest: NAL trace describes ExecutionResult with Java-equivalent operation feedback
+ok 32 - NAL trace describes ExecutionResult with Java-equivalent operation feedback
+  ---
+  duration_ms: 3572.9457
+  type: 'test'
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 32
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19922.0868

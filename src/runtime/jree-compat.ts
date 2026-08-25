@@ -1,5 +1,12 @@
 import { Class, JavaObject, java } from "jree";
 
+/** Text accepted at Node-facing Java string input boundaries. */
+export type JavaStringInput = java.lang.String | string;
+
+/** Normalize a native Node string before it enters translated Java code. */
+export const toJavaString = (value: JavaStringInput): java.lang.String =>
+    value instanceof java.lang.String ? value : new java.lang.String(value);
+
 /**
  * jree 1.3.0 does not ship java.lang.Double. Keep the boxed-number contract
  * at this compatibility boundary instead of replacing translated Java APIs
