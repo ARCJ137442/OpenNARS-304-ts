@@ -19,7 +19,7 @@ import { Symbols } from "../io/Symbols.ts";
 export class Interval extends Term {
 
     public static interval(i: java.lang.String): Interval {
-        return new Interval(java.lang.Long.parseLong(i.substring(1)));
+        return new Interval(java.lang.Long.parseLong(new java.lang.String(String(i).substring(1))) as unknown as long);
     }
 
     public hasInterval(): boolean {
@@ -46,8 +46,8 @@ export class Interval extends Term {
         const time = hasStringOperations
             ? Number(java.lang.Long.parseLong((value as java.lang.String).substring(1))) - 1
             : Number(value);
-        this.time = time;
-        this.setName(Symbols.INTERVAL_PREFIX + java.lang.String.valueOf(time));
+        this.time = time as unknown as long;
+        this.setName(new java.lang.String(String(Symbols.INTERVAL_PREFIX) + String(time)));
     }
 
 
