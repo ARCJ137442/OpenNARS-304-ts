@@ -63,7 +63,7 @@ export class ProcessQuestion extends JavaObject {
         concept.memory.event.emit(Events.ConceptQuestionAdd.class, concept, task);
 
         let ques: Sentence = quesTask.sentence;
-        let newAnswerT: Task = (ques.isQuestion())
+        let newAnswerT: Task | null = (ques.isQuestion())
             ? concept.selectCandidate(quesTask, concept.beliefs, nal.time)
             : concept.selectCandidate(quesTask, concept.desires, nal.time);
 

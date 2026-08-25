@@ -50,7 +50,7 @@ export class Concept extends Item<Term> {
     // concept represents was executed
     // Java reference fields default to null; keep the null guard in
     // TemporalInferenceControl meaningful before the first operation frame.
-    public seq_before: Bag<Task, Sentence> = null;
+    public seq_before: Bag<Task, Sentence> | null = null;
 
     /**
      * Task links for indirect processing
@@ -66,7 +66,7 @@ export class Concept extends Item<Term> {
      * Link templates of TermLink, only in concepts with CompoundTerm Templates
      * are used to improve the efficiency of TermLink building
      */
-    public readonly termLinkTemplates: java.util.List<TermLink>;
+    public readonly termLinkTemplates: java.util.List<TermLink> | null;
 
     /**
      * Pending Question directly asked about the term
@@ -160,18 +160,18 @@ export class Concept extends Item<Term> {
         eventAdd: java.lang.Class<unknown>, eventRemove: java.lang.Class<unknown>, ...extraEventArguments: java.lang.Object[]): void {
 
         let preSize: int = table.size();
-        let removedT: Task;
-        let removed: Sentence = null;
+        let removedT: Task | null;
+        let removed: Sentence | null = null;
         removedT = Concept.addToTable(task, table, max, rankTruthExpectation);
         if (removedT !== null) {
             removed = removedT.sentence;
         }
 
         if (removed !== null) {
-            this.memory.event.emit(eventRemove, this, removed, task, extraEventArguments);
+            this.memory.event.emit(eventRemove, this, removed, task, ...extraEventArguments);
         }
         if ((preSize !== table.size()) || (removed !== null)) {
-            this.memory.event.emit(eventAdd, this, task, extraEventArguments);
+            this.memory.event.emit(eventAdd, this, task, ...extraEventArguments);
         }
     }
 
@@ -193,7 +193,7 @@ export class Concept extends Item<Term> {
         if (!(this.term instanceof CompoundTerm)) {
             return retLink;
         }
-        if (this.termLinkTemplates.isEmpty()) {
+        if (this.termLinkTemplates === null || this.termLinkTemplates.isEmpty()) {
             return retLink;
         }
 
@@ -230,7 +230,7 @@ export class Concept extends Item<Term> {
      * @return whether table was modified
      */
     public static addToTable(newTask: Task, table: java.util.List<Task>, capacity: int,
-        rankTruthExpectation: boolean): Task {
+        rankTruthExpectation: boolean): Task | null {
         let newSentence: Sentence = newTask.sentence;
         let rank1: float = BudgetFunctions.rankBelief(newSentence, rankTruthExpectation); // for the new isBelief
         let rank2: float;
@@ -253,8 +253,8 @@ export class Concept extends Item<Term> {
         if (table.size() === capacity) {
             // nothing
         } else if (table.size() > capacity) {
-            let removed: Task = table.remove(table.size() - 1);
-            return removed;
+            let removed: Task | undefined = table.remove(table.size() - 1);
+            return removed ?? null;
         } else if (i === table.size()) { // branch implies implicit table.size() < capacity
             table.add(newTask);
         }
@@ -269,13 +269,13 @@ export class Concept extends Item<Term> {
      * @param list  The list of beliefs or desires to be used
      * @return The best candidate selected
      */
-    public selectCandidate(query: Task, list: java.util.List<Task>, time: Timable): Task {
+    public selectCandidate(query: Task, list: java.util.List<Task>, time: Timable): Task | null {
         // if (list == null) {
         // return null;
         // }
         let currentBest: float = 0;
         let beliefQuality: float;
-        let candidate: Task = null;
+        let candidate: Task | null = null;
         let rateByConfidence: boolean = true; // table vote, yes/no question / local processing
         /* synchronized (list) { */
         for (let judgT of list) {
@@ -310,9 +310,9 @@ export class Concept extends Item<Term> {
 
     public static AnticipationEntry = class AnticipationEntry extends JavaObject implements java.io.Serializable {
         public negConfirmationPriority: float = 0.0;
-        public negConfirmation: Task = null;
-        public negConfirm_abort_minTime: long = 0;
-        public negConfirm_abort_maxTime: long = 0;
+        public negConfirmation: Task | null = null;
+        public negConfirm_abort_minTime: long = 0n;
+        public negConfirm_abort_maxTime: long = 0n;
 
         public constructor(negConfirmationPriority: float, negConfirmation: Task, negConfirm_abort_minTime: long,
             negConfirm_abort_maxTime: long) {
@@ -347,7 +347,7 @@ export class Concept extends Item<Term> {
         let isEternal: boolean = target.sentence.isEternal();
         let nSameContent: int = 0;
         let lowest_priority: float = Number.MAX_VALUE;
-        let lowest: TaskLink = null;
+        let lowest: TaskLink | null = null;
         for (let tl of this.taskLinks) {
             let s: Sentence = tl.getTarget().sentence;
             if (s.getTerm().equals(taskLink.getTerm()) && s.isEternal() === isEternal) {
@@ -358,8 +358,10 @@ export class Concept extends Item<Term> {
                 }
                 if (nSameContent > nal.narParameters.TASKLINK_PER_CONTENT) { // ok we reached the maximum so lets delete
                     // the lowest
-                    this.taskLinks.pickOut(lowest);
-                    this.memory.emit(TaskLinkRemove.class, lowest, this);
+                    if (lowest !== null) {
+                        this.taskLinks.pickOut(lowest);
+                        this.memory.emit(TaskLinkRemove.class, lowest, this);
+                    }
                     break;
                 }
             }
@@ -386,7 +388,7 @@ export class Concept extends Item<Term> {
      * @param taskBudget The BudgetValue of the task
      */
     public buildTermLinks(taskBudget: BudgetValue, narParameters: Parameters): void {
-        if (this.termLinkTemplates.size() === 0) {
+        if (this.termLinkTemplates === null || this.termLinkTemplates.size() === 0) {
             return;
         }
 
@@ -512,7 +514,7 @@ export class Concept extends Item<Term> {
      *
      * @return The template get
      */
-    public getTermLinkTemplates(): java.util.List<TermLink> {
+    public getTermLinkTemplates(): java.util.List<TermLink> | null {
         return this.termLinkTemplates;
     }
 

@@ -79,7 +79,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param template The TermLink template
      * @param v        The budget
      */
-    public constructor(t: Task, template: TermLink, v: BudgetValue, recordLength: int) {
+    public constructor(t: Task, template: TermLink | null, v: BudgetValue, recordLength: int) {
         super(v);
         this.type = template === null ? TermLink.SELF : template.type;
         this.index =

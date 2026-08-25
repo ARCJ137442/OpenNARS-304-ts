@@ -97,6 +97,9 @@ export class ProcessAnticipation extends JavaObject {
                 c.anticipations.remove(toDelete);
             }
             c.anticipations.add(toInsert);
+            if (toInsert.negConfirmation === null) {
+                return;
+            }
             let impOrEqu: Statement = toInsert.negConfirmation.sentence.term as Statement;
             let cTarget: Concept = nal.memory.concept(impOrEqu.getPredicate());
             if (cTarget !== null) {
@@ -165,6 +168,9 @@ export class ProcessAnticipation extends JavaObject {
             concept.memory.emit(OutputHandler.DISAPPOINT.class, concept.getTerm());
         }
         for (let entry of disappointed) {
+            if (entry.negConfirmation === null) {
+                continue;
+            }
             let term: Term = entry.negConfirmation.getTerm();
             let termWithReplacedIntervals: Term = CompoundTerm.replaceIntervals(term);
 

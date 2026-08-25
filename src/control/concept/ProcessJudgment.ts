@@ -47,7 +47,7 @@ export class ProcessJudgment extends JavaObject {
         ProcessJudgment.handleOperationFeedback(task, nal);
         let judg: Sentence = task.sentence;
         ProcessAnticipation.confirmAnticipation(task, concept, nal);
-        let oldBeliefT: Task = concept.selectCandidate(task, concept.beliefs, nal.time); // only revise with the
+        let oldBeliefT: Task | null = concept.selectCandidate(task, concept.beliefs, nal.time); // only revise with the
         // strongest -- how about
         // projection?
         let oldBelief: Sentence | null = null;

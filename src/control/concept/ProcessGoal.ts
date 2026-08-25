@@ -52,7 +52,7 @@ export class ProcessGoal extends JavaObject {
      */
     public static processGoal(concept: Concept, nal: DerivationContext, task: Task): void {
         let goal: Sentence = task.sentence;
-        let oldGoalT: Task = concept.selectCandidate(task, concept.desires, nal.time); // revise with the existing
+        let oldGoalT: Task | null = concept.selectCandidate(task, concept.desires, nal.time); // revise with the existing
         // desire values
         let oldGoal: Sentence | null = null;
         let newStamp: Stamp = goal.stamp;
@@ -170,7 +170,7 @@ export class ProcessGoal extends JavaObject {
      * @param task          The goal task
      */
     protected static processOperationGoal(projectedGoal: Sentence, nal: DerivationContext,
-        concept: Concept, oldGoalT: Task, task: Task): void {
+        concept: Concept, oldGoalT: Task | null, task: Task): void {
         if (projectedGoal.getTruth().getExpectation() > nal.narParameters.DECISION_THRESHOLD) {
             // see whether the goal evidence is fully included in the old goal, if yes don't
             // execute
