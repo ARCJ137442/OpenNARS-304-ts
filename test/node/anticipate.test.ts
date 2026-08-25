@@ -6,6 +6,8 @@ import { Term } from "../../src/language/Term.ts";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { Events } from "../../src/io/events/Events.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
+import { Concept } from "../../src/entity/Concept.ts";
+import { BudgetValue } from "../../src/entity/BudgetValue.ts";
 
 test("Anticipate keeps a prediction and emits the Java-compatible signal", () => {
     const parameters = new Parameters();
@@ -46,4 +48,20 @@ test("Anticipate subscribes and unsubscribes from its cycle events", () => {
     anticipate.setEnabled(nar as never, false);
     assert.equal(event.isActive(Events.InduceSucceedingEvent.class), false);
     assert.equal(event.isActive(Events.CycleEnd.class), false);
+});
+
+test("Concept stores anticipation entries in a native array", () => {
+    const parameters = new Parameters();
+    const memory = { narParameters: parameters } as never;
+    const concept = new Concept(
+        new BudgetValue(0.5, 0.5, 0.5, parameters),
+        Term.get("anticipation"),
+        memory,
+    );
+    const entry = new Concept.AnticipationEntry(0.5, null as never, 0n, 1n);
+
+    assert.equal(Array.isArray(concept.anticipations), true);
+    concept.anticipations.push(entry);
+    assert.equal(concept.anticipations.length, 1);
+    assert.equal(concept.anticipations[0], entry);
 });

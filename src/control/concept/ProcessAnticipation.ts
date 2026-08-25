@@ -72,7 +72,7 @@ export class ProcessAnticipation extends JavaObject {
             mainSentence.getTerm().getTemporalOrder() === TemporalRules.ORDER_FORWARD) {
             let toDelete: Concept.AnticipationEntry | null = null;
             let toInsert: Concept.AnticipationEntry = new Concept.AnticipationEntry(urgency, t, minTime, maxTime);
-            let fullCapacity: boolean = c.anticipations.size() >= nal.narParameters.ANTICIPATIONS_PER_CONCEPT_MAX;
+            let fullCapacity: boolean = c.anticipations.length >= nal.narParameters.ANTICIPATIONS_PER_CONCEPT_MAX;
             // choose an element to replace with the new, in case that we are already at
             // full capacity
             if (fullCapacity) {
@@ -94,9 +94,10 @@ export class ProcessAnticipation extends JavaObject {
                 return;
             }
             if (toDelete !== null) {
-                c.anticipations.remove(toDelete);
+                const index = c.anticipations.indexOf(toDelete);
+                if (index >= 0) c.anticipations.splice(index, 1);
             }
-            c.anticipations.add(toInsert);
+            c.anticipations.push(toInsert);
             if (toInsert.negConfirmation === null) {
                 return;
             }
@@ -127,8 +128,8 @@ export class ProcessAnticipation extends JavaObject {
     public static maintainDisappointedAnticipations(narParameters: Parameters, concept: Concept,
         nar: Nar): void {
         // here we can check the expiration of the feedback:
-        let confirmed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList<Concept.AnticipationEntry>();
-        let disappointed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList<Concept.AnticipationEntry>();
+        const confirmed: Concept.AnticipationEntry[] = [];
+        const disappointed: Concept.AnticipationEntry[] = [];
         for (let entry of concept.anticipations) {
             if (entry.negConfirmation === null || nar.time() <= entry.negConfirm_abort_maxTime) {
                 continue;
@@ -147,7 +148,7 @@ export class ProcessAnticipation extends JavaObject {
                             .equals(CompoundTerm.replaceIntervals(concept.getTerm()))) {
                         if (t.sentence.getOccurrenceTime() >= entry.negConfirm_abort_minTime
                             && t.sentence.getOccurrenceTime() <= entry.negConfirm_abort_maxTime) {
-                            confirmed.add(entry);
+                            confirmed.push(entry);
                             gotConfirmed = true;
                             break;
                         }
@@ -155,16 +156,17 @@ export class ProcessAnticipation extends JavaObject {
                 }
             }
             if (!gotConfirmed) {
-                disappointed.add(entry);
+                disappointed.push(entry);
             }
         }
         // confirmed by input, nothing to do
-        if (confirmed.size() > 0) {
+        if (confirmed.length > 0) {
             concept.memory.emit(OutputHandler.CONFIRM.class, concept.getTerm());
         }
-        concept.anticipations.removeAll(confirmed);
+        const confirmedSet = new Set(confirmed);
+        concept.anticipations = concept.anticipations.filter((entry) => !confirmedSet.has(entry));
         // not confirmed and time is out, generate disappointment
-        if (disappointed.size() > 0) {
+        if (disappointed.length > 0) {
             concept.memory.emit(OutputHandler.DISAPPOINT.class, concept.getTerm());
         }
         for (let entry of disappointed) {
@@ -222,7 +224,8 @@ export class ProcessAnticipation extends JavaObject {
                 }
             }
 
-            concept.anticipations.remove(entry);
+            const index = concept.anticipations.indexOf(entry);
+            if (index >= 0) concept.anticipations.splice(index, 1);
         }
     }
 
@@ -237,18 +240,19 @@ export class ProcessAnticipation extends JavaObject {
         let satisfiesAnticipation: boolean = task.isInput() && !task.sentence.isEternal();
         let isExpectationAboveThreshold: boolean = task.sentence.getTruth()
             .getExpectation() > nal.narParameters.DEFAULT_CONFIRMATION_EXPECTATION;
-        let confirmed: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList<Concept.AnticipationEntry>();
+        const confirmed: Concept.AnticipationEntry[] = [];
         for (let entry of concept.anticipations) {
             if (satisfiesAnticipation && isExpectationAboveThreshold
                 && task.sentence.getOccurrenceTime() >= entry.negConfirm_abort_minTime
                 && task.sentence.getOccurrenceTime() <= entry.negConfirm_abort_maxTime) {
-                confirmed.add(entry);
+                confirmed.push(entry);
             }
         }
-        if (confirmed.size() > 0) {
+        if (confirmed.length > 0) {
             nal.memory.emit(OutputHandler.CONFIRM.class, concept.getTerm());
         }
-        concept.anticipations.removeAll(confirmed);
+        const confirmedSet = new Set(confirmed);
+        concept.anticipations = concept.anticipations.filter((entry) => !confirmedSet.has(entry));
     }
 
     /**

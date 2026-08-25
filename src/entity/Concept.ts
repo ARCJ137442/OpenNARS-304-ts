@@ -325,7 +325,8 @@ export class Concept extends Item<Term> {
     };
 
 
-    public anticipations: java.util.List<Concept.AnticipationEntry> = new java.util.ArrayList<Concept.AnticipationEntry>();
+    /** Native FIFO-compatible storage; only ProcessAnticipation owns mutations. */
+    public anticipations: Concept.AnticipationEntry[] = [];
 
     /* ---------- insert Links for indirect processing ---------- */
     /**
