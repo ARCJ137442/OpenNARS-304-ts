@@ -24,7 +24,9 @@ test("scoped variable ordering uses Java code-unit order for commutative interse
     const { java } = await import("jree");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
+    const { CompoundTerm } = await import("../../src/language/CompoundTerm.ts");
     const { IntersectionInt } = await import("../../src/language/IntersectionInt.ts");
+    const { Statement } = await import("../../src/language/Statement.ts");
 
     const parser = new Narsese(new Nar());
     const task = parser.parseTask(new java.lang.String(
@@ -33,13 +35,21 @@ test("scoped variable ordering uses Java code-unit order for commutative interse
     const belief = parser.parseTask(new java.lang.String(
         "<(|,#1,#2,cup) --> (|,#1,#2,[heated])>.",
     ));
+    assert.ok(task.sentence.term instanceof Statement);
+    assert.ok(belief.sentence.term instanceof Statement);
+    const taskStatement = task.sentence.term;
+    const beliefStatement = belief.sentence.term;
     const merged = IntersectionInt.make(
-        task.sentence.term.getPredicate(),
-        belief.sentence.term.getPredicate(),
+        taskStatement.getPredicate(),
+        beliefStatement.getPredicate(),
     );
     assert.ok(merged);
-    const taskVariable = task.sentence.term.getPredicate().term[0];
-    const beliefVariable = belief.sentence.term.getPredicate().term[0];
+    const taskPredicate = taskStatement.getPredicate();
+    const beliefPredicate = beliefStatement.getPredicate();
+    assert.ok(taskPredicate instanceof CompoundTerm);
+    assert.ok(beliefPredicate instanceof CompoundTerm);
+    const taskVariable = taskPredicate.term[0];
+    const beliefVariable = beliefPredicate.term[0];
 
     assert.ok(taskVariable.compareTo(beliefVariable) > 0);
     assert.ok(beliefVariable.compareTo(taskVariable) < 0);
@@ -64,10 +74,11 @@ test("default NAR loads the internal experience plugin used by Java toothbrush",
 });
 
 test("tensional sets initialize Java-compatible compound complexity", async () => {
+    const { java } = await import("jree");
     const { Term } = await import("../../src/language/Term.ts");
     const { SetInt } = await import("../../src/language/SetInt.ts");
 
-    const set = SetInt.make(new Term("busy"));
+    const set = SetInt.make(new Term(new java.lang.String("busy")));
 
     assert.equal(set.getComplexity(), 2);
 });
@@ -90,6 +101,7 @@ test("novel-task Bag preserves Java float level selection at the 0.8 boundary", 
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { java } = await import("jree");
+    const { Task } = await import("../../src/entity/Task.ts");
 
     const nar = new Nar();
     const parser = new Narsese(nar);
@@ -100,9 +112,11 @@ test("novel-task Bag preserves Java float level selection at the 0.8 boundary", 
     const bag = new Bag(100, 1000, nar.narParameters);
     bag.putIn(fact);
     bag.putIn(goal);
+    const taken = bag.takeOut();
+    assert.ok(taken instanceof Task);
 
     assert.equal(
-        String(bag.takeOut().sentence.term.name()),
+        String(taken.sentence.term.name()),
         "(&&,<#1 --> [unscrewing]>,<#1 --> object>)",
     );
 });
@@ -212,6 +226,7 @@ test("compound-condition TermLink overload preserves Java's leading condition in
 
     const parser = new Narsese(new Nar());
     const target = parser.parseTerm(new java.lang.String("<$1 --> [pliable]>"));
+    assert.ok(target);
     const link = new TermLink(TermLink.COMPOUND_CONDITION, target, 0, 1);
 
     assert.deepEqual(Array.from(link.index), [0, 0, 1]);
@@ -232,6 +247,8 @@ test("conditional operation unification substitutes the grounded toothbrush term
     const operation = parser.parseTerm(new java.lang.String(
         "(^lighter,{SELF},toothbrush)",
     ));
+    assert.ok(premise);
+    assert.ok(operation);
     const component = (premise as any).getSubject().term[0];
     const unified = [premise, operation] as any[];
 
