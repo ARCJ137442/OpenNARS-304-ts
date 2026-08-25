@@ -1,0 +1,568 @@
+test/core/ApplySubstituteTest.ts(21,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/ApplySubstituteTest.ts(25,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/ApplySubstituteTest.ts(26,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/ApplySubstituteTest.ts(29,15): error TS2345: Argument of type 'Term | null' is not assignable to parameter of type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/ApplySubstituteTest.ts(36,30): error TS2339: Property 'equals' does not exist on type 'CharSequence'.
+test/core/ApplySubstituteTest.ts(46,15): error TS2345: Argument of type 'Term | null' is not assignable to parameter of type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/bag/BagIteratorTest.ts(10,28): error TS2304: Cannot find name 'Bag'.
+test/core/bag/BagIteratorTest.ts(10,32): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(12,20): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(13,22): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(26,13): error TS2304: Cannot find name 'assertTrue'.
+test/core/bag/BagIteratorTest.ts(29,9): error TS2304: Cannot find name 'assertTrue'.
+test/core/bag/BagIteratorTest.ts(32,32): error TS2304: Cannot find name 'Bag'.
+test/core/bag/BagIteratorTest.ts(45,31): error TS2304: Cannot find name 'Bag'.
+test/core/bag/BagIteratorTest.ts(45,35): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(47,21): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(48,21): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(49,21): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(50,21): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(51,21): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(52,21): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(53,21): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(54,21): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/BagIteratorTest.ts(64,21): error TS2304: Cannot find name 'NullItem'.
+test/core/bag/DistributorAnalyzer.ts(23,13): error TS2322: Type 'ArrayList<unknown>' is not assignable to type 'List<number>'.
+test/core/bag/DistributorAnalyzer.ts(28,13): error TS2322: Type 'ArrayList<unknown>' is not assignable to type 'List<number>'.
+test/core/LongTermStability.ts(16,88): error TS2729: Property 'ObjectIdCounter' is used before its initialization.
+test/core/LongTermStability.ts(43,88): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/LongTermStability.ts(44,88): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/LongTermStability.ts(45,88): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/LongTermStability.ts(47,59): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/LongTermStability.ts(48,59): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/LongTermStability.ts(51,86): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/LongTermStability.ts(52,86): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/LongTermStability.ts(53,86): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/LongTermStability.ts(57,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+  Type 'string' is not assignable to type 'JavaString'.
+test/core/LongTermStability.ts(61,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(62,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(63,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(64,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(66,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(71,37): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(73,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(74,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(76,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(77,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(79,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(80,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(82,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/LongTermStability.ts(83,51): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/core/NALTest.ts(35,54): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/NALTest.ts(35,75): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/NALTest.ts(35,95): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/NALTest.ts(48,17): error TS2322: Type 'JavaString | null' is not assignable to type 'JavaString'.
+  Type 'null' is not assignable to type 'JavaString'.
+test/core/NALTest.ts(73,13): error TS2322: Type 'Collection<JavaObject>' is not assignable to type 'Collection<unknown>'.
+  Types of property 'addAll' are incompatible.
+    Type '(c: Collection<JavaObject>) => boolean' is not assignable to type '(c: Collection<unknown>) => boolean'.
+      Types of parameters 'c' and 'c' are incompatible.
+        Type 'Collection<unknown>' is not assignable to type 'Collection<JavaObject>'.
+          The types of 'iterator().forEachRemaining' are incompatible between these types.
+            Type '(action: Consumer<unknown>) => void' is not assignable to type '(action: Consumer<JavaObject>) => void'.
+              Types of parameters 'action' and 'action' are incompatible.
+                Type 'Consumer<JavaObject>' is not assignable to type 'Consumer<unknown>'.
+                  Types of property 'andThen' are incompatible.
+                    Type '((after: Consumer<JavaObject>) => Consumer<JavaObject>) | undefined' is not assignable to type '((after: Consumer<unknown>) => Consumer<unknown>) | undefined'.
+                      Type '(after: Consumer<JavaObject>) => Consumer<JavaObject>' is not assignable to type '(after: Consumer<unknown>) => Consumer<unknown>'.
+                        Types of parameters 'after' and 'after' are incompatible.
+                          Type 'Consumer<unknown>' is not assignable to type 'Consumer<JavaObject>'.
+                            Type 'unknown' is not assignable to type 'JavaObject'.
+test/core/NALTest.ts(80,47): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(ch: number): number', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number'.
+  Overload 2 of 4, '(searchString: JavaString): number', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/NALTest.ts(81,33): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'JavaBoolean'.
+test/core/NALTest.ts(89,21): error TS2304: Cannot find name 'Result'.
+test/core/NALTest.ts(89,30): error TS2304: Cannot find name 'JUnitCore'.
+test/core/NALTest.ts(89,55): error TS2304: Cannot find name 'ParallelComputer'.
+test/core/NALTest.ts(95,37): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'JavaBoolean'.
+test/core/NALTest.ts(209,17): error TS2531: Object is possibly 'null'.
+test/core/NALTest.ts(211,21): error TS2322: Type 'ArrayList<unknown>' is not assignable to type 'List<number>'.
+  Types of property 'addAll' are incompatible.
+    Type '{ (c: Collection<unknown>): boolean; (index: number, c: Collection<unknown>): boolean; }' is not assignable to type '{ (index: number, c: Collection<number>): boolean; (c: Collection<number>): boolean; }'.
+      Types of parameters 'c' and 'index' are incompatible.
+        Type 'number' is not assignable to type 'Collection<unknown>'.
+test/core/NALTest.ts(218,17): error TS2531: Object is possibly 'null'.
+test/core/NALTest.ts(220,21): error TS2322: Type 'ArrayList<unknown>' is not assignable to type 'List<number>'.
+test/core/NALTest.ts(234,14): error TS2447: The '&' operator is not allowed for boolean types. Consider using '&&' instead.
+test/core/NALTest.ts(242,24): error TS2345: Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+test/core/NALTestSome.ts(19,36): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/NALTestSome.ts(23,13): error TS2322: Type 'LinkedList<unknown>' is not assignable to type 'List<JavaObject[]>'.
+  Types of property 'addAll' are incompatible.
+    Type '{ (c: Collection<unknown>): boolean; (index: number, c: Collection<unknown>): boolean; }' is not assignable to type '{ (index: number, c: Collection<JavaObject[]>): boolean; (c: Collection<JavaObject[]>): boolean; }'.
+      Types of parameters 'c' and 'index' are incompatible.
+        Type 'number' is not assignable to type 'Collection<unknown>'.
+test/core/NALTestSome.ts(25,13): error TS2322: Type 'null' is not assignable to type 'JavaFile'.
+test/core/NALTestSome.ts(27,57): error TS2339: Property 'getResource' does not exist on type 'Class<JavaObject>'.
+test/core/NALTestSome.ts(36,33): error TS2551: Property 'listFiles' does not exist on type 'JavaFile'. Did you mean 'isFile'?
+test/core/NALTestSome.ts(43,9): error TS2322: Type 'List<JavaObject[]>' is not assignable to type 'Collection<unknown>'.
+  Types of property 'addAll' are incompatible.
+    Type '{ (index: number, c: Collection<JavaObject[]>): boolean; (c: Collection<JavaObject[]>): boolean; }' is not assignable to type '(c: Collection<unknown>) => boolean'.
+      Target signature provides too few arguments. Expected 2 or more, but got 1.
+test/core/NarNodeTest.ts(17,22): error TS2322: Type 'number' is not assignable to type 'Integer'.
+test/core/NarNodeTest.ts(20,9): error TS2322: Type 'number' is not assignable to type 'Integer'.
+test/core/NarNodeTest.ts(23,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/NarNodeTest.ts(28,42): error TS2689: Cannot extend an interface 'EventEmitter.EventObserver'. Did you mean 'implements'?
+test/core/NarNodeTest.ts(30,39): error TS2339: Property 'EventReceivedTask' does not exist on type 'typeof NarNode'.
+test/core/NarNodeTest.ts(34,21): error TS2356: An arithmetic operand must be of type 'any', 'number', 'bigint' or an enum type.
+test/core/NarNodeTest.ts(38,28): error TS2339: Property 'EventReceivedTask' does not exist on type 'typeof NarNode'.
+test/core/NarNodeTest.ts(40,29): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/NarNodeTest.ts(44,17): error TS2365: Operator '>=' cannot be applied to types 'Integer' and 'number'.
+test/core/ReplaceIntervalTest.ts(20,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/SaveLoadMemoryTest.ts(17,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/StabilityTest.ts(34,17): error TS2322: Type 'JavaString | null' is not assignable to type 'JavaString'.
+  Type 'null' is not assignable to type 'JavaString'.
+test/core/StabilityTest.ts(59,48): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/StabilityTest.ts(62,13): error TS2322: Type 'Collection<JavaObject>' is not assignable to type 'Collection<unknown>'.
+test/core/StabilityTest.ts(69,47): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(ch: number): number', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'number'.
+  Overload 2 of 4, '(searchString: JavaString): number', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/StabilityTest.ts(70,39): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'JavaBoolean'.
+test/core/StabilityTest.ts(81,34): error TS2339: Property 'in' does not exist on type 'typeof System'.
+test/core/StabilityTest.ts(93,21): error TS2304: Cannot find name 'Result'.
+test/core/StabilityTest.ts(93,30): error TS2304: Cannot find name 'JUnitCore'.
+test/core/StabilityTest.ts(93,55): error TS2304: Cannot find name 'ParallelComputer'.
+test/core/StabilityTest.ts(99,43): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'JavaBoolean'.
+test/core/StabilityTest.ts(124,21): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/StabilityTest.ts(139,32): error TS2304: Cannot find name 'org'.
+test/core/StabilityTest.ts(153,13): error TS2322: Type 'ArrayList<unknown>' is not assignable to type 'List<OutputCondition>'.
+test/core/StabilityTest.ts(155,13): error TS2322: Type 'null' is not assignable to type 'Nar'.
+test/core/StabilityTest.ts(204,14): error TS2447: The '&' operator is not allowed for boolean types. Consider using '&&' instead.
+test/core/StabilityTest.ts(214,24): error TS2345: Argument of type 'JavaString' is not assignable to parameter of type 'string'.
+test/core/TermTest.ts(34,17): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(35,17): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(45,38): error TS2339: Property 'InvalidInputException' does not exist on type 'typeof Narsese'.
+test/core/TermTest.ts(46,83): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'Throwable | null'.
+test/core/TermTest.ts(56,31): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/TermTest.ts(57,31): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/TermTest.ts(58,31): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/TermTest.ts(66,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(67,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(68,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(81,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/TermTest.ts(82,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(83,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/TermTest.ts(84,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(87,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(118,28): error TS2694: Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index"' has no exported member 'NavigableSet'.
+test/core/TermTest.ts(118,63): error TS2339: Property 'TreeSet' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+test/core/TermTest.ts(131,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/TermTest.ts(132,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(133,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(149,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/TermTest.ts(151,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(153,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(164,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/TermTest.ts(168,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(180,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/core/TermTest.ts(184,13): error TS2322: Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(185,13): error TS2322: Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(187,9): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(188,9): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/TermTest.ts(190,13): error TS2322: Type 'Statement | null' is not assignable to type 'Statement'.
+  Type 'null' is not assignable to type 'Statement'.
+test/core/TermTest.ts(214,13): error TS2322: Type 'Term | null' is not assignable to type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/core/VariableTest.ts(39,13): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(n: Nar, active: boolean, events: Class<unknown>[]): (Anonymous class)', gave the following error.
+    Argument of type 'Class<JavaObject>' is not assignable to parameter of type 'Class<unknown>[]'.
+      Type 'Class<JavaObject>' is missing the following properties from type 'Class<unknown>[]': length, pop, push, concat, and 35 more.
+  Overload 2 of 2, '(source: EventEmitter, active: boolean, events: Class<unknown>[]): (Anonymous class)', gave the following error.
+    Argument of type 'Nar' is not assignable to parameter of type 'EventEmitter'.
+      Type 'Nar' is missing the following properties from type 'EventEmitter': events, pendingOps, newObserverList, isActive, and 2 more.
+test/core/VariableTest.ts(46,78): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/core/VariableTest.ts(68,13): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(n: Nar, active: boolean, events: Class<unknown>[]): (Anonymous class)', gave the following error.
+    Argument of type 'Class<JavaObject>' is not assignable to parameter of type 'Class<unknown>[]'.
+  Overload 2 of 2, '(source: EventEmitter, active: boolean, events: Class<unknown>[]): (Anonymous class)', gave the following error.
+    Argument of type 'Nar' is not assignable to parameter of type 'EventEmitter'.
+test/entity/TLink.test.ts(118,46): error TS2345: Argument of type 'readonly [0, 1, 2]' is not assignable to parameter of type 'number[]'.
+  The type 'readonly [0, 1, 2]' is 'readonly' and cannot be assigned to the mutable type 'number[]'.
+test/metrics/AttentionMetric.ts(31,54): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/metrics/AttentionMetric.ts(31,74): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/metrics/AttentionMetric.ts(52,49): error TS2352: Conversion of type 'JavaObject' to type 'JavaObject[]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'JavaObject' is missing the following properties from type 'JavaObject[]': length, pop, push, concat, and 35 more.
+test/metrics/AttentionMetric.ts(126,13): error TS2322: Type 'null' is not assignable to type 'Reasoner'.
+test/metrics/AttentionMetric.ts(134,47): error TS2339: Property 'reflect' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+test/metrics/AttentionMetric.ts(135,17): error TS18046: 'e' is of type 'unknown'.
+test/metrics/AttentionMetric.ts(146,47): error TS2339: Property 'ParseException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+test/metrics/AttentionMetric.ts(147,17): error TS18046: 'e' is of type 'unknown'.
+test/metrics/AttentionMetric.ts(155,48): error TS2345: Argument of type 'number' is not assignable to parameter of type 'bigint'.
+test/metrics/AttentionMetric.ts(167,61): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/metrics/AttentionMetric.ts(168,65): error TS2339: Property 'endsWith' does not exist on type 'JavaString'.
+test/metrics/AttentionMetric.ts(177,74): error TS2339: Property 'InvalidInputException' does not exist on type 'typeof Narsese'.
+test/metrics/AttentionMetric.ts(178,17): error TS18046: 'e' is of type 'unknown'.
+test/metrics/AttentionMetric.ts(197,13): error TS2322: Type 'ArrayList<unknown>' is not assignable to type 'List<JavaString>'.
+  Types of property 'addAll' are incompatible.
+    Type '{ (c: Collection<unknown>): boolean; (index: number, c: Collection<unknown>): boolean; }' is not assignable to type '{ (index: number, c: Collection<JavaString>): boolean; (c: Collection<JavaString>): boolean; }'.
+test/metrics/AttentionMetric.ts(205,29): error TS2322: Type 'JavaString | null' is not assignable to type 'JavaString'.
+  Type 'null' is not assignable to type 'JavaString'.
+test/metrics/AttentionMetric.ts(226,13): error TS2554: Expected 3 arguments, but got 2.
+test/metrics/AttentionMetric.ts(268,13): error TS2322: Type 'ExecOrAnswerByTime | null' is not assignable to type 'ExecOrAnswerByTime'.
+  Type 'null' is not assignable to type 'ExecOrAnswerByTime'.
+test/metrics/AttentionMetric.ts(272,59): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/metrics/AttentionMetric.ts(274,31): error TS18047: 's.truth' is possibly 'null'.
+test/metrics/AttentionMetric.ts(281,30): error TS18047: 's.truth' is possibly 'null'.
+test/metrics/AttentionMetric.ts(282,20): error TS18047: 's.truth' is possibly 'null'.
+test/metrics/AttentionMetric.ts(285,30): error TS18047: 's.truth' is possibly 'null'.
+test/metrics/AttentionMetric.ts(295,16): error TS2564: Property 'firstTruth' has no initializer and is not definitely assigned in the constructor.
+test/metrics/AttentionMetric.ts(298,16): error TS2564: Property 'bestTruth' has no initializer and is not definitely assigned in the constructor.
+test/metrics/NalTestMetrics.ts(35,13): error TS2322: Type 'ArrayList<unknown>' is not assignable to type 'List<number>'.
+test/metrics/NalTestMetrics.ts(58,32): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/metrics/NalTestMetrics.ts(58,52): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/metrics/TemporalOneShotMetric.ts(14,12): error TS2564: Property 'reasonerUnderTest' has no initializer and is not definitely assigned in the constructor.
+test/metrics/TemporalOneShotMetric.ts(22,13): error TS2322: Type 'ArrayList<unknown>' is not assignable to type 'List<JavaString>'.
+test/metrics/TemporalOneShotMetric.ts(79,69): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 2, '(l: Locale, format: JavaString, ...args: unknown[]): JavaString', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'Locale'.
+test/metrics/TemporalOneShotMetric.ts(94,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/metrics/TemporalOneShotMetric.ts(97,13): error TS2365: Operator '+=' cannot be applied to types 'JavaString' and 'number'.
+test/node/anticipate.test.ts(28,59): error TS2345: Argument of type 'null' is not assignable to parameter of type 'Task'.
+test/node/budget-functions-float-boundary.test.ts(41,26): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(name: JavaString): Term', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 3, '(name: CharSequence): Term', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'CharSequence'.
+test/node/core-runtime.test.ts(42,43): error TS2344: Type 'typeof Negation' does not satisfy the constraint 'abstract new (...args: any) => any'.
+  Cannot assign a 'protected' constructor type to a 'public' constructor type.
+test/node/core-runtime.test.ts(77,90): error TS2344: Type 'typeof Conjunction' does not satisfy the constraint 'abstract new (...args: any) => any'.
+  Cannot assign a 'protected' constructor type to a 'public' constructor type.
+test/node/core-runtime.test.ts(244,67): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(time: bigint): Interval', gave the following error.
+    Argument of type 'number' is not assignable to parameter of type 'bigint'.
+  Overload 2 of 2, '(i: JavaString): Interval', gave the following error.
+    Argument of type 'number' is not assignable to parameter of type 'JavaString'.
+test/node/language-runtime.test.ts(23,26): error TS2345: Argument of type 'string' is not assignable to parameter of type 'CharSequence'.
+test/node/language-runtime.test.ts(48,33): error TS2749: 'ImageInt' refers to a value, but is being used as a type here. Did you mean 'typeof ImageInt'?
+test/node/language-runtime.test.ts(50,33): error TS2749: 'ImageExt' refers to a value, but is being used as a type here. Did you mean 'typeof ImageExt'?
+test/node/migration-patterns.test.ts(14,20): error TS7006: Parameter 'script' implicitly has an 'any' type.
+test/node/migration-patterns.test.ts(14,28): error TS7006: Parameter 'args' implicitly has an 'any' type.
+test/node/migration-patterns.test.ts(26,21): error TS7006: Parameter 'args' implicitly has an 'any' type.
+test/node/migration-patterns.test.ts(40,18): error TS18046: 'preview' is of type 'unknown'.
+test/node/migration-patterns.test.ts(41,29): error TS18046: 'preview' is of type 'unknown'.
+test/node/migration-patterns.test.ts(45,18): error TS18046: 'checkBeforeWrite' is of type 'unknown'.
+test/node/migration-patterns.test.ts(48,18): error TS18046: 'write' is of type 'unknown'.
+test/node/migration-patterns.test.ts(54,18): error TS18046: 'checkAfterWrite' is of type 'unknown'.
+test/node/migration-patterns.test.ts(66,18): error TS18046: 'write' is of type 'unknown'.
+test/node/migration-patterns.test.ts(83,18): error TS18046: 'write' is of type 'unknown'.
+test/node/migration-patterns.test.ts(96,16): error TS18046: 'result' is of type 'unknown'.
+test/node/migration-patterns.test.ts(97,29): error TS18046: 'result' is of type 'unknown'.
+test/node/migration-patterns.test.ts(98,50): error TS7006: Parameter 'pattern' implicitly has an 'any' type.
+test/node/migration-patterns.test.ts(99,51): error TS7006: Parameter 'pattern' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(514,19): error TS7006: Parameter 'subject' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(514,28): error TS7006: Parameter 'predicate' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(520,16): error TS7006: Parameter 'resultFile' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(520,28): error TS7006: Parameter 'mode' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(520,34): error TS7006: Parameter 'files' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(528,23): error TS7006: Parameter 'file' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(530,21): error TS7006: Parameter 'resultFile' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(534,21): error TS7006: Parameter 'row' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(545,19): error TS7006: Parameter 'rows' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(545,46): error TS7006: Parameter 'row' implicitly has an 'any' type.
+test/node/nal-runner-semantics.test.ts(546,31): error TS7006: Parameter 'result' implicitly has an 'any' type.
+test/node/narsese-temporal.test.ts(17,24): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(memory: Memory): Narsese', gave the following error.
+    Type 'null' is not assignable to type 'Operator'.
+  Overload 2 of 2, '(n: Nar): Narsese', gave the following error.
+    Object literal may only specify known properties, and 'getOperator' does not exist in type 'Nar'.
+test/node/narsese-temporal.test.ts(29,38): error TS2345: Argument of type 'number' is not assignable to parameter of type 'bigint'.
+test/node/narsese-temporal.test.ts(36,31): error TS2339: Property 'prepareComponentLinks' does not exist on type 'Term'.
+test/node/narsese-temporal.test.ts(37,48): error TS18046: 'link' is of type 'unknown'.
+test/node/narsese-temporal.test.ts(41,53): error TS2345: Argument of type 'null' is not assignable to parameter of type 'Memory'.
+test/node/narsese-temporal.test.ts(48,39): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(product: Product, relation: Term, index: number): Term', gave the following error.
+    Argument of type 'Term' is not assignable to parameter of type 'Product'.
+      Type 'Term' is missing the following properties from type 'Product': term, complexity, hasVariables, hasVarQueries, and 30 more.
+  Overload 2 of 3, '(oldImage: ImageExt, component: Term, index: number): Term', gave the following error.
+    Argument of type 'Term' is not assignable to parameter of type 'ImageExt'.
+      Type 'Term' is missing the following properties from type 'ImageExt': relationIndex, init, makeName, getRelation, and 33 more.
+test/node/narsese-temporal.test.ts(52,39): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(product: Product, relation: Term, index: number): Term', gave the following error.
+    Argument of type 'Term' is not assignable to parameter of type 'Product'.
+  Overload 2 of 4, '(oldImage: ImageInt, component: Term, index: number): Term', gave the following error.
+    Argument of type 'Term' is not assignable to parameter of type 'ImageInt'.
+      Type 'Term' is missing the following properties from type 'ImageInt': relationIndex, init, makeName, getRelation, and 33 more.
+test/node/narsese-temporal.test.ts(58,57): error TS2345: Argument of type 'Term | null' is not assignable to parameter of type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/node/tasklink-key.test.ts(53,40): error TS2345: Argument of type 'Term | null' is not assignable to parameter of type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/node/toothbrush-term-order.test.ts(37,28): error TS2339: Property 'getPredicate' does not exist on type 'Term'.
+test/node/toothbrush-term-order.test.ts(38,30): error TS2339: Property 'getPredicate' does not exist on type 'Term'.
+test/node/toothbrush-term-order.test.ts(41,45): error TS2339: Property 'getPredicate' does not exist on type 'Term'.
+test/node/toothbrush-term-order.test.ts(42,49): error TS2339: Property 'getPredicate' does not exist on type 'Term'.
+test/node/toothbrush-term-order.test.ts(70,38): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(name: JavaString): Term', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+  Overload 2 of 3, '(name: CharSequence): Term', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'CharSequence'.
+test/node/toothbrush-term-order.test.ts(105,30): error TS2339: Property 'sentence' does not exist on type 'Item<unknown>'.
+test/node/toothbrush-term-order.test.ts(215,22): error TS2769: No overload matches this call.
+  Overload 1 of 6, '(target: Term, type: number, ...indices: number[]): TermLink', gave the following error.
+    Argument of type 'number' is not assignable to parameter of type 'Term'.
+  Overload 2 of 6, '(type: number, target: Term, i0: number, i1: number): TermLink', gave the following error.
+    Argument of type 'Term | null' is not assignable to parameter of type 'Term'.
+      Type 'null' is not assignable to type 'Term'.
+test/node/toothbrush-term-order.test.ts(243,13): error TS2345: Argument of type 'Term | null' is not assignable to parameter of type 'Term'.
+  Type 'null' is not assignable to type 'Term'.
+test/node/variables-substitution.test.ts(14,39): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/node/variables-substitution.test.ts(15,39): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/node/variables-substitution.test.ts(33,21): error TS2339: Property 'getSubject' does not exist on type 'Term'.
+test/node/vision-channel.test.ts(10,37): error TS2445: Property 'sensoryChannels' is protected and only accessible within class 'Nar' and its subclasses.
+test/perf/BagPerf.ts(43,47): error TS2339: Property 'reflect' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+test/perf/BagPerf.ts(44,17): error TS18046: 'e' is of type 'unknown'.
+test/perf/BagPerf.ts(55,47): error TS2339: Property 'ParseException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+test/perf/BagPerf.ts(56,17): error TS18046: 'e' is of type 'unknown'.
+test/perf/BagPerf.ts(63,15): error TS2564: Property 'randomAccesses' has no initializer and is not definitely assigned in the constructor.
+test/perf/BagPerf.ts(72,39): error TS2344: Type 'unknown' does not satisfy the constraint 'Item<unknown>'.
+test/perf/BagPerf.ts(86,39): error TS2344: Type 'unknown' does not satisfy the constraint 'Item<unknown>'.
+test/perf/BagPerf.ts(100,12): error TS2564: Property 'totalPriority' has no initializer and is not definitely assigned in the constructor.
+test/perf/BagPerf.ts(103,12): error TS2564: Property 'totalMinItemsPerLevel' has no initializer and is not definitely assigned in the constructor.
+test/perf/BagPerf.ts(106,12): error TS2564: Property 'totalMaxItemsPerLevel' has no initializer and is not definitely assigned in the constructor.
+test/perf/BagPerf.ts(120,21): error TS2322: Type 'null' is not assignable to type 'Nar'.
+test/perf/BagPerf.ts(125,42): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(125,105): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(127,42): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(127,105): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(128,56): error TS2339: Property 'reflect' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+test/perf/BagPerf.ts(129,42): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(129,105): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(131,42): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(131,105): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(133,42): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(133,105): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(135,42): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(135,105): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(137,42): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(137,105): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(139,42): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(139,105): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(140,56): error TS2339: Property 'ParseException' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+test/perf/BagPerf.ts(141,42): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(141,105): error TS2339: Property 'Logger' does not exist on type 'typeof System'.
+test/perf/BagPerf.ts(164,78): error TS2345: Argument of type 'Bag<NullItem, CharSequence>' is not assignable to parameter of type 'Bag<unknown, unknown>'.
+  The types of 'nameTable.entrySet().addAll' are incompatible between these types.
+    Type '(c: Collection<Entry<CharSequence, NullItem>>) => boolean' is not assignable to type '(c: Collection<Entry<unknown, unknown>>) => boolean'.
+      Types of parameters 'c' and 'c' are incompatible.
+        Type 'Collection<Entry<unknown, unknown>>' is not assignable to type 'Collection<Entry<CharSequence, NullItem>>'.
+          The types of 'iterator().forEachRemaining' are incompatible between these types.
+            Type '(action: Consumer<Entry<unknown, unknown>>) => void' is not assignable to type '(action: Consumer<Entry<CharSequence, NullItem>>) => void'.
+              Types of parameters 'action' and 'action' are incompatible.
+                Type 'Consumer<Entry<CharSequence, NullItem>>' is not assignable to type 'Consumer<Entry<unknown, unknown>>'.
+                  Types of property 'andThen' are incompatible.
+                    Type '((after: Consumer<Entry<CharSequence, NullItem>>) => Consumer<Entry<CharSequence, NullItem>>) | undefined' is not assignable to type '((after: Consumer<Entry<unknown, unknown>>) => Consumer<Entry<unknown, unknown>>) | undefined'.
+                      Type '(after: Consumer<Entry<CharSequence, NullItem>>) => Consumer<Entry<CharSequence, NullItem>>' is not assignable to type '(after: Consumer<Entry<unknown, unknown>>) => Consumer<Entry<unknown, unknown>>'.
+                        Types of parameters 'after' and 'after' are incompatible.
+                          Type 'Consumer<Entry<unknown, unknown>>' is not assignable to type 'Consumer<Entry<CharSequence, NullItem>>'.
+                            Type 'Entry<unknown, unknown>' is not assignable to type 'Entry<CharSequence, NullItem>'.
+test/perf/BagPerf.ts(165,78): error TS2345: Argument of type 'Bag<NullItem, CharSequence>' is not assignable to parameter of type 'Bag<unknown, unknown>'.
+test/perf/BagPerf.ts(169,11): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/BagPerf.ts(177,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/BagPerf.ts(178,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/BagPerf.ts(187,25): error TS2564: Property 'key' has no initializer and is not definitely assigned in the constructor.
+test/perf/BagPerf.ts(196,21): error TS2349: This expression is not callable.
+  Type 'NullItem' has no call signatures.
+test/perf/BagPerf.ts(196,21): error TS17009: 'super' must be called before accessing 'this' in the constructor of a derived class.
+test/perf/BagPerf.ts(207,21): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/perf/BagPerf.ts(302,52): error TS2345: Argument of type '() => Bag<NullItem, java.lang.CharSequence>' is not assignable to parameter of type 'BagBuilder<NullItem, CharSequence>'.
+test/perf/BagPerf.ts(318,43): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(out: PrintStream, ...s: JavaString[]): void', gave the following error.
+    Argument of type 'List<JavaString[]>' is not assignable to parameter of type 'JavaString'.
+      Type 'List<JavaString[]>' is missing the following properties from type 'JavaString': #private, getBytes, array, charAt, and 17 more.
+  Overload 2 of 2, '(out: PrintStream, o: List<JavaString>): void', gave the following error.
+    Argument of type 'List<JavaString[]>' is not assignable to parameter of type 'List<JavaString>'.
+      Types of property 'add' are incompatible.
+        Type '{ (index: number, element: JavaString[]): void; (e: JavaString[]): boolean; }' is not assignable to type '{ (index: number, element: JavaString): void; (e: JavaString): boolean; }'.
+          Types of parameters 'element' and 'element' are incompatible.
+            Type 'JavaString' is missing the following properties from type 'JavaString[]': pop, push, concat, join, and 32 more.
+test/perf/BagPerf.ts(328,37): error TS2694: Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index"' has no exported member 'StringJoiner'.
+test/perf/BagPerf.ts(328,66): error TS2339: Property 'StringJoiner' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+test/perf/BagPerf.ts(362,87): error TS2314: Generic type 'Bag<Type, K>' requires 2 type argument(s).
+test/perf/BagPerf.ts(367,21): error TS2345: Argument of type 'Bag<NullItem, CharSequence>[]' is not assignable to parameter of type 'Bag<NullItem, CharSequence>'.
+  Type 'Bag<NullItem, CharSequence>[]' is missing the following properties from type 'Bag<NullItem, CharSequence>': TOTAL_LEVEL, THRESHOLD, DISTRIBUTOR, nameTable, and 38 more.
+test/perf/BagPerf.ts(371,25): error TS2322: Type 'List<string>' is not assignable to type 'List<JavaString>'.
+  Types of property 'add' are incompatible.
+    Type '{ (index: number, element: string): void; (e: string): boolean; }' is not assignable to type '{ (index: number, element: JavaString): void; (e: JavaString): boolean; }'.
+      Types of parameters 'element' and 'element' are incompatible.
+        Type 'JavaString' is not assignable to type 'string'.
+test/perf/BagPerf.ts(380,25): error TS2322: Type 'List<string>' is not assignable to type 'List<JavaString>'.
+test/perf/BagPerf.ts(383,32): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/BagPerf.ts(396,23): error TS2749: 'java.lang.Math.E' refers to a value, but is being used as a type here. Did you mean 'typeof java.lang.Math.E'?
+test/perf/NALStressMeasure.ts(24,44): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/NALStressMeasure.ts(39,44): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/NALStressMeasure.ts(47,44): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/NALStressMeasure.ts(50,48): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/Performance.ts(6,21): error TS2564: Property 'repeats' has no initializer and is not definitely assigned in the constructor.
+test/perf/Performance.ts(7,24): error TS2564: Property 'name' has no initializer and is not definitely assigned in the constructor.
+test/perf/Performance.ts(10,38): error TS2694: Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index"' has no exported member 'DecimalFormat'.
+test/perf/Performance.ts(10,68): error TS2339: Property 'DecimalFormat' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/text/index")'.
+test/perf/Performance.ts(21,17): error TS2349: This expression is not callable.
+  Type 'Performance' has no call signatures.
+test/perf/Performance.ts(21,17): error TS17009: 'super' must be called before accessing 'this' in the constructor of a derived class.
+test/perf/Performance.ts(47,65): error TS2339: Property 'Runtime' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+test/perf/Performance.ts(47,120): error TS2339: Property 'Runtime' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+test/perf/Performance.ts(55,62): error TS2339: Property 'Runtime' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+test/perf/Performance.ts(56,48): error TS2339: Property 'Runtime' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/lang/index")'.
+test/perf/Performance.ts(58,25): error TS2588: Cannot assign to 'warmups' because it is a constant.
+test/perf/Performance.ts(73,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/Performance.ts(74,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/Performance.ts(79,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/perf/Performance.ts(82,40): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/util/io/ExampleFileInput.ts(17,17): error TS2322: Type 'JavaString | null' is not assignable to type 'JavaString'.
+  Type 'null' is not assignable to type 'JavaString'.
+test/util/io/ExampleFileInput.ts(33,59): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/util/io/ExampleFileInput.ts(41,82): error TS2339: Property 'TreeMap' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+test/util/io/ExampleFileInput.ts(45,17): error TS2322: Type 'null' is not assignable to type 'JavaFile'.
+test/util/io/ExampleFileInput.ts(47,53): error TS2339: Property 'getResource' does not exist on type 'Class<JavaObject>'.
+test/util/io/ExampleFileInput.ts(56,24): error TS2551: Property 'listFiles' does not exist on type 'JavaFile'. Did you mean 'isFile'?
+test/util/io/ExampleFileInput.ts(57,41): error TS2551: Property 'listFiles' does not exist on type 'JavaFile'. Did you mean 'isFile'?
+test/util/io/ExampleFileInput.ts(60,35): error TS2339: Property 'equals' does not exist on type '"extra"'.
+test/util/io/ExampleFileInput.ts(61,47): error TS2345: Argument of type 'any[]' is not assignable to parameter of type 'JavaObject'.
+  Type 'any[]' is missing the following properties from type 'JavaObject': #private, equals, getClass, hashCode, and 5 more.
+test/util/test/OutputCondition.ts(68,13): error TS2322: Type 'ArrayList<unknown>' is not assignable to type 'List<OutputCondition>'.
+  Types of property 'addAll' are incompatible.
+    Type '{ (c: Collection<unknown>): boolean; (index: number, c: Collection<unknown>): boolean; }' is not assignable to type '{ (index: number, c: Collection<OutputCondition>): boolean; (c: Collection<OutputCondition>): boolean; }'.
+      Types of parameters 'c' and 'index' are incompatible.
+        Type 'number' is not assignable to type 'Collection<unknown>'.
+test/util/test/OutputCondition.ts(74,17): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/util/test/OutputCondition.ts(94,17): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/util/test/OutputCondition.ts(104,17): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/util/test/OutputCondition.ts(115,9): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/util/test/OutputCondition.ts(115,33): error TS2339: Property 'getClass' does not exist on type 'typeof JavaObject'.
+test/util/test/OutputContainsCondition.ts(47,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/util/test/OutputContainsCondition.ts(58,39): error TS2694: Namespace '"H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index"' has no exported member 'NavigableSet'.
+test/util/test/OutputContainsCondition.ts(58,107): error TS2339: Property 'TreeSet' does not exist on type 'typeof import("H:/A137442/Develop/AGI/NARS/_Project/OpenNARS-304-ts/node_modules/jree/lib/java/util/index")'.
+test/util/test/OutputContainsCondition.ts(76,13): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/util/test/OutputContainsCondition.ts(79,17): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/util/test/OutputContainsCondition.ts(102,17): error TS2322: Type 'number | null' is not assignable to type 'number'.
+  Type 'null' is not assignable to type 'number'.
+test/util/test/OutputContainsCondition.ts(133,23): error TS2339: Property 'contains' does not exist on type 'JavaString'.
+test/util/test/OutputContainsCondition.ts(140,21): error TS2322: Type 'null' is not assignable to type 'Task'.
+test/util/test/OutputContainsCondition.ts(142,21): error TS2322: Type 'Task | null' is not assignable to type 'Task'.
+  Type 'null' is not assignable to type 'Task'.
+test/util/test/OutputContainsCondition.ts(144,39): error TS2339: Property 'getOutputString' does not exist on type 'typeof TextOutputHandler'.
+test/util/test/OutputContainsCondition.ts(146,23): error TS2339: Property 'contains' does not exist on type 'JavaString'.
+test/util/test/OutputContainsCondition.ts(197,9): error TS2322: Type 'List<Task>' is not assignable to type 'List<unknown>'.
+  Types of property 'addAll' are incompatible.
+    Type '{ (index: number, c: Collection<Task>): boolean; (c: Collection<Task>): boolean; }' is not assignable to type '{ (index: number, c: Collection<unknown>): boolean; (c: Collection<unknown>): boolean; }'.
+      Types of parameters 'c' and 'c' are incompatible.
+        Type 'Collection<unknown>' is not assignable to type 'Collection<Task>'.
+          The types of 'iterator().forEachRemaining' are incompatible between these types.
+            Type '(action: Consumer<unknown>) => void' is not assignable to type '(action: Consumer<Task>) => void'.
+              Types of parameters 'action' and 'action' are incompatible.
+                Type 'Consumer<Task>' is not assignable to type 'Consumer<unknown>'.
+                  Types of property 'andThen' are incompatible.
+                    Type '((after: Consumer<Task>) => Consumer<Task>) | undefined' is not assignable to type '((after: Consumer<unknown>) => Consumer<unknown>) | undefined'.
+                      Type '(after: Consumer<Task>) => Consumer<Task>' is not assignable to type '(after: Consumer<unknown>) => Consumer<unknown>'.
+                        Types of parameters 'after' and 'after' are incompatible.
+                          Type 'Consumer<unknown>' is not assignable to type 'Consumer<Task>'.
+                            Type 'unknown' is not assignable to type 'Task'.
+test/util/test/OutputEmptyCondition.ts(16,24): error TS2322: Type 'LinkedList<unknown>' is not assignable to type 'List<JavaString>'.
+  Types of property 'addAll' are incompatible.
+    Type '{ (c: Collection<unknown>): boolean; (index: number, c: Collection<unknown>): boolean; }' is not assignable to type '{ (index: number, c: Collection<JavaString>): boolean; (c: Collection<JavaString>): boolean; }'.
+      Types of parameters 'c' and 'index' are incompatible.
+        Type 'number' is not assignable to type 'Collection<unknown>'.
+test/util/test/OutputEmptyCondition.ts(24,9): error TS2322: Type 'string' is not assignable to type 'JavaString'.
+test/util/test/OutputEmptyCondition.ts(30,29): error TS2345: Argument of type 'string' is not assignable to parameter of type 'JavaString'.
+test/util/test/OutputNotContainsCondition.ts(19,9): error TS2322: Type 'string' is not assignable to type 'JavaString'.

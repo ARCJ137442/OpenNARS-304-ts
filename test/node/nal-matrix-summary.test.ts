@@ -119,6 +119,7 @@ test("NAL matrix summary records a longer-budget pass without rewriting the fixe
     assert.equal(classified.parity, false);
     assert.equal(classified.root_cause_cluster, "correct_but_slower");
     assert.equal(classified.hypothesis.status, "confirmed_long_budget");
+    assert.ok(classified.long_budget_evidence);
     assert.equal(classified.long_budget_evidence.source_file, "reports/evidence/toothbrush-120s.jsonl");
 });
 
