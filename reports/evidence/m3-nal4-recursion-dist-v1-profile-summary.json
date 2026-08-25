@@ -1,0 +1,50 @@
+{
+  "schema": "opennars-304-ts/m3-profile-summary/v1",
+  "status": "observation-only",
+  "git_commit": "a5d61c8ab347b2920f8f1534ae0c018033a871b0",
+  "target": "java-master/src/main/resources/nal/multi_step/nal4.recursion.nal",
+  "ts_cli": "dist/cli.mjs",
+  "java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "runtime": {
+    "node": "v22.17.0",
+    "java": "18.0.2",
+    "mode": "single-thread cold-start",
+    "cycles": 1550,
+    "cli_exit_code": 0,
+    "marker_count": 1,
+    "marker_passed": true
+  },
+  "profile": {
+    "command": "node --cpu-prof --cpu-prof-dir=reports/evidence --cpu-prof-name=m3-nal4-recursion-dist-v1.cpuprofile dist/cli.mjs --cycles 1550 java-master/src/main/resources/nal/multi_step/nal4.recursion.nal",
+    "raw_file": "reports/evidence/m3-nal4-recursion-dist-v1.cpuprofile",
+    "raw_sha256": "0A68DF8E22AB9DEF02532A01BEB8D416BE2529B560FC1ED3E81EB0F9CD04CC7A",
+    "duration_ms": 164630.771,
+    "samples": 90873
+  },
+  "top_aggregates": [
+    {"function": "JavaObject", "url": "node_modules/jree/lib/java/lang/Object.js:10", "duration_ms": 94101.78, "samples": 51820, "share_percent": 57.2},
+    {"function": "defaultPrepareStackTrace", "url": "node:internal/errors:93", "duration_ms": 37451.46, "samples": 20648, "share_percent": 22.7},
+    {"function": "getConverter", "url": "jree compatibility runtime", "duration_ms": 6834.35},
+    {"function": "GC", "url": "V8", "duration_ms": 5550.7},
+    {"function": "CompoundTerm.equals", "url": "dist", "duration_ms": 547.61},
+    {"function": "Concept.insertTaskLink", "url": "dist", "duration_ms": 335.59},
+    {"function": "Bag.takeOut", "url": "dist", "duration_ms": 270.76}
+  ],
+  "hot_paths": [
+    "JavaObject -> jree AbstractList.IteratorImpl -> ArrayDeque.iterator -> TaskLink.novel -> Concept.selectTermLink -> GeneralInferenceControl.fireTaskLink",
+    "JavaObject -> ProcessAnticipation.maintainDisappointedAnticipations -> inference cycle",
+    "JavaObject -> ErrorPrepareStackTrace/prepareStackTraceCallback -> defaultPrepareStackTrace"
+  ],
+  "hypothesis": {
+    "statement": "jree JavaObject 构造函数为未登记类创建堆栈对象，可能使堆栈解析成为正式 dist 递归样本的主要额外开销。",
+    "status": "unconfirmed",
+    "prediction": "在不改变推理输入、周期、marker 或 Java-facing API 的受控运行中，降低该堆栈收集开销应显著降低 wall time；若 marker 或事件变化，则假设不能直接用于优化。",
+    "next_experiment": "先做只读源码审计，再用临时 Node 启动参数或隔离包装器做单样本受控对照；不修改 node_modules，不直接改推理代码。"
+  },
+  "limitations": [
+    "单次冷启动 profile，不代表 median/p95。",
+    "尚未采集 RSS/CPU。",
+    "profile 只证明热点观测，不证明可以安全删除 jree 堆栈语义。",
+    "本记录不构成性能优化或全量性能达标结论。"
+  ]
+}
