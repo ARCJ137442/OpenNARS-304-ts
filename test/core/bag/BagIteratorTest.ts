@@ -1,5 +1,9 @@
 import { java, JavaObject, type int } from "jree";
+import { Item } from "../../../src/entity/Item.ts";
 import { JavaAssertionError } from "../../../src/runtime/jree-compat.ts";
+import { Bag } from "../../../src/storage/Bag.ts";
+import { BagPerf } from "../../perf/BagPerf.ts";
+import { assertTrue } from "../../util/junit-assert.ts";
 
 
 
@@ -7,10 +11,10 @@ export class BagIteratorTest extends JavaObject {
 
     protected readonly L: int = 4;
 
-    public testIterator(b: Bag<NullItem, java.lang.CharSequence>): void {
+    public testIterator(b: Bag<BagPerf.NullItem, java.lang.CharSequence>): void {
         let count: int = 0;
-        let first: NullItem = null;
-        let current: NullItem = null;
+        let first: BagPerf.NullItem | null = null;
+        let current: BagPerf.NullItem | null = null;
         for (let n of b) {
             if (first === null)
                 first = n;
@@ -29,7 +33,7 @@ export class BagIteratorTest extends JavaObject {
         assertTrue(count === b.size());
     }
 
-    public numEmptyLevels(bag: Bag<unknown, unknown>): int {
+    public numEmptyLevels(bag: Bag<Item<unknown>, unknown>): int {
         /*
          * int empty = 0;
          * for (int i = 0; i < bag.level.length; i++) {
@@ -42,16 +46,16 @@ export class BagIteratorTest extends JavaObject {
         return 0;
     }
 
-    public testBagIterator(b: Bag<NullItem, java.lang.CharSequence>): void {
+    public testBagIterator(b: Bag<BagPerf.NullItem, java.lang.CharSequence>): void {
 
-        b.putIn(new NullItem(0.1));
-        b.putIn(new NullItem(0.2));
-        b.putIn(new NullItem(0.3));
-        b.putIn(new NullItem(0.4));
-        b.putIn(new NullItem(0.5));
-        b.putIn(new NullItem(0.6));
-        b.putIn(new NullItem(0.7));
-        b.putIn(new NullItem(0.8));
+        b.putIn(new BagPerf.NullItem(0.1));
+        b.putIn(new BagPerf.NullItem(0.2));
+        b.putIn(new BagPerf.NullItem(0.3));
+        b.putIn(new BagPerf.NullItem(0.4));
+        b.putIn(new BagPerf.NullItem(0.5));
+        b.putIn(new BagPerf.NullItem(0.6));
+        b.putIn(new BagPerf.NullItem(0.7));
+        b.putIn(new BagPerf.NullItem(0.8));
 
         /* assert !(b instanceof Bag) || (numEmptyLevels((Bag<?, ?>) b) < L); */
 
@@ -61,7 +65,7 @@ export class BagIteratorTest extends JavaObject {
 
         this.testIterator(b);
 
-        b.putIn(new NullItem(0.6));
+        b.putIn(new BagPerf.NullItem(0.6));
 
         this.testIterator(b);
 

@@ -1,0 +1,9 @@
+{
+  "command": "npm run test:parity:local",
+  "exitCode": 0,
+  "ok": true,
+  "tolerance": 0.00001,
+  "differences": [],
+  "javaArtifact": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+  "javaArtifactSha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5"
+}
