@@ -1,0 +1,35 @@
+{
+  "schema": "opennars-304-ts/m3-controlled-experiment/v1",
+  "status": "hypothesis-supported-but-not-production-approved",
+  "git_commit": "a94a395d05e6c0bfa05e12f57d6def0911d17df3",
+  "target": "java-master/src/main/resources/nal/single_step/nal8.add.nal",
+  "ts_cli": "dist/cli.mjs",
+  "cycles": 1550,
+  "mode": "single-thread, direct formal dist CLI",
+  "java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "control": {
+    "setting": "Error.stackTraceLimit default",
+    "wall_ms": 38759.026,
+    "functional_result": "formal baseline marker 1/1; no exception",
+    "marker_time_ms": 18.2954,
+    "source": "reports/evidence/m3-formal-dist-baseline-20260825-v1.jsonl"
+  },
+  "experiment": {
+    "setting": "Error.stackTraceLimit=0 set before importing dist/cli.mjs",
+    "wall_ms": 4513.657,
+    "marker_time_ms": 16.7657,
+    "functional_result": "marker 1/1; no exception",
+    "command": "node --input-type=module -e Error.stackTraceLimit=0; process.argv=['node','dist/cli.mjs','--cycles','1550','java-master/src/main/resources/nal/single_step/nal8.add.nal']; await import('./dist/cli.mjs');"
+  },
+  "observation": {
+    "wall_speedup_ratio_approx": 8.59,
+    "interpretation": "The profile hypothesis is supported for this sample: disabling stack trace detail removes most observed wall-time overhead.",
+    "semantic_risk": "jree JavaObject uses Error.stack to infer a translated class FQN; stackTraceLimit=0 may prevent that registration and is therefore not an approved production change.",
+    "decision": "Do not change runtime behavior yet. First identify a project-owned compatibility seam or an equivalent lazy class-name cache, then run M1/M2 regression and representative marker checks."
+  },
+  "limitations": [
+    "The control wall time is a direct formal CLI run while the marker time is from the recorded runner baseline; this is not a repeated statistical benchmark.",
+    "Only one small NAL sample was tested.",
+    "No code or node_modules file was modified by this experiment."
+  ]
+}
