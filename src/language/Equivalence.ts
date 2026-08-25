@@ -52,7 +52,7 @@ export class Equivalence extends Statement {
         switch (args.length) {
             case 0: {
 
-                return new Equivalence(term, this.temporalOrder);
+                return new Equivalence(this.term, this.temporalOrder);
 
 
                 break;
@@ -100,10 +100,15 @@ export class Equivalence extends Statement {
      * @param predicate The second component
      * @return A compound generated or null
      */
+    public static make(statement: Statement, subj: Term, pred: Term): Statement | null;
+    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(o: NativeOperator, subject: Term, predicate: Term,
+        customOrder: boolean, order: int): Statement | null;
     public static make(subject: Term, predicate: Term): Equivalence;
 
     public static make(subject: Term, predicate: Term, temporalOrder: int): Equivalence;
-    public static make(...args: unknown[]): Equivalence {
+    public static make(...args: unknown[]): Equivalence | Statement | null {
         switch (args.length) {
             case 2: {
                 const [subject, predicate] = args as [Term, Term];
@@ -123,13 +128,13 @@ export class Equivalence extends Statement {
                 // subject is Conjunction
                 if (Statement.invalidStatement(subject, predicate) && temporalOrder !== TemporalRules.ORDER_FORWARD
                     && temporalOrder !== TemporalRules.ORDER_CONCURRENT) {
-                    return null;
+                    return null as unknown as Equivalence;
                 }
 
                 if (isOperator(subject, "IMPLICATION") || isOperator(subject, "EQUIVALENCE")
                     || isOperator(predicate, "IMPLICATION") || isOperator(predicate, "EQUIVALENCE") ||
                     (subject instanceof Interval) || (predicate instanceof Interval)) {
-                    return null;
+                    return null as unknown as Equivalence;
                 }
 
                 if ((temporalOrder === TemporalRules.ORDER_BACKWARD)
@@ -163,11 +168,22 @@ export class Equivalence extends Statement {
                     t = Term.toSortedSetArray(subject, predicate);
 
                 if (t.length !== 2)
-                    return null;
+                    return null as unknown as Equivalence;
                 return new Equivalence(t, temporalOrder);
 
 
                 break;
+            }
+
+            case 4: {
+                const [first, subject, predicate, order] = args as [NativeOperator | Statement, Term, Term, int];
+                return first instanceof Statement
+                    ? Statement.make(first, subject, predicate, order)
+                    : Statement.make(first, subject, predicate, order);
+            }
+
+            case 5: {
+                return Statement.make(...args as [NativeOperator, Term, Term, boolean, int]);
             }
 
             default: {
