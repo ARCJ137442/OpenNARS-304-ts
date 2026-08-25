@@ -28,7 +28,7 @@ export class Implication extends Statement {
     private temporalOrder: int = TemporalRules.ORDER_NONE;
 
     // counter used for evidence tracking
-    public counter: long = 1;
+    public counter: long = 1 as unknown as long;
 
     /**
      * Constructor with partial values, called by make
@@ -65,7 +65,7 @@ export class Implication extends Statement {
                 const [first, second, third] = args as [Term[] | Term, int | Term, long | int];
                 const components = Array.isArray(first) ? first : [first as Term, second as Term];
                 const order = (Array.isArray(first) ? second : third) as int;
-                const counter = Array.isArray(first) ? third as long : 1 as long;
+                const counter = Array.isArray(first) ? third as long : 1 as unknown as long;
 
                 super(components);
                 this.temporalOrder = order;
@@ -131,10 +131,15 @@ export class Implication extends Statement {
      * @param predicate The second component
      * @return A compound generated or a term it reduced to
      */
+    public static make(statement: Statement, subj: Term, pred: Term): Statement | null;
+    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(o: NativeOperator, subject: Term, predicate: Term,
+        customOrder: boolean, order: int): Statement | null;
     public static make(subject: Term, predicate: Term): Implication;
 
     public static make(subject: Term, predicate: Term, temporalOrder: int): Implication;
-    public static make(...args: unknown[]): Implication {
+    public static make(...args: unknown[]): Implication | Statement | null {
         switch (args.length) {
             case 2: {
                 const [subject, predicate] = args as [Term, Term];
@@ -147,25 +152,28 @@ export class Implication extends Statement {
             }
 
             case 3: {
+                // A normal implication call also has a Statement (for example
+                // Inheritance) as its subject. Runtime dispatch must therefore
+                // remain positional; the inherited overloads are type-only.
                 const [subject, predicate, temporalOrder] = args as [Term, Term, int];
 
 
                 if (Statement.invalidStatement(subject, predicate,
                     temporalOrder !== TemporalRules.ORDER_FORWARD && temporalOrder !== TemporalRules.ORDER_CONCURRENT)) {
-                    return null;
+                    return null as unknown as Implication;
                 }
 
                 if (isOperator(subject, "IMPLICATION") || isOperator(subject, "EQUIVALENCE") || isOperator(predicate, "EQUIVALENCE")
                     ||
                     (subject instanceof Interval) || (predicate instanceof Interval)) {
-                    return null;
+                    return null as unknown as Implication;
                 }
 
                 // final CharSequence name = makeName(subject, temporalOrder, predicate);
                 if (predicate instanceof Implication) {
                     let oldCondition: Term = (predicate as Statement).getSubject();
                     if ((oldCondition instanceof Conjunction) && oldCondition.containsTerm(subject)) {
-                        return null;
+                        return null as unknown as Implication;
                     }
                     let order: int = temporalOrder;
                     let spatial: boolean = false;
@@ -182,6 +190,17 @@ export class Implication extends Statement {
 
 
                 break;
+            }
+
+            case 4: {
+                const [first, subject, predicate, order] = args as [NativeOperator | Statement, Term, Term, int];
+                return first instanceof Statement
+                    ? Statement.make(first, subject, predicate, order)
+                    : Statement.make(first, subject, predicate, order);
+            }
+
+            case 5: {
+                return Statement.make(...args as [NativeOperator, Term, Term, boolean, int]);
             }
 
             default: {
@@ -206,7 +225,7 @@ export class Implication extends Statement {
             default:
                 copula = NativeOperator.IMPLICATION;
         }
-        return makeStatementName(subject, copula, predicate);
+        return Implication.makeStatementName(subject, copula, predicate);
     }
 
     /**
