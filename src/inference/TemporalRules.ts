@@ -10,6 +10,7 @@ import type { TruthValue } from "../entity/TruthValue.ts";
 import type { Pair } from "./CompositionalRules.ts";
 import type { DerivationContext } from "../control/DerivationContext.ts";
 import type { Statement } from "../language/Statement.ts";
+import type { Interval } from "../language/Interval.ts";
 
 type TemporalRuntime = Record<string, any>;
 
@@ -141,7 +142,7 @@ export class TemporalRules extends JavaObject {
      * whether temporal induction can generate a task by avoiding producing wrong
      * terms; only one temporal operator is allowed
      */
-    public static tooMuchTemporalStatements(t: Term): boolean {
+    public static tooMuchTemporalStatements(t: Term | null): boolean {
         return (t === null) || (t.containedTemporalRelations() > 1);
     }
 
@@ -153,7 +154,7 @@ export class TemporalRules extends JavaObject {
 
     // TODO maybe split &/ case into own function
     public static temporalInduction(s1: Sentence, s2: Sentence,
-        nal: org.opennars.control.DerivationContext, SucceedingEventsInduction: boolean,
+        nal: DerivationContext, SucceedingEventsInduction: boolean,
         addToMemory: boolean, allowSequence: boolean): java.util.List<Task> {
 
         const {
@@ -184,7 +185,7 @@ export class TemporalRules extends JavaObject {
         let time1: long = s1.getOccurrenceTime();
         let time2: long = s2.getOccurrenceTime();
         let timeDiff: long = time2 - time1;
-        let interval: Interval = null;
+        let interval: Interval | null = null;
 
         if (!TemporalRules.concurrent(time1, time2, durationCycles)) {
             interval = new Interval(java.lang.Math.abs(timeDiff));
@@ -216,12 +217,20 @@ export class TemporalRules extends JavaObject {
         let statement1: Statement = Implication.make(t1, t2, order);
         let statement2: Statement = Implication.make(t2, t1, TemporalRules.reverseOrder(order));
         let statement3: Statement = Equivalence.make(t1, t2, order);
-        let statement4: Term = null;
+        let statement4: Term | null = null;
         switch (order) {
             case TemporalRules.ORDER_FORWARD:
+                if (interval === null) {
+                    statement4 = null;
+                    break;
+                }
                 statement4 = Conjunction.make(t1, interval, s2.term, order);
                 break;
             case TemporalRules.ORDER_BACKWARD:
+                if (interval === null) {
+                    statement4 = null;
+                    break;
+                }
                 statement4 = Conjunction.make(s2.term, interval, t1, TemporalRules.reverseOrder(order));
                 break;
             default:
@@ -264,7 +273,7 @@ export class TemporalRules extends JavaObject {
             TemporalRules.appendConclusion(nal, truth3, budget3, statement3, derivations);
         }
 
-        if (!TemporalRules.tooMuchTemporalStatements(statement4)) {
+        if (statement4 !== null && !TemporalRules.tooMuchTemporalStatements(statement4)) {
             if (!allowSequence) {
                 return derivations;
             }
