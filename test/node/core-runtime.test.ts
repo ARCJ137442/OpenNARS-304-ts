@@ -64,6 +64,7 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const conclusion = Inheritance.make(sharedVariable, new SetInt(Term.get("aggressive")));
     const rule = Implication.make(condition, conclusion, 0);
     const ruleSentence = new Sentence(rule, ".", TruthValue.fromFrequencyConfidence(1.0, 0.9, parameters), stamp);
+    assert.ok(ruleSentence.truth);
     assert.equal(ruleSentence.truth.confidence, 0.9);
     assert.equal(ruleSentence.term.subjectOrPredicateIsIndependentVar(), false);
 
@@ -269,6 +270,8 @@ test("CompoundTerm equality preserves Java case-sensitive key identity", async (
     const upper = parser.parseTerm(new java.lang.String(
         "<CAT --> (/,(/,REPRESENT,_,<(*,CAT,FISH) --> FOOD>),_,eat,fish)>",
     ));
+    assert.ok(lower);
+    assert.ok(upper);
 
     assert.equal(lower.equals(upper), false);
     assert.notEqual(lower.hashCode(), upper.hashCode());
@@ -307,6 +310,7 @@ test("Narsese truth parsing preserves Java Float.parseFloat boundaries", async (
     const task = new Narsese(nar).parseTask(new java.lang.String(
         "<heated --> pliable>. %1.00;0.90%",
     ));
+    assert.ok(task.sentence.truth);
 
     assert.equal(task.sentence.truth.frequency, Math.fround(1.0));
     assert.equal(task.sentence.truth.confidence, Math.fround(0.9));

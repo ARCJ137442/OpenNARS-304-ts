@@ -23,6 +23,8 @@ test("变量统一会替换操作参数并保留 Operation 运行时类型", asy
         `<<${variable} --> [unscrewing]> =/> (&/,<(*,${variable},plastic) --> made_of>,(^lighter,{SELF},${variable}),(^reshape,{SELF},${variable}))>`,
     ));
     const taskTerm = parser.parseTerm(new java.lang.String("<toothbrush --> [unscrewing]>"));
+    assert.ok(implication);
+    assert.ok(taskTerm);
     const unified: any[] = [implication, taskTerm];
 
     assert.equal(Variables.unify(

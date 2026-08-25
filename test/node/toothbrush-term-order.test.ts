@@ -33,16 +33,18 @@ test("scoped variable ordering uses Java code-unit order for commutative interse
     const belief = parser.parseTask(new java.lang.String(
         "<(|,#1,#2,cup) --> (|,#1,#2,[heated])>.",
     ));
+    const merged = IntersectionInt.make(
+        task.sentence.term.getPredicate(),
+        belief.sentence.term.getPredicate(),
+    );
+    assert.ok(merged);
     const taskVariable = task.sentence.term.getPredicate().term[0];
     const beliefVariable = belief.sentence.term.getPredicate().term[0];
 
     assert.ok(taskVariable.compareTo(beliefVariable) > 0);
     assert.ok(beliefVariable.compareTo(taskVariable) < 0);
     assert.equal(
-        String(IntersectionInt.make(
-            task.sentence.term.getPredicate(),
-            belief.sentence.term.getPredicate(),
-        ).name()),
+        String(merged.name()),
         "(|,#1,#1,#2,[heated],[unscrewing],cup)",
     );
 });

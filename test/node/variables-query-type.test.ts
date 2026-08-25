@@ -16,6 +16,8 @@ test("compound hasVar(type) preserves Java variable-kind dispatch", async () => 
     const other = parser.parseTerm(new java.lang.String(
         "(&&,<#1 --> [bendable]>,<#1 --> object>)",
     ));
+    assert.ok(dependent);
+    assert.ok(other);
 
     assert.equal(Boolean(dependent.hasVar()), true);
     assert.equal(Boolean(dependent.hasVarDep()), true);
