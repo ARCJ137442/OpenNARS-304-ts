@@ -1,6 +1,7 @@
 import { java, JavaObject, type long, type int } from "jree";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
+import type { JavaStringInput } from "../../src/runtime/jree-compat.ts";
 
 
 
@@ -11,6 +12,14 @@ import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
  * @author Robert Wünsche
  */
 export class LongTermStability extends JavaObject {
+    public static ObjectIdCounter = class ObjectIdCounter extends JavaObject {
+        protected counter: long = 0n;
+
+        protected retNext(): long {
+            return this.counter++;
+        }
+    };
+
     public readonly reasoner: Reasoner;
 
     public readonly counter: LongTermStability.ObjectIdCounter = new LongTermStability.ObjectIdCounter();
@@ -53,34 +62,37 @@ export class LongTermStability extends JavaObject {
         this.feedRelation2(consumer, this.rng.nextInt(3000), this.rng.nextInt(3000), "a2", true);
     }
 
-    public feedRelation2(consumer: Reasoner, objectId: long | number, placeId: long | number, relation: java.lang.String, isQuestion: boolean): void {
-        let taskType: java.lang.String = isQuestion ? "?" : ".";
+    public feedRelation2(consumer: Reasoner, objectId: long | number, placeId: long | number, relation: JavaStringInput, isQuestion: boolean): void {
+        const taskType = isQuestion ? "?" : ".";
         const nextObjectId: long | number = typeof objectId === "bigint" ? objectId + 500000n : objectId + 500000;
 
+        const format = (template: string, ...args: unknown[]): java.lang.String =>
+            java.lang.String.format(new java.lang.String(template), ...args);
+
         // we feed a combination of forms
-        consumer.addInput(java.lang.String.format("<(*, %d, %d)--> %s>%s :|:", objectId, placeId, relation, taskType));
-        consumer.addInput(java.lang.String.format("<(*, {%d}, %d)--> %s>%s :|:", objectId, placeId, relation, taskType));
-        consumer.addInput(java.lang.String.format("<(*, {%d}, {%d})--> %s>%s :|:", objectId, placeId, relation, taskType));
-        consumer.addInput(java.lang.String.format("<(*, %d, {%d})--> %s>%s :|:", objectId, placeId, relation, taskType));
+        consumer.addInput(format("<(*, %d, %d)--> %s>%s :|:", objectId, placeId, relation, taskType));
+        consumer.addInput(format("<(*, {%d}, %d)--> %s>%s :|:", objectId, placeId, relation, taskType));
+        consumer.addInput(format("<(*, {%d}, {%d})--> %s>%s :|:", objectId, placeId, relation, taskType));
+        consumer.addInput(format("<(*, %d, {%d})--> %s>%s :|:", objectId, placeId, relation, taskType));
         // set
-        consumer.addInput(java.lang.String.format("<(*, {%d, %d}, {%d})--> %s>%s :|:", objectId, nextObjectId, placeId,
+        consumer.addInput(format("<(*, {%d, %d}, {%d})--> %s>%s :|:", objectId, nextObjectId, placeId,
             relation, taskType));
 
         // duplicate set
         consumer.addInput(
-            java.lang.String.format("<(*, {%d, %d}, {%d})--> %s>%s :|:", objectId, objectId, placeId, relation, taskType));
+            format("<(*, {%d, %d}, {%d})--> %s>%s :|:", objectId, objectId, placeId, relation, taskType));
 
-        consumer.addInput(java.lang.String.format("<%d --> (/, %s, _, %d)>%s :|:", placeId, relation, objectId, taskType));
-        consumer.addInput(java.lang.String.format("<%d --> (/, %s, %d, _)>%s :|:", objectId, relation, placeId, taskType));
+        consumer.addInput(format("<%d --> (/, %s, _, %d)>%s :|:", placeId, relation, objectId, taskType));
+        consumer.addInput(format("<%d --> (/, %s, %d, _)>%s :|:", objectId, relation, placeId, taskType));
 
-        consumer.addInput(java.lang.String.format("<{%d} --> (/, %s, _, %d)>%s :|:", placeId, relation, objectId, taskType));
-        consumer.addInput(java.lang.String.format("<%d --> (/, %s, {%d}, _)>%s :|:", objectId, relation, placeId, taskType));
+        consumer.addInput(format("<{%d} --> (/, %s, _, %d)>%s :|:", placeId, relation, objectId, taskType));
+        consumer.addInput(format("<%d --> (/, %s, {%d}, _)>%s :|:", objectId, relation, placeId, taskType));
 
-        consumer.addInput(java.lang.String.format("<{%d} --> (/, %s, _, {%d})>%s :|:", placeId, relation, objectId, taskType));
-        consumer.addInput(java.lang.String.format("<{%d} --> (/, %s, {%d}, _)>%s :|:", objectId, relation, placeId, taskType));
+        consumer.addInput(format("<{%d} --> (/, %s, _, {%d})>%s :|:", placeId, relation, objectId, taskType));
+        consumer.addInput(format("<{%d} --> (/, %s, {%d}, _)>%s :|:", objectId, relation, placeId, taskType));
 
-        consumer.addInput(java.lang.String.format("<{%d} --> (/, %s, _, {%d})>%s :|:", placeId, relation, objectId, taskType));
-        consumer.addInput(java.lang.String.format("<{%d} --> (/, %s, {%d}, _)>%s :|:", objectId, relation, placeId, taskType));
+        consumer.addInput(format("<{%d} --> (/, %s, _, {%d})>%s :|:", placeId, relation, objectId, taskType));
+        consumer.addInput(format("<{%d} --> (/, %s, {%d}, _)>%s :|:", objectId, relation, placeId, taskType));
     }
 
     public static main(args: java.lang.String[]): void {
@@ -93,14 +105,6 @@ export class LongTermStability extends JavaObject {
 
         test.run(timeToRunInMilliseconds);
     }
-
-    public static ObjectIdCounter = class ObjectIdCounter extends JavaObject {
-        protected counter: long = 0n;
-
-        protected retNext(): long {
-            return this.counter++;
-        }
-    };
 
 }
 
