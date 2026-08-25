@@ -4,6 +4,8 @@ import {
     JavaIllegalAccessException,
     JavaInstantiationException,
     JavaNoSuchMethodException,
+    JavaInvocationTargetException,
+    JavaParseException,
 } from "../../src/runtime/jree-compat.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
@@ -131,7 +133,7 @@ export class AttentionMetric extends JavaObject {
                 e.printStackTrace();
             } else if (e instanceof JavaInstantiationException) {
                 e.printStackTrace();
-            } else if (e instanceof java.lang.reflect.InvocationTargetException) {
+            } else if (e instanceof JavaInvocationTargetException) {
                 e.printStackTrace();
             } else if (e instanceof JavaNoSuchMethodException) {
                 e.printStackTrace();
@@ -143,7 +145,7 @@ export class AttentionMetric extends JavaObject {
                 e.printStackTrace();
             } else if (e instanceof JavaClassNotFoundException) {
                 e.printStackTrace();
-            } else if (e instanceof java.text.ParseException) {
+            } else if (e instanceof JavaParseException) {
                 e.printStackTrace();
             } else {
                 throw e;
