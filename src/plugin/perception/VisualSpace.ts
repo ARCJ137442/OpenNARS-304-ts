@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/perception/VisualSpace.java
-import { java, JavaObject, type int, type double } from "jree";
+import { java, JavaObject, type int, type double, S } from "jree";
 import { Float32Math } from "../../runtime/Float32.ts";
 import { TruthFunctions } from "../../inference/TruthFunctions.ts";
 import { TemporalRules } from "../../inference/TemporalRules.ts";
@@ -26,8 +26,8 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
     public py: int = 0;
 
     // those are the same for each instance:
-    public static readonly move: NullOperator = new NullOperator("^move");
-    public static readonly zoom: NullOperator = new NullOperator("^zoom");
+    public static readonly move: NullOperator = new NullOperator(S`^move`);
+    public static readonly zoom: NullOperator = new NullOperator(S`^zoom`);
     private readonly nar: Nar;
 
     public constructor(nar: Nar, source: Float64Array[], py: int, px: int, height: int,
@@ -92,7 +92,7 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
         return bestShiftTruth;
     }
 
-    public ConstructSpace(program: Conjunction): ImaginationSpace {
+    public ConstructSpace(program: Conjunction): ImaginationSpace | null {
         if (program.isSpatial || program.getTemporalOrder() !== TemporalRules.ORDER_FORWARD) {
             return null; // would be a strange program :)
         }
@@ -110,13 +110,17 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
             if (!this.IsOperationInSpace(oper)) {
                 return null;
             }
-            cur = cur.ProgressSpace(oper, cur);
+            const progressed = cur.ProgressSpace(oper, cur);
+            if (progressed === null) {
+                return null;
+            }
+            cur = progressed;
             i++;
         }
         return null;
     }
 
-    public ProgressSpace(op: Operation, b: ImaginationSpace): ImaginationSpace {
+    public ProgressSpace(op: Operation, b: ImaginationSpace): ImaginationSpace | null {
         if (!(b instanceof VisualSpace)) {
             return null; // incompatible
         }
