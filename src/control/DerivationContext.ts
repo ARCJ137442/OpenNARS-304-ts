@@ -22,6 +22,7 @@ import type { Parameters } from "../main/Parameters.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 
+const asJavaObject = (value: unknown): java.lang.Object => value as unknown as java.lang.Object;
 
 
 /**
@@ -166,7 +167,7 @@ export class DerivationContext extends JavaObject {
                         task.getBudget().getPriority() * priorityLeak,
                     ) as float);
                 }
-                this.memory.event.emit(Events.TaskDerive.class, task, revised, single);
+                this.memory.event.emit(Events.TaskDerive.class, task, asJavaObject(revised), asJavaObject(single));
                 // memory.logic.TASK_DERIVED.commit(task.budget.getPriority());
 
                 if (addToMemory) {
@@ -199,7 +200,7 @@ export class DerivationContext extends JavaObject {
         let derived_stamp: Stamp = this.getTheNewStamp().clone();
         this.resetOccurrenceTime(); // stamp was already absorbed
 
-        let isCounterValid: boolean = counter !== -1;
+        let isCounterValid: boolean = Number(counter as unknown as number) !== -1;
         let conclusionTerm: Term = newContent;
         if (isCounterValid) {
             // assert newContent is implication
@@ -257,12 +258,12 @@ export class DerivationContext extends JavaObject {
 
                 let ret: java.util.List<Task> = new java.util.ArrayList<Task>();
                 if (newContent === null || !newBudget.aboveThreshold()) {
-                    return null;
+                    return null as unknown as java.util.List<Task>;
                 }
                 if ((newContent !== null) && (!(newContent instanceof Interval)) && (!(newContent instanceof Variable))) {
 
                     if (newContent.subjectOrPredicateIsIndependentVar()) {
-                        return null;
+                        return null as unknown as java.util.List<Task>;
                     }
                     let derive_stamp: Stamp = this.getTheNewStamp().clone(); // because occurrence time will be reset:
                     this.resetOccurrenceTime(); // stamp was already absorbed into task
@@ -306,7 +307,7 @@ export class DerivationContext extends JavaObject {
                     }
                     return ret;
                 }
-                return null;
+                return null as unknown as java.util.List<Task>;
 
 
                 break;
@@ -454,7 +455,7 @@ export class DerivationContext extends JavaObject {
         this.currentConcept = currentConcept;
     }
 
-    private original_time: long = 0;
+    private original_time: long = 0 as unknown as long;
 
     /**
      * @return the created stamp
@@ -653,7 +654,7 @@ export class DerivationContext extends JavaObject {
                 const [currentTask, budget, sentence, candidateBelief] = args as [Task, BudgetValue, Sentence, Sentence | null];
 
 
-                this.addTask(new Task(sentence, budget, sentence, candidateBelief), S`Activated`);
+                this.addTask(new Task(sentence, budget, sentence, candidateBelief as Sentence), S`Activated`);
 
 
                 break;
