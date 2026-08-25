@@ -32,7 +32,7 @@ export class NalTestMetrics extends JavaObject {
 
     // helper
     public static removeInfinities(values: java.util.List<double>): java.util.List<double> {
-        let result: java.util.List<double> = new java.util.ArrayList();
+        let result: java.util.List<double> = new java.util.ArrayList<double>();
 
         for (let iValue of values) {
             if (iValue !== Number.POSITIVE_INFINITY) {
@@ -55,7 +55,10 @@ export class NalTestMetrics extends JavaObject {
         let numberOfSamples: int = 50;
 
         // we are only in multistep problems interested
-        NALTest.directories = ["/nal/multi_step/", "/nal/application/"];
+        NALTest.directories = [
+            new java.lang.String("/nal/multi_step/"),
+            new java.lang.String("/nal/application/"),
+        ];
         NALTest.numberOfSamples = numberOfSamples;
 
         NALTest.runTests(NALTest.class);
