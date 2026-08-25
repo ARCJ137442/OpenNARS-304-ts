@@ -5,7 +5,7 @@ OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先
 ## 当前状态（2026-08-26）
 
 - M1：功能冻结已完成；245 个主资源加 `simpleOperationTest.nal` 共 246 个样本，综合验收 246/246。
-- M2：非增量 `tsc` 为 0 诊断；串行 `npm test` 为 160/160，局部算法 parity、正式构建和源码/构建产物 shell smoke 通过。
+- M2：非增量 `tsc` 为 0 诊断；串行 `npm test` 为 160/160，局部算法 parity、正式构建、构建 API 和源码/构建产物 shell smoke 通过；干净 `npm pack` 安装也已通过 API、CLI 和无启动警告验收。
 - M3：当前 HEAD `29b326a` 已完成一个 JavaString UTF-16 边界热点的语义保持优化，并保留前后 profile、正式 benchmark 和回归证据；完整性能与发布门禁尚未完成。
 - 当前版本：`0.1.0`；当前 canonical Java JAR 使用 `OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 
@@ -45,16 +45,20 @@ OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先
 
     npm run build
     npm run test:build
+    npm run test:api:dist
+    npm run test:release
 
 运行构建后的 CLI：
 
     node dist/cli.mjs --cycles 1550 path/to/example.nal
 
-启动可人工输入 Narsese 的单线程交互式 shell（入口已消除 Node loader 与 jree ESM 启动警告）：
+启动可人工输入 Narsese 的单线程交互式 shell（源码入口和发布产物均已消除 Node loader 与 jree ESM 启动警告）：
 
     npm run shell
 
 在 `nars> ` 提示符下输入 Narsese；输入 `:cycles 100` 执行 100 个推理周期，输入 `:status` 查看时钟，输入 `:quit` 退出。也可以用 `npm run shell -- --cycles 100` 让每条 Narsese 输入自动执行 100 个周期。构建后可用 `npm run build` 再运行 `npm run shell:dist`。
+
+发布产物通过 `dist/jree-entry.mjs` 的 Node `createRequire` 适配 `jree@1.3.0` 的不同包入口形态，不修改 `node_modules/jree/package.json`，也不要求消费者启用 TypeScript loader。
 
 运行 Java canonical 与 TypeScript 的串行 NAL parity（全量命令会运行较久，建议使用 checkpoint）：
 

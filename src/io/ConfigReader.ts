@@ -1,7 +1,8 @@
 //! Java source: opennars/io/ConfigReader.java
 import { java, JavaObject } from "jree";
 import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { Parameters } from "../main/Parameters.ts";
 import { Debug } from "../main/Debug.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
@@ -57,9 +58,11 @@ export class ConfigReader extends JavaObject {
     public static lastCompatibilityStubPluginClasspaths: string[] = [];
 
     private static nodeConfigPath(filepath: string): string | null {
+        const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
         const candidates = [
             resolve(filepath),
             resolve(process.cwd(), filepath),
+            resolve(packageRoot, "config", "defaultConfig.xml"),
             resolve(process.cwd(), "java-master", "src", "main", "resources", "config", "defaultConfig.xml"),
         ];
         return candidates.find(candidate => existsSync(candidate)) ?? null;

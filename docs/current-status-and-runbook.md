@@ -25,11 +25,12 @@ M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观�
 - canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 - Java 与 TypeScript 均按单线程运行；Java 测试使用 JDK 18.0.2。
 - `npx tsc --noEmit --pretty false --incremental false`：0 诊断。
-- 本批串行 `npm test --silent`：160/160；权威 `npx tsc --noEmit --pretty false --incremental false`：0 诊断；`npm run build --silent`、`npm run test:build --silent`、源码/构建产物 shell smoke 均通过。shell 已改用 `--import` 注册 TypeScript loader，并由项目 resolver 将 `jree` 直接解析到明确的 `lib/index.js`；实际 shell 子进程 stderr 为空，不再产生 `--experimental-loader`/`DEP0151` 启动警告，也不再改写 `node_modules/jree/package.json`。Node 测试器自身的 `--experimental-strip-types` 提示不属于 shell 子进程。
+- 本批串行 `npm test --silent`：160/160；权威 `npx tsc --noEmit --pretty false --incremental false`：0 诊断；`npm run build --silent`、`npm run test:build --silent`、构建 API 和源码/构建产物 shell smoke 均通过。源码 shell 已改用 `--import` 注册 TypeScript loader，并由项目 resolver 处理 `jree`；发布产物改用 `dist/jree-entry.mjs` 的 `createRequire` 适配入口。实际 shell 子进程 stderr 为空，不再产生 `--experimental-loader`/`DEP0151` 启动警告，也不再改写 `node_modules/jree/package.json`。Node 测试器自身的 `--experimental-strip-types` 提示不属于 shell 子进程。
+- `npm pack --ignore-scripts` 后在干净 consumer 中安装的包已通过 `Nar` API、外部 TypeScript consumer、npm bin CLI、交互式 shell 和非法 CLI 参数验收；干净包 shell stderr 无 `ExperimentalWarning`、`DEP0151` 或其他 Node deprecation warning。包内 `config/defaultConfig.xml` 的 83 个 `conf` 值与 Java canonical 配置一致。
 - 局部算法 parity：`ok: true`，`differences: []`，容差 `1e-5`。
 - M1 冻结合同已完成：245 个主资源加 `simpleOperationTest.nal` 共 246 个样本，244 个 marker 样本 marker 等价，2 个 markerless 样本均有 131072 周期独立 stage-digest 验收，综合功能结论为 246/246。原始 JSONL 的过程字段仍保留历史筛查分类，不应直接替代独立验收汇总。
-- 构建后公共 API smoke 已验证 `dist/index.js` 可导入 `Nar`、订阅 `CycleEnd`/`OUT`、执行 2 个周期并正常停止；构建后 CLI 对 `nal8.add.nal` 的单周期 smoke 通过。
-- `npm pack --dry-run --ignore-scripts` 已验证 `opennars-304-ts@0.1.0` 的包清单为 258 个文件，未包含 reports、探针或临时证据。
+- 构建后公共 API smoke 已验证 `dist/index.js` 可导入 `Nar`、订阅 `CycleEnd`/`OUT`、执行 2 个周期并正常停止；构建后 CLI 对 `nal8.add.nal` 的单周期 smoke 通过；`dist/index.d.ts` 由公共 API facade 生成并已被仓库外 TypeScript consumer 编译。
+- `npm run test:release` 会真实执行 `npm pack`，在干净 consumer 中串行验证外部 tsc、API、CLI、shell、shebang、配置和包清单；本批包清单为 262 个文件，未包含 reports、探针或临时证据。
 
 ## M1 冻结回归
 
@@ -75,7 +76,7 @@ M3 已有 `node scripts/e2e/run-m3-benchmark.mjs` 串行工具和显式资源观
 
 当前前后 profile 位于 `reports/evidence/m3-head-4d544a1-nal4-recursion-small-string-boundary-profile-comparison-v1.json`；热点为 jree `JavaString.valueOf` → `convertUTF16ToString` → Node `TextDecoder` 以及 GC。直接读取 Java-compatible UTF-16 code unit 后，单次 profile 总时长从 25,131.017 ms 降至 11,547.872 ms；该结果是单机单样本观测，不能外推为完整性能等价。
 
-这些证据只能证明代表样本可以在正式构建下运行，不能宣称完整性能等价或 M3 完成。Java 当前只能从管理接口提供进程 CPU、堆和 committed virtual memory proxy，Windows RSS 仍未直接取得；TypeScript 记录进程 CPU 与峰值 RSS。shell 的 `ExperimentalWarning` 与 `DEP0151` 已在 `4d544a1` 的 `--import`/resolver 方案中完成修复，并通过本批回归测试。
+这些证据只能证明代表样本可以在正式构建下运行，不能宣称完整性能等价或 M3 完成。Java 当前只能从管理接口提供进程 CPU、堆和 committed virtual memory proxy，Windows RSS 仍未直接取得；TypeScript 记录进程 CPU 与峰值 RSS。shell 的 `ExperimentalWarning` 与 `DEP0151` 已在 `4d544a1` 的 `--import`/resolver 方案和本批发布适配器中完成修复，并通过本批回归测试；测试宿主中的 `bash.exe: could not find /tmp` 仍是独立环境提示，不属于 Node/jree 启动链。
 
 ## 文档分层
 

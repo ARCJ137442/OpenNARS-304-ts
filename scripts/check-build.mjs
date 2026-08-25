@@ -10,6 +10,8 @@ const distRoot = join(projectRoot, "dist");
 const manifest = JSON.parse(await readFile(join(distRoot, "build-manifest.json"), "utf8"));
 await access(join(distRoot, manifest.entry));
 await access(join(distRoot, manifest.cli));
+await access(join(distRoot, manifest.declarations));
+assert.equal(manifest.declarationStrategy, "public-api-facade");
 
 const api = await import(pathToFileURL(join(distRoot, manifest.entry)).href);
 for (const exportName of ["Nar", "Narsese", "Term", "TruthValue", "BudgetValue"]) {
@@ -20,6 +22,7 @@ console.log(JSON.stringify({
     ok: true,
     entry: manifest.entry,
     cli: manifest.cli,
+    declarations: manifest.declarations,
     sourceFileCount: manifest.sourceFileCount,
     exports: ["Nar", "Narsese", "Term", "TruthValue", "BudgetValue"],
 }));

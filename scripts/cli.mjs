@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { readFile } from "node:fs/promises";
 import { performance } from "node:perf_hooks";
 import { resolve } from "node:path";

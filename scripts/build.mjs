@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -16,7 +16,7 @@ async function collectTypeScriptFiles(directory) {
         const entryPath = join(directory, entry.name);
         if (entry.isDirectory()) {
             files.push(...await collectTypeScriptFiles(entryPath));
-        } else if (entry.isFile() && entry.name.endsWith(".ts")) {
+        } else if (entry.isFile() && entry.name.endsWith(".ts") && !entry.name.endsWith(".d.ts")) {
             files.push(entryPath);
         }
     }
@@ -25,6 +25,18 @@ async function collectTypeScriptFiles(directory) {
 
 function rewriteRelativeTypeScriptImports(source) {
     return source.replace(/(["'])(\.\.?\/[^"']+?)\.ts\1/g, "$1$2.js$1");
+}
+
+function runtimeAdapterImport(outputPath) {
+    const adapterPath = join(outputRoot, "jree-entry.mjs");
+    const importPath = relative(dirname(outputPath), adapterPath).replaceAll("\\", "/");
+    return importPath.startsWith(".") ? importPath : `./${importPath}`;
+}
+
+function rewritePublishedImports(source, outputPath) {
+    const runtimeImport = runtimeAdapterImport(outputPath);
+    return rewriteRelativeTypeScriptImports(source)
+        .replace(/(["'])jree\1/g, `$1${runtimeImport}$1`);
 }
 
 function formatDiagnostics(diagnostics) {
@@ -72,30 +84,42 @@ async function emitSourceFile(sourcePath) {
     }
     const outputPath = join(outputRoot, relative(sourceRoot, sourcePath).replace(/\.ts$/, ".js"));
     await mkdir(dirname(outputPath), { recursive: true });
-    await writeFile(outputPath, rewriteRelativeTypeScriptImports(result.outputText), "utf8");
+    await writeFile(outputPath, rewritePublishedImports(result.outputText, outputPath), "utf8");
 }
 
 async function emitScript(scriptName) {
     const sourcePath = join(projectRoot, "scripts", scriptName);
     const source = await readFile(sourcePath, "utf8");
-    const builtSource = rewriteRelativeTypeScriptImports(source.replaceAll("../src/", "./"));
-    await writeFile(join(outputRoot, scriptName), builtSource, "utf8");
+    const outputPath = join(outputRoot, scriptName);
+    const builtSource = rewritePublishedImports(source.replaceAll("../src/", "./"), outputPath);
+    await writeFile(outputPath, builtSource, "utf8");
+}
+
+async function emitPublicDeclarations() {
+    const sourcePath = join(sourceRoot, "public-api.d.ts");
+    const outputPath = join(outputRoot, "index.d.ts");
+    await copyFile(sourcePath, outputPath);
 }
 
 async function main() {
-    checkTypes();
     const sourceFiles = await collectTypeScriptFiles(sourceRoot);
     await rm(outputRoot, { recursive: true, force: true });
     await mkdir(outputRoot, { recursive: true });
+    checkTypes();
     for (const sourcePath of sourceFiles.sort()) {
         await emitSourceFile(sourcePath);
     }
     await emitScript("cli.mjs");
     await emitScript("shell.mjs");
+    await copyFile(join(projectRoot, "scripts", "jree-entry.mjs"), join(outputRoot, "jree-entry.mjs"));
+    await emitPublicDeclarations();
     await writeFile(join(outputRoot, "build-manifest.json"), `${JSON.stringify({
         source: "src",
         entry: "index.js",
         cli: "cli.mjs",
+        declarations: "index.d.ts",
+        declarationStrategy: "public-api-facade",
+        sourceMap: false,
         sourceFileCount: sourceFiles.length,
         typescript: ts.version,
     }, null, 2)}\n`, "utf8");

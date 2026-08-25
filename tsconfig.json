@@ -19,6 +19,9 @@
             "esnext",
             "dom"
         ],
-        "target": "esnext",
-    }
+    "target": "esnext",
+    },
+    "exclude": [
+        "test/fixtures/public-package-consumer.ts"
+    ]
 }
