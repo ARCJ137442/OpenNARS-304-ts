@@ -31,7 +31,7 @@ const TaskDerive = Events.TaskDerive;
  * Experimental alternative to Abbreviation plugin.
  */
 export class Abbreviation extends JavaObject implements Plugin {
-    public obs: EventObserver;
+    public obs: EventObserver | null = null;
 
     // TODO different parameters for priorities and budgets of both the abbreviation
     // process and the resulting abbreviation judgment
@@ -107,14 +107,15 @@ export class Abbreviation extends JavaObject implements Plugin {
     public setEnabled(n: Nar, enabled: boolean): boolean {
         let memory: Memory = n.memory;
 
-        let _abbreviate: Operator = memory.getOperator("^abbreviate");
+        let _abbreviate: Operator = memory.getOperator(new java.lang.String("^abbreviate"));
         if (_abbreviate === null) {
             _abbreviate = memory.addOperator(new Abbreviation.Abbreviate());
         }
         let abbreviate: Operator = _abbreviate;
 
         if (this.obs === null) {
-            this.obs = (event, a) => {
+            this.obs = {
+                event: (event: java.lang.Class<unknown>, a: java.lang.Object[]): void => {
                 if (event !== TaskDerive.class)
                     return;
 
@@ -135,10 +136,11 @@ export class Abbreviation extends JavaObject implements Plugin {
                     abbreviate.call(operation, memory, n);
                 }
 
+                }
             };
         }
 
-        memory.event.set(this.obs, enabled, TaskDerive.class);
+        memory.event.set(this.obs as EventObserver, enabled, TaskDerive.class);
 
         return true;
     }
@@ -152,13 +154,13 @@ export class Abbreviation extends JavaObject implements Plugin {
             super("^abbreviate");
         }
 
-        private static currentTermSerial: java.lang.Integer = 1;
+        private static currentTermSerial: int = 1;
 
         public newSerialTerm(prefix: JavaChar): Term {
             /* synchronized (currentTermSerial) { */
             Abbreviate.currentTermSerial++;
             /* } */
-            return new Term(prefix + java.lang.String.valueOf(Abbreviate.currentTermSerial));
+            return new Term(new java.lang.String(String(prefix) + String(Abbreviate.currentTermSerial)));
         }
 
         /**
