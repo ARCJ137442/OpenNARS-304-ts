@@ -221,3 +221,13 @@ test("Bag removes from a restored Java Set bucket through iterator.remove", () =
     assert.equal(internals.removeKey("same"), item);
     assert.equal(bag.size(), 0);
 });
+
+test("Bag stores priority-level FIFO queues in native arrays", () => {
+    const bag = new Bag<TestItem, string>(4, 10, new Parameters());
+    const internals = bag as unknown as { itemTable: unknown };
+    const itemTable = internals.itemTable as unknown[];
+
+    assert.equal(Array.isArray(itemTable), true);
+    assert.equal(itemTable.length, 4);
+    assert.ok(itemTable.every((level) => Array.isArray(level)));
+});

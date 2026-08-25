@@ -25,8 +25,8 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
     private nameTable: java.util.HashMap<K, Type> = new java.util.LinkedHashMap<K, Type>();
     /** Java hash buckets used to avoid scanning every logical key on each lookup. */
     private equalityBuckets: Map<number, K[]> = new Map<number, K[]>();
-    /** array of lists of items, for items on different level */
-    private itemTable: java.util.ArrayList<java.util.ArrayList<Type>> = new java.util.ArrayList<java.util.ArrayList<Type>>();
+    /** Native FIFO queues for items on different priority levels. */
+    private itemTable: Type[][] = [];
     /** defined in different bags */
     private readonly capacity: int;
     /** current sum of occupied level */
@@ -60,9 +60,9 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
 
 
     public clear(): void {
-        this.itemTable = new java.util.ArrayList<java.util.ArrayList<Type>>(this.TOTAL_LEVEL);
+        this.itemTable = [];
         for (let i: int = 0; i < this.TOTAL_LEVEL; i++) {
-            this.itemTable.add(new java.util.ArrayList<Type>());
+            this.itemTable.push([]);
         }
         this.nameTable = new java.util.LinkedHashMap<K, Type>();
         this.equalityBuckets = new Map<number, K[]>();
@@ -177,7 +177,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
             if (this.currentLevel < this.THRESHOLD) { // for dormant levels, take one item
                 this.currentCounter = 1;
             } else { // for active levels, take all current items
-                this.currentCounter = this.itemTable.get(this.currentLevel).size();
+                this.currentCounter = this.itemTable[this.currentLevel].length;
             }
         }
         let selected: Type = this.takeOutFirst(this.currentLevel); // take out the first item in the level
@@ -378,7 +378,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
      * @return Whether that level is empty
      */
     protected emptyLevel(n: int): boolean {
-        return this.itemTable.get(n).isEmpty();
+        return this.itemTable[n].length === 0;
     }
 
     /**
@@ -417,7 +417,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
                 oldItem = this.takeOutFirst(outLevel);
             }
         }
-        this.itemTable.get(inLevel).add(newItem); // FIFO
+        this.itemTable[inLevel].push(newItem); // FIFO
         this.mass += (inLevel + 1); // increase total mass
         return oldItem; // TODO return null is a bad smell
     }
@@ -429,8 +429,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
      * @return The first Item
      */
     private takeOutFirst(level: int): Type {
-        let selected: Type = this.itemTable.get(level).get(0);
-        this.itemTable.get(level).remove(0);
+        const selected: Type = this.itemTable[level].shift() as Type;
         this.mass -= (level + 1);
         return selected;
     }
@@ -442,7 +441,8 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
      */
     protected outOfBase(oldItem: Type): void {
         let level: int = this.getLevel(oldItem);
-        this.itemTable.get(level).remove(oldItem);
+        const index = this.itemTable[level].indexOf(oldItem);
+        if (index >= 0) this.itemTable[level].splice(index, 1);
         this.mass -= (level + 1);
     }
 
@@ -454,8 +454,8 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
         for (let i: int = this.TOTAL_LEVEL; i >= 0; i--) {
             if (!this.emptyLevel(i - 1)) {
                 buf = buf.append("\n --- Level " + i + ":\n ");
-                for (let j: int = 0; j < this.itemTable.get(i - 1).size(); j++) {
-                    buf = buf.append(this.itemTable.get(i - 1).get(j).toString() + "\n ");
+                for (let j: int = 0; j < this.itemTable[i - 1].length; j++) {
+                    buf = buf.append(this.itemTable[i - 1][j].toString() + "\n ");
                 }
             }
         }
@@ -469,8 +469,8 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
         for (let i: int = this.TOTAL_LEVEL; i >= 0; i--) {
             if (!this.emptyLevel(i - 1)) {
                 buf = buf.append("\n --- LEVEL " + i + ":\n ");
-                for (let j: int = 0; j < this.itemTable.get(i - 1).size(); j++) {
-                    buf = buf.append(this.itemTable.get(i - 1).get(j).toStringLong() + "\n ");
+                for (let j: int = 0; j < this.itemTable[i - 1].length; j++) {
+                    buf = buf.append(this.itemTable[i - 1][j].toStringLong() + "\n ");
                 }
             }
         }
@@ -482,9 +482,9 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
         let buf: java.lang.StringBuilder = new java.lang.StringBuilder(" ");
         let levels: int = 0;
         for (let items of this.itemTable) {
-            if ((items !== null) && !items.isEmpty()) {
+            if ((items !== null) && items.length > 0) {
                 levels++;
-                buf.append(items.size()).append(" ");
+                buf.append(items.length).append(" ");
             }
         }
         return S`Levels: ${levels}, sizes: ${buf}`;
