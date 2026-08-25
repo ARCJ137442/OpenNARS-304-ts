@@ -27,6 +27,10 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
     private equalityBuckets: Map<number, K[]> = new Map<number, K[]>();
     /** Native FIFO queues for items on different priority levels. */
     private itemTable: Type[][] = [];
+    /** Native mirror of LinkedHashMap.values() insertion order for JS iteration. */
+    private itemOrder: Type[] = [];
+    /** Object-identity index for maintaining itemOrder without Java equality scans. */
+    private itemOrderIndex: Map<Type, int> = new Map<Type, int>();
     /** defined in different bags */
     private readonly capacity: int;
     /** current sum of occupied level */
@@ -61,6 +65,8 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
 
     public clear(): void {
         this.itemTable = [];
+        this.itemOrder = [];
+        this.itemOrderIndex = new Map<Type, int>();
         for (let i: int = 0; i < this.TOTAL_LEVEL; i++) {
             this.itemTable.push([]);
         }
@@ -127,8 +133,20 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
         if (existingKey === null) {
             oldItem = this.nameTable.put(newKey, newItem) as unknown as Type;
             this.addKeyToBucket(newKey);
+            this.itemOrder.push(newItem);
+            this.itemOrderIndex.set(newItem, this.itemOrder.length - 1);
         } else {
             oldItem = this.nameTable.put(existingKey, newItem) as unknown as Type;
+            const existingIndex = this.itemOrderIndex.get(oldItem);
+            if (existingIndex !== undefined) {
+                this.itemOrder[existingIndex] = newItem;
+                this.itemOrderIndex.delete(oldItem);
+                this.itemOrderIndex.set(newItem, existingIndex);
+            } else {
+                // Recover a missing mirror entry without changing the Java map's logical key.
+                this.itemOrder.push(newItem);
+                this.itemOrderIndex.set(newItem, this.itemOrder.length - 1);
+            }
         }
         if (oldItem !== null) { // merge duplications
             this.outOfBase(oldItem);
@@ -290,6 +308,16 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
 
     private removeKey(key: K): Type {
         const item = this.nameTable.remove(key);
+        if (item !== null && item !== undefined) {
+            const itemIndex = this.itemOrderIndex.get(item);
+            if (itemIndex !== undefined) {
+                this.itemOrder.splice(itemIndex, 1);
+                this.itemOrderIndex.delete(item);
+                for (let index = itemIndex; index < this.itemOrder.length; index += 1) {
+                    this.itemOrderIndex.set(this.itemOrder[index], index);
+                }
+            }
+        }
         const hashCode = this.keyHashCode(key);
         if (hashCode !== null) {
             const bucket = this.equalityBuckets.get(hashCode);
@@ -499,11 +527,17 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
     }
 
     public [Symbol.iterator](): Iterator<Type> {
-        const iterator = this.iterator();
-        return {
-            next: (): IteratorResult<Type> => iterator.hasNext()
-                ? { value: iterator.next(), done: false }
-                : { value: undefined as unknown as Type, done: true },
-        };
+        if (this.itemOrder.length !== this.nameTable.size()) {
+            // A deserialized/legacy instance may not contain the native mirror yet.
+            this.itemOrder = [];
+            this.itemOrderIndex = new Map<Type, int>();
+            const iterator = this.nameTable.values().iterator();
+            while (iterator.hasNext()) {
+                const item = iterator.next();
+                this.itemOrderIndex.set(item, this.itemOrder.length);
+                this.itemOrder.push(item);
+            }
+        }
+        return this.itemOrder[Symbol.iterator]();
     }
 }

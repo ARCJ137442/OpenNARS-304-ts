@@ -231,3 +231,20 @@ test("Bag stores priority-level FIFO queues in native arrays", () => {
     assert.equal(itemTable.length, 4);
     assert.ok(itemTable.every((level) => Array.isArray(level)));
 });
+
+test("Bag native iteration preserves LinkedHashMap insertion order across replacement and removal", () => {
+    const bag = new Bag<TestItem, string>(4, 10, new Parameters());
+    const first = new TestItem("first", 0.2);
+    const second = new TestItem("second", 0.9);
+    const replacement = new TestItem("first", 0.8);
+
+    bag.putIn(first);
+    bag.putIn(second);
+    assert.deepEqual(Array.from(bag), [first, second]);
+
+    bag.putIn(replacement);
+    assert.deepEqual(Array.from(bag), [replacement, second]);
+
+    assert.equal(bag.pickOut("first"), replacement);
+    assert.deepEqual(Array.from(bag), [second]);
+});
