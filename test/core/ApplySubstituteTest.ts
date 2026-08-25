@@ -6,6 +6,14 @@ import { Term } from "../../src/language/Term.ts";
 import { assertTrue } from "../util/junit-assert.ts";
 
 
+const parseRequired = (parser: Narsese, input: string): Term => {
+    const term = parser.parseTerm(input);
+    if (term === null) {
+        throw new java.lang.IllegalStateException(new java.lang.String("Expected a term."));
+    }
+    return term;
+};
+
 
 export class ApplySubstituteTest extends JavaObject {
 
@@ -18,22 +26,22 @@ export class ApplySubstituteTest extends JavaObject {
 
     public testApplySubstitute(): void {
 
-        let abS: java.lang.String = "<a --> b>";
-        let ab: CompoundTerm = this.np.parseTerm(abS) as CompoundTerm;
+        const abS = "<a --> b>";
+        const ab = parseRequired(this.np, abS) as CompoundTerm;
         let originalComplexity: int = ab.getComplexity();
 
-        let xyS: java.lang.String = "<x --> y>";
-        let xy: Term = this.np.parseTerm(xyS);
+        const xyS = "<x --> y>";
+        const xy = parseRequired(this.np, xyS);
 
         let h: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
-        h.put(this.np.parseTerm("b"), xy);
+        h.put(parseRequired(this.np, "b"), xy);
         let c: CompoundTerm = ab.applySubstituteToCompound(h);
 
         assertTrue(c.getComplexity() > originalComplexity);
 
         assertTrue(ab.name().toString().equals(abS)); // ab unmodified
 
-        assertTrue(!c.name().equals(abS)); // c is actually different
+        assertTrue(String(c.name()) !== abS); // c is actually different
         assertTrue(!c.equals(ab));
 
     }
@@ -43,8 +51,8 @@ export class ApplySubstituteTest extends JavaObject {
         // final Nar n = new Nar();
 
         let h: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
-        h.put(this.np.parseTerm("$1"), this.np.parseTerm("0"));
-        let c: CompoundTerm = (this.np.parseTerm("<(*,$1) --> num>") as CompoundTerm).applySubstituteToCompound(h);
+        h.put(parseRequired(this.np, "$1"), parseRequired(this.np, "0"));
+        const c = (parseRequired(this.np, "<(*,$1) --> num>") as CompoundTerm).applySubstituteToCompound(h);
 
         assertTrue(c !== null);
     }
