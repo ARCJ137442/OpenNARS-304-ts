@@ -1,0 +1,23 @@
+{
+  "git_commit": "cac31bd539f94e241b35f16077b63a2bbf68c2ad",
+  "java_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+  "java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "java_version": "18.0.2",
+  "node_version": "v22.17.0",
+  "npm_version": "11.19.0",
+  "os": "Microsoft Windows 11 Professional 10.0.22000 build 22000",
+  "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+  "cpu_cores": 16,
+  "cpu_logical_processors": 32,
+  "typescript_cli": "dist/cli.mjs",
+  "java_thread_mode": "single",
+  "typescript_process_mode": "cold",
+  "timeout_ms": 30000,
+  "process_limit_ms": 300000,
+  "cycles": 1550,
+  "chunk_size": 1,
+  "warmup_runs": 0,
+  "repetitions": 1,
+  "rss_and_cpu": "not yet captured; this first baseline records wall time and marker time",
+  "status": "initial-baseline-incomplete-for-median-p95"
+}
