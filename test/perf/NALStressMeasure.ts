@@ -68,10 +68,10 @@ export class NALStressMeasure extends JavaObject {
         let warmups: int = 0;
         let extraCycles: int = 5000;
 
-        let c: java.util.Collection<unknown> = NALTest.params();
+        let c: java.util.Collection<JavaObject[]> = NALTest.params();
         let totalTime: double = 0;
         for (let o of c) {
-            let examplePath: java.lang.String = (o as java.lang.Object[])[0] as java.lang.String;
+            let examplePath: java.lang.String = o[0] as java.lang.String;
             totalTime += NALStressMeasure.perfNAL(n, examplePath, extraCycles, repeats, warmups, true);
         }
         java.lang.System.out.println("\n\nTotal mean runtime (ms): " + totalTime);

@@ -1,0 +1,7 @@
+command: npm run test:serial
+tests: 150
+passed: 150
+failed: 0
+cancelled: 0
+skipped: 0
+mode: node --test --test-concurrency=1 --experimental-strip-types test/node/*.test.ts

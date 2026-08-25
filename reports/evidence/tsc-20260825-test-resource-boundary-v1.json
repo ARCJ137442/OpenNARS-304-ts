@@ -1,0 +1,25 @@
+{
+  "command": "npx tsc --noEmit --pretty false --incremental false",
+  "diagnostics_before": 118,
+  "diagnostics_after": 77,
+  "reduction": 41,
+  "production": 0,
+  "tests": 77,
+  "error_codes": {
+    "TS18046": 2,
+    "TS18047": 5,
+    "TS2304": 25,
+    "TS2322": 11,
+    "TS2339": 9,
+    "TS2345": 14,
+    "TS2356": 1,
+    "TS2365": 1,
+    "TS2445": 1,
+    "TS2564": 2,
+    "TS2689": 1,
+    "TS2694": 1,
+    "TS2769": 4
+  },
+  "m1_rerun": false,
+  "canonical_java_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5"
+}

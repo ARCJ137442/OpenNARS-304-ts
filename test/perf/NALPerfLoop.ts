@@ -23,10 +23,10 @@ export class NALPerfLoop extends JavaObject {
 
         let n: Reasoner = new Nar();
 
-        let c: java.util.Collection<unknown> = NALTest.params();
+        let c: java.util.Collection<JavaObject[]> = NALTest.params();
         while (true) {
             for (let o of c) {
-                let examplePath: java.lang.String = (o as java.lang.Object[])[0] as java.lang.String;
+                let examplePath: java.lang.String = o[0] as java.lang.String;
                 Debug.DETAILED = false;
 
                 perfNAL(n, examplePath, extraCycles + (java.lang.Math.random() * randomExtraCycles) as int, repeats, warmups,

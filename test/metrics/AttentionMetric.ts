@@ -30,7 +30,10 @@ import {
 // TODO< run more tests >
 
 export class AttentionMetric extends JavaObject {
-    public static directories: java.lang.String[] = ["/nal/multi_step/", "/nal/application/"];
+    public static directories: java.lang.String[] = [
+        new java.lang.String("/nal/multi_step/"),
+        new java.lang.String("/nal/application/")
+    ];
 
     public static showOutput: boolean = true;
 
@@ -40,7 +43,7 @@ export class AttentionMetric extends JavaObject {
 
     public static main(args: java.lang.String[]): void {
 
-        let et: java.util.Map<java.lang.String, java.lang.Object> = ExampleFileInput.getUnitTests(AttentionMetric.directories);
+        let et: java.util.Map<java.lang.String, JavaObject[]> = ExampleFileInput.getUnitTests(AttentionMetric.directories);
 
         // final Collection t = et.values();
 
@@ -51,7 +54,7 @@ export class AttentionMetric extends JavaObject {
             }
 
             if (enTest) {
-                let paths: java.lang.Object[] = iTest.getValue() as java.lang.Object[];
+                let paths: JavaObject[] = iTest.getValue();
 
                 let scoreSum: double = 0.0;
                 for (let iSample: int = 0; iSample < AttentionMetric.numberOfSamples; iSample++) {

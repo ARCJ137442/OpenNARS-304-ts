@@ -1,5 +1,9 @@
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { java, JavaObject, type int } from "jree";
-import { Nar } from "../../../src/main/Nar.ts";
+import { javaStringValue } from "../../../src/runtime/jree-compat.ts";
+import type { Nar } from "../../../src/main/Nar.ts";
 import { OutputCondition } from "../test/OutputCondition.ts";
 import "../test/OutputConditionImplementations.ts";
 
@@ -12,7 +16,7 @@ export class ExampleFileInput extends JavaObject {
 
     public static load(path: java.lang.String): java.lang.String {
         let sb: java.lang.StringBuilder = new java.lang.StringBuilder();
-        let line: java.lang.String;
+        let line: java.lang.String | null;
         let fp: java.io.File = new java.io.File(path);
         let br: java.io.BufferedReader = new java.io.BufferedReader(new java.io.FileReader(fp));
         while ((line = br.readLine()) !== null) {
@@ -31,41 +35,37 @@ export class ExampleFileInput extends JavaObject {
     }
 
     public static get(id: java.lang.String): ExampleFileInput {
-        return new ExampleFileInput(ExampleFileInput.load("./nal/" + id + ".nal"));
+        return new ExampleFileInput(ExampleFileInput.load(new java.lang.String("./nal/" + id + ".nal")));
     }
 
     public enableConditions(n: Nar, similarResultsToSave: int): java.util.List<OutputCondition> {
         return OutputCondition.getConditions(n, this.source, similarResultsToSave);
     }
 
-    public static getUnitTests(directories: java.lang.String[]): java.util.Map<java.lang.String, java.lang.Object> {
-        let l: java.util.Map<java.lang.String, java.lang.Object> = new java.util.TreeMap();
+    public static getUnitTests(directories: java.lang.String[]): java.util.Map<java.lang.String, JavaObject[]> {
+        // Java resolves these through the classpath.  Node has no equivalent classpath,
+        // so keep the resource lookup at this test-only adapter and preserve TreeMap order.
+        const resourceRoot = fileURLToPath(new URL("../../../java-master/src/main/resources/", import.meta.url));
+        const unitTests: java.util.Map<java.lang.String, JavaObject[]> =
+            new java.util.LinkedHashMap<java.lang.String, JavaObject[]>();
 
-        for (let dir of directories) {
+        for (const directory of directories) {
+            const relativeDirectory = javaStringValue(directory).replace(/^[/\\]+/, "");
+            const folder = join(resourceRoot, relativeDirectory);
+            const entries = readdirSync(folder, { withFileTypes: true })
+                .filter((entry) => entry.isFile())
+                .map((entry) => entry.name)
+                .sort();
 
-            let folder: java.io.File = null;
-            try {
-                folder = new java.io.File(Nar.class.getResource(dir).toURI());
-            } catch (e) {
-                if (e instanceof java.net.URISyntaxException) {
-                    throw new java.lang.IllegalStateException("Could not resolve path to nal tests in reosources.", e);
-                } else {
-                    throw e;
-                }
+            for (const name of entries) {
+                if (name === "README.txt" || name.includes(".png") || name === "extra")
+                    continue;
+                const absolutePath = join(folder, name);
+                const argumentsForTest: JavaObject[] = [new java.lang.String(absolutePath)];
+                unitTests.put(new java.lang.String(name), argumentsForTest);
             }
-
-            if (folder.listFiles() !== null) {
-                for (let file of folder.listFiles()) {
-                    if (file.getName().equals("README.txt") || file.getName().contains(".png"))
-                        continue;
-                    if (!("extra".equals(file.getName()))) {
-                        l.put(file.getName(), [file.getAbsolutePath()]);
-                    }
-                }
-            }
-
         }
-        return l;
+        return unitTests;
     }
 
     public getSource(): java.lang.String {

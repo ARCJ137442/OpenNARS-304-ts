@@ -1,0 +1,8 @@
+{
+  "command": "node --experimental-strip-types --input-type=module -e <ExampleFileInput resource smoke>",
+  "resource_count": 245,
+  "first": "desire.1.nal",
+  "contains_toothbrush": true,
+  "contains_stability": true,
+  "warnings": ["DEP0151 jree ESM main field"]
+}

@@ -1,0 +1,5 @@
+command: npm run test:parity:local
+ok: true
+differences: []
+tolerance: 0.00001
+java_artifact_sha256: 2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5

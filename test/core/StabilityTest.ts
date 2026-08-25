@@ -6,6 +6,8 @@ import { OutputCondition } from "../util/test/OutputCondition.ts";
 import "../util/test/OutputConditionImplementations.ts";
 import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
 import { assertTrue } from "../util/junit-assert.ts";
+import { NALTest } from "./NALTest.ts";
+import { javaStringValue } from "../../src/runtime/jree-compat.ts";
 
 
 
@@ -32,7 +34,7 @@ export class StabilityTest extends JavaObject {
 
     public static getExample(path: java.lang.String): java.lang.String {
         try {
-            let existing: java.lang.String = StabilityTest.examples.get(path);
+            let existing: java.lang.String | null = StabilityTest.examples.get(path);
             if (existing !== null)
                 return existing;
 
@@ -56,19 +58,19 @@ export class StabilityTest extends JavaObject {
         // return new DiscretinuousBagNARBuilder().build();
     }
 
-    public static params(): java.util.Collection<unknown> {
-        let directories: java.lang.String[] = ["/nal/stability/"];
+    public static params(): java.util.Collection<JavaObject[]> {
+        let directories: java.lang.String[] = [new java.lang.String("/nal/stability/")];
 
-        let et: java.util.Map<java.lang.String, java.lang.Object> = ExampleFileInput.getUnitTests(directories);
-        let t: java.util.Collection<unknown> = et.values();
+        let et: java.util.Map<java.lang.String, JavaObject[]> = ExampleFileInput.getUnitTests(directories);
+        let t: java.util.Collection<JavaObject[]> = et.values();
         for (let x of et.keySet())
             StabilityTest.addTest(x);
         return t;
     }
 
     public static addTest(name: java.lang.String): void {
-        name = name.substring(3, name.indexOf(".nal"));
-        StabilityTest.tests.put(name, true);
+        name = name.substring(3, name.indexOf(new java.lang.String(".nal")));
+        StabilityTest.tests.put(name, java.lang.Boolean.TRUE);
     }
 
     public static runTests(c: java.lang.Class<unknown>): double {
@@ -122,7 +124,7 @@ export class StabilityTest extends JavaObject {
             let total: int = 0;
             for (let i: int = 0; i < 9; i++) {
                 let rate: float = (levelTotals[i] > 0) ? (levelSuccess[i] as float) / levelTotals[i] : 0;
-                let prefix: java.lang.String = (i > 0) ? ("NAL" + i) : "Other";
+                let prefix: java.lang.String = new java.lang.String((i > 0) ? ("NAL" + i) : "Other");
 
                 java.lang.System.out.println(
                     prefix + ": " + (rate * 100.0) + "%  (" + levelSuccess[i] + "/" + levelTotals[i] + ")");
@@ -151,11 +153,10 @@ export class StabilityTest extends JavaObject {
     }
 
     protected testNAL(path: java.lang.String): double {
-        let expects: java.util.List<OutputCondition> = new java.util.ArrayList();
+        let expects: java.util.List<OutputCondition> = new java.util.ArrayList<OutputCondition>();
 
-        let n: Nar = null;
         let error: boolean = false;
-        n = this.newNAR();
+        const n: Nar = this.newNAR();
         let example: java.lang.String = StabilityTest.getExample(path);
 
         if (StabilityTest.showOutput) {
@@ -202,7 +203,7 @@ export class StabilityTest extends JavaObject {
         // System.out.println(lastSuccess + " , " + path + " \t excess cycles=" +
         // (n.time() - lastSuccess) + " end=" + n.time());
 
-        if ((!success & StabilityTest.showFail) || (success && StabilityTest.showSuccess)) {
+        if ((!success && StabilityTest.showFail) || (success && StabilityTest.showSuccess)) {
             java.lang.System.err.println('\n' + path + " @" + n.time());
             for (let e of expects) {
                 java.lang.System.err.println("  " + e);
@@ -212,7 +213,7 @@ export class StabilityTest extends JavaObject {
         // System.err.println("Status: " + success + " total=" + expects.size() + " " +
         // expects);
         if (StabilityTest.requireSuccess)
-            assertTrue(path, success);
+            assertTrue(javaStringValue(path), success);
 
         return score;
     }

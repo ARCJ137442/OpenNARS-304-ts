@@ -7,6 +7,7 @@ import { OutputContainsCondition } from "../util/test/OutputContainsCondition.ts
 import "../util/test/OutputConditionImplementations.ts";
 import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
 import { assertTrue } from "../util/junit-assert.ts";
+import { javaStringValue } from "../../src/runtime/jree-compat.ts";
 
 
 
@@ -33,7 +34,11 @@ export class NALTest extends JavaObject {
     public static numberOfSamples: int = 1;
 
     // exposed to be able to change it from the outside
-    public static directories: java.lang.String[] = ["/nal/single_step/", "/nal/multi_step/", "/nal/application/"];
+    public static directories: java.lang.String[] = [
+        new java.lang.String("/nal/single_step/"),
+        new java.lang.String("/nal/multi_step/"),
+        new java.lang.String("/nal/application/")
+    ];
 
     public static scoreSum: double = 0.0; // sum of all scores
     public static scoreSumWithTime: double = 0.0; // sum of all scores
@@ -46,7 +51,7 @@ export class NALTest extends JavaObject {
 
     public static getExample(path: java.lang.String): java.lang.String {
         try {
-            let existing: java.lang.String = NALTest.examples.get(path);
+            let existing: java.lang.String | null = NALTest.examples.get(path);
             if (existing !== null)
                 return existing;
 
@@ -67,19 +72,19 @@ export class NALTest extends JavaObject {
         return new Nar();
     }
 
-    public static params(): java.util.Collection<unknown> {
+    public static params(): java.util.Collection<JavaObject[]> {
         // return all test-paths of all files in the directories
 
-        let et: java.util.Map<java.lang.String, java.lang.Object> = ExampleFileInput.getUnitTests(NALTest.directories);
-        let t: java.util.Collection<unknown> = et.values();
+        let et: java.util.Map<java.lang.String, JavaObject[]> = ExampleFileInput.getUnitTests(NALTest.directories);
+        let t: java.util.Collection<JavaObject[]> = et.values();
         for (let x of et.keySet())
             NALTest.addTest(x);
         return t;
     }
 
     public static addTest(name: java.lang.String): void {
-        name = name.substring(3, name.indexOf(".nal"));
-        NALTest.tests.put(name, true);
+        name = name.substring(3, name.indexOf(new java.lang.String(".nal")));
+        NALTest.tests.put(name, java.lang.Boolean.TRUE);
     }
 
     public static runTests(c: java.lang.Class<unknown>): void {
@@ -206,19 +211,21 @@ export class NALTest extends JavaObject {
             // score = 1.0 + 1.0 / (1+lastSuccess);
             // score = lastSuccess;
 
-            if (NALTest.scores.containsKey(path)) {
-                NALTest.scores.get(path).add(score);
+            const existingScores = NALTest.scores.get(path);
+            if (existingScores !== null) {
+                existingScores.add(score);
             } else {
-                let scoresList: java.util.List<double> = new java.util.ArrayList();
+                let scoresList: java.util.List<double> = new java.util.ArrayList<double>();
                 scoresList.add(score);
                 NALTest.scores.put(path, scoresList);
             }
             // }
         } else {
-            if (NALTest.scores.containsKey(path)) {
-                NALTest.scores.get(path).add(0.0);
+            const existingScores = NALTest.scores.get(path);
+            if (existingScores !== null) {
+                existingScores.add(0.0);
             } else {
-                let scoresList: java.util.List<double> = new java.util.ArrayList();
+                let scoresList: java.util.List<double> = new java.util.ArrayList<double>();
                 scoresList.add(0.0);
                 NALTest.scores.put(path, scoresList);
             }
@@ -232,7 +239,7 @@ export class NALTest extends JavaObject {
         // System.out.println(lastSuccess + " , " + path + " \t excess cycles=" +
         // (n.time() - lastSuccess) + " end=" + n.time());
 
-        if ((!success & NALTest.showFail) || (success && NALTest.showSuccess)) {
+        if ((!success && NALTest.showFail) || (success && NALTest.showSuccess)) {
             java.lang.System.err.println('\n' + path + " @" + n.time());
             for (let e of expects) {
                 java.lang.System.err.println("  " + e);
@@ -240,7 +247,7 @@ export class NALTest extends JavaObject {
         }
 
         if (NALTest.requireSuccess) {
-            assertTrue(path, success);
+            assertTrue(javaStringValue(path), success);
         }
 
         return score;
