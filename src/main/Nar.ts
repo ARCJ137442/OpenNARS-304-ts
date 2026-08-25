@@ -642,7 +642,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
     /** gets a concept if it exists, or returns null if it does not */
-    public concept(concept: java.lang.String): Concept {
+    public concept(concept: JavaStringInput): Concept {
         const parsedTerm = new Narsese(this).parseTerm(concept);
         if (parsedTerm === null) {
             throw new java.lang.IllegalArgumentException(S`Invalid concept term`);
@@ -650,7 +650,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         return this.memory.concept(parsedTerm);
     }
 
-    public ask(termString: java.lang.String, answered: AnswerHandler): Nar {
+    public ask(termString: JavaStringInput, answered: AnswerHandler): Nar {
         const parsedTerm = new Narsese(this).parseTerm(termString);
         if (parsedTerm === null) {
             throw new java.lang.IllegalArgumentException(S`Invalid question term`);
@@ -675,7 +675,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     }
 
-    public askNow(termString: java.lang.String, answered: AnswerHandler): Nar {
+    public askNow(termString: JavaStringInput, answered: AnswerHandler): Nar {
         const parsedTerm = new Narsese(this).parseTerm(termString);
         if (parsedTerm === null) {
             throw new java.lang.IllegalArgumentException(S`Invalid question term`);

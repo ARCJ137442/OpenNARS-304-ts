@@ -1,6 +1,6 @@
 //! Java source: opennars/interfaces/NarseseConsumer.java
 
-import { java } from "jree";
+import type { JavaStringInput } from "../runtime/jree-compat.ts";
 
 
 
@@ -18,5 +18,5 @@ export interface NarseseConsumer {
      *
      * @param narsese the narsese text
      */
-    addInput(narsese: java.lang.String): void;
+    addInput(narsese: JavaStringInput): void;
 }

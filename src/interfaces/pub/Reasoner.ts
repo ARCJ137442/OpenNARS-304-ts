@@ -1,5 +1,6 @@
 //! Java source: opennars/interfaces/pub/Reasoner.java
 import { java, type long } from "jree";
+import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import type { SensoryChannelConsumer } from "../SensoryChannelConsumer.ts";
 import type { Resettable } from "../Resettable.ts";
 import type { NarseseConsumer } from "../NarseseConsumer.ts";
@@ -28,7 +29,7 @@ export interface Reasoner extends
     Pluggable,
     Multistepable,
     Timable {
-    addInput(narsese: java.lang.String): void;
+    addInput(narsese: JavaStringInput): void;
     addInput(task: Task, time: Timable): Reasoner;
 
     /**
@@ -39,7 +40,7 @@ export interface Reasoner extends
      * @return reasoner which processes the question
      * @throws Narsese.InvalidInputException
      */
-    ask(termString: java.lang.String, answered: AnswerHandler): Reasoner;
+    ask(termString: JavaStringInput, answered: AnswerHandler): Reasoner;
 
     /**
      * ask reasoner a now question
@@ -49,7 +50,7 @@ export interface Reasoner extends
      * @return reasoner which processes the question
      * @throws Narsese.InvalidInputException
      */
-    askNow(termString: java.lang.String, answered: AnswerHandler): Reasoner;
+    askNow(termString: JavaStringInput, answered: AnswerHandler): Reasoner;
 
     /**
      * returns the concept by name/term or creates it if it doesn't exist
@@ -58,7 +59,7 @@ export interface Reasoner extends
      * @return queried or created concept
      * @throws Narsese.InvalidInputException
      */
-    concept(concept: java.lang.String): Concept;
+    concept(concept: JavaStringInput): Concept;
 
     /**
      * Main loop executed by the Thread. Should not be called directly.
