@@ -33,6 +33,7 @@ const matchingOrder = TemporalRules.matchingOrder;
 const reverseOrder = TemporalRules.reverseOrder;
 const Answer = Events.Answer;
 const Unsolved = Events.Unsolved;
+const asJavaObject = (value: unknown): JavaObject => value as JavaObject;
 
 
 
@@ -130,7 +131,7 @@ export class LocalRules extends JavaObject {
         let budget: BudgetValue = BudgetFunctions.revise(newTruth, oldTruth, truth, feedbackToLinks, nal);
 
         if (budget.aboveThreshold()) {
-            let counter: long = -1; // -1 is invalid
+            let counter: long = -1 as unknown as long; // -1 is invalid
             if (newBelief.term instanceof Implication && oldBelief.term instanceof Implication) {
                 // add because the evidence adds up
                 counter = (newBelief.term as Implication).counter + (oldBelief.term as Implication).counter;
@@ -163,17 +164,17 @@ export class LocalRules extends JavaObject {
         if (newBeliefTerm.hasInterval()) {
             let ivalOld: java.util.List<java.lang.Long> = CompoundTerm.extractIntervals(nal.memory, oldBeliefTerm);
             let ivalNew: java.util.List<java.lang.Long> = CompoundTerm.extractIntervals(nal.memory, newBeliefTerm);
-            let AbsDiffSumNew: long = 0;
-            let AbsDiffSumOld: long = 0;
+            let AbsDiffSumNew: long = 0 as unknown as long;
+            let AbsDiffSumOld: long = 0 as unknown as long;
             /* synchronized (recent_ivals) { */
             if (recent_ivals.isEmpty()) {
                 for (let l of ivalOld) {
-                    recent_ivals.add(Float32Math.from(l) as float);
+                    recent_ivals.add(Float32Math.from(Number(l as unknown as number)) as float);
                 }
             }
             for (let i: int = 0; i < ivalNew.size(); i++) {
                 let inBetween: float = Float32Math.divide(
-                    Float32Math.add(recent_ivals.get(i), ivalNew.get(i)),
+                    Float32Math.add(recent_ivals.get(i), Number(ivalNew.get(i) as unknown as number)),
                     2.0,
                 ) as float;
                 // vote as one new entry, turtle style
@@ -191,17 +192,24 @@ export class LocalRules extends JavaObject {
                 ) as float);
             }
             for (let i: int = 0; i < ivalNew.size(); i++) {
-                AbsDiffSumNew += java.lang.Math.abs(ivalNew.get(i) - recent_ivals.get(i));
+                AbsDiffSumNew += java.lang.Math.abs(
+                    Number(ivalNew.get(i) as unknown as number) - recent_ivals.get(i),
+                ) as unknown as long;
             }
             for (let i: int = 0; i < ivalNew.size(); i++) {
-                AbsDiffSumOld += java.lang.Math.abs(ivalOld.get(i) - recent_ivals.get(i));
+                AbsDiffSumOld += java.lang.Math.abs(
+                    Number(ivalOld.get(i) as unknown as number) - recent_ivals.get(i),
+                ) as unknown as long;
             }
             /* } */
-            let AbsDiffSum: long = 0;
+            let AbsDiffSum: long = 0 as unknown as long;
             for (let i: int = 0; i < ivalNew.size(); i++) {
-                AbsDiffSum += java.lang.Math.abs(ivalNew.get(i) - ivalOld.get(i));
+                AbsDiffSum += java.lang.Math.abs(
+                    Number(ivalNew.get(i) as unknown as number) - Number(ivalOld.get(i) as unknown as number),
+                ) as unknown as long;
             }
-            let a: float = TruthFunctions.temporalProjection(0, AbsDiffSum, 0, nal.memory.narParameters);
+            let a: float = TruthFunctions.temporalProjection(
+                0 as unknown as long, AbsDiffSum, 0 as unknown as long, nal.memory.narParameters);
             // re-project, and it's safe:
             // we won't count more confidence than
             // when the second premise would have been shifted
@@ -230,12 +238,12 @@ export class LocalRules extends JavaObject {
             let newQ: float = LocalRules.solutionQuality(rateByConfidence, task, belief, memory, nal.time);
             let oldQ: float = LocalRules.solutionQuality(rateByConfidence, task, oldBest, memory, nal.time);
             let isBetterSolution: boolean = newQ > oldQ;
-            memory.emit(Events.TrySolution.class, isBetterSolution, task, belief);
+            memory.emit(Events.TrySolution.class, asJavaObject(isBetterSolution), task, belief);
             if (!isBetterSolution) {
                 if (problem.isGoal() && memory.emotion !== null) {
                     memory.emotion.adjustSatisfaction(oldQ, task.getPriority(), nal);
                 }
-                memory.emit(Unsolved.class, task, belief, "Lower quality");
+                memory.emit(Unsolved.class, task, belief, asJavaObject("Lower quality"));
                 return false;
             }
         }
@@ -260,7 +268,7 @@ export class LocalRules extends JavaObject {
             nal.addTask(nal.getCurrentTask(), budget, belief, task.getParentBelief());
             return true;
         } else {
-            memory.emit(Unsolved.class, task, belief, "Insufficient budget");
+            memory.emit(Unsolved.class, task, belief, asJavaObject("Insufficient budget"));
         }
         return false;
     }
@@ -326,9 +334,9 @@ export class LocalRules extends JavaObject {
     public static solutionEval(problem: Task, solution: Sentence, task: Task,
         nal: DerivationContext): BudgetValue {
         if (problem.sentence.punctuation !== solution.punctuation && solution.term.hasVarQuery()) {
-            return null;
+            return null as unknown as BudgetValue;
         }
-        let budget: BudgetValue = null;
+        let budget: BudgetValue = null as unknown as BudgetValue;
         let feedbackToLinks: boolean = false;
         if (task === null) {
             task = nal.getCurrentTask();
