@@ -78,4 +78,4 @@ npm run build
 npm run shell:dist
 ```
 
-CLI 是 M2 的人工 smoke 入口，不替代 M1 的 Java/TypeScript 机器可读矩阵。
+入口启动会自动把 jree 的无扩展名 `main` 元数据补成标准 ESM `exports`，并使用 Node `register()` loader；因此不应再看到 `--experimental-loader` 或 `DEP0151` 启动警告。CLI 是 M2 的人工 smoke 入口，不替代 M1 的 Java/TypeScript 机器可读矩阵。

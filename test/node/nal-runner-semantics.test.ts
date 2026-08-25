@@ -628,7 +628,7 @@ test("NAL trace describes ExecutionResult with Java-equivalent operation feedbac
   const traceRunner = join(process.cwd(), "scripts", "e2e", "NalTraceRunner.mjs");
   const file = join(process.cwd(), "java-master", "src", "main", "resources", "nal", "single_step", "nal8.add.nal");
   const result = spawnSync(process.execPath, [
-    "--loader", "./scripts/ts-loader.mjs", traceRunner, "32", file, "--skip-embedded",
+    "--import", "./scripts/register-ts-loader.mjs", traceRunner, "32", file, "--skip-embedded",
   ], {
     cwd: process.cwd(),
     encoding: "utf8",

@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { appendFileSync, existsSync, mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
+import { appendFileSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { delimiter, dirname, join, resolve } from "node:path";
@@ -108,6 +108,75 @@ function requirePath(value, option, kind) {
   return path;
 }
 
+function readManifestClassPath(jar) {
+  const extractionDirectory = mkdtempSync(join(tmpdir(), "opennars-java-manifest-"));
+  try {
+    const result = spawnSync("jar", ["xf", jar, "META-INF/MANIFEST.MF"], {
+      cwd: extractionDirectory,
+      encoding: "utf8",
+      maxBuffer: 4 * 1024 * 1024,
+    });
+    if (result.status !== 0) {
+      throw new Error(`jar manifest extraction failed for ${jar}:\n${result.stdout}\n${result.stderr}`);
+    }
+    const manifestPath = join(extractionDirectory, "META-INF", "MANIFEST.MF");
+    if (!existsSync(manifestPath)) return [];
+    const manifest = readFileSync(manifestPath, "utf8").replace(/\r?\n[ \t]/g, "");
+    const classPathLine = manifest.split(/\r?\n/).find((line) => line.startsWith("Class-Path:"));
+    if (!classPathLine) return [];
+    return classPathLine.slice("Class-Path:".length).trim().split(/\s+/).filter(Boolean);
+  } finally {
+    rmSync(extractionDirectory, { recursive: true, force: true });
+  }
+}
+
+function mavenRepositoryRoots() {
+  return [
+    process.env.MAVEN_REPO_LOCAL,
+    process.env.M2_REPO,
+    process.env.USERPROFILE ? join(process.env.USERPROFILE, ".m2", "repository") : null,
+    process.env.HOME ? join(process.env.HOME, ".m2", "repository") : null,
+  ].filter((path, index, paths) => path !== null && paths.indexOf(path) === index && existsSync(path));
+}
+
+function findFileByName(root, name) {
+  const pending = [root];
+  while (pending.length > 0) {
+    const directory = pending.pop();
+    let entries;
+    try {
+      entries = readdirSync(directory, { withFileTypes: true });
+    } catch {
+      continue;
+    }
+    for (const entry of entries) {
+      const path = join(directory, entry.name);
+      if (entry.isFile() && entry.name === name) return path;
+      if (entry.isDirectory() && entry.name !== "node_modules") pending.push(path);
+    }
+  }
+  return null;
+}
+
+function resolveManifestDependencies(jar) {
+  const entries = readManifestClassPath(jar);
+  const dependencies = [];
+  const missing = [];
+  for (const entry of entries) {
+    const directPath = resolve(dirname(jar), entry);
+    const resolvedPath = existsSync(directPath)
+      ? directPath
+      : mavenRepositoryRoots().map((root) => findFileByName(root, entry.split(/[\\/]/).pop()))
+        .find((path) => path !== null);
+    if (resolvedPath === undefined) missing.push(entry);
+    else dependencies.push(resolvedPath);
+  }
+  if (missing.length > 0) {
+    throw new Error(`Java artifact manifest dependencies are missing for ${jar}: ${missing.join(", ")}`);
+  }
+  return { entries, dependencies };
+}
+
 function resolveJavaArtifact(options) {
   if (options.engine === "ts") return null;
   const jar = requirePath(options.javaJar, "--java-jar", "file");
@@ -117,11 +186,14 @@ function resolveJavaArtifact(options) {
   if (sha256 === LEGACY_JAR_SHA256) {
     throw new Error(`--java-jar points to the legacy 3.1.0 artifact; use the canonical 3.0.4 artifact: ${jar}`);
   }
+  const manifestDependencies = resolveManifestDependencies(jar);
   return {
     jar,
     classes,
     testClasses,
     sha256,
+    manifest_class_path: manifestDependencies.entries,
+    runtime_classpath: manifestDependencies.dependencies,
   };
 }
 
@@ -159,7 +231,7 @@ function extractNalMetadata(source) {
 
 function compileJavaAdapter(artifact) {
   const outputDirectory = mkdtempSync(join(tmpdir(), "opennars-java-parity-"));
-  const classpath = [artifact.testClasses, artifact.classes, artifact.jar].join(delimiter);
+  const classpath = [artifact.testClasses, artifact.classes, artifact.jar, ...artifact.runtime_classpath].join(delimiter);
   const result = spawnSync("javac", ["-encoding", "UTF-8", "-cp", classpath, "-d", outputDirectory, javaAdapterSource], {
     cwd: projectRoot,
     encoding: "utf8",
@@ -549,7 +621,7 @@ async function runTs(
 
     const sourceCli = resolve(join(projectRoot, "scripts", "cli.mjs"));
     const cliInvocation = resolve(cli) === sourceCli
-      ? ["--loader", "./scripts/ts-loader.mjs", cli]
+      ? ["--import", "./scripts/register-ts-loader.mjs", cli]
       : [cli];
     const child = spawn(process.execPath, [
       ...cliInvocation, "--cycles", String(cycles),

@@ -19,7 +19,7 @@ function parseArgs(argv) {
     else if (argument === "--rss-limit-mb") rssLimitMb = Number(argv[++index]);
     else if (argument === "--output") output = argv[++index];
     else if (argument === "--help" || argument === "-h") {
-      console.error("usage: node --loader ./scripts/ts-loader.mjs scripts/e2e/NalResourceTelemetryRunner.mjs [--chunk N] [--max-cycles N] [--rss-limit-mb N] [--output FILE] <nal-file>");
+      console.error("usage: node --import ./scripts/register-ts-loader.mjs scripts/e2e/NalResourceTelemetryRunner.mjs [--chunk N] [--max-cycles N] [--rss-limit-mb N] [--output FILE] <nal-file>");
       process.exit(0);
     } else if (file === null) file = argument;
     else throw new Error(`unexpected argument: ${argument}`);

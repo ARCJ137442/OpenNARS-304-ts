@@ -20,20 +20,20 @@ M1 未全量通过时，不启动新的 M3 benchmark 或性能优化。任何 M2
 
 ## 当前已确认事实
 
-- Git 主线最新提交：`eba42ea`；代码优化提交：`4d5435f`。
+- Git 主线最新已推送提交：`ebadda1`；本批 warning/classpath 修复待提交。
 - Java canonical JAR：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`。
 - canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 - Java 与 TypeScript 均按单线程运行；Java 测试使用 JDK 18.0.2。
 - `npx tsc --noEmit --pretty false --incremental false`：0 诊断。
-- 固定优化提交上的 `npm test --silent`：155/155；jree 的 DEP0151 是运行时弃用警告，不是测试失败。
+- 本批串行 `npm test --silent`：159/159；权威 `npx tsc --noEmit --pretty false --incremental false`：0 诊断；`npm run build --silent` 与 `npm run shell:dist` 均通过。shell 已改用 `--import` 注册 TypeScript loader，并在入口前修补 jree 的 ESM `exports` 元数据；实际 shell 子进程 stderr 为空，不再产生 `--experimental-loader`/`DEP0151` 启动警告。Node 测试器自身的 `--experimental-strip-types` 提示不属于 shell 子进程。
 - 局部算法 parity：`ok: true`，`differences: []`，容差 `1e-5`。
-- M1 当前批次 `reports/evidence/m1-245-parity-20260825-fqn-fixed-v1.jsonl` 已在第 24 行暂停：`nars_multistep_2.nal` 首次出现 `Bag.findEquivalentKey` 的不可迭代桶异常。兼容性修复后的单样本证据 `reports/evidence/m1-nars-multistep-2-bag-rebuild-fix-20260825-v2.jsonl` 已 Java/TS marker 2/2、`functional_pass=true`、无异常/无 stall；TS 约 365.9 秒，性能差距另行记录。245+1 全量复跑尚未完成，因此仍不得宣称 M1 通过。
+- M1 主矩阵 `reports/evidence/m1-245-parity-20260825-bag-fix-v1.jsonl` 已完成 245/245：原始结果为 243 个 `functional_pass=true`。`nars_multistep_3.nal` 的延长复核已通过；Java runner 已补齐 canonical JAR manifest 的 7 个运行时依赖，且 progress observer 已收窄为只监听 `CycleEnd`，`long_term_stability.nal` 的 Java-only 复核通过。第 246 个 `simpleOperationTest.nal` 也已通过 Java/TS parity，但 stability 的 TS 在 900 秒安全上限内仍未复刻 marker；因此 245+1 仍不得宣称 M1 通过。
 
 ## M1 全量运行
 
 推荐使用显式 artifact 路径，避免历史 3.1.0 JAR 被误用：
 
-    node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 300000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports/evidence/m1-245-parity-YYYYMMDD-v1.jsonl
+    node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 900000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports/evidence/m1-245-parity-YYYYMMDD-v1.jsonl
 
 建议：
 
@@ -54,6 +54,10 @@ M1 未全量通过时，不启动新的 M3 benchmark 或性能优化。任何 M2
     npx tsc --noEmit --pretty false --incremental false
     npm run test:parity:local --silent
     npm run test:build --silent
+
+第 246 个夹具单独核实：
+
+    node scripts/e2e/run-nal-corpus.mjs --engine parity --file java-master\src\test\simpleOperationTest.nal --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 900000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports/evidence/m1-simpleOperationTest-YYYYMMDD-v1.jsonl --summary
 
 交互式人工核实入口：
 

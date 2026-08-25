@@ -135,7 +135,7 @@ function contextSummary(args) {
 
 function parseArgs(argv) {
     if (argv.length < 2 || argv.slice(2).some((value) => value !== "--skip-embedded")) {
-        throw new Error("usage: node --loader ./scripts/ts-loader.mjs scripts/e2e/NalTraceRunner.mjs <cycles> <nal-file> [--skip-embedded]");
+        throw new Error("usage: node --import ./scripts/register-ts-loader.mjs scripts/e2e/NalTraceRunner.mjs <cycles> <nal-file> [--skip-embedded]");
     }
     const cycles = Number(argv[0]);
     if (!Number.isInteger(cycles) || cycles < 1) throw new Error("cycles must be a positive integer");

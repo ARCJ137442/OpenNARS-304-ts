@@ -4,8 +4,8 @@ OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先
 
 ## 当前状态（2026-08-25）
 
-- M1：245 个主资源 NAL 的单线程 Java/TypeScript parity 矩阵曾在第 24 行暂停；`nars_multistep_2.nal` 已经单样本修复复核通过，但 TS 明显较慢，245+1 全量复跑仍未完成，因此不得宣称 M1 全量通过。
-- M2：非增量 `tsc` 为 0 诊断；固定提交上的 `npm test` 为 155/155，局部算法 parity 通过，正式构建与 CLI smoke 通过。
+- M1：245 个主资源 NAL 的原始串行矩阵为 243/245；`nars_multistep_3.nal` 延长复核和第 246 个 `simpleOperationTest.nal` 已通过，`long_term_stability.nal` 的 Java 端已通过但 TypeScript 长周期 marker 仍未完成，245+1 全量完成前不得宣称 M1 全量通过。
+- M2：非增量 `tsc` 为 0 诊断；本批串行 `npm test` 为 159/159，局部算法 parity、正式构建和源码/构建产物 shell smoke 通过。
 - M3：资源观测与串行 benchmark 已建立，但在 M1 全量通过前暂停；四类代表样本已完成功能/parity 观测，重复 median/p95 和 Java RSS 边界仍未收尾。
 - 当前版本：`0.1.0`；当前 canonical Java JAR 使用 `OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 
@@ -50,7 +50,7 @@ OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先
 
     node dist/cli.mjs --cycles 1550 path/to/example.nal
 
-启动可人工输入 Narsese 的单线程交互式 shell：
+启动可人工输入 Narsese 的单线程交互式 shell（入口已消除 Node loader 与 jree ESM 启动警告）：
 
     npm run shell
 

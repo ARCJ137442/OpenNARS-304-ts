@@ -70,8 +70,10 @@ public final class NalParityRunner {
                 nar.narParameters.THREADS_AMOUNT = 1;
                 nar.setThreadYield(false);
                 if (progressInterval > 0) {
-                    nar.event(new ProgressObserver(file, progressInterval), true,
-                            Events.CycleEnd.class, OutputHandler.OUT.class, OutputHandler.EXE.class);
+                    // CycleEnd is sufficient to distinguish active computation from a stall.
+                    // Observing OUT/EXE as well creates a callback on every emitted task and
+                    // changes the stability fixture's behavior under long single-thread runs.
+                    nar.event(new ProgressObserver(file, progressInterval), true, Events.CycleEnd.class);
                 }
                 final List<String> expectations = expectations(source);
                 capture = new Capture(nar, expectations);
