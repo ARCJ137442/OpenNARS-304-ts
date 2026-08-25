@@ -68,8 +68,8 @@ export class SyllogisticRules extends JavaObject {
         }
         let value1: TruthValue | null = sentence.truth;
         let value2: TruthValue = belief.getTruth();
-        let truth1: TruthValue = null;
-        let truth2: TruthValue = null;
+        let truth1: TruthValue = null as unknown as TruthValue;
+        let truth2: TruthValue = null as unknown as TruthValue;
         let budget1: BudgetValue;
         let budget2: BudgetValue;
 
@@ -129,9 +129,9 @@ export class SyllogisticRules extends JavaObject {
         let order: int = abdIndComOrder(order1, order2);
 
         let taskContent: Statement = sentence1.term as Statement;
-        let truth1: TruthValue = null;
-        let truth2: TruthValue = null;
-        let truth3: TruthValue = null;
+        let truth1: TruthValue = null as unknown as TruthValue;
+        let truth2: TruthValue = null as unknown as TruthValue;
+        let truth3: TruthValue = null as unknown as TruthValue;
         let budget1: BudgetValue;
         let budget2: BudgetValue;
         let budget3: BudgetValue;
@@ -195,14 +195,14 @@ export class SyllogisticRules extends JavaObject {
             && ((term2 as CompoundTerm).term[0] instanceof Interval)) {
             let interval: Interval = (term2 as CompoundTerm).term[0] as Interval;
             occurrence_time2 += interval.time;
-            term2 = (term2 as CompoundTerm).setComponent(0, null, nal.mem());
+            term2 = (term2 as CompoundTerm).setComponent(0, null as unknown as Term, nal.mem());
         }
         let occurrence_time1: long = nal.getCurrentTask().sentence.getOccurrenceTime();
         while (occurrence_time1 !== Stamp.ETERNAL && (term1 instanceof Conjunction)
             && ((term1 as CompoundTerm).term[0] instanceof Interval)) {
             let interval: Interval = (term1 as CompoundTerm).term[0] as Interval;
             occurrence_time1 += interval.time;
-            term1 = (term1 as CompoundTerm).setComponent(0, null, nal.mem());
+            term1 = (term1 as CompoundTerm).setComponent(0, null as unknown as Term, nal.mem());
         }
 
         if (order !== ORDER_INVALID) {
@@ -281,7 +281,7 @@ export class SyllogisticRules extends JavaObject {
             return;
         }
         let st: Statement = asym.term as Statement;
-        let truth: TruthValue = null;
+        let truth: TruthValue = null as unknown as TruthValue;
         let budget: BudgetValue;
         let sentence: Sentence = nal.getCurrentTask().sentence;
         let taskTerm: CompoundTerm = sentence.term as CompoundTerm;
@@ -341,7 +341,7 @@ export class SyllogisticRules extends JavaObject {
             return;
         }
         let st: Statement = belief.term as Statement;
-        let truth: TruthValue = null;
+        let truth: TruthValue = null as unknown as TruthValue;
         let budget: BudgetValue;
         if (!(sentence.isQuestion() || sentence.isQuest())) {
             if (sentence.isGoal()) {
@@ -379,10 +379,10 @@ export class SyllogisticRules extends JavaObject {
 
             // final BudgetValue budget1 = null;
             // final BudgetValue budget2 = null;
-            let budget3: BudgetValue = null;
+            let budget3: BudgetValue = null as unknown as BudgetValue;
             // final TruthValue truth1 = null;
             // final TruthValue truth2 = null;
-            let truth3: TruthValue = null;
+            let truth3: TruthValue = null as unknown as TruthValue;
             let value1: TruthValue = sentence.getTruth();
             let value2: TruthValue = belief.getTruth();
 
@@ -519,7 +519,7 @@ export class SyllogisticRules extends JavaObject {
                 if ((order !== ORDER_NONE) && (order !== ORDER_INVALID)) {
                     let baseTime: long = subSentence.getOccurrenceTime();
                     if (baseTime !== Stamp.ETERNAL) {
-                        let inc: long = order * nal.narParameters.DURATION;
+                        let inc: long = (order * nal.narParameters.DURATION) as unknown as long;
                         occurrence_time = (side === 0) ? baseTime + inc : baseTime - inc;
                     }
                 }
@@ -527,7 +527,7 @@ export class SyllogisticRules extends JavaObject {
                 let beliefTruth: TruthValue = beliefSentence.getTruth();
                 let truth1: TruthValue = mainSentence.getTruth();
                 let truth2: TruthValue = subSentence.getTruth();
-                let truth: TruthValue = null;
+                let truth: TruthValue = null as unknown as TruthValue;
                 let strong: boolean = false;
                 let budget: BudgetValue;
 
@@ -625,7 +625,7 @@ export class SyllogisticRules extends JavaObject {
         let conditionalTask: boolean = Variables.hasSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,
             premise2, belief.term);
         let commonComponent: Term;
-        let newComponent: Term = null;
+        let newComponent: Term = null as unknown as Term;
         if (side === 0 || side === 1) {
             let sideOfCommonComponentAsEnum: Statement.EnumStatementSide = side === 0 ? Statement.EnumStatementSide.SUBJECT
                 : Statement.EnumStatementSide.PREDICATE;
@@ -687,15 +687,15 @@ export class SyllogisticRules extends JavaObject {
         }
         let newCondition: Term;
         if (oldCondition.equals(commonComponent)) {
-            newCondition = null;
+            newCondition = null as unknown as Term;
         } else {
-            newCondition = oldCondition.setComponent(index, newComponent, nal.mem());
+            newCondition = oldCondition.setComponent(index, newComponent as Term, nal.mem());
         }
         let content: Term | null;
 
-        let delta: long = 0;
-        let minTime: long = 0;
-        let maxTime: long = 0;
+        let delta: long = 0 as unknown as long;
+        let minTime: long = 0 as unknown as long;
+        let maxTime: long = 0 as unknown as long;
         let predictedEvent: boolean = false;
 
         if (newCondition !== null) {
@@ -703,23 +703,24 @@ export class SyllogisticRules extends JavaObject {
                 content = premise1.getPredicate();
                 delta = (newCondition as Interval).time;
                 if (taskSentence.getOccurrenceTime() !== Stamp.ETERNAL) {
-                    let timeOffset: float = (newCondition as Interval).time;
+                    let timeOffset: float = Number((newCondition as Interval).time) as float;
                     let timeWindowHalf: float = Float32Math.multiply(
                         timeOffset,
                         nal.narParameters.ANTICIPATION_TOLERANCE,
                     ) as float;
-                    minTime = java.lang.Math.max(taskSentence.getOccurrenceTime(),
-                        (taskSentence.getOccurrenceTime() + timeOffset - timeWindowHalf)) as long;
-                    maxTime = (taskSentence.getOccurrenceTime() + timeOffset + timeWindowHalf) as long;
+                    const taskOccurrenceTime = Number(taskSentence.getOccurrenceTime());
+                    minTime = Math.max(taskOccurrenceTime,
+                        (taskOccurrenceTime + Number(timeOffset) - Number(timeWindowHalf))) as unknown as long;
+                    maxTime = (taskOccurrenceTime + Number(timeOffset) + Number(timeWindowHalf)) as unknown as long;
                     predictedEvent = nal.narParameters.RETROSPECTIVE_ANTICIPATIONS
-                        || (taskSentence.getOccurrenceTime() >= nal.time.time());
+                        || (Number(taskSentence.getOccurrenceTime()) >= Number(nal.time.time()));
                 }
             } else {
                 while ((newCondition instanceof Conjunction)
                     && ((newCondition as CompoundTerm).term[0] instanceof Interval)) {
                     let interval: Interval = (newCondition as CompoundTerm).term[0] as Interval;
                     delta += interval.time;
-                    newCondition = (newCondition as CompoundTerm).setComponent(0, null, nal.mem());
+                    newCondition = (newCondition as CompoundTerm).setComponent(0, null as unknown as Term, nal.mem());
                 }
                 content = Statement.make(premise1, newCondition, premise1.getPredicate(), premise1.getTemporalOrder());
             }
@@ -732,7 +733,7 @@ export class SyllogisticRules extends JavaObject {
             return;
 
         let occurrence_time: long = nal.getCurrentTask().sentence.getOccurrenceTime();
-        if (delta !== 0) {
+        if (delta !== (0 as unknown as long)) {
             let baseTime: long = taskSentence.getOccurrenceTime();
             if (baseTime !== Stamp.ETERNAL) {
                 baseTime += delta;
@@ -742,7 +743,7 @@ export class SyllogisticRules extends JavaObject {
 
         let truth1: TruthValue = taskSentence.getTruth();
         let truth2: TruthValue = belief.getTruth();
-        let truth: TruthValue = null;
+        let truth: TruthValue = null as unknown as TruthValue;
         let budget: BudgetValue;
 
         if (!(taskSentence.isQuestion() || taskSentence.isQuest())) {
@@ -812,7 +813,7 @@ export class SyllogisticRules extends JavaObject {
         let conditionalTask: boolean = Variables.hasSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,
             premise2, belief.term);
         let commonComponent: Term;
-        let newComponent: Term = null;
+        let newComponent: Term = null as unknown as Term;
         if (side === 0) {
             commonComponent = (premise2 as Statement).getSubject();
             newComponent = (premise2 as Statement).getPredicate();
@@ -859,9 +860,9 @@ export class SyllogisticRules extends JavaObject {
         }
         let newCondition: Term;
         if (oldCondition.equals(commonComponent)) {
-            newCondition = null;
+            newCondition = null as unknown as Term;
         } else {
-            newCondition = oldCondition.setComponent(index, newComponent, nal.mem());
+            newCondition = oldCondition.setComponent(index, newComponent as Term, nal.mem());
         }
         let content: Term | null;
         if (newCondition !== null) {
@@ -875,7 +876,7 @@ export class SyllogisticRules extends JavaObject {
 
         let truth1: TruthValue = taskSentence.getTruth();
         let truth2: TruthValue = belief.getTruth();
-        let truth: TruthValue = null;
+        let truth: TruthValue = null as unknown as TruthValue;
         let budget: BudgetValue;
         if (!(taskSentence.isQuestion() || taskSentence.isQuest())) {
             if (taskSentence.isGoal()) {
@@ -927,8 +928,8 @@ export class SyllogisticRules extends JavaObject {
         if (order1 !== TemporalRules.reverseOrder(order2)) {
             return false;
         }
-        let term1: Term = null;
-        let term2: Term = null;
+        let term1: Term = null as unknown as Term;
+        let term2: Term = null as unknown as Term;
         if (cond1 instanceof Conjunction) {
             term1 = reduceComponents(cond1 as CompoundTerm, cond2, nal.mem());
         }
@@ -960,7 +961,7 @@ export class SyllogisticRules extends JavaObject {
                 continue;
             }
             let content: Term | null;
-            let truth: TruthValue = null;
+            let truth: TruthValue = null as unknown as TruthValue;
             let budget: BudgetValue;
 
             if (term2InLoop !== null) {
@@ -989,6 +990,9 @@ export class SyllogisticRules extends JavaObject {
                 }
                 budget = BudgetFunctions.forward(truth, nal);
             }
+            if (content === null) {
+                continue;
+            }
             nal.doublePremiseTask(content, truth, budget, false, false);
         }
 
@@ -1006,7 +1010,7 @@ export class SyllogisticRules extends JavaObject {
      */
     public static elimiVarDep(compound: CompoundTerm, component: Term, compoundTask: boolean,
         nal: DerivationContext): void {
-        let comp: Term = null;
+        let comp: Term = null as unknown as Term;
         for (let t of compound.term) {
             let unify: Term[] = [t, component];
             if (Variables.unify(nal.memory.randomNumber, Symbols.VAR_DEPENDENT, unify)) {
@@ -1033,7 +1037,7 @@ export class SyllogisticRules extends JavaObject {
         }
         let v1: TruthValue = sentence.getTruth();
         let v2: TruthValue = belief.getTruth();
-        let truth: TruthValue = null;
+        let truth: TruthValue = null as unknown as TruthValue;
         let budget: BudgetValue;
 
         if (!(sentence.isQuestion() || sentence.isQuest())) {
