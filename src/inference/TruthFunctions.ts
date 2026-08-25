@@ -124,12 +124,12 @@ export class TruthFunctions extends UtilityFunctions {
      *         value was true
      */
     public static lookupTruthOrNull(a: TruthValue, b: TruthValue, narParameters: Parameters,
-        ...values: java.lang.Object[]): TruthValue {
+        ...values: java.lang.Object[]): TruthValue | null {
         let numberOfTuples: int = values.length / 2;
 
         for (let idx: int = 0; idx < numberOfTuples; idx++) {
-            let v: boolean = values[idx * 2] as boolean;
-            if (v) {
+            const value: unknown = values[idx * 2];
+            if (value === true) {
                 let type: TruthFunctions.EnumType = values[idx * 2 + 1] as TruthFunctions.EnumType;
                 return TruthFunctions.lookupTruthFunctionAndCompute(type, a, b, narParameters);
             }
@@ -596,12 +596,15 @@ export class TruthFunctions extends UtilityFunctions {
         param: Parameters): float {
         let a: double = 100000.0 * param.PROJECTION_DECAY; // projection less strict as we changed in v2.0.0 10000.0
         // slower decay than 100000.0
+        const sourceTargetDistance = Number(java.lang.Math.abs(sourceTime - targetTime));
+        const sourceCurrentDistance = Number(java.lang.Math.abs(sourceTime - currentTime));
+        const targetCurrentDistance = Number(java.lang.Math.abs(targetTime - currentTime));
         const denominator = Float32Math.from(
-            java.lang.Math.abs(sourceTime - currentTime)
-            + java.lang.Math.abs(targetTime - currentTime)
+            sourceCurrentDistance
+            + targetCurrentDistance
             + a,
         );
-        const ratio = Float32Math.divide(java.lang.Math.abs(sourceTime - targetTime), denominator);
+        const ratio = Float32Math.divide(sourceTargetDistance, denominator);
         return Float32Math.subtract(1, ratio) as float;
     }
 }

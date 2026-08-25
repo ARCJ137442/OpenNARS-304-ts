@@ -271,7 +271,7 @@ export class CompositionalRules extends JavaObject {
             return;
         }
 
-        let truth: TruthValue = null as unknown as TruthValue;
+        let truth: TruthValue | null = null;
         if (index === 0) {
             if (oldContent instanceof Inheritance) {
                 truth = lookupTruthOrNull(v1, v2, nal.narParameters,
