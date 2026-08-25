@@ -36,11 +36,11 @@ type EventObserver = EventEmitter.EventObserver;
  * called from Concept
  */
 export class InternalExperience extends JavaObject implements Plugin, EventObserver {
-    private memory: Memory;
+    private memory: Memory | null = null;
 
     public static enabled: boolean = false;
 
-    private nar: Nar;
+    private nar: Nar | null = null;
 
     public MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC: float = Float32Math.from(0.3) as float;
     public MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE: float = Float32Math.from(0.3) as float;
@@ -198,7 +198,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
         return true;
     }
 
-    public static toTerm(s: Sentence, mem: Memory, time: Timable): Term {
+    public static toTerm(s: Sentence, mem: Memory, time: Timable): Term | null {
         let opName: java.lang.String;
         switch (s.punctuation) {
             case Symbols.JUDGMENT_MARK:
@@ -243,13 +243,18 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
     public event(event: java.lang.Class<unknown>, a: java.lang.Object[]): void {
 
         if (event === Events.ConceptDirectProcessedTask.class) {
+            const memory = this.memory;
+            const nar = this.nar;
+            if (memory === null || nar === null) {
+                return;
+            }
             let task: Task = a[0] as Task;
 
             // old strategy always, new strategy only for QUESTION and QUEST:
             if (this.OLD_BELIEVE_WANT_EVALUATE_WONDER_STRATEGY || (!this.OLD_BELIEVE_WANT_EVALUATE_WONDER_STRATEGY
                 && (task.sentence.punctuation === Symbols.QUESTION_MARK
                     || task.sentence.punctuation === Symbols.QUEST_MARK))) {
-                InternalExperience.InternalExperienceFromTaskInternal(this.memory, task, this.FULL_REFLECTION, this.nar);
+                InternalExperience.InternalExperienceFromTaskInternal(memory, task, this.FULL_REFLECTION, nar);
             }
         } else if (event === Events.BeliefReason.class) {
             // belief, beliefTerm, taskTerm, nal
@@ -311,7 +316,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
             memory.narParameters);
         let stamp: Stamp = task.sentence.stamp.clone();
         stamp.setOccurrenceTime(time.time());
-        let ret: Term = InternalExperience.toTerm(sentence, memory, time);
+        let ret: Term | null = InternalExperience.toTerm(sentence, memory, time);
         if (ret === null) {
             return true;
         }
