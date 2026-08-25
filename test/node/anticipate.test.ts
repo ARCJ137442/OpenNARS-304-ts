@@ -21,16 +21,16 @@ test("Anticipate keeps a prediction and emits the Java-compatible signal", () =>
             throw new Error("feedback should be disabled for this local contract");
         },
     };
-    const time = { time: () => 10 };
+    const time = { time: () => 10n };
     const anticipate = new Anticipate();
     anticipate.setAnticipationAsOperator(false);
 
-    anticipate.anticipate(Term.SELF, memory as never, 15, null, time);
+    anticipate.anticipate(Term.SELF, memory as never, 15n, null, time);
 
     assert.equal(anticipate.anticipations.size(), 1);
     const entry = anticipate.anticipations.entrySet().iterator().next();
-    assert.equal(entry.getKey().predictionCreationTime, 10);
-    assert.equal(entry.getKey().predictedOccurenceTime, 15);
+    assert.equal(entry.getKey().predictionCreationTime, 10n);
+    assert.equal(entry.getKey().predictedOccurenceTime, 15n);
     assert.deepEqual(emitted, [[OutputHandler.ANTICIPATE.class, Term.SELF]]);
 });
 

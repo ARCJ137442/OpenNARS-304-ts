@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { java } from "jree";
 
 import { BudgetFunctions } from "../../src/inference/BudgetFunctions.ts";
 import { BudgetValue } from "../../src/entity/BudgetValue.ts";
@@ -38,7 +39,7 @@ test("budget inference narrows Java float parameters before belief feedback", ()
         getDurability: () => taskDurability,
     };
     const beliefLink = {
-        target: new Term("budget-target"),
+        target: new Term(new java.lang.String("budget-target")),
         getPriority: () => beliefBudget.getPriority(),
         getDurability: () => beliefBudget.getDurability(),
         incPriority: (value: number) => beliefBudget.incPriority(value),

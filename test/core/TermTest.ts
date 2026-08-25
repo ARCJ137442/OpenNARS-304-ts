@@ -126,7 +126,7 @@ export class TermTest extends JavaObject {
          * System.out.println("t2 compareTo t1 " + t2c1);
          */
 
-        let set: java.util.NavigableSet<Term> = new java.util.TreeSet();
+        let set: java.util.Set<Term> = new java.util.LinkedHashSet<Term>();
         let added1: boolean = set.add(term1.clone());
         let added2: boolean = set.add(term2.clone());
         assertTrue("term 1 added to set", added1);

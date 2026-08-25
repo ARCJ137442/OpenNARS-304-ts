@@ -8,10 +8,10 @@ import { TLink } from "../../src/entity/TLink.ts";
  */
 class MockTLink<T> implements TLink<T> {
     private readonly _target: T;
-    private readonly _indices: number[];
+    private readonly _indices: readonly number[];
     private readonly _priority: number;
 
-    constructor(target: T, indices: number[], priority: number = 0.5) {
+    constructor(target: T, indices: readonly number[], priority: number = 0.5) {
         this._target = target;
         this._indices = indices;
         this._priority = priority;

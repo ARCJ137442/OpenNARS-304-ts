@@ -9,6 +9,7 @@ import {
 } from "../../src/runtime/jree-compat.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
+import { Parser } from "../../src/io/Parser.ts";
 import { Narsese } from "../../src/io/Narsese.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import { Sentence } from "../../src/entity/Sentence.ts";
@@ -23,6 +24,7 @@ import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
 import {
     JavaParserConfigurationException as ParserConfigurationException,
     JavaSAXException as SAXException,
+    javaStringValue,
 } from "../../src/runtime/jree-compat.ts";
 
 
@@ -128,7 +130,7 @@ export class AttentionMetric extends JavaObject {
     public static runMetricTest(name: java.lang.String): double {
         let execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime> = new java.util.HashMap();
 
-        let n: Reasoner = null;
+        let n: Reasoner | null = null;
         try {
             n = new Nar();
         } catch (e) {
@@ -157,7 +159,7 @@ export class AttentionMetric extends JavaObject {
 
         if (n === null)
             throw new java.lang.IllegalStateException("Could not create NAR");
-        (n as Nar).memory.randomNumber.setSeed(AttentionMetric.rng.nextInt(10000)); // start it with another seed
+        (n as Nar).memory.randomNumber.setSeed(BigInt(AttentionMetric.rng.nextInt(10000))); // start it with another seed
 
         if (AttentionMetric.showOutput) {
             // new TextOutputHandler((Nar)n, System.out);
@@ -169,17 +171,20 @@ export class AttentionMetric extends JavaObject {
             for (let iLine of AttentionMetric.readFile(name)) {
                 java.lang.System.out.println(iLine);
 
-                let isCommented: boolean = iLine.startsWith("'");
-                let isQuestion: boolean = !isCommented && iLine.endsWith("?");
+                const inputLine = javaStringValue(iLine);
+                let isCommented: boolean = inputLine.startsWith("'");
+                let isQuestion: boolean = !isCommented && inputLine.endsWith("?");
                 if (isQuestion) {
-                    let question: java.lang.String = iLine.substring(0, iLine.length() - 1);
+                    let question: java.lang.String = new java.lang.String(inputLine.substring(0, inputLine.length - 1));
                     n.ask(question, new AttentionMetric.AnswerHandler(n, execOrQaAnswersByTime));
                 } else {
                     n.addInput(iLine);
                 }
             }
         } catch (e) {
-            if (e instanceof java.io.IOException || e instanceof Narsese.InvalidInputException) {
+            if (e instanceof java.io.IOException) {
+                e.printStackTrace();
+            } else if (e instanceof Parser.InvalidInputException) {
                 e.printStackTrace();
             } else {
                 throw e;
@@ -199,14 +204,14 @@ export class AttentionMetric extends JavaObject {
     }
 
     public static readFile(filepath: java.lang.String): java.util.List<java.lang.String> {
-        let res: java.util.List<java.lang.String> = new java.util.ArrayList();
+        let res: java.util.List<java.lang.String> = new java.util.ArrayList<java.lang.String>();
             // This holds the final error to throw (if any).
             let error: java.lang.Throwable | undefined;
 
             const br: java.io.BufferedReader = new java.io.BufferedReader(new java.io.FileReader(filepath))
             try {
                 try {
-                    let line: java.lang.String;
+                    let line: java.lang.String | null;
                     while ((line = br.readLine()) !== null) {
                         // process the line.
                         res.add(line);
@@ -267,20 +272,25 @@ export class AttentionMetric extends JavaObject {
     public static update(execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>, s: Sentence, nar: Reasoner): void {
         let exec: AttentionMetric.ExecOrAnswerByTime;
 
-        if (execOrQaAnswersByTime.containsKey(s.term.toString())) {
+        const existing = execOrQaAnswersByTime.get(new java.lang.String(s.term.toString()));
+        if (existing !== null) {
             // was executed before
 
-            exec = execOrQaAnswersByTime.get(s.term.toString());
+            exec = existing;
         } else {
             // is first time execution
 
-            exec = new AttentionMetric.ExecOrAnswerByTime("exec", s.term.toString());
+            exec = new AttentionMetric.ExecOrAnswerByTime(new java.lang.String("exec"), new java.lang.String(s.term.toString()));
             exec.firstTime = new java.lang.Long(nar.time());
+            if (s.truth === null)
+                return;
             exec.firstTruth = s.truth.clone();
 
-            execOrQaAnswersByTime.put(s.term.toString(), exec);
+            execOrQaAnswersByTime.put(new java.lang.String(s.term.toString()), exec);
         }
 
+        if (s.truth === null)
+            return;
         if (exec.bestTruth === null) { // is it the first time?
             exec.bestTime = new java.lang.Long(nar.time()); // the first is the best
             exec.bestTruth = s.truth.clone();
@@ -297,10 +307,10 @@ export class AttentionMetric extends JavaObject {
         public readonly type: java.lang.String;
 
         public firstTime!: java.lang.Long;
-        public firstTruth: TruthValue;
+        public firstTruth!: TruthValue;
 
         public bestTime!: java.lang.Long;
-        public bestTruth: TruthValue;
+        public bestTruth!: TruthValue;
 
         // /param type is the type, "exec" or "q&a"
         // /param narseseTerm term as string

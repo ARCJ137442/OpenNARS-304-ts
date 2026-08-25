@@ -38,7 +38,7 @@ test("translated term and sentence constructors preserve Java delegation contrac
 
     const { Negation } = await import("../../src/language/Negation.ts");
     const negated = Negation.make([Term.get("a")]);
-    assert.equal(negated instanceof Negation, true);
+    assert.ok(negated instanceof Negation);
     assert.equal(negated.term[0], Term.get("a"));
 
     const { Inheritance } = await import("../../src/language/Inheritance.ts");

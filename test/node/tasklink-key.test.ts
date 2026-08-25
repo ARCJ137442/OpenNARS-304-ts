@@ -50,6 +50,8 @@ test("Task Bag merges Java-equal derived sentences by TruthValue hash", () => {
     }
 
     const target = new Narsese(nar).parseTerm(new java.lang.String("<cat --> CAT>"));
+    if (target === null)
+        throw new Error("Expected task-link target term.");
     const concept = nar.memory.concept(target);
     assert.ok(concept);
     assert.equal(concept.taskLinks.size(), 3);

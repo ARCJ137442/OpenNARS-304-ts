@@ -11,8 +11,8 @@ test("变量统一会替换操作参数并保留 Operation 运行时类型", asy
 
     const variable = String.fromCharCode(36) + "1";
     const operators = new Map([
-        ["^lighter", new NullOperator("^lighter")],
-        ["^reshape", new NullOperator("^reshape")],
+        ["^lighter", new NullOperator(new java.lang.String("^lighter"))],
+        ["^reshape", new NullOperator(new java.lang.String("^reshape"))],
     ]);
     const parser = new Narsese({
         getOperator(name: unknown) {
@@ -21,10 +21,10 @@ test("变量统一会替换操作参数并保留 Operation 运行时类型", asy
     } as any);
     const implication = parser.parseTerm(new java.lang.String(
         `<<${variable} --> [unscrewing]> =/> (&/,<(*,${variable},plastic) --> made_of>,(^lighter,{SELF},${variable}),(^reshape,{SELF},${variable}))>`,
-    ));
+    )) as import("../../src/language/Statement.ts").Statement | null;
     const taskTerm = parser.parseTerm(new java.lang.String("<toothbrush --> [unscrewing]>"));
-    assert.ok(implication);
-    assert.ok(taskTerm);
+    if (implication === null || taskTerm === null)
+        throw new Error("Expected variable substitution terms.");
     const unified: any[] = [implication, taskTerm];
 
     assert.equal(Variables.unify(

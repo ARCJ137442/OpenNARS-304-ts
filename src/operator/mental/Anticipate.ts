@@ -234,7 +234,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         this.anticipationOperator = val;
     }
 
-    public anticipate(content: Term, memory: Memory, occurenceTime: JavaLongInput, t: Task,
+    public anticipate(content: Term, memory: Memory, occurenceTime: JavaLongInput, t: Task | null,
         time: Timable): void {
         if (t !== null && t.sentence.getTruth().getExpectation() < memory.narParameters.DEFAULT_CONFIRMATION_EXPECTATION) {
             return;

@@ -7,10 +7,11 @@ test("default NAR registers VisionChannel and maps decimal coordinates", async (
     const { VisionChannel } = await import("../../src/plugin/perception/VisionChannel.ts");
 
     const nar = new Nar();
-    const channels = Array.from(nar.sensoryChannels.values());
-    const vision = channels.find((channel) => channel instanceof VisionChannel);
+    const channels = Array.from((nar as unknown as { sensoryChannels: { values(): Iterable<unknown> } }).sensoryChannels.values());
+    const vision = channels.find((channel) => channel instanceof VisionChannel) as InstanceType<typeof VisionChannel> | undefined;
 
-    assert.ok(vision);
+    if (vision === undefined)
+        throw new Error("Expected the default NAR vision channel.");
     assert.equal(vision.width, 5);
     assert.equal(vision.height, 5);
     assert.doesNotThrow(() => {

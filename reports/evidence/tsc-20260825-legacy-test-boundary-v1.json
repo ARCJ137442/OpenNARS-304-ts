@@ -1,0 +1,15 @@
+{
+  "command": "npx tsc --noEmit --pretty false --incremental false",
+  "baseline_diagnostics": 77,
+  "after_diagnostics": 30,
+  "reduction": 47,
+  "production": 0,
+  "tests": 30,
+  "m1_rerun": false,
+  "remaining_groups": {
+    "BagIteratorTest": 19,
+    "NALTest_JUnit_runner": 4,
+    "StabilityTest_legacy_runner": 7
+  },
+  "canonical_java_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5"
+}

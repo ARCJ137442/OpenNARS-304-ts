@@ -17,8 +17,11 @@ export class ReplaceIntervalTest extends JavaObject {
     public replaceIvalTest(): void {
         let nar: Nar = new Nar();
         let parser: Narsese = new Narsese(nar);
-        let ret: Term = parser.parseTerm(
+        const parsed = parser.parseTerm(
             "<(*,{SELF},<{(*,fragmentC,fragmentD)} --> compare>,TRUE) =\\> (*,{SELF},(&/,<{fragmentC} --> mutate>,+12),TRUE)>");
+        if (parsed === null)
+            throw new java.lang.IllegalStateException(new java.lang.String("Expected an interval test term."));
+        let ret: Term = parsed;
         let ct: CompoundTerm = CompoundTerm.replaceIntervals(ret) as CompoundTerm;
         /* assert (ct.toString().equals(
                 "<(*,{SELF},<{(*,fragmentC,fragmentD)} --> compare>,TRUE) =\\> (*,{SELF},(&/,<{fragmentC} --> mutate>,+1),TRUE)>")); */
