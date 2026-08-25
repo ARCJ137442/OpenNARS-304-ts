@@ -13,7 +13,7 @@ const ERR = OutputHandler.ERR;
  * @author me
  */
 export class OutputEmptyCondition extends OutputCondition {
-    protected readonly output: java.util.List<java.lang.String> = new java.util.LinkedList();
+    protected readonly output: java.util.List<java.lang.String> = new java.util.LinkedList<java.lang.String>();
 
     public constructor(nar: Nar) {
         super(nar);
@@ -21,13 +21,13 @@ export class OutputEmptyCondition extends OutputCondition {
     }
 
     public getFalseReason(): java.lang.String {
-        return "FAIL: output exists but should not: " + this.output;
+        return new java.lang.String(`FAIL: output exists but should not: ${String(this.output)}`);
     }
 
     public condition(channel: java.lang.Class<unknown>, signal: java.lang.Object): boolean {
         // any OUT or ERR output is a failure
         if ((channel === OUT.class) || (channel === ERR.class)) {
-            this.output.add(channel.getSimpleName() + ": " + signal.toString());
+            this.output.add(new java.lang.String(`${String(channel.getSimpleName())}: ${String(signal.toString())}`));
             this.succeeded = false;
             return false;
         }

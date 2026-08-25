@@ -17,7 +17,7 @@ export class OutputNotContainsCondition extends OutputContainsCondition {
     }
 
     public getFalseReason(): java.lang.String {
-        return "incorrect output: " + this.containing;
+        return new java.lang.String(`incorrect output: ${String(this.containing)}`);
     }
 
     public condition(channel: java.lang.Class<unknown>, signal: java.lang.Object): boolean {

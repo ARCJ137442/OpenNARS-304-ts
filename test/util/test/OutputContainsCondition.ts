@@ -73,7 +73,7 @@ export class OutputContainsCondition extends OutputCondition {
     public confOfBestAnswer: double = 0.0;
     public timeOfBestAnswer: number = 0;
 
-    public readonly exact: java.util.List<Task> = new java.util.ArrayList<Task>();
+    public readonly exact: java.util.List<unknown> = new java.util.ArrayList<unknown>();
 
     public static SimilarOutput = class SimilarOutput extends JavaObject implements java.lang.Comparable<SimilarOutput> {
         public readonly signal: java.lang.String;
@@ -94,7 +94,7 @@ export class OutputContainsCondition extends OutputCondition {
         }
 
         public override  toString(): java.lang.String {
-            return "similar(" + this.distance + "): " + this.signal;
+            return new java.lang.String(`similar(${this.distance}): ${String(this.signal)}`);
         }
 
         public compareTo(o: SimilarOutput): int {
@@ -124,10 +124,10 @@ export class OutputContainsCondition extends OutputCondition {
     }
 
     public getFalseReason(): java.lang.String {
-        let s: java.lang.String = "FAIL: No substring match: " + this.containing;
+        let s = new java.lang.String(`FAIL: No substring match: ${String(this.containing)}`);
         if (!this.almost.isEmpty()) {
             for (let cs of this.getCandidates(5)) {
-                s += "\n\t" + cs;
+                s = new java.lang.String(`${String(s)}\n\t${String(cs)}`);
             }
         }
         return s;
@@ -150,7 +150,11 @@ export class OutputContainsCondition extends OutputCondition {
         }
         for (let j: int = 1; j < len1; j++) {
             newcost[0] = j;
-            let bj: char = b.charAt(j - 1);
+            const bjValue = b.charAt(j - 1);
+            if (bjValue === null) {
+                throw new java.lang.IllegalStateException(new java.lang.String("charAt returned null within a valid range"));
+            }
+            const bj: char = bjValue;
             for (let i: int = 1; i < len0; i++) {
                 let match: int = (a.charAt(i - 1) === bj) ? 0 : 1;
                 let cost_replace: int = cost[i - 1] + match;
@@ -180,21 +184,25 @@ export class OutputContainsCondition extends OutputCondition {
                 // which also does unescaping, etc..
                 let t: Task = signal as Task;
                 let s: Sentence = t.sentence;
-                o = s.toString(this.nar, false).toString();
-                if (o.contains(this.containing)) {
+                o = new java.lang.String(s.toString(this.nar, false).toString());
+                if (String(o).includes(String(this.containing))) {
                     if (this.saveSimilar) {
                         this.exact.add(t);
                     }
                     return true;
                 }
             } else {
-                let t: Task = null;
+                let t: Task | null = null;
                 if (signal instanceof ExecutionResult)
                     t = (signal as ExecutionResult).getTask();
 
-                o = TextOutputHandler.getOutputString(channel, signal, false, false, this.nar).toString();
+                const output = TextOutputHandler.getOutputString(channel, signal, false, false, this.nar);
+                if (output === null) {
+                    return false;
+                }
+                o = output;
 
-                if (o.contains(this.containing)) {
+                if (String(o).includes(String(this.containing))) {
                     if ((this.saveSimilar) && (t !== null)) {
                         this.exact.add(t);
                     }

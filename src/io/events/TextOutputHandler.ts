@@ -2,7 +2,7 @@
 import { java, type float, S } from "jree";
 import { OutputHandler } from "./OutputHandler.ts";
 import type { Nar } from "../../main/Nar.ts";
-import type { Sentence } from "../../entity/Sentence.ts";
+import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
 
@@ -176,6 +176,42 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
         return this;
     }
 
+    public static getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object,
+        showStamp: boolean, nar: Nar): java.lang.String | null;
+
+    public static getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object,
+        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String | null;
+
+    public static getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
+        showStamp: boolean, nar: Nar): java.lang.String | null;
+
+    public static getOutputString(...args: unknown[]): java.lang.String | null {
+        switch (args.length) {
+            case 4: {
+                const [channel, signal, showStamp, nar] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, Nar];
+                return TextOutputHandler.formatStaticOutputString(
+                    channel, signal, showStamp, nar, new java.lang.StringBuilder(),
+                );
+            }
+            case 5: {
+                if (args[4] instanceof java.lang.StringBuilder) {
+                    const [channel, signal, showStamp, nar, buffer] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, Nar, java.lang.StringBuilder];
+                    return TextOutputHandler.formatStaticOutputString(channel, signal, showStamp, nar, buffer);
+                }
+                const [channel, signal, showChannel, showStamp, nar] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, boolean, Nar];
+                const output = TextOutputHandler.formatStaticOutputString(
+                    channel, signal, showStamp, nar, new java.lang.StringBuilder(),
+                );
+                if (output === null || !showChannel)
+                    return output;
+                return new java.lang.StringBuilder()
+                    .append(channel.getSimpleName()).append(": ").append(output).toString();
+            }
+            default:
+                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        }
+    }
+
     public getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
         showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String | null;
 
@@ -186,79 +222,94 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
         switch (args.length) {
             case 6: {
                 const [channel, signal, showChannel, showStamp, nar, buffer] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, boolean, Nar, java.lang.StringBuilder];
-
-
                 return this.getOutputString(channel, signal, showChannel, showStamp, nar, buffer, 0);
-
-
-                break;
             }
-
             case 7: {
                 const [channel, signal, showChannel, showStamp, nar, buffer, minPriority] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, boolean, Nar, java.lang.StringBuilder, float];
-
-
-                buffer.setLength(0);
-
-                if (showChannel)
-                    buffer.append(channel.getSimpleName()).append(": ");
-
-                if (channel === ERR.class) {
-                    if (signal instanceof java.lang.Throwable) {
-                        let e: java.lang.Throwable = signal as java.lang.Throwable;
-
-                        buffer.append(e.toString());
-
-                        if (this.showStackTrace) {
-                            buffer.append(" ").append(java.util.Arrays.asList(e.getStackTrace()));
-                        }
-                    } else {
-                        buffer.append(signal.toString());
-                    }
-
-                } else if ((channel === OUT.class) || (channel === IN.class) || (channel === ECHO.class) || (channel === EXE.class)
-                    || (channel === Answer.class)
-                    || (channel === ANTICIPATE.class) || (channel === DISAPPOINT.class) || (channel === CONFIRM.class)
-                    || (channel === DEBUG.class)) {
-
-                    if (channel === CONFIRM.class) {
-                        buffer.append(signal.toString());
-                    }
-                    if (signal instanceof Task) {
-                        let t: Task = signal as Task;
-                        if (t.getPriority() < minPriority)
-                            return null;
-
-                        if ((channel === ANTICIPATE.class) || (channel === DISAPPOINT.class)) {
-                            buffer.append(t.sentence.toString(nar, showStamp));
-                        } else if (channel === Answer.class) {
-                            let task: Task = t; // server / NARRun
-                            let answer: Sentence | null = task.getBestSolution();
-                            if (answer !== null)
-                                buffer.append(answer.toString(nar, showStamp));
-                            else
-                                buffer.append(t.sentence.toString(nar, showStamp));
-                        } else
-                            buffer.append(t.sentence.toString(nar, showStamp));
-                    } else {
-                        buffer.append(signal.toString());
-                    }
-
-                } else {
-                    buffer.append(signal.toString());
-                }
-
-                return buffer.toString();
-
-
-
-                break;
+                return TextOutputHandler.formatInstanceOutputString(
+                    channel, signal, showChannel, showStamp, nar, buffer, minPriority, this.showStackTrace,
+                );
             }
-
-            default: {
+            default:
                 throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
         }
+    }
+
+    private static formatInstanceOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
+        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder, minPriority: float,
+        showStackTrace: boolean): java.lang.String | null {
+        buffer.setLength(0);
+
+        if (showChannel)
+            buffer.append(channel.getSimpleName()).append(": ");
+
+        if (channel === ERR.class) {
+            if (signal instanceof java.lang.Throwable) {
+                const e: java.lang.Throwable = signal as java.lang.Throwable;
+                buffer.append(e.toString());
+                if (showStackTrace) {
+                    buffer.append(" ").append(java.util.Arrays.asList(e.getStackTrace()));
+                }
+            } else {
+                buffer.append(signal.toString());
+            }
+        } else if ((channel === OUT.class) || (channel === IN.class) || (channel === ECHO.class) || (channel === EXE.class)
+            || (channel === Answer.class)
+            || (channel === ANTICIPATE.class) || (channel === DISAPPOINT.class) || (channel === CONFIRM.class)
+            || (channel === DEBUG.class)) {
+            if (channel === CONFIRM.class) {
+                buffer.append(signal.toString());
+            }
+            if (signal instanceof Task) {
+                const task: Task = signal as Task;
+                if (task.getPriority() < minPriority)
+                    return null;
+
+                if ((channel === ANTICIPATE.class) || (channel === DISAPPOINT.class)) {
+                    buffer.append(task.sentence.toString(nar, showStamp));
+                } else if (channel === Answer.class) {
+                    const answer: Sentence | null = task.getBestSolution();
+                    if (answer !== null)
+                        buffer.append(answer.toString(nar, showStamp));
+                    else
+                        buffer.append(task.sentence.toString(nar, showStamp));
+                } else {
+                    buffer.append(task.sentence.toString(nar, showStamp));
+                }
+            } else {
+                buffer.append(signal.toString());
+            }
+        } else {
+            buffer.append(signal.toString());
+        }
+
+        return buffer.toString();
+    }
+
+    private static formatStaticOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object,
+        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String {
+        buffer.setLength(0);
+
+        if (signal instanceof java.lang.Throwable) {
+            const error = signal as java.lang.Throwable;
+            buffer.append(error.toString()).append(" ")
+                .append(java.util.Arrays.asList(error.getStackTrace()));
+        } else if (signal instanceof Task) {
+            buffer.append(signal.sentence.toString(nar, showStamp));
+        } else if (signal instanceof Sentence) {
+            buffer.append(signal.toString(nar, showStamp));
+        } else if (Array.isArray(signal)) {
+            if (channel === Answer.class) {
+                const answer = (signal as unknown[])[1] as Sentence;
+                buffer.append(answer.toString(nar, showStamp));
+            } else {
+                buffer.append(java.util.Arrays.toString(signal as unknown[]));
+            }
+        } else {
+            buffer.append(signal.toString());
+        }
+
+        return buffer.toString();
     }
 
 }
