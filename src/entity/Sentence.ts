@@ -656,9 +656,8 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
      * @return truth of the sentence, truths are properties of sentences
      */
     public getTruth(): TruthValue {
-        if (this.truth === null) {
-            throw new java.lang.IllegalStateException(S`Sentence has no truth value`);
-        }
-        return this.truth;
+        // Java returns the nullable field directly; it does not turn a query
+        // sentence into an exception at this accessor boundary.
+        return this.truth as TruthValue;
     }
 }

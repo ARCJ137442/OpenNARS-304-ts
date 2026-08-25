@@ -135,6 +135,20 @@ test("Concept.getBelief returns null when Java belief selection has no candidate
     assert.equal(concept.getBelief(context, task), null);
 });
 
+test("Sentence.getTruth preserves Java's nullable query accessor", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+
+    const nar = new Nar();
+    const stamp = new Stamp(0n, Tense.Present, new Stamp.BaseEntry(0n, 1n), nar.narParameters.DURATION);
+    const query = new Sentence(Term.get("query-accessor"), "?", null, stamp);
+
+    assert.equal(query.getTruth(), null);
+});
+
 test("DerivationContext currentBeliefLink preserves Java null lifecycle", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
     const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
