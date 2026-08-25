@@ -215,7 +215,7 @@ export class Conjunction extends CompoundTerm {
                         Terms.verifyNonNullTerms(...argList);
                     }
                     if (argList === null || argList.length === 0) {
-                        return null;
+                        return null as unknown as Term;
                     }
                     if (argList.length === 1) {
                         return argList[0];
@@ -380,9 +380,9 @@ export class Conjunction extends CompoundTerm {
 
     public static PositiveIntString(value: int): java.lang.String {
         if (value === 0) {
-            return "";
+            return new java.lang.String("");
         } else {
-            return "+" + java.lang.String.valueOf(value);
+            return new java.lang.String("+" + String(value));
         }
     }
 
@@ -397,7 +397,8 @@ export class Conjunction extends CompoundTerm {
         } else {
             if (term.term_indices !== null) {
                 // term indices remain the same, but representation changes
-                let s: java.lang.String = term.index_variable;
+                // Java string concatenation turns a null reference into the literal "null".
+                let s: string = String(term.index_variable);
                 let relativeSizeX: int = term.term_indices[0] - minsX;
                 let relativeSizeY: int = term.term_indices[1] - minsY;
                 let relativePositionX: int = term.term_indices[2] - minX;
@@ -407,7 +408,7 @@ export class Conjunction extends CompoundTerm {
                     ",j" + Conjunction.PositiveIntString(relativeSizeY);
                 s += ",k" + Conjunction.PositiveIntString(relativePositionX);
                 s += ",l" + Conjunction.PositiveIntString(relativePositionY) + "]";
-                let ret: Term = Term.get(s);
+                let ret: Term = Term.get(new java.lang.String(s));
                 ret.term_indices = term.term_indices;
                 ret.index_variable = term.index_variable;
                 return ret;
@@ -427,11 +428,13 @@ export class Conjunction extends CompoundTerm {
         for (let i: int = 0; i < components.length;) {
             if (components[i] instanceof Interval) {
                 // add up next ones
-                let ival: long = 0;
+                // jree models Java long as bigint, while this port keeps Interval.time
+                // as a runtime number for compatibility with the existing arithmetic.
+                let ival: number = 0;
                 for (; i < components.length && components[i] instanceof Interval; i++) {
-                    ival += (components[i] as Interval).time;
+                    ival += Number((components[i] as Interval).time as unknown as number);
                 }
-                ret.add(new Interval(ival));
+                ret.add(new Interval(ival as unknown as long));
             } else {
                 ret.add(components[i]);
                 i++;
