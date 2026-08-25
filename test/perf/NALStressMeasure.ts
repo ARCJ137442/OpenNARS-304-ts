@@ -1,4 +1,4 @@
-import { java, JavaObject, type double, type int, type float } from "jree";
+import { java, JavaObject, type double, type int, type float, S } from "jree";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
 import { NALTest } from "../core/NALTest.ts";
 import { Performance } from "./Performance.ts";
@@ -21,7 +21,7 @@ export class NALStressMeasure extends JavaObject {
             protected totalCycles: number = 0;
 
             public init(): void {
-                java.lang.System.out.print(java.lang.Enum.name + ": ");
+                java.lang.System.out.print(S`${java.lang.Enum.name}: `);
                 this.totalCycles = 0;
             }
 
@@ -36,18 +36,16 @@ export class NALStressMeasure extends JavaObject {
 
             public print(): Performance {
                 super.print();
-                java.lang.System.out.print(", " + this.df.format(this.getCycleTimeMS() / Number(this.totalCycles) * 1000.0) + " uS/cycle, "
-                    + (Number(this.totalCycles) / (warmups + repeats)) + " cycles/run");
+                java.lang.System.out.print(S`, ${this.df.format(this.getCycleTimeMS() / Number(this.totalCycles) * 1000.0)} uS/cycle, ${Number(this.totalCycles) / (warmups + repeats)} cycles/run`);
                 return this;
 
             }
 
             public printCSV(finalComma: boolean): Performance {
                 super.printCSV(true);
-                java.lang.System.out.print(this.df.format(this.getCycleTimeMS() / Number(this.totalCycles) * 1000.0) + ", "
-                    + (Number(this.totalCycles) / (warmups + repeats)));
+                java.lang.System.out.print(S`${this.df.format(this.getCycleTimeMS() / Number(this.totalCycles) * 1000.0)}, ${Number(this.totalCycles) / (warmups + repeats)}`);
                 if (finalComma)
-                    java.lang.System.out.print(", ");
+                    java.lang.System.out.print(S`, `);
                 return this;
 
             }

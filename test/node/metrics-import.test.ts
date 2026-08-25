@@ -7,6 +7,8 @@ test("metrics and output conditions load without an ESM initialization cycle", a
     const { Nar } = await import("../../src/main/Nar.ts");
     const { OutputHandler } = await import("../../src/io/events/OutputHandler.ts");
     const { TextOutputHandler } = await import("../../src/io/events/TextOutputHandler.ts");
+    const { JavaDecimalFormatCompat, JavaRuntimeCompat, JavaStringJoinerCompat } =
+        await import("../../src/runtime/jree-compat.ts");
     const { OutputCondition } = await import("../../test/util/test/OutputCondition.ts");
 
     const values = new java.util.ArrayList<number>();
@@ -17,6 +19,13 @@ test("metrics and output conditions load without an ESM initialization cycle", a
 
     assert.equal(filtered.size(), 2);
     assert.equal(NalTestMetrics.calcMedian(filtered), 3);
+
+    assert.equal(String(new JavaDecimalFormatCompat("#.###").format(1.23456)), "1.235");
+    const joiner = new JavaStringJoinerCompat(", ");
+    joiner.add(new java.lang.String("a")).add(new java.lang.String("b"));
+    assert.equal(String(joiner.toString()), "a, b");
+    const runtime = JavaRuntimeCompat.getRuntime();
+    assert.ok(runtime.totalMemory() >= runtime.freeMemory());
 
     const nar = new Nar();
     assert.equal(

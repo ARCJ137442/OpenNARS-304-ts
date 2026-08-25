@@ -1,4 +1,5 @@
 import { java, JavaObject, type int, type double, S } from "jree";
+import { JavaDecimalFormatCompat, JavaRuntimeCompat } from "../../src/runtime/jree-compat.ts";
 
 
 
@@ -7,58 +8,26 @@ export abstract class Performance extends JavaObject {
     protected readonly name: java.lang.String;
     private totalTime: number = 0;
     private totalMemory: number = 0;
-    protected readonly df: java.text.DecimalFormat = new java.text.DecimalFormat("#.###");
+    protected readonly df: JavaDecimalFormatCompat = new JavaDecimalFormatCompat("#.###");
 
     public constructor(name: java.lang.String, repeats: int, warmups: int);
 
     public constructor(name: java.lang.String, repeats: int, warmups: int, gc: boolean);
     public constructor(...args: unknown[]) {
+        super();
+        let name: java.lang.String;
+        let repeats: int;
+        let warmups: int;
+        let gc: boolean;
         switch (args.length) {
             case 3: {
-                const [name, repeats, warmups] = args as [java.lang.String, int, int];
-
-
-                this(name, repeats, warmups, true);
-
-
+                [name, repeats, warmups] = args as [java.lang.String, int, int];
+                gc = true;
                 break;
             }
 
             case 4: {
-                const [name, repeats, warmups, gc] = args as [java.lang.String, int, int, boolean];
-
-
-                super();
-                this.repeats = repeats;
-                this.name = name;
-
-                this.init();
-
-                this.totalTime = 0;
-                this.totalMemory = 0;
-
-                let total: int = repeats + warmups;
-                for (let r: int = 0; r < total; r++) {
-
-                    if (gc) {
-                        java.lang.System.gc();
-                    }
-
-                    let usedMemStart: number = Number(java.lang.Runtime.getRuntime().totalMemory()) - Number(java.lang.Runtime.getRuntime().freeMemory());
-
-                    let start: number = Number(java.lang.System.nanoTime());
-
-                    this.run(warmups !== 0);
-
-                    if (warmups === 0) {
-                        this.totalTime += Number(java.lang.System.nanoTime()) - start;
-                        this.totalMemory += Number(java.lang.Runtime.getRuntime().totalMemory())
-                            - Number(java.lang.Runtime.getRuntime().freeMemory()) - usedMemStart;
-                    } else
-                        warmups--;
-                }
-
-
+                [name, repeats, warmups, gc] = args as [java.lang.String, int, int, boolean];
                 break;
             }
 
@@ -66,20 +35,42 @@ export abstract class Performance extends JavaObject {
                 throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
             }
         }
+
+        this.repeats = repeats;
+        this.name = name;
+        this.init();
+
+        const runtime = JavaRuntimeCompat.getRuntime();
+        let total: int = repeats + warmups;
+        for (let r: int = 0; r < total; r++) {
+            if (gc)
+                java.lang.System.gc();
+
+            const usedMemStart = runtime.totalMemory() - runtime.freeMemory();
+            const start: number = Number(java.lang.System.nanoTime());
+            this.run(warmups !== 0);
+
+            if (warmups === 0) {
+                this.totalTime += Number(java.lang.System.nanoTime()) - start;
+                this.totalMemory += runtime.totalMemory() - runtime.freeMemory() - usedMemStart;
+            } else {
+                warmups--;
+            }
+        }
     }
 
 
     public print(): Performance {
-        java.lang.System.out.print(": " + this.df.format(this.getCycleTimeMS()) + "ms/run, ");
-        java.lang.System.out.print(this.df.format(this.totalMemory / this.repeats / 1024.0) + " kb/run");
+        java.lang.System.out.print(S`: ${this.df.format(this.getCycleTimeMS())}ms/run, `);
+        java.lang.System.out.print(S`${this.df.format(this.totalMemory / this.repeats / 1024.0)} kb/run`);
         return this;
     }
 
     public printCSV(finalComma: boolean): Performance {
-        java.lang.System.out.print(this.name + ", " + this.df.format(this.getCycleTimeMS()) + ", ");
+        java.lang.System.out.print(S`${this.name}, ${this.df.format(this.getCycleTimeMS())}, `);
         java.lang.System.out.print(this.df.format(this.totalMemory / this.repeats / 1024.0));
         if (finalComma)
-            java.lang.System.out.print(",");
+            java.lang.System.out.print(S`, `);
         return this;
     }
 

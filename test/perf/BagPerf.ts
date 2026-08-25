@@ -9,6 +9,7 @@ import {
     JavaInvocationTargetException,
     JavaParseException,
     JavaSystemLoggerCompat,
+    JavaStringJoinerCompat,
 } from "../../src/runtime/jree-compat.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
@@ -63,7 +64,7 @@ export class BagPerf extends JavaObject {
         }
     }
 
-    protected randomAccesses: int;
+    protected randomAccesses: int = 0;
     protected readonly insertRatio: double = 0.9;
 
     /*
@@ -72,7 +73,7 @@ export class BagPerf extends JavaObject {
      * }
      */
 
-    public getMaxItemsPerLevel(b: Bag<unknown, unknown>): float {
+    public getMaxItemsPerLevel<E extends Item<K>, K>(b: Bag<E, K>): float {
         /*
          * int max = getLevelSize(b,0);
          * for (int i = 1; i < b.levels; i++) {
@@ -86,7 +87,7 @@ export class BagPerf extends JavaObject {
         return 0.0;
     }
 
-    public getMinItemsPerLevel(b: Bag<unknown, unknown>): float {
+    public getMinItemsPerLevel<E extends Item<K>, K>(b: Bag<E, K>): float {
         /*
          * int min = getLevelSize(b,0);
          * for (int i = 1; i < b.levels; i++) {
@@ -100,13 +101,13 @@ export class BagPerf extends JavaObject {
         return 0;
     }
 
-    public totalPriority: float;
+    public totalPriority: float = 0;
 
 
-    public totalMinItemsPerLevel: float;
+    public totalMinItemsPerLevel: float = 0;
 
 
-    public totalMaxItemsPerLevel: float;
+    public totalMaxItemsPerLevel: float = 0;
 
     public testBag(List: boolean, levels: int, capacity: int, forgetRate: float): void {
         const outer = this;
@@ -120,7 +121,7 @@ export class BagPerf extends JavaObject {
             }
 
             public run(warmup: boolean): void {
-                let nar: Nar = null;
+                let nar: Nar | null = null;
                 try {
                     nar = new Nar();
                 } catch (ex) {
@@ -169,7 +170,7 @@ export class BagPerf extends JavaObject {
                 }
             }
 
-        }((List ? "DequeArray" : "LinkedList") + "," + levels + "," + capacity,
+        }(S`${List ? "DequeArray" : "LinkedList"},${levels},${capacity}`,
             outer.repeats, outer.warmups).printCSV(true);
 
         // items per level min
@@ -177,8 +178,8 @@ export class BagPerf extends JavaObject {
         // avg prioirty
         // avg norm mass
         // System.out.print((totalMinItemsPerLevel/p.repeats) + ",");
-        java.lang.System.out.print((this.totalMaxItemsPerLevel / p.repeats) + ",");
-        java.lang.System.out.print(this.totalPriority / p.repeats + ",");
+        java.lang.System.out.print(S`${this.totalMaxItemsPerLevel / p.repeats},`);
+        java.lang.System.out.print(S`${this.totalPriority / p.repeats},`);
         java.lang.System.out.println();
     }
 
@@ -193,32 +194,15 @@ export class BagPerf extends JavaObject {
 
         public constructor(priority: float);
         public constructor(...args: unknown[]) {
-            switch (args.length) {
-                case 0: {
-
-                    this(BagPerf.rnd.nextFloat() * (1.0 - BagPerf.narParameters.TRUTH_EPSILON));
-
-
-                    break;
-                }
-
-                case 1: {
-                    const [priority] = args as [float];
-
-
-                    super(new BudgetValue(priority, priority, priority, BagPerf.narParameters));
-                    this.key = "" + (BagPerf.itemID++);
-
-
-                    break;
-                }
-
-                default: {
-                    throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-                }
+            if (args.length !== 0 && args.length !== 1) {
+                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
             }
+            const priority = args.length === 0
+                ? BagPerf.rnd.nextFloat() * (1.0 - BagPerf.narParameters.TRUTH_EPSILON)
+                : args[0] as float;
+            super(new BudgetValue(priority, priority, priority, BagPerf.narParameters));
+            this.key = new java.lang.String(String(BagPerf.itemID++));
         }
-
 
         public name(): java.lang.CharSequence {
             return this.key;
@@ -248,7 +232,7 @@ export class BagPerf extends JavaObject {
             count++;
         }
         if (count !== b.size()) {
-            java.lang.System.err.println("Error itrating " + b.getClass() + " " + b.size() + " != " + count);
+            java.lang.System.err.println(S`Error itrating ${b.getClass()} ${b.size()} != ${count}`);
         }
     }
 
@@ -302,7 +286,8 @@ export class BagPerf extends JavaObject {
         for (let X of B) {
             X.clear();
 
-            t.put(X, BagPerf.getTime(X.toString(), () => X, iterations, randomAccesses, insertRatio, repeats, warmups));
+            t.put(X, BagPerf.getTime(new java.lang.String(X.toString()), { newBag: () => X },
+                iterations, randomAccesses, insertRatio, repeats, warmups));
 
         }
         return t;
@@ -313,34 +298,21 @@ export class BagPerf extends JavaObject {
 
     public static printCSVLine(out: java.io.PrintStream, o: java.util.List<java.lang.String>): void;
     public static printCSVLine(...args: unknown[]): void {
-        switch (args.length) {
-            case 2: {
-                const [out, s] = args as [java.io.PrintStream, java.lang.String[]];
-
-
-                BagPerf.printCSVLine(out, Lists.newArrayList(s));
-
-
-                break;
-            }
-
-            case 2: {
-                const [out, o] = args as [java.io.PrintStream, java.util.List<java.lang.String>];
-
-
-                let line: java.util.StringJoiner = new java.util.StringJoiner(", ", "", "");
-                for (let x of o)
-                    line.add(x);
-                out.println(line.toString());
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
-            }
+        if (args.length !== 2) {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
+
+        const out = args[0] as java.io.PrintStream;
+        const value = args[1];
+        if (Array.isArray(value)) {
+            BagPerf.printCSVLine(out, Lists.newArrayList(...value as java.lang.String[]));
+            return;
+        }
+
+        const line = new JavaStringJoinerCompat(", ", "", "");
+        for (const x of value as java.util.List<java.lang.String>)
+            line.add(x);
+        out.println(line.toString());
     }
 
 
@@ -362,28 +334,34 @@ export class BagPerf extends JavaObject {
                 let iterations: int = iterationsPerItem * items;
                 let randomAccesses: int = accessesPerItem * items;
 
-                let bags: Bag<BagPerf.NullItem, java.lang.CharSequence>[] = new Array<Bag>(1);
+                let bags: Bag<BagPerf.NullItem, java.lang.CharSequence>[] =
+                    new Array<Bag<BagPerf.NullItem, java.lang.CharSequence>>(1);
                 bags[0] = new Bag(levels, items, BagPerf.narParameters);
 
                 let t: java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, double> = BagPerf.compare(
                     iterations, randomAccesses, insertRatio, repeats, warmups,
-                    bags);
+                    ...bags);
 
                 if (!printedHeader) {
 
-                    let ls: java.util.List<java.lang.String> = Lists.newArrayList("items", "io_ratio", "accesses", "nexts");
+                    let ls: java.util.List<java.lang.String> = Lists.newArrayList(
+                        new java.lang.String("items"), new java.lang.String("io_ratio"),
+                        new java.lang.String("accesses"), new java.lang.String("nexts"),
+                    );
                     for (let e of t.entrySet())
-                        ls.add(e.getKey().toString());
+                        ls.add(new java.lang.String(e.getKey().toString()));
 
                     BagPerf.printCSVLine(java.lang.System.out, ls);
                     printedHeader = true;
                 }
 
                 {
-                    let ls: java.util.List<java.lang.String> = Lists.newArrayList(items + "", insertRatio + "", randomAccesses + "",
-                        iterations + "");
+                    let ls: java.util.List<java.lang.String> = Lists.newArrayList(
+                        new java.lang.String(String(items)), new java.lang.String(String(insertRatio)),
+                        new java.lang.String(String(randomAccesses)), new java.lang.String(String(iterations)),
+                    );
                     for (let e of t.entrySet())
-                        ls.add(e.getValue().toString());
+                        ls.add(new java.lang.String(e.getValue().toString()));
 
                     BagPerf.printCSVLine(java.lang.System.out, ls);
                 }
@@ -396,7 +374,7 @@ export class BagPerf extends JavaObject {
 export namespace BagPerf {
     export type NullItem = InstanceType<typeof BagPerf.NullItem>;
     export interface BagBuilder<E extends Item<K>, K> {
-        newBag(): Bag<java.lang.Math.E, K>;
+        newBag(): Bag<E, K>;
     }
 
 }

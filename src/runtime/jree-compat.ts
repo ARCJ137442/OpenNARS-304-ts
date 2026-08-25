@@ -149,6 +149,69 @@ export class JavaSystemLoggerCompat {
     }
 }
 
+/** Minimal Node-backed replacements for Java standard classes omitted by jree. */
+export class JavaDecimalFormatCompat {
+    private readonly formatter: Intl.NumberFormat;
+
+    public constructor(pattern: java.lang.String | string) {
+        const normalized = javaStringValue(pattern);
+        const fractionPattern = normalized.split(".")[1] ?? "";
+        const maximumFractionDigits = fractionPattern.length;
+        const minimumFractionDigits = (fractionPattern.match(/0/g) ?? []).length;
+        this.formatter = new Intl.NumberFormat("en-US", {
+            useGrouping: false,
+            minimumFractionDigits,
+            maximumFractionDigits,
+        });
+    }
+
+    public format(value: number): java.lang.String {
+        return new java.lang.String(this.formatter.format(value));
+    }
+}
+
+export class JavaRuntimeCompat {
+    private static readonly instance = new JavaRuntimeCompat();
+
+    private constructor() {
+    }
+
+    public static getRuntime(): JavaRuntimeCompat {
+        return JavaRuntimeCompat.instance;
+    }
+
+    public totalMemory(): number {
+        return process.memoryUsage().heapTotal;
+    }
+
+    public freeMemory(): number {
+        const usage = process.memoryUsage();
+        return Math.max(0, usage.heapTotal - usage.heapUsed);
+    }
+}
+
+export class JavaStringJoinerCompat {
+    private readonly values: string[] = [];
+    private readonly delimiter: string;
+    private readonly prefix: string;
+    private readonly suffix: string;
+
+    public constructor(delimiter: JavaStringInput, prefix: JavaStringInput = "", suffix: JavaStringInput = "") {
+        this.delimiter = javaStringValue(delimiter);
+        this.prefix = javaStringValue(prefix);
+        this.suffix = javaStringValue(suffix);
+    }
+
+    public add(value: JavaStringInput): JavaStringJoinerCompat {
+        this.values.push(javaStringValue(value));
+        return this;
+    }
+
+    public toString(): java.lang.String {
+        return new java.lang.String(`${this.prefix}${this.values.join(this.delimiter)}${this.suffix}`);
+    }
+}
+
 /** Java String.hashCode(), applied after crossing a jree/native string boundary. */
 export const javaStringHashCode = (value: unknown): number => {
     const text = javaStringValue(value);

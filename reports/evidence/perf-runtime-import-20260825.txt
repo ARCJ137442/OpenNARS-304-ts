@@ -1,0 +1,7 @@
+(node:12060) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12060) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\test\perf\Performance.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(node:12060) [DEP0151] DeprecationWarning: Package H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\node_modules\jree\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\index.js", imported from H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\src\runtime\jree-compat.ts.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+PERFORMANCE_IMPORT_OK
