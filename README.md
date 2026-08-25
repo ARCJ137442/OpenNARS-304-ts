@@ -5,8 +5,8 @@ OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先
 ## 当前状态（2026-08-26）
 
 - M1：功能冻结已完成；245 个主资源加 `simpleOperationTest.nal` 共 246 个样本，综合验收 246/246。
-- M2：非增量 `tsc` 为 0 诊断；串行 `npm test` 为 159/159，局部算法 parity、正式构建和源码/构建产物 shell smoke 通过。
-- M3：当前 HEAD 已建立五个串行正式构建观测和一个低成本 profile；四个 marker 样本功能/parity 通过，性能优化和发布门禁尚未完成。
+- M2：非增量 `tsc` 为 0 诊断；串行 `npm test` 为 160/160，局部算法 parity、正式构建和源码/构建产物 shell smoke 通过。
+- M3：当前 HEAD `29b326a` 已完成一个 JavaString UTF-16 边界热点的语义保持优化，并保留前后 profile、正式 benchmark 和回归证据；完整性能与发布门禁尚未完成。
 - 当前版本：`0.1.0`；当前 canonical Java JAR 使用 `OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 
 当前事实、门禁顺序和可复制命令见 [`docs/current-status-and-runbook.md`](docs/current-status-and-runbook.md)。

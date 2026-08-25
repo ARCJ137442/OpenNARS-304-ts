@@ -1,0 +1,143 @@
+{
+  "file": "java-master/src/main/resources/nal/single_step/nal8_list.nal",
+  "thread_mode": "single",
+  "embedded_cycles": 300000,
+  "target_cycles": 4096,
+  "observed_cycles": 1024,
+  "chunk_cycles": 1024,
+  "rss_limit_mb": 1800,
+  "stopped_reason": "markers_reached",
+  "expected_markers": [
+    "(#,(#,a,b),c,d). %1.00;0.90%",
+    "(#,(#,a,b,c),d). %1.00;0.90%",
+    "(#,a,(#,b,c),d). %1.00;0.90%",
+    "(#,a,(#,b,c,d)). %1.00;0.90%",
+    "(#,a,b,c). %1.00;0.81%",
+    "(#,b,c,d). %1.00;0.81%"
+  ],
+  "matched": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "marker_time_ms": [
+    8.155300000000125,
+    11.576300000000174,
+    10.129699999999957,
+    30.844299999999976,
+    11.738000000000056,
+    10.508600000000115
+  ],
+  "sample_count": 1,
+  "final": {
+    "cycle": 1024,
+    "chunk_cycles": 1024,
+    "chunk_duration_ms": 975.3148999999999,
+    "elapsed_ms": 978.5911000000001,
+    "cycle_end_events": 1024,
+    "out_events": 627,
+    "exe_events": 0,
+    "expected_markers": [
+      "(#,(#,a,b),c,d). %1.00;0.90%",
+      "(#,(#,a,b,c),d). %1.00;0.90%",
+      "(#,a,(#,b,c),d). %1.00;0.90%",
+      "(#,a,(#,b,c,d)). %1.00;0.90%",
+      "(#,a,b,c). %1.00;0.81%",
+      "(#,b,c,d). %1.00;0.81%"
+    ],
+    "matched": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "marker_time_ms": [
+      8.155300000000125,
+      11.576300000000174,
+      10.129699999999957,
+      30.844299999999976,
+      11.738000000000056,
+      10.508600000000115
+    ],
+    "rss_bytes": 339980288,
+    "heap_used_bytes": 127432528,
+    "heap_total_bytes": 156753920,
+    "external_bytes": 3117358,
+    "array_buffers_bytes": 932065,
+    "bags": {
+      "concepts": 105,
+      "novel_tasks": 0,
+      "sequence_current": 0,
+      "recent_operations": 0
+    },
+    "concept_state": {
+      "concepts": 105,
+      "task_links": 440,
+      "term_links": 620,
+      "beliefs": 71,
+      "desires": 0,
+      "questions": 0,
+      "quests": 0
+    }
+  },
+  "samples": [
+    {
+      "cycle": 1024,
+      "chunk_cycles": 1024,
+      "chunk_duration_ms": 975.3148999999999,
+      "elapsed_ms": 978.5911000000001,
+      "cycle_end_events": 1024,
+      "out_events": 627,
+      "exe_events": 0,
+      "expected_markers": [
+        "(#,(#,a,b),c,d). %1.00;0.90%",
+        "(#,(#,a,b,c),d). %1.00;0.90%",
+        "(#,a,(#,b,c),d). %1.00;0.90%",
+        "(#,a,(#,b,c,d)). %1.00;0.90%",
+        "(#,a,b,c). %1.00;0.81%",
+        "(#,b,c,d). %1.00;0.81%"
+      ],
+      "matched": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "marker_time_ms": [
+        8.155300000000125,
+        11.576300000000174,
+        10.129699999999957,
+        30.844299999999976,
+        11.738000000000056,
+        10.508600000000115
+      ],
+      "rss_bytes": 339980288,
+      "heap_used_bytes": 127432528,
+      "heap_total_bytes": 156753920,
+      "external_bytes": 3117358,
+      "array_buffers_bytes": 932065,
+      "bags": {
+        "concepts": 105,
+        "novel_tasks": 0,
+        "sequence_current": 0,
+        "recent_operations": 0
+      },
+      "concept_state": {
+        "concepts": 105,
+        "task_links": 440,
+        "term_links": 620,
+        "beliefs": 71,
+        "desires": 0,
+        "questions": 0,
+        "quests": 0
+      }
+    }
+  ]
+}

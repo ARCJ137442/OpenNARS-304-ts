@@ -20,14 +20,16 @@ M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观�
 
 ## 当前已确认事实
 
-- Git 主线最新已推送提交：`7964e69`；warning/classpath 修复位于 `bf7dd22`，文档同步位于 `7964e69`。
+- Git 主线最新已推送提交：`29b326a`；`4d544a1` 修复 Node/jree 运行时入口警告，`29b326a` 固化 JavaString UTF-16 边界优化与单线程证据。
 - Java canonical JAR：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`。
 - canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 - Java 与 TypeScript 均按单线程运行；Java 测试使用 JDK 18.0.2。
 - `npx tsc --noEmit --pretty false --incremental false`：0 诊断。
-- 本批串行 `npm test --silent`：159/159；权威 `npx tsc --noEmit --pretty false --incremental false`：0 诊断；`npm run build --silent` 与 `npm run shell:dist` 均通过。shell 已改用 `--import` 注册 TypeScript loader，并由项目 resolver 将 `jree` 直接解析到明确的 `lib/index.js`；实际 shell 子进程 stderr 为空，不再产生 `--experimental-loader`/`DEP0151` 启动警告，也不再改写 `node_modules/jree/package.json`。Node 测试器自身的 `--experimental-strip-types` 提示不属于 shell 子进程。
+- 本批串行 `npm test --silent`：160/160；权威 `npx tsc --noEmit --pretty false --incremental false`：0 诊断；`npm run build --silent`、`npm run test:build --silent`、源码/构建产物 shell smoke 均通过。shell 已改用 `--import` 注册 TypeScript loader，并由项目 resolver 将 `jree` 直接解析到明确的 `lib/index.js`；实际 shell 子进程 stderr 为空，不再产生 `--experimental-loader`/`DEP0151` 启动警告，也不再改写 `node_modules/jree/package.json`。Node 测试器自身的 `--experimental-strip-types` 提示不属于 shell 子进程。
 - 局部算法 parity：`ok: true`，`differences: []`，容差 `1e-5`。
 - M1 冻结合同已完成：245 个主资源加 `simpleOperationTest.nal` 共 246 个样本，244 个 marker 样本 marker 等价，2 个 markerless 样本均有 131072 周期独立 stage-digest 验收，综合功能结论为 246/246。原始 JSONL 的过程字段仍保留历史筛查分类，不应直接替代独立验收汇总。
+- 构建后公共 API smoke 已验证 `dist/index.js` 可导入 `Nar`、订阅 `CycleEnd`/`OUT`、执行 2 个周期并正常停止；构建后 CLI 对 `nal8.add.nal` 的单周期 smoke 通过。
+- `npm pack --dry-run --ignore-scripts` 已验证 `opennars-304-ts@0.1.0` 的包清单为 258 个文件，未包含 reports、探针或临时证据。
 
 ## M1 冻结回归
 
@@ -69,11 +71,11 @@ M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观�
 
 ## M3 当前证据边界
 
-M3 已有 `node scripts/e2e/run-m3-benchmark.mjs` 串行工具和显式资源观测开关。当前 HEAD `7964e69` 的正式 `dist` 基线位于 `reports/evidence/m3-formal-baseline-20260825-head-7964-v1.json`、`...recursion-v1.json` 和 `m3-formal-baseline-20260826-head-7964-simple-operation-v1.json`；四个 marker 代表样本功能/parity 通过，markerless 样本本次运行完成但未在该次 1550 周期追加观测中达到 131072。
+M3 已有 `node scripts/e2e/run-m3-benchmark.mjs` 串行工具和显式资源观测开关。当前 HEAD `29b326a` 的优化后样本证据位于 `reports/evidence/m3-formal-optimization-29b326a-representative-v1.json`；`nal8.add`、`nars_multistep_1`、`toothbrush`、`nal4.recursion.small` 的功能/parity 均通过，未出现 process limit 或性能预算警告。此前两次正式重复的 `nal4.recursion.small` 证据仍位于 `reports/evidence/m3-formal-optimization-4d544a1-string-boundary-v1.json`，TS 墙钟中位数 11,241 ms，Java 墙钟中位数 1,228 ms，TS 仍约 9.15 倍慢但在当前 120 秒/1024 周期宽限内。
 
-当前 profile 位于 `reports/evidence/m3-head-7964-nal8-add-v1-profile-summary.json`，第一可观测热点为 Node 内部 `getConverter`（21.91%），其调用链为 jree `JavaString.valueOf` → `convertUTF16ToString` → Node `TextDecoder`，其次为 GC（16.21%）。该归因已由 `reports/evidence/m3-head-7964-nal4-recursion-small-v1.cpuprofile` 的高成本样本复核；尚未实施新的性能优化。
+当前前后 profile 位于 `reports/evidence/m3-head-4d544a1-nal4-recursion-small-string-boundary-profile-comparison-v1.json`；热点为 jree `JavaString.valueOf` → `convertUTF16ToString` → Node `TextDecoder` 以及 GC。直接读取 Java-compatible UTF-16 code unit 后，单次 profile 总时长从 25,131.017 ms 降至 11,547.872 ms；该结果是单机单样本观测，不能外推为完整性能等价。
 
-这些证据只能证明代表样本可以在正式构建下运行，不能宣称完整性能等价或 M3 完成。Java 当前只能从管理接口提供进程 CPU、堆和 committed virtual memory proxy，Windows RSS 仍未直接取得；TypeScript 记录进程 CPU 与峰值 RSS。shell 的 `ExperimentalWarning` 与 `DEP0151` 已由 `bf7dd22` 开始修复，并在本批改为 resolver 方案后通过回归测试。
+这些证据只能证明代表样本可以在正式构建下运行，不能宣称完整性能等价或 M3 完成。Java 当前只能从管理接口提供进程 CPU、堆和 committed virtual memory proxy，Windows RSS 仍未直接取得；TypeScript 记录进程 CPU 与峰值 RSS。shell 的 `ExperimentalWarning` 与 `DEP0151` 已在 `4d544a1` 的 `--import`/resolver 方案中完成修复，并通过本批回归测试。
 
 ## 文档分层
 
