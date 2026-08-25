@@ -511,13 +511,13 @@ test("NAL runner keeps hot results isolated from order and cold-process boundari
   const first = join(directory, "first.nal");
   const second = join(directory, "second.nal");
   const repeat = join(directory, "repeat.nal");
-  const source = (subject, predicate) => `<${subject} --> ${predicate}>.\n''outputMustContain('<${subject} --> ${predicate}>.')\n`;
+  const source = (subject: string, predicate: string): string => `<${subject} --> ${predicate}>.\n''outputMustContain('<${subject} --> ${predicate}>.')\n`;
   writeFileSync(first, source("a", "b"), "utf8");
   writeFileSync(second, source("b", "c"), "utf8");
   writeFileSync(repeat, source("a", "b"), "utf8");
 
   const runner = join(process.cwd(), "scripts", "e2e", "run-nal-corpus.mjs");
-  const run = (resultFile, mode, files) => spawnSync(process.execPath, [
+  const run = (resultFile: string, mode: string, files: string[]) => spawnSync(process.execPath, [
     runner,
     "--engine", "ts",
     "--ts-mode", mode,
@@ -527,11 +527,12 @@ test("NAL runner keeps hot results isolated from order and cold-process boundari
     "--result-file", resultFile,
     ...files.flatMap((file) => ["--file", file]),
   ], { cwd: process.cwd(), encoding: "utf8", maxBuffer: 4 * 1024 * 1024 });
-  const readRows = (resultFile) => readFileSync(resultFile, "utf8")
+  type JsonRow = Record<string, unknown>;
+  const readRows = (resultFile: string): JsonRow[] => readFileSync(resultFile, "utf8")
     .trim()
     .split(/\r?\n/)
     .map((line) => JSON.parse(line));
-  const semantic = (row) => ({
+  const semantic = (row: JsonRow): JsonRow => ({
     expected: row.expected,
     passed: row.passed,
     matched: row.matched,
@@ -542,8 +543,11 @@ test("NAL runner keeps hot results isolated from order and cold-process boundari
     not_run: row.not_run,
     marker_missing: row.marker_missing,
   });
-  const byFile = (rows) => new Map(rows.map((row) => [row.file, semantic(row)]));
-  const assertRunSucceeded = (result) => assert.ok(result.status === 0, result.stderr || result.stdout);
+  const byFile = (rows: JsonRow[]): Map<string, JsonRow> => new Map(rows.map((row) => [row.file as string, semantic(row)]));
+  const assertRunSucceeded = (result: ReturnType<typeof spawnSync>): void => {
+    const output = result.stderr ?? result.stdout;
+    assert.ok(result.status === 0, output == null ? undefined : output.toString());
+  };
 
   try {
     const hotResultFile = join(directory, "hot.jsonl");

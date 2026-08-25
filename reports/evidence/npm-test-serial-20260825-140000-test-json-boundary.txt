@@ -1,0 +1,388 @@
+TAP version 13
+# (node:37952) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\io\\Narsese.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\io\\Parser.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\runtime\\jree-compat.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\io\\Symbols.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Tense.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\entity\\Task.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\entity\\Stamp.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Variable.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\entity\\BudgetValue.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Term.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Interval.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\entity\\Sentence.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\operator\\Operator.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\operator\\Operation.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Variables.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Product.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\inference\\TemporalRules.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Conjunction.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\SetExt.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Terms.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\SetInt.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\ImageExt.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\ImageInt.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Statement.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\DifferenceExt.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\IntersectionInt.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\IntersectionExt.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\DifferenceInt.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\InstanceProperty.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Property.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Instance.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Inheritance.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Negation.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Implication.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Equivalence.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Disjunction.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\inference\\BudgetFunctions.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\inference\\CompositionalRules.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Similarity.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\inference\\TruthFunctions.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\control\\TemporalInferenceControl.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\entity\\Item.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\main\\Debug.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\plugin\\mental\\InternalExperience.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\inference\\UtilityFunctions.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\io\\events\\OutputHandler.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\CompoundTerm.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\SetTensional.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\main\\Parameters.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Image.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\entity\\TermLink.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\entity\\TaskLink.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\control\\DerivationContext.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\entity\\Concept.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\storage\\Memory.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\io\\events\\Events.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\storage\\Bag.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\entity\\TruthValueTerm.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\io\\events\\EventHandler.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\inference\\LocalRules.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\control\\concept\\ProcessQuestion.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\io\\events\\EventEmitter.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\runtime\\ThreadCompat.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\control\\GeneralInferenceControl.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\control\\concept\\ProcessTask.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\plugin\\mental\\Emotions.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\control\\concept\\ProcessAnticipation.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\inference\\RuleTables.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\control\\concept\\ProcessJudgment.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\control\\concept\\ProcessGoal.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\operator\\mental\\Anticipate.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\inference\\SyllogisticRules.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\inference\\StructuralRules.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:37952) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\operator\\FunctionOperator.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# Subtest: migration codemod repairs only the narrow generic alias shape
+ok 1 - migration codemod repairs only the narrow generic alias shape
+  ---
+  duration_ms: 248.6759
+  type: 'test'
+  ...
+# Subtest: migration codemod repairs split logical operators
+ok 2 - migration codemod repairs split logical operators
+  ---
+  duration_ms: 64.8284
+  type: 'test'
+  ...
+# Subtest: migration codemod adds extensions only to relative ESM imports
+ok 3 - migration codemod adds extensions only to relative ESM imports
+  ---
+  duration_ms: 66.8324
+  type: 'test'
+  ...
+# Subtest: migration scanner ignores Narsese examples in comments, strings, and regex literals
+ok 4 - migration scanner ignores Narsese examples in comments, strings, and regex literals
+  ---
+  duration_ms: 147.8804
+  type: 'test'
+  ...
+# Subtest: Narsese constructor delegation preserves either memory entry point
+ok 5 - Narsese constructor delegation preserves either memory entry point
+  ---
+  duration_ms: 0.4088
+  type: 'test'
+  ...
+# (node:45036) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:45036) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\test\\node\\nal-runner-semantics.test.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# (node:45036) [DEP0151] DeprecationWarning: Package H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\node_modules\\jree\\ has a "main" field set to "./lib", excluding the full filename and extension to the resolved file at "lib\\index.js", imported from H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\src\\language\\Tense.ts.
+#  Automatic extension resolution of the "main" field is deprecated for ES modules.
+# Subtest: NAL runner counts final matched markers even when an exception occurs
+ok 6 - NAL runner counts final matched markers even when an exception occurs
+  ---
+  duration_ms: 0.9252
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps timeout and marker absence as separate observations
+ok 7 - NAL runner keeps timeout and marker absence as separate observations
+  ---
+  duration_ms: 0.1207
+  type: 'test'
+  ...
+# Subtest: NAL runner distinguishes a process crash from a single-file timeout
+ok 8 - NAL runner distinguishes a process crash from a single-file timeout
+  ---
+  duration_ms: 0.1139
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps files after a timeout separate from the timed-out file
+ok 9 - NAL runner keeps files after a timeout separate from the timed-out file
+  ---
+  duration_ms: 0.0586
+  type: 'test'
+  ...
+# Subtest: parity does not become functional pass when both engines miss the marker
+ok 10 - parity does not become functional pass when both engines miss the marker
+  ---
+  duration_ms: 0.3914
+  type: 'test'
+  ...
+# Subtest: parity exposes Java/TypeScript result differences independently
+ok 11 - parity exposes Java/TypeScript result differences independently
+  ---
+  duration_ms: 0.0895
+  type: 'test'
+  ...
+# Subtest: NAL runner reports marker timing against a 120-second-per-1024-cycle budget
+ok 12 - NAL runner reports marker timing against a 120-second-per-1024-cycle budget
+  ---
+  duration_ms: 0.1374
+  type: 'test'
+  ...
+# Subtest: NAL runner records runtime per reasoning cycle and relative slowdown
+ok 13 - NAL runner records runtime per reasoning cycle and relative slowdown
+  ---
+  duration_ms: 0.0602
+  type: 'test'
+  ...
+# Subtest: NAL runner marks stalled runtime as a lower bound instead of a functional verdict
+ok 14 - NAL runner marks stalled runtime as a lower bound instead of a functional verdict
+  ---
+  duration_ms: 0.1591
+  type: 'test'
+  ...
+# Subtest: NAL runner classifies no-progress watchdog termination independently of performance
+ok 15 - NAL runner classifies no-progress watchdog termination independently of performance
+  ---
+  duration_ms: 0.2375
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps a slow completed process as performance data, not a timeout
+ok 16 - NAL runner keeps a slow completed process as performance data, not a timeout
+  ---
+  duration_ms: 0.0925
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps a process safety limit separate from a no-progress timeout
+ok 17 - NAL runner keeps a process safety limit separate from a no-progress timeout
+  ---
+  duration_ms: 0.0791
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps performance observations separate when a marker is missing
+ok 18 - NAL runner keeps performance observations separate when a marker is missing
+  ---
+  duration_ms: 0.0903
+  type: 'test'
+  ...
+# Subtest: marker parity is an equivalence route without requiring 131072 cycles or an internal trace
+ok 19 - marker parity is an equivalence route without requiring 131072 cycles or an internal trace
+  ---
+  duration_ms: 0.0504
+  type: 'test'
+  ...
+# Subtest: marker parity remains equivalent when an optional internal trace differs
+ok 20 - marker parity remains equivalent when an optional internal trace differs
+  ---
+  duration_ms: 0.0933
+  type: 'test'
+  ...
+# Subtest: 131072-cycle equivalence is available for inputs without Java markers
+ok 21 - 131072-cycle equivalence is available for inputs without Java markers
+  ---
+  duration_ms: 0.0545
+  type: 'test'
+  ...
+# Subtest: NAL parity rows expose marker equivalence independently of the long-cycle target
+ok 22 - NAL parity rows expose marker equivalence independently of the long-cycle target
+  ---
+  duration_ms: 0.0823
+  type: 'test'
+  ...
+# Subtest: NAL runner preserves valid rows when stdout contains a diagnostic line
+ok 23 - NAL runner preserves valid rows when stdout contains a diagnostic line
+  ---
+  duration_ms: 0.1525
+  type: 'test'
+  ...
+# Subtest: NAL runner accepts only structured progress heartbeats
+ok 24 - NAL runner accepts only structured progress heartbeats
+  ---
+  duration_ms: 0.1234
+  type: 'test'
+  ...
+# Subtest: NAL runner resets the no-progress watchdog for cycle, command, and marker heartbeats
+ok 25 - NAL runner resets the no-progress watchdog for cycle, command, and marker heartbeats
+  ---
+  duration_ms: 0.0637
+  type: 'test'
+  ...
+# Subtest: NAL runner preserves expected marker count on timeout rows
+ok 26 - NAL runner preserves expected marker count on timeout rows
+  ---
+  duration_ms: 0.0858
+  type: 'test'
+  ...
+# Subtest: NAL runner recognizes Windows timeout results with signal and message
+ok 27 - NAL runner recognizes Windows timeout results with signal and message
+  ---
+  duration_ms: 0.0464
+  type: 'test'
+  ...
+# Subtest: Tense lookup accepts Java String values at the parser boundary
+ok 28 - Tense lookup accepts Java String values at the parser boundary
+  ---
+  duration_ms: 0.2277
+  type: 'test'
+  ...
+# Subtest: NAL metadata separates embedded and runner-added cycles
+ok 29 - NAL metadata separates embedded and runner-added cycles
+  ---
+  duration_ms: 0.2269
+  type: 'test'
+  ...
+# Subtest: NAL runner validates and resumes a persisted per-file result
+ok 30 - NAL runner validates and resumes a persisted per-file result
+  ---
+  duration_ms: 1934.8894
+  type: 'test'
+  ...
+# Subtest: NAL runner records an explicit TypeScript process mode and separates run keys
+ok 31 - NAL runner records an explicit TypeScript process mode and separates run keys
+  ---
+  duration_ms: 0.2198
+  type: 'test'
+  ...
+# Subtest: NAL runner rejects duplicate checkpoint rows for one run
+ok 32 - NAL runner rejects duplicate checkpoint rows for one run
+  ---
+  duration_ms: 1.7483
+  type: 'test'
+  ...
+# Subtest: NAL runner rejects duplicate input files before execution
+ok 33 - NAL runner rejects duplicate input files before execution
+  ---
+  duration_ms: 0.1479
+  type: 'test'
+  ...
+# Subtest: NAL runner persists cold and hot results without overwriting either run
+ok 34 - NAL runner persists cold and hot results without overwriting either run
+  ---
+  duration_ms: 3466.1647
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps hot results isolated from order and cold-process boundaries
+ok 35 - NAL runner keeps hot results isolated from order and cold-process boundaries
+  ---
+  duration_ms: 7081.0881
+  type: 'test'
+  ...
+# Subtest: NAL runner resumes after a real middle-file timeout and preserves the tail
+ok 36 - NAL runner resumes after a real middle-file timeout and preserves the tail
+  ---
+  duration_ms: 2592.8752
+  type: 'test'
+  ...
+# Subtest: NAL trace describes ExecutionResult with Java-equivalent operation feedback
+ok 37 - NAL trace describes ExecutionResult with Java-equivalent operation feedback
+  ---
+  duration_ms: 3522.1117
+  type: 'test'
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19791.7417

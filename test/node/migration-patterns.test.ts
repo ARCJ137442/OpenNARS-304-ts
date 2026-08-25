@@ -11,8 +11,14 @@ const projectRoot = fileURLToPath(new URL("../..", import.meta.url));
 const codemod = join(projectRoot, "scripts", "converting", "apply-migration-patterns.mjs");
 const scanner = join(projectRoot, "scripts", "converting", "scan-migration-patterns.mjs");
 
-function runScript(script, args) {
-  return new Promise((resolve, reject) => {
+type ScriptResult = {
+  code: number | null;
+  stdout: string;
+  stderr: string;
+};
+
+function runScript(script: string, args: string[]): Promise<ScriptResult> {
+  return new Promise<ScriptResult>((resolve, reject) => {
     const child = spawn(process.execPath, [script, ...args], { cwd: projectRoot });
     let stdout = "";
     let stderr = "";
@@ -23,7 +29,7 @@ function runScript(script, args) {
   });
 }
 
-function runCodemod(args) {
+function runCodemod(args: string[]): Promise<ScriptResult> {
   return runScript(codemod, args);
 }
 
@@ -94,9 +100,13 @@ test("migration codemod adds extensions only to relative ESM imports", async () 
 test("migration scanner ignores Narsese examples in comments, strings, and regex literals", async () => {
   const result = await runScript(scanner, ["--json"]);
   assert.equal(result.code, 0);
-  const report = JSON.parse(result.stdout);
+  const report = JSON.parse(result.stdout) as {
+    patterns: Array<{ id: string; occurrences: number }>;
+  };
   const malformedGeneric = report.patterns.find((pattern) => pattern.id === "malformed-generic");
   const malformedOperator = report.patterns.find((pattern) => pattern.id === "malformed-operator");
+  assert.ok(malformedGeneric);
+  assert.ok(malformedOperator);
   assert.equal(malformedGeneric.occurrences, 0);
   assert.equal(malformedOperator.occurrences, 0);
 });
