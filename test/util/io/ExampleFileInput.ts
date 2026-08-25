@@ -1,6 +1,7 @@
 import { java, JavaObject, type int } from "jree";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputCondition } from "../test/OutputCondition.ts";
+import "../test/OutputConditionImplementations.ts";
 
 
 

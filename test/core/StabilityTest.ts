@@ -3,6 +3,7 @@ import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { TextOutputHandler } from "../../src/io/events/TextOutputHandler.ts";
 import { OutputCondition } from "../util/test/OutputCondition.ts";
+import "../util/test/OutputConditionImplementations.ts";
 import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
 import { assertTrue } from "../util/junit-assert.ts";
 

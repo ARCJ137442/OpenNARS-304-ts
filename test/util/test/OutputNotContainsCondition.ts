@@ -1,6 +1,7 @@
 import { java } from "jree";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputContainsCondition } from "./OutputContainsCondition.ts";
+import { OutputCondition } from "./OutputCondition.ts";
 
 
 
@@ -39,3 +40,7 @@ export class OutputNotContainsCondition extends OutputContainsCondition {
     }
 
 }
+
+OutputCondition.registerOutputNotContainsFactory(
+    (nar, containing) => new OutputNotContainsCondition(nar, containing),
+);

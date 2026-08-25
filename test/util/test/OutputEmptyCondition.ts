@@ -35,3 +35,5 @@ export class OutputEmptyCondition extends OutputCondition {
     }
 
 }
+
+OutputCondition.registerOutputEmptyFactory((nar) => new OutputEmptyCondition(nar));

@@ -1,13 +1,13 @@
 import { java, type int } from "jree";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
-import { OutputContainsCondition } from "./OutputContainsCondition.ts";
-import { OutputEmptyCondition } from "./OutputEmptyCondition.ts";
-import { OutputNotContainsCondition } from "./OutputNotContainsCondition.ts";
 
 const OUT = OutputHandler.OUT;
 const EXE = OutputHandler.EXE;
 
+type OutputContainsFactory = (nar: Nar, containing: java.lang.String, maxSimilars: int) => OutputCondition;
+type OutputNotContainsFactory = (nar: Nar, containing: java.lang.String) => OutputCondition;
+type OutputEmptyFactory = (nar: Nar) => OutputCondition;
 
 
 /**
@@ -18,6 +18,10 @@ const EXE = OutputHandler.EXE;
  * the condition true
  */
 export abstract class OutputCondition extends OutputHandler {
+    private static outputContainsFactory: OutputContainsFactory | null = null;
+    private static outputNotContainsFactory: OutputNotContainsFactory | null = null;
+    private static outputEmptyFactory: OutputEmptyFactory | null = null;
+
     public succeeded: boolean = false;
 
     public readonly nar: Nar;
@@ -59,6 +63,27 @@ export abstract class OutputCondition extends OutputHandler {
     /** returns true if condition was satisfied */
     public abstract condition(channel: java.lang.Class<unknown>, signal: java.lang.Object): boolean;
 
+    public static registerOutputContainsFactory(factory: OutputContainsFactory): void {
+        OutputCondition.outputContainsFactory = factory;
+    }
+
+    public static registerOutputNotContainsFactory(factory: OutputNotContainsFactory): void {
+        OutputCondition.outputNotContainsFactory = factory;
+    }
+
+    public static registerOutputEmptyFactory(factory: OutputEmptyFactory): void {
+        OutputCondition.outputEmptyFactory = factory;
+    }
+
+    private static requireFactory<T>(factory: T | null, name: string): T {
+        if (factory === null) {
+            throw new java.lang.IllegalStateException(
+                new java.lang.String(`${name} implementation was not loaded`),
+            );
+        }
+        return factory;
+    }
+
     /**
      * reads an example file line-by-line, before being processed, to extract
      * expectations
@@ -87,7 +112,11 @@ export abstract class OutputCondition extends OutputHandler {
                  * }
                  */
 
-                conditions.add(new OutputContainsCondition(n, e, similarResultsToSave));
+                const createOutputContains = OutputCondition.requireFactory(
+                    OutputCondition.outputContainsFactory,
+                    "OutputContainsCondition",
+                );
+                conditions.add(createOutputContains(n, e, similarResultsToSave));
 
             }
 
@@ -97,13 +126,21 @@ export abstract class OutputCondition extends OutputHandler {
 
                 // remove ') suffix:
                 let e: java.lang.String = s.substring(expectOutNotContains2.length(), s.length() - 2);
-                conditions.add(new OutputNotContainsCondition(n, e));
+                const createOutputNotContains = OutputCondition.requireFactory(
+                    OutputCondition.outputNotContainsFactory,
+                    "OutputNotContainsCondition",
+                );
+                conditions.add(createOutputNotContains(n, e));
 
             }
 
             const expectOutEmpty = new java.lang.String("''expect.outEmpty");
             if (s.indexOf(expectOutEmpty) === 0) {
-                conditions.add(new OutputEmptyCondition(n));
+                const createOutputEmpty = OutputCondition.requireFactory(
+                    OutputCondition.outputEmptyFactory,
+                    "OutputEmptyCondition",
+                );
+                conditions.add(createOutputEmpty(n));
             }
 
         }

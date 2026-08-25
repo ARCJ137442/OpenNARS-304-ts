@@ -9,6 +9,56 @@ import { OutputCondition } from "./OutputCondition.ts";
 
 const OUT = OutputHandler.OUT;
 const EXE = OutputHandler.EXE;
+
+class SortedComparableSet<T> implements Iterable<T> {
+    private readonly values: T[] = [];
+    private readonly compare: (left: T, right: T) => number;
+
+    public constructor(compare: (left: T, right: T) => number) {
+        this.compare = compare;
+    }
+
+    public isEmpty(): boolean {
+        return this.values.length === 0;
+    }
+
+    public size(): int {
+        return this.values.length;
+    }
+
+    public add(value: T): boolean {
+        const index = this.values.findIndex((current) => this.compare(value, current) <= 0);
+        if (index >= 0 && this.compare(value, this.values[index]) === 0) {
+            return false;
+        }
+        if (index < 0) {
+            this.values.push(value);
+        } else {
+            this.values.splice(index, 0, value);
+        }
+        return true;
+    }
+
+    public remove(value: T): boolean {
+        const index = this.values.findIndex((current) => this.compare(value, current) === 0);
+        if (index < 0) {
+            return false;
+        }
+        this.values.splice(index, 1);
+        return true;
+    }
+
+    public last(): T {
+        if (this.values.length === 0) {
+            throw new java.lang.IllegalStateException(new java.lang.String("empty sorted set"));
+        }
+        return this.values[this.values.length - 1];
+    }
+
+    public [Symbol.iterator](): Iterator<T> {
+        return this.values[Symbol.iterator]();
+    }
+}
 const ExecutionResult = Operator.ExecutionResult;
 type ExecutionResult = InstanceType<typeof Operator.ExecutionResult>;
 
@@ -55,7 +105,8 @@ export class OutputContainsCondition extends OutputCondition {
 
 
     protected readonly containing: java.lang.String;
-    public readonly almost: java.util.NavigableSet<OutputContainsCondition.SimilarOutput> = new java.util.TreeSet();
+    public readonly almost: SortedComparableSet<OutputContainsCondition.SimilarOutput> =
+        new SortedComparableSet((left, right) => left.compareTo(right));
     protected readonly saveSimilar: boolean;
     protected maxSimilars: int = 5;
 
@@ -82,7 +133,7 @@ export class OutputContainsCondition extends OutputCondition {
         return s;
     }
 
-    public getCandidates(max: int): java.util.Collection<OutputContainsCondition.SimilarOutput> {
+    public getCandidates(max: int): SortedComparableSet<OutputContainsCondition.SimilarOutput> {
         return this.almost;
     }
 
@@ -204,4 +255,7 @@ export namespace OutputContainsCondition {
     export type SimilarOutput = InstanceType<typeof OutputContainsCondition.SimilarOutput>;
 }
 
+OutputCondition.registerOutputContainsFactory(
+    (nar, containing, maxSimilars) => new OutputContainsCondition(nar, containing, maxSimilars),
+);
 
