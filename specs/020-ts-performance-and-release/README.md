@@ -1,11 +1,14 @@
 ---
-status: planned
+status: in-progress
 created: 2026-08-24
 priority: medium
 depends_on:
 - 019-tsc-zero-error-build
 created_at: 2026-08-24T01:48:53.859499900Z
-updated_at: 2026-08-24T01:49:20.651785900Z
+updated_at: 2026-08-25T11:48:42.932070800Z
+transitions:
+- status: in-progress
+  at: 2026-08-25T11:48:42.932070800Z
 ---
 
 # TypeScript performance and release
