@@ -39,7 +39,7 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const { Negation } = await import("../../src/language/Negation.ts");
     const negated = Negation.make([Term.get("a")]);
     assert.equal(negated instanceof Negation, true);
-    assert.equal((negated as InstanceType<typeof Negation>).term[0], Term.get("a"));
+    assert.equal(negated.term[0], Term.get("a"));
 
     const { Inheritance } = await import("../../src/language/Inheritance.ts");
     const statement = Inheritance.make(Term.get("A"), Term.get("B"));
@@ -74,7 +74,8 @@ test("translated term and sentence constructors preserve Java delegation contrac
     assert.equal(arrayConstructedSet.term[0], setMember);
 
     const { Conjunction } = await import("../../src/language/Conjunction.ts");
-    const conjunction = Conjunction.make([Term.get("a"), Term.get("b")]) as InstanceType<typeof Conjunction>;
+    const conjunction = Conjunction.make([Term.get("a"), Term.get("b")]);
+    assert.ok(conjunction instanceof Conjunction);
     const clonedConjunction = conjunction.clone();
     assert.equal(String(clonedConjunction.toString()), "(&&,a,b)");
 
@@ -241,7 +242,7 @@ test("mixed runtime long values preserve temporal projection and interval normal
     const projection = TruthFunctions.temporalProjection(10n, 12, 10n, parameters);
     assert.equal(Number.isFinite(Number(projection)), true);
 
-    const content = Conjunction.make([Term.get("a"), new Interval(1)], TemporalRules.ORDER_FORWARD);
+    const content = Conjunction.make([Term.get("a"), new Interval(1n)], TemporalRules.ORDER_FORWARD);
     assert.ok(content instanceof Conjunction);
     const stamp = new Stamp(10, Tense.Present, new Stamp.BaseEntry(0, 1), parameters.DURATION);
     new Sentence(content, ".", TruthValue.fromFrequencyConfidence(0.8, 0.7, parameters), stamp);

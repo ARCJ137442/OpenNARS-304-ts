@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { java } from "jree";
 
 test("Implication.clone preserves the source term and runtime type", async () => {
     const { Implication } = await import("../../src/language/Implication.ts");
@@ -20,7 +21,7 @@ test("Image placeholder recognition keeps Java exact-Term semantics", async () =
     class DerivedTerm extends Term {
         public constructor() {
             super();
-            this.setName("_");
+            this.setName(new java.lang.String("_"));
         }
     }
 
@@ -45,7 +46,9 @@ test("Terms.term preserves the relation index when rebuilding images", async () 
     const rebuiltExt = Terms.term(imageExt, [replacement, variable]);
 
     assert.equal(String(rebuiltInt.name()), "(\\,reaction,_,?1)");
-    assert.equal((rebuiltInt as ImageInt).relationIndex, 0);
+    assert.ok(rebuiltInt instanceof ImageInt);
+    assert.equal(rebuiltInt.relationIndex, 0);
     assert.equal(String(rebuiltExt.name()), "(/,reaction,_,?1)");
-    assert.equal((rebuiltExt as ImageExt).relationIndex, 0);
+    assert.ok(rebuiltExt instanceof ImageExt);
+    assert.equal(rebuiltExt.relationIndex, 0);
 });
