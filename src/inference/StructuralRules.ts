@@ -42,6 +42,10 @@ import type { Task } from "../entity/Task.ts";
  */
 export class StructuralRules extends JavaObject {
 
+    private static asTruthValue(value: TruthValue | null): TruthValue {
+        return value as unknown as TruthValue;
+    }
+
     /*
      * -------------------- transform between compounds and term
      * --------------------
@@ -104,7 +108,7 @@ export class StructuralRules extends JavaObject {
         let truth: TruthValue = TruthFunctions.deduction(sentence.getTruth(), nal.narParameters.reliance,
             nal.narParameters);
         let budget: BudgetValue = BudgetFunctions.compoundForward(truth, content, nal);
-        nal.singlePremiseTask(content, truth, budget);
+        nal.singlePremiseTask(content, StructuralRules.asTruthValue(truth), budget);
     }
 
     /**
@@ -151,7 +155,7 @@ export class StructuralRules extends JavaObject {
         } else {
             budget = BudgetFunctions.compoundForward(sentence.getTruth(), content, nal);
         }
-        nal.singlePremiseTask(content, truth, budget);
+        nal.singlePremiseTask(content, StructuralRules.asTruthValue(truth), budget);
     }
 
     /**
@@ -346,7 +350,7 @@ export class StructuralRules extends JavaObject {
         } else {
             budget = BudgetFunctions.compoundBackward(content, nal);
         }
-        nal.singlePremiseTask(content, truth, budget);
+        nal.singlePremiseTask(content, StructuralRules.asTruthValue(truth), budget);
     }
 
     /* -------------------- products and images transform -------------------- */
@@ -418,7 +422,7 @@ export class StructuralRules extends JavaObject {
             return;
         }
 
-        let newInh: CompoundTerm = null;
+        let newInh: CompoundTerm = null as unknown as CompoundTerm;
         if (predicate.equals(Term.SEQ_SPATIAL)) {
             newInh = Conjunction.make((subject as CompoundTerm).term, TemporalRules.ORDER_FORWARD, true) as CompoundTerm;
         } else if (predicate.equals(Term.SEQ_TEMPORAL)) {
@@ -481,7 +485,7 @@ export class StructuralRules extends JavaObject {
             budget = BudgetFunctions.compoundForward(sentence.getTruth(), content, nal);
         }
 
-        nal.singlePremiseTask(content, truth, budget);
+        nal.singlePremiseTask(content, StructuralRules.asTruthValue(truth), budget);
     }
 
     /**
@@ -520,7 +524,7 @@ export class StructuralRules extends JavaObject {
                         } else {
                             budget = BudgetFunctions.compoundForward(truth, inheritance, nal);
                         }
-                        nal.singlePremiseTask(inheritance, truth, budget);
+                        nal.singlePremiseTask(inheritance, StructuralRules.asTruthValue(truth), budget);
                     }
                 }
             }
@@ -543,7 +547,7 @@ export class StructuralRules extends JavaObject {
                     } else {
                         budget = BudgetFunctions.compoundForward(truth, inheritance, nal);
                     }
-                    nal.singlePremiseTask(inheritance, truth, budget);
+                    nal.singlePremiseTask(inheritance, StructuralRules.asTruthValue(truth), budget);
                 }
             }
         }
@@ -584,7 +588,7 @@ export class StructuralRules extends JavaObject {
                     } else {
                         budget = BudgetFunctions.compoundForward(truth, inheritance, nal);
                     }
-                    nal.singlePremiseTask(inheritance, truth, budget);
+                    nal.singlePremiseTask(inheritance, StructuralRules.asTruthValue(truth), budget);
                 }
             }
         } else if (predicate instanceof ImageExt) {
@@ -609,7 +613,7 @@ export class StructuralRules extends JavaObject {
                     } else {
                         budget = BudgetFunctions.compoundForward(truth, seq, nal);
                     }
-                    nal.singlePremiseTask(seq, truth, budget);
+                    nal.singlePremiseTask(seq, StructuralRules.asTruthValue(truth), budget);
                     return;
                 }
 
@@ -620,7 +624,7 @@ export class StructuralRules extends JavaObject {
                     } else {
                         budget = BudgetFunctions.compoundForward(truth, inheritance, nal);
                     }
-                    nal.singlePremiseTask(inheritance, truth, budget);
+                    nal.singlePremiseTask(inheritance, StructuralRules.asTruthValue(truth), budget);
                 }
             }
         }
@@ -679,7 +683,7 @@ export class StructuralRules extends JavaObject {
             java.lang.System.arraycopy(conjCompound.term, index + 1, newTerm, index, newTerm.length - index);
             let cont: Term = Conjunction.make(newTerm, conjCompound.getTemporalOrder(), conjCompound.getIsSpatial());
             let curS: Sentence = nal.getCurrentTask().sentence;
-            let truth: TruthValue = null;
+            let truth: TruthValue = null as unknown as TruthValue;
             if (curS.isJudgment()) {
                 truth = TruthFunctions.deduction(nal.getCurrentTask().sentence.getTruth(), nal.narParameters.reliance,
                     nal.narParameters);
@@ -723,7 +727,7 @@ export class StructuralRules extends JavaObject {
             }
             java.lang.System.arraycopy(conjCompound.term, 0 + index, newTermRight, 0, newTermRight.length);
             let curS: Sentence = nal.getCurrentTask().sentence;
-            let truth: TruthValue = null;
+            let truth: TruthValue = null as unknown as TruthValue;
             if (curS.isJudgment()) {
                 truth = TruthFunctions.deduction(curS.getTruth(), nal.narParameters.reliance, nal.narParameters);
             }
@@ -843,7 +847,8 @@ export class StructuralRules extends JavaObject {
         // sourceConjunction
         let curS: Sentence = nal.getCurrentTask().sentence;
         let truth: TruthValue | null = curS.truth !== null ? curS.getTruth().clone() : null;
-        StructuralRules.deriveSequenceTask(nal, sourceConjunction, destination, truth);
+        StructuralRules.deriveSequenceTask(nal, sourceConjunction, destination,
+            StructuralRules.asTruthValue(truth));
     }
 
     /***
@@ -950,7 +955,7 @@ export class StructuralRules extends JavaObject {
             }
             budget = BudgetFunctions.forward(truth, nal);
         }
-        return nal.singlePremiseTask(content, truth, budget);
+        return nal.singlePremiseTask(content, StructuralRules.asTruthValue(truth), budget);
     }
 
     /* --------------- Negation related rules --------------- */
@@ -973,7 +978,7 @@ export class StructuralRules extends JavaObject {
         } else {
             budget = BudgetFunctions.compoundBackward(content, nal);
         }
-        nal.singlePremiseTask(content, truth, budget);
+        nal.singlePremiseTask(content, StructuralRules.asTruthValue(truth), budget);
     }
 
     /**
@@ -1006,13 +1011,16 @@ export class StructuralRules extends JavaObject {
             } else {
                 budget = BudgetFunctions.compoundBackward(content, nal);
             }
-            return nal.singlePremiseTask(content, Symbols.QUESTION_MARK, truth, budget);
+            return nal.singlePremiseTask(content, Symbols.QUESTION_MARK,
+                StructuralRules.asTruthValue(truth), budget);
         } else {
             if (content instanceof Implication) {
                 truth = TruthFunctions.contraposition(sentence.getTruth(), nal.narParameters);
             }
-            budget = BudgetFunctions.compoundForward(truth, content, nal);
-            return nal.singlePremiseTask(content, Symbols.JUDGMENT_MARK, truth, budget);
+            budget = BudgetFunctions.compoundForward(
+                StructuralRules.asTruthValue(truth), content, nal);
+            return nal.singlePremiseTask(content, Symbols.JUDGMENT_MARK,
+                StructuralRules.asTruthValue(truth), budget);
         }
     }
 }
