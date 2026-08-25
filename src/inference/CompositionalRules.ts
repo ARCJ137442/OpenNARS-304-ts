@@ -82,6 +82,7 @@ const pair = <L, R>(left: L, right: R): Pair<L, R> => ({
 const union = TruthFunctions.union;
 const intersection = TruthFunctions.intersection;
 const negation = TruthFunctions.negation;
+const asJavaObject = (value: unknown): JavaObject => value as JavaObject;
 const induction = TruthFunctions.induction;
 const comparison = TruthFunctions.comparison;
 const abduction = TruthFunctions.abduction;
@@ -145,10 +146,10 @@ export class CompositionalRules extends JavaObject {
         let truthB: TruthValue = currentBelief.getTruth();
         let truthOr: TruthValue = union(truthT, truthB, nal.narParameters);
         let truthAnd: TruthValue = intersection(truthT, truthB, nal.narParameters);
-        let truthDif: TruthValue = null;
-        let termOr: Term = null;
-        let termAnd: Term = null;
-        let termDif: Term = null;
+        let truthDif: TruthValue = null as unknown as TruthValue;
+        let termOr: Term = null as unknown as Term;
+        let termAnd: Term = null as unknown as Term;
+        let termDif: Term = null as unknown as Term;
         if (index === 0) {
             if (taskContent instanceof Inheritance) {
                 termOr = IntersectionInt.make(componentT, componentB);
@@ -250,11 +251,11 @@ export class CompositionalRules extends JavaObject {
             return;
         }
 
-        let delta: long = 0;
+        let delta: long = 0 as unknown as long;
         while ((term2 instanceof Conjunction) && ((term2 as CompoundTerm).term[0] instanceof Interval)) {
             let interval: Interval = (term2 as CompoundTerm).term[0] as Interval;
             delta += interval.time;
-            term2 = (term2 as CompoundTerm).setComponent(0, null, nal.mem());
+            term2 = (term2 as CompoundTerm).setComponent(0, null as unknown as Term, nal.mem());
         }
 
         let task: Task = nal.getCurrentTask();
@@ -270,14 +271,14 @@ export class CompositionalRules extends JavaObject {
             return;
         }
 
-        let truth: TruthValue = null;
+        let truth: TruthValue = null as unknown as TruthValue;
         if (index === 0) {
             if (oldContent instanceof Inheritance) {
                 truth = lookupTruthOrNull(v1, v2, nal.narParameters,
-                    compound instanceof IntersectionExt, EnumType.REDUCECONJUNCTION,
-                    compound instanceof IntersectionInt, EnumType.REDUCEDISJUNCTION,
-                    compound instanceof SetInt && component instanceof SetInt, EnumType.REDUCECONJUNCTION,
-                    compound instanceof SetExt && component instanceof SetExt, EnumType.REDUCEDISJUNCTION);
+                    asJavaObject(compound instanceof IntersectionExt), EnumType.REDUCECONJUNCTION,
+                    asJavaObject(compound instanceof IntersectionInt), EnumType.REDUCEDISJUNCTION,
+                    asJavaObject(compound instanceof SetInt && component instanceof SetInt), EnumType.REDUCECONJUNCTION,
+                    asJavaObject(compound instanceof SetExt && component instanceof SetExt), EnumType.REDUCEDISJUNCTION);
 
                 if (truth === null && compound instanceof DifferenceExt) {
                     if (compound.term[0].equals(component)) {
@@ -296,10 +297,10 @@ export class CompositionalRules extends JavaObject {
         } else {
             if (oldContent instanceof Inheritance) {
                 truth = lookupTruthOrNull(v1, v2, nal.narParameters,
-                    compound instanceof IntersectionInt, EnumType.REDUCECONJUNCTION,
-                    compound instanceof IntersectionExt, EnumType.REDUCEDISJUNCTION,
-                    compound instanceof SetExt && component instanceof SetExt, EnumType.REDUCECONJUNCTION,
-                    compound instanceof SetInt && component instanceof SetInt, EnumType.REDUCEDISJUNCTION);
+                    asJavaObject(compound instanceof IntersectionInt), EnumType.REDUCECONJUNCTION,
+                    asJavaObject(compound instanceof IntersectionExt), EnumType.REDUCEDISJUNCTION,
+                    asJavaObject(compound instanceof SetExt && component instanceof SetExt), EnumType.REDUCECONJUNCTION,
+                    asJavaObject(compound instanceof SetInt && component instanceof SetInt), EnumType.REDUCEDISJUNCTION);
 
                 if (truth === null && compound instanceof DifferenceInt) {
                     if (compound.term[1].equals(component)) {
@@ -318,7 +319,7 @@ export class CompositionalRules extends JavaObject {
         }
         if (truth !== null) {
             let budget: BudgetValue = BudgetFunctions.compoundForward(truth, content, nal);
-            if (delta !== 0) {
+            if (delta !== (0 as unknown as long)) {
                 let baseTime: long = task.sentence.getOccurrenceTime();
                 if (baseTime !== Stamp.ETERNAL) {
                     baseTime += delta;
@@ -360,7 +361,7 @@ export class CompositionalRules extends JavaObject {
         if (content === null) {
             return;
         }
-        let truth: TruthValue = null;
+        let truth: TruthValue = null as unknown as TruthValue;
         let budget: BudgetValue;
         if (taskSentence.isQuestion() || taskSentence.isQuest()) {
             budget = BudgetFunctions.compoundBackward(content, nal);
@@ -834,11 +835,11 @@ export class CompositionalRules extends JavaObject {
         let termCounts: java.util.Map<Term, java.lang.Integer> = implicationEquivalenceOrJunction.countTermRecursively(null);
         let k: int = 0;
         for (let t of candidates) {
-            if (termCounts.getOrDefault(t, 0) > 1) {
+            if (termCounts.getOrDefault(t, java.lang.Integer.valueOf(0)).valueOf() > 1) {
                 // ok it appeared as subject or predicate but appears in the Conjunction more
                 // than once
                 // => introduce a dependent variable for it!
-                let varType: java.lang.String = "#";
+                let varType: string = "#";
                 if (implicationEquivalenceOrJunction instanceof Implication
                     || implicationEquivalenceOrJunction instanceof Equivalence) {
                     let imp: Statement = implicationEquivalenceOrJunction as Statement;
@@ -875,7 +876,7 @@ export class CompositionalRules extends JavaObject {
         for (let combo of powerset) {
             let mapping: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
             for (let vIntro of combo) {
-                mapping.put(vIntro, app.get(vIntro));
+                mapping.put(vIntro, app.get(vIntro) as unknown as Term);
             }
             if (mapping.size() > 0) {
                 let generalizationPenalty: float = Float32Math.pow(
@@ -902,7 +903,7 @@ export class CompositionalRules extends JavaObject {
         let n: int = junction ? (side as CompoundTerm).size() : 1;
         for (let i: int = 0; i < n; i++) {
             // we found an Inheritance
-            let t: Term = null;
+            let t: Term = null as unknown as Term;
             if (i < n) {
                 if (junction) {
                     t = (side as CompoundTerm).term[i];
@@ -923,7 +924,8 @@ export class CompositionalRules extends JavaObject {
                 // transform
                 let removals: java.util.Set<Term> = new java.util.LinkedHashSet<Term>();
                 if (addSubject && !subjT.hasVar()) {
-                    let ret: java.util.Set<Term> = CompoundTerm.addComponentsRecursively(subjT, null);
+                    let ret: java.util.Set<Term> = CompoundTerm.addComponentsRecursively(
+                        subjT, null as unknown as java.util.Set<Term>);
                     for (let ct of ret) {
                         if (ct instanceof Image) {
                             removals.add((ct as Image).term[(ct as Image).relationIndex]);
@@ -934,7 +936,8 @@ export class CompositionalRules extends JavaObject {
                 let addPredicate: boolean = !subject || predT instanceof ImageExt; // also allow for images due to
                 // equivalence transform
                 if (addPredicate && !predT.hasVar()) {
-                    let ret: java.util.Set<Term> = CompoundTerm.addComponentsRecursively(predT, null);
+                    let ret: java.util.Set<Term> = CompoundTerm.addComponentsRecursively(
+                        predT, null as unknown as java.util.Set<Term>);
                     for (let ct of ret) {
                         if (ct instanceof Image) {
                             removals.add((ct as Image).term[(ct as Image).relationIndex]);
