@@ -31,7 +31,7 @@ const truthToQuality = (truth: any): float => {
  */
 export abstract class FunctionOperator extends Operator {
 
-    protected constructor(name: java.lang.String) {
+    protected constructor(name: string | java.lang.String) {
         super(name);
     }
 
@@ -40,7 +40,7 @@ export abstract class FunctionOperator extends Operator {
      *
      * @return y, or null if unsuccessful
      */
-    protected abstract function(memory: Memory, x: Term[]): Term;
+    protected abstract function(memory: Memory, x: Term[]): Term | null;
 
     /**
      * the term that the output will inherit from; analogous to the 'Range' of a
@@ -51,7 +51,7 @@ export abstract class FunctionOperator extends Operator {
     // abstract protected int getMinArity();
     // abstract protected int getMaxArity();
 
-    protected execute(operation: Operation, args: Term[], m: Memory, time: Timable): java.util.List<Task> {
+    protected execute(operation: Operation, args: Term[], m: Memory, time: Timable): java.util.List<Task> | null {
         // TODO make memory access optional by constructor argument
         // TODO allow access to Nar instance?
         let numArgs: int = args.length - 1;
@@ -79,7 +79,7 @@ export abstract class FunctionOperator extends Operator {
         let x: Term[] = new Array<Term>(numParam);
         java.lang.System.arraycopy(args, 1, x, 0, numParam);
 
-        let y: Term;
+        let y: Term | null;
         // try {
         y = this.function(m, x);
         if (y === null) {

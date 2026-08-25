@@ -41,11 +41,13 @@ export class Reflect extends FunctionOperator {
         return Reflect.getMetaTerm(content);
     }
 
-    public static sop(s: Statement, operatorName: java.lang.String): Term;
+    public static sop(s: Statement, operatorName: string | java.lang.String): Term;
 
     public static sop(s: Statement, predicate: Term): Term;
 
-    public static sop(operatorName: java.lang.String, ...t: Term[]): Term;
+    public static sop(operatorName: string | java.lang.String, t: Term[]): Term;
+
+    public static sop(operatorName: string | java.lang.String, ...t: Term[]): Term;
 
     /**
      * <(*,subject,object) --> predicate>

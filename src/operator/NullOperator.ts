@@ -31,9 +31,9 @@ export class NullOperator extends Operator {
 
     /** called from Operator */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> {
+        time: Timable): java.util.List<Task> | null {
         if (Debug.DETAILED) {
-            memory.emit(this.getClass(), args as java.lang.Object[]);
+            memory.emit(this.getClass(), ...(args as java.lang.Object[]));
         }
         return null;
     }

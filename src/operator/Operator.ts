@@ -28,7 +28,7 @@ export abstract class Operator extends Term implements Plugin {
 
     protected constructor();
 
-    protected constructor(name: string);
+    protected constructor(name: string | java.lang.String);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -40,7 +40,7 @@ export abstract class Operator extends Term implements Plugin {
             }
 
             case 1: {
-                const [name] = args as [java.lang.String];
+                const [name] = args as [string | java.lang.String];
 
 
                 super(java.lang.String.valueOf(name));

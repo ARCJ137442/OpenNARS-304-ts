@@ -29,7 +29,7 @@ export class Count extends FunctionOperator {
         super("^count");
     }
 
-    protected static readonly requireMessage: java.lang.String = "Requires 1 SetExt or SetInt argument";
+    protected static readonly requireMessage: java.lang.String = new java.lang.String("Requires 1 SetExt or SetInt argument");
 
     protected static readonly counted: Term = Term.get("counted");
 
