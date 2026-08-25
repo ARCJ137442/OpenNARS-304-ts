@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { java } from "jree";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
+import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";
 
 test("EventEmitter.set subscribes only to the requested event classes", () => {
@@ -18,6 +20,21 @@ test("EventEmitter.set subscribes only to the requested event classes", () => {
     assert.deepEqual(received, [Events.CycleEnd.class]);
 
     emitter.set(observer, false, Events.CycleEnd.class);
+    emitter.emit(Events.CycleEnd.class);
+    assert.deepEqual(received, [Events.CycleEnd.class]);
+});
+
+test("EventHandler accepts Java-style event varargs", () => {
+    const emitter = new EventEmitter();
+    const received: unknown[] = [];
+    class Handler extends EventHandler {
+        public event(event: java.lang.Class<unknown>): void {
+            received.push(event);
+        }
+    }
+
+    new Handler(emitter, true, Events.CycleEnd.class);
+    emitter.emit(Events.CycleStart.class);
     emitter.emit(Events.CycleEnd.class);
     assert.deepEqual(received, [Events.CycleEnd.class]);
 });

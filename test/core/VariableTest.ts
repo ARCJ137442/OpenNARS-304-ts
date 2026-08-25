@@ -43,7 +43,7 @@ export class VariableTest extends JavaObject {
             }
         }(outer.n, true, Answer.class);
 
-        let e: OutputContainsCondition = new OutputContainsCondition(this.n, "=/> <a --> 4>>.", 5);
+        const e = new OutputContainsCondition(this.n, new java.lang.String("=/> <a --> 4>>."), 5);
 
         this.n.cycles(32);
 

@@ -72,7 +72,7 @@ export abstract class OutputHandler extends EventHandler {
         } else {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
-        super(source, active, OutputHandler.DefaultOutputEvents);
+        super(source, active, ...OutputHandler.DefaultOutputEvents);
     }
 
 
