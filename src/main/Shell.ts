@@ -7,6 +7,7 @@ import { Debug } from "./Debug.ts";
 import { TextOutputHandler } from "../io/events/TextOutputHandler.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { javaSystemExit } from "../runtime/jree-compat.ts";
+import { NodeStdinInputStream } from "../runtime/NodeStdinInputStream.ts";
 
 
 
@@ -185,7 +186,7 @@ export class Shell extends JavaObject {
         if (hasInputFile) {
             this.nar.addInputFile(args[2]);
         }
-        it = new this.InputThread(java.lang.System.in, this.nar);
+        it = new this.InputThread(new NodeStdinInputStream(), this.nar);
         it.start();
 
         let numberOfSteps: int = hasNumberOfSteps ? java.lang.Integer.parseInt(String(args[3])) : -1;

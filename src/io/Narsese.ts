@@ -1,5 +1,5 @@
 //! Java source: opennars/io/Narsese.java
-import { java, JavaObject, type int, type float, S } from "jree";
+import { java, JavaObject, type int, type float, type long, S } from "jree";
 import { Parser } from "./Parser.ts";
 import { Symbols } from "./Symbols.ts";
 import { Tense } from "../language/Tense.ts";
@@ -158,7 +158,7 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
         let last: int = str.length() - 1;
         let punc: JavaChar = String.fromCharCode(str.charAt(last));
 
-        let stamp: Stamp = new Stamp(-1 /* if -1, will be set right before the Task is input */,
+        let stamp: Stamp = new Stamp(-1 as unknown as long /* if -1, will be set right before the Task is input */,
             tense, this.memory.newStampSerial(), this.memory.narParameters.DURATION);
 
         let truth: TruthValue | null = this.parseTruth(truthString, punc);
