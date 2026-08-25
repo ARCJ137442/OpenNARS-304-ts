@@ -91,7 +91,7 @@ function truth(value) {
     confidence: value.confidence,
     expectation: value.getExpectation(),
     analytic: value.analytic,
-    external: value.toStringExternal(),
+    external: String(value.toStringExternal()),
   };
 }
 
@@ -101,7 +101,7 @@ function budget(value) {
     durability: value.getDurability(),
     quality: value.getQuality(),
     summary: value.summary(),
-    external: value.toStringExternal(),
+    external: String(value.toStringExternal()),
   };
 }
 

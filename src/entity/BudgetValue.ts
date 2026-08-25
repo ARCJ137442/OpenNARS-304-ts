@@ -47,7 +47,7 @@ export class BudgetValue extends JavaObject implements java.lang.Cloneable<Budge
      * time at which this budget was last forgotten, for calculating accurate memory
      * decay rates
      */
-    private lastForgetTime: long = -1;
+    private lastForgetTime: long = -1n;
 
     private narParameters: Parameters;
 
@@ -301,7 +301,7 @@ export class BudgetValue extends JavaObject implements java.lang.Cloneable<Budge
      * @return String representation of the value
      */
     public toString(): java.lang.String {
-        return BudgetValue.MARK + Texts.n4(this.priority) + BudgetValue.SEPARATOR + Texts.n4(this.durability) + BudgetValue.SEPARATOR + Texts.n4(this.quality) + BudgetValue.MARK;
+        return S`${BudgetValue.MARK}${Texts.n4(this.priority)}${BudgetValue.SEPARATOR}${Texts.n4(this.durability)}${BudgetValue.SEPARATOR}${Texts.n4(this.quality)}${BudgetValue.MARK}`;
     }
 
     /**
@@ -316,13 +316,7 @@ export class BudgetValue extends JavaObject implements java.lang.Cloneable<Budge
         let priorityString: string = Texts.n2(this.priority);
         let durabilityString: string = Texts.n2(this.durability);
         let qualityString: string = Texts.n2(this.quality);
-        return BudgetValue.MARK
-            + priorityString
-            + BudgetValue.SEPARATOR
-            + durabilityString
-            + BudgetValue.SEPARATOR
-            + qualityString
-            + BudgetValue.MARK;
+        return S`${BudgetValue.MARK}${priorityString}${BudgetValue.SEPARATOR}${durabilityString}${BudgetValue.SEPARATOR}${qualityString}${BudgetValue.MARK}`;
     }
 
     /**
@@ -333,8 +327,8 @@ export class BudgetValue extends JavaObject implements java.lang.Cloneable<Budge
     // TODO< split this into two methods >
     public setLastForgetTime(currentTime: long): long {
         let period: long;
-        if (this.lastForgetTime === -1)
-            period = 0;
+        if (this.lastForgetTime === -1n)
+            period = 0n;
         else
             period = currentTime - this.lastForgetTime;
 
