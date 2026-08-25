@@ -246,12 +246,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
             // A translated/runtime-restored bucket may not be a native JS
             // iterable. Rebuild only that hash bucket from the authoritative
             // Java map, then keep the fast lookup path for subsequent calls.
-            const rebuilt: K[] = [];
-            for (const entry of this.nameTable.entrySet()) {
-                const existingKey = entry.getKey();
-                if (this.keyHashCode(existingKey) === hashCode) rebuilt.push(existingKey);
-            }
-            this.equalityBuckets.set(hashCode, rebuilt);
+            const rebuilt = this.rebuildEqualityBucket(hashCode);
             for (const existingKey of rebuilt) {
                 if (javaValuesEqual(existingKey, key)) return existingKey;
             }
@@ -299,12 +294,80 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
         if (hashCode !== null) {
             const bucket = this.equalityBuckets.get(hashCode);
             if (bucket !== undefined) {
-                const index = bucket.indexOf(key);
-                if (index >= 0) bucket.splice(index, 1);
-                if (bucket.length === 0) this.equalityBuckets.delete(hashCode);
+                if (Array.isArray(bucket)) {
+                    const index = bucket.findIndex((existingKey) => javaValuesEqual(existingKey, key));
+                    if (index >= 0) bucket.splice(index, 1);
+                    if (bucket.length === 0) this.equalityBuckets.delete(hashCode);
+                } else {
+                    // Keep removal native when a Java List was restored into
+                    // this index; rebuilding the whole name table per remove
+                    // would turn a local repair into an O(n²) hot path.
+                    const restoredList = bucket as unknown as {
+                        size?: () => number;
+                        get?: (index: number) => K;
+                        remove?: (index: number) => unknown;
+                    };
+                    if (typeof restoredList.size === "function"
+                        && typeof restoredList.get === "function"
+                        && typeof restoredList.remove === "function") {
+                        for (let index = 0; index < restoredList.size(); index += 1) {
+                            if (javaValuesEqual(restoredList.get(index), key)) {
+                                restoredList.remove(index);
+                                break;
+                            }
+                        }
+                        if (restoredList.size() === 0) this.equalityBuckets.delete(hashCode);
+                    } else {
+                        const restoredCollection = bucket as unknown as {
+                            size?: () => number;
+                            iterator?: () => {
+                                hasNext: () => boolean;
+                                next: () => K;
+                                remove: () => void;
+                            };
+                            [Symbol.iterator]?: () => IterableIterator<K>;
+                        };
+                        if (typeof restoredCollection.size === "function"
+                            && typeof restoredCollection.iterator === "function") {
+                            const iterator = restoredCollection.iterator();
+                            while (iterator.hasNext()) {
+                                if (javaValuesEqual(iterator.next(), key)) {
+                                    iterator.remove();
+                                    break;
+                                }
+                            }
+                            if (restoredCollection.size() === 0) this.equalityBuckets.delete(hashCode);
+                        } else if (typeof restoredCollection[Symbol.iterator] === "function") {
+                            const values = [...bucket as unknown as Iterable<K>];
+                            const index = values.findIndex((existingKey) => javaValuesEqual(existingKey, key));
+                            if (index >= 0) values.splice(index, 1);
+                            if (values.length === 0) this.equalityBuckets.delete(hashCode);
+                            else this.equalityBuckets.set(hashCode, values);
+                        } else {
+                            // Unknown restored shape: recover from the
+                            // authoritative Java map once, then use the
+                            // native array representation subsequently.
+                            this.rebuildEqualityBucket(hashCode);
+                        }
+                    }
+                }
             }
         }
         return item as unknown as Type;
+    }
+
+    private rebuildEqualityBucket(hashCode: number): K[] {
+        const rebuilt: K[] = [];
+        for (const entry of this.nameTable.entrySet()) {
+            const existingKey = entry.getKey();
+            if (this.keyHashCode(existingKey) === hashCode) rebuilt.push(existingKey);
+        }
+        if (rebuilt.length === 0) {
+            this.equalityBuckets.delete(hashCode);
+        } else {
+            this.equalityBuckets.set(hashCode, rebuilt);
+        }
+        return rebuilt;
     }
 
 

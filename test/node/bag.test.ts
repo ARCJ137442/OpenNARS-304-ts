@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { java } from "jree";
 import { Bag } from "../../src/storage/Bag.ts";
 import { Item } from "../../src/entity/Item.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
@@ -170,4 +171,53 @@ test("Bag falls back to Java equality when a hash bucket is not JS iterable", ()
     assert.ok(Array.isArray(
         (bag as unknown as { equalityBuckets: Map<number, unknown> }).equalityBuckets.get(4),
     ));
+});
+
+test("Bag removes an item when a restored hash bucket is not a JS array", () => {
+    const bag = new Bag<TestItem, string>(4, 10, new Parameters());
+    const item = new TestItem("same", 0.8);
+    bag.putIn(item);
+
+    const internals = bag as unknown as {
+        equalityBuckets: Map<number, unknown>;
+        removeKey: (key: string) => TestItem;
+    };
+    internals.equalityBuckets.set(4, { restored: true });
+
+    assert.equal(internals.removeKey("same"), item);
+    assert.equal(bag.size(), 0);
+});
+
+test("Bag removes from a restored Java List bucket without rebuilding the bag", () => {
+    const bag = new Bag<TestItem, string>(4, 10, new Parameters());
+    const item = new TestItem("same", 0.8);
+    bag.putIn(item);
+
+    const restoredBucket = new java.util.ArrayList<string>();
+    restoredBucket.add("same");
+    const internals = bag as unknown as {
+        equalityBuckets: Map<number, unknown>;
+        removeKey: (key: string) => TestItem;
+    };
+    internals.equalityBuckets.set(4, restoredBucket);
+
+    assert.equal(internals.removeKey("same"), item);
+    assert.equal(bag.size(), 0);
+});
+
+test("Bag removes from a restored Java Set bucket through iterator.remove", () => {
+    const bag = new Bag<TestItem, string>(4, 10, new Parameters());
+    const item = new TestItem("same", 0.8);
+    bag.putIn(item);
+
+    const restoredBucket = new java.util.LinkedHashSet<string>();
+    restoredBucket.add("same");
+    const internals = bag as unknown as {
+        equalityBuckets: Map<number, unknown>;
+        removeKey: (key: string) => TestItem;
+    };
+    internals.equalityBuckets.set(4, restoredBucket);
+
+    assert.equal(internals.removeKey("same"), item);
+    assert.equal(bag.size(), 0);
 });
