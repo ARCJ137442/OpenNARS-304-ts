@@ -1,4 +1,4 @@
-# M1 / M2 命令行核实手册
+# M1 / M2 / M3 命令行核实手册
 
 本文只给当前主线可复核的命令。所有 M1 Java 对照都显式绑定 canonical Java 304 artifact；不要改用历史 3.1.0 JAR。
 
@@ -16,7 +16,7 @@ node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycle
 node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 300000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-245-parity-YYYYMMDD-v1.jsonl --resume
 ```
 
-`--all` 的主语料是 245 个资源。M1 的第 246 项单独执行：
+`--all` 的主语料是 245 个资源。M1 的第 246 项单独执行（仅在发现真实回归时）：
 
 ```powershell
 node scripts/e2e/run-nal-corpus.mjs --engine parity --file java-master\src\test\simpleOperationTest.nal --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 300000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-simpleOperationTest-YYYYMMDD-v1.jsonl --summary
@@ -79,3 +79,19 @@ npm run shell:dist
 ```
 
 入口启动会自动把 jree 的无扩展名 `main` 元数据补成标准 ESM `exports`，并使用 Node `register()` loader；因此不应再看到 `--experimental-loader` 或 `DEP0151` 启动警告。CLI 是 M2 的人工 smoke 入口，不替代 M1 的 Java/TypeScript 机器可读矩阵。
+
+## M3：正式构建串行性能基线
+
+先执行正式构建：
+
+```powershell
+npm run build
+```
+
+再直接调用 benchmark 脚本（当前 PowerShell/npm 组合对 `npm run ... -- --option` 的透传不稳定）：
+
+```powershell
+node scripts/e2e/run-m3-benchmark.mjs --cycles 1550 --timeout-ms 180000 --process-limit-ms 900000 --warmup-runs 1 --repetitions 2 --output reports/evidence/m3-formal-baseline-YYYYMMDD-v1.json --file java-master/src/main/resources/nal/single_step/nal8.add.nal --file java-master/src/main/resources/nal/multi_step/nars_multistep_1.nal --file java-master/src/main/resources/nal/application/toothbrush.nal --file java-master/src/main/resources/nal/multi_step/nal4.recursion.small.nal
+```
+
+该命令固定 canonical Java artifact、单线程、冷启动和资源指标；结果同时记录 Java/TypeScript 的 wall、CPU、RSS、marker、parity、异常和 process limit。markerless 131072 周期结论仍以 M1 冻结的 stage-digest 证据为准，不能把一次短周期无 marker 运行标成等价。

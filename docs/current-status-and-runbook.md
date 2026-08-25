@@ -1,6 +1,6 @@
 # 当前状态与运行手册
 
-更新时间：2026-08-25
+更新时间：2026-08-26
 
 本文是当前主线的事实入口，优先级高于历史报告中的旧统计。历史审阅、重启提示词和逐批报告保留用于追溯，不直接代表当前通过率。
 
@@ -16,20 +16,20 @@ M3：串行资源基线、重复 median/p95、profile 与优化
 发布：CLI、公共 API、插件、稳定性和文档
 ```
 
-M1 未全量通过时，不启动新的 M3 benchmark 或性能优化。任何 M2 改动都必须以 M1 冻结证据为回归底线；若出现功能回退，先修复 M1，再继续 M2。
+M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观测覆盖功能验收。任何后续优化都必须以 M1/M2 冻结证据为回归底线；若出现功能回退，先修复功能，再继续性能工作。
 
 ## 当前已确认事实
 
-- Git 主线最新已推送提交：`bf7dd22`；本批 warning/classpath 修复已推送。
+- Git 主线最新已推送提交：`7964e69`；warning/classpath 修复位于 `bf7dd22`，文档同步位于 `7964e69`。
 - Java canonical JAR：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`。
 - canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 - Java 与 TypeScript 均按单线程运行；Java 测试使用 JDK 18.0.2。
 - `npx tsc --noEmit --pretty false --incremental false`：0 诊断。
 - 本批串行 `npm test --silent`：159/159；权威 `npx tsc --noEmit --pretty false --incremental false`：0 诊断；`npm run build --silent` 与 `npm run shell:dist` 均通过。shell 已改用 `--import` 注册 TypeScript loader，并在入口前修补 jree 的 ESM `exports` 元数据；实际 shell 子进程 stderr 为空，不再产生 `--experimental-loader`/`DEP0151` 启动警告。Node 测试器自身的 `--experimental-strip-types` 提示不属于 shell 子进程。
 - 局部算法 parity：`ok: true`，`differences: []`，容差 `1e-5`。
-- M1 主矩阵 `reports/evidence/m1-245-parity-20260825-bag-fix-v1.jsonl` 已完成 245/245：原始结果为 243 个 `functional_pass=true`。`nars_multistep_3.nal` 的延长复核已通过；Java runner 已补齐 canonical JAR manifest 的 7 个运行时依赖，且 progress observer 已收窄为只监听 `CycleEnd`，`long_term_stability.nal` 的 Java-only 复核通过。第 246 个 `simpleOperationTest.nal` 也已通过 Java/TS parity，但 stability 的 TS 在 900 秒安全上限内仍未复刻 marker；因此 245+1 仍不得宣称 M1 通过。
+- M1 冻结合同已完成：245 个主资源加 `simpleOperationTest.nal` 共 246 个样本，244 个 marker 样本 marker 等价，2 个 markerless 样本均有 131072 周期独立 stage-digest 验收，综合功能结论为 246/246。原始 JSONL 的过程字段仍保留历史筛查分类，不应直接替代独立验收汇总。
 
-## M1 全量运行
+## M1 冻结回归
 
 推荐使用显式 artifact 路径，避免历史 3.1.0 JAR 被误用：
 
@@ -41,7 +41,7 @@ M1 未全量通过时，不启动新的 M3 benchmark 或性能优化。任何 M2
 - `--timeout-ms 180000` 表示 180 秒没有进度才判定 stall，不把“慢”直接当作逻辑失败；
 - `--process-limit-ms 300000` 是常规单文件硬进程上限；对持续有周期进展但尚未出现 marker 的已知慢样本，可单独提高上限复核，不能因此掩盖真正的无进展卡死；
 - 结果必须同时查看 `matched[]`、`ok`、`error_type`、`marker_missing`、`timed_out` 和 `process_limited`；
-- 只有 245 个主资源全部完成且无未解释功能分叉，才能将 M1 标记为通过。
+- 只有发现真实功能回归时才重新运行 245+1；日常 M2/M3 批次使用冻结证据和小范围受影响样本，避免重复消耗全量矩阵。
 
 当前运行的 PID、日志和 checkpoint 以实际终端输出为准，不写入长期文档，避免留下过期进程状态。
 
@@ -69,9 +69,11 @@ M1 未全量通过时，不启动新的 M3 benchmark 或性能优化。任何 M2
 
 ## M3 当前证据边界
 
-M3 已有 `npm run benchmark:m3` 串行工具和显式资源观测开关。`4d5435f` 的 jree FQN 优化在 single-step、multi-step、application、recursion 四类代表样本上通过功能/parity；其正式证据位于 `reports/evidence/m3-formal-resource-baseline-20260825-*.json`。
+M3 已有 `node scripts/e2e/run-m3-benchmark.mjs` 串行工具和显式资源观测开关。当前 HEAD `7964e69` 的正式 `dist` 基线位于 `reports/evidence/m3-formal-baseline-20260825-head-7964-v1.json`、`...recursion-v1.json` 和 `m3-formal-baseline-20260826-head-7964-simple-operation-v1.json`；四个 marker 代表样本功能/parity 通过，markerless 样本本次运行完成但未在该次 1550 周期追加观测中达到 131072。
 
-这只能证明代表样本和优化候选已验证，不能替代 M1 全量矩阵，也不能宣称完整性能等价。Java 当前只能从管理接口提供进程 CPU、堆和 committed virtual memory proxy，Windows RSS 仍未直接取得；TypeScript 记录进程 CPU 与峰值 RSS。
+当前 profile 位于 `reports/evidence/m3-head-7964-nal8-add-v1-profile-summary.json`，第一可观测热点为 jree `getConverter`（21.91%），其次为 GC（16.21%）。尚未实施新的优化。
+
+这些证据只能证明代表样本可以在正式构建下运行，不能宣称完整性能等价或 M3 完成。Java 当前只能从管理接口提供进程 CPU、堆和 committed virtual memory proxy，Windows RSS 仍未直接取得；TypeScript 记录进程 CPU 与峰值 RSS。shell 的 `ExperimentalWarning` 与 `DEP0151` 已由 `bf7dd22` 修复并通过回归测试。
 
 ## 文档分层
 

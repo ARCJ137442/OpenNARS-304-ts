@@ -1,0 +1,60 @@
+{
+  "schema": "opennars-304-ts/m3-profile-summary/v1",
+  "status": "observation-only",
+  "git_commit": "7964e694c6f9516e1b3e0d82226f692591dae5ae",
+  "target": "java-master/src/main/resources/nal/single_step/nal8.add.nal",
+  "ts_cli": "dist/cli.mjs",
+  "java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "runtime": {
+    "node": "v22.17.0",
+    "mode": "single-thread cold-start",
+    "cycles": 1550,
+    "cli_exit_code": 0,
+    "marker_count": 1,
+    "marker_passed": true
+  },
+  "profile": {
+    "command": "node --cpu-prof --cpu-prof-dir=reports/evidence --cpu-prof-name=m3-head-7964-nal8-add-v1.cpuprofile dist/cli.mjs --cycles 1550 java-master/src/main/resources/nal/single_step/nal8.add.nal",
+    "raw_file": "reports/evidence/m3-head-7964-nal8-add-v1.cpuprofile",
+    "raw_sha256": "58201566B182B58E21CB9863AB69168A16B62355D08CA13521E0540B8AAD258D",
+    "samples": 2000,
+    "profile_time_ms": 3363.695
+  },
+  "top_aggregates": [
+    {
+      "function": "getConverter",
+      "url": "jree compatibility runtime",
+      "profile_time_ms": 736.873,
+      "share_percent": 21.91
+    },
+    {
+      "function": "(garbage collector)",
+      "url": "V8",
+      "profile_time_ms": 545.143,
+      "share_percent": 16.21
+    },
+    {
+      "function": "decode",
+      "url": "runtime/encoding",
+      "profile_time_ms": 219.85,
+      "share_percent": 6.54
+    },
+    {
+      "function": "Distributor",
+      "url": "dist/storage/Distributor.js",
+      "profile_time_ms": 93.331,
+      "share_percent": 2.77
+    },
+    {
+      "function": "JavaObject",
+      "url": "jree/java/lang/Object.js",
+      "profile_time_ms": 61.911,
+      "share_percent": 1.84
+    }
+  ],
+  "interpretation": {
+    "confirmed": "当前正式构建的低成本样本中，jree converter、GC 与编码路径是主要可观测成本；JavaObject 仍可观测但不是本样本的第一热点。",
+    "not_proven": "profile 尚未证明任何实现可以安全删除或替换，也未证明这些热点在高成本样本中占比相同。",
+    "next_experiment": "选定一个热点后建立同样输入的优化前后对照，并保持 marker、M1/M2 门禁和单线程合同不变。"
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "schema": "opennars-304-ts/m3-benchmark/v1",
+  "git_commit": "7964e694c6f9516e1b3e0d82226f692591dae5ae",
+  "node": "v22.17.0",
+  "java_version": "java version \"18.0.2\" 2022-07-19\r\nJava(TM) SE Runtime Environment (build 18.0.2+9-61)\r\nJava HotSpot(TM) 64-Bit Server VM (build 18.0.2+9-61, mixed mode, sharing)",
+  "platform": "win32",
+  "architecture": "x64",
+  "configuration": {
+    "cycles": 1550,
+    "timeout_ms": 300000,
+    "process_limit_ms": 900000,
+    "warmup_runs": 0,
+    "repetitions": 1,
+    "thread_mode": "single",
+    "ts_mode": "cold",
+    "ts_cli": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\dist\\cli.mjs",
+    "java_jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+    "java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+    "resource_metrics": true
+  },
+  "samples": [
+    {
+      "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\test\\simpleOperationTest.nal",
+      "repetitions": 1,
+      "functional_pass_all": true,
+      "parity_pass_all": true,
+      "java": {
+        "wall_ms": {
+          "count": 1,
+          "min": 2135,
+          "median": 2135,
+          "p95": 2135,
+          "max": 2135,
+          "values": [
+            2135
+          ]
+        },
+        "process_cpu_ms": {
+          "count": 1,
+          "min": 6343.75,
+          "median": 6343.75,
+          "p95": 6343.75,
+          "max": 6343.75,
+          "values": [
+            6343.75
+          ]
+        },
+        "peak_rss_bytes": {
+          "count": 0,
+          "min": null,
+          "median": null,
+          "p95": null,
+          "max": null,
+          "values": []
+        },
+        "marker_time_ms": [
+          []
+        ],
+        "resource_sources": [
+          "java-management"
+        ],
+        "rss_observations": 0
+      },
+      "ts": {
+        "wall_ms": {
+          "count": 1,
+          "min": 77905,
+          "median": 77905,
+          "p95": 77905,
+          "max": 77905,
+          "values": [
+            77905
+          ]
+        },
+        "process_cpu_ms": {
+          "count": 1,
+          "min": 85062,
+          "median": 85062,
+          "p95": 85062,
+          "max": 85062,
+          "values": [
+            85062
+          ]
+        },
+        "peak_rss_bytes": {
+          "count": 1,
+          "min": 968671232,
+          "median": 968671232,
+          "p95": 968671232,
+          "max": 968671232,
+          "values": [
+            968671232
+          ]
+        },
+        "marker_time_ms": [
+          []
+        ],
+        "resource_sources": [
+          "node-process"
+        ],
+        "rss_observations": 1
+      },
+      "runs": [
+        {
+          "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\test\\simpleOperationTest.nal",
+          "repetition": 0,
+          "warmup": false,
+          "runner_exit_code": 0,
+          "runner_wall_ms": 81256.14229999999,
+          "row": {
+            "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\test\\simpleOperationTest.nal",
+            "expected": [],
+            "timeout_ms": 300000,
+            "embedded_cycles": 50014,
+            "extra_cycles": 1550,
+            "duration_ms": 80040,
+            "java": {
+              "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\test\\simpleOperationTest.nal",
+              "cycles": 1550,
+              "expected": 0,
+              "passed": 0,
+              "matched": [],
+              "ok": true,
+              "error_type": "none",
+              "exception": false,
+              "timed_out": false,
+              "thread_mode": "single",
+              "marker_missing": false,
+              "marker_missing_count": 0,
+              "marker_time_ms": [],
+              "resource_metrics": {
+                "source": "java-management",
+                "process_cpu_ms": 6343.75,
+                "peak_rss_bytes": null,
+                "committed_virtual_memory_bytes": 945504256,
+                "heap_used_bytes": 275171824
+              },
+              "duration_ms": 2135,
+              "artifact_path": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+              "artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+              "stall_detected": false,
+              "not_run": false
+            },
+            "ts": {
+              "file": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts\\java-master\\src\\test\\simpleOperationTest.nal",
+              "cycles": 1550,
+              "expected": 0,
+              "passed": 0,
+              "matched": [],
+              "ok": true,
+              "error_type": "none",
+              "exception": false,
+              "timed_out": false,
+              "thread_mode": "single",
+              "marker_missing": false,
+              "marker_missing_count": 0,
+              "marker_time_ms": [],
+              "resource_metrics": {
+                "source": "node-process",
+                "user_cpu_ms": 84218,
+                "system_cpu_ms": 844,
+                "peak_rss_bytes": 968671232
+              },
+              "duration_ms": 77905,
+              "stall_detected": false,
+              "not_run": false
+            },
+            "parity": true,
+            "java_ts_diff": false,
+            "both_wrong": false,
+            "functional_pass": true,
+            "long_cycle_equivalence": {
+              "target_cycles": 131072,
+              "observed_cycles": 51564,
+              "cycle_target_reached": false,
+              "marker_standard": "not_applicable",
+              "internal_event_standard": "unverified",
+              "equivalence_route": "unverified",
+              "equivalent": false,
+              "status": "not_reached"
+            },
+            "performance_budget_ms_per_1024_cycles": 120000,
+            "java_marker_time_per_1024_ms": [],
+            "ts_marker_time_per_1024_ms": [],
+            "marker_time_delta_ms": [],
+            "marker_time_delta_per_1024_ms": [],
+            "java_marker_timing_complete": null,
+            "ts_marker_timing_complete": null,
+            "marker_delta_timing_complete": null,
+            "ts_performance_within_budget": null,
+            "marker_delta_within_budget": null,
+            "java_runtime_ms": 2135,
+            "ts_runtime_ms": 77905,
+            "java_runtime_observation": "completed",
+            "ts_runtime_observation": "completed",
+            "reasoning_cycles": 51564,
+            "runtime_budget_ms_per_cycle": 117.1875,
+            "java_runtime_ms_per_cycle": 0.041404856101155844,
+            "ts_runtime_ms_per_cycle": 1.5108408967496703,
+            "runtime_delta_ms": 75770,
+            "runtime_delta_ms_per_cycle": 1.4694360406485145,
+            "ts_runtime_slowdown_ratio": 36.48946135831382,
+            "ts_runtime_within_budget": true,
+            "performance_warning": false,
+            "timeout_classification": null,
+            "java_thread_mode": "single",
+            "ts_thread_mode": "single",
+            "java_exception": false,
+            "java_timeout": false,
+            "java_stalled": false,
+            "java_timeout_reason": null,
+            "java_last_progress_cycle": null,
+            "java_not_run": false,
+            "java_marker_missing": false,
+            "ts_exception": false,
+            "ts_timeout": false,
+            "ts_stalled": false,
+            "ts_timeout_reason": null,
+            "ts_last_progress_cycle": null,
+            "ts_not_run": false,
+            "ts_marker_missing": false,
+            "process_limited": false,
+            "java_process_limited": false,
+            "ts_process_limited": false,
+            "java_process_mode": "cold",
+            "ts_process_mode": "cold",
+            "chunk_index": 0,
+            "sequence": 0,
+            "process_limit_ms": 900000,
+            "run_key": "{\"engine\":\"parity\",\"cycles\":1550,\"timeoutMs\":300000,\"processLimitMs\":900000,\"tsMode\":\"cold\",\"tsCli\":\"H:\\\\A137442\\\\Develop\\\\AGI\\\\NARS\\\\_Project\\\\OpenNARS-304-ts\\\\dist\\\\cli.mjs\",\"resourceMetrics\":true,\"javaArtifactSha256\":\"2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5\"}"
+          },
+          "stderr": "running chunk 1/1 (1 files)"
+        }
+      ]
+    }
+  ],
+  "all_functional_pass": true,
+  "all_parity_pass": true,
+  "rss_status": "TypeScript reports peak RSS; Java adapter reports RSS unavailable and a committed-virtual-memory proxy."
+}
