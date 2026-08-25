@@ -212,11 +212,46 @@ test("Stamp tense lookup uses Java temporal order constants", async () => {
     assert.equal(String(stamp.getTense(10, 2)), Symbols.TENSE_PRESENT);
 });
 
+test("Stamp long time arithmetic preserves bigint inputs at the boundary", async () => {
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+
+    const past = new Stamp(10n, Tense.Past, new Stamp.BaseEntry(0n, 1n), 2);
+    const future = new Stamp(10n, Tense.Future, new Stamp.BaseEntry(1n, 1n), 2);
+
+    assert.equal(past.getCreationTime(), 10n);
+    assert.equal(past.getOccurrenceTime(), 8n);
+    assert.equal(future.getOccurrenceTime(), 12n);
+});
+
+test("mixed runtime long values preserve temporal projection and interval normalization", async () => {
+    const { Parameters } = await import("../../src/main/Parameters.ts");
+    const { TruthFunctions } = await import("../../src/inference/TruthFunctions.ts");
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { TruthValue } = await import("../../src/entity/TruthValue.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Interval } = await import("../../src/language/Interval.ts");
+    const { Conjunction } = await import("../../src/language/Conjunction.ts");
+    const { TemporalRules } = await import("../../src/inference/TemporalRules.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+
+    const parameters = new Parameters();
+    const projection = TruthFunctions.temporalProjection(10n, 12, 10n, parameters);
+    assert.equal(Number.isFinite(Number(projection)), true);
+
+    const content = Conjunction.make([Term.get("a"), new Interval(1)], TemporalRules.ORDER_FORWARD);
+    assert.ok(content instanceof Conjunction);
+    const stamp = new Stamp(10, Tense.Present, new Stamp.BaseEntry(0, 1), parameters.DURATION);
+    new Sentence(content, ".", TruthValue.fromFrequencyConfidence(0.8, 0.7, parameters), stamp);
+    assert.equal(stamp.getOccurrenceTime(), 9);
+});
+
 test("Nar explicit long overload accepts JavaScript number and bigint values", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
 
     assert.equal(new Nar(0n).memory.narId, 0n);
-    assert.equal(new Nar(7 as never).memory.narId, 7);
+    assert.equal(new Nar(7).memory.narId, 7);
 });
 
 test("CompoundTerm equality preserves Java case-sensitive key identity", async () => {

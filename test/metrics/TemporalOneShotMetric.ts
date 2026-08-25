@@ -21,7 +21,7 @@ export class TemporalOneShotMetric extends AnswerHandler {
 
     private termNames: java.util.List<java.lang.String> = new java.util.ArrayList();
 
-    private rng: java.util.Random = new java.util.Random(42);
+    private rng: java.util.Random = new java.util.Random(42n);
 
     private wasAnswered: boolean = false;
 

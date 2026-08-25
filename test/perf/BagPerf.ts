@@ -180,7 +180,7 @@ export class BagPerf extends JavaObject {
     }
 
     public static itemID: int = 0;
-    public static rnd: java.util.Random = new java.util.Random(42);
+    public static rnd: java.util.Random = new java.util.Random(42n);
 
     /** Empty Item implementation useful for testing */
     public static NullItem = class NullItem extends Item.StringKeyItem {

@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type double, type float, type long } from "jree";
+import { java, JavaObject, type int, type double, type float } from "jree";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { TextOutputHandler } from "../../src/io/events/TextOutputHandler.ts";
@@ -182,7 +182,7 @@ export class StabilityTest extends JavaObject {
 
         let score: double = Number.POSITIVE_INFINITY;
         if (success) {
-            let lastSuccess: long = -1;
+            let lastSuccess: number = -1;
             for (let e of expects) {
                 if (e.getTrueTime() !== -1) {
                     if (lastSuccess < e.getTrueTime())

@@ -1,0 +1,47 @@
+{
+  "run": "m1-246-parity-20260825-restart-v2",
+  "source_result": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts-m1-baseline-20260825\\reports\\evidence\\m1-246-parity-20260825-restart-v2.jsonl",
+  "canonical_java_jar": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-java-canonical-fixed-build\\target\\opennars-3.0.4-SNAPSHOT.jar",
+  "canonical_java_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "thread_mode": "single",
+  "ts_mode": "cold",
+  "cycles": 1550,
+  "timeout_ms": 30000,
+  "process_limit_ms": 180000,
+  "resource_counts": {
+    "single_step": 215,
+    "multi_step": 24,
+    "application": 5,
+    "stability": 1,
+    "total": 245
+  },
+  "rows": 245,
+  "functional_pass": 188,
+  "parity": 188,
+  "java_ok": 244,
+  "ts_ok": 188,
+  "java_exceptions": 1,
+  "ts_exceptions": 44,
+  "java_timeouts": 0,
+  "ts_timeouts": 0,
+  "java_marker_missing": 1,
+  "ts_marker_missing": 27,
+  "process_limited": 8,
+  "ts_process_limited": 8,
+  "markerless_not_reached": 5,
+  "extra_245_plus_1": {
+    "file": "simpleOperationTest.nal",
+    "java_completed": true,
+    "ts_process_limited": true,
+    "ts_observed_cycles": 51564,
+    "ts_last_progress_cycle": 25943,
+    "process_limit_ms": 180000,
+    "mixed_long_exception": false
+  },
+  "interpretation": {
+    "source_snapshot_predates_runtime_long_fix": true,
+    "process_limit_is_not_functional_failure": true,
+    "markerless_rows_are_not_reached": true,
+    "current_frozen_m1_claim_is_not_replaced": true
+  }
+}

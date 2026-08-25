@@ -26,7 +26,7 @@ test("变量统一会替换操作参数并保留 Operation 运行时类型", asy
     const unified: any[] = [implication, taskTerm];
 
     assert.equal(Variables.unify(
-        new java.util.Random(1),
+        new java.util.Random(1n),
         Symbols.VAR_INDEPENDENT,
         implication.getSubject(),
         taskTerm,
@@ -59,7 +59,7 @@ test("common variable propagation matches Java for commutative unification", asy
 
     assert.equal(
         Variables.unify(
-            new java.util.Random(0),
+            new java.util.Random(0n),
             Symbols.VAR_INDEPENDENT,
             asym.getPredicate(),
             sym.getSubject(),

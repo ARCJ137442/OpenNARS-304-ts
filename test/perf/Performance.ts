@@ -1,12 +1,12 @@
-import { java, JavaObject, type int, type long, type double, S } from "jree";
+import { java, JavaObject, type int, type double, S } from "jree";
 
 
 
 export abstract class Performance extends JavaObject {
     public readonly repeats: int;
     protected readonly name: java.lang.String;
-    private totalTime: long;
-    private totalMemory: long;
+    private totalTime: number = 0;
+    private totalMemory: number = 0;
     protected readonly df: java.text.DecimalFormat = new java.text.DecimalFormat("#.###");
 
     public constructor(name: java.lang.String, repeats: int, warmups: int);
@@ -44,15 +44,16 @@ export abstract class Performance extends JavaObject {
                         java.lang.System.gc();
                     }
 
-                    let usedMemStart: long = (java.lang.Runtime.getRuntime().totalMemory() - java.lang.Runtime.getRuntime().freeMemory());
+                    let usedMemStart: number = Number(java.lang.Runtime.getRuntime().totalMemory()) - Number(java.lang.Runtime.getRuntime().freeMemory());
 
-                    let start: long = java.lang.System.nanoTime();
+                    let start: number = Number(java.lang.System.nanoTime());
 
                     this.run(warmups !== 0);
 
                     if (warmups === 0) {
-                        this.totalTime += java.lang.System.nanoTime() - start;
-                        this.totalMemory += (java.lang.Runtime.getRuntime().totalMemory() - java.lang.Runtime.getRuntime().freeMemory()) - usedMemStart;
+                        this.totalTime += Number(java.lang.System.nanoTime()) - start;
+                        this.totalMemory += Number(java.lang.Runtime.getRuntime().totalMemory())
+                            - Number(java.lang.Runtime.getRuntime().freeMemory()) - usedMemStart;
                     } else
                         warmups--;
                 }

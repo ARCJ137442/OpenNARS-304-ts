@@ -5,6 +5,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { addRuntimeLong, subtractRuntimeLong, toRuntimeLong, type JavaLongInput } from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Parameters } from "../main/Parameters.ts";
@@ -119,12 +120,12 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
      * @param old          The stamp of the single premise
      * @param creationTime The current time
      */
-    public constructor(old: Stamp, creationTime: long);
+    public constructor(old: Stamp, creationTime: JavaLongInput);
 
     /** creates a stamp with default Present tense */
     public constructor(time: Timable, memory: Memory);
 
-    public constructor(old: Stamp, creationTime: long, useEvidentialBase: Stamp);
+    public constructor(old: Stamp, creationTime: JavaLongInput, useEvidentialBase: Stamp);
 
     public constructor(time: Timable, memory: Memory, tense: Tense);
 
@@ -133,7 +134,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
      *
      * @param time Creation time of the stamp
      */
-    public constructor(time: long, tense: Tense, serial: Stamp.BaseEntry, duration: int);
+    public constructor(time: JavaLongInput, tense: Tense, serial: Stamp.BaseEntry, duration: int);
 
     /**
      * Generate a new stamp for derived sentence by merging the two from parents
@@ -142,7 +143,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
      * @param first  The first Stamp
      * @param second The second Stamp
      */
-    public constructor(first: Stamp, second: Stamp, time: long, narParameters: Parameters);
+    public constructor(first: Stamp, second: Stamp, time: JavaLongInput, narParameters: Parameters);
     public constructor(...args: unknown[]) {
         // Java constructor delegation (`this(...)`) is not legal in TypeScript.
         // Resolve the overload first, then call `super()` exactly once.
@@ -158,10 +159,10 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         }
 
         if (args.length === 2 && args[0] instanceof Stamp) {
-            const [old, creationTime] = args as [Stamp, long];
+            const [old, creationTime] = args as [Stamp, JavaLongInput];
             this.evidentialBase = old.evidentialBase;
             this.baseLength = old.baseLength;
-            this.creationTime = creationTime;
+            this.creationTime = toRuntimeLong(creationTime);
             this.occurrenceTime = old.getOccurrenceTime();
             this.tense = old.tense;
             return;
@@ -183,10 +184,10 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         }
 
         if (args.length === 3 && args[0] instanceof Stamp) {
-            const [old, creationTime, useEvidentialBase] = args as [Stamp, long, Stamp];
+            const [old, creationTime, useEvidentialBase] = args as [Stamp, JavaLongInput, Stamp];
             this.evidentialBase = useEvidentialBase.evidentialBase;
             this.baseLength = useEvidentialBase.baseLength;
-            this.creationTime = creationTime;
+            this.creationTime = toRuntimeLong(creationTime);
             this.occurrenceTime = old.getOccurrenceTime();
             this.tense = old.tense;
             return;
@@ -199,13 +200,13 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         }
 
         if (args.length === 4 && args[0] instanceof Stamp) {
-            const [first, second, time, narParameters] = args as [Stamp, Stamp, long, Parameters];
+            const [first, second, time, narParameters] = args as [Stamp, Stamp, JavaLongInput, Parameters];
             let i1 = 0;
             let i2 = 0;
             let j = 0;
             this.baseLength = Math.min(first.baseLength + second.baseLength, narParameters.MAXIMUM_EVIDENTAL_BASE_LENGTH);
             this.evidentialBase = new Array<Stamp.BaseEntry>(this.baseLength);
-            this.creationTime = time;
+            this.creationTime = toRuntimeLong(time);
             this.occurrenceTime = first.getOccurrenceTime();
             while (j < this.baseLength) {
                 if (i2 < second.baseLength) this.evidentialBase[j++] = second.evidentialBase[i2++];
@@ -216,7 +217,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         }
 
         if (args.length === 4) {
-            const [time, tense, serial, duration] = args as [long, Tense, Stamp.BaseEntry, int];
+            const [time, tense, serial, duration] = args as [JavaLongInput, Tense, Stamp.BaseEntry, int];
             this.baseLength = 1;
             this.evidentialBase = [serial];
             this.tense = tense;
@@ -284,19 +285,20 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
      * sets the creation time; used to set input tasks with the actual time they
      * enter Memory
      */
-    public setCreationTime(time: long, duration: int): void {
-        this.creationTime = time;
+    public setCreationTime(time: JavaLongInput, duration: int): void {
+        const runtimeTime = toRuntimeLong(time);
+        this.creationTime = runtimeTime;
 
         if (this.tense === null) {
             this.occurrenceTime = Stamp.ETERNAL;
         } else if (this.tense === Tense.Past) {
-            this.occurrenceTime = time - runtimeLong(duration);
+            this.occurrenceTime = subtractRuntimeLong(time, duration);
         } else if (this.tense === Tense.Future) {
-            this.occurrenceTime = time + runtimeLong(duration);
+            this.occurrenceTime = addRuntimeLong(time, duration);
         } else if (this.tense === Tense.Present) {
-            this.occurrenceTime = time;
+            this.occurrenceTime = runtimeTime;
         } else {
-            this.occurrenceTime = time;
+            this.occurrenceTime = runtimeTime;
         }
 
     }
@@ -421,7 +423,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         return this.evidentialHashValue;
     }
 
-    public cloneWithNewOccurrenceTime(newOcurrenceTime: long): Stamp {
+    public cloneWithNewOccurrenceTime(newOcurrenceTime: JavaLongInput): Stamp {
         let s: Stamp = this.clone();
         if (newOcurrenceTime === Stamp.ETERNAL)
             s.tense = Tense.Eternal;
@@ -467,12 +469,12 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         }
     }
 
-    public getTense(currentTime: long, duration: int): java.lang.String {
+    public getTense(currentTime: JavaLongInput, duration: int): java.lang.String {
 
         if (this.isEternal()) {
             return S``;
         }
-        switch (TemporalRules.order(currentTime, this.occurrenceTime, duration)) {
+        switch (TemporalRules.order(toRuntimeLong(currentTime), this.occurrenceTime, duration)) {
             case TemporalRules.ORDER_FORWARD:
                 return S`${Symbols.TENSE_FUTURE}`;
             case TemporalRules.ORDER_BACKWARD:
@@ -482,11 +484,12 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         }
     }
 
-    public setOccurrenceTime(time: long): void {
-        if (this.occurrenceTime !== time) {
-            this.occurrenceTime = time;
+    public setOccurrenceTime(time: JavaLongInput): void {
+        const runtimeTime = toRuntimeLong(time);
+        if (this.occurrenceTime !== runtimeTime) {
+            this.occurrenceTime = runtimeTime;
 
-            if (time === Stamp.ETERNAL)
+            if (runtimeTime === Stamp.ETERNAL)
                 this.tense = Tense.Eternal;
 
             this.nameCache = null;
@@ -553,10 +556,10 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
          * @param narId   The id of the NAR the input evidence was obtained from
          * @param inputId The nar-specific input id of the input
          */
-        public constructor(narId: long, inputId: long) {
+        public constructor(narId: JavaLongInput, inputId: JavaLongInput) {
             super();
-            this.narId = narId;
-            this.inputId = inputId;
+            this.narId = toRuntimeLong(narId);
+            this.inputId = toRuntimeLong(inputId);
         }
 
         public override  toString(): java.lang.String {

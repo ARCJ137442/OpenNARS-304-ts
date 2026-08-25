@@ -35,7 +35,7 @@ const toSetArray = Stamp.toSetArray;
  *
  */
 export class TestStamp extends JavaObject {
-    private narid: long = 0;
+    private narid: long = 0n;
 
     protected entry(inputId: long): BaseEntry {
         return new BaseEntry(this.narid, inputId);
@@ -43,15 +43,15 @@ export class TestStamp extends JavaObject {
 
     public testStampToSetArray(): void {
 
-        assertTrue(toSetArray([this.entry(1), this.entry(2), this.entry(3)]).length === 3);
-        assertTrue(toSetArray([this.entry(1), this.entry(1), this.entry(3)]).length === 2);
-        assertTrue(toSetArray([this.entry(1)]).length === 1);
+        assertTrue(toSetArray([this.entry(1n), this.entry(2n), this.entry(3n)]).length === 3);
+        assertTrue(toSetArray([this.entry(1n), this.entry(1n), this.entry(3n)]).length === 2);
+        assertTrue(toSetArray([this.entry(1n)]).length === 1);
         assertTrue(toSetArray([]).length === 0);
         assertTrue(
-            java.util.Arrays.hashCode(toSetArray([this.entry(3), this.entry(2), this.entry(1)])) === java.util.Arrays
-                .hashCode(toSetArray([this.entry(2), this.entry(3), this.entry(1)])));
+            java.util.Arrays.hashCode(toSetArray([this.entry(3n), this.entry(2n), this.entry(1n)])) === java.util.Arrays
+                .hashCode(toSetArray([this.entry(2n), this.entry(3n), this.entry(1n)])));
         assertTrue(
-            java.util.Arrays.hashCode(toSetArray([this.entry(1), this.entry(2), this.entry(3)])) !== java.util.Arrays
-                .hashCode(toSetArray([this.entry(1), this.entry(1), this.entry(3)])));
+            java.util.Arrays.hashCode(toSetArray([this.entry(1n), this.entry(2n), this.entry(3n)])) !== java.util.Arrays
+                .hashCode(toSetArray([this.entry(1n), this.entry(1n), this.entry(3n)])));
     }
 }

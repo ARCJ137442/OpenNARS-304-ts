@@ -15,7 +15,7 @@ export class LongTermStability extends JavaObject {
 
     public readonly counter: LongTermStability.ObjectIdCounter = new LongTermStability.ObjectIdCounter();
 
-    public readonly rng: java.util.Random = new java.util.Random(42);
+    public readonly rng: java.util.Random = new java.util.Random(42n);
 
     public constructor(reasoner: Reasoner) {
         super();
@@ -53,8 +53,9 @@ export class LongTermStability extends JavaObject {
         this.feedRelation2(consumer, this.rng.nextInt(3000), this.rng.nextInt(3000), "a2", true);
     }
 
-    public feedRelation2(consumer: Reasoner, objectId: long, placeId: long, relation: java.lang.String, isQuestion: boolean): void {
+    public feedRelation2(consumer: Reasoner, objectId: long | number, placeId: long | number, relation: java.lang.String, isQuestion: boolean): void {
         let taskType: java.lang.String = isQuestion ? "?" : ".";
+        const nextObjectId: long | number = typeof objectId === "bigint" ? objectId + 500000n : objectId + 500000;
 
         // we feed a combination of forms
         consumer.addInput(java.lang.String.format("<(*, %d, %d)--> %s>%s :|:", objectId, placeId, relation, taskType));
@@ -62,7 +63,7 @@ export class LongTermStability extends JavaObject {
         consumer.addInput(java.lang.String.format("<(*, {%d}, {%d})--> %s>%s :|:", objectId, placeId, relation, taskType));
         consumer.addInput(java.lang.String.format("<(*, %d, {%d})--> %s>%s :|:", objectId, placeId, relation, taskType));
         // set
-        consumer.addInput(java.lang.String.format("<(*, {%d, %d}, {%d})--> %s>%s :|:", objectId, objectId + 500000, placeId,
+        consumer.addInput(java.lang.String.format("<(*, {%d, %d}, {%d})--> %s>%s :|:", objectId, nextObjectId, placeId,
             relation, taskType));
 
         // duplicate set
@@ -86,7 +87,7 @@ export class LongTermStability extends JavaObject {
         let reasonerUnderTest: Reasoner = new Nar();
         let test: LongTermStability = new LongTermStability(reasonerUnderTest);
 
-        let timeToRunInMilliseconds: long = 7 * 24 * 3600 * 1000;
+        let timeToRunInMilliseconds: long = 7n * 24n * 3600n * 1000n;
 
         reasonerUnderTest.addInput("*volume=0");
 
@@ -94,7 +95,7 @@ export class LongTermStability extends JavaObject {
     }
 
     public static ObjectIdCounter = class ObjectIdCounter extends JavaObject {
-        protected counter: long = 0;
+        protected counter: long = 0n;
 
         protected retNext(): long {
             return this.counter++;

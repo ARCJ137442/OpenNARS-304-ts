@@ -4,6 +4,7 @@ import { UtilityFunctions } from "./UtilityFunctions.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { subtractRuntimeLongValues, type JavaLongInput } from "../runtime/jree-compat.ts";
 
 
 
@@ -592,13 +593,13 @@ export class TruthFunctions extends UtilityFunctions {
         return new TruthFunctions.EternalizedTruthValue(f1, c, narParameters);
     }
 
-    public static temporalProjection(sourceTime: long, targetTime: long, currentTime: long,
+    public static temporalProjection(sourceTime: JavaLongInput, targetTime: JavaLongInput, currentTime: JavaLongInput,
         param: Parameters): float {
         let a: double = 100000.0 * param.PROJECTION_DECAY; // projection less strict as we changed in v2.0.0 10000.0
         // slower decay than 100000.0
-        const sourceTargetDistance = Number(java.lang.Math.abs(sourceTime - targetTime));
-        const sourceCurrentDistance = Number(java.lang.Math.abs(sourceTime - currentTime));
-        const targetCurrentDistance = Number(java.lang.Math.abs(targetTime - currentTime));
+        const sourceTargetDistance = Math.abs(Number(subtractRuntimeLongValues(sourceTime, targetTime)));
+        const sourceCurrentDistance = Math.abs(Number(subtractRuntimeLongValues(sourceTime, currentTime)));
+        const targetCurrentDistance = Math.abs(Number(subtractRuntimeLongValues(targetTime, currentTime)));
         const denominator = Float32Math.from(
             sourceCurrentDistance
             + targetCurrentDistance

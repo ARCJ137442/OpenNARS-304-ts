@@ -18,7 +18,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Nar } from "../main/Nar.ts";
 import type { Parameters } from "../main/Parameters.ts";
-import { JavaAssertionError } from "../runtime/jree-compat.ts";
+import { addRuntimeLongValues, JavaAssertionError, subtractRuntimeLongValues } from "../runtime/jree-compat.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
 
 
@@ -109,11 +109,11 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                         let c: Conjunction = _content as Conjunction;
                         if (c.getTemporalOrder() === TemporalRules.ORDER_FORWARD) {
                             if (c.term[c.term.length - 1] instanceof Interval) {
-                                let time: long = 0n;
+                                let time: number = 0;
                                 // refined:
                                 let u: int = 0;
                                 while (c.term.length - 1 - u >= 0 && c.term[c.term.length - 1 - u] instanceof Interval) {
-                                    time += (c.term[c.term.length - 1 - u] as Interval).time;
+                                    time += Number((c.term[c.term.length - 1 - u] as Interval).time);
                                     u++;
                                 }
 
@@ -125,14 +125,14 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                                 // accordingly
 
                                 if (!c.isSpatial && stamp !== null && stamp.getOccurrenceTime() !== Stamp.ETERNAL)
-                                    stamp.setOccurrenceTime(stamp.getOccurrenceTime() - time);
+                                    stamp.setOccurrenceTime(subtractRuntimeLongValues(stamp.getOccurrenceTime(), time));
                             }
                             if (c.term[0] instanceof Interval) {
-                                let time: long = 0n;
+                                let time: number = 0;
                                 // refined:
                                 let u: int = 0;
                                 while (u < c.term.length && (c.term[u] instanceof Interval)) {
-                                    time += (c.term[u] as Interval).time;
+                                    time += Number((c.term[u] as Interval).time);
                                     u++;
                                 }
 
@@ -144,7 +144,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                                 // accordingly
 
                                 if (!c.isSpatial && stamp !== null && stamp.getOccurrenceTime() !== Stamp.ETERNAL)
-                                    stamp.setOccurrenceTime(stamp.getOccurrenceTime() + time);
+                                    stamp.setOccurrenceTime(addRuntimeLongValues(stamp.getOccurrenceTime(), time));
                             }
                         }
                     }

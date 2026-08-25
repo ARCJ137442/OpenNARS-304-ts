@@ -1,7 +1,7 @@
 //! Java source: opennars/main/Nar.java
 import { readFileSync } from "node:fs";
 import { java, type long, JavaObject, S, type int, type double, type float, closeResources, handleResourceError, throwResourceError } from "jree";
-import type { JavaStringInput } from "../runtime/jree-compat.ts";
+import { toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { Parameters } from "./Parameters.ts";
 import { Debug } from "./Debug.ts";
 import { ConfigReader } from "../io/ConfigReader.ts";
@@ -220,7 +220,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      *
      * @param narId inter NARS id of this NARS instance
      */
-    public constructor(narId: long);
+    public constructor(narId: JavaLongInput);
 
     /**
      * constructs the NAR and loads a config from the filepath
@@ -244,7 +244,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      * @param narId                  inter NARS id of this NARS instance
      * @param relativeConfigFilePath (relative) path of the XML encoded config file
      */
-    public constructor(narId: long, relativeConfigFilePath: java.lang.String);
+    public constructor(narId: JavaLongInput, relativeConfigFilePath: java.lang.String);
 
     /**
      * constructs the NAR and loads a config from the filepath
@@ -261,7 +261,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
      * @param relativeConfigFilePath (relative) path of the XML encoded config file
      * @param parameterOverrides     (overwritten) parameters of a Reasoner
      */
-    public constructor(narId: long, relativeConfigFilePath: java.lang.String, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
+    public constructor(narId: JavaLongInput, relativeConfigFilePath: java.lang.String, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
     public constructor(...args: unknown[]) {
         // Java constructor delegation (`this(...)`) is not legal in
         // TypeScript. Resolve all overloads before the one and only `super()`.
@@ -275,7 +275,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             const value = args[0];
             if (typeof value === "number" || typeof value === "bigint" || value instanceof java.lang.Number) {
                 narId = typeof value === "number" || typeof value === "bigint"
-                    ? value as long
+                    ? toRuntimeLong(value)
                     : (value as java.lang.Number).longValue();
             } else if (value !== null && typeof (value as java.lang.Object).toString === "function") {
                 relativeConfigFilePath = value as java.lang.String;
@@ -285,7 +285,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         } else if (args.length === 2) {
             if (typeof args[0] === "number" || typeof args[0] === "bigint" || args[0] instanceof java.lang.Number) {
                 narId = typeof args[0] === "number" || typeof args[0] === "bigint"
-                    ? args[0] as long
+                    ? toRuntimeLong(args[0] as JavaLongInput)
                     : (args[0] as java.lang.Number).longValue();
                 relativeConfigFilePath = args[1] as java.lang.String;
             } else {
@@ -294,7 +294,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             }
         } else if (args.length === 3) {
             narId = typeof args[0] === "number" || typeof args[0] === "bigint"
-                ? args[0] as long
+                ? toRuntimeLong(args[0] as JavaLongInput)
                 : (args[0] as java.lang.Number).longValue();
             relativeConfigFilePath = args[1] as java.lang.String;
             parameterOverrides = args[2] as java.util.Map<java.lang.String, java.lang.Object>;

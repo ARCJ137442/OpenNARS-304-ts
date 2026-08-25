@@ -1,4 +1,4 @@
-import { Class, JavaObject, java } from "jree";
+import { Class, JavaObject, java, type long } from "jree";
 
 /** Text accepted at Node-facing Java string input boundaries. */
 export type JavaStringInput = java.lang.String | string;
@@ -6,6 +6,34 @@ export type JavaStringInput = java.lang.String | string;
 /** Normalize a native Node string before it enters translated Java code. */
 export const toJavaString = (value: JavaStringInput): java.lang.String =>
     value instanceof java.lang.String ? value : new java.lang.String(value);
+
+/**
+ * Java long values enter the Node-facing port in both jree's bigint form and
+ * the numeric clock form retained by the translated OpenNARS runtime.
+ * Keep that representation choice at one compatibility boundary instead of
+ * forcing every caller to use a type assertion.
+ */
+export type JavaLongInput = long | number;
+
+export const toRuntimeLong = (value: JavaLongInput): long => value as long;
+
+export const addRuntimeLong = (value: JavaLongInput, delta: number): long =>
+    (typeof value === "bigint" ? value + BigInt(delta) : value + delta) as long;
+
+export const subtractRuntimeLong = (value: JavaLongInput, delta: number): long =>
+    (typeof value === "bigint" ? value - BigInt(delta) : value - delta) as long;
+
+/** Add two Java long values while preserving the active runtime representation. */
+export const addRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long =>
+    (typeof left === "bigint" || typeof right === "bigint"
+        ? BigInt(left) + BigInt(right)
+        : left + right) as long;
+
+/** Subtract two Java long values while preserving the active runtime representation. */
+export const subtractRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long =>
+    (typeof left === "bigint" || typeof right === "bigint"
+        ? BigInt(left) - BigInt(right)
+        : left - right) as long;
 
 /**
  * jree 1.3.0 does not ship java.lang.Double. Keep the boxed-number contract

@@ -10,7 +10,6 @@ transitions:
 - status: in-progress
   at: 2026-08-24T09:34:04.441781300Z
 ---
-
 # TypeScript zero-error build
 
 ## 概述

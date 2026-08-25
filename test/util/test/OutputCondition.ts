@@ -1,4 +1,4 @@
-import { java, type long, type int } from "jree";
+import { java, type int } from "jree";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import { OutputContainsCondition } from "./OutputContainsCondition.ts";
@@ -21,7 +21,7 @@ export abstract class OutputCondition extends OutputHandler {
     public succeeded: boolean = false;
 
     public readonly nar: Nar;
-    protected successAt: long = -1;
+    protected successAt: number = -1;
 
     public constructor(nar: Nar) {
         super(nar);
@@ -47,7 +47,7 @@ export abstract class OutputCondition extends OutputHandler {
 
     protected setTrue(): void {
         if (this.successAt === -1) {
-            this.successAt = this.nar.time();
+            this.successAt = Number(this.nar.time());
         }
         this.succeeded = true;
     }
@@ -125,7 +125,7 @@ export abstract class OutputCondition extends OutputHandler {
     public abstract getFalseReason(): java.lang.String;
 
     /** if true, when it became true */
-    public getTrueTime(): long {
+    public getTrueTime(): number {
         return this.successAt;
     }
 

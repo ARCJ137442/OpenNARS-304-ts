@@ -8,6 +8,7 @@ import { Task } from "../../entity/Task.ts";
 import { TruthValue } from "../../entity/TruthValue.ts";
 import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
+import { toRuntimeLong, type JavaLongInput } from "../../runtime/jree-compat.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { Events } from "../../io/events/Events.ts";
@@ -233,7 +234,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         this.anticipationOperator = val;
     }
 
-    public anticipate(content: Term, memory: Memory, occurenceTime: long, t: Task,
+    public anticipate(content: Term, memory: Memory, occurenceTime: JavaLongInput, t: Task,
         time: Timable): void {
         if (t !== null && t.sentence.getTruth().getExpectation() < memory.narParameters.DEFAULT_CONFIRMATION_EXPECTATION) {
             return;
@@ -246,7 +247,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         }
 
         let ae: java.util.LinkedHashSet<Term> = new java.util.LinkedHashSet();
-        this.anticipations.put(new this.Prediction(time.time(), occurenceTime), ae);
+        this.anticipations.put(new this.Prediction(time.time(), toRuntimeLong(occurenceTime)), ae);
 
         ae.add(content);
         this.anticipationFeedback(content, t, memory, time);
@@ -310,10 +311,10 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             // simple?
             public readonly predictedOccurenceTime: long;
 
-            public constructor(predictionCreationTime: long, predictedOccurenceTime: long) { // rest of the crap:
+            public constructor(predictionCreationTime: JavaLongInput, predictedOccurenceTime: JavaLongInput) { // rest of the crap:
                 super();
-                this.predictionCreationTime = predictionCreationTime; // when the prediction happened
-                this.predictedOccurenceTime = predictedOccurenceTime; // when the event is expected
+                this.predictionCreationTime = toRuntimeLong(predictionCreationTime); // when the prediction happened
+                this.predictedOccurenceTime = toRuntimeLong(predictedOccurenceTime); // when the event is expected
             }
         }
     })(this);

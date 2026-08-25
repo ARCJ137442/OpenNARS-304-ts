@@ -34,7 +34,7 @@ export class AttentionMetric extends JavaObject {
 
     public static numberOfSamples: int = 8;
 
-    public static rng: java.util.Random = new java.util.Random(23 + 42);
+    public static rng: java.util.Random = new java.util.Random(65n);
 
     public static main(args: java.lang.String[]): void {
 
@@ -84,7 +84,7 @@ export class AttentionMetric extends JavaObject {
             // so we can compute
             // a more meaningful
             // score
-            let bestTimeWeight: double = java.lang.Math.exp(-iEntry.getValue().bestTime * exponentialDecayTimeWeightFactor); // weight
+            let bestTimeWeight: double = java.lang.Math.exp(-Number(iEntry.getValue().bestTime.longValue()) * exponentialDecayTimeWeightFactor); // weight
             // faster
             // answers
             // with a
@@ -100,7 +100,7 @@ export class AttentionMetric extends JavaObject {
             // a more
             // meaningful
             // score
-            let firstTimeWeight: double = java.lang.Math.exp(-iEntry.getValue().firstTime * exponentialDecayTimeWeightFactor); // weight
+            let firstTimeWeight: double = java.lang.Math.exp(-Number(iEntry.getValue().firstTime.longValue()) * exponentialDecayTimeWeightFactor); // weight
             // faster
             // answers
             // with
@@ -270,18 +270,18 @@ export class AttentionMetric extends JavaObject {
             // is first time execution
 
             exec = new AttentionMetric.ExecOrAnswerByTime("exec", s.term.toString());
-            exec.firstTime = nar.time();
+            exec.firstTime = new java.lang.Long(nar.time());
             exec.firstTruth = s.truth.clone();
 
             execOrQaAnswersByTime.put(s.term.toString(), exec);
         }
 
         if (exec.bestTruth === null) { // is it the first time?
-            exec.bestTime = nar.time(); // the first is the best
+            exec.bestTime = new java.lang.Long(nar.time()); // the first is the best
             exec.bestTruth = s.truth.clone();
         } else if (s.truth.clone().confidence > exec.bestTruth.confidence) { // is the TV this time better
             // than the recorded one?
-            exec.bestTime = nar.time();
+            exec.bestTime = new java.lang.Long(nar.time());
             exec.bestTruth = s.truth.clone();
         }
     }
@@ -291,10 +291,10 @@ export class AttentionMetric extends JavaObject {
         public readonly narseseTerm: java.lang.String;
         public readonly type: java.lang.String;
 
-        public firstTime: java.lang.Long;
+        public firstTime!: java.lang.Long;
         public firstTruth: TruthValue;
 
-        public bestTime: java.lang.Long;
+        public bestTime!: java.lang.Long;
         public bestTruth: TruthValue;
 
         // /param type is the type, "exec" or "q&a"

@@ -1,4 +1,4 @@
-import { java, type double, type long, JavaObject, type int, type char } from "jree";
+import { java, type double, JavaObject, type int, type char } from "jree";
 import { Nar } from "../../../src/main/Nar.ts";
 import { Sentence } from "../../../src/entity/Sentence.ts";
 import { Task } from "../../../src/entity/Task.ts";
@@ -21,7 +21,7 @@ type ExecutionResult = InstanceType<typeof Operator.ExecutionResult>;
  */
 export class OutputContainsCondition extends OutputCondition {
     public confOfBestAnswer: double = 0.0;
-    public timeOfBestAnswer: long = 0;
+    public timeOfBestAnswer: number = 0;
 
     public readonly exact: java.util.List<Task> = new java.util.ArrayList<Task>();
 
@@ -180,7 +180,7 @@ export class OutputContainsCondition extends OutputCondition {
                 let s: Sentence = t.sentence;
                 if (s.truth !== null) {
                     if (s.truth.confidence > this.confOfBestAnswer) {
-                        this.timeOfBestAnswer = this.nar.time();
+                        this.timeOfBestAnswer = Number(this.nar.time());
                     }
                     this.confOfBestAnswer = java.lang.Math.max(this.confOfBestAnswer, s.truth.confidence);
                 }

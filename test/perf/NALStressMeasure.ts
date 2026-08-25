@@ -1,4 +1,4 @@
-import { java, JavaObject, type double, type int, type long, type float } from "jree";
+import { java, JavaObject, type double, type int, type float } from "jree";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
 import { NALTest } from "../core/NALTest.ts";
 import { Performance } from "./Performance.ts";
@@ -18,7 +18,7 @@ export class NALStressMeasure extends JavaObject {
         let example: java.lang.String = NALTest.getExample(path);
 
         let p: Performance = new class extends Performance {
-            protected totalCycles: long;
+            protected totalCycles: number = 0;
 
             public init(): void {
                 java.lang.System.out.print(java.lang.Enum.name + ": ");
@@ -31,21 +31,21 @@ export class NALStressMeasure extends JavaObject {
                 n.cycles(1);
                 n.cycles(extraCycles);
 
-                this.totalCycles += n.time();
+                this.totalCycles += Number(n.time());
             }
 
             public print(): Performance {
                 super.print();
-                java.lang.System.out.print(", " + df.format(getCycleTimeMS() / this.totalCycles * 1000.0) + " uS/cycle, "
-                    + ((this.totalCycles as float) / (warmups + repeats)) + " cycles/run");
+                java.lang.System.out.print(", " + this.df.format(this.getCycleTimeMS() / Number(this.totalCycles) * 1000.0) + " uS/cycle, "
+                    + (Number(this.totalCycles) / (warmups + repeats)) + " cycles/run");
                 return this;
 
             }
 
             public printCSV(finalComma: boolean): Performance {
                 super.printCSV(true);
-                java.lang.System.out.print(df.format(getCycleTimeMS() / this.totalCycles * 1000.0) + ", "
-                    + ((this.totalCycles as float) / (warmups + repeats)));
+                java.lang.System.out.print(this.df.format(this.getCycleTimeMS() / Number(this.totalCycles) * 1000.0) + ", "
+                    + (Number(this.totalCycles) / (warmups + repeats)));
                 if (finalComma)
                     java.lang.System.out.print(", ");
                 return this;

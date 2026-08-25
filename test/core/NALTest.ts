@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type double, type long } from "jree";
+import { java, JavaObject, type int, type double } from "jree";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { TextOutputHandler } from "../../src/io/events/TextOutputHandler.ts";
@@ -41,7 +41,7 @@ export class NALTest extends JavaObject {
 
     public static timeSum: double = 0.0;
     public static bestAnswerConfSum: double = 0.0;
-    public static samplesCnt: long = 0;
+    public static samplesCnt: number = 0;
 
     public static getExample(path: java.lang.String): java.lang.String {
         try {
