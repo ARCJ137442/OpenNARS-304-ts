@@ -1,5 +1,5 @@
 //! Java source: opennars/language/CompoundTerm.java
-import { java, type short, type int, JavaObject, S } from "jree";
+import { java, type short, type int, type long, JavaObject, S } from "jree";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Interval } from "./Interval.ts";
@@ -191,7 +191,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     public invalidateName(): void {
-        this.setName(null); // invalidate name so it will be (re-)created lazily
+        this.setName(null as unknown as java.lang.CharSequence); // invalidate name so it will be (re-)created lazily
         for (let t of this.term) {
             if (t.hasVar())
                 if (t instanceof CompoundTerm)
@@ -203,7 +203,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     public cloneDeep(): CompoundTerm {
         let c: Term = this.clone(this.cloneTermsDeep());
         if (c === null)
-            return null;
+            return null as unknown as CompoundTerm;
         if (Debug.DETAILED && c.getClass() !== this.getClass()) // debug relevant, while it is natural due to interval
             // simplification to reduce to other term type,
             // other cases should not appear
@@ -211,7 +211,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         if (this.isNormalized())
             (c as CompoundTerm).setNormalized(true);
         if (!(c instanceof CompoundTerm)) {
-            return null;
+            return null as unknown as CompoundTerm;
         }
         return c as CompoundTerm;
     }
@@ -233,7 +233,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         }
     }
 
-    protected static readonly conceptival: Interval = new Interval(1);
+    protected static readonly conceptival: Interval = new Interval(1 as unknown as long);
 
     private static ReplaceIntervals(comp: CompoundTerm): void {
         if (!comp.hasIntervals) {
@@ -257,7 +257,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         if (T instanceof CompoundTerm) {
             T = T.cloneDeep(); // we will operate on a copy
             if (T === null) {
-                return null; // not a valid concept term
+                return null as unknown as Term; // not a valid concept term
             }
             CompoundTerm.ReplaceIntervals(T as CompoundTerm);
         }
@@ -268,7 +268,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         for (let i: int = 0; i < comp.term.length; i++) {
             let t: Term = comp.term[i];
             if (t instanceof Interval) {
-                ivals.add((t as Interval).time);
+                ivals.add((t as Interval).time as unknown as java.lang.Long);
             } else if (t instanceof CompoundTerm) {
                 CompoundTerm.ExtractIntervals(mem, ivals, t as CompoundTerm);
             }
@@ -305,7 +305,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         let c: Term = this.clone(this.cloneVariableTermsDeep());
 
         if (c === null)
-            return null;
+            return null as unknown as CompoundTerm;
 
         if (Debug.DETAILED && c.getClass() !== this.getClass())
             java.lang.System.out.println("cloneDeepVariables resulted in different class: " + c + " from " + this);
@@ -461,7 +461,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
                 removed = true;
         }
         if ((!removed) && (requireModification))
-            return null;
+            return null as unknown as Term[];
 
         return l.toArray(new Array<Term>(0));
     }
@@ -474,7 +474,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      */
     public static cloneTermsAppend(original: Term[], additional: Term[]): Term[] {
         if (original === null) {
-            return null;
+            return null as unknown as Term[];
         }
 
         let L: int = original.length + additional.length;
@@ -513,7 +513,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         for (let i: int = 0; i < l.length; i++) {
             l[i] = this.term[i].cloneDeep();
             if (l[i] === null) {
-                return null;
+                return null as unknown as Term[];
             }
         }
         return l;
@@ -729,9 +729,9 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             let t1: Term = tt[i] = this.term[i];
 
             if (subs.containsKey(t1)) {
-                let t2: Term = subs.get(t1);
+                let t2: Term = subs.get(t1) as unknown as Term;
                 while (subs.containsKey(t2)) {
-                    t2 = subs.get(t2);
+                    t2 = subs.get(t2) as unknown as Term;
                 }
                 // prevents infinite recursion
                 if (!t2.containsTerm(t1)) {
@@ -765,7 +765,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         let t: Term = this.applySubstitute(substitute);
         if (t instanceof CompoundTerm)
             return (t as CompoundTerm);
-        return null;
+        return null as unknown as CompoundTerm;
     }
 
     /* ----- link CompoundTerm and its term ----- */
