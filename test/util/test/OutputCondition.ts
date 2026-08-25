@@ -65,13 +65,13 @@ export abstract class OutputCondition extends OutputHandler {
      */
     public static getConditions(n: Nar, example: java.lang.String,
         similarResultsToSave: int): java.util.List<OutputCondition> {
-        let conditions: java.util.List<OutputCondition> = new java.util.ArrayList();
+        const conditions: java.util.List<OutputCondition> = new java.util.ArrayList<OutputCondition>();
         let lines: java.lang.String[] = example.split("\n");
 
         for (let s of lines) {
             s = s.trim();
 
-            let expectOutContains2: java.lang.String = "''outputMustContain('";
+            const expectOutContains2 = new java.lang.String("''outputMustContain('");
 
             if (s.indexOf(expectOutContains2) === 0) {
 
@@ -91,7 +91,7 @@ export abstract class OutputCondition extends OutputHandler {
 
             }
 
-            let expectOutNotContains2: java.lang.String = "''outputMustNotContain('";
+            const expectOutNotContains2 = new java.lang.String("''outputMustNotContain('");
 
             if (s.indexOf(expectOutNotContains2) === 0) {
 
@@ -101,7 +101,7 @@ export abstract class OutputCondition extends OutputHandler {
 
             }
 
-            let expectOutEmpty: java.lang.String = "''expect.outEmpty";
+            const expectOutEmpty = new java.lang.String("''expect.outEmpty");
             if (s.indexOf(expectOutEmpty) === 0) {
                 conditions.add(new OutputEmptyCondition(n));
             }
@@ -112,13 +112,13 @@ export abstract class OutputCondition extends OutputHandler {
     }
 
     public toString(): java.lang.String {
-        return java.lang.Object.getClass().getSimpleName() + " " + (this.succeeded ? "OK: " + this.getTrueReasons() : this.getFalseReason());
+        return new java.lang.String(this.getClass().getSimpleName() + " " + (this.succeeded ? "OK: " + this.getTrueReasons() : this.getFalseReason()));
     }
 
     public getTrueReasons(): java.util.List<unknown> {
         if (!this.isTrue())
             throw new java.lang.IllegalStateException(this + " is not true so has no true reasons");
-        return java.util.Collections.emptyList();
+        return new java.util.ArrayList<unknown>();
     }
 
     /** if false, a reported reason why this condition is false */
