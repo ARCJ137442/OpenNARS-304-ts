@@ -302,7 +302,7 @@ export class RuleTables extends JavaObject {
         nal: DerivationContext, beliefTerm: Term): void {
         if (task.sentence.isJudgment() && tIndex === 0 && bIndex === 1 && taskTerm instanceof Operation) {
             let op: Operation = taskTerm as Operation;
-            if (op.getPredicate() === nal.memory.getOperator("^want")) {
+            if (op.getPredicate() === nal.memory.getOperator(S`^want`)) {
                 let newTruth: TruthValue = TruthFunctions.deduction(task.sentence.getTruth(), nal.narParameters.reliance,
                     nal.narParameters);
                 nal.singlePremiseTask((taskTerm as Operation).getArguments().term[1], Symbols.GOAL_MARK, newTruth,
@@ -314,8 +314,8 @@ export class RuleTables extends JavaObject {
     private static goalFromQuestion(task: Task, taskTerm: Term, nal: DerivationContext): void {
         if (task.sentence.punctuation === Symbols.QUESTION_MARK
             && (taskTerm instanceof Implication || taskTerm instanceof Equivalence)) { // <a =/> b>? |- a!
-            let goalterm: Term = null;
-            let goalterm2: Term = null;
+            let goalterm: Term | null = null;
+            let goalterm2: Term | null = null;
             if (taskTerm instanceof Implication) {
                 let imp: Implication = taskTerm as Implication;
                 if (imp.getTemporalOrder() !== TemporalRules.ORDER_BACKWARD
@@ -835,7 +835,7 @@ export class RuleTables extends JavaObject {
         }
 
         let component: Term = condition.term[index];
-        let component2: Term = null;
+        let component2: Term | null = null;
         if (statement instanceof Inheritance || statement instanceof Similarity) {
             component2 = statement;
             side = -1;
@@ -1005,8 +1005,11 @@ export class RuleTables extends JavaObject {
      */
     public static transformTask(tLink: TaskLink, nal: DerivationContext): void {
         let content: CompoundTerm = nal.getCurrentTask().getTerm() as CompoundTerm;
-        let indices: Int16Array = tLink.index;
-        let expectedInheritanceTerm: Term = null; // we store here the (dereferenced) term which we expect to be a
+        const indices = tLink.index;
+        if (indices === null) {
+            return;
+        }
+        let expectedInheritanceTerm: Term | null = null; // we store here the (dereferenced) term which we expect to be a
         // inheritance
 
         { // this block "dereferences" the term by the address which we are storing in
