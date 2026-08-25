@@ -1,0 +1,121 @@
+{
+  "schema": "opennars-304-ts/m3-p2-sample-plan/v1",
+  "status": "waiting_for_budget_approval",
+  "budget_proposal": "reports/evidence/m3-performance-budget-proposal-20260826-v1.json",
+  "selection_source": "reports/evidence/opennars-304-nal-manifest-245-plus-1-v1.json",
+  "candidate_git_commit": "f5c05df",
+  "canonical_java_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+  "canonical_java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
+  "environment": {
+    "node": "v22.17.0",
+    "jdk": "18.0.2",
+    "platform": "win32-x64",
+    "thread_mode": "single",
+    "ts_mode": "cold",
+    "timeout_ms": 180000,
+    "process_limit_ms": 900000,
+    "stall_definition": "no progress event, checkpoint, marker or digest update for 180000 ms"
+  },
+  "repetition_policy": {
+    "fast_and_medium": {
+      "warmup_runs": 1,
+      "official_repetitions": 5,
+      "p95_repetitions": 20
+    },
+    "high_cost": {
+      "warmup_runs": 1,
+      "official_repetitions": 3,
+      "p95": "not reported"
+    },
+    "markerless": {
+      "mode": "checkpoint/resume stage digest",
+      "target_cycles": 131072,
+      "window_cycles": 1024,
+      "p95": "not applicable"
+    }
+  },
+  "layers": [
+    {
+      "id": "fast_basic",
+      "selection": "manifest stratum=single_step and file=nal8.add.nal",
+      "files": ["java-master/src/main/resources/nal/single_step/nal8.add.nal"],
+      "repetitions": "fast_and_medium"
+    },
+    {
+      "id": "medium_interactive",
+      "selection": "manifest entries explicitly named by this layer",
+      "files": [
+        "java-master/src/main/resources/nal/multi_step/nars_multistep_1.nal",
+        "java-master/src/main/resources/nal/application/toothbrush.nal"
+      ],
+      "repetitions": "fast_and_medium"
+    },
+    {
+      "id": "recursive_high_cycle",
+      "selection": "manifest stratum=multi_step entries explicitly named by this layer",
+      "files": [
+        "java-master/src/main/resources/nal/multi_step/nal4.recursion.small.nal",
+        "java-master/src/main/resources/nal/multi_step/nal4.recursion.small.2.nal",
+        "java-master/src/main/resources/nal/multi_step/nal4.recursion.nal"
+      ],
+      "repetitions": "high_cost"
+    },
+    {
+      "id": "historical_high_ratio",
+      "selection": "manifest entries explicitly named by this layer",
+      "files": [
+        "java-master/src/main/resources/nal/multi_step/nars_transitivity.nal",
+        "java-master/src/main/resources/nal/application/toothbrush2.nal",
+        "java-master/src/main/resources/nal/application/vision.nal",
+        "java-master/src/main/resources/nal/application/detective2.nal"
+      ],
+      "repetitions": "high_cost"
+    },
+    {
+      "id": "known_process_limit",
+      "selection": "manifest entries explicitly named by this layer; process limit is independent from functionality",
+      "files": [
+        "java-master/src/main/resources/nal/multi_step/nars_multistep_2.nal",
+        "java-master/src/main/resources/nal/multi_step/nars_multistep_3.nal",
+        "java-master/src/main/resources/nal/single_step/nal8_list.nal",
+        "java-master/src/main/resources/nal/stability/long_term_stability.nal"
+      ],
+      "repetitions": "high_cost"
+    },
+    {
+      "id": "markerless_digest",
+      "selection": "manifest scope/stratum plus existing equivalence evidence; never inferred from filename alone",
+      "manifest_entries": [
+        "java-master/src/main/resources/nal/stability/long_term_stability.nal",
+        "java-master/src/test/simpleOperationTest.nal"
+      ],
+      "existing_evidence": [
+        "reports/evidence/long-term-stability-131072-parity-20260824.json",
+        "reports/evidence/java-simpleOperationTest-stage-counter-131072-20260824-compoundterm-m1.summary.json"
+      ],
+      "repetitions": "markerless"
+    }
+  ],
+  "per_run_required_fields": [
+    "file",
+    "engine",
+    "artifact_sha256",
+    "functional_pass",
+    "parity",
+    "matched",
+    "marker_missing",
+    "exception",
+    "stall_detected",
+    "process_limited",
+    "embedded_cycles",
+    "extra_cycles",
+    "reasoning_cycles",
+    "duration_ms",
+    "process_cpu_ms",
+    "peak_rss_bytes",
+    "marker_time_ms",
+    "ts_wall_ms_per_1024_cycles",
+    "ts_to_java_wall_ratio"
+  ],
+  "execution_rule": "Only execute after a user-approved budget scenario is recorded; do not treat this plan as performance evidence or as approval of 020."
+}
