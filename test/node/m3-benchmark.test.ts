@@ -50,6 +50,11 @@ test("M3 benchmark requires explicit files and accepts serial repetition setting
   assert.deepEqual(options.files, ["sample.nal"]);
   assert.equal(options.warmupRuns, 1);
   assert.equal(options.repetitions, 3);
+  assert.equal(options.performanceBudgetMsPer1024Cycles, 120000);
+  assert.equal(parseArgs([
+    "--file", "sample.nal",
+    "--performance-budget-ms-per-1024-cycles", "60000",
+  ]).performanceBudgetMsPer1024Cycles, 60000);
   assert.throws(() => parseArgs(["--repetitions", "0", "--file", "sample.nal"]), /--repetitions/);
   assert.throws(() => parseArgs([]), /at least one --file PATH/);
 });

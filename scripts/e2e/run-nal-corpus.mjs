@@ -14,7 +14,7 @@ const defaultJavaTestClasses = join(canonicalJavaRoot, "target", "test-classes")
 const defaultJavaClasses = join(canonicalJavaRoot, "target", "classes");
 const LEGACY_JAR_SHA256 = "796A3B20EE6ED7F8F6778367738AD728F0BFCC32CFAD99BACAEBEC41EBC7EB04";
 const javaAdapterSource = join(projectRoot, "scripts", "e2e", "NalParityRunner.java");
-const PERFORMANCE_BUDGET_MS_PER_1024_CYCLES = 120_000;
+const DEFAULT_PERFORMANCE_BUDGET_MS_PER_1024_CYCLES = 120_000;
 const PROGRESS_INTERVAL_CYCLES = 256;
 const LONG_CYCLE_EQUIVALENCE_TARGET = 131_072;
 
@@ -34,6 +34,7 @@ function parseArgs(argv) {
     chunkSize: null,
     timeoutMs: null,
     processLimitMs: null,
+    performanceBudgetMsPer1024Cycles: DEFAULT_PERFORMANCE_BUDGET_MS_PER_1024_CYCLES,
     tsMode: "hot",
     tsCli: null,
     resourceMetrics: false,
@@ -55,6 +56,10 @@ function parseArgs(argv) {
     else if (argument === "--chunk-size") options.chunkSize = Number(argv[++i]);
     else if (argument === "--timeout-ms") options.timeoutMs = Number(argv[++i]);
     else if (argument === "--process-limit-ms") options.processLimitMs = Number(argv[++i]);
+    else if (argument === "--performance-budget-ms-per-1024-cycles"
+      || argument === "--performance-budget-ms-per-1024") {
+      options.performanceBudgetMsPer1024Cycles = Number(argv[++i]);
+    }
     else if (argument === "--ts-mode" || argument === "--ts-process-mode") options.tsMode = argv[++i];
     else if (argument === "--ts-cli") options.tsCli = argv[++i];
     else if (argument === "--resource-metrics") options.resourceMetrics = true;
@@ -85,6 +90,10 @@ function parseArgs(argv) {
   }
   if (options.processLimitMs !== null && (!Number.isInteger(options.processLimitMs) || options.processLimitMs < 1)) {
     throw new Error("--process-limit-ms must be a positive integer");
+  }
+  if (!Number.isInteger(options.performanceBudgetMsPer1024Cycles)
+    || options.performanceBudgetMsPer1024Cycles < 1) {
+    throw new Error("--performance-budget-ms-per-1024-cycles must be a positive integer");
   }
   if (options.tsMode !== "hot" && options.tsMode !== "cold") {
     throw new Error("--ts-mode must be hot or cold");
@@ -779,12 +788,12 @@ function normalizeResult(result, expectedOverride = null) {
   };
 }
 
-function evaluateMarkerPerformance(javaResult, tsResult, totalCycles) {
+function evaluateMarkerPerformance(javaResult, tsResult, totalCycles, performanceBudgetMsPer1024Cycles = DEFAULT_PERFORMANCE_BUDGET_MS_PER_1024_CYCLES) {
   const javaTimes = Array.isArray(javaResult?.marker_time_ms) ? javaResult.marker_time_ms : null;
   const tsTimes = Array.isArray(tsResult?.marker_time_ms) ? tsResult.marker_time_ms : null;
   if (javaTimes === null && tsTimes === null) {
     return {
-      performance_budget_ms_per_1024_cycles: PERFORMANCE_BUDGET_MS_PER_1024_CYCLES,
+      performance_budget_ms_per_1024_cycles: performanceBudgetMsPer1024Cycles,
       java_marker_time_per_1024_ms: null,
       ts_marker_time_per_1024_ms: null,
       marker_time_delta_ms: null,
@@ -824,7 +833,7 @@ function evaluateMarkerPerformance(javaResult, tsResult, totalCycles) {
   const tsTimingComplete = timingComplete(tsMarkerTimePer1024);
   const deltaTimingComplete = timingComplete(markerTimeDeltaPer1024);
   return {
-    performance_budget_ms_per_1024_cycles: PERFORMANCE_BUDGET_MS_PER_1024_CYCLES,
+    performance_budget_ms_per_1024_cycles: performanceBudgetMsPer1024Cycles,
     java_marker_time_per_1024_ms: javaMarkerTimePer1024,
     ts_marker_time_per_1024_ms: tsMarkerTimePer1024,
     marker_time_delta_ms: markerTimeDelta,
@@ -834,14 +843,14 @@ function evaluateMarkerPerformance(javaResult, tsResult, totalCycles) {
     marker_delta_timing_complete: deltaTimingComplete,
     ts_performance_within_budget: tsTimingComplete !== true || tsObserved.length === 0
       ? null
-      : tsObserved.every((value) => value <= PERFORMANCE_BUDGET_MS_PER_1024_CYCLES),
+      : tsObserved.every((value) => value <= performanceBudgetMsPer1024Cycles),
     marker_delta_within_budget: deltaTimingComplete !== true || deltaObserved.length === 0
       ? null
-      : deltaObserved.every((value) => Math.abs(value) <= PERFORMANCE_BUDGET_MS_PER_1024_CYCLES),
+      : deltaObserved.every((value) => Math.abs(value) <= performanceBudgetMsPer1024Cycles),
   };
 }
 
-function evaluateRuntimePerformance(javaResult, tsResult, totalCycles) {
+function evaluateRuntimePerformance(javaResult, tsResult, totalCycles, performanceBudgetMsPer1024Cycles = DEFAULT_PERFORMANCE_BUDGET_MS_PER_1024_CYCLES) {
   const javaRuntimeMs = Number.isFinite(javaResult?.duration_ms) ? javaResult.duration_ms : null;
   const tsRuntimeMs = Number.isFinite(tsResult?.duration_ms) ? tsResult.duration_ms : null;
   const javaRuntimeMsPerCycle = javaRuntimeMs !== null && Number.isFinite(totalCycles) && totalCycles > 0
@@ -885,7 +894,7 @@ function evaluateRuntimePerformance(javaResult, tsResult, totalCycles) {
     java_runtime_observation: javaRuntimeObservation,
     ts_runtime_observation: tsRuntimeObservation,
     reasoning_cycles: Number.isFinite(totalCycles) ? totalCycles : null,
-    runtime_budget_ms_per_cycle: PERFORMANCE_BUDGET_MS_PER_1024_CYCLES / 1024,
+    runtime_budget_ms_per_cycle: performanceBudgetMsPer1024Cycles / 1024,
     java_runtime_ms_per_cycle: javaRuntimeMsPerCycle,
     ts_runtime_ms_per_cycle: tsRuntimeMsPerCycle,
     runtime_delta_ms: runtimeDeltaMs,
@@ -893,7 +902,7 @@ function evaluateRuntimePerformance(javaResult, tsResult, totalCycles) {
     ts_runtime_slowdown_ratio: tsRuntimeSlowdownRatio,
     ts_runtime_within_budget: tsRuntimeObservation === "completed"
       && tsRuntimeMsPerCycle !== null
-      && tsRuntimeMsPerCycle <= PERFORMANCE_BUDGET_MS_PER_1024_CYCLES / 1024,
+      && tsRuntimeMsPerCycle <= performanceBudgetMsPer1024Cycles / 1024,
   };
 }
 
@@ -993,7 +1002,8 @@ function evaluateLongCycleEquivalence({
   };
 }
 
-function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles = null, timeoutMs = null) {
+function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles = null, timeoutMs = null,
+  performanceBudgetMsPer1024Cycles = DEFAULT_PERFORMANCE_BUDGET_MS_PER_1024_CYCLES) {
   const expectedCount = Array.isArray(expected)
     ? expected.length
     : Number.isInteger(expected) ? expected : null;
@@ -1031,8 +1041,8 @@ function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles =
       java,
       ts,
     }),
-    ...evaluateMarkerPerformance(java, ts, totalCycles),
-    ...evaluateRuntimePerformance(java, ts, totalCycles),
+    ...evaluateMarkerPerformance(java, ts, totalCycles, performanceBudgetMsPer1024Cycles),
+    ...evaluateRuntimePerformance(java, ts, totalCycles, performanceBudgetMsPer1024Cycles),
     ...classifyTimeoutObservation({ timeoutMs, java, ts }),
     java_thread_mode: java?.thread_mode ?? null,
     ts_thread_mode: ts?.thread_mode ?? null,
@@ -1195,6 +1205,7 @@ async function main() {
             options.engine,
             sources.get(file).embeddedCycles + options.cycles,
             options.timeoutMs,
+            options.performanceBudgetMsPer1024Cycles,
           ),
           java_process_mode: options.engine === "ts" ? null : "cold",
           ts_process_mode: options.engine === "java" ? null : options.tsMode,

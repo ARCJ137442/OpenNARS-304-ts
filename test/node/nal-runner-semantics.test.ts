@@ -131,6 +131,16 @@ test("NAL runner reports marker timing against a 120-second-per-1024-cycle budge
   );
   assert.equal(over.ts_performance_within_budget, false);
   assert.equal(over.marker_delta_within_budget, false);
+
+  const balanced = evaluateMarkerPerformance(
+    { marker_time_ms: [0] },
+    { marker_time_ms: [60001] },
+    1024,
+    60000,
+  );
+  assert.equal(balanced.performance_budget_ms_per_1024_cycles, 60000);
+  assert.equal(balanced.ts_performance_within_budget, false);
+  assert.equal(balanced.marker_delta_within_budget, false);
 });
 
 test("NAL runner records runtime per reasoning cycle and relative slowdown", () => {
@@ -150,6 +160,15 @@ test("NAL runner records runtime per reasoning cycle and relative slowdown", () 
   assert.equal(result.runtime_delta_ms, 39500);
   assert.equal(result.ts_runtime_slowdown_ratio, 80);
   assert.equal(result.ts_runtime_within_budget, true);
+
+  const balanced = evaluateRuntimePerformance(
+    { duration_ms: 500, timed_out: false },
+    { duration_ms: 100000, timed_out: false },
+    1550,
+    60000,
+  );
+  assert.equal(balanced.runtime_budget_ms_per_cycle, 60000 / 1024);
+  assert.equal(balanced.ts_runtime_within_budget, false);
 });
 
 test("NAL runner marks stalled runtime as a lower bound instead of a functional verdict", () => {
@@ -443,6 +462,9 @@ test("NAL runner records an explicit TypeScript process mode and separates run k
   assert.equal(parseArgs(["--ts-mode", "cold"]).tsMode, "cold");
   assert.equal(parseArgs(["--ts-process-mode", "hot"]).tsMode, "hot");
   assert.equal(parseArgs(["--process-limit-ms", "600000"]).processLimitMs, 600000);
+  assert.equal(parseArgs(["--performance-budget-ms-per-1024-cycles", "60000"]).performanceBudgetMsPer1024Cycles, 60000);
+  assert.equal(parseArgs(["--performance-budget-ms-per-1024", "60000"]).performanceBudgetMsPer1024Cycles, 60000);
+  assert.throws(() => parseArgs(["--performance-budget-ms-per-1024-cycles", "0"]), /performance-budget-ms-per-1024-cycles/);
   assert.throws(() => parseArgs(["--process-limit-ms", "0"]), /--process-limit-ms must be a positive integer/);
   assert.throws(() => parseArgs(["--ts-mode", "warm"]), /--ts-mode must be hot or cold/);
 });

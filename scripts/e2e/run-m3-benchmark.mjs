@@ -21,6 +21,7 @@ function parseArgs(argv) {
     cycles: 1550,
     timeoutMs: 30000,
     processLimitMs: 300000,
+    performanceBudgetMsPer1024Cycles: 120000,
     warmupRuns: 0,
     repetitions: 1,
     javaJar: defaultJavaJar,
@@ -35,6 +36,10 @@ function parseArgs(argv) {
     if (argument === "--cycles") options.cycles = Number(argv[++index]);
     else if (argument === "--timeout-ms") options.timeoutMs = Number(argv[++index]);
     else if (argument === "--process-limit-ms") options.processLimitMs = Number(argv[++index]);
+    else if (argument === "--performance-budget-ms-per-1024-cycles"
+      || argument === "--performance-budget-ms-per-1024") {
+      options.performanceBudgetMsPer1024Cycles = Number(argv[++index]);
+    }
     else if (argument === "--warmup-runs") options.warmupRuns = Number(argv[++index]);
     else if (argument === "--repetitions") options.repetitions = Number(argv[++index]);
     else if (argument === "--java-jar") options.javaJar = argv[++index];
@@ -54,6 +59,7 @@ function parseArgs(argv) {
     ["--cycles", options.cycles],
     ["--timeout-ms", options.timeoutMs],
     ["--process-limit-ms", options.processLimitMs],
+    ["--performance-budget-ms-per-1024-cycles", options.performanceBudgetMsPer1024Cycles],
     ["--warmup-runs", options.warmupRuns],
     ["--repetitions", options.repetitions],
   ];
@@ -118,6 +124,7 @@ function runOne(options, file, repetition, warmup) {
     "--cycles", String(options.cycles),
     "--timeout-ms", String(options.timeoutMs),
     "--process-limit-ms", String(options.processLimitMs),
+    "--performance-budget-ms-per-1024-cycles", String(options.performanceBudgetMsPer1024Cycles),
     "--ts-mode", "cold",
     "--ts-cli", resolve(options.tsCli),
     "--chunk-size", "1",
@@ -257,7 +264,8 @@ function main() {
       timeout_ms: options.timeoutMs,
       process_limit_ms: options.processLimitMs,
       warmup_runs: options.warmupRuns,
-      repetitions: options.repetitions,
+    repetitions: options.repetitions,
+    performance_budget_ms_per_1024_cycles: options.performanceBudgetMsPer1024Cycles,
       thread_mode: "single",
       ts_mode: "cold",
       ts_cli: resolve(options.tsCli),
