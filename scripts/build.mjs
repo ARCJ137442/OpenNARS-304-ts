@@ -75,11 +75,11 @@ async function emitSourceFile(sourcePath) {
     await writeFile(outputPath, rewriteRelativeTypeScriptImports(result.outputText), "utf8");
 }
 
-async function emitCli() {
-    const sourcePath = join(projectRoot, "scripts", "cli.mjs");
+async function emitScript(scriptName) {
+    const sourcePath = join(projectRoot, "scripts", scriptName);
     const source = await readFile(sourcePath, "utf8");
     const builtSource = rewriteRelativeTypeScriptImports(source.replaceAll("../src/", "./"));
-    await writeFile(join(outputRoot, "cli.mjs"), builtSource, "utf8");
+    await writeFile(join(outputRoot, scriptName), builtSource, "utf8");
 }
 
 async function main() {
@@ -90,7 +90,8 @@ async function main() {
     for (const sourcePath of sourceFiles.sort()) {
         await emitSourceFile(sourcePath);
     }
-    await emitCli();
+    await emitScript("cli.mjs");
+    await emitScript("shell.mjs");
     await writeFile(join(outputRoot, "build-manifest.json"), `${JSON.stringify({
         source: "src",
         entry: "index.js",

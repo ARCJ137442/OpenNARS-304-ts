@@ -121,3 +121,53 @@ test("Bag merges distinct object keys through Java equals semantics", () => {
     assert.equal(bag.pickOut(new EqualKey("same")), second);
     assert.equal(bag.size(), 0);
 });
+
+test("Bag falls back to Java equality when a hash bucket is not JS iterable", () => {
+    class EqualKey {
+        public readonly value: string;
+
+        public constructor(value: string) {
+            this.value = value;
+        }
+
+        public equals(other: unknown): boolean {
+            return other instanceof EqualKey && other.value === this.value;
+        }
+
+        public hashCode(): number {
+            return this.value.length;
+        }
+    }
+
+    class EqualKeyItem extends Item<EqualKey> {
+        private readonly key: EqualKey;
+
+        public constructor(key: EqualKey) {
+            super();
+            this.key = key;
+        }
+
+        public name(): EqualKey {
+            return this.key;
+        }
+
+        public getPriority(): number {
+            return 0.8;
+        }
+
+        public merge(): Item<unknown> {
+            return this;
+        }
+    }
+
+    const bag = new Bag<EqualKeyItem, EqualKey>(4, 10, new Parameters());
+    const item = new EqualKeyItem(new EqualKey("same"));
+    bag.putIn(item);
+    (bag as unknown as { equalityBuckets: Map<number, unknown> })
+        .equalityBuckets.set(4, { restored: true });
+
+    assert.equal(bag.get(new EqualKey("same")), item);
+    assert.ok(Array.isArray(
+        (bag as unknown as { equalityBuckets: Map<number, unknown> }).equalityBuckets.get(4),
+    ));
+});

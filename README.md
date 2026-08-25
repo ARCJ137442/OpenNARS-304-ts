@@ -4,7 +4,7 @@ OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先
 
 ## 当前状态（2026-08-25）
 
-- M1：245 个主资源 NAL 的单线程 Java/TypeScript parity 全量矩阵正在串行运行；结果写入 `reports/evidence/m1-245-parity-20260825-fqn-fixed-v1.jsonl`，完成前不得宣称 M1 全量通过。
+- M1：245 个主资源 NAL 的单线程 Java/TypeScript parity 矩阵曾在第 24 行暂停；`nars_multistep_2.nal` 已经单样本修复复核通过，但 TS 明显较慢，245+1 全量复跑仍未完成，因此不得宣称 M1 全量通过。
 - M2：非增量 `tsc` 为 0 诊断；固定提交上的 `npm test` 为 155/155，局部算法 parity 通过，正式构建与 CLI smoke 通过。
 - M3：资源观测与串行 benchmark 已建立，但在 M1 全量通过前暂停；四类代表样本已完成功能/parity 观测，重复 median/p95 和 Java RSS 边界仍未收尾。
 - 当前版本：`0.1.0`；当前 canonical Java JAR 使用 `OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
@@ -50,6 +50,12 @@ OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先
 
     node dist/cli.mjs --cycles 1550 path/to/example.nal
 
+启动可人工输入 Narsese 的单线程交互式 shell：
+
+    npm run shell
+
+在 `nars> ` 提示符下输入 Narsese；输入 `:cycles 100` 执行 100 个推理周期，输入 `:status` 查看时钟，输入 `:quit` 退出。也可以用 `npm run shell -- --cycles 100` 让每条 Narsese 输入自动执行 100 个周期。构建后可用 `npm run build` 再运行 `npm run shell:dist`。
+
 运行 Java canonical 与 TypeScript 的串行 NAL parity（全量命令会运行较久，建议使用 checkpoint）：
 
     npm run test:e2e:parity:serial
@@ -62,7 +68,7 @@ OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先
 
 ### 当前战略基线
 
-旧的逐文件转写计划已不足以指导主线推进。当前以[新战略基线与工作流](docs/strategic-baseline.md)和[当前状态与运行手册](docs/current-status-and-runbook.md)为项目导航：先完成 M1 全量功能门禁，再推进 M2/M3 的后续工作。
+旧的逐文件转写计划已不足以指导主线推进。当前以[新战略基线与工作流](docs/strategic-baseline.md)和[当前状态与运行手册](docs/current-status-and-runbook.md)为项目导航：先完成 M1 全量功能门禁，再推进 M2/M3 的后续工作。可直接复制执行的 M1/M2 验收命令见[命令行核实手册](docs/verification-commands.md)。
 
 ## 目录 & 进度（历史文件清单）
 

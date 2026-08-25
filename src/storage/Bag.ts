@@ -230,11 +230,30 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
 
         const hashCode = this.keyHashCode(key);
         const candidates = hashCode === null ? null : this.equalityBuckets.get(hashCode);
-        if (candidates !== null && candidates !== undefined) {
-            for (const existingKey of candidates) {
+        const candidateIterator = candidates !== null && candidates !== undefined
+            ? (candidates as unknown as { [Symbol.iterator]?: unknown })[Symbol.iterator]
+            : undefined;
+        if (typeof candidateIterator === "function") {
+            for (const existingKey of candidates as K[]) {
                 if (javaValuesEqual(existingKey, key)) {
                     return existingKey;
                 }
+            }
+            return null as unknown as K;
+        }
+
+        if (hashCode !== null && candidates !== null && candidates !== undefined) {
+            // A translated/runtime-restored bucket may not be a native JS
+            // iterable. Rebuild only that hash bucket from the authoritative
+            // Java map, then keep the fast lookup path for subsequent calls.
+            const rebuilt: K[] = [];
+            for (const entry of this.nameTable.entrySet()) {
+                const existingKey = entry.getKey();
+                if (this.keyHashCode(existingKey) === hashCode) rebuilt.push(existingKey);
+            }
+            this.equalityBuckets.set(hashCode, rebuilt);
+            for (const existingKey of rebuilt) {
+                if (javaValuesEqual(existingKey, key)) return existingKey;
             }
             return null as unknown as K;
         }
