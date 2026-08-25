@@ -1,0 +1,11 @@
+{
+  "command": "npm run test:serial",
+  "exitCode": 0,
+  "tests": 150,
+  "passed": 150,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "durationMs": 41001.1717,
+  "mode": "single-concurrency"
+}

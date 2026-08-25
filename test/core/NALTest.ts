@@ -8,6 +8,7 @@ import "../util/test/OutputConditionImplementations.ts";
 import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
 import { assertTrue } from "../util/junit-assert.ts";
 import { javaStringValue } from "../../src/runtime/jree-compat.ts";
+import { runSerialParameterized } from "../util/serial-parameterized-runner.ts";
 
 
 
@@ -87,19 +88,34 @@ export class NALTest extends JavaObject {
         NALTest.tests.put(name, java.lang.Boolean.TRUE);
     }
 
-    public static runTests(c: java.lang.Class<unknown>): void {
-
+    public static runTests(_c: java.lang.Class<unknown>): void {
         NALTest.tests.clear();
         NALTest.scores.clear();
+        NALTest.runSerialTests(NALTest.params(), path => new NALTest(path));
+    }
 
-        let result: Result = JUnitCore.runClasses(new ParallelComputer(true, true), c);
+    public static runSerialTests(
+        parameters: java.util.Collection<JavaObject[]>,
+        createTest: (path: java.lang.String) => NALTest,
+    ): void {
+        runSerialParameterized(parameters, argumentsForTest => {
+            const path = argumentsForTest[0] as java.lang.String;
+            createTest(path).test();
+        }, argumentsForTest => {
+            const path = argumentsForTest[0] as java.lang.String;
+            NALTest.tests.put(NALTest.testName(path), java.lang.Boolean.FALSE);
+        });
 
-        for (let f of result.getFailures()) {
-            let test: java.lang.String = f.getMessage().substring(f.getMessage().indexOf("/nal/single_step") + 8,
-                f.getMessage().indexOf(".nal"));
+        NALTest.doYourOneTimeTeardown();
+    }
 
-            NALTest.tests.put(test, false);
-        }
+    private static testName(path: java.lang.String): java.lang.String {
+        const normalizedPath = javaStringValue(path).replaceAll("\\\\", "/");
+        const fileName = normalizedPath.substring(normalizedPath.lastIndexOf("/") + 1);
+        const withoutExtension = fileName.endsWith(".nal") ? fileName.substring(0, fileName.length - 4) : fileName;
+        const name = withoutExtension.startsWith("nal") ? withoutExtension.substring(3) : withoutExtension;
+        return new java.lang.String(name);
+    }
 
         /*
          * commented because name.split() is broken for a special case in NalTestMetrics
@@ -131,8 +147,6 @@ export class NALTest extends JavaObject {
          * System.out.println(totalSucceeded + " / " + total);
          * }
          */
-    }
-
     public constructor(scriptPath: java.lang.String) {
         super();
         this.scriptPath = scriptPath;

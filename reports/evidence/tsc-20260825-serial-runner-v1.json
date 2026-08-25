@@ -1,0 +1,11 @@
+{
+  "command": "npx tsc --noEmit --pretty false --incremental false",
+  "exitCode": 1,
+  "diagnosticCount": 19,
+  "productionDiagnostics": 0,
+  "testDiagnostics": 19,
+  "previousDiagnosticCount": 30,
+  "resolvedCluster": "legacy JUnit parameterized runner",
+  "remainingFile": "test/core/bag/BagIteratorTest.ts",
+  "remainingDiagnosticCount": 19
+}

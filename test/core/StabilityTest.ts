@@ -8,6 +8,7 @@ import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
 import { assertTrue } from "../util/junit-assert.ts";
 import { NALTest } from "./NALTest.ts";
 import { javaStringValue } from "../../src/runtime/jree-compat.ts";
+import { runSerialParameterized } from "../util/serial-parameterized-runner.ts";
 
 
 
@@ -25,8 +26,6 @@ export class StabilityTest extends JavaObject {
     public static readonly showReport: boolean = true;
     public static readonly requireSuccess: boolean = true;
     public static readonly similarsToSave: int = 5;
-    private static readonly waitForEnterKeyOnStart: boolean = false; // useful for running profiler or some other
-    // instrumentation
     protected static readonly examples: java.util.Map<java.lang.String, java.lang.String> = new java.util.LinkedHashMap(); // path -> script data
     public static readonly tests: java.util.Map<java.lang.String, java.lang.Boolean> = new java.util.LinkedHashMap();
     public static readonly scores: java.util.Map<java.lang.String, double> = new java.util.LinkedHashMap();
@@ -73,34 +72,18 @@ export class StabilityTest extends JavaObject {
         StabilityTest.tests.put(name, java.lang.Boolean.TRUE);
     }
 
-    public static runTests(c: java.lang.Class<unknown>): double {
+    public static runTests(): double {
 
         StabilityTest.tests.clear();
         StabilityTest.scores.clear();
 
-        if (StabilityTest.waitForEnterKeyOnStart) {
-            java.lang.System.out.println("When ready, press enter");
-            try {
-                java.lang.System.in.read();
-            } catch (ex) {
-                if (ex instanceof java.io.IOException) {
-                    throw new java.lang.IllegalStateException("Could not read user input.", ex);
-                } else {
-                    throw ex;
-                }
-            }
-        }
-
-        // Result result = org.junit.runner.JUnitCore.runClasses(NALTest.class);
-
-        let result: Result = JUnitCore.runClasses(new ParallelComputer(true, true), c);
-
-        for (let f of result.getFailures()) {
-            let test: java.lang.String = f.getMessage().substring(f.getMessage().indexOf("/nal/single_step") + 8,
-                f.getMessage().indexOf(".nal"));
-
-            StabilityTest.tests.put(test, false);
-        }
+        runSerialParameterized(StabilityTest.params(), argumentsForTest => {
+            const path = argumentsForTest[0] as java.lang.String;
+            new StabilityTest(path).run();
+        }, argumentsForTest => {
+            const path = argumentsForTest[0] as java.lang.String;
+            StabilityTest.tests.put(StabilityTest.testName(path), java.lang.Boolean.FALSE);
+        });
 
         let levelSuccess: Int32Array = new Int32Array(10);
         let levelTotals: Int32Array = new Int32Array(10);
@@ -110,7 +93,7 @@ export class StabilityTest extends JavaObject {
             let level: int = 0;
             level = java.lang.Integer.parseInt(name.split("\\.")[0]);
             levelTotals[level]++;
-            if (e.getValue()) {
+            if (e.getValue().booleanValue()) {
                 levelSuccess[level]++;
             }
         }
@@ -138,8 +121,16 @@ export class StabilityTest extends JavaObject {
         return totalScore;
     }
 
+    private static testName(path: java.lang.String): java.lang.String {
+        const normalizedPath = javaStringValue(path).replaceAll("\\\\", "/");
+        const fileName = normalizedPath.substring(normalizedPath.lastIndexOf("/") + 1);
+        const withoutExtension = fileName.endsWith(".nal") ? fileName.substring(0, fileName.length - 4) : fileName;
+        const name = withoutExtension.startsWith("nal") ? withoutExtension.substring(3) : withoutExtension;
+        return new java.lang.String(name);
+    }
+
     public static main(args: java.lang.String[]): void {
-        StabilityTest.runTests(org.opennars.core.NALTest.class);
+        StabilityTest.runTests();
     }
 
     public constructor(scriptPath: java.lang.String) {

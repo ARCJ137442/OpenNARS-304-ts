@@ -36,7 +36,9 @@ export class NALTestSome extends NALTest {
     }
 
     public static main(args: java.lang.String[]): void {
-        NALTest.runTests(NALTestSome.class);
+        NALTest.tests.clear();
+        NALTest.scores.clear();
+        NALTest.runSerialTests(NALTestSome.params(), path => new NALTestSome(path));
     }
 
     public constructor(scriptPath: java.lang.String) {
