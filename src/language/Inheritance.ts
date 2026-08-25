@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Inheritance.java
-import { java, S } from "jree";
+import { java, type int, S } from "jree";
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
 import { CompoundTerm } from "./CompoundTerm.ts";
@@ -112,17 +112,36 @@ export class Inheritance extends Statement {
      * @param predicate The second component
      * @return A compound generated or null
      */
-    public static make(subject: Term, predicate: Term): Inheritance {
+    public static make(statement: Statement, subj: Term, pred: Term): Statement | null;
+    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(o: NativeOperator, subject: Term, predicate: Term,
+        customOrder: boolean, order: int): Statement | null;
+    public static make(subject: Term, predicate: Term): Inheritance;
+    public static make(...args: unknown[]): Inheritance | Statement | null {
+        if (args.length === 3) {
+            return Statement.make(...args as [Statement, Term, Term]);
+        }
+        if (args.length === 4) {
+            const [first, subject, predicate, order] = args as [NativeOperator | Statement, Term, Term, int];
+            return first instanceof Statement
+                ? Statement.make(first, subject, predicate, order)
+                : Statement.make(first, subject, predicate, order);
+        }
+        if (args.length === 5) {
+            return Statement.make(...args as [NativeOperator, Term, Term, boolean, int]);
+        }
+        const [subject, predicate] = args as [Term, Term];
 
         if (subject === null || predicate === null || Statement.invalidStatement(subject, predicate)) {
-            return null;
+            return null as unknown as Inheritance;
         }
 
         let subjectProduct: boolean = subject instanceof Product;
         let predicateOperator: boolean = Inheritance.operatorPredicate?.(predicate) ?? false;
 
         if (Debug.DETAILED) {
-            if (!predicateOperator && predicate.toString().startsWith("^")) {
+            if (!predicateOperator && predicate.toString().startsWith(new java.lang.String("^"))) {
                 throw new java.lang.IllegalStateException("operator term detected but is not an operator: " + predicate);
             }
         }

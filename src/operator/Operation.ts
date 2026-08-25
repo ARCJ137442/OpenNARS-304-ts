@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/Operation.java
-import { java, S } from "jree";
+import { java, type int, S } from "jree";
 import { Inheritance } from "../language/Inheritance.ts";
 import { Product } from "../language/Product.ts";
 import { Term } from "../language/Term.ts";
@@ -77,16 +77,33 @@ export class Operation extends Inheritance {
      * @param addSelf include SELF term at end of product terms
      * @return A compound generated or null
      */
+    public static make(statement: Statement, subj: Term, pred: Term): Statement | null;
+    public static make(op: Symbols.NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(o: Symbols.NativeOperator, subject: Term, predicate: Term,
+        customOrder: boolean, order: int): Statement | null;
     public static make(argProduct: Term, operator: Term): Operation;
     public static make(oper: Operator, arg: Term[], addSelf: boolean): Operation;
-    public static make(...args: unknown[]): Operation {
+    public static make(...args: unknown[]): Operation | Statement | null {
         if (args.length === 2) {
             const [argProduct, operator] = args as [Term, Term];
             return super.make(argProduct, operator) as Operation;
         }
         if (args.length === 3) {
+            if (args[0] instanceof Statement) {
+                return Statement.make(args[0], args[1] as Term, args[2] as Term);
+            }
             const [oper, arg] = args as [Operator, Term[], boolean];
             return new Operation(new Product(arg), oper);
+        }
+        if (args.length === 4) {
+            const [first, subject, predicate, order] = args as [Symbols.NativeOperator | Statement, Term, Term, int];
+            return first instanceof Statement
+                ? Statement.make(first, subject, predicate, order)
+                : Statement.make(first, subject, predicate, order);
+        }
+        if (args.length === 5) {
+            return Statement.make(...args as [Symbols.NativeOperator, Term, Term, boolean, int]);
         }
         throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
     }
