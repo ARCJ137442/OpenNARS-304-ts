@@ -1,0 +1,17 @@
+{
+  "command": "node dist/cli.mjs --cycles 1 java-master/src/main/resources/nal/single_step/desire.1.nal",
+  "exit_code": 0,
+  "file": "java-master/src/main/resources/nal/single_step/desire.1.nal",
+  "cycles": 1,
+  "expected": 1,
+  "passed": 1,
+  "matched": [true],
+  "ok": true,
+  "error_type": "none",
+  "exception": false,
+  "timed_out": false,
+  "thread_mode": "single",
+  "marker_missing": false,
+  "marker_missing_count": 0,
+  "marker_time_ms": [3.8925]
+}

@@ -1,0 +1,22 @@
+{
+  "date": "2026-08-25",
+  "clean_install": {
+    "command": "npm ci --ignore-scripts --no-audit --no-fund",
+    "exit_code": 0,
+    "added_packages": 14
+  },
+  "serial_test": {
+    "command": "npm test",
+    "exit_code": 0,
+    "tests": 151,
+    "passed": 151,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 40755.3756,
+    "concurrency": 1
+  },
+  "warnings": [
+    "Node experimental type stripping",
+    "jree DEP0151 main-field extension resolution"
+  ]
+}

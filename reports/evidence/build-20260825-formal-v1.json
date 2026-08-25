@@ -1,0 +1,16 @@
+{
+  "command": "npm run test:build",
+  "exit_code": 0,
+  "build": {
+    "sourceFileCount": 126,
+    "typescript": "5.4.5",
+    "output": "dist"
+  },
+  "check_build": {
+    "ok": true,
+    "entry": "index.js",
+    "cli": "cli.mjs",
+    "exports": ["Nar", "Narsese", "Term", "TruthValue", "BudgetValue"]
+  },
+  "warnings": ["jree DEP0151 main-field extension resolution"]
+}

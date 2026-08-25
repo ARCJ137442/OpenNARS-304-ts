@@ -2,15 +2,30 @@
     "name": "opennars-304-ts",
     "version": "0.1.0",
     "type": "module",
+    "main": "./dist/index.js",
+    "types": "./src/index.ts",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "bin": {
+        "opennars-304": "./dist/cli.mjs"
+    },
     "description": "",
     "directories": {
         "test": "test"
     },
     "scripts": {
-        "test": "npm run test:unit",
+        "test": "npm run test:unit:serial",
         "test:unit": "node --test --experimental-strip-types test/node/*.test.ts",
         "test:unit:serial": "node --test --test-concurrency=1 --experimental-strip-types test/node/*.test.ts",
         "test:serial": "npm run test:unit:serial",
+        "build": "node scripts/build.mjs",
+        "cli:dist": "node dist/cli.mjs",
+        "test:build": "npm run build && node scripts/check-build.mjs",
+        "prepack": "npm run build",
         "scan:migration-patterns": "node scripts/converting/scan-migration-patterns.mjs",
         "apply:migration-patterns": "node scripts/converting/apply-migration-patterns.mjs",
         "test:parity:local": "node --loader ./scripts/ts-loader.mjs scripts/parity/run-local-algorithm-parity.mjs",
@@ -24,6 +39,12 @@
     },
     "author": "",
     "license": "MIT",
+    "files": [
+        "dist",
+        "src",
+        "scripts/cli.mjs",
+        "README.md"
+    ],
     "dependencies": {
         "jree": "^1.3.0"
     },

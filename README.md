@@ -21,6 +21,24 @@ OpenNARS 3.0.4的TypeScript翻译版（开发中🚧）
 - 标准流程：先 `lean-spec board/search` 做上下文发现 → 基于 spec 盘点公开面与依赖 → 先定测试计划再动代码 → 依赖剥离与纯 TS 设计 → 最小测试/可选 tsc → 更新 spec 状态与报告并提交。
 - 可读性原则：每一步都写清“来源（扫描/调用点）—边界（拆分/依赖）—验证（测试/检查）”，让人类与 AI 都能复现决策路径。
 
+## 构建与运行
+
+安装依赖并运行串行单元测试：
+
+    npm ci
+    npm test
+
+生成 `dist/` 正式产物并验证核心 API：
+
+    npm run build
+    npm run test:build
+
+运行构建后的 CLI：
+
+    node dist/cli.mjs --cycles 1550 path/to/example.nal
+
+构建产物提供 `dist/index.js` 入口，公开 `Nar`、`Narsese`、`Term`、`TruthValue` 和 `BudgetValue` 等核心 API。`npm test` 默认使用单并发模式，以降低测试期间的内存压力；`npm run test:unit` 保留为显式并发入口。
+
 ### 当前战略基线
 
 旧的逐文件转写计划已不足以指导主线推进。当前以[新战略基线与工作流](docs/strategic-baseline.md)为项目导航：优先恢复可重复工具链，打通最小 NARS 垂直切片，再逐层扩展到完整推理与 NAL 差分验证。

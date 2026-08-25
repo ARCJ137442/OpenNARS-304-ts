@@ -1,0 +1,14 @@
+{
+  "command": "npm pack --dry-run --json",
+  "exit_code": 0,
+  "package": "opennars-304-ts@0.1.0",
+  "filename": "opennars-304-ts-0.1.0.tgz",
+  "entryCount": 257,
+  "size": 411621,
+  "unpackedSize": 2076704,
+  "shasum": "06add9dd5a8410633081297cbaa9f73b8c21288a",
+  "prepack_build": {
+    "sourceFileCount": 126,
+    "typescript": "5.4.5"
+  }
+}
