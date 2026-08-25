@@ -78,7 +78,7 @@ npm run build
 npm run shell:dist
 ```
 
-入口启动会自动把 jree 的无扩展名 `main` 元数据补成标准 ESM `exports`，并使用 Node `register()` loader；因此不应再看到 `--experimental-loader` 或 `DEP0151` 启动警告。CLI 是 M2 的人工 smoke 入口，不替代 M1 的 Java/TypeScript 机器可读矩阵。
+入口使用 Node `register()` loader，并由项目 resolver 将 jree 解析到明确的 `lib/index.js`，不修改 `node_modules`；因此不应再看到 `--experimental-loader` 或 `DEP0151` 启动警告。CLI 是 M2 的人工 smoke 入口，不替代 M1 的 Java/TypeScript 机器可读矩阵。
 
 ## M3：正式构建串行性能基线
 

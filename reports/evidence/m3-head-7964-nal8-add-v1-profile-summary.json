@@ -23,7 +23,7 @@
   "top_aggregates": [
     {
       "function": "getConverter",
-      "url": "jree compatibility runtime",
+      "url": "node:internal/encoding",
       "profile_time_ms": 736.873,
       "share_percent": 21.91
     },
@@ -53,7 +53,7 @@
     }
   ],
   "interpretation": {
-    "confirmed": "当前正式构建的低成本样本中，jree converter、GC 与编码路径是主要可观测成本；JavaObject 仍可观测但不是本样本的第一热点。",
+    "confirmed": "当前正式构建的低成本样本中，jree JavaString.valueOf -> convertUTF16ToString -> Node TextDecoder/getConverter 编码路径与 GC 是主要可观测成本；JavaObject 仍可观测但不是本样本的第一热点。getConverter 是 Node 内部编码实现，不是 jree 自有 converter 函数。",
     "not_proven": "profile 尚未证明任何实现可以安全删除或替换，也未证明这些热点在高成本样本中占比相同。",
     "next_experiment": "选定一个热点后建立同样输入的优化前后对照，并保持 marker、M1/M2 门禁和单线程合同不变。"
   }

@@ -25,7 +25,7 @@ M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观�
 - canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 - Java 与 TypeScript 均按单线程运行；Java 测试使用 JDK 18.0.2。
 - `npx tsc --noEmit --pretty false --incremental false`：0 诊断。
-- 本批串行 `npm test --silent`：159/159；权威 `npx tsc --noEmit --pretty false --incremental false`：0 诊断；`npm run build --silent` 与 `npm run shell:dist` 均通过。shell 已改用 `--import` 注册 TypeScript loader，并在入口前修补 jree 的 ESM `exports` 元数据；实际 shell 子进程 stderr 为空，不再产生 `--experimental-loader`/`DEP0151` 启动警告。Node 测试器自身的 `--experimental-strip-types` 提示不属于 shell 子进程。
+- 本批串行 `npm test --silent`：159/159；权威 `npx tsc --noEmit --pretty false --incremental false`：0 诊断；`npm run build --silent` 与 `npm run shell:dist` 均通过。shell 已改用 `--import` 注册 TypeScript loader，并由项目 resolver 将 `jree` 直接解析到明确的 `lib/index.js`；实际 shell 子进程 stderr 为空，不再产生 `--experimental-loader`/`DEP0151` 启动警告，也不再改写 `node_modules/jree/package.json`。Node 测试器自身的 `--experimental-strip-types` 提示不属于 shell 子进程。
 - 局部算法 parity：`ok: true`，`differences: []`，容差 `1e-5`。
 - M1 冻结合同已完成：245 个主资源加 `simpleOperationTest.nal` 共 246 个样本，244 个 marker 样本 marker 等价，2 个 markerless 样本均有 131072 周期独立 stage-digest 验收，综合功能结论为 246/246。原始 JSONL 的过程字段仍保留历史筛查分类，不应直接替代独立验收汇总。
 
@@ -71,9 +71,9 @@ M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观�
 
 M3 已有 `node scripts/e2e/run-m3-benchmark.mjs` 串行工具和显式资源观测开关。当前 HEAD `7964e69` 的正式 `dist` 基线位于 `reports/evidence/m3-formal-baseline-20260825-head-7964-v1.json`、`...recursion-v1.json` 和 `m3-formal-baseline-20260826-head-7964-simple-operation-v1.json`；四个 marker 代表样本功能/parity 通过，markerless 样本本次运行完成但未在该次 1550 周期追加观测中达到 131072。
 
-当前 profile 位于 `reports/evidence/m3-head-7964-nal8-add-v1-profile-summary.json`，第一可观测热点为 jree `getConverter`（21.91%），其次为 GC（16.21%）。尚未实施新的优化。
+当前 profile 位于 `reports/evidence/m3-head-7964-nal8-add-v1-profile-summary.json`，第一可观测热点为 Node 内部 `getConverter`（21.91%），其调用链为 jree `JavaString.valueOf` → `convertUTF16ToString` → Node `TextDecoder`，其次为 GC（16.21%）。该归因已由 `reports/evidence/m3-head-7964-nal4-recursion-small-v1.cpuprofile` 的高成本样本复核；尚未实施新的性能优化。
 
-这些证据只能证明代表样本可以在正式构建下运行，不能宣称完整性能等价或 M3 完成。Java 当前只能从管理接口提供进程 CPU、堆和 committed virtual memory proxy，Windows RSS 仍未直接取得；TypeScript 记录进程 CPU 与峰值 RSS。shell 的 `ExperimentalWarning` 与 `DEP0151` 已由 `bf7dd22` 修复并通过回归测试。
+这些证据只能证明代表样本可以在正式构建下运行，不能宣称完整性能等价或 M3 完成。Java 当前只能从管理接口提供进程 CPU、堆和 committed virtual memory proxy，Windows RSS 仍未直接取得；TypeScript 记录进程 CPU 与峰值 RSS。shell 的 `ExperimentalWarning` 与 `DEP0151` 已由 `bf7dd22` 开始修复，并在本批改为 resolver 方案后通过回归测试。
 
 ## 文档分层
 
