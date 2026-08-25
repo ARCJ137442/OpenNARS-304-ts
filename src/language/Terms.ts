@@ -6,8 +6,9 @@ import { TermLink } from "../entity/TermLink.ts";
 import type { Statement } from "./Statement.ts";
 import { Variable } from "./Variable.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
-import type { Term } from "./Term.ts";
+import { Term } from "./Term.ts";
 import type { Memory } from "../storage/Memory.ts";
+import { javaValuesEqual } from "../runtime/jree-compat.ts";
 
 type TermsRuntime = Record<string, any>;
 
@@ -172,11 +173,11 @@ export class Terms extends JavaObject {
 
     public static reduceUntilLayer2(_itself: CompoundTerm, replacement: Term, memory: Memory): Term {
         if (_itself === null)
-            return null;
+            return null as unknown as Term;
 
         let reduced: Term = Terms.reduceComponentOneLayer(_itself, replacement, memory);
         if (!(reduced instanceof CompoundTerm))
-            return null;
+            return null as unknown as Term;
 
         let itself: CompoundTerm = reduced as CompoundTerm;
         let j: int = 0;
@@ -190,7 +191,7 @@ export class Terms extends JavaObject {
             let ret2: Term = Terms.reduceComponentOneLayer(t2 as CompoundTerm, replacement, memory);
 
             // CompoundTerm itselfCompound = itself;
-            let replaced: Term = null;
+            let replaced: Term = null as unknown as Term;
             if (j < itself.term.length)
                 replaced = itself.setComponent(j, ret2, memory);
 
@@ -343,7 +344,7 @@ export class Terms extends JavaObject {
                 }
             }
         }
-        return null;
+        return null as unknown as Term;
     }
 
     public static reduceComponentOneLayer(compound: CompoundTerm, component: Term, memory: Memory): Term {
@@ -396,10 +397,10 @@ export class Terms extends JavaObject {
         let subjB: Term = B.getSubject();
         let predB: Term = B.getPredicate();
 
-        let ta: Term = null;
-        let tb: Term = null;
-        let sa: Term = null;
-        let sb: Term = null;
+        let ta: Term = null as unknown as Term;
+        let tb: Term = null as unknown as Term;
+        let sa: Term = null as unknown as Term;
+        let sb: Term = null as unknown as Term;
 
         if (isOperator(subjA, "PRODUCT") && isOperator(predB, "IMAGE_EXT")) {
             ta = predA;
@@ -473,7 +474,7 @@ export class Terms extends JavaObject {
             let had: boolean = false;
             for (let sB of componentsB) {
                 if (sA instanceof Variable && sB instanceof Variable) {
-                    if (sA.name().equals(sB.name())) {
+                    if (javaValuesEqual(sA.name(), sB.name())) {
                         had = true;
                     }
                 } else if (sA.equals(sB)) {
@@ -597,7 +598,7 @@ export class Terms extends JavaObject {
          */
         let i: int = 0;
         for (let e of array) {
-            if (v.equals(e)) {
+            if (javaValuesEqual(v, e)) {
                 return i;
             }
             i++;
@@ -639,14 +640,14 @@ export class Terms extends JavaObject {
 
     public static contains<T>(array: T[], v: T): boolean {
         for (let e of array) {
-            if (v.equals(e)) {
+            if (javaValuesEqual(v, e)) {
                 return true;
             }
         }
         return false;
     }
 
-    protected static override equals(a: Term[], b: Term[]): boolean {
+    protected static equals(a: Term[], b: Term[]): boolean {
         if (a.length !== b.length)
             return false;
         for (let i: int = 0; i < a.length; i++) {
