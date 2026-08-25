@@ -37,15 +37,15 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
     private newTasks: java.util.Set<Term> = new java.util.LinkedHashSet();
 
-    private expiredTruth: TruthValue = null;
-    private expiredBudget: BudgetValue = null;
+    private expiredTruth: TruthValue = null as unknown as TruthValue;
+    private expiredBudget: BudgetValue = null as unknown as BudgetValue;
 
     // internal experience has less durability?
     public ANTICIPATION_DURABILITY_MUL: float = Float32Math.from(0.1) as float; // 0.1
     // internal experience has less priority?
     public ANTICIPATION_PRIORITY_MUL: float = Float32Math.from(0.1) as float; // 0.1
 
-    private nal: DerivationContext; // don't serialize, it will be re-set after deserialization
+    private nal: DerivationContext = null as unknown as DerivationContext; // don't serialize, it will be re-set after deserialization
 
     public constructor();
 
@@ -132,7 +132,8 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             // constructed)
             // ok, and what predicted occurence time would that be? because only if now is
             // bigger or equal, didnt happen is true
-            let expiredate: double = predictionstarted + Int.time * nal.narParameters.ANTICIPATION_TOLERANCE;
+            let expiredate: double = Number(predictionstarted as unknown as number)
+                + Number(Int.time as unknown as number) * nal.narParameters.ANTICIPATION_TOLERANCE;
             //
 
             let didntHappen: boolean = (now >= expiredate);
@@ -210,12 +211,14 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
     protected execute(operation: Operation, args: Term[], memory: Memory,
         time: Timable): java.util.List<Task> {
         if (operation === null) {
-            return null; // not as mental operator but as fundamental principle
+            return null as unknown as java.util.List<Task>; // not as mental operator but as fundamental principle
         }
 
-        this.anticipate(args[1], memory, time.time() + memory.narParameters.DURATION, null, time);
+        this.anticipate(args[1], memory,
+            (Number(time.time() as unknown as number) + memory.narParameters.DURATION) as unknown as long,
+            null as unknown as Task, time);
 
-        return null;
+        return null as unknown as java.util.List<Task>;
     }
 
     protected anticipationOperator: boolean = true; // a parameter which tells whether NARS should know if it anticipated or not
@@ -274,7 +277,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
                 BudgetFunctions.truthToQuality(truth), memory.narParameters);
             let newTask: Task = new Task(s, budgetForNewTask, Task.EnumType.INPUT);
 
-            memory.addNewTask(newTask, "Perceived (Internal Experience: Anticipation)");
+            memory.addNewTask(newTask, S`Perceived (Internal Experience: Anticipation)`);
         }
     }
 
