@@ -150,7 +150,7 @@ export class Variables extends JavaObject {
                     let termAAsVariable: Variable = termA as Variable;
                     // https://github.com/opennars/opennars/issues/482:
                     let mapIdx: int = term1VarUnifyAllowed ? 0 : 1;
-                    let t: Term = map[mapIdx] !== null ? map[mapIdx].get(termAAsVariable) : null;
+                    let t: Term = ((map[mapIdx] !== null ? map[mapIdx].get(termAAsVariable) : null) as unknown as Term);
                     if (t !== null) {
                         return Variables.findSubstitute(rnd, type, t, termB, map);
                     }
@@ -231,7 +231,7 @@ export class Variables extends JavaObject {
                         for (let i: int = 0; i < list.length; i++) {
                             let succeeded: boolean = false;
                             for (let j: int = 0; j < list.length; j++) {
-                                if (matchedJ.contains(j)) { // this one already was used to match one of the i's
+                                if (matchedJ.contains(java.lang.Integer.valueOf(j))) { // this one already was used to match one of the i's
                                     continue;
                                 }
                                 let ti: Term = list[i].clone();
@@ -250,7 +250,7 @@ export class Variables extends JavaObject {
                                     Variables.appendToMap(mapNew[0], map[0]);
                                     Variables.appendToMap(mapNew[1], map[1]);
                                     succeeded = true;
-                                    matchedJ.add(j);
+                                    matchedJ.add(java.lang.Integer.valueOf(j));
                                     break;
                                 }
                             }
@@ -331,7 +331,7 @@ export class Variables extends JavaObject {
 
     private static appendToMap(source: java.util.Map<Term, Term>, target: java.util.Map<Term, Term>): void {
         for (let c of source.keySet()) {
-            target.put(c, source.get(c));
+            target.put(c, source.get(c) as unknown as Term);
         }
     }
 
@@ -355,7 +355,7 @@ export class Variables extends JavaObject {
                     return false;
                 let l: int = n.length();
                 for (let i: int = 0; i < l; i++) {
-                    switch (String.fromCharCode(n.charAt(i))) {
+                    switch (String.fromCharCode(n.charAt(i) as unknown as number)) {
                         case Symbols.VAR_INDEPENDENT:
                         case Symbols.VAR_DEPENDENT:
                         case Symbols.VAR_QUERY:
@@ -443,17 +443,20 @@ export class Variables extends JavaObject {
                 const [rnd, type, t1, t2, compound, allowPartial] = args as [java.util.Random, JavaChar, Term, Term, Term[], boolean];
 
 
-                let map: java.util.Map<Term, Term>[] = [null, null]; // begins empty: null,null
+                let map: java.util.Map<Term, Term>[] = [
+                    null as unknown as java.util.Map<Term, Term>,
+                    null as unknown as java.util.Map<Term, Term>,
+                ]; // begins empty: null,null
 
                 let hasSubs: boolean = Variables.findSubstitute(rnd, type, t1, t2, map, allowPartial);
                 if (hasSubs) {
                     let a: Term = (compound[0] instanceof Variable && map[0].containsKey(compound[0]))
-                        ? map[0].get(compound[0])
+                        ? map[0].get(compound[0]) as unknown as Term
                         : Variables.applySubstituteAndRenameVariables((compound[0] as CompoundTerm), map[0]);
                     if (a === null)
                         return false;
                     let b: Term = (compound[1] instanceof Variable && map[1].containsKey(compound[1]))
-                        ? map[1].get(compound[1])
+                        ? map[1].get(compound[1]) as unknown as Term
                         : Variables.applySubstituteAndRenameVariables((compound[1] as CompoundTerm), map[1]);
                     if (b === null)
                         return false;
@@ -495,7 +498,7 @@ export class Variables extends JavaObject {
         let r: Term = t.applySubstitute(subs);
 
         if (r === null)
-            return null;
+            return null as unknown as Term;
 
         if (r.equals(t))
             return t;
@@ -505,7 +508,8 @@ export class Variables extends JavaObject {
 
     public static makeCommonVariable(v1: Term, v2: Term): Variable {
         // TODO use more efficient string construction
-        return new Variable(v2.toString() + v1.toString() + '$'); // v2 first since when type does not match
+        const generatedName = String(v2.toString()) + String(v1.toString()) + '$';
+        return new Variable(generatedName); // v2 first since when type does not match
     } // but it is an allowed rename like $1 -> #1 then the second type should be used
 
     /**
