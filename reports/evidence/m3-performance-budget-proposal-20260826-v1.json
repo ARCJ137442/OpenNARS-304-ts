@@ -1,7 +1,15 @@
 {
   "schema": "opennars-304-ts/m3-performance-budget-proposal/v1",
-  "status": "proposed",
+  "status": "approved",
   "approval_required": true,
+  "approved_at": "2026-08-26",
+  "approved_by": "user",
+  "approval_note": "用户明确批准平衡档：60秒/1024周期，Java相对倍率16；性能优化主线优先推进去jree化与TypeScript原生运行逻辑。",
+  "approved_scenario": {
+    "id": "balanced",
+    "ts_wall_ms_per_1024_cycles_max": 60000,
+    "ts_to_java_wall_ratio_max": 16
+  },
   "generated_at": "2026-08-26",
   "purpose": "在功能等价先决条件成立后，为单线程 TypeScript 性能验收提供可审阅的绝对预算、相对 Java 预算和 stall 定义；不自动改变当前 runner 的通过结论。",
   "baseline": {
@@ -69,7 +77,7 @@
     {
       "id": "balanced",
       "label": "平衡",
-      "status": "proposed",
+      "status": "approved",
       "ts_wall_ms_per_1024_cycles_max": 60000,
       "ts_to_java_wall_ratio_max": 16,
       "interpretation": "保留较宽绝对安全余量，同时要求 TypeScript 不长期超过 Java 一个数量级以上的宽松边界"

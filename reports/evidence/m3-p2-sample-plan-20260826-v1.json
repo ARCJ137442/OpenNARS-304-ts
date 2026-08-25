@@ -1,9 +1,14 @@
 {
   "schema": "opennars-304-ts/m3-p2-sample-plan/v1",
-  "status": "waiting_for_budget_approval",
+  "status": "approved_for_execution",
   "budget_proposal": "reports/evidence/m3-performance-budget-proposal-20260826-v1.json",
+  "approved_scenario": {
+    "id": "balanced",
+    "ts_wall_ms_per_1024_cycles_max": 60000,
+    "ts_to_java_wall_ratio_max": 16
+  },
   "selection_source": "reports/evidence/opennars-304-nal-manifest-245-plus-1-v1.json",
-  "candidate_git_commit": "b2ab6fa",
+  "candidate_git_commit": "4af4a73",
   "canonical_java_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
   "canonical_java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
   "environment": {

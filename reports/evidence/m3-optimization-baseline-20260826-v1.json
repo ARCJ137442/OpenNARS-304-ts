@@ -1,0 +1,69 @@
+{
+  "schema": "opennars-304-ts/m3-optimization-baseline/v1",
+  "status": "frozen_before_optimization",
+  "captured_at": "2026-08-26",
+  "optimization_goal": "在不破坏M1/M2功能与类型契约的前提下，逐轮减少jree依赖并使用TypeScript原生运行逻辑。",
+  "performance_contract": {
+    "scenario": "balanced",
+    "ts_wall_ms_per_1024_cycles_max": 60000,
+    "ts_to_java_wall_ratio_max": 16,
+    "thread_mode": "single",
+    "functional_precedes_performance": true
+  },
+  "commits": {
+    "m1_functional_freeze": {
+      "commit": "1bdad9d468232912b621cbb6f118ad8bc25be798",
+      "short": "1bdad9d",
+      "completed_at": "2026-08-24T17:31:29+08:00",
+      "subject": "test(018): 完成功能冻结矩阵与等价证据"
+    },
+    "m1_freeze_documentation": {
+      "commit": "67c30e68fa76af4d23acf77fdc6d4c8618f2cd19",
+      "short": "67c30e6",
+      "subject": "docs(018): 完成功能冻结批次记录"
+    },
+    "m2_zero_diagnostic_release": {
+      "commit": "2ffcb646be7b112dd1be893d366f4120a1254c60",
+      "short": "2ffcb64",
+      "subject": "feat(019): 完成零诊断构建与发布门禁"
+    },
+    "m1_m2_joint_regression_checkpoint": {
+      "commit": "c1885a1b3b1e88db4786329108ddac346278848d",
+      "short": "c1885a1",
+      "subject": "fix(019): 恢复Sentence可空真值访问语义"
+    },
+    "optimization_start": {
+      "commit": "4af4a731ce9de2abbd0c54b17ffe835fa9d5e94e",
+      "short": "4af4a73",
+      "subject": "docs(020): 同步M3基线与运行时警告证据"
+    }
+  },
+  "java_canonical": {
+    "commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+    "jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5"
+  },
+  "frozen_functional_evidence": [
+    "reports/evidence/ts-java-parity-20260824-functional-freeze-v1-summary.json",
+    "reports/evidence/m1-245-parity-20260825-sentence-gettruth-fix-v1.jsonl",
+    "reports/evidence/long-term-stability-131072-parity-20260824.json"
+  ],
+  "m2_regression_commands": [
+    "npx tsc --noEmit --pretty false --incremental false",
+    "npm test --silent",
+    "npm run test:parity:local --silent",
+    "npm run test:build --silent",
+    "npm run test:release --silent"
+  ],
+  "m1_regression_requirement": {
+    "scope": "245个主资源加simpleOperationTest.nal的综合246/246口径",
+    "raw_matrix_must_remain_distinguished": true,
+    "must_run_after_optimization": true
+  },
+  "optimization_policy": {
+    "max_failed_attempts_before_effort_checkpoint": 3,
+    "one_confirmed_hotspot_per_attempt": true,
+    "no_node_modules_mutation": true,
+    "no_semantic_fallback_to_performance": true,
+    "rollback_reference": "m1_m2_joint_regression_checkpoint"
+  }
+}
