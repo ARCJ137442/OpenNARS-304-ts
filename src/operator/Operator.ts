@@ -130,7 +130,7 @@ export abstract class Operator extends Term implements Plugin {
                     memory.executedTask(time, operation, TruthValue.fromFrequencyConfidence(1, executionConfidence, memory.narParameters));
                 }
 
-                Operator.reportExecution(operation, operationArgs, feedback, memory);
+                Operator.reportExecution(operation, operationArgs, feedback as unknown as java.lang.Object, memory);
 
                 if (feedback !== null) {
                     for (let t of feedback) {
@@ -154,8 +154,8 @@ export abstract class Operator extends Term implements Plugin {
     public static operationExecutionString(operation: Statement): java.lang.String {
         let operator: Term = operation.getPredicate();
         let operationArguments: Term = operation.getSubject();
-        let argList: java.lang.String = operationArguments.toString().substring(3); // skip the product prefix "(*,"
-        return operator + "(" + argList;
+        let argList: java.lang.String = new java.lang.String(String(operationArguments.toString()).substring(3)); // skip the product prefix "(*,"
+        return new java.lang.String(javaStringValue(operator) + "(" + String(argList));
     }
 
     public clone(): Operator {
@@ -181,7 +181,7 @@ export abstract class Operator extends Term implements Plugin {
             // final Operator operator = (Operator) opT;
 
             if (feedback instanceof java.lang.Exception)
-                feedback = feedback.getClass().getSimpleName() + ": " + (feedback as java.lang.Throwable).getMessage();
+                feedback = new java.lang.String(String(feedback.getClass().getSimpleName()) + ": " + String((feedback as java.lang.Throwable).getMessage()));
 
             memory.emit(OutputHandler.EXE.class, new Operator.ExecutionResult(operation, feedback));
         }
@@ -202,23 +202,24 @@ export abstract class Operator extends Term implements Plugin {
         }
 
         public override  toString(): java.lang.String {
-            let b: BudgetValue = null;
+            let b: BudgetValue = null as unknown as BudgetValue;
             if (this.getTask() !== null) {
                 b = this.getTask().getBudget();
             }
             let args: Term[] = this.operation.getArguments().term;
             let operator: Operator = this.operation.getOperator();
 
-            return ((b !== null) ? (b.toStringExternal() + " ") : "") +
-                operator + "(" + java.util.Arrays.toString(args) + ")=" + this.feedback;
+            const budgetPrefix = b !== null ? javaStringValue(b.toStringExternal()) + " " : "";
+            return new java.lang.String(budgetPrefix + javaStringValue(operator) +
+                "(" + String(java.util.Arrays.toString(args)) + ")=" + javaStringValue(this.feedback));
         }
 
     };
 
 
     public static addPrefixIfMissing(opName: java.lang.String): java.lang.String {
-        if (!opName.startsWith("^"))
-            return '^' + opName;
+        if (!opName.startsWith(new java.lang.String("^")))
+            return new java.lang.String("^" + String(opName));
         return opName;
     }
 
