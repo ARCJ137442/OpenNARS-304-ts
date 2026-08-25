@@ -31,16 +31,16 @@ export class Emotions extends JavaObject implements Plugin {
     public CHANGE_STEPS_DEMANDED: int = 1000;
 
     public lasthappy: double = 0.5;
-    public last_happy_time: long = 0;
-    public last_busy_time: long = 0;
+    public last_happy_time: long = 0 as unknown as long;
+    public last_busy_time: long = 0 as unknown as long;
 
     /**
      * Java permits a private field and an accessor method to share a name.
      * Keep the public method names while avoiding a TypeScript instance field
      * shadowing happy() and busy().
      */
-    private happyValue: float;
-    private busyValue: float;
+    private happyValue: float = Float32Math.from(0) as float;
+    private busyValue: float = Float32Math.from(0) as float;
 
     public setHAPPY_EVENT_HIGHER_THRESHOLD(val: double): void {
         this.HAPPY_EVENT_HIGHER_THRESHOLD = Float32Math.from(val) as float;
@@ -168,7 +168,7 @@ export class Emotions extends JavaObject implements Plugin {
         }
 
         if (frequency !== -1) { // ok lets add an event now
-            let predicate: Term = SetInt.make(new Term(java.lang.String.valueOf("satisfied")));
+            let predicate: Term = SetInt.make(new Term(S`satisfied`));
             let subject: Term = Term.SELF;
             let inh: Inheritance = Inheritance.make(subject, predicate);
             let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.happyValue, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
@@ -182,7 +182,7 @@ export class Emotions extends JavaObject implements Plugin {
                 nal.narParameters);
             let t: Task = new Task(s, budgetOfNewTask, Task.EnumType.INPUT);
 
-            nal.addTask(t, "emotion");
+            nal.addTask(t, S`emotion`);
             /*
              * if(Parameters.REFLECT_META_HAPPY_GOAL) { //remind on the goal whenever
              * happyness changes, should suffice for now
@@ -262,7 +262,7 @@ export class Emotions extends JavaObject implements Plugin {
         }
 
         if (frequency !== -1) { // ok lets add an event now
-            let predicate: Term = SetInt.make(new Term(java.lang.String.valueOf("busy")));
+            let predicate: Term = SetInt.make(new Term(S`busy`));
             let subject: Term = new Term(java.lang.String.valueOf("SELF"));
             let inh: Inheritance = Inheritance.make(subject, predicate);
             let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.busyValue, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
@@ -278,7 +278,7 @@ export class Emotions extends JavaObject implements Plugin {
                 nal.narParameters.DEFAULT_JUDGMENT_DURABILITY,
                 BudgetFunctions.truthToQuality(truth), nal.narParameters);
             let t: Task = new Task(s, budgetForNewTask, Task.EnumType.INPUT);
-            nal.addTask(t, "emotion");
+            nal.addTask(t, S`emotion`);
         }
     }
 
