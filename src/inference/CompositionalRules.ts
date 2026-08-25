@@ -147,9 +147,9 @@ export class CompositionalRules extends JavaObject {
         let truthOr: TruthValue = union(truthT, truthB, nal.narParameters);
         let truthAnd: TruthValue = intersection(truthT, truthB, nal.narParameters);
         let truthDif: TruthValue = null as unknown as TruthValue;
-        let termOr: Term = null as unknown as Term;
-        let termAnd: Term = null as unknown as Term;
-        let termDif: Term = null as unknown as Term;
+        let termOr: Term | null = null;
+        let termAnd: Term | null = null;
+        let termDif: Term | null = null;
         if (index === 0) {
             if (taskContent instanceof Inheritance) {
                 termOr = IntersectionInt.make(componentT, componentB);
@@ -207,7 +207,7 @@ export class CompositionalRules extends JavaObject {
      * @param truth     TruthValue of the contentInd
      * @param nal       Reference to the memory
      */
-    private static processComposed(statement: Statement, subject: Term, predicate: Term,
+    private static processComposed(statement: Statement, subject: Term | null, predicate: Term | null,
         order: int, truth: TruthValue, nal: DerivationContext): void {
         if ((subject === null) || (predicate === null)) {
             return;

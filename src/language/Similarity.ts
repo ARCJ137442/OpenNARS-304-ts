@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Similarity.java
-import { java, S } from "jree";
+import { java, type int, S } from "jree";
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -101,7 +101,7 @@ export class Similarity extends Statement {
      * alternate version of make that allows equivalent subject and predicate
      * to be reduced to the common term.
      */
-    public static makeTerm(subject: Term, predicate: Term): Term {
+    public static makeTerm(subject: Term, predicate: Term): Term | null {
         if (subject.equals(predicate))
             return subject;
         return Similarity.make(subject, predicate);
@@ -114,8 +114,27 @@ export class Similarity extends Statement {
      * @param predicate The second component
      * @return A compound generated or null
      */
-    public static make(subject: Term, predicate: Term): Similarity {
+    public static make(statement: Statement, subj: Term, pred: Term): Statement | null;
+    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(o: NativeOperator, subject: Term, predicate: Term,
+        customOrder: boolean, order: int): Statement | null;
+    public static make(subject: Term, predicate: Term): Similarity | null;
+    public static make(...args: unknown[]): Similarity | Statement | null {
+        if (args.length === 3) {
+            return Statement.make(...args as [Statement, Term, Term]);
+        }
+        if (args.length === 4) {
+            const [first, subject, predicate, order] = args as [NativeOperator | Statement, Term, Term, int];
+            return first instanceof Statement
+                ? Statement.make(first, subject, predicate, order)
+                : Statement.make(first, subject, predicate, order);
+        }
+        if (args.length === 5) {
+            return Statement.make(...args as [NativeOperator, Term, Term, boolean, int]);
+        }
 
+        const [subject, predicate] = args as [Term, Term];
         if (Statement.invalidStatement(subject, predicate)) {
             return null;
         }

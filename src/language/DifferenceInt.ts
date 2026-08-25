@@ -88,7 +88,7 @@ export class DifferenceInt extends CompoundTerm {
      * @return the Term generated from the arguments
      * @param arg The list of term
      */
-    public static make(arg: Term[]): Term;
+    public static make(arg: Term[]): Term | null;
 
     /**
      * Try to make a new compound from two term. Called by the inference rules.
@@ -97,8 +97,8 @@ export class DifferenceInt extends CompoundTerm {
      * @param t2 The second component
      * @return A compound generated or a term it reduced to
      */
-    public static make(t1: Term, t2: Term): Term;
-    public static make(...args: unknown[]): Term {
+    public static make(t1: Term, t2: Term): Term | null;
+    public static make(...args: unknown[]): Term | null {
         switch (args.length) {
             case 1: {
                 const [arg] = args as [Term[]];

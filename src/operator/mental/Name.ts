@@ -35,7 +35,10 @@ export class Name extends Operator {
         time: Timable): java.util.List<Task> {
         let compound: Term = args[1];
         let atomic: Term = args[2];
-        let content: Similarity = Similarity.make(compound, atomic);
+        let content: Similarity | null = Similarity.make(compound, atomic);
+        if (content === null) {
+            return new java.util.ArrayList<Task>();
+        }
 
         let truth: TruthValue = TruthValue.fromFrequencyConfidence(1, 0.9999, memory.narParameters); // a naming convension
         let sentence: Sentence = new Sentence(

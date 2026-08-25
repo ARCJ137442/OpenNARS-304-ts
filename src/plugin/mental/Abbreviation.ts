@@ -177,8 +177,12 @@ export class Abbreviation extends JavaObject implements Plugin {
 
             let atomic: Term = this.newSerialTerm(Symbols.TERM_PREFIX);
 
+            const content = Similarity.make(compound, atomic);
+            if (content === null) {
+                return new java.util.ArrayList<Task>();
+            }
             let sentence: Sentence = new Sentence(
-                Similarity.make(compound, atomic),
+                content,
                 Symbols.JUDGMENT_MARK,
                 TruthValue.fromFrequencyConfidence(1, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, memory.narParameters), // a
                 // naming

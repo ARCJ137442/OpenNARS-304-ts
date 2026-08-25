@@ -75,7 +75,7 @@ export class IntersectionExt extends CompoundTerm {
     }
 
 
-    public static make(t: Term[]): Term;
+    public static make(t: Term[]): Term | null;
 
     /**
      * Try to make a new compound from two term. Called by the inference rules.
@@ -84,8 +84,8 @@ export class IntersectionExt extends CompoundTerm {
      * @param term2 The first component
      * @return A compound generated or a term it reduced to
      */
-    public static make(term1: Term, term2: Term): Term;
-    public static make(...args: unknown[]): Term {
+    public static make(term1: Term, term2: Term): Term | null;
+    public static make(...args: unknown[]): Term | null {
         switch (args.length) {
             case 1: {
                 let [t] = args as [Term[]];

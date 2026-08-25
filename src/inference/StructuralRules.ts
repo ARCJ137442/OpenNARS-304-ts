@@ -327,7 +327,7 @@ export class StructuralRules extends JavaObject {
         }
         let sub: Term = statement.getSubject();
         let pre: Term = statement.getPredicate();
-        let content: Statement;
+        let content: Statement | null;
         if (statement instanceof Inheritance) {
             content = Similarity.make(sub, pre);
         } else {
@@ -995,9 +995,14 @@ export class StructuralRules extends JavaObject {
         let subj: Term = statement.getSubject();
         let pred: Term = statement.getPredicate();
 
+        const negatedPred = Negation.make(pred);
+        const negatedSubj = Negation.make(subj);
+        if (negatedPred === null || negatedSubj === null) {
+            return false;
+        }
         let content: Statement | null = Statement.make(statement,
-            Negation.make(pred),
-            Negation.make(subj),
+            negatedPred,
+            negatedSubj,
             TemporalRules.reverseOrder(statement.getTemporalOrder()));
 
         if (content === null)

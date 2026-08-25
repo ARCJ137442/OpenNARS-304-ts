@@ -431,11 +431,14 @@ export class LocalRules extends JavaObject {
         let s1: Statement = judgment1.term as Statement;
         let t1: Term = s1.getSubject();
         let t2: Term = s1.getPredicate();
-        let content: Term;
+        let content: Term | null;
         if (s1 instanceof Inheritance) {
             content = Similarity.make(t1, t2);
         } else {
             content = Equivalence.make(t1, t2, s1.getTemporalOrder());
+        }
+        if (content === null) {
+            return;
         }
         let value1: TruthValue = judgment1.getTruth();
         let value2: TruthValue = judgment2.getTruth();

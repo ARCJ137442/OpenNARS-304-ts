@@ -79,7 +79,7 @@ export class Negation extends CompoundTerm {
      * @param t The component
      * @return A compound generated or a term it reduced to
      */
-    public static make(t: Term): Term;
+    public static make(t: Term): Term | null;
 
     /**
      * Try to make a new Negation. Called by StringParser.
@@ -87,8 +87,8 @@ export class Negation extends CompoundTerm {
      * @return the Term generated from the arguments
      * @param argument The list of term
      */
-    public static make(argument: Term[]): Term;
-    public static make(...args: unknown[]): Term {
+    public static make(argument: Term[]): Term | null;
+    public static make(...args: unknown[]): Term | null {
         if (args.length !== 1) {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
@@ -125,7 +125,8 @@ export class Negation extends CompoundTerm {
     public static areMutuallyInverse(tc: Term, ptc: Term): boolean {
         // doesnt seem necessary to check both, one seems sufficient.
         // incurs cost of creating a Negation and its id
-        return (ptc.equals(Negation.make(tc)) /* || tc.equals(Negation.make(ptc)) */);
+        const inverse = Negation.make(tc);
+        return inverse !== null && ptc.equals(inverse); // || tc.equals(Negation.make(ptc))
     }
 
 }
