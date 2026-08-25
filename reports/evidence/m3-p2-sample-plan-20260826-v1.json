@@ -3,7 +3,7 @@
   "status": "waiting_for_budget_approval",
   "budget_proposal": "reports/evidence/m3-performance-budget-proposal-20260826-v1.json",
   "selection_source": "reports/evidence/opennars-304-nal-manifest-245-plus-1-v1.json",
-  "candidate_git_commit": "f5c05df",
+  "candidate_git_commit": "b2ab6fa",
   "canonical_java_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
   "canonical_java_jar_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5",
   "environment": {

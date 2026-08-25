@@ -20,7 +20,7 @@ M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观�
 
 ## 当前已确认事实
 
-- Git 主线最新已推送提交：`42b58fd`；`4d544a1` 修复 Node/jree 运行时入口警告，`29b326a` 固化 JavaString UTF-16 边界优化与 `42b58fd` 完成发布候选外部消费验收。
+- Git 主线最新已推送提交：`b2ab6fa`；`4d544a1` 修复 Node/jree 运行时入口警告，`29b326a` 固化 JavaString UTF-16 边界优化与 `42b58fd` 完成发布候选外部消费验收。
 - Java canonical JAR：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`。
 - canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 - Java 与 TypeScript 均按单线程运行；Java 测试使用 JDK 18.0.2。
