@@ -20,7 +20,7 @@ M1 未全量通过时，不启动新的 M3 benchmark 或性能优化。任何 M2
 
 ## 当前已确认事实
 
-- Git 主线最新提交：`0acc192`；代码优化提交：`4d5435f`。
+- Git 主线最新提交：`913bf8f`；代码优化提交：`4d5435f`。
 - Java canonical JAR：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`。
 - canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 - Java 与 TypeScript 均按单线程运行；Java 测试使用 JDK 18.0.2。

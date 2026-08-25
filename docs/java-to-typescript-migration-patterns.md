@@ -2,7 +2,7 @@
 
 版本：0.7（2026-08-25）
 
-当前证据覆盖：代码主线 `0acc192`（FQN 优化代码来自 `4d5435f`）。历史扫描数字保留用于比较，不作为当前质量门禁；当前权威门禁见 [`docs/current-status-and-runbook.md`](current-status-and-runbook.md)。
+当前证据覆盖：代码主线 `913bf8f`（FQN 优化代码来自 `4d5435f`）。历史扫描数字保留用于比较，不作为当前质量门禁；当前权威门禁见 [`docs/current-status-and-runbook.md`](current-status-and-runbook.md)。
 
 本文件把当前 OpenNARS 转写中反复出现的纠正归纳为可检索、可验证、可批量处理的模式。它不是“看到字符串就替换”的规则表：每条模式都必须同时说明识别条件、正确的 TypeScript 语义、验证门禁和自动化边界。
 
