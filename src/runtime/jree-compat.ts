@@ -1,5 +1,20 @@
 import { Class, JavaObject, java, type long } from "jree";
 
+// jree 1.3.0 constructs and parses an Error stack in every JavaObject class
+// that has not inherited its internal "#fqn" marker.  The published runtime
+// only writes this marker; Class.getName()/getSimpleName() use the constructor
+// name, and no jree or OpenNARS source reads "#fqn".  Seed the inherited
+// marker at the compatibility boundary so translated objects keep their
+// observable class identity without paying for a dead stack-parsing path.
+const JREE_FQN_MARKER = "#fqn";
+const javaObjectConstructor = JavaObject as unknown as Record<string, unknown>;
+if (!(JREE_FQN_MARKER in javaObjectConstructor)) {
+    Object.defineProperty(javaObjectConstructor, JREE_FQN_MARKER, {
+        configurable: true,
+        value: true,
+    });
+}
+
 /** Text accepted at Node-facing Java string input boundaries. */
 export type JavaStringInput = java.lang.String | string;
 

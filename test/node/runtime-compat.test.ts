@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java } from "jree";
+import { java, JavaObject } from "jree";
 import {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -55,4 +55,15 @@ test("missing jree exception compatibility preserves Java inheritance", () => {
     assert.equal(assertion.getMessage(), "invariant");
     assert.equal(access.getMessage(), "access");
     assert.equal(missing.getMessage(), "missing");
+});
+
+test("jree object FQN marker is inherited without changing class identity", () => {
+    const javaObjectConstructor = JavaObject as unknown as Record<string, unknown>;
+    assert.equal(javaObjectConstructor["#fqn"], true);
+
+    class Probe extends JavaObject {}
+    const probe = new Probe();
+    assert.equal("#fqn" in Probe, true);
+    assert.equal(probe.getClass().getName(), "Probe");
+    assert.equal(probe.getClass().getSimpleName(), "Probe");
 });
