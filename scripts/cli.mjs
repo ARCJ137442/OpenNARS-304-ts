@@ -69,6 +69,28 @@ function signalText(signal, nar) {
   }
 }
 
+function createResourceMetrics() {
+  if (process.env.OPENNARS_RESOURCE_METRICS !== "1") return null;
+  const startUsage = process.resourceUsage();
+  let peakRssBytes = process.memoryUsage().rss;
+  const sample = () => {
+    peakRssBytes = Math.max(peakRssBytes, process.memoryUsage().rss);
+  };
+  return {
+    sample,
+    finish() {
+      sample();
+      const endUsage = process.resourceUsage();
+      return {
+        source: "node-process",
+        user_cpu_ms: (endUsage.userCPUTime - startUsage.userCPUTime) / 1000,
+        system_cpu_ms: (endUsage.systemCPUTime - startUsage.systemCPUTime) / 1000,
+        peak_rss_bytes: peakRssBytes,
+      };
+    },
+  };
+}
+
 function failureText(failure) {
   const summary = String(failure);
   const stack = failure?.stack;
@@ -86,16 +108,22 @@ async function runFile(file, cycles, progressInterval) {
   let cycleCount = 0;
   let lastCommandCycle = -1;
   let error = null;
+  let runtimeMetrics = null;
+  let resourceMetrics = null;
 
   try {
     const nar = new Nar();
     const startedAt = performance.now();
+    resourceMetrics = createResourceMetrics();
     const outputChannel = OutputHandler.OUT.class;
     const executeChannel = OutputHandler.EXE.class;
     const observer = {
       event(channel, args) {
         if (channel === Events.CycleEnd.class) {
           cycleCount += 1;
+          if (resourceMetrics !== null && (cycleCount % 256 === 0 || cycleCount === cycles)) {
+            resourceMetrics.sample();
+          }
           if (progressInterval > 0 && (cycleCount % progressInterval === 0 || cycleCount === cycles)) {
             emitProgress(file, cycleCount);
           }
@@ -122,8 +150,10 @@ async function runFile(file, cycles, progressInterval) {
     nar.on(Events.CycleEnd.class, observer);
     nar.addInputFile(file);
     nar.cycles(cycles);
+    runtimeMetrics = resourceMetrics?.finish() ?? null;
   } catch (failure) {
     error = failureText(failure);
+    runtimeMetrics = resourceMetrics?.finish() ?? null;
   }
 
   const passed = matched.filter(Boolean).length;
@@ -142,6 +172,7 @@ async function runFile(file, cycles, progressInterval) {
     marker_missing: passed < expectations.length,
     marker_missing_count: expectations.length - passed,
     marker_time_ms: markerTimeMs,
+    ...(runtimeMetrics === null ? {} : { resource_metrics: runtimeMetrics }),
     ...(error ? { error } : {}),
   };
 }

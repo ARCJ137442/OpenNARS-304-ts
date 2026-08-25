@@ -8,6 +8,7 @@ import org.opennars.parameter.Debug;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.management.ManagementFactory;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -30,10 +31,13 @@ public final class NalParityRunner {
 
         final int cycles = Integer.parseInt(args[0]);
         int progressInterval = 0;
+        boolean resourceMetrics = false;
         final List<String> files = new ArrayList<>();
         for (int i = 1; i < args.length; i++) {
             if ("--progress-interval".equals(args[i])) {
                 progressInterval = Integer.parseInt(args[++i]);
+            } else if ("--resource-metrics".equals(args[i])) {
+                resourceMetrics = true;
             } else {
                 files.add(args[i]);
             }
@@ -52,11 +56,16 @@ public final class NalParityRunner {
             int expectedCount = 0;
             int passedCount = 0;
             Capture capture = null;
+            ResourceSnapshot resourceStart = null;
+            ResourceSnapshot resourceEnd = null;
 
             try {
                 System.setOut(quiet);
                 final String source = Files.readString(Path.of(file));
                 final Nar nar = new Nar();
+                if (resourceMetrics) {
+                    resourceStart = ResourceSnapshot.capture();
+                }
                 // Keep parity runs synchronous and independent of Nar.start() thread scheduling.
                 nar.narParameters.THREADS_AMOUNT = 1;
                 nar.setThreadYield(false);
@@ -75,6 +84,9 @@ public final class NalParityRunner {
             } catch (final Throwable failure) {
                 error = failureText(failure);
             } finally {
+                if (resourceStart != null) {
+                    resourceEnd = ResourceSnapshot.capture();
+                }
                 System.setOut(output);
             }
 
@@ -94,6 +106,7 @@ public final class NalParityRunner {
                     + ",\"marker_missing\":" + (expectedCount != passedCount)
                     + ",\"marker_missing_count\":" + (expectedCount - passedCount)
                     + ",\"marker_time_ms\":" + numberArray(capture == null ? new double[expectedCount] : capture.markerTimeMs())
+                    + (resourceStart == null ? "" : ",\"resource_metrics\":" + resourceMetricsJson(resourceStart, resourceEnd))
                     + (error == null ? "" : ",\"error\":" + quote(error))
                     + "}");
         }
@@ -115,6 +128,44 @@ public final class NalParityRunner {
         final String className = failure.getClass().getName();
         final String message = failure.getMessage();
         return message == null || message.isEmpty() ? className : className + ": " + message;
+    }
+
+    private static String resourceMetricsJson(final ResourceSnapshot start, final ResourceSnapshot end) {
+        if (end == null) {
+            return "null";
+        }
+        final long processCpuNanos = start.processCpuNanos < 0 || end.processCpuNanos < 0
+                ? -1
+                : end.processCpuNanos - start.processCpuNanos;
+        return "{\"source\":\"java-management\",\"process_cpu_ms\":"
+                + (processCpuNanos < 0 ? "null" : processCpuNanos / 1_000_000.0)
+                + ",\"peak_rss_bytes\":null"
+                + ",\"committed_virtual_memory_bytes\":"
+                + (end.committedVirtualMemoryBytes < 0 ? "null" : end.committedVirtualMemoryBytes)
+                + ",\"heap_used_bytes\":" + end.heapUsedBytes + "}";
+    }
+
+    private static final class ResourceSnapshot {
+        private static final com.sun.management.OperatingSystemMXBean OPERATING_SYSTEM =
+                (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+        private final long processCpuNanos;
+        private final long committedVirtualMemoryBytes;
+        private final long heapUsedBytes;
+
+        private ResourceSnapshot(final long processCpuNanos, final long committedVirtualMemoryBytes,
+                final long heapUsedBytes) {
+            this.processCpuNanos = processCpuNanos;
+            this.committedVirtualMemoryBytes = committedVirtualMemoryBytes;
+            this.heapUsedBytes = heapUsedBytes;
+        }
+
+        private static ResourceSnapshot capture() {
+            final Runtime runtime = Runtime.getRuntime();
+            return new ResourceSnapshot(
+                    OPERATING_SYSTEM.getProcessCpuTime(),
+                    OPERATING_SYSTEM.getCommittedVirtualMemorySize(),
+                    runtime.totalMemory() - runtime.freeMemory());
+        }
     }
 
     private static final class Capture extends OutputHandler {

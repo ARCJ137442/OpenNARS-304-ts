@@ -36,6 +36,7 @@ function parseArgs(argv) {
     processLimitMs: null,
     tsMode: "hot",
     tsCli: null,
+    resourceMetrics: false,
     javaJar: defaultJavaJar,
     javaClasses: defaultJavaClasses,
     javaTestClasses: defaultJavaTestClasses,
@@ -56,6 +57,7 @@ function parseArgs(argv) {
     else if (argument === "--process-limit-ms") options.processLimitMs = Number(argv[++i]);
     else if (argument === "--ts-mode" || argument === "--ts-process-mode") options.tsMode = argv[++i];
     else if (argument === "--ts-cli") options.tsCli = argv[++i];
+    else if (argument === "--resource-metrics") options.resourceMetrics = true;
     else if (argument === "--java-jar") options.javaJar = argv[++i];
     else if (argument === "--java-classes") options.javaClasses = argv[++i];
     else if (argument === "--java-test-classes") options.javaTestClasses = argv[++i];
@@ -307,13 +309,14 @@ function addArtifactMetadata(rows, artifact) {
   }));
 }
 
-function runJavaProcess(file, cycles, timeoutMs, processLimitMs, classpath) {
+function runJavaProcess(file, cycles, timeoutMs, processLimitMs, classpath, resourceMetrics = false) {
   return new Promise((resolveProcess) => {
     const startedAt = Date.now();
     const progressInterval = progressIntervalCycles();
     const child = spawn("java", [
       "-cp", classpath, "NalParityRunner", String(cycles), file,
       ...(timeoutMs === null ? [] : ["--progress-interval", String(progressInterval)]),
+      ...(resourceMetrics ? ["--resource-metrics"] : []),
     ], {
       cwd: projectRoot,
       windowsHide: true,
@@ -392,12 +395,27 @@ function runJavaProcess(file, cycles, timeoutMs, processLimitMs, classpath) {
   });
 }
 
-async function runJava(files, cycles, timeoutMs, processLimitMs, artifact, adapter = null) {
+async function runJava(
+  files,
+  cycles,
+  timeoutMs,
+  processLimitMs,
+  artifact,
+  adapter = null,
+  resourceMetrics = false,
+) {
   const activeAdapter = adapter ?? compileJavaAdapter(artifact);
   try {
     const rows = [];
     for (const file of files) {
-      const result = await runJavaProcess(file, cycles, timeoutMs, processLimitMs, activeAdapter.classpath);
+      const result = await runJavaProcess(
+        file,
+        cycles,
+        timeoutMs,
+        processLimitMs,
+        activeAdapter.classpath,
+        resourceMetrics,
+      );
       if (result.stalled) {
         rows.push(...addArtifactMetadata(timeoutRows([file], cycles, "Java", timeoutMs, {
           durationMs: result.durationMs,
@@ -438,7 +456,14 @@ async function runJava(files, cycles, timeoutMs, processLimitMs, artifact, adapt
   }
 }
 
-async function runTs(files, cycles, timeoutMs, processLimitMs, cliPath = join(projectRoot, "scripts", "cli.mjs")) {
+async function runTs(
+  files,
+  cycles,
+  timeoutMs,
+  processLimitMs,
+  cliPath = join(projectRoot, "scripts", "cli.mjs"),
+  resourceMetrics = false,
+) {
   if (files.length === 0) return [];
   const cli = cliPath;
   return new Promise((resolveRows) => {
@@ -533,6 +558,7 @@ async function runTs(files, cycles, timeoutMs, processLimitMs, cliPath = join(pr
     ], {
       cwd: projectRoot,
       windowsHide: true,
+      env: resourceMetrics ? { ...process.env, OPENNARS_RESOURCE_METRICS: "1" } : process.env,
       stdio: ["ignore", "pipe", "pipe"],
     });
     child.stdout.on("data", (chunk) => {
@@ -568,7 +594,7 @@ async function runTs(files, cycles, timeoutMs, processLimitMs, cliPath = join(pr
         const timedOutIndex = files.indexOf(timedOutFile);
         const remainingFiles = files.slice(timedOutIndex + 1)
           .filter((file) => !completedKeys.has(resolve(file)));
-        rows.push(...await runTs(remainingFiles, cycles, timeoutMs, processLimitMs, cli));
+        rows.push(...await runTs(remainingFiles, cycles, timeoutMs, processLimitMs, cli, resourceMetrics));
       } else if (processLimitedFile !== null
         && !completedKeys.has(resolve(processLimitedFile))) {
         rows.push(...processLimitRows([processLimitedFile], cycles, "TypeScript", processLimitMs, {
@@ -578,7 +604,7 @@ async function runTs(files, cycles, timeoutMs, processLimitMs, cliPath = join(pr
         const processLimitedIndex = files.indexOf(processLimitedFile);
         const remainingFiles = files.slice(processLimitedIndex + 1)
           .filter((file) => !completedKeys.has(resolve(file)));
-        rows.push(...await runTs(remainingFiles, cycles, timeoutMs, processLimitMs, cli));
+        rows.push(...await runTs(remainingFiles, cycles, timeoutMs, processLimitMs, cli, resourceMetrics));
       } else if (unresolved.length > 0) {
         const failedFile = unresolved[0];
         const errorMessage = processError?.message
@@ -618,9 +644,12 @@ async function runTsCold(
   timeoutMs,
   processLimitMs,
   cliPath = join(projectRoot, "scripts", "cli.mjs"),
+  resourceMetrics = false,
 ) {
   const rows = [];
-  for (const file of files) rows.push(...await runTs([file], cycles, timeoutMs, processLimitMs, cliPath));
+  for (const file of files) {
+    rows.push(...await runTs([file], cycles, timeoutMs, processLimitMs, cliPath, resourceMetrics));
+  }
   return rows;
 }
 
@@ -978,6 +1007,7 @@ function resultKey(options, javaArtifact) {
     processLimitMs: options.processLimitMs,
     tsMode: options.engine === "java" ? null : options.tsMode,
     tsCli: options.engine === "java" ? null : options.tsCli,
+    resourceMetrics: options.resourceMetrics,
     javaArtifactSha256: javaArtifact?.sha256 ?? null,
   });
 }
@@ -1055,7 +1085,17 @@ async function main() {
       if (options.chunkSize !== null) {
         console.error(`running chunk ${index + 1}/${chunks.length} (${pending.length} files)`);
       }
-      if (options.engine !== "ts") javaResults.push(...await runJava(pending, options.cycles, options.timeoutMs, options.processLimitMs, javaArtifact, javaAdapter));
+      if (options.engine !== "ts") {
+        javaResults.push(...await runJava(
+          pending,
+          options.cycles,
+          options.timeoutMs,
+          options.processLimitMs,
+          javaArtifact,
+          javaAdapter,
+          options.resourceMetrics,
+        ));
+      }
       if (options.engine !== "java") {
         const runTsFiles = options.tsMode === "cold" ? runTsCold : runTs;
         tsResults.push(...await runTsFiles(
@@ -1064,6 +1104,7 @@ async function main() {
           options.timeoutMs,
           options.processLimitMs,
           options.tsCli,
+          options.resourceMetrics,
         ));
       }
       const javaByFile = new Map(javaResults.map((row) => [resolve(row.file), row]));
@@ -1120,6 +1161,7 @@ async function main() {
     processLimitMs: options.processLimitMs,
     tsProcessMode: options.engine === "java" ? null : options.tsMode,
     ts_cli: options.engine === "java" ? null : options.tsCli,
+    resource_metrics: options.resourceMetrics,
     files: rows.length,
     passed: rows.length - failures.length,
     failed: failures.length,
