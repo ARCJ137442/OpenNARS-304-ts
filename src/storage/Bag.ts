@@ -111,7 +111,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
      */
     public get(key: K): Type {
         const existingKey = this.findEquivalentKey(key);
-        return existingKey === null ? null : this.nameTable.get(existingKey);
+        return (existingKey === null ? null : this.nameTable.get(existingKey)) as unknown as Type;
     }
 
     /**
@@ -125,10 +125,10 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
         const existingKey = this.findEquivalentKey(newKey);
         let oldItem: Type;
         if (existingKey === null) {
-            oldItem = this.nameTable.put(newKey, newItem);
+            oldItem = this.nameTable.put(newKey, newItem) as unknown as Type;
             this.addKeyToBucket(newKey);
         } else {
-            oldItem = this.nameTable.put(existingKey, newItem);
+            oldItem = this.nameTable.put(existingKey, newItem) as unknown as Type;
         }
         if (oldItem !== null) { // merge duplications
             this.outOfBase(oldItem);
@@ -139,7 +139,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
             this.removeByEquivalentKey(overflowItem.name());
             return overflowItem;
         } else {
-            return null;
+            return null as unknown as Type;
         }
     }
 
@@ -165,7 +165,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
      */
     public takeOut(): Type {
         if (this.nameTable.isEmpty()) { // empty bag
-            return null;
+            return null as unknown as Type;
         }
         if (this.emptyLevel(this.currentLevel) || (this.currentCounter === 0)) { // done with the current level
             this.currentLevel = this.DISTRIBUTOR.pick(this.levelIndex);
@@ -213,7 +213,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
             ? (value as Type).name()
             : value as K;
         const existingKey = this.findEquivalentKey(key);
-        const picked: Type = existingKey === null ? null : this.nameTable.get(existingKey);
+        const picked: Type = (existingKey === null ? null : this.nameTable.get(existingKey)) as unknown as Type;
         if (picked !== null) {
             this.outOfBase(picked);
             this.removeKey(existingKey);
@@ -236,11 +236,11 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
                     return existingKey;
                 }
             }
-            return null;
+            return null as unknown as K;
         }
 
         if (hashCode !== null) {
-            return null;
+            return null as unknown as K;
         }
 
         for (const entry of this.nameTable.entrySet()) {
@@ -249,12 +249,12 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
                 return existingKey;
             }
         }
-        return null;
+        return null as unknown as K;
     }
 
     private removeByEquivalentKey(key: K): Type {
         const existingKey = this.findEquivalentKey(key);
-        return existingKey === null ? null : this.removeKey(existingKey);
+        return (existingKey === null ? null : this.removeKey(existingKey)) as unknown as Type;
     }
 
     private keyHashCode(key: K): number | null {
@@ -285,7 +285,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
                 if (bucket.length === 0) this.equalityBuckets.delete(hashCode);
             }
         }
-        return item;
+        return item as unknown as Type;
     }
 
 
@@ -322,7 +322,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
      * @return The overflow Item
      */
     private intoBase(newItem: Type): Type {
-        let oldItem: Type = null;
+        let oldItem: Type = null as unknown as Type;
         let inLevel: int = this.getLevel(newItem);
         if (this.nameTable.size() > this.capacity) { // the bag is full
             let outLevel: int = 0;
@@ -405,7 +405,7 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
                 buf.append(items.size()).append(" ");
             }
         }
-        return "Levels: " + java.lang.Integer.toString(levels) + ", sizes: " + buf;
+        return S`Levels: ${levels}, sizes: ${buf}`;
     }
 
     public size(): int {
