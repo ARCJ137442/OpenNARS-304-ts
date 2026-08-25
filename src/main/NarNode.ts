@@ -11,6 +11,28 @@ import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
 
 type EventObserver = EventEmitter.EventObserver;
+type DatagramPacketCompat = { getLength(): number };
+type DatagramSocketCompat = {
+    send(packet: DatagramPacketCompat): void;
+    receive(packet: DatagramPacketCompat): void;
+};
+type InetAddressCompat = object;
+type JavaNetCompat = {
+    DatagramSocket: new (...args: unknown[]) => DatagramSocketCompat;
+    DatagramPacket: new (...args: unknown[]) => DatagramPacketCompat;
+    InetAddress: { getByName(host: unknown): InetAddressCompat };
+};
+type ObjectOutputCompat = { writeObject(value: unknown): void; close(): void };
+type ObjectInputStreamCompat = { readObject(): unknown; close(): void };
+type JavaIoCompat = {
+    ObjectOutputStream: new (stream: unknown) => ObjectOutputCompat;
+    ObjectInputStream: new (stream: unknown) => ObjectInputStreamCompat;
+    ByteArrayInputStream: new (bytes: Int8Array) => unknown;
+};
+
+const javaNetCompat = java.net as unknown as JavaNetCompat;
+const javaIoCompat = java.io as unknown as JavaIoCompat;
+const asJavaObject = (value: unknown): java.lang.Object => value as unknown as java.lang.Object;
 
 
 
@@ -27,7 +49,7 @@ export class NarNode extends JavaObject implements EventObserver {
 
 
     /* The socket the Nar listens from */
-    private receiveSocket: java.net.DatagramSocket;
+    private receiveSocket: DatagramSocketCompat;
 
     // /*
     // * Listen port however is not transient and can be used to recover the
@@ -64,7 +86,7 @@ export class NarNode extends JavaObject implements EventObserver {
 
         this.nar = nar;
         // this.listenPort = listenPort;
-        this.receiveSocket = new java.net.DatagramSocket(listenPort, java.net.InetAddress.getByName("127.0.0.1"));
+        this.receiveSocket = new javaNetCompat.DatagramSocket(listenPort, javaNetCompat.InetAddress.getByName("127.0.0.1"));
         nar.event(this, true, Events.TaskAdd.class);
         let THIS: NarNode = this;
         new class extends ThreadCompat {
@@ -74,7 +96,7 @@ export class NarNode extends JavaObject implements EventObserver {
                         let ret: java.lang.Object = THIS.receiveObject();
                         if (ret !== null) {
                             if (ret instanceof Task) {
-                                nar.memory.event.emit(THIS.EventReceivedTask.class, [ret]);
+                                nar.memory.event.emit(THIS.EventReceivedTask.class, asJavaObject([ret]));
                                 nar.addInput(ret as Task, nar);
                             } else if (ret instanceof java.lang.String) { // emits IN.class anyway
                                 nar.addInput(ret as java.lang.String);
@@ -124,7 +146,7 @@ export class NarNode extends JavaObject implements EventObserver {
      */
     private sendTask(t: Task): void {
         let bStream: java.io.ByteArrayOutputStream = new java.io.ByteArrayOutputStream();
-        let oo: java.io.ObjectOutput = new java.io.ObjectOutputStream(bStream);
+        let oo: ObjectOutputCompat = new javaIoCompat.ObjectOutputStream(bStream);
         oo.writeObject(t);
         oo.close();
         let serializedMessage: Int8Array = bStream.toByteArray();
@@ -137,7 +159,7 @@ export class NarNode extends JavaObject implements EventObserver {
                 let compoundContainsSearched: boolean = target.mustContainTerm !== null && isCompound
                     && (term as CompoundTerm).containsTermRecursively(target.mustContainTerm);
                 if (!searchTerm || atomicEqualsSearched || compoundContainsSearched) {
-                    let packet: java.net.DatagramPacket = new java.net.DatagramPacket(serializedMessage, serializedMessage.length,
+                    let packet: DatagramPacketCompat = new javaNetCompat.DatagramPacket(serializedMessage, serializedMessage.length,
                         target.targetAddress, target.targetPort);
                     target.sendSocket.send(packet);
                     // System.out.println("task sent:" + t);
@@ -164,15 +186,15 @@ export class NarNode extends JavaObject implements EventObserver {
 
 
                 let bStream: java.io.ByteArrayOutputStream = new java.io.ByteArrayOutputStream();
-                let oo: java.io.ObjectOutput = new java.io.ObjectOutputStream(bStream);
+                let oo: ObjectOutputCompat = new javaIoCompat.ObjectOutputStream(bStream);
                 oo.writeObject(input);
                 oo.close();
                 let serializedMessage: Int8Array = bStream.toByteArray();
                 let searchTerm: boolean = target.mustContainTerm !== null;
                 let containsFound: boolean = target.mustContainTerm !== null
-                    && input.contains(target.mustContainTerm.toString());
+                    && String(input).includes(String(target.mustContainTerm.toString()));
                 if (!searchTerm || containsFound) {
-                    let packet: java.net.DatagramPacket = new java.net.DatagramPacket(serializedMessage, serializedMessage.length,
+                    let packet: DatagramPacketCompat = new javaNetCompat.DatagramPacket(serializedMessage, serializedMessage.length,
                         target.targetAddress, target.targetPort);
                     target.sendSocket.send(packet);
                     // System.out.println("narsese sent:" + input);
@@ -215,8 +237,8 @@ export class NarNode extends JavaObject implements EventObserver {
         public constructor(targetIP: java.lang.String, targetPort: int, threshold: float, mustContainTerm: Term | null,
             sendInput: boolean) {
             super();
-            this.targetAddress = java.net.InetAddress.getByName(targetIP);
-            this.sendSocket = new java.net.DatagramSocket();
+            this.targetAddress = javaNetCompat.InetAddress.getByName(targetIP);
+            this.sendSocket = new javaNetCompat.DatagramSocket();
             this.threshold = Float32Math.from(threshold) as float;
             this.targetPort = targetPort;
             this.mustContainTerm = mustContainTerm;
@@ -224,9 +246,9 @@ export class NarNode extends JavaObject implements EventObserver {
         }
 
         public readonly threshold: float;
-        public readonly sendSocket: java.net.DatagramSocket;
+        public readonly sendSocket: DatagramSocketCompat;
         public readonly targetPort: int;
-        public readonly targetAddress: java.net.InetAddress;
+        public readonly targetAddress: InetAddressCompat;
         public readonly mustContainTerm: Term | null;
         protected readonly sendInput: boolean;
     };
@@ -287,23 +309,25 @@ export class NarNode extends JavaObject implements EventObserver {
      */
     private receiveObject(): java.lang.Object {
         let recBytes: Int8Array = new Int8Array(65535);
-        let packet: java.net.DatagramPacket = new java.net.DatagramPacket(recBytes, recBytes.length);
+        let packet: DatagramPacketCompat = new javaNetCompat.DatagramPacket(recBytes, recBytes.length);
         this.receiveSocket.receive(packet);
         if (packet.getLength() > 0) {
             try {
                     // This holds the final error to throw (if any).
                     let error: java.lang.Throwable | undefined;
 
-                    const iStream: java.io.ObjectInputStream = new java.io.ObjectInputStream(new java.io.ByteArrayInputStream(recBytes))
+                    const iStream: ObjectInputStreamCompat = new javaIoCompat.ObjectInputStream(
+                        new javaIoCompat.ByteArrayInputStream(recBytes),
+                    );
                     try {
                         try {
-                            let msg: java.lang.Object = iStream.readObject();
+                            const msg = iStream.readObject();
                             if (msg instanceof Task || msg instanceof java.lang.String) {
-                                return msg;
+                                return msg as java.lang.Object;
                             }
                         }
                         finally {
-                            error = closeResources([iStream]);
+                            error = closeResources([iStream as unknown as java.io.Closeable]);
                         }
                     } catch (e) {
                         error = handleResourceError(e, error);
@@ -322,7 +346,7 @@ export class NarNode extends JavaObject implements EventObserver {
             // parser will tell
             return new java.lang.String(recBytes, java.nio.charset.StandardCharsets.UTF_8).trim();
         }
-        return null;
+        return null as unknown as java.lang.Object;
     }
 }
 
