@@ -41,7 +41,30 @@ test("Narsese preserves temporal statement order from Java relation dispatch", a
 
     const intervalConditional = parseRequired(new java.lang.String("<(&/,a,+8,b) =/> c>"));
     const intervals = CompoundTerm.extractIntervals(null, intervalConditional);
+    assert.ok(Array.isArray(intervals));
     assert.deepEqual(Array.from(intervals).map(Number), [8]);
+
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { LocalRules } = await import("../../src/inference/LocalRules.ts");
+    const { TruthValue } = await import("../../src/entity/TruthValue.ts");
+    const nar = new Nar();
+    try {
+        const oldIntervalTerm = parseRequired(new java.lang.String("<(&/,a,+4,b) =/> c>"));
+        const recentIntervals: number[] = [];
+        const truth = TruthValue.fromFrequencyConfidence(0.8, 0.9, nar.narParameters);
+        const useNewBelief = LocalRules.intervalProjection(
+            { memory: nar.memory, narParameters: nar.narParameters } as any,
+            intervalConditional,
+            oldIntervalTerm,
+            recentIntervals,
+            truth,
+        );
+        assert.equal(typeof useNewBelief, "boolean");
+        assert.equal(recentIntervals.length, 1);
+        assert.ok(Number.isFinite(recentIntervals[0]));
+    } finally {
+        nar.stop();
+    }
 
     const self = parseRequired(new java.lang.String("SELF"));
     const extImage = parseRequired(new java.lang.String("(/,at,_,{t003})")) as InstanceType<typeof ImageExt>;

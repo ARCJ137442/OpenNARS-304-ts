@@ -382,9 +382,9 @@ export class ProcessGoal extends JavaObject {
             let precondition: Term = Conjunction.make(newprec, TemporalRules.ORDER_FORWARD);
             let newesttime: long = -1n;
             let bestsofar: Task | null = null;
-            let prec_intervals: java.util.List<float> = new java.util.ArrayList<float>();
+            const prec_intervals: float[] = [];
             for (let l of CompoundTerm.extractIntervals(nal.memory, precTerm)) {
-                prec_intervals.add(Float32Math.from(Number(l)) as float);
+                prec_intervals.push(Float32Math.from(Number(l)) as float);
             }
             let subsconc: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
             let conclusionMatches: boolean = Variables.findSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,

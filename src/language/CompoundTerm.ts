@@ -255,19 +255,19 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return T;
     }
 
-    private static ExtractIntervals(mem: Memory | null, ivals: java.util.List<java.lang.Long>, comp: CompoundTerm): void {
+    private static ExtractIntervals(mem: Memory | null, ivals: long[], comp: CompoundTerm): void {
         for (let i: int = 0; i < comp.term.length; i++) {
             let t: Term = comp.term[i];
             if (t instanceof Interval) {
-                ivals.add((t as Interval).time as unknown as java.lang.Long);
+                ivals.push((t as Interval).time);
             } else if (t instanceof CompoundTerm) {
                 CompoundTerm.ExtractIntervals(mem, ivals, t as CompoundTerm);
             }
         }
     }
 
-    public static extractIntervals(mem: Memory | null, T: Term): java.util.List<java.lang.Long> {
-        let ret: java.util.List<java.lang.Long> = new java.util.ArrayList<java.lang.Long>();
+    public static extractIntervals(mem: Memory | null, T: Term): long[] {
+        const ret: long[] = [];
         if (T instanceof CompoundTerm) {
             CompoundTerm.ExtractIntervals(mem, ret, T as CompoundTerm);
         }

@@ -159,22 +159,22 @@ export class LocalRules extends JavaObject {
      * @return
      */
     public static intervalProjection(nal: DerivationContext, newBeliefTerm: Term,
-        oldBeliefTerm: Term, recent_ivals: java.util.List<float>, newTruth: TruthValue): boolean {
+        oldBeliefTerm: Term, recent_ivals: float[], newTruth: TruthValue): boolean {
         let useNewBeliefTerm: boolean = false;
         if (newBeliefTerm.hasInterval()) {
-            let ivalOld: java.util.List<java.lang.Long> = CompoundTerm.extractIntervals(nal.memory, oldBeliefTerm);
-            let ivalNew: java.util.List<java.lang.Long> = CompoundTerm.extractIntervals(nal.memory, newBeliefTerm);
+            const ivalOld: long[] = CompoundTerm.extractIntervals(nal.memory, oldBeliefTerm);
+            const ivalNew: long[] = CompoundTerm.extractIntervals(nal.memory, newBeliefTerm);
             let AbsDiffSumNew: long = 0 as unknown as long;
             let AbsDiffSumOld: long = 0 as unknown as long;
             /* synchronized (recent_ivals) { */
-            if (recent_ivals.isEmpty()) {
+            if (recent_ivals.length === 0) {
                 for (let l of ivalOld) {
-                    recent_ivals.add(Float32Math.from(Number(l as unknown as number)) as float);
+                    recent_ivals.push(Float32Math.from(Number(l)) as float);
                 }
             }
-            for (let i: int = 0; i < ivalNew.size(); i++) {
+            for (let i: int = 0; i < ivalNew.length; i++) {
                 let inBetween: float = Float32Math.divide(
-                    Float32Math.add(recent_ivals.get(i), Number(ivalNew.get(i) as unknown as number)),
+                    Float32Math.add(recent_ivals[i], Number(ivalNew[i])),
                     2.0,
                 ) as float;
                 // vote as one new entry, turtle style
@@ -186,26 +186,26 @@ export class LocalRules extends JavaObject {
                     ),
                 ) as float;
                 // less truth expectation, slower
-                recent_ivals.set(i, Float32Math.add(
-                    recent_ivals.get(i),
-                    Float32Math.multiply(speed, Float32Math.subtract(inBetween, recent_ivals.get(i))),
-                ) as float);
+                recent_ivals[i] = Float32Math.add(
+                    recent_ivals[i],
+                    Float32Math.multiply(speed, Float32Math.subtract(inBetween, recent_ivals[i])),
+                ) as float;
             }
-            for (let i: int = 0; i < ivalNew.size(); i++) {
+            for (let i: int = 0; i < ivalNew.length; i++) {
                 AbsDiffSumNew += java.lang.Math.abs(
-                    Number(ivalNew.get(i) as unknown as number) - recent_ivals.get(i),
+                    Number(ivalNew[i]) - recent_ivals[i],
                 ) as unknown as long;
             }
-            for (let i: int = 0; i < ivalNew.size(); i++) {
+            for (let i: int = 0; i < ivalNew.length; i++) {
                 AbsDiffSumOld += java.lang.Math.abs(
-                    Number(ivalOld.get(i) as unknown as number) - recent_ivals.get(i),
+                    Number(ivalOld[i]) - recent_ivals[i],
                 ) as unknown as long;
             }
             /* } */
             let AbsDiffSum: long = 0 as unknown as long;
-            for (let i: int = 0; i < ivalNew.size(); i++) {
+            for (let i: int = 0; i < ivalNew.length; i++) {
                 AbsDiffSum += java.lang.Math.abs(
-                    Number(ivalNew.get(i) as unknown as number) - Number(ivalOld.get(i) as unknown as number),
+                    Number(ivalNew[i]) - Number(ivalOld[i]),
                 ) as unknown as long;
             }
             let a: float = TruthFunctions.temporalProjection(
