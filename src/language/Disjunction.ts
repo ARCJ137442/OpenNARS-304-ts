@@ -107,25 +107,25 @@ export class Disjunction extends CompoundTerm {
                 const [term1, term2] = args as [Term, Term];
 
 
-            let set: java.util.List<Term> = new java.util.ArrayList<Term>();
+                const set: Term[] = [];
                 if (term1 instanceof Disjunction) {
-                    set.addAll((term1 as CompoundTerm).asTermList());
+                    set.push(...(term1 as CompoundTerm).term);
                     if (term2 instanceof Disjunction) {
                         // (&,(&,P,Q),(&,R,S)) = (&,P,Q,R,S)
-                        set.addAll((term2 as CompoundTerm).asTermList());
+                        set.push(...(term2 as CompoundTerm).term);
                     } else {
                         // (&,(&,P,Q),R) = (&,P,Q,R)
-                        set.add(term2);
+                        set.push(term2);
                     }
                 } else if (term2 instanceof Disjunction) {
                     // (&,R,(&,P,Q)) = (&,P,Q,R)
-                    set.addAll((term2 as CompoundTerm).asTermList());
-                    set.add(term1);
+                    set.push(...(term2 as CompoundTerm).term);
+                    set.push(term1);
                 } else {
-                    set.add(term1);
-                    set.add(term2);
+                    set.push(term1);
+                    set.push(term2);
                 }
-                return Disjunction.make(set.toArray(new Array<Term>(0)));
+                return Disjunction.make(set);
 
 
                 break;

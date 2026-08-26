@@ -277,20 +277,19 @@ export class Conjunction extends CompoundTerm {
 
                         let cterm1: CompoundTerm = term1 as CompoundTerm;
 
-                        let list: java.util.List<Term> = new java.util.ArrayList<Term>(cterm1.size());
-                        cterm1.addTermsTo(list);
+                        const list: Term[] = [...cterm1.term];
 
                         if ((term2 instanceof Conjunction) &&
                             cterm1.getIsSpatial() === term2.getIsSpatial() &&
                             term2.getTemporalOrder() === TemporalRules.ORDER_FORWARD) {
                             // (&/,(&/,P,Q),(&/,R,S)) = (&/,P,Q,R,S)
-                            (term2 as CompoundTerm).addTermsTo(list);
+                            list.push(...(term2 as CompoundTerm).term);
                         } else {
                             // (&,(&,P,Q),R) = (&,P,Q,R)
-                            list.add(term2);
+                            list.push(term2);
                         }
 
-                        components = list.toArray(new Array<Term>(0));
+                        components = list;
 
                     } else if ((term2 instanceof Conjunction) && (term2.getTemporalOrder() === TemporalRules.ORDER_FORWARD)) {
                         let cterm2: CompoundTerm = term2 as CompoundTerm;
@@ -304,26 +303,26 @@ export class Conjunction extends CompoundTerm {
 
                 } else {
 
-                    let set: java.util.List<Term> = new java.util.ArrayList<Term>();
+                    const set: Term[] = [];
                     if (term1 instanceof Conjunction) {
-                        (term1 as CompoundTerm).addTermsTo(set);
+                        set.push(...(term1 as CompoundTerm).term);
                         if (term2 instanceof Conjunction) {
                             // (&,(&,P,Q),(&,R,S)) = (&,P,Q,R,S)
-                            (term2 as CompoundTerm).addTermsTo(set);
+                            set.push(...(term2 as CompoundTerm).term);
                         } else {
                             // (&,(&,P,Q),R) = (&,P,Q,R)
-                            set.add(term2);
+                            set.push(term2);
                         }
 
                     } else if (term2 instanceof Conjunction) {
-                        (term2 as CompoundTerm).addTermsTo(set);
-                        set.add(term1); // (&,R,(&,P,Q)) = (&,P,Q,R)
+                        set.push(...(term2 as CompoundTerm).term);
+                        set.push(term1); // (&,R,(&,P,Q)) = (&,P,Q,R)
                     } else {
-                        set.add(term1);
-                        set.add(term2);
+                        set.push(term1);
+                        set.push(term2);
                     }
 
-                    return Conjunction.makeFromCollection(set, temporalOrder, spatial);
+                    return Conjunction.make(set, temporalOrder, spatial);
                 }
 
 
@@ -335,12 +334,6 @@ export class Conjunction extends CompoundTerm {
             }
         }
     }
-
-    private static makeFromCollection(set: java.util.Collection<Term>, temporalOrder: int, spatial: boolean): Term {
-        const argument = set.toArray(new Array<Term>(0));
-        return Conjunction.make(argument, temporalOrder, spatial);
-    }
-
 
     public static isConjunctionAndHasSameOrder(t: Term, order: int): boolean {
         if (t instanceof Conjunction) {

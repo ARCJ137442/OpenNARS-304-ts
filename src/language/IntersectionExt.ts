@@ -129,25 +129,25 @@ export class IntersectionExt extends CompoundTerm {
                     // helper function like existed previously
                     return SetExt.make(set.toArray(new Array<Term>(0)));
                 }
-            let se: java.util.List<Term> = new java.util.ArrayList<Term>();
+                const se: Term[] = [];
                 if (term1 instanceof IntersectionExt) {
-                    (term1 as CompoundTerm).addTermsTo(se);
+                    se.push(...(term1 as CompoundTerm).term);
                     if (term2 instanceof IntersectionExt) {
                         // (&,(&,P,Q),(&,R,S)) = (&,P,Q,R,S)
-                        (term2 as CompoundTerm).addTermsTo(se);
+                        se.push(...(term2 as CompoundTerm).term);
                     } else {
                         // (&,(&,P,Q),R) = (&,P,Q,R)
-                        se.add(term2);
+                        se.push(term2);
                     }
                 } else if (term2 instanceof IntersectionExt) {
                     // (&,R,(&,P,Q)) = (&,P,Q,R)
-                    (term2 as CompoundTerm).addTermsTo(se);
-                    se.add(term1);
+                    se.push(...(term2 as CompoundTerm).term);
+                    se.push(term1);
                 } else {
-                    se.add(term1);
-                    se.add(term2);
+                    se.push(term1);
+                    se.push(term2);
                 }
-                return IntersectionExt.make(se.toArray(new Array<Term>(0)));
+                return IntersectionExt.make(se);
 
 
                 break;

@@ -88,6 +88,39 @@ test("translated term and sentence constructors preserve Java delegation contrac
     assert.deepEqual(Array.from(rectangle.term_indices ?? []), [1, 1, 1, 0, 1, 1]);
 });
 
+test("compound factories flatten transient Java lists with native arrays", async () => {
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Conjunction } = await import("../../src/language/Conjunction.ts");
+    const { Disjunction } = await import("../../src/language/Disjunction.ts");
+    const { IntersectionExt } = await import("../../src/language/IntersectionExt.ts");
+    const { IntersectionInt } = await import("../../src/language/IntersectionInt.ts");
+
+    const a = Term.get("factory-a");
+    const b = Term.get("factory-b");
+    const c = Term.get("factory-c");
+    const names = (term: any) => term.term.map((component: any) => String(component.name()));
+
+    const nestedConjunction = Conjunction.make([a, b]);
+    if (nestedConjunction === null) throw new Error("conjunction factory returned null");
+    const conjunction = Conjunction.make(nestedConjunction, c);
+    assert.deepEqual(names(conjunction), ["factory-a", "factory-b", "factory-c"]);
+
+    const nestedDisjunction = Disjunction.make([a, b]);
+    if (nestedDisjunction === null) throw new Error("disjunction factory returned null");
+    const disjunction = Disjunction.make(nestedDisjunction, c);
+    assert.deepEqual(names(disjunction), ["factory-a", "factory-b", "factory-c"]);
+
+    const nestedExtension = IntersectionExt.make([a, b]);
+    if (nestedExtension === null) throw new Error("extension factory returned null");
+    const extension = IntersectionExt.make(nestedExtension, c);
+    assert.deepEqual(names(extension), ["factory-a", "factory-b", "factory-c"]);
+
+    const nestedIntension = IntersectionInt.make([a, b]);
+    if (nestedIntension === null) throw new Error("intension factory returned null");
+    const intension = IntersectionInt.make(nestedIntension, c);
+    assert.deepEqual(names(intension), ["factory-a", "factory-b", "factory-c"]);
+});
+
 test("Sentence normalization keeps duplicate variables in traversal order", async () => {
     const { Sentence } = await import("../../src/entity/Sentence.ts");
     const { Product } = await import("../../src/language/Product.ts");
