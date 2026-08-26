@@ -161,7 +161,11 @@ export class Shell extends JavaObject {
                         ThreadCompat.sleep(1);
                     } catch (e) {
                         if (e instanceof InterruptedExceptionCompat) {
-                            throw new java.lang.IllegalStateException(S`ERROR: Unexpectedly interrupted while sleeping.`, e);
+                            // The translated Java Shell still exposes a jree Throwable cause;
+                            // keep that compatibility boundary local to the legacy entry point.
+                            throw new java.lang.IllegalStateException(
+                                S`ERROR: Unexpectedly interrupted while sleeping.`,
+                                e as unknown as java.lang.Throwable);
                         } else {
                             throw e;
                         }

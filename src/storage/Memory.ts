@@ -222,9 +222,8 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         if (typeof process !== "undefined" && process.release?.name === "node") {
             return false;
         }
-        let stackTrace: java.lang.StackTraceElement[] = ThreadCompat.currentThread().getStackTrace();
-        let list: java.lang.StackTraceElement[] = stackTrace;
-        for (let element of list) {
+        const stackTrace = ThreadCompat.currentThread().getStackTrace();
+        for (let element of stackTrace) {
             if (element.getClassName().startsWith("org.junit.")) {
                 return true;
             }
