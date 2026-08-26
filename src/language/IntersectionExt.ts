@@ -119,15 +119,11 @@ export class IntersectionExt extends CompoundTerm {
                     return SetInt.make(both);
                 }
                 if ((term1 instanceof SetExt) && (term2 instanceof SetExt)) {
-                    // set intersection
-                    let set: java.util.Set<Term> = Term.toSortedSet(...(term1 as CompoundTerm).term);
-
-                    set.retainAll((term2 as CompoundTerm).asTermList());
-
-                    // technically this can be used directly if it can be converted to array
-                    // but wait until we can verify that NavigableSet.toarray does it or write a
-                    // helper function like existed previously
-                    return SetExt.make(set.toArray(new Array<Term>(0)));
+                    const set = Term.sortedIntersection(
+                        (term1 as CompoundTerm).term,
+                        (term2 as CompoundTerm).term,
+                    );
+                    return SetExt.make(set);
                 }
                 const se: Term[] = [];
                 if (term1 instanceof IntersectionExt) {

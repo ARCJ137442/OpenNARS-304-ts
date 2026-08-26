@@ -102,9 +102,10 @@ export class DifferenceExt extends CompoundTerm {
                     return null;
                 }
                 if ((arg[0] instanceof SetExt) && (arg[1] instanceof SetExt)) {
-                    // TODO maybe a faster way to do this operation:
-                    let set: java.util.Set<Term> = Term.toSortedSet(...(arg[0] as CompoundTerm).asTermList().toArray(new Array<Term>(0)));
-                    set.removeAll((arg[1] as CompoundTerm).asTermList()); // set difference
+                    const set = Term.sortedDifference(
+                        (arg[0] as CompoundTerm).term,
+                        (arg[1] as CompoundTerm).term,
+                    );
                     return SetExt.make(set);
                 }
 

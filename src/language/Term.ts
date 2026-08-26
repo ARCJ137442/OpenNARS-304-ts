@@ -526,6 +526,24 @@ export class Term extends JavaObject implements AbstractTerm {
         return new java.util.ArrayList(Term.toSortedSetArray(...arg)) as unknown as java.util.Set<Term>;
     }
 
+    /**
+     * Apply the set difference used by the set compound factories without
+     * materializing the sorted terms through a Java collection.
+     */
+    public static sortedDifference(left: Term[], right: Term[]): Term[] {
+        return Term.toSortedSetArray(...left).filter((candidate) =>
+            !right.some((other) => candidate.equals(other)));
+    }
+
+    /**
+     * Apply the set intersection used by the set compound factories without
+     * materializing the sorted terms through a Java collection.
+     */
+    public static sortedIntersection(left: Term[], right: Term[]): Term[] {
+        return Term.toSortedSetArray(...left).filter((candidate) =>
+            right.some((other) => candidate.equals(other)));
+    }
+
     public static readonly EmptyTermArray: Term[] = new Array<Term>(0);
 
     public static toSortedSetArray(...arg: Term[]): Term[] {

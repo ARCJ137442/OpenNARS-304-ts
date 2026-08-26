@@ -345,6 +345,34 @@ test("ProcessGoal question staging preserves the emitted question with a native 
     }
 });
 
+test("set factories use native equality-aware intersection and difference", async () => {
+    const { DifferenceExt } = await import("../../src/language/DifferenceExt.ts");
+    const { DifferenceInt } = await import("../../src/language/DifferenceInt.ts");
+    const { IntersectionExt } = await import("../../src/language/IntersectionExt.ts");
+    const { IntersectionInt } = await import("../../src/language/IntersectionInt.ts");
+    const { SetExt } = await import("../../src/language/SetExt.ts");
+    const { SetInt } = await import("../../src/language/SetInt.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+
+    const a = Term.get("native-set-a");
+    const b = Term.get("native-set-b");
+    const equalButDistinctB = b.clone();
+    const extLeft = new SetExt([a, b]);
+    const extRight = new SetExt([equalButDistinctB]);
+    const intLeft = new SetInt([a, b]);
+    const intRight = new SetInt([equalButDistinctB]);
+
+    const componentNames = (result: unknown): string[] => {
+        assert.ok(result && typeof result === "object" && "term" in result);
+        const terms = (result as { term: Array<{ name(): unknown }> }).term;
+        return terms.map((term) => String(term.name()));
+    };
+    assert.deepEqual(componentNames(DifferenceExt.make(extLeft, extRight)), ["native-set-a"]);
+    assert.deepEqual(componentNames(IntersectionExt.make(extLeft, extRight)), ["native-set-b"]);
+    assert.deepEqual(componentNames(DifferenceInt.make(intLeft, intRight)), ["native-set-a"]);
+    assert.deepEqual(componentNames(IntersectionInt.make(intLeft, intRight)), ["native-set-b"]);
+});
+
 test("Stamp tense lookup uses Java temporal order constants", async () => {
     const { Stamp } = await import("../../src/entity/Stamp.ts");
     const { Tense } = await import("../../src/language/Tense.ts");
