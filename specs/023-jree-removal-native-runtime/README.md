@@ -6,10 +6,8 @@ tags:
 - jree
 - native-typescript
 - milestone
-depends_on:
-- 020-ts-performance-and-release
 created_at: 2026-08-26T05:36:04.576870200Z
-updated_at: 2026-08-26T05:36:25.773815100Z
+updated_at: 2026-08-26T05:46:50.864563400Z
 transitions:
 - status: in-progress
   at: 2026-08-26T05:36:10.563187Z
@@ -35,7 +33,7 @@ transitions:
 按数据结构、容器、推理规则、推理引擎、程序入口安排依赖边界。优先替换局部临时集合和高频路径，保留窄化的兼容适配器；公共API不得泄漏jree类型。每个批次先做局部测试，再做M2检查和受影响的M1矩阵；M1或M2回退时停止后续迁移。
 
 ## 计划
-- [ ] 完成生产jree、Java集合和Java对象依赖的机器可读清单，标记允许的适配边界。
+- [x] 完成生产jree、Java集合和Java对象依赖的机器可读清单，标记允许的适配边界。
 - [ ] 以小批次替换原生集合和辅助逻辑，每批保留回退提交与功能证据。
 - [ ] 收敛公共API和入口边界，确认无未授权jree泄漏。
 - [ ] 完成受影响的M1、M2、局部测试和性能验证，并记录未迁移残余及理由。
@@ -46,4 +44,4 @@ transitions:
 - [ ] 通过串行单线程性能对照，性能结果达到批准预算或明确记录为后续优化项。
 
 ## 备注
-当前稳定回退基线：M1为1bdad9d，M2为2ffcb64，组合回归提交为c1885a1。当前代码批次已在5362cec提交；LeanSpec工具的默认模板返回Invalid template format，因此本spec使用LeanSpec的--content创建，待工具恢复后再核对模板兼容性。
+当前稳定回退基线：M1为1bdad9d，M2为2ffcb64，组合回归提交为c1885a1。当前代码批次已在5362cec提交；J0清单见`reports/evidence/j0-jree-dependency-inventory-20260826-v1.json`。LeanSpec工具的默认模板返回Invalid template format，因此本spec使用LeanSpec的--content创建；当前依赖方向为`020`依赖`023`。

@@ -32,6 +32,7 @@
         "test:release": "npm run build && node scripts/check-release-package.mjs",
         "prepack": "npm run build",
         "scan:migration-patterns": "node scripts/converting/scan-migration-patterns.mjs",
+        "audit:jree": "node scripts/converting/audit-jree-dependencies.mjs",
         "apply:migration-patterns": "node scripts/converting/apply-migration-patterns.mjs",
         "test:parity:local": "node --import ./scripts/register-ts-loader.mjs scripts/parity/run-local-algorithm-parity.mjs",
         "benchmark:m3": "node scripts/e2e/run-m3-benchmark.mjs",
