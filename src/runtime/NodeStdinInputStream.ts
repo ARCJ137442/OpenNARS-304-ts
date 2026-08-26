@@ -1,4 +1,4 @@
-import { java, type int } from "jree";
+import { java } from "jree";
 
 export type NodeReadableInput = {
     on(event: "data" | "end", listener: (...args: unknown[]) => void): NodeReadableInput;
@@ -31,21 +31,21 @@ export class NodeStdinInputStream extends java.io.InputStream {
         input.resume();
     }
 
-    public override available(): int {
+    public override available(): number {
         return this.availableBytes;
     }
 
-    public override read(): int;
-    public override read(buffer: Int8Array): int;
-    public override read(buffer: Int8Array, offset: int, length: int): int;
-    public override read(...args: unknown[]): int {
+    public override read(): number;
+    public override read(buffer: Int8Array): number;
+    public override read(buffer: Int8Array, offset: number, length: number): number;
+    public override read(...args: unknown[]): number {
         if (args.length === 0) {
             return this.readByte();
         }
 
         const buffer = args[0] as Int8Array;
-        const offset = args.length === 1 ? 0 : args[1] as int;
-        const length = args.length === 1 ? buffer.length : args[2] as int;
+        const offset = args.length === 1 ? 0 : args[1] as number;
+        const length = args.length === 1 ? buffer.length : args[2] as number;
         let count = 0;
         while (count < length) {
             const value = this.readByte();
@@ -56,7 +56,7 @@ export class NodeStdinInputStream extends java.io.InputStream {
         return count;
     }
 
-    private readByte(): int {
+    private readByte(): number {
         if (this.closed || this.availableBytes === 0) return -1;
 
         while (this.chunkIndex < this.chunks.length && this.chunks[this.chunkIndex].length === 0) {
