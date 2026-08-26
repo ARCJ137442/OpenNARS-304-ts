@@ -159,13 +159,13 @@ export class VisionChannel extends SensoryChannel {
         let newTask: Task = new Task(s, budgetForNewTask, Task.EnumType.INPUT);
         newTask.setElemOfSequenceBuffer(true);
         if (this.nPrototypes === 0) { // report directly to NARS as there are no prototypes
-            this.results.add(newTask);// feeds results into "upper" sensory channels:
+            this.results.push(newTask);// feeds results into "upper" sensory channels:
             this.step_finished(time);
         } else {
             // if there is no other prototype yet we return
             if (this.prototypes.isEmpty()) {
                 this.prototypes.add(new this.Prototype(newTask));
-                this.results.add(newTask);// feeds results into "upper" sensory channels:
+                this.results.push(newTask);// feeds results into "upper" sensory channels:
                 this.step_finished(time);
             } else {
                 // 1. determine the most similar prototype
@@ -241,7 +241,7 @@ export class VisionChannel extends SensoryChannel {
                         let taskX: Task = new Narsese(this.nar).parseTask(new java.lang.String("(^move,{SELF}," + minusX + Texts.n1(xParam) + ","
                             + minusY + Texts.n1(yParam) + "). :|:"));
                         taskX.setElemOfSequenceBuffer(true);
-                        this.results.add(taskX);
+                        this.results.push(taskX);
                         this.step_finished(time);
                         // timing to make sure procedure learning observes the operation before the new
                         // prototype
@@ -269,7 +269,7 @@ export class VisionChannel extends SensoryChannel {
                     stamp.clone());
                 let bestTask: Task = new Task(bestSentence, best.task.budget.clone(), Task.EnumType.INPUT);
                 bestTask.setElemOfSequenceBuffer(true);
-                this.results.add(bestTask);// feeds results into "upper" sensory channels:
+                this.results.push(bestTask);// feeds results into "upper" sensory channels:
                 this.step_finished(time);
                 // 5. reward the best prototype and set as the last observed one
                 best.incrementObservationCount();

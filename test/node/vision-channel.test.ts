@@ -33,4 +33,9 @@ test("default NAR registers VisionChannel and maps decimal coordinates", async (
     });
     assert.equal((vision as any).cnt_updated, 0);
     assert.equal((vision as any).subj, "");
+
+    const results = (vision as any).results as unknown;
+    assert.equal(Array.isArray(results), true);
+    assert.equal(Array.isArray((vision as any).reportResultsTo), true);
+    nar.stop();
 });

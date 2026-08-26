@@ -22,9 +22,9 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         return true;
     }
 
-    private reportResultsTo: java.util.Collection<SensoryChannel> = new java.util.ArrayList<SensoryChannel>();
+    private reportResultsTo: SensoryChannel[] = [];
     public nar!: Nar; // for top-down influence of concept budgets
-    public readonly results: java.util.List<Task> = new java.util.ArrayList<Task>();
+    public readonly results: Task[] = [];
     public height: int = 0; // 1D channels have height 1
     public width: int = 0;
     public duration: int = -1;
@@ -60,7 +60,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
 
     public constructor();
 
-    public constructor(nar: Nar, reportResultsTo: java.util.Collection<SensoryChannel>, width: int,
+    public constructor(nar: Nar, reportResultsTo: java.util.Collection<SensoryChannel> | SensoryChannel[], width: int,
         height: int, duration: int, label: Term);
 
     public constructor(nar: Nar, reportResultsTo: SensoryChannel, width: int, height: int,
@@ -78,7 +78,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
             case 6: {
                 const [nar, reportResultsTo, width, height, duration, label] = args as [
                     Nar,
-                    java.util.Collection<SensoryChannel> | SensoryChannel,
+                    java.util.Collection<SensoryChannel> | SensoryChannel[] | SensoryChannel,
                     int,
                     int,
                     int,
@@ -87,8 +87,10 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
 
                 super();
                 this.reportResultsTo = reportResultsTo instanceof SensoryChannel
-                    ? java.util.Collections.singletonList(reportResultsTo)
-                    : reportResultsTo;
+                    ? [reportResultsTo]
+                    : Array.isArray(reportResultsTo)
+                        ? reportResultsTo
+                        : reportResultsTo.toArray(new Array<SensoryChannel>(0));
                 this.nar = nar;
                 this.width = width;
                 this.height = height;
@@ -133,7 +135,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
                 ch.addInput(t, time);
             }
         }
-        this.results.clear();
+        this.results.length = 0;
     }
 
     public topDownPriority(t: Term): double {
@@ -141,7 +143,7 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         for (let chan of this.reportResultsTo) {
             prioritySum += chan.priority(t);
         }
-        return prioritySum / this.reportResultsTo.size() as double;
+        return prioritySum / this.reportResultsTo.length as double;
     }
 
     public priority(t: Term): double {
