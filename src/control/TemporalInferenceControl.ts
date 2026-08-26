@@ -221,12 +221,14 @@ export class TemporalInferenceControl extends JavaObject {
     }
 
     public static NewOperationFrame(mem: Memory, task: Task): void {
-        let toRemove: java.util.List<Task> = new java.util.LinkedList<Task>(); // can there be more than one? I don't think so..
+        // This is a local removal snapshot; native arrays preserve Java's order
+        // while avoiding a jree LinkedList on every operation frame.
+        let toRemove: Task[] = []; // can there be more than one? I don't think so..
         let priorityGain: float = 0.0;
         for (let t of mem.recent_operations) { // when made sure, make single element and add break
             if (t.getTerm().equals(task.getTerm())) {
                 priorityGain = BudgetFunctions.or(priorityGain, t.getPriority());
-                toRemove.add(t);
+                toRemove.push(t);
             }
         }
         for (let t of toRemove) {

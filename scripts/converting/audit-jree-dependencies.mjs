@@ -69,6 +69,16 @@ const rules = [
     modules: ["java.util", "jree"],
   },
   {
+    id: "new-linked-list",
+    regex: /\bnew\s+java\.util\.LinkedList\b/g,
+    layer: "container",
+    status: "candidate-native",
+    alternative: "原生数组，或在需要Java List语义时使用项目内NativeList。",
+    risk: "只有确认不依赖equals/hash、iterator.remove和Java边界行为时才能直接替换。",
+    contract: ["顺序和可变性保持", "调用点不依赖Java集合方法副作用"],
+    modules: ["java.util", "jree"],
+  },
+  {
     id: "new-linked-hash-map",
     regex: /\bnew\s+java\.util\.LinkedHashMap\b/g,
     layer: "container",
@@ -316,6 +326,7 @@ async function main() {
   const textualBaseline = {
     directJreeImportFiles: new Set(),
     newArrayListOccurrences: 0,
+    newLinkedListOccurrences: 0,
     newLinkedHashMapOccurrences: 0,
     newLinkedHashSetOccurrences: 0,
     javaObjectFiles: new Set(),
@@ -332,6 +343,7 @@ async function main() {
       textualBaseline.directJreeImportFiles.add(relativePath);
     }
     textualBaseline.newArrayListOccurrences += [...source.matchAll(/\bnew\s+java\.util\.ArrayList\b/g)].length;
+    textualBaseline.newLinkedListOccurrences += [...source.matchAll(/\bnew\s+java\.util\.LinkedList\b/g)].length;
     textualBaseline.newLinkedHashMapOccurrences += [...source.matchAll(/\bnew\s+java\.util\.LinkedHashMap\b/g)].length;
     textualBaseline.newLinkedHashSetOccurrences += [...source.matchAll(/\bnew\s+java\.util\.LinkedHashSet\b/g)].length;
     if (/\bJavaObject\b/.test(source)) textualBaseline.javaObjectFiles.add(relativePath);
@@ -373,6 +385,7 @@ async function main() {
       directJreeImportFiles: count("direct-jree-import").length,
       directJreeImportOccurrences: occurrences("direct-jree-import"),
       newArrayListOccurrences: occurrences("new-array-list"),
+      newLinkedListOccurrences: occurrences("new-linked-list"),
       newLinkedHashMapOccurrences: occurrences("new-linked-hash-map"),
       newLinkedHashSetOccurrences: occurrences("new-linked-hash-set"),
       javaObjectFiles: count("java-object").length,
@@ -386,6 +399,7 @@ async function main() {
     textualBaseline: {
       directJreeImportFiles: textualBaseline.directJreeImportFiles.size,
       newArrayListOccurrences: textualBaseline.newArrayListOccurrences,
+      newLinkedListOccurrences: textualBaseline.newLinkedListOccurrences,
       newLinkedHashMapOccurrences: textualBaseline.newLinkedHashMapOccurrences,
       newLinkedHashSetOccurrences: textualBaseline.newLinkedHashSetOccurrences,
       javaObjectFiles: textualBaseline.javaObjectFiles.size,
