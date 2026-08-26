@@ -7,6 +7,7 @@ type PendingOperation = [
     event: java.lang.Class<unknown>,
     observer: EventEmitter.EventObserver,
 ];
+type ObserverList = EventEmitter.EventObserver[];
 
 
 /**
@@ -17,7 +18,7 @@ type PendingOperation = [
 // TODO separate this into a single-thread and multithread implementation
 export class EventEmitter extends JavaObject {
 
-    private readonly events: java.util.Map<java.lang.Class<unknown>, java.util.List<EventEmitter.EventObserver>>;
+    private readonly events: Map<java.lang.Class<unknown>, ObserverList>;
 
     // Java source: private final Deque<Object[]> pendingOps = new ArrayDeque<>();
     // The queue is private and only supports FIFO iteration followed by clear.
@@ -45,7 +46,7 @@ export class EventEmitter extends JavaObject {
                  */
                 // events = new LinkedHashMap<>();
                 super();
-                this.events = new java.util.LinkedHashMap();
+                this.events = new Map();
 
 
                 break;
@@ -56,9 +57,9 @@ export class EventEmitter extends JavaObject {
 
 
                 super();
-                this.events = new java.util.LinkedHashMap(knownEventClasses.length);
+                this.events = new Map();
                 for (let c of knownEventClasses) {
-                    this.events.put(c, this.newObserverList());
+                    this.events.set(c, this.newObserverList());
                 }
 
 
@@ -72,8 +73,8 @@ export class EventEmitter extends JavaObject {
     }
 
 
-    protected newObserverList(): java.util.List<EventEmitter.EventObserver> {
-        return new java.util.ArrayList<EventEmitter.EventObserver>();
+    protected newObserverList(): ObserverList {
+        return [];
         /*
          * return Parameters.THREADS == 1 ?
          * new ArrayList<>() : Collections.synchronizedList(new ArrayList<>());
@@ -82,8 +83,8 @@ export class EventEmitter extends JavaObject {
 
     public isActive(event: java.lang.Class<unknown>): boolean {
         const observers = this.events.get(event);
-        if (observers !== null)
-            return !observers.isEmpty();
+        if (observers !== undefined)
+            return observers.length > 0;
         return false;
     }
 
@@ -105,12 +106,12 @@ export class EventEmitter extends JavaObject {
 
     public on(event: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void {
         const observers = this.events.get(event);
-        if (observers !== null) {
-            observers.add(o);
+        if (observers !== undefined) {
+            observers.push(o);
         } else {
-            let a: java.util.List<EventEmitter.EventObserver> = this.newObserverList();
-            a.add(o);
-            this.events.put(event, a);
+            const a = this.newObserverList();
+            a.push(o);
+            this.events.set(event, a);
         }
     }
 
@@ -122,19 +123,19 @@ export class EventEmitter extends JavaObject {
         if (null === event || null === o)
             throw new java.lang.IllegalStateException("Invalid parameter");
 
-        if (!this.events.containsKey(event))
+        if (!this.events.has(event))
             throw new java.lang.IllegalStateException("Unknown event: " + event);
 
         // Observers are commonly plain TypeScript objects, not JavaObject
         // instances. jree's List.remove(value) only compares Java-style
         // equatable objects, so preserve Java's registration identity here.
         const observers = this.events.get(event);
-        if (observers === null) {
+        if (observers === undefined) {
             throw new java.lang.IllegalStateException("Unknown event: " + event);
         }
-        for (let index = 0; index < observers.size(); index += 1) {
-            if (observers.get(index) === o) {
-                observers.remove(index);
+        for (let index = 0; index < observers.length; index += 1) {
+            if (observers[index] === o) {
+                observers.splice(index, 1);
                 break;
             }
         }
@@ -157,9 +158,9 @@ export class EventEmitter extends JavaObject {
     }
 
     public emit(eventClass: java.lang.Class<unknown>, ...params: java.lang.Object[]): void {
-        let observers: java.util.List<EventEmitter.EventObserver> | null = this.events.get(eventClass);
+        const observers = this.events.get(eventClass);
 
-        if ((observers === null) || (observers.isEmpty()))
+        if (observers === undefined || observers.length === 0)
             return;
 
         // final int n = observers.size();

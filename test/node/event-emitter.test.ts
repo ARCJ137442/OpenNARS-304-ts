@@ -24,6 +24,25 @@ test("EventEmitter.set subscribes only to the requested event classes", () => {
     assert.deepEqual(received, [Events.CycleEnd.class]);
 });
 
+test("EventEmitter uses native map and observer arrays while preserving identity removal", () => {
+    const emitter = new EventEmitter();
+    const observer: EventEmitter.EventObserver = { event() {} };
+    emitter.on(Events.CycleEnd.class, observer);
+    emitter.on(Events.CycleEnd.class, observer);
+
+    const events = (emitter as unknown as {
+        events: Map<java.lang.Class<unknown>, EventEmitter.EventObserver[]>;
+    }).events;
+    const observers = events.get(Events.CycleEnd.class);
+    assert.ok(observers);
+    assert.equal(events instanceof Map, true);
+    assert.equal(Array.isArray(observers), true);
+    assert.equal(observers.length, 2);
+
+    emitter.off(Events.CycleEnd.class, observer);
+    assert.equal(observers.length, 1);
+});
+
 test("EventEmitter.synch applies pending operations in FIFO order", () => {
     const emitter = new EventEmitter();
     const received: unknown[] = [];
