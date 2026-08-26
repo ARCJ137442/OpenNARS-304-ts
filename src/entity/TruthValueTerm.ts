@@ -1,12 +1,11 @@
-import { java } from "jree";
 import { Term } from "../language/Term.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { TruthValue } from "./TruthValue.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 
-const TRUTH_TRUE: Term = new Term(java.lang.String.valueOf("TRUE"));
-const TRUTH_FALSE: Term = new Term(java.lang.String.valueOf("FALSE"));
-const TRUTH_UNSURE: Term = new Term(java.lang.String.valueOf("UNSURE"));
+const TRUTH_TRUE: Term = Term.get("TRUE");
+const TRUTH_FALSE: Term = Term.get("FALSE");
+const TRUTH_UNSURE: Term = Term.get("UNSURE");
 
 export function truthToWordTerm(truth: TruthValue): Term {
     const e: number = truth.getExpectation();

@@ -3,6 +3,8 @@ import test from "node:test";
 
 import { Parameters } from "../../src/main/Parameters.ts";
 import { TruthValue } from "../../src/entity/TruthValue.ts";
+import { truthFromWordTerm, truthToWordTerm } from "../../src/entity/TruthValueTerm.ts";
+import { Term } from "../../src/language/Term.ts";
 
 test("TruthValue constructor assigns fields and keeps Parameters reference", () => {
     const params = new Parameters();
@@ -122,4 +124,20 @@ test("TruthValue expectation difference is a Java float result", () => {
     ));
 
     assert.equal(left.getExpDifAbs(right), expected);
+});
+
+test("TruthValue word terms use the native Term factory and preserve Java words", () => {
+    const params = new Parameters();
+    const trueTruth = TruthValue.fromFrequencyConfidence(1, 0.9, params);
+    const falseTruth = TruthValue.fromFrequencyConfidence(0, 0.9, params);
+    const unsureTruth = TruthValue.fromFrequencyConfidence(0.5, 0, params);
+
+    assert.equal(String(truthToWordTerm(trueTruth).name()), "TRUE");
+    assert.equal(String(truthToWordTerm(falseTruth).name()), "FALSE");
+    assert.equal(String(truthToWordTerm(unsureTruth).name()), "UNSURE");
+
+    assert.equal(truthFromWordTerm(params, truthToWordTerm(trueTruth))?.frequency, Math.fround(1));
+    assert.equal(truthFromWordTerm(params, truthToWordTerm(falseTruth))?.frequency, Math.fround(0));
+    assert.equal(truthFromWordTerm(params, truthToWordTerm(unsureTruth))?.frequency, Math.fround(0.5));
+    assert.equal(truthFromWordTerm(params, Term.get("OTHER")), null);
 });
