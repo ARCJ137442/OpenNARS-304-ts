@@ -1,0 +1,39 @@
+{
+  "rows": 246,
+  "scopes": {
+    "main": 245,
+    "extra": 1
+  },
+  "unique_files": 246,
+  "functional_pass": 246,
+  "parity": 246,
+  "error_type": {
+    "none": 246
+  },
+  "root_cause_cluster": {
+    "startup_overhead": 0,
+    "correct_but_slower": 0,
+    "cross_file_state_leak": 0,
+    "scheduler_divergence": 0,
+    "task_explosion": 0,
+    "term_link_divergence": 0,
+    "rule_dispatch_divergence": 0,
+    "numeric_ordering_divergence": 0,
+    "unsupported_operator": 0,
+    "unknown": 0,
+    "none": 246
+  },
+  "unknown_rows": [],
+  "cluster_catalog": [
+    "startup_overhead",
+    "correct_but_slower",
+    "cross_file_state_leak",
+    "scheduler_divergence",
+    "task_explosion",
+    "term_link_divergence",
+    "rule_dispatch_divergence",
+    "numeric_ordering_divergence",
+    "unsupported_operator",
+    "unknown"
+  ]
+}

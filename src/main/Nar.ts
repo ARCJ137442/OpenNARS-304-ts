@@ -148,7 +148,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         let stream: ObjectInputStreamCompat = new ObjectInputStream(inStream);
         let ret: Nar = stream.readObject() as Nar;
         ret.memory.event = new EventEmitter();
-        ret.plugins = new java.util.ArrayList<Nar.PluginState>();
+        ret.plugins = [];
         ret.sensoryChannels = new java.util.LinkedHashMap();
         let pluginsToAdd: java.util.List<Plugin> = ConfigReader.loadParamsFromFileAndReturnPlugins(ret.usedConfigFilePath, ret,
             ret.narParameters);
@@ -207,7 +207,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     })(this);
 
 
-    protected plugins: java.util.List<Nar.PluginState> = new java.util.ArrayList<Nar.PluginState>(); // was CopyOnWriteArrayList
+    protected plugins: Nar.PluginState[] = []; // was CopyOnWriteArrayList
 
     /** Flag for running continuously */
     private running: boolean = false;
@@ -692,12 +692,14 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             this.memory.internalExperience = p as InternalExperience;
         }
         let ps: Nar.PluginState = new this.PluginState(p);
-        this.plugins.add(ps);
+        this.plugins.push(ps);
         this.emit(Events.PluginsChange.class, asJavaObject(p), asJavaObject(null));
     }
 
     public removePlugin(ps: Nar.PluginState): void {
-        if (this.plugins.remove(ps)) {
+        const pluginIndex = this.plugins.indexOf(ps);
+        if (pluginIndex >= 0) {
+            this.plugins.splice(pluginIndex, 1);
             let p: Plugin = ps.plugin;
             if (p instanceof Operator) {
                 this.memory.removeOperator(p as Operator);
@@ -715,7 +717,11 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
     public getPlugins(): java.util.List<unknown> {
-        return java.util.Collections.unmodifiableList(this.plugins) as unknown as java.util.List<unknown>;
+        const plugins = new java.util.ArrayList<Nar.PluginState>();
+        for (const plugin of this.plugins) plugins.add(plugin);
+        return java.util.Collections.unmodifiableList(
+            plugins as unknown as java.util.List<unknown>,
+        );
     }
 
     public start(): void;

@@ -152,3 +152,28 @@ test("PluginRegistry returns a native ordered plugin sequence and diagnostics", 
     assert.deepEqual(result.diagnostics.compatibilityStubPluginClasspaths, []);
     assert.deepEqual(result.diagnostics.missingRuntimeCapabilityPluginClasspaths, []);
 });
+
+test("Nar keeps plugin states in a native array and returns a Java-compatible list", () => {
+    const nar = new Nar({
+        configText: `
+            <config>
+                <plugins>
+                    <plugin classpath="org.opennars.operator.NullOperator" />
+                </plugins>
+            </config>
+        `,
+    });
+
+    try {
+        const states = (nar as unknown as { plugins: unknown[] }).plugins;
+        assert.equal(Array.isArray(states), true);
+        assert.equal(states.length, 1);
+        const plugins = nar.getPlugins();
+        assert.equal(plugins.size(), 1);
+        nar.removePlugin(states[0] as never);
+        assert.equal(states.length, 0);
+        assert.equal(nar.getPlugins().size(), 0);
+    } finally {
+        nar.stop();
+    }
+});
