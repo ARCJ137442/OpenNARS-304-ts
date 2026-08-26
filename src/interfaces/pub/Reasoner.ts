@@ -1,5 +1,4 @@
 //! Java source: opennars/interfaces/pub/Reasoner.java
-import { java, type long } from "jree";
 import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import type { SensoryChannelConsumer } from "../SensoryChannelConsumer.ts";
 import type { Resettable } from "../Resettable.ts";
@@ -71,7 +70,7 @@ export interface Reasoner extends
      *
      * @return The current time
      */
-    time(): long;
+    time(): bigint;
 
     /**
      * is the reasoner running?
@@ -85,7 +84,7 @@ export interface Reasoner extends
      *
      * @return minimum cycle delay period
      */
-    getMinCyclePeriodMS(): long;
+    getMinCyclePeriodMS(): bigint;
 
     /**
      * When b is true, Nar will call Thread.yield each run() iteration that

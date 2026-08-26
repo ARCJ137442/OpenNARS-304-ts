@@ -1,9 +1,5 @@
 //! Java source: opennars/interfaces/Timable.java
 
-import { java, type long } from "jree";
-
-
-
 /**
  * Used to dispatch the deferred retrieval of time
  *
@@ -15,5 +11,5 @@ export interface Timable {
      *
      * @return The current time
      */
-    time(): long;
+    time(): bigint;
 }
