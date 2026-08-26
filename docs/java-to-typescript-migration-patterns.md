@@ -1,8 +1,8 @@
 # Java → TypeScript 迁移纠正模式库
 
-版本：0.7（2026-08-25）
+版本：0.8（2026-08-27）
 
-当前证据覆盖：代码主线 `bf7dd22`（FQN 优化代码来自 `4d5435f`）。历史扫描数字保留用于比较，不作为当前质量门禁；当前权威门禁见 [`docs/current-status-and-runbook.md`](current-status-and-runbook.md)。
+当前证据覆盖：Evaluate 单任务反馈原生化批次及其 M1/M2 保护回归（FQN 优化代码来自 `4d5435f`）。历史扫描数字保留用于比较，不作为当前质量门禁；当前权威门禁见 [`docs/current-status-and-runbook.md`](current-status-and-runbook.md)。
 
 本文件把当前 OpenNARS 转写中反复出现的纠正归纳为可检索、可验证、可批量处理的模式。它不是“看到字符串就替换”的规则表：每条模式都必须同时说明识别条件、正确的 TypeScript 语义、验证门禁和自动化边界。
 
@@ -16,7 +16,15 @@
 
 这说明迁移的首要问题是“重复的语义转换模式没有固化”，不是单个文件的偶然手工错误。
 
-当前新增证据：非增量 `tsc` 为 0 诊断，串行 `npm test` 为 159/159，局部算法 parity 为 `ok: true` 且 `differences: []`。四类代表 NAL 已完成单线程功能/parity 观测，但 M1 的 245+1 个资源仍有 stability 的 TypeScript 长周期 marker 未完成，是后续 TypeScript/M3 工作的硬门禁；不能把代表样本外推为整库通过。
+当前新增证据：非增量 `tsc` 为 0 诊断，串行 `npm test` 为 202/202，局部算法 parity 为 `ok: true` 且 `differences: []`。M1/M2 在 `Evaluate` 原生化后已完成串行保护回归；整体 jree 退场仍未完成。
+
+#### B18. Java 单任务 List 反馈应收敛为原生数组
+
+Java 算子常用 `Lists.newArrayList(newTask)` 或 `new ArrayList<Task>()` 后加入一个任务。若调用方只依赖有序、可迭代的单任务反馈，TypeScript 可以直接返回 `Task[]`，不应继续为临时容器引入 jree。
+
+迁移边界：只处理已经确认“最多一个反馈任务、`null` 仍表示无反馈”的算子；公共消费者必须同时接受遗留 Java List 与原生数组，不能把所有 `java.util.List` 全局替换成数组。
+
+已应用于 `FunctionOperator`、`Want`、`Evaluate`，并由 `test/node/core-runtime.test.ts` 的直接返回测试和 `Operator.call` 回归保护；对应 NAL marker 也必须通过。该模式适合按算子逐个套用，不适合无证据批量替换。
 
 ## 2. 模式分级
 

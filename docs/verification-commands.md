@@ -7,19 +7,19 @@
 先在项目根目录执行。命令是单进程、单线程、逐文件 checkpoint；`--timeout-ms` 是“无进展 watchdog”，不是用 TypeScript 总运行时间判定功能失败。
 
 ```powershell
-node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 300000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-245-parity-YYYYMMDD-v1.jsonl
+node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 900000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-245-parity-YYYYMMDD-v1.jsonl
 ```
 
 系统重启或进程中断后，使用完全相同的参数并追加 `--resume`，不要启动第二个同名矩阵：
 
 ```powershell
-node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 300000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-245-parity-YYYYMMDD-v1.jsonl --resume
+node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 900000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-245-parity-YYYYMMDD-v1.jsonl --resume
 ```
 
-`--all` 的主语料是 245 个资源。M1 的第 246 项单独执行（仅在发现真实回归时）：
+`--all` 的主语料是 245 个资源。M1 的第 246 项可以单独执行；在一次原生化批次后若要求保护 M1，应一并执行：
 
 ```powershell
-node scripts/e2e/run-nal-corpus.mjs --engine parity --file java-master\src\test\simpleOperationTest.nal --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 300000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-simpleOperationTest-YYYYMMDD-v1.jsonl --summary
+node scripts/e2e/run-nal-corpus.mjs --engine parity --file java-master\src\test\simpleOperationTest.nal --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 900000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-simpleOperationTest-YYYYMMDD-v1.jsonl --summary
 ```
 
 核对结果时，245 + 1 必须全部满足 `functional_pass=true`。`parity=true` 但任一侧异常、marker 缺失或双方都未满足期望，不能算通过：
@@ -43,9 +43,11 @@ npx tsc --noEmit --pretty false --incremental false
 npm test
 npm run test:parity:local --silent
 npm run test:build --silent
+npm run test:api:dist --silent
+npm run test:release --silent
 ```
 
-其中第一条是阶段权威的非增量零诊断检查；`npm test` 默认已经指向 `test:unit:serial`。`test:build` 会先正式构建，再检查 `dist/index.js` 的公共 API。
+其中第一条是阶段权威的非增量零诊断检查；`npm test` 默认已经指向 `test:unit:serial`。`test:build` 会先正式构建，再检查 `dist/index.js` 的公共 API；`test:release` 还会验证干净包的外部 tsc、API、CLI、shell 和启动警告。
 
 ### Narsese 交互式 CLI
 

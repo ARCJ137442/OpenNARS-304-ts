@@ -1,6 +1,6 @@
 # 当前状态与运行手册
 
-更新时间：2026-08-26
+更新时间：2026-08-27
 
 本文是当前主线的事实入口，优先级高于历史报告中的旧统计。历史审阅、重启提示词和逐批报告保留用于追溯，不直接代表当前通过率。
 
@@ -20,17 +20,19 @@ M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观�
 
 ## 当前已确认事实
 
-- Git 主线最新提交以仓库 HEAD 和对应批次报告为准；当前 G0 回归绑定 `3ae6874`，`4d544a1` 修复 Node/jree 运行时入口警告，`29b326a` 固化 JavaString UTF-16 边界优化，`42b58fd` 完成发布候选外部消费验收。
+- Git 主线最新提交以仓库 HEAD 和对应批次报告为准；当前 M1/M2 保护回归记录于 `reports/20260826-231219.md`，此前稳定 G0 证据仍由 `3ae6874` 及其后续批次保留。
 - Java canonical JAR：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`。
 - canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 - Java 与 TypeScript 均按单线程运行；Java 测试使用 JDK 18.0.2。
 - `npx tsc --noEmit --pretty false --incremental false`：0 诊断。
-- G0 干净提交串行 `npm run test:unit:serial --silent`：195/195；当前 `Nar.plugins` 批次复验为 196/196；权威 `npm run typecheck --silent` 使用 `--incremental false` 且为 0 诊断；`npm run test:build --silent`、构建 API 和源码/构建产物 shell smoke 均通过。源码 shell 使用 `--import` 注册 TypeScript loader，并由项目 resolver 处理 `jree`；发布产物使用 `dist/jree-entry.mjs` 的 `createRequire` 适配入口。独立 Shell 子进程 stderr 为空，不再产生 `--experimental-loader`/`DEP0151` 启动警告，也不再改写 `node_modules/jree/package.json`。Node 测试器自身的 `--experimental-strip-types` 提示不属于 Shell 子进程。
-- `npm pack --ignore-scripts` 后在干净 consumer 中安装的包已通过 `Nar` API、外部 TypeScript consumer、npm bin CLI、交互式 shell 和非法 CLI 参数验收；干净包 shell stderr 无 `ExperimentalWarning`、`DEP0151` 或其他 Node deprecation warning。最近一次 G0/插件批次发布包包含 272 个文件；包内 `config/defaultConfig.xml` 的 83 个 `conf` 值与 Java canonical 配置一致。
+- 当前 HEAD 串行 `npm test`：202/202；权威 `npm run typecheck --silent` 使用 `--incremental false` 且为 0 诊断；`npm run test:build --silent`、构建 API、局部算法 parity、release 和源码/构建产物 shell smoke 均通过。源码 shell 使用 `--import` 注册 TypeScript loader，并由项目 resolver 处理 `jree`；发布产物使用 `dist/jree-entry.mjs` 的 `createRequire` 适配入口。独立 Shell 子进程 stderr 为空，不再产生 `--experimental-loader`/`DEP0151` 启动警告，也不再改写 `node_modules/jree/package.json`。Node 测试器自身的 `--experimental-strip-types` 提示不属于 Shell 子进程。
+- `npm pack --ignore-scripts` 后在干净 consumer 中安装的包已通过 `Nar` API、外部 TypeScript consumer、npm bin CLI、交互式 shell 和非法 CLI 参数验收；干净包 shell stderr 无 `ExperimentalWarning`、`DEP0151` 或其他 Node deprecation warning。2026-08-26 G0/插件批次发布包包含 272 个文件；包内 `config/defaultConfig.xml` 的 83 个 `conf` 值与 Java canonical 配置一致。
 - 局部算法 parity：`ok: true`，`differences: []`，容差 `1e-5`。
 - M1 冻结合同已完成：245 个主资源加 `simpleOperationTest.nal` 共 246 个样本，244 个 marker/negative-marker 样本等价，2 个 markerless 样本均有 131072 周期独立 stage-digest 验收；G0 有效功能结论为 246/246。原始 JSONL 的过程字段仍保留 transient V8 fatal 和 stability process-limit 等筛查记录，不应直接替代带替代证据说明的独立验收汇总。
+- 当前 `Evaluate` 批次的 M1 保护回归仍与稳定 raw 证据逐字段一致（245 行 `differing_fields=0`）；raw stability 仍可能命中进程安全上限，但不构成功能回退。第 246 项当前 HEAD 通过；其短测未达到 131072，沿用既有不触达 `^evaluate` 的严格长周期证据。
+- 023 当前已原生化 `FunctionOperator`、`Want`、`Evaluate` 的单任务反馈；jree 直接导入仍有 105 个生产文件，整体去 jree 尚未完成。
 - 构建后公共 API smoke 已验证 `dist/index.js` 可导入 `Nar`、订阅 `CycleEnd`/`OUT`、执行 2 个周期并正常停止；构建后 CLI 对 `nal8.add.nal` 的单周期 smoke 通过；`dist/index.d.ts` 由公共 API facade 生成并已被仓库外 TypeScript consumer 编译。
-- `npm run test:release` 会真实执行 `npm pack`，在干净 consumer 中串行验证外部 tsc、API、CLI、shell、shebang、配置和包清单；最近一次插件批次包清单为 272 个文件，未包含 reports、探针或临时证据。
+- `npm run test:release` 会真实执行 `npm pack`，在干净 consumer 中串行验证外部 tsc、API、CLI、shell、shebang、配置和包清单；2026-08-26 插件批次包清单为 272 个文件，未包含 reports、探针或临时证据。
 - 024 P1 已提供平台中立的 `parseConfigXml(text)` 和 `ParsedNarConfig`；默认 `new Nar()` 使用源码内嵌的配置文本，不在构造期间读取文件。Node shell 的 `--config PATH` 由 shell 读取文本后以 `NarOptions.configText` 注入；核心收到路径字符串会明确拒绝，避免把文件系统能力伪装成核心能力。
 
 ## M1 冻结回归
@@ -45,7 +47,7 @@ M1 已冻结；M3 benchmark 只使用正式构建产物，且不得以性能观�
 - `--timeout-ms 180000` 表示 180 秒没有进度才判定 stall，不把“慢”直接当作逻辑失败；
 - `--process-limit-ms 900000` 是本次 G0 长周期复核采用的单文件硬进程上限；对持续有周期进展但尚未出现 marker 的已知慢样本，可单独提高上限复核，不能因此掩盖真正的无进展卡死；
 - 结果必须同时查看 `matched[]`、`ok`、`error_type`、`marker_missing`、`timed_out` 和 `process_limited`；
-- 只有发现真实功能回归时才重新运行 245+1；日常 M2/M3 批次使用冻结证据和小范围受影响样本，避免重复消耗全量矩阵。发生一次 M2/M3 结构性改动后，若用户要求保护 M1 底线，则使用单进程、`--chunk-size 1` 的全量回归。
+- 发生一次 M2/M3 结构性改动后，若用户要求保护 M1 底线，则使用单进程、`--chunk-size 1` 的 245+1 全量回归；结果必须与稳定基线逐字段比较。日常小改动可先用受影响样本，但在继续扩张前要保留 M1/M2 回归证据。
 
 当前运行的 PID、日志和 checkpoint 以实际终端输出为准，不写入长期文档，避免留下过期进程状态。
 
@@ -92,5 +94,6 @@ M3 已有 `node scripts/e2e/run-m3-benchmark.mjs` 串行工具和显式资源观
 - `docs/strategic-baseline.md`：战略路线和历史决策；
 - `docs/java-to-typescript-migration-patterns.md`：可复用迁移纠正模式；
 - `docs/translation-deep-pitfalls.md`：结构性风险与开工自检；
+- `reports/20260826-231219.md`：`Evaluate` 原生反馈批次及当前 M1/M2 保护回归；
 - `reports/*.md`：阶段批次的证据、决策和复盘；
 - `specs/*`：里程碑、重大决策和阶段门禁，不用于记录每个局部 Bug。

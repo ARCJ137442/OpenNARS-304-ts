@@ -1,10 +1,10 @@
 # Java → TypeScript 翻译：深层踩坑点清单
 
 **版本**：0.1（2026-08-23）
-**范围**：本文件是 [`docs/java-to-typescript-migration-patterns.md`](./java-to-typescript-migration-patterns.md) v0.7 的**补充**，不替代、也不修订 v0.7。
+**范围**：本文件是 [`docs/java-to-typescript-migration-patterns.md`](./java-to-typescript-migration-patterns.md) v0.8 的**补充**，不替代、也不修订模式库。
 **目的**：面向开工 Agent——按"难解决性 + 长期代价"排序；不是按"识别 → 纠正"模式排序。
 
-**当前校准（2026-08-25）**：本文的计数和示例是 2026-08-23 的结构性审计快照，不是当前通过率。当前 M1 全量矩阵优先于 M3；当前 TypeScript 已达到非增量 0 诊断和串行 159/159 单测，但这不等于 245+1 个 NAL 全量通过。jree FQN 堆栈热点已在 `4d5435f` 以兼容层预置标记方式验证，升级 jree 后仍需重新审计。
+**当前校准（2026-08-27）**：本文的计数和示例仍主要是结构性审计快照，不是当前通过率。当前 M1/M2 保护回归记录为：非增量 tsc 0 诊断、串行单测 202/202、245 主资源 raw 与稳定基线逐字段一致；raw stability 的 process-limit 与功能结论分开记录。jree 单任务反馈已在 `FunctionOperator`、`Want`、`Evaluate` 中原生化，但整体 jree 退场仍未完成。jree FQN 堆栈热点已在 `4d5435f` 以兼容层预置标记方式验证，升级 jree 后仍需重新审计。
 
 ## 0. 与 v0.7 的关系
 

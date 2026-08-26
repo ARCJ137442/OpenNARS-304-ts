@@ -445,6 +445,34 @@ test("Want emits native array feedback through Operator.call", async () => {
     }
 });
 
+test("Evaluate emits native array feedback through Operator.call", async () => {
+    const { Evaluate } = await import("../../src/operator/mental/Evaluate.ts");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Operation } = await import("../../src/operator/Operation.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+
+    const nar = new Nar();
+    try {
+        const evaluate = new Evaluate();
+        const makeOperation = () => Operation.make(evaluate, [
+            Term.SELF,
+            Term.get("cat"),
+        ], true);
+        const operation = makeOperation();
+        const directFeedback = (evaluate as any).execute(
+            operation,
+            operation.getArguments().term,
+            nar.memory,
+            nar,
+        );
+        assert.ok(Array.isArray(directFeedback));
+        assert.equal(directFeedback.length, 1);
+        assert.equal(evaluate.call(makeOperation(), nar.memory, nar), true);
+    } finally {
+        nar.stop();
+    }
+});
+
 test("set factories use native equality-aware intersection and difference", async () => {
     const { DifferenceExt } = await import("../../src/language/DifferenceExt.ts");
     const { DifferenceInt } = await import("../../src/language/DifferenceInt.ts");

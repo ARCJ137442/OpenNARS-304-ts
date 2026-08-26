@@ -2,10 +2,11 @@
 
 OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先保证 Java canonical 基线与 TypeScript 的功能证据一致，再进入性能与发布门禁。
 
-## 当前状态（2026-08-26）
+## 当前状态（2026-08-27）
 
 - M1：功能冻结已完成；245 个主资源加 `simpleOperationTest.nal` 共 246 个样本，综合验收 246/246。
-- M2：非增量 `tsc` 为 0 诊断；串行 `npm test` 为 185/185，局部算法 parity、正式构建、构建 API 和源码/构建产物 shell smoke 通过；干净 `npm pack` 安装也已通过 API、CLI 和无启动警告验收。
+- M2：非增量 `tsc` 为 0 诊断；串行 `npm test` 为 202/202，局部算法 parity、正式构建、构建 API 和源码/构建产物 shell smoke 通过；干净 `npm pack` 安装也已通过 API、CLI 和无启动警告验收。
+- 023 去 jree：`FunctionOperator`、`Want`、`Evaluate` 的单任务反馈已改用原生 `Task[]`，并由单元测试与对应 NAL marker 保护；整体 jree 退场尚未完成。
 - M3：此前已完成一个 JavaString UTF-16 边界热点的语义保持优化，并完成真实 npm tarball 外部消费验收；正式性能门禁尚未开始，后续以单线程 `60,000 ms / 1024 cycles`、TS/Java 不超过 `16x` 作为量化目标。
 - 当前版本：`0.1.0`；当前 canonical Java JAR 使用 `OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 

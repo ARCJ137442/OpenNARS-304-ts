@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/mental/Evaluate.java
-import { java } from "jree";
 import { Operator } from "../Operator.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -30,7 +29,7 @@ export class Evaluate extends Operator {
      * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> | null {
+        time: Timable): Task[] | null {
         let content: Term = args[1];
 
         let sentence: Sentence = new Sentence(
@@ -43,8 +42,6 @@ export class Evaluate extends Operator {
             memory.narParameters.DEFAULT_QUESTION_DURABILITY, 1, memory.narParameters);
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-        let result: java.util.List<Task> = new java.util.ArrayList<Task>();
-        result.add(newTask);
-        return result;
+        return [newTask];
     }
 }
