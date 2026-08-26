@@ -2,6 +2,11 @@
 import "../../runtime/jree-compat.ts";
 import { java, JavaObject, S } from "jree";
 
+type PendingOperation = [
+    enabled: boolean,
+    event: java.lang.Class<unknown>,
+    observer: EventEmitter.EventObserver,
+];
 
 
 /**
@@ -14,10 +19,9 @@ export class EventEmitter extends JavaObject {
 
     private readonly events: java.util.Map<java.lang.Class<unknown>, java.util.List<EventEmitter.EventObserver>>;
 
-    // jree's ArrayDeque constructor mishandles both an omitted argument and a
-    // numeric capacity; an empty Java collection preserves the no-argument form.
-    private readonly pendingOps: java.util.Deque<java.lang.Object[]> =
-        new java.util.ArrayDeque<java.lang.Object[]>(new java.util.ArrayList<java.lang.Object[]>());
+    // Java source: private final Deque<Object[]> pendingOps = new ArrayDeque<>();
+    // The queue is private and only supports FIFO iteration followed by clear.
+    private readonly pendingOps: PendingOperation[] = [];
 
     /**
      * EventEmitter that allows unknown events; must use concurrent collection
@@ -86,18 +90,16 @@ export class EventEmitter extends JavaObject {
     // apply pending on/off changes when synchronizing, ex: in-between memory cycles
     public synch(): void {
         /* synchronized (pendingOps) { */
-        if (!this.pendingOps.isEmpty()) {
-            for (let o of this.pendingOps) {
-                let c: java.lang.Class<unknown> = o[1] as java.lang.Class<unknown>;
-                let d: EventEmitter.EventObserver = o[2] as unknown as EventEmitter.EventObserver;
-                if (o[0] as java.lang.Boolean) {
+        if (this.pendingOps.length > 0) {
+            for (const [enabled, c, d] of this.pendingOps) {
+                if (enabled) {
                     this.on(c, d);
                 } else {
                     this.off(c, d);
                 }
             }
         }
-        this.pendingOps.clear();
+        this.pendingOps.length = 0;
         /* } */
     }
 

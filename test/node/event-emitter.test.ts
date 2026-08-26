@@ -24,6 +24,30 @@ test("EventEmitter.set subscribes only to the requested event classes", () => {
     assert.deepEqual(received, [Events.CycleEnd.class]);
 });
 
+test("EventEmitter.synch applies pending operations in FIFO order", () => {
+    const emitter = new EventEmitter();
+    const received: unknown[] = [];
+    const observer: EventEmitter.EventObserver = {
+        event(event) {
+            received.push(event);
+        },
+    };
+    const pendingOps = (emitter as unknown as {
+        pendingOps: Array<[boolean, java.lang.Class<unknown>, EventEmitter.EventObserver]>;
+    }).pendingOps;
+
+    pendingOps.push([true, Events.CycleEnd.class, observer]);
+    emitter.synch();
+    emitter.emit(Events.CycleEnd.class);
+
+    pendingOps.push([false, Events.CycleEnd.class, observer]);
+    emitter.synch();
+    emitter.emit(Events.CycleEnd.class);
+
+    assert.deepEqual(received, [Events.CycleEnd.class]);
+    assert.equal(pendingOps.length, 0);
+});
+
 test("EventHandler accepts Java-style event varargs", () => {
     const emitter = new EventEmitter();
     const received: unknown[] = [];
