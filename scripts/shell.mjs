@@ -9,6 +9,7 @@ import { OutputHandler } from "../src/io/events/OutputHandler.ts";
 import { TextOutputHandler } from "../src/io/events/TextOutputHandler.ts";
 import { Nar } from "../src/main/Nar.ts";
 import { Debug } from "../src/main/Debug.ts";
+import { createNodeRuntimeCapabilities } from "../src/platform/node/SystemCommandCapabilities.ts";
 
 Debug.TEST = true;
 
@@ -88,8 +89,12 @@ function attachOutput(nar) {
 
 function createNar(config) {
   return config === null
-    ? new Nar()
-    : new Nar({ configText: readFileSync(config, "utf8"), configSource: config });
+    ? new Nar({ capabilities: createNodeRuntimeCapabilities() })
+    : new Nar({
+      configText: readFileSync(config, "utf8"),
+      configSource: config,
+      capabilities: createNodeRuntimeCapabilities(),
+    });
 }
 
 async function run(argv = process.argv.slice(2), input = process.stdin) {

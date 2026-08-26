@@ -1,9 +1,9 @@
 //! Java source: opennars/operator/misc/System.java
-import { execFileSync } from "node:child_process";
 import { java } from "jree";
 import { FunctionOperator } from "../FunctionOperator.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import { Term } from "../../language/Term.ts";
+import { MissingRuntimeCapabilityError, type RuntimeCapabilities } from "../../platform/RuntimeCapabilities.ts";
 
 
 
@@ -11,9 +11,11 @@ import { Term } from "../../language/Term.ts";
  * Count the number of elements in a set
  */
 export class System extends FunctionOperator {
+    private readonly executeSystemCommand: RuntimeCapabilities["executeSystemCommand"];
 
-    public constructor() {
+    public constructor(capabilities?: RuntimeCapabilities) {
         super(new java.lang.String("^system"));
+        this.executeSystemCommand = capabilities?.executeSystemCommand;
     }
 
     protected function(_memory: Memory, x: Term[]): Term {
@@ -22,9 +24,11 @@ export class System extends FunctionOperator {
             cmd += String(x[i].name()) + " ";
         }
         let ret = "";
+        if (this.executeSystemCommand === undefined) {
+            throw new MissingRuntimeCapabilityError("executeSystemCommand");
+        }
         try {
-            const output = execFileSync("bash", ["-c", cmd], { encoding: "utf8" });
-            ret = output.split(/\r?\n/).join("");
+            ret = this.executeSystemCommand(cmd).split(/\r?\n/).join("");
         } catch {
             // Java catches Exception here and returns an empty Term.
         }

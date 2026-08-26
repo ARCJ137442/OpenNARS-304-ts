@@ -8,6 +8,7 @@ import { OutputHandler } from "../src/io/events/OutputHandler.ts";
 import { Events } from "../src/io/events/Events.ts";
 import { Nar } from "../src/main/Nar.ts";
 import { Debug } from "../src/main/Debug.ts";
+import { createNodeRuntimeCapabilities } from "../src/platform/node/SystemCommandCapabilities.ts";
 
 // Match java-master's NALTest static setup: deterministic occurrence times.
 Debug.TEST = true;
@@ -140,7 +141,7 @@ async function runFile(file, cycles, progressInterval) {
   let resourceMetrics = null;
 
   try {
-    const nar = new Nar();
+    const nar = new Nar({ capabilities: createNodeRuntimeCapabilities() });
     const startedAt = performance.now();
     resourceMetrics = createResourceMetrics();
     const outputChannel = OutputHandler.OUT.class;

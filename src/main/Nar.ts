@@ -34,6 +34,7 @@ import type { Plugin } from "../plugin/Plugin.ts";
 import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import { DEFAULT_CONFIG_XML } from "../io/DefaultConfig.ts";
+import type { RuntimeCapabilities } from "../platform/RuntimeCapabilities.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 type ObjectOutputStreamCompat = {
@@ -50,6 +51,7 @@ export interface NarOptions {
     readonly configText?: string;
     readonly configSource?: string;
     readonly parameterOverrides?: java.util.Map<java.lang.String, java.lang.Object>;
+    readonly capabilities?: RuntimeCapabilities;
 }
 
 const asJavaObject = (value: unknown): java.lang.Object => value as unknown as java.lang.Object;
@@ -244,6 +246,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         let configText = DEFAULT_CONFIG_XML;
         let configSource: java.lang.String = Nar.DEFAULTCONFIG_FILEPATH;
         let parameterOverrides: java.util.Map<java.lang.String, java.lang.Object> | null = null;
+        let capabilities: RuntimeCapabilities | undefined;
 
         if (args.length === 0) {
             // defaults above
@@ -251,13 +254,15 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             const value = args[0];
             const isOptions = value !== null && typeof value === "object"
                 && ("configText" in (value as object) || "narId" in (value as object)
-                    || "configSource" in (value as object) || "parameterOverrides" in (value as object));
+                    || "configSource" in (value as object) || "parameterOverrides" in (value as object)
+                    || "capabilities" in (value as object));
             if (isOptions) {
                 const options = value as NarOptions;
                 if (options.narId !== undefined) narId = toRuntimeLong(options.narId);
                 if (options.configText !== undefined) configText = options.configText;
                 if (options.configSource !== undefined) configSource = S`${options.configSource}`;
                 if (options.parameterOverrides !== undefined) parameterOverrides = options.parameterOverrides;
+                if (options.capabilities !== undefined) capabilities = options.capabilities;
             } else if (typeof value === "number" || typeof value === "bigint" || value instanceof java.lang.Number) {
                 narId = typeof value === "number" || typeof value === "bigint"
                     ? toRuntimeLong(value)
@@ -305,7 +310,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
         super();
         let pluginsToAdd: java.util.List<Plugin> = ConfigReader.loadParamsFromConfigTextAndReturnPlugins(configText, this,
-            this.narParameters);
+            this.narParameters, capabilities);
         if (parameterOverrides !== null) {
             Nar.overrideParameters(this.narParameters, parameterOverrides);
         }

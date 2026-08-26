@@ -3,9 +3,11 @@ import test from "node:test";
 import { java } from "jree";
 import { Term } from "../../src/language/Term.ts";
 import { System } from "../../src/operator/misc/System.ts";
+import { MissingRuntimeCapabilityError } from "../../src/platform/RuntimeCapabilities.ts";
+import { createNodeRuntimeCapabilities } from "../../src/platform/node/SystemCommandCapabilities.ts";
 
 test("System operator executes its Java-compatible shell contract", () => {
-    const operator = new System();
+    const operator = new System(createNodeRuntimeCapabilities());
     const callFunction = (operator as unknown as Record<string, unknown>)["function"] as
         (memory: unknown, terms: Term[]) => Term;
     const result = callFunction.call(operator, undefined, [
@@ -21,4 +23,17 @@ test("System operator exposes the Java range term", () => {
     const getRange = (operator as unknown as Record<string, unknown>)["getRange"] as () => Term;
 
     assert.equal(String(getRange.call(operator).name()), "system_called");
+});
+
+test("System operator reports a missing host capability explicitly", () => {
+    const operator = new System();
+    const callFunction = (operator as unknown as Record<string, unknown>)["function"] as
+        (memory: unknown, terms: Term[]) => Term;
+
+    assert.throws(
+        () => callFunction.call(operator, undefined, [Term.get(new java.lang.String("printf"))]),
+        (error: unknown) => error instanceof MissingRuntimeCapabilityError
+            && error.code === "MISSING_RUNTIME_CAPABILITY"
+            && error.capability === "executeSystemCommand",
+    );
 });

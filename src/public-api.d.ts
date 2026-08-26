@@ -205,6 +205,16 @@ export interface NarOptions {
     readonly narId?: number | bigint;
     readonly configText?: string;
     readonly configSource?: string;
+    readonly capabilities?: RuntimeCapabilities;
+}
+
+export interface RuntimeCapabilities {
+    readonly executeSystemCommand?: (command: string) => string;
+}
+
+export class MissingRuntimeCapabilityError extends Error {
+    readonly code: "MISSING_RUNTIME_CAPABILITY";
+    readonly capability: string;
 }
 
 export class Events {

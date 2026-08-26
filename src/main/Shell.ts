@@ -9,6 +9,7 @@ import { TextOutputHandler } from "../io/events/TextOutputHandler.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { javaSystemExit } from "../runtime/jree-compat.ts";
 import { NodeStdinInputStream } from "../runtime/NodeStdinInputStream.ts";
+import { createNodeRuntimeCapabilities } from "../platform/node/SystemCommandCapabilities.ts";
 
 
 
@@ -33,16 +34,21 @@ export class Shell extends JavaObject {
 
         if (narPath.toLowerCase() === "null") {
             if (id === null) {
-                nar = new Nar();
+                nar = new Nar({ capabilities: createNodeRuntimeCapabilities() });
             } else {
-                nar = new Nar(BigInt(id));
+                nar = new Nar({ narId: BigInt(id), capabilities: createNodeRuntimeCapabilities() });
             }
         } else if (narPath.endsWith(".xml")) {
             const configText = readFileSync(narPath, "utf8");
             if (id === null) {
-                nar = new Nar({ configText, configSource: narPath });
+                nar = new Nar({ configText, configSource: narPath, capabilities: createNodeRuntimeCapabilities() });
             } else {
-                nar = new Nar({ narId: BigInt(id), configText, configSource: narPath });
+                nar = new Nar({
+                    narId: BigInt(id),
+                    configText,
+                    configSource: narPath,
+                    capabilities: createNodeRuntimeCapabilities(),
+                });
             }
         } else {
             if (id !== null) {

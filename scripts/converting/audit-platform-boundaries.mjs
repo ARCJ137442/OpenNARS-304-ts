@@ -50,6 +50,7 @@ function scopeFor(filePath) {
     const absolutePath = resolve(filePath);
     const projectRelative = toPosix(relative(projectRoot, absolutePath));
     if (projectRelative.startsWith("src/")) {
+        if (projectRelative.startsWith("src/platform/node/")) return "node-adapter-candidate";
         if (projectRelative === "src/runtime/NodeStdinInputStream.ts") return "node-adapter-candidate";
         if ([
             "src/io/ConfigReader.ts",

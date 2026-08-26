@@ -7,6 +7,8 @@ export { parseConfigXml } from "./io/ConfigParser.ts";
 export type { ParsedConfigValue, ParsedNarConfig, ParsedPlugin, ParsedPluginArgument } from "./io/ConfigParser.ts";
 export { Nar } from "./main/Nar.ts";
 export type { NarOptions } from "./main/Nar.ts";
+export type { RuntimeCapabilities } from "./platform/RuntimeCapabilities.ts";
+export { MissingRuntimeCapabilityError } from "./platform/RuntimeCapabilities.ts";
 export { Parameters } from "./main/Parameters.ts";
 export { Debug } from "./main/Debug.ts";
 export { Events } from "./io/events/Events.ts";

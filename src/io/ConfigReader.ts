@@ -21,7 +21,9 @@ import { Wonder } from "../operator/mental/Wonder.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
 import { Emotions } from "../plugin/mental/Emotions.ts";
 import { VisionChannel } from "../plugin/perception/VisionChannel.ts";
+import { System } from "../operator/misc/System.ts";
 import { parseConfigXml } from "./ConfigParser.ts";
+import type { RuntimeCapabilities } from "../platform/RuntimeCapabilities.ts";
 
 export { parseConfigXml } from "./ConfigParser.ts";
 
@@ -59,6 +61,8 @@ export class ConfigReader extends JavaObject {
     public static lastUnsupportedPluginClasspaths: string[] = [];
     /** Classpaths represented by a parse-only compatibility stub in Node. */
     public static lastCompatibilityStubPluginClasspaths: string[] = [];
+    /** Node-only classpaths skipped because their host capability was absent. */
+    public static lastMissingRuntimeCapabilityPluginClasspaths: string[] = [];
 
     private static nodeConfigPath(filepath: string): string | null {
         const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
@@ -79,11 +83,13 @@ export class ConfigReader extends JavaObject {
         return readFileSync(path, "utf8");
     }
 
-    private static loadNodeConfigText(text: string, reasoner: Reasoner, parameters: Parameters): java.util.List<Plugin> {
+    private static loadNodeConfigText(text: string, reasoner: Reasoner, parameters: Parameters,
+        capabilities?: RuntimeCapabilities): java.util.List<Plugin> {
         const config = parseConfigXml(text);
         const parameterTarget = parameters as unknown as Record<string, unknown>;
         const debugTarget = Debug as unknown as Record<string, unknown>;
         const configuredPlugins: string[] = [];
+        const missingRuntimeCapabilityPlugins: string[] = [];
         const plugins = new java.util.ArrayList<Plugin>();
         const supportedPluginFactories = new Map<string, () => Plugin>([
             ["org.opennars.operator.misc.Add", () => new Add()],
@@ -127,6 +133,7 @@ export class ConfigReader extends JavaObject {
         ]);
         ConfigReader.lastUnsupportedPluginClasspaths = [];
         ConfigReader.lastCompatibilityStubPluginClasspaths = [];
+        ConfigReader.lastMissingRuntimeCapabilityPluginClasspaths = [];
         for (const { name, value: rawValue } of config.values) {
             let target: Record<string, unknown> | null = null;
             if (Object.prototype.hasOwnProperty.call(parameterTarget, name)) {
@@ -153,6 +160,12 @@ export class ConfigReader extends JavaObject {
                 plugins.add(value === undefined || value === null
                     ? new NullOperator()
                     : new NullOperator(new java.lang.String(value)));
+            } else if (classpath === "org.opennars.operator.misc.System") {
+                if (capabilities?.executeSystemCommand === undefined) {
+                    missingRuntimeCapabilityPlugins.push(classpath);
+                } else {
+                    plugins.add(new System(capabilities));
+                }
             } else {
                 const factory = supportedPluginFactories.get(classpath);
                 if (factory !== undefined) {
@@ -163,12 +176,13 @@ export class ConfigReader extends JavaObject {
             }
         }
         ConfigReader.lastUnsupportedPluginClasspaths = configuredPlugins;
+        ConfigReader.lastMissingRuntimeCapabilityPluginClasspaths = missingRuntimeCapabilityPlugins;
         return plugins;
     }
 
     public static loadParamsFromConfigTextAndReturnPlugins(text: string, reasoner: Reasoner,
-        parameters: Parameters): java.util.List<Plugin> {
-        return ConfigReader.loadNodeConfigText(text, reasoner, parameters);
+        parameters: Parameters, capabilities?: RuntimeCapabilities): java.util.List<Plugin> {
+        return ConfigReader.loadNodeConfigText(text, reasoner, parameters, capabilities);
     }
 
     public static loadParamsFromFileAndReturnPlugins(filepath: java.lang.String, reasoner: Reasoner,

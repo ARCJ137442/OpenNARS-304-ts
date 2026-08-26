@@ -4,8 +4,10 @@ import test from "node:test";
 
 import { DEFAULT_CONFIG_XML } from "../../src/io/DefaultConfig.ts";
 import { parseConfigXml } from "../../src/io/ConfigParser.ts";
+import { ConfigReader } from "../../src/io/ConfigReader.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { Debug } from "../../src/main/Debug.ts";
+import { createNodeRuntimeCapabilities } from "../../src/platform/node/SystemCommandCapabilities.ts";
 
 function normalizeXml(text: string): string {
     return text.replace(/\r\n/g, "\n").trim();
@@ -86,4 +88,46 @@ test("Nar rejects a path passed to the core string configuration overload", () =
         () => new Nar("config/defaultConfig.xml"),
         /configuration must be XML text/i,
     );
+});
+
+test("Nar records a missing capability instead of loading a Node-only plugin", () => {
+    const nar = new Nar({
+        configText: `
+            <config>
+                <plugins>
+                    <plugin classpath="org.opennars.operator.misc.System" />
+                </plugins>
+            </config>
+        `,
+    });
+
+    try {
+        assert.deepEqual(
+            ConfigReader.lastMissingRuntimeCapabilityPluginClasspaths,
+            ["org.opennars.operator.misc.System"],
+        );
+        assert.deepEqual(ConfigReader.lastUnsupportedPluginClasspaths, []);
+    } finally {
+        nar.stop();
+    }
+});
+
+test("Nar registers the system plugin when the Node capability is supplied", () => {
+    const nar = new Nar({
+        capabilities: createNodeRuntimeCapabilities(),
+        configText: `
+            <config>
+                <plugins>
+                    <plugin classpath="org.opennars.operator.misc.System" />
+                </plugins>
+            </config>
+        `,
+    });
+
+    try {
+        assert.deepEqual(ConfigReader.lastMissingRuntimeCapabilityPluginClasspaths, []);
+        assert.deepEqual(ConfigReader.lastUnsupportedPluginClasspaths, []);
+    } finally {
+        nar.stop();
+    }
 });
