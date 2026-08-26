@@ -53,7 +53,9 @@ export class ConfigReader extends JavaObject {
         ConfigReader.lastMissingRuntimeCapabilityPluginClasspaths = [
             ...result.diagnostics.missingRuntimeCapabilityPluginClasspaths,
         ];
-        return result.plugins;
+        const plugins = new java.util.ArrayList<Plugin>();
+        for (const plugin of result.plugins) plugins.add(plugin);
+        return plugins;
     }
 
     public static loadParamsFromConfigTextAndReturnPlugins(text: string, reasoner: Reasoner,

@@ -5,8 +5,11 @@ import test from "node:test";
 import { DEFAULT_CONFIG_XML } from "../../src/io/DefaultConfig.ts";
 import { parseConfigXml } from "../../src/io/ConfigParser.ts";
 import { ConfigReader } from "../../src/io/ConfigReader.ts";
+import { PluginRegistry } from "../../src/io/ConfigPluginRegistry.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { Debug } from "../../src/main/Debug.ts";
+import { Parameters } from "../../src/main/Parameters.ts";
+import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
 import { createNodeRuntimeCapabilities } from "../../src/platform/node/SystemCommandCapabilities.ts";
 
 function normalizeXml(text: string): string {
@@ -130,4 +133,22 @@ test("Nar registers the system plugin when the Node capability is supplied", () 
     } finally {
         nar.stop();
     }
+});
+
+test("PluginRegistry returns a native ordered plugin sequence and diagnostics", () => {
+    const result = PluginRegistry.load(parseConfigXml(`
+        <config>
+            <plugins>
+                <plugin classpath="org.opennars.operator.NullOperator" />
+                <plugin classpath="org.opennars.operator.misc.Add" />
+                <plugin classpath="org.example.Unsupported" />
+            </plugins>
+        </config>
+    `), undefined as unknown as Reasoner, new Parameters());
+
+    assert.equal(Array.isArray(result.plugins), true);
+    assert.equal(result.plugins.length, 2);
+    assert.deepEqual(result.diagnostics.unsupportedPluginClasspaths, ["org.example.Unsupported"]);
+    assert.deepEqual(result.diagnostics.compatibilityStubPluginClasspaths, []);
+    assert.deepEqual(result.diagnostics.missingRuntimeCapabilityPluginClasspaths, []);
 });

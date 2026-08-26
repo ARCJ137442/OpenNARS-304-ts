@@ -50,7 +50,7 @@ export interface PluginRegistryDiagnostics {
 }
 
 export interface PluginRegistryResult {
-    readonly plugins: java.util.List<Plugin>;
+    readonly plugins: readonly Plugin[];
     readonly diagnostics: PluginRegistryDiagnostics;
 }
 
@@ -123,7 +123,7 @@ export class PluginRegistry {
     public static load(config: ParsedNarConfig, reasoner: Reasoner, parameters: Parameters,
         capabilities?: RuntimeCapabilities): PluginRegistryResult {
         applyConfigValues(config, parameters);
-        const plugins = new java.util.ArrayList<Plugin>();
+        const plugins: Plugin[] = [];
         const factories = createBuiltinFactories(reasoner);
         const unsupportedPluginClasspaths: string[] = [];
         const compatibilityStubPluginClasspaths: string[] = [];
@@ -133,7 +133,7 @@ export class PluginRegistry {
             const classpath = plugin.classpath;
             if (classpath === "org.opennars.operator.NullOperator") {
                 const value = plugin.arguments.find(argument => argument.type === "String.class")?.value;
-                plugins.add(value === undefined || value === null
+                plugins.push(value === undefined || value === null
                     ? new NullOperator()
                     : new NullOperator(new java.lang.String(value)));
                 continue;
@@ -142,13 +142,13 @@ export class PluginRegistry {
                 if (capabilities?.executeSystemCommand === undefined) {
                     missingRuntimeCapabilityPluginClasspaths.push(classpath);
                 } else {
-                    plugins.add(new System(capabilities));
+                    plugins.push(new System(capabilities));
                 }
                 continue;
             }
             const factory = factories.get(classpath);
             if (factory !== undefined) {
-                plugins.add(factory());
+                plugins.push(factory());
             } else {
                 unsupportedPluginClasspaths.push(classpath);
             }
