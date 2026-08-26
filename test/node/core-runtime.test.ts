@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import type { Product as ProductType } from "../../src/language/Product.ts";
+import type { Variable as VariableType } from "../../src/language/Variable.ts";
 
 test("translated term and sentence constructors preserve Java delegation contracts", async () => {
     // Load the sentence root first so its existing language-module cycle is initialized once.
@@ -84,6 +86,33 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const rectangle = CompoundTerm.UpdateConvRectangle([indexedTerm]);
     assert.equal(rectangle.index_variable, "M1");
     assert.deepEqual(Array.from(rectangle.term_indices ?? []), [1, 1, 1, 0, 1, 1]);
+});
+
+test("Sentence normalization keeps duplicate variables in traversal order", async () => {
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Product } = await import("../../src/language/Product.ts");
+    const { Variable } = await import("../../src/language/Variable.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { TruthValue } = await import("../../src/entity/TruthValue.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Parameters } = await import("../../src/main/Parameters.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+
+    const parameters = new Parameters();
+    const content = Product.make([new Variable("$x"), Term.get("a"), new Variable("$x")]);
+    const sentence = new Sentence(
+        content,
+        ".",
+        TruthValue.fromFrequencyConfidence(1, 0.9, parameters),
+        new Stamp(0, Tense.Present, new Stamp.BaseEntry(0, 1), parameters.DURATION),
+    );
+    const normalized = sentence.term as ProductType;
+    const variableNames = normalized.term
+        .filter((term): term is VariableType => term instanceof Variable)
+        .map((variable) => String(variable.name()));
+
+    assert.equal(normalized.isNormalized(), true);
+    assert.deepEqual(variableNames, ["$1", "$1"]);
 });
 
 test("decimal perception coordinates remain conceptual like Java Term.get", async () => {

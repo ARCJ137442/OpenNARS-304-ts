@@ -211,12 +211,14 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
 
                     this.term = newTerm;
                     let c: CompoundTerm = this.term as CompoundTerm;
-                    let vars: java.util.List<Variable> = new java.util.ArrayList<Variable>(); // may contain duplicates, list for efficiency
+                    // Keep duplicates and traversal order; this is a short-lived normalization snapshot,
+                    // so a native array avoids a jree list without changing the rename pass.
+                    let vars: Variable[] = [];
 
                     c.recurseSubtermsContainingVariables((t, parent) => {
                         if (t instanceof Variable) {
                             let v: Variable = (t as Variable);
-                            vars.add(v);
+                            vars.push(v);
                         }
                     });
 
