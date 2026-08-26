@@ -4,6 +4,7 @@ import { Operator } from "./Operator.ts";
 import { Operation } from "./Operation.ts";
 import { Term } from "../language/Term.ts";
 import { Debug } from "../main/Debug.ts";
+import type { JavaStringInput } from "../runtime/jree-compat.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Task } from "../entity/Task.ts";
@@ -17,12 +18,12 @@ export class NullOperator extends Operator {
 
     public constructor();
 
-    public constructor(name: java.lang.String);
+    public constructor(name: JavaStringInput);
     public constructor(...args: unknown[]) {
         if (args.length === 0) {
             super("^sample");
         } else if (args.length === 1) {
-            super(args[0] as java.lang.String);
+            super(args[0] as JavaStringInput);
         } else {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }

@@ -1,5 +1,4 @@
 //! Java source: org/opennars/io/ConfigReader.java plugin registration subset
-import { java } from "jree";
 import { Parameters } from "../main/Parameters.ts";
 import { Debug } from "../main/Debug.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
@@ -85,7 +84,7 @@ function createBuiltinFactories(reasoner: Reasoner): Map<string, () => Plugin> {
             1000,
         )],
         ["org.opennars.plugin.perception.VisionChannel", () => new VisionChannel(
-            new java.lang.String("BRIGHT"),
+            "BRIGHT",
             reasoner,
             reasoner,
             5,
@@ -135,7 +134,7 @@ export class PluginRegistry {
                 const value = plugin.arguments.find(argument => argument.type === "String.class")?.value;
                 plugins.push(value === undefined || value === null
                     ? new NullOperator()
-                    : new NullOperator(new java.lang.String(value)));
+                    : new NullOperator(value));
                 continue;
             }
             if (classpath === "org.opennars.operator.misc.System") {

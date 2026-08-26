@@ -2,7 +2,7 @@
 import { java, type float, type int, JavaObject, S } from "jree";
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { JavaSystemLoggerCompat } from "../../runtime/jree-compat.ts";
+import { JavaSystemLoggerCompat, toJavaString, type JavaStringInput } from "../../runtime/jree-compat.ts";
 import { Events } from "../../io/events/Events.ts";
 import type { EventEmitter } from "../../io/events/EventEmitter.ts";
 import { Narsese } from "../../io/Narsese.ts";
@@ -37,12 +37,13 @@ export class VisionChannel extends SensoryChannel {
     // Nar"
     public readonly obs: EventEmitter.EventObserver;
 
-    public constructor(label: java.lang.String, nar: Reasoner, reportResultsTo: Reasoner, width: int,
+    public constructor(label: JavaStringInput, nar: Reasoner, reportResultsTo: Reasoner, width: int,
         height: int, duration: int,
         defaultOutputConfidence: float, nPrototypes: int) {
-        super(nar as Nar, reportResultsTo as unknown as SensoryChannel, width, height, duration, SetInt.make(new Term(label)));
+        super(nar as Nar, reportResultsTo as unknown as SensoryChannel, width, height, duration,
+            SetInt.make(new Term(toJavaString(label))));
         this.nar = nar as Nar;
-        this.label = SetInt.make(new Term(label));
+        this.label = SetInt.make(new Term(toJavaString(label)));
         this.defaultOutputConfidence = Float32Math.from(defaultOutputConfidence) as float;
         this.nPrototypes = nPrototypes;
         this.prototypes = new java.util.ArrayList<VisionChannel.Prototype>();
