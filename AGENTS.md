@@ -8,6 +8,14 @@
 - 项目名称：opennars-304-ts
 - 工作方式：LeanSpec 规格驱动开发（SDD）
 
+## 阶段封存规则
+
+- 项目已于 2026-08-27 阶段封存；开始任何工作前先读 `docs/current-status.md` 与 `docs/developer-guide.md`。
+- 代码恢复点是 `17cec541f535d83bd62e5b15ee9c03f4a2233812`；旧 `v0.1.0` tag 不是新的发布候选。
+- `020`、`023`、`024` 仍未完成；没有新的明确目标时不得自行恢复，也不得为表示“暂停”而标成 complete。
+- 当前状态只维护在 `docs/current-status.md`；README 只保留必要摘要和入口。
+- 历史 Agent 提示词、旧战略与待办计划只能用于追溯，不能覆盖 Git、LeanSpec 与冻结报告的事实。
+
 ## 🚨至关重要：在任何任务之前
 
 **先停下来检查：**

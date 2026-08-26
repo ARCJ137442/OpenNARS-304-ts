@@ -1,6 +1,8 @@
-# OpenNARS-304-TS Luna Agent 长期目标（M1/M2 后续阶段）
+# OpenNARS-304-TS Luna Agent 历史重启提示词
 
-用途：本文件是 G0/M1/M2 重建阶段的历史提示词，保留用于追溯当时的门禁设计。当前 G0 已完成，最新 M1/M2 状态以 `docs/current-status-and-runbook.md` 和批次报告为准；后续 Agent 应使用 `docs/luna-agent-post-g0-goal.md`，不要把本文件的旧“先执行 G0”段落当作当前工作入口。
+> **封存文档（禁止直接交给 Agent 执行）**：本文描述 2026-08-26 的开发目标，状态、提交和任务入口已经过期。项目已阶段封存；如需恢复，先读[当前状态](current-status.md)和[开发者指南](developer-guide.md)，再根据新的用户目标重写提示词。
+
+用途：保留 G0/M1/M2 重建阶段的门禁设计与决策历史。文中的“后续 Agent 应……”均为历史指令，不再生效。
 
 ## 可直接交给 Luna Agent 的提示词
 

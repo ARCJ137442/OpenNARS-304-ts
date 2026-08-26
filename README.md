@@ -1,258 +1,71 @@
-# OpenNARS-304-ts
+# OpenNARS 3.0.4 TypeScript
 
-OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先保证 Java canonical 基线与 TypeScript 的功能证据一致，再进入性能与发布门禁。
+OpenNARS 3.0.4 的 TypeScript/Node.js 迁移实现。项目以可复现的 Java 3.0.4 产物为语义基线，保留交互式 Shell、批处理 CLI 和 ESM 库入口。
 
-## 当前状态（2026-08-27）
+> **项目已于 2026-08-27 进入阶段封存。** M1 功能等价与 M2 零诊断构建基线已经冻结；去 jree 化、浏览器平台中立化、正式性能门和发布候选尚未完成。精确证据、剩余边界和恢复方式见[当前状态](docs/current-status.md)。
 
-- M1：功能冻结已完成；245 个主资源加 `simpleOperationTest.nal` 共 246 个样本，综合验收 246/246。
-- M2：非增量 `tsc` 为 0 诊断；串行 `npm test` 为 202/202，局部算法 parity、正式构建、构建 API 和源码/构建产物 shell smoke 通过；干净 `npm pack` 安装也已通过 API、CLI 和无启动警告验收。
-- 023 去 jree：`FunctionOperator`、`Want`、`Evaluate` 的单任务反馈已改用原生 `Task[]`，并由单元测试与对应 NAL marker 保护；整体 jree 退场尚未完成。
-- M3：此前已完成一个 JavaString UTF-16 边界热点的语义保持优化，并完成真实 npm tarball 外部消费验收；正式性能门禁尚未开始，后续以单线程 `60,000 ms / 1024 cycles`、TS/Java 不超过 `16x` 作为量化目标。
-- 当前版本：`0.1.0`；当前 canonical Java JAR 使用 `OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+## 快速开始
 
-当前事实、门禁顺序和可复制命令见 [`docs/current-status-and-runbook.md`](docs/current-status-and-runbook.md)。
+```bash
+git clone https://github.com/ARCJ137442/OpenNARS-304-ts.git
+cd OpenNARS-304-ts
+npm ci
+npm run build
+```
 
-## 概况
+启动交互式 Shell：
 
-🔗来源：<https://github.com/ARCJ137442/opennars-304>
-🛠️工具：<https://github.com/mike-lischke/java2typescript>
+```bash
+npm run shell
+```
 
-❗Java→TypeScript的主要困难
+或直接运行构建产物：
 
-1. 空安全性
-2. 函数重载
-3. 内部类
-4. `final`
-5. ...
+```bash
+node dist/shell.mjs
+```
 
-## 转写方法与流程
+在 Shell 中输入 Narsese 或裸整数周期命令；输入 `:help` 查看命令，输入 `:quit` 退出。
 
-- 入口文档：`AGENTS.md`（全局规范）、`通用转写方法1.1.md`（通用转写步骤/测试/依赖剥离）、`specs/*`（模块规格）、`reports/*`（过程与结论记录）。
-- 标准流程：先 `lean-spec board/search` 做上下文发现 → 基于 spec 盘点公开面与依赖 → 先定测试计划再动代码 → 依赖剥离与纯 TS 设计 → 最小测试/可选 tsc → 更新 spec 状态与报告并提交。
-- 可读性原则：每一步都写清“来源（扫描/调用点）—边界（拆分/依赖）—验证（测试/检查）”，让人类与 AI 都能复现决策路径。
+批量执行 NAL 文件：
 
-## 构建与运行
+```bash
+node dist/cli.mjs --cycles 1550 path/to/example.nal
+```
 
-安装依赖并运行串行单元测试：
+## 作为库使用
 
-    npm ci
-    npm test
+当前公开入口是 ESM `dist/index.js`，主类为 `Nar`：
 
-权威 TypeScript 编译检查（关闭增量，避免沿用旧诊断缓存）：
+```js
+import { Nar, OutputHandler } from "./dist/index.js";
 
-    npx tsc --noEmit --pretty false --incremental false
+const nar = new Nar();
+const output = {
+  event(_channel, args = []) {
+    console.log(...args.map(String));
+  },
+};
 
-生成 `dist/` 正式产物并验证核心 API：
+nar.on(OutputHandler.OUT.class, output);
+nar.addInput("<bird --> animal>.");
+nar.cycles(10);
+nar.off(OutputHandler.OUT.class, output);
+nar.stop();
+```
 
-    npm run build
-    npm run test:build
-    npm run test:api:dist
-    npm run test:release
+更完整的输入、配置、生命周期和限制说明见[用户指南](docs/user-guide.md)。
 
-运行构建后的 CLI：
+## 文档入口
 
-    node dist/cli.mjs --cycles 1550 path/to/example.nal
+- [当前状态](docs/current-status.md)：封存点、可信证据、未完成项和恢复条件。
+- [用户指南](docs/user-guide.md)：Shell、CLI 与 ESM 库的使用方法。
+- [开发者指南](docs/developer-guide.md)：架构、测试门禁、LeanSpec 与接手流程。
+- [文档索引](docs/README.md)：当前文档、维护资料、历史资料和后续计划的分类。
 
-启动可人工输入 Narsese 的单线程交互式 shell（源码入口和发布产物均已消除 Node loader 与 jree ESM 启动警告）：
+## 版本与发布边界
 
-    npm run shell
-
-在 `nars> ` 提示符下输入 Narsese；输入 `:cycles 100` 执行 100 个推理周期，输入 `:status` 查看时钟，输入 `:quit` 退出。也可以用 `npm run shell -- --cycles 100` 让每条 Narsese 输入自动执行 100 个周期。构建后可用 `npm run build` 再运行 `npm run shell:dist`。
-
-外部配置由 Node 宿主读取后注入核心，避免 `Nar` 在构造期间隐式读取文件：
-
-    npm run shell -- --config config/defaultConfig.xml
-
-库调用可直接使用 `new Nar({ configText: xmlText, configSource: "upload.xml" })`；`parseConfigXml(xmlText)` 返回原生参数与插件描述，浏览器 Worker 后续可复用同一解析入口。
-
-发布产物通过 `dist/jree-entry.mjs` 的 Node `createRequire` 适配 `jree@1.3.0` 的不同包入口形态，不修改 `node_modules/jree/package.json`，也不要求消费者启用 TypeScript loader。
-
-运行 Java canonical 与 TypeScript 的串行 NAL parity（全量命令会运行较久，建议使用 checkpoint）：
-
-    npm run test:e2e:parity:serial
-
-运行 M3 资源 benchmark 时使用正式构建产物，并逐文件、单进程运行：
-
-    node scripts/e2e/run-m3-benchmark.mjs --cycles 1550 --repetitions 2 --file java-master/src/main/resources/nal/single_step/nal8.add.nal
-
-P1 性能预算提案（尚未批准）位于 `reports/evidence/m3-performance-budget-proposal-20260826-v1.json`。其中保守、平衡、激进三档均只使用 `ts_wall_ms_per_1024_cycles` 和 `ts_to_java_wall_ratio`，不把 120 秒宽限自动当作 SLA；批准前不得用它标记 `020` 完成。
-
-构建产物提供 `dist/index.js` 入口，公开 `Nar`、`Narsese`、`Term`、`TruthValue` 和 `BudgetValue` 等核心 API。`npm test` 默认使用单并发模式，以降低测试期间的内存压力；`npm run test:unit` 保留为显式并发入口。
-
-### 当前战略基线
-
-旧的逐文件转写计划已不足以指导主线推进。当前以[新战略基线与工作流](docs/strategic-baseline.md)和[当前状态与运行手册](docs/current-status-and-runbook.md)为项目导航：先完成 M1 全量功能门禁，再推进 M2/M3 的后续工作。可直接复制执行的 M1/M2 验收命令见[命令行核实手册](docs/verification-commands.md)。
-
-## 目录 & 进度（历史文件清单）
-
-以下复选框保留用于回溯早期逐文件转写进度，不再作为当前排期或完成标准。当前阶段、门禁和路线以[新战略基线与工作流](docs/strategic-baseline.md)为准。
-
-- [ ] control
-  - [ ] concept
-    - [ ] ProcessAnticipation
-    - [ ] ProcessGoal
-    - [ ] ProcessJudgment
-    - [ ] ProcessQuestion
-    - [ ] ProcessTask
-  - [ ] DerivationContext
-  - [ ] GeneralInferenceControl
-  - [ ] TemporalInferenceControl
-- [ ] entity
-  - [ ] BudgetValue
-  - [ ] Concept
-  - [ ] Item
-  - [ ] Sentence
-  - [ ] Stamp
-  - [ ] Task
-  - [ ] TaskLink
-  - [ ] TermLink
-  - [ ] TLink
-  - [x] TruthValue
-- [ ] inference
-  - [ ] BudgetFunctions
-  - [ ] CompositionalRules
-  - [ ] LocalRules
-  - [ ] RuleTables
-  - [ ] StructuralRules
-  - [ ] SyllogisticRules
-  - [ ] TemporalRules
-  - [ ] TruthFunctions
-  - [ ] UtilityFunctions
-- [ ] interfaces
-  - [ ] pub
-    - [ ] Reasoner
-  - [ ] Eventable
-  - [ ] InputFileConsumer
-  - [ ] Multistepable
-  - [ ] NarseseConsumer
-  - [ ] Pluggable
-  - [ ] Resettable
-  - [ ] SensoryChannelConsumer
-  - [ ] TaskConsumer
-  - [ ] Timable
-- [ ] io
-  - [ ] events
-    - [ ] AnswerHandler
-    - [ ] EventEmitter
-    - [ ] EventHandler
-    - [ ] Events
-    - [ ] OutputHandler
-    - [ ] TextOutputHandler
-  - [ ] ConfigReader
-  - [ ] Narsese
-  - [ ] Parser
-  - [ ] Symbols
-  - [x] Texts
-- [ ] language
-  - [ ] AbstractTerm
-  - [ ] CompoundTerm
-  - [ ] Conjunction
-  - [ ] DifferenceExt
-  - [ ] DifferenceInt
-  - [ ] Disjunction
-  - [ ] Equivalence
-  - [ ] Image
-  - [ ] ImageExt
-  - [ ] ImageInt
-  - [ ] Implication
-  - [ ] Inheritance
-  - [ ] Instance
-  - [ ] InstanceProperty
-  - [ ] IntersectionExt
-  - [ ] IntersectionInt
-  - [ ] Interval
-  - [ ] Negation
-  - [ ] Product
-  - [ ] Property
-  - [ ] SetExt
-  - [ ] SetInt
-  - [ ] SetTensional
-  - [ ] Similarity
-  - [ ] Statement
-  - [ ] Tense
-  - [ ] Term
-  - [ ] Terms
-  - [ ] Variable
-  - [ ] Variables
-- [ ] main
-  - [ ] Debug
-  - [ ] Nar
-  - [ ] NarNode
-  - [ ] Parameters
-  - [ ] Shell
-- [ ] operator
-  - [ ] mental
-    - [ ] Anticipate
-    - [ ] Believe
-    - [ ] Consider
-    - [ ] Doubt
-    - [ ] Evaluate
-    - [ ] Feel
-    - [ ] FeelBusy
-    - [ ] FeelSatisfied
-    - [ ] Hesitate
-    - [ ] Name
-    - [ ] Register
-    - [ ] Remind
-    - [ ] Want
-    - [ ] Wonder
-  - [ ] misc
-    - [ ] Add
-    - [ ] Count
-    - [ ] Reflect
-    - [ ] System
-  - [ ] FunctionOperator
-  - [ ] ImaginationSpace
-  - [ ] NullOperator
-  - [ ] Operation
-  - [ ] Operator
-- [ ] plugin
-  - [ ] mental
-    - [ ] Abbreviation
-    - [ ] ComplexEmotions
-    - [ ] Counting
-    - [ ] Emotions
-    - [ ] InternalExperience
-  - [ ] perception
-    - [ ] SensoryChannel
-    - [ ] VisionChannel
-    - [ ] VisualSpace
-  - [ ] Plugin
-- [ ] storage
-  - [ ] Bag
-  - [x] Distributor
-  - [ ] Memory
-- [ ] util
-  - [ ] ListUtil
-
-### 历史转写完成
-
-- Texts（2026-01-12）
-- TruthValue（2026-01-11）
-
-## 文件分析进展（基于 `full_check.txt`）
-
-- 数据来源：`specs/003-dependency-analyze-brief-plan/tsc_checks/full_check.txt`（`npx tsc --noEmit` 在当前 `src` 上的完整输出），共命中 109/119 个 TypeScript 文件。
-- 现阶段所有顶层模块都存在阻塞型依赖，仅 `storage/Distributor.ts` 一个文件在 `tsc` 结果中未出现报错，其余模块至少有一半文件待补充依赖或语义对齐。
-
-| 模块 | 出错文件 / 总数 | 报错条数 | 说明 |
-| --- | --- | --- | --- |
-| control | 8 / 8 | 586 | `DerivationContext` 与 `Process*` 系列完整依赖 `entity` / `language` 层，当前全部无法解析外部符号。 |
-| entity | 9 / 10 | 513 | 核心结构（`Concept`、`Sentence`、`Stamp` 等）均缺少互相引用的类型，仅 `TLink.ts` 未触发报错。 |
-| inference | 8 / 9 | 2100 | `CompositionalRules`、`RuleTables`、`StructuralRules`、`SyllogisticRules` 单文件即累计 350+ 报错，揭示推理规则链尚未建立。 |
-| interfaces | 5 / 10 | 19 | `Reasoner` 及部分接口（`Eventable`、`TaskConsumer` 等）仍引用缺失的事件 / Narsese 类型。 |
-| io | 11 / 11 | 463 | `Narsese`、`Symbols`、`events/*` 均依赖 `language` 与插件层，导致 I/O 层整体无法通过检查。 |
-| language | 30 / 30 | 1543 | 语言层所有基础类型待补齐，`Terms.ts`、`Variables.ts`、`Statement.ts` 报错尤多。 |
-| main | 3 / 5 | 317 | `Nar.ts`、`NarNode.ts`、`Shell.ts` 依赖尚未接通，使主循环无法构建。 |
-| operator | 23 / 23 | 472 | mental / misc 操作器全部依赖 `Task`、`Concept`、`BudgetValue` 等核心结构。 |
-| plugin | 9 / 9 | 468 | 感知与情绪插件 (`VisionChannel.ts`、`InternalExperience.ts` 等) 全面受制于 `io` 和 `entity`。 |
-| storage | 2 / 3 | 148 | `Bag.ts`、`Memory.ts` 仍等待 `Task`/`Concept` 定义，`Distributor.ts` 暂为唯一未报错文件。 |
-| util | 1 / 1 | 2 | `ListUtil.ts` 只剩两处泛型签名问题，属低优先级但可快速收敛。 |
-
-### 优先排查文件（报错条数 Top 5）
-
-- `src/inference/CompositionalRules.ts`：435 条，覆盖绝大多数结论生成规则。
-- `src/inference/RuleTables.ts`：400 条，需先补齐语言层与推理上下文。
-- `src/inference/StructuralRules.ts`：391 条，当前所有结构性推导均被阻塞。
-- `src/inference/SyllogisticRules.ts`：392 条，暴露出 `Term`、`Statement` 未就绪。
-- `src/language/Terms.ts`：252 条，说明语言层基础 API 仍未连通 `CompoundTerm` / `Variable`。
+- 包版本：`0.1.0`。
+- 模块格式：ESM。
+- `package.json` 声明许可证为 MIT；封存点尚未补入独立 `LICENSE` 文件。
+- 当前仓库是经过 M1/M2 验证的开发冻结点，不是完成去 jree 化、浏览器中立化和正式性能验收后的 Release Candidate。

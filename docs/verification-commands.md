@@ -1,5 +1,7 @@
 # M1 / M2 / M3 命令行核实手册
 
+> **封存后的维护手册**：这些命令记录冻结环境的复核口径，不会在项目暂停期间自动运行。完整 M1 成本较高；恢复前必须核对 artifact、路径、结果文件名和[当前状态](current-status.md)。
+
 本文只给当前主线可复核的命令。所有 M1 Java 对照都显式绑定 canonical Java 304 artifact；不要改用历史 3.1.0 JAR。
 
 ## M1：Java 304 与 TypeScript 功能对照
