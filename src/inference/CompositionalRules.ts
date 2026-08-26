@@ -788,9 +788,15 @@ export class CompositionalRules extends JavaObject {
             sets.add(new java.util.LinkedHashSet<T>());
             return sets;
         }
-        let list: java.util.List<T> = new java.util.ArrayList<T>(originalSet);
-        let head: T = list.get(0);
-        let rest: java.util.Set<T> = new java.util.LinkedHashSet<T>(list.subList(1, list.size()));
+        // This list is only a temporary ordered view for the recursive split.
+        // Keep the Java Set boundary, but avoid allocating a jree ArrayList and
+        // AbstractList subList on every power-set level.
+        const list: T[] = Array.from(originalSet);
+        const head: T = list[0];
+        const rest: java.util.Set<T> = new java.util.LinkedHashSet<T>();
+        for (let i = 1; i < list.length; i++) {
+            rest.add(list[i]);
+        }
         for (let set of CompositionalRules.powerSet(rest)) {
             let newSet: java.util.Set<T> = new java.util.LinkedHashSet<T>();
             newSet.add(head);
