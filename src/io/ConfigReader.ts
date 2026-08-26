@@ -21,6 +21,9 @@ import { Wonder } from "../operator/mental/Wonder.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
 import { Emotions } from "../plugin/mental/Emotions.ts";
 import { VisionChannel } from "../plugin/perception/VisionChannel.ts";
+import { parseConfigXml } from "./ConfigParser.ts";
+
+export { parseConfigXml } from "./ConfigParser.ts";
 
 // These fields are Java `float` values. Node's XML path parses numbers as
 // binary64, so make the narrowing explicit at the configuration boundary.
@@ -68,13 +71,16 @@ export class ConfigReader extends JavaObject {
         return candidates.find(candidate => existsSync(candidate)) ?? null;
     }
 
-    private static loadNodeConfig(filepath: string, reasoner: Reasoner, parameters: Parameters): java.util.List<Plugin> {
+    public static loadConfigTextFromFile(filepath: string): string {
         const path = ConfigReader.nodeConfigPath(filepath);
         if (path === null) {
             throw new Error(`Configuration file not found: ${filepath}`);
         }
+        return readFileSync(path, "utf8");
+    }
 
-        const xml = readFileSync(path, "utf8");
+    private static loadNodeConfigText(text: string, reasoner: Reasoner, parameters: Parameters): java.util.List<Plugin> {
+        const config = parseConfigXml(text);
         const parameterTarget = parameters as unknown as Record<string, unknown>;
         const debugTarget = Debug as unknown as Record<string, unknown>;
         const configuredPlugins: string[] = [];
@@ -121,37 +127,32 @@ export class ConfigReader extends JavaObject {
         ]);
         ConfigReader.lastUnsupportedPluginClasspaths = [];
         ConfigReader.lastCompatibilityStubPluginClasspaths = [];
-        for (const match of xml.matchAll(/<conf\s+name=["']([^"']+)["']\s+value=["']([^"']*)["']\s*\/?>/g)) {
-            const [, name, rawValue] = match;
-            let value: unknown = rawValue;
-            if (rawValue === "true" || rawValue === "false") {
-                value = rawValue === "true";
-            } else if (/^[-+]?\d+$/.test(rawValue)) {
-                value = Number.parseInt(rawValue, 10);
-            } else if (/^[-+]?(?:\d+\.\d*|\.\d+)(?:[eE][-+]?\d+)?$/.test(rawValue)) {
-                value = Number.parseFloat(rawValue);
-            }
-
-            // Preserve binary32 values before inference uses them in binary64
-            // expressions, while leaving Java double parameters unchanged.
-            if (FLOAT_PARAMETER_NAMES.has(name) && typeof value === "number") {
-                value = Math.fround(value);
-            }
-
+        for (const { name, value: rawValue } of config.values) {
+            let target: Record<string, unknown> | null = null;
             if (Object.prototype.hasOwnProperty.call(parameterTarget, name)) {
-                parameterTarget[name] = value;
+                target = parameterTarget;
             } else if (Object.prototype.hasOwnProperty.call(debugTarget, name)) {
-                debugTarget[name] = value;
+                target = debugTarget;
+            }
+            if (target === null) continue;
+            const currentValue = target[name];
+            if (typeof currentValue === "boolean") {
+                target[name] = rawValue === "true";
+            } else if (typeof currentValue === "number") {
+                const value = Number.parseFloat(rawValue);
+                // Preserve binary32 values before inference uses them in binary64
+                // expressions, while leaving Java double parameters unchanged.
+                target[name] = FLOAT_PARAMETER_NAMES.has(name) ? Math.fround(value) : value;
             }
         }
 
-        const pluginPattern = /<plugin\s+[^>]*classpath=["']([^"']+)["'][^>]*(?:\/?>)(?:([\s\S]*?)<\/plugin>)?/g;
-        for (const match of xml.matchAll(pluginPattern)) {
-            const classpath = match[1];
-            const body = match[2] ?? "";
+        for (const plugin of config.plugins) {
+            const classpath = plugin.classpath;
             if (classpath === "org.opennars.operator.NullOperator") {
-                const valueMatch = body.match(/<arg\s+[^>]*type=["']String\.class["'][^>]*value=["']([^"']+)["'][^>]*\/?\s*>/);
-                plugins.add(valueMatch === null ? new NullOperator() : new NullOperator(new java.lang.String(valueMatch[1])));
+                const value = plugin.arguments.find(argument => argument.type === "String.class")?.value;
+                plugins.add(value === undefined || value === null
+                    ? new NullOperator()
+                    : new NullOperator(new java.lang.String(value)));
             } else {
                 const factory = supportedPluginFactories.get(classpath);
                 if (factory !== undefined) {
@@ -165,11 +166,16 @@ export class ConfigReader extends JavaObject {
         return plugins;
     }
 
+    public static loadParamsFromConfigTextAndReturnPlugins(text: string, reasoner: Reasoner,
+        parameters: Parameters): java.util.List<Plugin> {
+        return ConfigReader.loadNodeConfigText(text, reasoner, parameters);
+    }
+
     public static loadParamsFromFileAndReturnPlugins(filepath: java.lang.String, reasoner: Reasoner,
         parameters: Parameters): java.util.List<Plugin> {
 
         if (typeof process !== "undefined" && process.versions?.node !== undefined) {
-            return ConfigReader.loadNodeConfig(String(filepath), reasoner, parameters);
+            return ConfigReader.loadNodeConfigText(ConfigReader.loadConfigTextFromFile(String(filepath)), reasoner, parameters);
         }
         throw new Error("ConfigReader requires the Node.js runtime");
     }

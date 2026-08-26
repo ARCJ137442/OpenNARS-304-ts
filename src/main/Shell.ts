@@ -1,5 +1,6 @@
 //! Java source: opennars/main/Shell.java
 import { java, JavaObject, S, type int } from "jree";
+import { readFileSync } from "node:fs";
 import { Nar } from "./Nar.ts";
 import { NarNode } from "./NarNode.ts";
 import { Term } from "../language/Term.ts";
@@ -37,10 +38,11 @@ export class Shell extends JavaObject {
                 nar = new Nar(BigInt(id));
             }
         } else if (narPath.endsWith(".xml")) {
+            const configText = readFileSync(narPath, "utf8");
             if (id === null) {
-                nar = new Nar(S`${narPath}`);
+                nar = new Nar({ configText, configSource: narPath });
             } else {
-                nar = new Nar(BigInt(id), S`${narPath}`);
+                nar = new Nar({ narId: BigInt(id), configText, configSource: narPath });
             }
         } else {
             if (id !== null) {

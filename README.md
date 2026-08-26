@@ -5,8 +5,8 @@ OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先
 ## 当前状态（2026-08-26）
 
 - M1：功能冻结已完成；245 个主资源加 `simpleOperationTest.nal` 共 246 个样本，综合验收 246/246。
-- M2：非增量 `tsc` 为 0 诊断；串行 `npm test` 为 160/160，局部算法 parity、正式构建、构建 API 和源码/构建产物 shell smoke 通过；干净 `npm pack` 安装也已通过 API、CLI 和无启动警告验收。
-- M3：当前 HEAD `b2ab6fa` 已完成一个 JavaString UTF-16 边界热点的语义保持优化，并完成真实 npm tarball 外部消费验收；性能预算提案仍为 `proposed`，完整性能门禁尚未完成。
+- M2：非增量 `tsc` 为 0 诊断；串行 `npm test` 为 185/185，局部算法 parity、正式构建、构建 API 和源码/构建产物 shell smoke 通过；干净 `npm pack` 安装也已通过 API、CLI 和无启动警告验收。
+- M3：此前已完成一个 JavaString UTF-16 边界热点的语义保持优化，并完成真实 npm tarball 外部消费验收；正式性能门禁尚未开始，后续以单线程 `60,000 ms / 1024 cycles`、TS/Java 不超过 `16x` 作为量化目标。
 - 当前版本：`0.1.0`；当前 canonical Java JAR 使用 `OpenNARS-304-java-canonical-fixed-build/target/opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 
 当前事实、门禁顺序和可复制命令见 [`docs/current-status-and-runbook.md`](docs/current-status-and-runbook.md)。
@@ -57,6 +57,12 @@ OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先
     npm run shell
 
 在 `nars> ` 提示符下输入 Narsese；输入 `:cycles 100` 执行 100 个推理周期，输入 `:status` 查看时钟，输入 `:quit` 退出。也可以用 `npm run shell -- --cycles 100` 让每条 Narsese 输入自动执行 100 个周期。构建后可用 `npm run build` 再运行 `npm run shell:dist`。
+
+外部配置由 Node 宿主读取后注入核心，避免 `Nar` 在构造期间隐式读取文件：
+
+    npm run shell -- --config config/defaultConfig.xml
+
+库调用可直接使用 `new Nar({ configText: xmlText, configSource: "upload.xml" })`；`parseConfigXml(xmlText)` 返回原生参数与插件描述，浏览器 Worker 后续可复用同一解析入口。
 
 发布产物通过 `dist/jree-entry.mjs` 的 Node `createRequire` 适配 `jree@1.3.0` 的不同包入口形态，不修改 `node_modules/jree/package.json`，也不要求消费者启用 TypeScript loader。
 

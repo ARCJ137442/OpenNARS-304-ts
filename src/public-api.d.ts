@@ -9,6 +9,30 @@
 
 export type StringLike = string | { toString(): string };
 
+export interface ParsedConfigValue {
+    readonly name: string;
+    readonly value: string;
+}
+
+export interface ParsedPluginArgument {
+    readonly type: string | null;
+    readonly value: string | null;
+    readonly name: string | null;
+    readonly isReasoner: boolean;
+}
+
+export interface ParsedPlugin {
+    readonly classpath: string;
+    readonly arguments: readonly ParsedPluginArgument[];
+}
+
+export interface ParsedNarConfig {
+    readonly values: readonly ParsedConfigValue[];
+    readonly plugins: readonly ParsedPlugin[];
+}
+
+export function parseConfigXml(text: string): ParsedNarConfig;
+
 export interface EventToken {
     readonly name?: string;
 }
@@ -153,8 +177,10 @@ export class Nar {
     readonly memory: MemoryLike;
     narParameters: Parameters;
     usedConfigFilePath: StringLike;
+    constructor(options: NarOptions);
     constructor();
-    constructor(relativeConfigFilePath: StringLike);
+    constructor(configText: StringLike);
+    constructor(narId: number | bigint, configText: StringLike);
     constructor(...args: readonly unknown[]);
     reset(): void;
     addInput(input: StringLike): void;
@@ -173,6 +199,12 @@ export class Nar {
     getMinCyclePeriodMS(): number | bigint;
     setThreadYield(enabled: boolean): void;
     toString(): string;
+}
+
+export interface NarOptions {
+    readonly narId?: number | bigint;
+    readonly configText?: string;
+    readonly configSource?: string;
 }
 
 export class Events {

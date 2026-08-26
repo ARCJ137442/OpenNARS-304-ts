@@ -80,6 +80,22 @@ npm run shell:dist
 
 入口使用 Node `register()` loader，并由项目 resolver 将 jree 解析到明确的 `lib/index.js`，不修改 `node_modules`；因此不应再看到 `--experimental-loader` 或 `DEP0151` 启动警告。CLI 是 M2 的人工 smoke 入口，不替代 M1 的 Java/TypeScript 机器可读矩阵。
 
+### 显式配置文本
+
+核心不读取配置路径；宿主读取文件后注入文本。Node shell 已实现这一适配：
+
+```powershell
+":quit" | node --import ./scripts/register-ts-loader.mjs scripts/shell.mjs --no-prompt --config config/defaultConfig.xml
+```
+
+库调用可以直接传入原生配置文本：
+
+```powershell
+node --import ./scripts/register-ts-loader.mjs --input-type=module -e "import {Nar} from './src/main/Nar.ts'; const nar=new Nar({configText:'<config><conf name=\"DURATION\" value=\"9\" /></config>'}); console.log(nar.narParameters.DURATION); nar.stop();"
+```
+
+`parseConfigXml(text)` 只返回原生的参数值/插件描述数组，不依赖 Node 或 jree；浏览器 Worker 可以复用该解析入口。`new Nar('config/defaultConfig.xml')` 会拒绝路径并提示宿主先读取，这是故意的边界检查。
+
 ## M3：正式构建串行性能基线
 
 先执行正式构建：

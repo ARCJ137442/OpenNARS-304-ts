@@ -34,6 +34,7 @@ import { Task } from "../entity/Task.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
 import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
 import type { Timable } from "../interfaces/Timable.ts";
+import { DEFAULT_CONFIG_XML } from "../io/DefaultConfig.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 type ObjectOutputStreamCompat = {
@@ -44,6 +45,13 @@ type ObjectInputStreamCompat = {
     readObject(): unknown;
     close(): void;
 };
+
+export interface NarOptions {
+    readonly narId?: JavaLongInput;
+    readonly configText?: string;
+    readonly configSource?: string;
+    readonly parameterOverrides?: java.util.Map<java.lang.String, java.lang.Object>;
+}
 
 const asJavaObject = (value: unknown): java.lang.Object => value as unknown as java.lang.Object;
 
@@ -208,77 +216,59 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
 
     public static readonly DEFAULTCONFIG_FILEPATH: java.lang.String = S`./config/defaultConfig.xml`;
 
-    /**
-     * constructs the NAR and loads a config from the default filepath
-     *
-     * Assigns a random id to the instance
-     */
+    /** Constructs the NAR with the embedded default configuration text. */
     public constructor();
 
-    /**
-     * constructs the NAR and loads a config from the default filepath
-     *
-     * @param narId inter NARS id of this NARS instance
-     */
+    /** Constructs the NAR with the embedded default configuration text. */
     public constructor(narId: JavaLongInput);
 
-    /**
-     * constructs the NAR and loads a config from the filepath
-     *
-     * @param relativeConfigFilePath (relative) path of the XML encoded config file
-     */
-    public constructor(relativeConfigFilePath: java.lang.String);
+    /** Constructs the NAR from explicit XML configuration text. */
+    public constructor(configText: JavaStringInput);
 
-    /**
-     * constructs the NAR and loads a config from the default filepath
-     *
-     * Assigns a random id to the instance
-     *
-     * @param parameterOverrides (overwritten) parameters of a Reasoner
-     */
+    /** Constructs the NAR with parameter overrides and embedded defaults. */
     public constructor(parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
 
-    /**
-     * constructs the NAR and loads a config from the filepath
-     *
-     * @param narId                  inter NARS id of this NARS instance
-     * @param relativeConfigFilePath (relative) path of the XML encoded config file
-     */
-    public constructor(narId: JavaLongInput, relativeConfigFilePath: java.lang.String);
+    /** Constructs the NAR with an id and explicit XML configuration text. */
+    public constructor(narId: JavaLongInput, configText: JavaStringInput);
 
-    /**
-     * constructs the NAR and loads a config from the filepath
-     *
-     * @param relativeConfigFilePath (relative) path of the XML encoded config file
-     * @param parameterOverrides     (overwritten) parameters of a Reasoner
-     */
-    public constructor(relativeConfigFilePath: java.lang.String, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
+    /** Constructs the NAR from XML text with parameter overrides. */
+    public constructor(configText: JavaStringInput, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
 
-    /**
-     * constructs the NAR and loads a config from the filepath
-     *
-     * @param narId                  inter NARS id of this NARS instance
-     * @param relativeConfigFilePath (relative) path of the XML encoded config file
-     * @param parameterOverrides     (overwritten) parameters of a Reasoner
-     */
-    public constructor(narId: JavaLongInput, relativeConfigFilePath: java.lang.String, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
+    /** Constructs the NAR with an id, XML text and parameter overrides. */
+    public constructor(narId: JavaLongInput, configText: JavaStringInput, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
+    /** Constructs the NAR from explicit configuration text without file I/O. */
+    public constructor(options: NarOptions);
     public constructor(...args: unknown[]) {
         // Java constructor delegation (`this(...)`) is not legal in
         // TypeScript. Resolve all overloads before the one and only `super()`.
         let narId: long = Nar.randomId();
-        let relativeConfigFilePath: java.lang.String = Nar.DEFAULTCONFIG_FILEPATH;
+        let configText = DEFAULT_CONFIG_XML;
+        let configSource: java.lang.String = Nar.DEFAULTCONFIG_FILEPATH;
         let parameterOverrides: java.util.Map<java.lang.String, java.lang.Object> | null = null;
 
         if (args.length === 0) {
             // defaults above
         } else if (args.length === 1) {
             const value = args[0];
-            if (typeof value === "number" || typeof value === "bigint" || value instanceof java.lang.Number) {
+            const isOptions = value !== null && typeof value === "object"
+                && ("configText" in (value as object) || "narId" in (value as object)
+                    || "configSource" in (value as object) || "parameterOverrides" in (value as object));
+            if (isOptions) {
+                const options = value as NarOptions;
+                if (options.narId !== undefined) narId = toRuntimeLong(options.narId);
+                if (options.configText !== undefined) configText = options.configText;
+                if (options.configSource !== undefined) configSource = S`${options.configSource}`;
+                if (options.parameterOverrides !== undefined) parameterOverrides = options.parameterOverrides;
+            } else if (typeof value === "number" || typeof value === "bigint" || value instanceof java.lang.Number) {
                 narId = typeof value === "number" || typeof value === "bigint"
                     ? toRuntimeLong(value)
                     : (value as java.lang.Number).longValue();
             } else if (value !== null && typeof (value as java.lang.Object).toString === "function") {
-                relativeConfigFilePath = value as java.lang.String;
+                const text = String(value);
+                if (!text.trimStart().startsWith("<")) {
+                    throw new java.lang.IllegalArgumentException(S`Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText`);
+                }
+                configText = text;
             } else {
                 parameterOverrides = value as java.util.Map<java.lang.String, java.lang.Object>;
             }
@@ -287,23 +277,35 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
                 narId = typeof args[0] === "number" || typeof args[0] === "bigint"
                     ? toRuntimeLong(args[0] as JavaLongInput)
                     : (args[0] as java.lang.Number).longValue();
-                relativeConfigFilePath = args[1] as java.lang.String;
+                const text = String(args[1]);
+                if (!text.trimStart().startsWith("<")) {
+                    throw new java.lang.IllegalArgumentException(S`Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText`);
+                }
+                configText = text;
             } else {
-                relativeConfigFilePath = args[0] as java.lang.String;
+                const text = String(args[0]);
+                if (!text.trimStart().startsWith("<")) {
+                    throw new java.lang.IllegalArgumentException(S`Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText`);
+                }
+                configText = text;
                 parameterOverrides = args[1] as java.util.Map<java.lang.String, java.lang.Object>;
             }
         } else if (args.length === 3) {
             narId = typeof args[0] === "number" || typeof args[0] === "bigint"
                 ? toRuntimeLong(args[0] as JavaLongInput)
                 : (args[0] as java.lang.Number).longValue();
-            relativeConfigFilePath = args[1] as java.lang.String;
+            const text = String(args[1]);
+            if (!text.trimStart().startsWith("<")) {
+                throw new java.lang.IllegalArgumentException(S`Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText`);
+            }
+            configText = text;
             parameterOverrides = args[2] as java.util.Map<java.lang.String, java.lang.Object>;
         } else {
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
 
         super();
-        let pluginsToAdd: java.util.List<Plugin> = ConfigReader.loadParamsFromFileAndReturnPlugins(relativeConfigFilePath, this,
+        let pluginsToAdd: java.util.List<Plugin> = ConfigReader.loadParamsFromConfigTextAndReturnPlugins(configText, this,
             this.narParameters);
         if (parameterOverrides !== null) {
             Nar.overrideParameters(this.narParameters, parameterOverrides);
@@ -315,7 +317,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
             new Bag(this.narParameters.OPERATION_BAG_LEVELS, this.narParameters.OPERATION_BAG_SIZE, this.narParameters));
         this.memory = m;
         this.memory.narId = narId;
-        this.usedConfigFilePath = relativeConfigFilePath;
+        this.usedConfigFilePath = configSource;
         for (let p of pluginsToAdd) { // adding after memory is constructed, as memory depends on the loaded params!!
             this.addPlugin(p);
         }

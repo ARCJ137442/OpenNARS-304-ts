@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { createInterface } from "node:readline";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
-import { java } from "jree";
 import { Events } from "../src/io/events/Events.ts";
 import { OutputHandler } from "../src/io/events/OutputHandler.ts";
 import { TextOutputHandler } from "../src/io/events/TextOutputHandler.ts";
@@ -87,7 +87,9 @@ function attachOutput(nar) {
 }
 
 function createNar(config) {
-  return config === null ? new Nar() : new Nar(new java.lang.String(config));
+  return config === null
+    ? new Nar()
+    : new Nar({ configText: readFileSync(config, "utf8"), configSource: config });
 }
 
 async function run(argv = process.argv.slice(2), input = process.stdin) {
@@ -131,7 +133,7 @@ async function run(argv = process.argv.slice(2), input = process.stdin) {
         } else if (command.kind === "status") {
           console.log(`[shell] time=${String(nar.time())} running=${nar.isRunning()}`);
         } else {
-          nar.addInput(new java.lang.String(command.text));
+          nar.addInput(command.text);
           if (options.autoCycles !== null) nar.cycles(options.autoCycles);
         }
       } catch (error) {
