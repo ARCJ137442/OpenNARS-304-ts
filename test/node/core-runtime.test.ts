@@ -302,6 +302,49 @@ test("ProcessGoal executable precondition preserves Java default metadata", asyn
     assert.equal(metadata.substitution, null);
 });
 
+test("ProcessGoal question staging preserves the emitted question with a native buffer", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+    const { ProcessGoal } = await import("../../src/control/concept/ProcessGoal.ts");
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Task } = await import("../../src/entity/Task.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+
+    const nar = new Nar();
+    try {
+        nar.narParameters.QUESTION_GENERATION_ON_DECISION_MAKING = true;
+        nar.narParameters.HOW_QUESTION_GENERATION_ON_DECISION_MAKING = false;
+        const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+        const stamp = new Stamp(0n, Tense.Present, new Stamp.BaseEntry(0n, 1n), nar.narParameters.DURATION);
+        const task = new Task(
+            new Sentence(Term.get("native-question-goal"), "!", null, stamp),
+            new BudgetValue(0.5, 0.5, 0.5, nar.narParameters),
+            Task.EnumType.INPUT,
+        );
+        const emitted: Array<InstanceType<typeof Sentence>> = [];
+        (context as unknown as {
+            singlePremiseTask: (
+                sentence: InstanceType<typeof Sentence>,
+                budget: InstanceType<typeof BudgetValue>,
+            ) => boolean;
+        }).singlePremiseTask = (sentence) => {
+            emitted.push(sentence);
+            return true;
+        };
+
+        ProcessGoal.questionFromGoal(task, context);
+
+        assert.equal(emitted.length, 1);
+        assert.equal(emitted[0].punctuation, "?");
+        assert.equal(String(emitted[0].term.name()), "native-question-goal");
+    } finally {
+        nar.stop();
+    }
+});
+
 test("Stamp tense lookup uses Java temporal order constants", async () => {
     const { Stamp } = await import("../../src/entity/Stamp.ts");
     const { Tense } = await import("../../src/language/Tense.ts");

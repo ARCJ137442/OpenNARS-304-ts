@@ -208,7 +208,7 @@ export class ProcessGoal extends JavaObject {
         if (nal.narParameters.QUESTION_GENERATION_ON_DECISION_MAKING
             || nal.narParameters.HOW_QUESTION_GENERATION_ON_DECISION_MAKING) {
             // ok, how can we achieve it? add a question of whether it is fulfilled
-            let qu: java.util.List<Term> = new java.util.ArrayList<Term>();
+            const qu: Term[] = [];
             if (nal.narParameters.HOW_QUESTION_GENERATION_ON_DECISION_MAKING) {
                 if (!(task.sentence.term instanceof Equivalence) && !(task.sentence.term instanceof Implication)) {
                     let how: Variable = new Variable("?how");
@@ -217,12 +217,12 @@ export class ProcessGoal extends JavaObject {
                     let imp2: Implication = Implication.make(how, task.sentence.term, TemporalRules.ORDER_FORWARD);
                     // qu.add(imp);
                     if (!(task.sentence.term instanceof Operation)) {
-                        qu.add(imp2);
+                        qu.push(imp2);
                     }
                 }
             }
             if (nal.narParameters.QUESTION_GENERATION_ON_DECISION_MAKING) {
-                qu.add(task.sentence.term);
+                qu.push(task.sentence.term);
             }
             for (let q of qu) {
                 if (q !== null) {
