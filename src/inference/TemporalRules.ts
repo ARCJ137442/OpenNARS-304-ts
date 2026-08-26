@@ -238,28 +238,30 @@ export class TemporalRules extends JavaObject {
                 break;
         }
 
-            let t11s: java.util.List<Term> = new java.util.ArrayList<Term>();
-            let t22s: java.util.List<Term> = new java.util.ArrayList<Term>();
-        let penalties: java.util.List<float> = new java.util.ArrayList<float>();
+        // These three sequences are one-pass local staging for variable-introduction
+        // candidates; native arrays preserve Java List order and duplicate entries.
+        let t11s: Term[] = [];
+        let t22s: Term[] = [];
+        let penalties: number[] = [];
         // "Perception Variable Introduction Rule" -
         // https://groups.google.com/forum/#!topic/open-nars/uoJBa8j7ryE
         if (!deriveSequenceOnly && statement2 !== null) {
             for (let subjectIntro of [true, false]) {
                 let ress: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, statement2, subjectIntro);
                 for (let content_penalty of ress) { // ok we applied it, all we have to do now is to use it
-                    t11s.add((content_penalty.getLeft() as Statement).getPredicate());
-                    t22s.add((content_penalty.getLeft() as Statement).getSubject());
-                    penalties.add(content_penalty.getRight());
+                    t11s.push((content_penalty.getLeft() as Statement).getPredicate());
+                    t22s.push((content_penalty.getLeft() as Statement).getSubject());
+                    penalties.push(content_penalty.getRight());
                 }
             }
         }
 
             let derivations: java.util.List<Task> = new java.util.ArrayList<Task>();
         if (!deriveSequenceOnly) {
-            for (let i: int = 0; i < t11s.size(); i++) {
-                let t11: Term = t11s.get(i);
-                let t22: Term = t22s.get(i);
-                let penalty: float = penalties.get(i);
+            for (let i: int = 0; i < t11s.length; i++) {
+                let t11: Term = t11s[i];
+                let t22: Term = t22s[i];
+                let penalty: float = penalties[i];
                 let statement11: Statement = Implication.make(t11, t22, order);
                 let statement22: Statement = Implication.make(t22, t11, TemporalRules.reverseOrder(order));
                 let statement33: Statement = Equivalence.make(t11, t22, order);
