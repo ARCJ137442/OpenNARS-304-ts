@@ -385,6 +385,37 @@ test("ProcessGoal keeps the native general-precondition buffer iterable", async 
     }
 });
 
+test("FunctionOperator emits native array feedback through Operator.call", async () => {
+    const { Add } = await import("../../src/operator/misc/Add.ts");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Operation } = await import("../../src/operator/Operation.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Variable } = await import("../../src/language/Variable.ts");
+
+    const nar = new Nar();
+    try {
+        const add = new Add();
+        const makeOperation = () => Operation.make(add, [
+            Term.SELF,
+            Term.get("1"),
+            Term.get("2"),
+            new Variable("$1"),
+        ], true);
+        const operation = makeOperation();
+        const directFeedback = (add as any).execute(
+            operation,
+            operation.getArguments().term,
+            nar.memory,
+            nar,
+        );
+        assert.ok(Array.isArray(directFeedback));
+        assert.equal(directFeedback.length, 1);
+        assert.equal(add.call(makeOperation(), nar.memory, nar), true);
+    } finally {
+        nar.stop();
+    }
+});
+
 test("set factories use native equality-aware intersection and difference", async () => {
     const { DifferenceExt } = await import("../../src/language/DifferenceExt.ts");
     const { DifferenceInt } = await import("../../src/language/DifferenceInt.ts");

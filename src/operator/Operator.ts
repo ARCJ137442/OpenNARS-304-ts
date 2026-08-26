@@ -72,7 +72,8 @@ export abstract class Operator extends Term implements Plugin {
      * @return The direct collectable results and feedback of the
      *         reportExecution
      */
-    protected abstract execute(operation: Operation, args: Term[], memory: Memory, time: Timable): java.util.List<Task> | null;
+    protected abstract execute(operation: Operation, args: Term[], memory: Memory,
+        time: Timable): java.util.List<Task> | Task[] | null;
 
     public call(op: Operation, memory: Memory, time: Timable): boolean;
 
@@ -107,7 +108,7 @@ export abstract class Operator extends Term implements Plugin {
                 const [operation, operationArgs, memory, time] = args as [Operation, Term[], Memory, Timable];
 
 
-                let feedback: java.util.List<Task> | null = null;
+                let feedback: java.util.List<Task> | Task[] | null = null;
                 try {
                     feedback = this.execute(operation, operationArgs, memory, time);
                 } catch (ex) {
@@ -126,7 +127,7 @@ export abstract class Operator extends Term implements Plugin {
                 }
 
                 let executionConfidence: float = memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE;
-                if (feedback === null || feedback.isEmpty()) { // null operator case
+                if (feedback === null || (Array.isArray(feedback) ? feedback.length === 0 : feedback.isEmpty())) { // null operator case
                     memory.executedTask(time, operation, TruthValue.fromFrequencyConfidence(1, executionConfidence, memory.narParameters));
                 }
 

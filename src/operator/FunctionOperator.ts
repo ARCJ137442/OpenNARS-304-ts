@@ -51,7 +51,7 @@ export abstract class FunctionOperator extends Operator {
     // abstract protected int getMinArity();
     // abstract protected int getMaxArity();
 
-    protected execute(operation: Operation, args: Term[], m: Memory, time: Timable): java.util.List<Task> | null {
+    protected execute(operation: Operation, args: Term[], m: Memory, time: Timable): Task[] | null {
         // TODO make memory access optional by constructor argument
         // TODO allow access to Nar instance?
         let numArgs: int = args.length - 1;
@@ -115,9 +115,7 @@ export abstract class FunctionOperator extends Operator {
             m.narParameters.DEFAULT_FEEDBACK_DURABILITY,
             truthToQuality(s.getTruth()), m.narParameters);
         let newTask: Task = new Task(s, budgetForNewTask, Task.EnumType.INPUT);
-        let result: java.util.List<Task> = new java.util.ArrayList<Task>();
-        result.add(newTask);
-        return result;
+        return [newTask];
     }
 
     /**
