@@ -277,7 +277,7 @@ export class ProcessGoal extends JavaObject {
         // 1. pull up variable based preconditions from component concepts without
         // replacing them
         let ret: java.util.Map<Term, java.lang.Integer> = (projectedGoal.getTerm()).countTermRecursively(null);
-        let generalPreconditions: java.util.List<Task> = new java.util.ArrayList<Task>();
+        const generalPreconditions: Task[] = [];
         for (let t of ret.keySet()) {
             let get_concept: Concept = nal.memory.concept(t); // the concept to pull preconditions from
             if (get_concept === null || get_concept === concept) { // target concept does not exist or is the same as the
@@ -293,7 +293,7 @@ export class ProcessGoal extends JavaObject {
                     (precon.sentence.term as Implication).getPredicate(), projectedGoal.term,
                     new java.util.LinkedHashMap(), new java.util.LinkedHashMap())) {
                     for (let precondition of get_concept.general_executable_preconditions) {
-                        generalPreconditions.add(precondition);
+                        generalPreconditions.push(precondition);
                         useful_component = true;
                     }
                 }
@@ -305,7 +305,7 @@ export class ProcessGoal extends JavaObject {
         }
         // 2. Accumulate all general preconditions of itself too and create list for
         // anticipations
-        generalPreconditions.addAll(concept.general_executable_preconditions);
+        generalPreconditions.push(...concept.general_executable_preconditions);
         let anticipationsToMake: java.util.Map<Operation, java.util.List<ProcessGoal.ExecutablePrecondition>> = new java.util.LinkedHashMap();
         // 3. For the more specific hypotheses first and then the general
         for (let table of [concept.executable_preconditions, generalPreconditions]) {
@@ -365,7 +365,7 @@ export class ProcessGoal extends JavaObject {
      * @return The procedural hypothesis with the highest result truth expectation
      */
     private static calcBestExecutablePrecondition(nal: DerivationContext,
-        concept: Concept, projectedGoal: Sentence, execPreconditions: java.util.List<Task>,
+        concept: Concept, projectedGoal: Sentence, execPreconditions: java.util.List<Task> | Task[],
         anticipationsToMake: java.util.Map<Operation, java.util.List<ProcessGoal.ExecutablePrecondition>>): ProcessGoal.ExecutablePrecondition {
         let result: ProcessGoal.ExecutablePrecondition = new ProcessGoal.ExecutablePrecondition();
         for (let t of execPreconditions) {
