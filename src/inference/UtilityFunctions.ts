@@ -1,5 +1,4 @@
 //! Java source: opennars/inference/UtilityFunctions.java
-import { java, JavaObject, type double, type float } from "jree";
 import { Parameters } from "../main/Parameters.ts";
 
 /**
@@ -8,10 +7,10 @@ import { Parameters } from "../main/Parameters.ts";
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class UtilityFunctions extends JavaObject {
+export class UtilityFunctions {
 
-    private static float(value: number): float {
-        return Math.fround(value) as float;
+    private static float(value: number): number {
+        return Math.fround(value);
     }
 
     /**
@@ -20,8 +19,8 @@ export class UtilityFunctions extends JavaObject {
      * @param arr The inputs, each in [0, 1]
      * @return The output that is no larger than each input
      */
-    public static and(...arr: double[]): double {
-        let product: float = 1;
+    public static and(...arr: number[]): number {
+        let product: number = 1;
         for (let f of arr) {
             product = UtilityFunctions.float(product * f);
         }
@@ -34,8 +33,8 @@ export class UtilityFunctions extends JavaObject {
      * @param arr The inputs, each in [0, 1]
      * @return The output that is no smaller than each input
      */
-    public static or(...arr: float[]): float {
-        let product: float = 1;
+    public static or(...arr: number[]): number {
+        let product: number = 1;
         for (let f of arr) {
             const javaF = UtilityFunctions.float(f);
             product = UtilityFunctions.float(product * UtilityFunctions.float(1 - javaF));
@@ -49,8 +48,8 @@ export class UtilityFunctions extends JavaObject {
      * @param arr The inputs, each in [0, 1]
      * @return The arithmetic average the inputs
      */
-    public static aveAri(...arr: float[]): float {
-        let sum: float = 0;
+    public static aveAri(...arr: number[]): number {
+        let sum: number = 0;
         for (let f of arr) {
             sum = UtilityFunctions.float(sum + UtilityFunctions.float(f));
         }
@@ -63,8 +62,8 @@ export class UtilityFunctions extends JavaObject {
      * @param arr The inputs, each in [0, 1]
      * @return The geometric average the inputs
      */
-    public static aveGeo(...arr: float[]): float {
-        let product: float = 1;
+    public static aveGeo(...arr: number[]): number {
+        let product: number = 1;
         for (let f of arr) {
             product = UtilityFunctions.float(product * UtilityFunctions.float(f));
         }
@@ -84,7 +83,7 @@ export class UtilityFunctions extends JavaObject {
      * @param narParameters parameters of the reasoner
      * @return The corresponding confidence, in [0, 1)
      */
-    public static w2c(w: double, narParameters: Parameters): double {
+    public static w2c(w: number, narParameters: Parameters): number {
         return w / (w + narParameters.HORIZON);
     }
 
@@ -95,7 +94,7 @@ export class UtilityFunctions extends JavaObject {
      * @param narParameters parameters of the reasoner
      * @return The corresponding weight of evidence, a non-negative real number
      */
-    public static c2w(c: double, narParameters: Parameters): double {
+    public static c2w(c: number, narParameters: Parameters): number {
         return narParameters.HORIZON * c / (1 - c);
     }
 }
