@@ -417,7 +417,7 @@ export class Conjunction extends CompoundTerm {
      *         for transforming (&/,a,+1,+1) to (&/,a,+2)
      */
     public static simplifyIntervals(components: Term[]): Term[] {
-        let ret: java.util.List<Term> = new java.util.ArrayList<Term>();
+        const ret: Term[] = [];
         for (let i: int = 0; i < components.length;) {
             if (components[i] instanceof Interval) {
                 // add up next ones
@@ -427,13 +427,13 @@ export class Conjunction extends CompoundTerm {
                 for (; i < components.length && components[i] instanceof Interval; i++) {
                     ival += Number((components[i] as Interval).time as unknown as number);
                 }
-                ret.add(new Interval(ival as unknown as long));
+                ret.push(new Interval(ival as unknown as long));
             } else {
-                ret.add(components[i]);
+                ret.push(components[i]);
                 i++;
             }
         }
-        return ret.toArray(new Array<Term>(0));
+        return ret;
     }
 
     protected makeName(): java.lang.CharSequence {

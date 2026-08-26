@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import type { Interval as IntervalType } from "../../src/language/Interval.ts";
 import type { Product as ProductType } from "../../src/language/Product.ts";
 import type { Variable as VariableType } from "../../src/language/Variable.ts";
 
@@ -119,6 +120,30 @@ test("compound factories flatten transient Java lists with native arrays", async
     if (nestedIntension === null) throw new Error("intension factory returned null");
     const intension = IntersectionInt.make(nestedIntension, c);
     assert.deepEqual(names(intension), ["factory-a", "factory-b", "factory-c"]);
+});
+
+test("Conjunction interval normalization preserves Java order and sums adjacent intervals", async () => {
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Conjunction } = await import("../../src/language/Conjunction.ts");
+    const { Interval } = await import("../../src/language/Interval.ts");
+
+    const first = Term.get("interval-first");
+    const second = Term.get("interval-second");
+    const normalized = Conjunction.simplifyIntervals([
+        first,
+        new Interval(1n),
+        new Interval(2n),
+        second,
+        new Interval(3n),
+    ]);
+
+    assert.equal(normalized.length, 4);
+    assert.equal(normalized[0], first);
+    assert.ok(normalized[1] instanceof Interval);
+    assert.equal(Number((normalized[1] as IntervalType).time), 3);
+    assert.equal(normalized[2], second);
+    assert.ok(normalized[3] instanceof Interval);
+    assert.equal(Number((normalized[3] as IntervalType).time), 3);
 });
 
 test("Sentence normalization keeps duplicate variables in traversal order", async () => {
