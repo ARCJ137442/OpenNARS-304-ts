@@ -161,7 +161,7 @@ export class StabilityTest extends JavaObject {
         if (StabilityTest.showOutput)
             new TextOutputHandler(n, java.lang.System.out);
 
-        n.addInputFile(path);
+        n.addInputText(example);
         n.cycles(this.minCycles);
 
         java.lang.System.err.flush();

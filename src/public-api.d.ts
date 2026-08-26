@@ -184,7 +184,7 @@ export class Nar {
     constructor(...args: readonly unknown[]);
     reset(): void;
     addInput(input: StringLike): void;
-    addInputFile(path: StringLike): void;
+    addInputText(text: StringLike): void;
     concept(term: StringLike): unknown;
     ask(term: StringLike, answered: EventObserver): Nar;
     askNow(term: StringLike, answered: EventObserver): Nar;

@@ -104,7 +104,33 @@ function emitProgress(file, cycle, kind = "cycle") {
 }
 
 async function runFile(file, cycles, progressInterval) {
-  const expectations = extractExpectations(await readFile(file, "utf8"));
+  let source;
+  try {
+    source = await readFile(file, "utf8");
+  } catch (failure) {
+    const errorType = failure?.code === "ENOENT"
+      ? "file_not_found"
+      : failure?.code === "EILSEQ"
+        ? "file_encoding"
+        : "file_read";
+    return {
+      file,
+      cycles,
+      expected: 0,
+      passed: 0,
+      matched: [],
+      ok: false,
+      error_type: errorType,
+      exception: true,
+      timed_out: false,
+      thread_mode: "single",
+      marker_missing: false,
+      marker_missing_count: 0,
+      marker_time_ms: [],
+      error: failureText(failure),
+    };
+  }
+  const expectations = extractExpectations(source);
   const matched = new Array(expectations.length).fill(false);
   const markerTimeMs = new Array(expectations.length).fill(null);
   let cycleCount = 0;
@@ -150,7 +176,7 @@ async function runFile(file, cycles, progressInterval) {
     nar.on(outputChannel, observer);
     nar.on(executeChannel, observer);
     nar.on(Events.CycleEnd.class, observer);
-    nar.addInputFile(file);
+    nar.addInputText(source);
     nar.cycles(cycles);
     runtimeMetrics = resourceMetrics?.finish() ?? null;
   } catch (failure) {
@@ -182,7 +208,9 @@ async function runFile(file, cycles, progressInterval) {
 async function main() {
   const { cycles, progressInterval, files } = parseArgs(process.argv.slice(2));
   for (const file of files) {
-    console.log(JSON.stringify(await runFile(file, cycles, progressInterval)));
+    const result = await runFile(file, cycles, progressInterval);
+    console.log(JSON.stringify(result));
+    if (result.error_type.startsWith("file_")) process.exitCode = 1;
   }
 }
 

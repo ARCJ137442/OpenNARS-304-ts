@@ -3,7 +3,6 @@ import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import type { SensoryChannelConsumer } from "../SensoryChannelConsumer.ts";
 import type { Resettable } from "../Resettable.ts";
 import type { NarseseConsumer } from "../NarseseConsumer.ts";
-import type { InputFileConsumer } from "../InputFileConsumer.ts";
 import type { Eventable } from "../Eventable.ts";
 import type { Pluggable } from "../Pluggable.ts";
 import type { Multistepable } from "../Multistepable.ts";
@@ -23,7 +22,6 @@ export interface Reasoner extends
     SensoryChannelConsumer,
     Resettable,
     NarseseConsumer,
-    InputFileConsumer,
     Eventable,
     Pluggable,
     Multistepable,

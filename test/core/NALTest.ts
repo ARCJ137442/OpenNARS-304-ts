@@ -176,7 +176,7 @@ export class NALTest extends JavaObject {
             new TextOutputHandler(n, java.lang.System.out);
         }
 
-        n.addInputFile(path);
+        n.addInputText(example);
         n.cycles(this.minCycles);
 
         if (NALTest.showOutput) {

@@ -190,7 +190,7 @@ export class Shell extends JavaObject {
         let hasNumberOfSteps: boolean = String(args[3]).toLowerCase() !== "null";
 
         if (hasInputFile) {
-            this.nar.addInputFile(args[2]);
+            this.nar.addInputText(readFileSync(String(args[2]), "utf8"));
         }
         it = new this.InputThread(new NodeStdinInputStream(), this.nar);
         it.start();

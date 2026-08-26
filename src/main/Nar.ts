@@ -1,6 +1,5 @@
 //! Java source: opennars/main/Nar.java
-import { readFileSync } from "node:fs";
-import { java, type long, JavaObject, S, type int, type double, type float, closeResources, handleResourceError, throwResourceError } from "jree";
+import { java, type long, JavaObject, S, type int, type double, type float } from "jree";
 import { toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { Parameters } from "./Parameters.ts";
 import { Debug } from "./Debug.ts";
@@ -568,77 +567,37 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         return false;
     }
 
-    public addInputFile(s: java.lang.String): void {
-        // jree's FileReader currently calls an uninitialized Charset.defaultCharset
-        // field in Node. Keep the Java path below for translated runtimes, while
-        // using the native UTF-8 boundary in the Node CLI and test runners.
-        if (typeof process !== "undefined" && process.release?.name === "node") {
-            const source = readFileSync(String(s), "utf8");
-            for (const rawLine of source.split(/\r?\n/)) {
-                if (rawLine.length === 0) continue;
-                if (/^[A-Za-z]+:/.test(rawLine)) {
-                    if (!rawLine.startsWith("IN:")) continue;
-                    const parts = rawLine.slice(3).split("{");
-                    const creationTime = Number.parseInt(parts.at(-1)?.split(" :")[0].split("|")[0] ?? "0", 10);
-                    while (this.time() < creationTime) this.cycles(1);
-                    this.addInput(new java.lang.String(parts.slice(0, -1).join("{").trim()));
-                } else {
-                    this.addInput(new java.lang.String(rawLine));
-                }
-            }
+    /**
+     * Accept NAL text at the core boundary.
+     *
+     * File-system access belongs to a host adapter. The one-argument form
+     * keeps the old experience-file semantics: empty lines are ignored,
+     * metadata other than IN: is ignored, and an IN: creation time advances
+     * the deterministic clock before the task is submitted. The inherited
+     * two-argument form remains the Java sensory-channel task overload.
+     */
+    public addInputText(source: JavaStringInput): void;
+    public addInputText(text: java.lang.String, time: Timable): void;
+    public addInputText(...args: unknown[]): void {
+        if (args.length === 2) {
+            super.addInputText(args[0] as java.lang.String, args[1] as Timable);
             return;
         }
-        try {
-            // This holds the final error to throw (if any).
-            let error: java.lang.Throwable | undefined;
-
-            const br: java.io.BufferedReader = new java.io.BufferedReader(new java.io.FileReader(s))
-            try {
-                try {
-                    let line: java.lang.String | null;
-                    while ((line = br.readLine()) !== null) {
-                        const lineText = String(line);
-                        if (lineText.length > 0) {
-                            // Loading experience file lines, or else just normal input lines
-                            if (/^[A-Za-z]+:.*$/.test(lineText)) {
-                                // Extract creation time:
-                                if (!lineText.startsWith("IN:")) {
-                                    continue; // ignore
-                                }
-                                let spl: string[] = lineText.replace("IN:", "").split("\\{");
-                                let creationTime: int = java.lang.Integer.parseInt(
-                                    new java.lang.String(spl[spl.length - 1].split(" :")[0].split("\\|")[0]),
-                                );
-                                while (this.time() < creationTime) {
-                                    this.cycles(1);
-                                }
-                                let lineReconstructed = ""; // the line but without the stamp info at the end
-                                for (let i: int = 0; i < spl.length - 1; i++) {
-                                    lineReconstructed += spl[i] + "{";
-                                }
-                                lineReconstructed = lineReconstructed.substring(0, lineReconstructed.length - 1);
-                                this.addInput(new java.lang.String(lineReconstructed.trim()));
-                            } else {
-                                this.addInput(new java.lang.String(lineText));
-                            }
-                        }
-                    }
-                }
-                finally {
-                    error = closeResources([br]);
-                }
-            } catch (e) {
-                error = handleResourceError(e, error);
-            } finally {
-                throwResourceError(error);
-            }
+        if (args.length !== 1) {
+            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
-        catch (ex) {
-            if (ex instanceof java.lang.Exception) {
-                JavaSystemLoggerCompat.getLogger(Nar.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
-                throw new java.lang.IllegalStateException("Loading experience file failed ", ex);
+
+        const source = String(args[0]);
+        for (const rawLine of source.split(/\r?\n/)) {
+            if (rawLine.length === 0) continue;
+            if (/^[A-Za-z]+:/.test(rawLine)) {
+                if (!rawLine.startsWith("IN:")) continue;
+                const parts = rawLine.slice(3).split("{");
+                const creationTime = Number.parseInt(parts.at(-1)?.split(" :")[0].split("|")[0] ?? "0", 10);
+                while (this.time() < creationTime) this.cycles(1);
+                this.addInput(parts.slice(0, -1).join("{").trim());
             } else {
-                throw ex;
+                this.addInput(rawLine);
             }
         }
     }
