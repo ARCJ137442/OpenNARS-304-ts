@@ -44,4 +44,4 @@ transitions:
 - [ ] 通过串行单线程性能对照，性能结果达到批准预算或明确记录为后续优化项。
 
 ## 备注
-当前稳定回退基线：M1为1bdad9d，M2为2ffcb64，组合回归提交为c1885a1。当前代码批次已在5362cec提交；J0清单见`reports/evidence/j0-jree-dependency-inventory-20260826-v1.json`。LeanSpec工具的默认模板返回Invalid template format，因此本spec使用LeanSpec的--content创建；当前依赖方向为`020`依赖`023`。
+当前稳定回退基线：M1为1bdad9d，M2为2ffcb64，组合回归提交为c1885a1。当前代码批次已推进至4b44806；J0清单见`reports/evidence/j0-jree-dependency-inventory-20260826-v1.json`以及各批次的post清单。LeanSpec工具的默认模板返回Invalid template format，因此本spec使用LeanSpec的--content创建；当前依赖方向为`020`依赖`023`。
