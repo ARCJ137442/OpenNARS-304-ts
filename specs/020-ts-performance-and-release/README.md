@@ -5,8 +5,9 @@ priority: medium
 depends_on:
 - 019-tsc-zero-error-build
 - 023-jree-removal-native-runtime
+- 024-platform-neutral-core-host-adapters
 created_at: 2026-08-24T01:48:53.859499900Z
-updated_at: 2026-08-26T05:46:54.716129500Z
+updated_at: 2026-08-26T07:14:22.603632Z
 transitions:
 - status: in-progress
   at: 2026-08-25T11:48:42.932070800Z

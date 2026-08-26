@@ -1,0 +1,4591 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-26T07:19:19.411Z",
+  "projectRoot": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts",
+  "demoRoot": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts-web-demo",
+  "scopes": [
+    "browser-build-tool",
+    "browser-source",
+    "core-candidate",
+    "generated-browser-bundle",
+    "mixed-boundary",
+    "node-adapter-candidate",
+    "node-tooling"
+  ],
+  "summary": {
+    "filesScanned": 174,
+    "filesWithPlatformOrJreeMatches": 159,
+    "coreCandidateFiles": 112,
+    "mixedBoundaryFiles": 5,
+    "nodeAdapterCandidateFiles": 1,
+    "browserSourceFiles": 2,
+    "jreeImportFiles": 134,
+    "jreeImportOccurrences": 134,
+    "nodeImportFiles": 41,
+    "nodeImportOccurrences": 105,
+    "nodeGlobalFiles": 41,
+    "nodeGlobalOccurrences": 261,
+    "browserShimFiles": 2,
+    "browserShimOccurrences": 19
+  },
+  "entries": [
+    {
+      "file": "../OpenNARS-304-ts-web-demo/public/nars-worker.js",
+      "scope": "generated-browser-bundle",
+      "matches": [
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 18,
+          "lines": [
+            18,
+            18,
+            18,
+            18,
+            245,
+            245,
+            245,
+            245,
+            245,
+            247,
+            259,
+            259,
+            267,
+            267,
+            267,
+            267,
+            269,
+            271
+          ],
+          "samples": [
+            "process.stderr",
+            "process.stdout",
+            "process.stderr",
+            "process.stdout",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 10,
+          "lines": [
+            11,
+            12,
+            18,
+            18,
+            18,
+            18,
+            18,
+            18,
+            258,
+            258
+          ],
+          "samples": [
+            "stdout",
+            "stderr",
+            "stdout",
+            "stderr",
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/scripts/build-opennars-worker.mjs",
+      "scope": "browser-build-tool",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            167
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "samples": [
+            "from \"node:child_process\"",
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 24,
+          "lines": [
+            1,
+            2,
+            2,
+            10,
+            14,
+            27,
+            31,
+            34,
+            37,
+            37,
+            50,
+            62,
+            98,
+            99,
+            100,
+            101,
+            105,
+            106,
+            107,
+            108,
+            109,
+            113,
+            114,
+            336
+          ],
+          "samples": [
+            "execFileSync",
+            "readFileSync",
+            "writeFileSync",
+            "process.env",
+            "execFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            113,
+            113,
+            114,
+            114,
+            160,
+            161,
+            306
+          ],
+          "samples": [
+            "stdout",
+            "stdout",
+            "stderr",
+            "stderr",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        },
+        {
+          "id": "browser-node-shim",
+          "layer": "browser-shim",
+          "occurrences": 16,
+          "lines": [
+            45,
+            46,
+            50,
+            65,
+            80,
+            93,
+            97,
+            103,
+            117,
+            123,
+            130,
+            136,
+            144,
+            150,
+            322,
+            323
+          ],
+          "samples": [
+            "virtualModules",
+            "browser:fs",
+            "readFileSync = () => configXml",
+            "browser:path",
+            "browser:os"
+          ],
+          "recommendation": "replace the shim with explicit browser configuration and capabilities"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/scripts/build.mjs",
+      "scope": "browser-build-tool",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            2,
+            3
+          ],
+          "samples": [
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            1,
+            1,
+            19,
+            21
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "readFileSync",
+            "writeFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/scripts/check-build.mjs",
+      "scope": "browser-build-tool",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            2,
+            3
+          ],
+          "samples": [
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            1,
+            13,
+            18,
+            23,
+            28
+          ],
+          "samples": [
+            "readFileSync",
+            "readFileSync",
+            "readFileSync",
+            "readFileSync",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/scripts/deploy-pages.mjs",
+      "scope": "browser-build-tool",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "samples": [
+            "from \"node:child_process\"",
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            1,
+            7,
+            7,
+            21,
+            22
+          ],
+          "samples": [
+            "execFileSync",
+            "process.argv",
+            "process.env",
+            "execFileSync",
+            "execFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/src/app.js",
+      "scope": "browser-source",
+      "matches": [
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            12,
+            14,
+            15,
+            16,
+            56
+          ],
+          "samples": [
+            "terminal",
+            "terminal",
+            "terminal",
+            "terminal",
+            "terminal"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/src/index.html",
+      "scope": "browser-source",
+      "matches": [
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 16,
+          "lines": [
+            15,
+            45,
+            45,
+            49,
+            57,
+            58,
+            60,
+            62,
+            62,
+            63,
+            63,
+            64,
+            66,
+            73,
+            81,
+            82
+          ],
+          "samples": [
+            "terminal",
+            "terminal",
+            "terminal",
+            "terminal",
+            "terminal"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/annotate-java-sources.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from 'node:fs/promises'",
+            "from 'node:path'",
+            "from 'node:url'"
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            91,
+            166,
+            169,
+            175
+          ],
+          "samples": [
+            "process.argv",
+            "process.exit",
+            "process.exit",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/build.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            131
+          ],
+          "samples": [
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/check-build.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "samples": [
+            "from \"node:assert/strict\"",
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/check-built-api.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:assert/strict\"",
+            "from \"node:url\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            7
+          ],
+          "samples": [
+            "process.argv"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/check-public-api.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:assert/strict\"",
+            "from \"node:url\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            7
+          ],
+          "samples": [
+            "process.argv"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/check-release-package.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "samples": [
+            "from \"node:assert/strict\"",
+            "from \"node:crypto\"",
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 9,
+          "lines": [
+            9,
+            12,
+            13,
+            16,
+            20,
+            35,
+            89,
+            95,
+            102
+          ],
+          "samples": [
+            "spawnSync",
+            "process.platform",
+            "process.platform",
+            "process.platform",
+            "spawnSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 15,
+          "lines": [
+            27,
+            27,
+            31,
+            31,
+            31,
+            31,
+            43,
+            43,
+            44,
+            44,
+            64,
+            90,
+            98,
+            104,
+            120
+          ],
+          "samples": [
+            "stdout",
+            "stderr",
+            "stdout",
+            "stdout",
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/cli.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:perf_hooks\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 9,
+          "lines": [
+            27,
+            75,
+            76,
+            77,
+            79,
+            85,
+            103,
+            183,
+            191
+          ],
+          "samples": [
+            "process.exit",
+            "process.env",
+            "process.resourceUsage",
+            "process.memoryUsage",
+            "process.memoryUsage"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            103
+          ],
+          "samples": [
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/converting/apply-migration-patterns.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            2,
+            3
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            107,
+            134,
+            139
+          ],
+          "samples": [
+            "process.argv",
+            "process.exit",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/converting/audit-jree-dependencies.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:child_process\"",
+            "from \"node:fs/promises\"",
+            "from \"node:util\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            312,
+            434
+          ],
+          "samples": [
+            "process.argv",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            304,
+            305
+          ],
+          "samples": [
+            "stdout",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/converting/audit-platform-boundaries.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            2,
+            3
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 9,
+          "lines": [
+            28,
+            28,
+            28,
+            28,
+            40,
+            186,
+            187,
+            192,
+            195
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "execFileSync",
+            "spawnSync",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 13,
+          "lines": [
+            28,
+            28,
+            28,
+            32,
+            34,
+            34,
+            34,
+            34,
+            34,
+            34,
+            34,
+            35,
+            192
+          ],
+          "samples": [
+            "stdin",
+            "stdout",
+            "stderr",
+            "terminal",
+            "stdin"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        },
+        {
+          "id": "browser-node-shim",
+          "layer": "browser-shim",
+          "occurrences": 3,
+          "lines": [
+            40,
+            40,
+            40
+          ],
+          "samples": [
+            "virtualModules",
+            "nodeShimPlugin",
+            "processShim"
+          ],
+          "recommendation": "replace the shim with explicit browser configuration and capabilities"
+        }
+      ]
+    },
+    {
+      "file": "scripts/converting/scan-migration-patterns.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            2,
+            3
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            190,
+            202
+          ],
+          "samples": [
+            "process.argv",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/ConceptBagCycleTraceRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            1,
+            8,
+            54,
+            89
+          ],
+          "samples": [
+            "readFileSync",
+            "process.argv",
+            "process.stdout",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            54
+          ],
+          "samples": [
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/ConceptBagSchedulerProbe.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            317
+          ],
+          "samples": [
+            "readFileSync",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/ConceptBudgetTraceRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 13,
+          "lines": [
+            1,
+            12,
+            44,
+            78,
+            122,
+            142,
+            147,
+            168,
+            190,
+            223,
+            263,
+            274,
+            292
+          ],
+          "samples": [
+            "readFileSync",
+            "process.argv",
+            "process.stdout",
+            "process.stdout",
+            "process.stdout"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 10,
+          "lines": [
+            44,
+            78,
+            122,
+            142,
+            147,
+            168,
+            190,
+            223,
+            263,
+            274
+          ],
+          "samples": [
+            "stdout",
+            "stdout",
+            "stdout",
+            "stdout",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/ConceptSelectionProbe.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            8
+          ],
+          "samples": [
+            "readFileSync",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalCycleWindowTraceRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            1,
+            28,
+            123,
+            201
+          ],
+          "samples": [
+            "readFileSync",
+            "process.argv",
+            "process.stdout",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            123
+          ],
+          "samples": [
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalResourceTelemetryRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            2
+          ],
+          "samples": [
+            "from \"node:fs\"",
+            "from \"node:perf_hooks\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 10,
+          "lines": [
+            1,
+            1,
+            23,
+            65,
+            96,
+            111,
+            121,
+            174,
+            214,
+            215
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "process.exit",
+            "process.memoryUsage",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            174,
+            215
+          ],
+          "samples": [
+            "stdout",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalStageCounterRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            1,
+            1,
+            106,
+            172,
+            204,
+            204,
+            207
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "writeFileSync",
+            "readFileSync",
+            "process.stdout"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            204
+          ],
+          "samples": [
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalStageDigestRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            4
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            2
+          ],
+          "samples": [
+            "from \"node:crypto\"",
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            2,
+            220,
+            274,
+            305,
+            307,
+            315,
+            322
+          ],
+          "samples": [
+            "readFileSync",
+            "process.stdout",
+            "readFileSync",
+            "process.argv",
+            "process.stdout"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            220,
+            307,
+            315
+          ],
+          "samples": [
+            "stdout",
+            "stdout",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalTargetIntroDebug.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            20,
+            138
+          ],
+          "samples": [
+            "readFileSync",
+            "process.argv",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalTargetTraceRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            1,
+            14,
+            48,
+            68
+          ],
+          "samples": [
+            "readFileSync",
+            "process.argv",
+            "process.stdout",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            48
+          ],
+          "samples": [
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalTraceOnProbe.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            1,
+            44,
+            53,
+            57,
+            67,
+            69
+          ],
+          "samples": [
+            "readFileSync",
+            "process.argv",
+            "process.stdout",
+            "readFileSync",
+            "process.stdout"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            53,
+            67,
+            69
+          ],
+          "samples": [
+            "stdout",
+            "stdout",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalTraceRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            1,
+            146,
+            154,
+            164,
+            173,
+            175,
+            182
+          ],
+          "samples": [
+            "readFileSync",
+            "process.argv",
+            "process.stdout",
+            "readFileSync",
+            "process.stdout"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            154,
+            173,
+            175
+          ],
+          "samples": [
+            "stdout",
+            "stdout",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalTraceVariableProbe.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 9,
+          "lines": [
+            1,
+            30,
+            46,
+            48,
+            56,
+            70,
+            100,
+            118,
+            129
+          ],
+          "samples": [
+            "readFileSync",
+            "process.argv",
+            "process.stderr",
+            "process.stderr",
+            "process.stderr"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            46,
+            48,
+            56,
+            70,
+            100,
+            118
+          ],
+          "samples": [
+            "stderr",
+            "stderr",
+            "stderr",
+            "stderr",
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/compare-nal-stage-digest.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            1,
+            105,
+            105,
+            108,
+            109,
+            111
+          ],
+          "samples": [
+            "readFileSync",
+            "readFileSync",
+            "readFileSync",
+            "process.argv",
+            "process.argv"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            111
+          ],
+          "samples": [
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/run-m3-benchmark.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "samples": [
+            "from \"node:crypto\"",
+            "from \"node:fs\"",
+            "from \"node:os\"",
+            "from \"node:path\"",
+            "from \"node:perf_hooks\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 14,
+          "lines": [
+            4,
+            4,
+            8,
+            53,
+            110,
+            114,
+            141,
+            147,
+            246,
+            260,
+            281,
+            283,
+            286,
+            286
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "spawnSync",
+            "process.exit",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            115,
+            115,
+            156,
+            156,
+            167,
+            167
+          ],
+          "samples": [
+            "stdout",
+            "stderr",
+            "stderr",
+            "stderr",
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/run-nal-corpus.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "samples": [
+            "from \"node:crypto\"",
+            "from \"node:fs\"",
+            "from \"node:fs/promises\"",
+            "from \"node:os\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 22,
+          "lines": [
+            2,
+            6,
+            123,
+            133,
+            144,
+            145,
+            146,
+            146,
+            147,
+            147,
+            194,
+            244,
+            326,
+            327,
+            645,
+            645,
+            1102,
+            1133,
+            1284,
+            1307,
+            1307,
+            1310
+          ],
+          "samples": [
+            "readFileSync",
+            "spawnSync",
+            "spawnSync",
+            "readFileSync",
+            "process.env"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 26,
+          "lines": [
+            129,
+            129,
+            251,
+            251,
+            345,
+            348,
+            381,
+            406,
+            444,
+            445,
+            447,
+            466,
+            467,
+            514,
+            520,
+            520,
+            558,
+            606,
+            648,
+            654,
+            695,
+            701,
+            714,
+            743,
+            757,
+            757
+          ],
+          "samples": [
+            "stdout",
+            "stderr",
+            "stdout",
+            "stderr",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/summarize-nal-matrix.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            2
+          ],
+          "samples": [
+            "from \"node:fs\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 9,
+          "lines": [
+            1,
+            1,
+            55,
+            264,
+            299,
+            300,
+            301,
+            307,
+            307
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "readFileSync",
+            "process.argv",
+            "writeFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/summarize-toothbrush2-cycle-47286.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            24,
+            33,
+            244
+          ],
+          "samples": [
+            "process.exit",
+            "readFileSync",
+            "process.argv"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            6,
+            7,
+            17,
+            18,
+            23,
+            23
+          ],
+          "samples": [
+            "stderr",
+            "stderr",
+            "stderr",
+            "stderr",
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/jree-entry.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            10
+          ],
+          "samples": [
+            "require(\"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"node:module\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/parity/run-local-algorithm-parity.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "samples": [
+            "from \"node:crypto\"",
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:child_process\"",
+            "from \"node:os\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            2,
+            4,
+            30,
+            46,
+            65,
+            204,
+            217
+          ],
+          "samples": [
+            "readFileSync",
+            "spawnSync",
+            "readFileSync",
+            "process.exit",
+            "spawnSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            72,
+            72,
+            74
+          ],
+          "samples": [
+            "stdout",
+            "stderr",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/register-ts-loader.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            2
+          ],
+          "samples": [
+            "from \"node:url\"",
+            "from \"node:module\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/shell.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            6
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:readline\"",
+            "from \"node:url\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 8,
+          "lines": [
+            93,
+            93,
+            102,
+            105,
+            151,
+            151,
+            153,
+            156
+          ],
+          "samples": [
+            "process.argv",
+            "process.stdin",
+            "process.stdout",
+            "process.stdout",
+            "process.argv"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            93,
+            102,
+            102,
+            105,
+            106,
+            110,
+            140
+          ],
+          "samples": [
+            "stdin",
+            "terminal",
+            "stdout",
+            "stdout",
+            "terminal"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/ts-loader.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs/promises\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/control/DerivationContext.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/control/GeneralInferenceControl.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/control/TemporalInferenceControl.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/control/concept/ProcessAnticipation.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/control/concept/ProcessGoal.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/control/concept/ProcessJudgment.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/control/concept/ProcessQuestion.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/control/concept/ProcessTask.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/entity/BudgetValue.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/entity/Concept.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/entity/Item.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/entity/Sentence.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/entity/Stamp.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/entity/Task.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/entity/TaskLink.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/entity/TermLink.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/entity/TruthValueTerm.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/inference/BudgetFunctions.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/inference/CompositionalRules.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/inference/LocalRules.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/inference/RuleTables.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/inference/StructuralRules.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/inference/SyllogisticRules.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/inference/TemporalRules.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/inference/TruthFunctions.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/inference/UtilityFunctions.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/interfaces/Eventable.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/interfaces/InputFileConsumer.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/interfaces/Multistepable.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/interfaces/Pluggable.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/interfaces/Resettable.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/interfaces/SensoryChannelConsumer.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/interfaces/TaskConsumer.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/interfaces/Timable.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/interfaces/pub/Reasoner.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/io/ConfigReader.ts",
+      "scope": "mixed-boundary",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            3,
+            64,
+            66,
+            77,
+            171
+          ],
+          "samples": [
+            "readFileSync",
+            "process.cwd",
+            "process.cwd",
+            "readFileSync",
+            "process.versions"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/io/Narsese.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/io/Parser.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/io/Symbols.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/io/events/AnswerHandler.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/io/events/EventEmitter.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/io/events/EventHandler.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/io/events/Events.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/io/events/OutputHandler.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/io/events/TextOutputHandler.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/AbstractTerm.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/CompoundTerm.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Conjunction.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/DifferenceExt.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/DifferenceInt.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Disjunction.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Equivalence.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Image.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/ImageExt.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/ImageInt.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Implication.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Inheritance.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Instance.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/InstanceProperty.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/IntersectionExt.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/IntersectionInt.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Interval.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Negation.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Product.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Property.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/SetExt.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/SetInt.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/SetTensional.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Similarity.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Statement.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Tense.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Term.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Terms.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Variable.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/language/Variables.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/main/Debug.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/main/Nar.ts",
+      "scope": "mixed-boundary",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            2,
+            54,
+            573,
+            574
+          ],
+          "samples": [
+            "readFileSync",
+            "process.release",
+            "process.release",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/main/NarNode.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/main/Parameters.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/main/Shell.ts",
+      "scope": "mixed-boundary",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            124
+          ],
+          "samples": [
+            "InputStream"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/FunctionOperator.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/ImaginationSpace.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/NullOperator.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/Operation.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/Operator.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Anticipate.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Believe.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Consider.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Doubt.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Evaluate.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Feel.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/FeelBusy.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/FeelSatisfied.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Hesitate.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Name.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Register.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Remind.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Want.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/mental/Wonder.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/misc/Add.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/misc/Count.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/misc/Reflect.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/operator/misc/System.ts",
+      "scope": "mixed-boundary",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"node:child_process\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            2,
+            26
+          ],
+          "samples": [
+            "execFileSync",
+            "execFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/plugin/Plugin.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/plugin/mental/Abbreviation.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/plugin/mental/ComplexEmotions.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/plugin/mental/Counting.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/plugin/mental/Emotions.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/plugin/mental/InternalExperience.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/plugin/perception/SensoryChannel.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/plugin/perception/VisionChannel.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/plugin/perception/VisualSpace.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/runtime/NodeStdinInputStream.ts",
+      "scope": "node-adapter-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            15
+          ],
+          "samples": [
+            "process.stdin"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            8,
+            8,
+            9,
+            15,
+            29
+          ],
+          "samples": [
+            "stdin",
+            "InputStream",
+            "InputStream",
+            "stdin",
+            "InputStream"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "src/runtime/ThreadCompat.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "scope": "mixed-boundary",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            253,
+            257,
+            316,
+            317
+          ],
+          "samples": [
+            "process.memoryUsage",
+            "process.memoryUsage",
+            "process.exit",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/storage/Bag.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/storage/Memory.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            222
+          ],
+          "samples": [
+            "process.release"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/util/ListUtil.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            4
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "This is a static inventory; it does not prove that an import is reachable from the browser bundle.",
+    "Generated public/nars-worker.js is included only to expose the current browser artifact boundary.",
+    "Each candidate still requires a Java/TypeScript contract test before migration."
+  ]
+}
