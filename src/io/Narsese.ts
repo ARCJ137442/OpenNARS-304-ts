@@ -409,8 +409,8 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
 
                 let a: Term[];
                 if (argString.length() > 1) {
-                    let args: java.util.List<Term> = this.parseArguments(argString);
-                    a = args.toArray(new Array<Term>(0));
+                    const args: Term[] = this.parseArguments(argString);
+                    a = args;
                 } else {
                     // void "()" arguments, default to (SELF)
                     a = Operation.SELF_TERM_ARRAY;
@@ -528,10 +528,10 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             throw new Parser.InvalidInputException(S`Unknown operator: ${op}`);
         }
 
-        let arg: java.util.List<Term> = (firstSeparator < 0) ? new java.util.ArrayList<Term>(0)
+        const arg: Term[] = (firstSeparator < 0) ? []
             : this.parseArguments(new java.lang.String(String(s.substring(firstSeparator + 1)) + ARGUMENT_SEPARATOR));
 
-        let argA: Term[] = arg.toArray(new Array<Term>(0));
+        const argA: Term[] = arg;
 
         let t: Term;
 
@@ -565,15 +565,15 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
     /**
      * Parse a String into the argument get of a CompoundTerm.
      *
-     * @return the arguments in an List
+     * @return the arguments in an array
      * @param s0 The String to be parsed
      *
      * @throws Parser.InvalidInputException if the String couldn't get parsed to a
      *                                      term
      */
-    private parseArguments(s0: java.lang.String): java.util.List<Term> {
+    private parseArguments(s0: java.lang.String): Term[] {
         let s: java.lang.String = s0.trim();
-        let list: java.util.List<Term> = new java.util.ArrayList<Term>();
+        const list: Term[] = [];
         let start: int = 0;
         let end: int = 0;
         let t: Term;
@@ -584,10 +584,10 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             const parsed = this.parseTerm(s.substring(start, end)); // recursive call
             if (parsed === null)
                 throw new Parser.InvalidInputException(S`null argument`);
-            list.add(parsed);
+            list.push(parsed);
             start = end + 1;
         }
-        if (list.isEmpty()) {
+        if (list.length === 0) {
             throw new Parser.InvalidInputException(S`null argument`);
         }
         return list;
