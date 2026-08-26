@@ -859,15 +859,15 @@ export class CompositionalRules extends JavaObject {
             }
         }
 
-        let shuffledVariables: java.util.List<Term> = new java.util.ArrayList<Term>();
-        for (let t of app.keySet()) {
-            shuffledVariables.add(t);
-        }
-        for (let i = shuffledVariables.size() - 1; i > 0; i--) {
+        // keySet() is already an ordered Java LinkedHashMap view. Keep one
+        // native snapshot for the local Fisher-Yates shuffle instead of
+        // allocating a jree ArrayList for this transient sequence.
+        const shuffledVariables: Term[] = Array.from(app.keySet());
+        for (let i = shuffledVariables.length - 1; i > 0; i--) {
             const j = nal.memory.randomNumber.nextInt(i + 1);
-            const current = shuffledVariables.get(i);
-            shuffledVariables.set(i, shuffledVariables.get(j));
-            shuffledVariables.set(j, current);
+            const current = shuffledVariables[i];
+            shuffledVariables[i] = shuffledVariables[j];
+            shuffledVariables[j] = current;
         }
         let selected: java.util.Set<Term> = new java.util.LinkedHashSet<Term>();
         let i: int = 1;
