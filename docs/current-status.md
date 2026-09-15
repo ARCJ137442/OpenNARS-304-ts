@@ -85,30 +85,30 @@
 
 因此，ArrayList 的下降只能证明一个子簇取得进展，不能作为整个去 jree 化的完成率。
 
-### G0 之后的持续开发增量（截至 `87646f8`）
+### G0 之后的持续开发增量（截至 `3312c9a`）
 
 以下数字是在不改变上方冻结 M1/M2 结论的前提下，对当前主线增量的记录：
 
 - 生产源码直接 jree 导入文件：`96`；
 - `new ArrayList` 构造：`14`；
-- `new LinkedHashMap` 构造：`41`；
+- `new LinkedHashMap` 构造：`38`；
 - `new LinkedHashSet` 构造：`26`；
-- 最近四批已推送的原生化范围：mental operator 反馈数组、配置插件原生序列、`ProcessGoal` anticipation value 数组、`VisionChannel` prototypes 数组；
-- 最近一批（`0af732b` 实现、`87646f8` 文档）的串行单测为 `207/207`，非增量 typecheck 为 0 诊断，`vision.nal` 与 canonical Java 局部 parity 均通过。
+- 最近五批已推送的原生化范围：mental operator 反馈数组、配置插件原生序列、`ProcessGoal` anticipation value 数组、`VisionChannel` prototypes 数组、`Tense`/`Symbols` 字符串与字符查找表；
+- 最近一批（`3312c9a`）的串行单测为 `213/213`，非增量 typecheck 为 0 诊断，build、dist API、canonical Java 局部 parity 和 M1 245+1 保护矩阵均通过。
 
 这些是可追溯的局部迁移结果，不是 023 的完成率，也不改变 023 的退出条件。领域 Map/Set、迭代器/remove、运行时类身份、jree compatibility 层和 `package.json` 运行时依赖仍未收口。对应批次报告见 `reports/20260915-170037.md`、`reports/20260915-171226.md`、`reports/20260915-173124.md`、`reports/20260915-173959.md` 和 `reports/20260915-180430.md`。
 
-### 当前候选（截至 `673d390`）
+### 当前候选（截至 `3312c9a`）
 
-当前候选不是 2026-08-27 冻结点的替代品，而是冻结后在本地尚未推送的增量。当前工作区干净，`main` 为 `673d390`，相对 `origin/main` 超前 3 个提交；canonical Java artifact 未改变。
+当前候选不是 2026-08-27 冻结点的替代品，而是冻结后的去 jree 增量。代码提交 `3312c9a` 已完成，文档状态将在本批提交后一并推送；canonical Java artifact 未改变。
 
-- M2 当前复验：串行单测 `212/212`、非增量 `tsc` 0 诊断、build、dist API、局部算法 parity 和 `vision.nal` 均通过。
-- M1 当前保护矩阵：245 个主资源中 244 个完成实际 marker parity，0 exception、0 普通 timeout、0 not-run；`long_term_stability.nal` 仍为 process limit/marker 未完成，而不是逻辑 parity 通过。
-- 该 stability 样本在 TypeScript 侧推进到约 461,770 周期后达到 600 秒/进程安全上限，峰值内存约 2.7 GB；它应作为性能/资源与空 marker 观测缺口记录，不能被“有进度”改写成成功 marker。
+- M2 当前复验：串行单测 `213/213`、非增量 `tsc` 0 诊断、build、dist API 和局部算法 parity 均通过。
+- M1 当前保护矩阵：245 个主资源全部通过 marker/功能口径，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run；额外 `simpleOperationTest.nal` 完成 131072 周期，Java/TS stage digest `equal=true`。
+- `long_term_stability.nal` 在主矩阵内完成约 2001974 周期并命中当前空 marker 合同；TS 约 2461.8 秒、约 1.230 ms/周期，低于 117.1875 ms/周期预算。按用户授权的 4GB 单进程/10GB 系统可用内存边界，Node 峰值约 2.89GB，系统可用内存高于 12GB；相对 Java 的慢速是后续性能优化项，不是功能失败。
 - 本批新增的 024-P3 插件显式参数、非法配置/重复 classpath 诊断和三种合法无参插件构造均有直接测试；这不等于 P3-P5 或 J/P 集成门禁完成。
 - `Image.ts` 的既有注释空格调整已单独作为 `673d390 style(repo): 统一 Image 注释格式` 记录，没有与语义修改混提交。
 
-因此，当前可以继续 023/024 的低风险、单簇、可回归工作；不能宣称当前 HEAD 已完成 M1 全量，也不能开始正式发布、tag、性能门或大范围无证据重构。M1 的高成本 stability 证据应在后续先定义低内存、可重复的观测方式，再单独处理性能，不与逻辑修复混为一谈。
+因此，当前可以继续 023/024 的低风险、单簇、可回归工作；M1/M2 可以作为本候选的稳定保护门，但不能宣称 023 已完成、jree 已退场、正式发布或 Java/TypeScript 性能等价。性能优化应与后续逻辑迁移分开。
 
 ### 冻结后阶段增量与去 jree 具体范围
 
@@ -123,12 +123,13 @@
 | `0af732b` | `VisionChannel` | `prototypes` 改为 `Prototype[]`，`isEmpty/size/get/set/add` 映射到 `length`、索引和 `push`；迭代顺序保持 | 单测 `207/207`，`vision.nal` parity 通过 |
 | `597267f` | 024-P3 `ConfigPluginRegistry`、`ConfigReader`、`System` 边界 | 不是容器替换，而是去除隐式反射式注册假设：显式解析 int/float/boolean/String/Reasoner 构造参数，float 在边界处 `Math.fround`，保留诊断与配置顺序 | 局部 `17/17`，M2 与局部 parity 通过 |
 | `14bedad` | 同一插件注册表 | 补齐 Java 已确认支持的 `Anticipate`、`Emotions`、`InternalExperience` 无参构造工厂；参数化构造路径不变 | 局部 `14/14`，串行单测 `212/212` |
+| `3312c9a` | `Tense`、`Symbols` 字符串/字符查找表 | 将仅使用字符串/字符 key 的 `LinkedHashMap` 改为原生 `Map`，`put/get` 改为 `set/get`，显式把 miss 的 `undefined` 归一化为 Java `null`；领域对象 key 的 Map 未迁移 | 局部 `2/2`，串行单测 `213/213`，M1 `245+1` 通过 |
 
-综合指标为：生产源码直接 jree 导入文件 `117 → 96`，`new ArrayList` `50 → 14`，`new LinkedHashMap` `43 → 41`，`new LinkedHashSet` `26 → 26`。这证明数组/序列子簇已取得实质进展，但不是“jree 已移除”：`package.json` 仍依赖 `jree@1.3.0`，Map/Set key equality、JavaObject/运行时类身份、JavaString、随机数、float32 和模块初始化环仍是未收口边界。后续仍按“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序推进。
+综合指标为：生产源码直接 jree 导入文件 `117 → 96`，`new ArrayList` `50 → 14`，`new LinkedHashMap` `43 → 38`，`new LinkedHashSet` `26 → 26`。这证明数组/序列子簇和一个字符串查找表子簇已取得实质进展，但不是“jree 已移除”：`package.json` 仍依赖 `jree@1.3.0`，Map/Set key equality、JavaObject/运行时类身份、JavaString、随机数、float32 和模块初始化环仍是未收口边界。后续仍按“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序推进。
 
 ## 平台中立与发布冻结状态
 
-`spec 024` 已完成：
+`spec 024` 当前已完成：
 
 - P0 平台与依赖盘点；
 - P1 配置文本解析、原生配置对象和默认配置边界；
