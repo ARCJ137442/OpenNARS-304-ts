@@ -46,25 +46,23 @@ export class ConfigReader extends JavaObject {
     }
 
     private static loadNodeConfigText(text: string, reasoner: Reasoner, parameters: Parameters,
-        capabilities?: RuntimeCapabilities): java.util.List<Plugin> {
+        capabilities?: RuntimeCapabilities): Plugin[] {
         const result = PluginRegistry.load(parseConfigXml(text), reasoner, parameters, capabilities);
         ConfigReader.lastUnsupportedPluginClasspaths = [...result.diagnostics.unsupportedPluginClasspaths];
         ConfigReader.lastCompatibilityStubPluginClasspaths = [...result.diagnostics.compatibilityStubPluginClasspaths];
         ConfigReader.lastMissingRuntimeCapabilityPluginClasspaths = [
             ...result.diagnostics.missingRuntimeCapabilityPluginClasspaths,
         ];
-        const plugins = new java.util.ArrayList<Plugin>();
-        for (const plugin of result.plugins) plugins.add(plugin);
-        return plugins;
+        return [...result.plugins];
     }
 
     public static loadParamsFromConfigTextAndReturnPlugins(text: string, reasoner: Reasoner,
-        parameters: Parameters, capabilities?: RuntimeCapabilities): java.util.List<Plugin> {
+        parameters: Parameters, capabilities?: RuntimeCapabilities): Plugin[] {
         return ConfigReader.loadNodeConfigText(text, reasoner, parameters, capabilities);
     }
 
     public static loadParamsFromFileAndReturnPlugins(filepath: java.lang.String, reasoner: Reasoner,
-        parameters: Parameters): java.util.List<Plugin> {
+        parameters: Parameters): Plugin[] {
 
         if (typeof process !== "undefined" && process.versions?.node !== undefined) {
             return ConfigReader.loadNodeConfigText(ConfigReader.loadConfigTextFromFile(String(filepath)), reasoner, parameters);

@@ -150,7 +150,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         ret.memory.event = new EventEmitter();
         ret.plugins = [];
         ret.sensoryChannels = new java.util.LinkedHashMap();
-        let pluginsToAdd: java.util.List<Plugin> = ConfigReader.loadParamsFromFileAndReturnPlugins(ret.usedConfigFilePath, ret,
+        let pluginsToAdd: Plugin[] = ConfigReader.loadParamsFromFileAndReturnPlugins(ret.usedConfigFilePath, ret,
             ret.narParameters);
         for (let p of pluginsToAdd) {
             ret.addPlugin(p);
@@ -309,7 +309,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         }
 
         super();
-        let pluginsToAdd: java.util.List<Plugin> = ConfigReader.loadParamsFromConfigTextAndReturnPlugins(configText, this,
+        let pluginsToAdd: Plugin[] = ConfigReader.loadParamsFromConfigTextAndReturnPlugins(configText, this,
             this.narParameters, capabilities);
         if (parameterOverrides !== null) {
             Nar.overrideParameters(this.narParameters, parameterOverrides);

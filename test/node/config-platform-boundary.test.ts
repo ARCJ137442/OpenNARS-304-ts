@@ -153,6 +153,25 @@ test("PluginRegistry returns a native ordered plugin sequence and diagnostics", 
     assert.deepEqual(result.diagnostics.missingRuntimeCapabilityPluginClasspaths, []);
 });
 
+test("ConfigReader forwards the native plugin sequence without a jree list wrapper", () => {
+    const nar = new Nar({ configText: "<config></config>" });
+    try {
+        const plugins = ConfigReader.loadParamsFromConfigTextAndReturnPlugins(`
+            <config>
+                <plugins>
+                    <plugin classpath="org.opennars.operator.NullOperator" />
+                    <plugin classpath="org.opennars.operator.misc.Add" />
+                </plugins>
+            </config>
+        `, nar, nar.narParameters);
+
+        assert.equal(Array.isArray(plugins), true);
+        assert.equal(plugins.length, 2);
+    } finally {
+        nar.stop();
+    }
+});
+
 test("Nar keeps plugin states in a native array and returns a Java-compatible list", () => {
     const nar = new Nar({
         configText: `
