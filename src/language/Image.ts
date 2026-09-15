@@ -44,7 +44,7 @@ export abstract class Image extends CompoundTerm {
 
     // TODO replace with a special Term type
     public static isPlaceHolder(t: Term): boolean {
-        // Java accepts only an exact atomic Term here.  `instanceof Term` also
+        // Java accepts only an exact atomic Term here. `instanceof Term` also
         // accepts Variable and every CompoundTerm subclass in TypeScript,
         // which changes image parsing for a derived term named "_".
         if (!(t instanceof Term) || t.getClass() !== Term.class)
