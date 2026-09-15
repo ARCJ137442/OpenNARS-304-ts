@@ -12,6 +12,8 @@ import { Parameters } from "../../src/main/Parameters.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
 import { createNodeRuntimeCapabilities } from "../../src/platform/node/SystemCommandCapabilities.ts";
 import { Anticipate } from "../../src/operator/mental/Anticipate.ts";
+import { Emotions } from "../../src/plugin/mental/Emotions.ts";
+import { InternalExperience } from "../../src/plugin/mental/InternalExperience.ts";
 
 function normalizeXml(text: string): string {
     return text.replace(/\r\n/g, "\n").trim();
@@ -172,6 +174,24 @@ test("PluginRegistry consumes Java constructor arguments with float32 narrowing"
     const anticipate = result.plugins[0] as Anticipate;
     assert.equal(anticipate.ANTICIPATION_DURABILITY_MUL, Math.fround(0.123456789));
     assert.equal(anticipate.ANTICIPATION_PRIORITY_MUL, Math.fround(0.987654321));
+});
+
+test("PluginRegistry accepts Java no-argument constructors", () => {
+    const result = PluginRegistry.load(parseConfigXml(`
+        <config>
+            <plugins>
+                <plugin classpath="org.opennars.operator.mental.Anticipate" />
+                <plugin classpath="org.opennars.plugin.mental.Emotions" />
+                <plugin classpath="org.opennars.plugin.mental.InternalExperience" />
+            </plugins>
+        </config>
+    `), undefined as unknown as Reasoner, new Parameters());
+
+    assert.deepEqual(result.diagnostics.invalidPluginClasspaths, []);
+    assert.equal(result.plugins.length, 3);
+    assert.ok(result.plugins[0] instanceof Anticipate);
+    assert.ok(result.plugins[1] instanceof Emotions);
+    assert.ok(result.plugins[2] instanceof InternalExperience);
 });
 
 test("PluginRegistry diagnoses invalid and repeated registrations without reordering valid instances", () => {

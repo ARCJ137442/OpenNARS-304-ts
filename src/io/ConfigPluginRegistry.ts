@@ -26,6 +26,7 @@ type PluginArgumentKind = "int" | "float" | "boolean" | "string" | "reasoner";
 interface BuiltinPluginFactory {
     readonly argumentKinds: readonly PluginArgumentKind[];
     readonly create: (values: readonly unknown[]) => Plugin;
+    readonly createDefault?: () => Plugin;
 }
 
 // These fields are Java `float` values. Keep binary32 narrowing at the
@@ -62,8 +63,9 @@ export interface PluginRegistryResult {
     readonly diagnostics: PluginRegistryDiagnostics;
 }
 
-function factory(argumentKinds: readonly PluginArgumentKind[], create: (values: readonly unknown[]) => Plugin): BuiltinPluginFactory {
-    return { argumentKinds, create };
+function factory(argumentKinds: readonly PluginArgumentKind[], create: (values: readonly unknown[]) => Plugin,
+    createDefault?: () => Plugin): BuiltinPluginFactory {
+    return { argumentKinds, create, createDefault };
 }
 
 function createBuiltinFactories(reasoner: Reasoner, capabilities?: RuntimeCapabilities): Map<string, BuiltinPluginFactory> {
@@ -72,10 +74,11 @@ function createBuiltinFactories(reasoner: Reasoner, capabilities?: RuntimeCapabi
         ["org.opennars.operator.misc.Count", factory([], () => new Count())],
         ["org.opennars.operator.misc.Reflect", factory([], () => new Reflect())],
         ["org.opennars.operator.misc.System", factory([], () => new System(capabilities))],
-        ["org.opennars.operator.mental.Anticipate", factory(["float", "float"], values => new Anticipate(
-            values[0] as number,
-            values[1] as number,
-        ))],
+        ["org.opennars.operator.mental.Anticipate", factory(
+            ["float", "float"],
+            values => new Anticipate(values[0] as number, values[1] as number),
+            () => new Anticipate(),
+        )],
         ["org.opennars.operator.mental.Believe", factory([], () => new Believe())],
         ["org.opennars.operator.mental.Doubt", factory([], () => new Doubt())],
         ["org.opennars.operator.mental.Evaluate", factory([], () => new Evaluate())],
@@ -95,6 +98,7 @@ function createBuiltinFactories(reasoner: Reasoner, capabilities?: RuntimeCapabi
                 values[7] as boolean,
                 values[8] as boolean,
             ),
+            () => new InternalExperience(),
         )],
         ["org.opennars.plugin.mental.Emotions", factory(
             ["float", "float", "float", "float", "int"],
@@ -105,6 +109,7 @@ function createBuiltinFactories(reasoner: Reasoner, capabilities?: RuntimeCapabi
                 values[3] as number,
                 values[4] as number,
             ),
+            () => new Emotions(),
         )],
         ["org.opennars.plugin.perception.VisionChannel", factory(
             ["string", "reasoner", "reasoner", "int", "int", "int", "float", "int"],
@@ -169,6 +174,15 @@ function parsePluginArguments(plugin: ParsedNarConfig["plugins"][number], kinds:
         }
     }
     return values;
+}
+
+function createConfiguredPlugin(plugin: ParsedNarConfig["plugins"][number], factory: BuiltinPluginFactory,
+    reasoner: Reasoner): Plugin | null {
+    if (plugin.arguments.length === 0 && factory.createDefault !== undefined) {
+        return factory.createDefault();
+    }
+    const values = parsePluginArguments(plugin, factory.argumentKinds, reasoner);
+    return values === null ? null : factory.create(values);
 }
 
 function addUnique(items: string[], value: string): void {
@@ -239,24 +253,24 @@ export class PluginRegistry {
                     addUnique(missingRuntimeCapabilityPluginClasspaths, classpath);
                 } else {
                     const factory = factories.get(classpath);
-                    const values = factory === undefined
+                    const instance = factory === undefined
                         ? null
-                        : parsePluginArguments(plugin, factory.argumentKinds, reasoner);
-                    if (factory === undefined || values === null) {
+                        : createConfiguredPlugin(plugin, factory, reasoner);
+                    if (factory === undefined || instance === null) {
                         addUnique(invalidPluginClasspaths, classpath);
                     } else {
-                        plugins.push(factory.create(values));
+                        plugins.push(instance);
                     }
                 }
                 continue;
             }
             const factory = factories.get(classpath);
             if (factory !== undefined) {
-                const values = parsePluginArguments(plugin, factory.argumentKinds, reasoner);
-                if (values === null) {
+                const instance = createConfiguredPlugin(plugin, factory, reasoner);
+                if (instance === null) {
                     addUnique(invalidPluginClasspaths, classpath);
                 } else {
-                    plugins.push(factory.create(values));
+                    plugins.push(instance);
                 }
             } else {
                 addUnique(unsupportedPluginClasspaths, classpath);
