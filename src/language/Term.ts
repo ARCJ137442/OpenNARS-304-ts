@@ -34,7 +34,10 @@ export class Term extends JavaObject implements AbstractTerm {
     // Java initializes this reference to null; keeping that default matters for
     // inference branches that test whether a term has an imagination space.
     public imagination: any = null;
-    private static readonly atoms: java.util.Map<java.lang.CharSequence, Term> = new java.util.LinkedHashMap();
+    // Java's atom cache is keyed only by CharSequence text.  Keep that
+    // contract at the boundary instead of retaining a jree Map for a
+    // domain-object key.
+    private static readonly atoms: Map<string, Term> = new Map();
 
     // Java defines SELF as the singleton extension set {SELF}, not as the
     // atomic term SELF.  SetExt registers that value after the module cycle has
@@ -146,9 +149,9 @@ export class Term extends JavaObject implements AbstractTerm {
                 const [name] = args as [java.lang.CharSequence];
 
 
-                const nativeName = String(name);
-                const nativeNameKey = nativeName as unknown as java.lang.CharSequence;
-                let x: Term | null = Term.atoms.get(nativeNameKey); // only
+                const nativeName = javaStringValue(name);
+                const nativeNameKey = nativeName;
+                let x: Term | null = Term.atoms.get(nativeNameKey) ?? null; // only
                 if (x !== null && !String(x).endsWith("]")) { // return only if it isn't an index term
                     return x;
                 }
@@ -186,7 +189,7 @@ export class Term extends JavaObject implements AbstractTerm {
                 x = new Term(name2);
                 x.term_indices = term_indices;
                 x.index_variable = before_indices_str === null ? null : String(before_indices_str);
-                Term.atoms.put(name2, x);
+                Term.atoms.set(javaStringValue(name2), x);
 
                 return x;
 

@@ -20,3 +20,14 @@ test("native lookup tables preserve Java symbol and tense contracts", async () =
     assert.equal(Tense.tense(new java.lang.String(":/:")), Tense.Future);
     assert.equal(Tense.tense(new java.lang.String("")), null);
 });
+
+test("Term atom cache normalizes Java and native text keys", async () => {
+    const { Term } = await import("../../src/language/Term.ts");
+    const { java } = await import("jree");
+    const name = `term-cache-${Date.now()}-${Math.random()}`;
+
+    const nativeTerm = Term.get(name);
+    const javaTerm = Term.get(new java.lang.String(name));
+
+    assert.equal(javaTerm, nativeTerm);
+});
