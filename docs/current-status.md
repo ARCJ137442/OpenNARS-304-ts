@@ -100,7 +100,7 @@
 
 ### 当前候选（截至 `dbdb936`）
 
-当前候选不是 2026-08-27 冻结点的替代品，而是冻结后的去 jree 增量。代码提交 `dbdb936` 已完成；本批阶段报告、状态和 023 记录将随收尾提交推送；canonical Java artifact 未改变。
+当前候选不是 2026-08-27 冻结点的替代品，而是冻结后的去 jree 增量。代码提交 `dbdb936` 已完成；本批阶段报告、状态和 023 记录已随收尾提交推送；canonical Java artifact 未改变。
 
 - M2 当前复验：串行单测 `214/214`、非增量 `tsc` 0 诊断、build、dist API 和局部算法 parity 均通过。
 - M1 当前保护矩阵：245 个主资源全部通过 marker/功能口径，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run；额外 `simpleOperationTest.nal` 完成 131072 周期，Java/TS stage digest `equal=true`。
