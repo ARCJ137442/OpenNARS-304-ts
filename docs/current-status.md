@@ -98,6 +98,34 @@
 
 这些是可追溯的局部迁移结果，不是 023 的完成率，也不改变 023 的退出条件。领域 Map/Set、迭代器/remove、运行时类身份、jree compatibility 层和 `package.json` 运行时依赖仍未收口。对应批次报告见 `reports/20260915-170037.md`、`reports/20260915-171226.md`、`reports/20260915-173124.md`、`reports/20260915-173959.md` 和 `reports/20260915-180430.md`。
 
+### 当前候选（截至 `673d390`）
+
+当前候选不是 2026-08-27 冻结点的替代品，而是冻结后在本地尚未推送的增量。当前工作区干净，`main` 为 `673d390`，相对 `origin/main` 超前 3 个提交；canonical Java artifact 未改变。
+
+- M2 当前复验：串行单测 `212/212`、非增量 `tsc` 0 诊断、build、dist API、局部算法 parity 和 `vision.nal` 均通过。
+- M1 当前保护矩阵：245 个主资源中 244 个完成实际 marker parity，0 exception、0 普通 timeout、0 not-run；`long_term_stability.nal` 仍为 process limit/marker 未完成，而不是逻辑 parity 通过。
+- 该 stability 样本在 TypeScript 侧推进到约 461,770 周期后达到 600 秒/进程安全上限，峰值内存约 2.7 GB；它应作为性能/资源与空 marker 观测缺口记录，不能被“有进度”改写成成功 marker。
+- 本批新增的 024-P3 插件显式参数、非法配置/重复 classpath 诊断和三种合法无参插件构造均有直接测试；这不等于 P3-P5 或 J/P 集成门禁完成。
+- `Image.ts` 的既有注释空格调整已单独作为 `673d390 style(repo): 统一 Image 注释格式` 记录，没有与语义修改混提交。
+
+因此，当前可以继续 023/024 的低风险、单簇、可回归工作；不能宣称当前 HEAD 已完成 M1 全量，也不能开始正式发布、tag、性能门或大范围无证据重构。M1 的高成本 stability 证据应在后续先定义低内存、可重复的观测方式，再单独处理性能，不与逻辑修复混为一谈。
+
+### 冻结后阶段增量与去 jree 具体范围
+
+以下是从 `17cec541` 冻结点到当前候选的可追溯实现增量。文档提交只记录状态，不重复计算产品完成率。
+
+| 提交 | 主要代码范围 | 去 jree 的实际变化 | 验证结果 |
+| --- | --- | --- | --- |
+| `1ea7bdd` | `src/operator/mental/*` 的 Consider、Doubt、Feel、FeelBusy、FeelSatisfied、Hesitate、Name、Register、Remind、Wonder | 反馈结果从 `java.util.List<Task>` 收敛为原生 `Task[]`；`ArrayList` 构造、add 和仅为返回类型存在的 jree 导入被移除，保留 Java 的 null/顺序语义 | 单测 `203/203` |
+| `d88dc5b` | `NullOperator`、mental `Believe`、plugin mental `Abbreviation` | 同一反馈容器模式继续迁移到原生数组；`ArrayList` 从 20 降至 17 | 单测 `205/205` |
+| `097f488` | `ConfigReader`、`Nar` 插件序列 | 配置插件序列由 `java.util.List<Plugin>` 改为 `Plugin[]`，复制和传递路径保持顺序 | 单测 `206/206` |
+| `3f6c851` | `ProcessGoal` | `ArrayList<ExecutablePrecondition>` 改为原生数组，`add` 改为 `push`；`LinkedHashMap<Operation, ...>` 保留以维护 Java key/order 契约 | 单测 `206/206` |
+| `0af732b` | `VisionChannel` | `prototypes` 改为 `Prototype[]`，`isEmpty/size/get/set/add` 映射到 `length`、索引和 `push`；迭代顺序保持 | 单测 `207/207`，`vision.nal` parity 通过 |
+| `597267f` | 024-P3 `ConfigPluginRegistry`、`ConfigReader`、`System` 边界 | 不是容器替换，而是去除隐式反射式注册假设：显式解析 int/float/boolean/String/Reasoner 构造参数，float 在边界处 `Math.fround`，保留诊断与配置顺序 | 局部 `17/17`，M2 与局部 parity 通过 |
+| `14bedad` | 同一插件注册表 | 补齐 Java 已确认支持的 `Anticipate`、`Emotions`、`InternalExperience` 无参构造工厂；参数化构造路径不变 | 局部 `14/14`，串行单测 `212/212` |
+
+综合指标为：生产源码直接 jree 导入文件 `117 → 96`，`new ArrayList` `50 → 14`，`new LinkedHashMap` `43 → 41`，`new LinkedHashSet` `26 → 26`。这证明数组/序列子簇已取得实质进展，但不是“jree 已移除”：`package.json` 仍依赖 `jree@1.3.0`，Map/Set key equality、JavaObject/运行时类身份、JavaString、随机数、float32 和模块初始化环仍是未收口边界。后续仍按“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序推进。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 已完成：
