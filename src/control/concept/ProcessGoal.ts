@@ -306,7 +306,7 @@ export class ProcessGoal extends JavaObject {
         // 2. Accumulate all general preconditions of itself too and create list for
         // anticipations
         generalPreconditions.push(...concept.general_executable_preconditions);
-        let anticipationsToMake: java.util.Map<Operation, java.util.List<ProcessGoal.ExecutablePrecondition>> = new java.util.LinkedHashMap();
+        let anticipationsToMake: java.util.Map<Operation, ProcessGoal.ExecutablePrecondition[]> = new java.util.LinkedHashMap();
         // 3. For the more specific hypotheses first and then the general
         for (let table of [concept.executable_preconditions, generalPreconditions]) {
             // 4. Apply choice rule, using the highest truth expectation solution and
@@ -366,7 +366,7 @@ export class ProcessGoal extends JavaObject {
      */
     private static calcBestExecutablePrecondition(nal: DerivationContext,
         concept: Concept, projectedGoal: Sentence, execPreconditions: java.util.List<Task> | Task[],
-        anticipationsToMake: java.util.Map<Operation, java.util.List<ProcessGoal.ExecutablePrecondition>>): ProcessGoal.ExecutablePrecondition {
+        anticipationsToMake: java.util.Map<Operation, ProcessGoal.ExecutablePrecondition[]>): ProcessGoal.ExecutablePrecondition {
         let result: ProcessGoal.ExecutablePrecondition = new ProcessGoal.ExecutablePrecondition();
         for (let t of execPreconditions) {
             let precTerm: CompoundTerm = ((t.getTerm() as Implication).getSubject() as Conjunction);
@@ -461,10 +461,10 @@ export class ProcessGoal extends JavaObject {
                 result.timeOffset = timeOffset;
                 let anticipations = anticipationsToMake.get(bestOp);
                 if (anticipations === null) {
-                    anticipations = new java.util.ArrayList<ProcessGoal.ExecutablePrecondition>();
+                    anticipations = [];
                     anticipationsToMake.put(bestOp, anticipations);
                 }
-                anticipations.add(result);
+                anticipations.push(result);
             }
         }
         return result;
