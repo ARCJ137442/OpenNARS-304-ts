@@ -14,6 +14,7 @@
 - [M1/M2/M3 命令行核实手册](verification-commands.md)：维护者复核命令和长测试口径。
 - [Java → TypeScript 迁移纠正模式库](java-to-typescript-migration-patterns.md)：经过归纳的迁移模式与自动化边界。
 - [AGENTS.md](../AGENTS.md)：Agent 在本仓库工作的强制规则。
+- [诊断归档说明](diagnostic-archive.md)：仓库外临时产物的范围、去向和逐脚本归档理由。
 
 `current-status-and-runbook.md` 只保留为旧链接兼容页，不再承载状态或运行手册。
 

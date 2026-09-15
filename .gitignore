@@ -17,3 +17,11 @@ __pycache__/
 
 # logs
 *.log
+
+# TypeScript build metadata
+*.tsbuildinfo
+
+# Local diagnostic/build leftovers; archive outside the repository
+/output/
+/META-INF/
+/reports/evidence/**/*.class
