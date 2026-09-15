@@ -85,6 +85,19 @@
 
 因此，ArrayList 的下降只能证明一个子簇取得进展，不能作为整个去 jree 化的完成率。
 
+### G0 之后的持续开发增量（截至 `405b779`）
+
+以下数字是在不改变上方冻结 M1/M2 结论的前提下，对当前主线增量的记录：
+
+- 生产源码直接 jree 导入文件：`96`；
+- `new ArrayList` 构造：`15`；
+- `new LinkedHashMap` 构造：`41`；
+- `new LinkedHashSet` 构造：`26`；
+- 最近三批已推送的原生化范围：mental operator 反馈数组、配置插件原生序列、`ProcessGoal` anticipation value 数组；
+- 最近一批的串行单测为 `206/206`，非增量 typecheck 为 0 诊断，受影响 NAL 与 canonical Java 局部 parity 均通过。
+
+这些是可追溯的局部迁移结果，不是 023 的完成率，也不改变 023 的退出条件。领域 Map/Set、迭代器/remove、运行时类身份、jree compatibility 层和 `package.json` 运行时依赖仍未收口。对应批次报告见 `reports/20260915-170037.md`、`reports/20260915-171226.md`、`reports/20260915-173124.md` 和 `reports/20260915-173959.md`。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 已完成：
