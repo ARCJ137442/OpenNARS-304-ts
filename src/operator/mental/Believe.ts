@@ -34,7 +34,7 @@ export class Believe extends Operator {
      *               + * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> | null {
+        time: Timable): Task[] | null {
 
         let content: Term = args[1];
 
@@ -54,9 +54,7 @@ export class Believe extends Operator {
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
 
-        let result: java.util.List<Task> = new java.util.ArrayList<Task>();
-        result.add(newTask);
-        return result;
+        return [newTask];
 
     }
 }

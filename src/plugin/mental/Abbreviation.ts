@@ -171,7 +171,7 @@ export class Abbreviation extends JavaObject implements Plugin {
          * @return Immediate results as Tasks
          */
         protected execute(operation: Operation, args: Term[], memory: Memory,
-            time: Timable): java.util.List<Task> {
+            time: Timable): Task[] {
 
             let compound: Term = args[0];
 
@@ -179,7 +179,7 @@ export class Abbreviation extends JavaObject implements Plugin {
 
             const content = Similarity.make(compound, atomic);
             if (content === null) {
-                return new java.util.ArrayList<Task>();
+                return [];
             }
             let sentence: Sentence = new Sentence(
                 content,
@@ -197,7 +197,7 @@ export class Abbreviation extends JavaObject implements Plugin {
                 quality, memory.narParameters);
 
             let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-            return new java.util.ArrayList([newTask]);
+            return [newTask];
 
         }
 

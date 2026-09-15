@@ -501,6 +501,70 @@ test("Wonder emits native array feedback after mental operator boundary migratio
     }
 });
 
+test("Believe emits native array feedback after the remaining operator migration", async () => {
+    const { Believe } = await import("../../src/operator/mental/Believe.ts");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Operation } = await import("../../src/operator/Operation.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+
+    const nar = new Nar();
+    try {
+        const believe = new Believe();
+        const makeOperation = () => Operation.make(believe, [
+            Term.SELF,
+            Term.get("native-belief-target"),
+            Term.get("TRUE"),
+        ], true);
+        const operation = makeOperation();
+        const directFeedback = (believe as any).execute(
+            operation,
+            operation.getArguments().term,
+            nar.memory,
+            nar,
+        );
+        assert.ok(Array.isArray(directFeedback));
+        assert.equal(directFeedback.length, 1);
+        assert.equal(believe.call(makeOperation(), nar.memory, nar), true);
+    } finally {
+        nar.stop();
+    }
+});
+
+test("Abbreviation emits native array feedback for empty and single-task results", async () => {
+    const { Abbreviation } = await import("../../src/plugin/mental/Abbreviation.ts");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Operation } = await import("../../src/operator/Operation.ts");
+    const { Product } = await import("../../src/language/Product.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+
+    const nar = new Nar();
+    try {
+        const abbreviate = new Abbreviation.Abbreviate();
+        const compound = Product.make([Term.get("native-abbreviation-left"), Term.get("native-abbreviation-right")]);
+        const makeOperation = () => Operation.make(abbreviate, [compound], true);
+        const operation = makeOperation();
+        const directFeedback = (abbreviate as any).execute(
+            operation,
+            operation.getArguments().term,
+            nar.memory,
+            nar,
+        );
+        assert.ok(Array.isArray(directFeedback));
+        assert.equal(directFeedback.length, 1);
+
+        const emptyFeedback = (abbreviate as any).execute(
+            null,
+            [null],
+            nar.memory,
+            nar,
+        );
+        assert.ok(Array.isArray(emptyFeedback));
+        assert.equal(emptyFeedback.length, 0);
+    } finally {
+        nar.stop();
+    }
+});
+
 test("set factories use native equality-aware intersection and difference", async () => {
     const { DifferenceExt } = await import("../../src/language/DifferenceExt.ts");
     const { DifferenceInt } = await import("../../src/language/DifferenceInt.ts");
