@@ -27,7 +27,7 @@ import type { Nar } from "../../main/Nar.ts";
 export class VisionChannel extends SensoryChannel {
     public defaultOutputConfidence: float = Float32Math.from(0.5) as float;
     public nPrototypes: int = 0;
-    public prototypes: java.util.ArrayList<VisionChannel.Prototype>;
+    public prototypes: VisionChannel.Prototype[];
     protected inputs: Float64Array[];
     protected updated: boolean[][];
     protected cnt_updated: int = 0;
@@ -46,7 +46,7 @@ export class VisionChannel extends SensoryChannel {
         this.label = SetInt.make(new Term(toJavaString(label)));
         this.defaultOutputConfidence = Float32Math.from(defaultOutputConfidence) as float;
         this.nPrototypes = nPrototypes;
-        this.prototypes = new java.util.ArrayList<VisionChannel.Prototype>();
+        this.prototypes = [];
         this.inputs = VisionChannel.emptyInputs(height, width);
         this.updated = VisionChannel.emptyUpdated(height, width);
         this.obs = { event: (ev, _args) => {
@@ -163,8 +163,8 @@ export class VisionChannel extends SensoryChannel {
             this.step_finished(time);
         } else {
             // if there is no other prototype yet we return
-            if (this.prototypes.isEmpty()) {
-                this.prototypes.add(new this.Prototype(newTask));
+            if (this.prototypes.length === 0) {
+                this.prototypes.push(new this.Prototype(newTask));
                 this.results.push(newTask);// feeds results into "upper" sensory channels:
                 this.step_finished(time);
             } else {
@@ -184,22 +184,22 @@ export class VisionChannel extends SensoryChannel {
                 }
                 // 2. replace the rarest seen prototype with the new prototype when full
                 // else just add it
-                if (this.prototypes.size() >= this.nPrototypes) {
+                if (this.prototypes.length >= this.nPrototypes) {
                     let lowestValue: int = java.lang.Integer.MAX_VALUE;
                     let lowestIndex: int = -1;
-                    for (let i: int = 0; i < this.prototypes.size(); i++) {
-                        let cur: VisionChannel.Prototype = this.prototypes.get(i);
+                    for (let i: int = 0; i < this.prototypes.length; i++) {
+                        let cur: VisionChannel.Prototype = this.prototypes[i];
                         if (cur.getObservationCount() < lowestValue) {
                             lowestValue = i;
                             lowestIndex = i;
                         }
                     }
                     if (similarity < 0.8) {
-                        this.prototypes.set(lowestIndex, new this.Prototype(newTask));
+                        this.prototypes[lowestIndex] = new this.Prototype(newTask);
                     }
                 } else {
                     if (similarity < 0.8) {
-                        this.prototypes.add(new this.Prototype(newTask));
+                        this.prototypes.push(new this.Prototype(newTask));
                     }
                 }
 

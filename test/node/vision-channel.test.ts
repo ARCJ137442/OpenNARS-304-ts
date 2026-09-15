@@ -39,3 +39,19 @@ test("default NAR registers VisionChannel and maps decimal coordinates", async (
     assert.equal(Array.isArray((vision as any).reportResultsTo), true);
     nar.stop();
 });
+
+test("VisionChannel keeps prototype order in a native array", async () => {
+    const { java } = await import("jree");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { VisionChannel } = await import("../../src/plugin/perception/VisionChannel.ts");
+
+    const nar = new Nar();
+    const vision = new VisionChannel(new java.lang.String("probe"), nar, nar, 1, 1, 1, 0.5, 2);
+
+    vision.step_start(nar);
+
+    assert.equal(Array.isArray(vision.prototypes), true);
+    assert.equal(vision.prototypes.length, 1);
+    assert.equal(vision.prototypes[0].getObservationCount(), 1);
+    nar.stop();
+});
