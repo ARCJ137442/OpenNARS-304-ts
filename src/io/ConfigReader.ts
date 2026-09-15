@@ -25,6 +25,10 @@ export class ConfigReader extends JavaObject {
     public static lastCompatibilityStubPluginClasspaths: string[] = [];
     /** Node-only classpaths skipped because their host capability was absent. */
     public static lastMissingRuntimeCapabilityPluginClasspaths: string[] = [];
+    /** Built-ins skipped because their XML constructor arguments were invalid. */
+    public static lastInvalidPluginClasspaths: string[] = [];
+    /** Classpaths repeated in the XML; instances are still kept in declaration order. */
+    public static lastDuplicatePluginClasspaths: string[] = [];
 
     private static nodeConfigPath(filepath: string): string | null {
         const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
@@ -53,6 +57,8 @@ export class ConfigReader extends JavaObject {
         ConfigReader.lastMissingRuntimeCapabilityPluginClasspaths = [
             ...result.diagnostics.missingRuntimeCapabilityPluginClasspaths,
         ];
+        ConfigReader.lastInvalidPluginClasspaths = [...result.diagnostics.invalidPluginClasspaths];
+        ConfigReader.lastDuplicatePluginClasspaths = [...result.diagnostics.duplicatePluginClasspaths];
         return [...result.plugins];
     }
 

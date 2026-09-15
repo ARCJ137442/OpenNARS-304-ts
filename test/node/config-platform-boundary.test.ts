@@ -11,6 +11,7 @@ import { Debug } from "../../src/main/Debug.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
 import { createNodeRuntimeCapabilities } from "../../src/platform/node/SystemCommandCapabilities.ts";
+import { Anticipate } from "../../src/operator/mental/Anticipate.ts";
 
 function normalizeXml(text: string): string {
     return text.replace(/\r\n/g, "\n").trim();
@@ -151,6 +152,63 @@ test("PluginRegistry returns a native ordered plugin sequence and diagnostics", 
     assert.deepEqual(result.diagnostics.unsupportedPluginClasspaths, ["org.example.Unsupported"]);
     assert.deepEqual(result.diagnostics.compatibilityStubPluginClasspaths, []);
     assert.deepEqual(result.diagnostics.missingRuntimeCapabilityPluginClasspaths, []);
+    assert.deepEqual(result.diagnostics.invalidPluginClasspaths, []);
+    assert.deepEqual(result.diagnostics.duplicatePluginClasspaths, []);
+});
+
+test("PluginRegistry consumes Java constructor arguments with float32 narrowing", () => {
+    const result = PluginRegistry.load(parseConfigXml(`
+        <config>
+            <plugins>
+                <plugin classpath="org.opennars.operator.mental.Anticipate">
+                    <arg type="float.class" value="0.123456789" />
+                    <arg type="float.class" value="0.987654321" />
+                </plugin>
+            </plugins>
+        </config>
+    `), undefined as unknown as Reasoner, new Parameters());
+
+    assert.deepEqual(result.diagnostics.invalidPluginClasspaths, []);
+    const anticipate = result.plugins[0] as Anticipate;
+    assert.equal(anticipate.ANTICIPATION_DURABILITY_MUL, Math.fround(0.123456789));
+    assert.equal(anticipate.ANTICIPATION_PRIORITY_MUL, Math.fround(0.987654321));
+});
+
+test("PluginRegistry diagnoses invalid and repeated registrations without reordering valid instances", () => {
+    const result = PluginRegistry.load(parseConfigXml(`
+        <config>
+            <plugins>
+                <plugin classpath="org.opennars.operator.misc.Add">
+                    <arg type="String.class" value="unexpected" />
+                </plugin>
+                <plugin classpath="org.opennars.operator.NullOperator">
+                    <arg type="String.class" value="^first" />
+                </plugin>
+                <plugin classpath="org.opennars.operator.NullOperator">
+                    <arg type="String.class" value="^second" />
+                </plugin>
+                <plugin classpath="org.example.Unsupported" />
+            </plugins>
+        </config>
+    `), undefined as unknown as Reasoner, new Parameters());
+
+    assert.equal(result.plugins.length, 2);
+    assert.deepEqual(result.diagnostics.invalidPluginClasspaths, ["org.opennars.operator.misc.Add"]);
+    assert.deepEqual(result.diagnostics.duplicatePluginClasspaths, ["org.opennars.operator.NullOperator"]);
+    assert.deepEqual(result.diagnostics.unsupportedPluginClasspaths, ["org.example.Unsupported"]);
+});
+
+test("PluginRegistry accepts an empty plugin section without diagnostics", () => {
+    const result = PluginRegistry.load(parseConfigXml("<config></config>"), undefined as unknown as Reasoner, new Parameters());
+
+    assert.deepEqual(result.plugins, []);
+    assert.deepEqual(result.diagnostics, {
+        unsupportedPluginClasspaths: [],
+        compatibilityStubPluginClasspaths: [],
+        missingRuntimeCapabilityPluginClasspaths: [],
+        invalidPluginClasspaths: [],
+        duplicatePluginClasspaths: [],
+    });
 });
 
 test("ConfigReader forwards the native plugin sequence without a jree list wrapper", () => {

@@ -21,6 +21,13 @@ import { Emotions } from "../plugin/mental/Emotions.ts";
 import { VisionChannel } from "../plugin/perception/VisionChannel.ts";
 import type { RuntimeCapabilities } from "../platform/RuntimeCapabilities.ts";
 
+type PluginArgumentKind = "int" | "float" | "boolean" | "string" | "reasoner";
+
+interface BuiltinPluginFactory {
+    readonly argumentKinds: readonly PluginArgumentKind[];
+    readonly create: (values: readonly unknown[]) => Plugin;
+}
+
 // These fields are Java `float` values. Keep binary32 narrowing at the
 // configuration boundary before the values enter inference state.
 const FLOAT_PARAMETER_NAMES = new Set([
@@ -46,6 +53,8 @@ export interface PluginRegistryDiagnostics {
     readonly unsupportedPluginClasspaths: readonly string[];
     readonly compatibilityStubPluginClasspaths: readonly string[];
     readonly missingRuntimeCapabilityPluginClasspaths: readonly string[];
+    readonly invalidPluginClasspaths: readonly string[];
+    readonly duplicatePluginClasspaths: readonly string[];
 }
 
 export interface PluginRegistryResult {
@@ -53,47 +62,117 @@ export interface PluginRegistryResult {
     readonly diagnostics: PluginRegistryDiagnostics;
 }
 
-function createBuiltinFactories(reasoner: Reasoner): Map<string, () => Plugin> {
-    return new Map<string, () => Plugin>([
-        ["org.opennars.operator.misc.Add", () => new Add()],
-        ["org.opennars.operator.misc.Count", () => new Count()],
-        ["org.opennars.operator.misc.Reflect", () => new Reflect()],
-        ["org.opennars.operator.mental.Anticipate", () => new Anticipate(0.1, 0.1)],
-        ["org.opennars.operator.mental.Believe", () => new Believe()],
-        ["org.opennars.operator.mental.Doubt", () => new Doubt()],
-        ["org.opennars.operator.mental.Evaluate", () => new Evaluate()],
-        ["org.opennars.operator.mental.Hesitate", () => new Hesitate()],
-        ["org.opennars.operator.mental.Want", () => new Want()],
-        ["org.opennars.operator.mental.Wonder", () => new Wonder()],
-        ["org.opennars.plugin.mental.InternalExperience", () => new InternalExperience(
-            0.3,
-            0.3,
-            0.0001,
-            0.000025,
-            0.1,
-            0.1,
-            true,
-            false,
-            false,
+function factory(argumentKinds: readonly PluginArgumentKind[], create: (values: readonly unknown[]) => Plugin): BuiltinPluginFactory {
+    return { argumentKinds, create };
+}
+
+function createBuiltinFactories(reasoner: Reasoner, capabilities?: RuntimeCapabilities): Map<string, BuiltinPluginFactory> {
+    return new Map<string, BuiltinPluginFactory>([
+        ["org.opennars.operator.misc.Add", factory([], () => new Add())],
+        ["org.opennars.operator.misc.Count", factory([], () => new Count())],
+        ["org.opennars.operator.misc.Reflect", factory([], () => new Reflect())],
+        ["org.opennars.operator.misc.System", factory([], () => new System(capabilities))],
+        ["org.opennars.operator.mental.Anticipate", factory(["float", "float"], values => new Anticipate(
+            values[0] as number,
+            values[1] as number,
+        ))],
+        ["org.opennars.operator.mental.Believe", factory([], () => new Believe())],
+        ["org.opennars.operator.mental.Doubt", factory([], () => new Doubt())],
+        ["org.opennars.operator.mental.Evaluate", factory([], () => new Evaluate())],
+        ["org.opennars.operator.mental.Hesitate", factory([], () => new Hesitate())],
+        ["org.opennars.operator.mental.Want", factory([], () => new Want())],
+        ["org.opennars.operator.mental.Wonder", factory([], () => new Wonder())],
+        ["org.opennars.plugin.mental.InternalExperience", factory(
+            ["float", "float", "float", "float", "float", "float", "boolean", "boolean", "boolean"],
+            values => new InternalExperience(
+                values[0] as number,
+                values[1] as number,
+                values[2] as number,
+                values[3] as number,
+                values[4] as number,
+                values[5] as number,
+                values[6] as boolean,
+                values[7] as boolean,
+                values[8] as boolean,
+            ),
         )],
-        ["org.opennars.plugin.mental.Emotions", () => new Emotions(
-            0.25,
-            0.75,
-            0.1,
-            0.9,
-            1000,
+        ["org.opennars.plugin.mental.Emotions", factory(
+            ["float", "float", "float", "float", "int"],
+            values => new Emotions(
+                values[0] as number,
+                values[1] as number,
+                values[2] as number,
+                values[3] as number,
+                values[4] as number,
+            ),
         )],
-        ["org.opennars.plugin.perception.VisionChannel", () => new VisionChannel(
-            "BRIGHT",
-            reasoner,
-            reasoner,
-            5,
-            5,
-            25,
-            0.1,
-            0,
+        ["org.opennars.plugin.perception.VisionChannel", factory(
+            ["string", "reasoner", "reasoner", "int", "int", "int", "float", "int"],
+            values => new VisionChannel(
+                values[0] as string,
+                values[1] as Reasoner,
+                values[2] as Reasoner,
+                values[3] as number,
+                values[4] as number,
+                values[5] as number,
+                values[6] as number,
+                values[7] as number,
+            ),
         )],
     ]);
+}
+
+function parseInteger(value: string): number | null {
+    const normalized = value.trim();
+    if (!/^[+-]?\d+$/.test(normalized)) return null;
+    const parsed = Number(normalized);
+    return Number.isInteger(parsed) && parsed >= -2147483648 && parsed <= 2147483647 ? parsed : null;
+}
+
+function parseFloat32(value: string): number | null {
+    const normalized = value.trim();
+    if (normalized.length === 0) return null;
+    const parsed = Number(normalized);
+    if (Number.isNaN(parsed) && normalized.toLowerCase() !== "nan") return null;
+    return Math.fround(parsed);
+}
+
+function parsePluginArguments(plugin: ParsedNarConfig["plugins"][number], kinds: readonly PluginArgumentKind[],
+    reasoner: Reasoner): readonly unknown[] | null {
+    if (plugin.arguments.length !== kinds.length) return null;
+    const values: unknown[] = [];
+    for (let index = 0; index < kinds.length; index++) {
+        const argument = plugin.arguments[index];
+        const kind = kinds[index];
+        if (kind === "reasoner") {
+            if (!argument.isReasoner) return null;
+            values.push(reasoner);
+            continue;
+        }
+        if (argument.isReasoner || argument.value === null) return null;
+        const expectedType = kind === "int" ? "int.class"
+            : kind === "float" ? "float.class"
+                : kind === "boolean" ? "boolean.class" : "String.class";
+        if (argument.type !== expectedType) return null;
+        if (kind === "int") {
+            const value = parseInteger(argument.value);
+            if (value === null) return null;
+            values.push(value);
+        } else if (kind === "float") {
+            const value = parseFloat32(argument.value);
+            if (value === null) return null;
+            values.push(value);
+        } else if (kind === "boolean") {
+            values.push(argument.value.toLowerCase() === "true");
+        } else {
+            values.push(argument.value);
+        }
+    }
+    return values;
+}
+
+function addUnique(items: string[], value: string): void {
+    if (!items.includes(value)) items.push(value);
 }
 
 function applyConfigValues(config: ParsedNarConfig, parameters: Parameters): void {
@@ -123,33 +202,64 @@ export class PluginRegistry {
         capabilities?: RuntimeCapabilities): PluginRegistryResult {
         applyConfigValues(config, parameters);
         const plugins: Plugin[] = [];
-        const factories = createBuiltinFactories(reasoner);
+        const factories = createBuiltinFactories(reasoner, capabilities);
         const unsupportedPluginClasspaths: string[] = [];
         const compatibilityStubPluginClasspaths: string[] = [];
         const missingRuntimeCapabilityPluginClasspaths: string[] = [];
+        const invalidPluginClasspaths: string[] = [];
+        const duplicatePluginClasspaths: string[] = [];
+        const seenPluginClasspaths = new Set<string>();
 
         for (const plugin of config.plugins) {
             const classpath = plugin.classpath;
+            if (seenPluginClasspaths.has(classpath)) {
+                addUnique(duplicatePluginClasspaths, classpath);
+            } else {
+                seenPluginClasspaths.add(classpath);
+            }
             if (classpath === "org.opennars.operator.NullOperator") {
-                const value = plugin.arguments.find(argument => argument.type === "String.class")?.value;
-                plugins.push(value === undefined || value === null
-                    ? new NullOperator()
-                    : new NullOperator(value));
+                if (plugin.arguments.length > 1) {
+                    addUnique(invalidPluginClasspaths, classpath);
+                    continue;
+                }
+                if (plugin.arguments.length === 0) {
+                    plugins.push(new NullOperator());
+                    continue;
+                }
+                const values = parsePluginArguments(plugin, ["string"], reasoner);
+                if (values === null) {
+                    addUnique(invalidPluginClasspaths, classpath);
+                    continue;
+                }
+                plugins.push(new NullOperator(values[0] as string));
                 continue;
             }
             if (classpath === "org.opennars.operator.misc.System") {
                 if (capabilities?.executeSystemCommand === undefined) {
-                    missingRuntimeCapabilityPluginClasspaths.push(classpath);
+                    addUnique(missingRuntimeCapabilityPluginClasspaths, classpath);
                 } else {
-                    plugins.push(new System(capabilities));
+                    const factory = factories.get(classpath);
+                    const values = factory === undefined
+                        ? null
+                        : parsePluginArguments(plugin, factory.argumentKinds, reasoner);
+                    if (factory === undefined || values === null) {
+                        addUnique(invalidPluginClasspaths, classpath);
+                    } else {
+                        plugins.push(factory.create(values));
+                    }
                 }
                 continue;
             }
             const factory = factories.get(classpath);
             if (factory !== undefined) {
-                plugins.push(factory());
+                const values = parsePluginArguments(plugin, factory.argumentKinds, reasoner);
+                if (values === null) {
+                    addUnique(invalidPluginClasspaths, classpath);
+                } else {
+                    plugins.push(factory.create(values));
+                }
             } else {
-                unsupportedPluginClasspaths.push(classpath);
+                addUnique(unsupportedPluginClasspaths, classpath);
             }
         }
 
@@ -159,6 +269,8 @@ export class PluginRegistry {
                 unsupportedPluginClasspaths,
                 compatibilityStubPluginClasspaths,
                 missingRuntimeCapabilityPluginClasspaths,
+                invalidPluginClasspaths,
+                duplicatePluginClasspaths,
             },
         };
     }

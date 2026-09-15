@@ -37,3 +37,16 @@ test("System operator reports a missing host capability explicitly", () => {
             && error.capability === "executeSystemCommand",
     );
 });
+
+test("System operator preserves Java empty-result behavior when the host command fails", () => {
+    const operator = new System({
+        executeSystemCommand: () => {
+            throw new Error("host command failed");
+        },
+    });
+    const callFunction = (operator as unknown as Record<string, unknown>)["function"] as
+        (memory: unknown, terms: Term[]) => Term;
+
+    const result = callFunction.call(operator, undefined, [Term.get(new java.lang.String("failing"))]);
+    assert.equal(String(result.name()), "");
+});
