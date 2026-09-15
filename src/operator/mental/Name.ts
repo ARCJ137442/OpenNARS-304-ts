@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/mental/Name.java
-import { java } from "jree";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Stamp } from "../../entity/Stamp.ts";
@@ -32,12 +31,12 @@ export class Name extends Operator {
      * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> {
+        time: Timable): Task[] {
         let compound: Term = args[1];
         let atomic: Term = args[2];
         let content: Similarity | null = Similarity.make(compound, atomic);
         if (content === null) {
-            return new java.util.ArrayList<Task>();
+            return [];
         }
 
         let truth: TruthValue = TruthValue.fromFrequencyConfidence(1, 0.9999, memory.narParameters); // a naming convension
@@ -51,6 +50,6 @@ export class Name extends Operator {
             memory.narParameters.DEFAULT_JUDGMENT_DURABILITY, truth, memory.narParameters);
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-        return new java.util.ArrayList([newTask]);
+        return [newTask];
     }
 }

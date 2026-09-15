@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/mental/Consider.java
-import { java } from "jree";
 import { Operator } from "../Operator.ts";
 import { DerivationContext } from "../../control/DerivationContext.ts";
 import { GeneralInferenceControl } from "../../control/GeneralInferenceControl.ts";
@@ -34,7 +33,7 @@ export class Consider extends Operator {
      * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> | null {
+        time: Timable): Task[] | null {
         let term: Term = args[1];
 
         let concept: Concept = memory.conceptualize(Consider.budgetMentalConcept(operation), term);

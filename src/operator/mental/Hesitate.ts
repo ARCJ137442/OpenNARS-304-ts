@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/mental/Hesitate.java
-import { java } from "jree";
 import { Operator } from "../Operator.ts";
 import { Consider } from "./Consider.ts";
 import type { Operation } from "../Operation.ts";
@@ -28,7 +27,7 @@ export class Hesitate extends Operator {
      * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> | null {
+        time: Timable): Task[] | null {
         let term: Term = args[1];
         let concept: Concept = memory.conceptualize(Consider.budgetMentalConcept(operation), term);
         concept.discountConfidence(false);

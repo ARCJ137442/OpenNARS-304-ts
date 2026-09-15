@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/mental/FeelSatisfied.java
-import { java } from "jree";
 import { Feel } from "./Feel.ts";
 import type { Operation } from "../Operation.ts";
 import type { Term } from "../../language/Term.ts";
@@ -26,7 +25,7 @@ export class FeelSatisfied extends Feel {
      * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> | null {
+        time: Timable): Task[] | null {
         if (memory.emotion === null) {
             return null;
         }

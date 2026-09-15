@@ -473,6 +473,34 @@ test("Evaluate emits native array feedback through Operator.call", async () => {
     }
 });
 
+test("Wonder emits native array feedback after mental operator boundary migration", async () => {
+    const { Wonder } = await import("../../src/operator/mental/Wonder.ts");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Operation } = await import("../../src/operator/Operation.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+
+    const nar = new Nar();
+    try {
+        const wonder = new Wonder();
+        const makeOperation = () => Operation.make(wonder, [
+            Term.SELF,
+            Term.get("native-feedback-target"),
+        ], true);
+        const operation = makeOperation();
+        const directFeedback = (wonder as any).execute(
+            operation,
+            operation.getArguments().term,
+            nar.memory,
+            nar,
+        );
+        assert.ok(Array.isArray(directFeedback));
+        assert.equal(directFeedback.length, 1);
+        assert.equal(wonder.call(makeOperation(), nar.memory, nar), true);
+    } finally {
+        nar.stop();
+    }
+});
+
 test("set factories use native equality-aware intersection and difference", async () => {
     const { DifferenceExt } = await import("../../src/language/DifferenceExt.ts");
     const { DifferenceInt } = await import("../../src/language/DifferenceInt.ts");

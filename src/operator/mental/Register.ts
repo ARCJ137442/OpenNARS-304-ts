@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/mental/Register.java
-import { java } from "jree";
 import { Operator } from "../Operator.ts";
 import { NullOperator } from "../NullOperator.ts";
 import type { Operation } from "../Operation.ts";
@@ -27,7 +26,7 @@ export class Register extends Operator {
      * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> | null {
+        time: Timable): Task[] | null {
         let op: Operator = new NullOperator(args[1].toString());
         memory.addOperator(op); // add error checking
         return null;

@@ -40,7 +40,7 @@ export abstract class Feel extends Operator {
      * @param memory The memory in which the operation is executed
      * @return Immediate results as Tasks
      */
-    protected feeling(value: float, memory: Memory, time: Timable): java.util.List<Task> {
+    protected feeling(value: float, memory: Memory, time: Timable): Task[] {
         let stamp: Stamp = new Stamp(time, memory, Tense.Present);
         let truth: TruthValue = TruthValue.fromFrequencyConfidence(value, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
             memory.narParameters);
@@ -59,7 +59,7 @@ export abstract class Feel extends Operator {
             memory.narParameters.DEFAULT_JUDGMENT_DURABILITY, quality, memory.narParameters);
 
         let newTask: Task = new Task(sentence, budget, Task.EnumType.INPUT);
-        return new java.util.ArrayList<Task>([newTask]);
+        return [newTask];
 
     }
 }

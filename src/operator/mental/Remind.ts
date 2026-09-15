@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/mental/Remind.java
-import { java } from "jree";
 import { Operator } from "../Operator.ts";
 import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -36,7 +35,7 @@ export class Remind extends Operator {
      * @return Immediate results as Tasks
      */
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> | null {
+        time: Timable): Task[] | null {
         let term: Term = args[1];
         let concept: Concept = memory.conceptualize(Consider.budgetMentalConcept(operation), term);
         let budget: BudgetValue = new BudgetValue(memory.narParameters.DEFAULT_QUESTION_PRIORITY,
