@@ -67,3 +67,9 @@ transitions:
 在提交 `3312c9a` 中，对照 Java `Tense.stringToTense`、`Symbols.stringToOperator` 与 `Symbols.charToOperator` 的实际调用，确认这些表只以字符串或字符文本为 key，不承担 Term、Task 等领域对象的 `equals/hashCode` 判等。因此将三张 jree `LinkedHashMap` 查找表收窄为原生 `Map`，把 `put` 改为 `set`，并在对外查找边界将原生 `undefined` 明确归一化为 Java `null`。首轮局部测试发现 `Symbols.getRelation` 直接使用 miss 结果会触发 `undefined` 运行时异常，补上 null 归一化后，新增查找表回归与原有时间 Narsese 回归共 `2/2` 通过。
 
 该批次的 M2 证据为串行单测 `213/213`、非增量 `tsc` 0 诊断、build、dist API 和局部算法 parity 全部通过。M1 在不可变提交 `3312c9a` 上串行完成 245 个主资源，`245/245` 功能/parity、0 exception、0 marker missing、0 timeout、0 process limit、0 not-run；额外 `simpleOperationTest.nal` 无 marker 但完成 131072 周期，Java/TS stage digest 比较为 `equal=true`、`first_difference=null`。jree 审计的生产直接导入文件保持 `96`，`new LinkedHashMap` 构造由 `41` 降为 `38`；Map/Set 的领域对象 key、JavaObject/运行时类身份和 jree 运行时依赖仍保留，023 继续保持 `in-progress`。
+
+### 2026-09-15：Memory.operators 文本注册表批次
+
+在提交 `dbdb936` 中，对照 canonical Java `Memory.operators` 的实际写入、读取和删除调用，确认 key 只来自 `Operator.name()` 和文本 `getOperator(String)`，不承担 `Term`、`Task` 等领域对象的 `equals/hashCode` 判等。因此将该 `CharSequence → Operator` 注册表从 jree `LinkedHashMap` 收窄为原生 `Map<string, Operator>`，以 `javaStringValue` 统一 Java String 与原生文本 key，并显式把 native `Map.get` 的 `undefined` 归一化为 Java `null`。新增回归覆盖 Java String 查询、缺失、同名替换和删除旧值；首轮测试捕获并修复了 miss 未归一化的问题。
+
+该批次的 M2 证据为串行单测 `214/214`、非增量 `tsc` 0 诊断、build、dist API 和局部算法 parity 全部通过。M1 在不可变提交 `dbdb936` 上串行完成 245 个主资源，`245/245` 功能/parity、0 exception、0 marker missing、0 timeout、0 process limit、0 not-run；额外 `simpleOperationTest.nal` 无 marker 但完成 131072 周期，Java/TS stage digest 比较为 `equal=true`、`first_difference=null`。jree 审计的生产直接导入文件保持 `96`，`new LinkedHashMap` 构造由 `38` 降为 `37`；Bag、TemporalInferenceControl 等领域对象集合仍保留，jree 运行时依赖也仍保留，023 继续保持 `in-progress`。
