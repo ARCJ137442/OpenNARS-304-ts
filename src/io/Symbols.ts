@@ -221,22 +221,20 @@ export class Symbols extends JavaObject {
         }
     };
 
-    protected static readonly stringToOperator: java.util.Map<string, Symbols.NativeOperator> = new java.util.LinkedHashMap<string, Symbols.NativeOperator>(
-        Symbols.NativeOperator.values().length * 2);
-    protected static readonly charToOperator: java.util.Map<string, Symbols.NativeOperator> = new java.util.LinkedHashMap<string, Symbols.NativeOperator>(
-        Symbols.NativeOperator.values().length * 2);
+    protected static readonly stringToOperator: Map<string, Symbols.NativeOperator> = new Map<string, Symbols.NativeOperator>();
+    protected static readonly charToOperator: Map<string, Symbols.NativeOperator> = new Map<string, Symbols.NativeOperator>();
 
 
     static {
         // Setup NativeOperator String index hashtable
         for (const r of Symbols.NativeOperator.values<Symbols.NativeOperator>())
-            Symbols.stringToOperator.put(r.symbol, r);
+            Symbols.stringToOperator.set(r.symbol, r);
 
         // Setup NativeOperator Character index hashtable
         for (const r of Symbols.NativeOperator.values<Symbols.NativeOperator>()) {
             let c: string = r.ch;
             if (c !== "")
-                Symbols.charToOperator.put(c, r);
+                Symbols.charToOperator.set(c, r);
         }
     }
 
@@ -251,8 +249,8 @@ export class Symbols extends JavaObject {
                     ? value
                     : String((value as unknown as { valueOf?: () => unknown }).valueOf?.() ?? value);
                 return nativeValue.length === 1
-                    ? Symbols.charToOperator.get(nativeValue)
-                    : Symbols.stringToOperator.get(nativeValue);
+                    ? Symbols.charToOperator.get(nativeValue) ?? null
+                    : Symbols.stringToOperator.get(nativeValue) ?? null;
 
 
             }

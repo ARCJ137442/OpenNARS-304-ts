@@ -23,11 +23,11 @@ export class Tense extends java.lang.Enum<Tense> {
         return this.symbol;
     }
 
-    protected static readonly stringToTense: java.util.Map<string, Tense> = new java.util.LinkedHashMap<string, Tense>(Tense.values<Tense>().length * 2);
+    protected static readonly stringToTense: Map<string, Tense> = new Map<string, Tense>();
 
     static {
         for (let t of Tense.values<Tense>()) {
-            Tense.stringToTense.put(t.toString(), t);
+            Tense.stringToTense.set(t.toString(), t);
         }
     }
 
