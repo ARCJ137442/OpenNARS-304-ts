@@ -28,6 +28,7 @@ import { GeneralInferenceControl } from "../control/GeneralInferenceControl.ts";
 import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import type { Nar } from "../main/Nar.ts";
+import { javaStringValue } from "../runtime/jree-compat.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 import type { Resettable } from "../interfaces/Resettable.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -74,7 +75,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
     public event: EventEmitter;
 
     /* InnateOperator registry. Containing all registered operators of the system */
-    public readonly operators: java.util.Map<java.lang.CharSequence, Operator>;
+    public readonly operators: Map<string, Operator>;
 
     /* a mutex for novel and new tasks */
     private readonly tasksMutex: java.lang.Boolean = java.lang.Boolean.TRUE;
@@ -106,7 +107,7 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         this.novelTasks = novelTasks;
         this.recent_operations = recent_operations;
         this.seq_current = seq_current;
-        this.operators = new java.util.LinkedHashMap();
+        this.operators = new Map();
         this.reset();
     }
 
@@ -420,16 +421,19 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
     }
 
     public getOperator(op: java.lang.String): Operator {
-        return this.operators.get(op) as unknown as Operator;
+        return (this.operators.get(javaStringValue(op)) ?? null) as unknown as Operator;
     }
 
     public addOperator(op: Operator): Operator {
-        this.operators.put(op.name(), op);
+        this.operators.set(javaStringValue(op.name()), op);
         return op;
     }
 
     public removeOperator(op: Operator): Operator {
-        return this.operators.remove(op.name()) as unknown as Operator;
+        const key = javaStringValue(op.name());
+        const previous = this.operators.get(key) ?? null;
+        this.operators.delete(key);
+        return previous as unknown as Operator;
     }
 
     private currentStampSerial: long = 0 as unknown as long;
