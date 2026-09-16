@@ -210,6 +210,18 @@
 
 本候选代码、测试和阶段证据见 [ProcessGoal 批次报告](../reports/20260916-235913.md)。项目外 M1- JSONL、严格摘要与 artifact 证据保存在 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`，不纳入 Git。本批只完成 023 的一个局部责任簇，可以继续下一类原生化；不能宣称 023/024 完成、jree 已移除、完整 M1/#245 重新完成或 Java/TypeScript 性能等价。
 
+### 当前候选：`TemporalInferenceControl` 局部尝试集合原生化簇（2026-09-17）
+
+本批沿“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序，核对并原生化 `TemporalInferenceControl.eventInference` 中两个只承担局部尝试去重的集合。Java canonical 未改变：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+
+- Java 的 `already_attempted` 与 `already_attempted_ops` 只执行 `contains/add/clear`；`Task.equals` 按 `Sentence` 值判等。TypeScript 改用既有 `NativeList<Task>`，不触碰其他 `TemporalInferenceControl` 集合和推理流程。
+- 新增 `test/node/temporal-inference.test.ts`，命中真实 `eventInference`，覆盖不同对象相同 Task 值只尝试一次、任务回放和清空边界；局部回归 `1/1`，统一串行 M2 `233/233`。
+- 非增量 `tsc` 为 `0` 诊断；build、dist API、canonical Java 局部 parity 均通过；受影响 `nars_memorize_precondition_sequence.nal` smoke 为 `1/1`。
+- 当前 jree 审计为直接导入文件 `95`、`new LinkedHashMap=35`、`new LinkedHashSet=21`、`candidateNativeItems=68`。本批只去除两个局部实例，不能解释为 jree 已退出；`NativeList` 的线性查找性能也未在本批裁决。
+- 按用户对局部小簇的明确政策，本批不运行 M1-，不运行长期稳定性 `#245`；待较大责任簇或高风险运行时簇闭合后再做串行 M1- 保护。故本批不能宣称 M1-/M1 全量通过或 023 完成。
+
+本批代码、测试和阶段证据见 [TemporalInferenceControl 批次报告](../reports/20260917-074048.md)。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：
