@@ -169,7 +169,7 @@
 
 ### 当前候选：只读列表原生化簇（2026-09-16）
 
-本批在 G0 稳定保护门之上，完成了“只读 `ArrayList` 快照”整类责任的 Java 合同核对与原生化。小范围变更采用局部合同、直接回归和 M2 验证；完整特性簇闭合后再运行 M1-，符合当前减少非必要全量测试的约定。
+本批在 G0 稳定保护门之上，完成了“只读 `ArrayList` 快照”整类责任的 Java 合同核对与原生化。代码提交 `3543752` 已推送到 `origin/main`。小范围变更采用局部合同、直接回归和 M2 验证；完整特性簇闭合后再运行 M1-，符合当前减少非必要全量测试的约定。
 
 - Java `Concept` 的四个任务 getter 与 `Nar.getPlugins()` 实际返回 `Collections.unmodifiableList` 的实时只读视图；TypeScript 已从“jree `ArrayList` 复制后再包装”改为 `NativeReadOnlyList`，保持实时观察、插入顺序、索引、遍历和修改拒绝语义。
 - 生产源码中的实际 `new java.util.ArrayList` 构造由 `5` 降为 `0`；直接 jree 导入文件由 `96` 降为 `95`。后者仍包含既有 Java 类型与运行时兼容责任，不能解释为 jree 已退出。
