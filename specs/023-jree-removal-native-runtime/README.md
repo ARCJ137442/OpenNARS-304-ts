@@ -81,3 +81,11 @@ transitions:
 本批 M2 已完成：串行单测 `215/215`、非增量 `tsc` 0 诊断、build、dist API 和局部算法 parity 通过。M1 在不可变提交 `ef78de8` 上完成：245 个主资源 `245/245`，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run；额外 `simpleOperationTest.nal` 短 parity 为 `1/1`。对无 marker 夹具按冻结的 `--skip-embedded --cycles 131072 --window-size 1024` 合同复验，Java/TS 均为 `131072` 周期、`128` 窗口、`2535970` 事件，`equal=true`、`first_difference=null`；对应项目外证据文件为 `java-simpleOperationTest-stage-digest-131072-window1024-20260916-ef78de8-skip.json` 和 `ts-simpleOperationTest-stage-digest-131072-window1024-20260916-ef78de8-skip.json`。另一次执行内嵌周期后追加周期的诊断协议在窗口 53 观察到 Java/TS scheduler `3238/3237`，但暂时恢复旧 jree `LinkedHashMap` 后 TS 摘要完全不变，证明该差异不是本批 `Term.atoms` 引入，且该协议不同于冻结的 markerless 合同。
 
 审计在候选提交上显示 `new LinkedHashMap=36`，较上一批再减少 1；直接 jree 导入文件保持 `96`。`Bag.nameTable`、替换映射、Set/Iterator 和 jree compatibility 层不属于本批，023 继续保持 `in-progress`。
+
+### 2026-09-16：Sentence 变量重命名表批次
+
+在代码提交 `6af34d8` 中，对照 canonical Java `Sentence.java` 的规范化实现，确认 `rename` 表的 key 是变量名（及必要 scope 后缀）的文本值，value 是 `Variable.getName` 返回的 Java `CharSequence`。因此仅将该短生命周期 `LinkedHashMap<CharSequence, CharSequence>` 收窄为原生 `Map<string, CharSequence>`：读写 key 统一经过 `javaStringValue`，miss 归一化为 `null`，并使用原生 `Map.size` 属性生成与 Java 相同的编号。没有将这一结论外推到领域对象 Map。
+
+新增回归覆盖 Java `String` 与原生 TypeScript 字符串混合输入，确认重复文本变量均复用 `$1`。首轮局部测试暴露并修复了遗漏的 `javaStringValue` 导入和原生 Map 的 `size()`/`size` API 差异。
+
+本批保护证据：非增量 typecheck 为 `0` 诊断，串行单测 `216/216`，build 源文件 `131`，dist API 和局部算法 parity 通过；M1 主矩阵 `245/245`、额外 `simpleOperationTest.nal` `1/1`，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run。无 marker 冻结协议 `--skip-embedded --cycles 131072 --window-size 1024` 下，Java/TS 均为 `131072` 周期、`128` 窗口、`2,535,970` 事件，逐窗口记录一致且两侧均完整。静态审计为直接 jree 导入文件 `96`、`new ArrayList=14`、`new LinkedHashMap=35`、`new LinkedHashSet=26`；相比上一批仅减少 1 个 LinkedHashMap 构造。`package.json`、Bag 领域集合、替换映射、Set/Iterator、运行时类身份与兼容层仍未迁移，因此 023 继续保持 `in-progress`。
