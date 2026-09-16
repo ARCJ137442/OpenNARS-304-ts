@@ -198,7 +198,7 @@
 
 ### 当前候选：`ProcessGoal` 证据子集原生化簇（2026-09-17）
 
-本批沿“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序，核对并原生化 `ProcessGoal.processOperationGoal` 中只承担 `BaseEntry` `add/contains` 子集判定的局部集合责任。Java canonical 未改变：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+本批沿“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序，核对并原生化 `ProcessGoal.processOperationGoal` 中只承担 `BaseEntry` `add/contains` 子集判定的局部集合责任。Java canonical 未改变：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。本批代码、测试和文档提交为 `4ff0860c3fe6eb19451e3a0f35766b67bbb366eb`，已推送至 `origin/main`。
 
 - Java `BaseEntry.equals` 按 `(narId,inputId)` 值判等；TypeScript 将局部 `java.util.LinkedHashSet` 替换为既有 `NativeList`，只保持该局部合同，不扩展到 `ProcessGoal` 的其他 Map/Set。
 - 新增回归覆盖相同值不同对象的证据包含、缺失证据和空旧目标分支；直接回归 `3/3`。
