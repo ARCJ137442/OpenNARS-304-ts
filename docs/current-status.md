@@ -100,7 +100,7 @@
 
 ### 当前候选（截至 `6af34d8`）
 
-当前候选不是 2026-08-27 冻结点的替代品，而是冻结后的去 jree 增量。代码提交 `6af34d8` 已完成；本批阶段报告、状态和 023 记录已完成收尾，待最终检查后推送；canonical Java artifact 未改变。
+当前候选不是 2026-08-27 冻结点的替代品，而是冻结后的去 jree 增量。代码提交 `6af34d8`、本批阶段报告、状态和 023 记录均已完成并推送；canonical Java artifact 未改变。
 
 - M2 当前复验：串行单测 `216/216`、非增量 `tsc` 0 诊断、build、dist API 和局部算法 parity 均通过。
 - M1 当前保护矩阵：245 个主资源全部通过 marker/功能口径，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run；额外 `simpleOperationTest.nal` 的短 parity 为 `1/1`。按冻结的 `--skip-embedded --cycles 131072 --window-size 1024` 合同复验，Java/TS 均观察到 `131072` 周期、`128` 窗口、`2535970` 事件，stage digest `equal=true`、`first_difference=null`。另一次执行内嵌周期后追加周期的诊断协议在窗口 53 的 scheduler 事件数为 `3238/3237`，该差异在旧 jree `Term.atoms` A/B 中同样存在，不能归因于 `ef78de8`。
