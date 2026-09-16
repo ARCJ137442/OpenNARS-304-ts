@@ -826,7 +826,22 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     public iterator(): java.util.Iterator<Term> {
-        return new java.util.ArrayList<Term>(this.term).iterator();
+        // Java delegates to Guava Iterators.forArray(term), whose
+        // UnmodifiableIterator reads this array in order and rejects remove().
+        const terms = this.term;
+        let index = 0;
+        return {
+            hasNext: (): boolean => index < terms.length,
+            next: (): Term => {
+                if (index >= terms.length) {
+                    throw new java.util.NoSuchElementException();
+                }
+                return terms[index++];
+            },
+            remove: (): void => {
+                throw new java.lang.UnsupportedOperationException();
+            },
+        } as unknown as java.util.Iterator<Term>;
     }
 
     public [Symbol.iterator](): IterableIterator<Term> {

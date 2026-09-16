@@ -205,6 +205,30 @@ test("Sentence normalization keys duplicate variables by Java text value", async
     assert.equal(String(variables[1].name()), "$1");
 });
 
+test("CompoundTerm iterator preserves Guava forArray contract", async () => {
+    const { Product } = await import("../../src/language/Product.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { java } = await import("jree");
+
+    const compound = Product.make([Term.get("iterator-a"), Term.get("iterator-b")]);
+    if (compound === null) throw new Error("product factory returned null");
+    const iterator = compound.iterator();
+
+    assert.equal(iterator.hasNext(), true);
+    assert.equal(String(iterator.next().name()), "iterator-a");
+    assert.throws(
+        () => iterator.remove(),
+        (error: unknown) => error instanceof java.lang.UnsupportedOperationException,
+    );
+    assert.equal(String(iterator.next().name()), "iterator-b");
+    assert.equal(iterator.hasNext(), false);
+    assert.throws(
+        () => iterator.next(),
+        (error: unknown) => error instanceof java.util.NoSuchElementException,
+    );
+    assert.deepEqual(compound.term.map((term) => String(term.name())), ["iterator-a", "iterator-b"]);
+});
+
 test("decimal perception coordinates remain conceptual like Java Term.get", async () => {
     const { Term } = await import("../../src/language/Term.ts");
     const indexedTerm = Term.get("M1[-1.0,0.0]");
