@@ -184,6 +184,8 @@
 
 本批继续沿“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序，完成 `Stamp` 两处局部证据基集合责任的 Java 合同核对。按照当前工作约定，小簇使用局部合同和局部 M2；只有整类责任闭合后才运行一次串行 M1-，不重复运行长期稳定性 `#245`。
 
+本批代码、测试和报告已由提交 `7bef525` 记录并推送到 `origin/main`；canonical Java artifact 未改变。
+
 - Java `Stamp.baseOverlap` 与 `Stamp.evidenceIsCyclic` 都只对 `LinkedHashSet<BaseEntry>` 执行 `contains + add`；没有依赖集合遍历、删除或桶恢复。`BaseEntry.equals` 按 `(narId,inputId)` 值判等，因此 TS 改为 `NativeList<Stamp.BaseEntry>` 后仍执行 Java equals 驱动的重复检测。
 - 新增 `test/node/stamp-evidence.test.ts`，覆盖不同对象相同 `(narId,inputId)`、同一 stamp 重复证据和跨 stamp 重叠；局部测试 `2/2`，统一串行 M2 `231/231`，`test/entity/TLink.test.ts` 已随统一入口纳入历史 M2 口径。
 - 非增量 `tsc --noEmit --pretty false --incremental false` 为 `0` 诊断；build `sourceFileCount=133`、dist API、canonical Java 局部 parity 均通过；`nal8.add.nal` 受影响 smoke `1/1`。本批没有修改 canonical Java。
