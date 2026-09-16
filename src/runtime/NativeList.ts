@@ -2,7 +2,7 @@
  * Native ordered list for translated Java tables.
  *
  * 📌【2026-09-16】Concept tables use only this small ArrayList contract:
- * indexed read/insert/remove, append, size checks and ordered iteration.
+ * indexed read/insert/remove, value removal, append, size checks and ordered iteration.
  * Keeping that contract here avoids constructing a jree ArrayList for every
  * concept while preserving the insertion order used by Java's ranked tables.
  */
@@ -67,11 +67,26 @@ export class NativeList<T> implements Iterable<T> {
         return new NativeListIterator(this);
     }
 
-    public remove(index: number): T {
-        this.checkElementIndex(index);
-        const [removed] = this.items.splice(index, 1);
+    public remove(index: number): T;
+    public remove(element: T): boolean;
+    public remove(value: number | T): T | boolean {
+        // Java List.remove(int) and List.remove(Object) are distinguished by
+        // the translated call-site type. At runtime, primitive numeric calls
+        // retain the indexed form; object values use Java-style equality.
+        if (typeof value === "number") {
+            this.checkElementIndex(value);
+            const [removed] = this.items.splice(value, 1);
+            this.modificationCount += 1;
+            return removed;
+        }
+
+        const index = this.indexOf(value);
+        if (index < 0) {
+            return false;
+        }
+        this.items.splice(index, 1);
         this.modificationCount += 1;
-        return removed;
+        return true;
     }
 
     public set(index: number, element: T): T {

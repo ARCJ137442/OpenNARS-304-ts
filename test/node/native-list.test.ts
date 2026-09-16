@@ -32,7 +32,9 @@ test("NativeList preserves indexed removal and Java-style equality lookup", () =
     assert.equal(list.indexOf(searchedFirst), 0);
     assert.equal(list.remove(0), first);
     assert.deepEqual(list.toArray(), [second]);
-    assert.equal(list.isEmpty(), false);
+    assert.equal(list.remove(searchedSecond), true);
+    assert.deepEqual(list.toArray(), []);
+    assert.equal(list.isEmpty(), true);
 
     list.clear();
     assert.equal(list.isEmpty(), true);

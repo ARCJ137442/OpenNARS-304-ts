@@ -11,6 +11,7 @@ import { Terms } from "./Terms.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
 import { javaStringHashCode, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
+import { NativeList } from "../runtime/NativeList.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -496,9 +497,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     public asTermList(): java.util.List<Term> {
-        let l: java.util.List<Term> = new java.util.ArrayList<Term>(this.term.length);
-        this.addTermsTo(l);
-        return l;
+        return new NativeList<Term>(this.term) as unknown as java.util.List<Term>;
     }
 
     /** forced deep clone of terms */
@@ -530,10 +529,10 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     /** forced deep clone of terms */
     public cloneTermsListDeep(): java.util.List<Term> {
-        let l: java.util.List<Term> = new java.util.ArrayList<Term>(this.term.length);
+        const l = new NativeList<Term>();
         for (let t of this.term)
             l.add(t.clone());
-        return l;
+        return l as unknown as java.util.List<Term>;
     }
 
     public static shuffle(ar: Term[], randomNumber: java.util.Random): void {
@@ -776,7 +775,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         // componentLinks.
         // Capacity is only an optimization; avoid passing a Java short through
         // jree's native ArrayList length constructor.
-        let componentLinks: java.util.List<TermLink> = new java.util.ArrayList<TermLink>();
+        const componentLinks = new NativeList<TermLink>() as unknown as java.util.List<TermLink>;
         return Terms.prepareComponentLinks(componentLinks, this);
     }
 

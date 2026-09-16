@@ -117,3 +117,11 @@ TypeScript 侧将这一处仅为生成迭代器而构造的 jree `ArrayList` 替
 对照 canonical Java `TemporalRules.temporalInduction` 及其调用点，确认 `derivations` 仅按规则产生顺序收集短生命周期 `Task` 结果，实际使用为 `add`、`addAll`、迭代和返回；Java 的前三个变量引入 staging 列表已在 TypeScript 中是原生数组。本批仅将 `derivations` 的 jree `ArrayList<Task>` 替换为 `NativeList<Task>`，保留 `java.util.List<Task>` 返回形状，不改 `Collections.emptyList()` 的只读空结果契约，也不改任何推理规则、预算、Stamp 或派发顺序。
 
 新增直接回归覆盖 `addToMemory=false`、`allowSequence=false` 的合法时间归纳空结果路径，确认返回原生有序缓冲且数量为 0。M2 串行单测为 `224/224`，非增量 typecheck 为 0 诊断，build、dist API、canonical Java 局部算法 parity 均通过。M1- 主矩阵 `244/244`，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run、0 Java/TS diff；额外 `simpleOperationTest.nal` `1/1`。本批 jree 审计为直接导入文件 `96`、`new ArrayList=9`、`new LinkedHashMap=35`、`new LinkedHashSet=26`、candidate native items `72`。M1- 主矩阵总时长为 `2,028,815 ms`，TS 峰值 RSS 为 `1,478,266,880 bytes`；相对上一批主矩阵分别 `+1.39%` 和 `+0.90%`，不宣称性能收益。023 继续保持 `in-progress`。
+
+### 2026-09-16：CompoundTerm 局部列表缓冲批次
+
+对照 canonical Java `CompoundTerm.asTermList`、`cloneTermsListDeep` 和 `prepareComponentLinks` 及其调用点，确认三处 `ArrayList` 都是按 `term` 原顺序构造、短生命周期使用的列表缓冲，不承担 key 判等。`asTermList` 的调用方还会执行 `remove(Object)` 和 `remove(int)` 两种 Java 重载，因此同步补齐 `NativeList` 的值删除分支：以被搜索对象的 `equals` 方向定位元素，保留索引删除、顺序和修改计数；没有修改 `Terms.prepareComponentLinks` 的递归规则。
+
+TypeScript 侧将三处局部 `ArrayList` 收窄为 `NativeList`，仍以类型断言保留 Java `List<Term>`/`List<TermLink>` 返回形状。新增回归覆盖 `asTermList` 的原生存储、索引删除、`cloneTermsExcept` 的值删除、深拷贝顺序和 TermLink `target` 顺序；NativeList 原有 indexed remove、equals lookup、iterator/remove 回归也继续通过。
+
+本批 M2 为非增量 `tsc=0`、串行单测 `225/225`、build、dist API、canonical Java 局部 parity 全部通过。M1- 主矩阵在显式 canonical Java JAR、单线程 cold、逐文件串行条件下为 `244/244`，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run、0 Java/TS diff；额外 `simpleOperationTest.nal` 为 `1/1`。jree 审计为直接导入文件 `96`、`new ArrayList=6`、`new LinkedHashMap=35`、`new LinkedHashSet=26`、candidate native items `71`。主矩阵总时长 `1,957,134 ms`，TS 峰值 RSS `1,345,036,288 bytes`；相对上一批分别减少 `71,681 ms`（`3.53%`）和 `133,230,592 bytes`（`9.01%`）。相对历史完整 M1 的 `4,231,370 ms`，M1- 节省 `2,274,236 ms`（`53.75%`）；历史完整 M1 与当前 M1- 的内存采样口径不同，只作为量级参考，不能将本批变化宣称为性能优化。023 继续保持 `in-progress`。

@@ -229,6 +229,35 @@ test("CompoundTerm iterator preserves Guava forArray contract", async () => {
     assert.deepEqual(compound.term.map((term) => String(term.name())), ["iterator-a", "iterator-b"]);
 });
 
+test("CompoundTerm local lists preserve native storage and Java order", async () => {
+    const { Product } = await import("../../src/language/Product.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { NativeList } = await import("../../src/runtime/NativeList.ts");
+
+    const compound = Product.make([Term.get("compound-list-a"), Term.get("compound-list-b")]);
+    if (compound === null) throw new Error("product factory returned null");
+
+    const terms = compound.asTermList();
+    assert.ok(terms instanceof NativeList);
+    assert.deepEqual(Array.from(terms).map((term) => String(term.name())), ["compound-list-a", "compound-list-b"]);
+    const removed = terms.remove(0);
+    assert.ok(removed);
+    assert.equal(String(removed.name()), "compound-list-a");
+    assert.deepEqual(Array.from(terms).map((term) => String(term.name())), ["compound-list-b"]);
+
+    const cloneExcept = compound.cloneTermsExcept(true, [Term.get("compound-list-a")]);
+    assert.deepEqual(cloneExcept.map((term) => String(term.name())), ["compound-list-b"]);
+
+    const deepClone = compound.cloneTermsListDeep();
+    assert.ok(deepClone instanceof NativeList);
+    assert.deepEqual(Array.from(deepClone).map((term) => String(term.name())), ["compound-list-a", "compound-list-b"]);
+
+    const links = compound.prepareComponentLinks();
+    assert.ok(links instanceof NativeList);
+    assert.equal(links.size(), 2);
+    assert.deepEqual(Array.from(links).map((link) => String(link.target.name())), ["compound-list-a", "compound-list-b"]);
+});
+
 test("decimal perception coordinates remain conceptual like Java Term.get", async () => {
     const { Term } = await import("../../src/language/Term.ts");
     const indexedTerm = Term.get("M1[-1.0,0.0]");
