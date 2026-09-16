@@ -97,3 +97,11 @@ transitions:
 TypeScript 侧将这一处仅为生成迭代器而构造的 jree `ArrayList` 替换为原生 `Term[]` 引用和索引状态，同时保留 `java.util.Iterator<Term>` 的兼容返回形状及两类 Java 异常。新增 `core-runtime` 回归覆盖遍历顺序、耗尽、`remove()` 只读约束和原数组不变性。
 
 本批 M2 通过：非增量 typecheck 为 `0` 诊断，串行单测 `217/217`，build、dist API 和 canonical Java 局部 parity 均通过。M1 使用 explicit canonical JAR、单线程 cold、`--chunk-size 1`，主矩阵 `245/245`、额外 `simpleOperationTest.nal` `1/1`，均无异常；markerless 冻结协议下 Java/TS 均完整观察 `131072` 周期、`128` 窗口、`2,535,970` 事件，`equal=true`、`first_difference=null`。静态审计为直接 jree 导入文件 `96`、`new ArrayList=13`、`new LinkedHashMap=35`、`new LinkedHashSet=26`；023 仍保持 `in-progress`，本批不改变领域 Map/Set、运行时类身份或兼容层的未完成状态。
+
+### 2026-09-16：Concept NativeList 列表容器批次
+
+在代码提交 `2465dcd` 中，对照 canonical Java `Concept.java`、`ProcessQuestion.java`、`ProcessJudgment.java` 和 `ProcessGoal.java` 的实际调用点，确认六组任务表只依赖有限的 `ArrayList` 合同：`questions/quests` 在容量满时按 FIFO `remove(0)`，`beliefs/desires` 需要按 rank 中间插入并从尾部淘汰，四类表都需要 `size/get/add/iterator`。因此新增项目内 `src/runtime/NativeList.ts`，以原生数组实现这些操作、fail-fast iterator、iterator.remove、Java equals 方向的 contains/indexOf 和边界检查；六组 Concept 表及三个控制类局部变量改用该容器。公开 getter 仍保留 Java List 返回形状，但只在兼容边界返回不可修改的 jree 快照，避免把内部可变表交给 `Collections.unmodifiableList` 后原地锁死。
+
+本批局部回归为 `5/5`，最终 M2 为非增量 `tsc=0`、串行单测 `222/222`、build、dist API、canonical Java 局部 parity 全部通过。普通保护矩阵按新口径执行 M1-（排除长期稳定性 #245）为 `244/244`，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run、0 java/TS diff；额外 `simpleOperationTest.nal` 为 `1/1`。#245 的 TS 长测完成 `2,001,974` 周期并命中 marker；同一 canonical JAR 的 Java SerialGC 独立长测也完成 `2,001,974` 周期并命中 marker。普通 JVM 的首次执行在 JDK 18.0.2 `jvm.dll` 的 `GC Thread#1` 触发 `EXCEPTION_ACCESS_VIOLATION`，另一次带 `JAVA_TOOL_OPTIONS` 的 parity 复核再次遇到同类主机异常；这两次环境故障与 TS 逻辑分叉分开记录，不把它们算作本批语义失败。
+
+本批矩阵原始逐行时长为：完整 M1 的 245 行 `4,231,370 ms`，其中 #245 为 `2,236,442 ms`；最终代码 M1- 的 244 行为 `1,974,268 ms`，相对完整 M1 节省 `2,257,102 ms`（`53.34%`）。相同前 244 行的差额仅 `20,660 ms`（`1.04%`），所以这项节省主要来自拆出 #245，而不是宣称 NativeList 已完成性能优化。当前完整 M1 #245 的 Windows `PeakWorkingSet64` 观察值为 `3,050,434,560 bytes`，M1- 的最大 TS `peak_rss_bytes` 为 `1,475,260,416 bytes`；由于采样接口不同，内存差只作量级参考，下一次完整 M1 按命令手册统一使用 `--resource-metrics`。023 仍保持 `in-progress`，未迁移的领域 Map/Set、其他 List/Iterator、运行时类身份和 jree 兼容层不能被本批覆盖。

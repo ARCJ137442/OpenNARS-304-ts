@@ -9,13 +9,13 @@
 先在项目根目录执行。命令是单进程、单线程、逐文件 checkpoint；`--timeout-ms` 是“无进展 watchdog”，不是用 TypeScript 总运行时间判定功能失败。
 
 ```powershell
-node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 900000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-245-parity-YYYYMMDD-v1.jsonl
+node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 900000 --ts-mode cold --resource-metrics --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-245-parity-YYYYMMDD-v1.jsonl
 ```
 
 系统重启或进程中断后，使用完全相同的参数并追加 `--resume`，不要启动第二个同名矩阵：
 
 ```powershell
-node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 900000 --ts-mode cold --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-245-parity-YYYYMMDD-v1.jsonl --resume
+node scripts/e2e/run-nal-corpus.mjs --engine parity --all --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 900000 --ts-mode cold --resource-metrics --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-245-parity-YYYYMMDD-v1.jsonl --resume
 ```
 
 `--all` 的主语料是 245 个资源。M1 的第 246 项可以单独执行；在一次原生化批次后若要求保护 M1，应一并执行：
@@ -33,6 +33,16 @@ $all = @($main) + @($extra)
 "rows=$($all.Count) functional_pass=$(@($all | Where-Object functional_pass).Count) failed=$(@($all | Where-Object { -not $_.functional_pass }).Count)"
 $all | Where-Object { -not $_.functional_pass } | Select-Object file, functional_pass, parity, java_ts_diff, timeout_classification, java_exception, ts_exception
 ```
+
+### M1-：日常保护回归
+
+长期稳定性样本 `long_term_stability.nal` 是 #245。按当前语料排序，它位于 245 个主资源的最后一项；因此普通去 jree 批次只运行 M1-，即排除该项的前 244 个主资源。完整 M1（含 #245）只在一次去 jree 提交前执行并调试，避免把长期稳定性成本混入每轮局部迁移。
+
+```powershell
+node scripts/e2e/run-nal-corpus.mjs --engine parity --all --limit 244 --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 3600000 --ts-mode cold --resource-metrics --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-minus245-parity-YYYYMMDD-v1.jsonl --summary
+```
+
+M1- 仍须追加执行 `simpleOperationTest.nal`；该夹具不属于 #245。每次运行前应确认语料清单末项仍是 `stability\long_term_stability.nal`，若主语料数量或排序发生变化，先调整 `--limit`，不能静默漏测。M1 与 M1- 的时间节省按两次结果行 `duration_ms` 求和比较；内存节省按启用 `--resource-metrics` 后两批 TS 子进程的最大 `resource_metrics.peak_rss_bytes` 比较，并同时记录系统可用内存最低值。
 
 带 marker 的样本按 marker 对照判定；没有 marker 的样本才使用 131072 周期内部轨迹判定。运行较慢本身是性能记录，不等于功能失败；只有无进展 watchdog 或进程安全上限命中，才作为异常类别单独记录。
 

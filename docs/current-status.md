@@ -85,31 +85,33 @@
 
 因此，ArrayList 的下降只能证明一个子簇取得进展，不能作为整个去 jree 化的完成率。
 
-### G0 之后的持续开发增量（截至 `1833fc4`）
+### G0 之后的持续开发增量（截至 `2465dcd`）
 
 以下数字是在不改变上方冻结 M1/M2 结论的前提下，对当前主线增量的记录：
 
 - 生产源码直接 jree 导入文件：`96`；
-- `new ArrayList` 构造：`13`；
+- `new ArrayList` 构造：`11`；
 - `new LinkedHashMap` 构造：`35`；
 - `new LinkedHashSet` 构造：`26`；
-- 最近九批已推送的原生化范围：mental operator 反馈数组、配置插件原生序列、`ProcessGoal` anticipation value 数组、`VisionChannel` prototypes 数组、`Tense`/`Symbols` 字符串与字符查找表、`Memory.operators` 文本 key 注册表、`Term.atoms` 文本缓存、`Sentence` 变量重命名文本表、`CompoundTerm` Guava 数组迭代器；
+- 最近十批已推送的原生化范围：mental operator 反馈数组、配置插件原生序列、`ProcessGoal` anticipation value 数组、`VisionChannel` prototypes 数组、`Tense`/`Symbols` 字符串与字符查找表、`Memory.operators` 文本 key 注册表、`Term.atoms` 文本缓存、`Sentence` 变量重命名文本表、`CompoundTerm` Guava 数组迭代器、`Concept` 六组任务表；
 - 最近一批（`1833fc4`）的串行单测为 `217/217`，非增量 typecheck 为 0 诊断，build、dist API、canonical Java 局部 parity、M1 主矩阵、额外夹具和 markerless 长周期均通过；长周期采用冻结的 `--skip-embedded + 131072` 协议。
 
 这些是可追溯的局部迁移结果，不是 023 的完成率，也不改变 023 的退出条件。领域 Map/Set、其余迭代器/remove、运行时类身份、jree compatibility 层和 `package.json` 运行时依赖仍未收口。对应批次报告见 `reports/20260915-170037.md`、`reports/20260915-171226.md`、`reports/20260915-173124.md`、`reports/20260915-173959.md`、`reports/20260915-180430.md`、`reports/20260915-200152.md`、`reports/20260915-214647.md`、`reports/20260916-074856.md` 和 `reports/20260916-091636.md`。
 
-### 当前候选（截至 `1833fc4`）
+### 当前候选（截至 `2465dcd`）
 
-当前候选不是 2026-08-27 冻结点的替代品，而是冻结后的去 jree 增量。代码提交 `1833fc4` 已完成本批实现；本批阶段报告、状态和 023 记录随后归档，canonical Java artifact 未改变。
+当前候选不是 2026-08-27 冻结点的替代品，而是冻结后的去 jree 增量。代码提交 `2465dcd` 已完成本批实现；本批阶段报告、状态和 023 记录随后归档，canonical Java artifact 未改变。
 
-- M2 当前复验：串行单测 `217/217`、非增量 `tsc` 0 诊断、build、dist API 和局部算法 parity 均通过。
-- M1 当前保护矩阵：245 个主资源全部通过 marker/功能口径，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run；额外 `simpleOperationTest.nal` 的短 parity 为 `1/1`。按冻结的 `--skip-embedded --cycles 131072 --window-size 1024` 合同复验，Java/TS 均观察到 `131072` 周期、`128` 窗口、`2535970` 事件，stage digest `equal=true`、`first_difference=null`。另一次执行内嵌周期后追加周期的诊断协议在窗口 53 的 scheduler 事件数为 `3238/3237`，该差异在旧 jree `Term.atoms` A/B 中同样存在，不能归因于 `ef78de8`。
+- 上一候选的 M2 复验：串行单测 `217/217`、非增量 `tsc` 0 诊断、build、dist API 和局部算法 parity 均通过。
+- 上一候选的 M1 保护矩阵：245 个主资源全部通过 marker/功能口径，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run；额外 `simpleOperationTest.nal` 的短 parity 为 `1/1`。按冻结的 `--skip-embedded --cycles 131072 --window-size 1024` 合同复验，Java/TS 均观察到 `131072` 周期、`128` 窗口、`2535970` 事件，stage digest `equal=true`、`first_difference=null`。另一次执行内嵌周期后追加周期的诊断协议在窗口 53 的 scheduler 事件数为 `3238/3237`，该差异在旧 jree `Term.atoms` A/B 中同样存在，不能归因于 `ef78de8`。
 - 本批 `CompoundTerm.iterator()` 迁移后，M1 主矩阵为 `245/245`、额外 `simpleOperationTest.nal` 为 `1/1`；无 marker 长周期两侧均为 `131072` 周期、`128` 窗口、`2,535,970` 事件，逐窗口记录一致，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run。主矩阵累计耗时 `4,318,407 ms`。
 - `long_term_stability.nal` 在主矩阵内完成约 2001974 周期并命中当前空 marker 合同；TS 约 2461.8 秒、约 1.230 ms/周期，低于 117.1875 ms/周期预算。按用户授权的 4GB 单进程/10GB 系统可用内存边界，Node 峰值约 2.89GB，系统可用内存高于 12GB；相对 Java 的慢速是后续性能优化项，不是功能失败。
 - 本批新增的 024-P3 插件显式参数、非法配置/重复 classpath 诊断和三种合法无参插件构造均有直接测试；这不等于 P3-P5 或 J/P 集成门禁完成。
 - `Image.ts` 的既有注释空格调整已单独作为 `673d390 style(repo): 统一 Image 注释格式` 记录，没有与语义修改混提交。
 
 因此，当前可以继续 023/024 的低风险、单簇、可回归工作；本候选可以宣称 M1/M2 保护门重新闭环，并已将一处 Guava 数组迭代器构造去 jree 化，但不能宣称 023 已完成、jree 已退场、正式发布或 Java/TypeScript 性能等价。性能优化应与后续逻辑迁移分开。
+
+本批 `2465dcd` 将 `Concept.questions`、`quests`、`beliefs`、`executable_preconditions`、`general_executable_preconditions` 和 `desires` 从 jree `ArrayList` 收窄为项目内 `NativeList`：排序表保留中间插入/末尾淘汰，问题表保留 FIFO `remove(0)`，六组表保留索引读取、顺序迭代和容量判断。M2 为非增量 `tsc=0`、串行单测 `222/222`、build/API/local parity 全部通过；M1- 为 `244/244`，额外 `simpleOperationTest.nal` 为 `1/1`。完整 M1 的 #245 在普通 JVM 运行中触发 JDK 18.0.2 `jvm.dll` 的 `GC Thread#1` `EXCEPTION_ACCESS_VIOLATION`，但 TS 长测与 Java SerialGC 独立长测均完成并命中 marker；该主机级异常不归因于本批 TS 语义。按本批逐行时长，完整 M1 原始 245 行为 `4,231,370 ms`，M1- 为 `1,974,268 ms`，主要节省来自排除 #245；内存当前只能作量级比较，下一次完整 M1 按手册统一开启资源指标。
 
 ### 冻结后阶段增量与去 jree 具体范围
 
@@ -129,8 +131,9 @@
 | `ef78de8` | `Term.atoms` | 确认 atom cache 的 key 是 `CharSequence` 文本而非 Term 对象，将 `CharSequence → Term` 的 jree `LinkedHashMap` 改为原生 `Map<string, Term>`；读写统一经 `javaStringValue`，显式保留 Java `null` miss 和索引项规范化 | 局部 `1/1`，串行单测 `215/215`，M1 主矩阵 `245/245`；markerless `--skip-embedded + 131072` stage digest `equal=true` |
 | `6af34d8` | `Sentence` 变量规范化 | 确认重命名表的 key 是变量名文本而非变量对象，将短生命周期 `LinkedHashMap<CharSequence, CharSequence>` 改为原生 `Map<string, CharSequence>`；读写经 `javaStringValue`，保留 Java `CharSequence` value、null miss 和编号顺序 | 局部新增回归，串行单测 `216/216`，M1 主矩阵 `245/245`、额外夹具 `1/1`；markerless `--skip-embedded + 131072` 逐窗口一致 |
 | `1833fc4` | `CompoundTerm.iterator()` | 对照 Java 的 Guava `Iterators.forArray(term)`，以原生数组引用和索引状态替换 jree `ArrayList` 构造；保留只读 `remove()` 与耗尽 `next()` 的 Java 异常合同 | 新增迭代器回归，串行单测 `217/217`，M1 主矩阵 `245/245`、额外夹具 `1/1`；markerless `--skip-embedded + 131072` 为 `equal=true` |
+| `2465dcd` | `Concept` 六组任务表、`ProcessQuestion`、`ProcessJudgment`、`ProcessGoal` | 新增 `NativeList<T>`，将高频 Concept `ArrayList` 收窄为原生数组容器；保留 Java `add/get/remove/size/isEmpty/iterator` 合同，`contains/indexOf` 按查询对象的 Java `equals` 方向执行；公开 getter 仍在兼容边界返回不可修改的 jree 快照 | 容器回归 `5/5`，串行单测 `222/222`，非增量 tsc `0`；M1- `244/244`、额外夹具 `1/1`；#245 的 Java/TS 长测分别有成功原始证据，但普通 JVM 曾发生主机级 `hs_err` |
 
-综合指标为：生产源码直接 jree 导入文件 `117 → 96`，`new ArrayList` `50 → 13`，`new LinkedHashMap` `43 → 35`，`new LinkedHashSet` `26 → 26`。这证明数组/序列子簇和四个稳定文本 key 查找表子簇已取得实质进展，但不是“jree 已移除”：`package.json` 仍依赖 `jree@1.3.0`，Map/Set key equality、JavaObject/运行时类身份、JavaString、随机数、float32 和模块初始化环仍是未收口边界。后续仍按“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序推进。
+综合指标为：生产源码直接 jree 导入文件 `117 → 96`，`new ArrayList` `50 → 11`，`new LinkedHashMap` `43 → 35`，`new LinkedHashSet` `26 → 26`。这证明数组/序列子簇和四个稳定文本 key 查找表子簇已取得实质进展，但不是“jree 已移除”：`package.json` 仍依赖 `jree@1.3.0`，Map/Set key equality、JavaObject/运行时类身份、JavaString、随机数、float32 和模块初始化环仍是未收口边界。后续仍按“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序推进。
 
 ## 平台中立与发布冻结状态
 
