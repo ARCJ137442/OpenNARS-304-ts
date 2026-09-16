@@ -180,6 +180,20 @@
 
 本批代码、测试和证据详见 [只读列表原生化阶段报告](../reports/20260916-212425.md)。当前可以继续 023 的下一类小簇；不能宣称 023 已完成、jree 已移除、024 已完成、完整 M1/#245 已在本候选重新执行，或 Java/TypeScript 性能等价。项目外 M1- JSONL 证据保存在 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`，不纳入 Git。
 
+### 当前候选：`Stamp` 证据基集合原生化簇（2026-09-16）
+
+本批继续沿“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序，完成 `Stamp` 两处局部证据基集合责任的 Java 合同核对。按照当前工作约定，小簇使用局部合同和局部 M2；只有整类责任闭合后才运行一次串行 M1-，不重复运行长期稳定性 `#245`。
+
+- Java `Stamp.baseOverlap` 与 `Stamp.evidenceIsCyclic` 都只对 `LinkedHashSet<BaseEntry>` 执行 `contains + add`；没有依赖集合遍历、删除或桶恢复。`BaseEntry.equals` 按 `(narId,inputId)` 值判等，因此 TS 改为 `NativeList<Stamp.BaseEntry>` 后仍执行 Java equals 驱动的重复检测。
+- 新增 `test/node/stamp-evidence.test.ts`，覆盖不同对象相同 `(narId,inputId)`、同一 stamp 重复证据和跨 stamp 重叠；局部测试 `2/2`，统一串行 M2 `231/231`，`test/entity/TLink.test.ts` 已随统一入口纳入历史 M2 口径。
+- 非增量 `tsc --noEmit --pretty false --incremental false` 为 `0` 诊断；build `sourceFileCount=133`、dist API、canonical Java 局部 parity 均通过；`nal8.add.nal` 受影响 smoke `1/1`。本批没有修改 canonical Java。
+- M1- 原始主矩阵为 `243/244`：唯一失败 `nal6.12.nal` 的 TS 子进程退出 `0xC0000005 (EXCEPTION_ACCESS_VIOLATION)`。依据已确认的主机内存不稳定事实，该行作为主机级瞬态证据保留，不作为源码逻辑分叉；相同参数独立重跑为 `1/1`。额外 `simpleOperationTest.nal` 为 `1/1`，故有效主资源 `244/244`、含额外夹具 `245/245`，有效 `java_ts_diff=0`、`timeout=0`、`marker_missing=0`、`process_limit=0`、`not_run=0`。
+- 两个无 marker 样本均在当前代码下重新完成 `--skip-embedded --cycles 131072 --window-size 1024` 严格摘要：`nal6.redundant.nal` 为 `131072` 周期、`128` 窗口、`589572` 事件；`simpleOperationTest.nal` 为 `131072` 周期、`128` 窗口、`2535970` 事件；两组 Java/TS 均 `equal=true`、`first_difference=null`、`incomplete=false`。
+- 本批 M1- 有效总耗时 `1,995,388 ms`，TS 峰值 RSS `1,374,785,536 bytes`。相对上一批 `1,929,641 ms` 与 `1,395,273,728 bytes`，时间增加 `3.41%`，RSS 减少 `1.47%`；这是回归观测，不宣称 `NativeList` 已带来性能优化。`NativeList.contains` 的线性复杂度与 Java `LinkedHashSet` 的复杂度差异留作后续容器/性能专题。
+- 当前机器可读 jree 审计为：生产直接导入文件 `95`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=24`、`javaObjectFiles=53`、`javaUtilFiles=40`、`candidateNativeItems=68`。相对上一候选 `9d4cc87` 的审计记录，直接导入文件减少 `1`，`LinkedHashSet` 构造减少 `2`；这仍不是 jree 退场。
+
+本批代码、测试和阶段证据见 [Stamp 批次报告](../reports/20260916-225427.md)。项目外 JSONL 与四份 stage digest 保存在 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`，不纳入 Git。本批可以继续 023 的下一类局部 jree 原生化；不能宣称 023 完成、所有领域 Map/Set 判等已审计、完整 M1/#245 重新完成、Java/TypeScript 性能等价或 024/发布门完成。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：

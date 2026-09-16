@@ -5,6 +5,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { NativeList } from "../runtime/NativeList.ts";
 import { addRuntimeLong, subtractRuntimeLong, toRuntimeLong, type JavaLongInput } from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Memory } from "../storage/Memory.ts";
@@ -241,29 +242,29 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         let base1: Stamp.BaseEntry[] = a.evidentialBase;
         let base2: Stamp.BaseEntry[] = b.evidentialBase;
 
-        let task_base: java.util.Set<Stamp.BaseEntry> = new java.util.LinkedHashSet(base1.length + base2.length);
+        const taskBase = new NativeList<Stamp.BaseEntry>();
         for (let aBase1 of base1) {
-            if (task_base.contains(aBase1)) { // can have an overlap in itself already
+            if (taskBase.contains(aBase1)) { // can have an overlap in itself already
                 return true;
             }
-            task_base.add(aBase1);
+            taskBase.add(aBase1);
         }
         for (let aBase2 of base2) {
-            if (task_base.contains(aBase2)) {
+            if (taskBase.contains(aBase2)) {
                 return true;
             }
-            task_base.add(aBase2); // also add to detect collision with itself
+            taskBase.add(aBase2); // also add to detect collision with itself
         }
         return false;
     }
 
     public evidenceIsCyclic(): boolean {
-        let task_base: java.util.Set<Stamp.BaseEntry> = new java.util.LinkedHashSet(this.evidentialBase.length);
+        const taskBase = new NativeList<Stamp.BaseEntry>();
         for (let anEvidentialBase of this.evidentialBase) {
-            if (task_base.contains(anEvidentialBase)) { // can have an overlap in itself already
+            if (taskBase.contains(anEvidentialBase)) { // can have an overlap in itself already
                 return true;
             }
-            task_base.add(anEvidentialBase);
+            taskBase.add(anEvidentialBase);
         }
         return false;
     }
