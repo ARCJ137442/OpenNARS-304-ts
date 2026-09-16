@@ -6,6 +6,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { javaStringHashCode, javaStringValue, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
+import { NativeSortedSet } from "../runtime/NativeSortedSet.ts";
 import type { Memory } from "../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -523,10 +524,12 @@ export class Term extends JavaObject implements AbstractTerm {
     }
 
     public static toSortedSet(...arg: Term[]): java.util.Set<Term> {
-        // jree does not provide java.util.TreeSet. An ArrayList with the same
-        // sorted/unique contents is sufficient for the callers here, which only
-        // use retainAll() and toArray().
-        return new java.util.ArrayList(Term.toSortedSetArray(...arg)) as unknown as java.util.Set<Term>;
+        // jree does not provide java.util.TreeSet. Keep the actual Set
+        // contract native instead of returning an ArrayList with a Set cast.
+        return new NativeSortedSet(
+            Term.toSortedSetArray(...arg),
+            (left, right) => left.compareTo(right),
+        ) as unknown as java.util.Set<Term>;
     }
 
     /**
