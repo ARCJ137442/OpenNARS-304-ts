@@ -5,6 +5,7 @@ import { Events } from "../../io/events/Events.ts";
 import { CompoundTerm } from "../../language/CompoundTerm.ts";
 import { Variables } from "../../language/Variables.ts";
 import { LocalRules } from "../../inference/LocalRules.ts";
+import { NativeList } from "../../runtime/NativeList.ts";
 import type { Concept } from "../../entity/Concept.ts";
 import type { Sentence } from "../../entity/Sentence.ts";
 import type { Task } from "../../entity/Task.ts";
@@ -38,7 +39,7 @@ export class ProcessQuestion extends JavaObject {
      */
     public static processQuestion(concept: Concept, nal: DerivationContext, task: Task): void {
         let quesTask: Task = task;
-        let questions: java.util.List<Task> = concept.questions;
+        let questions: NativeList<Task> = concept.questions;
         if (task.sentence.punctuation === Symbols.QUEST_MARK) {
             questions = concept.quests;
         }
@@ -105,7 +106,7 @@ export class ProcessQuestion extends JavaObject {
                         continue; // target concept is already gone
                     }
                     /* synchronized (c) { */ // changing target concept, lock it
-                    let answers: java.util.List<Task> = ques.sentence.isQuest() ? c.desires : c.beliefs;
+                    let answers: NativeList<Task> = ques.sentence.isQuest() ? c.desires : c.beliefs;
                     if (c !== null && answers.size() > 0) {
                         let taskAnswer: Task = answers.get(0);
                         if (taskAnswer !== null && taskAnswer !== undefined) {
@@ -149,7 +150,7 @@ export class ProcessQuestion extends JavaObject {
                             continue; // target doesn't exist anymore
                         }
                         /* synchronized (c) { */ // changing target concept, lock it
-                        let answers: java.util.List<Task> = ques.sentence.isQuest() ? c.desires : c.beliefs;
+                        let answers: NativeList<Task> = ques.sentence.isQuest() ? c.desires : c.beliefs;
                         if (c !== null && answers.size() > 0) {
                             let taskAnswer: Task = answers.get(0);
                             if (taskAnswer !== null && taskAnswer !== undefined) {

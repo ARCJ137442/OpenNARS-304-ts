@@ -11,6 +11,7 @@ import { Conjunction } from "../../language/Conjunction.ts";
 import { Interval } from "../../language/Interval.ts";
 import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
+import { NativeList } from "../../runtime/NativeList.ts";
 import type { Concept } from "../../entity/Concept.ts";
 import type { Sentence } from "../../entity/Sentence.ts";
 import type { Stamp } from "../../entity/Stamp.ts";
@@ -184,7 +185,7 @@ export class ProcessJudgment extends JavaObject {
             }
             // we do not add the target, instead the strongest belief in the target concept
             /* synchronized (target_concept) { */
-            let table: java.util.List<Task> = strongest_target.get().sentence.term.hasVar()
+            let table: NativeList<Task> = strongest_target.get().sentence.term.hasVar()
                 ? target_concept.general_executable_preconditions
                 : target_concept.executable_preconditions;
             // at first we have to remove the last one with same content from table

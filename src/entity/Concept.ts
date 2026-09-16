@@ -14,6 +14,7 @@ import { CompoundTerm } from "../language/CompoundTerm.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { NativeList } from "../runtime/NativeList.ts";
 import { LocalRules } from "../inference/LocalRules.ts";
 import { Events } from "../io/events/Events.ts";
 import { ProcessQuestion } from "../control/concept/ProcessQuestion.ts";
@@ -74,25 +75,25 @@ export class Concept extends Item<Term> {
      * Note: since this is iterated frequently, an array should be used. To
      * avoid iterator allocation, use .get(n) in a for-loop
      */
-    public readonly questions: java.util.List<Task>;
+    public readonly questions: NativeList<Task>;
 
     /**
      * Pending Quests to be answered by new desire values
      */
-    public readonly quests: java.util.List<Task>;
+    public readonly quests: NativeList<Task>;
 
     /**
      * Judgments directly made about the term Use List because of access
      * and insertion in the middle
      */
-    public readonly beliefs: java.util.List<Task>;
-    public executable_preconditions: java.util.List<Task>;
-    public general_executable_preconditions: java.util.List<Task>;
+    public readonly beliefs: NativeList<Task>;
+    public executable_preconditions: NativeList<Task>;
+    public general_executable_preconditions: NativeList<Task>;
 
     /**
      * Desire values on the term, similar to the above one
      */
-    public readonly desires: java.util.List<Task>;
+    public readonly desires: NativeList<Task>;
 
     /**
      * Reference to the memory to which the Concept belongs
@@ -120,12 +121,12 @@ export class Concept extends Item<Term> {
         this.term = tm;
         this.memory = memory;
 
-        this.questions = new java.util.ArrayList<Task>();
-        this.beliefs = new java.util.ArrayList<Task>();
-        this.executable_preconditions = new java.util.ArrayList<Task>();
-        this.general_executable_preconditions = new java.util.ArrayList<Task>();
-        this.quests = new java.util.ArrayList<Task>();
-        this.desires = new java.util.ArrayList<Task>();
+        this.questions = new NativeList<Task>();
+        this.beliefs = new NativeList<Task>();
+        this.executable_preconditions = new NativeList<Task>();
+        this.general_executable_preconditions = new NativeList<Task>();
+        this.quests = new NativeList<Task>();
+        this.desires = new NativeList<Task>();
 
         this.taskLinks = new Bag(memory.narParameters.TASK_LINK_BAG_LEVELS, memory.narParameters.TASK_LINK_BAG_SIZE,
             memory.narParameters);
@@ -156,7 +157,7 @@ export class Concept extends Item<Term> {
         return this.term;
     }
 
-    public addToTable(task: Task, rankTruthExpectation: boolean, table: java.util.List<Task>, max: int,
+    public addToTable(task: Task, rankTruthExpectation: boolean, table: NativeList<Task>, max: int,
         eventAdd: java.lang.Class<unknown>, eventRemove: java.lang.Class<unknown>, ...extraEventArguments: java.lang.Object[]): void {
 
         let preSize: int = table.size();
@@ -229,7 +230,7 @@ export class Concept extends Item<Term> {
      * @param capacity The capacity of the table
      * @return whether table was modified
      */
-    public static addToTable(newTask: Task, table: java.util.List<Task>, capacity: int,
+    public static addToTable(newTask: Task, table: NativeList<Task>, capacity: int,
         rankTruthExpectation: boolean): Task | null {
         let newSentence: Sentence = newTask.sentence;
         let rank1: float = BudgetFunctions.rankBelief(newSentence, rankTruthExpectation); // for the new isBelief
@@ -269,7 +270,7 @@ export class Concept extends Item<Term> {
      * @param list  The list of beliefs or desires to be used
      * @return The best candidate selected
      */
-    public selectCandidate(query: Task, list: java.util.List<Task>, time: Timable): Task | null {
+    public selectCandidate(query: Task, list: NativeList<Task>, time: Timable): Task | null {
         // if (list == null) {
         // return null;
         // }
@@ -598,11 +599,13 @@ export class Concept extends Item<Term> {
      * dedConjunctionByQuestion only
      */
     public getQuestions(): java.util.List<Task> {
-        return java.util.Collections.unmodifiableList(this.questions);
+        const snapshot = new java.util.ArrayList<Task>(this.questions.toArray() as Task[]) as unknown as java.util.List<Task>;
+        return java.util.Collections.unmodifiableList(snapshot);
     }
 
     public getQuess(): java.util.List<Task> {
-        return java.util.Collections.unmodifiableList(this.quests);
+        const snapshot = new java.util.ArrayList<Task>(this.quests.toArray() as Task[]) as unknown as java.util.List<Task>;
+        return java.util.Collections.unmodifiableList(snapshot);
     }
 
     public discountConfidence(onBeliefs: boolean): void {
@@ -627,12 +630,14 @@ export class Concept extends Item<Term> {
 
     /** returns unmodifidable collection wrapping beliefs */
     public getBeliefs(): java.util.List<Task> {
-        return java.util.Collections.unmodifiableList(this.beliefs);
+        const snapshot = new java.util.ArrayList<Task>(this.beliefs.toArray() as Task[]) as unknown as java.util.List<Task>;
+        return java.util.Collections.unmodifiableList(snapshot);
     }
 
     /** returns unmodifidable collection wrapping beliefs */
     public getDesires(): java.util.List<Task> {
-        return java.util.Collections.unmodifiableList(this.desires);
+        const snapshot = new java.util.ArrayList<Task>(this.desires.toArray() as Task[]) as unknown as java.util.List<Task>;
+        return java.util.Collections.unmodifiableList(snapshot);
     }
 }
 

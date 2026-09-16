@@ -28,6 +28,7 @@ import { Float32Math } from "../../runtime/Float32.ts";
 import { JavaIllegalAccessError, javaStringValue } from "../../runtime/jree-compat.ts";
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
+import { NativeList } from "../../runtime/NativeList.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 
 const revisable = LocalRules.revisable;
@@ -365,7 +366,7 @@ export class ProcessGoal extends JavaObject {
      * @return The procedural hypothesis with the highest result truth expectation
      */
     private static calcBestExecutablePrecondition(nal: DerivationContext,
-        concept: Concept, projectedGoal: Sentence, execPreconditions: java.util.List<Task> | Task[],
+        concept: Concept, projectedGoal: Sentence, execPreconditions: NativeList<Task> | Task[],
         anticipationsToMake: java.util.Map<Operation, ProcessGoal.ExecutablePrecondition[]>): ProcessGoal.ExecutablePrecondition {
         let result: ProcessGoal.ExecutablePrecondition = new ProcessGoal.ExecutablePrecondition();
         for (let t of execPreconditions) {
