@@ -167,6 +167,19 @@
 - 当前可宣称：`ee7bc39` 已通过 G0 的 M1/M2 迁移前保护门，可以继续 023/024 的单簇去 jree 化。当前不能宣称 023/024 完成、jree 已移除、浏览器平台中立完成、Java/TypeScript 性能等价或正式发布；下一轮仍使用 M1- 做日常保护，#245 按阶段计划单独执行完整 M1。
 - 可追溯记录：详见 [G0 阶段报告](../reports/20260916-193157.md)。项目外原始 JSONL、summary、stage digest 与 artifact manifest 保存在 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`，不纳入 Git。
 
+### 当前候选：只读列表原生化簇（2026-09-16）
+
+本批在 G0 稳定保护门之上，完成了“只读 `ArrayList` 快照”整类责任的 Java 合同核对与原生化。小范围变更采用局部合同、直接回归和 M2 验证；完整特性簇闭合后再运行 M1-，符合当前减少非必要全量测试的约定。
+
+- Java `Concept` 的四个任务 getter 与 `Nar.getPlugins()` 实际返回 `Collections.unmodifiableList` 的实时只读视图；TypeScript 已从“jree `ArrayList` 复制后再包装”改为 `NativeReadOnlyList`，保持实时观察、插入顺序、索引、遍历和修改拒绝语义。
+- 生产源码中的实际 `new java.util.ArrayList` 构造由 `5` 降为 `0`；直接 jree 导入文件由 `96` 降为 `95`。后者仍包含既有 Java 类型与运行时兼容责任，不能解释为 jree 已退出。
+- M2：串行单测 `229/229`，显式非增量 `tsc` `0` 诊断，build、dist API、canonical Java 局部 parity、release、直接 CLI 和 `npm run shell` 全部通过，运行时警告为 none。
+- M1-：主资源 `244/244` 加额外 `simpleOperationTest.nal` `1/1`，合计 `245/245`；0 exception、0 timeout、0 marker missing、0 process limit、0 not-run、0 Java/TS diff。主资源与额外夹具均使用显式 canonical Java artifact，矩阵串行执行。
+- 本批 M1- 耗时 `1,929,641 ms`，TS 峰值 RSS `1,395,273,728 bytes`；相对 G0 完整 M1 的 `4,185,931 ms` 与 `3,047,796,736 bytes`，结构性节省分别为 `53.90%` 与 `54.22%`（约 `1.54 GiB`），原因是排除长期稳定性 `#245`，不是本批性能优化结论。
+- canonical Java 未改变：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+
+本批代码、测试和证据详见 [只读列表原生化阶段报告](../reports/20260916-212425.md)。当前可以继续 023 的下一类小簇；不能宣称 023 已完成、jree 已移除、024 已完成、完整 M1/#245 已在本候选重新执行，或 Java/TypeScript 性能等价。项目外 M1- JSONL 证据保存在 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`，不纳入 Git。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：

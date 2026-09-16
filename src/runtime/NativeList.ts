@@ -1,3 +1,12 @@
+const nativeValuesEqual = (left: unknown, right: unknown): boolean => {
+    if (Object.is(left, right)) {
+        return true;
+    }
+    // Java List.contains/indexOf uses the searched object as the receiver.
+    const equals = (right as { equals?: unknown } | null)?.equals;
+    return typeof equals === "function" && equals.call(right, left);
+};
+
 /**
  * Native ordered list for translated Java tables.
  *
@@ -56,7 +65,7 @@ export class NativeList<T> implements Iterable<T> {
     }
 
     public indexOf(element: T): number {
-        return this.items.findIndex((candidate) => NativeList.valuesEqual(candidate, element));
+        return this.items.findIndex((candidate) => nativeValuesEqual(candidate, element));
     }
 
     public isEmpty(): boolean {
@@ -130,15 +139,147 @@ export class NativeList<T> implements Iterable<T> {
         }
     }
 
-    private static valuesEqual(left: unknown, right: unknown): boolean {
-        if (Object.is(left, right)) {
-            return true;
+}
+
+/**
+ * Live, unmodifiable view for translated Java Collections.unmodifiableList.
+ *
+ * The Java wrapper does not copy its source: later source mutations are
+ * visible through the view, while every mutating List operation fails. The
+ * view accepts either the project's NativeList or a native array so callers
+ * can preserve that contract without constructing a jree ArrayList.
+ */
+export class NativeReadOnlyList<T> implements Iterable<T> {
+    private readonly source: NativeList<T> | readonly T[];
+
+    public constructor(source: NativeList<T> | readonly T[]) {
+        this.source = source;
+    }
+
+    public add(_element: T): never;
+    public add(_index: number, _element: T): never;
+    public add(_first: T | number, _second?: T): never {
+        return NativeReadOnlyList.unsupported();
+    }
+
+    public addAll(_elements: Iterable<T>): never {
+        return NativeReadOnlyList.unsupported();
+    }
+
+    public clear(): never {
+        return NativeReadOnlyList.unsupported();
+    }
+
+    public contains(element: T): boolean {
+        return this.indexOf(element) !== -1;
+    }
+
+    public get(index: number): T {
+        this.checkElementIndex(index);
+        return this.source instanceof NativeList ? this.source.get(index) : this.source[index];
+    }
+
+    public indexOf(element: T): number {
+        for (let index = 0; index < this.size(); index += 1) {
+            if (nativeValuesEqual(this.get(index), element)) {
+                return index;
+            }
         }
-        // Java ArrayList.indexOf/contains uses the searched object as the
-        // receiver: searched.equals(candidate). Preserve that direction for
-        // translated value types whose equals implementation is asymmetric.
-        const equals = (right as { equals?: unknown } | null)?.equals;
-        return typeof equals === "function" && equals.call(right, left);
+        return -1;
+    }
+
+    public isEmpty(): boolean {
+        return this.size() === 0;
+    }
+
+    public iterator(): NativeReadOnlyListIterator<T> {
+        return new NativeReadOnlyListIterator(this);
+    }
+
+    public remove(_index: number): never;
+    public remove(_element: T): never;
+    public remove(_value: number | T): never {
+        return NativeReadOnlyList.unsupported();
+    }
+
+    public removeAll(_elements: Iterable<T>): never {
+        return NativeReadOnlyList.unsupported();
+    }
+
+    public retainAll(_elements: Iterable<T>): never {
+        return NativeReadOnlyList.unsupported();
+    }
+
+    public set(_index: number, _element: T): never {
+        return NativeReadOnlyList.unsupported();
+    }
+
+    public size(): number {
+        return this.source instanceof NativeList ? this.source.size() : this.source.length;
+    }
+
+    public toArray(): T[] {
+        if (this.source instanceof NativeList) {
+            return this.source.toArray();
+        }
+        return this.source.slice();
+    }
+
+    public [Symbol.iterator](): IterableIterator<T> {
+        return new NativeReadOnlyListIterableIterator(this.iterator());
+    }
+
+    private checkElementIndex(index: number): void {
+        if (!Number.isInteger(index) || index < 0 || index >= this.size()) {
+            throw new RangeError(`NativeReadOnlyList index out of bounds: ${index}`);
+        }
+    }
+
+    private static unsupported(): never {
+        const error = new Error("UnsupportedOperationException");
+        error.name = "UnsupportedOperationException";
+        throw error;
+    }
+}
+
+export class NativeReadOnlyListIterator<T> {
+    private cursor = 0;
+    private lastIndex = -1;
+
+    public constructor(private readonly owner: NativeReadOnlyList<T>) {}
+
+    public hasNext(): boolean {
+        return this.cursor < this.owner.size();
+    }
+
+    public next(): T {
+        if (!this.hasNext()) {
+            throw new Error("NativeReadOnlyList iterator is exhausted");
+        }
+        this.lastIndex = this.cursor;
+        this.cursor += 1;
+        return this.owner.get(this.lastIndex);
+    }
+
+    public remove(): never {
+        const error = new Error("UnsupportedOperationException");
+        error.name = "UnsupportedOperationException";
+        throw error;
+    }
+}
+
+class NativeReadOnlyListIterableIterator<T> implements IterableIterator<T> {
+    public constructor(private readonly iterator: NativeReadOnlyListIterator<T>) {}
+
+    public [Symbol.iterator](): IterableIterator<T> {
+        return this;
+    }
+
+    public next(): IteratorResult<T> {
+        if (!this.iterator.hasNext()) {
+            return { done: true, value: undefined as never };
+        }
+        return { done: false, value: this.iterator.next() };
     }
 }
 

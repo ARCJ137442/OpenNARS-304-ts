@@ -14,7 +14,7 @@ import { CompoundTerm } from "../language/CompoundTerm.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-import { NativeList } from "../runtime/NativeList.ts";
+import { NativeList, NativeReadOnlyList } from "../runtime/NativeList.ts";
 import { LocalRules } from "../inference/LocalRules.ts";
 import { Events } from "../io/events/Events.ts";
 import { ProcessQuestion } from "../control/concept/ProcessQuestion.ts";
@@ -598,14 +598,12 @@ export class Concept extends Item<Term> {
      * Return the questions, called in ComposionalRules in
      * dedConjunctionByQuestion only
      */
-    public getQuestions(): java.util.List<Task> {
-        const snapshot = new java.util.ArrayList<Task>(this.questions.toArray() as Task[]) as unknown as java.util.List<Task>;
-        return java.util.Collections.unmodifiableList(snapshot);
+    public getQuestions(): NativeReadOnlyList<Task> {
+        return new NativeReadOnlyList(this.questions);
     }
 
-    public getQuess(): java.util.List<Task> {
-        const snapshot = new java.util.ArrayList<Task>(this.quests.toArray() as Task[]) as unknown as java.util.List<Task>;
-        return java.util.Collections.unmodifiableList(snapshot);
+    public getQuess(): NativeReadOnlyList<Task> {
+        return new NativeReadOnlyList(this.quests);
     }
 
     public discountConfidence(onBeliefs: boolean): void {
@@ -629,15 +627,13 @@ export class Concept extends Item<Term> {
     }
 
     /** returns unmodifidable collection wrapping beliefs */
-    public getBeliefs(): java.util.List<Task> {
-        const snapshot = new java.util.ArrayList<Task>(this.beliefs.toArray() as Task[]) as unknown as java.util.List<Task>;
-        return java.util.Collections.unmodifiableList(snapshot);
+    public getBeliefs(): NativeReadOnlyList<Task> {
+        return new NativeReadOnlyList(this.beliefs);
     }
 
     /** returns unmodifidable collection wrapping beliefs */
-    public getDesires(): java.util.List<Task> {
-        const snapshot = new java.util.ArrayList<Task>(this.desires.toArray() as Task[]) as unknown as java.util.List<Task>;
-        return java.util.Collections.unmodifiableList(snapshot);
+    public getDesires(): NativeReadOnlyList<Task> {
+        return new NativeReadOnlyList(this.desires);
     }
 }
 

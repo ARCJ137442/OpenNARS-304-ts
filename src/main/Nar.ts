@@ -27,6 +27,7 @@ import { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
 import { Stamp } from "../entity/Stamp.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { NativeReadOnlyList } from "../runtime/NativeList.ts";
 import { JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { Task } from "../entity/Task.ts";
@@ -716,12 +717,8 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         }
     }
 
-    public getPlugins(): java.util.List<unknown> {
-        const plugins = new java.util.ArrayList<Nar.PluginState>();
-        for (const plugin of this.plugins) plugins.add(plugin);
-        return java.util.Collections.unmodifiableList(
-            plugins as unknown as java.util.List<unknown>,
-        );
+    public getPlugins(): NativeReadOnlyList<Nar.PluginState> {
+        return new NativeReadOnlyList(this.plugins);
     }
 
     public start(): void;

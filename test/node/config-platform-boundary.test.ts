@@ -250,7 +250,7 @@ test("ConfigReader forwards the native plugin sequence without a jree list wrapp
     }
 });
 
-test("Nar keeps plugin states in a native array and returns a Java-compatible list", () => {
+test("Nar exposes a live native read-only plugin list", () => {
     const nar = new Nar({
         configText: `
             <config>
@@ -266,7 +266,10 @@ test("Nar keeps plugin states in a native array and returns a Java-compatible li
         assert.equal(Array.isArray(states), true);
         assert.equal(states.length, 1);
         const plugins = nar.getPlugins();
+        assert.equal(plugins.constructor.name, "NativeReadOnlyList");
         assert.equal(plugins.size(), 1);
+        assert.equal(plugins.get(0), states[0]);
+        assert.throws(() => plugins.add(states[0] as never), /UnsupportedOperationException/);
         nar.removePlugin(states[0] as never);
         assert.equal(states.length, 0);
         assert.equal(nar.getPlugins().size(), 0);

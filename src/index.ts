@@ -13,3 +13,4 @@ export { Parameters } from "./main/Parameters.ts";
 export { Debug } from "./main/Debug.ts";
 export { Events } from "./io/events/Events.ts";
 export { OutputHandler } from "./io/events/OutputHandler.ts";
+export { NativeReadOnlyList } from "./runtime/NativeList.ts";

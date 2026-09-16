@@ -1,7 +1,7 @@
 //! Java source: opennars/interfaces/Pluggable.java
-import { java } from "jree";
 import type { Plugin } from "../plugin/Plugin.ts";
 import type { Nar } from "../main/Nar.ts";
+import type { NativeReadOnlyList } from "../runtime/NativeList.ts";
 
 
 
@@ -30,5 +30,5 @@ export interface Pluggable {
      *
      * @return plugins
      */
-    getPlugins(): java.util.List<unknown>;
+    getPlugins(): NativeReadOnlyList<unknown>;
 }
