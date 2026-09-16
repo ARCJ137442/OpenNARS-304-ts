@@ -322,6 +322,49 @@ test("DerivationContext delayed execution state starts null and requires explici
     assert.throws(() => context.requireCurrentTaskLink());
 });
 
+test("DerivationContext double-premise results use the native ordered buffer", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Task } = await import("../../src/entity/Task.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Inheritance } = await import("../../src/language/Inheritance.ts");
+    const { TruthValue } = await import("../../src/entity/TruthValue.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+    const { NativeList } = await import("../../src/runtime/NativeList.ts");
+
+    const nar = new Nar();
+    try {
+        const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+        const stamp = new Stamp(0n, Tense.Present, new Stamp.BaseEntry(0n, 1n), nar.narParameters.DURATION);
+        const truth = TruthValue.fromFrequencyConfidence(0.8, 0.8, nar.narParameters);
+        const currentTask = new Task(
+            new Sentence(Term.get("double-premise-current"), ".", truth, stamp),
+            new BudgetValue(0.8, 0.8, 0.8, nar.narParameters),
+            Task.EnumType.INPUT,
+        );
+        context.setCurrentTask(currentTask);
+        context.setTheNewStamp(stamp);
+
+        const results = context.doublePremiseTask(
+            Inheritance.make(Term.get("double-premise-subject"), Term.get("double-premise-predicate")),
+            truth,
+            new BudgetValue(0.8, 0.8, 0.8, nar.narParameters),
+            false,
+            false,
+            false,
+        );
+
+        assert.ok(results instanceof NativeList);
+        assert.equal(results?.size(), 1);
+        assert.equal(String(results?.get(0).sentence.term.name()), "<double-premise-subject --> double-premise-predicate>");
+    } finally {
+        nar.stop();
+    }
+});
+
 test("DerivationContext lazily builds and caches the Java newStamp", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
     const { DerivationContext } = await import("../../src/control/DerivationContext.ts");

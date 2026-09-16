@@ -21,6 +21,7 @@ import type { TaskLink } from "../entity/TaskLink.ts";
 import type { Parameters } from "../main/Parameters.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
+import { NativeList } from "../runtime/NativeList.ts";
 
 const asJavaObject = (value: unknown): java.lang.Object => value as unknown as java.lang.Object;
 
@@ -256,7 +257,10 @@ export class DerivationContext extends JavaObject {
 
 
 
-                let ret: java.util.List<Task> = new java.util.ArrayList<Task>();
+                // Java uses this ArrayList only as a local 0–2 item result buffer.
+                // Keep the public Java-shaped return type, but avoid constructing a
+                // jree collection on every double-premise derivation.
+                const ret = new NativeList<Task>();
                 if (newContent === null || !newBudget.aboveThreshold()) {
                     return null as unknown as java.util.List<Task>;
                 }
@@ -305,7 +309,7 @@ export class DerivationContext extends JavaObject {
                             }
                         }
                     }
-                    return ret;
+                    return ret as unknown as java.util.List<Task>;
                 }
                 return null as unknown as java.util.List<Task>;
 
