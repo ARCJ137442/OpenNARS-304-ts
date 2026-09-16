@@ -11,6 +11,7 @@ import type { Pair } from "./CompositionalRules.ts";
 import type { DerivationContext } from "../control/DerivationContext.ts";
 import type { Statement } from "../language/Statement.ts";
 import type { Interval } from "../language/Interval.ts";
+import { NativeList } from "../runtime/NativeList.ts";
 
 type TemporalRuntime = Record<string, any>;
 
@@ -256,7 +257,9 @@ export class TemporalRules extends JavaObject {
             }
         }
 
-            let derivations: java.util.List<Task> = new java.util.ArrayList<Task>();
+        // Java uses this list as an ordered short-lived result buffer. Keep the
+        // Java-shaped return type while using the native list implementation.
+        const derivations = new NativeList<Task>() as unknown as java.util.List<Task>;
         if (!deriveSequenceOnly) {
             for (let i: int = 0; i < t11s.length; i++) {
                 let t11: Term = t11s[i];

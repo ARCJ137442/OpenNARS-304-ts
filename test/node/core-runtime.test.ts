@@ -365,6 +365,54 @@ test("DerivationContext double-premise results use the native ordered buffer", a
     }
 });
 
+test("TemporalRules returns the native ordered derivation buffer", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { TemporalRules } = await import("../../src/inference/TemporalRules.ts");
+    const { Task } = await import("../../src/entity/Task.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Inheritance } = await import("../../src/language/Inheritance.ts");
+    const { TruthValue } = await import("../../src/entity/TruthValue.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+    const { NativeList } = await import("../../src/runtime/NativeList.ts");
+
+    const nar = new Nar();
+    try {
+        const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+        const stamp1 = new Stamp(0n, Tense.Present, new Stamp.BaseEntry(0n, 1n), nar.narParameters.DURATION);
+        const stamp2 = new Stamp(1n, Tense.Present, new Stamp.BaseEntry(1n, 2n), nar.narParameters.DURATION);
+        const truth = TruthValue.fromFrequencyConfidence(0.8, 0.8, nar.narParameters);
+        const first = new Sentence(
+            Inheritance.make(Term.get("temporal-first-subject"), Term.get("temporal-first-predicate")),
+            ".",
+            truth,
+            stamp1,
+        );
+        const second = new Sentence(
+            Inheritance.make(Term.get("temporal-second-subject"), Term.get("temporal-second-predicate")),
+            ".",
+            truth,
+            stamp2,
+        );
+        const currentTask = new Task(
+            first,
+            new BudgetValue(0.8, 0.8, 0.8, nar.narParameters),
+            Task.EnumType.INPUT,
+        );
+        context.setCurrentTask(currentTask);
+
+        const results = TemporalRules.temporalInduction(first, second, context, false, false, false);
+
+        assert.ok(results instanceof NativeList);
+        assert.equal(results?.size(), 0);
+    } finally {
+        nar.stop();
+    }
+});
+
 test("DerivationContext lazily builds and caches the Java newStamp", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
     const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
