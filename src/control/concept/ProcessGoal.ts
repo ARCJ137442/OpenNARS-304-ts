@@ -177,7 +177,7 @@ export class ProcessGoal extends JavaObject {
             // execute
             // as execution for this reason already happened (or did not since there was
             // evidence against it)
-            let oldEvidence: java.util.Set<Stamp.BaseEntry> = new java.util.LinkedHashSet();
+            const oldEvidence = new NativeList<Stamp.BaseEntry>();
             let Subset: boolean = false;
             if (oldGoalT !== null) {
                 Subset = true;

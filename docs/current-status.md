@@ -196,6 +196,20 @@
 
 本批代码、测试和阶段证据见 [Stamp 批次报告](../reports/20260916-225427.md)。项目外 JSONL 与四份 stage digest 保存在 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`，不纳入 Git。本批可以继续 023 的下一类局部 jree 原生化；不能宣称 023 完成、所有领域 Map/Set 判等已审计、完整 M1/#245 重新完成、Java/TypeScript 性能等价或 024/发布门完成。
 
+### 当前候选：`ProcessGoal` 证据子集原生化簇（2026-09-17）
+
+本批沿“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”的顺序，核对并原生化 `ProcessGoal.processOperationGoal` 中只承担 `BaseEntry` `add/contains` 子集判定的局部集合责任。Java canonical 未改变：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+
+- Java `BaseEntry.equals` 按 `(narId,inputId)` 值判等；TypeScript 将局部 `java.util.LinkedHashSet` 替换为既有 `NativeList`，只保持该局部合同，不扩展到 `ProcessGoal` 的其他 Map/Set。
+- 新增回归覆盖相同值不同对象的证据包含、缺失证据和空旧目标分支；直接回归 `3/3`。
+- M2：统一串行单测 `232/232`，显式非增量 `npx tsc --noEmit --pretty false --incremental false` 为 `0` 诊断，build `sourceFileCount=133`、dist API、canonical Java local parity、平台审计、迁移模式扫描和受影响 smoke 均通过。
+- M1-：244 个主资源与额外 `simpleOperationTest.nal` 共 `245/245`；主矩阵在系统重启后从 JSONL 检查点 `--resume` 续跑完成。0 exception、0 stall/no-progress、0 marker missing、0 process limit、0 not-run、0 Java/TS diff。矩阵串行执行，canonical artifact 路径和 SHA-256 均逐行记录。
+- 无 marker 样本严格摘要：`nal6.redundant.nal` 为 131072 周期、128 窗口、589572 事件；`simpleOperationTest.nal` 为 131072 周期、128 窗口、2535970 事件。Java/TS 两侧均 `equal=true`、`first_difference=null`、`incomplete=false`。
+- 本批 M1- 总耗时 `1,938,672 ms`，TS 峰值 RSS `1,353,818,112 bytes`；相对上一批 Stamp 的 `1,995,388 ms` 与 `1,374,785,536 bytes`，分别少 `2.84%` 与 `1.52%`。这是运行观测，不是本批性能优化结论；`NativeList.contains` 的线性复杂度仍留在后续容器/性能专题。
+- 当前 jree 审计：直接导入文件 `95`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=23`、`javaObjectFiles=53`、`javaUtilFiles=40`、`javaLangFiles=87`、`highRiskItems=93`、`semanticReviewItems=111`、`candidateNativeItems=68`。相对 Stamp 批次，`new LinkedHashSet` 再减少 1；这仍不是 jree 退场。
+
+本候选代码、测试和阶段证据见 [ProcessGoal 批次报告](../reports/20260916-235913.md)。项目外 M1- JSONL、严格摘要与 artifact 证据保存在 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`，不纳入 Git。本批只完成 023 的一个局部责任簇，可以继续下一类原生化；不能宣称 023/024 完成、jree 已移除、完整 M1/#245 重新完成或 Java/TypeScript 性能等价。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：
