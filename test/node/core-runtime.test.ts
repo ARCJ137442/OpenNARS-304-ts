@@ -173,6 +173,38 @@ test("Sentence normalization keeps duplicate variables in traversal order", asyn
     assert.deepEqual(variableNames, ["$1", "$1"]);
 });
 
+test("Sentence normalization keys duplicate variables by Java text value", async () => {
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Product } = await import("../../src/language/Product.ts");
+    const { Variable } = await import("../../src/language/Variable.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { TruthValue } = await import("../../src/entity/TruthValue.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Parameters } = await import("../../src/main/Parameters.ts");
+    const { Tense } = await import("../../src/language/Tense.ts");
+    const { java } = await import("jree");
+
+    const parameters = new Parameters();
+    const content = Product.make([
+        new Variable(new java.lang.String("$x")),
+        Term.get("a"),
+        new Variable("$x"),
+    ]);
+    const sentence = new Sentence(
+        content,
+        ".",
+        TruthValue.fromFrequencyConfidence(1, 0.9, parameters),
+        new Stamp(0, Tense.Present, new Stamp.BaseEntry(0, 1), parameters.DURATION),
+    );
+    const variables = (sentence.term as ProductType).term.filter(
+        (term): term is VariableType => term instanceof Variable,
+    );
+
+    assert.equal(variables.length, 2);
+    assert.equal(String(variables[0].name()), "$1");
+    assert.equal(String(variables[1].name()), "$1");
+});
+
 test("decimal perception coordinates remain conceptual like Java Term.get", async () => {
     const { Term } = await import("../../src/language/Term.ts");
     const indexedTerm = Term.get("M1[-1.0,0.0]");

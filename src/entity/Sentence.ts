@@ -18,7 +18,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Nar } from "../main/Nar.ts";
 import type { Parameters } from "../main/Parameters.ts";
-import { addRuntimeLongValues, JavaAssertionError, subtractRuntimeLongValues } from "../runtime/jree-compat.ts";
+import { addRuntimeLongValues, JavaAssertionError, javaStringValue, subtractRuntimeLongValues } from "../runtime/jree-compat.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
 
 
@@ -222,19 +222,22 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
                         }
                     });
 
-                    let rename: java.util.Map<java.lang.CharSequence, java.lang.CharSequence> = new java.util.LinkedHashMap();
+                    // Java's normalization table uses only the variable-name text
+                    // as its key; retain the mapped Java CharSequence as the value
+                    // so duplicate variables share the same generated object.
+                    let rename: Map<string, java.lang.CharSequence> = new Map();
                     let renamed: boolean = false;
 
                     for (let v of vars) {
                         let vname: java.lang.CharSequence = v.name();
                         if (!v.hasVarIndep())
                             vname = new java.lang.String(String(vname) + " " + String(v.getScope().name()));
-                        let n: java.lang.CharSequence | null = rename.get(vname);
-                        // jree maps return undefined for a missing key, while Java
-                        // Map.get returns null. Treat both as the absent value.
+                        const renameKey = javaStringValue(vname);
+                        let n: java.lang.CharSequence | null = rename.get(renameKey) ?? null;
                         if (n == null) {
                             // type + id
-                            rename.put(vname, n = Variable.getName(v.getType(), rename.size() + 1));
+                            n = Variable.getName(v.getType(), rename.size + 1);
+                            rename.set(renameKey, n);
                             if (!java.lang.String.valueOf(n).equals(java.lang.String.valueOf(vname)))
                                 renamed = true;
                         }
