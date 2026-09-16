@@ -153,6 +153,20 @@
 
 本候选可以宣称 M2 与 M1- 保护门在补充证据口径下重新闭环，以及 `Term.toSortedSet` 的局部原生合同有直接回归；不能宣称本批重新完成完整 M1/#245、023 已完成、jree 已退场、TypeScript 与 Java 性能等价或正式发布。完整 M1/#245 仍按独立长期稳定性计划执行。
 
+### G0 最新稳定 HEAD 验收（截至 `ee7bc39`）
+
+本节是冻结后最新稳定候选的阶段性复核，补充并更新上文历史候选的证据，不改变 023/024 的未完成状态。
+
+- Git：`HEAD=origin/main=ee7bc3970e1c9d99c34034648320dd735368fbfc`；本轮验证前工作区干净，未修改生产代码。
+- Canonical Java：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`；本轮使用该显式 artifact，未回退到历史 3.1.0 JAR。
+- M1 主矩阵：245/245（single_step 215、multi_step 24、application 5、stability 1）功能与 parity 通过；0 exception、0 timeout、0 marker missing、0 process limit、0 not-run、0 Java/TS diff。逐行总耗时 `4,185,931 ms`，TypeScript 峰值 RSS `3,047,796,736 bytes`。
+- M1 额外夹具：`simpleOperationTest.nal` 为 1/1，无异常/超时。两个 markerless 样本 `nal6.redundant.nal` 与 `simpleOperationTest.nal` 均完成严格 `131072` 周期、`128` 窗口；事件总数分别为 `589572`、`2535970`，Java/TS digest 均 `equal=true`、`first_difference=null`。因此 G0 有效结果为 245+1，即 246/246。
+- M1- 资源节省：当前同口径 M1- 为 `2,118,396 ms`、TS 峰值 RSS `1,387,151,360 bytes`；相比完整 M1 少 `2,067,535 ms`（`49.39%`）和 `1,660,645,376 bytes`（`54.49%`）。这是排除长期稳定性 #245 的结构性节省，不是本批代码优化收益；运行时间仍作为后续性能优化指标记录。
+- M2：串行单测 `227/227`；显式非增量 `npx tsc --noEmit --pretty false --incremental false` 为 0 诊断；build、dist API、local algorithm parity、release、直接 CLI 和 `npm run shell` 均通过，运行时警告为 none。release tarball SHA-256 为 `fde84e3f1f36ac28a53b9ea2ea80b2a4cb70ac24a697a3a4f038404e0ef9e9bf`。
+- 资源与流程：长周期单进程峰值约 3.05 GB，观测期间系统可用内存保持在用户授权的安全范围内；矩阵全程串行，没有并行第二矩阵或内存密集型 tsc/build。第一次 `npm run typecheck` 无诊断文本退出 1，显式非增量重跑和随后复跑均为 0，作为瞬态命令层现象留痕。
+- 当前可宣称：`ee7bc39` 已通过 G0 的 M1/M2 迁移前保护门，可以继续 023/024 的单簇去 jree 化。当前不能宣称 023/024 完成、jree 已移除、浏览器平台中立完成、Java/TypeScript 性能等价或正式发布；下一轮仍使用 M1- 做日常保护，#245 按阶段计划单独执行完整 M1。
+- 可追溯记录：详见 [G0 阶段报告](../reports/20260916-193157.md)。项目外原始 JSONL、summary、stage digest 与 artifact manifest 保存在 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`，不纳入 Git。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：
