@@ -125,3 +125,13 @@ TypeScript 侧将这一处仅为生成迭代器而构造的 jree `ArrayList` 替
 TypeScript 侧将三处局部 `ArrayList` 收窄为 `NativeList`，仍以类型断言保留 Java `List<Term>`/`List<TermLink>` 返回形状。新增回归覆盖 `asTermList` 的原生存储、索引删除、`cloneTermsExcept` 的值删除、深拷贝顺序和 TermLink `target` 顺序；NativeList 原有 indexed remove、equals lookup、iterator/remove 回归也继续通过。
 
 本批 M2 为非增量 `tsc=0`、串行单测 `225/225`、build、dist API、canonical Java 局部 parity 全部通过。M1- 主矩阵在显式 canonical Java JAR、单线程 cold、逐文件串行条件下为 `244/244`，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run、0 Java/TS diff；额外 `simpleOperationTest.nal` 为 `1/1`。jree 审计为直接导入文件 `96`、`new ArrayList=6`、`new LinkedHashMap=35`、`new LinkedHashSet=26`、candidate native items `71`。主矩阵总时长 `1,957,134 ms`，TS 峰值 RSS `1,345,036,288 bytes`；相对上一批分别减少 `71,681 ms`（`3.53%`）和 `133,230,592 bytes`（`9.01%`）。相对历史完整 M1 的 `4,231,370 ms`，M1- 节省 `2,274,236 ms`（`53.75%`）；历史完整 M1 与当前 M1- 的内存采样口径不同，只作为量级参考，不能将本批变化宣称为性能优化。023 继续保持 `in-progress`。
+
+### 2026-09-16：Term.toSortedSet 原生有序集合批次（`02ddf20`）
+
+对照 canonical Java `Term.toSortedSet` 确认其真实返回类型为 `TreeSet`，排序和去重由 `Term.compareTo` 决定；当前 TypeScript 因 jree 缺少 `TreeSet`，曾以 `ArrayList` 冒充 `Set`。本批新增 `src/runtime/NativeSortedSet.ts`，只实现该调用面已经需要的排序、比较器去重、`contains`、`add`、`remove`、`retainAll`、`size`、迭代和 Java 形状的 `toArray`，并把 `Term.toSortedSet` 改为返回该原生集合。没有修改现有数组化的 SetExt/SetInt/IntersectionExt/IntersectionInt 工厂，也没有扩大到领域 Map/Set。
+
+局部回归已覆盖乱序输入、重复项、比较器相等、交集保留和带目标数组的 `toArray`；串行完整单测为 `227/227`，非增量 `tsc=0`，build、dist API 和 canonical Java 局部 parity 均通过。当前静态审计为直接 jree 导入文件 `96`、`new ArrayList=5`、`new LinkedHashMap=35`、`new LinkedHashSet=26`、candidate native items `70`。
+
+M1- 主矩阵使用 canonical JAR `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`、单线程 cold、逐文件串行和 `--cycles 1550`：原始结果 `242/244`，两项均为 Java 子进程异常且 TS 同行通过；对 `nal4.everyday_reasoning.nal` 与 `nars_multistep_2.nal` 的独立 canonical 重跑为 `2/2`，无可复现 TS 分叉，因此有效 M1- 为 `244/244`，但原始矩阵仍如实保留 `242/244`。额外 `simpleOperationTest.nal` 为 `1/1`。其无 marker 严格长周期证据为 Java/TS 均 `131072` 周期、`128` 窗口、`2535970` 事件，`equal=true`、`first_difference=null`。
+
+本批主矩阵逐行总时长为 `2,118,396 ms`，TS 峰值 RSS 为 `1,387,151,360 bytes`。相对上一批 M1-（`1,957,134 ms`、`1,345,036,288 bytes`），本批分别增加 `161,262 ms`（`8.24%`）和 `42,115,072 bytes`（`3.13%`），没有把该变化宣称为性能收益。相对历史完整 M1（`4,231,370 ms`、约 `3,050,434,560 bytes` 的不同采样口径），M1- 少运行 `2,112,974 ms`（`49.94%`），粗略少占 `1,663,283,200 bytes`（`54.53%`）；主要原因是排除长期稳定性 `#245`，不是本批算法优化结论。023 继续保持 `in-progress`。
