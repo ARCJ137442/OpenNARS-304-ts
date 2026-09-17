@@ -1,5 +1,4 @@
 //! Java source: opennars/control/concept/ProcessTask.java
-import { java, JavaObject } from "jree";
 import { Symbols } from "../../io/Symbols.ts";
 import { ProcessJudgment } from "./ProcessJudgment.ts";
 import { ProcessGoal } from "./ProcessGoal.ts";
@@ -20,7 +19,8 @@ import type { JavaChar } from "../../runtime/jree-compat.ts";
  * @author Patrick Hammer
  *
  */
-export class ProcessTask extends JavaObject {
+// Java 原始类未声明专用父类；移除转写器添加的 jree JavaObject 壳。
+export class ProcessTask {
     /**
      * Directly process a new task within a concept.Here task can either be a
      * judgement, goal, question or quest.The function is called exactly once on

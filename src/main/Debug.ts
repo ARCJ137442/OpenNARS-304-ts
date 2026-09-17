@@ -1,14 +1,11 @@
 //! Java source: opennars/parameter/Debug.java
 
-import { java, JavaObject } from "jree";
-
-
-
 /**
  * Nar operating parameters.
  * All static values will be removed so that this is an entirely dynamic class.
  */
-export class Debug extends JavaObject {
+// Java 原始类未声明专用父类；移除转写器添加的 jree JavaObject 壳。
+export class Debug {
     /**
      * ========================================================
      * The following options add additional logging and outputs

@@ -885,3 +885,22 @@ test("Narsese truth parsing preserves Java Float.parseFloat boundaries", async (
     assert.equal(task.sentence.truth.confidence, Math.fround(0.9));
     assert.notEqual(task.sentence.truth.confidence, 0.9);
 });
+test("Java implicit Object classes no longer carry a jree JavaObject base", async () => {
+    const { Debug } = await import("../../src/main/Debug.ts");
+    const { GeneralInferenceControl } = await import("../../src/control/GeneralInferenceControl.ts");
+    const { ProcessTask } = await import("../../src/control/concept/ProcessTask.ts");
+    const { Instance } = await import("../../src/language/Instance.ts");
+    const { InstanceProperty } = await import("../../src/language/InstanceProperty.ts");
+    const { Property } = await import("../../src/language/Property.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+
+    for (const type of [Debug, GeneralInferenceControl, ProcessTask, Instance, InstanceProperty, Property]) {
+        assert.equal(Object.getPrototypeOf(type.prototype), Object.prototype);
+    }
+
+    const subject = Term.get("java-object-free-subject");
+    const predicate = Term.get("java-object-free-predicate");
+    assert.equal(String(Instance.make(subject, predicate).toString()), "<{java-object-free-subject} --> java-object-free-predicate>");
+    assert.equal(String(InstanceProperty.make(subject, predicate).toString()), "<{java-object-free-subject} --> [java-object-free-predicate]>");
+    assert.equal(String(Property.make(subject, predicate).toString()), "<java-object-free-subject --> [java-object-free-predicate]>");
+});

@@ -1,5 +1,4 @@
 //! Java source: opennars/control/GeneralInferenceControl.java
-import { java, JavaObject } from "jree";
 import type { float, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../io/events/Events.ts";
 import { DerivationContext } from "./DerivationContext.ts";
@@ -23,7 +22,8 @@ import type { Task } from "../entity/Task.ts";
  * @author Patrick Hammer
  *
  */
-export class GeneralInferenceControl extends JavaObject {
+// Java 原始类未声明专用父类；移除转写器添加的 jree JavaObject 壳。
+export class GeneralInferenceControl {
 
     public static selectConceptForInference(mem: Memory, narParameters: Parameters, nar: Nar): void {
         let currentConcept: Concept;

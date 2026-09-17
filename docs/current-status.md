@@ -466,3 +466,17 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - runner 已新增 `--engine ts --java-baseline <冻结 JSONL>`：校验当前 fixture、读取冻结 Java 功能字段、只运行 TS，并输出冻结文件 SHA-256、Java source commit 与 Java artifact SHA-256；回归 smoke `nal8.add.nal` 为 `1/1`，`java_process_mode=frozen-baseline`。
 
 本批明确更新基线使用方式：日常 G0/M1- 应在校验 Java artifact、依赖、fixture、runner 合同、JDK、线程/随机/配置均未变化后，复用三轮一致的 Java 功能标杆，仅运行 TS 并重新采集时间、marker 时间戳和 RSS；本批 M1- 在该入口落地前已完成，因此是一次性 Java+TS 双跑。023/024 的整体验收必须现跑 Java，与冻结功能投影逐字段比较，差异经解释并获准后才能刷新标杆。
+
+### 2026-09-17：Java 隐式 Object 标记性继承去 jree 化
+
+本批继续对照 canonical Java 304 做历史前向审查。确认 `Instance`、`InstanceProperty`、`Property`、`ProcessTask`、`GeneralInferenceControl` 和 `Debug` 的 Java 原始声明均未继承专用父类；当前 TypeScript 的 `extends JavaObject` 只是转写器为 Java 隐式 `Object` 添加的 jree 运行时壳。搜索实例化、`instanceof`、`getClass()` 和类 token 消费后，没有发现这些六个类的实例身份被业务逻辑使用；真正的 `Events.*.class` 事件标识未触碰。
+
+因此本批移除六个类的 `JavaObject` 继承和仅为此存在的 jree 导入，保留静态工厂、任务派发、推理控制和调试字段不变；源码注释记录“Java 隐式 Object → 原生 TypeScript 类”的前后关系。新增回归验证六个类不再位于 jree `JavaObject` 原型链上，并验证 Instance/InstanceProperty/Property 的静态工厂输出结构。
+
+- M2：定向 core-runtime `34/34`；串行统一单测 `251/251`，失败 0、跳过 0；显式非增量 `tsc` 为 0 诊断；build、dist API、canonical local algorithm parity 均通过。
+- 受影响语言 smoke：`nal2.13.nal`、`nal2.14.nal`、`nal2.15.nal` 使用冻结 Java 功能标杆做 TS-only 对照，`3/3`；异常 0、marker 缺失 0、no-progress timeout 0、process limit 0、not-run 0。
+- 冻结 Java 基线未改变：baseline JSONL SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit 为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 审计前→后：生产直接 jree 导入文件 `95→89`，JavaObject 文件 `53→47`；`new LinkedHashMap=35`、`new LinkedHashSet=1` 未变。迁移扫描 224 个文件，malformed 项均为 0。
+- 本批未运行 M1- 或 #245：这是六个无实例消费的继承壳小簇，已有直接合同、串行 M2、local parity 和受影响 NAL smoke；涉及共享领域集合、推理调度、公共 API 或运行时类身份的后续簇必须重新评估 M1-。
+
+本批可以宣称：上述六个历史 JavaObject 标记性继承点已在 023 下原生化，并通过局部回归、M2 和三个受影响 NAL 的冻结标杆对照。不能宣称：023/024 完成、jree runtime 已移除、M1/#245 在本批重新全量通过、性能等价或正式发布。阶段细节见 [Java 隐式 Object 标记性继承批次报告](../reports/20260917-194533.md)。

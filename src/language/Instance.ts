@@ -1,6 +1,5 @@
 //! Java source: opennars/language/Instance.java
 
-import { java, JavaObject } from "jree";
 import { Inheritance } from "./Inheritance.ts";
 import { SetExt } from "./SetExt.ts";
 import type { Term } from "./Term.ts";
@@ -14,7 +13,8 @@ import type { Term } from "./Term.ts";
  *
  * @author Patrick Hammer
  */
-export abstract class Instance extends JavaObject /* extends Statement */ {
+// Java 原始类未声明专用父类；移除转写器添加的 jree JavaObject 壳。
+export abstract class Instance /* extends Statement */ {
 
     /**
      * Try to make a new compound from two components. Called by the inference

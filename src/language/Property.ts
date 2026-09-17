@@ -1,6 +1,5 @@
 //! Java source: opennars/language/Property.java
 
-import { java, JavaObject } from "jree";
 import { Inheritance } from "./Inheritance.ts";
 import { SetInt } from "./SetInt.ts";
 import type { Term } from "./Term.ts";
@@ -13,7 +12,8 @@ import type { Term } from "./Term.ts";
  *
  * @author Patrick Hammer
  */
-export abstract class Property extends JavaObject /* would extend "Statement" if it were its own type */ {
+// Java 原始类未声明专用父类；移除转写器添加的 jree JavaObject 壳。
+export abstract class Property /* would extend "Statement" if it were its own type */ {
 
     /**
      * Try to make a new compound from two components. Called by the inference
