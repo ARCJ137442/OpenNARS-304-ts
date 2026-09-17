@@ -422,3 +422,34 @@
 定向回归最终为 `10/10`，完整串行 M2 为 `248/248`，非增量 `tsc` 为 0 诊断，build、dist API、canonical local parity 均通过；`nal8.add.nal` 受影响 smoke 为 `1/1`。首轮 M1- 的原始结果为 `243/244`，唯一异常是 canonical Java 子进程在 `multi_step/nars_multistep_2.nal` 上退出；同一文件 TypeScript 为 `2/2`，独立 canonical 重跑为 `1/1`，因此未形成 TS 语义差异。修复外层 Map 延迟删除后，最终以显式排除 #245 的 244 个文件、canonical JAR、单线程、cold、逐文件单进程方式完成 M1-：`244/244`，分层为 `single_step=215`、`multi_step=24`、`application=5`；Java/TS 均为 0 exception、0 marker missing、0 timeout、0 stall、0 process limit、0 not-run、0 Java/TS diff。
 
 本批首先暴露了 jree `LinkedHashMap` entry iterator 不支持 Java `Iterator.remove()` 的边界，随后保留外层 Map 抽象，以有序 Prediction 临时数组收集待删项，遍历后调用 `Map.remove()`，并增加了对应生命周期回归。最终 M1- Java 总耗时 `159,782 ms`、TypeScript `1,655,338 ms`、合计 `1,815,120 ms`，TS/Java 约 `10.36x`，最大单行 `363,928 ms`；本次未启用 resource metrics，不新增内存节省比例。canonical Java source commit 为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。023 继续保持 `in-progress`，本批不能宣称 jree 已移除、#245 通过、性能等价或里程碑完成。
+
+### 2026-09-17：G0 最新稳定 HEAD 的 M1/M2 全量保护门
+
+本批在稳定提交 `26772af507f96516311bc2077869fe5ee4151f77` 上暂停新的迁移，只验证当前代码。Java 对照固定使用 canonical 304 artifact：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR `opennars-3.0.4-SNAPSHOT.jar`，SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`；Java/TypeScript 均为单线程、cold、逐文件串行。
+
+- M1 主资源共 245 个：首轮固定 `900000 ms` 进程安全上限下完成 `244/245`，唯一未完成是 `stability/long_term_stability.nal` 的 TypeScript process-limit；该行原始证据保留。随后以 `3600000 ms` 独立串行恢复，#245 完成 `1/1`，没有异常、无进展 timeout 或 Java/TS 差异。
+- 额外 `src/test/simpleOperationTest.nal` 完成 `1/1`。有效 M1 合计 `246/246`，`java_ts_diff=0`、exception 0、timeout 0、process-limit 0、not-run 0、marker missing 0。
+- 两个 markerless 样本均按 `--skip-embedded --cycles 131072 --window-size 1024` 完成 `131072` 周期和 `128` 个窗口：`nal6.redundant.nal` 为 `589572` 事件，`simpleOperationTest.nal` 为 `2535970` 事件；Java/TS 两组均 `equal=true`、`first_difference=null`、`incomplete=false`。
+- M2 串行单测 `248/248`，统一入口包含 `test/entity/TLink.test.ts`；`npm run typecheck` 使用显式 `--incremental false` 且为 0 诊断；build、dist API、canonical local algorithm parity、release、直接 CLI/Shell smoke、jree/platform 审计、迁移模式扫描、汉字检查和 `git diff --check` 均通过。release 检查的运行时 warning 为 none。
+- 当前 M1 运行观测：Java 总运行时约 `241388 ms`，TypeScript 总运行时约 `3881779 ms`，TS 最大 RSS `2998956032 bytes`。这些是后续性能优化的输入，不改变功能等价判定。
+
+Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：在 Java artifact、源码/classes/test-classes、依赖 JAR、fixture、runner/验收合同、JDK、线程/随机条件均未变化时，后续日常批次可复用已封存的 Java `expected/matched/ok/error` 结果，只运行 TypeScript 并重新采集耗时、marker 时间和 RSS；上述任一条件变化，或基准本身出现异常/资源限制，就必须重新运行 Java。当前批次仍实际运行了 Java，避免把“未执行”误记为对照通过。旧 M1- 与本批 244 个共同文件的稳定 Java 字段差异为 `0`。
+
+当前去 jree 路线仍未完成：静态审计显示生产直接 jree 导入 `95` 个文件、`new LinkedHashMap=35`、`new LinkedHashSet=1`、candidate native items `68`。`src/runtime/jree-compat.ts` 仍是过渡桥接层，集中承接 Java 字符串/哈希、float/long、异常、类身份、随机数和集合边界；后续必须按“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”逐簇拆除，不能把 Set 当 List、把 Map 当普通对象，也不能因底层使用数组就省略原始 Java 类型和判等/顺序/迭代器契约。
+
+证据 manifest 和原始/有效 JSONL、summary、分类矩阵及四份 stage digest 位于项目外：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\g0-artifact-manifest-26772af-20260917.json`。阶段细节见 [G0 阶段报告](../reports/20260917-154752.md)。
+
+本批可以宣称：当前稳定 HEAD 在 canonical Java 304、单线程和已定义 245+1 观测面上通过 M1/M2 G0 保护门。仍不能宣称：023/024 完成、生产核心已去 jree、浏览器可达图无 shim、Java/TypeScript 性能等价或正式发布。
+
+#### Java canonical 标杆三轮一致性冻结（2026-09-17）
+
+在同一 canonical JAR、单线程、`chunk-size=1`、`cycles=1550`、`timeout=180000 ms`、`process-limit=1800000 ms` 下，Java 主矩阵 `245` 项加额外 `simpleOperationTest.nal` 共 `246` 项，连续三轮的归一化功能投影均为 `246/246`，轮次两两差异均为 `0`。归一化字段包含期望/实际 marker、`ok`、错误分类、异常/超时/退出/未运行/marker 缺失和 `functional_pass`；不包含耗时、RSS、绝对路径等运行观测。
+
+第 3 轮主矩阵的 `long_term_stability.nal` 曾出现一次退出码 `4294967295` 的环境/进程稳定性失败；原始证据未覆盖，重跑该单项成功后才纳入有效 run3。三轮有效 Java 观测总时长分别为 `244128 ms`、`244967 ms`、`254975 ms`；这些数值只用于性能观察，不作为功能基线字段。
+
+已冻结的 Java 功能标杆位于项目外归档目录：
+
+- `g0-java-baseline-frozen-26772af-20260917.jsonl`：246 行，SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；
+- `g0-java-baseline-manifest-26772af-20260917.json`：SHA-256 `889274025E3C38A05D90BCC3FBF59F65AF3C2454E43DC209ABC88C4EB5009799`。
+
+后续可在 canonical Java artifact、源码/classes/test-classes、依赖、fixture、runner/验收合同、JDK、线程/随机种子/配置不变且 manifest 校验通过时，仅运行 TypeScript 并对照这份 Java 功能标杆；耗时、marker 时间戳和 RSS 每次重新采集。若任一条件变化或基准出现异常，必须重新运行 Java。当前 Java 标杆已满足“三次一致后归一化”的条件，但不改变 TypeScript 性能尚待优化、023/024 尚未完成的结论。
