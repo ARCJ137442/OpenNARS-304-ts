@@ -1,5 +1,6 @@
 //! Java source: opennars/language/Terms.java
-import { java, JavaObject, type int, type short, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { TermLink } from "../entity/TermLink.ts";

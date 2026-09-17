@@ -1,5 +1,6 @@
 //! Java source: opennars/entity/TermLink.java
-import { java, type short, type int, S } from "jree";
+import { java, S } from "jree";
+import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { Term } from "../language/Term.ts";
 import { BudgetValue } from "./BudgetValue.ts";

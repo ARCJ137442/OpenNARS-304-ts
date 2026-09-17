@@ -1,8 +1,10 @@
 /**
  * Adapt the original code to TypeScript from Java.
  *
- * The only semantic distinction we preserve is integer vs. floating numbers.
- * Everything else maps directly to native TypeScript types.
+ * These aliases are project-owned compile-time migration contracts. They used
+ * to come from jree, but moving their definitions here must not be mistaken
+ * for implementing Java's numeric runtime semantics: float32/int32/long
+ * narrowing remains an explicit follow-up contract at each operation boundary.
  *
  * For other types:
  * - String: string
@@ -18,3 +20,8 @@
  * - enum: enum { ... } or const object + as const
  */
 export type int = number;
+export type char = number;
+export type short = number;
+export type long = bigint;
+export type float = number;
+export type double = number;

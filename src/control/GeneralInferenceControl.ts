@@ -1,5 +1,6 @@
 //! Java source: opennars/control/GeneralInferenceControl.java
-import { java, JavaObject, type float, type int } from "jree";
+import { java, JavaObject } from "jree";
+import type { float, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../io/events/Events.ts";
 import { DerivationContext } from "./DerivationContext.ts";
 import { ProcessAnticipation } from "./concept/ProcessAnticipation.ts";

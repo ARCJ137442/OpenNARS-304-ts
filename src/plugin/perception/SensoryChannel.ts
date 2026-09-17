@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/perception/SensoryChannel.java
-import { java, JavaObject, type int, type double, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Narsese } from "../../io/Narsese.ts";
 import { Parser } from "../../io/Parser.ts";
 import { JavaSystemLoggerCompat } from "../../runtime/jree-compat.ts";

@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { delimiter, dirname, join, resolve } from "node:path";
+import { delimiter, dirname, join, relative, resolve } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
@@ -41,6 +41,7 @@ function parseArgs(argv) {
     javaJar: defaultJavaJar,
     javaClasses: defaultJavaClasses,
     javaTestClasses: defaultJavaTestClasses,
+    javaBaseline: null,
     all: false,
     summary: false,
     resultFile: null,
@@ -66,6 +67,7 @@ function parseArgs(argv) {
     else if (argument === "--java-jar") options.javaJar = argv[++i];
     else if (argument === "--java-classes") options.javaClasses = argv[++i];
     else if (argument === "--java-test-classes") options.javaTestClasses = argv[++i];
+    else if (argument === "--java-baseline") options.javaBaseline = argv[++i];
     else if (argument === "--all") options.all = true;
     else if (argument === "--summary") options.summary = true;
     else if (argument === "--result-file") options.resultFile = argv[++i];
@@ -100,6 +102,9 @@ function parseArgs(argv) {
   }
   if (options.resume && options.resultFile === null) {
     throw new Error("--resume requires --result-file PATH");
+  }
+  if (options.javaBaseline !== null && options.engine !== "ts") {
+    throw new Error("--java-baseline requires --engine ts; it is a frozen reference for TS-only runs");
   }
   return options;
 }
@@ -203,6 +208,54 @@ function resolveJavaArtifact(options) {
     sha256,
     manifest_class_path: manifestDependencies.entries,
     runtime_classpath: manifestDependencies.dependencies,
+  };
+}
+
+function projectFileKey(file) {
+  const normalized = String(file).replace(/\\/g, "/");
+  const javaMasterIndex = normalized.lastIndexOf("/java-master/");
+  if (javaMasterIndex >= 0) {
+    return resolve(projectRoot, normalized.slice(javaMasterIndex + 1));
+  }
+  const absolute = resolve(file);
+  const projectPrefix = `${resolve(projectRoot)}${delimiter}`;
+  return absolute === resolve(projectRoot) || absolute.startsWith(projectPrefix)
+    ? absolute
+    : resolve(projectRoot, relative(projectRoot, absolute));
+}
+
+function loadJavaBaseline(value) {
+  const path = requirePath(value, "--java-baseline", "file");
+  const sha256 = createHash("sha256").update(readFileSync(path)).digest("hex").toUpperCase();
+  const rows = readFileSync(path, "utf8")
+    .split(/\r?\n/)
+    .filter(Boolean)
+    .map((line) => JSON.parse(line));
+  if (rows.length === 0) throw new Error(`--java-baseline is empty: ${path}`);
+  const first = rows[0];
+  if (first.schema !== "opennars-304-ts.java-functional-baseline.v1") {
+    throw new Error(`--java-baseline has unsupported schema: ${first.schema ?? "missing"}`);
+  }
+  const byFile = new Map();
+  for (const row of rows) {
+    if (typeof row.file !== "string" || row.java === null || typeof row.java !== "object") {
+      throw new Error(`--java-baseline row is missing file/java: ${JSON.stringify(row)}`);
+    }
+    const key = projectFileKey(row.file);
+    if (byFile.has(key)) throw new Error(`--java-baseline has duplicate file: ${row.file}`);
+    if (row.java_artifact_sha256 !== first.java_artifact_sha256) {
+      throw new Error(`--java-baseline has inconsistent Java artifact hashes: ${row.file}`);
+    }
+    byFile.set(key, row);
+  }
+  return {
+    path,
+    sha256,
+    baseline_id: first.baseline_id ?? null,
+    schema: first.schema,
+    java_source_commit: first.java_source_commit ?? null,
+    java_artifact_sha256: first.java_artifact_sha256 ?? null,
+    rows: byFile,
   };
 }
 
@@ -1017,10 +1070,11 @@ function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles =
     : null;
   const bothWrong = java && ts ? java.ok === false && ts.ok === false : null;
   const javaTsDiff = java && ts ? parity !== true : null;
+  const hasJavaReference = javaResult !== null;
   const functionalPass = engine === "java"
     ? java?.ok === true
     : engine === "ts"
-      ? ts?.ok === true
+      ? hasJavaReference ? parity === true && bothWrong !== true : ts?.ok === true
       : parity === true && bothWrong !== true;
   return {
     file,
@@ -1051,7 +1105,7 @@ function evaluateRow(file, expected, javaResult, tsResult, engine, totalCycles =
     java_stalled: java?.stall_detected ?? null,
     java_timeout_reason: java?.timeout_reason ?? null,
     java_last_progress_cycle: java?.last_progress_cycle ?? null,
-    java_not_run: java?.not_run ?? null,
+    java_not_run: engine === "ts" ? null : java?.not_run ?? null,
     java_marker_missing: java?.marker_missing ?? null,
     ts_exception: ts?.exception ?? null,
     ts_timeout: ts?.timed_out ?? null,
@@ -1094,6 +1148,7 @@ function resultKey(options, javaArtifact) {
     tsCli: options.engine === "java" ? null : options.tsCli,
     resourceMetrics: options.resourceMetrics,
     javaArtifactSha256: javaArtifact?.sha256 ?? null,
+    javaBaselineSha256: options.javaBaseline?.sha256 ?? null,
   });
 }
 
@@ -1131,6 +1186,7 @@ function appendCheckpoint(resultFile, runKey, rows) {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
+  if (options.javaBaseline !== null) options.javaBaseline = loadJavaBaseline(options.javaBaseline);
   const javaArtifact = resolveJavaArtifact(options);
   if (options.engine !== "java") {
     options.tsCli = options.tsCli === null
@@ -1157,6 +1213,18 @@ async function main() {
 
   const sources = new Map();
   for (const file of files) sources.set(file, extractNalMetadata(await readFile(file, "utf8")));
+  if (options.javaBaseline !== null) {
+    for (const file of files) {
+      const baseline = options.javaBaseline.rows.get(projectFileKey(file));
+      if (baseline === undefined) {
+        throw new Error(`--java-baseline has no row for file: ${file}`);
+      }
+      if (JSON.stringify(baseline.expected_markers ?? [])
+        !== JSON.stringify(sources.get(file).expected)) {
+        throw new Error(`--java-baseline expectations do not match the current fixture: ${file}`);
+      }
+    }
+  }
 
   const javaResults = [];
   const tsResults = [];
@@ -1196,18 +1264,21 @@ async function main() {
       const tsByFile = new Map(tsResults.map((row) => [resolve(row.file), row]));
       const completedRows = pending.map((file) => {
         const key = resolve(file);
+        const frozenJava = options.javaBaseline?.rows.get(projectFileKey(file))?.java ?? null;
         return {
           ...evaluateRow(
             key,
             sources.get(file).expected,
-            javaByFile.get(key) ?? null,
+            javaByFile.get(key) ?? frozenJava,
             tsByFile.get(key) ?? null,
             options.engine,
             sources.get(file).embeddedCycles + options.cycles,
             options.timeoutMs,
             options.performanceBudgetMsPer1024Cycles,
           ),
-          java_process_mode: options.engine === "ts" ? null : "cold",
+          java_process_mode: options.engine === "ts"
+            ? options.javaBaseline === null ? null : "frozen-baseline"
+            : "cold",
           ts_process_mode: options.engine === "java" ? null : options.tsMode,
           chunk_index: index,
           sequence: files.indexOf(file),
@@ -1226,9 +1297,12 @@ async function main() {
   const rows = files.map((file) => {
     const key = resolve(file);
     const expected = sources.get(file).expected;
+    const frozenJava = options.javaBaseline?.rows.get(projectFileKey(file))?.java ?? null;
     return checkpoint.get(key) ?? {
-      ...evaluateRow(key, expected, null, null, options.engine),
-      java_process_mode: options.engine === "ts" ? null : "cold",
+      ...evaluateRow(key, expected, frozenJava, null, options.engine),
+      java_process_mode: options.engine === "ts"
+        ? options.javaBaseline === null ? null : "frozen-baseline"
+        : "cold",
       ts_process_mode: options.engine === "java" ? null : options.tsMode,
       chunk_index: null,
       sequence: files.indexOf(file),
@@ -1252,6 +1326,14 @@ async function main() {
     passed: rows.length - failures.length,
     failed: failures.length,
     java_artifact: javaArtifact,
+    java_baseline: options.javaBaseline === null ? null : {
+      path: options.javaBaseline.path,
+      sha256: options.javaBaseline.sha256,
+      baseline_id: options.javaBaseline.baseline_id,
+      schema: options.javaBaseline.schema,
+      java_source_commit: options.javaBaseline.java_source_commit,
+      java_artifact_sha256: options.javaBaseline.java_artifact_sha256,
+    },
     rows,
   };
   if (options.summary) {
@@ -1272,6 +1354,7 @@ async function main() {
       passed: summary.passed,
       failed: summary.failed,
       java_artifact: summary.java_artifact,
+      java_baseline: summary.java_baseline,
       failures: failures.map((row) => ({
         ...row,
         java: compact(row.java),
@@ -1293,6 +1376,7 @@ export {
   evaluateRuntimePerformance,
   evaluateLongCycleEquivalence,
   extractNalMetadata,
+  loadJavaBaseline,
   isProcessTimeout,
   loadCheckpoint,
   normalizeResult,
@@ -1302,6 +1386,7 @@ export {
   runTs,
   parseJsonLines,
   classifyTimeoutObservation,
+  projectFileKey,
 };
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

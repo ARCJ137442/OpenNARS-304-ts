@@ -1,5 +1,6 @@
 //! Java source: opennars/parameter/Parameters.java
-import { java, JavaObject, type int, type float, type double } from "jree";
+import { java, JavaObject } from "jree";
+import type { int, float, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 
 

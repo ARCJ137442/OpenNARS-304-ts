@@ -1,5 +1,6 @@
 //! Java source: opennars/language/Conjunction.java
-import { java, type int, type long, S } from "jree";
+import { java, S } from "jree";
+import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import { Interval } from "./Interval.ts";

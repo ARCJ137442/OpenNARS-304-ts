@@ -1,5 +1,6 @@
 //! Java source: opennars/language/Variables.java
-import { java, JavaObject, type int, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Variable } from "./Variable.ts";
 import { CompoundTerm } from "./CompoundTerm.ts";

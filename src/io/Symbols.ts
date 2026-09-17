@@ -1,5 +1,6 @@
 //! Java source: opennars/io/Symbols.java
-import { java, JavaObject, type char, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { char } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 
 
 

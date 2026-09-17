@@ -1,5 +1,6 @@
 //! Java source: opennars/main/Nar.java
-import { java, type long, JavaObject, S, type int, type double, type float } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { Parameters } from "./Parameters.ts";
 import { Debug } from "./Debug.ts";

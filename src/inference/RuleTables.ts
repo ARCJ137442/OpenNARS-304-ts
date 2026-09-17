@@ -1,5 +1,6 @@
 //! Java source: opennars/inference/RuleTables.java
-import { java, JavaObject, type short, type int, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Events } from "../io/events/Events.ts";
 import { Terms } from "../language/Terms.ts";

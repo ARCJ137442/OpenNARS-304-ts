@@ -1,5 +1,6 @@
 //! Java source: opennars/inference/SyllogisticRules.java
-import { java, JavaObject, type int, type long, type short, type float, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int, long, short, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Statement } from "../language/Statement.ts";
 import { CompoundTerm } from "../language/CompoundTerm.ts";

@@ -1,5 +1,6 @@
 //! Java source: opennars/operator/mental/Believe.java
-import { java, type float } from "jree";
+import { java } from "jree";
+import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Operator } from "../Operator.ts";
 import { Operation } from "../Operation.ts";
 import { Task } from "../../entity/Task.ts";

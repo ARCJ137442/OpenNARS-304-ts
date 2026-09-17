@@ -1,5 +1,6 @@
 //! Java source: opennars/language/ImageInt.java
-import { java, type short, type int, S } from "jree";
+import { java, S } from "jree";
+import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Image } from "./Image.ts";
 import { Term } from "./Term.ts";
 import { Product } from "./Product.ts";

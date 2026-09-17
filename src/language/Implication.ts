@@ -1,5 +1,6 @@
 //! Java source: opennars/language/Implication.java
-import { java, type int, type long, S } from "jree";
+import { java, S } from "jree";
+import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";

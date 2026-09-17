@@ -1,5 +1,6 @@
 //! Java source: opennars/inference/TruthFunctions.java
-import { java, S, type int, type float, type double, type long } from "jree";
+import { java, S } from "jree";
+import type { int, float, double, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { UtilityFunctions } from "./UtilityFunctions.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Parameters } from "../main/Parameters.ts";

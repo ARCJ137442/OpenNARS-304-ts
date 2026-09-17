@@ -1,5 +1,6 @@
 //! Java source: opennars/control/concept/ProcessJudgment.java
-import { java, JavaObject, S, type int } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
 import { LocalRules } from "../../inference/LocalRules.ts";

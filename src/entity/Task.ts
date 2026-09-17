@@ -1,5 +1,6 @@
 //! Java source: opennars/entity/Task.java
-import { java, type int, type long, S } from "jree";
+import { java, S } from "jree";
+import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
 import { javaStringValue } from "../runtime/jree-compat.ts";

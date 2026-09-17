@@ -1,5 +1,6 @@
 //! Java source: opennars/entity/Stamp.java
-import { java, JavaObject, type int, type long, type float, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Tense } from "../language/Tense.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";

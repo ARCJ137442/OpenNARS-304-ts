@@ -1,5 +1,6 @@
 //! Java source: opennars/control/DerivationContext.java
-import { java, JavaObject, type double, type long, type float, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { double, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Stamp } from "../entity/Stamp.ts";
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Sentence } from "../entity/Sentence.ts";

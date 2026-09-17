@@ -1,5 +1,6 @@
 //! Java source: opennars/operator/misc/Add.java
-import { java, type int } from "jree";
+import { java } from "jree";
+import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { Term } from "../../language/Term.ts";
 import type { Memory } from "../../storage/Memory.ts";

@@ -1,5 +1,6 @@
 //! Java source: opennars/entity/BudgetValue.java
-import { java, JavaObject, type float, type long, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Texts } from "../io/Texts.ts";
 import { UtilityFunctions } from "../inference/UtilityFunctions.ts";

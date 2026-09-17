@@ -1,5 +1,6 @@
 //! Java source: opennars/main/Shell.java
-import { java, JavaObject, S, type int } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { readFileSync } from "node:fs";
 import { Nar } from "./Nar.ts";
 import { NarNode } from "./NarNode.ts";

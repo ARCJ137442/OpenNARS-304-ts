@@ -1,5 +1,6 @@
 //! Java source: opennars/operator/Operator.java
-import { java, type float, JavaObject, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "../language/Term.ts";
 import { Inheritance } from "../language/Inheritance.ts";
 import { Operation } from "./Operation.ts";

@@ -1,5 +1,6 @@
 //! Java source: opennars/entity/TaskLink.java
-import { java, type int, JavaObject, type long, type short, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int, long, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { Task } from "./Task.ts";
 import { TermLink } from "./TermLink.ts";

@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/mental/InternalExperience.java
-import { java, JavaObject, type float, type double, type int, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { float, double, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Stamp } from "../../entity/Stamp.ts";

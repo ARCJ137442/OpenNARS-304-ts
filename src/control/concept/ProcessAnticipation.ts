@@ -1,5 +1,6 @@
 //! Java source: opennars/control/concept/ProcessAnticipation.java
-import { java, JavaObject, type long, type float, type double } from "jree";
+import { java, JavaObject } from "jree";
+import type { long, float, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { DerivationContext } from "../DerivationContext.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Concept } from "../../entity/Concept.ts";

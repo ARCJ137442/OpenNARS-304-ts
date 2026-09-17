@@ -1,5 +1,6 @@
 //! Java source: opennars/io/events/TextOutputHandler.java
-import { java, type float, S } from "jree";
+import { java, S } from "jree";
+import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { OutputHandler } from "./OutputHandler.ts";
 import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";

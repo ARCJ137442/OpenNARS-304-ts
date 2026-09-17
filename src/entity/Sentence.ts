@@ -1,5 +1,6 @@
 //! Java source: opennars/entity/Sentence.java
-import { java, JavaObject, type int, type long, type float, type double, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int, long, float, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Term } from "../language/Term.ts";

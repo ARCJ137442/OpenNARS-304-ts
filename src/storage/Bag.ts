@@ -1,5 +1,6 @@
 //! Java source: opennars/storage/Bag.java
-import { java, JavaObject, type int, type float, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "../entity/Item.ts";
 import { Distributor } from "./Distributor.ts";
 import { Parameters } from "../main/Parameters.ts";

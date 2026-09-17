@@ -1,5 +1,6 @@
 //! Java source: opennars/operator/misc/Reflect.java
-import { java, type int, S } from "jree";
+import { java, S } from "jree";
+import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { CompoundTerm } from "../../language/CompoundTerm.ts";
 import { Inheritance } from "../../language/Inheritance.ts";

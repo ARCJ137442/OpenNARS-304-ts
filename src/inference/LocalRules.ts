@@ -1,5 +1,6 @@
 //! Java source: opennars/inference/LocalRules.java
-import { java, JavaObject, type int, type long, type float } from "jree";
+import { java, JavaObject } from "jree";
+import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";

@@ -1,5 +1,6 @@
 //! Java source: opennars/entity/Item.java
-import { java, JavaObject, type int, type float, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
 import { javaStringHashCode, javaStringValue, javaValuesEqual } from "../runtime/jree-compat.ts";

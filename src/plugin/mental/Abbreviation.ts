@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/mental/Abbreviation.java
-import { java, JavaObject, type double, type int, type float, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { double, int, float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Stamp } from "../../entity/Stamp.ts";

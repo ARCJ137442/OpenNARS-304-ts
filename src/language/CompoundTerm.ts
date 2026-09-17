@@ -1,5 +1,6 @@
 //! Java source: opennars/language/CompoundTerm.java
-import { java, type short, type int, type long, JavaObject, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { short, int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Interval } from "./Interval.ts";

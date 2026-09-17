@@ -1,5 +1,6 @@
 //! Java source: opennars/inference/BudgetFunctions.java
-import { java, type float, type double, type int, S } from "jree";
+import { java, S } from "jree";
+import type { float, double, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
 import { TaskLink } from "../entity/TaskLink.ts";

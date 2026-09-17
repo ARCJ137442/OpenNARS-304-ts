@@ -1,5 +1,6 @@
 //! Java source: opennars/control/concept/ProcessGoal.java
-import { java, JavaObject, type double, type float, type long, type int } from "jree";
+import { java, JavaObject } from "jree";
+import type { double, float, long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Concept } from "../../entity/Concept.ts";

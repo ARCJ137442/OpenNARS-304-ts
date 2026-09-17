@@ -1,5 +1,6 @@
 //! Java source: opennars/language/Product.java
-import { java, type int, S } from "jree";
+import { java, S } from "jree";
+import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import type { Term } from "./Term.ts";

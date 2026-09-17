@@ -1,5 +1,6 @@
 //! Java source: opennars/language/Interval.java
-import { java, type long, S } from "jree";
+import { java, S } from "jree";
+import type { long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
 

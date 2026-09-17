@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/perception/VisionChannel.java
-import { java, type float, type int, JavaObject, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { float, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import { JavaSystemLoggerCompat, toJavaString, type JavaStringInput } from "../../runtime/jree-compat.ts";

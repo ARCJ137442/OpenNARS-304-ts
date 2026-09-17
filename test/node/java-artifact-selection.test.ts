@@ -13,6 +13,12 @@ const canonicalRoot = join(projectRoot, "..", "OpenNARS-304-java-canonical-fixed
 const canonicalJar = join(canonicalRoot, "opennars-3.0.4-SNAPSHOT.jar");
 const canonicalClasses = join(canonicalRoot, "classes");
 const canonicalTestClasses = join(canonicalRoot, "test-classes");
+const frozenJavaBaseline = join(
+  projectRoot,
+  "..",
+  "OpenNARS-304-ts-evidence-archive",
+  "g0-java-baseline-frozen-26772af-20260917.jsonl",
+);
 
 function run(script: string, args: string[]) {
   const nodeArgs = script === localRunner ? ["--experimental-strip-types", script, ...args] : [script, ...args];
@@ -69,4 +75,36 @@ test("NAL runner rejects the historical 3.1.0 artifact", { skip: !existsSync(leg
   ]);
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /legacy 3\.1\.0 artifact/);
+});
+
+test("NAL runner can compare TS with the frozen Java baseline without starting Java", {
+  skip: !existsSync(frozenJavaBaseline),
+}, () => {
+  const result = run(nalRunner, [
+    "--engine", "ts",
+    "--java-baseline", frozenJavaBaseline,
+    "--file", join(projectRoot, "java-master", "src", "main", "resources", "nal", "single_step", "nal8.add.nal"),
+    "--cycles", "1550",
+    "--timeout-ms", "180000",
+    "--process-limit-ms", "1800000",
+    "--ts-mode", "cold",
+    "--summary",
+  ]);
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const output = JSON.parse(result.stdout);
+  assert.equal(output.java_artifact, null);
+  assert.equal(output.files, 1);
+  assert.equal(output.passed, 1);
+  assert.equal(output.failed, 0);
+  assert.match(output.java_baseline.sha256, /^[0-9A-F]{64}$/);
+  assert.match(output.java_baseline.java_artifact_sha256, /^[0-9A-F]{64}$/);
+});
+
+test("NAL runner rejects a missing frozen Java baseline", () => {
+  const result = run(nalRunner, [
+    "--engine", "ts",
+    "--java-baseline", join(projectRoot, "missing-java-functional-baseline.jsonl"),
+  ]);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /--java-baseline path does not exist/);
 });

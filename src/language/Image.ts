@@ -1,5 +1,6 @@
 //! Java source: opennars/language/Image.java
-import { java, type short, type int } from "jree";
+import { java } from "jree";
+import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";

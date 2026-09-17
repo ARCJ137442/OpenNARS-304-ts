@@ -453,3 +453,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - `g0-java-baseline-manifest-26772af-20260917.json`：SHA-256 `889274025E3C38A05D90BCC3FBF59F65AF3C2454E43DC209ABC88C4EB5009799`。
 
 后续可在 canonical Java artifact、源码/classes/test-classes、依赖、fixture、runner/验收合同、JDK、线程/随机种子/配置不变且 manifest 校验通过时，仅运行 TypeScript 并对照这份 Java 功能标杆；耗时、marker 时间戳和 RSS 每次重新采集。若任一条件变化或基准出现异常，必须重新运行 Java。当前 Java 标杆已满足“三次一致后归一化”的条件，但不改变 TypeScript 性能尚待优化、023/024 尚未完成的结论。
+
+### 2026-09-17：primitive alias 去 jree 化批次
+
+本批从 `bff971e90214bba93d8b397a10b327a3dac454a0` 开始，完成一项不改变运行时语义的编译期迁移：在 `src/types.ts` 建立项目自有的 `int`、`char`、`short`、`long`、`float`、`double` 别名，将 67 个生产文件中的 145 个 primitive alias 导入从 jree 移出。各文件保留其余 jree runtime 导入，并以注释记录“Java 原别名 → 项目类型契约”；没有将这次改动误称为 Float32、int32 或 long 运行时语义实现。
+
+- M2：串行统一单测 `250/250`，显式非增量 `tsc` 为 0 诊断；build、dist API、canonical local algorithm parity 和受影响的 `nal8.add.nal` smoke 均通过。
+- M1-：显式排除 `#245` 后，主资源 `215 single_step + 24 multi_step + 5 application + 1 extra` 共 `245/245` 通过；Java/TS parity `245`，差异、异常、无进展 stall、process limit、marker missing、not-run 均为 0，线程模式全部为 `single/single`。
+- M1- 证据位于项目外归档：`g2-primitive-alias-m1-minus-20260917-bff971e.jsonl`，SHA-256 为 `0D61DC45679FEC63FE0A4B01F1687766F9FF26024114A560D5678C73DFD84994`。Java canonical JAR SHA-256 仍为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 运行观测：Java 总运行时 `170,668 ms`，TypeScript `1,804,291 ms`；TS 平均峰值 RSS 约 `257.5 MiB`，最大约 `1,185.3 MiB`。性能差距记录为后续独立优化输入，不作为本批功能门失败。
+- 去 jree 审计当前仍为生产直接导入文件 `95`、`new LinkedHashMap=35`、`new LinkedHashSet=1`；因此 023 仍为 `in-progress`，不能宣称生产核心已去 jree 化。
+- runner 已新增 `--engine ts --java-baseline <冻结 JSONL>`：校验当前 fixture、读取冻结 Java 功能字段、只运行 TS，并输出冻结文件 SHA-256、Java source commit 与 Java artifact SHA-256；回归 smoke `nal8.add.nal` 为 `1/1`，`java_process_mode=frozen-baseline`。
+
+本批明确更新基线使用方式：日常 G0/M1- 应在校验 Java artifact、依赖、fixture、runner 合同、JDK、线程/随机/配置均未变化后，复用三轮一致的 Java 功能标杆，仅运行 TS 并重新采集时间、marker 时间戳和 RSS；本批 M1- 在该入口落地前已完成，因此是一次性 Java+TS 双跑。023/024 的整体验收必须现跑 Java，与冻结功能投影逐字段比较，差异经解释并获准后才能刷新标杆。

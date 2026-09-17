@@ -1,5 +1,6 @@
 //! Java source: opennars/operator/mental/Anticipate.java
-import { java, type float, type long, type double, JavaObject, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { float, long, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";

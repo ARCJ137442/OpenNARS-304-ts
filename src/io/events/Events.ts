@@ -1,6 +1,7 @@
 //! Java source: opennars/io/events/Events.java
 import "../../runtime/jree-compat.ts";
-import { java, JavaObject, type long, type int, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { Concept } from "../../entity/Concept.ts";
 import type { Sentence } from "../../entity/Sentence.ts";
 import type { Task } from "../../entity/Task.ts";

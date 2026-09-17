@@ -1,5 +1,6 @@
 //! Java source: opennars/language/SetTensional.java
-import { java, type int } from "jree";
+import { java } from "jree";
+import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";

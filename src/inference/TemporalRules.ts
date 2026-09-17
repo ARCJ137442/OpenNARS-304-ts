@@ -1,5 +1,6 @@
 //! Java source: opennars/inference/TemporalRules.java
-import { java, JavaObject, type int, type long, type float, S } from "jree";
+import { java, JavaObject, S } from "jree";
+import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Stamp } from "../entity/Stamp.ts";
 import type { BudgetValue } from "../entity/BudgetValue.ts";
