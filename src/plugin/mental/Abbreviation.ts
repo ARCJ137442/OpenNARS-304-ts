@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/Abbreviation.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { double, int, float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -31,7 +31,10 @@ const TaskDerive = Events.TaskDerive;
  * added Task.
  * Experimental alternative to Abbreviation plugin.
  */
-export class Abbreviation extends JavaObject implements Plugin {
+// Java source declares Abbreviation as a Plugin without a specialized parent.
+// The nested Abbreviate operator has its own Operator identity and is not part
+// of this outer-plugin shell migration.
+export class Abbreviation implements Plugin {
     public obs: EventObserver | null = null;
 
     // TODO different parameters for priorities and budgets of both the abbreviation
@@ -72,10 +75,6 @@ export class Abbreviation extends JavaObject implements Plugin {
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
-
-                super();
-
-
                 break;
             }
 
@@ -83,7 +82,6 @@ export class Abbreviation extends JavaObject implements Plugin {
                 const [abbreviationProbability, abbreviationComplexityMin, abbreviationQualityMin] = args as [double, int, double];
 
 
-                super();
                 this.abbreviationProbability = abbreviationProbability;
                 this.abbreviationComplexityMin = abbreviationComplexityMin;
                 this.abbreviationQualityMin = abbreviationQualityMin;

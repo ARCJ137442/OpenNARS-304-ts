@@ -688,3 +688,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - M1-/#245：本批未运行。改动只触及无实例消费面的外层静态壳，没有改变嵌套值、集合、预算/浮点、事件 token、推理调度、Java artifact 或 runner；M2、local parity 和受影响 NAL smoke 提供局部保护。后续触及嵌套值或算法时重新评估 M1-。
 
 本批可以宣称：`ProcessGoal` 外层静态工具壳已原生化，并经原型回归、M2、local parity 和 NAL smoke 保护。仍不能宣称整个 `ProcessGoal` 模块、023/024 或生产核心已脱离 jree，也不能宣称 M1- 全量重跑、性能等价或正式发布。
+
+### 2026-09-18：`Abbreviation` 外层插件壳批次
+
+本批以 G8 提交 `d577927` 为基线，对照 canonical Java `Abbreviation.java`。Java 外层类声明为 `implements Plugin`，没有专用父类或自身类身份消费；其嵌套 `Abbreviate` 继续继承 `Operator`，不在本批迁移范围内。
+
+- `src/plugin/mental/Abbreviation.ts`：删除外层 `JavaObject` 继承及两个外层构造器 `super()`；保留 Java `double/int/double` 字段、构造重载、插件事件观察者、事件 token、概率判断和嵌套 Operator。
+- `test/node/core-runtime.test.ts`：增加 `Abbreviation.prototype` 直接继承 `Object.prototype` 的回归，并继续执行 `Abbreviate` 的实际操作测试。
+- M2：定向核心回归 `36/36`；统一串行单测 `261/261`，失败 `0`、跳过 `0`；显式非增量 `tsc` 为 `0` 诊断；local canonical parity `ok=true`、`differences=[]`；build、dist API、release 均通过，`runtimeWarnings=none`。
+- 受影响 NAL：`nal8_list.nal` 首次使用 `180000 ms` process limit 时推进至 `301550` 周期后被成本上限截止；提高到 `1800000 ms`、无进展上限 `120000 ms` 后 TS-only 对冻结 Java 标杆 `1/1`，6 个 marker 全部匹配。该过程证明前一次是成本上限，不是逻辑异常。
+- jree 审计相对 G8：JavaObject 文件 `32→31`；直接 jree 导入文件仍为 `88`（本文件仍使用 Java 类型/运行时边界）、`java.util` 文件 `39`、`new LinkedHashMap=11`、`new LinkedHashSet=1`；迁移扫描 `227` 个文件，jree-runtime-type `1714`，malformed generic/operator/new-this/constructor-delegation 均为 `0`；平台、汉字编码和 diff 检查通过。
+- M1-/#245：本批未运行。改动只触及插件外层继承壳，没有改变嵌套 Operator、事件 token、集合、预算/浮点算法、推理调度、Java artifact 或 runner；M2、local parity 和长预算单文件 smoke 提供局部保护。后续触及插件算法或嵌套 Operator 时重新评估 M1-。
+
+本批可以宣称：`Abbreviation` 外层隐式 `Object` 壳已原生化，并经定向回归、串行 M2、local parity、长预算 NAL smoke 和构建门保护。仍不能宣称整个插件模块、023/024 或生产核心已脱离 jree，也不能宣称 M1- 全量重跑、性能等价或正式发布。

@@ -717,6 +717,7 @@ test("Abbreviation emits native array feedback for empty and single-task results
     const { Product } = await import("../../src/language/Product.ts");
     const { Term } = await import("../../src/language/Term.ts");
 
+    assert.equal(Object.getPrototypeOf(Abbreviation.prototype), Object.prototype);
     const nar = new Nar();
     try {
         const abbreviate = new Abbreviation.Abbreviate();
