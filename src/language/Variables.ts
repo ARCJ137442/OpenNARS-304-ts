@@ -13,10 +13,16 @@ import { ImageInt } from "./ImageInt.ts";
 import { Inheritance } from "./Inheritance.ts";
 import { Similarity } from "./Similarity.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
+import { NativeMap } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import type { Term } from "./Term.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
 
+// Java 原类型：Map<Term, Term>，实现类型：LinkedHashMap。
+// The two-element array remains the Java Map<Term, Term>[] container; only the
+// concrete map implementation moves to the native ordered Map contract.
+const nativeTermMap = (): java.util.Map<Term, Term> =>
+    new NativeMap<Term, Term>() as unknown as java.util.Map<Term, Term>;
 
 
 /**
@@ -92,10 +98,10 @@ export class Variables {
                             for (let k: int = 0; k < (c2.term.length - c1.term.length); k++) {
 
                                 if (map[0] === null) {
-                                    map[0] = new java.util.LinkedHashMap();
+                                    map[0] = nativeTermMap();
                                 }
                                 if (map[1] === null) {
-                                    map[1] = new java.util.LinkedHashMap();
+                                    map[1] = nativeTermMap();
                                 }
 
                                 let mapk: java.util.Map<Term, Term>[] = Variables.copyMapFrom(map);
@@ -134,8 +140,8 @@ export class Variables {
                     if (v1.getType() === v2.getType()) {
                         let CommonVar: Variable = Variables.makeCommonVariable(term1, term2);
                         if (map[0] === null) {
-                            map[0] = new java.util.LinkedHashMap();
-                            map[1] = new java.util.LinkedHashMap();
+                            map[0] = nativeTermMap();
+                            map[1] = nativeTermMap();
                         }
                         map[0].put(v1, CommonVar);
                         map[1].put(v2, CommonVar);
@@ -159,8 +165,8 @@ export class Variables {
                     }
 
                     if (map[0] === null) {
-                        map[0] = new java.util.LinkedHashMap();
-                        map[1] = new java.util.LinkedHashMap();
+                        map[0] = nativeTermMap();
+                        map[1] = nativeTermMap();
                     }
 
                     if (term1VarUnifyAllowed) {
@@ -243,10 +249,10 @@ export class Variables {
                                 // clone map also:
 
                                 if (map[0] === null) {
-                                    map[0] = new java.util.LinkedHashMap();
+                                    map[0] = nativeTermMap();
                                 }
                                 if (map[1] === null) {
-                                    map[1] = new java.util.LinkedHashMap();
+                                    map[1] = nativeTermMap();
                                 }
 
                                 let mapNew: java.util.Map<Term, Term>[] = Variables.copyMapFrom(map);
@@ -324,10 +330,11 @@ export class Variables {
      * @return copied maps
      */
     private static copyMapFrom(source: java.util.Map<Term, Term>[]): java.util.Map<Term, Term>[] {
-        let destination: java.util.Map<Term, Term>[] = new Array<java.util.LinkedHashMap<unknown, unknown>>(2) as java.util.Map<Term, Term>[];
+        // Java original: Map<Term, Term>[] backed by two LinkedHashMap instances.
+        let destination: java.util.Map<Term, Term>[] = new Array<java.util.Map<Term, Term>>(2);
 
-        destination[0] = new java.util.LinkedHashMap();
-        destination[1] = new java.util.LinkedHashMap();
+        destination[0] = nativeTermMap();
+        destination[1] = nativeTermMap();
 
         Variables.appendToMap(source[0], destination[0]);
         Variables.appendToMap(source[1], destination[1]);
@@ -556,7 +563,7 @@ export class Variables {
      * @return Whether there is a substitution
      */
     public static hasSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term): boolean {
-        return Variables.findSubstitute(rnd, type, term1, term2, new java.util.LinkedHashMap(), new java.util.LinkedHashMap());
+        return Variables.findSubstitute(rnd, type, term1, term2, nativeTermMap(), nativeTermMap());
     }
 
 }

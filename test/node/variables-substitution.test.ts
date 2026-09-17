@@ -97,3 +97,30 @@ test("commutative unification does not reuse one matched operand index", async (
         false,
     );
 });
+
+test("Variables initializes the Java Map pair with native ordered maps", async () => {
+    const { java } = await import("jree");
+    const { Symbols } = await import("../../src/io/Symbols.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Variable } = await import("../../src/language/Variable.ts");
+    const { Variables } = await import("../../src/language/Variables.ts");
+    const { NativeMap } = await import("../../src/runtime/NativeMap.ts");
+
+    const variable = new Variable("$1");
+    const target = Term.get("grounded");
+    const maps = [null, null] as any[];
+
+    assert.equal(
+        Variables.findSubstitute(
+            new java.util.Random(1n),
+            Symbols.VAR_INDEPENDENT,
+            variable,
+            target,
+            maps,
+        ),
+        true,
+    );
+    assert.ok(maps[0] instanceof NativeMap);
+    assert.ok(maps[1] instanceof NativeMap);
+    assert.equal(maps[0].get(variable), target);
+});

@@ -545,3 +545,17 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计前→后（相对 `fdda235`）：`new LinkedHashMap` `30→24`，直接 jree 导入文件仍为 `89`；平台审计扫描 172 个文件，迁移模式扫描 227 个文件，malformed 项均为 0。
 
 本批可以宣称：`CompositionalRules` 六个局部 `Map<Term,Term>` 构造点已按 Java Map 合同原生化，并通过直接回归、M2 与冻结 Java 标杆 M1- 保护。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 本批重跑通过、markerless 长周期在本批重新验证、Java/TypeScript 性能等价或正式发布。日常批次继续复用冻结 Java 功能字段；023/024 整体验收仍需现跑 canonical Java 并与标杆逐字段核对。
+
+### 2026-09-18：`Variables` 统一映射簇原生化批次
+
+本批以 `2b94dac2560558cff416463be83a1dcbedf19a65` 为前向基线，对照 canonical Java `Variables.java` 审查统一变量替换路径。Java 中 12 个具体构造点的声明均为 `Map<Term, Term>`，实现为 `LinkedHashMap`；`copyMapFrom` 保留两个 Map 的数组形状，并按源 Map 的 `keySet` 顺序逐项 `put` 到新 Map。本批只替换具体实现，不把 Map 改成数组、Set 或普通对象，也没有改动统一算法。
+
+- `src/language/Variables.ts`：12 个懒初始化、复制和默认参数构造点由 jree `LinkedHashMap` 改为 `NativeMap`；对外仍为 Java `Map<Term, Term>`，保留 Term 值相等查找、覆盖语义和插入顺序，并标注“Java 原类型 → NativeMap 实现”。
+- `test/node/variables-substitution.test.ts`：新增直接回归，验证替换路径懒初始化两个 NativeMap，并能以变量键取回绑定 Term。
+- M2：直接测试 `5/5`；串行统一单测 `260/260`，失败 0、跳过 0；`npm run typecheck` 使用显式 `--incremental false`，0 诊断；build、dist API、canonical local algorithm parity 均通过。
+- M1-：使用三次一致的 Java 功能冻结标杆，仅运行 TypeScript，单线程、cold、逐文件串行、244 个主资源（`single_step=215`、`multi_step=24`、`application=5`）`244/244` 通过；Java/TS diff、TS exception、marker missing、stall、process limit、not-run 和 performance warning 均为 0。243 个样本走 marker 路径；1 个 markerless 短运行未达到 131072 周期，因此不新增长周期证据。
+- M1- 证据位于项目外：`g4-variables-map-m1-minus-20260917.jsonl`，SHA-256 `6683B34AB110404CE0DE9F82F7B0B8615BFD0D1E63902D4FCD9C43070C61352A`。TS 总耗时 `1,580,493 ms`，最长单文件 `324,434 ms`，最大 RSS `1,242,873,856 bytes`，推理周期合计 `2,288,254`；性能观测仅作为后续优化输入。
+- Java 标杆未变化：冻结 JSONL `g0-java-baseline-frozen-26772af-20260917.jsonl` SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。本批未启动 Java 全量矩阵，因为 artifact、源码/classes、依赖、夹具、runner 合同、JDK、线程和随机/配置均未变化；023/024 整体验收仍须现跑 Java 与冻结标杆逐字段核对。
+- 审计当前：生产 `src` 136 个文件，直接 jree 导入文件 `89`，`new LinkedHashMap=12`，`new LinkedHashSet=1`，`JavaObject=38` 个文件，`Java util=40` 个文件，`Java lang=87` 个文件，`Java String=52` 个文件；迁移模式扫描 227 个文件，malformed generic/operator/new-this/constructor-delegation 均为 0，platform findings 为 0。
+
+本批可以宣称：`Variables` 统一 Map 实现已按 Java Map 合同原生化，并通过直接回归、M2 和冻结 Java 标杆 M1- 保护。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 在本批重跑通过、markerless 131072 周期等价、Java/TypeScript 性能等价或正式发布。阶段细节见 [Variables 统一映射批次报告](../reports/20260917-232955.md)。
