@@ -1,5 +1,5 @@
 //! Java source: opennars/io/events/AnswerHandler.java
-import { java, JavaObject } from "jree";
+import { java } from "jree";
 import { Events } from "./Events.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
 import type { Task } from "../../entity/Task.ts";
@@ -15,7 +15,9 @@ const Answer = Events.Answer;
 /**
  *
  */
-export abstract class AnswerHandler extends JavaObject implements EventObserver {
+// Java source declares AnswerHandler without a specialized parent.  Its
+// observable contract is the Answer event subscription and Task equality.
+export abstract class AnswerHandler implements EventObserver {
 
     private question!: Task;
     private nar!: Nar;
@@ -40,7 +42,7 @@ export abstract class AnswerHandler extends JavaObject implements EventObserver 
         if (event === Answer.class) {
             let task: Task = args[0] as unknown as Task;
             let belief: Sentence = args[1] as unknown as Sentence;
-            if (task.equals(this.question as unknown as JavaObject)) {
+            if (task.equals(this.question)) {
                 this.onSolution(belief);
             }
         }

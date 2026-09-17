@@ -12,8 +12,10 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const { Stamp } = await import("../../src/entity/Stamp.ts");
     const { Tense } = await import("../../src/language/Tense.ts");
     const { Parameters } = await import("../../src/main/Parameters.ts");
+    const { AnswerHandler } = await import("../../src/io/events/AnswerHandler.ts");
 
     const parameters = new Parameters();
+    assert.equal(Object.getPrototypeOf(AnswerHandler.prototype), Object.prototype);
     const term = Term.get("A");
     const truth = TruthValue.fromFrequencyConfidence(0.7, 0.6, parameters);
     const stamp = new Stamp(0, Tense.Present, new Stamp.BaseEntry(0, 1), parameters.DURATION);

@@ -662,3 +662,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 对照 canonical Java `EventHandler.java` 后，试验性移除其 `JavaObject` 外壳触发非增量 `tsc` 反证：`OutputHandler.class` 依赖从 `JavaObject` 继承的静态类 token，`TextOutputHandler` 的 `Serializable` 结构依赖 `getClass()`，测试层 `OutputCondition` 也依赖该继承链。试改已撤回，G5 提交 `2365d0fbf020172cfa0833371c444edcc35ed3cc` 保持干净，未将该候选标记为完成。
 
 该类不能按“Java 没有显式父类”单独迁移；后续必须先设计并验证原生运行时类身份/marker 方案，再处理 `EventHandler`、`OutputHandler` 与测试工具的完整继承链。本次只记录为已解释的边界，不改变 023/024 的完成状态或 Java 标杆。
+
+### 2026-09-18：G7 `AnswerHandler` 隐式 `Object` 壳批次
+
+本批以 G6 审查记录后的干净提交 `27a34c6` 为基线，对照 canonical Java `AnswerHandler.java`。Java 类没有专用父类；当前 TS 消费面只有两个业务子类，没有 `AnswerHandler.class`、`getClass()` 或 `instanceof AnswerHandler`。与 `EventHandler` 不同，本批没有发现它参与公共事件类身份继承链，因此可以只移除外层 `JavaObject`。
+
+- `src/io/events/AnswerHandler.ts`：删除 `JavaObject` 继承和导入；保留 `EventObserver`、`Events.Answer.class`、Java `Object[]` 事件边界，以及 `Task.equals` 的值相等逻辑。
+- `test/node/core-runtime.test.ts`：增加 `AnswerHandler.prototype` 直接继承 `Object.prototype` 的回归断言。
+- M2：定向核心/事件回归 `41/41`；统一串行单测 `261/261`，失败 `0`、跳过 `0`；显式非增量 `tsc` 为 `0` 诊断；local canonical parity `ok=true`、`differences=[]`；build、dist API、release 均通过，`runtimeWarnings=none`。
+- 受影响 NAL：`nal1.5.nal` 使用 TS-only 与冻结 Java 标杆运行，`1/1` 通过，marker 匹配；异常、stall、not-run 和 marker missing 均为 `0`。
+- jree 审计相对 G5：JavaObject 文件 `33→32`；直接 jree 导入文件 `88`、`java.util` 文件 `39`、`new LinkedHashMap=11`、`new LinkedHashSet=1`；迁移扫描 `227` 个文件，jree-runtime-type `1714`，malformed generic/operator/new-this/constructor-delegation 均为 `0`；平台、汉字编码和 diff 检查通过。
+- M1-/#245：本批未运行。改动只触及没有类身份消费面的继承壳，未改变事件 token、Task/Sentence 判等、集合、预算/浮点、推理调度、Java artifact 或 runner；完整串行 M2、local parity 和受影响 NAL smoke 已提供局部保护。后续若触及公共事件身份、集合或推理算法，应重新评估 M1-。
+
+本批可以宣称：`AnswerHandler` 的 Java 隐式 `Object` 壳已原生化，并经直接原型回归、M2、local parity 和受影响 NAL smoke 保护。普通批次继续在 Java artifact、源码/classes/test-classes、依赖、夹具、runner 合同、JDK、线程/随机条件和配置不变时复用冻结 Java 标杆；023/024 整体验收仍需现跑 canonical Java 并核对标杆一致。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。
