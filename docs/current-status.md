@@ -276,6 +276,19 @@
 
 本批代码、测试和阶段报告已由 `84806c2 refactor(023): 原生化 Item 文本拼接边界` 提交并推送到 `origin/main`；本状态补录提交状态。`v0.1.0` 未移动。023/024、正式性能门和发布门仍未完成。
 
+### 当前候选：`TermLink` 前缀文本原生化（2026-09-17）
+
+本批承接远端 `45bcef9`，继续对早期迁移提交做前向审查。Java canonical 未改变：源码 commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+
+- `TermLink.newKeyPrefix()` 的 Java 返回类型是 `CharSequence`，实现是局部 `StringBuilder`；唯一调用点是 `TermLink.toString()` 的立即拼接。TypeScript 现使用原生文本和 `join("-")`，保持组件/复合标记、类型号、索引顺序、radix-16 小写格式和空索引行为。
+- `TermLink.toString()` 同步使用原生字符串组合，并通过 `javaStringValue` 保留 target 的 Java 对象字符串边界；没有改动 equality、hashCode 或规则派发。
+- 本批回读 `b9e1407` 的 TermLink 字符串边界修复，并与此前 `84806c2` 的 Item 输出合同保持一致；历史 `Set/List/Map/Deque` 仍按各自 Java 抽象审查，不套用字符串模板。
+- M2：`termlink-string.test.ts` `1/1`，统一串行单测 `238/238`，显式非增量 `tsc` `0` 诊断，build、dist API、canonical local parity、`nal8.add.nal` smoke 均通过。
+- 当前 jree 审计：生产直接导入文件 `95`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=21`、`javaStringFiles=52`、`semanticReviewItems=107`、`candidateNativeItems=68`；迁移扫描 `224` 文件，jree runtime type `1772/144`。本批不是 023 完成。
+- 本批不运行 M1-/#245：这是局部文本合同簇，已有直接回归、局部 parity 和 NAL smoke；涉及共享输出、集合/Map、运行时类型或推理调度的责任簇仍须按规模重新决定 M1-。
+
+本批代码、测试和阶段报告待提交后补录提交哈希；`v0.1.0` 不移动。023/024、正式性能门和发布门仍未完成。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：

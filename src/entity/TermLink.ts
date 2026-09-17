@@ -228,34 +228,28 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
     public toString(): string {
         // Java source return type: String; new StringBuilder().append(newKeyPrefix()).append(
         //              target != null ? target.name() : "").toString();
-        return javaStringValue(
-            new java.lang.StringBuilder().append(this.newKeyPrefix()).append(
-                this.target !== null ? this.target.name() : S``).toString()
-        );
+        const targetText = this.target !== null ? javaStringValue(this.target.name()) : "";
+        return `${this.newKeyPrefix()}${targetText}`;
     }
 
-    public newKeyPrefix(): java.lang.CharSequence {
-        let at1: java.lang.String;
-        let at2: java.lang.String;
+    public newKeyPrefix(): string {
+        // Java source type: CharSequence built by a local StringBuilder.
+        // The builder is immediately consumed by toString(), so native text
+        // plus join preserves the same value without retaining a jree object.
+        let at1: string;
+        let at2: string;
         if ((this.type % 2) === 1) { // to component
-            at1 = S`${Symbols.TO_COMPONENT_1}`;
-            at2 = S`${Symbols.TO_COMPONENT_2}`;
+            at1 = Symbols.TO_COMPONENT_1;
+            at2 = Symbols.TO_COMPONENT_2;
         } else { // to compound
-            at1 = S`${Symbols.TO_COMPOUND_1}`;
-            at2 = S`${Symbols.TO_COMPOUND_2}`;
+            at1 = Symbols.TO_COMPOUND_1;
+            at2 = Symbols.TO_COMPOUND_2;
         }
-        let MAX_INDEX_DIGITS: int = 2;
-        let estimatedLength: int = 2 + 2 + 1 + MAX_INDEX_DIGITS * ((this.index !== null ? this.index.length : 0) + 1);
-        let prefix: java.lang.StringBuilder = new java.lang.StringBuilder(estimatedLength);
-        prefix.append(at1).append('T').append(this.type);
-        if (this.index !== null) {
-            for (let i of this.index) {
-                prefix.append('-').append(java.lang.Integer.toString(i + 1, 16 /** hexadecimal */
-                ));
-            }
-        }
-        prefix.append(at2);
-        return prefix;
+        const indexText = this.index === null
+            ? ""
+            : Array.from(this.index, (i) => (i + 1).toString(16)).join("-");
+        const indexSuffix = indexText.length === 0 ? "" : `-${indexText}`;
+        return `${at1}T${this.type}${indexSuffix}${at2}`;
     }
 
     /**
