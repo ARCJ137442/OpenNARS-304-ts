@@ -656,3 +656,9 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - M1-/#245：本批未运行。只移除了事件容器的隐式 Object 壳，没有改变事件 token、订阅顺序、observer identity、推理算法、runner 或 Java artifact；定向事件合同、完整串行 M2、local parity 和受影响 NAL smoke 已覆盖。后续若触及 `Events` token、事件 payload、集合实现或推理调度，应重新评估 M1-。
 
 本批可以宣称：`EventEmitter` 已脱离隐式 `JavaObject` 继承，并经事件合同、M2、local parity 和受影响 NAL smoke 保护。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。普通 023 批次继续在 Java artifact、源码/classes/test-classes、依赖、夹具、runner 合同、JDK、线程/随机条件和配置均不变时复用冻结 Java 标杆；023/024 整体验收仍需现跑 canonical Java 并逐字段核对标杆一致。
+
+### 2026-09-18：`EventHandler` 候选前向审查（保留未迁移）
+
+对照 canonical Java `EventHandler.java` 后，试验性移除其 `JavaObject` 外壳触发非增量 `tsc` 反证：`OutputHandler.class` 依赖从 `JavaObject` 继承的静态类 token，`TextOutputHandler` 的 `Serializable` 结构依赖 `getClass()`，测试层 `OutputCondition` 也依赖该继承链。试改已撤回，G5 提交 `2365d0fbf020172cfa0833371c444edcc35ed3cc` 保持干净，未将该候选标记为完成。
+
+该类不能按“Java 没有显式父类”单独迁移；后续必须先设计并验证原生运行时类身份/marker 方案，再处理 `EventHandler`、`OutputHandler` 与测试工具的完整继承链。本次只记录为已解释的边界，不改变 023/024 的完成状态或 Java 标杆。
