@@ -1,4 +1,5 @@
-const nativeValuesEqual = (stored: unknown, searched: unknown): boolean => {
+/** Java Object.equals lookup with the searched value as receiver. */
+export const javaValueEquals = (stored: unknown, searched: unknown): boolean => {
     if (Object.is(stored, searched)) {
         return true;
     }
@@ -77,7 +78,7 @@ export class NativeSet<T> implements Iterable<T> {
     }
 
     public contains(value: T): boolean {
-        return this.items.some((candidate) => nativeValuesEqual(candidate, value));
+        return this.items.some((candidate) => javaValueEquals(candidate, value));
     }
 
     /**
@@ -120,7 +121,7 @@ export class NativeSet<T> implements Iterable<T> {
     }
 
     public remove(value: T): boolean {
-        const index = this.items.findIndex((candidate) => nativeValuesEqual(candidate, value));
+        const index = this.items.findIndex((candidate) => javaValueEquals(candidate, value));
         if (index < 0) {
             return false;
         }

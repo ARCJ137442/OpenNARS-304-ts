@@ -14,6 +14,7 @@ import type { TermLink } from "../entity/TermLink.ts";
 import { javaStringHashCode, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
 import { NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
+import { NativeMap } from "../runtime/NativeMap.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -600,7 +601,9 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      */
     public countTermRecursively(map: java.util.Map<Term, java.lang.Integer> | null): java.util.Map<Term, java.lang.Integer> {
         if (map === null) {
-            map = new java.util.LinkedHashMap<Term, java.lang.Integer>();
+            // Java original type: LinkedHashMap<Term, Integer>. Keep the
+            // public Map contract while using the native ordered Map here.
+            map = new NativeMap<Term, java.lang.Integer>() as unknown as java.util.Map<Term, java.lang.Integer>;
         }
         map.put(this, java.lang.Integer.valueOf(map.getOrDefault(this, java.lang.Integer.valueOf(0)).valueOf() + 1));
         for (let term of this.term) {

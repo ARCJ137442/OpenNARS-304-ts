@@ -504,3 +504,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 本批未运行 M1- 或 #245：这是六个无实例消费的继承壳小簇，已有直接合同、串行 M2、local parity 和受影响 NAL smoke；涉及共享领域集合、推理调度、公共 API 或运行时类身份的后续簇必须重新评估 M1-。
 
 本批可以宣称：上述六个历史 JavaObject 标记性继承点已在 023 下原生化，并通过局部回归、M2 和三个受影响 NAL 的冻结标杆对照。不能宣称：023/024 完成、jree runtime 已移除、M1/#245 在本批重新全量通过、性能等价或正式发布。阶段细节见 [Java 隐式 Object 标记性继承批次报告](../reports/20260917-194533.md)。
+
+### 2026-09-17：`Map<Term, Integer>` 计数簇原生化
+
+本批继续沿“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”做 023 的历史前向审查。对照 canonical Java，确认 `Term.countTermRecursively`、`CompoundTerm.countTermRecursively` 和 `Variable.countTermRecursively` 的原始类型都是 `Map<Term, Integer>`，且首次创建时具体实现为 `LinkedHashMap`。其中 `Term`/`CompoundTerm` 按 Java `equals` 累加值，`Variable` 只创建并传递累加器、不计数。此前 TS 的前状态是 `new java.util.LinkedHashMap`；本批后状态是项目内 `NativeMap<Term, java.lang.Integer>`，对外方法签名仍为 Java `Map<Term, Integer>`。
+
+新增的 `src/runtime/NativeMap.ts` 保留 Map 的独立抽象，不以数组或 List 冒充 Map：查找以被搜索键的 Java `equals` 为准；相等键替换时保留首个键和原插入位置；`keySet`、`entrySet`、`values` 是 live views；视图迭代器支持 `remove()` 和 fail-fast 检查。`NativeSet` 仅导出共享的 Java 值相等函数，未改变其 Set 语义。源码注释明确标出“Java `LinkedHashMap<Term,Integer>` → NativeMap”，没有迁移 Bag、变量替换 Map 或其他领域 Map。
+
+- 定向 NativeMap/core-runtime 回归：`40/40`，包含 equal-but-distinct key、替换顺序、null value、live view、iterator.remove、fail-fast、jree `LinkedHashMap` 对照和计数器实际返回类型。
+- M2：串行统一单测 `257/257`，失败 0、跳过 0；`npm run typecheck` 使用显式 `--incremental false` 为 0 诊断；build `sourceFileCount=135`、dist API 均通过。canonical local algorithm parity 为 `ok=true`、`differences=[]`，JAR SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- M1-：使用单线程、cold、逐文件串行、`--engine ts --java-baseline`，显式排除 #245 的 244 个主资源（`single_step=215`、`multi_step=24`、`application=5`），`functional_pass=244/244`；marker missing、TS exception、stall、process limit、performance warning、failed 均为 0。243 行走 marker 等价路径；1 行 markerless 短运行未达到 131072 周期，但不影响其功能通过，也不替代已有 markerless 长周期 digest 证据。
+- M1- 证据位于项目外归档：`g3-count-map-m1-minus-20260917.jsonl`，SHA-256 为 `5CDAD861753CF5E7A4E689DD389DE32212D183CCC33ECD262C259E7D39398737`；使用冻结 Java 标杆 `g0-java-baseline-frozen-26772af-20260917.jsonl`，其 SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，Java source commit 为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`。
+- 运行观测：M1- TS 总时长 `1,755,052 ms`，平均每文件约 `7,193 ms`，最大单文件 `389,509 ms`，最大 TS RSS `1,224,298,496 bytes`，推理周期合计 `2,288,254`。相对功能结论，这些只作为后续性能优化输入；本批没有把慢运行判为逻辑错误，也没有重新运行 Java 全量矩阵。
+- 去 jree 生产审计：`new LinkedHashMap` `35→32`；直接 jree 导入文件仍为 `89`，`new LinkedHashSet` 为 `1`，说明本批只完成一个明确 Map 计数簇，不代表 jree 已退场。迁移扫描更新为 226 个文件；malformed generic/operator/new-this/constructor-delegation 均为 0。
+
+本批可以宣称：计数算法的一个 `Map<Term,Integer>` 簇已按 Java 合同原生化，并通过局部合同、M2 与冻结 Java 标杆 M1- 保护矩阵；当前工作区仍可在此基础上继续下一类经 Java 合同确认的 jree 依赖。不能宣称：023 完成、全部生产 Map 已原生化、#245 在本批重新运行、Java/TypeScript 性能等价或正式发布。完整 023/024 验收时仍需重新运行 canonical Java，并与冻结标杆逐字段核对。

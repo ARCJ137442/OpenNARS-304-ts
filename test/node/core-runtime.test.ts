@@ -269,10 +269,12 @@ test("decimal perception coordinates remain conceptual like Java Term.get", asyn
 test("countTermRecursively accepts a null accumulator like Java", async () => {
     const { Inheritance } = await import("../../src/language/Inheritance.ts");
     const { Term } = await import("../../src/language/Term.ts");
+    const { NativeMap } = await import("../../src/runtime/NativeMap.ts");
 
     const term = Inheritance.make(Term.get("subject"), Term.get("predicate"));
     const counts = term.countTermRecursively(null);
 
+    assert.ok(counts instanceof NativeMap);
     assert.equal(counts.size(), 3);
     assert.equal(counts.get(term)?.valueOf(), 1);
     assert.equal(counts.get(Term.get("subject"))?.valueOf(), 1);
