@@ -904,3 +904,17 @@ test("Java implicit Object classes no longer carry a jree JavaObject base", asyn
     assert.equal(String(InstanceProperty.make(subject, predicate).toString()), "<{java-object-free-subject} --> [java-object-free-predicate]>");
     assert.equal(String(Property.make(subject, predicate).toString()), "<java-object-free-subject --> [java-object-free-predicate]>");
 });
+
+test("static Java utility classes no longer carry a jree JavaObject base", async () => {
+    const modules = await Promise.all([
+        import("../../src/control/concept/ProcessAnticipation.ts"),
+        import("../../src/control/concept/ProcessJudgment.ts"),
+        import("../../src/control/TemporalInferenceControl.ts"),
+        import("../../src/language/Terms.ts"),
+        import("../../src/language/Variables.ts"),
+    ]);
+    for (const module of modules) {
+        const type = Object.values(module)[0] as { prototype: object };
+        assert.equal(Object.getPrototypeOf(type.prototype), Object.prototype);
+    }
+});

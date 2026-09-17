@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Terms.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -113,7 +113,8 @@ const normalizeComponentForLinks = (term: Term): Term => {
  *
  * @author Patrick Hammer
  */
-export class Terms extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static utility namespace.
+export class Terms {
 
     private static runtime: TermsRuntime | null = null;
 

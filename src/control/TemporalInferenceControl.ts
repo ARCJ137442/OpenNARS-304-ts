@@ -1,5 +1,5 @@
 //! Java source: opennars/control/TemporalInferenceControl.java
-import { java, JavaObject } from "jree";
+import { java } from "jree";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Stamp } from "../entity/Stamp.ts";
@@ -24,7 +24,8 @@ import type { Memory } from "../storage/Memory.ts";
  *
  * @author Patrick Hammer
  */
-export class TemporalInferenceControl extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static utility namespace.
+export class TemporalInferenceControl {
     public static proceedWithTemporalInduction(newEvent: Sentence, stmLast: Sentence,
         controllerTask: Task, nal: DerivationContext, SucceedingEventsInduction: boolean,
         addToMemory: boolean, allowSequence: boolean): java.util.List<Task> | null {

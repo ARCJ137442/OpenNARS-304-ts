@@ -1,5 +1,5 @@
 //! Java source: opennars/control/concept/ProcessAnticipation.java
-import { java, JavaObject } from "jree";
+import { java } from "jree";
 import type { long, float, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { DerivationContext } from "../DerivationContext.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -35,7 +35,8 @@ import type { Parameters } from "../../main/Parameters.ts";
  *
  * @author Patrick Hammer
  */
-export class ProcessAnticipation extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static utility namespace.
+export class ProcessAnticipation {
 
     public static anticipate(nal: DerivationContext, mainSentence: Sentence, budget: BudgetValue,
         minTime: long, maxTime: long, urgency: float, substitution: java.util.Map<Term, Term>): void {

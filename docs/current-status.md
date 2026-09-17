@@ -113,6 +113,14 @@
 
 因此，当前可以继续 023/024 的低风险、单簇、可回归工作；本候选可以宣称 M2 与 M1- 保护门重新闭环，并已将 `Concept`、`DerivationContext`、`TemporalRules` 和 `CompoundTerm` 的局部列表责任逐步收窄到原生实现，但不能把未重新执行的完整 M1/#245 说成当前候选的全量通过，也不能宣称 023 已完成、jree 已退场、正式发布或 Java/TypeScript 性能等价。性能优化应与后续逻辑迁移分开。
 
+### 2026-09-17：静态工具类 JavaObject 标记壳批次
+
+本批在既有 023 里程碑下继续做前向审查。对照 canonical Java 的类声明和 TypeScript 调用点，确认 `ProcessAnticipation`、`ProcessJudgment`、`TemporalInferenceControl`、`Terms`、`Variables` 均只有静态方法；Java 源码没有显式父类，TypeScript 的 `extends JavaObject` 只是转写标记。没有发现这些类被实例化、用于 `instanceof` 或作为 `.class` 运行时身份，因此只移除继承壳，保留它们对 jree 中真实 Java 类型、异常和事件类的使用。`ProcessQuestion` 因仍以 `JavaObject` 作为事件参数兼容类型，本批明确保留。
+
+新增 `core-runtime` 原型回归，确认 5 个静态工具类直接继承 `Object.prototype`；此前 6 个标记类回归继续通过。串行单测 `252/252`，非增量 `tsc=0`，build `134` 源文件、dist API、canonical local parity 和 `toothbrush.nal` 的 TS-only 冻结标杆 smoke 均通过；该 smoke 使用 `g0-java-baseline-26772af-20260917`（baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`），没有重复启动 Java。本批按“纯静态类壳”低风险口径未运行 M1- 或 #245。
+
+生产 jree 审计（去除注释后的 summary）为：直接 jree 导入文件 `89`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=1`、`javaObjectFiles=42`；迁移扫描为 `224` 文件、`jree-runtime-type=1727/145`。这些下降只反映静态类壳和 import 的移除，不代表 jree compatibility、领域 Map/Set、运行时类身份或 023 已完成。下一批应继续按层审查 inference rule static shell，仍需避免把推理语义修改与壳迁移混在一起。
+
 上一批 `2465dcd` 将 `Concept` 六组列表收窄为 `NativeList`；随后 `cb4c60a` 处理 `DerivationContext.doublePremiseTask`，`b4c0a21` 处理 `TemporalRules.temporalInduction`，本批 `9d4cc87` 处理 `CompoundTerm` 三处局部列表并补齐 `NativeList.remove(Object)`。当前本批 M2 为非增量 `tsc=0`、串行单测 `225/225`、build/API/local parity 全部通过；M1- 为 `244/244`，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run、0 Java/TS diff。M1- 逐行总时长为 `1,957,134 ms`，相对上一批 `2,028,815 ms` 减少 `71,681 ms`（`3.53%`），TS 最大 RSS 为 `1,345,036,288 bytes`，相对上一批 `1,478,266,880 bytes` 减少 `133,230,592 bytes`（`9.01%`）；这些数字记录为本轮测量结果，不等同于性能优化结论。相对完整 M1 `4,231,370 ms`，M1- 排除 #245 节省 `2,274,236 ms`（`53.75%`）；完整 M1 的 #245 仍按独立长期稳定性证据管理。
 
 ### 冻结后阶段增量与去 jree 具体范围

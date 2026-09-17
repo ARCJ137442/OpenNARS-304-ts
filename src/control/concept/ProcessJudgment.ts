@@ -1,5 +1,5 @@
 //! Java source: opennars/control/concept/ProcessJudgment.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
@@ -33,7 +33,8 @@ const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): java.
 
 
 
-export class ProcessJudgment extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static utility namespace.
+export class ProcessJudgment {
     /**
      * To accept a new judgment as belief, and check for revisions and solutions.
      * Revisions will be processed as judgment tasks by themselves.

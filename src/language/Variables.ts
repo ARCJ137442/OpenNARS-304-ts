@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Variables.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Variable } from "./Variable.ts";
@@ -24,7 +24,8 @@ import type { JavaChar } from "../runtime/jree-compat.ts";
  *
  * @author Patrick Hammer
  */
-export class Variables extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static utility namespace.
+export class Variables {
 
     /**
      * map is a 2-element array of Map<Term,Term>. it may be null, in which
