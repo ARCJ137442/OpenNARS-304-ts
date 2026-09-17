@@ -242,7 +242,7 @@
 - `a89d003` 的 `TemporalInferenceControl` 两个尝试集合原始 Java 类型是 `Set<Task> = LinkedHashSet`，本批同步改为 `NativeSet<Task>`。
 - `NativeList`、`NativeSortedSet`、`NativeDeque`、Map 文本索引/对象身份辅助索引、数组队列和字符串缓冲已逐项核对；截至本批没有发现第二个已证实的 Map/Deque/字符串容器错配。`StringBuilder` 后续仅在确认纯文本拼接语义后按模板字符串/`join` 改写，并保留 Java 来源与格式注释。
 
-本批增加 `NativeSet` 的 Java equals 接收者方向回归，并命中 Stamp/ProcessGoal/Temporal 三条业务路径；按局部小簇策略运行针对性单测、串行 M2、显式非增量 typecheck、build/API、局部 parity 与受影响 NAL，不运行 M1-/#245。代码与报告提交前不能宣称该修正已进入远端稳定状态。
+本批增加 `NativeSet` 的 Java equals 接收者方向回归，并命中 Stamp/ProcessGoal/Temporal 三条业务路径；按局部小簇策略运行针对性单测、串行 M2、显式非增量 typecheck、build/API、局部 parity 与受影响 NAL，不运行 M1-/#245。代码与报告已提交为 `7b9f1d4`，但推送 `origin/main` 首次因 GitHub HTTPS Schannel TLS 握手失败，尚不能宣称该修正已进入远端稳定状态。
 
 ## 平台中立与发布冻结状态
 
