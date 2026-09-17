@@ -37,7 +37,14 @@ import { TemporalRules } from "./TemporalRules.ts";
 import { TruthFunctions } from "./TruthFunctions.ts";
 import type { DerivationContext } from "../control/DerivationContext.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { NativeMap } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
+
+// Java 原类型：Map<Term, Term>，实现类型：LinkedHashMap。
+// These local substitution tables keep the Java Map boundary while using the
+// native ordered implementation for their short-lived inference state.
+const nativeTermMap = (): java.util.Map<Term, Term> =>
+    new NativeMap<Term, Term>() as unknown as java.util.Map<Term, Term>;
 
 export type Pair<L, R> = {
     getLeft(): L;
@@ -586,13 +593,13 @@ export class CompositionalRules {
         let P1: Term = T2.getPredicate();
         let P2: Term = T1.getPredicate();
 
-        let res1: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
+        let res1: java.util.Map<Term, Term> = nativeTermMap();
         let
-            res2: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
+            res2: java.util.Map<Term, Term> = nativeTermMap();
         let
-            res3: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
+            res3: java.util.Map<Term, Term> = nativeTermMap();
         let
-            res4: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
+            res4: java.util.Map<Term, Term> = nativeTermMap();
 
         if (figure === 21) {
             Variables.findSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT, P1, S2, res1, res2);
@@ -833,7 +840,7 @@ export class CompositionalRules {
         if (!validForIntroduction) {
             return result;
         }
-        let app: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
+        let app: java.util.Map<Term, Term> = nativeTermMap();
         const candidates = new NativeSet<Term>();
         if (implicationEquivalenceOrJunction instanceof Implication
             || implicationEquivalenceOrJunction instanceof Equivalence) {
@@ -886,7 +893,7 @@ export class CompositionalRules {
         }
         const powerset = CompositionalRules.powerSet(selected);
         for (let combo of powerset) {
-            let mapping: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
+            let mapping: java.util.Map<Term, Term> = nativeTermMap();
             for (let vIntro of combo) {
                 mapping.put(vIntro, app.get(vIntro) as unknown as Term);
             }

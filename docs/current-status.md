@@ -532,3 +532,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计前→后（相对 `df7ba35`）：`new LinkedHashMap` `32→30`，直接 jree 导入文件仍为 `89`；当前扫描为 227 个文件，`semanticReviewItems=99`、`candidateNativeItems=2`。这说明本批只移除两个明确构造点，不代表生产 jree 已退场。
 
 本批可以宣称：`Nar.sensoryChannels` 的 Map 簇已在 023 下原生化，并通过直接合同、M2 与冻结 Java 标杆 M1- 保护。仍不能宣称：023/024 完成、#245 在本批重跑通过、markerless 长周期在本批重新验证、生产核心完全去 jree、Java/TypeScript 性能等价或正式发布。日常批次继续复用冻结 Java 功能字段；023/024 整体验收时仍需现跑 canonical Java 并与标杆逐字段核对。
+
+### 2026-09-17：CompositionalRules 局部 Map 原生化批次
+
+本批以 `fdda235` 为前向基线，对照 canonical Java `CompositionalRules.java`，确认 `eliminateVariableOfConditionAbductive` 的 `res1`—`res4` 与 `introduceVariables` 的 `app`、`mapping` 都是方法内 `Map<Term,Term>`，具体实现为 `LinkedHashMap`。调用面仅包含 `put`、`get`、`clear`、`size`、`getOrDefault` 和有序 `keySet` 快照，没有把 Map 当作 List 或 Set 使用。
+
+- 以 `nativeTermMap()` 将六个构造点切换为 `NativeMap`，保持对外 Java `Map` 类型、Term 值相等查找、替换语义和插入顺序；注释记录 Java 原始类型与实现类型。
+- 新增 `CompositionalRules.introduceVariables` 直接回归：重复 subject 的变量引入结果与 Java 兼容文本及 penalty 均符合预期。统一串行单测 `259/259`，非增量 `tsc` 为 0 诊断，build、dist API、local algorithm parity 均通过。
+- M1- 使用 TS-only、单线程、cold、逐文件串行和冻结 Java 功能标杆，排除 #245 的 244 个主资源 `244/244` 通过；分层 `single_step=215`、`multi_step=24`、`application=5`。TS exception、marker missing、stall、process limit、not-run、performance warning 和功能失败均为 0。243 行走 marker 等价路线，1 行 markerless 短运行未到 131072 周期。
+- M1- 证据位于项目外：`g4-compositional-rules-m1-minus-20260917.jsonl`，SHA-256 为 `268BB09A2AE298A603295DD5934B7F98915B612C8172A5895EA1D6B2A48D3DB4`；冻结 Java 标杆 SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，Java artifact SHA-256 仍为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 运行观测：TS 总耗时 `1,587,700 ms`，最长单文件 `329,008 ms`，最大 RSS `1,270,341,632 bytes`，推理周期合计 `2,288,254`；这些数据只用于后续性能优化。
+- jree 审计前→后（相对 `fdda235`）：`new LinkedHashMap` `30→24`，直接 jree 导入文件仍为 `89`；平台审计扫描 172 个文件，迁移模式扫描 227 个文件，malformed 项均为 0。
+
+本批可以宣称：`CompositionalRules` 六个局部 `Map<Term,Term>` 构造点已按 Java Map 合同原生化，并通过直接回归、M2 与冻结 Java 标杆 M1- 保护。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 本批重跑通过、markerless 长周期在本批重新验证、Java/TypeScript 性能等价或正式发布。日常批次继续复用冻结 Java 功能字段；023/024 整体验收仍需现跑 canonical Java 并与标杆逐字段核对。
