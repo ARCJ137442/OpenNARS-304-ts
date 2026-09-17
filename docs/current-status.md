@@ -316,7 +316,7 @@
 - 审计前后：生产 `new LinkedHashSet` `13 → 12`，直接 jree 导入文件 `95 → 95`，`new LinkedHashMap` `35 → 35`；迁移扫描 collection-method `560 → 561` 是新增测试 `.size()` 带来的扫描计数变化，不是生产依赖增加。
 - 本批不运行 M1-/#245：该项是局部 Set 小簇，已有直接合同、串行 M2、local parity 和受影响 smoke；共享领域 Set/Map、迭代器或调度簇扩大时再按规模触发 M1-。
 
-本批可以宣称 `ProcessJudgment` 这一局部 Set 去 jree 化已验证；不能宣称 023/024 完成、jree 已移除、完整 M1/#245 本批重跑、Java/TypeScript 性能等价或正式发布。代码、测试、spec 状态说明和阶段报告待同一批提交并推送，`v0.1.0` 不移动。
+本批可以宣称 `ProcessJudgment` 这一局部 Set 去 jree 化已验证；不能宣称 023/024 完成、jree 已移除、完整 M1/#245 本批重跑、Java/TypeScript 性能等价或正式发布。代码与测试已由 `fb2a3c917f1bdcaa7bac4e53a33e42431fdc8846` 提交并推送，状态说明与阶段报告随后补录，`v0.1.0` 不移动。
 
 ## 平台中立与发布冻结状态
 
