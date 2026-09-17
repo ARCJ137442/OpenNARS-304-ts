@@ -30,12 +30,29 @@ import { JavaIllegalAccessError, javaStringValue } from "../../runtime/jree-comp
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
 import { NativeList } from "../../runtime/NativeList.ts";
+import { NativeMap } from "../../runtime/NativeMap.ts";
 import { NativeSet } from "../../runtime/NativeSet.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 
 const revisable = LocalRules.revisable;
 const revision = LocalRules.revision;
 const trySolution = LocalRules.trySolution;
+
+/**
+ * Java 原类型：Map<K, V>；ProcessGoal 中的实现类型：LinkedHashMap<K, V>。
+ * NativeMap 只替换具体实现，保留 Map 的 key equals、替换值和插入顺序契约。
+ * Java 的 LinkedHashMap(Map) 复制构造也必须按 entrySet() 复制，不能把 Java
+ * Map 当成 JavaScript 的键值对象或假定它可直接解构为二元组。
+ */
+const nativeJavaMap = <K, V>(source?: java.util.Map<K, V>): java.util.Map<K, V> => {
+    const map = new NativeMap<K, V>();
+    if (source !== undefined && source !== null) {
+        for (const entry of source.entrySet()) {
+            map.put(entry.getKey(), entry.getValue());
+        }
+    }
+    return map as unknown as java.util.Map<K, V>;
+};
 
 
 
@@ -300,7 +317,7 @@ export class ProcessGoal {
                 // check whether the conclusion matches
                 if (Variables.findSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,
                     (precon.sentence.term as Implication).getPredicate(), projectedGoal.term,
-                    new java.util.LinkedHashMap(), new java.util.LinkedHashMap())) {
+                    nativeJavaMap<Term, Term>(), nativeJavaMap<Term, Term>())) {
                     for (let precondition of get_concept.general_executable_preconditions) {
                         generalPreconditions.push(precondition);
                         useful_component = true;
@@ -315,7 +332,10 @@ export class ProcessGoal {
         // 2. Accumulate all general preconditions of itself too and create list for
         // anticipations
         generalPreconditions.push(...concept.general_executable_preconditions);
-        let anticipationsToMake: java.util.Map<Operation, ProcessGoal.ExecutablePrecondition[]> = new java.util.LinkedHashMap();
+        // Java 原类型：Map<Operation, List<ExecutablePrecondition>>；实现类型：LinkedHashMap。
+        // Keep Map explicit; NativeMap provides Java equals-based Operation keys and order.
+        let anticipationsToMake: java.util.Map<Operation, ProcessGoal.ExecutablePrecondition[]> =
+            nativeJavaMap<Operation, ProcessGoal.ExecutablePrecondition[]>();
         // 3. For the more specific hypotheses first and then the general
         for (let table of [concept.executable_preconditions, generalPreconditions]) {
             // 4. Apply choice rule, using the highest truth expectation solution and
@@ -395,23 +415,26 @@ export class ProcessGoal {
             for (let l of CompoundTerm.extractIntervals(nal.memory, precTerm)) {
                 prec_intervals.push(Float32Math.from(Number(l)) as float);
             }
-            let subsconc: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
+            // Java 原类型：Map<Term, Term>；实现类型：LinkedHashMap。
+            let subsconc: java.util.Map<Term, Term> = nativeJavaMap<Term, Term>();
             let conclusionMatches: boolean = Variables.findSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,
                 CompoundTerm.replaceIntervals((t.getTerm() as Implication).getPredicate()),
-                CompoundTerm.replaceIntervals(projectedGoal.getTerm()), subsconc, new java.util.LinkedHashMap());
+                CompoundTerm.replaceIntervals(projectedGoal.getTerm()), subsconc, nativeJavaMap<Term, Term>());
             // ok we can look now how much it is fullfilled
             // check recent events in event bag
-            let subsBest: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
+            // Java 原类型：Map<Term, Term>；实现类型：LinkedHashMap。
+            let subsBest: java.util.Map<Term, Term> = nativeJavaMap<Term, Term>();
             /* synchronized (concept.memory.seq_current) { */
             for (let p of concept.memory.seq_current) {
                 if (p.sentence.isJudgment() && !p.sentence.isEternal()
                     && p.sentence.getOccurrenceTime() > newesttime
                     && p.sentence.getOccurrenceTime() <= nal.time.time()) {
-                    let subs: java.util.Map<Term, Term> = new java.util.LinkedHashMap(subsconc);
+                    // Java 原类型：Map<Term, Term>；实现类型：LinkedHashMap(Map) 复制构造。
+                    let subs: java.util.Map<Term, Term> = nativeJavaMap(subsconc);
                     let preconditionMatches: boolean = Variables.findSubstitute(nal.memory.randomNumber,
                         Symbols.VAR_INDEPENDENT,
                         CompoundTerm.replaceIntervals(precondition),
-                        CompoundTerm.replaceIntervals(p.sentence.term), subs, new java.util.LinkedHashMap());
+                        CompoundTerm.replaceIntervals(p.sentence.term), subs, nativeJavaMap<Term, Term>());
                     if (preconditionMatches && conclusionMatches) {
                         let pNew: Task = new Task(p.sentence.clone(), p.getBudget().clone(),
                             p.isInput() ? Task.EnumType.INPUT : Task.EnumType.DERIVED);

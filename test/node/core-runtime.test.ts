@@ -565,6 +565,89 @@ test("ProcessGoal keeps the native general-precondition buffer iterable", async 
     }
 });
 
+test("ProcessGoal keeps temporary substitution maps as native Map implementations", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { Concept } = await import("../../src/entity/Concept.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+    const { ProcessGoal } = await import("../../src/control/concept/ProcessGoal.ts");
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Task } = await import("../../src/entity/Task.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Conjunction } = await import("../../src/language/Conjunction.ts");
+    const { Implication } = await import("../../src/language/Implication.ts");
+    const { Interval } = await import("../../src/language/Interval.ts");
+    const { TemporalRules } = await import("../../src/inference/TemporalRules.ts");
+    const { Variables } = await import("../../src/language/Variables.ts");
+    const { NativeMap } = await import("../../src/runtime/NativeMap.ts");
+
+    const nar = new Nar();
+    const variablesRuntime = Variables as unknown as {
+        findSubstitute: (...args: unknown[]) => boolean;
+    };
+    const originalFindSubstitute = variablesRuntime.findSubstitute;
+    const observedMaps: unknown[] = [];
+    variablesRuntime.findSubstitute = (...args: unknown[]) => {
+        for (const candidate of args.slice(4)) {
+            if (candidate !== null && typeof candidate === "object"
+                && typeof (candidate as { entrySet?: unknown }).entrySet === "function") {
+                observedMaps.push(candidate);
+            }
+        }
+        return originalFindSubstitute(...args);
+    };
+
+    try {
+        const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+        const concept = new Concept(
+            new BudgetValue(0.5, 0.5, 0.5, nar.narParameters),
+            Term.get("native-map-process-goal"),
+            nar.memory,
+        );
+        const stamp = new Stamp(nar, nar.memory);
+        const projectedGoal = new Sentence(
+            Term.get("native-map-goal"),
+            "!",
+            null,
+            stamp,
+        );
+        const preconditionTerm = Conjunction.make([
+            Term.get("native-map-condition"),
+            Term.get("native-map-operation"),
+            new Interval(1n),
+        ], TemporalRules.ORDER_FORWARD);
+        const precondition = Implication.make(
+            preconditionTerm,
+            projectedGoal.term,
+            TemporalRules.ORDER_FORWARD,
+        );
+        assert.ok(precondition !== null);
+        concept.general_executable_preconditions.add(new Task(
+            new Sentence(
+                precondition,
+                ".",
+                null,
+                stamp,
+            ),
+            new BudgetValue(0.5, 0.5, 0.5, nar.narParameters),
+            Task.EnumType.INPUT,
+        ));
+
+        assert.doesNotThrow(() => ProcessGoal.bestReactionForGoal(
+            concept,
+            context,
+            projectedGoal,
+            concept.general_executable_preconditions.get(0),
+        ));
+        assert.ok(observedMaps.length > 0);
+        assert.equal(observedMaps.every((candidate) => candidate instanceof NativeMap), true);
+    } finally {
+        variablesRuntime.findSubstitute = originalFindSubstitute;
+        nar.stop();
+    }
+});
+
 test("FunctionOperator emits native array feedback through Operator.call", async () => {
     const { Add } = await import("../../src/operator/misc/Add.ts");
     const { Nar } = await import("../../src/main/Nar.ts");

@@ -717,6 +717,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 
 当前可以宣称：`cb32ed8` 的 244 个普通主资源与额外夹具在本次串行 Java/TypeScript 对照中通过，M2 工程门通过。当前不能宣称：本次 raw 245+1 矩阵全绿、#245 markerless 长周期等价、023/024 完成、生产核心 jree 清零、Java/TypeScript 性能等价或正式发布。
 
+### 2026-09-18：ProcessGoal 临时 Map 原生化
+
+本批对照 canonical Java `ProcessGoal.java` 审查了 8 个临时 `LinkedHashMap`：`Map<Term,Term>` 替换映射、以及 `Map<Operation,List<ExecutablePrecondition>>` 预测聚合。TypeScript 保留两个 `java.util.Map` 抽象边界，改用项目 `NativeMap`；Java `LinkedHashMap(Map)` 复制构造通过 `entrySet()` 显式复制，未把 Map 改成对象、数组或仅按 JS 引用身份判等。
+
+- 直接回归：ProcessGoal Map 路径 `4/4`；统一串行 M2 `277/277`，失败/跳过 `0/0`。
+- M2：非增量 `tsc=0`，build、dist API、release 通过，runtime warnings 为 `none`；canonical 局部 parity `differences=[]`。
+- TS-only M1-：`244/244`，分层 `single_step=215`、`multi_step=24`、`application=5`；`exception=0`、`marker_missing=0`、`timeout=0`、`not_run=0`、Java/TS diff `0`。本批复用冻结 Java JSONL，未启动 Java。
+- 本批 M1- 结果文件在项目外归档：`m1-minus-processgoal-nativemap-20260918.jsonl`，SHA-256 为 `D7D5D68739AEDD1724D5348A85127B5DBBCEF09A10446922FCDEED62AFDF8F4A`；TS 总时长 `1,700,616 ms`，总推理周期 `2,288,254`，约 `0.743 ms/周期`，峰值 RSS `1,245,339,648 bytes`。性能数值仅作后续观测，不作为本批优化结论。
+- jree 构造前→后：`ProcessGoal` 的 `new LinkedHashMap` `8→0`；生产剩余 `new LinkedHashMap=3`（Bag 2、Anticipate 1）。023 仍为 `in-progress`。
+
+本批可以宣称：ProcessGoal 临时 Map 实现已原生化，并在局部合同、M2 与 M1- 上通过。当前不能宣称：023 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。普通局部批次在 canonical JAR、依赖、夹具、runner 合同、JDK、单线程设置、随机/周期/配置不变时继续只运行 TS 并复用冻结 Java 标杆；spec/阶段验收或任一基线不变量变化时才现跑 Java 并逐字段核对。:codex-annotation{index="1"}
+
 ### 2026-09-18：统一串行测试入口补齐 `TLink`
 
 本批只修正 M2 测试发现范围，不改变推理代码、Java artifact 或 runner 语义。`package.json` 的 `test:unit:serial` 由 `test/node/*.test.ts` 扩展为同时捕获 `test/entity/*.test.ts`，使已有的 `test/entity/TLink.test.ts` 15 项合同测试进入统一入口。
