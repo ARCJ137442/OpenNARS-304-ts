@@ -23,7 +23,7 @@
         "test": "npm run test:unit:serial",
         "typecheck": "tsc --noEmit --pretty false --incremental false",
         "test:unit": "node --import ./scripts/register-ts-loader.mjs --test --experimental-strip-types test/node/*.test.ts",
-        "test:unit:serial": "node --import ./scripts/register-ts-loader.mjs --test --test-concurrency=1 --experimental-strip-types test/node/*.test.ts",
+        "test:unit:serial": "node --import ./scripts/register-ts-loader.mjs --test --test-concurrency=1 --experimental-strip-types test/node/*.test.ts test/entity/*.test.ts",
         "test:serial": "npm run test:unit:serial",
         "build": "node scripts/build.mjs",
         "cli:dist": "node --import ./scripts/register-ts-loader.mjs dist/cli.mjs",

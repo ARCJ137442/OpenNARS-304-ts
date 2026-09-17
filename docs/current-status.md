@@ -716,3 +716,14 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 📌 Java 标杆复用规则：当 canonical JAR SHA、Java source/classes/test-classes、jree 依赖、NAL 夹具、runner 合同、JDK、单线程设置、随机/周期/配置均不变时，普通 023 小批次只运行 TypeScript 并对照已验证的冻结 Java JSONL；一旦其中任一不变量变化，或进入 023/024 阶段验收、集成冻结、发布候选，就必须现跑 Java 并逐字段核对冻结标杆。不一致时先调查原因，再决定是否刷新标杆。:codex-annotation{index="1"}
 
 当前可以宣称：`cb32ed8` 的 244 个普通主资源与额外夹具在本次串行 Java/TypeScript 对照中通过，M2 工程门通过。当前不能宣称：本次 raw 245+1 矩阵全绿、#245 markerless 长周期等价、023/024 完成、生产核心 jree 清零、Java/TypeScript 性能等价或正式发布。
+
+### 2026-09-18：统一串行测试入口补齐 `TLink`
+
+本批只修正 M2 测试发现范围，不改变推理代码、Java artifact 或 runner 语义。`package.json` 的 `test:unit:serial` 由 `test/node/*.test.ts` 扩展为同时捕获 `test/entity/*.test.ts`，使已有的 `test/entity/TLink.test.ts` 15 项合同测试进入统一入口。
+
+- 串行单测：`276/276`，失败 `0`、跳过 `0`；新增纳入的 TLink 15 项全部通过。
+- `npm run typecheck`：显式非增量 TypeScript 诊断 `0`。
+- `npm run test:build`、`npm run test:api:dist`：均通过；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。
+- 复用基线探针：`nal8.add.nal` 使用 `--engine ts --java-baseline`，`java_artifact=null`，冻结 Java 基线 SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，结果 `1/1` 通过；本批没有启动 Java。
+
+本批可以宣称：M2 统一串行测试入口现在覆盖 `test/node` 与 `test/entity`，共 `276/276` 通过，且非增量编译、构建和 dist API 通过。仍不能宣称：#245 稳定性长测在本批完成、023/024 完成、生产 jree 清零或 Java/TypeScript 性能等价。日常普通 TS 验证继续在 Java 基线不变量未变化时复用冻结 Java JSONL；阶段验收或基线变化时现跑 Java 并核对。:codex-annotation{index="1"}
