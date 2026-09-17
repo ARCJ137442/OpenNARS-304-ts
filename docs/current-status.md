@@ -306,6 +306,18 @@
 
 本候选可以宣称：组合规则集合簇及其历史 Set 契约 fix 已通过局部 M2、M1- `245/245` 和 markerless 131072 周期证据，可以继续下一类小簇原生化。本候选不能宣称：023/024 完成、jree 已移除、所有历史公共 List API 已恢复、完整 M1/#245 已在本批重跑、Java/TypeScript 性能等价或正式发布。证据 JSONL 与 stage digest 保存在项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`，不纳入 Git。
 
+### 当前候选：`ProcessJudgment` 目标 Set 原生化（2026-09-17）
+
+本批继续对更早 Git 提交做前向审查。canonical Java 仍为 source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。回读 Java `ProcessJudgment.addToTargetConceptsPreconditions` 与 TS blame 后确认，局部目标集合的原始合同是 `Set<Term> + LinkedHashSet`，实际只需要 `add`、按插入顺序遍历和 Term 值去重；该处没有历史 Set→List 错配。
+
+- 实现：以 `NativeSet<Term>` 替换局部 jree Set，保留 Set 抽象；代码注释明确标出原始 Java `Set<Term> targets = new LinkedHashSet<>()`，未改 Map、List、规则或派发逻辑。
+- 回归：新增两个独立解析但 Java `equals` 相等 Term 的去重/顺序测试，定向回归 `18/18`，串行单测 `242/242`，失败 0、跳过 0；`test/entity/TLink.test.ts` 仍由统一入口纳入。
+- 构建与合同：显式非增量 `tsc` 为 0 诊断；build、dist API、canonical local parity 通过；`toothbrush.nal` 受影响 smoke 为 `1/1`。
+- 审计前后：生产 `new LinkedHashSet` `13 → 12`，直接 jree 导入文件 `95 → 95`，`new LinkedHashMap` `35 → 35`；迁移扫描 collection-method `560 → 561` 是新增测试 `.size()` 带来的扫描计数变化，不是生产依赖增加。
+- 本批不运行 M1-/#245：该项是局部 Set 小簇，已有直接合同、串行 M2、local parity 和受影响 smoke；共享领域 Set/Map、迭代器或调度簇扩大时再按规模触发 M1-。
+
+本批可以宣称 `ProcessJudgment` 这一局部 Set 去 jree 化已验证；不能宣称 023/024 完成、jree 已移除、完整 M1/#245 本批重跑、Java/TypeScript 性能等价或正式发布。代码、测试、spec 状态说明和阶段报告待同一批提交并推送，`v0.1.0` 不移动。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：

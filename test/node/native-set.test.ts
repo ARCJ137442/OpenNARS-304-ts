@@ -65,3 +65,19 @@ test("NativeSet.equals follows Java AbstractSet receiver direction", () => {
     assert.equal(left.equals(right), true);
     assert.equal(right.equals(left), false);
 });
+
+test("NativeSet deduplicates structurally equal Terms used as target Set values", async () => {
+    const { java } = await import("jree");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Narsese } = await import("../../src/io/Narsese.ts");
+
+    const parser = new Narsese(new Nar());
+    const first = parser.parseTerm(new java.lang.String("target"));
+    const equivalent = parser.parseTerm(new java.lang.String("target"));
+    assert.ok(first);
+    assert.ok(equivalent);
+
+    const values = new NativeSet([first, equivalent]);
+    assert.equal(values.size(), 1);
+    assert.deepEqual(values.toArray(), [first]);
+});

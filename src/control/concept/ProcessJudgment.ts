@@ -12,6 +12,7 @@ import { Interval } from "../../language/Interval.ts";
 import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import { NativeList } from "../../runtime/NativeList.ts";
+import { NativeSet } from "../../runtime/NativeSet.ts";
 import type { Concept } from "../../entity/Concept.ts";
 import type { Sentence } from "../../entity/Sentence.ts";
 import type { Stamp } from "../../entity/Stamp.ts";
@@ -149,7 +150,9 @@ export class ProcessJudgment extends JavaObject {
      * @param nal  The derivation context
      */
     public static addToTargetConceptsPreconditions(task: Task, nal: DerivationContext): void {
-        let targets: java.util.Set<Term> = new java.util.LinkedHashSet();
+        // Java source: Set<Term> targets = new LinkedHashSet<>();
+        // NativeSet keeps the original Set contract: value de-duplication and insertion order.
+        const targets = new NativeSet<Term>();
         // add to all components, unless it doesn't have vars
         if (!(task.getTerm() as Implication).getPredicate().hasVar()) {
             targets.add((task.getTerm() as Implication).getPredicate());

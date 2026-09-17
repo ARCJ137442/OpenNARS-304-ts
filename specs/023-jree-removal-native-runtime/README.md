@@ -135,3 +135,11 @@ TypeScript 侧将三处局部 `ArrayList` 收窄为 `NativeList`，仍以类型�
 M1- 主矩阵使用 canonical JAR `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`、单线程 cold、逐文件串行和 `--cycles 1550`：原始结果 `242/244`，两项均为 Java 子进程异常且 TS 同行通过；对 `nal4.everyday_reasoning.nal` 与 `nars_multistep_2.nal` 的独立 canonical 重跑为 `2/2`，无可复现 TS 分叉，因此有效 M1- 为 `244/244`，但原始矩阵仍如实保留 `242/244`。额外 `simpleOperationTest.nal` 为 `1/1`。其无 marker 严格长周期证据为 Java/TS 均 `131072` 周期、`128` 窗口、`2535970` 事件，`equal=true`、`first_difference=null`。
 
 本批主矩阵逐行总时长为 `2,118,396 ms`，TS 峰值 RSS 为 `1,387,151,360 bytes`。相对上一批 M1-（`1,957,134 ms`、`1,345,036,288 bytes`），本批分别增加 `161,262 ms`（`8.24%`）和 `42,115,072 bytes`（`3.13%`），没有把该变化宣称为性能收益。相对历史完整 M1（`4,231,370 ms`、约 `3,050,434,560 bytes` 的不同采样口径），M1- 少运行 `2,112,974 ms`（`49.94%`），粗略少占 `1,663,283,200 bytes`（`54.53%`）；主要原因是排除长期稳定性 `#245`，不是本批算法优化结论。023 继续保持 `in-progress`。
+
+### 2026-09-17：ProcessJudgment 目标 Set 批次
+
+对照 canonical Java `ProcessJudgment.addToTargetConceptsPreconditions` 及其历史 blame，确认局部变量原始类型是 `Set<Term>`、实现是 `LinkedHashSet<Term>`；调用面只有 `add`、按插入顺序遍历和基于 Term 值的去重。该处自初始转写以来一直使用 jree Set，未发现历史 Set→List 错配，因此本批只替换实现为项目 `NativeSet<Term>`，没有把 Set 降成数组，也没有改动 Map、List、推理规则或目标派发逻辑。
+
+新增 NativeSet 等值 Term 回归，验证两个独立解析但 Java `equals` 相等的 Term 只保留首个元素。M2 结果为定向回归 `18/18`、串行单测 `242/242`、非增量 `tsc=0`、build、dist API、canonical Java 局部 parity 和 `toothbrush.nal` smoke `1/1`；失败 0、跳过 0。本批按低风险局部 Set 规则不运行 M1-/#245。
+
+审计数字按“前 → 后”记录：相对上一提交 `b99467c`，生产 `new LinkedHashSet` 为 `13 → 12`，直接 jree 导入文件为 `95 → 95`，`new LinkedHashMap` 为 `35 → 35`；迁移扫描的 collection-method 为 `560 → 561`，增加来自本批测试新增的 `.size()`，不是生产 jree 依赖。canonical Java 仍为 source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`、JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。023 继续保持 `in-progress`。
