@@ -1,6 +1,6 @@
 # OpenNARS-304-ts 当前状态
 
-- 状态日期：2026-09-16（Asia/Shanghai）
+- 状态日期：2026-09-18（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
@@ -573,3 +573,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 审计：生产 `src` 136 个文件，直接 jree 导入文件 `89`，`new LinkedHashMap=11`、`new LinkedHashSet=1`，JavaObject 文件 `38`，java.util 文件 `40`，java.lang 文件 `87`，Java String 文件 `52`；迁移模式扫描 227 个文件，constructor-delegation、malformed-generic、malformed-operator、malformed-new-this 均为 0。platform 审计扫描 172 个文件，其中 core candidate 84、mixed boundary 5、node adapter candidate 2、browser source 2、browser shim 2 个文件/19 处，属于 024 的后续边界债务。
 
 本批可以宣称：`SyllogisticRules` 一个临时 `Map<Term,Term>` 构造点已按 Java Map 合同原生化，并通过直接回归、M2、受影响 smoke 与 M1- 保护。仍不能宣称：023/024 完成、全部生产 jree 清零、#245 在本批重跑通过、markerless 131072 周期等价、Java/TypeScript 性能等价或正式发布。阶段细节见 [SyllogisticRules 临时 Map 批次报告](../reports/20260918-001150.md)。
+
+### 2026-09-18：`9bd6cc0` G0 M1/M2 全量复核
+
+本次在干净的 `HEAD=origin/main=9bd6cc0398e1cbe583cda5ef8d0261d2373f4a19` 上重新执行 G0 全量保护门。与日常 023 小批次不同，本次实际同时运行 canonical Java 与 TypeScript；后续在 Java artifact、源码/classes/test-classes、依赖、NAL 夹具、runner 合同、JDK、线程/随机条件和配置均不变时，可以复用已确认一致的 Java 标杆，只运行 TS。
+
+- canonical Java：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- M1 主矩阵：245 项，分层为 `single_step=215`、`multi_step=24`、`application=5`、`stability=1`；Java/TS `functional_pass=245`、`parity=245`，`java_ts_diff=0`。
+- 额外夹具：`simpleOperationTest.nal` 为 Java/TS `1/1`；合计 `246/246`。
+- 全量错误字段：exception、timed out、stall、process limited、not run、marker missing、both wrong 均为 `0`。
+- markerless 严格摘要：`nal6.redundant.nal` 与 `simpleOperationTest.nal` 均为 `131072` 周期、`128` 个 1024 周期窗口，事件数分别为 `589572` 与 `2535970`；两组比较均为 `equal=true`、`first_difference=null`、`incomplete=false`。
+- 运行观测：Java 总耗时 `232755 ms`，TS 总耗时 `3599126 ms`，合计 `3831881 ms`；TS 峰值 RSS `3025555456 bytes`。这些是性能输入，不改变功能判定。
+- M2：串行单测 `261/261`，失败 `0`、跳过 `0`；显式非增量 `tsc` 为 `0` 诊断；build、dist API、local algorithm parity、release/package、CLI、Shell 均通过，release 检查报告 `runtimeWarnings=none`。
+- 静态检查：迁移模式扫描 227 个文件，malformed generic/operator/new-this/constructor-delegation 均为 `0`；jree 审计为直接导入 89 个文件、`new LinkedHashMap=11`、`new LinkedHashSet=1`；platform 审计扫描 172 个文件，browser shim 为 2 个文件/19 处；汉字编码检查和 `git diff --check` 通过。
+
+本次 G0 可以宣称：在 canonical Java 3.0.4、固定单线程和当前 runner 观测面下，`9bd6cc0` 的 245+1 项功能结果与 Java 一致，两个 markerless 样本的 131072 周期阶段摘要一致，M2 工程门通过。仍不能宣称：023/024 完成、生产核心 jree 清零、性能等价、浏览器平台门完成、正式发布或新的 tag。G0 证据均保存在项目外 `OpenNARS-304-ts-evidence-archive`，不纳入 Git。
