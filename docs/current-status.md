@@ -129,6 +129,14 @@
 
 本批生产 jree 审计为 direct import `89`、`javaObjectFiles=38`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=1`；迁移扫描 224 个文件，malformed 项均为 0。`JavaObject` 数量下降只反映外层类壳，不代表推理规则实现、jree compatibility、领域 Map/Set 或 023 已完成。阶段报告见 `reports/20260917-201456.md`。
 
+本批提交 `eeaa938` 完成后，继续执行串行 M1- 保护矩阵：使用冻结 Java 功能标杆 `g0-java-baseline-26772af-20260917`，未重复启动 Java；命令为 `node scripts/e2e/run-nal-corpus.mjs --engine ts --java-baseline ... --all --limit 244 --cycles 1550 --timeout-ms 180000 --process-limit-ms 1800000 --ts-mode cold --resource-metrics --chunk-size 1 --summary`。结果文件位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\g3-inference-rule-javaobject-m1-minus-20260917.jsonl`，SHA-256 为 `25B67A1EE9F290A6473C7C7D1BBD3DC83C6629998CC728E178028B5A18DC7B8D`。
+
+- M1- 分层为 `single_step=215`、`multi_step=24`、`application=5`，合计 `244/244`；0 exception、0 marker missing、0 no-progress timeout、0 process limit、0 not-run、0 Java/TS diff。
+- 逐行总时长 `1,675,927 ms`，平均 `6,869 ms/行`，最大单行 `346,810 ms`；TS 平均峰值 RSS `257.25 MiB`，最大 `1,172.45 MiB`；累计 reasoning cycles `2,288,254`。这些只作为后续性能优化观测。
+- `243` 行通过 marker 路线；无 marker 的 `nal6.redundant.nal` 在该短矩阵中仅运行到 `1,650` 周期，长周期状态为 `not_reached`。该项不构成失败，也不替代此前已完成的 `131072` 周期、`128` 窗口、`589572` 事件且 `equal=true` 的独立 stage-digest 证据。
+
+本批因此可以宣称：推理规则静态壳改动在 M1- 244 个主资源上没有产生功能回退。仍不能宣称完整 M1/#245 在本批重跑通过、023 完成、jree 已退场或 Java/TypeScript 性能等价。日常非 023 验证继续复用冻结 Java 功能字段；只有 023/024 整体验收才现跑 Java 与冻结投影逐字段核对。
+
 上一批 `2465dcd` 将 `Concept` 六组列表收窄为 `NativeList`；随后 `cb4c60a` 处理 `DerivationContext.doublePremiseTask`，`b4c0a21` 处理 `TemporalRules.temporalInduction`，本批 `9d4cc87` 处理 `CompoundTerm` 三处局部列表并补齐 `NativeList.remove(Object)`。当前本批 M2 为非增量 `tsc=0`、串行单测 `225/225`、build/API/local parity 全部通过；M1- 为 `244/244`，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run、0 Java/TS diff。M1- 逐行总时长为 `1,957,134 ms`，相对上一批 `2,028,815 ms` 减少 `71,681 ms`（`3.53%`），TS 最大 RSS 为 `1,345,036,288 bytes`，相对上一批 `1,478,266,880 bytes` 减少 `133,230,592 bytes`（`9.01%`）；这些数字记录为本轮测量结果，不等同于性能优化结论。相对完整 M1 `4,231,370 ms`，M1- 排除 #245 节省 `2,274,236 ms`（`53.75%`）；完整 M1 的 #245 仍按独立长期稳定性证据管理。
 
 ### 冻结后阶段增量与去 jree 具体范围
