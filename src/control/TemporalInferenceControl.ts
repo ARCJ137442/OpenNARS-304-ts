@@ -5,7 +5,7 @@ import { Stamp } from "../entity/Stamp.ts";
 import { Task } from "../entity/Task.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-import { NativeList } from "../runtime/NativeList.ts";
+import { NativeSet } from "../runtime/NativeSet.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Events } from "../io/events/Events.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -73,8 +73,10 @@ export class TemporalInferenceControl extends JavaObject {
             return false;
         }
 
-        const already_attempted = new NativeList<Task>();
-        const already_attempted_ops = new NativeList<Task>();
+        // Java source: final Set<Task> already_attempted = new LinkedHashSet<>();
+        const already_attempted = new NativeSet<Task>();
+        // Java source: final Set<Task> already_attempted_ops = new LinkedHashSet<>();
+        const already_attempted_ops = new NativeSet<Task>();
         // Sequence formation:
         for (let i: int = 0; i < nal.narParameters.SEQUENCE_BAG_ATTEMPTS; i++) {
             /* synchronized (nal.memory.seq_current) { */

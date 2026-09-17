@@ -29,6 +29,7 @@ import { JavaIllegalAccessError, javaStringValue } from "../../runtime/jree-comp
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
 import { NativeList } from "../../runtime/NativeList.ts";
+import { NativeSet } from "../../runtime/NativeSet.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 
 const revisable = LocalRules.revisable;
@@ -177,7 +178,10 @@ export class ProcessGoal extends JavaObject {
             // execute
             // as execution for this reason already happened (or did not since there was
             // evidence against it)
-            const oldEvidence = new NativeList<Stamp.BaseEntry>();
+            // Java source: Set<BaseEntry> oldEvidence = new LinkedHashSet<>();
+            // This is a membership set, not an ordered List; retain Java
+            // equals-based uniqueness even though the native storage is compact.
+            const oldEvidence = new NativeSet<Stamp.BaseEntry>();
             let Subset: boolean = false;
             if (oldGoalT !== null) {
                 Subset = true;

@@ -9,7 +9,7 @@ import { TruthValue } from "../../src/entity/TruthValue.ts";
 import { Term } from "../../src/language/Term.ts";
 import { Tense } from "../../src/language/Tense.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
-import { NativeList } from "../../src/runtime/NativeList.ts";
+import { NativeSet } from "../../src/runtime/NativeSet.ts";
 
 test("TemporalInferenceControl filters equal Task values in local attempt set", () => {
     const parameters = new Parameters();
@@ -69,8 +69,9 @@ test("TemporalInferenceControl filters equal Task values in local attempt set", 
     assert.equal(proceedCount, 1);
     assert.deepEqual(putBack, [firstAttempt, equalAttempt]);
 
-    const values = new NativeList<Task>();
-    values.add(firstAttempt);
+    const values = new NativeSet<Task>();
+    assert.equal(values.add(firstAttempt), true);
+    assert.equal(values.add(equalAttempt), false);
     assert.equal(values.contains(equalAttempt), true);
     values.clear();
     assert.equal(values.contains(equalAttempt), false);

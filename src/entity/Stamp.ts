@@ -5,7 +5,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-import { NativeList } from "../runtime/NativeList.ts";
+import { NativeSet } from "../runtime/NativeSet.ts";
 import { addRuntimeLong, subtractRuntimeLong, toRuntimeLong, type JavaLongInput } from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Memory } from "../storage/Memory.ts";
@@ -242,7 +242,10 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         let base1: Stamp.BaseEntry[] = a.evidentialBase;
         let base2: Stamp.BaseEntry[] = b.evidentialBase;
 
-        const taskBase = new NativeList<Stamp.BaseEntry>();
+        // Java source: Set<BaseEntry> task_base = new LinkedHashSet<>(...);
+        // Set uniqueness is part of this algorithm; NativeSet keeps that
+        // contract explicit while using a native implementation.
+        const taskBase = new NativeSet<Stamp.BaseEntry>();
         for (let aBase1 of base1) {
             if (taskBase.contains(aBase1)) { // can have an overlap in itself already
                 return true;
@@ -259,7 +262,8 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
     }
 
     public evidenceIsCyclic(): boolean {
-        const taskBase = new NativeList<Stamp.BaseEntry>();
+        // Java source: Set<BaseEntry> task_base = new LinkedHashSet(...);
+        const taskBase = new NativeSet<Stamp.BaseEntry>();
         for (let anEvidentialBase of this.evidentialBase) {
             if (taskBase.contains(anEvidentialBase)) { // can have an overlap in itself already
                 return true;

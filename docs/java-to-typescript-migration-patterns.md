@@ -1,6 +1,6 @@
 # Java → TypeScript 迁移纠正模式库
 
-版本：0.8（2026-08-27）
+版本：0.9（2026-09-17）
 
 封存定位：本文是可复用的迁移模式库，不是项目进度表。历史扫描数字只用于比较；权威门禁和去 jree 残余见[当前状态](current-status.md)。任何批量规则仍须先由多处实例和自动化测试证明适用边界。
 
@@ -270,6 +270,26 @@ Java 的 `float` 不是“最后赋值时才取单精度”。如果两个操作
 jree 1.3.0 的 `JavaObject` 构造器会为尚未继承 `"#fqn"` 标记的类解析 `Error` 堆栈；当前 jree/OpenNARS 代码只写入该标记，`Class.getName()/getSimpleName()` 使用构造器名称，业务代码没有读取它。兼容层在 `src/runtime/jree-compat.ts` 预置可继承标记，跳过这条无效堆栈路径，同时保留类名观测。
 
 验证必须同时覆盖：`JavaObject` 子类的 `getClass().getName()/getSimpleName()`、局部单测、局部算法 parity，以及至少一条 single-step 和一条 application/multi-step NAL。该优化只改变已证实的运行时开销，不改变 NAL 规则；若 jree 升级，必须重新审计 `#fqn` 的读写契约。
+
+#### B19. 原生容器替换必须保留 Java 抽象和方法合同
+
+`List`、`Set`、`Map`、`Deque`、排序集合和数组都可能使用相似的 `add/get/contains/iterator` 表面 API，但它们的唯一性、键相等、排序、FIFO、删除方式和缺失值并不相同。不能因为底层都可以用 JavaScript 数组承载，就把调用点统一声明成 `NativeList`。
+
+迁移前必须回到 Java 源码同时记录：原始接口类型、具体实现类型、实际调用的方法、是否依赖值相等/对象身份、是否依赖插入或排序顺序、是否依赖迭代器删除，以及 `null`/缺失值行为。替换声明必须保留一条简短的 Java 来源注释；若语义发生收窄，也必须说明收窄的证据。
+
+当前项目的最小映射规则：
+
+- Java `List`/`ArrayList` → `NativeList` 或数组，仅限已证明的索引/追加/顺序/结果缓冲责任；数组只能在调用方不需要 Java List 方法时使用。
+- Java `Set`/`LinkedHashSet` → `NativeSet`；禁止用 `NativeList` 冒充 Set。若要求比较器排序，则使用 `NativeSortedSet` 并记录 TreeSet 来源。
+- Java `Map`/`LinkedHashMap` → 原生 `Map` 仅在键已经收窄为原生稳定值（例如文本）且已处理 `undefined → null`；领域对象键必须先验证 Java equals/hashCode，不能默认依赖 JS 对象身份。
+- Java `Deque`/`ArrayDeque` → `NativeDeque` 或明确的数组队列，仅限 FIFO、清空和已验证的迭代删除子集。
+- Java `StringBuilder`/`StringBuffer` → 模板字符串或分段数组拼接，只在确认没有容量、可变共享对象、链式返回值或中途 `toString()` 观测时采用；改写处注明 Java 来源和输出顺序/格式。
+
+验证至少包含：容器直接合同测试、相同值不同对象、重复插入、缺失键、删除/迭代顺序和一个真实业务路径。若前序提交已使用错误抽象，不重写历史，新增向前 fix，并在批次报告中列出原提交、错配位置、修复提交和受影响测试。
+
+#### B20. Java 字符串构造优先按语义而非 API 形状迁移
+
+对只承担一次性文本拼接的 `StringBuilder`/`StringBuffer`，优先识别 Java 的片段顺序、分隔符、空值字符串化和最终输出，再选择模板字符串或数组 `join`。不要为了减少 `new java.lang.StringBuilder` 的数量而改变 `String.valueOf`、`toString()` 或 `null` 的显示行为。若 builder 被作为参数传递、在循环中增量共享、依赖 `append` 的返回值或容量/异常合同，则暂留兼容实现并单独测试。
 
 ### C 级：必须做语义重写，禁止自动替换
 

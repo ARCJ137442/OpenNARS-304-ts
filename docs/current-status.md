@@ -223,6 +223,27 @@
 本批代码、测试和阶段证据见 [TemporalInferenceControl 批次报告](../reports/20260917-074048.md)。
 代码与测试提交 `a89d003` 已推送至 `origin/main`；本批不运行 M1-，后续仅在较大或高风险责任簇闭合后运行串行 M1- 保护。
 
+### 当前候选：`TemporalInferenceControl` Set 抽象修正（2026-09-17）
+
+前一批曾把 Java `LinkedHashSet<Task>` 映射为 `NativeList<Task>`；功能上可通过，但类型层没有表达 Set 语义。本批新增 `NativeSet<T>`，底层暂用数组但对外保持 Set 的唯一性、Java-style `equals` 判重和插入顺序，并在 `TemporalInferenceControl.eventInference` 的两个声明处保留原始 `Set<Task>`/`LinkedHashSet<Task>` 来源注释。
+
+- 直接回归继续覆盖不同对象但相同 Task 值只尝试一次，以及清空后的重新判重边界。
+- 本批应只运行局部回归、串行 M2、非增量 typecheck、build/API、局部 parity 和受影响 NAL smoke；不运行 M1- 或 #245。
+- 本批尚未完成提交前，不能宣称该修正已进入远端稳定状态。
+
+本批修正验证已完成：局部回归 `2/2`，串行 M2 `234/234`，非增量 typecheck 0 诊断，build/API、canonical parity 和受影响 sequence NAL smoke 均通过；待修正提交后补录远端哈希。本批不运行 M1- 或 #245。
+
+### 当前候选：既有原生容器语义审计与 Set→Set 修正（2026-09-17）
+
+用户指出不能以 API 形状把 Set 继续冒充 List。本批因此回溯 `023`/`020`/`024` 已提交的原生化点，并以向前 fix 保留历史提交：
+
+- `7bef525` 的 `Stamp.baseOverlap`、`Stamp.evidenceIsCyclic` 原始 Java 类型是 `Set<BaseEntry> = LinkedHashSet`，此前误用 `NativeList`；现改为 `NativeSet<BaseEntry>`。
+- `4ff0860` 的 `ProcessGoal.processOperationGoal` 原始 Java 类型是 `Set<BaseEntry> = LinkedHashSet`，此前误用 `NativeList`；现改为 `NativeSet<BaseEntry>`。
+- `a89d003` 的 `TemporalInferenceControl` 两个尝试集合原始 Java 类型是 `Set<Task> = LinkedHashSet`，本批同步改为 `NativeSet<Task>`。
+- `NativeList`、`NativeSortedSet`、`NativeDeque`、Map 文本索引/对象身份辅助索引、数组队列和字符串缓冲已逐项核对；截至本批没有发现第二个已证实的 Map/Deque/字符串容器错配。`StringBuilder` 后续仅在确认纯文本拼接语义后按模板字符串/`join` 改写，并保留 Java 来源与格式注释。
+
+本批增加 `NativeSet` 的 Java equals 接收者方向回归，并命中 Stamp/ProcessGoal/Temporal 三条业务路径；按局部小簇策略运行针对性单测、串行 M2、显式非增量 typecheck、build/API、局部 parity 与受影响 NAL，不运行 M1-/#245。代码与报告提交前不能宣称该修正已进入远端稳定状态。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：
