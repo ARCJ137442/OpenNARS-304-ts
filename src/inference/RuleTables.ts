@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/RuleTables.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Events } from "../io/events/Events.ts";
@@ -53,7 +53,8 @@ const retOppositeSide = Statement.retOppositeSide;
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class RuleTables extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static dispatch namespace.
+export class RuleTables {
 
     /**
      * Entry point of the inference engine

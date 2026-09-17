@@ -106,7 +106,8 @@ const EnumType = TruthFunctions.EnumType;
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class CompositionalRules extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static rule namespace.
+export class CompositionalRules {
 
     /* -------------------- intersections and differences -------------------- */
     /**

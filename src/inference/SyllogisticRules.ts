@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/SyllogisticRules.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, long, short, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Statement } from "../language/Statement.ts";
@@ -39,7 +39,8 @@ const reduceComponents = Terms.reduceComponents;
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class SyllogisticRules extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static rule namespace.
+export class SyllogisticRules {
 
     /*
      * --------------- rules used in both first-tense inference and higher-tense

@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/TemporalRules.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Stamp } from "../entity/Stamp.ts";
@@ -24,7 +24,8 @@ type TemporalRuntime = Record<string, any>;
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class TemporalRules extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static rule namespace.
+export class TemporalRules {
 
     private static runtime: TemporalRuntime | null = null;
 

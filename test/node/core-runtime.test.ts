@@ -918,3 +918,18 @@ test("static Java utility classes no longer carry a jree JavaObject base", async
         assert.equal(Object.getPrototypeOf(type.prototype), Object.prototype);
     }
 });
+
+test("static inference rule classes no longer carry a jree JavaObject base", async () => {
+    const modules = [
+        await import("../../src/inference/CompositionalRules.ts"),
+        await import("../../src/inference/LocalRules.ts"),
+        await import("../../src/inference/RuleTables.ts"),
+        await import("../../src/inference/StructuralRules.ts"),
+        await import("../../src/inference/SyllogisticRules.ts"),
+        await import("../../src/inference/TemporalRules.ts"),
+    ];
+    for (const module of modules) {
+        const type = Object.values(module)[0] as { prototype: object };
+        assert.equal(Object.getPrototypeOf(type.prototype), Object.prototype);
+    }
+});

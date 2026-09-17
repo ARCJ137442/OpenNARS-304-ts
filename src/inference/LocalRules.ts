@@ -51,7 +51,8 @@ const asJavaObject = (value: unknown): JavaObject => value as JavaObject;
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class LocalRules extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static rule namespace.
+export class LocalRules {
 
     /* -------------------- same contents -------------------- */
     /**

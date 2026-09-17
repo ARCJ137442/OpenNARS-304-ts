@@ -121,6 +121,14 @@
 
 生产 jree 审计（去除注释后的 summary）为：直接 jree 导入文件 `89`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=1`、`javaObjectFiles=42`；迁移扫描为 `224` 文件、`jree-runtime-type=1727/145`。这些下降只反映静态类壳和 import 的移除，不代表 jree compatibility、领域 Map/Set、运行时类身份或 023 已完成。下一批应继续按层审查 inference rule static shell，仍需避免把推理语义修改与壳迁移混在一起。
 
+### 2026-09-17：推理规则静态工具类 JavaObject 标记壳批次
+
+本批在 023 的推理规则层做前向审查。对照 canonical Java，确认 `CompositionalRules`、`LocalRules`、`RuleTables`、`StructuralRules`、`SyllogisticRules`、`TemporalRules` 都是无显式父类的静态规则/派发类；没有实例化、`instanceof` 或外层 `.class` 身份消费。因此只移除外层 `extends JavaObject`。`CompositionalRules` 和 `LocalRules` 仍保留 `JavaObject` import，因为事件载荷转换 helper 仍要求该兼容类型；`RuleTables.EnumFigureSide` 等嵌套 Java enum 身份没有修改。
+
+新增 `core-runtime` 原型回归，确认 6 个规则类直接继承 `Object.prototype`。串行单测 `253/253`，非增量 `tsc=0`，build `134` 源文件、dist API、canonical local parity 均通过；`nal4.7.nal` 与 `toothbrush.nal` 使用冻结 Java 功能标杆的 TS-only smoke 为 `2/2`，无异常、marker 缺失、no-progress timeout 或未运行。普通验证没有重复启动 Java。
+
+本批生产 jree 审计为 direct import `89`、`javaObjectFiles=38`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=1`；迁移扫描 224 个文件，malformed 项均为 0。`JavaObject` 数量下降只反映外层类壳，不代表推理规则实现、jree compatibility、领域 Map/Set 或 023 已完成。阶段报告见 `reports/20260917-201456.md`。
+
 上一批 `2465dcd` 将 `Concept` 六组列表收窄为 `NativeList`；随后 `cb4c60a` 处理 `DerivationContext.doublePremiseTask`，`b4c0a21` 处理 `TemporalRules.temporalInduction`，本批 `9d4cc87` 处理 `CompoundTerm` 三处局部列表并补齐 `NativeList.remove(Object)`。当前本批 M2 为非增量 `tsc=0`、串行单测 `225/225`、build/API/local parity 全部通过；M1- 为 `244/244`，0 exception、0 marker missing、0 timeout、0 process limit、0 not-run、0 Java/TS diff。M1- 逐行总时长为 `1,957,134 ms`，相对上一批 `2,028,815 ms` 减少 `71,681 ms`（`3.53%`），TS 最大 RSS 为 `1,345,036,288 bytes`，相对上一批 `1,478,266,880 bytes` 减少 `133,230,592 bytes`（`9.01%`）；这些数字记录为本轮测量结果，不等同于性能优化结论。相对完整 M1 `4,231,370 ms`，M1- 排除 #245 节省 `2,274,236 ms`（`53.75%`）；完整 M1 的 #245 仍按独立长期稳定性证据管理。
 
 ### 冻结后阶段增量与去 jree 具体范围

@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/StructuralRules.java
-import { java, JavaObject } from "jree";
+import { java } from "jree";
 import type { short, int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -41,7 +41,8 @@ import type { Task } from "../entity/Task.ts";
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class StructuralRules extends JavaObject {
+// Java implicit Object -> native TypeScript class; this class is a static rule namespace.
+export class StructuralRules {
 
     private static asTruthValue(value: TruthValue | null): TruthValue {
         return value as unknown as TruthValue;
