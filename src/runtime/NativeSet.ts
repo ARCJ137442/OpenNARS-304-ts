@@ -9,7 +9,7 @@ const nativeValuesEqual = (stored: unknown, searched: unknown): boolean => {
     return typeof equals === "function" && equals.call(searched, stored);
 };
 
-const javaValueHashCode = (value: unknown): number => {
+export const javaValueHashCode = (value: unknown): number => {
     if (value === null || value === undefined) {
         return 0;
     }
@@ -95,16 +95,14 @@ export class NativeSet<T> implements Iterable<T> {
         if (Number(candidate.size()) !== this.items.length) {
             return false;
         }
-        if (typeof candidate.contains === "function") {
-            const contains = candidate.contains as (value: unknown) => unknown;
-            return this.items.every((value) => Boolean(contains.call(other, value)));
-        }
         if (typeof candidate[Symbol.iterator] !== "function") {
             return false;
         }
-        const values = [...other as Iterable<unknown>];
-        return this.items.every((value) => values.some((candidateValue) =>
-            nativeValuesEqual(candidateValue, value)));
+        // AbstractSet.equals is this.containsAll(other), not
+        // other.containsAll(this).  Keeping this receiver direction matters
+        // for translated value objects whose equals implementation is
+        // asymmetric, and also mirrors the Java Set contract directly.
+        return [...other as Iterable<unknown>].every((value) => this.contains(value as T));
     }
 
     /** Java Set.hashCode is the sum of the element hash codes. */

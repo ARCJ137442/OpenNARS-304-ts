@@ -1,3 +1,5 @@
+import { javaValueHashCode } from "./NativeSet.ts";
+
 /**
  * Native ordered set for translated TreeSet-shaped term helpers.
  *
@@ -43,6 +45,29 @@ export class NativeSortedSet<T> implements Iterable<T> {
     public contains(value: T): boolean {
         const index = this.lowerBound(value);
         return index < this.items.length && this.compare(this.items[index], value) === 0;
+    }
+
+    /** Java TreeSet inherits value equality and hashing from AbstractSet. */
+    public equals(other: unknown): boolean {
+        if (other === this) {
+            return true;
+        }
+        const candidate = other as {
+            size?: unknown;
+            [Symbol.iterator]?: unknown;
+        } | null;
+        if (candidate === null || typeof candidate !== "object" || typeof candidate.size !== "function") {
+            return false;
+        }
+        if (Number(candidate.size()) !== this.items.length || typeof candidate[Symbol.iterator] !== "function") {
+            return false;
+        }
+        return [...other as Iterable<unknown>].every((value) => this.contains(value as T));
+    }
+
+    /** Java Set.hashCode is the sum of the element hash codes. */
+    public hashCode(): number {
+        return this.items.reduce((sum, value) => (sum + javaValueHashCode(value)) | 0, 0);
     }
 
     public isEmpty(): boolean {
