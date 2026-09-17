@@ -8,6 +8,7 @@ import { Events } from "../../src/io/events/Events.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { Concept } from "../../src/entity/Concept.ts";
 import { BudgetValue } from "../../src/entity/BudgetValue.ts";
+import { NativeSet } from "../../src/runtime/NativeSet.ts";
 
 test("Anticipate keeps a prediction and emits the Java-compatible signal", () => {
     const parameters = new Parameters();
@@ -33,7 +34,53 @@ test("Anticipate keeps a prediction and emits the Java-compatible signal", () =>
     const entry = anticipate.anticipations.entrySet().iterator().next();
     assert.equal(entry.getKey().predictionCreationTime, 10n);
     assert.equal(entry.getKey().predictedOccurenceTime, 15n);
+    const terms = entry.getValue();
+    assert.equal(terms instanceof NativeSet, true);
+    const termIterator = terms.iterator();
+    assert.equal(termIterator.next(), Term.SELF);
+    termIterator.remove();
+    assert.equal(terms.isEmpty(), true);
     assert.deepEqual(emitted, [[OutputHandler.ANTICIPATE.class, Term.SELF]]);
+});
+
+test("Anticipate removes a confirmed NativeSet value through its Java iterator path", () => {
+    const parameters = new Parameters();
+    const emitted: unknown[] = [];
+    const memory = {
+        narParameters: parameters,
+        emit(channel: unknown, ...args: unknown[]) {
+            emitted.push([channel, ...args]);
+        },
+        addNewTask() {
+            throw new Error("feedback should be disabled for this local contract");
+        },
+    };
+    const clock = { time: () => 10n };
+    const anticipate = new Anticipate();
+    anticipate.setAnticipationAsOperator(false);
+    anticipate.anticipate(Term.SELF, memory as never, 15n, null, clock);
+
+    const nal = {
+        time: clock,
+        memory,
+        narParameters: parameters,
+    };
+    const task = {
+        sentence: {
+            truth: { getExpectation: () => 1 },
+            isJudgment: () => true,
+            isEternal: () => false,
+        },
+        getTerm: () => Term.SELF,
+    };
+    anticipate.event(Events.TaskDerive.class, [task, nal] as never);
+    anticipate.updateAnticipations(nal as never);
+
+    assert.equal(anticipate.anticipations.isEmpty(), true);
+    assert.deepEqual(emitted, [
+        [OutputHandler.ANTICIPATE.class, Term.SELF],
+        [OutputHandler.CONFIRM.class, Term.SELF],
+    ]);
 });
 
 test("Anticipate subscribes and unsubscribes from its cycle events", () => {

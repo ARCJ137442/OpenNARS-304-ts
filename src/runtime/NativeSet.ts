@@ -45,6 +45,7 @@ const javaStringHashCode = (value: string): number => {
  */
 export class NativeSet<T> implements Iterable<T> {
     private readonly items: T[];
+    private modificationCount = 0;
 
     public constructor(initialValues: Iterable<T> = []) {
         this.items = [];
@@ -56,6 +57,7 @@ export class NativeSet<T> implements Iterable<T> {
             return false;
         }
         this.items.push(value);
+        this.modificationCount += 1;
         return true;
     }
 
@@ -68,7 +70,10 @@ export class NativeSet<T> implements Iterable<T> {
     }
 
     public clear(): void {
-        this.items.length = 0;
+        if (this.items.length > 0) {
+            this.items.length = 0;
+            this.modificationCount += 1;
+        }
     }
 
     public contains(value: T): boolean {
@@ -120,7 +125,13 @@ export class NativeSet<T> implements Iterable<T> {
             return false;
         }
         this.items.splice(index, 1);
+        this.modificationCount += 1;
         return true;
+    }
+
+    /** Java Set iterators support removing the last value returned by next(). */
+    public iterator(): NativeSetIterator<T> {
+        return new NativeSetIterator(this);
     }
 
     public size(): number {
@@ -131,7 +142,80 @@ export class NativeSet<T> implements Iterable<T> {
         return this.items.slice();
     }
 
+    /** @internal Used by NativeSetIterator without exposing indexed Set access. */
+    public valueAt(index: number): T {
+        return this.items[index];
+    }
+
+    /** @internal Used by NativeSetIterator for Java-shaped fail-fast checks. */
+    public get modificationVersion(): number {
+        return this.modificationCount;
+    }
+
+    /** @internal Used by NativeSetIterator to remove its last value. */
+    public removeAt(index: number): void {
+        this.items.splice(index, 1);
+        this.modificationCount += 1;
+    }
+
     public [Symbol.iterator](): IterableIterator<T> {
-        return this.items[Symbol.iterator]();
+        return new NativeSetIterableIterator(this.iterator());
+    }
+}
+
+export class NativeSetIterator<T> {
+    private cursor = 0;
+    private lastIndex = -1;
+    private expectedModificationVersion: number;
+
+    public constructor(private readonly owner: NativeSet<T>) {
+        this.expectedModificationVersion = owner.modificationVersion;
+    }
+
+    public hasNext(): boolean {
+        this.checkForExternalMutation();
+        return this.cursor < this.owner.size();
+    }
+
+    public next(): T {
+        this.checkForExternalMutation();
+        if (!this.hasNext()) {
+            throw new Error("NativeSet iterator is exhausted");
+        }
+        this.lastIndex = this.cursor;
+        this.cursor += 1;
+        return this.owner.valueAt(this.lastIndex);
+    }
+
+    public remove(): void {
+        this.checkForExternalMutation();
+        if (this.lastIndex < 0) {
+            throw new Error("NativeSet iterator has no removable item");
+        }
+        this.owner.removeAt(this.lastIndex);
+        this.cursor = this.lastIndex;
+        this.lastIndex = -1;
+        this.expectedModificationVersion = this.owner.modificationVersion;
+    }
+
+    private checkForExternalMutation(): void {
+        if (this.expectedModificationVersion !== this.owner.modificationVersion) {
+            throw new Error("NativeSet was modified outside its iterator");
+        }
+    }
+}
+
+class NativeSetIterableIterator<T> implements IterableIterator<T> {
+    public constructor(private readonly iterator: NativeSetIterator<T>) {}
+
+    public [Symbol.iterator](): IterableIterator<T> {
+        return this;
+    }
+
+    public next(): IteratorResult<T> {
+        if (!this.iterator.hasNext()) {
+            return { done: true, value: undefined as never };
+        }
+        return { done: false, value: this.iterator.next() };
     }
 }

@@ -44,6 +44,23 @@ test("NativeSet uses the searched value as the Java equals receiver", () => {
     assert.equal(values.contains(new SearchValue()), true);
 });
 
+test("NativeSet iterator supports Java remove and fail-fast mutation checks", () => {
+    const values = new NativeSet(["first", "second", "third"]);
+    const iterator = values.iterator();
+
+    assert.equal(iterator.next(), "first");
+    iterator.remove();
+    assert.deepEqual(values.toArray(), ["second", "third"]);
+    assert.equal(iterator.next(), "second");
+    iterator.remove();
+    assert.deepEqual(values.toArray(), ["third"]);
+    assert.throws(() => iterator.remove(), /no removable item/);
+
+    const invalidated = values.iterator();
+    values.add("fourth");
+    assert.throws(() => invalidated.hasNext(), /modified outside its iterator/);
+});
+
 test("NativeSet.equals follows Java AbstractSet receiver direction", () => {
     class StoredValue {
         public equals(_other: unknown): boolean {

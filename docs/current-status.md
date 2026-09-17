@@ -414,3 +414,11 @@
 | `0af732b` | `ArrayList<Prototype>` → `Prototype[]` | 索引读取、追加、按索引替换、顺序遍历 | 数组成立；随机访问是主要操作 |
 
 源码已补充每处的“原始 Java 类型 → 当前类型 → 适用范围”注释。当前没有发现需要回退的历史逻辑错误；未来若出现 `.size/.get/.add` 兼容要求、Java 值相等删除/迭代器删除、并发可见性或公共 List 形状依赖，再单独引入 `NativeList`/兼容视图。该复核不改变已冻结的 M1/M2 结论，也不宣称 023 完成。
+
+### 2026-09-17：`Anticipate` 预测 Map value Set 原生化（本批完成，023 仍进行中）
+
+本批继续做历史提交前向审查。对照 canonical Java `Anticipate.java`，确认 `anticipations` 的原始形状为 `Map<Prediction, LinkedHashSet<Term>>`；内层 Set 需要 Term 值相等去重、插入顺序以及 `Iterator.remove()`，不能按 List 或数组处理。TypeScript 保留外层 Java `LinkedHashMap`，仅将具体 value 改为 `NativeSet<Term>`；新增 `NativeSet.iterator().remove()` 与变更检查，并在源码注明 Java 原始类型。Prediction 键、外层 Map 的 entry iterator.remove、目标派发与其它推理规则未改动。
+
+定向回归最终为 `10/10`，完整串行 M2 为 `248/248`，非增量 `tsc` 为 0 诊断，build、dist API、canonical local parity 均通过；`nal8.add.nal` 受影响 smoke 为 `1/1`。首轮 M1- 的原始结果为 `243/244`，唯一异常是 canonical Java 子进程在 `multi_step/nars_multistep_2.nal` 上退出；同一文件 TypeScript 为 `2/2`，独立 canonical 重跑为 `1/1`，因此未形成 TS 语义差异。修复外层 Map 延迟删除后，最终以显式排除 #245 的 244 个文件、canonical JAR、单线程、cold、逐文件单进程方式完成 M1-：`244/244`，分层为 `single_step=215`、`multi_step=24`、`application=5`；Java/TS 均为 0 exception、0 marker missing、0 timeout、0 stall、0 process limit、0 not-run、0 Java/TS diff。
+
+本批首先暴露了 jree `LinkedHashMap` entry iterator 不支持 Java `Iterator.remove()` 的边界，随后保留外层 Map 抽象，以有序 Prediction 临时数组收集待删项，遍历后调用 `Map.remove()`，并增加了对应生命周期回归。最终 M1- Java 总耗时 `159,782 ms`、TypeScript `1,655,338 ms`、合计 `1,815,120 ms`，TS/Java 约 `10.36x`，最大单行 `363,928 ms`；本次未启用 resource metrics，不新增内存节省比例。canonical Java source commit 为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。023 继续保持 `in-progress`，本批不能宣称 jree 已移除、#245 通过、性能等价或里程碑完成。

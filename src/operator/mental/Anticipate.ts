@@ -35,7 +35,11 @@ const DISAPPOINT = OutputHandler.DISAPPOINT;
  */
 export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
-    public readonly anticipations: java.util.Map<Anticipate.Prediction, java.util.LinkedHashSet<Term>> = new java.util.LinkedHashMap();
+    // Java source: Map<Prediction, LinkedHashSet<Term>>.
+    // Keep the outer Map at its Java boundary; NativeSet replaces only the
+    // concrete Set value and preserves equals-based membership, order, and
+    // Iterator.remove() used by updateAnticipations().
+    public readonly anticipations: java.util.Map<Anticipate.Prediction, NativeSet<Term>> = new java.util.LinkedHashMap();
 
     // Java source: transient Set<Term> newTasks = new LinkedHashSet<>();
     // NativeSet preserves Java equals-based uniqueness and insertion order.
@@ -104,15 +108,23 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             this.newTasks = new NativeSet<Term>();
         }
         let hasNewTasks: boolean = !this.newTasks.isEmpty();
+        // Java source removes the current Map entry through a live entry
+        // iterator. jree's LinkedHashMap iterator does not implement remove;
+        // keep the Map abstraction and defer those removals until traversal
+        // completes. The array is only a temporary ordered key accumulator.
+        const predictionsToRemove: Anticipate.Prediction[] = [];
 
-        let aei: java.util.Iterator<java.util.Map.Entry<Anticipate.Prediction, java.util.LinkedHashSet<Term>>> = this.anticipations.entrySet().iterator();
+        let aei: java.util.Iterator<java.util.Map.Entry<Anticipate.Prediction, NativeSet<Term>>> = this.anticipations.entrySet().iterator();
         while (aei.hasNext()) {
 
-            let ae: java.util.Map.Entry<Anticipate.Prediction, java.util.LinkedHashSet<Term>> = aei.next();
+            let ae: java.util.Map.Entry<Anticipate.Prediction, NativeSet<Term>> = aei.next();
 
             let aTime: long = ae.getKey().predictedOccurenceTime;
             let predictionstarted: long = ae.getKey().predictionCreationTime;
             if (aTime < predictionstarted) { // its about the past..
+                for (const prediction of predictionsToRemove) {
+                    this.anticipations.remove(prediction);
+                }
                 return;
             }
 
@@ -146,9 +158,9 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             if ((!didntHappen) && (!maybeHappened))
                 continue;
 
-            let terms: java.util.LinkedHashSet<Term> = ae.getValue();
+            let terms: NativeSet<Term> = ae.getValue();
 
-            let ii: java.util.Iterator<Term> = terms.iterator();
+            const ii = terms.iterator();
             while (ii.hasNext()) {
                 let aTerm: Term = ii.next();
 
@@ -180,8 +192,12 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
             if (terms.isEmpty()) {
                 // remove this time entry because its terms have been emptied
-                aei.remove();
+                predictionsToRemove.push(ae.getKey());
             }
+        }
+
+        for (const prediction of predictionsToRemove) {
+            this.anticipations.remove(prediction);
         }
 
         if (this.newTasks === null) {
@@ -249,7 +265,8 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             memory.emit(ANTICIPATE.class, content);
         }
 
-        let ae: java.util.LinkedHashSet<Term> = new java.util.LinkedHashSet();
+        // Java source: final LinkedHashSet<Term> ae = new LinkedHashSet<>();
+        const ae = new NativeSet<Term>();
         this.anticipations.put(new this.Prediction(time.time(), toRuntimeLong(occurenceTime)), ae);
 
         ae.add(content);
