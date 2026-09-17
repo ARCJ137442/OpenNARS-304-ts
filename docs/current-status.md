@@ -274,7 +274,7 @@
 - 当前 jree 审计：生产直接导入文件 `95`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=21`、`javaObjectFiles=53`、`javaUtilFiles=40`、`javaLangFiles=87`、`semanticReviewItems=108`、`candidateNativeItems=68`。迁移扫描 `223` 文件，jree runtime type `1779/144`；本批是字符串输出边界收敛，不代表 jree 已退场。
 - 本批不运行 M1-/#245：修改范围是局部文本合同，已有直接回归、局部 parity 与受影响 smoke；较大共享输出、集合或调度责任簇闭合时再运行串行 M1-。这不能改写 G0 的完整 M1 结论。
 
-本批阶段报告见 [Item 文本边界批次报告](../reports/20260917-095625.md)。在本批提交完成前，不把上述候选称为远端稳定点；提交后应补录提交哈希和推送状态。023/024、正式性能门和发布门仍未完成。
+本批代码、测试和阶段报告已由 `84806c2 refactor(023): 原生化 Item 文本拼接边界` 提交并推送到 `origin/main`；本状态补录提交状态。`v0.1.0` 未移动。023/024、正式性能门和发布门仍未完成。
 
 ## 平台中立与发布冻结状态
 
