@@ -50,6 +50,35 @@ test("Anticipate subscribes and unsubscribes from its cycle events", () => {
     assert.equal(event.isActive(Events.CycleEnd.class), false);
 });
 
+test("Anticipate deduplicates equal derived terms in its Set boundary", () => {
+    const anticipate = new Anticipate();
+    const first = Term.get("anticipated");
+    const second = first.clone();
+    assert.notEqual(first, second);
+    assert.equal(first.equals(second), true);
+
+    const nal = {
+        narParameters: { DEFAULT_CONFIRMATION_EXPECTATION: 0.5 },
+    };
+    const makeTask = (term: Term) => ({
+        sentence: {
+            truth: { getExpectation: () => 1 },
+            isJudgment: () => true,
+            isEternal: () => false,
+        },
+        getTerm: () => term,
+    });
+
+    anticipate.event(Events.TaskDerive.class, [makeTask(first), nal] as never);
+    anticipate.event(Events.TaskDerive.class, [makeTask(second), nal] as never);
+
+    const newTasks = (anticipate as unknown as {
+        newTasks: { size(): number; toArray(): Term[] };
+    }).newTasks;
+    assert.equal(newTasks.size(), 1);
+    assert.equal(newTasks.toArray()[0], first);
+});
+
 test("Concept stores anticipation entries in a native array", () => {
     const parameters = new Parameters();
     const memory = { narParameters: parameters } as never;

@@ -367,6 +367,17 @@
 
 恢复者必须先阅读[开发者指南](developer-guide.md)和[冻结交接报告](../reports/20260827-003242.md)，再运行 LeanSpec board/search/view。不要把未完成 spec 标成 complete，也不要清理当前工作区中来源不明的历史证据或探针。
 
+### 当前候选：`Anticipate.newTasks` Set 原生化（2026-09-17）
+
+本批继续做历史前向审查。对照 canonical Java `Anticipate` 的声明与调用，确认 `newTasks` 的原始合同是 `Set<Term> + LinkedHashSet<Term>`，用途是登记待派发 Term，并依赖 `add`、`remove`、`clear`、空判断、Term 值相等去重和插入顺序。TypeScript 现改为 `NativeSet<Term>`，源码保留“Java 原始 Set/LinkedHashSet → 当前 NativeSet”的注释；没有将 Set 降为数组，也没有触碰 `anticipations` Map、Map value Set、`ae` 临时 Set 或目标派发规则。
+
+- M2：定向 `anticipate.test.ts + native-set.test.ts` 为 `8/8`；串行统一单测 `244/244`，失败 0、跳过 0；`test/entity/TLink.test.ts` 仍由统一入口纳入。
+- 构建与合同：`npx tsc --noEmit --pretty false --incremental false` 为 0 诊断；build、dist API、canonical Java local parity 均通过。
+- 受影响 NAL：`nal8.add.nal` 使用显式 canonical JAR、单线程、cold、1550 周期、逐文件运行，Java/TS `1/1` 通过。
+- 审计前→后：生产 `new LinkedHashSet` `11 → 6`，直接 jree 导入文件 `95 → 95`，`new LinkedHashMap` `35 → 35`，`new ArrayList` `0 → 0`。迁移扫描 collection-method `561 → 563` 来自新增测试调用，不是生产依赖增加。
+
+本批按局部 Set 风险规则不重新运行 M1-/#245；不能把本批局部证据说成新的 M1 全量通过。023 仍保持 `in-progress`，尚未完成的共享 Map/Set、其它 jree 运行时依赖、公共 API 和平台边界继续按原有门禁推进。阶段报告为 `reports/20260917-131050.md`。
+
 ### 当前候选补录：历史 List→数组边界复核（2026-09-17）
 
 用户确认“除非有特殊需要，否则原生数组更合适”。据此复核此前登记的历史转换：Java `List` 名称本身不构成必须恢复 `NativeList` 的理由；应以实际调用面和对外兼容要求判定。

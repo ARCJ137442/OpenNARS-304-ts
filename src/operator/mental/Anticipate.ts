@@ -21,6 +21,7 @@ import type { Nar } from "../../main/Nar.ts";
 import { Operation } from "../Operation.ts";
 import { Operator } from "../Operator.ts";
 import type { Memory } from "../../storage/Memory.ts";
+import { NativeSet } from "../../runtime/NativeSet.ts";
 
 const CycleEnd = Events.CycleEnd;
 const ANTICIPATE = OutputHandler.ANTICIPATE;
@@ -36,7 +37,9 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
     public readonly anticipations: java.util.Map<Anticipate.Prediction, java.util.LinkedHashSet<Term>> = new java.util.LinkedHashMap();
 
-    private newTasks: java.util.Set<Term> = new java.util.LinkedHashSet();
+    // Java source: transient Set<Term> newTasks = new LinkedHashSet<>();
+    // NativeSet preserves Java equals-based uniqueness and insertion order.
+    private newTasks: NativeSet<Term> = new NativeSet<Term>();
 
     private expiredTruth: TruthValue = null as unknown as TruthValue;
     private expiredBudget: BudgetValue = null as unknown as BudgetValue;
@@ -98,7 +101,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
         // share stamps created by tasks in this cycle
         if (this.newTasks === null) {
-            this.newTasks = new java.util.LinkedHashSet();
+            this.newTasks = new NativeSet<Term>();
         }
         let hasNewTasks: boolean = !this.newTasks.isEmpty();
 
@@ -158,7 +161,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
                 if (maybeHappened) {
                     if (this.newTasks === null) {
-                        this.newTasks = new java.util.LinkedHashSet();
+                        this.newTasks = new NativeSet<Term>();
                     }
                     if (this.newTasks.remove(aTerm)) {
                         // in case it happened, temporal induction will do the rest, else
@@ -182,7 +185,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         }
 
         if (this.newTasks === null) {
-            this.newTasks = new java.util.LinkedHashSet();
+            this.newTasks = new NativeSet<Term>();
         }
         this.newTasks.clear();
     }
@@ -197,7 +200,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
                 && newEvent.sentence.truth.getExpectation() > nal.narParameters.DEFAULT_CONFIRMATION_EXPECTATION
                 && !newEvent.sentence.isEternal()) {
                 if (this.newTasks === null) {
-                    this.newTasks = new java.util.LinkedHashSet();
+                    this.newTasks = new NativeSet<Term>();
                 }
                 this.newTasks.add(newEvent.getTerm()); // new: always add but keep truth value in mind
             }

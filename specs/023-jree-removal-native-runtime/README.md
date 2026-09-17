@@ -163,3 +163,11 @@ M1- 在提交前基线 `35f6d4d` 之后运行，使用单线程、cold、`--chun
 本次在相关源码补充“原始 Java 类型 → 当前数组类型 → 适用调用面”的注释，并保留已有直接回归：`anticipate.test.ts`、`narsese-temporal.test.ts`、`vision-channel.test.ts`。只有未来调用方依赖 `.size/.get/.add`、Java 值相等删除/迭代器删除、并发可见性或对外 Java List 兼容形状时，才新增兼容视图或 `NativeList`。这次是前向审查与边界澄清，没有改变推理代码路径。
 
 023 仍保持 `in-progress`：本批只完成 `Variables` 局部 Set 原生化，不能宣称 jree 已移除、全部 Java List 边界已对齐、#245 长期稳定性通过、Java/TypeScript 性能等价或正式发布。
+
+### 2026-09-17：`Anticipate.newTasks` Set 原生化
+
+本批承接历史前向审查，回读 canonical Java `Anticipate` 的字段声明与使用点，确认 `newTasks` 的原始类型为 `Set<Term>`、实现为 `LinkedHashSet<Term>`。调用面虽然只有空判断、`add`、`remove`、`clear` 和遍历，但其语义仍包括 Java `Term.equals` 值相等去重与插入顺序，因此不能按数组或 List 处理。TypeScript 将其实现替换为 `NativeSet<Term>`，并在字段与防御性初始化处注明“Java 原始 Set/LinkedHashSet → 当前 NativeSet”。`anticipations` Map、Map value Set、`ae` 临时 Set 及派发规则未改动。
+
+新增两个独立但 Java `equals` 相等的 Term 回归，确认 `newTasks` 只保留首个对象。定向回归 `8/8`、串行单测 `244/244`、显式非增量 `tsc` 0 诊断、build、dist API、canonical local parity 以及 `nal8.add.nal` `1/1` 均通过。本批按局部 Set 风险等级不运行 M1-/#245。
+
+审计前→后：生产 `new LinkedHashSet` `11 → 6`；`new LinkedHashMap` `35 → 35`；`new ArrayList` `0 → 0`；直接 jree 导入文件 `95 → 95`。迁移扫描 collection-method `561 → 563` 是新增测试调用带来的计数变化，不是生产依赖增加。023 仍保持 `in-progress`，本批不能宣称 jree 已移除、M1- 全量重跑、性能等价或里程碑完成。
