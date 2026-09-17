@@ -261,7 +261,7 @@
 
 本批也确认历史前向审查必须持续执行：`7b9f1d4` 已修正 `7bef525`（Stamp 两处）、`4ff0860`（ProcessGoal 一处）和 `a89d003`（Temporal 两处）中把 Java `LinkedHashSet` 错映射为 `NativeList` 的问题，改为语义明确的 `NativeSet`。以后所有原生化仍须先回到 Java 声明核对 List/Set/Map/Deque/TreeSet、equals/hashCode、顺序、缺失值和迭代删除，不能只按 API 表面或数组底层实现批量迁移。
 
-证据文件位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`：`g0-m1-245-main-20260917.jsonl`、`g0-m1-simpleOperation-20260917.jsonl` 及四份 131072 stage digest；阶段解释见 [G0 阶段报告](../reports/20260917-083653.md)。
+证据文件位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`：`g0-m1-245-main-20260917.jsonl`、`g0-m1-simpleOperation-20260917.jsonl` 及四份 131072 stage digest；阶段解释见 [G0 阶段报告](../reports/20260917-083653.md)。状态与报告已由 `d66da8d docs(g0): 记录 M1 M2 全量保护门` 提交并推送至 `origin/main`。
 
 ## 平台中立与发布冻结状态
 
