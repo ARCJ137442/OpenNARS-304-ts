@@ -9,6 +9,7 @@ import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { Concept } from "../../src/entity/Concept.ts";
 import { BudgetValue } from "../../src/entity/BudgetValue.ts";
 import { NativeSet } from "../../src/runtime/NativeSet.ts";
+import { NativeMap } from "../../src/runtime/NativeMap.ts";
 
 test("Anticipate keeps a prediction and emits the Java-compatible signal", () => {
     const parameters = new NarParameters();
@@ -30,6 +31,7 @@ test("Anticipate keeps a prediction and emits the Java-compatible signal", () =>
 
     anticipate.anticipate(Term.SELF, memory as never, 15n, null, time);
 
+    assert.equal(anticipate.anticipations instanceof NativeMap, true);
     assert.equal(anticipate.anticipations.size(), 1);
     const entry = anticipate.anticipations.entrySet().iterator().next();
     assert.equal(entry.getKey().predictionCreationTime, 10n);
@@ -41,6 +43,22 @@ test("Anticipate keeps a prediction and emits the Java-compatible signal", () =>
     termIterator.remove();
     assert.equal(terms.isEmpty(), true);
     assert.deepEqual(emitted, [[OutputHandler.ANTICIPATE.class, Term.SELF]]);
+});
+
+test("Anticipate keeps Java Prediction identity keys in its outer Map", () => {
+    const anticipate = new Anticipate();
+    const first = new anticipate.Prediction(10n, 15n);
+    const second = new anticipate.Prediction(10n, 15n);
+    const firstTerms = new NativeSet<Term>();
+    const secondTerms = new NativeSet<Term>();
+
+    anticipate.anticipations.put(first, firstTerms);
+    anticipate.anticipations.put(second, secondTerms);
+
+    assert.notEqual(first, second);
+    assert.equal(anticipate.anticipations.size(), 2);
+    assert.equal(anticipate.anticipations.get(first), firstTerms);
+    assert.equal(anticipate.anticipations.get(second), secondTerms);
 });
 
 test("Anticipate removes a confirmed NativeSet value through its Java iterator path", () => {

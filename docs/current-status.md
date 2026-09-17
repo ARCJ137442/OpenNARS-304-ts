@@ -739,3 +739,19 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 复用基线探针：`nal8.add.nal` 使用 `--engine ts --java-baseline`，`java_artifact=null`，冻结 Java 基线 SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，结果 `1/1` 通过；本批没有启动 Java。
 
 本批可以宣称：M2 统一串行测试入口现在覆盖 `test/node` 与 `test/entity`，共 `276/276` 通过，且非增量编译、构建和 dist API 通过。仍不能宣称：#245 稳定性长测在本批完成、023/024 完成、生产 jree 清零或 Java/TypeScript 性能等价。日常普通 TS 验证继续在 Java 基线不变量未变化时复用冻结 Java JSONL；阶段验收或基线变化时现跑 Java 并核对。:codex-annotation{index="1"}
+
+### 2026-09-18：`Anticipate` 外层 Map 原生化
+
+本批承接 `5e4dbd0` 的 `ProcessGoal` Map 批次，对照 canonical Java `Anticipate.java` 审查 `anticipations`：Java 原始形状为 `Map<Prediction, LinkedHashSet<Term>>`，实现为 `LinkedHashMap`。`Prediction` 没有覆写 `equals/hashCode`，因此外层 key 必须继续保持 Java 默认对象身份；内层 value 仍需要 Set 的 Term 值相等、插入顺序和迭代删除语义。
+
+- `src/operator/mental/Anticipate.ts`：以 `NativeMap<Prediction, NativeSet<Term>>` 替换具体 `LinkedHashMap`，保留 `java.util.Map` 抽象、Prediction 身份 key、内层 NativeSet、延迟删除和全部预测/反馈派发逻辑。源码注释明确记录 Java 原类型与当前实现。
+- `test/node/anticipate.test.ts`：新增两个相同时间字段但不同 Prediction 对象必须占据两个 Map key 的回归；定向 Anticipate 回归 `5/5`。
+- 串行 M2 为 `278/278`，失败 `0`、跳过 `0`；`test/entity/TLink.test.ts` 已纳入统一入口。
+- 显式非增量 `tsc --noEmit --pretty false --incremental false` 为 `0` 诊断；build、dist API、local canonical parity 均通过，`differences=[]`。
+- `nal8.add.nal` 的 TS-only 冻结标杆 smoke 为 `1/1`，无异常；本批普通验证未启动 Java。:codex-annotation{index="1"}
+- M1- 使用单线程、cold、逐文件串行、`--cycles 1550`、`--timeout-ms 180000`、`--process-limit-ms 1800000`、`--chunk-size 1`，排除长期稳定性 `#245`；`single_step=215`、`multi_step=24`、`application=5`，共 `244/244` 通过。exception、marker missing、timeout、stall、process limit、not-run、Java/TS diff 均为 `0`。
+- M1- 证据在项目外归档：`m1-minus-anticipate-nativemap-20260918.jsonl`，SHA-256 为 `C75A5FC706B5118AECB6BA694349FFCBF28A5E0F8DECD5B353D2346387F8A67E`；TS 总时长 `1,782,206 ms`，推理周期 `2,288,254`，`0.778850 ms/周期`，峰值 RSS `1,231,945,728 bytes`。性能数据只作为后续优化输入。
+- jree 生产审计当前为：直接导入文件 `88`、`newLinkedHashMap=2`、`newLinkedHashSet=1`、`JavaObject` 文件 `31`、`java.util` 文件 `39`、`java.lang` 文件 `87`、Java String 文件 `52`；这不是 023 完成度。
+- 平台审计扫描 `172` 个文件，核心候选 `83`、混合边界 `5`、Node adapter 候选 `2`；迁移模式扫描 `227` 个文件，constructor-delegation、malformed-generic/operator/new-this 均为 `0`。release `0.1.0` 通过，`runtimeWarnings=none`、`forbiddenPackageMembers=0`；汉字编码检查与 `git diff --check` 通过。
+
+本批可以宣称：`Anticipate` 外层具体 Map 已在不改变 Map 抽象和 Prediction 身份 key 的前提下原生化，并经直接合同、M2、local parity、受影响 smoke 和 M1- 保护。仍不能宣称：023/024 完成、全部生产 jree 清零、#245 长期稳定性在本批完成、Java/TypeScript 性能等价或正式发布。普通小批次继续在 canonical Java 基线不变量不变时复用冻结 Java 功能标杆；023/024 整体验收或任一基线不变量变化时才现跑 Java 并逐字段核对。:codex-annotation{index="1"}

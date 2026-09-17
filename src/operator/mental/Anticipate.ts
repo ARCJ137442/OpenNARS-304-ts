@@ -22,6 +22,7 @@ import type { Nar } from "../../main/Nar.ts";
 import { Operation } from "../Operation.ts";
 import { Operator } from "../Operator.ts";
 import type { Memory } from "../../storage/Memory.ts";
+import { NativeMap } from "../../runtime/NativeMap.ts";
 import { NativeSet } from "../../runtime/NativeSet.ts";
 
 const CycleEnd = Events.CycleEnd;
@@ -36,11 +37,13 @@ const DISAPPOINT = OutputHandler.DISAPPOINT;
  */
 export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
-    // Java source: Map<Prediction, LinkedHashSet<Term>>.
-    // Keep the outer Map at its Java boundary; NativeSet replaces only the
-    // concrete Set value and preserves equals-based membership, order, and
-    // Iterator.remove() used by updateAnticipations().
-    public readonly anticipations: java.util.Map<Anticipate.Prediction, NativeSet<Term>> = new java.util.LinkedHashMap();
+    // Java source: Map<Prediction, LinkedHashSet<Term>> backed by LinkedHashMap.
+    // Keep the outer Map abstraction and Java Object-identity key semantics:
+    // Prediction has no equals/hashCode override. NativeMap replaces only the
+    // concrete Map implementation; NativeSet preserves value membership, order,
+    // and Iterator.remove() for each prediction's terms.
+    public readonly anticipations: java.util.Map<Anticipate.Prediction, NativeSet<Term>> =
+        new NativeMap<Anticipate.Prediction, NativeSet<Term>>() as unknown as java.util.Map<Anticipate.Prediction, NativeSet<Term>>;
 
     // Java source: transient Set<Term> newTasks = new LinkedHashSet<>();
     // NativeSet preserves Java equals-based uniqueness and insertion order.
