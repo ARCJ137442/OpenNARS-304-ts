@@ -601,3 +601,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计前→后（相对 G0）：生产直接导入文件 `89→88`，JavaObject 文件 `38→36`；迁移扫描 malformed 项仍为 0。审计结果保存在项目外 `g1-audit-jree-20260918.log`。
 
 本批可以宣称：`Parameters`、`Symbols` 两个 Java 隐式 Object 壳已原生化，并通过 261 项串行 M2、非增量编译、局部 canonical parity、build 与 dist API 检查。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。普通批次继续复用 G0 冻结 Java 标杆；023/024 整体验收时仍须现跑 canonical Java 并核对标杆一致。
+
+### 2026-09-18：G2 `BudgetValue` Java 隐式 Object 壳批次
+
+本批以 G1 提交 `cec700a3557d40b20de32381dc525693d2182488` 为基线，对照 canonical Java `BudgetValue.java`。Java 类没有显式父类，`Cloneable` 与 `Serializable` 只是 marker interface；`clone()` 是类自有实现。因此本批只移除转写器附加的 `JavaObject`/marker 壳，不改变预算字段、构造重载、float32 收窄、预算运算、异常或文本语义。
+
+- `src/entity/BudgetValue.ts`：由 `extends JavaObject implements ...` 收窄为原生 TypeScript 类；保留显式 `clone()` 和已有 float32 边界。
+- `test/node/core-runtime.test.ts`：加入 `BudgetValue` 隐式 Object 原型回归，并验证 clone 是独立对象且三个预算数值保持一致。
+- M2：最终定向 `core-runtime.test.ts` 为 `36/36`；统一串行单测 `261/261`，失败 `0`、跳过 `0`；显式非增量 `tsc` 为 `0` 诊断；build、dist API、local canonical parity 均通过。local parity 使用 canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，结果 `ok=true`、`differences=[]`。
+- 静态检查：生产源文件 `136`，直接 jree 导入文件 `88`，`JavaObject` 文件 `35`；迁移模式扫描 `227` 个文件，malformed generic/operator/new-this/constructor-delegation 均为 `0`；汉字编码检查与 `git diff --check` 通过。
+- jree 审计相对 G1：`JavaObject` 文件 `36→35`；直接导入文件仍为 `88`，因为 `BudgetValue` 仍使用 `java`、`S` 和 Java 异常/类型边界；迁移扫描的 jree runtime type 为 `1721→1719`。这表示一个壳已移除，不表示 jree runtime 已退场。
+- M1-/#245：本批未运行。改动只触及继承/marker 壳，已有直接回归、完整串行 M2 与 canonical local parity；G0 的 `245+1` 全量证据继续作为功能保护基线。若后续改动触及 BudgetValue 数值逻辑、集合、推理或公共边界，必须重新评估 M1-。
+
+本批可以宣称：`BudgetValue` 的 Java 隐式 Object/marker 壳已原生化，并经直接回归、串行 M2、非增量编译和 canonical 局部 parity 保护。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。普通 023 批次继续在 Java artifact、源码/classes/test-classes、依赖、夹具、runner 合同、JDK、线程/随机条件和配置均不变时复用冻结 Java 标杆；023/024 整体验收仍需现跑 canonical Java 并逐字段核对标杆一致。

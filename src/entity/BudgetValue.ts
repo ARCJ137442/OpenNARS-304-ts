@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/BudgetValue.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Texts } from "../io/Texts.ts";
@@ -17,7 +17,9 @@ type char = string
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class BudgetValue extends JavaObject implements java.lang.Cloneable<BudgetValue>, java.io.Serializable {
+// Java source declares `class BudgetValue implements Cloneable, Serializable`;
+// both are marker contracts here, while clone() remains an explicit method below.
+export class BudgetValue {
 
     // Java stores these fields as float.  Keep the narrowing at write
     // boundaries; rounding getters or every consumer would change ordering.
@@ -70,7 +72,6 @@ export class BudgetValue extends JavaObject implements java.lang.Cloneable<Budge
      */
     public constructor(p: float, d: float, q: float, narParameters: Parameters);
     public constructor(...args: unknown[]) {
-        super();
         if (args.length === 1) {
             const [v] = args as [BudgetValue];
             this.narParameters = v.narParameters;

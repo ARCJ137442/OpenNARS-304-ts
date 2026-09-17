@@ -896,11 +896,20 @@ test("Java implicit Object classes no longer carry a jree JavaObject base", asyn
     const { Property } = await import("../../src/language/Property.ts");
     const { Parameters } = await import("../../src/main/Parameters.ts");
     const { Symbols } = await import("../../src/io/Symbols.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
     const { Term } = await import("../../src/language/Term.ts");
 
-    for (const type of [Debug, GeneralInferenceControl, ProcessTask, Instance, InstanceProperty, Property, Parameters, Symbols]) {
+    for (const type of [Debug, GeneralInferenceControl, ProcessTask, Instance, InstanceProperty, Property, Parameters, Symbols, BudgetValue]) {
         assert.equal(Object.getPrototypeOf(type.prototype), Object.prototype);
     }
+
+    const budget = new BudgetValue(0.4, 0.6, 0.8, new Parameters());
+    const clone = budget.clone();
+    assert.notEqual(clone, budget);
+    assert.deepEqual(
+        [clone.getPriority(), clone.getDurability(), clone.getQuality()],
+        [budget.getPriority(), budget.getDurability(), budget.getQuality()],
+    );
 
     const subject = Term.get("java-object-free-subject");
     const predicate = Term.get("java-object-free-predicate");
