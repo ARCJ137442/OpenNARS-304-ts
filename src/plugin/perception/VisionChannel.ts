@@ -27,6 +27,8 @@ import type { Nar } from "../../main/Nar.ts";
 export class VisionChannel extends SensoryChannel {
     public defaultOutputConfidence: float = Float32Math.from(0.5) as float;
     public nPrototypes: int = 0;
+    // Java source: public ArrayList<Prototype>; array preserves indexed lookup,
+    // ordered append and replacement used by this channel.
     public prototypes: VisionChannel.Prototype[];
     protected inputs: Float64Array[];
     protected updated: boolean[][];

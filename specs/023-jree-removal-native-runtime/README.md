@@ -154,6 +154,12 @@ M1- 在提交前基线 `35f6d4d` 之后运行，使用单线程、cold、`--chun
 
 本批 canonical Java source commit 为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR 为 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。jree 审计前→后为：`new LinkedHashSet 12→11`、直接导入文件 `95→95`、`new LinkedHashMap 35→35`；迁移扫描的 `collection-method 560→561` 来自新增测试，不是生产依赖增加。
 
-本批同时完成了历史前向审查：`7b9f1d4` 已修正早期三处 Java `Set` 误用 `NativeList` 的问题；本次又登记出 `dda82d0`、`cdbf968`、`3ae6874`、`0af732b` 等把 Java List 边界收窄为数组的待处理项。它们目前没有在 M1/M2 观测面产生分叉，但与 Java List 抽象不一致，后续应作为独立 List 契约批次恢复或明确兼容视图，不能用本批 Set 通过结论覆盖。
+本批同时完成了历史前向审查：`7b9f1d4` 已修正早期三处 Java `Set` 误用 `NativeList` 的问题；另登记了 `dda82d0`、`cdbf968`、`3ae6874`、`0af732b` 等把 Java List 边界收窄为数组的历史转换。它们最初作为待审查项保留，后续复核结论见下文；不能用本批 Set 通过结论替代这项审查。
+
+### 2026-09-17：历史 List→数组边界复核
+
+结合用户对原生运行时的约束，对上段登记项做了前向复核。结论不是按 Java 类型名回退：原生数组是优先实现，只有确有 List 专有契约才保留 `NativeList`。`dda82d0` 的 `Concept.anticipations` 只执行有序遍历、追加、按对象身份删除、过滤和长度检查；`cdbf968` 的 `Concept.recent_intervals` 只执行数值索引读写/追加，`CompoundTerm.extractIntervals` 只返回有序结果缓冲；`3ae6874` 的 `SensoryChannel.results` 只执行追加、遍历和清空；`0af732b` 的 `VisionChannel.prototypes` 只执行索引读取、追加和替换。因此当前数组化不构成已证实的语义错误，不回退为 `NativeList`。
+
+本次在相关源码补充“原始 Java 类型 → 当前数组类型 → 适用调用面”的注释，并保留已有直接回归：`anticipate.test.ts`、`narsese-temporal.test.ts`、`vision-channel.test.ts`。只有未来调用方依赖 `.size/.get/.add`、Java 值相等删除/迭代器删除、并发可见性或对外 Java List 兼容形状时，才新增兼容视图或 `NativeList`。这次是前向审查与边界澄清，没有改变推理代码路径。
 
 023 仍保持 `in-progress`：本批只完成 `Variables` 局部 Set 原生化，不能宣称 jree 已移除、全部 Java List 边界已对齐、#245 长期稳定性通过、Java/TypeScript 性能等价或正式发布。

@@ -328,7 +328,7 @@
 - canonical Java：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
 - 审计前→后：`new LinkedHashSet 12→11`、直接 jree 导入文件 `95→95`、`new LinkedHashMap 35→35`；迁移扫描 collection-method `560→561` 是新增测试 `.size()` 造成的计数变化，不是生产依赖增加。
 
-本批同步完成历史前向审查。已确认此前 `7b9f1d4` 修正的 `7bef525`（Stamp 两处）、`4ff0860`（ProcessGoal 一处）和 `a89d003`（Temporal 两处）Set→List 错配仍保持为 `NativeSet`。本次还登记了 `dda82d0` 的 `Concept.anticipations`、`cdbf968` 的 `Concept.recent_intervals`/`CompoundTerm.extractIntervals`、`3ae6874` 的 `SensoryChannel.results`、`0af732b` 的 `VisionChannel.prototypes` 等 Java List→数组边界；当前未在 M1/M2 观测面产生分叉，但仍不符合 Java List 抽象，下一批独立修复并保留“原类型→新类型→适用范围”说明。
+本批同步完成历史前向审查。已确认此前 `7b9f1d4` 修正的 `7bef525`（Stamp 两处）、`4ff0860`（ProcessGoal 一处）和 `a89d003`（Temporal 两处）Set→List 错配仍保持为 `NativeSet`。本次还登记了 `dda82d0` 的 `Concept.anticipations`、`cdbf968` 的 `Concept.recent_intervals`/`CompoundTerm.extractIntervals`、`3ae6874` 的 `SensoryChannel.results`、`0af732b` 的 `VisionChannel.prototypes` 等 Java List→数组历史转换；后续复核见文末补录，不能按类型名称直接判定必须回退。
 
 本候选可以宣称 `Variables` 局部 Set 去 jree 化已通过 M2 与 M1-；不能宣称 023/024 完成、全部历史 List 边界已对齐、#245 长期稳定性通过、Java/TypeScript 性能等价或正式发布。代码、测试和本批报告已在后续状态提交中推送；`v0.1.0` 未移动。
 
@@ -366,3 +366,16 @@
 ```
 
 恢复者必须先阅读[开发者指南](developer-guide.md)和[冻结交接报告](../reports/20260827-003242.md)，再运行 LeanSpec board/search/view。不要把未完成 spec 标成 complete，也不要清理当前工作区中来源不明的历史证据或探针。
+
+### 当前候选补录：历史 List→数组边界复核（2026-09-17）
+
+用户确认“除非有特殊需要，否则原生数组更合适”。据此复核此前登记的历史转换：Java `List` 名称本身不构成必须恢复 `NativeList` 的理由；应以实际调用面和对外兼容要求判定。
+
+| 历史提交 | Java 原类型 → 当前 TypeScript 类型 | 实际调用面 | 当前结论 |
+| --- | --- | --- | --- |
+| `dda82d0` | `List<AnticipationEntry> + ArrayList` → `AnticipationEntry[]` | 有序遍历、追加、按身份删除、过滤、长度 | 数组成立；`ProcessAnticipation` 独占修改 |
+| `cdbf968` | `List<Float>` → `float[]`；`List<Long>` 返回 → `long[]` | 数值索引读写、追加、长度、顺序结果遍历 | 数组成立；没有 List 专有调用 |
+| `3ae6874` | `Collection<SensoryChannel>`/`List<Task>` → 数组 | 私有目标遍历；结果追加、遍历、清空 | 数组成立；不要求 Collection/List 方法 |
+| `0af732b` | `ArrayList<Prototype>` → `Prototype[]` | 索引读取、追加、按索引替换、顺序遍历 | 数组成立；随机访问是主要操作 |
+
+源码已补充每处的“原始 Java 类型 → 当前类型 → 适用范围”注释。当前没有发现需要回退的历史逻辑错误；未来若出现 `.size/.get/.add` 兼容要求、Java 值相等删除/迭代器删除、并发可见性或公共 List 形状依赖，再单独引入 `NativeList`/兼容视图。该复核不改变已冻结的 M1/M2 结论，也不宣称 023 完成。

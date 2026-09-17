@@ -267,6 +267,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         }
     }
 
+    /** Java source returns List<Long>; callers use this as an ordered result buffer. */
     public static extractIntervals(mem: Memory | null, T: Term): long[] {
         const ret: long[] = [];
         if (T instanceof CompoundTerm) {

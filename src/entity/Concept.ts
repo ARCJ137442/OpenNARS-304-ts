@@ -101,9 +101,9 @@ export class Concept extends Item<Term> {
      */
     public readonly memory: Memory;
 
-    // use to create averaging stats of occurring intervals
-    // so that revision can decide whether to use the new or old term
-    // based on which intervals are closer to the average
+    // Java source: List<Float> recent_intervals.
+    // Native array is intentional: LocalRules only needs numeric length,
+    // indexed read/write and append operations.
     public readonly recent_intervals: float[] = [];
 
     public observable: boolean = false; // whether it received a "native" input task
@@ -327,7 +327,11 @@ export class Concept extends Item<Term> {
     };
 
 
-    /** Native FIFO-compatible storage; only ProcessAnticipation owns mutations. */
+    /**
+     * Java source: public List<AnticipationEntry> backed by ArrayList.
+     * Native array is intentional: the owner only needs ordered iteration,
+     * append, indexed identity removal, filtering and length.
+     */
     public anticipations: Concept.AnticipationEntry[] = [];
 
     /* ---------- insert Links for indirect processing ---------- */

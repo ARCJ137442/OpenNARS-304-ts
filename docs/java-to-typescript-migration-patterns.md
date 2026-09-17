@@ -291,6 +291,14 @@ jree 1.3.0 的 `JavaObject` 构造器会为尚未继承 `"#fqn"` 标记的类解
 
 对只承担一次性文本拼接的 `StringBuilder`/`StringBuffer`，优先识别 Java 的片段顺序、分隔符、空值字符串化和最终输出，再选择模板字符串或数组 `join`。不要为了减少 `new java.lang.StringBuilder` 的数量而改变 `String.valueOf`、`toString()` 或 `null` 的显示行为。若 builder 被作为参数传递、在循环中增量共享、依赖 `append` 的返回值或容量/异常合同，则暂留兼容实现并单独测试。
 
+#### B20.1. Java List 边界默认优先原生数组，特殊契约才保留 List
+
+前向审查不能把“Java 声明为 `List`”直接等同于“TypeScript 必须使用 `NativeList`”。当调用面已经证明只需要长度、索引读写、追加、按身份删除、过滤、顺序遍历或短生命周期结果缓冲时，原生数组更简单、开销更低，也更符合 TypeScript 运行时；数组仍必须保留 Java 的顺序、重复元素、缺失值和修改时机。
+
+只有存在 Java List 专有方法、值相等删除/迭代器删除、对外要求 `.size/.get/.add` 形状、并发/同步可见性，或调用方确实依赖可替换的 List 抽象时，才使用 `NativeList` 或兼容视图。判定必须记录“原始 Java 类型 → 当前 TS 类型 → 实际调用面 → 为什么数组成立/什么条件会改回”，并在源码附近注明原始 Java 类型。
+
+2026-09-17 的历史前向复核将以下转换判为当前成立：`dda82d0` 的 `Concept.anticipations`（有序预测记录）、`cdbf968` 的 `Concept.recent_intervals` 与 `CompoundTerm.extractIntervals`（数值历史/结果缓冲）、`3ae6874` 的 `SensoryChannel.results`（结果队列）以及 `0af732b` 的 `VisionChannel.prototypes`（索引和替换集合）。它们的当前调用面没有上述特殊需求；若未来公共 API 要求 Java List 方法，再单独增加兼容视图，不为形式一致性回退。
+
 ### C 级：必须做语义重写，禁止自动替换
 
 #### C1. Java 包装类型与原生类型

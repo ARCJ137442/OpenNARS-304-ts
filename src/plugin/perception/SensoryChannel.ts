@@ -22,8 +22,10 @@ export abstract class SensoryChannel extends JavaObject implements Plugin {
         return true;
     }
 
+    // Java source: private Collection<SensoryChannel>; only ordered iteration is used.
     private reportResultsTo: SensoryChannel[] = [];
     public nar!: Nar; // for top-down influence of concept budgets
+    // Java source: public List<Task>; native array preserves push/iteration/clear semantics.
     public readonly results: Task[] = [];
     public height: int = 0; // 1D channels have height 1
     public width: int = 0;
