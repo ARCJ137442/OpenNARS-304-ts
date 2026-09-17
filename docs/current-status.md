@@ -287,7 +287,7 @@
 - 当前 jree 审计：生产直接导入文件 `95`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=21`、`javaStringFiles=52`、`semanticReviewItems=107`、`candidateNativeItems=68`；迁移扫描 `224` 文件，jree runtime type `1772/144`。本批不是 023 完成。
 - 本批不运行 M1-/#245：这是局部文本合同簇，已有直接回归、局部 parity 和 NAL smoke；涉及共享输出、集合/Map、运行时类型或推理调度的责任簇仍须按规模重新决定 M1-。
 
-本批代码、测试和阶段报告待提交后补录提交哈希；`v0.1.0` 不移动。023/024、正式性能门和发布门仍未完成。
+本批代码、测试和阶段报告已由 `14cd10f refactor(023): 原生化 TermLink 前缀文本` 提交并推送；状态补录提交随后完成。`v0.1.0` 不移动。023/024、正式性能门和发布门仍未完成。
 
 ## 平台中立与发布冻结状态
 
