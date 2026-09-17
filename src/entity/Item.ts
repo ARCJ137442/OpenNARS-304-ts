@@ -2,7 +2,7 @@
 import { java, JavaObject, type int, type float, S } from "jree";
 import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
-import { javaStringHashCode, javaStringLength, javaValuesEqual } from "../runtime/jree-compat.ts";
+import { javaStringHashCode, javaStringValue, javaValuesEqual } from "../runtime/jree-compat.ts";
 
 interface ItemComparator<E> {
     compare(a: E, b: E): int;
@@ -183,13 +183,15 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      *
      * @return The String representation of the full content
      */
-    public toString():  java.lang.String {
-        // return budget + " " + key ;
-
-         let  budgetStr: java.lang.String = this.budget !== null ? this.budget.toString() : new java.lang.String();
-         let  n: java.lang.String = java.lang.String.valueOf(this.name());
-        return new  java.lang.StringBuilder(javaStringLength(budgetStr) + javaStringLength(n) + 1).append(budgetStr).append(' ').append(n)
-                .toString();
+    public toString(): string {
+        // Java source type: StringBuilder -> String; new StringBuilder(budgetStr.length() + n.length() + 1)
+        //              .append(budgetStr).append(' ').append(n).toString();
+        // This builder is local, consumed once, and never observed as a mutable
+        // object.  Keep Java String.valueOf/toString conversion explicit, then
+        // use the native string concatenation equivalent.
+        const budgetText = this.budget !== null ? javaStringValue(this.budget.toString()) : "";
+        const nameText = javaStringValue(this.name());
+        return `${budgetText} ${nameText}`;
     }
 
     /**
@@ -197,22 +199,24 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
      *
      * @return A simplified String representation of the content
      */
-    public  toStringExternal():  java.lang.String {
-         let  briefBudget: java.lang.String = this.requireBudget().toStringExternal();
-         let  n: java.lang.String = java.lang.String.valueOf(this.name());
-        return new  java.lang.StringBuilder(javaStringLength(briefBudget) + javaStringLength(n) + 1).append(briefBudget).append(' ').append(n)
-                .toString();
+    public toStringExternal(): string {
+        // Java source type: StringBuilder -> String; StringBuilder(briefBudget.length() + n.length() + 1)
+        //              .append(briefBudget).append(' ').append(n).toString();
+        const budgetText = javaStringValue(this.requireBudget().toStringExternal());
+        const nameText = javaStringValue(this.name());
+        return `${budgetText} ${nameText}`;
     }
 
     /** similar to toStringExternal but includes budget afterward */
-    public  toStringExternal2():  java.lang.String {
-         let  briefBudget: java.lang.String = this.requireBudget().toStringExternal();
-         let  n: java.lang.String = java.lang.String.valueOf(this.name());
-        return new  java.lang.StringBuilder(javaStringLength(briefBudget) + javaStringLength(n) + 1).append(n).append(' ').append(briefBudget)
-                .toString();
+    public toStringExternal2(): string {
+        // Java source type: StringBuilder -> String; StringBuilder(briefBudget.length() + n.length() + 1)
+        //              .append(n).append(' ').append(briefBudget).toString();
+        const budgetText = javaStringValue(this.requireBudget().toStringExternal());
+        const nameText = javaStringValue(this.name());
+        return `${nameText} ${budgetText}`;
     }
 
-    public  toStringLong():  java.lang.String {
+    public toStringLong(): string {
         return this.toString();
     }
 

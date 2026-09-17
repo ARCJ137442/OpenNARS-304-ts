@@ -5,6 +5,7 @@ import { Term } from "../language/Term.ts";
 import { BudgetValue } from "./BudgetValue.ts";
 import { Symbols } from "../io/Symbols.ts";
 import type { TLink } from "./TLink.ts";
+import { javaStringValue } from "../runtime/jree-compat.ts";
 
 
 
@@ -224,9 +225,13 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
         return h;
     }
 
-    public toString(): java.lang.String {
-        return new java.lang.StringBuilder().append(this.newKeyPrefix()).append(
-            this.target !== null ? this.target.name() : S``).toString();
+    public toString(): string {
+        // Java source return type: String; new StringBuilder().append(newKeyPrefix()).append(
+        //              target != null ? target.name() : "").toString();
+        return javaStringValue(
+            new java.lang.StringBuilder().append(this.newKeyPrefix()).append(
+                this.target !== null ? this.target.name() : S``).toString()
+        );
     }
 
     public newKeyPrefix(): java.lang.CharSequence {

@@ -15,6 +15,7 @@ import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeList, NativeReadOnlyList } from "../runtime/NativeList.ts";
+import { javaStringValue } from "../runtime/jree-compat.ts";
 import { LocalRules } from "../inference/LocalRules.ts";
 import { Events } from "../io/events/Events.ts";
 import { ProcessQuestion } from "../control/concept/ProcessQuestion.ts";
@@ -449,7 +450,7 @@ export class Concept extends Item<Term> {
      *
      * @return The concept name, with taskBudget in the full version
      */
-    public toString(): java.lang.String { // called from concept bag
+    public toString(): string { // called from concept bag
         // return (super.toStringBrief() + " " + key);
         return super.toStringExternal();
     }
@@ -457,7 +458,7 @@ export class Concept extends Item<Term> {
     /**
      * called from {@link Shell}
      */
-    public toStringLong(): java.lang.String {
+    public toStringLong(): string {
         const res: java.lang.String = S`${this.toStringExternal()} ${this.term.name()}${this.toStringIfNotNull(this.termLinks.size(), S`termLinks`)}${this.toStringIfNotNull(this.taskLinks.size(), S`taskLinks`)}${this.toStringIfNotNull(this.beliefs.size(), S`beliefs`)}${this.toStringIfNotNull(this.desires.size(), S`desires`)}${this.toStringIfNotNull(this.questions.size(), S`questions`)}${this.toStringIfNotNull(this.quests.size(), S`quests`)}`;
 
         // + toStringIfNotNull(null, "questions");
@@ -467,7 +468,7 @@ export class Concept extends Item<Term> {
          * }
          */
         // TODO other details?
-        return res;
+        return javaStringValue(res);
     }
 
     private toStringIfNotNull(item: unknown, title: java.lang.String): java.lang.String {

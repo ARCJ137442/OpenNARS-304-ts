@@ -263,6 +263,19 @@
 
 证据文件位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`：`g0-m1-245-main-20260917.jsonl`、`g0-m1-simpleOperation-20260917.jsonl` 及四份 131072 stage digest；阶段解释见 [G0 阶段报告](../reports/20260917-083653.md)。状态与报告已由 `d66da8d docs(g0): 记录 M1 M2 全量保护门` 提交并推送至 `origin/main`。
 
+### 当前候选：`Item` 文本边界原生化（2026-09-17）
+
+本批承接 G0 稳定保护点 `534407bc7058c545daf2772b3846b3d3cc84d1d1`，继续沿“数据结构 → 容器 → 推理规则 → 推理引擎 → 程序入口”的方向做历史前向审查。canonical Java 未改变：源码 commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+
+- Java `Item.toString`、`toStringExternal`、`toStringExternal2` 都是局部一次性 `StringBuilder -> String`；没有共享、增量观察或中途可变状态。TypeScript 改用模板字符串，显式保留 Java `String.valueOf`、null 名称、无预算前导空格和三种输出顺序。
+- 因基类返回类型改变，`Concept`、`Task`、`TaskLink`、`TermLink` 的相同继承合同同步改为原生 `string`；仍有共享/条件拼接的 `Task.toStringLong`、`TermLink.newKeyPrefix` 等 builder 未作批量替换。
+- 历史前向审查回读 `b9e1407`（TermLink Java 字符边界）、`cbdb52f`（Item 可空预算/`String.valueOf`）和 `81b41a5`（TaskLink 的真实 Deque）；结合此前 `7b9f1d4` 对三处 Set→List 错配的修复，确认字符串、Deque、Set、List、Map 必须按原始 Java 抽象分别处理。
+- M2：`item-string.test.ts` `2/2`，统一串行单测 `237/237`；显式非增量 `tsc` `0` 诊断；build/API、canonical local parity、`nal8.add.nal` smoke `1/1` 均通过。`test/entity/TLink.test.ts` 仍由统一入口纳入。
+- 当前 jree 审计：生产直接导入文件 `95`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=21`、`javaObjectFiles=53`、`javaUtilFiles=40`、`javaLangFiles=87`、`semanticReviewItems=108`、`candidateNativeItems=68`。迁移扫描 `223` 文件，jree runtime type `1779/144`；本批是字符串输出边界收敛，不代表 jree 已退场。
+- 本批不运行 M1-/#245：修改范围是局部文本合同，已有直接回归、局部 parity 与受影响 smoke；较大共享输出、集合或调度责任簇闭合时再运行串行 M1-。这不能改写 G0 的完整 M1 结论。
+
+本批阶段报告见 [Item 文本边界批次报告](../reports/20260917-095625.md)。在本批提交完成前，不把上述候选称为远端稳定点；提交后应补录提交哈希和推送状态。023/024、正式性能门和发布门仍未完成。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：

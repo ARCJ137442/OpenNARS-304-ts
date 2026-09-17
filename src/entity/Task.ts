@@ -2,6 +2,7 @@
 import { java, type int, type long, S } from "jree";
 import { Item } from "./Item.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
+import { javaStringValue } from "../runtime/jree-compat.ts";
 import type { Sentence } from "./Sentence.ts";
 import type { BudgetValue } from "./BudgetValue.ts";
 import type { Memory } from "../storage/Memory.ts";
@@ -196,13 +197,13 @@ export class Task extends Item<Sentence> {
      *
      * @return The Task as a String
      */
-    public toStringLong(): java.lang.String {
+    public toStringLong(): string {
         let s: java.lang.StringBuilder = new java.lang.StringBuilder();
         s.append(super.toString()).append(' ').append(this.sentence.stamp.name());
         if (this.bestSolution !== null) {
             s.append("  \n solution: ").append(this.bestSolution.toString());
         }
-        return s.toString();
+        return javaStringValue(s);
     }
 
     /**

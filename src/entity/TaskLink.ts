@@ -8,6 +8,7 @@ import type { TLink } from "./TLink.ts";
 import type { Parameters } from "../main/Parameters.ts";
 import type { Term } from "../language/Term.ts";
 import { NativeDeque } from "../runtime/NativeDeque.ts";
+import { javaStringValue } from "../runtime/jree-compat.ts";
 
 
 
@@ -205,11 +206,14 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
     }
 
 
-    public toString(): java.lang.String {
-        return S`${super.toString()} ${this.getTarget().sentence.stamp}`;
+    public toString(): string {
+        // Java source return type: String; return super.toString() + " " + getTarget().sentence.stamp;
+        // Keep the inherited Item output and Java object-to-string boundary
+        // explicit while returning the native string contract.
+        return `${javaStringValue(super.toString())} ${javaStringValue(this.getTarget().sentence.stamp)}`;
     }
 
-    public toStringBrief(): java.lang.String {
+    public toStringBrief(): string {
         return super.toString();
     }
 
