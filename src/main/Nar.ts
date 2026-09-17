@@ -29,6 +29,7 @@ import { Sentence } from "../entity/Sentence.ts";
 import { Stamp } from "../entity/Stamp.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeReadOnlyList } from "../runtime/NativeList.ts";
+import { NativeMap } from "../runtime/NativeMap.ts";
 import { JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { Task } from "../entity/Task.ts";
@@ -113,7 +114,10 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     public static readonly WEBSITE: java.lang.String = S` Open-NARS website:  http://code.google.com/p/open-org.opennars/ \n      NARS website:  http://sites.google.com/site/narswang/ \n    Github website:  http://github.com/opennars/ \n    IRC:  http://webchat.freenode.net/?channels=org.opennars \n`;
 
     private threads: ThreadCompat[] | null = null;
-    protected sensoryChannels: java.util.Map<Term, SensoryChannel> = new java.util.LinkedHashMap();
+    // Java `Map<Term, SensoryChannel>` backed by `LinkedHashMap`; NativeMap
+    // preserves Term.equals lookup, insertion order, and Map views.
+    protected sensoryChannels: java.util.Map<Term, SensoryChannel> =
+        new NativeMap<Term, SensoryChannel>() as unknown as java.util.Map<Term, SensoryChannel>;
 
     public addSensoryChannel(term: java.lang.String, channel: SensoryChannel): void {
         try {
@@ -151,7 +155,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         let ret: Nar = stream.readObject() as Nar;
         ret.memory.event = new EventEmitter();
         ret.plugins = [];
-        ret.sensoryChannels = new java.util.LinkedHashMap();
+        ret.sensoryChannels = new NativeMap<Term, SensoryChannel>() as unknown as java.util.Map<Term, SensoryChannel>;
         let pluginsToAdd: Plugin[] = ConfigReader.loadParamsFromFileAndReturnPlugins(ret.usedConfigFilePath, ret,
             ret.narParameters);
         for (let p of pluginsToAdd) {

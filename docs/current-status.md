@@ -519,3 +519,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 去 jree 生产审计：`new LinkedHashMap` `35→32`；直接 jree 导入文件仍为 `89`，`new LinkedHashSet` 为 `1`，说明本批只完成一个明确 Map 计数簇，不代表 jree 已退场。迁移扫描更新为 226 个文件；malformed generic/operator/new-this/constructor-delegation 均为 0。
 
 本批可以宣称：计数算法的一个 `Map<Term,Integer>` 簇已按 Java 合同原生化，并通过局部合同、M2 与冻结 Java 标杆 M1- 保护矩阵；当前工作区仍可在此基础上继续下一类经 Java 合同确认的 jree 依赖。不能宣称：023 完成、全部生产 Map 已原生化、#245 在本批重新运行、Java/TypeScript 性能等价或正式发布。完整 023/024 验收时仍需重新运行 canonical Java，并与冻结标杆逐字段核对。
+
+### 2026-09-17：`Nar.sensoryChannels` Map 原生化批次
+
+本批以 `df7ba35` 为前向基线，继续按“数据结构 → 容器 → 推理规则 → 推理引擎 → 宿主入口”审查 023。对照 canonical Java `Nar.java`，确认 `sensoryChannels` 的原始声明为 `Map<Term, SensoryChannel>`，具体实现为 `LinkedHashMap`；`addSensoryChannel`、感知派发、插件移除和反序列化重建分别依赖 `put`、`containsKey`、`get`、`remove`、`values`。本批将两个构造点改为 `NativeMap<Term, SensoryChannel>`，对外仍保留 Java Map 类型形状，并以注释记录 Java 原类型；没有将 Map 改成数组或普通对象。
+
+- 新增 `nar-sensory-channel-map.test.ts`：以独立但 Java `Term.equals` 相等的键查询、覆盖、删除，并确认实际 registry 为 NativeMap。
+- M2：统一串行单测 `258/258`，失败 0、跳过 0；`npm run typecheck` 使用显式 `--incremental false` 为 0 诊断；build、dist API、canonical local algorithm parity 均通过。
+- M1-：使用三轮一致的冻结 Java 功能标杆，TS-only、单线程、cold、`chunk-size=1`、逐文件独立运行，排除 #245，`244/244` 通过；分层为 `single_step=215`、`multi_step=24`、`application=5`。TS exception、marker missing、无进展 stall、process limit、not-run、性能 warning 与功能失败均为 0。243 行走 marker 等价路线，1 行 markerless 短运行未到 131072 周期，不替代已有 markerless 长周期证据。
+- M1- 结果位于项目外归档：`g4-nar-sensory-map-m1-minus-20260917.jsonl`，SHA-256 为 `AC11509A4EC0378C0A89851C82C10EE4EBEF6EF7D351EAE936CDF8783109C6D0`；冻结标杆 `g0-java-baseline-frozen-26772af-20260917.jsonl` 的 SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。本轮 `java_artifact=null`，明确没有启动 Java 全量矩阵。
+- 运行观测：TS 总时长 `1,685,890 ms`，最长单文件 `365,186 ms`，最大 RSS `1,226,625,024 bytes`，推理周期合计 `2,288,254`；耗时与 RSS 只作为后续性能优化输入，不作为功能门失败。
+- jree 审计前→后（相对 `df7ba35`）：`new LinkedHashMap` `32→30`，直接 jree 导入文件仍为 `89`；当前扫描为 227 个文件，`semanticReviewItems=99`、`candidateNativeItems=2`。这说明本批只移除两个明确构造点，不代表生产 jree 已退场。
+
+本批可以宣称：`Nar.sensoryChannels` 的 Map 簇已在 023 下原生化，并通过直接合同、M2 与冻结 Java 标杆 M1- 保护。仍不能宣称：023/024 完成、#245 在本批重跑通过、markerless 长周期在本批重新验证、生产核心完全去 jree、Java/TypeScript 性能等价或正式发布。日常批次继续复用冻结 Java 功能字段；023/024 整体验收时仍需现跑 canonical Java 并与标杆逐字段核对。
