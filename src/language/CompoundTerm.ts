@@ -12,6 +12,7 @@ import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
 import { javaStringHashCode, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
 import { NativeList } from "../runtime/NativeList.ts";
+import { NativeSet } from "../runtime/NativeSet.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -420,13 +421,16 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     /** Gives a set of all contained term, recursively */
     public getContainedTerms(): java.util.Set<Term> {
-        let s: java.util.Set<Term> = new java.util.LinkedHashSet(this.getComplexity());
+        // Java source: Set<Term> s = new LinkedHashSet<>(getComplexity());
+        // This public Java Set shape is retained at the boundary; NativeSet
+        // supplies the actual Term.equals-based membership and order.
+        const s = new NativeSet<Term>();
         for (let t of this.term) {
             s.add(t);
             if (t instanceof CompoundTerm)
                 s.addAll((t as CompoundTerm).getContainedTerms());
         }
-        return s;
+        return s as unknown as java.util.Set<Term>;
     }
 
     /**
@@ -613,7 +617,8 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      */
     public static addComponentsRecursively(t: Term, components: java.util.Set<Term>): java.util.Set<Term> {
         if (components === null) {
-            components = new java.util.LinkedHashSet<Term>();
+            // Java source: components = new LinkedHashSet<Term>();
+            components = new NativeSet<Term>() as unknown as java.util.Set<Term>;
         }
         components.add(t);
         if (t instanceof CompoundTerm) {

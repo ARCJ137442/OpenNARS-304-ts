@@ -389,6 +389,19 @@
 
 本批按局部 Set 风险规则不重新运行 M1-/#245；不能把本批局部证据说成新的 M1 全量通过。023 仍保持 `in-progress`，尚未完成的共享 Map/Set、其它 jree 运行时依赖、公共 API 和平台边界继续按原有门禁推进。阶段报告为 `reports/20260917-131050.md`。
 
+### 2026-09-17：CompoundTerm 递归 Set 原生化
+
+本批继续对照 canonical Java 做历史前向审查，并将 `CompoundTerm.getContainedTerms()` 与 `addComponentsRecursively()` 的两个 Java `Set<Term> + LinkedHashSet` 实现替换为 `NativeSet<Term>`。Java 公共返回形状仍保留为 `java.util.Set<Term>`；唯一性、Java `equals` 值相等、首次加入顺序和递归算法均保持不变。`CompositionalRules` 对后一个入口有真实消费，因此本批在 M2 后执行 M1- 保护矩阵。
+
+- canonical Java source commit：`8675b76fe8c21ee20a7b8c1b63408fb05327210d`；JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`；classes/test-classes 来自 `OpenNARS-304-java-canonical-fixed-build`，未覆盖历史 JAR。
+- M2：定向回归 `45/45`；`npm test`/`npm run test:unit:serial` `246/246`，失败 0、跳过 0；显式非增量 `npx tsc --noEmit --pretty false --incremental false` 为 0 诊断；build、dist API、canonical local parity 均通过。
+- M1-：显式排除 `stability/long_term_stability.nal` 后的 244 个主资源，`single_step=215`、`multi_step=24`、`application=5`，`244/244` 功能与 parity 通过；0 exception、0 marker missing、0 no-progress timeout、0 process limit、0 not-run、0 Java/TS diff。Java 总耗时 `157,614 ms`，TypeScript `1,644,344 ms`，总计 `1,801,958 ms`；本批未启用 `--resource-metrics`，不新增内存节省结论。
+- markerless 补证：`nal6.redundant.nal` 的 Java/TS stage digest 均完成 `131072` 周期、`128` 个窗口、`589572` 个事件，`incomplete=false`，比较结果 `equal=true`、`first_difference=null`。
+- 审计前→后：生产 `new LinkedHashSet` `4→2`、`new LinkedHashMap` `35→35`、`new ArrayList` `0→0`、直接 jree 导入文件 `95→95`；迁移扫描的 collection-method `565→568` 来自本批 Set 调用/测试观察，不是新增 jree 构造。当前仍有 95 个直接 jree 导入文件，023 不能标记完成。
+- 前向审查继续遵循“Map 仍为 Map、Set 仍为 Set、无特殊 List 合同时优先原生数组”的原则；本批没有修改既有 Java List→数组边界。阶段报告为 [reports/20260917-132959.md](../reports/20260917-132959.md)。
+
+本批可以宣称 `CompoundTerm` 递归 Set 辅助已原生化并通过 M2、M1- 和 markerless 长周期证据；不能宣称 023/024 完成、jree 已移除、#245 已在本批重跑、Java/TypeScript 性能等价或正式发布。下一批仍应先回到 Java 合同，优先审查 `Anticipate` 的公开 Map value Set 或其他具有明确 Set/Map 责任的簇。
+
 ### 当前候选补录：历史 List→数组边界复核（2026-09-17）
 
 用户确认“除非有特殊需要，否则原生数组更合适”。据此复核此前登记的历史转换：Java `List` 名称本身不构成必须恢复 `NativeList` 的理由；应以实际调用面和对外兼容要求判定。

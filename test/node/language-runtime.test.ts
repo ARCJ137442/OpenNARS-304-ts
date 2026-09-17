@@ -72,3 +72,36 @@ test("Terms image/product equivalence keeps Java Set de-duplication", async () =
         true,
     );
 });
+
+test("CompoundTerm Set helpers preserve Java equality and insertion order", async () => {
+    const { CompoundTerm } = await import("../../src/language/CompoundTerm.ts");
+    const { Product } = await import("../../src/language/Product.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { NativeSet } = await import("../../src/runtime/NativeSet.ts");
+
+    const first = Term.get("contained-first");
+    const equivalent = first.clone();
+    const inner = Product.make([first, equivalent]);
+    const outer = Product.make([inner, first]);
+
+    const contained = outer.getContainedTerms() as unknown as {
+        size(): number;
+        toArray(): unknown[];
+    };
+    assert.equal(contained instanceof NativeSet, true);
+    assert.equal(contained.size(), 2);
+    assert.deepEqual(contained.toArray(), [inner, first]);
+
+    const allComponents = CompoundTerm.addComponentsRecursively(
+        outer,
+        null as never,
+    ) as unknown as {
+        size(): number;
+        toArray(): unknown[];
+        contains(value: unknown): boolean;
+    };
+    assert.equal(allComponents instanceof NativeSet, true);
+    assert.equal(allComponents.size(), 3);
+    assert.deepEqual(allComponents.toArray(), [outer, inner, first]);
+    assert.equal(allComponents.contains(equivalent), true);
+});

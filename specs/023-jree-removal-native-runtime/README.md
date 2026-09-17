@@ -179,3 +179,13 @@ M1- 在提交前基线 `35f6d4d` 之后运行，使用单线程、cold、`--chun
 新增重复变量 Product/Image 等价回归，定向回归 `8/8`、串行单测 `245/245`、显式非增量 `tsc` 0 诊断、build、dist API、canonical local parity 均通过。`nal4.0.nal`～`nal4.8.nal` 在 canonical JAR、单线程、cold、1550 周期条件下逐文件运行，`9/9` 通过。本批按局部 Set 风险等级不运行 M1-/#245。
 
 审计前→后：生产 `new LinkedHashSet` `6 → 4`；`new LinkedHashMap` `35 → 35`；`new ArrayList` `0 → 0`；直接 jree 导入文件 `95 → 95`。迁移扫描 collection-method `563 → 565` 是 `.add` 调用扫描计数变化，不是生产 jree 构造增加。023 仍保持 `in-progress`，本批不能宣称 jree 已移除、M1- 全量重跑、性能等价或里程碑完成。
+
+### 2026-09-17：`CompoundTerm` 递归 Set 原生化
+
+本批继续历史前向审查，回读 canonical Java `CompoundTerm.getContainedTerms()` 与 `addComponentsRecursively()`。两者的原始合同都是 `Set<Term>`，实现为 `LinkedHashSet`：递归收集 Term，按 Java `equals` 做值相等去重，并按首次加入顺序迭代；后一个入口由 `CompositionalRules` 的目标/谓词分支实际消费。TypeScript 将两个局部实现改为 `NativeSet<Term>`，保留 `java.util.Set<Term>` 的公共边界、递归顺序和调用方逻辑，没有以 `NativeList` 或数组冒充 Set。
+
+新增语言层回归，验证 NativeSet 运行时类型、递归结果的唯一性、插入顺序和独立但 Java `equals` 相等的 Term 可以命中。M2 为定向 `45/45`、串行统一单测 `246/246`、非增量 `tsc=0`、build、dist API 和 canonical local parity 全部通过，失败/跳过均为 0。
+
+在显式排除 `stability/long_term_stability.nal` 后，M1- 主资源 `single_step=215`、`multi_step=24`、`application=5`，`244/244` 功能与 parity 通过；0 exception、0 marker missing、0 no-progress timeout、0 process limit、0 not-run、0 Java/TS diff。唯一 markerless 资源 `nal6.redundant.nal` 另按冻结协议完成 Java/TS 各 `131072` 周期、`128` 个窗口、`589572` 个事件，stage digest 为 `equal=true`、`first_difference=null`、`incomplete=false`。
+
+canonical Java source commit 为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。生产审计前→后为 `new LinkedHashSet 4→2`、`new LinkedHashMap 35→35`、`new ArrayList 0→0`、直接 jree 导入文件 `95→95`；迁移扫描 collection-method `565→568` 的增加来自本批 Set 调用/测试观察，不是 jree 构造增加。编码检查扫描 915 个文件且无异常；报告为 `reports/20260917-132959.md`。023 仍保持 `in-progress`，本批不能宣称 jree 已移除、#245 长期稳定性已重跑、性能等价或里程碑完成。
