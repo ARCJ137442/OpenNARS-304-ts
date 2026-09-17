@@ -701,3 +701,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - M1-/#245：本批未运行。改动只触及插件外层继承壳，没有改变嵌套 Operator、事件 token、集合、预算/浮点算法、推理调度、Java artifact 或 runner；M2、local parity 和长预算单文件 smoke 提供局部保护。后续触及插件算法或嵌套 Operator 时重新评估 M1-。
 
 本批可以宣称：`Abbreviation` 外层隐式 `Object` 壳已原生化，并经定向回归、串行 M2、local parity、长预算 NAL smoke 和构建门保护。仍不能宣称整个插件模块、023/024 或生产核心已脱离 jree，也不能宣称 M1- 全量重跑、性能等价或正式发布。
+
+### 2026-09-18：`cb32ed8` G0 串行保护回归
+
+本节是本次 G0 的增量证据，不改写此前已经封存的 `9bd6cc0` 全量通过结论。测试使用 `HEAD=cb32ed8dec5084d41fd3d80f5d906373dfe8b476` 与 canonical Java：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR 为 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。Java 与 TypeScript 均为单线程、cold 模式；矩阵逐文件串行运行，`cycles=1550`、`timeout-ms=180000`、`process-limit-ms=1800000`、`chunk-size=1`、启用 `resource-metrics`。
+
+- M1 主资源共 `245` 项，JSONL 解析 `245/245`，序号完整为 `0..244`，`not_run=0`、Java/TS exception `0`、stall `0`、普通 timeout `0`。
+- 其中 `244` 个普通资源 `functional_pass=244` 且 parity 等价；唯一未完成的是 `stability/long_term_stability.nal`：Java 完成 `2,001,974` 周期，TS 在 `1,746,827` 周期时达到进程上限，marker missing。因此这里是稳定性证据未完成，不是已证实的逻辑分叉，也不能将 raw G0 记为 `245/245` 全绿。
+- 额外 `simpleOperationTest.nal` 为 `1/1`，无异常、stall、timeout 或 process limit。证据见 [g0-m1-245-cb32ed8-parity-serial.jsonl](../reports/evidence/g0-m1-245-cb32ed8-parity-serial.jsonl) 与 [g0-m1-simple-cb32ed8-parity-serial.jsonl](../reports/evidence/g0-m1-simple-cb32ed8-parity-serial.jsonl)。
+- M2 串行单测 `261/261`，失败 `0`、跳过 `0`；显式非增量 `tsc` 为 `0` 诊断；build、dist API、local algorithm parity、release/package 与静态检查均通过，release `runtimeWarnings=none`，local parity `differences=[]`。
+- 当前统一单测入口为 `test/node/*.test.ts`，`test/entity/TLink.test.ts` 尚未被捕获；因此 `261/261` 是统一入口结果，不等于仓库全部测试已经纳入。
+- 本批 jree 审计快照：生产直接导入文件 `88`、`newLinkedHashMap=11`、`newLinkedHashSet=1`、`JavaObject` 文件 `31`；这些是当前清单，不是 023 完成度。023 仍为 `in-progress`。
+
+📌 Java 标杆复用规则：当 canonical JAR SHA、Java source/classes/test-classes、jree 依赖、NAL 夹具、runner 合同、JDK、单线程设置、随机/周期/配置均不变时，普通 023 小批次只运行 TypeScript 并对照已验证的冻结 Java JSONL；一旦其中任一不变量变化，或进入 023/024 阶段验收、集成冻结、发布候选，就必须现跑 Java 并逐字段核对冻结标杆。不一致时先调查原因，再决定是否刷新标杆。:codex-annotation{index="1"}
+
+当前可以宣称：`cb32ed8` 的 244 个普通主资源与额外夹具在本次串行 Java/TypeScript 对照中通过，M2 工程门通过。当前不能宣称：本次 raw 245+1 矩阵全绿、#245 markerless 长周期等价、023/024 完成、生产核心 jree 清零、Java/TypeScript 性能等价或正式发布。
