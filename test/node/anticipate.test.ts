@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { Anticipate } from "../../src/operator/mental/Anticipate.ts";
-import { Parameters } from "../../src/main/Parameters.ts";
+import { Parameters as NarParameters } from "../../src/main/Parameters.ts";
 import { Term } from "../../src/language/Term.ts";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { Events } from "../../src/io/events/Events.ts";
@@ -11,7 +11,7 @@ import { BudgetValue } from "../../src/entity/BudgetValue.ts";
 import { NativeSet } from "../../src/runtime/NativeSet.ts";
 
 test("Anticipate keeps a prediction and emits the Java-compatible signal", () => {
-    const parameters = new Parameters();
+    const parameters = new NarParameters();
     const event = new EventEmitter();
     const emitted: unknown[] = [];
     const memory = {
@@ -44,7 +44,7 @@ test("Anticipate keeps a prediction and emits the Java-compatible signal", () =>
 });
 
 test("Anticipate removes a confirmed NativeSet value through its Java iterator path", () => {
-    const parameters = new Parameters();
+    const parameters = new NarParameters();
     const emitted: unknown[] = [];
     const memory = {
         narParameters: parameters,
@@ -84,7 +84,7 @@ test("Anticipate removes a confirmed NativeSet value through its Java iterator p
 });
 
 test("Anticipate subscribes and unsubscribes from its cycle events", () => {
-    const parameters = new Parameters();
+    const parameters = new NarParameters();
     const event = new EventEmitter();
     const nar = { memory: { event }, narParameters: parameters };
     const anticipate = new Anticipate(0.2, 0.3);
@@ -127,7 +127,7 @@ test("Anticipate deduplicates equal derived terms in its Set boundary", () => {
 });
 
 test("Concept stores anticipation entries in a native array", () => {
-    const parameters = new Parameters();
+    const parameters = new NarParameters();
     const memory = { narParameters: parameters } as never;
     const concept = new Concept(
         new BudgetValue(0.5, 0.5, 0.5, parameters),
@@ -140,4 +140,52 @@ test("Concept stores anticipation entries in a native array", () => {
     concept.anticipations.push(entry);
     assert.equal(concept.anticipations.length, 1);
     assert.equal(concept.anticipations[0], entry);
+});
+
+test("ProcessAnticipation accepts the native Map substitution boundary", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+    const { ProcessAnticipation } = await import("../../src/control/concept/ProcessAnticipation.ts");
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { TruthValue } = await import("../../src/entity/TruthValue.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { Product } = await import("../../src/language/Product.ts");
+    const { Implication } = await import("../../src/language/Implication.ts");
+    const { Variable } = await import("../../src/language/Variable.ts");
+    const { TemporalRules } = await import("../../src/inference/TemporalRules.ts");
+    const { NativeMap } = await import("../../src/runtime/NativeMap.ts");
+
+    const nar = new Nar();
+    try {
+        const variable = new Variable("$1");
+        const grounded = Term.get("grounded-anticipation");
+        const predicate = Product.make([Term.get("anticipated-target"), variable]);
+        const implication = Implication.make(Term.get("anticipation-condition"), predicate, TemporalRules.ORDER_FORWARD);
+        const sentence = new Sentence(
+            implication,
+            ".",
+            TruthValue.fromFrequencyConfidence(1, 0.9, nar.narParameters),
+            new Stamp(nar, nar.memory),
+        );
+        type ProcessSubstitution = Parameters<typeof ProcessAnticipation.anticipate>[6];
+        const substitution = new NativeMap<Term, Term>() as unknown as ProcessSubstitution;
+        substitution.put(variable, grounded);
+        const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+
+        assert.doesNotThrow(() => ProcessAnticipation.anticipate(
+            context,
+            sentence,
+            new BudgetValue(0.9, 0.9, 0.9, nar.narParameters),
+            1n,
+            2n,
+            1.0,
+            substitution,
+        ));
+        const substituted = predicate.applySubstitute(substitution);
+        assert.equal(substituted instanceof Product, true);
+        assert.equal((substituted as typeof predicate).term[1].equals(grounded), true);
+    } finally {
+        nar.stop();
+    }
 });

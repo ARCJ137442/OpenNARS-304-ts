@@ -22,6 +22,7 @@ import { TemporalRules } from "./TemporalRules.ts";
 import type { DerivationContext } from "../control/DerivationContext.ts";
 import { ProcessAnticipation } from "../control/concept/ProcessAnticipation.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { NativeMap } from "../runtime/NativeMap.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 const { ORDER_NONE, ORDER_FORWARD, ORDER_BACKWARD, ORDER_INVALID } = TemporalRules;
@@ -782,8 +783,11 @@ export class SyllogisticRules {
             truth.getExpectation() > nal.narParameters.DEFAULT_CONFIRMATION_EXPECTATION
             && !premise1Sentence.stamp.alreadyAnticipatedNegConfirmation) {
             premise1Sentence.stamp.alreadyAnticipatedNegConfirmation = true;
+            // Java 原类型：Map<Term, Term>；原实现：LinkedHashMap。
+            // This is a temporary substitution map, so preserve the Java Map
+            // boundary while using the native equality-aware ordered map.
             ProcessAnticipation.anticipate(nal, premise1Sentence, budget, minTime, maxTime, 1,
-                new java.util.LinkedHashMap<Term, Term>());
+                new NativeMap<Term, Term>() as unknown as java.util.Map<Term, Term>);
         }
     }
 

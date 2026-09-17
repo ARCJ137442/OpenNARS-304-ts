@@ -559,3 +559,17 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 审计当前：生产 `src` 136 个文件，直接 jree 导入文件 `89`，`new LinkedHashMap=12`，`new LinkedHashSet=1`，`JavaObject=38` 个文件，`Java util=40` 个文件，`Java lang=87` 个文件，`Java String=52` 个文件；迁移模式扫描 227 个文件，malformed generic/operator/new-this/constructor-delegation 均为 0，platform findings 为 0。
 
 本批可以宣称：`Variables` 统一 Map 实现已按 Java Map 合同原生化，并通过直接回归、M2 和冻结 Java 标杆 M1- 保护。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 在本批重跑通过、markerless 131072 周期等价、Java/TypeScript 性能等价或正式发布。阶段细节见 [Variables 统一映射批次报告](../reports/20260917-232955.md)。
+
+### 2026-09-18：`SyllogisticRules` 临时替换 Map 原生化批次
+
+本批以 `e4bb8f3c9a88f774cae811270c5a3e2bae02c034` 为前向基线，对照 canonical Java `SyllogisticRules.java` 与 `ProcessAnticipation.java`。确认 `conditionalAna` 在预测确认成立时创建一个临时 `Map<Term, Term>`，具体实现为 `LinkedHashMap`，随后仅交给 `ProcessAnticipation.anticipate`，由 `CompoundTerm.applySubstitute` 读取；该点没有独立的 key 表、Set 语义或持久生命周期。
+
+- `src/inference/SyllogisticRules.ts`：将单个 `new java.util.LinkedHashMap<Term, Term>()` 改为 `NativeMap<Term, Term>`，并显式收窄为 Java `Map<Term, Term>`；源码注释记录 Java 原类型与原实现。
+- `test/node/anticipate.test.ts`：新增真实 `ProcessAnticipation` 调用合同，验证 NativeMap 替换映射可被推理路径接受，复合项替换结果保持正确；测试导入别名避免遮蔽 TypeScript `Parameters<>` 工具类型。
+- M2：直接回归 `6/6`；串行统一单测 `261/261`，失败 0、跳过 0；显式非增量 `tsc` 为 0 诊断；build、dist API、canonical local algorithm parity 均通过；`nal9.anticipate1.nal` smoke `1/1`。
+- M1-：使用三次一致的 Java 功能冻结标杆，仅运行 TypeScript，单线程、cold、逐文件串行，244 个主资源 `244/244` 通过；分层 `single_step=215`、`multi_step=24`、`application=5`；Java/TS diff、TS exception、marker missing、stall、process limit、not-run、performance warning 均为 0。243 个样本走 marker 路径，1 个 markerless 短运行未达到 131072 周期。
+- M1- 证据位于项目外：`g4-syllogistic-anticipation-m1-minus-20260918.jsonl`，SHA-256 `9B115CEBC908625B47F2EFE00FD19F095EA40CB973CCCA6689CA808208F1D437`；TS 总耗时 `1,698,236 ms`，最长单文件 `368,710 ms`，最大 RSS `1,260,576,768 bytes`，推理周期合计 `2,288,254`。性能观测仅作为后续优化输入。
+- Java 标杆未变化：冻结 JSONL `g0-java-baseline-frozen-26772af-20260917.jsonl` SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。本批没有启动 Java 全量矩阵，因为 artifact、源码/classes、依赖、夹具、runner 合同、JDK、线程和随机/配置均未变化；023/024 整体验收仍须现跑 Java 与冻结标杆逐字段核对。
+- 审计：生产 `src` 136 个文件，直接 jree 导入文件 `89`，`new LinkedHashMap=11`、`new LinkedHashSet=1`，JavaObject 文件 `38`，java.util 文件 `40`，java.lang 文件 `87`，Java String 文件 `52`；迁移模式扫描 227 个文件，constructor-delegation、malformed-generic、malformed-operator、malformed-new-this 均为 0。platform 审计扫描 172 个文件，其中 core candidate 84、mixed boundary 5、node adapter candidate 2、browser source 2、browser shim 2 个文件/19 处，属于 024 的后续边界债务。
+
+本批可以宣称：`SyllogisticRules` 一个临时 `Map<Term,Term>` 构造点已按 Java Map 合同原生化，并通过直接回归、M2、受影响 smoke 与 M1- 保护。仍不能宣称：023/024 完成、全部生产 jree 清零、#245 在本批重跑通过、markerless 131072 周期等价、Java/TypeScript 性能等价或正式发布。阶段细节见 [SyllogisticRules 临时 Map 批次报告](../reports/20260918-001150.md)。
