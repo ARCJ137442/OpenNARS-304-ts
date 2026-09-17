@@ -12,6 +12,7 @@ import { ImageInt } from "./ImageInt.ts";
 import { Inheritance } from "./Inheritance.ts";
 import { Similarity } from "./Similarity.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
+import { NativeSet } from "../runtime/NativeSet.ts";
 import type { Term } from "./Term.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
 
@@ -227,7 +228,9 @@ export class Variables extends JavaObject {
                         if (list === null || cTerm2.term === null || list.length !== cTerm2.term.length) {
                             return false;
                         }
-                        let matchedJ: java.util.Set<java.lang.Integer> = new java.util.LinkedHashSet(list.length * 2);
+                        // Java source: final Set<Integer> matchedJ = new LinkedHashSet<>(list.length * 2);
+                        // Keep Integer wrapper values at the translated Java boundary; NativeSet preserves Set uniqueness.
+                        const matchedJ = new NativeSet<java.lang.Integer>();
                         for (let i: int = 0; i < list.length; i++) {
                             let succeeded: boolean = false;
                             for (let j: int = 0; j < list.length; j++) {

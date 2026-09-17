@@ -78,3 +78,22 @@ test("common variable propagation matches Java for commutative unification", asy
         "<(&,(|,#1#2$,object),object) <-> (|,[unscrewing],object)>",
     );
 });
+
+test("commutative unification does not reuse one matched operand index", async () => {
+    const { java } = await import("jree");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Narsese } = await import("../../src/io/Narsese.ts");
+    const { Symbols } = await import("../../src/io/Symbols.ts");
+    const { Variables } = await import("../../src/language/Variables.ts");
+
+    const parser = new Narsese(new Nar());
+    const left = parser.parseTerm(new java.lang.String("(|,a,a)"));
+    const right = parser.parseTerm(new java.lang.String("(|,a,b)"));
+    assert.ok(left);
+    assert.ok(right);
+
+    assert.equal(
+        Variables.unify(new java.util.Random(1n), Symbols.VAR_INDEPENDENT, left, right, [left, right]),
+        false,
+    );
+});
