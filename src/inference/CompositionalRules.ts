@@ -36,6 +36,7 @@ import { TemporalRules } from "./TemporalRules.ts";
 import { TruthFunctions } from "./TruthFunctions.ts";
 import type { DerivationContext } from "../control/DerivationContext.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { NativeSet } from "../runtime/NativeSet.ts";
 
 export type Pair<L, R> = {
     getLeft(): L;
@@ -458,7 +459,7 @@ export class CompositionalRules extends JavaObject {
             return;
         }
         for (let subjectIntroduction of [true, false]) {
-            let contents: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal,
+            let contents: NativeSet<Pair<Term, float>> = CompositionalRules.introduceVariables(nal,
                 Implication.make(state1, state2), subjectIntroduction);
             for (let content_penalty of contents) {
                 let truth: TruthValue = induction(truthT, truthB, nal.narParameters)
@@ -530,7 +531,7 @@ export class CompositionalRules extends JavaObject {
                 return false;
             }
             for (let subjectIntro of [true, false]) {
-                let conts: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, content, subjectIntro);
+                let conts: NativeSet<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, content, subjectIntro);
                 for (let content_penalty of conts) {
                     let truth: TruthValue = intersection(taskSentence.getTruth(), belief.getTruth(), nal.narParameters)
                         .mulConfidence(content_penalty.getRight());
@@ -547,7 +548,7 @@ export class CompositionalRules extends JavaObject {
                 return false;
             }
             for (let subjectIntro of [true, false]) {
-                let conts: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, content, subjectIntro);
+                let conts: NativeSet<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, content, subjectIntro);
                 for (let content_penalty of conts) {
                     let truth: TruthValue;
                     if (premise1.equals(taskSentence.term)) {
@@ -763,7 +764,7 @@ export class CompositionalRules extends JavaObject {
             }
             let truth: TruthValue = induction(originalMainSentence.getTruth(), subSentence.getTruth(), nal.narParameters);
             for (let subjectIntro of [true, false]) {
-                let conts: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, T, subjectIntro);
+                let conts: NativeSet<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, T, subjectIntro);
                 for (let content_penalty of conts) {
                     let budget: BudgetValue = BudgetFunctions.compoundForward(truth, content_penalty.getLeft(), nal);
                     let truthVal: TruthValue = truth.clone();
@@ -782,23 +783,26 @@ export class CompositionalRules extends JavaObject {
      * @param originalSet
      * @return
      */
-    public static powerSet<T>(originalSet: java.util.Set<T>): java.util.Set<java.util.Set<T>> {
-        let sets: java.util.Set<java.util.Set<T>> = new java.util.LinkedHashSet<java.util.Set<T>>();
-        if (originalSet.isEmpty()) {
-            sets.add(new java.util.LinkedHashSet<T>());
+    public static powerSet<T>(originalSet: NativeSet<T> | java.util.Set<T>): NativeSet<NativeSet<T>> {
+        // Java source type: Set<Set<T>> backed by LinkedHashSet. Keep Set
+        // semantics explicit at both nesting levels; keep the input typed as a
+        // Java Set boundary rather than widening it to an arbitrary Iterable.
+        const sets = new NativeSet<NativeSet<T>>();
+        const list: T[] = Array.from(originalSet);
+        if (list.length === 0) {
+            sets.add(new NativeSet<T>());
             return sets;
         }
         // This list is only a temporary ordered view for the recursive split.
         // Keep the Java Set boundary, but avoid allocating a jree ArrayList and
         // AbstractList subList on every power-set level.
-        const list: T[] = Array.from(originalSet);
         const head: T = list[0];
-        const rest: java.util.Set<T> = new java.util.LinkedHashSet<T>();
+        const rest = new NativeSet<T>();
         for (let i = 1; i < list.length; i++) {
             rest.add(list[i]);
         }
         for (let set of CompositionalRules.powerSet(rest)) {
-            let newSet: java.util.Set<T> = new java.util.LinkedHashSet<T>();
+            const newSet = new NativeSet<T>();
             newSet.add(head);
             newSet.addAll(set);
             sets.add(newSet);
@@ -818,8 +822,8 @@ export class CompositionalRules extends JavaObject {
      *         the amount of vars introduced
      */
     public static introduceVariables(nal: DerivationContext,
-        implicationEquivalenceOrJunction: Term, subject: boolean): java.util.Set<Pair<Term, float>> {
-        let result: java.util.Set<Pair<Term, float>> = new java.util.LinkedHashSet<Pair<Term, float>>();
+        implicationEquivalenceOrJunction: Term, subject: boolean): NativeSet<Pair<Term, float>> {
+        const result = new NativeSet<Pair<Term, float>>();
         let validForIntroduction: boolean = implicationEquivalenceOrJunction instanceof Conjunction ||
             implicationEquivalenceOrJunction instanceof Disjunction ||
             implicationEquivalenceOrJunction instanceof Equivalence ||
@@ -828,7 +832,7 @@ export class CompositionalRules extends JavaObject {
             return result;
         }
         let app: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
-        let candidates: java.util.Set<Term> = new java.util.LinkedHashSet();
+        const candidates = new NativeSet<Term>();
         if (implicationEquivalenceOrJunction instanceof Implication
             || implicationEquivalenceOrJunction instanceof Equivalence) {
             CompositionalRules.addVariableCandidates(candidates, (implicationEquivalenceOrJunction as Statement).getSubject(), subject);
@@ -869,7 +873,7 @@ export class CompositionalRules extends JavaObject {
             shuffledVariables[i] = shuffledVariables[j];
             shuffledVariables[j] = current;
         }
-        let selected: java.util.Set<Term> = new java.util.LinkedHashSet<Term>();
+        const selected = new NativeSet<Term>();
         let i: int = 1;
         for (let t of shuffledVariables) {
             selected.add(t);
@@ -878,7 +882,7 @@ export class CompositionalRules extends JavaObject {
             }
             i++;
         }
-        let powerset: java.util.Set<java.util.Set<Term>> = CompositionalRules.powerSet(selected);
+        const powerset = CompositionalRules.powerSet(selected);
         for (let combo of powerset) {
             let mapping: java.util.Map<Term, Term> = new java.util.LinkedHashMap();
             for (let vIntro of combo) {
@@ -904,7 +908,7 @@ export class CompositionalRules extends JavaObject {
      * @param side
      * @param subject
      */
-    public static addVariableCandidates(candidates: java.util.Set<Term>, side: Term, subject: boolean): void {
+    public static addVariableCandidates(candidates: NativeSet<Term>, side: Term, subject: boolean): void {
         let junction: boolean = (side instanceof Conjunction || side instanceof Disjunction || side instanceof Negation);
         let n: int = junction ? (side as CompoundTerm).size() : 1;
         for (let i: int = 0; i < n; i++) {
@@ -928,7 +932,7 @@ export class CompositionalRules extends JavaObject {
                 let predT: Term = inh.getPredicate();
                 let addSubject: boolean = subject || subjT instanceof ImageInt; // also allow for images due to equivalence
                 // transform
-                let removals: java.util.Set<Term> = new java.util.LinkedHashSet<Term>();
+                const removals = new NativeSet<Term>();
                 if (addSubject && !subjT.hasVar()) {
                     let ret: java.util.Set<Term> = CompoundTerm.addComponentsRecursively(
                         subjT, null as unknown as java.util.Set<Term>);

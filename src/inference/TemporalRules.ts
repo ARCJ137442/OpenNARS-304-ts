@@ -12,6 +12,7 @@ import type { DerivationContext } from "../control/DerivationContext.ts";
 import type { Statement } from "../language/Statement.ts";
 import type { Interval } from "../language/Interval.ts";
 import { NativeList } from "../runtime/NativeList.ts";
+import type { NativeSet } from "../runtime/NativeSet.ts";
 
 type TemporalRuntime = Record<string, any>;
 
@@ -248,7 +249,8 @@ export class TemporalRules extends JavaObject {
         // https://groups.google.com/forum/#!topic/open-nars/uoJBa8j7ryE
         if (!deriveSequenceOnly && statement2 !== null) {
             for (let subjectIntro of [true, false]) {
-                let ress: java.util.Set<Pair<Term, float>> = CompositionalRules.introduceVariables(nal, statement2, subjectIntro);
+                let ress: NativeSet<Pair<Term, float>> =
+                    CompositionalRules.introduceVariables(nal, statement2, subjectIntro);
                 for (let content_penalty of ress) { // ok we applied it, all we have to do now is to use it
                     t11s.push((content_penalty.getLeft() as Statement).getPredicate());
                     t22s.push((content_penalty.getLeft() as Statement).getSubject());

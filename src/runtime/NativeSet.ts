@@ -9,6 +9,31 @@ const nativeValuesEqual = (stored: unknown, searched: unknown): boolean => {
     return typeof equals === "function" && equals.call(searched, stored);
 };
 
+const javaValueHashCode = (value: unknown): number => {
+    if (value === null || value === undefined) {
+        return 0;
+    }
+    const hashCode = (value as { hashCode?: unknown }).hashCode;
+    if (typeof hashCode === "function") {
+        return Number(hashCode.call(value));
+    }
+    if (typeof value === "boolean") {
+        return value ? 1231 : 1237;
+    }
+    if (typeof value === "number") {
+        return Number.isInteger(value) ? value | 0 : javaStringHashCode(String(value));
+    }
+    return javaStringHashCode(String(value));
+};
+
+const javaStringHashCode = (value: string): number => {
+    let hash = 0;
+    for (let index = 0; index < value.length; index += 1) {
+        hash = ((hash * 31) + value.charCodeAt(index)) | 0;
+    }
+    return hash;
+};
+
 /**
  * Native insertion-ordered Set for translated Java Set contracts.
  *
@@ -48,6 +73,43 @@ export class NativeSet<T> implements Iterable<T> {
 
     public contains(value: T): boolean {
         return this.items.some((candidate) => nativeValuesEqual(candidate, value));
+    }
+
+    /**
+     * Java Set equality is value-based, including when a Set is itself an
+     * element of another Set.  This is needed by CompositionalRules.powerSet;
+     * object identity alone would allow equal nested subsets to coexist.
+     */
+    public equals(other: unknown): boolean {
+        if (other === this) {
+            return true;
+        }
+        const candidate = other as {
+            size?: unknown;
+            contains?: unknown;
+            [Symbol.iterator]?: unknown;
+        } | null;
+        if (candidate === null || typeof candidate !== "object" || typeof candidate.size !== "function") {
+            return false;
+        }
+        if (Number(candidate.size()) !== this.items.length) {
+            return false;
+        }
+        if (typeof candidate.contains === "function") {
+            const contains = candidate.contains as (value: unknown) => unknown;
+            return this.items.every((value) => Boolean(contains.call(other, value)));
+        }
+        if (typeof candidate[Symbol.iterator] !== "function") {
+            return false;
+        }
+        const values = [...other as Iterable<unknown>];
+        return this.items.every((value) => values.some((candidateValue) =>
+            nativeValuesEqual(candidateValue, value)));
+    }
+
+    /** Java Set.hashCode is the sum of the element hash codes. */
+    public hashCode(): number {
+        return this.items.reduce((sum, value) => (sum + javaValueHashCode(value)) | 0, 0);
     }
 
     public isEmpty(): boolean {
