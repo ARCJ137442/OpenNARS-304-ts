@@ -614,3 +614,17 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - M1-/#245：本批未运行。改动只触及继承/marker 壳，已有直接回归、完整串行 M2 与 canonical local parity；G0 的 `245+1` 全量证据继续作为功能保护基线。若后续改动触及 BudgetValue 数值逻辑、集合、推理或公共边界，必须重新评估 M1-。
 
 本批可以宣称：`BudgetValue` 的 Java 隐式 Object/marker 壳已原生化，并经直接回归、串行 M2、非增量编译和 canonical 局部 parity 保护。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。普通 023 批次继续在 Java artifact、源码/classes/test-classes、依赖、夹具、runner 合同、JDK、线程/随机条件和配置均不变时复用冻结 Java 标杆；023/024 整体验收仍需现跑 canonical Java 并逐字段核对标杆一致。
+
+### 2026-09-18：G3 `ProcessQuestion` 静态工具与私有 Optional 边界批次
+
+本批以 G2 提交 `e563361c25e1211b27c9398727727efe0bb18d04` 为基线，对照 canonical Java `ProcessQuestion.java`。Java 类没有显式父类，所有方法均为静态工具方法；当前 TS 没有该类的实例化、`instanceof` 或 `.class` 消费。因此移除外层 `JavaObject` 是安全的。另确认 Java/Guava `Optional` 只在私有 `tryFind` 中用于 `isPresent()`/`get()`，本批将其收窄为 `Task | null`，不改变问题处理算法。
+
+- `src/control/concept/ProcessQuestion.ts`：移除外层 `JavaObject` 继承；私有搜索结果由 `java.util.Optional<Task>` 改为 `Task | null`。保留事件载荷的 `JavaObject` 类型断言、Java 异常和其他 Java 行为边界。
+- `test/node/core-runtime.test.ts`：将 `ProcessQuestion` 纳入静态工具类原型回归。
+- M2：定向核心测试 `36/36`；统一串行单测 `261/261`，失败 `0`、跳过 `0`；显式非增量 `tsc` 为 `0` 诊断；local canonical parity `ok=true`、`differences=[]`；build、dist API、release 均通过，release `runtimeWarnings=none`。
+- 受影响 NAL：`nal1.5.nal` 使用 TS-only 与冻结 Java 标杆运行，`1/1` 通过，marker 匹配，TS exception、stall、not-run 和 marker missing 均为 `0`；额外周期 `1550`，推理周期 `1556`。
+- 静态检查：生产源文件 `136`，直接 jree 导入文件 `88`，`JavaObject` 文件 `35`，`java.util` 文件 `39`；迁移模式扫描 `227` 个文件，malformed generic/operator/new-this/constructor-delegation 均为 `0`；平台审计、汉字编码检查和 `git diff --check` 通过。
+- jree 审计相对 G2：直接导入文件 `88→88`、`JavaObject` 文件 `35→35`，因为事件载荷类型断言仍需 `JavaObject` 名称；`java.util` 文件 `40→39`，迁移扫描 jree runtime type `1719→1715`。这表示私有 Optional 与外层壳收窄，不表示 jree runtime 已退场。
+- M1-/#245：本批未运行。改动没有改变集合判等、推理规则、预算/浮点数值、公共 runner 或 Java 基线；已用静态工具原型回归、完整串行 M2、local parity 和问题处理 NAL smoke 保护。若后续改动触及 `ProcessQuestion` 的算法、集合或公共边界，应重新评估 M1-。
+
+本批可以宣称：`ProcessQuestion` 的隐式 Object 壳及其私有 Optional 包装已按 Java 合同原生化，并通过直接回归、M2、local parity 和受影响 NAL smoke。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。普通 023 批次继续在 Java artifact、源码/classes/test-classes、依赖、夹具、runner 合同、JDK、线程/随机条件和配置均不变时复用冻结 Java 标杆；023/024 整体验收仍需现跑 canonical Java 并逐字段核对标杆一致。

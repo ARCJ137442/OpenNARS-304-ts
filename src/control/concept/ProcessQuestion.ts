@@ -14,13 +14,15 @@ import type { DerivationContext } from "../DerivationContext.ts";
 
 const trySolution = LocalRules.trySolution;
 const asJavaObject = (value: unknown): JavaObject => value as JavaObject;
-const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): java.util.Optional<T> => {
+// Java source uses Guava Optional only as a private search result.  The
+// TypeScript boundary is internal, so null represents Java Optional.empty().
+const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): T | null => {
     for (const item of items) {
         if (predicate(item)) {
-            return java.util.Optional.of(item);
+            return item;
         }
     }
-    return java.util.Optional.empty();
+    return null;
 };
 
 
@@ -29,7 +31,10 @@ const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): java.
  *
  * @author Patrick Hammer
  */
-export class ProcessQuestion extends JavaObject {
+// Java source declares ProcessQuestion without an explicit parent; this class
+// is a static utility namespace.  JavaObject remains only for the event-payload
+// cast above, not as a runtime superclass.
+export class ProcessQuestion {
     /**
      * To answer a question by existing beliefs
      *
@@ -44,13 +49,13 @@ export class ProcessQuestion extends JavaObject {
             questions = concept.quests;
         }
         if (task.sentence.isEternal()) {
-            let eternalQuestionTask: java.util.Optional<Task> = tryFind(questions,
+            const eternalQuestionTask: Task | null = tryFind(questions,
                 iQuestionTask => iQuestionTask.sentence.isEternal());
 
             // we can override the question task with the eternal question task if any was
             // found
-            if (eternalQuestionTask.isPresent()) {
-                quesTask = eternalQuestionTask.get();
+            if (eternalQuestionTask !== null) {
+                quesTask = eternalQuestionTask;
             }
         }
         if (questions.size() + 1 > concept.memory.narParameters.CONCEPT_QUESTIONS_MAX) {
