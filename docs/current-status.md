@@ -675,3 +675,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - M1-/#245：本批未运行。改动只触及没有类身份消费面的继承壳，未改变事件 token、Task/Sentence 判等、集合、预算/浮点、推理调度、Java artifact 或 runner；完整串行 M2、local parity 和受影响 NAL smoke 已提供局部保护。后续若触及公共事件身份、集合或推理算法，应重新评估 M1-。
 
 本批可以宣称：`AnswerHandler` 的 Java 隐式 `Object` 壳已原生化，并经直接原型回归、M2、local parity 和受影响 NAL smoke 保护。普通批次继续在 Java artifact、源码/classes/test-classes、依赖、夹具、runner 合同、JDK、线程/随机条件和配置不变时复用冻结 Java 标杆；023/024 整体验收仍需现跑 canonical Java 并核对标杆一致。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。
+
+### 2026-09-18：G8 `ProcessGoal` 外层静态工具壳批次
+
+本批以 G7 提交 `3b8c7e6` 为基线，对照 canonical Java `ProcessGoal.java`。Java 外层类只有静态方法，没有专用父类、实例状态或外层身份消费；`ExecutablePrecondition` 是独立的嵌套运行时值，继续保留 JavaObject 继承。
+
+- `src/control/concept/ProcessGoal.ts`：删除外层 `extends JavaObject`；保留嵌套 `ExecutablePrecondition`、其 Java 默认字段、Map/Set/List 合同和全部目标/操作推理算法。
+- `test/node/core-runtime.test.ts`：将 `ProcessGoal` 纳入静态工具类的 `Object.prototype` 原型回归。
+- M2：定向核心回归 `36/36`；统一串行单测 `261/261`，失败 `0`、跳过 `0`；显式非增量 `tsc` 为 `0` 诊断；local canonical parity `ok=true`、`differences=[]`；build、dist API、release 均通过，`runtimeWarnings=none`。
+- 受影响 NAL：`nal1.5.nal` 使用 TS-only 与冻结 Java 标杆运行，`1/1` 通过；异常、stall、not-run 和 marker missing 均为 `0`。
+- jree 审计相对 G7：直接 jree 导入文件 `88`、`JavaObject` 文件仍为 `32`（嵌套 `ExecutablePrecondition` 仍有明确身份）、`java.util` 文件 `39`、`new LinkedHashMap=11`、`new LinkedHashSet=1`；迁移扫描 `227` 个文件，jree-runtime-type `1714`，malformed generic/operator/new-this/constructor-delegation 均为 `0`；平台、汉字编码和 diff 检查通过。
+- M1-/#245：本批未运行。改动只触及无实例消费面的外层静态壳，没有改变嵌套值、集合、预算/浮点、事件 token、推理调度、Java artifact 或 runner；M2、local parity 和受影响 NAL smoke 提供局部保护。后续触及嵌套值或算法时重新评估 M1-。
+
+本批可以宣称：`ProcessGoal` 外层静态工具壳已原生化，并经原型回归、M2、local parity 和 NAL smoke 保护。仍不能宣称整个 `ProcessGoal` 模块、023/024 或生产核心已脱离 jree，也不能宣称 M1- 全量重跑、性能等价或正式发布。

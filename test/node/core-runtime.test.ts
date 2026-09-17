@@ -926,6 +926,7 @@ test("static Java utility classes no longer carry a jree JavaObject base", async
         import("../../src/control/concept/ProcessAnticipation.ts"),
         import("../../src/control/concept/ProcessJudgment.ts"),
         import("../../src/control/concept/ProcessQuestion.ts"),
+        import("../../src/control/concept/ProcessGoal.ts"),
         import("../../src/control/TemporalInferenceControl.ts"),
         import("../../src/language/Terms.ts"),
         import("../../src/language/Variables.ts"),

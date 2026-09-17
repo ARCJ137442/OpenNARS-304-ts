@@ -43,7 +43,10 @@ const trySolution = LocalRules.trySolution;
  *
  * @author Patrick Hammer
  */
-export class ProcessGoal extends JavaObject {
+// Java source declares ProcessGoal as a static-only class without a
+// specialized parent.  ExecutablePrecondition below is a separate nested
+// runtime value and intentionally retains its JavaObject contract.
+export class ProcessGoal {
     /**
      * To accept a new goal, and check for revisions and realization, then
      * decide whether to actively pursue it, potentially executing in case of an
