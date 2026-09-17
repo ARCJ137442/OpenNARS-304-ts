@@ -628,3 +628,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - M1-/#245：本批未运行。改动没有改变集合判等、推理规则、预算/浮点数值、公共 runner 或 Java 基线；已用静态工具原型回归、完整串行 M2、local parity 和问题处理 NAL smoke 保护。若后续改动触及 `ProcessQuestion` 的算法、集合或公共边界，应重新评估 M1-。
 
 本批可以宣称：`ProcessQuestion` 的隐式 Object 壳及其私有 Optional 包装已按 Java 合同原生化，并通过直接回归、M2、local parity 和受影响 NAL smoke。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。普通 023 批次继续在 Java artifact、源码/classes/test-classes、依赖、夹具、runner 合同、JDK、线程/随机条件和配置均不变时复用冻结 Java 标杆；023/024 整体验收仍需现跑 canonical Java 并逐字段核对标杆一致。
+
+### 2026-09-18：G4 `DerivationContext` 原生推理上下文边界批次
+
+本批以 G3 提交 `a0b773c732959f94d005633d1605b5f821ca5ca8` 为基线，对照 canonical Java `DerivationContext.java`。Java 类没有专用父类；其 `JavaObject` 只是隐式 `Object` 转写壳。没有发现 `DerivationContext` 的实例身份被 `.class` 或 `instanceof` 消费。它确实作为 Java `Object...` 事件 payload 传递，因此本批同步修正事件边界：native TypeScript 对象可进入 `Memory.emit`，仅在旧 EventEmitter 入口集中转换。
+
+- `src/control/DerivationContext.ts`：移除 `JavaObject` 继承和构造器 `super()`，删除失效的 `override`；`emit` 的 Java `Object...` payload 改为 `unknown[]`，保留全部推理状态、派发和 Float32 运算。
+- `src/storage/Memory.ts`：`emit` 接受 `unknown[]`，在兼容 EventEmitter 边界转换为 Java 形状，避免把 native 推理上下文伪装成 jree 对象。
+- `src/operator/mental/Anticipate.ts`、`src/plugin/mental/InternalExperience.ts`：对事件数组中的推理上下文做显式 unknown→`DerivationContext` 收窄。
+- `test/node/core-runtime.test.ts`：加入 `DerivationContext` 隐式 Object 原型回归。
+- M2：定向核心测试 `36/36`；统一串行单测 `261/261`，失败 `0`、跳过 `0`；显式非增量 `tsc` 为 `0` 诊断；local canonical parity `ok=true`、`differences=[]`；build、dist API、release 均通过，`runtimeWarnings=none`。
+- 受影响 NAL：`nal1.5.nal` 使用 TS-only 与冻结 Java 标杆运行，`1/1` 通过，marker 匹配，exception、stall、not-run 和 marker missing 均为 `0`。
+- 静态检查：生产源文件 `136`，直接 jree 导入文件 `88`，`JavaObject` 文件 `35→34`，`java.util` 文件 `39`；`new LinkedHashMap=11`、`new LinkedHashSet=1`；迁移模式扫描 `227` 个文件，malformed generic/operator/new-this/constructor-delegation 均为 `0`；平台审计、汉字编码检查和 `git diff --check` 通过。
+- M1-/#245：本批未运行。改动是隐式 Object 壳和事件 payload 类型边界，没有改变集合判等、推理规则、预算/浮点数值、runner 或 Java artifact；直接原型、完整串行 M2、local parity 和受影响 NAL smoke 已覆盖。后续若改动 `DerivationContext` 算法、集合或公共事件合同，应重新评估 M1-。
+
+本批可以宣称：推理上下文已脱离隐式 `JavaObject` 继承，native 实例可通过事件 payload 进入推理链，并经直接回归、M2、local parity 和受影响 NAL smoke 保护。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。普通 023 批次继续在 Java artifact、源码/classes/test-classes、依赖、夹具、runner 合同、JDK、线程/随机条件和配置均不变时复用冻结 Java 标杆；023/024 整体验收仍需现跑 canonical Java 并逐字段核对标杆一致。

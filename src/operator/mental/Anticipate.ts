@@ -210,7 +210,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
     public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
         if (event === Events.InduceSucceedingEvent.class || event === Events.TaskDerive.class) {
             let newEvent: Task = args[0] as Task;
-            let nal: DerivationContext = args[1] as DerivationContext;
+            let nal: DerivationContext = args[1] as unknown as DerivationContext;
             this.nal = nal;
 
             if (newEvent.sentence.truth !== null && newEvent.sentence.isJudgment()

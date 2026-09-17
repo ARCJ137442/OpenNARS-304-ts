@@ -262,7 +262,7 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
             let belief: Sentence = a[0] as Sentence;
             let beliefTerm: Term = a[1] as Term;
             let taskTerm: Term = a[2] as Term;
-            let nal: DerivationContext = a[3] as DerivationContext;
+            let nal: DerivationContext = a[3] as unknown as DerivationContext;
             this.beliefReason(belief, beliefTerm, taskTerm, nal);
         }
     }

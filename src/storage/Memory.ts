@@ -352,8 +352,10 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         }
     }
 
-    public emit(c: java.lang.Class<unknown>, ...signal: java.lang.Object[]): void {
-        this.event.emit(c, ...signal);
+    // Java Object... accepts native TypeScript payloads as well; convert only
+    // at the legacy EventEmitter boundary.
+    public emit(c: java.lang.Class<unknown>, ...signal: unknown[]): void {
+        this.event.emit(c, ...(signal as unknown as java.lang.Object[]));
     }
 
     public emitting(channel: java.lang.Class<unknown>): boolean {

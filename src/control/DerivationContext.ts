@@ -1,5 +1,5 @@
 //! Java source: opennars/control/DerivationContext.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { double, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Stamp } from "../entity/Stamp.ts";
 import { BudgetValue } from "../entity/BudgetValue.ts";
@@ -32,7 +32,10 @@ const asJavaObject = (value: unknown): java.lang.Object => value as unknown as j
  *
  * @author Patrick Hammer
  */
-export class DerivationContext extends JavaObject {
+// Java source declares DerivationContext without a specialized parent.  Its
+// runtime role is the mutable inference context itself; JavaObject supplied
+// no behavior used by this class and is not used for class identity here.
+export class DerivationContext {
     public evidentialOverlap: boolean = false;
     public readonly memory: Memory;
     public currentTerm: Term | null = null;
@@ -49,13 +52,14 @@ export class DerivationContext extends JavaObject {
     public time: Timable;
 
     public constructor(mem: Memory, narParameters: Parameters, time: Timable) {
-        super();
         this.memory = mem;
         this.narParameters = narParameters;
         this.time = time;
     }
 
-    public emit(c: java.lang.Class<unknown>, ...o: java.lang.Object[]): void {
+    // Java Object... accepts any event payload, including native TypeScript
+    // classes that no longer extend jree JavaObject.
+    public emit(c: java.lang.Class<unknown>, ...o: unknown[]): void {
         this.memory.emit(c, ...o);
     }
 
@@ -672,7 +676,7 @@ export class DerivationContext extends JavaObject {
     }
 
 
-    public override  toString(): java.lang.String {
+    public toString(): java.lang.String {
         return S`DerivationContext[${this.currentConcept},${this.currentTaskLink}]`;
     }
 }

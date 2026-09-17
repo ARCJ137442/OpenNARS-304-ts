@@ -890,6 +890,7 @@ test("Narsese truth parsing preserves Java Float.parseFloat boundaries", async (
 test("Java implicit Object classes no longer carry a jree JavaObject base", async () => {
     const { Debug } = await import("../../src/main/Debug.ts");
     const { GeneralInferenceControl } = await import("../../src/control/GeneralInferenceControl.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
     const { ProcessTask } = await import("../../src/control/concept/ProcessTask.ts");
     const { Instance } = await import("../../src/language/Instance.ts");
     const { InstanceProperty } = await import("../../src/language/InstanceProperty.ts");
@@ -899,7 +900,7 @@ test("Java implicit Object classes no longer carry a jree JavaObject base", asyn
     const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
     const { Term } = await import("../../src/language/Term.ts");
 
-    for (const type of [Debug, GeneralInferenceControl, ProcessTask, Instance, InstanceProperty, Property, Parameters, Symbols, BudgetValue]) {
+    for (const type of [Debug, GeneralInferenceControl, DerivationContext, ProcessTask, Instance, InstanceProperty, Property, Parameters, Symbols, BudgetValue]) {
         assert.equal(Object.getPrototypeOf(type.prototype), Object.prototype);
     }
 
