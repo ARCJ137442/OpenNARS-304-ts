@@ -318,6 +318,20 @@
 
 本批可以宣称 `ProcessJudgment` 这一局部 Set 去 jree 化已验证；不能宣称 023/024 完成、jree 已移除、完整 M1/#245 本批重跑、Java/TypeScript 性能等价或正式发布。代码与测试已由 `fb2a3c917f1bdcaa7bac4e53a33e42431fdc8846` 提交并推送，状态说明与阶段报告随后补录，`v0.1.0` 不移动。
 
+### 当前候选：`Variables` 统一索引 Set 原生化（2026-09-17）
+
+本批代码提交为 `52d4f5d`，提交前回退基线为 `35f6d4d`。对照 canonical Java `Variables.unify` 的声明与历史 blame，确认 `matchedJ` 的原始类型是 `Set<Integer>`、实现是 `LinkedHashSet`，职责是记录已经使用的右侧索引；TypeScript 现使用 `NativeSet<java.lang.Integer>`，保留 Set 抽象、Java `Integer` 包装边界、唯一性和插入顺序。新增回归验证 `(|,a,a)` 与 `(|,a,b)` 不能复用一个右侧索引。
+
+- M2：定向回归 `40/40`，串行单测 `243/243`（`test/entity/TLink.test.ts` 仍由统一入口纳入），非增量 `tsc --noEmit --pretty false --incremental false` 为 0 诊断；build、dist API、canonical Java local parity 均通过。
+- M1-：显式 canonical JAR、单线程、cold、`--chunk-size 1`、`--cycles 1550`，排除长期稳定性 #245；`single_step=215`、`multi_step=24`、`application=5`，主资源 `244/244`，0 exception、0 marker missing、0 timeout、0 stall、0 process limit、0 not-run、0 Java/TS diff。证据 JSONL 在项目外归档。
+- 资源观测：Java 阶段时长合计 `161,997 ms`，TypeScript `1,649,672 ms`，TS/Java 约 `10.18x`；TS 最大 RSS `1,193,345,024 bytes`。这是性能观测，不是本批性能优化完成结论。
+- canonical Java：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 审计前→后：`new LinkedHashSet 12→11`、直接 jree 导入文件 `95→95`、`new LinkedHashMap 35→35`；迁移扫描 collection-method `560→561` 是新增测试 `.size()` 造成的计数变化，不是生产依赖增加。
+
+本批同步完成历史前向审查。已确认此前 `7b9f1d4` 修正的 `7bef525`（Stamp 两处）、`4ff0860`（ProcessGoal 一处）和 `a89d003`（Temporal 两处）Set→List 错配仍保持为 `NativeSet`。本次还登记了 `dda82d0` 的 `Concept.anticipations`、`cdbf968` 的 `Concept.recent_intervals`/`CompoundTerm.extractIntervals`、`3ae6874` 的 `SensoryChannel.results`、`0af732b` 的 `VisionChannel.prototypes` 等 Java List→数组边界；当前未在 M1/M2 观测面产生分叉，但仍不符合 Java List 抽象，下一批独立修复并保留“原类型→新类型→适用范围”说明。
+
+本候选可以宣称 `Variables` 局部 Set 去 jree 化已通过 M2 与 M1-；不能宣称 023/024 完成、全部历史 List 边界已对齐、#245 长期稳定性通过、Java/TypeScript 性能等价或正式发布。代码、测试和本批报告已在后续状态提交中推送；`v0.1.0` 未移动。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：

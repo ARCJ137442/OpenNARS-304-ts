@@ -143,3 +143,17 @@ M1- 主矩阵使用 canonical JAR `2CF519E1F85C38E38384C7076AA750C730580C612C97C
 新增 NativeSet 等值 Term 回归，验证两个独立解析但 Java `equals` 相等的 Term 只保留首个元素。M2 结果为定向回归 `18/18`、串行单测 `242/242`、非增量 `tsc=0`、build、dist API、canonical Java 局部 parity 和 `toothbrush.nal` smoke `1/1`；失败 0、跳过 0。本批按低风险局部 Set 规则不运行 M1-/#245。
 
 审计数字按“前 → 后”记录：相对上一提交 `b99467c`，生产 `new LinkedHashSet` 为 `13 → 12`，直接 jree 导入文件为 `95 → 95`，`new LinkedHashMap` 为 `35 → 35`；迁移扫描的 collection-method 为 `560 → 561`，增加来自本批测试新增的 `.size()`，不是生产 jree 依赖。canonical Java 仍为 source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`、JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。023 继续保持 `in-progress`。
+
+### 2026-09-17：Variables 统一索引 Set 原生化
+
+在代码提交 `52d4f5d` 中，对照 canonical Java `Variables.unify` 的实际声明与调用，确认 `matchedJ` 是 `Set<Integer>`，由 `LinkedHashSet` 支撑，用于记录已经匹配的右侧索引。它不是可重复的 List，也不能只按数组 API 形状迁移。TypeScript 改为 `NativeSet<java.lang.Integer>`，保留 `Integer` 包装边界、`contains`/`add` 的唯一性和原有匹配顺序；代码中明确标注了 Java 原类型。
+
+新增回归用 `(|,a,a)` 与 `(|,a,b)` 验证同一个右侧 `a` 不能被重复索引。M2 证据为定向 `40/40`、串行单测 `243/243`、显式非增量 `tsc` 0 诊断、build、dist API 和 canonical Java 局部 parity 通过；`test/entity/TLink.test.ts` 仍由统一串行入口纳入。
+
+M1- 在提交前基线 `35f6d4d` 之后运行，使用单线程、cold、`--chunk-size 1`、显式 canonical Java 304 artifact，排除长期稳定性 #245。244 个主资源按 `single_step=215`、`multi_step=24`、`application=5` 分层，`244/244` 通过；Java/TS 均为 0 exception、0 marker missing、0 timeout、0 stall、0 process limit、0 not-run、0 Java/TS diff。阶段时长合计 Java `161,997 ms`、TypeScript `1,649,672 ms`，TS/Java 约 `10.18x`；TS 最大 `peak_rss_bytes=1,193,345,024`，仅作后续性能观测。
+
+本批 canonical Java source commit 为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR 为 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`，SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。jree 审计前→后为：`new LinkedHashSet 12→11`、直接导入文件 `95→95`、`new LinkedHashMap 35→35`；迁移扫描的 `collection-method 560→561` 来自新增测试，不是生产依赖增加。
+
+本批同时完成了历史前向审查：`7b9f1d4` 已修正早期三处 Java `Set` 误用 `NativeList` 的问题；本次又登记出 `dda82d0`、`cdbf968`、`3ae6874`、`0af732b` 等把 Java List 边界收窄为数组的待处理项。它们目前没有在 M1/M2 观测面产生分叉，但与 Java List 抽象不一致，后续应作为独立 List 契约批次恢复或明确兼容视图，不能用本批 Set 通过结论覆盖。
+
+023 仍保持 `in-progress`：本批只完成 `Variables` 局部 Set 原生化，不能宣称 jree 已移除、全部 Java List 边界已对齐、#245 长期稳定性通过、Java/TypeScript 性能等价或正式发布。
