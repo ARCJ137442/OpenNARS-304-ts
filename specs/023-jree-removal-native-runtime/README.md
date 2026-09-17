@@ -171,3 +171,11 @@ M1- 在提交前基线 `35f6d4d` 之后运行，使用单线程、cold、`--chun
 新增两个独立但 Java `equals` 相等的 Term 回归，确认 `newTasks` 只保留首个对象。定向回归 `8/8`、串行单测 `244/244`、显式非增量 `tsc` 0 诊断、build、dist API、canonical local parity 以及 `nal8.add.nal` `1/1` 均通过。本批按局部 Set 风险等级不运行 M1-/#245。
 
 审计前→后：生产 `new LinkedHashSet` `11 → 6`；`new LinkedHashMap` `35 → 35`；`new ArrayList` `0 → 0`；直接 jree 导入文件 `95 → 95`。迁移扫描 collection-method `561 → 563` 是新增测试调用带来的计数变化，不是生产依赖增加。023 仍保持 `in-progress`，本批不能宣称 jree 已移除、M1- 全量重跑、性能等价或里程碑完成。
+
+### 2026-09-17：`Terms` 图像/Product 局部 Set 原生化
+
+本批承接历史前向审查，回读 canonical Java `Terms.equalSubjectPredicateInRespectToImageAndProduct`，确认 `componentsA`、`componentsB` 的原始类型均为 `Set<Term>`、实现为 `LinkedHashSet`。调用面只有逐项 `add` 和插入顺序遍历；其语义是 Term 值相等去重后的成员比较，不是 List 或数组。TypeScript 使用 `NativeSet<Term>`，并在源码注明“Java 原始 Set/LinkedHashSet → 当前 NativeSet”；没有改变等价判断算法或公共返回形状。
+
+新增重复变量 Product/Image 等价回归，定向回归 `8/8`、串行单测 `245/245`、显式非增量 `tsc` 0 诊断、build、dist API、canonical local parity 均通过。`nal4.0.nal`～`nal4.8.nal` 在 canonical JAR、单线程、cold、1550 周期条件下逐文件运行，`9/9` 通过。本批按局部 Set 风险等级不运行 M1-/#245。
+
+审计前→后：生产 `new LinkedHashSet` `6 → 4`；`new LinkedHashMap` `35 → 35`；`new ArrayList` `0 → 0`；直接 jree 导入文件 `95 → 95`。迁移扫描 collection-method `563 → 565` 是 `.add` 调用扫描计数变化，不是生产 jree 构造增加。023 仍保持 `in-progress`，本批不能宣称 jree 已移除、M1- 全量重跑、性能等价或里程碑完成。

@@ -52,3 +52,23 @@ test("Terms.term preserves the relation index when rebuilding images", async () 
     assert.ok(rebuiltExt instanceof ImageExt);
     assert.equal(rebuiltExt.relationIndex, 0);
 });
+
+test("Terms image/product equivalence keeps Java Set de-duplication", async () => {
+    const { ImageExt } = await import("../../src/language/ImageExt.ts");
+    const { Inheritance } = await import("../../src/language/Inheritance.ts");
+    const { Product } = await import("../../src/language/Product.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Terms } = await import("../../src/language/Terms.ts");
+
+    const relation = Term.get("set-relation");
+    const variable = Term.get("?set-variable");
+    const product = Product.make([variable, variable]);
+    const image = new ImageExt([relation, variable], 0);
+    const productStatement = Inheritance.make(product, relation);
+    const imageStatement = Inheritance.make(relation, image);
+
+    assert.equal(
+        Terms.equalSubjectPredicateInRespectToImageAndProduct(productStatement, imageStatement),
+        true,
+    );
+});

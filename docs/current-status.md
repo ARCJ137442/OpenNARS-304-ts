@@ -367,6 +367,17 @@
 
 恢复者必须先阅读[开发者指南](developer-guide.md)和[冻结交接报告](../reports/20260827-003242.md)，再运行 LeanSpec board/search/view。不要把未完成 spec 标成 complete，也不要清理当前工作区中来源不明的历史证据或探针。
 
+### 当前候选：`Terms` 图像/Product 局部 Set 原生化（2026-09-17）
+
+本批继续对照 Java 源码做历史前向审查。`Terms.equalSubjectPredicateInRespectToImageAndProduct` 中的 `componentsA`、`componentsB` 原始类型均为 `Set<Term>`、实现为 `LinkedHashSet`；实际调用只有逐项 `add` 与插入顺序遍历，用于成员去重和比较。TypeScript 已改用 `NativeSet<Term>`，保留 Set 抽象、Term 值相等去重和顺序，不改变等价判断分支或公共返回形状。
+
+- 定向回归覆盖重复变量的 Product/Image 等价路径，相关回归与 NativeSet 共 `8/8` 通过。
+- M2：串行统一单测 `245/245`，失败 0、跳过 0；显式非增量 `tsc` 为 0 诊断；build、dist API、canonical Java local parity 均通过。
+- 受影响 NAL：`nal4.0.nal`～`nal4.8.nal`，canonical JAR、单线程、cold、1550 周期、逐文件串行，`9/9` 通过，0 failure。
+- 审计前→后：生产 `new LinkedHashSet` `6 → 4`，直接 jree 导入文件 `95 → 95`，`new LinkedHashMap` `35 → 35`，`new ArrayList` `0 → 0`。collection-method `563 → 565` 是扫描到 `.add` 调用的变化，不是生产 jree 构造增加。
+
+本批按局部 Set 风险规则不重新运行 M1-/#245；不能把局部证据表述为新的 M1 全量通过。023 仍保持 `in-progress`，`CompoundTerm` 公共 Set 返回、`Anticipate` Map value Set 和 jree 兼容层继续单独审查。阶段报告为 `reports/20260917-132229.md`。
+
 ### 当前候选：`Anticipate.newTasks` Set 原生化（2026-09-17）
 
 本批继续做历史前向审查。对照 canonical Java `Anticipate` 的声明与调用，确认 `newTasks` 的原始合同是 `Set<Term> + LinkedHashSet<Term>`，用途是登记待派发 Term，并依赖 `add`、`remove`、`clear`、空判断、Term 值相等去重和插入顺序。TypeScript 现改为 `NativeSet<Term>`，源码保留“Java 原始 Set/LinkedHashSet → 当前 NativeSet”的注释；没有将 Set 降为数组，也没有触碰 `anticipations` Map、Map value Set、`ae` 临时 Set 或目标派发规则。

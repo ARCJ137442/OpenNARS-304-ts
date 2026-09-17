@@ -9,6 +9,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Term } from "./Term.ts";
 import type { Memory } from "../storage/Memory.ts";
 import { javaValuesEqual } from "../runtime/jree-compat.ts";
+import { NativeSet } from "../runtime/NativeSet.ts";
 
 type TermsRuntime = Record<string, any>;
 
@@ -457,8 +458,11 @@ export class Terms extends JavaObject {
             }
         }
 
-        let componentsA: java.util.Set<Term> = new java.util.LinkedHashSet(1 + sat.length);
-        let componentsB: java.util.Set<Term> = new java.util.LinkedHashSet(1 + sbt.length);
+        // Java source: Set<Term> componentsA/B = new LinkedHashSet<>(...);
+        // These are local membership sets; NativeSet preserves Term.equals
+        // de-duplication and insertion order without exposing a List/array.
+        const componentsA = new NativeSet<Term>();
+        const componentsB = new NativeSet<Term>();
 
         componentsA.add(ta);
         for (const term of sat) {
