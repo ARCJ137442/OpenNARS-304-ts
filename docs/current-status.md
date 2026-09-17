@@ -244,6 +244,25 @@
 
 本批增加 `NativeSet` 的 Java equals 接收者方向回归，并命中 Stamp/ProcessGoal/Temporal 三条业务路径；按局部小簇策略运行针对性单测、串行 M2、显式非增量 typecheck、build/API、局部 parity 与受影响 NAL，不运行 M1-/#245。代码与报告已提交并推送：修复提交为 `7b9f1d4`，状态补录提交为 `4e964fd`。首次推送因 GitHub HTTPS Schannel TLS 握手失败，低频重试后成功，当前 `origin/main=4e964fd`。
 
+### 当前权威候选：G0 M1/M2 保护门复验（2026-09-17）
+
+本节覆盖此前所有候选记录，当前事实以本节、G0 阶段报告和项目外机器可读证据为准。复验起点为 `HEAD=origin/main=c5957163e8e4ef553bf2c6b5f778608f306cbca6`，工作区在启动时干净；本批没有修改产品源码。
+
+- canonical Java source commit：`8675b76fe8c21ee20a7b8c1b63408fb05327210d`。
+- canonical JAR：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`。
+- canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- M1 主矩阵：245/245（single_step 215、multi_step 24、application 5、stability 1）；额外 `simpleOperationTest.nal` 为 1/1；合计 246/246。
+- M1 结果字段：0 exception、0 timeout、0 process limit、0 not-run、0 marker missing、0 Java/TS diff；Java/TS 均单线程、cold、chunk-size=1。M1 总 Java 运行时 `228326 ms`，TypeScript `3709796 ms`，TS 最大 RSS `2995437568 bytes`，仅作为后续性能观测。
+- 无 marker 的 `nal6.redundant.nal` 与 `simpleOperationTest.nal` 均完成 131072 周期、128 个 1024 周期窗口；Java/TS stage digest 均 `equal=true`、`first_difference=null`。
+- M2 串行单测 `235/235`（失败 0、跳过 0，含 `test/entity/TLink.test.ts`）；显式非增量 `npx tsc --noEmit --pretty false --incremental false` 为 0 诊断；build、dist API、local parity、release 均通过，release runtime warnings 为 none。
+- 当前审计数字：jree 生产直接导入文件 95、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=21`；平台扫描 171 文件，其中核心候选 90、混合边界 5、browser shim 2/19 处；迁移模式扫描 222 文件，malformed generic/operator/new-this 均为 0。
+
+本次复验确认 G0 的 M1 245+1 与 M2 保护门通过，可以继续下一阶段单簇去 jree 化；不能据此宣称 023/024 完成、jree 已移除、平台中立完成、Java/TypeScript 性能等价或正式发布。
+
+本批也确认历史前向审查必须持续执行：`7b9f1d4` 已修正 `7bef525`（Stamp 两处）、`4ff0860`（ProcessGoal 一处）和 `a89d003`（Temporal 两处）中把 Java `LinkedHashSet` 错映射为 `NativeList` 的问题，改为语义明确的 `NativeSet`。以后所有原生化仍须先回到 Java 声明核对 List/Set/Map/Deque/TreeSet、equals/hashCode、顺序、缺失值和迭代删除，不能只按 API 表面或数组底层实现批量迁移。
+
+证据文件位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`：`g0-m1-245-main-20260917.jsonl`、`g0-m1-simpleOperation-20260917.jsonl` 及四份 131072 stage digest；阶段解释见 [G0 阶段报告](../reports/20260917-083653.md)。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：
