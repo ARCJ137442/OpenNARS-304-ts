@@ -643,3 +643,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - M1-/#245：本批未运行。改动是隐式 Object 壳和事件 payload 类型边界，没有改变集合判等、推理规则、预算/浮点数值、runner 或 Java artifact；直接原型、完整串行 M2、local parity 和受影响 NAL smoke 已覆盖。后续若改动 `DerivationContext` 算法、集合或公共事件合同，应重新评估 M1-。
 
 本批可以宣称：推理上下文已脱离隐式 `JavaObject` 继承，native 实例可通过事件 payload 进入推理链，并经直接回归、M2、local parity 和受影响 NAL smoke 保护。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。普通 023 批次继续在 Java artifact、源码/classes/test-classes、依赖、夹具、runner 合同、JDK、线程/随机条件和配置均不变时复用冻结 Java 标杆；023/024 整体验收仍需现跑 canonical Java 并逐字段核对标杆一致。
+
+### 2026-09-18：G5 `EventEmitter` 原生事件容器壳批次
+
+本批以 G4 提交 `fd3fcc3a41af1a5c81bc3dd56b77c509cc0357eb` 为基线，对照 canonical Java `EventEmitter.java`。Java 类没有专用父类；其行为合同是事件注册表、observer 身份删除、订阅/派发顺序和 FIFO pending 操作，不依赖 `JavaObject` 的 equals/hashCode/getClass。事件 token 属于 `Events`/`OutputHandler` 类族，本批未修改 token 或事件身份。
+
+- `src/io/events/EventEmitter.ts`：移除 `JavaObject` 继承和两个构造器中的 `super()`；保留现有原生 `Map`、observer 数组、identity removal、FIFO pending 和 Java event token 接口。
+- `test/node/event-emitter.test.ts`：增加 `EventEmitter.prototype` 直接继承 `Object.prototype` 的回归；定向事件测试 `5/5`。
+- M2：统一串行单测 `261/261`，失败 `0`、跳过 `0`；显式非增量 `tsc` 为 `0` 诊断；local canonical parity `ok=true`、`differences=[]`；build、dist API 通过；release 检查通过且无新的 runtime warning。
+- 受影响 NAL：`nal1.5.nal` 使用 TS-only 与冻结 Java 标杆运行，`1/1` 通过，marker 匹配，exception、stall、not-run 和 marker missing 均为 `0`。
+- 静态检查：生产源文件 `136`，直接 jree 导入文件 `88`，`JavaObject` 文件 `34→33`，`java.util` 文件 `39`；`new LinkedHashMap=11`、`new LinkedHashSet=1`；迁移模式扫描 `227` 个文件，malformed generic/operator/new-this/constructor-delegation 均为 `0`；平台审计、汉字编码检查和 `git diff --check` 通过。
+- M1-/#245：本批未运行。只移除了事件容器的隐式 Object 壳，没有改变事件 token、订阅顺序、observer identity、推理算法、runner 或 Java artifact；定向事件合同、完整串行 M2、local parity 和受影响 NAL smoke 已覆盖。后续若触及 `Events` token、事件 payload、集合实现或推理调度，应重新评估 M1-。
+
+本批可以宣称：`EventEmitter` 已脱离隐式 `JavaObject` 继承，并经事件合同、M2、local parity 和受影响 NAL smoke 保护。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。普通 023 批次继续在 Java artifact、源码/classes/test-classes、依赖、夹具、runner 合同、JDK、线程/随机条件和配置均不变时复用冻结 Java 标杆；023/024 整体验收仍需现跑 canonical Java 并逐字段核对标杆一致。

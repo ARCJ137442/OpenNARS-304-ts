@@ -1,6 +1,6 @@
 //! Java source: opennars/io/events/EventEmitter.java
 import "../../runtime/jree-compat.ts";
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 
 type PendingOperation = [
     enabled: boolean,
@@ -16,7 +16,9 @@ type ObserverList = EventEmitter.EventObserver[];
 // Adapted from
 // http://www.recursiverobot.com/post/86215392884/witness-a-simple-android-and-java-event-emitter
 // TODO separate this into a single-thread and multithread implementation
-export class EventEmitter extends JavaObject {
+// Java source declares EventEmitter without a specialized parent.  The event
+// registry and its observer identity rules are the actual runtime contract.
+export class EventEmitter {
 
     private readonly events: Map<java.lang.Class<unknown>, ObserverList>;
 
@@ -45,7 +47,6 @@ export class EventEmitter extends JavaObject {
                  * else
                  */
                 // events = new LinkedHashMap<>();
-                super();
                 this.events = new Map();
 
 
@@ -56,7 +57,6 @@ export class EventEmitter extends JavaObject {
                 const [knownEventClasses] = args as [java.lang.Class<unknown>[]];
 
 
-                super();
                 this.events = new Map();
                 for (let c of knownEventClasses) {
                     this.events.set(c, this.newObserverList());

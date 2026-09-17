@@ -7,6 +7,7 @@ import { Events } from "../../src/io/events/Events.ts";
 
 test("EventEmitter.set subscribes only to the requested event classes", () => {
     const emitter = new EventEmitter();
+    assert.equal(Object.getPrototypeOf(EventEmitter.prototype), Object.prototype);
     const received: unknown[] = [];
     const observer: EventEmitter.EventObserver = {
         event(event) {
