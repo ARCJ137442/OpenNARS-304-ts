@@ -289,6 +289,23 @@
 
 本批代码、测试和阶段报告已由 `14cd10f refactor(023): 原生化 TermLink 前缀文本` 提交并推送；状态补录提交随后完成。`v0.1.0` 不移动。023/024、正式性能门和发布门仍未完成。
 
+### 当前候选：`CompositionalRules` 集合簇与历史 Set 契约前向修复（2026-09-17）
+
+本批承接稳定推进点 `17cec541f535d83bd62e5b15ee9c03f4a2233812`，先由 `a0b3584 refactor(023): 原生化组合规则集合簇` 将 `CompositionalRules` 中 Java `LinkedHashSet` 的集合责任改为显式 `NativeSet`，再由 `5251f129 fix(023): 对齐集合相等与哈希契约` 修正前向审查发现的集合语义缺口。两次提交均保持 `Map` 为 Map、`Set` 为 Set；幂集递归仅使用原生数组作为短生命周期的有序 List 视图，没有把数组当作 Set 对外暴露。
+
+- canonical Java source commit：`8675b76fe8c21ee20a7b8c1b63408fb05327210d`。
+- canonical JAR：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar`。
+- canonical JAR SHA-256：`2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- M2：定向集合合同 `9/9`；完整串行单测 `241/241`，失败 0、跳过 0，统一入口包含 `test/entity/TLink.test.ts`；显式非增量 tsc `0` 诊断；build、dist API、local parity、`nal3.5.nal` smoke 均通过。
+- M1-：244 个主资源 `244/244`，额外 `java-master/src/test/simpleOperationTest.nal` 为 `1/1`，合计 `245/245`；0 exception、0 timeout、0 stall/no-progress、0 marker missing、0 process limit、0 not-run、0 Java/TS diff。主资源分层为 single_step 215、multi_step 24、application 5；本批排除 #245 `stability/long_term_stability.nal`。
+- M1- 资源观测：主矩阵合计 `1,763,277 ms`，其中 Java `157,319 ms`、TypeScript `1,605,958 ms`；TypeScript 峰值 RSS `1,265,442,816 bytes`。该时间差主要反映 Java/TS 运行时和样本成本，不能当作本批逻辑修复带来的性能结论。
+- markerless 严格长周期：`nal6.redundant.nal` 与 `simpleOperationTest.nal` 均完成 `131072` 周期、`128` 个 1024 周期窗口；事件总数分别为 `589572`、`2535970`，Java/TS 均 `equal=true`、`first_difference=null`、`incomplete=false`。
+- jree/平台/迁移审计：jree 生产直接导入文件 `95`、`new ArrayList=0`、`new LinkedHashMap=35`、`new LinkedHashSet=13`；平台扫描 171 文件（核心候选 90、混合边界 5、browser shim 2/19）；迁移扫描 224 文件，malformed generic/operator/new-this 均为 0，jree runtime type `1744/144`。
+
+本批的历史前向审查覆盖了 `20ba562`、`ef78de8`、`6af34d8`、`3312c9a`、`dbdb936`、`3f6c851`、`097f488`、`0af732b`、Operator 反馈簇、插件事件簇、`81b41a5`、`02ddf20`、`7bef525`、`4ff0860`、`a89d003` 等早期原生化点。结论是：文本 key 的 Map 仍保持 Map；短生命周期 List 才允许数组化；Deque、TreeSet、Set 的抽象分别保持。发现并修正的实际遗留问题是 `NativeSet.equals` 原先反向使用另一集合的 `contains`，不符合 Java `AbstractSet.equals` 的 `this.containsAll(other)` 方向；同时补齐 `NativeSortedSet` 的 Set `equals/hashCode`。公开插件/API 上的 List 形状收窄仍登记为后续边界审查项，不能被 NAL 通过结果掩盖。
+
+本候选可以宣称：组合规则集合簇及其历史 Set 契约 fix 已通过局部 M2、M1- `245/245` 和 markerless 131072 周期证据，可以继续下一类小簇原生化。本候选不能宣称：023/024 完成、jree 已移除、所有历史公共 List API 已恢复、完整 M1/#245 已在本批重跑、Java/TypeScript 性能等价或正式发布。证据 JSONL 与 stage digest 保存在项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\`，不纳入 Git。
+
 ## 平台中立与发布冻结状态
 
 `spec 024` 当前已完成：
