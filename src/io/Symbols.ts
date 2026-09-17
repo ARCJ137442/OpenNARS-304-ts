@@ -1,5 +1,5 @@
 //! Java source: opennars/io/Symbols.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { char } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 
 
@@ -7,7 +7,9 @@ import type { char } from "../types.ts"; // Java primitive aliases formerly impo
 /**
  * @author Patrick Hammer
  */
-export class Symbols extends JavaObject {
+// Java source declares `class Symbols` with only the implicit Object base;
+// keep the nested Java enum boundary, but do not pay for a jree Object shell.
+export class Symbols {
 
     /* sentence type and delimitors */
     public static readonly JUDGMENT_MARK: string = '.';

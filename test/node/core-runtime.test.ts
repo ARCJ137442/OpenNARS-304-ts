@@ -894,9 +894,11 @@ test("Java implicit Object classes no longer carry a jree JavaObject base", asyn
     const { Instance } = await import("../../src/language/Instance.ts");
     const { InstanceProperty } = await import("../../src/language/InstanceProperty.ts");
     const { Property } = await import("../../src/language/Property.ts");
+    const { Parameters } = await import("../../src/main/Parameters.ts");
+    const { Symbols } = await import("../../src/io/Symbols.ts");
     const { Term } = await import("../../src/language/Term.ts");
 
-    for (const type of [Debug, GeneralInferenceControl, ProcessTask, Instance, InstanceProperty, Property]) {
+    for (const type of [Debug, GeneralInferenceControl, ProcessTask, Instance, InstanceProperty, Property, Parameters, Symbols]) {
         assert.equal(Object.getPrototypeOf(type.prototype), Object.prototype);
     }
 

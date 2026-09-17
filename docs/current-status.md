@@ -588,3 +588,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 静态检查：迁移模式扫描 227 个文件，malformed generic/operator/new-this/constructor-delegation 均为 `0`；jree 审计为直接导入 89 个文件、`new LinkedHashMap=11`、`new LinkedHashSet=1`；platform 审计扫描 172 个文件，browser shim 为 2 个文件/19 处；汉字编码检查和 `git diff --check` 通过。
 
 本次 G0 可以宣称：在 canonical Java 3.0.4、固定单线程和当前 runner 观测面下，`9bd6cc0` 的 245+1 项功能结果与 Java 一致，两个 markerless 样本的 131072 周期阶段摘要一致，M2 工程门通过。仍不能宣称：023/024 完成、生产核心 jree 清零、性能等价、浏览器平台门完成、正式发布或新的 tag。G0 证据均保存在项目外 `OpenNARS-304-ts-evidence-archive`，不纳入 Git。
+
+### 2026-09-18：G1 Java 隐式 `Object` 壳批次
+
+本批以已推送的 G0 提交 `01aff5c` 为基线，对照 canonical Java 的 `Parameters.java` 与 `Symbols.java`。两者都没有显式父类；本批移除转写器附加的 `JavaObject`，但保留 `Symbols.NativeOperator` 的 Java Enum 边界，不改枚举、查表、静态初始化或参数数值逻辑。
+
+- `src/main/Parameters.ts`：删除 `JavaObject` 基类和仅用于 marker interface 的 `java.io.Serializable` 声明；保留全部参数字段与 Java float binary32 边界。
+- `src/io/Symbols.ts`：删除 `JavaObject` 基类；保留 Java Enum、字符串模板和异常边界。
+- `test/node/core-runtime.test.ts`：将 `Parameters`、`Symbols` 纳入隐式 Object 原型回归。
+- M2：串行统一单测 `261/261`，失败 0、跳过 0；显式 `--incremental false` 的 `tsc` 诊断为 0；build、dist API、local algorithm parity 全部通过。local parity 使用 canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，结果 `ok=true`、`differences=[]`。
+- M1-/#245：本批未运行。改动仅影响两个无显式父类的运行时壳，没有触碰集合判等、推理调度、公共算法或 runner；G0 的 245+1 全量证据仍是当前保护基线。后续若改动 Enum、集合、推理或公共边界，必须重新评估 M1-。
+- jree 审计前→后（相对 G0）：生产直接导入文件 `89→88`，JavaObject 文件 `38→36`；迁移扫描 malformed 项仍为 0。审计结果保存在项目外 `g1-audit-jree-20260918.log`。
+
+本批可以宣称：`Parameters`、`Symbols` 两个 Java 隐式 Object 壳已原生化，并通过 261 项串行 M2、非增量编译、局部 canonical parity、build 与 dist API 检查。仍不能宣称：023/024 完成、生产 jree 清零、M1/#245 在本批重新全量通过、Java/TypeScript 性能等价或正式发布。普通批次继续复用 G0 冻结 Java 标杆；023/024 整体验收时仍须现跑 canonical Java 并核对标杆一致。

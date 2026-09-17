@@ -1,5 +1,4 @@
 //! Java source: opennars/parameter/Parameters.java
-import { java, JavaObject } from "jree";
 import type { int, float, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 
@@ -11,7 +10,9 @@ import { Float32Math } from "../runtime/Float32.ts";
  * @author Patrick Hammer
  */
 // TODO< rename this after MVP0 to "ReasonerArguments" >
-export class Parameters extends JavaObject implements java.io.Serializable {
+// Java source declares `class Parameters` with only the implicit Object base;
+// Serializable is a marker interface and has no runtime behavior here.
+export class Parameters {
     /**
      * what this value represents was originally equal to the termLink record length
      * (10), but we may want to adjust it or make it scaled according to duration
