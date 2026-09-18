@@ -840,3 +840,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `28`（本批前 `29`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `231` 个文件，平台审计扫描 `179` 个文件；编码检查与 `git diff --check` 通过。
 
 本批可以宣称：`Counting` 的无行为 JavaObject 外壳及遗留 `super()` 已原生化，并经直接回归、M2、代表性 smoke 和修订后 T1 gate 保护。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。该插件不在默认注册表，代表性 NAL 不等于 Counting 业务行为的直接覆盖。
+
+### 2026-09-18：`Emotions` 隐式 JavaObject 壳原生化
+
+本批承接 `13a1a29`，继续 023 的单一普通类切片。对照 canonical Java `Emotions.java` 确认其声明为普通 `public class Emotions implements Plugin`；TypeScript 原先的 `JavaObject` 只提供外壳，两个构造器中的 `super()` 是翻译遗留。该插件在默认配置中注册，且 `Nar` 使用 `instanceof Emotions` 识别，因此保留原生类身份、Java float32 阈值、事件、异常、字符串和 Math 合同，只移除兼容壳。
+
+- `src/plugin/mental/Emotions.ts`：删除 `JavaObject` 导入和继承，移除默认/带参构造器中的空 `super()`，保留 Java 构造器重载、float32 阈值、事件和 `instanceof` 语义。
+- `test/node/emotions-boundary.test.ts`：新增默认/带参构造器、阈值收窄、原型链和 `instanceof` 回归；定向测试 `1/1`。
+- M2-TS：非增量 `tsc=0`；串行单测 `293` 项，`291` 通过、`2` 跳过、`0` 失败；build、dist API 通过。
+- 两个代表性 TS-only NAL smoke（`nal4.7.nal`、`nal8.add.nal`）均为 `1/1`，`java_artifact=null`、无异常/timeout/stall/not-run；结果 SHA-256 分别为 `9DF54FCC80450ECE3C97BDE037996F4EADD4E4450E1911599B1B0B4D6E79696A` 与 `40EDB744ACC5706E8E0CC54A2ED6C8CFC6FA651C557D4E88C763F32EC40C8450`。
+- 以 `13a1a29` 为父基线运行修订后的 `classify-change-gate`：`T1`、`live_java_required=false`、`m1_minus_required=false`、生产源改动 `13` 行；原因是 `high-risk-path` 与 `semantic-token-change`。单个普通类不使用 `--scope responsibility`，本批未启动 M1-。
+- jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `27`（本批前 `28`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `232` 个文件，平台审计扫描 `179` 个文件；编码检查与 `git diff --check` 通过。
+
+本批可以宣称：`Emotions` 的无行为 JavaObject 外壳及遗留 `super()` 已原生化，并经直接回归、默认配置路径 M2、代表性 smoke 和修订后 T1 gate 保护。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。代表性 NAL 覆盖默认插件装载路径，但不等于 Emotions 事件行为全覆盖。
