@@ -1018,3 +1018,13 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 静态审计（HEAD `65927d9`）：迁移扫描 `236` 个文件；jree 审计直接导入文件 `88`、`JavaObject` 文件 `18`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`。汉字编码检查与 `git diff --check` 通过。
 
 本批可以宣称：`VisionChannel.Prototype` 的无行为 JavaObject 外壳已按 canonical Java 普通类合同原生化，并经原型链/感知生成回归、串行 M2-TS、两个 TS-only smoke、T1 gate 和静态审计保护；代码提交 `65927d9`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。VisionChannel 外层、日志反射、感知算法和 float 合同未在本批重写。
+
+### 2026-09-18：`EventHandler` 前向审查暂缓
+
+本批承接 `ff5d43e`，对剩余 `JavaObject` 做继承链前向审查。canonical Java `EventHandler.java` 直接声明为普通抽象基类，没有显式父类、Serializable 或自身 `.class` 消费；但 TypeScript 的 `OutputHandler`、`TextOutputHandler` 和测试辅助类沿继承链消费了 jree 提供的 `class/getClass` 及 Serializable 类型合同。
+
+- 未提交实验曾删除 `EventHandler` 的 JavaObject 和空 `super()`，并增加普通原型链断言。
+- 实验定向 EventHandler 测试为 `6/6`，但非增量 typecheck 暴露 4 项下游诊断：`LocalRules` 的两处 `OutputHandler.class`、`TextOutputHandler implements Serializable` 缺少 `getClass`、测试 `OutputCondition` 缺少 `getClass`。
+- 实验已完全撤回；撤回后 `tsc=0`、build `135` 个源文件、dist API 和 EventHandler 定向 `6/6` 均通过。没有新增代码、测试或 jree 计数变化，也没有改变 Java 标杆和 M1/M2 证据。
+
+本批可以宣称：EventHandler 的前向审查发现并记录了真实的继承链约束，避免了一次会破坏事件 class token 和 Serializable 类型传播的表面去壳。仍不能宣称：EventHandler 已去 jree；023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。后续若处理该簇，必须先设计项目内 `class/getClass` 兼容边界，再单独回归 OutputHandler 和 Serializable 消费者。
