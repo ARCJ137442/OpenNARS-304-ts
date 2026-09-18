@@ -1092,6 +1092,22 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 
 本批可以宣称：`TaskLink.Recording` 的无行为 JavaObject 壳已按 canonical Java 合同原生化，并通过直接回归、M2、构建/API、T1 要求的 M1- 及单项环境异常重试。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。代码提交 `f8a7b4d`；报告与状态文档提交待本批最终检查后推送。
 
+### 2026-09-18：`Nar.PluginState` 插件状态壳原生化
+
+本批承接 `aff8cb1`，继续按 023 的 canonical Java 合同推进单一内部状态类切片。对照 `java-master/src/main/java/org/opennars/main/Nar.java` 确认 `PluginState` 是非静态内部类，仅保存 `Plugin` 和 `enabled`，通过 `Nar.this` 调用插件生命周期和事件；Java `Serializable` 只是 marker，没有自定义 `equals/hashCode`、`.class` 或 `getClass()` 消费。TS 闭包 `$outer` 保留了这个外层绑定，插件列表仍用对象身份定位删除。
+
+- `src/main/Nar.ts`：删除 `PluginState` 的 jree `JavaObject` 继承、marker 类型壳和空 `super()`；保留构造重载、默认启用、`setEnabled`、`isEnabled`、插件回调、外层 Nar 事件发射和列表身份行为。
+- `test/node/config-platform-boundary.test.ts`：新增原型链、初始 enabled、回调顺序和禁用行为回归；专项文件最终 `16/16`。
+- M2：非增量 `tsc=0`；串行单元测试 `307` 项，`305` 通过、`0` 失败、`2` 跳过；build `sourceFileCount=136`、dist API 通过。
+- `classify-change-gate --base aff8cb1 --head 1f0879d` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`，原因是 `Nar.ts` 热路径。
+- M1- 使用单线程、cold、逐文件串行、`--cycles 1550`、`--timeout-ms 180000`、`--process-limit-ms 1800000`、TS-only 和冻结 Java 标杆；主资源 `244/244` functional/parity，`0` exception、`0` marker missing、`0` timeout、`0` stall、`0` process limit、`0` not-run、`0` performance warning。分层为 `single_step=215`、`multi_step=24`、`application=5`。
+- M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\nar-plugin-state-m1-minus-20260918.jsonl`，SHA-256 `3E2D091B8003BAC53BED8689AE62E2C07811661A6DE40B260192B4FE4D7B3158`；TS 总时长 `1,694,667 ms`，最长单文件 `365,033 ms`，最大 RSS `947,920,896 bytes`，reasoning cycles `2,288,254`。
+- 相对上一批 `Concept.AnticipationEntry` 的 `1,693,705 ms`，本批总时长增加 `962 ms`（约 `0.06%`），RSS 增加 `145,510,400 bytes`（约 `18.13%`）；这是资源观测，不宣称本批完成性能优化。
+- 继续复用三轮一致的冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，artifact SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，本批未重复启动 Java。
+- 代码提交 `1f0879d`；本批 jree 审计：`sourceFiles=137`、直接导入文件 `88`、`javaObjectFiles=10`、`javaUtilFiles=39`、`javaLangFiles=85`、`javaStringFiles=52`、`semanticReviewItems=93`、`candidateNativeItems=2`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。覆盖率专项仍未实现，NAL 通过数不替代源码覆盖率。
+
+本批可以宣称：`Nar.PluginState` 的无行为 jree `JavaObject` 外壳已按 canonical Java 合同原生化，并通过生命周期回归、M2、构建/API、T1 要求的 TS-only M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。总体目标完成后才汇总覆盖率与 Java/TypeScript 一致性资料并发送给计划任务 `01a026ef-8f70-7670-95dd-2dd82746b5f8`。
+
 ### 2026-09-18：`Concept.AnticipationEntry` 普通预期记录壳原生化
 
 本批承接 `8c8e124`，继续按 023 的 canonical Java 合同推进单一嵌套数据壳切片。对照 `java-master/src/main/java/org/opennars/entity/Concept.java` 确认 `AnticipationEntry` 只有四个字段和构造器，Java 声明为 `implements Serializable`，没有自定义 `equals/hashCode`、`.class`、`getClass()` 或身份 key 消费。早期 `dda82d0` 已将外层 `List<AnticipationEntry>` 按有序遍历、追加、身份删除和过滤语义改为原生数组；本批不改变这部分算法。
