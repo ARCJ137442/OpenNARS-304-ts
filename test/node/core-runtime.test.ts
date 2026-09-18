@@ -1022,6 +1022,12 @@ test("static Java utility classes no longer carry a jree JavaObject base", async
     }
 });
 
+test("ItemPriorityComparator keeps the Java plain comparator boundary", async () => {
+    const { Item } = await import("../../src/entity/Item.ts");
+
+    assert.equal(Object.getPrototypeOf(Item.ItemPriorityComparator.prototype), Object.prototype);
+});
+
 test("static inference rule classes no longer carry a jree JavaObject base", async () => {
     const modules = [
         await import("../../src/inference/CompositionalRules.ts"),

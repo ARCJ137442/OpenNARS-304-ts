@@ -29,7 +29,9 @@ const javaObjectHashCode = (value: unknown): int => {
  */
 export abstract  class Item<K> extends JavaObject implements java.io.Serializable {
 
-    public static ItemPriorityComparator =  class ItemPriorityComparator<E extends Item<unknown>> extends JavaObject implements ItemComparator<E> {
+    // Java original type: static class ItemPriorityComparator implements Comparator;
+    // it has no JavaObject/reflection contract of its own.
+    public static ItemPriorityComparator =  class ItemPriorityComparator<E extends Item<unknown>> implements ItemComparator<E> {
 
         public  compare(a: E, b: E):  int {
              let  ap: float = a.getPriority();
