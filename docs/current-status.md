@@ -790,3 +790,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - M1- 总耗时为 `1741388 ms`；主矩阵已采集样本的最大 RSS 为 `995.22 MiB`。关键行 `nars_multistep_3.nal` 完成 `502562` 周期、约 `349969 ms`，此前 Bag 批次在进程上限截断；本批未修改原始异常行，主机访问冲突与代码功能结论分开记录。
 
 本批可以宣称：S0 的 NativeMap 最小索引修复通过局部 Map 合同、M2-TS、两个原先高成本样本和 M1- 合并 `244/244` 功能/parity 证据；可以继续现行目标的下一个 023/024 单簇。仍不能宣称：023/024 完成、生产 jree 清零、完整 M1/#245 长周期完成、Java/TypeScript 性能等价或正式发布。`nars_multistep_3.nal` 的约 350 秒只作为性能观测，不是 020 性能门结论。
+
+### 2026-09-18：S1 `ConfigReader` 隐式 JavaObject 壳原生化
+
+本批承接 S0 `dba2334`，继续现行目标的单一 jree 责任切片。对照 canonical Java `ConfigReader.java` 确认 Java 声明是无显式父类的普通 `public class`；TypeScript 原先的 `extends JavaObject` 没有对应业务行为、实例身份或 `.class` 消费面，因此只移除该外层兼容壳。对照审查同时发现 `Stamp` 虽然 Java 没有显式父类，但 TS 的 `Cloneable`/`Serializable` 仍经 jree `IReflection` 承诺 `getClass()`，本批保留，不把高风险反射契约混入 IO 小切片。
+
+- `src/io/ConfigReader.ts`：删除 `JavaObject` 导入和外层继承；保留 Node 文件系统访问、配置解析、插件诊断、顺序和原生插件数组。
+- `test/node/config-platform-boundary.test.ts`：新增原型链回归，确认 `ConfigReader.prototype` 直接继承 `Object.prototype`；配置边界定向测试 `15/15`。
+- M2-TS：`npm run typecheck` 使用显式 `--incremental false`，诊断 `0`；串行单测共 `289` 项，`287` 通过、`2` 跳过、`0` 失败；build `135` 个源文件成功；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。
+- 受影响 NAL：`nal4.7.nal` 以 TS-only、cold、单线程和冻结 Java 标杆运行，`1/1` marker 通过，0 exception、0 timeout、0 stall、0 not-run。结果位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\s1-config-reader-nal4.7-20260918.jsonl`，SHA-256 为 `0420E251A298B87C7E4D2853F986CAACE513F06DFF4E8314E72EE7D937D1C4A6`。
+- jree 审计（去注释 summary）：直接导入文件 `88`，相对本批前 `89` 减少 1；`JavaObject` 文件 `30`，相对本批前 `31` 减少 1；`new LinkedHashMap=0`、`new LinkedHashSet=1`。这些是静态清单变化，不是 023 完成率。
+- 迁移模式扫描：229 个文件；constructor-delegation、malformed-generic/operator/new-this 均为 `0`。平台审计、全部 `scripts/checking/*.py`、汉字编码和 `git diff --check` 通过。
+
+本批可以宣称：ConfigReader 的隐式 JavaObject 壳已按 Java 普通类契约原生化，并经直接原型回归、串行 M2、构建、dist API 和受影响 NAL smoke 保护；可以继续下一个 S1 单簇。普通批次仍只运行 TypeScript 并复用冻结 Java JSONL。
+
+本批不能宣称：M1- 或 #245 在本批全量重跑、023/024 完成、生产核心 jree 清零、Stamp 等核心实体已去 jree、Java/TypeScript 性能等价或正式发布。阶段验收、Java 基线不变量变化或进入 023/024 整体验收时，仍需现跑 canonical Java 并逐字段核对冻结标杆。

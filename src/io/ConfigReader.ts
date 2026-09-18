@@ -1,5 +1,5 @@
 //! Java source: opennars/io/ConfigReader.java
-import { java, JavaObject } from "jree";
+import { java } from "jree";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,7 +17,13 @@ export { parseConfigXml } from "./ConfigParser.ts";
  *
  * @author Robert Wünsche
  */
-export class ConfigReader extends JavaObject {
+/**
+ * Java source declares `public class ConfigReader` without an explicit
+ * superclass.  The translated JavaObject shell carried no behavior here:
+ * this class is a static configuration facade, while Node file access remains
+ * at the explicit host boundary below.
+ */
+export class ConfigReader {
 
     /** Classpaths that were present in an XML config but cannot be loaded in Node yet. */
     public static lastUnsupportedPluginClasspaths: string[] = [];

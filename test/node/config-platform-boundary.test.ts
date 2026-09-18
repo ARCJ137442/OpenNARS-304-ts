@@ -15,6 +15,13 @@ import { Anticipate } from "../../src/operator/mental/Anticipate.ts";
 import { Emotions } from "../../src/plugin/mental/Emotions.ts";
 import { InternalExperience } from "../../src/plugin/mental/InternalExperience.ts";
 
+test("ConfigReader keeps the Java plain-class boundary without a jree Object shell", () => {
+    const reader = new ConfigReader();
+
+    assert.equal(Object.getPrototypeOf(ConfigReader.prototype), Object.prototype);
+    assert.equal(Object.getPrototypeOf(reader), ConfigReader.prototype);
+});
+
 function normalizeXml(text: string): string {
     return text.replace(/\r\n/g, "\n").trim();
 }
