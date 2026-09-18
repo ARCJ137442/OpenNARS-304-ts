@@ -1267,3 +1267,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：`Bag` 的无行为 jree `JavaObject` 外壳已按 Java 观察合同收窄为项目 `RuntimeObject`，M2 与 T1 要求的 TS-only M1- `244/244` 通过，未观察到功能回退。
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、markerless 资源的 131072 周期等价、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。下一责任簇候选为 `Memory` 的 plain-class 外壳，须另起代码提交并重新走 M2/gate。
+
+### 2026-09-19：`Memory` 状态容器 plain-class 外壳原生化
+
+本批承接 `e5eb077`，继续沿数据结构、容器和推理引擎边界做前向审查。对照 canonical Java `Memory.java` 确认其原始声明为 `implements Serializable, Iterable<Concept>, Resettable`，没有显式业务父类；`Serializable` 在当前调用图中仅为 marker，没有观察到 `Memory.class`、实例 `getClass()` 或 `instanceof Memory` 消费。因此本批只移除转写器添加的 jree `JavaObject`/marker 外壳，不修改 Memory 的状态、事件、Bag、operator registry、随机数、reset 或迭代行为。
+
+- `src/storage/Memory.ts`：移除 `JavaObject` 导入、继承和空 `super()`；保留 `java`、`S` 等仍有业务用途的兼容边界，并在源码中记录 Java 原始类型与替换理由。
+- `test/node/memory-operator-registry.test.ts`：新增原型链回归，确认 `Memory` 实例直接落在原生 `Object.prototype`，并清理 `Nar` 运行资源。
+- M2：专项 `2/2`；串行单元测试 `314` 项，`312` 通过、`2` 跳过、`0` 失败；非增量 typecheck、build、dist API 均通过，build `sourceFileCount=136`。
+- change gate：`d746990..a2de854` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`，原因是 `Memory` 热路径和完成责任簇。
+- M1-：TS-only、单线程、cold、逐文件串行、冻结 Java 标杆、`--cycles 1550`；主资源 `244/244` functional/parity。`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`java_ts_diff=0`、`performance_warning=0`；243 项走 marker 路线，`nal6.redundant.nal` 唯一 markerless 项运行到 `1650/131072` 周期，状态为 `not_reached`，不构成长周期等价。
+- M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\memory-shell-m1-minus-20260919.jsonl`；SHA-256 为 `CF56606E40CB9FFF1E23A17C280F7C5BDFE43D355176420F7BB1D8ABE73B63E8`。总时长 `1,663,813 ms`，最长单文件 `353,111 ms`，最大 RSS `1,075,593,216 bytes`，reasoning cycles `2,288,254`。
+- canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`、JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5` 和冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954` 均未变化；本批未启动 Java。
+- jree 审计前→后：`javaObjectFiles=2→1`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、Java String `52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2`。当前没有 c8/nyc/Istanbul 覆盖率依赖或脚本，NAL 通过数继续不作为源码覆盖率替代。
+
+本批可以宣称：`Memory` 的无行为 jree 外壳已按 canonical Java plain-class 合同原生化，并通过 M2 与 T1 要求的 TS-only M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、markerless 131072 周期等价、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。代码提交 `a2de854` 已推送；批次报告为 `reports/20260919-061141.md`，文档收尾提交待完成。
