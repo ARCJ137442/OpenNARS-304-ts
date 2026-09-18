@@ -140,6 +140,27 @@ test("compound factories flatten transient Java lists with native arrays", async
     assert.deepEqual(names(intension), ["factory-a", "factory-b", "factory-c"]);
 });
 
+test("Product preserves the Java List constructor boundary without a direct jree import", async () => {
+    const { Product } = await import("../../src/language/Product.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { JavaIllegalArgumentException } = await import("../../src/runtime/jree-compat.ts");
+    const { java } = await import("jree");
+
+    const javaList = new java.util.ArrayList<typeof Term.prototype>();
+    javaList.add(Term.get("product-list-a"));
+    javaList.add(Term.get("product-list-b"));
+    const product = new Product(javaList);
+
+    assert.deepEqual(
+        product.term.map((term) => String(term.name())),
+        ["product-list-a", "product-list-b"],
+    );
+    assert.throws(
+        () => (Product.make as (...args: unknown[]) => unknown)(),
+        (error: unknown) => error instanceof JavaIllegalArgumentException,
+    );
+});
+
 test("Conjunction interval normalization preserves Java order and sums adjacent intervals", async () => {
     const { Term } = await import("../../src/language/Term.ts");
     const { Conjunction } = await import("../../src/language/Conjunction.ts");

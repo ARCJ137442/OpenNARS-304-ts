@@ -19,6 +19,19 @@ if (!(JREE_FQN_MARKER in javaObjectConstructor)) {
 /** Text accepted at Node-facing Java string input boundaries. */
 export type JavaStringInput = java.lang.String | string;
 
+/**
+ * Structural view of the original Java `java.util.List<T>` input contract.
+ * The translated core only needs the Java `toArray` operation at this
+ * boundary; callers may still pass a real jree List without exposing jree's
+ * type namespace from every consumer.
+ */
+export type JavaListInput<T> = {
+    toArray(array?: T[]): T[];
+};
+
+export const isJavaListInput = <T>(value: unknown): value is JavaListInput<T> =>
+    typeof (value as { toArray?: unknown } | null)?.toArray === "function";
+
 /** Normalize a native Node string before it enters translated Java code. */
 export const toJavaString = (value: JavaStringInput): java.lang.String =>
     value instanceof java.lang.String ? value : new java.lang.String(value);
@@ -96,6 +109,9 @@ export class JavaDoubleCompat extends java.lang.Number {
         return this.value;
     }
 }
+
+/** Keep Java's argument exception at the shared compatibility boundary. */
+export class JavaIllegalArgumentException extends java.lang.IllegalArgumentException {}
 
 /** jree omits several Java exception classes used by the translated sources. */
 export class JavaAssertionError extends java.lang.Error {}

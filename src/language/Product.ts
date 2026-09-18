@@ -1,9 +1,13 @@
 //! Java source: opennars/language/Product.java
-import { java, S } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import type { Term } from "./Term.ts";
+import {
+    isJavaListInput,
+    JavaIllegalArgumentException,
+} from "../runtime/jree-compat.ts";
+import type { JavaListInput } from "../runtime/jree-compat.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -26,13 +30,14 @@ export class Product extends CompoundTerm {
     public constructor(arg: Term[]);
     public constructor(...arg: Term[]);
 
-    public constructor(x: java.util.List<Term>);
+    // Java 原始重载：Product(List<Term>)；保留 List 的有序 toArray 合同。
+    public constructor(x: JavaListInput<Term>);
     public constructor(...args: unknown[]) {
         let terms: Term[];
         if (args.length === 1 && Array.isArray(args[0])) {
             terms = args[0] as Term[];
-        } else if (args.length === 1 && typeof (args[0] as java.util.List<Term>)?.toArray === "function") {
-            terms = (args[0] as java.util.List<Term>).toArray(new Array<Term>(0));
+        } else if (args.length === 1 && isJavaListInput<Term>(args[0])) {
+            terms = args[0].toArray(new Array<Term>(0));
         } else {
             terms = args as Term[];
         }
@@ -85,7 +90,7 @@ export class Product extends CompoundTerm {
                 if (args.length > 0) {
                     return new Product(args as Term[]);
                 }
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
 
         }
@@ -124,7 +129,7 @@ export class Product extends CompoundTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
