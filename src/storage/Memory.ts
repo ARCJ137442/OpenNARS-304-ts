@@ -1,5 +1,5 @@
 //! Java source: opennars/storage/Memory.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, float, int, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
@@ -56,7 +56,10 @@ const TaskRemove = Events.TaskRemove;
  * <br>
  * Memory is serializable so it can be persisted and transported.
  */
-export class Memory extends JavaObject implements java.io.Serializable, Iterable<Concept>, Resettable {
+// Java original type: Memory implements Serializable, Iterable<Concept>, Resettable.
+// It has no explicit superclass and no observed JavaObject/class-identity use;
+// Serializable is only a marker, so the runtime state is a native TS class.
+export class Memory implements Iterable<Concept>, Resettable {
 
     /* Nar parameters */
     public readonly narParameters: Parameters;
@@ -101,7 +104,6 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         novelTasks: Bag<Task, Sentence>,
         seq_current: Bag<Task, Sentence>,
         recent_operations: Bag<Task, Sentence>) {
-        super();
         this.narParameters = narParameters;
         this.event = new EventEmitter();
         this.concepts = concepts;

@@ -22,3 +22,13 @@ test("Memory operator registry adds, replaces, and removes operators by Java tex
         nar.stop();
     }
 });
+
+test("Memory keeps the Java plain-class boundary without a jree object shell", () => {
+    const nar = new Nar({ configText: "<config></config>" });
+
+    try {
+        assert.equal(Object.getPrototypeOf(Object.getPrototypeOf(nar.memory)), Object.prototype);
+    } finally {
+        nar.stop();
+    }
+});
