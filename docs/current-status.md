@@ -1060,3 +1060,19 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 静态审计：迁移扫描 `237` 个文件；jree 审计 `sourceFiles=137`、直接导入文件 `88`、`JavaObject` 文件 `15`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台边界仍由既有审计维护。覆盖率专项尚未实现，NAL 数量也未被当作源码覆盖率替代指标。
 
 本批可以宣称：`SensoryChannel` 的无行为 `JavaObject` 外壳已按 canonical Java 普通基类合同原生化，并经直接身份回归、串行 M2-TS、构建、dist API、静态审计和冻结标杆 M1- `244/244` 保护。仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期在本批重跑、Java/TypeScript 性能等价或代码覆盖率目标完成。代码提交为 `eab9a56`；报告与状态更新待本批检查后另行提交。
+
+### 2026-09-18：事件 payload 边界原生化
+
+本批承接 `8c043d2`，对照 canonical Java `EventEmitter.emit(Object...)`、观察者 `event(Object[])` 和 `Events` 的位置化参数消费，确认事件 payload 只要求按顺序传递对象值，不要求每个值继承 `JavaObject`、参与 Java equals/hashCode 或序列化。因而将事件桥接边界命名为 `EventEmitter.EventPayload = unknown[]`，不把它误扩展为领域对象或集合语义迁移。
+
+- `src/io/events/EventEmitter.ts`、`Events.ts`、`EventHandler.ts`、`AnswerHandler.ts`、`TextOutputHandler.ts`：观察者和 emit 签名改为 `EventPayload`，保留事件 token、注册、FIFO pending operation、参数位置和既有格式化兼容边界。
+- `Nar`、`Memory`、`NarNode`、`DerivationContext`、`ProcessQuestion`、`LocalRules`、`Concept`、`NullOperator` 及 mental plugin 事件调用方：删除仅用于事件转发的伪 `JavaObject` 转换；`TruthFunctions` 所需的 Java value 转换不在本批删除。
+- `test/node/event-emitter.test.ts` 新增原生 payload 顺序回归，测试观察者签名同步收窄；局部事件专项 `8/8`。
+- M2-TS：非增量 `tsc=0`；串行单测 `305` 项，`303` 通过、`0` 失败、`2` 跳过；build 源文件 `136` 个；dist API 通过。
+- 两个受影响 TS-only 冻结标杆 smoke（`nal4.7.nal`、`nal8.add.nal`）为 `2/2`；证据文件 `event-payload-smoke-20260918.jsonl`，SHA-256 `530A4453E0DDAAD288B6059396DE9A5769384956B68CF6E6F04D2AF903357E38`。使用冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，未重复启动 Java。
+- `classify-change-gate --base 8c043d2 --head 5134dd6`：`T1`、`live_java_required=false`、`m1_minus_required=true`。
+- M1- 按单线程、cold、逐文件串行、`--cycles 1550`、`--timeout-ms 180000`、`--process-limit-ms 1800000`、显式冻结 Java 标杆运行；主资源 `244/244`，分层 `single_step=215`、`multi_step=24`、`application=5`。0 exception、0 marker missing、0 timeout、0 stall/no-progress、0 process limit、0 not-run、0 Java/TS diff、0 performance warning。
+- M1- 证据文件 `event-payload-m1-minus-20260918.jsonl`，SHA-256 `F6069395A54842D118E7D4801519D3099B82AEA87C566AEB3E8509DFFA6D52DE`；TS 总时长 `1,807,198 ms`，最长单文件 `378,311 ms`，最大 RSS `1,054,670,848 bytes`，reasoning cycles `2,288,254`。相对上一批 M1- 的 `1,875,218 ms`，本批观测时长减少 `68,020 ms`（约 `3.63%`）；RSS 增加 `95,129,312 bytes`（约 `9.92%`）。这是同口径观测，不宣称事件 payload 原生化已经完成性能优化。
+- 本批静态审计：jree `sourceFiles=137`、直接导入文件 `88`、`javaObjectFiles=13`、`javaUtilFiles=39`、`javaLangFiles=85`、`javaStringFiles=52`、`semanticReviewItems=93`；迁移模式扫描 `237` 个文件；平台扫描 `180` 个文件、核心候选 `83`、混合边界 `5`、Node 适配候选 `2`。编码检查无异常，`git diff --check` 待提交前复核。
+
+本批可以宣称：事件 payload 原生边界已通过 M2、非增量编译、构建/API、受影响 smoke 和 T1 要求的 TS-only M1- `244/244`；代码提交为 `5134dd6`。仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 在本批重跑、Java/TypeScript 全面等价、性能等价或代码覆盖率目标完成。覆盖率专项仍只登记为后续工作：应先建立全仓基线和缺口，再设计能命中缺口的 NAL/局部测试，并与 Java/TS 对照及矩阵回归联动。
