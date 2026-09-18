@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/ComplexEmotions.java
-import { java, JavaObject } from "jree";
+import { java } from "jree";
 import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { LocalRules } from "../../inference/LocalRules.ts";
@@ -20,7 +20,10 @@ const Answer = Events.Answer;
  *
  * @author Patrick
  */
-export class ComplexEmotions extends JavaObject implements Plugin {
+// Java source declares a plain Plugin implementation without an Object shell.
+// Keep jree only for translated event/string contracts; the plugin itself has no
+// JavaObject identity, reflection, or class-literal behavior to preserve.
+export class ComplexEmotions implements Plugin {
 
     public obs: EventObserver | null = null;
     protected fear: float = Float32Math.from(0.5) as float;
