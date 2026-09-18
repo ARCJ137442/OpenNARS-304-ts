@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/CompositionalRules.java
-import { java, JavaObject } from "jree";
+import { java } from "jree";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import type { Concept } from "../entity/Concept.ts";
@@ -91,7 +91,6 @@ const pair = <L, R>(left: L, right: R): Pair<L, R> => ({
 const union = TruthFunctions.union;
 const intersection = TruthFunctions.intersection;
 const negation = TruthFunctions.negation;
-const asJavaObject = (value: unknown): JavaObject => value as JavaObject;
 const induction = TruthFunctions.induction;
 const comparison = TruthFunctions.comparison;
 const abduction = TruthFunctions.abduction;
@@ -285,10 +284,10 @@ export class CompositionalRules {
         if (index === 0) {
             if (oldContent instanceof Inheritance) {
                 truth = lookupTruthOrNull(v1, v2, nal.narParameters,
-                    asJavaObject(compound instanceof IntersectionExt), EnumType.REDUCECONJUNCTION,
-                    asJavaObject(compound instanceof IntersectionInt), EnumType.REDUCEDISJUNCTION,
-                    asJavaObject(compound instanceof SetInt && component instanceof SetInt), EnumType.REDUCECONJUNCTION,
-                    asJavaObject(compound instanceof SetExt && component instanceof SetExt), EnumType.REDUCEDISJUNCTION);
+                    compound instanceof IntersectionExt, EnumType.REDUCECONJUNCTION,
+                    compound instanceof IntersectionInt, EnumType.REDUCEDISJUNCTION,
+                    compound instanceof SetInt && component instanceof SetInt, EnumType.REDUCECONJUNCTION,
+                    compound instanceof SetExt && component instanceof SetExt, EnumType.REDUCEDISJUNCTION);
 
                 if (truth === null && compound instanceof DifferenceExt) {
                     if (compound.term[0].equals(component)) {
@@ -307,10 +306,10 @@ export class CompositionalRules {
         } else {
             if (oldContent instanceof Inheritance) {
                 truth = lookupTruthOrNull(v1, v2, nal.narParameters,
-                    asJavaObject(compound instanceof IntersectionInt), EnumType.REDUCECONJUNCTION,
-                    asJavaObject(compound instanceof IntersectionExt), EnumType.REDUCEDISJUNCTION,
-                    asJavaObject(compound instanceof SetExt && component instanceof SetExt), EnumType.REDUCECONJUNCTION,
-                    asJavaObject(compound instanceof SetInt && component instanceof SetInt), EnumType.REDUCEDISJUNCTION);
+                    compound instanceof IntersectionInt, EnumType.REDUCECONJUNCTION,
+                    compound instanceof IntersectionExt, EnumType.REDUCEDISJUNCTION,
+                    compound instanceof SetExt && component instanceof SetExt, EnumType.REDUCECONJUNCTION,
+                    compound instanceof SetInt && component instanceof SetInt, EnumType.REDUCEDISJUNCTION);
 
                 if (truth === null && compound instanceof DifferenceInt) {
                     if (compound.term[1].equals(component)) {

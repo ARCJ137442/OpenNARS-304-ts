@@ -3,6 +3,8 @@ import test from "node:test";
 import { java } from "jree";
 import { DerivationContext } from "../../src/control/DerivationContext.ts";
 import { CompositionalRules } from "../../src/inference/CompositionalRules.ts";
+import { TruthFunctions } from "../../src/inference/TruthFunctions.ts";
+import { TruthValue } from "../../src/entity/TruthValue.ts";
 import { Inheritance } from "../../src/language/Inheritance.ts";
 import { Implication } from "../../src/language/Implication.ts";
 import { Term } from "../../src/language/Term.ts";
@@ -57,4 +59,31 @@ test("CompositionalRules.introduceVariables keeps Java Map substitution semantic
 
     assert.deepEqual(outputTerms, ["<<$ind0 --> antecedent> =|> <$ind0 --> consequent>>"]);
     assert.equal(outputs.toArray()[0].getRight(), 1);
+});
+
+test("TruthFunctions lookup keeps native boolean varargs and nullable selection", () => {
+    const nar = new Nar();
+    const firstPremise = TruthValue.fromFrequencyConfidence(0.7, 0.6, nar.narParameters);
+    const secondPremise = TruthValue.fromFrequencyConfidence(0.3, 0.4, nar.narParameters);
+    const selected = TruthFunctions.lookupTruthOrNull(
+        firstPremise,
+        secondPremise,
+        nar.narParameters,
+        false,
+        TruthFunctions.EnumType.DEDUCTION,
+        true,
+        TruthFunctions.EnumType.DEDUCTION,
+    );
+    const expected = TruthFunctions.deduction(firstPremise, secondPremise, nar.narParameters);
+    assert.ok(selected);
+    assert.equal(selected.equals(expected), true);
+
+    const none = TruthFunctions.lookupTruthOrNull(
+        firstPremise,
+        secondPremise,
+        nar.narParameters,
+        false,
+        TruthFunctions.EnumType.DEDUCTION,
+    );
+    assert.equal(none, null);
 });

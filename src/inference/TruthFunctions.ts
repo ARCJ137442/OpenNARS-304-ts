@@ -125,8 +125,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return truth value as computed by the truth-function or null if no boolean
      *         value was true
      */
+    // Java source: Object... values; the implementation observes only boolean
+    // guards and EnumType selectors, so the boundary does not require JavaObject.
     public static lookupTruthOrNull(a: TruthValue, b: TruthValue, narParameters: Parameters,
-        ...values: java.lang.Object[]): TruthValue | null {
+        ...values: unknown[]): TruthValue | null {
         let numberOfTuples: int = values.length / 2;
 
         for (let idx: int = 0; idx < numberOfTuples; idx++) {
