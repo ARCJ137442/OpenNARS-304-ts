@@ -827,3 +827,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - `d8b2f39` 原先把 `7` 行生产 TS、`11` 行测试和 `84` 行报告合计成 `102`，修正后为 `source_changed_lines=7`，默认 slice 不触发 M1-。
 - ConfigReader 历史批次原先为 `120`（`10` 行生产 TS 加测试、报告和文档），修正后生产源行数为 `10`，默认 slice 同样不因行数触发 M1-。
 - `--scope responsibility` 仍独立触发 M1-；ComplexEmotions 已额外完成的 TS-only M1- `244/244` 是保护证据，不是修正后默认 slice 的强制要求。
+
+### 2026-09-18：`Counting` 隐式 JavaObject 壳原生化
+
+本批承接 `4c59aa4` 与门禁口径修订提交 `ee0dd77`，继续 023 的单一普通类切片。对照 canonical Java `Counting.java` 确认其声明为普通 `public class Counting implements Plugin`；TypeScript 原先的 `JavaObject` 只提供外壳，两个构造器中的 `super()` 也是翻译遗留。事件类、异常、字符串和 float32 收窄仍是有效合同，因此只移除外壳，不删除整个 `java` 导入。
+
+- `src/plugin/mental/Counting.ts`：删除 `JavaObject` 导入和继承，移除默认/带参构造器中的空 `super()`，保留 Java 构造器重载、事件派发和 float32 优先级边界。
+- `test/node/counting-boundary.test.ts`：新增默认构造器、带参构造器和原型链回归；定向测试 `1/1`。
+- M2-TS：非增量 `tsc=0`；串行单测 `292` 项，`290` 通过、`2` 跳过、`0` 失败；build、dist API 通过。
+- 两个代表性 TS-only NAL smoke（`nal4.7.nal`、`nal8.add.nal`）均为 `1/1`，`java_artifact=null`、无异常/timeout/stall/not-run；结果 SHA-256 分别为 `D17E48E636585A7EB1744663B88E6FA8C12ADE9275704B8592BD36F4787E16C7` 与 `FDCE55E44104E3378E0FDCA14BF742F126488A961CF96D38789D2D214F11F29E`。
+- 以 `ee0dd77` 为父基线运行修订后的 `classify-change-gate`：`T1`、`live_java_required=false`、`m1_minus_required=false`、生产源改动 `13` 行；原因是 `high-risk-path` 与 `semantic-token-change`。单个普通类不使用 `--scope responsibility`，本批未启动 M1-。
+- jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `28`（本批前 `29`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `231` 个文件，平台审计扫描 `179` 个文件；编码检查与 `git diff --check` 通过。
+
+本批可以宣称：`Counting` 的无行为 JavaObject 外壳及遗留 `super()` 已原生化，并经直接回归、M2、代表性 smoke 和修订后 T1 gate 保护。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。该插件不在默认注册表，代表性 NAL 不等于 Counting 业务行为的直接覆盖。
