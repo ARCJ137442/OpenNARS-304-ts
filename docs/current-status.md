@@ -1315,3 +1315,17 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：`Eventable` 的无行为 jree 导入残留已清理，M2 和静态审计通过，未观察到功能变化。
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245、源码覆盖率目标完成、Java/TypeScript 性能等价或正式发布。后续若进入 `runtime/jree-compat.ts`、Map/Set、随机数、类身份或热路径，必须重新按 T1/T2 门禁验证。
+
+### 2026-09-19：`AnswerHandler` 残留 jree 导入清理
+
+本批继续前向审查事件边界。`AnswerHandler` 的 Java 原始职责是订阅 `Answer` 事件、比较 `Task.equals` 并调用 `onSolution`；TypeScript 当前实现只使用项目内的 `ClassTokenLike`、`EventEmitter.EventObserver`、`Events.Answer` 和 `Task`。文件中的 `import { java } from "jree"` 没有任何 `java.*` 使用，因此删除该导入，不改变事件 token、订阅顺序、回调参数或任务值相等语义。
+
+- M2：串行单元测试 `315` 项，`313` 通过、`2` 跳过、`0` 失败；显式非增量 typecheck 为 `0` 诊断；build `sourceFileCount=137`、build 检查和 dist API 通过。
+- change gate：`classify-change-gate --base 5873ffc --head b99a755` 判定 `T1`，原因是 `io/events` 高风险路径；`live_java_required=false`、`m1_minus_required=false`，因此本批没有启动 Java 或 M1-。
+- 静态审计：迁移扫描 `239` 个文件，constructor-delegation、malformed generic/operator/new-this 均为 `0`；jree 直接导入文件 `87→86`，`javaObjectFiles=1`、`semanticReviewItems=92`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。
+- 继续复用冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 代码提交：`b99a7554444bd7f2c70ac1503e11a5f92fb9f8b4`；批次报告：`reports/20260919-071447.md`。
+
+本批可以宣称：`AnswerHandler` 的无行为 jree 导入残留已清理，M2、静态审计和 T1 最低门通过。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245、源码覆盖率目标完成、Java/TypeScript 性能等价或正式发布。
