@@ -26,6 +26,12 @@
 
 > **为什么？** 跳过发现会造成重复工作。手动创建文件会破坏 LeanSpec 工具链。
 
+## 代码检索：优先使用 CodeGraph
+
+- LeanSpec `board/search` 负责规格发现；进入源码定位、调用链或影响面分析时，优先使用 CodeGraph MCP 的 `codegraph_explore`，或 CLI 的 `codegraph explore "<符号或问题>"`。
+- 本项目的 `.codegraph/` 是本地生成索引，不提交到 Git。若新工作树尚无索引且已安装 `codegraph`，先运行 `codegraph init`；用 `codegraph status` 确认索引状态。
+- CodeGraph 不可用时使用 `rg`；精确文本匹配、生成文件或图谱未覆盖的路径也使用 `rg`。图谱边与影响范围是检索线索，修改前仍需核对源码、合同与测试。
+
 ## 🔧specs 管理方法
 
 ### MCP 工具（优先）与 CLI 备用

@@ -7,8 +7,9 @@
 1. 阅读[当前状态](current-status.md)与[冻结交接报告](../reports/20260827-003242.md)。
 2. 检查 `git status --short --branch`，不要清理或提交来源不明的未跟踪证据、探针和生成物。
 3. 运行 `lean-spec board`，再用 `lean-spec search` 和 `lean-spec view` 查找相关规格。
-4. 只有多阶段功能、破坏性变更或设计决策才创建新 spec；frontmatter 和状态只能由 LeanSpec 工具维护。
-5. 以 `17cec541f535d83bd62e5b15ee9c03f4a2233812` 作为代码恢复点，不要把旧 `v0.1.0` tag 当成新的 RC。
+4. 定位源码符号、调用链与影响面时优先使用 `codegraph_explore` 或 `codegraph explore "<符号或问题>"`；新工作树若缺少 `.codegraph/`，运行 `codegraph init` 后以 `codegraph status` 核对。索引不可用或需要精确文本匹配时使用 `rg`。
+5. 只有多阶段功能、破坏性变更或设计决策才创建新 spec；frontmatter 和状态只能由 LeanSpec 工具维护。
+6. 以 `17cec541f535d83bd62e5b15ee9c03f4a2233812` 作为代码恢复点，不要把旧 `v0.1.0` tag 当成新的 RC。
 
 详细 Agent 规则见仓库根目录的 [AGENTS.md](../AGENTS.md)。
 
