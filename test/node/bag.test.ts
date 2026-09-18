@@ -43,6 +43,12 @@ test("Bag.pickOut supports both Java overload shapes", () => {
     assert.equal(bag.size(), 0);
 });
 
+test("Bag keeps its observed runtime class identity without jree JavaObject", () => {
+    const bag = new Bag<TestItem, string>(4, 10, new Parameters());
+
+    assert.equal(bag.getClass().getSimpleName(), "Bag");
+});
+
 test("Bag.pickOut keeps a key object with name() on the key overload", () => {
     class TermKeyItem extends Item<Term> {
         private readonly key: Term;

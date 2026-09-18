@@ -1,5 +1,5 @@
 //! Java source: opennars/storage/Bag.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "../entity/Item.ts";
 import { Distributor } from "./Distributor.ts";
@@ -8,6 +8,7 @@ import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { javaValuesEqual } from "../runtime/jree-compat.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
+import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import type { Memory } from "./Memory.ts";
 
 
@@ -15,7 +16,11 @@ import type { Memory } from "./Memory.ts";
  * Original Bag implementation which distributes items into
  * discrete levels (queues) according to priority
  */
-export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.Serializable {
+// Java original type: Bag<Type, K> implements Serializable, Iterable<Type>.
+// Serializable is a marker here; RuntimeObject preserves the observed
+// getClass().getSimpleName() boundary used by toStringLong without retaining
+// the translated jree JavaObject shell.
+export class Bag<Type extends Item<K>, K> extends RuntimeObject {
 
     /** priority levels */
     private readonly TOTAL_LEVEL: int;
