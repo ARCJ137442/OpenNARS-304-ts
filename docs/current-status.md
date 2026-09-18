@@ -906,3 +906,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计（HEAD `90fe4fe`）：直接导入文件 `88`、`JavaObject` 文件 `23`、`new LinkedHashMap=0`、`new LinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`。`Narsese` 仍保留 `java` 字符串/异常/运行时解析边界，本批不是 jree 退场。
 
 本批可以宣称：`Narsese` 的无行为 JavaObject 外壳已按 canonical Java 普通类契约原生化，并经直接回归、串行 M2-TS、两个 TS-only smoke、静态审计和 T1 gate 保护；代码提交 `90fe4fe`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 重新完成、Java/TypeScript 性能等价或正式发布。全部 `scripts/checking/*.py` 已顺序通过，汉字编码和 `git diff --check` 通过。
+
+### 2026-09-18：`Events` 外层普通类边界原生化
+
+本批承接 `082bf62`，继续 023 的单一普通类切片。对照 canonical Java `Events.java` 确认其声明为可实例化的 `public class Events`，没有显式父类、实例方法或构造器使用面；TypeScript 原先的外层 `abstract extends JavaObject` 是翻译兼容壳。`CycleEnd` 等嵌套事件类仍承担 JavaObject/反射合同，因此只移除外层壳，不删除文件内仍有意义的 jree 依赖。
+
+- `src/io/events/Events.ts`：删除外层 `abstract`、`extends JavaObject` 和对应外层兼容语义；嵌套事件类、`java` 导入和反射行为保持不变。
+- `test/node/event-emitter.test.ts`：新增外层原型链、实例身份和 `CycleEnd.class` 名称回归；定向测试 `6/6`。
+- M2-TS：非增量 `tsc=0`；串行单测 `298` 项，`296` 通过、`2` 跳过、`0` 失败；build 源文件 `135` 个成功；dist API 通过。
+- 两个 TS-only 冻结标杆 smoke（`nal4.7.nal`、`nal8.add.nal`）均为 `1/1`，冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，`java_artifact=null`，无 exception/stall/process limit/marker missing。结果 SHA-256 分别为 `35681ED7493ACFDA774351F9EE7A4A21087809D435FFA0AA23F584F8541CDEC7` 与 `BCB998E733E4D3726DCE75A94AD637B87100B3E4535879B962B941C0E07423BD`。
+- 以 `082bf62` 为父基线运行 `classify-change-gate`：`T1`、`live_java_required=false`、`m1_minus_required=false`；本批未启动 Java 和 M1-。
+- jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `23`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `236` 个文件。JavaObject 文件数不下降是预期的，因为嵌套事件类仍保留反射合同。
+
+本批可以宣称：`Events` 外层无行为 JavaObject/abstract 兼容壳已按 canonical Java 普通类合同原生化，并经直接回归、串行 M2-TS、两个 TS-only smoke、静态审计和 T1 gate 保护；代码提交 `4e09b5b`。
+
+仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 重新完成、Java/TypeScript 性能等价或正式发布。嵌套事件类的反射合同和事件行为全量覆盖仍未改变。
