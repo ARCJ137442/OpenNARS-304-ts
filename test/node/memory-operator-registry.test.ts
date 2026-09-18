@@ -32,3 +32,15 @@ test("Memory keeps the Java plain-class boundary without a jree object shell", (
         nar.stop();
     }
 });
+
+test("Memory keeps Java iterator calls and native iteration as separate contracts", () => {
+    const nar = new Nar({ configText: "<config></config>" });
+
+    try {
+        const iterator = nar.memory.iterator();
+        assert.equal(iterator.hasNext(), false);
+        assert.deepEqual([...nar.memory], []);
+    } finally {
+        nar.stop();
+    }
+});

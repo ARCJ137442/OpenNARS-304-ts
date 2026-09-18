@@ -8,6 +8,7 @@ import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { javaValuesEqual } from "../runtime/jree-compat.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
+import type { JavaIterator } from "../runtime/JavaIterator.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import type { Memory } from "./Memory.ts";
 
@@ -542,11 +543,12 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
         return this.nameTable.size();
     }
 
-    public iterator(): java.util.Iterator<Type> {
+    // Java original return type: java.util.Iterator<Type>.
+    public iterator(): JavaIterator<Type> {
         return this.nameTable.values().iterator();
     }
 
-    public [Symbol.iterator](): Iterator<Type> {
+    public [Symbol.iterator](): IterableIterator<Type> {
         if (this.itemOrder.length !== this.nameTable.size()) {
             // A deserialized/legacy instance may not contain the native mirror yet.
             this.itemOrder = [];

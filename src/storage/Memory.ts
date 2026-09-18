@@ -3,6 +3,7 @@ import { java, S } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, float, int, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
+import type { JavaIterator } from "../runtime/JavaIterator.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -455,19 +456,12 @@ export class Memory implements Iterable<Concept>, Resettable {
         return Float32Math.multiply(this.narParameters.DURATION, Float32Math.from(durations)) as float;
     }
 
-    public iterator(): java.util.Iterator<Concept> {
+    // Java original return type: java.util.Iterator<Concept>.
+    public iterator(): JavaIterator<Concept> {
         return this.concepts.iterator();
     }
 
     public [Symbol.iterator](): IterableIterator<Concept> {
-        const iterator = this.iterator();
-        return {
-            next: (): IteratorResult<Concept> => iterator.hasNext()
-                ? { value: iterator.next(), done: false }
-                : { value: undefined as unknown as Concept, done: true },
-            [Symbol.iterator](): IterableIterator<Concept> {
-                return this;
-            },
-        };
+        return this.concepts[Symbol.iterator]();
     }
 }
