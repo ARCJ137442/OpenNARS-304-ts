@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/perception/VisionChannel.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { float, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
@@ -296,13 +296,15 @@ export class VisionChannel extends SensoryChannel {
         this.py = py;
     }
 
+    // Java source: package-private class Prototype.
+    // It is a plain data holder; VisionChannel's own class identity and logger
+    // reflection remain separate contracts above.
     public Prototype = (($outer) => {
-        return class Prototype extends JavaObject {
+        return class Prototype {
             protected observationCount: int;
             public readonly task: Task;
 
             public constructor(t: Task) {
-                super();
                 this.observationCount = 1; // as the task itself is a case
                 this.task = t;
             }

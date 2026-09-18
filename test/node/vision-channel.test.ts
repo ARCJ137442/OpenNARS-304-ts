@@ -53,5 +53,7 @@ test("VisionChannel keeps prototype order in a native array", async () => {
     assert.equal(Array.isArray(vision.prototypes), true);
     assert.equal(vision.prototypes.length, 1);
     assert.equal(vision.prototypes[0].getObservationCount(), 1);
+    assert.equal(Object.getPrototypeOf(vision.Prototype.prototype), Object.prototype);
+    assert.equal(Object.getPrototypeOf(vision.prototypes[0]), vision.Prototype.prototype);
     nar.stop();
 });
