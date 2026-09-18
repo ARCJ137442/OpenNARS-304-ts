@@ -1167,3 +1167,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计前→后：`javaObjectFiles=9→8`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、`javaString=52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2` 保持不变。
 
 本批可以宣称：`lookupTruthOrNull` 的 jree `JavaObject` 类型壳已移除，M2 和 244 个普通主资源的功能保护通过。仍不能宣称：`nal6.redundant.nal` 的 131072 周期长测完成、#245 长期稳定性完成、023/024 完成、生产核心完全去 jree、Java/TypeScript 性能等价或源码覆盖率目标完成。报告为 `reports/20260919-004703.md`；代码提交 `3ea4b75` 待与报告、状态更新一起推送。
+
+### 2026-09-19：`NarNode` 类身份运行时边界原生化
+
+本批承接 `1ab7d01`，对照 canonical Java `NarNode.java` 确认 `NarNode` 原始声明为 `implements EventObserver`，内部 `EventReceivedTask` 也是普通类；Java 没有需要由 jree `JavaObject` 提供的 hash、monitor 或序列化行为。TS 原先继承 `JavaObject` 的实际用途只有 `.class` 类身份令牌，因此改用项目 `RuntimeObject` 的窄合同。
+
+- `src/main/NarNode.ts`：移除 `JavaObject` 导入和继承；`EventReceivedTask` 同样改为 `RuntimeObject`。网络收发、事件派发、目标列表顺序、线程和序列化路径均未改动，并在源码中标注原 Java 声明及替换理由。
+- `test/node/narnode-targets.test.ts`：增加 `NarNode.class.getName()` 和 token 自等回归；专项测试 `3/3` 通过。
+- M2：`npm run test:unit:serial` 为 `310` 项，`308` 通过、`2` 跳过、`0` 失败；`npm run typecheck` 使用显式 `--incremental false` 为 `0` 诊断；`npm run test:build`、`npm run test:api:dist` 与 `npm run test:parity:local` 均通过。
+- gate：`classify-change-gate --base 1ab7d01 --head b55d594 --scope responsibility` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；原因包括 `src/main/NarNode.ts` 高风险路径、semantic token 和 completed responsibility。
+- M1-：TS-only、单线程、cold、逐文件串行，使用冻结 Java baseline、`--cycles 1550`、`--timeout-ms 180000`、`--process-limit-ms 1800000`、`--all --start 0 --limit 244`，明确排除 #245。结果 `244/244` functional pass、`244/244` parity；`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`Java/TS diff=0`、`performance_warning=0`。分层为 `single_step=215`、`multi_step=24`、`application=5`；243 行走 marker 等价路线，`nal6.redundant.nal` 无 marker，状态为 `not_reached`。
+- M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\narnode-m1-minus-20260919.jsonl`，SHA-256 `1E9771B212A794E0C25ED64A44E2CBC8B4EDD295B40739109018D77CC1419F6B`；TS 总时长 `1,684,905 ms`，最长单文件 `358,823 ms`，最大 RSS `1,070,170,112 bytes`，reasoning cycles `2,288,254`。
+- 本批复用三轮一致的冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`、JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5` 均未变化，未重复启动 Java。
+- jree 审计前→后：`javaObjectFiles=8→7`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、`javaString=52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2` 保持不变。直接导入数未下降，是因为 NarNode 仍需 jree 的网络、IO、异常和字符串兼容边界。
+
+本批可以宣称：`NarNode` 与 `EventReceivedTask` 的无行为 `JavaObject` 壳已按 canonical Java 合同收窄为项目 `RuntimeObject`，并通过直接回归、M2、构建/API、局部 parity 和 T1 要求的 TS-only M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、`nal6.redundant.nal` 的 131072 周期长测完成、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。代码提交为 `b55d594`；报告为 `reports/20260919-020533.md`。
