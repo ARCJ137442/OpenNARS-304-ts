@@ -992,3 +992,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 静态扫描：迁移扫描 `236` 个文件；jree 审计直接导入文件 `88`、`JavaObject` 文件 `20`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`；编码检查与 `git diff --check` 通过。
 
 本批可以宣称：`NarNode.TargetNar` 的无行为 JavaObject 外壳已按 canonical Java 普通静态类合同原生化，并经直接边界回归、M2、主链 smoke、静态审计和 T1 gate 保护；代码提交 `be1dd9f`。仍不能宣称：024 网络宿主完整验收、023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。`NarNode` 外层、`EventReceivedTask` 和真实 socket 通道未在本批重写。
+
+### 2026-09-18：`Anticipate.Prediction` 普通身份键数据壳原生化
+
+本批承接 `52c5c30`，继续按 023 的 Java 合同推进单一普通类切片。对照 canonical Java `Anticipate.java` 确认 `Prediction` 是包可见普通类，只含两个 `long` 字段和构造器，没有 `equals/hashCode`、`.class`、`getClass()` 或 Serializable 消费面。它虽然作为外层 `Map<Prediction, LinkedHashSet<Term>>` 的 key 使用，但 key 依赖的是 Java 默认对象身份；去掉 JavaObject 不得把它变成字段值 key。
+
+- `src/operator/mental/Anticipate.ts`：删除 `Prediction` 的 `JavaObject` 导入、继承和空 `super()`；保留 `toRuntimeLong`、两个 long 字段、外层 Java Map 抽象、NativeMap 具体实现、Prediction 身份 key 和内层 NativeSet。
+- `test/node/anticipate.test.ts`：在已有相同字段双 Prediction key 回归中增加普通原型链断言；不改变 Map/Set 行为测试。
+- M2-TS：非增量 `tsc=0`；串行单测 `302` 项，`300` 通过、`2` 跳过、`0` 失败；build 源文件 `135` 个成功；dist API 通过。
+- 两个 TS-only 冻结标杆 smoke 均 `functional_pass=true`、`parity=true`，冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，`java_artifact=null`，单线程 cold。`nal4.7.nal` 为 `1550` 周期、`2891 ms`，结果 SHA-256 `20AC2521A8EE9A931FEE024C9C5EF981CA1ADB0DB13DDF782B732894B97F88D2`；`nal8.add.nal` 为 `1550` 周期、`3519 ms`，结果 SHA-256 `29095183338BF216AF309AFE6207940DCE2A4C8165C12515A912199C5CB35914`。两项均无 exception、timeout、stall、process limit 或 marker missing。
+- 以 `52c5c30` 为父基线运行 `classify-change-gate`：T1、`live_java_required=false`、`m1_minus_required=false`；原因是 `high-risk-path:src/operator/mental/Anticipate.ts` 与 `semantic-token-change`，本批未启动 M1-。
+- 静态审计（HEAD `e03f823`）：迁移扫描 `236` 个文件；jree 审计直接导入文件 `88`、`JavaObject` 文件 `19`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计继续保留宿主边界和核心 jree 风险清单。汉字编码检查与 `git diff --check` 通过。
+
+本批可以宣称：`Anticipate.Prediction` 的无行为 JavaObject 外壳已按 canonical Java 普通类合同原生化，并经身份键/原型链回归、串行 M2-TS、两个 TS-only smoke、T1 gate 和静态审计保护；代码提交 `e03f823`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。外层 `Anticipate`、Map/Set 抽象、预测派发和 `jree-compat` 未在本批重写。
