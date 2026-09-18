@@ -866,3 +866,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `26`（本批前 `27`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `233` 个文件，平台审计扫描 `179` 个文件；编码检查与 `git diff --check` 通过。
 
 本批可以宣称：`InternalExperience` 的无行为 JavaObject 外壳及遗留 `super()` 已原生化，并经直接回归、默认配置路径 M2、代表性 smoke 和修订后 T1 gate 保护。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。代表性 NAL 覆盖默认插件装载路径，但不等于 InternalExperience 全部事件分支和静态业务方法的直接覆盖。
+
+### 2026-09-18：`Shell` 隐式 JavaObject 壳原生化
+
+本批承接 `85770b1`，继续 023/024 的宿主入口切片。对照 canonical Java `Shell.java` 确认 Java 声明为普通 `public class Shell`，构造器只有 `this.nar = n`；只有内部 `InputThread` 继承线程类。TypeScript 原先的 `JavaObject` 是翻译外壳，不能与 `ThreadCompat` 这一真实线程适配混淆。
+
+- `src/main/Shell.ts`：删除 `JavaObject` 导入、外层继承和空 `super()`；保留 `java` 的 PrintStream/System、Integer/Boolean、String、异常和 IO 合同，保留 `InputThread extends ThreadCompat`、Node stdin、文件系统和宿主退出路径。
+- `test/node/shell-boundary.test.ts`：新增构造器、原型链和 `instanceof` 回归；定向测试 `1/1`。
+- M2-TS：非增量 `tsc=0`；串行单测 `295` 项，`293` 通过、`2` 跳过、`0` 失败；build 源文件 `135` 个成功；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。其中已有 Shell 无警告测试也通过。
+- 两个代表性 TS-only NAL smoke（`nal4.7.nal`、`nal8.add.nal`）均为 `1/1`，冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，`java_artifact=null`，无 exception/stall/process limit/marker missing。结果 SHA-256 分别为 `2847539708B516ECFC4035947F90B1B27ADDACB61A2BBEB4871899DADB9DECAE` 与 `EB2B1F3F7A7709696E8AFCDCD6CC559717CCBF5DE2D47CA5F7813377D1BF6E84`。
+- 以 `85770b1` 为父基线运行 `classify-change-gate`：`T1`、`live_java_required=false`、`m1_minus_required=false`、生产源改动 `6` 行；原因是 `high-risk-path:src/main/Shell.ts` 与 `semantic-token-change`。单个普通宿主类不使用 `--scope responsibility`，本批未启动 M1-。
+- jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `25`（本批前 `26`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `234` 个文件。平台审计仍把 Shell 标记为 mixed Node-host boundary；未把宿主 Node 依赖误算作核心去 jree 完成。
+
+本批可以宣称：`Shell` 的无行为 JavaObject 外壳已按 canonical Java 普通类契约原生化，并经直接回归、串行 M2-TS、Shell 无警告测试、两个代表性 smoke、静态审计和 T1 gate 保护；代码提交 `3cb60c8` 已推送到 `origin/main`。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。Shell 的 Node 文件系统、stdin、线程和退出能力仍属于后续 024 宿主适配边界，本批未改变这些行为。
