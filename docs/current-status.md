@@ -1249,3 +1249,21 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：`Term` 已脱离 jree `JavaObject` 外层壳并保留 Java 可观察合同，M2、非增量类型检查、构建/API、T1 gate 要求的 TS-only M1- `244/244` 均通过；代码提交 `a9ef59d`，已推送到 `origin/main`，批次报告为 `reports/20260919-040006.md`。
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、markerless 资源的 131072 周期等价、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。普通验证继续复用冻结 Java 标杆；仅在 Java artifact/source/classes、runner 合同、配置/线程/随机条件或整体验收阶段变化时重跑 Java。
+
+### 2026-09-19：`Bag` 运行时外壳原生化
+
+本批在 `08f6a1c` 后继续沿数据结构 → 容器顺序，对照 canonical Java `Bag.java` 处理单一运行时外壳责任。Java `Bag` 原始声明为 `Serializable, Iterable<Type>`；实际观察到的额外类身份行为只有 `toStringLong()` 使用 `getClass().getSimpleName()`。因此本批只移除转写器添加的 jree `JavaObject`/marker 壳，改用项目 `RuntimeObject`，不改 `NativeMap`、equality bucket、优先级层、FIFO 队列、容量淘汰、迭代顺序或调度算法。
+
+- `src/storage/Bag.ts`：删除 `JavaObject` 导入和 `Serializable` 继承，改为 `RuntimeObject`；保留 Bag 的 Java 类身份观察面。
+- `test/node/bag.test.ts`：增加 `getClass().getSimpleName()` 直接合同回归；空 Bag 的既有 `toStringLong()` 层索引边界不在本批范围。
+- 定向 Bag 测试 `11/11`；统一串行单测 `313` 项，`311` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `sourceFileCount=136`；dist API 通过。
+- gate：`classify-change-gate --base 08f6a1c --head e5eb077 --scope responsibility` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`，原因包括 `src/storage/Bag.ts` 热路径与语义 token 变化。
+- M1- 使用单线程、cold、逐文件串行、冻结 Java JSONL、`--cycles 1550`、`--timeout-ms 180000`、`--process-limit-ms 1800000`、`--resource-metrics`，排除 #245；244 个主资源 `244/244` functional/parity，`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`java_ts_diff=0`、`performance_warning=0`。243 行走 marker 等价路线，1 行 markerless 为 `unverified`。
+- M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\bag-shell-m1-minus-20260919.jsonl`，SHA-256 `FA7BBA0C34915D19044D33DF7E187F0F08F048EF5C4FAE8DDFACDE1AD78C3CC9`；TS 总时长 `1,671,440 ms`，最长单文件 `358,918 ms`，最大 RSS `868,003,840 bytes`，reasoning cycles `2,288,254`。
+- 继续复用三轮一致的冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，artifact SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`；本批未启动 Java。
+- jree 审计前→后：`javaObjectFiles=3→2`；直接导入文件 `88`，`java.util=39`，`java.lang=85`，Java String `52`，`semanticReviewItems=93`，`candidateNativeItems=2`，`newLinkedHashMap=0`，`newLinkedHashSet=1`。迁移扫描 `238` 个文件，结构性异常项为 `0`。
+- 代码提交 `e5eb077`；报告为 `reports/20260919-050229.md`；状态与报告在本批收尾提交中归档。
+
+本批可以宣称：`Bag` 的无行为 jree `JavaObject` 外壳已按 Java 观察合同收窄为项目 `RuntimeObject`，M2 与 T1 要求的 TS-only M1- `244/244` 通过，未观察到功能回退。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、markerless 资源的 131072 周期等价、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。下一责任簇候选为 `Memory` 的 plain-class 外壳，须另起代码提交并重新走 M2/gate。
