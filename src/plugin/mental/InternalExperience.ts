@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/InternalExperience.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { float, double, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -36,7 +36,9 @@ type EventObserver = EventEmitter.EventObserver;
  * <p>
  * called from Concept
  */
-export class InternalExperience extends JavaObject implements Plugin, EventObserver {
+// Java source declares a plain Plugin/EventObserver implementation without a
+// JavaObject base; the event observer contract remains explicit below.
+export class InternalExperience implements Plugin, EventObserver {
     private memory: Memory | null = null;
 
     public static enabled: boolean = false;
@@ -152,18 +154,12 @@ export class InternalExperience extends JavaObject implements Plugin, EventObser
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
-
-                super();
-
-
                 break;
             }
 
             case 9: {
                 const [MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC, MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE, INTERNAL_EXPERIENCE_PROBABILITY, INTERNAL_EXPERIENCE_RARE_PROBABILITY, INTERNAL_EXPERIENCE_DURABILITY_MUL, INTERNAL_EXPERIENCE_PRIORITY_MUL, ALLOW_WANT_BELIEF, OLD_BELIEVE_WANT_EVALUATE_WONDER_STRATEGY, FULL_REFLECTION] = args as [float, float, float, float, float, float, boolean, boolean, boolean];
 
-
-                super();
                 this.MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC = Float32Math.from(MINIMUM_PRIORITY_TO_CREATE_WANT_BELIEVE_ETC) as float;
                 this.MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE = Float32Math.from(MINIMUM_PRIORITY_TO_CREATE_WONDER_EVALUATE) as float;
                 this.INTERNAL_EXPERIENCE_PROBABILITY = Float32Math.from(INTERNAL_EXPERIENCE_PROBABILITY) as float;
