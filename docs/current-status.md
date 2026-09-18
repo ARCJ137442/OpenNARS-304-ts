@@ -1122,3 +1122,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 代码提交 `174508a`；本批 jree 审计：`sourceFiles=137`、直接导入文件 `88`、`javaObjectFiles=11`、`javaUtilFiles=39`、`javaLangFiles=85`、`javaStringFiles=52`、`semanticReviewItems=93`、`candidateNativeItems=2`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。覆盖率专项仍未实现，NAL 通过数不替代源码覆盖率。
 
 本批可以宣称：`Concept.AnticipationEntry` 的无行为 jree `JavaObject` 外壳已按 canonical Java 合同原生化，并通过直接回归、M2、构建/API、T1 要求的 TS-only M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。总体目标完成后才汇总覆盖率与 Java/TypeScript 一致性资料并发送给计划任务 `01a026ef-8f70-7670-95dd-2dd82746b5f8`。
+
+### 2026-09-19：`Stamp.BaseEntry` 证据条目值对象原生化
+
+本批承接 `b355f19`，对照 canonical Java `Stamp.BaseEntry` 确认它虽然声明 `Comparable<BaseEntry>, Serializable`，但实际可观察合同是两个 long 字段、访问器、按字段值的 `equals`、Java 31 倍 `hashCode`、先 `narId` 后 `inputId` 的自然排序和固定文本格式。jree `Comparable<T>` 额外继承 `IReflection/getClass()`，不属于该值对象的业务语义；本批移除运行时接口壳，不移除值语义。
+
+- `src/entity/Stamp.ts`：删除 `BaseEntry` 的 jree `JavaObject`/`Comparable`/`Serializable` 壳和空构造调用；保留字段、访问器、值相等、哈希、比较和文本行为。Java `Arrays.sort(set)` 改为原生数组排序并显式调用同一 `compareTo`，因此保留 Java 的排序顺序。
+- `test/node/stamp-evidence.test.ts`：增加原型链、`compareTo`、`toString` 和等值哈希一致性回归；原有 `Stamp` evidential-base、重复值和 `ProcessGoal` 路径继续覆盖。
+- M2：定向 `stamp-evidence.test.ts` 为 `3/3`；串行单元测试 `307` 项，`305` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `sourceFileCount=136`、dist API 通过。
+- `classify-change-gate --base b355f19 --head 58d6aad` 判定 `T1`，`live_java_required=false`；因 `Stamp.ts` 为高风险路径且包含语义 token 变化，仍执行 M1- 保护。
+- M1- 使用单线程、cold、逐文件串行、`--engine ts --java-baseline`、`--cycles 1550`、`--timeout-ms 180000`、`--process-limit-ms 1800000`、`--resource-metrics`、`--chunk-size 1`，排除长期稳定性 `#245`；主资源 `244/244` functional/parity，分层为 `single_step=215`、`multi_step=24`、`application=5`。`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`Java/TS diff=0`、`performance_warning=0`。`243` 行走 marker 等价路线；`nal6.redundant.nal` 无 marker，短运行观察 `1,650` 周期并标记 `not_reached`，但功能和 parity 通过。
+- M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\stamp-base-entry-m1-minus-20260918.jsonl`，SHA-256 `75656D12A053E384C20634D866D854CBA175C9F95AD84DCED74BC84A149363A6`；TS 总时长 `1,754,433 ms`，平均 `7,190.30 ms/文件`，最大单文件 `387,154 ms`，最大 RSS `902,828,032 bytes`，平均 RSS `267,809,506.62 bytes`，reasoning cycles `2,288,254`。
+- 继续复用三轮一致的冻结 Java baseline `g0-java-baseline-26772af-20260917`，其 SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，artifact SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`；本批 `java_artifact=null`，未重复启动 Java。
+- 本批提交：代码 `58d6aad`；报告与状态更新待最终检查后提交。jree 审计为 `sourceFiles=137`、直接导入文件 `88`、`JavaObject` 文件 `10`、`java.util` `39`、`java.lang` `85`、Java String `52`、`semanticReviewItems=93`、`candidateNativeItems=2`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。迁移扫描 `238` 个文件，malformed/constructor-delegation 均为 `0`；平台扫描 `180` 个文件，核心候选 `83`、混合边界 `5`、Node adapter 候选 `2`。
+
+本批可以宣称：`Stamp.BaseEntry` 的无行为 jree 壳已按 Java 值对象合同原生化，并通过直接回归、M2、构建/API、T1 要求的 TS-only M1- `244/244`；未观察到功能回退。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。总体目标完成后才汇总覆盖率与 Java/TypeScript 一致性资料并发送给计划任务 `01a026ef-8f70-7670-95dd-2dd82746b5f8`。
