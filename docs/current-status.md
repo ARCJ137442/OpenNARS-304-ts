@@ -1,6 +1,6 @@
 # OpenNARS-304-ts 当前状态
 
-- 状态日期：2026-09-18（Asia/Shanghai）
+- 状态日期：2026-09-19（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
@@ -1150,3 +1150,20 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计前→后：`javaObjectFiles=10→9`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、`javaString=52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2` 保持不变。
 
 本批可以宣称：EventHandler 的 jree JavaObject 壳已按 Java 继承合同收窄为项目 RuntimeObject，并通过 M2 和局部 parity。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。报告为 `reports/20260919-003336.md`；提交与推送待最终收尾。
+
+### 2026-09-19：`TruthFunctions.lookupTruthOrNull` varargs 边界原生化
+
+本批承接 `af88531`，对照 canonical Java `TruthFunctions.lookupTruthOrNull(TruthValue, TruthValue, Parameters, Object...)` 确认其 varargs 在实际实现中只按成对位置读取 boolean 条件和 `EnumType` 选择器：首个 true 立即计算并返回，全部 false 返回 null。原 TypeScript 用 `JavaObject` cast 包装布尔值，只是 jree 类型适配，并非业务对象身份。
+
+- `src/inference/TruthFunctions.ts`：将 `...values` 从 jree `java.lang.Object[]` 改为 `unknown[]`；保留 Java 的成对扫描、首个 true 优先、TruthFunction 选择和 nullable 返回。
+- `src/inference/CompositionalRules.ts`：删除 `JavaObject` 导入与 `asJavaObject` 辅助函数，8 个条件直接以原生 boolean 传入。
+- `test/node/compositional-rules.test.ts`：新增 raw boolean varargs、首个 true 选择及全 false 返回 null 回归。
+- `classify-change-gate --base af88531 --head 3ea4b75 --scope responsibility`：T1，`live_java_required=false`，`m1_minus_required=true`；原因是 inference 热路径和责任收口。
+- M2：定向 compositional rules `5/5`；串行单测 `309` 项，`307` 通过、`2` 跳过、`0` 失败；显式非增量 `tsc=0`；build `sourceFileCount=136`、build 检查、dist API 和 canonical Java 局部 parity 均通过。
+- M1-：TS-only、单线程、cold、逐文件串行、冻结 Java JSONL、`--cycles 1550`、`--timeout-ms 180000`、`--process-limit-ms 1800000`、`--resource-metrics`；结果 `244/244` functional pass，分层 `single_step=215`、`multi_step=24`、`application=5`。exception、marker missing、timeout、stall、process limit、Java/TS diff、performance warning 均为 `0`；243 行走 marker 路线。
+- 唯一 markerless `nal6.redundant.nal` 观察到 `1,650/131,072` 周期，状态为 `not_reached`；它的功能和 marker/parity 行为通过，但不能计作长周期等价。#245 `stability/long_term_stability.nal` 未纳入本批证据。
+- M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\truthfunctions-varargs-m1-minus-20260919.jsonl`，SHA-256 `E7A15B19445C8A2AB9E0381EE822E6E8FAACDA0E002908F3DCDE2353E0005249`；TS 总时长 `1,706,180 ms`，最长单文件 `352,009 ms`，最大 RSS `955,789,312 bytes`，reasoning cycles `2,288,254`。
+- canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`、JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`、冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954` 均未变化；本批未启动 Java。
+- jree 审计前→后：`javaObjectFiles=9→8`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、`javaString=52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2` 保持不变。
+
+本批可以宣称：`lookupTruthOrNull` 的 jree `JavaObject` 类型壳已移除，M2 和 244 个普通主资源的功能保护通过。仍不能宣称：`nal6.redundant.nal` 的 131072 周期长测完成、#245 长期稳定性完成、023/024 完成、生产核心完全去 jree、Java/TypeScript 性能等价或源码覆盖率目标完成。报告为 `reports/20260919-004703.md`；代码提交 `3ea4b75` 待与报告、状态更新一起推送。
