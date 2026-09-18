@@ -1028,3 +1028,19 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 实验已完全撤回；撤回后 `tsc=0`、build `135` 个源文件、dist API 和 EventHandler 定向 `6/6` 均通过。没有新增代码、测试或 jree 计数变化，也没有改变 Java 标杆和 M1/M2 证据。
 
 本批可以宣称：EventHandler 的前向审查发现并记录了真实的继承链约束，避免了一次会破坏事件 class token 和 Serializable 类型传播的表面去壳。仍不能宣称：EventHandler 已去 jree；023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。后续若处理该簇，必须先设计项目内 `class/getClass` 兼容边界，再单独回归 OutputHandler 和 Serializable 消费者。
+
+### 2026-09-18：事件类身份边界原生化
+
+本批承接 `0716ee2`，继续按照 023 的 Java 合同驱动小簇推进。对照 canonical Java 事件 API 确认，`Events` 的嵌套类和 `OutputHandler` 的通道类主要作为 `Class` token 使用：事件注册表以类身份作为 Map key，`InferenceEvent.getType()` 返回运行时类，输出通道通过类 token 分派。这个局部合同可以从 jree JavaObject 的通用兼容壳中拆出，但 `EventHandler` 外层仍保留 jree 继承，因为此前前向审查已确认其后代的 Serializable/`getClass()` 类型链尚未独立收敛。
+
+- `src/runtime/RuntimeClass.ts`：新增 `ClassTokenLike`、`RuntimeClassToken` 和 `RuntimeObject`。项目自有边界只承载稳定类 token、类名、身份相等、实例判断和受限构造；不声称提供 JavaObject 的 hashCode、monitor 或序列化行为。
+- `src/io/events/Events.ts`、`src/io/events/OutputHandler.ts`：事件标记类、推理事件类和输出通道类由 `JavaObject` 外壳改为 `RuntimeObject`；保留 Java 类身份和事件分派语义。
+- `EventEmitter`、`EventHandler`、`AnswerHandler`、`TextOutputHandler`、`Eventable` 及相关调用方：将事件 token 参数收敛为 `ClassTokenLike`，兼容尚未迁移的 jree Class 与新 token。
+- `test/node/event-emitter.test.ts`：增加原生事件 token 的稳定性、名称、相等性和 `InferenceEvent.getType()` 回归。
+- M2-TS：定向事件测试 `7/7`；串行单元测试 `303` 项，`301` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build、dist API、release package 均通过，release runtime warnings 为 `none`。
+- 两个 TS-only 冻结标杆 smoke（`nal4.7.nal`、`nal8.add.nal`）均 marker parity `1/1`；代码提交 `28d7513`。
+- `classify-change-gate --base 0716ee2 --head 28d7513` 判定 `T1`、`live_java_required=false`、`m1_minus_required=true`。随后完成冻结 Java JSONL 标杆下的 244 项单文件串行 M1-：`244/244` functional/parity，0 exception、0 timeout、0 stall、0 marker missing、0 process limit、0 not-run、0 performance warning；TS 运行时合计 `1631113 ms`，最大单文件 `339261 ms`，reasoning cycles 合计 `378200`。本次未启用 resource metrics，因此没有新增峰值 RSS 观测。
+- M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\m1-minus-runtime-class-20260918.jsonl`，SHA-256 `6B904837DF993F82540716BABD972D223B775DD11D01B168B4E54E137DC5EC46`；复用冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，Java artifact SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，`java_artifact=null`。
+- 提交后静态审计：jree 生产审计 `sourceFiles=137`、直接导入文件 `88`、JavaObject 文件 `16`（上一批 `18`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `237` 个文件；平台边界扫描 `180` 个文件，核心候选 `83`、混合边界 `5`。汉字编码检查为 `No encoding anomalies`，`git diff --check` 通过。
+
+本批可以宣称：事件类身份已形成项目自有、可单测的去 jree 边界，并通过 M2-TS、局部 TS-only smoke 和 T1 要求的 M1- `244/244`。仍不能宣称：完整 M1/#245 长周期重新完成、023/024 完成、生产核心 jree 清零、Java/TypeScript 性能等价或正式发布。M1- 结果本次未采集 RSS，性能数据只用于记录运行时，不替代后续性能专项。
