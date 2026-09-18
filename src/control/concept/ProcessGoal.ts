@@ -1,5 +1,5 @@
 //! Java source: opennars/control/concept/ProcessGoal.java
-import { java, JavaObject } from "jree";
+import { java } from "jree";
 import type { double, float, long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -61,8 +61,8 @@ const nativeJavaMap = <K, V>(source?: java.util.Map<K, V>): java.util.Map<K, V> 
  * @author Patrick Hammer
  */
 // Java source declares ProcessGoal as a static-only class without a
-// specialized parent.  ExecutablePrecondition below is a separate nested
-// runtime value and intentionally retains its JavaObject contract.
+// specialized parent.  ExecutablePrecondition is a private data holder with
+// no JavaObject/reflection contract.
 export class ProcessGoal {
     /**
      * To accept a new goal, and check for revisions and realization, then
@@ -272,7 +272,7 @@ export class ProcessGoal {
         }
     }
 
-    public static ExecutablePrecondition = class ExecutablePrecondition extends JavaObject {
+    public static ExecutablePrecondition = class ExecutablePrecondition {
         public bestOp: Operation | null = null;
         public bestOp_truthExp: float = 0.0;
         public bestOp_truth: TruthValue | null = null;

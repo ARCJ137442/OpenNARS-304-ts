@@ -472,6 +472,7 @@ test("ProcessGoal executable precondition preserves Java default metadata", asyn
 
     const metadata = new ProcessGoal.ExecutablePrecondition();
 
+    assert.equal(Object.getPrototypeOf(ProcessGoal.ExecutablePrecondition.prototype), Object.prototype);
     assert.equal(metadata.bestOp, null);
     assert.equal(metadata.bestOp_truth, null);
     assert.equal(metadata.executable_precondition, null);
