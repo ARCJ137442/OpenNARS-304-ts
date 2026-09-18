@@ -950,3 +950,19 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 生产 jree 审计：直接导入文件 `88`、`JavaObject` 文件 `22`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`。编码检查与 `git diff --check` 通过。
 
 本批可以宣称：`ItemPriorityComparator` 的无行为 JavaObject 外壳已按 canonical Java 合同原生化，并经直接回归、串行 M2、两个 TS-only smoke、静态审计和 T1 gate 保护；代码提交 `b358e4c`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。外层 `Item` 的 JavaObject、equals/hashCode、Serializable 和核心实体行为未在本批重写。
+
+### 2026-09-18：S0 A/B 证据复核与 `Operator.ExecutionResult` 普通载荷原生化
+
+本批首先按现行目标文件复核 S0，而不是把目标文件中遗留的待办文字当作当前事实。`f1cf976` 与 `f952a02` 的 M1- 外部结果均为 244 行，并且 `run_key` 完全一致：TS-only、单线程 cold、`cycles=1550`、`timeoutMs=180000`、`processLimitMs=1800000`、冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。A（Anticipate Map）两项高成本样本均完成 marker；B（Bag nameTable Map）两项均命中进程安全上限。原始 profile SHA-256 为 `4C864400155D54C1898A773ED2EC02FC8CE7E27107CE051A06329B38EA13946C`。随后 `1faf542` 的 NativeMap 哈希索引修复已恢复两项 marker 可观察性，S0 闭环已有既有报告和结果支撑，本批未重复运行长测。
+
+本批继续 023 的单一普通静态类切片。对照 canonical Java `Operator.java` 确认 `ExecutionResult` 是无显式父类的 `public static class`，没有 `.class`、`getClass()` 或 Serializable 消费面；TypeScript 只需保留其 class identity 和事件载荷行为。
+
+- `src/operator/Operator.ts`：删除嵌套 `ExecutionResult` 的 `JavaObject` 继承、空 `super()` 和不再适用的 `override`；外层 `Operator extends Term` 保持不变，并增加 Java 原始类型注释。
+- `test/metrics/AttentionMetric.ts`：将事件参数到 `Operator.ExecutionResult` 的转换改为显式 `unknown` 中转，固定普通载荷的类型边界。
+- `test/node/core-runtime.test.ts`：增加 `ExecutionResult.prototype` 直接继承 `Object.prototype` 的回归；定向 core-runtime `39/39`。
+- M2-TS：非增量 `tsc=0`；串行单测 `300` 项，`298` 通过、`2` 跳过、`0` 失败；build `sourceFileCount=135`；dist API 通过。
+- 两个 TS-only 受影响样本均与冻结 Java 标杆一致：`simpleOperationTest.nal` `1/1`、`51564` 周期、`23523 ms`，证据 SHA-256 `E5E88B627F8EB1124702A64556020C474B588889D81FF2B8B12F77894252706B`；`toothbrush2.nal` `1/1`、两个 marker、`201550` 周期、`126618 ms`、峰值 RSS `831414272`，证据 SHA-256 `4AD724D2431FB0F61A6916BFE94DBEF833B2CFDF208E3F622D63A040F3F18112`。两项均无 exception、timeout、stall、process limit 或 marker missing，且 `java_artifact=null`。
+- `classify-change-gate --base 41ce643 --head 8862203`：`T1`、`live_java_required=false`、`m1_minus_required=false`；原因是高风险 Operator 路径和语义 token 变化。本批未重复运行 Java 或 M1-。
+- 静态扫描：迁移扫描 `236` 个文件；jree 审计直接导入文件 `88`、`JavaObject` 文件 `21`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`；汉字编码检查和 `git diff --check` 通过。
+
+本批可以宣称：S0 的 A/B/profile 证据链已复核；`Operator.ExecutionResult` 的无行为 JavaObject 外壳已按 canonical Java 普通静态类合同原生化，并经直接回归、M2、操作样本和 T1 gate 保护；代码提交 `8862203`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。
