@@ -892,3 +892,17 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `24`（本批前 `25`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `235` 个文件。平台审计仍把感知模块和 jree 依赖作为静态边界项记录，本批未误宣称核心 jree 清零。
 
 本批可以宣称：`VisualSpace` 的无行为 JavaObject 外壳已按 canonical Java 普通类契约原生化，并经直接回归、串行 M2-TS、两个 TS-only smoke、静态审计和 T1 gate 保护；代码提交 `6fe4f6e` 已推送到 `origin/main`。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。VisualSpace 的图像算法、float 合同和 Nar/插件依赖仍未改变。
+
+### 2026-09-18：`Narsese` 隐式 JavaObject 壳原生化
+
+本批承接 `b8c0858`，继续 023 的单一普通类切片。对照 canonical Java `Narsese.java` 确认其声明为 `public class Narsese implements Serializable, Parser`，没有显式父类；TypeScript 原先的 `JavaObject` 只提供翻译外壳。项目内没有 `Narsese.class`、`instanceof Narsese` 或 `Narsese.getClass()` 的消费面，因此只移除外层壳和空 `super()`，保留解析器、Memory/Nar 双入口、Java 字符串、异常和所有解析算法。
+
+- `src/io/Narsese.ts`：删除 `JavaObject` 导入、继承和空 `super()`；不保留 jree 的 `java.io.Serializable` TypeScript marker，因为该接口在 jree 中额外要求 `getClass()` 反射方法，而 Java 的 `Serializable` 本身只是无行为标记。保留 `Parser` 契约，并用注释记录原 Java 类型。
+- `test/node/narsese-boundary.test.ts`：新增普通类原型链、`instanceof` 和构造器 Memory 委托回归，直接测试 `1/1`。
+- M2-TS：非增量 `tsc=0`；串行单测 `297` 项，`295` 通过、`2` 跳过、`0` 失败；build `sourceFileCount=135`、dist API 均通过。
+- 两个 TS-only 冻结标杆 smoke（`nal4.7.nal`、`nal8.add.nal`）均 `1/1`，无 exception、stall、process limit、marker missing 或 Java/TS diff；冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，`java_artifact=null`。
+- 以 `b8c0858` 为父基线运行 `classify-change-gate`：`T1`、`live_java_required=false`、`m1_minus_required=false`、生产源改动 `7` 行；本批未启动 Java 和 M1-。
+- 证据文件在项目外归档：`s1-narsese-nal4.7-20260918.jsonl` SHA-256 `9AE0829B7635A8C7D9A5F993662583119300C87178AD0529284FD768E982F6B1`；`s1-narsese-nal8-add-20260918.jsonl` SHA-256 `E1604EAB6CCC0B15D29B3D2FAF37D149DB82FC8599E7736F7EB6E678F72A63B8`。
+- jree 审计（HEAD `90fe4fe`）：直接导入文件 `88`、`JavaObject` 文件 `23`、`new LinkedHashMap=0`、`new LinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`。`Narsese` 仍保留 `java` 字符串/异常/运行时解析边界，本批不是 jree 退场。
+
+本批可以宣称：`Narsese` 的无行为 JavaObject 外壳已按 canonical Java 普通类契约原生化，并经直接回归、串行 M2-TS、两个 TS-only smoke、静态审计和 T1 gate 保护；代码提交 `90fe4fe`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 重新完成、Java/TypeScript 性能等价或正式发布。全部 `scripts/checking/*.py` 已顺序通过，汉字编码和 `git diff --check` 通过。
