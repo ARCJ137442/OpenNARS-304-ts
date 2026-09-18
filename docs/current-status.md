@@ -1214,3 +1214,17 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - M1- 命令参数为 `--all --limit 244 --cycles 1550 --timeout-ms 180000 --process-limit-ms 1800000 --ts-mode cold --resource-metrics --chunk-size 1`；结果 `244/244` functional pass、`244/244` parity，分层为 `single_step=215`、`multi_step=24`、`application=5`。`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`Java/TS diff=0`、`performance_warning=0`；243 行走 marker 等价路线，`nal6.redundant.nal` 无 marker，短运行状态为 `not_reached`，不构成长周期结论。
 - M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\item-m1-minus-20260919.jsonl`，SHA-256 `E179C5D5F840466DCE8856C352AE1DF7F65BC08890F353FCDD597BF4A92B6EEF`；TS 总时长 `1,651,339 ms`，最大单文件 `349,740 ms`，最大 RSS `1,086,853,120 bytes`，reasoning cycles `2,288,254`。
 - 本批最终可以宣称：`Item` 的无行为 jree 外层壳已按 Java 值对象合同收窄为项目 RuntimeObject，M2-TS、两项受影响 smoke 和 T1 要求的 M1- `244/244` 均通过，未观察到功能回退。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。
+
+### 2026-09-19：`Sentence` 运行时身份边界原生化
+
+本批承接 `9de82c0`，对照 canonical Java `Sentence.java` 做前向审查。Java 原始声明是 `public class Sentence implements Cloneable, Serializable`；`Sentence` 自身实现构造、变量规范化、投影、值相等、哈希和 clone。调用图未发现 `Sentence.class`、实例 `getClass()` 或序列化运行时消费，因此只移除转写器添加的 jree `JavaObject`/marker 类型壳，改用项目 `RuntimeObject` 承接类身份。
+
+- `src/entity/Sentence.ts`：删除 jree `JavaObject` import 和继承，改为 `RuntimeObject`；删除仅作类型 marker 的 `Cloneable`/`Serializable`；保留构造、规范化、投影、Java 字符/异常边界、`equals/hashCode/clone` 和领域状态。
+- `test/node/core-runtime.test.ts`：新增 `Sentence.class`、实例 `getClass()`、clone 值相等和哈希一致性回归。
+- M2-TS：定向 Sentence/core-runtime 等回归 `48/48`；统一串行单测 `312` 项，`310` 通过、`2` 按 TS-only 规则跳过、`0` 失败；显式非增量 `tsc=0`；build `sourceFileCount=136`、dist API 通过。
+- `classify-change-gate --base 9de82c0 --head 6e2ee4b` 判定 `T1`，`live_java_required=false`、`m1_minus_required=false`；本批按最低 T1 门运行两个受影响 NAL，没有扩大到 244 项 M1-。
+- TS-only smoke 使用冻结 Java baseline、单线程、cold、逐文件串行和 `--cycles 1550`：`application/toothbrush.nal` 与 `single_step/nal8.add.nal` 均 `functional/parity=1/1`；`exception=0`、`marker_missing=0`、`stall=0`、`process_limit=0`。证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\sentence-shell-smoke-20260919.jsonl`，SHA-256 `809121B6E61E50EB5805947E93FFAB39931A04643046BE1A371F3DB0445ADF4E`。
+- 继续复用冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`、JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，本批未启动 Java。
+- jree 审计前→后：`javaObjectFiles=5→4`；当前 summary 为 `sourceFiles=137`、直接导入文件 `88`、`java.util=39`、`java.lang=85`、Java String `52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2`。平台审计扫描 `180` 个文件，`coreCandidateFiles=83`、`mixedBoundaryFiles=5`、`nodeAdapterCandidateFiles=2`、`jreeImportFiles=95`、`browserShimFiles=2`。
+
+本批可以宣称：`Sentence` 的无行为 jree 外层壳已按 Java 类身份合同收窄为项目 `RuntimeObject`，M2-TS、直接回归和 T1 要求的两个 TS-only smoke 通过，未观察到功能回退。仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。代码提交为 `6e2ee4b`；报告为 `reports/20260919-034853.md`，状态收尾待最终检查后提交。
