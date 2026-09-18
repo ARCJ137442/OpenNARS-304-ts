@@ -1076,3 +1076,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 本批静态审计：jree `sourceFiles=137`、直接导入文件 `88`、`javaObjectFiles=13`、`javaUtilFiles=39`、`javaLangFiles=85`、`javaStringFiles=52`、`semanticReviewItems=93`；迁移模式扫描 `237` 个文件；平台扫描 `180` 个文件、核心候选 `83`、混合边界 `5`、Node 适配候选 `2`。编码检查无异常，`git diff --check` 待提交前复核。
 
 本批可以宣称：事件 payload 原生边界已通过 M2、非增量编译、构建/API、受影响 smoke 和 T1 要求的 TS-only M1- `244/244`；代码提交为 `5134dd6`。仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 在本批重跑、Java/TypeScript 全面等价、性能等价或代码覆盖率目标完成。覆盖率专项仍只登记为后续工作：应先建立全仓基线和缺口，再设计能命中缺口的 NAL/局部测试，并与 Java/TS 对照及矩阵回归联动。
+
+### 2026-09-18：`TaskLink.Recording` 普通记录数据壳原生化
+
+本批承接 `2aec759`，继续按 023 的 Java 合同推进单一嵌套类切片。对照 canonical Java `TaskLink.java` 确认 `Recording` 是 `public static final class Recording implements Serializable`，只保存 `TermLink` 与时间并提供读写方法；没有自定义 `equals/hashCode`、`.class`、`getClass()` 或身份 key 消费。Java `Serializable` 在此是 marker interface，当前 jree 的 TypeScript 类型却额外要求 `getClass()`；按照项目中 `Parameters`/`Narsese` 的既有边界处理，本批不为了满足 jree 类型壳重新引入 `JavaObject`。
+
+- `src/entity/TaskLink.ts`：删除 `Recording` 的 `JavaObject` 继承和空 `super()`；保留 `link`、时间读写与原 Java marker 来源说明。外层 `TaskLink extends Item`、任务链接的值相等与 novelty 逻辑未改动。
+- `test/node/tasklink-recording.test.ts`：新增原型链、link 身份、时间读取和修改回归；首次断言层级错误已在提交前修正。
+- M2：`npm run test:unit:serial` 为 `306` 项，`304` 通过、`0` 失败、`2` 跳过；`npm run typecheck` 使用显式 `--incremental false` 为 `0` 诊断；`npm run test:build` 与 `npm run test:api:dist` 通过，build `sourceFileCount=136`。
+- gate：`classify-change-gate --base 2aec759 --head f8a7b4d` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`，原因是 `TaskLink.ts` 热路径和语义 token 变化。
+- M1- 原始 TS-only 矩阵为 `243/244` functional/parity；唯一异常是 `single_step/nal2.15.nal` 的 TS 子进程退出码 `3221225477`（Windows `EXCEPTION_ACCESS_VIOLATION`），没有 Java/TS marker 分叉证据。原始证据位于项目外 `tasklink-recording-m1-minus-20260918.jsonl`，SHA-256 `897A94F39AC642529B73327CCBEE2957AB2F80E5613851B6EDDA97CCEB22D48D`；`244` 行中 `243` 通过、`1` 异常，TS 总时长 `1,803,463 ms`，最长单行 `374,140 ms`，最大 RSS `1,107,599,360 bytes`，reasoning cycles `2,288,254`。
+- 按本机环境异常处理规则，使用相同参数独立重跑 `nal2.15.nal`，结果 `1/1` functional/parity、无异常；重试证据 `tasklink-recording-nal2-15-retry-20260918.jsonl`，SHA-256 `5B76A6DE02FEE28F6E29F863FB96D7AA6C30C859C307998AAF83E1487F810898`，耗时 `1,856 ms`、`1,551` reasoning cycles。故本批经环境重试的 M1- 功能保护结论为 `244/244`，但不改写原始 `243/244` 记录。
+- 两份矩阵证据均复用三轮一致的冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，artifact SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，未重复启动 Java。
+- jree 审计（本批代码提交后）：生产直接导入文件 `88`，`JavaObject` 文件 `12`，`java.util` 文件 `39`，`newLinkedHashMap=0`，`newLinkedHashSet=1`。覆盖率专项仍未实现：当前约有 `137` 个生产 TS 源文件、`306` 个统一 TS-only 测试声明和 `16` 个历史 `test/core` 文件，但 package 尚无 `c8`/`nyc`/Istanbul 覆盖率依赖或脚本；NAL 通过数不作为源码覆盖率替代指标。
+
+本批可以宣称：`TaskLink.Recording` 的无行为 JavaObject 壳已按 canonical Java 合同原生化，并通过直接回归、M2、构建/API、T1 要求的 M1- 及单项环境异常重试。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。代码提交 `f8a7b4d`；报告与状态文档提交待本批最终检查后推送。
