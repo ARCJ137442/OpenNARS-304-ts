@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { classifyChangeGate, runtimeDependencyFingerprint } from "./change-gate-policy.mjs";
+import { classifyChangeGate, countProductionSourceLines, runtimeDependencyFingerprint } from "./change-gate-policy.mjs";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const options = { base: null, head: "HEAD", stage: "none", scope: "slice" };
@@ -23,13 +23,10 @@ const range = `${options.base}..${options.head}`;
 const files = git("diff", "--name-only", "--diff-filter=ACMRD", range, "--")
   .split(/\r?\n/).filter(Boolean);
 const numstat = git("diff", "--numstat", range, "--");
-const changedLines = numstat.split(/\r?\n/).filter(Boolean).reduce((total, line) => {
-  const [added, deleted] = line.split("\t", 2);
-  return total + (Number(added) || 0) + (Number(deleted) || 0);
-}, 0);
+const sourceChangedLines = countProductionSourceLines(numstat);
 const patch = git("diff", "--unified=0", "--no-ext-diff", range, "--");
 const runtimeDependencies = (revision) => runtimeDependencyFingerprint(JSON.parse(git("show", `${revision}:package.json`)));
 const runtimeDependenciesChanged = files.includes("package.json")
   && runtimeDependencies(options.base) !== runtimeDependencies(options.head);
-const result = classifyChangeGate({ files, changedLines, patch, stage: options.stage, scope: options.scope, runtimeDependenciesChanged });
+const result = classifyChangeGate({ files, sourceChangedLines, patch, stage: options.stage, scope: options.scope, runtimeDependenciesChanged });
 process.stdout.write(`${JSON.stringify({ base: git("rev-parse", options.base).trim(), head: git("rev-parse", options.head).trim(), files, ...result }, null, 2)}\n`);

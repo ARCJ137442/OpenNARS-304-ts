@@ -819,3 +819,11 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计去注释 summary：直接导入文件 `88`（未变，因 `java` 事件/字符串/输出合同仍在）、`JavaObject` 文件 `29`（本批前 `30`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `230` 个文件，平台审计扫描 `179` 个文件。
 
 本批可以宣称：`ComplexEmotions` 的无行为 JavaObject 外壳已原生化，并经直接回归、M2、代表性 smoke 和额外 M1- 保护。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。该插件不在默认注册表，代表性 NAL 不等于插件业务行为的直接覆盖；下一候选为 `Counting` 的同类普通 Plugin 外壳。只有收口已枚举责任类或大模块时才使用 `--scope responsibility`。
+
+### 2026-09-18：change gate 生产 TypeScript 行数口径纠正
+
+修正 `scripts/checking/classify-change-gate.mjs` 与 `change-gate-policy.mjs` 的 `>80` 行门：现在只统计 `src/` 下生产 `.ts`、`.tsx`、`.mts`、`.cts` 文件，排除测试/规格文件、`test`/`tests`/`__tests__` 目录、报告、文档、脚本和其他非 TypeScript 文件。
+
+- `d8b2f39` 原先把 `7` 行生产 TS、`11` 行测试和 `84` 行报告合计成 `102`，修正后为 `source_changed_lines=7`，默认 slice 不触发 M1-。
+- ConfigReader 历史批次原先为 `120`（`10` 行生产 TS 加测试、报告和文档），修正后生产源行数为 `10`，默认 slice 同样不因行数触发 M1-。
+- `--scope responsibility` 仍独立触发 M1-；ComplexEmotions 已额外完成的 TS-only M1- `244/244` 是保护证据，不是修正后默认 slice 的强制要求。

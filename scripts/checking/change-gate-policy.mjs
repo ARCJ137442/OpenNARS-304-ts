@@ -19,6 +19,22 @@ const BASELINE_PATHS = [
 const SEMANTIC_TOKENS = /\b(?:equals|hashCode|compareTo|iterator|Map|Set|Random|seed|TermLink|TaskLink|RuleTables|dispatch|instanceof|float|JavaObject|await|async)\b|Math\.fround/;
 const STAGES = new Set(["none", "023", "024", "integration", "rc"]);
 const SCOPES = new Set(["slice", "responsibility"]);
+export function isProductionSourceFile(file) {
+  const normalized = file.replaceAll("\\", "/");
+  if (!normalized.startsWith("src/")) return false;
+  const segments = normalized.split("/");
+  const basename = segments.at(-1) ?? "";
+  if (segments.slice(1, -1).some((segment) => ["test", "tests", "__tests__"].includes(segment))) return false;
+  if (/\.(?:test|spec)\./.test(basename)) return false;
+  return /\.(?:ts|tsx|mts|cts)$/.test(basename);
+}
+
+export function countProductionSourceLines(numstat) {
+  return numstat.split(/\r?\n/).filter(Boolean).reduce((total, line) => {
+    const [added, deleted, file] = line.split("\t", 3);
+    return total + (file && isProductionSourceFile(file) ? (Number(added) || 0) + (Number(deleted) || 0) : 0);
+  }, 0);
+}
 
 export function runtimeDependencyFingerprint(manifest) {
   return JSON.stringify(Object.fromEntries(
@@ -29,11 +45,11 @@ export function runtimeDependencyFingerprint(manifest) {
   ));
 }
 
-export function classifyChangeGate({ files = [], changedLines = 0, patch = "", stage = "none", scope = "slice", runtimeDependenciesChanged = false } = {}) {
+export function classifyChangeGate({ files = [], sourceChangedLines = 0, patch = "", stage = "none", scope = "slice", runtimeDependenciesChanged = false } = {}) {
   if (!STAGES.has(stage)) throw new Error(`unknown stage: ${stage}`);
   if (!SCOPES.has(scope)) throw new Error(`unknown scope: ${scope}`);
   const normalized = [...new Set(files.map((file) => file.replaceAll("\\", "/")))];
-  const sourceFiles = normalized.filter((file) => file.startsWith("src/"));
+  const sourceFiles = normalized.filter(isProductionSourceFile);
   const reasons = [];
   let tier = 0;
   const require = (minimum, reason) => {
@@ -51,7 +67,7 @@ export function classifyChangeGate({ files = [], changedLines = 0, patch = "", s
     require(2, "runtime-dependency-change:package.json");
   }
   if (sourceFiles.length >= 3) require(1, `source-file-count:${sourceFiles.length}`);
-  if (changedLines > 80 && sourceFiles.length > 0) require(1, `source-line-count:${changedLines}`);
+  if (sourceChangedLines > 80 && sourceFiles.length > 0) require(1, `source-line-count:${sourceChangedLines}`);
   if (sourceFiles.length > 0 && SEMANTIC_TOKENS.test(patch)) require(1, "semantic-token-change");
   if (reasons.length === 0) reasons.push(sourceFiles.length === 0 ? "non-production-change" : "bounded-low-risk-source-change");
 
@@ -60,7 +76,7 @@ export function classifyChangeGate({ files = [], changedLines = 0, patch = "", s
     if (M1_MINUS_HOT_PATHS.some((pattern) => pattern.test(file))) m1MinusReasons.push(`hot-path:${file}`);
   }
   if (sourceFiles.length >= 3) m1MinusReasons.push(`source-file-count:${sourceFiles.length}`);
-  if (changedLines > 80 && sourceFiles.length > 0) m1MinusReasons.push(`source-line-count:${changedLines}`);
+  if (sourceChangedLines > 80 && sourceFiles.length > 0) m1MinusReasons.push(`source-line-count:${sourceChangedLines}`);
   if (scope === "responsibility") m1MinusReasons.push("completed-responsibility");
 
   return {
@@ -69,7 +85,7 @@ export function classifyChangeGate({ files = [], changedLines = 0, patch = "", s
     m1_minus_required: tier === 1 && m1MinusReasons.length > 0,
     m1_minus_reasons: m1MinusReasons,
     source_files: sourceFiles.length,
-    changed_lines: changedLines,
+    source_changed_lines: sourceChangedLines,
     reasons,
     note: "This is a minimum gate. Observed regressions or an invalid frozen baseline always escalate; the tool never certifies semantic equivalence.",
   };

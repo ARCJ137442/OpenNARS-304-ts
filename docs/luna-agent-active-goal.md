@@ -18,15 +18,15 @@
 
     node scripts/checking/classify-change-gate.mjs --base <上次验收提交> --head HEAD
 
-完成一类 jree 责任或大模块时追加 `--scope responsibility`；阶段验收追加 `--stage 023|024|integration|rc`。JSON 中的 `tier` 是最低门，`m1_minus_required` 指示该 T1 批次是否必须跑整份 M1-，不是等价证书；脚本漏报或实测异常只能升级。不能凭 Agent 主观判断降级；例外需可复核证据及用户批准。
+完成一类 jree 责任或大模块时追加 `--scope responsibility`；这里的“完成一类责任”是收口一个已枚举的 jree 责任类或一个大模块，不是单个普通类/单文件切片。阶段验收追加 `--stage 023|024|integration|rc`。JSON 中的 `tier` 是最低门，`m1_minus_required` 指示该 T1 批次是否必须跑整份 M1-，不是等价证书；脚本漏报或实测异常只能升级。不能凭 Agent 主观判断降级；例外需可复核证据及用户批准。
 
 | 门 | 量化触发 | 必做验证 |
 | --- | --- | --- |
-| T0 日常切片 | 未命中 T1/T2；生产源文件 ≤2 个且总改动 ≤80 行 | 生产改动：直接正常/异常合同、`npm test`（TS-only）、非增量 typecheck、build、dist API、静态审计和受影响 NAL；没有对应 NAL 时记录调用链。纯文档/测试工具改动只做适用的静态检查和工具回归，不需无关 NAL |
-| T1 风险簇 | `src/control|inference|storage|language|entity|operator|plugin|main|runtime|platform|io` 任一路径，即使只改一行；diff 命中集合判等、迭代、随机、float、派发等语义词；生产源文件 ≥3 或总改动 >80 行；完成一类 jree 责任；或 T0 出现退化 | T0 全部＋至少 2 个受影响 NAL 和 1 个已通过样本的定向探针；`m1_minus_required=true` 才加跑 TS-only M1- 244 项。高成本探针已红时，先诊断，不启动整份 M1- |
+| T0 日常切片 | 未命中 T1/T2；生产源文件 ≤2 个且生产 TypeScript 源总改动 ≤80 行 | 生产改动：直接正常/异常合同、`npm test`（TS-only）、非增量 typecheck、build、dist API、静态审计和受影响 NAL；没有对应 NAL 时记录调用链。纯文档/测试工具改动只做适用的静态检查和工具回归，不需无关 NAL |
+| T1 风险簇 | `src/control|inference|storage|language|entity|operator|plugin|main|runtime|platform|io` 任一路径，即使只改一行；diff 命中集合判等、迭代、随机、float、派发等语义词；生产源文件 ≥3 或生产 TypeScript 源总改动 >80 行；完成一类 jree 责任；或 T0 出现退化 | T0 全部＋至少 2 个受影响 NAL 和 1 个已通过样本的定向探针；`m1_minus_required=true` 才加跑 TS-only M1- 244 项。高成本探针已红时，先诊断，不启动整份 M1- |
 | T2 阶段门 | Java/fixture/配置/runner/运行依赖基线变化；023/024 整体验收、J/P 集成、RC；或冻结标杆失效 | 现跑单线程 canonical Java；完整 245+1 M1、两个无 marker 样本严格长周期观察、完整含 Java 的 M2、Node/真实浏览器及依赖扫描 |
 
-路径与行数规则的可执行版本是 `scripts/checking/change-gate-policy.mjs`，并有自动化测试。`m1_minus_required` 在存储/调度/推理热路径、关键链接/变量/原生容器、≥3 个生产文件、>80 改动行或 `--scope responsibility` 时为真；一般平台/IO 小切片先做定向验证，不机械启动 244 项。即使脚本未命中，变更实质位于 Bag、TaskLink、TermLink、RuleTables、随机数或类身份热路径时也必须升级 T1 和 M1-，并在报告指出调用链。`M1-` 是不含 #245 的 244 个普通主资源保护矩阵；`simpleOperationTest.nal` 按影响另做定向测试。无 marker 样本的短运行不能代替 131072 周期严格摘要。
+路径与行数规则的可执行版本是 `scripts/checking/change-gate-policy.mjs`，并有自动化测试。`>80` 门只统计 `src/**/*.ts`、`.tsx`、`.mts`、`.cts` 的生产源文件行数；测试/规格文件、`test`/`tests`/`__tests__` 目录、报告、文档、脚本和其他非 TypeScript 文件均不计入。`m1_minus_required` 在存储/调度/推理热路径、关键链接/变量/原生容器、≥3 个生产文件、生产源改动 >80 行或 `--scope responsibility` 时为真；一般平台/IO 小切片先做定向验证，不机械启动 244 项。即使脚本未命中，变更实质位于 Bag、TaskLink、TermLink、RuleTables、随机数或类身份热路径时也必须升级 T1 和 M1-，并在报告指出调用链。`M1-` 是不含 #245 的 244 个普通主资源保护矩阵；`simpleOperationTest.nal` 按影响另做定向测试。无 marker 样本的短运行不能代替 131072 周期严格摘要。
 
 ## 测试入口与零 Java 纪律
 
