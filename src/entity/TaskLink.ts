@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/TaskLink.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, long, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { Task } from "./Task.ts";
@@ -39,13 +39,15 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * Remember the TermLinks, and when they has been used recently with this
      * TaskLink
      */
-    public static readonly Recording = class Recording extends JavaObject implements java.io.Serializable {
+    // Java原类型：public static final class Recording implements Serializable。
+    // Serializable 在 Java 中只是 marker；原转写的 JavaObject 只提供隐式 Object 外壳，
+    // Recording 不消费 class/getClass、equals 或 hashCode，因此不保留 jree 类型壳。
+    public static readonly Recording = class Recording {
 
         public readonly link: TermLink;
         protected time: long;
 
         public constructor(link: TermLink, time: long) {
-            super();
             this.link = link;
             this.time = time;
         }
