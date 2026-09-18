@@ -2,6 +2,7 @@ import { java, JavaObject } from "jree";
 import { Nar } from "../../src/main/Nar.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";
+import type { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { OutputContainsCondition } from "../util/test/OutputContainsCondition.ts";
 import { assertTrue } from "../util/junit-assert.ts";
 
@@ -37,7 +38,7 @@ export class VariableTest extends JavaObject {
          * query variable
          */
         new class extends EventHandler {
-            public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+            public event(event: java.lang.Class<unknown>, args: EventEmitter.EventPayload): void {
                 // nothing should arrive via Solved.class channel
                 assertTrue(false);
             }
@@ -66,7 +67,7 @@ export class VariableTest extends JavaObject {
 
         let solutionFound: java.util.concurrent.atomic.AtomicBoolean = new java.util.concurrent.atomic.AtomicBoolean(false);
         new class extends EventHandler {
-            public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+            public event(event: java.lang.Class<unknown>, args: EventEmitter.EventPayload): void {
                 solutionFound.set(true);
                 outer.n.stop();
             }

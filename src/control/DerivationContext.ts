@@ -25,9 +25,6 @@ import type { JavaChar } from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import { NativeList } from "../runtime/NativeList.ts";
 
-const asJavaObject = (value: unknown): java.lang.Object => value as unknown as java.lang.Object;
-
-
 /**
  * NAL Reasoner Process. Includes all reasoning process state.
  *
@@ -174,7 +171,7 @@ export class DerivationContext {
                         task.getBudget().getPriority() * priorityLeak,
                     ) as float);
                 }
-                this.memory.event.emit(Events.TaskDerive.class, task, asJavaObject(revised), asJavaObject(single));
+                this.memory.event.emit(Events.TaskDerive.class, task, revised, single);
                 // memory.logic.TASK_DERIVED.commit(task.budget.getPriority());
 
                 if (addToMemory) {

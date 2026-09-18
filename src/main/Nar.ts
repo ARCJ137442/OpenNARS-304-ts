@@ -58,7 +58,6 @@ export interface NarOptions {
     readonly capabilities?: RuntimeCapabilities;
 }
 
-const asJavaObject = (value: unknown): java.lang.Object => value as unknown as java.lang.Object;
 
 const isNumeric = (value: unknown): boolean => /^[-+]?\d+(?:\.\d+)?$/.test(String(value).trim());
 const CyclesStart = Events.CyclesStart;
@@ -205,7 +204,7 @@ export class Nar extends SensoryChannel implements Reasoner {
 
                 this.plugin.setEnabled($outer, enabled);
                 this.enabled = enabled;
-                    $outer.emit(Events.PluginsChange.class, asJavaObject(this.plugin), asJavaObject(enabled));
+                    $outer.emit(Events.PluginsChange.class, this.plugin, enabled);
             }
 
             public isEnabled(): boolean {
@@ -454,7 +453,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                 // Ignore any input that is just a comment
                 if (inputText.startsWith("\'") || inputText.startsWith("//") || inputText.length <= 0) {
                     if (inputText.length > 0) {
-                        this.emit(OutputHandler.ECHO.class, asJavaObject(inputText));
+                        this.emit(OutputHandler.ECHO.class, inputText);
                     }
                     return;
                 }
@@ -701,7 +700,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         }
         let ps: Nar.PluginState = new this.PluginState(p);
         this.plugins.push(ps);
-        this.emit(Events.PluginsChange.class, asJavaObject(p), asJavaObject(null));
+        this.emit(Events.PluginsChange.class, p, null);
     }
 
     public removePlugin(ps: Nar.PluginState): void {
@@ -720,7 +719,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             }
             // TODO sensory channels can be plugins
             ps.setEnabled(false);
-            this.emit(Events.PluginsChange.class, asJavaObject(null), asJavaObject(p));
+        this.emit(Events.PluginsChange.class, null, p);
         }
     }
 
@@ -822,7 +821,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         }
     }
 
-    public emit(c: ClassTokenLike, ...o: java.lang.Object[]): void {
+    public emit(c: ClassTokenLike, ...o: EventEmitter.EventPayload): void {
         this.memory.event.emit(c, ...o);
     }
 

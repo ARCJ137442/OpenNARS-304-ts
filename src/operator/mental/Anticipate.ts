@@ -211,7 +211,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         this.newTasks.clear();
     }
 
-    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
         if (event === Events.InduceSucceedingEvent.class || event === Events.TaskDerive.class) {
             let newEvent: Task = args[0] as Task;
             let nal: DerivationContext = args[1] as unknown as DerivationContext;

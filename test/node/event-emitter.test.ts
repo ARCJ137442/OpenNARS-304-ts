@@ -86,6 +86,26 @@ test("EventEmitter.synch applies pending operations in FIFO order", () => {
     assert.equal(pendingOps.length, 0);
 });
 
+test("EventEmitter preserves native event payload order", () => {
+    const emitter = new EventEmitter();
+    const received: EventEmitter.EventPayload[] = [];
+    const observer: EventEmitter.EventObserver = {
+        event(_event, args) {
+            received.push(args);
+        },
+    };
+    const payload: EventEmitter.EventPayload = [true, "native", { id: 3 }, [1, 2]];
+
+    emitter.on(Events.CycleEnd.class, observer);
+    emitter.emit(Events.CycleEnd.class, ...payload);
+
+    assert.deepEqual(received, [payload]);
+    assert.equal(received[0][0], true);
+    assert.equal(received[0][1], "native");
+    assert.deepEqual(received[0][2], { id: 3 });
+    assert.deepEqual(received[0][3], [1, 2]);
+});
+
 test("EventHandler accepts Java-style event varargs", () => {
     const emitter = new EventEmitter();
     const received: unknown[] = [];

@@ -1,5 +1,5 @@
 //! Java source: opennars/control/concept/ProcessQuestion.java
-import { java, JavaObject } from "jree";
+import { java } from "jree";
 import { Symbols } from "../../io/Symbols.ts";
 import { Events } from "../../io/events/Events.ts";
 import { CompoundTerm } from "../../language/CompoundTerm.ts";
@@ -13,7 +13,6 @@ import type { Term } from "../../language/Term.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 
 const trySolution = LocalRules.trySolution;
-const asJavaObject = (value: unknown): JavaObject => value as JavaObject;
 // Java source uses Guava Optional only as a private search result.  The
 // TypeScript boundary is internal, so null represents Java Optional.empty().
 const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): T | null => {
@@ -32,8 +31,8 @@ const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): T | n
  * @author Patrick Hammer
  */
 // Java source declares ProcessQuestion without an explicit parent; this class
-// is a static utility namespace.  JavaObject remains only for the event-payload
-// cast above, not as a runtime superclass.
+// is a static utility namespace. Event payloads are native unknown values;
+// no JavaObject cast is required.
 export class ProcessQuestion {
     /**
      * To answer a question by existing beliefs
@@ -85,7 +84,7 @@ export class ProcessQuestion {
             // case
             // of
             // input
-            concept.memory.emit(Events.Answer.class, quesTask, asJavaObject(quesTask.getBestSolution()));
+            concept.memory.emit(Events.Answer.class, quesTask, quesTask.getBestSolution());
         }
     }
 
@@ -123,7 +122,7 @@ export class ProcessQuestion {
                 }
             }
             if (newAnswer && ques.isInput()) {
-                nal.memory.emit(Events.Answer.class, ques, asJavaObject(ques.getBestSolution()));
+                nal.memory.emit(Events.Answer.class, ques, ques.getBestSolution());
             }
         }
     }
@@ -167,7 +166,7 @@ export class ProcessQuestion {
                         /* } */
                     }
                     if (newAnswer && ques.isInput()) {
-                        nal.memory.emit(Events.Answer.class, ques, asJavaObject(ques.getBestSolution()));
+                        nal.memory.emit(Events.Answer.class, ques, ques.getBestSolution());
                     }
                 }
             }

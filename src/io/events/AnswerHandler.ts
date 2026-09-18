@@ -38,7 +38,7 @@ export abstract class AnswerHandler implements EventObserver {
         this.nar.event(this, false, ...AnswerHandler.events);
     }
 
-    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
 
         if (event === Answer.class) {
             let task: Task = args[0] as unknown as Task;

@@ -17,5 +17,5 @@ export interface Eventable {
 
     event(e: EventEmitter.EventObserver, enabled: boolean, ...events: ClassTokenLike[]): void;
 
-    emit(c: ClassTokenLike, ...o: java.lang.Object[]): void;
+    emit(c: ClassTokenLike, ...o: EventEmitter.EventPayload): void;
 }

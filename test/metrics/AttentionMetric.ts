@@ -20,6 +20,7 @@ import { TruthFunctions } from "../../src/inference/TruthFunctions.ts";
 import { Operator } from "../../src/operator/Operator.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { AnswerHandler as JavaAnswerHandler } from "../../src/io/events/AnswerHandler.ts";
+import type { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
 import {
@@ -239,7 +240,7 @@ export class AttentionMetric extends JavaObject {
             this.execOrQaAnswersByTime = execOrQaAnswersByTime;
         }
 
-        public event(event: ClassTokenLike, args: java.lang.Object[]): void {
+        public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
             let exeResult: Operator.ExecutionResult = args[0] as unknown as Operator.ExecutionResult;
             let task: Task | null = exeResult.getTask();
             if (task === null) {

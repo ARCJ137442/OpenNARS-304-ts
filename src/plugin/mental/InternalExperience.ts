@@ -238,7 +238,7 @@ export class InternalExperience implements Plugin, EventObserver {
         return operation;
     }
 
-    public event(event: ClassTokenLike, a: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, a: EventEmitter.EventPayload): void {
 
         if (event === Events.ConceptDirectProcessedTask.class) {
             const memory = this.memory;

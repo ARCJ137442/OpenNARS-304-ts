@@ -1,6 +1,7 @@
 import { java, type int } from "jree";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
+import type { EventEmitter } from "../../../src/io/events/EventEmitter.ts";
 import type { ClassTokenLike } from "../../../src/runtime/RuntimeClass.ts";
 
 const OUT = OutputHandler.OUT;
@@ -38,12 +39,12 @@ export abstract class OutputCondition extends OutputHandler {
         return false;
     }
 
-    public event(channel: ClassTokenLike, args: java.lang.Object[]): void {
+    public event(channel: ClassTokenLike, args: EventEmitter.EventPayload): void {
         if ((this.succeeded) && (!this.isInverse())) {
             return;
         }
         if ((channel === OUT.class) || (channel === EXE.class)) {
-            let signal: java.lang.Object = args[0];
+            let signal: java.lang.Object = args[0] as java.lang.Object;
             if (this.condition(channel, signal)) {
                 this.setTrue();
             }

@@ -158,7 +158,7 @@ export class EventEmitter {
         }
     }
 
-    public emit(eventClass: ClassTokenLike, ...params: java.lang.Object[]): void {
+    public emit(eventClass: ClassTokenLike, ...params: EventEmitter.EventPayload): void {
         const observers = this.events.get(eventClass);
 
         if (observers === undefined || observers.length === 0)
@@ -174,8 +174,11 @@ export class EventEmitter {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace EventEmitter {
+    /** Java原始类型：Object... 事件载荷；载荷只按顺序传递，不承担JavaObject身份。 */
+    export type EventPayload = unknown[];
+
     export interface EventObserver {
-        event(event: ClassTokenLike, args: java.lang.Object[]): void;
+        event(event: ClassTokenLike, args: EventPayload): void;
     }
 
 }

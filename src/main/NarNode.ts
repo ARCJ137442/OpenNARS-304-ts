@@ -34,9 +34,6 @@ type JavaIoCompat = {
 
 const javaNetCompat = java.net as unknown as JavaNetCompat;
 const javaIoCompat = java.io as unknown as JavaIoCompat;
-const asJavaObject = (value: unknown): java.lang.Object => value as unknown as java.lang.Object;
-
-
 
 /**
  * @author Patrick Hammer
@@ -98,7 +95,7 @@ export class NarNode extends JavaObject implements EventObserver {
                         let ret: java.lang.Object = THIS.receiveObject();
                         if (ret !== null) {
                             if (ret instanceof Task) {
-                                nar.memory.event.emit(THIS.EventReceivedTask.class, asJavaObject([ret]));
+                                nar.memory.event.emit(THIS.EventReceivedTask.class, [ret]);
                                 nar.addInput(ret as Task, nar);
                             } else if (ret instanceof java.lang.String) { // emits IN.class anyway
                                 nar.addInput(ret as java.lang.String);
@@ -124,7 +121,7 @@ export class NarNode extends JavaObject implements EventObserver {
      * @param event
      * @param args
      */
-    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
         if (event === Events.TaskAdd.class) {
             let t: Task = args[0] as Task;
             try {

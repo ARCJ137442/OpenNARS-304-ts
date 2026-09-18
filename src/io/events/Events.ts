@@ -14,27 +14,27 @@ import type { EventEmitter } from "./EventEmitter.ts";
 type EventObserver = EventEmitter.EventObserver;
 
 abstract class ConceptBeliefAdd extends RuntimeObject implements EventObserver {
-    public abstract onBeliefAdd(c: Concept, t: Task, extra: java.lang.Object[]): void;
+    public abstract onBeliefAdd(c: Concept, t: Task, extra: EventEmitter.EventPayload): void;
 
-    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
         this.onBeliefAdd(args[0] as unknown as Concept, args[1] as unknown as Task,
-            args[2] as unknown as java.lang.Object[]);
+            args[2] as unknown as EventEmitter.EventPayload);
     }
 }
 
 abstract class ConceptBeliefRemove extends RuntimeObject implements EventObserver {
-    public abstract onBeliefRemove(c: Concept, removed: Sentence, t: Task, extra: java.lang.Object[]): void;
+    public abstract onBeliefRemove(c: Concept, removed: Sentence, t: Task, extra: EventEmitter.EventPayload): void;
 
-    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
         this.onBeliefRemove(args[0] as unknown as Concept, args[1] as unknown as Sentence,
-            args[2] as unknown as Task, args[3] as unknown as java.lang.Object[]);
+            args[2] as unknown as Task, args[3] as unknown as EventEmitter.EventPayload);
     }
 }
 
 abstract class ConceptFire extends RuntimeObject implements EventObserver {
     public abstract onFire(n: GeneralInferenceControl): void;
 
-    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
         this.onFire(args[0] as unknown as GeneralInferenceControl);
     }
 }
@@ -42,7 +42,7 @@ abstract class ConceptFire extends RuntimeObject implements EventObserver {
 abstract class TaskImmediateProcess extends RuntimeObject implements EventObserver {
     public abstract onProcessed(t: Task, n: DerivationContext): void;
 
-    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
         this.onProcessed(args[0] as unknown as Task, args[1] as unknown as DerivationContext);
     }
 }
@@ -50,7 +50,7 @@ abstract class TaskImmediateProcess extends RuntimeObject implements EventObserv
 abstract class TaskAdd extends RuntimeObject implements EventObserver {
     public abstract onTaskAdd(t: Task, reason: java.lang.String): void;
 
-    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
         this.onTaskAdd(args[0] as unknown as Task, args[1] as unknown as java.lang.String);
     }
 }

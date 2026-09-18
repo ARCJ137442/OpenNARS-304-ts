@@ -115,7 +115,7 @@ export class Abbreviation implements Plugin {
 
         if (this.obs === null) {
             this.obs = {
-                event: (event: ClassTokenLike, a: java.lang.Object[]): void => {
+                event: (event: ClassTokenLike, a: EventEmitter.EventPayload): void => {
                 if (event !== TaskDerive.class)
                     return;
 

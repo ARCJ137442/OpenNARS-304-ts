@@ -3,6 +3,7 @@ import { java, S } from "jree";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { OutputHandler } from "./OutputHandler.ts";
+import type { EventEmitter } from "./EventEmitter.ts";
 import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
@@ -129,7 +130,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
      * Process the next chunk of output data
      *
      */
-    public event(channel: ClassTokenLike, oo: java.lang.Object[]): void {
+    public event(channel: ClassTokenLike, oo: EventEmitter.EventPayload): void {
         if (!this.showErrors && (channel === ERR.class))
             return;
 
@@ -137,7 +138,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
             return;
 
         if ((this.outExp !== null) || (this.outExp2 !== null)) {
-            let o: java.lang.Object = oo[0];
+            let o: java.lang.Object = oo[0] as unknown as java.lang.Object;
             let s: java.lang.String | null = this.process(channel, o);
             if (s !== null) {
                 const line = new java.lang.StringBuilder().append(this.prefix).append(s).toString();

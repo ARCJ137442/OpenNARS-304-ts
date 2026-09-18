@@ -41,7 +41,6 @@ const DEBUG = OutputHandler.DEBUG;
 const ResetStart = Events.ResetStart;
 const ResetEnd = Events.ResetEnd;
 const TaskRemove = Events.TaskRemove;
-const asJavaObject = (value: unknown): JavaObject => value as JavaObject;
 
 
 
@@ -347,16 +346,16 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
         if (budget >= noiseLevel) { // only report significant derived Tasks
             this.emit(OUT.class, t);
             if (Debug.PARENTS) {
-                this.emit(DEBUG.class, asJavaObject("Parent Belief\t" + t.parentBelief));
-                this.emit(DEBUG.class, asJavaObject("Parent Task\t" + t.parentTask + "\n\n"));
+                this.emit(DEBUG.class, "Parent Belief\t" + t.parentBelief);
+                this.emit(DEBUG.class, "Parent Task\t" + t.parentTask + "\n\n");
             }
         }
     }
 
     // Java Object... accepts native TypeScript payloads as well; convert only
     // at the legacy EventEmitter boundary.
-    public emit(c: ClassTokenLike, ...signal: unknown[]): void {
-        this.event.emit(c, ...(signal as unknown as java.lang.Object[]));
+    public emit(c: ClassTokenLike, ...signal: EventEmitter.EventPayload): void {
+        this.event.emit(c, ...signal);
     }
 
     public emitting(channel: ClassTokenLike): boolean {

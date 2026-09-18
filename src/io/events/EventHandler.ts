@@ -42,5 +42,5 @@ export abstract class EventHandler extends JavaObject implements EventEmitter.Ev
         return this.active;
     }
 
-    public abstract event(event: ClassTokenLike, args: java.lang.Object[]): void;
+    public abstract event(event: ClassTokenLike, args: EventEmitter.EventPayload): void;
 }

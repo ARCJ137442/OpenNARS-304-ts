@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/LocalRules.java
-import { java, JavaObject } from "jree";
+import { java } from "jree";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Concept } from "../entity/Concept.ts";
@@ -34,7 +34,6 @@ const matchingOrder = TemporalRules.matchingOrder;
 const reverseOrder = TemporalRules.reverseOrder;
 const Answer = Events.Answer;
 const Unsolved = Events.Unsolved;
-const asJavaObject = (value: unknown): JavaObject => value as JavaObject;
 
 
 
@@ -240,12 +239,12 @@ export class LocalRules {
             let newQ: float = LocalRules.solutionQuality(rateByConfidence, task, belief, memory, nal.time);
             let oldQ: float = LocalRules.solutionQuality(rateByConfidence, task, oldBest, memory, nal.time);
             let isBetterSolution: boolean = newQ > oldQ;
-            memory.emit(Events.TrySolution.class, asJavaObject(isBetterSolution), task, belief);
+            memory.emit(Events.TrySolution.class, isBetterSolution, task, belief);
             if (!isBetterSolution) {
                 if (problem.isGoal() && memory.emotion !== null) {
                     memory.emotion.adjustSatisfaction(oldQ, task.getPriority(), nal);
                 }
-                memory.emit(Unsolved.class, task, belief, asJavaObject("Lower quality"));
+                memory.emit(Unsolved.class, task, belief, "Lower quality");
                 return false;
             }
         }
@@ -270,7 +269,7 @@ export class LocalRules {
             nal.addTask(nal.getCurrentTask(), budget, belief, task.getParentBelief());
             return true;
         } else {
-            memory.emit(Unsolved.class, task, belief, asJavaObject("Insufficient budget"));
+            memory.emit(Unsolved.class, task, belief, "Insufficient budget");
         }
         return false;
     }
