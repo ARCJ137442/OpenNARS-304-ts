@@ -191,13 +191,14 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
         return this.hash;
     }
 
-    public equals(obj: java.lang.Object): boolean {
+    public equals(obj: unknown): boolean {
         if (obj === this)
             return true;
-        if (this.hashCode() !== obj.hashCode())
-            return false;
 
         if (obj instanceof TermLink) {
+            if (this.hashCode() !== obj.hashCode())
+                return false;
+
             let t: TermLink = obj as TermLink;
 
             if (this.type !== t.type)

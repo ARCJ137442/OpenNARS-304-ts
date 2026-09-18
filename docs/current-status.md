@@ -1197,3 +1197,17 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计前→后：`javaObjectFiles=7→6`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、`javaString=52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2` 保持不变。直接导入数未下降，是因为 Stamp 仍需 jree 的异常、字符串和 Java 时间边界能力。
 
 本批可以宣称：`Stamp` 的无行为 jree `JavaObject`/marker 壳已按 canonical Java 合同收窄为项目 `RuntimeObject`，并通过直接回归、M2、构建/API、局部 parity 和 T1 要求的 TS-only M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、`nal6.redundant.nal` 的 131072 周期等价、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。代码提交为 `842d4e4`；报告为 `reports/20260919-024737.md`。
+
+### 2026-09-19：`Item` 值对象基类运行时壳原生化
+
+本批承接 `7aa07eb`，对照 canonical Java `Item.java` 做前向审查。Java 原始声明是 `abstract class Item<K> implements Serializable`；`Item` 自身已经实现预算访问、文本表示、按名称的 `equals/hashCode` 和合并行为，当前调用图没有发现 `Item.getClass()`、`Item.class` 或序列化运行时消费。因此只移除转写器添加的 jree `JavaObject`/Serializable 类型壳，改用项目 `RuntimeObject` 承接可观察的类身份。
+
+- `src/entity/Item.ts`：删除 jree `JavaObject` 继承和仅作 marker 的 `java.io.Serializable`，改为 `RuntimeObject`；保留 budget、`toString*`、名称值相等、哈希和优先级比较。
+- `src/entity/Concept.ts`、`Task.ts`、`TaskLink.ts`、`TermLink.ts`：将同一 Item 值相等边界的参数从 jree `java.lang.Object` 收窄为 `unknown`，由 `instanceof` 保持 Java 类型判断；`TermLink` 的哈希快速路径只在同类对象收窄后执行。没有改动 Bag 调度算法或领域 Map/Set。
+- `test/node/core-runtime.test.ts`：新增 Item 原型链落在 `RuntimeObject`、派生类 token、值相等和等值哈希回归；既有 Item 文本、Bag、TaskLink 回归继续通过。
+- M2-TS：局部 core-runtime/Item/Bag/TaskLink 测试 `54/54`；统一串行单测 `312` 项，`310` 通过、`2` 按 TS-only 规则跳过、`0` 失败；显式非增量 `tsc=0`；build `sourceFileCount=136`、dist API 通过。
+- 两个 TS-only 受影响 smoke（`toothbrush.nal`、`nal8.add.nal`）均 functional/parity `1/1`，无 exception、marker missing、stall 或 process limit；证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\s2-item-shell-smoke-20260919.jsonl`，SHA-256 `F02D236B7175B6801256BE77CD5A933D8DC75AF59B79C8B7CFCFFE079E8788F8`。
+- 继续复用冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`、JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，本批未启动 Java。
+- jree 审计前→后：`javaObjectFiles=6→5`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、Java String `52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2`。迁移扫描 `238` 个文件，malformed/constructor-delegation 为 `0`；平台扫描 `180` 个文件，核心候选 `83`、混合边界 `5`、Node adapter 候选 `2`。
+
+本批当前可以宣称：`Item` 的无行为 jree 外层壳已按 Java 值对象合同收窄为项目 RuntimeObject，M2-TS 和两项受影响 smoke 通过。M1- 是否为本批必做由提交后的 gate 分类器决定；在该门明确前不能宣称本批拥有全量 M1- 保护。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。

@@ -3,6 +3,7 @@ import test from "node:test";
 import type { Interval as IntervalType } from "../../src/language/Interval.ts";
 import type { Product as ProductType } from "../../src/language/Product.ts";
 import type { Variable as VariableType } from "../../src/language/Variable.ts";
+import type { Item as ItemType } from "../../src/entity/Item.ts";
 
 test("translated term and sentence constructors preserve Java delegation contracts", async () => {
     // Load the sentence root first so its existing language-module cycle is initialized once.
@@ -1026,6 +1027,34 @@ test("ItemPriorityComparator keeps the Java plain comparator boundary", async ()
     const { Item } = await import("../../src/entity/Item.ts");
 
     assert.equal(Object.getPrototypeOf(Item.ItemPriorityComparator.prototype), Object.prototype);
+});
+
+test("Item keeps its value contract while using the project runtime class boundary", async () => {
+    const { Item } = await import("../../src/entity/Item.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { Parameters } = await import("../../src/main/Parameters.ts");
+
+    class ProbeItem extends Item<string> {
+        public constructor(private readonly key: string) {
+            super(new BudgetValue(0.1, 0.2, 0.3, new Parameters()));
+        }
+
+        public name(): string {
+            return this.key;
+        }
+
+        public merge(): ItemType<unknown> {
+            return this;
+        }
+    }
+
+    const first = new ProbeItem("same");
+    const second = new ProbeItem("same");
+    assert.equal(Object.getPrototypeOf(Item.prototype).constructor.name, "RuntimeObject");
+    assert.equal(first.getClass().getSimpleName(), "ProbeItem");
+    assert.equal(first.getClass().isInstance(first), true);
+    assert.equal(first.equals(second), true);
+    assert.equal(first.hashCode(), second.hashCode());
 });
 
 test("Operator.ExecutionResult keeps the Java plain event-payload boundary", async () => {

@@ -1,9 +1,10 @@
 //! Java source: opennars/entity/Item.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
 import { javaStringHashCode, javaStringValue, javaValuesEqual } from "../runtime/jree-compat.ts";
+import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 
 interface ItemComparator<E> {
     compare(a: E, b: E): int;
@@ -27,7 +28,10 @@ const javaObjectHashCode = (value: unknown): int => {
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export abstract  class Item<K> extends JavaObject implements java.io.Serializable {
+// Java original type: abstract Item<K> implements Serializable; it has its own
+// value equality, hashCode and text methods. RuntimeObject replaces only the
+// translated JavaObject class-identity shell; Serializable has no runtime use.
+export abstract  class Item<K> extends RuntimeObject {
 
     // Java original type: static class ItemPriorityComparator implements Comparator;
     // it has no JavaObject/reflection contract of its own.
@@ -237,7 +241,7 @@ export abstract  class Item<K> extends JavaObject implements java.io.Serializabl
         return javaObjectHashCode(this.name());
     }
 
-    public equals(obj: java.lang.Object):  boolean {
+    public equals(obj: unknown):  boolean {
         if (obj === this)
             return true;
         if (obj instanceof Item) {
@@ -278,7 +282,7 @@ abstract class StringKeyItem extends Item<java.lang.CharSequence> {
         return javaObjectHashCode(this.name());
     }
 
-    public equals(obj: java.lang.Object): boolean {
+    public equals(obj: unknown): boolean {
         if (obj === this)
             return true;
         if (obj instanceof Item) {

@@ -145,7 +145,7 @@ export class Concept extends Item<Term> {
 
     }
 
-    public equals(obj: java.lang.Object): boolean {
+    public equals(obj: unknown): boolean {
         if (this === obj)
             return true;
         if (!(obj instanceof Concept))

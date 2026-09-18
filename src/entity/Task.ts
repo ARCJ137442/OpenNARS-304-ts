@@ -111,7 +111,7 @@ export class Task extends Item<Sentence> {
         return this.sentence;
     }
 
-    public equals(obj: java.lang.Object): boolean {
+    public equals(obj: unknown): boolean {
         if (obj === this)
             return true;
         if (obj instanceof Task) {

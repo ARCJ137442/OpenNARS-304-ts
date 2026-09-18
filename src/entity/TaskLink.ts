@@ -105,7 +105,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
         return this.targetTask;
     }
 
-    public equals(obj: java.lang.Object): boolean {
+    public equals(obj: unknown): boolean {
         if (obj === this)
             return true;
         if (obj instanceof TaskLink) {
