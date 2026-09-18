@@ -921,3 +921,19 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：`Events` 外层无行为 JavaObject/abstract 兼容壳已按 canonical Java 普通类合同原生化，并经直接回归、串行 M2-TS、两个 TS-only smoke、静态审计和 T1 gate 保护；代码提交 `4e09b5b`。
 
 仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 重新完成、Java/TypeScript 性能等价或正式发布。嵌套事件类的反射合同和事件行为全量覆盖仍未改变。
+
+### 2026-09-18：`ProcessGoal.ExecutablePrecondition` 私有数据壳原生化
+
+本批承接 `00349ab`，继续 023 的 Java 合同驱动小簇。对照 canonical Java `ProcessGoal.java` 确认外层 `ProcessGoal` 是静态工具类，私有 `ExecutablePrecondition` 是普通数据 holder；两者均无显式父类，且没有 `getClass()`、`.class` 或其他反射消费面。先审查的 `EventHandler` 候选因下游仍消费继承的 `getClass()`、静态 `OutputHandler.class` 和 `Serializable` 类型契约而暂缓，未把它误删。
+
+- `src/control/concept/ProcessGoal.ts`：删除仅服务于私有 `ExecutablePrecondition` 的 `JavaObject` 导入和继承；保留 `java` Map/异常、float/long 边界、任务派发和静态推理算法。
+- `test/node/core-runtime.test.ts`：在已有默认元数据测试中增加 `ExecutablePrecondition.prototype` 直接继承 `Object.prototype` 的回归。
+- 定向 `core-runtime`：`37/37`；非增量 `tsc=0`；串行单测 `298` 项，`296` 通过、`2` 跳过、`0` 失败；build 源文件 `135` 个；dist API 通过。
+- 两个 TS-only 冻结标杆 smoke（`nal4.7.nal`、`nal8.add.nal`）均 `1/1`，无 exception/stall/process limit/marker missing。结果 SHA-256 为 `9C8245DA3CE3932388D0638666A99180F77DDF093C11286171FFE2169DC47D76` 与 `D06CBDFC847E9ABFEECDE7BF4E3245D1737E98F6006BA82C1878DACFBBCFF0C7`。
+- 以 `00349ab` 为父基线的 `classify-change-gate` 判定 `T1`、`live_java_required=false`、`m1_minus_required=true`，原因是 `hot-path:src/control/concept/ProcessGoal.ts`。随后完成 TS-only M1- 244 项串行矩阵：`244/244` functional/parity，0 exception、0 timeout、0 marker missing、0 stall、0 process limit、0 not-run、0 performance warning；总耗时 `1794242 ms`，最大单文件 `388643 ms`，最大 RSS `1049436160 bytes`，reasoning cycles 合计 `2288254`。
+- M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\s1-process-goal-m1-minus-20260918.jsonl`，SHA-256 `984382E657EEABD0478F0BFC7D561FF2C97DCD97111BFF1416C73561A127AFC5`；复用冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，`java_artifact=null`。
+- jree 审计（生产 `src`）：直接导入文件 `88`、`JavaObject` 文件 `22`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `236` 个文件。M1- 中 1 个 markerless 短运行项未达到 131072 周期，但没有功能失败或 marker 缺失，不替代既有严格长周期证据。
+
+本批可以宣称：`ProcessGoal.ExecutablePrecondition` 的无行为 JavaObject 壳已原生化，并通过直接回归、完整串行 M2、两个 TS-only smoke、T1 要求的 M1- 244/244 和静态审计保护；代码提交 `875abba`。
+
+仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期在本批完成、Java/TypeScript 性能等价或正式发布。`EventHandler` 的 JavaObject 继承仍是有证据的反射/类型边界，需独立设计后再处理。
