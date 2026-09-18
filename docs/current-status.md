@@ -1044,3 +1044,19 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 提交后静态审计：jree 生产审计 `sourceFiles=137`、直接导入文件 `88`、JavaObject 文件 `16`（上一批 `18`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `237` 个文件；平台边界扫描 `180` 个文件，核心候选 `83`、混合边界 `5`。汉字编码检查为 `No encoding anomalies`，`git diff --check` 通过。
 
 本批可以宣称：事件类身份已形成项目自有、可单测的去 jree 边界，并通过 M2-TS、局部 TS-only smoke 和 T1 要求的 M1- `244/244`。仍不能宣称：完整 M1/#245 长周期重新完成、023/024 完成、生产核心 jree 清零、Java/TypeScript 性能等价或正式发布。M1- 结果本次未采集 RSS，性能数据只用于记录运行时，不替代后续性能专项。
+
+### 2026-09-18：`SensoryChannel` 普通 Plugin 基类原生化
+
+本批承接 `04402c2`，继续按 Java 合同审查一个普通插件基类。canonical Java `SensoryChannel.java` 是抽象 `Plugin` 基类，没有 `Serializable`、自定义 `equals/hashCode`、显式父类行为或实例级 `.class` 消费；`SensoryChannel.class.getName()` 只服务于日志。因而它的通用 `JavaObject` 外壳可以由项目内运行时类身份合同承接。
+
+- `src/plugin/perception/SensoryChannel.ts`：Java 原始类型 `abstract class SensoryChannel implements Plugin` → TypeScript `extends RuntimeObject implements Plugin`；保留 Plugin 方法、感知算法、日志和公开 API。
+- `src/main/Nar.ts`：删除冗余的 jree `java.lang.Runnable` 显式实现；`Nar` 仍通过 `Reasoner.run()` 满足 `ThreadCompat` 的 `{ run(): void }` 合同。这个收窄是必要的，因为 jree `Runnable` 携带的 `getClass(): jree Class` 会与 `RuntimeObject` 的项目内类 token 冲突。
+- `test/node/nar-sensory-channel-map.test.ts`：新增原型链落在 `RuntimeObject`、派生通道保持自身类 token 的回归。
+- M2-TS：定向测试 `2/2`；串行单元测试 `304` 项，`302` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build 的 136 个源文件、dist API 均通过。
+- `classify-change-gate --base 04402c2 --head eab9a56` 判定 T1，`live_java_required=false`、`m1_minus_required=true`；未重新启动 Java，使用三轮一致的冻结功能标杆。
+- M1-：TS-only、单线程、cold、逐文件串行，主资源 `single_step=215`、`multi_step=24`、`application=5`，共 `244/244` functional/parity；exception、marker missing、stall、process limit、not-run、Java/TS diff 和 performance warning 均为 `0`。TS 总时长 `1,875,218 ms`，最长单文件 `432,665 ms`，最大 RSS `959,041,536 bytes`，reasoning cycles `2,288,254`。
+- M1- 首次运行在 24/244 后因外部进程会话终止而停止，没有形成失败结论；同一 JSONL 使用 `--resume` 从第 25 项恢复，最终摘要退出码为 `0`，没有重复已完成行。证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\sensory-channel-m1-minus-20260918.jsonl`，SHA-256 为 `D4070A8BD596F2929E0E146AA968FD32B28BD5B718BF0FDDCC69AFA55731A0EF`。
+- 仍复用冻结 Java 标杆 `g0-java-baseline-frozen-26772af-20260917`，SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；其 Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，canonical artifact SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 静态审计：迁移扫描 `237` 个文件；jree 审计 `sourceFiles=137`、直接导入文件 `88`、`JavaObject` 文件 `15`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台边界仍由既有审计维护。覆盖率专项尚未实现，NAL 数量也未被当作源码覆盖率替代指标。
+
+本批可以宣称：`SensoryChannel` 的无行为 `JavaObject` 外壳已按 canonical Java 普通基类合同原生化，并经直接身份回归、串行 M2-TS、构建、dist API、静态审计和冻结标杆 M1- `244/244` 保护。仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期在本批重跑、Java/TypeScript 性能等价或代码覆盖率目标完成。代码提交为 `eab9a56`；报告与状态更新待本批检查后另行提交。
