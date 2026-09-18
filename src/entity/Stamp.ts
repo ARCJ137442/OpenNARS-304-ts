@@ -329,7 +329,10 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         // 3. count duplicates
         // 4. create new array
 
-        java.util.Arrays.sort(set);
+        // Java source uses Arrays.sort(set) with BaseEntry's natural ordering.
+        // The ordering contract is kept explicitly while the value class no
+        // longer inherits jree's reflection-bearing Comparable interface.
+        set.sort((a, b) => a.compareTo(b));
         let lastValue: Stamp.BaseEntry | null = null;
         let j: int = 0; // # of unique items
         for (let v of set) {
@@ -543,7 +546,9 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
     /**
      * Element of the evidential base of stamp
      */
-    public static BaseEntry = class BaseEntry extends JavaObject implements java.lang.Comparable<BaseEntry>, java.io.Serializable {
+    // Java source: public static class BaseEntry implements Comparable<BaseEntry>, Serializable.
+    // Keep value equality, Java hashCode and ordering; Serializable is marker-only here.
+    public static BaseEntry = class BaseEntry {
         public readonly narId: long; // the NAR in which the input evidence was added
 
         public getNarId(): long {
@@ -563,16 +568,15 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
          * @param inputId The nar-specific input id of the input
          */
         public constructor(narId: JavaLongInput, inputId: JavaLongInput) {
-            super();
             this.narId = toRuntimeLong(narId);
             this.inputId = toRuntimeLong(inputId);
         }
 
-        public override  toString(): java.lang.String {
-            return S`(${this.narId},${this.inputId})`;
+        public toString(): string {
+            return `(${this.narId},${this.inputId})`;
         }
 
-        public override  equals(other: java.lang.Object): boolean {
+        public equals(other: unknown): boolean {
             if (other === this) {
                 return true;
             }
@@ -583,7 +587,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
             return other_.inputId === this.inputId && other_.narId === this.narId;
         }
 
-        public override  hashCode(): int {
+        public hashCode(): int {
             let prime: int = 31;
             let result: int = 1;
             result = prime * result + hashLong(this.narId);

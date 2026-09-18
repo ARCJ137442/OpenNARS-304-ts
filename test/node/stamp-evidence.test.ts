@@ -21,8 +21,12 @@ test("Stamp.evidenceIsCyclic detects equal BaseEntry values in one evidential ba
     const stamp = makeStamp(3, 5);
     stamp.evidentialBase = [first, equalValue];
 
+    assert.equal(Object.getPrototypeOf(Object.getPrototypeOf(first)), Object.prototype);
     assert.equal(first === equalValue, false);
     assert.equal(first.equals(equalValue), true);
+    assert.equal(first.compareTo(equalValue), 0);
+    assert.equal(first.toString(), "(3,5)");
+    assert.equal(first.hashCode(), equalValue.hashCode());
     assert.equal(stamp.evidenceIsCyclic(), true);
 });
 
