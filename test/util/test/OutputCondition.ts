@@ -1,6 +1,7 @@
 import { java, type int } from "jree";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
+import type { ClassTokenLike } from "../../../src/runtime/RuntimeClass.ts";
 
 const OUT = OutputHandler.OUT;
 const EXE = OutputHandler.EXE;
@@ -37,7 +38,7 @@ export abstract class OutputCondition extends OutputHandler {
         return false;
     }
 
-    public event(channel: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+    public event(channel: ClassTokenLike, args: java.lang.Object[]): void {
         if ((this.succeeded) && (!this.isInverse())) {
             return;
         }
@@ -61,7 +62,7 @@ export abstract class OutputCondition extends OutputHandler {
     }
 
     /** returns true if condition was satisfied */
-    public abstract condition(channel: java.lang.Class<unknown>, signal: java.lang.Object): boolean;
+    public abstract condition(channel: ClassTokenLike, signal: java.lang.Object): boolean;
 
     public static registerOutputContainsFactory(factory: OutputContainsFactory): void {
         OutputCondition.outputContainsFactory = factory;

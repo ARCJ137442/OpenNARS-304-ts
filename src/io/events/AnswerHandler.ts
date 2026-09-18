@@ -1,5 +1,6 @@
 //! Java source: opennars/io/events/AnswerHandler.java
 import { java } from "jree";
+import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import { Events } from "./Events.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
 import type { Task } from "../../entity/Task.ts";
@@ -22,7 +23,7 @@ export abstract class AnswerHandler implements EventObserver {
     private question!: Task;
     private nar!: Nar;
 
-    protected static readonly events: java.lang.Class<unknown>[] = [
+    protected static readonly events: ClassTokenLike[] = [
         Answer.class
     ];
 
@@ -37,7 +38,7 @@ export abstract class AnswerHandler implements EventObserver {
         this.nar.event(this, false, ...AnswerHandler.events);
     }
 
-    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
 
         if (event === Answer.class) {
             let task: Task = args[0] as unknown as Task;

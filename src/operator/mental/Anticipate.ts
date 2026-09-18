@@ -1,5 +1,6 @@
 //! Java source: opennars/operator/mental/Anticipate.java
 import { java, S } from "jree";
+import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float, long, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -210,7 +211,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         this.newTasks.clear();
     }
 
-    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
         if (event === Events.InduceSucceedingEvent.class || event === Events.TaskDerive.class) {
             let newEvent: Task = args[0] as Task;
             let nal: DerivationContext = args[1] as unknown as DerivationContext;

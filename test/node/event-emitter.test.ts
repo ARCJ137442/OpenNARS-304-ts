@@ -4,6 +4,7 @@ import { java } from "jree";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";
+import type { ClassTokenLike } from "../../src/runtime/RuntimeClass.ts";
 
 test("EventEmitter.set subscribes only to the requested event classes", () => {
     const emitter = new EventEmitter();
@@ -33,6 +34,15 @@ test("Events keeps the Java plain namespace-holder boundary", () => {
     assert.equal(Events.CycleEnd.class.getSimpleName(), "CycleEnd");
 });
 
+test("native event classes keep stable runtime identity tokens", () => {
+    assert.equal(Events.CycleEnd.class, Events.CycleEnd.class);
+    assert.notEqual(Events.CycleEnd.class, Events.CycleStart.class);
+    assert.equal(Events.CycleEnd.class.getName(), "CycleEnd");
+    assert.equal(Events.CycleEnd.class.getSimpleName(), "CycleEnd");
+    assert.equal(Events.CycleEnd.class.equals(Events.CycleEnd.class), true);
+    assert.equal(Events.CycleEnd.class.equals(Events.CycleStart.class), false);
+});
+
 test("EventEmitter uses native map and observer arrays while preserving identity removal", () => {
     const emitter = new EventEmitter();
     const observer: EventEmitter.EventObserver = { event() {} };
@@ -40,7 +50,7 @@ test("EventEmitter uses native map and observer arrays while preserving identity
     emitter.on(Events.CycleEnd.class, observer);
 
     const events = (emitter as unknown as {
-        events: Map<java.lang.Class<unknown>, EventEmitter.EventObserver[]>;
+        events: Map<ClassTokenLike, EventEmitter.EventObserver[]>;
     }).events;
     const observers = events.get(Events.CycleEnd.class);
     assert.ok(observers);
@@ -61,7 +71,7 @@ test("EventEmitter.synch applies pending operations in FIFO order", () => {
         },
     };
     const pendingOps = (emitter as unknown as {
-        pendingOps: Array<[boolean, java.lang.Class<unknown>, EventEmitter.EventObserver]>;
+        pendingOps: Array<[boolean, ClassTokenLike, EventEmitter.EventObserver]>;
     }).pendingOps;
 
     pendingOps.push([true, Events.CycleEnd.class, observer]);
@@ -80,7 +90,7 @@ test("EventHandler accepts Java-style event varargs", () => {
     const emitter = new EventEmitter();
     const received: unknown[] = [];
     class Handler extends EventHandler {
-        public event(event: java.lang.Class<unknown>): void {
+        public event(event: ClassTokenLike): void {
             received.push(event);
         }
     }
@@ -100,5 +110,6 @@ test("Events.ConceptNew preserves the Java InferenceEvent constructor contract",
     assert.equal(event.when, 3n);
     assert.equal(event.stack, null);
     assert.equal(event.getType(), event.getClass());
+    assert.equal(event.getType(), Events.ConceptNew.class);
     assert.equal(String(event.toString()), "Concept Created: fake-concept");
 });

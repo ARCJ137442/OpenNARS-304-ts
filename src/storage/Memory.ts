@@ -1,5 +1,6 @@
 //! Java source: opennars/storage/Memory.java
 import { java, JavaObject, S } from "jree";
+import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, float, int, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import { Parameters } from "../main/Parameters.ts";
@@ -354,11 +355,11 @@ export class Memory extends JavaObject implements java.io.Serializable, Iterable
 
     // Java Object... accepts native TypeScript payloads as well; convert only
     // at the legacy EventEmitter boundary.
-    public emit(c: java.lang.Class<unknown>, ...signal: unknown[]): void {
+    public emit(c: ClassTokenLike, ...signal: unknown[]): void {
         this.event.emit(c, ...(signal as unknown as java.lang.Object[]));
     }
 
-    public emitting(channel: java.lang.Class<unknown>): boolean {
+    public emitting(channel: ClassTokenLike): boolean {
         return this.event.isActive(channel);
     }
 

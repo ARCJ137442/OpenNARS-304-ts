@@ -1,22 +1,24 @@
 //! Java source: opennars/io/events/OutputHandler.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
+import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import { EventHandler } from "./EventHandler.ts";
 import { Events } from "./Events.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
-const InputChannel = class IN extends JavaObject {
+const InputChannel = class IN extends RuntimeObject {
 };
-const OutputChannel = class OUT extends JavaObject {
+const OutputChannel = class OUT extends RuntimeObject {
 };
-const ErrorChannel = class ERR extends JavaObject {
+const ErrorChannel = class ERR extends RuntimeObject {
 };
-const EchoChannel = class ECHO extends JavaObject {
+const EchoChannel = class ECHO extends RuntimeObject {
 };
-const DebugChannel = class DEBUG extends JavaObject {
+const DebugChannel = class DEBUG extends RuntimeObject {
 };
-const ExecuteChannel = class EXE extends JavaObject {
+const ExecuteChannel = class EXE extends RuntimeObject {
 };
 
 
@@ -35,19 +37,19 @@ export abstract class OutputHandler extends EventHandler {
     public static readonly DEBUG = DebugChannel;
     public static readonly EXE = ExecuteChannel;
 
-    public static ANTICIPATE = class ANTICIPATE extends JavaObject {
+    public static ANTICIPATE = class ANTICIPATE extends RuntimeObject {
     };
 
 
-    public static CONFIRM = class CONFIRM extends JavaObject {
+    public static CONFIRM = class CONFIRM extends RuntimeObject {
     };
 
 
-    public static DISAPPOINT = class DISAPPOINT extends JavaObject {
+    public static DISAPPOINT = class DISAPPOINT extends RuntimeObject {
     };
 
 
-    public static readonly DefaultOutputEvents: java.lang.Class<unknown>[] = [InputChannel.class, ExecuteChannel.class, OutputChannel.class, ErrorChannel.class,
+    public static readonly DefaultOutputEvents: ClassTokenLike[] = [InputChannel.class, ExecuteChannel.class, OutputChannel.class, ErrorChannel.class,
     EchoChannel.class, Events.Answer.class, OutputHandler.ANTICIPATE.class, OutputHandler.CONFIRM.class, OutputHandler.DISAPPOINT.class, DebugChannel.class];
 
     public constructor(n: Nar);

@@ -1,6 +1,7 @@
 //! Java source: opennars/interfaces/Eventable.java
 import { java } from "jree";
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
+import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 
 
 
@@ -10,11 +11,11 @@ import type { EventEmitter } from "../io/events/EventEmitter.ts";
  * @author Robert Wünsche
  */
 export interface Eventable {
-    on(c: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void;
+    on(c: ClassTokenLike, o: EventEmitter.EventObserver): void;
 
-    off(c: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void;
+    off(c: ClassTokenLike, o: EventEmitter.EventObserver): void;
 
-    event(e: EventEmitter.EventObserver, enabled: boolean, ...events: java.lang.Class<unknown>[]): void;
+    event(e: EventEmitter.EventObserver, enabled: boolean, ...events: ClassTokenLike[]): void;
 
-    emit(c: java.lang.Class<unknown>, ...o: java.lang.Object[]): void;
+    emit(c: ClassTokenLike, ...o: java.lang.Object[]): void;
 }

@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/mental/ComplexEmotions.java
 import { java } from "jree";
+import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { LocalRules } from "../../inference/LocalRules.ts";
@@ -35,7 +36,7 @@ export class ComplexEmotions implements Plugin {
 
             if (this.obs === null) {
                 this.obs = {
-                    event: (event: java.lang.Class<unknown>, a: java.lang.Object[]): void => {
+                    event: (event: ClassTokenLike, a: java.lang.Object[]): void => {
                     if (event !== Events.TaskDerive.class &&
                         event !== Events.InduceSucceedingEvent.class)
                         return;

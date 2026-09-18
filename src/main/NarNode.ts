@@ -1,5 +1,6 @@
 //! Java source: opennars/main/NarNode.java
 import { java, JavaObject, closeResources, handleResourceError, throwResourceError, S } from "jree";
+import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import { Nar } from "./Nar.ts";
@@ -123,7 +124,7 @@ export class NarNode extends JavaObject implements EventObserver {
      * @param event
      * @param args
      */
-    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
         if (event === Events.TaskAdd.class) {
             let t: Task = args[0] as Task;
             try {

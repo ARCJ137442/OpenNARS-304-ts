@@ -1,5 +1,6 @@
 //! Java source: opennars/control/DerivationContext.java
 import { java, S } from "jree";
+import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { double, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Stamp } from "../entity/Stamp.ts";
 import { BudgetValue } from "../entity/BudgetValue.ts";
@@ -59,7 +60,7 @@ export class DerivationContext {
 
     // Java Object... accepts any event payload, including native TypeScript
     // classes that no longer extend jree JavaObject.
-    public emit(c: java.lang.Class<unknown>, ...o: unknown[]): void {
+    public emit(c: ClassTokenLike, ...o: unknown[]): void {
         this.memory.emit(c, ...o);
     }
 

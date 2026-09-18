@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/mental/Counting.java
 import { java, S } from "jree";
+import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float, double, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -73,7 +74,7 @@ export class Counting implements Plugin {
 
         if (this.obs === null) {
             this.obs = {
-                event: (event: java.lang.Class<unknown>, a: java.lang.Object[]): void => {
+                event: (event: ClassTokenLike, a: java.lang.Object[]): void => {
 
                 if ((event !== Events.TaskDerive.class && event !== Events.TaskAdd.class))
                     return;

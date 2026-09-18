@@ -1,10 +1,11 @@
 //! Java source: opennars/io/events/EventEmitter.java
 import "../../runtime/jree-compat.ts";
 import { java, S } from "jree";
+import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 
 type PendingOperation = [
     enabled: boolean,
-    event: java.lang.Class<unknown>,
+    event: ClassTokenLike,
     observer: EventEmitter.EventObserver,
 ];
 type ObserverList = EventEmitter.EventObserver[];
@@ -20,7 +21,7 @@ type ObserverList = EventEmitter.EventObserver[];
 // registry and its observer identity rules are the actual runtime contract.
 export class EventEmitter {
 
-    private readonly events: Map<java.lang.Class<unknown>, ObserverList>;
+    private readonly events: Map<ClassTokenLike, ObserverList>;
 
     // Java source: private final Deque<Object[]> pendingOps = new ArrayDeque<>();
     // The queue is private and only supports FIFO iteration followed by clear.
@@ -36,7 +37,7 @@ export class EventEmitter {
      * EventEmitter with a fixed set of known events; the 'events' map
      * can then be made unmodifiable and non-concurrent for speed.
      */
-    public constructor(...knownEventClasses: java.lang.Class<unknown>[]);
+    public constructor(...knownEventClasses: ClassTokenLike[]);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -54,7 +55,7 @@ export class EventEmitter {
             }
 
             case 1: {
-                const [knownEventClasses] = args as [java.lang.Class<unknown>[]];
+                const [knownEventClasses] = args as [ClassTokenLike[]];
 
 
                 this.events = new Map();
@@ -81,7 +82,7 @@ export class EventEmitter {
          */
     }
 
-    public isActive(event: java.lang.Class<unknown>): boolean {
+    public isActive(event: ClassTokenLike): boolean {
         const observers = this.events.get(event);
         if (observers !== undefined)
             return observers.length > 0;
@@ -104,7 +105,7 @@ export class EventEmitter {
         /* } */
     }
 
-    public on(event: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void {
+    public on(event: ClassTokenLike, o: EventEmitter.EventObserver): void {
         const observers = this.events.get(event);
         if (observers !== undefined) {
             observers.push(o);
@@ -119,7 +120,7 @@ export class EventEmitter {
      * @param event
      * @param o
      */
-    public off(event: java.lang.Class<unknown>, o: EventEmitter.EventObserver): void {
+    public off(event: ClassTokenLike, o: EventEmitter.EventObserver): void {
         if (null === event || null === o)
             throw new java.lang.IllegalStateException("Invalid parameter");
 
@@ -148,7 +149,7 @@ export class EventEmitter {
     }
 
     /** for enabling many events at the same time */
-    public set(o: EventEmitter.EventObserver, enable: boolean, ...events: java.lang.Class<unknown>[]): void {
+    public set(o: EventEmitter.EventObserver, enable: boolean, ...events: ClassTokenLike[]): void {
         for (let c of events) {
             if (enable)
                 this.on(c, o);
@@ -157,7 +158,7 @@ export class EventEmitter {
         }
     }
 
-    public emit(eventClass: java.lang.Class<unknown>, ...params: java.lang.Object[]): void {
+    public emit(eventClass: ClassTokenLike, ...params: java.lang.Object[]): void {
         const observers = this.events.get(eventClass);
 
         if (observers === undefined || observers.length === 0)
@@ -174,7 +175,7 @@ export class EventEmitter {
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace EventEmitter {
     export interface EventObserver {
-        event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void;
+        event(event: ClassTokenLike, args: java.lang.Object[]): void;
     }
 
 }

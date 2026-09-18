@@ -2,6 +2,7 @@ import { java } from "jree";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import { OutputCondition } from "./OutputCondition.ts";
+import type { ClassTokenLike } from "../../../src/runtime/RuntimeClass.ts";
 
 const OUT = OutputHandler.OUT;
 const ERR = OutputHandler.ERR;
@@ -24,7 +25,7 @@ export class OutputEmptyCondition extends OutputCondition {
         return new java.lang.String(`FAIL: output exists but should not: ${String(this.output)}`);
     }
 
-    public condition(channel: java.lang.Class<unknown>, signal: java.lang.Object): boolean {
+    public condition(channel: ClassTokenLike, signal: java.lang.Object): boolean {
         // any OUT or ERR output is a failure
         if ((channel === OUT.class) || (channel === ERR.class)) {
             this.output.add(new java.lang.String(`${String(channel.getSimpleName())}: ${String(signal.toString())}`));

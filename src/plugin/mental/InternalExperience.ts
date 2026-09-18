@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/mental/InternalExperience.java
 import { java, S } from "jree";
+import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float, double, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -237,7 +238,7 @@ export class InternalExperience implements Plugin, EventObserver {
         return operation;
     }
 
-    public event(event: java.lang.Class<unknown>, a: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, a: java.lang.Object[]): void {
 
         if (event === Events.ConceptDirectProcessedTask.class) {
             const memory = this.memory;

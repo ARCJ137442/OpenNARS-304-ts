@@ -1,6 +1,8 @@
 //! Java source: opennars/io/events/Events.java
 import "../../runtime/jree-compat.ts";
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
+import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { Concept } from "../../entity/Concept.ts";
 import type { Sentence } from "../../entity/Sentence.ts";
@@ -11,49 +13,49 @@ import type { EventEmitter } from "./EventEmitter.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 
-abstract class ConceptBeliefAdd extends JavaObject implements EventObserver {
+abstract class ConceptBeliefAdd extends RuntimeObject implements EventObserver {
     public abstract onBeliefAdd(c: Concept, t: Task, extra: java.lang.Object[]): void;
 
-    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
         this.onBeliefAdd(args[0] as unknown as Concept, args[1] as unknown as Task,
             args[2] as unknown as java.lang.Object[]);
     }
 }
 
-abstract class ConceptBeliefRemove extends JavaObject implements EventObserver {
+abstract class ConceptBeliefRemove extends RuntimeObject implements EventObserver {
     public abstract onBeliefRemove(c: Concept, removed: Sentence, t: Task, extra: java.lang.Object[]): void;
 
-    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
         this.onBeliefRemove(args[0] as unknown as Concept, args[1] as unknown as Sentence,
             args[2] as unknown as Task, args[3] as unknown as java.lang.Object[]);
     }
 }
 
-abstract class ConceptFire extends JavaObject implements EventObserver {
+abstract class ConceptFire extends RuntimeObject implements EventObserver {
     public abstract onFire(n: GeneralInferenceControl): void;
 
-    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
         this.onFire(args[0] as unknown as GeneralInferenceControl);
     }
 }
 
-abstract class TaskImmediateProcess extends JavaObject implements EventObserver {
+abstract class TaskImmediateProcess extends RuntimeObject implements EventObserver {
     public abstract onProcessed(t: Task, n: DerivationContext): void;
 
-    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
         this.onProcessed(args[0] as unknown as Task, args[1] as unknown as DerivationContext);
     }
 }
 
-abstract class TaskAdd extends JavaObject implements EventObserver {
+abstract class TaskAdd extends RuntimeObject implements EventObserver {
     public abstract onTaskAdd(t: Task, reason: java.lang.String): void;
 
-    public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
+    public event(event: ClassTokenLike, args: java.lang.Object[]): void {
         this.onTaskAdd(args[0] as unknown as Task, args[1] as unknown as java.lang.String);
     }
 }
 
-abstract class InferenceEvent extends JavaObject {
+abstract class InferenceEvent extends RuntimeObject {
     public readonly when: long;
     public readonly stack: java.util.List<java.lang.StackTraceElement> | null;
 
@@ -92,7 +94,7 @@ abstract class InferenceEvent extends JavaObject {
         }
     }
 
-    public getType(): java.lang.Class<unknown> {
+    public getType(): ClassTokenLike {
         return this.getClass();
     }
 }
@@ -128,58 +130,58 @@ class ConceptNew extends ParametricInferenceEvent<Concept> {
 export class Events {
 
     /** fired at the beginning of each Nar multi-cycle execution */
-    public static CyclesStart =  class CyclesStart extends JavaObject {
+    public static CyclesStart =  class CyclesStart extends RuntimeObject {
     };
 
 
     /** fired at the end of each Nar multi-cycle execution */
-    public static CyclesEnd =  class CyclesEnd extends JavaObject {
+    public static CyclesEnd =  class CyclesEnd extends RuntimeObject {
     };
 
 
     /** fired at the beginning of each memory cycle */
-    public static CycleStart =  class CycleStart extends JavaObject {
+    public static CycleStart =  class CycleStart extends RuntimeObject {
     };
 
 
     /** fired at the end of each memory cycle */
-    public static CycleEnd =  class CycleEnd extends JavaObject {
+    public static CycleEnd =  class CycleEnd extends RuntimeObject {
     };
 
 
     /** fired at the beginning of each individual Memory work cycle */
-    public static WorkCycleStart =  class WorkCycleStart extends JavaObject {
+    public static WorkCycleStart =  class WorkCycleStart extends RuntimeObject {
     };
 
 
     /** fired at the end of each Memory individual cycle */
-    public static WorkCycleEnd =  class WorkCycleEnd extends JavaObject {
+    public static WorkCycleEnd =  class WorkCycleEnd extends RuntimeObject {
     };
 
 
     /** called before memory.reset() proceeds */
-    public static ResetStart =  class ResetStart extends JavaObject {
+    public static ResetStart =  class ResetStart extends RuntimeObject {
     };
 
 
     /** called after memory.reset() proceeds */
-    public static ResetEnd =  class ResetEnd extends JavaObject {
+    public static ResetEnd =  class ResetEnd extends RuntimeObject {
     };
 
 
-    public static Perceive =  class Perceive extends JavaObject {
+    public static Perceive =  class Perceive extends RuntimeObject {
     };
 
 
-    public static ConceptForget =  class ConceptForget extends JavaObject {
+    public static ConceptForget =  class ConceptForget extends RuntimeObject {
     };
 
 
-    public static EnactableExplainationAdd =  class EnactableExplainationAdd extends JavaObject {
+    public static EnactableExplainationAdd =  class EnactableExplainationAdd extends RuntimeObject {
     };
 
 
-    public static EnactableExplainationRemove =  class EnactableExplainationRemove extends JavaObject {
+    public static EnactableExplainationRemove =  class EnactableExplainationRemove extends RuntimeObject {
     };
 
 
@@ -189,64 +191,64 @@ export class Events {
     public static ConceptBeliefRemove = ConceptBeliefRemove;
 
 
-    public static ConceptGoalAdd =  class ConceptGoalAdd extends JavaObject {
+    public static ConceptGoalAdd =  class ConceptGoalAdd extends RuntimeObject {
     };
 
 
-    public static ConceptGoalRemove =  class ConceptGoalRemove extends JavaObject {
+    public static ConceptGoalRemove =  class ConceptGoalRemove extends RuntimeObject {
     };
 
 
-    public static ConceptQuestionAdd =  class ConceptQuestionAdd extends JavaObject {
+    public static ConceptQuestionAdd =  class ConceptQuestionAdd extends RuntimeObject {
     };
 
 
-    public static ConceptQuestionRemove =  class ConceptQuestionRemove extends JavaObject {
+    public static ConceptQuestionRemove =  class ConceptQuestionRemove extends RuntimeObject {
     };
 
 
     // Executive & Planning
-    public static UnexecutableGoal =  class UnexecutableGoal extends JavaObject {
+    public static UnexecutableGoal =  class UnexecutableGoal extends RuntimeObject {
     };
 
 
-    public static UnexecutableOperation =  class UnexecutableOperation extends JavaObject {
+    public static UnexecutableOperation =  class UnexecutableOperation extends RuntimeObject {
     };
 
 
-    public static NewTaskExecution =  class NewTaskExecution extends JavaObject {
+    public static NewTaskExecution =  class NewTaskExecution extends RuntimeObject {
     };
 
 
-    public static InduceSucceedingEvent =  class InduceSucceedingEvent extends JavaObject {
+    public static InduceSucceedingEvent =  class InduceSucceedingEvent extends RuntimeObject {
     };
 
 
-    public static TermLinkAdd =  class TermLinkAdd extends JavaObject {
+    public static TermLinkAdd =  class TermLinkAdd extends RuntimeObject {
     };
 
 
-    public static TermLinkRemove =  class TermLinkRemove extends JavaObject {
+    public static TermLinkRemove =  class TermLinkRemove extends RuntimeObject {
     };
 
 
-    public static TaskLinkAdd =  class TaskLinkAdd extends JavaObject {
+    public static TaskLinkAdd =  class TaskLinkAdd extends RuntimeObject {
     };
 
 
-    public static TaskLinkRemove =  class TaskLinkRemove extends JavaObject {
+    public static TaskLinkRemove =  class TaskLinkRemove extends RuntimeObject {
     };
 
 
-    public static Answer =  class Answer extends JavaObject {
+    public static Answer =  class Answer extends RuntimeObject {
     };
 
 
-    public static Unsolved =  class Unsolved extends JavaObject {
+    public static Unsolved =  class Unsolved extends RuntimeObject {
     };
 
 
-    public static TrySolution =  class TrySolution extends JavaObject {
+    public static TrySolution =  class TrySolution extends RuntimeObject {
     };
 
 
@@ -256,41 +258,41 @@ export class Events {
     public static TaskImmediateProcess = TaskImmediateProcess;
 
 
-    public static TermLinkSelect =  class TermLinkSelect extends JavaObject {
+    public static TermLinkSelect =  class TermLinkSelect extends RuntimeObject {
     };
 
 
-    public static BeliefSelect =  class BeliefSelect extends JavaObject {
+    public static BeliefSelect =  class BeliefSelect extends RuntimeObject {
     };
 
 
     /** called from RuleTables.reason for a given Belief */
-    public static BeliefReason =  class BeliefReason extends JavaObject {
+    public static BeliefReason =  class BeliefReason extends RuntimeObject {
     };
 
 
-    public static ConceptUnification =  class ConceptUnification extends JavaObject {
+    public static ConceptUnification =  class ConceptUnification extends RuntimeObject {
     };
  // 2nd level unification in CompositionalRules
 
     public static TaskAdd = TaskAdd;
 
 
-    public static TaskRemove =  class TaskRemove extends JavaObject {
+    public static TaskRemove =  class TaskRemove extends RuntimeObject {
     };
 
 
-    public static TaskDerive =  class TaskDerive extends JavaObject {
+    public static TaskDerive =  class TaskDerive extends RuntimeObject {
     };
 
 
-    public static PluginsChange =  class PluginsChange extends JavaObject {
+    public static PluginsChange =  class PluginsChange extends RuntimeObject {
     };
 
 
     // public static class UnExecutedGoal { }
 
-    public static ConceptDirectProcessedTask =  class ConceptDirectProcessedTask extends JavaObject {
+    public static ConceptDirectProcessedTask =  class ConceptDirectProcessedTask extends RuntimeObject {
     };
 
 
@@ -351,7 +353,7 @@ export namespace Events {
 	export type InferenceEvent = {
 		readonly when: long;
 		readonly stack: java.util.List<java.lang.StackTraceElement> | null;
-		getType(): java.lang.Class<unknown>;
+		getType(): ClassTokenLike;
 	};
 	export type ParametricInferenceEvent<O> = InferenceEvent & { readonly object: O };
 }

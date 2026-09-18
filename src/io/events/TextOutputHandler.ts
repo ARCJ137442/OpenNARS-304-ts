@@ -1,5 +1,6 @@
 //! Java source: opennars/io/events/TextOutputHandler.java
 import { java, S } from "jree";
+import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { OutputHandler } from "./OutputHandler.ts";
 import type { Nar } from "../../main/Nar.ts";
@@ -128,7 +129,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
      * Process the next chunk of output data
      *
      */
-    public event(channel: java.lang.Class<unknown>, oo: java.lang.Object[]): void {
+    public event(channel: ClassTokenLike, oo: java.lang.Object[]): void {
         if (!this.showErrors && (channel === ERR.class))
             return;
 
@@ -153,7 +154,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
 
     protected readonly result: java.lang.StringBuilder = new java.lang.StringBuilder(16 /* estimate */);
 
-    public process(c: java.lang.Class<unknown>, o: java.lang.Object): java.lang.String | null {
+    public process(c: ClassTokenLike, o: java.lang.Object): java.lang.String | null {
         return this.getOutputString(c, o, true, this.showStamp, this.nar, this.result, this.minPriority);
     }
 
@@ -177,29 +178,29 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
         return this;
     }
 
-    public static getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object,
+    public static getOutputString(channel: ClassTokenLike, signal: java.lang.Object,
         showStamp: boolean, nar: Nar): java.lang.String | null;
 
-    public static getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object,
+    public static getOutputString(channel: ClassTokenLike, signal: java.lang.Object,
         showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String | null;
 
-    public static getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
+    public static getOutputString(channel: ClassTokenLike, signal: java.lang.Object, showChannel: boolean,
         showStamp: boolean, nar: Nar): java.lang.String | null;
 
     public static getOutputString(...args: unknown[]): java.lang.String | null {
         switch (args.length) {
             case 4: {
-                const [channel, signal, showStamp, nar] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, Nar];
+                const [channel, signal, showStamp, nar] = args as [ClassTokenLike, java.lang.Object, boolean, Nar];
                 return TextOutputHandler.formatStaticOutputString(
                     channel, signal, showStamp, nar, new java.lang.StringBuilder(),
                 );
             }
             case 5: {
                 if (args[4] instanceof java.lang.StringBuilder) {
-                    const [channel, signal, showStamp, nar, buffer] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, Nar, java.lang.StringBuilder];
+                    const [channel, signal, showStamp, nar, buffer] = args as [ClassTokenLike, java.lang.Object, boolean, Nar, java.lang.StringBuilder];
                     return TextOutputHandler.formatStaticOutputString(channel, signal, showStamp, nar, buffer);
                 }
-                const [channel, signal, showChannel, showStamp, nar] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, boolean, Nar];
+                const [channel, signal, showChannel, showStamp, nar] = args as [ClassTokenLike, java.lang.Object, boolean, boolean, Nar];
                 const output = TextOutputHandler.formatStaticOutputString(
                     channel, signal, showStamp, nar, new java.lang.StringBuilder(),
                 );
@@ -213,20 +214,20 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
         }
     }
 
-    public getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
+    public getOutputString(channel: ClassTokenLike, signal: java.lang.Object, showChannel: boolean,
         showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String | null;
 
     /** generates a human-readable string from an output channel and signal */
-    public getOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
+    public getOutputString(channel: ClassTokenLike, signal: java.lang.Object, showChannel: boolean,
         showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder, minPriority: float): java.lang.String | null;
     public getOutputString(...args: unknown[]): java.lang.String | null {
         switch (args.length) {
             case 6: {
-                const [channel, signal, showChannel, showStamp, nar, buffer] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, boolean, Nar, java.lang.StringBuilder];
+                const [channel, signal, showChannel, showStamp, nar, buffer] = args as [ClassTokenLike, java.lang.Object, boolean, boolean, Nar, java.lang.StringBuilder];
                 return this.getOutputString(channel, signal, showChannel, showStamp, nar, buffer, 0);
             }
             case 7: {
-                const [channel, signal, showChannel, showStamp, nar, buffer, minPriority] = args as [java.lang.Class<unknown>, java.lang.Object, boolean, boolean, Nar, java.lang.StringBuilder, float];
+                const [channel, signal, showChannel, showStamp, nar, buffer, minPriority] = args as [ClassTokenLike, java.lang.Object, boolean, boolean, Nar, java.lang.StringBuilder, float];
                 return TextOutputHandler.formatInstanceOutputString(
                     channel, signal, showChannel, showStamp, nar, buffer, minPriority, this.showStackTrace,
                 );
@@ -236,7 +237,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
         }
     }
 
-    private static formatInstanceOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object, showChannel: boolean,
+    private static formatInstanceOutputString(channel: ClassTokenLike, signal: java.lang.Object, showChannel: boolean,
         showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder, minPriority: float,
         showStackTrace: boolean): java.lang.String | null {
         buffer.setLength(0);
@@ -287,7 +288,7 @@ export class TextOutputHandler extends OutputHandler implements java.io.Serializ
         return buffer.toString();
     }
 
-    private static formatStaticOutputString(channel: java.lang.Class<unknown>, signal: java.lang.Object,
+    private static formatStaticOutputString(channel: ClassTokenLike, signal: java.lang.Object,
         showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String {
         buffer.setLength(0);
 

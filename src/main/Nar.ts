@@ -1,5 +1,6 @@
 //! Java source: opennars/main/Nar.java
 import { java, JavaObject, S } from "jree";
+import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { Parameters } from "./Parameters.ts";
@@ -673,17 +674,17 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
     }
 
     /** attach event handler */
-    public on(c: java.lang.Class<unknown>, o: EventObserver): void {
+    public on(c: ClassTokenLike, o: EventObserver): void {
         this.memory.event.on(c, o);
     }
 
     /** remove event handler */
-    public off(c: java.lang.Class<unknown>, o: EventObserver): void {
+    public off(c: ClassTokenLike, o: EventObserver): void {
         this.memory.event.off(c, o);
     }
 
     /** set an event handler. useful for multiple events. */
-    public event(e: EventObserver, enabled: boolean, ...events: java.lang.Class<unknown>[]): void {
+    public event(e: EventObserver, enabled: boolean, ...events: ClassTokenLike[]): void {
         this.memory.event.set(e, enabled, ...events);
     }
 
@@ -820,7 +821,7 @@ export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable 
         }
     }
 
-    public emit(c: java.lang.Class<unknown>, ...o: java.lang.Object[]): void {
+    public emit(c: ClassTokenLike, ...o: java.lang.Object[]): void {
         this.memory.event.emit(c, ...o);
     }
 
