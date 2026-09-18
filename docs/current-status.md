@@ -1301,3 +1301,17 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计前→后：`directJreeImportFiles=88→88`、`javaObjectFiles=1→1`、`semanticReviewItems=93→92`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。直接导入未减少，因为存储层仍有其他 Java 字符串、异常、随机数和事件边界。
 
 本批可以宣称：Memory/Bag 的 Java 迭代器类型边界已收窄到项目自有合同，并通过 M2、受影响 smoke 和 T1 要求的 M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245、markerless 131072 周期等价、Java/TypeScript 性能等价、源码覆盖率完成或正式发布。代码提交 `c798116`；报告为 `reports/20260919-065512.md`，文档收尾提交待完成。
+
+### 2026-09-19：`Eventable` 残留 jree 导入清理
+
+本批是对早期迁移提交的前向审查。`src/interfaces/Eventable.ts` 只声明事件观察接口，源码中的 `import { java } from "jree"` 没有对应运行时或类型引用；Java 原始接口的实际合同由项目内 `EventEmitter.EventObserver` 与 `ClassTokenLike` 表达。因此删除该未使用导入，不创建新的兼容层，也不改变事件派发、类 token、集合、随机数或推理逻辑。
+
+- M2：串行单元测试 `315` 项，`313` 通过、`2` 跳过、`0` 失败；显式非增量 typecheck 为 `0` 诊断；build `sourceFileCount=137`、build 检查和 dist API 通过。
+- change gate：`classify-change-gate --base 6c5ac8b --head 8bb25fc` 判定 `T0`，`live_java_required=false`、`m1_minus_required=false`；因此没有启动 Java 或 M1-。
+- 静态审计：迁移扫描 `239` 个文件，constructor-delegation、malformed generic/operator/new-this 均为 `0`；平台审计成功；jree 直接导入文件 `88→87`，`javaObjectFiles=1`、`java.util=39`、`java.lang=85`、Java String `52`、`newLinkedHashMap=0`、`newLinkedHashSet=1` 保持不变。
+- 继续复用冻结 Java baseline `g0-java-baseline-26772af-20260917`，SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 代码提交：`8bb25fc3de151e0e4f954c9ac63a3ff07113d7d2`；批次报告：`reports/20260919-070629.md`。
+
+本批可以宣称：`Eventable` 的无行为 jree 导入残留已清理，M2 和静态审计通过，未观察到功能变化。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245、源码覆盖率目标完成、Java/TypeScript 性能等价或正式发布。后续若进入 `runtime/jree-compat.ts`、Map/Set、随机数、类身份或热路径，必须重新按 T1/T2 门禁验证。
