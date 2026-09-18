@@ -7,6 +7,7 @@ import { Parameters } from "../main/Parameters.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { javaValuesEqual } from "../runtime/jree-compat.ts";
+import { NativeMap } from "../runtime/NativeMap.ts";
 import type { Memory } from "./Memory.ts";
 
 
@@ -22,8 +23,13 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
     private readonly THRESHOLD: int;
     /** shared DISTRIBUTOR that produce the probability distribution */
     private readonly DISTRIBUTOR: Distributor;
-    /** mapping from key to item */
-    private nameTable: java.util.HashMap<K, Type> = new java.util.LinkedHashMap<K, Type>();
+    /**
+     * Java original type: HashMap<K, Type>; concrete implementation:
+     * LinkedHashMap<K, Type>. NativeMap keeps the Map contract, Java equals
+     * lookup, and insertion order without a jree-backed table.
+     */
+    private nameTable: java.util.HashMap<K, Type> =
+        new NativeMap<K, Type>() as unknown as java.util.HashMap<K, Type>;
     /** Java hash buckets used to avoid scanning every logical key on each lookup. */
     private equalityBuckets: Map<number, K[]> = new Map<number, K[]>();
     /** Native FIFO queues for items on different priority levels. */
@@ -71,7 +77,9 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
         for (let i: int = 0; i < this.TOTAL_LEVEL; i++) {
             this.itemTable.push([]);
         }
-        this.nameTable = new java.util.LinkedHashMap<K, Type>();
+        // Java original type: HashMap<K, Type>; concrete implementation:
+        // LinkedHashMap<K, Type>. Keep the ordered Map abstraction native.
+        this.nameTable = new NativeMap<K, Type>() as unknown as java.util.HashMap<K, Type>;
         this.equalityBuckets = new Map<number, K[]>();
         this.currentLevel = this.TOTAL_LEVEL - 1;
         this.levelIndex = this.capacity % this.TOTAL_LEVEL; // so that different bags start at different point
@@ -240,11 +248,17 @@ export class Bag<Type extends Item<K>, K> extends JavaObject implements java.io.
         return picked;
     }
 
-    /** Resolve Java equals/hashCode key identity before using jree's JS-backed map. */
+    /** Resolve Java equals/hashCode key identity for native and restored maps. */
     private findEquivalentKey(key: K): K {
         const directItem = this.nameTable.get(key);
-        if (directItem !== null && directItem !== undefined && directItem.name() === key) {
-            return key;
+        if (directItem !== null && directItem !== undefined) {
+            // NativeMap already applies Java Map equality. Returning the
+            // item's current name is sufficient for an equivalent-key
+            // operation even when the map retained an older equal key object.
+            const directKey = directItem.name();
+            if (directKey === key || javaValuesEqual(directKey, key)) {
+                return directKey;
+            }
         }
 
         const hashCode = this.keyHashCode(key);

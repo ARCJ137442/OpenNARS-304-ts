@@ -5,6 +5,7 @@ import { Bag } from "../../src/storage/Bag.ts";
 import { Item } from "../../src/entity/Item.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import { Term } from "../../src/language/Term.ts";
+import { NativeMap } from "../../src/runtime/NativeMap.ts";
 
 class TestItem extends Item<string> {
     private readonly key: string;
@@ -123,7 +124,7 @@ test("Bag merges distinct object keys through Java equals semantics", () => {
     assert.equal(bag.size(), 0);
 });
 
-test("Bag falls back to Java equality when a hash bucket is not JS iterable", () => {
+test("Bag lookup remains Java-equal when the legacy hash bucket is malformed", () => {
     class EqualKey {
         public readonly value: string;
 
@@ -162,15 +163,12 @@ test("Bag falls back to Java equality when a hash bucket is not JS iterable", ()
     }
 
     const bag = new Bag<EqualKeyItem, EqualKey>(4, 10, new Parameters());
+    const internals = bag as unknown as { equalityBuckets: Map<number, unknown> };
     const item = new EqualKeyItem(new EqualKey("same"));
     bag.putIn(item);
-    (bag as unknown as { equalityBuckets: Map<number, unknown> })
-        .equalityBuckets.set(4, { restored: true });
+    internals.equalityBuckets.set(4, { restored: true });
 
     assert.equal(bag.get(new EqualKey("same")), item);
-    assert.ok(Array.isArray(
-        (bag as unknown as { equalityBuckets: Map<number, unknown> }).equalityBuckets.get(4),
-    ));
 });
 
 test("Bag removes an item when a restored hash bucket is not a JS array", () => {
@@ -230,6 +228,23 @@ test("Bag stores priority-level FIFO queues in native arrays", () => {
     assert.equal(Array.isArray(itemTable), true);
     assert.equal(itemTable.length, 4);
     assert.ok(itemTable.every((level) => Array.isArray(level)));
+});
+
+test("Bag keeps the Java HashMap/LinkedHashMap contract with a native Map", () => {
+    const bag = new Bag<TestItem, string>(4, 10, new Parameters());
+    const internals = bag as unknown as { nameTable: unknown };
+
+    assert.ok(internals.nameTable instanceof NativeMap);
+    const first = new TestItem("first", 0.2);
+    const second = new TestItem("second", 0.9);
+    const replacement = new TestItem("first", 0.8);
+
+    bag.putIn(first);
+    bag.putIn(second);
+    bag.putIn(replacement);
+
+    assert.equal(bag.get("first"), replacement);
+    assert.deepEqual(Array.from(bag), [replacement, second]);
 });
 
 test("Bag native iteration preserves LinkedHashMap insertion order across replacement and removal", () => {

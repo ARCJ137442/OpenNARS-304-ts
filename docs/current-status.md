@@ -755,3 +755,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 平台审计扫描 `172` 个文件，核心候选 `83`、混合边界 `5`、Node adapter 候选 `2`；迁移模式扫描 `227` 个文件，constructor-delegation、malformed-generic/operator/new-this 均为 `0`。release `0.1.0` 通过，`runtimeWarnings=none`、`forbiddenPackageMembers=0`；汉字编码检查与 `git diff --check` 通过。
 
 本批可以宣称：`Anticipate` 外层具体 Map 已在不改变 Map 抽象和 Prediction 身份 key 的前提下原生化，并经直接合同、M2、local parity、受影响 smoke 和 M1- 保护。仍不能宣称：023/024 完成、全部生产 jree 清零、#245 长期稳定性在本批完成、Java/TypeScript 性能等价或正式发布。普通小批次继续在 canonical Java 基线不变量不变时复用冻结 Java 功能标杆；023/024 整体验收或任一基线不变量变化时才现跑 Java 并逐字段核对。:codex-annotation{index="1"}
+
+### 2026-09-18：`Bag.nameTable` NativeMap 原生化批次
+
+本批承接 `f1cf976` 的 `Anticipate` Map 批次，对照 canonical Java `Bag.java` 审查 `nameTable` 与 `itemTable` 的历史迁移。Java 原始合同是 `HashMap<K,Type>` 声明、`LinkedHashMap<K,Type>` 具体实现；`itemTable` 则是独立的 `ArrayList<ArrayList<Type>>` 优先级队列。本批只迁移名称 Map，不把 Map、Set、List 混为同一底层抽象。
+
+- `src/storage/Bag.ts`：`nameTable` 的新建与 `clear()` 改用项目 `NativeMap`，保留 Java `HashMap` 类型边界；NativeMap 提供 Java equals 查找、替换不移动插入位置、values/entry 迭代和删除合同。旧/restored `equalityBuckets`、`itemOrder`、`itemTable` 兼容路径保持不变。
+- `test/node/bag.test.ts`：新增 NativeMap 类型、Java equals 替换和插入顺序回归；保留 malformed/restored bucket 与 FIFO 层级测试。Bag 定向测试 `10/10`。
+- M2：统一串行单测 `279/279`，失败/跳过/取消 `0/0/0`；`test/entity/TLink.test.ts` 已纳入入口；显式 `--incremental false` 的 `tsc` 为 `0` 诊断；build、dist API、受影响 `nal8.add.nal` smoke `1/1` 通过。
+- M1-：TS-only 对冻结 Java 标杆逐文件串行运行，主资源 `244/244` 行完整，`functional_pass=242`、parity `242`、exception/stall/not-run `0/0/0`。`toothbrush2.nal` 与 `nars_multistep_3.nal` 触发 `1800000 ms` process limit，分别推进 `201550` 与 `502562` reasoning cycles；没有发现逻辑异常，但未完成 marker 观测，因此不能写成 `244/244` 全功能通过。
+- 结果文件在项目外归档：`m1-minus-bag-nativemap-20260918.jsonl`，SHA-256 为 `EF6728C3E8D4EEC5496A968FB4B64CA479E28E564334A785F0E5905FFC2D06CC`；总运行 `6756929 ms`，总 reasoning cycles `2288254`，已采集样本峰值 RSS `369.42 MiB`。先前相同 M1- 口径的 `nars_multistep_3.nal` 为 `377969 ms`/`357765 ms` 完成，本批性能显著回退，原因与 NativeMap 线性查找热路径吻合，留作后续性能批次，不改写本批语义结论。
+- jree 审计：生产直接 jree 导入文件 `88`，`newLinkedHashMap=0`，`newLinkedHashSet=1`，`JavaObject` 文件 `31`，`java.util` 文件 `39`；平台审计扫描 `172` 个文件。全部 `scripts/checking/*.py` 顺序通过，汉字编码与 `git diff --check` 通过。
+
+本批可以宣称：`Bag.nameTable` 已完成一次保留 Java Map 合同的原生化，并通过局部 M2 与大部分 M1- 功能保护。当前不能宣称：M1- `244/244` 全部通过、023/024 完成、生产核心 jree 清零、Java/TypeScript 性能等价或正式发布。后续应优先单独评估 NativeMap 的索引策略和高周期性能，避免把性能回退与语义迁移混在同一修复中。普通批次继续复用冻结 Java 标杆；阶段验收、集成冻结或基线不变量变化时才现跑 canonical Java。:codex-annotation{index="1"}
