@@ -21,6 +21,14 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const truth = TruthValue.fromFrequencyConfidence(0.7, 0.6, parameters);
     const stamp = new Stamp(0, Tense.Present, new Stamp.BaseEntry(0, 1), parameters.DURATION);
     const sentence = new Sentence(term, ".", truth, stamp);
+    const { RuntimeObject } = await import("../../src/runtime/RuntimeClass.ts");
+
+    assert.equal(Object.getPrototypeOf(Sentence.prototype), RuntimeObject.prototype);
+    assert.equal(Sentence.class.getSimpleName(), "Sentence");
+    assert.equal(sentence.getClass(), Sentence.class);
+    const sentenceClone = sentence.clone();
+    assert.equal(sentence.equals(sentenceClone), true);
+    assert.equal(sentence.hashCode(), sentenceClone.hashCode());
 
     assert.equal(typeof term.name, "function");
     assert.equal(String(term.toString()), "A");

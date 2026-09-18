@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Sentence.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, long, float, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -21,6 +21,7 @@ import type { Nar } from "../main/Nar.ts";
 import type { Parameters } from "../main/Parameters.ts";
 import { addRuntimeLongValues, JavaAssertionError, javaStringValue, subtractRuntimeLongValues } from "../runtime/jree-compat.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
+import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 
 
 
@@ -32,7 +33,9 @@ import type { JavaChar } from "../runtime/jree-compat.ts";
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence>, java.io.Serializable {
+// Java 原始声明：public class Sentence implements Cloneable, Serializable。
+// Sentence 自身承载值相等、哈希和 clone；RuntimeObject 只替换无行为的类身份壳。
+export class Sentence extends RuntimeObject {
 
     public producedByTemporalInduction: boolean = false;
 
@@ -279,7 +282,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
      * @param that The other sentence
      * @return Whether the two sentences have the same content
      */
-    public override  equals(that: java.lang.Object): boolean {
+    public override equals(that: unknown): boolean {
         if (this === that)
             return true;
         if (that instanceof Sentence) {
@@ -324,7 +327,7 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
      *
      * @return a hashcode
      */
-    public override  hashCode(): int {
+    public hashCode(): int {
         return this.hash;
     }
 
@@ -345,9 +348,9 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
      *
      * @return The cloned Sentence
      */
-    public override  clone(): Sentence;
+    public clone(): Sentence;
 
-    public override  clone(makeEternal: boolean): Sentence;
+    public clone(makeEternal: boolean): Sentence;
 
     /**
      * clone with a different term
@@ -355,8 +358,8 @@ export class Sentence extends JavaObject implements java.lang.Cloneable<Sentence
      * @param t term which has to get cloned
      * @return sentence with the cloned term as a property
      */
-    public override clone(t: Term): Sentence;
-    public override clone(...args: unknown[]): Sentence {
+    public clone(t: Term): Sentence;
+    public clone(...args: unknown[]): Sentence {
         switch (args.length) {
             case 0: {
 
