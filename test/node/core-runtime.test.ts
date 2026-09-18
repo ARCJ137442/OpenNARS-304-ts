@@ -1034,6 +1034,15 @@ test("Operator.ExecutionResult keeps the Java plain event-payload boundary", asy
     assert.equal(Object.getPrototypeOf(Operator.ExecutionResult.prototype), Object.prototype);
 });
 
+test("CompoundTerm.ConvRectangle keeps the Java plain data-holder boundary", async () => {
+    const { CompoundTerm } = await import("../../src/language/CompoundTerm.ts");
+
+    const rectangle = new CompoundTerm.ConvRectangle();
+    assert.equal(Object.getPrototypeOf(CompoundTerm.ConvRectangle.prototype), Object.prototype);
+    assert.equal(rectangle.index_variable, null);
+    assert.equal(rectangle.term_indices, null);
+});
+
 test("static inference rule classes no longer carry a jree JavaObject base", async () => {
     const modules = [
         await import("../../src/inference/CompositionalRules.ts"),

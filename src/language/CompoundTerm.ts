@@ -1,5 +1,5 @@
 //! Java source: opennars/language/CompoundTerm.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { short, int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
@@ -92,12 +92,13 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         this.term = components;
     }
 
-    public static ConvRectangle = class ConvRectangle extends JavaObject {
+    // Java original type: public static class ConvRectangle;
+    // it is a plain geometry/data holder without a reflection contract.
+    public static ConvRectangle = class ConvRectangle {
         public index_variable: string | null = null;
         public term_indices: Int32Array | null = null; // size X, size Y, pos X, pos Y, min size X, min size Y
 
         public constructor() {
-            super();
         } // the latter two for being able to assing a relative index for size too
     };
 
