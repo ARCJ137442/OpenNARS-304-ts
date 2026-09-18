@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/Operator.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "../language/Term.ts";
 import { Inheritance } from "../language/Inheritance.ts";
@@ -189,12 +189,13 @@ export abstract class Operator extends Term implements Plugin {
         }
     }
 
-    public static ExecutionResult = class ExecutionResult extends JavaObject {
+    // Java original type: public static class ExecutionResult;
+    // it is a plain event payload; no JavaObject/reflection contract is consumed.
+    public static ExecutionResult = class ExecutionResult {
         private readonly operation: Operation;
         private readonly feedback: java.lang.Object;
 
         public constructor(op: Operation, feedback: java.lang.Object) {
-            super();
             this.operation = op;
             this.feedback = feedback;
         }
@@ -203,7 +204,7 @@ export abstract class Operator extends Term implements Plugin {
             return this.operation.getTask();
         }
 
-        public override  toString(): java.lang.String {
+        public toString(): java.lang.String {
             let b: BudgetValue = null as unknown as BudgetValue;
             const task = this.getTask();
             if (task !== null) {

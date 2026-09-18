@@ -1028,6 +1028,12 @@ test("ItemPriorityComparator keeps the Java plain comparator boundary", async ()
     assert.equal(Object.getPrototypeOf(Item.ItemPriorityComparator.prototype), Object.prototype);
 });
 
+test("Operator.ExecutionResult keeps the Java plain event-payload boundary", async () => {
+    const { Operator } = await import("../../src/operator/Operator.ts");
+
+    assert.equal(Object.getPrototypeOf(Operator.ExecutionResult.prototype), Object.prototype);
+});
+
 test("static inference rule classes no longer carry a jree JavaObject base", async () => {
     const modules = [
         await import("../../src/inference/CompositionalRules.ts"),

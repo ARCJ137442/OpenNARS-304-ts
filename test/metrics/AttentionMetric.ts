@@ -239,7 +239,7 @@ export class AttentionMetric extends JavaObject {
         }
 
         public event(event: java.lang.Class<unknown>, args: java.lang.Object[]): void {
-            let exeResult: Operator.ExecutionResult = args[0] as Operator.ExecutionResult;
+            let exeResult: Operator.ExecutionResult = args[0] as unknown as Operator.ExecutionResult;
             let task: Task | null = exeResult.getTask();
             if (task === null) {
                 throw new java.lang.NullPointerException();
