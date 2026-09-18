@@ -799,9 +799,10 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - `test/node/config-platform-boundary.test.ts`：新增原型链回归，确认 `ConfigReader.prototype` 直接继承 `Object.prototype`；配置边界定向测试 `15/15`。
 - M2-TS：`npm run typecheck` 使用显式 `--incremental false`，诊断 `0`；串行单测共 `289` 项，`287` 通过、`2` 跳过、`0` 失败；build `135` 个源文件成功；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。
 - 受影响 NAL：`nal4.7.nal` 以 TS-only、cold、单线程和冻结 Java 标杆运行，`1/1` marker 通过，0 exception、0 timeout、0 stall、0 not-run。结果位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\s1-config-reader-nal4.7-20260918.jsonl`，SHA-256 为 `0420E251A298B87C7E4D2853F986CAACE513F06DFF4E8314E72EE7D937D1C4A6`。
+- 提交后 `classify-change-gate.mjs --base dba2334 --head 64cc54a` 判定 T1 且 `m1_minus_required=true`，故补跑 TS-only M1- 244 项串行保护矩阵。结果 `244/244` functional/parity，0 exception、0 marker missing、0 stall、0 process limit、0 not-run；总耗时 `1748907 ms`，最大单行 `374501 ms`，最大 RSS `1029468160 bytes`，总 reasoning cycles `2288254`。证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\s1-config-reader-m1-minus-20260918.jsonl`，SHA-256 为 `E999A4DA9CD5DCD9CFC2AA997941C687B3A3AA705637CEEF32058B8F8B4800FB`。
 - jree 审计（去注释 summary）：直接导入文件 `88`，相对本批前 `89` 减少 1；`JavaObject` 文件 `30`，相对本批前 `31` 减少 1；`new LinkedHashMap=0`、`new LinkedHashSet=1`。这些是静态清单变化，不是 023 完成率。
 - 迁移模式扫描：229 个文件；constructor-delegation、malformed-generic/operator/new-this 均为 `0`。平台审计、全部 `scripts/checking/*.py`、汉字编码和 `git diff --check` 通过。
 
 本批可以宣称：ConfigReader 的隐式 JavaObject 壳已按 Java 普通类契约原生化，并经直接原型回归、串行 M2、构建、dist API 和受影响 NAL smoke 保护；可以继续下一个 S1 单簇。普通批次仍只运行 TypeScript 并复用冻结 Java JSONL。
 
-本批不能宣称：M1- 或 #245 在本批全量重跑、023/024 完成、生产核心 jree 清零、Stamp 等核心实体已去 jree、Java/TypeScript 性能等价或正式发布。阶段验收、Java 基线不变量变化或进入 023/024 整体验收时，仍需现跑 canonical Java 并逐字段核对冻结标杆。
+本批不能宣称：#245 在本批重跑、023/024 完成、生产核心 jree 清零、Stamp 等核心实体已去 jree、Java/TypeScript 性能等价或正式发布。M1- 已按提交后 T1 门禁完成，但其中无 marker 样本只有短跑证据，不能替代 131072 周期长周期门。阶段验收、Java 基线不变量变化或进入 023/024 整体验收时，仍需现跑 canonical Java 并逐字段核对冻结标杆。
