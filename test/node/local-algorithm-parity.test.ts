@@ -9,7 +9,9 @@ const javaArtifactsAvailable = existsSync(`${canonicalRoot}/opennars-3.0.4-SNAPS
     && existsSync(`${canonicalRoot}/classes`)
     && existsSync(`${canonicalRoot}/test-classes`);
 
-test("Java and TypeScript local algorithm fixtures remain in parity", { skip: !javaArtifactsAvailable }, () => {
+test("Java and TypeScript local algorithm fixtures remain in parity", {
+    skip: process.env.OPENNARS_TEST_MODE === "ts-only" || !javaArtifactsAvailable,
+}, () => {
     const result = spawnSync(process.execPath, [
         "--experimental-strip-types",
         "scripts/parity/run-local-algorithm-parity.mjs",

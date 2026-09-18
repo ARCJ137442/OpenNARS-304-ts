@@ -48,18 +48,17 @@ M1- 仍须追加执行 `simpleOperationTest.nal`；该夹具不属于 #245。每
 
 ## M2：TypeScript 自身的构建与人工入口
 
-M2 不替代 M1。建议串行执行，避免系统内存压力：
+M2 不替代 M1。普通批次先执行不启动 Java 的 M2-TS，避免系统内存压力：
 
 ```powershell
 npx tsc --noEmit --pretty false --incremental false
 npm test
-npm run test:parity:local --silent
 npm run test:build --silent
 npm run test:api:dist --silent
 npm run test:release --silent
 ```
 
-其中第一条是阶段权威的非增量零诊断检查；`npm test` 默认已经指向 `test:unit:serial`。`test:build` 会先正式构建，再检查 `dist/index.js` 的公共 API；`test:release` 还会验证干净包的外部 tsc、API、CLI、shell 和启动警告。
+其中第一条是非增量零诊断检查；`npm test` 默认指向 TS-only 串行单测，会跳过两项需现跑 Java 的测试，并拦截 Java 子进程。`test:build` 会先正式构建，再检查 `dist/index.js` 的公共 API；`test:release` 还会验证干净包的外部 tsc、API、CLI、shell 和启动警告。阶段性完整 M2 另执行 `npm run test:unit:with-java` 与 `npm run test:parity:local`；不得把日常 skip 计为通过，也不得在普通批次误运行后两项命令。
 
 ### Narsese 交互式 CLI
 

@@ -6,6 +6,8 @@
 
 本文是项目封存后的唯一状态入口。README 只保留必要摘要；历史报告、旧战略和 Agent 提示词不得覆盖本文的状态结论。
 
+2026-09-18 恢复开发的唯一现行目标见[当前开发目标与验收计划](luna-agent-active-goal.md)；下面的“代码冻结点”是历史恢复点，不是当前 HEAD 或新发布候选。
+
 ## 封存结论
 
 项目已经得到一个可编译、可测试、可运行 Shell/CLI、可从 ESM 入口调用的 TypeScript OpenNARS。Java/TypeScript 功能等价基线（M1）与 TypeScript 零诊断构建基线（M2）已经建立并在冻结点保持不回退。
@@ -763,8 +765,14 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - `src/storage/Bag.ts`：`nameTable` 的新建与 `clear()` 改用项目 `NativeMap`，保留 Java `HashMap` 类型边界；NativeMap 提供 Java equals 查找、替换不移动插入位置、values/entry 迭代和删除合同。旧/restored `equalityBuckets`、`itemOrder`、`itemTable` 兼容路径保持不变。
 - `test/node/bag.test.ts`：新增 NativeMap 类型、Java equals 替换和插入顺序回归；保留 malformed/restored bucket 与 FIFO 层级测试。Bag 定向测试 `10/10`。
 - M2：统一串行单测 `279/279`，失败/跳过/取消 `0/0/0`；`test/entity/TLink.test.ts` 已纳入入口；显式 `--incremental false` 的 `tsc` 为 `0` 诊断；build、dist API、受影响 `nal8.add.nal` smoke `1/1` 通过。
-- M1-：TS-only 对冻结 Java 标杆逐文件串行运行，主资源 `244/244` 行完整，`functional_pass=242`、parity `242`、exception/stall/not-run `0/0/0`。`toothbrush2.nal` 与 `nars_multistep_3.nal` 触发 `1800000 ms` process limit，分别推进 `201550` 与 `502562` reasoning cycles；没有发现逻辑异常，但未完成 marker 观测，因此不能写成 `244/244` 全功能通过。
-- 结果文件在项目外归档：`m1-minus-bag-nativemap-20260918.jsonl`，SHA-256 为 `EF6728C3E8D4EEC5496A968FB4B64CA479E28E564334A785F0E5905FFC2D06CC`；总运行 `6756929 ms`，总 reasoning cycles `2288254`，已采集样本峰值 RSS `369.42 MiB`。先前相同 M1- 口径的 `nars_multistep_3.nal` 为 `377969 ms`/`357765 ms` 完成，本批性能显著回退，原因与 NativeMap 线性查找热路径吻合，留作后续性能批次，不改写本批语义结论。
+- M1-：TS-only 对冻结 Java 标杆逐文件串行运行，主资源 `244/244` 行完整，`functional_pass=242`、parity `242`、exception/stall/not-run `0/0/0`。`toothbrush2.nal` 与 `nars_multistep_3.nal` 触发 `1800000 ms` process limit；`201550` 与 `502562` 是计划周期数，原始行的 `last_progress_cycle` 分别为 `170381` 与 `296192`。没有证据证明逻辑分叉，但 marker 观测未完成，因此不能写成 `244/244` 全功能通过。
+- 结果文件在项目外归档：`m1-minus-bag-nativemap-20260918.jsonl`，SHA-256 为 `EF6728C3E8D4EEC5496A968FB4B64CA479E28E564334A785F0E5905FFC2D06CC`；总运行 `6756929 ms`，`reasoning_cycles` 求和 `2288254` 是计划周期合计而非全部实际完成周期，已采集样本峰值 RSS `369.42 MiB`。先前相同 M1- 口径的 `nars_multistep_3.nal` 为 `377969 ms`/`357765 ms` 完成，本批性能显著回退，与 NativeMap 线性查找热路径吻合，但尚须 A/B 与 profile 证明因果；本批不改写语义结论。
 - jree 审计：生产直接 jree 导入文件 `88`，`newLinkedHashMap=0`，`newLinkedHashSet=1`，`JavaObject` 文件 `31`，`java.util` 文件 `39`；平台审计扫描 `172` 个文件。全部 `scripts/checking/*.py` 顺序通过，汉字编码与 `git diff --check` 通过。
 
 本批可以宣称：`Bag.nameTable` 已完成一次保留 Java Map 合同的原生化，并通过局部 M2 与大部分 M1- 功能保护。当前不能宣称：M1- `244/244` 全部通过、023/024 完成、生产核心 jree 清零、Java/TypeScript 性能等价或正式发布。后续应优先单独评估 NativeMap 的索引策略和高周期性能，避免把性能回退与语义迁移混在同一修复中。普通批次继续复用冻结 Java 标杆；阶段验收、集成冻结或基线不变量变化时才现跑 canonical Java。:codex-annotation{index="1"}
+
+### 2026-09-18：日常 TS-only 与阶段 Java 测试门分离
+
+根据用户对 Java 标杆复用的最高指示，`npm test` 与 `test:unit:serial` 改为 TS-only 入口，保留 `test:unit:with-java` 供阶段完整验收显式调用；`test:parity:local` 仍会现跑 Java，不能算入普通批次。TS-only 入口对直接及继承该环境的 Node 子进程设置 Java 启动拦截；两项确需现跑 Java 的单测明确跳过，其他 Java artifact 选择的负向合同仍运行。当前验证发现 `286` 项，`284` 通过、`2` 跳过、`0` 失败；非增量 typecheck `0` 诊断、build 与 dist API 通过。此数不等于完整含 Java 的 M2 结果。
+
+新增 `classify-change-gate.mjs` 按提交差异给 T0/T1/T2 最低门；真实的 `f1cf976..f952a02` Bag 差异被判为 T1，显式 `--stage 023` 被判为 T2。现行长期计划已单独落在 `docs/luna-agent-active-goal.md`。本批没有启动 Java 全量、没有重新运行 M1- 或 #245；上方 Bag 两项未完成的状态不变。

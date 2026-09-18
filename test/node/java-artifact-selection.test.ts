@@ -54,7 +54,10 @@ test("local parity rejects the historical 3.1.0 artifact", { skip: !existsSync(l
   assert.match(result.stderr, /legacy 3\.1\.0 artifact/);
 });
 
-test("local parity default and explicit selection identify the canonical Java artifact", { skip: !existsSync(canonicalJar) || !existsSync(canonicalClasses) || !existsSync(canonicalTestClasses) }, () => {
+test("local parity default and explicit selection identify the canonical Java artifact", {
+  skip: process.env.OPENNARS_TEST_MODE === "ts-only"
+    || !existsSync(canonicalJar) || !existsSync(canonicalClasses) || !existsSync(canonicalTestClasses),
+}, () => {
   const result = run(localRunner, [
     "--java-jar", canonicalJar,
     "--java-classes", canonicalClasses,

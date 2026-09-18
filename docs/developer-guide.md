@@ -1,6 +1,6 @@
 # OpenNARS-304-ts 开发者指南
 
-本文面向维护、审阅或恢复开发的贡献者。项目已经阶段封存；除非有新的明确目标，不应继续推进仍处于 `in-progress` 的规格。
+本文面向维护、审阅或恢复开发的贡献者。2026-08-27 封存点仍是历史恢复基线；当前恢复开发的执行顺序以[现行开发目标](luna-agent-active-goal.md)为准，不能直接执行两份历史 Luna 提示词。
 
 ## 开始前
 
@@ -38,8 +38,9 @@ npm test
 npm run typecheck
 npm run test:build
 npm run test:api:dist
-npm run test:parity:local
 ```
+
+`npm test` 是 TS-only 日常门，两项必须现跑 Java 的测试会显式跳过，且 Java 子进程有启动拦截。阶段门才运行 `npm run test:unit:with-java` 和 `npm run test:parity:local`。用 `node scripts/checking/classify-change-gate.mjs --base <上次验收提交> --head HEAD` 得到最低 T0/T1/T2 门；该脚本不包含未提交工作区。
 
 补充审计：
 
@@ -59,7 +60,7 @@ python scripts/checking/check_hanzi_encoding.py --json-output scripts/checking/h
 - 有 marker 的样本比较 marker 路线；无 marker 的高周期样本使用独立 stage digest。
 - 冻结点 246/246 是证据组合结论，最后一次 245 行 raw 矩阵本身是 244 pass + 1 process limit。
 - M2 必须使用非增量 typecheck、串行单测、正式 build 和 dist API 检查。
-- 每个去 jree 或平台边界批次都先跑局部合同，再跑 M2 和受影响 M1；发现回退立即停止扩张。
+- 每个去 jree 或平台边界批次都先跑局部合同和 M2-TS，再按[现行目标](luna-agent-active-goal.md)的 T0/T1/T2 判别运行受影响 NAL、M1- 或阶段全量 M1；发现回退立即停止扩张。
 
 长测试必须使用唯一结果文件、逐文件 checkpoint 和 `--resume`。命令在后台运行时，不做数秒级轮询；可整理已落盘 checkpoint、文档或独立单测，但不得启动第二份同名全量矩阵。
 
