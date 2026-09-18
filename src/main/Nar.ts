@@ -88,7 +88,8 @@ const printInfo = (message: unknown): void => {
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class Nar extends SensoryChannel implements Reasoner, java.lang.Runnable {
+// Java 原始类型实现 Runnable；Reasoner 已声明 run()，ThreadCompat 只消费该运行合同。
+export class Nar extends SensoryChannel implements Reasoner {
     public narParameters: Parameters = new Parameters();
 
     /*

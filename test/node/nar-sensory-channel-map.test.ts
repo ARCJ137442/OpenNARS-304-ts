@@ -5,6 +5,7 @@ import { java } from "jree";
 import { Nar } from "../../src/main/Nar.ts";
 import { Term } from "../../src/language/Term.ts";
 import { NativeMap } from "../../src/runtime/NativeMap.ts";
+import { RuntimeObject } from "../../src/runtime/RuntimeClass.ts";
 import { SensoryChannel } from "../../src/plugin/perception/SensoryChannel.ts";
 import type { Task } from "../../src/entity/Task.ts";
 import type { Timable } from "../../src/interfaces/Timable.ts";
@@ -42,6 +43,19 @@ test("Nar sensory channel registry keeps Java Map and Term equality semantics", 
 
         assert.equal(channels.remove(equivalentTerm), replacement);
         assert.equal(channels.isEmpty(), true);
+    } finally {
+        nar.stop();
+    }
+});
+
+test("SensoryChannel keeps the Java plain-base class identity contract", () => {
+    assert.equal(Object.getPrototypeOf(SensoryChannel.prototype), RuntimeObject.prototype);
+
+    const nar = new Nar({ configText: "<config></config>" });
+    try {
+        const channel = new ProbeChannel(nar);
+        assert.equal(channel.getClass(), ProbeChannel.class);
+        assert.equal(channel.getClass().getSimpleName(), "ProbeChannel");
     } finally {
         nar.stop();
     }

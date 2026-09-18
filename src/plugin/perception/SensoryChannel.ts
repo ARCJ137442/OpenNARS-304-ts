@@ -1,9 +1,10 @@
 //! Java source: opennars/plugin/perception/SensoryChannel.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Narsese } from "../../io/Narsese.ts";
 import { Parser } from "../../io/Parser.ts";
 import { JavaSystemLoggerCompat } from "../../runtime/jree-compat.ts";
+import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import { Term } from "../../language/Term.ts";
 import { Concept } from "../../entity/Concept.ts";
 import type { Plugin } from "../Plugin.ts";
@@ -13,7 +14,8 @@ import type { Timable } from "../../interfaces/Timable.ts";
 
 
 
-export abstract class SensoryChannel extends JavaObject implements Plugin {
+/** Java原始类型：抽象普通基类；无Serializable、equals/hashCode或专用JavaObject行为。 */
+export abstract class SensoryChannel extends RuntimeObject implements Plugin {
     /**
      * Java Plugin provides this default implementation; SensoryChannel does
      * not make the method abstract. Keeping the default here also lets Nar
