@@ -1091,3 +1091,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计（本批代码提交后）：生产直接导入文件 `88`，`JavaObject` 文件 `12`，`java.util` 文件 `39`，`newLinkedHashMap=0`，`newLinkedHashSet=1`。覆盖率专项仍未实现：当前约有 `137` 个生产 TS 源文件、`306` 个统一 TS-only 测试声明和 `16` 个历史 `test/core` 文件，但 package 尚无 `c8`/`nyc`/Istanbul 覆盖率依赖或脚本；NAL 通过数不作为源码覆盖率替代指标。
 
 本批可以宣称：`TaskLink.Recording` 的无行为 JavaObject 壳已按 canonical Java 合同原生化，并通过直接回归、M2、构建/API、T1 要求的 M1- 及单项环境异常重试。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。代码提交 `f8a7b4d`；报告与状态文档提交待本批最终检查后推送。
+
+### 2026-09-18：`Concept.AnticipationEntry` 普通预期记录壳原生化
+
+本批承接 `8c8e124`，继续按 023 的 canonical Java 合同推进单一嵌套数据壳切片。对照 `java-master/src/main/java/org/opennars/entity/Concept.java` 确认 `AnticipationEntry` 只有四个字段和构造器，Java 声明为 `implements Serializable`，没有自定义 `equals/hashCode`、`.class`、`getClass()` 或身份 key 消费。早期 `dda82d0` 已将外层 `List<AnticipationEntry>` 按有序遍历、追加、身份删除和过滤语义改为原生数组；本批不改变这部分算法。
+
+- `src/entity/Concept.ts`：删除 `AnticipationEntry` 的 jree `JavaObject` 继承、marker 类型壳和空 `super()`；保留字段、`Float32Math.from` 写入、long 字段和构造参数。
+- `test/node/anticipate.test.ts`：增加嵌套记录原型链回归，保留原生数组存储与对象身份断言。
+- M2：专项 `anticipate.test.ts` 为 `7/7`；非增量 `tsc=0`；串行单元测试 `306` 项，`304` 通过、`0` 失败、`2` 跳过；build `sourceFileCount=136`、dist API 通过。
+- `classify-change-gate --base 8c8e124 --head 174508a` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`，原因是 `Concept.ts` 热路径。
+- M1- 使用单线程、cold、逐文件串行、`--cycles 1550`、`--timeout-ms 180000`、`--process-limit-ms 1800000`、TS-only 和冻结 Java 标杆；主资源 `244/244` functional/parity，`0` exception、`0` marker missing、`0` timeout、`0` stall、`0` process limit、`0` not-run、`0` performance warning。分层为 `single_step=215`、`multi_step=24`、`application=5`。
+- M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\concept-anticipation-entry-m1-minus-20260918.jsonl`，SHA-256 `8C85D223258C06F8A44DC30E620DC23856E4BAA5CAABC85D1311DB30CFD98B9A`；TS 总时长 `1,693,705 ms`，最长单文件 `358,440 ms`，最大 RSS `802,410,496 bytes`，reasoning cycles `2,288,254`。
+- 继续复用三轮一致的冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，artifact SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，本批未重复启动 Java。
+- 代码提交 `174508a`；本批 jree 审计：`sourceFiles=137`、直接导入文件 `88`、`javaObjectFiles=11`、`javaUtilFiles=39`、`javaLangFiles=85`、`javaStringFiles=52`、`semanticReviewItems=93`、`candidateNativeItems=2`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。覆盖率专项仍未实现，NAL 通过数不替代源码覆盖率。
+
+本批可以宣称：`Concept.AnticipationEntry` 的无行为 jree `JavaObject` 外壳已按 canonical Java 合同原生化，并通过直接回归、M2、构建/API、T1 要求的 TS-only M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。总体目标完成后才汇总覆盖率与 Java/TypeScript 一致性资料并发送给计划任务 `01a026ef-8f70-7670-95dd-2dd82746b5f8`。
