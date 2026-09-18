@@ -1,5 +1,4 @@
 //! Java source: opennars/io/events/AnswerHandler.java
-import { java } from "jree";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import { Events } from "./Events.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
