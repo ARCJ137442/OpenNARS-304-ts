@@ -3,6 +3,8 @@ import { javaValueEquals, javaValueHashCode } from "./NativeSet.ts";
 interface NativeMapRecord<K, V> {
     key: K;
     value: V;
+    /** Java HashMap-compatible lookup hash; null means equality-only fallback. */
+    hashCode: number | null;
 }
 
 /**
@@ -12,11 +14,14 @@ interface NativeMapRecord<K, V> {
  * Term.countTermRecursively.  Map remains an explicit abstraction here: the
  * backing table is private, lookups use Java equals semantics, replacement
  * keeps the original key and insertion position, and the collection views
- * remain live.  A small ordered record table is intentional for now; it keeps
- * the contract observable while later work can replace the storage strategy.
+ * remain live.  The ordered record table remains the source of iteration order;
+ * hash buckets only narrow equality candidates for keys that expose a Java-
+ * compatible hashCode.  Keys without hashCode retain the previous full
+ * equality scan so Map semantics do not depend on JS identity.
  */
 export class NativeMap<K, V> implements Iterable<[K, V]> {
     private readonly records: NativeMapRecord<K, V>[] = [];
+    private readonly hashBuckets = new Map<number, NativeMapRecord<K, V>[]>();
     private modificationCount = 0;
 
     public constructor(initialEntries: Iterable<readonly [K, V]> = []) {
@@ -28,6 +33,7 @@ export class NativeMap<K, V> implements Iterable<[K, V]> {
     public clear(): void {
         if (this.records.length > 0) {
             this.records.length = 0;
+            this.hashBuckets.clear();
             this.modificationCount += 1;
         }
     }
@@ -101,7 +107,13 @@ export class NativeMap<K, V> implements Iterable<[K, V]> {
     public put(key: K, value: V): V | null {
         const index = this.findIndex(key);
         if (index < 0) {
-            this.records.push({ key, value });
+            const record: NativeMapRecord<K, V> = {
+                key,
+                value,
+                hashCode: this.keyHashCode(key),
+            };
+            this.records.push(record);
+            this.addToHashIndex(record);
             this.modificationCount += 1;
             return null;
         }
@@ -129,6 +141,7 @@ export class NativeMap<K, V> implements Iterable<[K, V]> {
             return null;
         }
         const [removed] = this.records.splice(index, 1);
+        this.removeFromHashIndex(removed);
         this.modificationCount += 1;
         return removed.value;
     }
@@ -183,12 +196,63 @@ export class NativeMap<K, V> implements Iterable<[K, V]> {
         if (index < 0) {
             throw new Error("NativeMap entry is no longer present");
         }
+        this.removeFromHashIndex(record);
         this.records.splice(index, 1);
         this.modificationCount += 1;
     }
 
     private findIndex(key: K): number {
-        return this.records.findIndex((record) => javaValueEquals(record.key, key));
+        const hashCode = this.keyHashCode(key);
+        if (hashCode === null) {
+            return this.records.findIndex((record) => javaValueEquals(record.key, key));
+        }
+        const bucket = this.hashBuckets.get(hashCode);
+        if (bucket === undefined) {
+            return -1;
+        }
+        const record = bucket.find((candidate) => javaValueEquals(candidate.key, key));
+        return record === undefined ? -1 : this.records.indexOf(record);
+    }
+
+    private keyHashCode(key: K): number | null {
+        if (key === null || key === undefined) {
+            return javaValueHashCode(key);
+        }
+        const type = typeof key;
+        if (type !== "object" && type !== "function") {
+            return javaValueHashCode(key);
+        }
+        const hashCode = (key as unknown as { hashCode?: unknown }).hashCode;
+        return typeof hashCode === "function" ? Number(hashCode.call(key)) : null;
+    }
+
+    private addToHashIndex(record: NativeMapRecord<K, V>): void {
+        if (record.hashCode === null) {
+            return;
+        }
+        const bucket = this.hashBuckets.get(record.hashCode);
+        if (bucket === undefined) {
+            this.hashBuckets.set(record.hashCode, [record]);
+        } else {
+            bucket.push(record);
+        }
+    }
+
+    private removeFromHashIndex(record: NativeMapRecord<K, V>): void {
+        if (record.hashCode === null) {
+            return;
+        }
+        const bucket = this.hashBuckets.get(record.hashCode);
+        if (bucket === undefined) {
+            return;
+        }
+        const index = bucket.indexOf(record);
+        if (index >= 0) {
+            bucket.splice(index, 1);
+        }
+        if (bucket.length === 0) {
+            this.hashBuckets.delete(record.hashCode);
+        }
     }
 }
 

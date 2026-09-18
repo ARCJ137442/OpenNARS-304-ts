@@ -776,3 +776,17 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 根据用户对 Java 标杆复用的最高指示，`npm test` 与 `test:unit:serial` 改为 TS-only 入口，保留 `test:unit:with-java` 供阶段完整验收显式调用；`test:parity:local` 仍会现跑 Java，不能算入普通批次。TS-only 入口对直接及继承该环境的 Node 子进程设置 Java 启动拦截；两项确需现跑 Java 的单测明确跳过，其他 Java artifact 选择的负向合同仍运行。当前验证发现 `286` 项，`284` 通过、`2` 跳过、`0` 失败；非增量 typecheck `0` 诊断、build 与 dist API 通过。此数不等于完整含 Java 的 M2 结果。
 
 新增 `classify-change-gate.mjs` 按提交差异给 T0/T1/T2 最低门；真实的 `f1cf976..f952a02` Bag 差异被判为 T1，显式 `--stage 023` 被判为 T2。现行长期计划已单独落在 `docs/luna-agent-active-goal.md`。本批没有启动 Java 全量、没有重新运行 M1- 或 #245；上方 Bag 两项未完成的状态不变。
+
+### 2026-09-18：S0 `NativeMap` 索引修复与 M1- 保护复核
+
+本批承接 `10e8db0` 的现行 S0 目标，先用正常结束的 TypeScript 子进程 profile 证实热点，再做一处不改变 Map 抽象的最小修复。Java canonical 与冻结标杆未变化：source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 Java JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。所有运行均为单线程、cold、TS-only，未启动 Java。
+
+- `src/runtime/NativeMap.ts`：保留 ordered record table、Map/entrySet/keySet/values/iterator 合同和 Java equals 查找方向；为有 Java-compatible `hashCode` 的 key 增加候选桶索引，`remove`、迭代器 `remove`、`clear` 同步维护索引；无 `hashCode` 的对象继续全表 equals 回退。
+- `test/node/native-map.test.ts`：新增 hash collision、remove/clear 索引维护和无 hashCode 对象回退测试；NativeMap 定向回归 `6/6`。
+- profile：`nars_transitivity.nal` 正常完成并生成子进程 profile `CPU.20260918.120616.5080.0.001.cpuprofile`，SHA-256 `4C864400155D54C1898A773ED2EC02FC8CE7E27107CE051A06329B38EA13946C`。聚合自耗时主要为 `CompoundTerm.equals`、`javaValueEquals`、`Bag.findEquivalentKey/removeKey`；`NativeMap.put` 也在热点中，但不能据此把 NativeMap 宣称为唯一根因。
+- 定向高成本样本：`nars_transitivity.nal` 为 `211550` 实际周期、2/2 marker、`111147 ms`、RSS `362.33 MiB`；`toothbrush2.nal` 为 `201550` 实际周期、2/2 marker、`105422 ms`、RSS `960.25 MiB`。两者均 functional/parity 通过、无 exception、stall 或 process limit。证据 SHA-256 分别为 `A6E00333A812371160EE13FD8B58D9A6D5709EF1548D49F7795911781A02B924` 与 `5A3FDE81D5573BA44D5C471F947EE579C09A7DED881587DEE0A430451DDE181D`。
+- M2-TS：非增量 `tsc=0`；NativeMap 定向 `6/6`；串行单测 `288` 项，`286` 通过、`2` 跳过、`0` 失败；build 与 dist API 通过。跳过项是按 TS-only 规则不现跑 Java 的测试，不计为通过。
+- M1-：244 行逐文件串行完整运行，主结果 `243/244` functional/parity；唯一失败是 `nal2.8.nal` 的一次 Windows `EXCEPTION_ACCESS_VIOLATION (3221225477)`，无 Java/TS 逻辑差异证据。同配置单独 retry `1/1` 通过，retry SHA-256 `5DC06ED2A608D16B797DC9CD7E940CFA0D2B0176105BD1193B0C3ADDE595E6E5`；合并本批功能证据为 `244/244`。主矩阵 SHA-256 `5E941B2C9B9E08594A43AB525C68364AB22D09CE271D25C9A02CADA1575A0BE9`。
+- M1- 总耗时为 `1741388 ms`；主矩阵已采集样本的最大 RSS 为 `995.22 MiB`。关键行 `nars_multistep_3.nal` 完成 `502562` 周期、约 `349969 ms`，此前 Bag 批次在进程上限截断；本批未修改原始异常行，主机访问冲突与代码功能结论分开记录。
+
+本批可以宣称：S0 的 NativeMap 最小索引修复通过局部 Map 合同、M2-TS、两个原先高成本样本和 M1- 合并 `244/244` 功能/parity 证据；可以继续现行目标的下一个 023/024 单簇。仍不能宣称：023/024 完成、生产 jree 清零、完整 M1/#245 长周期完成、Java/TypeScript 性能等价或正式发布。`nars_multistep_3.nal` 的约 350 秒只作为性能观测，不是 020 性能门结论。
