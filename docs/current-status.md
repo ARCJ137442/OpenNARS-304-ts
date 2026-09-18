@@ -806,3 +806,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：ConfigReader 的隐式 JavaObject 壳已按 Java 普通类契约原生化，并经直接原型回归、串行 M2、构建、dist API 和受影响 NAL smoke 保护；可以继续下一个 S1 单簇。普通批次仍只运行 TypeScript 并复用冻结 Java JSONL。
 
 本批不能宣称：#245 在本批重跑、023/024 完成、生产核心 jree 清零、Stamp 等核心实体已去 jree、Java/TypeScript 性能等价或正式发布。M1- 已按提交后 T1 门禁完成，但其中无 marker 样本只有短跑证据，不能替代 131072 周期长周期门。阶段验收、Java 基线不变量变化或进入 023/024 整体验收时，仍需现跑 canonical Java 并逐字段核对冻结标杆。
+
+### 2026-09-18：`ComplexEmotions` 隐式 JavaObject 壳原生化
+
+本批承接 `a1d9a14`，继续 023 的单一 jree 责任切片。对照 canonical Java `ComplexEmotions.java` 确认其声明为普通 `public class ComplexEmotions implements Plugin`，没有显式父类；TypeScript 原先的 `extends JavaObject` 只提供兼容外壳。`java` 导入仍用于事件类、Java 字符串、异常和输出，因此没有机械删除整个 jree 导入。
+
+- `src/plugin/mental/ComplexEmotions.ts`：删除 `JavaObject` 导入和继承，增加 Java 普通 Plugin 边界说明；保留事件、字符串与输出合同。
+- `test/node/complex-emotions-boundary.test.ts`：新增实例原型链回归，确认直接继承 JavaScript `Object.prototype`；定向测试 `1/1`。
+- M2-TS：非增量 `tsc=0`；串行单测 `290` 项，`288` 通过、`2` 跳过、`0` 失败；build、dist API 通过。
+- 两个代表性 TS-only NAL smoke（`nal4.7.nal`、`nal8.add.nal`）均为 `1/1`，`java_artifact=null`、无异常/timeout/stall/not-run；结果 SHA-256 分别为 `192C0CC6AC4CCCC213427AD6042F911E4CA1A2D4E6F7E42BA4B34821ADEE48AC` 与 `ED07C51FA6BAA6940B6EAF83F6D22C7F2599EB725923269D5944E5DA6EA6DD87`。
+- 提交 `d8b2f39` 的 `classify-change-gate --scope responsibility` 判定 `T1` 且 `m1_minus_required=true`。随后 M1- 244 项 TS-only 串行矩阵 `244/244` functional/parity，通过 `0` exception、`0` marker missing、`0` stall、`0` process limit、`0` not-run；总耗时 `1787048 ms`，最大单文件 `385820 ms`，最大 RSS `866918400 bytes`，结果位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\s1-complex-emotions-m1-minus-20260918.jsonl`，SHA-256 为 `6259B40D6BDB2F5104FD24B322597162B4CA379AB2595AAFC6148B2542FDD0B0`。
+- jree 审计去注释 summary：直接导入文件 `88`（未变，因 `java` 事件/字符串/输出合同仍在）、`JavaObject` 文件 `29`（本批前 `30`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `230` 个文件，平台审计扫描 `179` 个文件。
+
+本批可以宣称：`ComplexEmotions` 的无行为 JavaObject 外壳已原生化，并经直接回归、M2、代表性 smoke 和提交后 M1- 保护。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。该插件不在默认注册表，代表性 NAL 不等于插件业务行为的直接覆盖；下一候选为 `Counting` 的同类普通 Plugin 外壳。
