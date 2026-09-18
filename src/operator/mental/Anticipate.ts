@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/mental/Anticipate.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { float, long, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -329,14 +329,16 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         nal.memory.emit(DISAPPOINT.class, task);
     }
 
+    // Java source: package-private class Prediction.
+    // It is a plain identity-key data holder; no JavaObject, equals/hashCode,
+    // reflection, or serialization behavior is consumed by this module.
     public Prediction = (($outer) => {
-        return class Prediction extends JavaObject {
+        return class Prediction {
             public readonly predictionCreationTime: long; // 2014 and this is still the best way to define a data structure that
             // simple?
             public readonly predictedOccurenceTime: long;
 
             public constructor(predictionCreationTime: JavaLongInput, predictedOccurenceTime: JavaLongInput) { // rest of the crap:
-                super();
                 this.predictionCreationTime = toRuntimeLong(predictionCreationTime); // when the prediction happened
                 this.predictedOccurenceTime = toRuntimeLong(predictedOccurenceTime); // when the event is expected
             }

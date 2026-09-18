@@ -56,6 +56,8 @@ test("Anticipate keeps Java Prediction identity keys in its outer Map", () => {
     anticipate.anticipations.put(second, secondTerms);
 
     assert.notEqual(first, second);
+    assert.equal(Object.getPrototypeOf(anticipate.Prediction.prototype), Object.prototype);
+    assert.equal(Object.getPrototypeOf(first), anticipate.Prediction.prototype);
     assert.equal(anticipate.anticipations.size(), 2);
     assert.equal(anticipate.anticipations.get(first), firstTerms);
     assert.equal(anticipate.anticipations.get(second), secondTerms);
