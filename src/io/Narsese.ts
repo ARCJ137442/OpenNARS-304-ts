@@ -1,5 +1,5 @@
 //! Java source: opennars/io/Narsese.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { Parser } from "./Parser.ts";
@@ -126,7 +126,9 @@ TemporalRules.registerRuntime({
  *
  * @author Patrick Hammer
  */
-export class Narsese extends JavaObject implements java.io.Serializable, Parser {
+// Java original type: public class Narsese implements Serializable, Parser; no superclass.
+// Serializable is a Java marker; the jree TypeScript interface also requires reflection methods.
+export class Narsese implements Parser {
 
     public readonly memory: Memory;
 
@@ -138,7 +140,6 @@ export class Narsese extends JavaObject implements java.io.Serializable, Parser 
             throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
         }
         const value = args[0] as Memory | Nar;
-        super();
         this.memory = (value as Nar).memory ?? value as Memory;
     }
 
