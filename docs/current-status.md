@@ -1182,3 +1182,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计前→后：`javaObjectFiles=8→7`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、`javaString=52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2` 保持不变。直接导入数未下降，是因为 NarNode 仍需 jree 的网络、IO、异常和字符串兼容边界。
 
 本批可以宣称：`NarNode` 与 `EventReceivedTask` 的无行为 `JavaObject` 壳已按 canonical Java 合同收窄为项目 `RuntimeObject`，并通过直接回归、M2、构建/API、局部 parity 和 T1 要求的 TS-only M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、`nal6.redundant.nal` 的 131072 周期长测完成、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。代码提交为 `b55d594`；报告为 `reports/20260919-020533.md`。
+
+### 2026-09-19：`Stamp` 类身份与 marker 边界原生化
+
+本批承接 `40979a6`，对照 canonical Java `Stamp.java` 确认其原始声明为 `public class Stamp implements Cloneable, Serializable`。两个接口在当前业务中只是 marker；Stamp 的实际合同是 evidential base、时间字段、clone、equals/hashCode、排序和文本表示。因此只收窄转写器添加的 jree Object 壳，不改证据算法。
+
+- `src/entity/Stamp.ts`：移除 jree `JavaObject`，改为项目 `RuntimeObject`；移除仅用于类型适配的 jree `Cloneable/Serializable` marker；保留构造、证据、时间、clone、equals/hashCode 和排序逻辑。为满足 RuntimeObject 的原生字符串合同，`toString()` 返回原生 `string`。
+- `test/node/stamp-evidence.test.ts`：新增 `Stamp.class`、实例 `getClass()`、clone 类型和实例关系回归；专项 `4/4` 通过。
+- M2：`npm run test:unit:serial` 为 `311` 项，`309` 通过、`2` 跳过、`0` 失败；显式非增量 `tsc=0`；build、dist API、canonical Java 局部 parity 均通过。
+- gate：`classify-change-gate --base 40979a6 --head 842d4e4 --scope responsibility` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；原因包括 `Stamp.ts` 高风险路径、semantic token 和 completed responsibility。
+- M1-：TS-only、单线程、cold、逐文件串行，使用冻结 Java baseline、`--cycles 1550`、`--timeout-ms 180000`、`--process-limit-ms 1800000`、`--all --start 0 --limit 244`，明确排除 #245。结果 `244/244` functional pass、`244/244` parity；`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`Java/TS diff=0`、`performance_warning=0`。分层为 `single_step=215`、`multi_step=24`、`application=5`；243 行走 marker 等价路线，`nal6.redundant.nal` 无 marker，状态为 `not_reached`。
+- M1- 证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\stamp-m1-minus-20260919.jsonl`，SHA-256 `C60D323412F49998F1CAF8EBDB06F23CC3D7937A5896923FC60A67E00884BE93`；TS 总时长 `1,643,515 ms`，最长单文件 `344,306 ms`，最大 RSS `1,035,661,312 bytes`，reasoning cycles `2,288,254`。
+- 本批复用三轮一致的冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`、JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5` 均未变化，未重复启动 Java。
+- jree 审计前→后：`javaObjectFiles=7→6`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、`javaString=52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2` 保持不变。直接导入数未下降，是因为 Stamp 仍需 jree 的异常、字符串和 Java 时间边界能力。
+
+本批可以宣称：`Stamp` 的无行为 jree `JavaObject`/marker 壳已按 canonical Java 合同收窄为项目 `RuntimeObject`，并通过直接回归、M2、构建/API、局部 parity 和 T1 要求的 TS-only M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、`nal6.redundant.nal` 的 131072 周期等价、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。代码提交为 `842d4e4`；报告为 `reports/20260919-024737.md`。
