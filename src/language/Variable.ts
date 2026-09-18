@@ -143,7 +143,7 @@ export class Variable extends Term {
         return this.isQueryVariable();
     }
 
-    public equals(that: java.lang.Object): boolean {
+    public equals(that: unknown): boolean {
         if (that === this) {
             return true;
         }
@@ -164,7 +164,7 @@ export class Variable extends Term {
         return javaStringValue(v.getScope().name()) === javaStringValue(this.getScope().name());
     }
 
-    public equalsTerm(that: java.lang.Object): boolean {
+    public equalsTerm(that: unknown): boolean {
         // TODO factor these comparisons into 2 nested if's
         let v: Variable = that as Variable;
         if ((v.scope === v) && (this.scope === this))

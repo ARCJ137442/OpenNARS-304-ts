@@ -55,9 +55,10 @@ export class RuntimeClassToken<T> implements ClassTokenLike {
 }
 
 /**
- * Minimal project-owned replacement for JavaObject where only class identity
- * is part of the Java contract. Serializable entities and Java equality
- * objects deliberately remain on their existing compatibility boundary.
+ * Minimal project-owned replacement for JavaObject where only the observed
+ * class identity and Java-style string coercion are part of the contract.
+ * Serializable entities and Java equality objects deliberately remain on
+ * their existing compatibility boundary.
  */
 export abstract class RuntimeObject {
     public static get class(): RuntimeClassToken<RuntimeObject> {
@@ -74,5 +75,20 @@ export abstract class RuntimeObject {
 
     public equals(other: unknown): boolean {
         return other === this;
+    }
+
+    /**
+     * Java's string concatenation and String(value) call toString on an
+     * object.  Translated OpenNARS toString methods still return jree's boxed
+     * JavaString, so keep this coercion at the project-owned runtime boundary
+     * while the domain classes are migrated away from JavaObject.
+     */
+    public [Symbol.toPrimitive](): string {
+        const toString = (this as unknown as { toString?: unknown }).toString;
+        if (typeof toString === "function") {
+            const rendered = toString.call(this);
+            return typeof rendered === "string" ? rendered : String(rendered);
+        }
+        return Object.prototype.toString.call(this);
     }
 }

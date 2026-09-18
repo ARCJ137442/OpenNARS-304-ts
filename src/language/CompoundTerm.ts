@@ -808,7 +808,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return super.compareTo(that);
     }
 
-    public equals(that: java.lang.Object): boolean {
+    public equals(that: unknown): boolean {
         if (that === this)
             return true;
         if (!(that instanceof Term))

@@ -123,13 +123,13 @@ export abstract class FunctionOperator extends Operator {
      * (can be overridden in subclasses) the extent to which it is truth
      * that the 2 given terms are equal. in other words, a distance metric
      */
-    public override equals(that: java.lang.Object): boolean;
+    public override equals(that: unknown): boolean;
     public equals(a: Term, b: Term): float;
     public equals(...args: unknown[]): boolean | float {
         if (args.length === 1) {
             // Java overload preservation: FunctionOperator inherits Term.equals(Object)
             // while also exposing the two-argument similarity metric below.
-            return super.equals(args[0] as java.lang.Object);
+            return super.equals(args[0]);
         }
         if (args.length === 2) {
             const [a, b] = args as [Term, Term];

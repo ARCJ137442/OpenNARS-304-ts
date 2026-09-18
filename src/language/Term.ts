@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Term.java
-import { java, JavaObject, type JavaString, S } from "jree";
+import { java, type JavaString, S } from "jree";
 import type { int, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Texts } from "../io/Texts.ts";
@@ -9,6 +9,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { javaStringHashCode, javaStringValue, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
 import { NativeSortedSet } from "../runtime/NativeSortedSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
+import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import type { Memory } from "../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -33,7 +34,9 @@ const compoundTerms = (value: unknown): Term[] | null => {
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class Term extends JavaObject implements AbstractTerm {
+// Java 原始声明：public class Term implements AbstractTerm, Serializable。
+// Term 自身承载精确类判等、文本哈希和 clone；RuntimeObject 只替换无行为类身份壳。
+export class Term extends RuntimeObject implements AbstractTerm {
     // Java initializes this reference to null; keeping that default matters for
     // inference branches that test whether a term has an imagination space.
     public imagination: any = null;
@@ -240,7 +243,7 @@ export class Term extends JavaObject implements AbstractTerm {
      *
      * @return The new Term
      */
-    public override  clone(): Term {
+    public clone(): Term {
         let t: Term = new Term();
         if (this.term_indices !== null) {
             t.term_indices = this.term_indices.slice();
@@ -262,7 +265,7 @@ export class Term extends JavaObject implements AbstractTerm {
      * @return Whether the two Terms are equal
      * @param that The Term to be compared with the current Term
      */
-    public override  equals(that: java.lang.Object): boolean {
+    public equals(that: unknown): boolean {
         if (that === this)
             return true;
         if (that === null || !(that instanceof Term) || this.getClass() !== (that as Term).getClass())
@@ -279,7 +282,7 @@ export class Term extends JavaObject implements AbstractTerm {
      *
      * @return An integer hash code
      */
-    public override  hashCode(): int {
+    public hashCode(): int {
         // Match java.lang.String.hashCode() instead of jree's typed-array hash
         // fallback, which otherwise gives unrelated term names the same hash.
         return javaStringHashCode(this.name());
