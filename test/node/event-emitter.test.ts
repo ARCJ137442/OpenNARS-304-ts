@@ -25,6 +25,14 @@ test("EventEmitter.set subscribes only to the requested event classes", () => {
     assert.deepEqual(received, [Events.CycleEnd.class]);
 });
 
+test("Events keeps the Java plain namespace-holder boundary", () => {
+    const events = new Events();
+
+    assert.equal(Object.getPrototypeOf(Events.prototype), Object.prototype);
+    assert.ok(events instanceof Events);
+    assert.equal(Events.CycleEnd.class.getSimpleName(), "CycleEnd");
+});
+
 test("EventEmitter uses native map and observer arrays while preserving identity removal", () => {
     const emitter = new EventEmitter();
     const observer: EventEmitter.EventObserver = { event() {} };

@@ -123,7 +123,9 @@ class ConceptNew extends ParametricInferenceEvent<Concept> {
  * empty event classes for use with EventEmitter
  *
  */
-export abstract  class Events extends JavaObject {
+// Java original type: public class Events; only the nested event classes carry
+// JavaObject/reflection behavior. The outer namespace holder has no superclass.
+export class Events {
 
     /** fired at the beginning of each Nar multi-cycle execution */
     public static CyclesStart =  class CyclesStart extends JavaObject {
