@@ -1137,3 +1137,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 本批提交：代码 `58d6aad`；报告与状态更新待最终检查后提交。jree 审计为 `sourceFiles=137`、直接导入文件 `88`、`JavaObject` 文件 `10`、`java.util` `39`、`java.lang` `85`、Java String `52`、`semanticReviewItems=93`、`candidateNativeItems=2`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。迁移扫描 `238` 个文件，malformed/constructor-delegation 均为 `0`；平台扫描 `180` 个文件，核心候选 `83`、混合边界 `5`、Node adapter 候选 `2`。
 
 本批可以宣称：`Stamp.BaseEntry` 的无行为 jree 壳已按 Java 值对象合同原生化，并通过直接回归、M2、构建/API、T1 要求的 TS-only M1- `244/244`；未观察到功能回退。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。总体目标完成后才汇总覆盖率与 Java/TypeScript 一致性资料并发送给计划任务 `01a026ef-8f70-7670-95dd-2dd82746b5f8`。
+
+### 2026-09-19：`EventHandler` 事件处理器继承边界原生化
+
+本批承接 `bb07a48`，对照 canonical Java `EventHandler.java` 确认其原始声明为 `abstract class EventHandler implements EventEmitter.EventObserver`，没有专用父类；但 TypeScript 派生类实际使用了 `OutputHandler.class` 和 `getClass()`，所以不能简单落到 `Object.prototype`。本批将 jree `JavaObject` 壳收窄为项目自有 `RuntimeObject`，只保留已观测的类身份能力。
+
+- `src/io/events/EventHandler.ts`：删除 jree `JavaObject`，改为 `RuntimeObject`；保留构造重载、source、active 状态、事件列表和注册/注销行为。
+- `src/io/events/TextOutputHandler.ts`：Java `Serializable` 在此仅是 marker；移除会重新要求 jree `getClass()` 的 TypeScript 接口实现，保留 Java 来源注释和输出行为。
+- `test/node/event-emitter.test.ts`：新增继承边界回归，确认 `EventHandler` 的原型直接落在项目 `RuntimeObject`，不再落到 jree `JavaObject`。
+- M2：串行单测 `308` 项，`306` 通过、`2` 跳过、`0` 失败；显式非增量 `tsc=0`；build `sourceFileCount=136`、build 检查、dist API 和 canonical Java 局部 parity 均通过；编码检查无异常，`git diff --check` 无差异错误。
+- canonical Java source commit 为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`；冻结 Java 标杆 SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。本批未启动 Java，也未重复 M1-，因为没有修改 Java 基线、推理算法、事件顺序或容器语义。
+- jree 审计前→后：`javaObjectFiles=10→9`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、`javaString=52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2` 保持不变。
+
+本批可以宣称：EventHandler 的 jree JavaObject 壳已按 Java 继承合同收窄为项目 RuntimeObject，并通过 M2 和局部 parity。仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、Java/TypeScript 性能等价或源码覆盖率目标完成。报告为 `reports/20260919-003336.md`；提交与推送待最终收尾。

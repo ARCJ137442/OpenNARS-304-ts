@@ -26,7 +26,8 @@ const Answer = Events.Answer;
  * To read and write experience as Task streams
  *
  */
-export class TextOutputHandler extends OutputHandler implements java.io.Serializable {
+// Java 原始类型实现 Serializable；它是 marker，不增加运行时方法，故不引入 jree 接口。
+export class TextOutputHandler extends OutputHandler {
 
     private readonly nar: Nar;
 

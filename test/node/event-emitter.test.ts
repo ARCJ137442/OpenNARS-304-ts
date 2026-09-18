@@ -4,7 +4,7 @@ import { java } from "jree";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";
-import type { ClassTokenLike } from "../../src/runtime/RuntimeClass.ts";
+import { RuntimeObject, type ClassTokenLike } from "../../src/runtime/RuntimeClass.ts";
 
 test("EventEmitter.set subscribes only to the requested event classes", () => {
     const emitter = new EventEmitter();
@@ -119,6 +119,11 @@ test("EventHandler accepts Java-style event varargs", () => {
     emitter.emit(Events.CycleStart.class);
     emitter.emit(Events.CycleEnd.class);
     assert.deepEqual(received, [Events.CycleEnd.class]);
+});
+
+test("EventHandler uses the project runtime identity boundary without jree", () => {
+    assert.equal(Object.getPrototypeOf(EventHandler.prototype), RuntimeObject.prototype);
+    assert.notEqual(Object.getPrototypeOf(EventHandler.prototype), Object.prototype);
 });
 
 test("Events.ConceptNew preserves the Java InferenceEvent constructor contract", () => {
