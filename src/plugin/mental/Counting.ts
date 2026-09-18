@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/Counting.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { float, double, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -25,7 +25,10 @@ type EventObserver = EventEmitter.EventObserver;
 /**
  * Counting and Cardinality
  */
-export class Counting extends JavaObject implements Plugin {
+// Java source declares a plain Plugin implementation without a JavaObject base.
+// Keep jree for translated event/exception/string contracts; only the empty
+// compatibility shell and its constructor super() calls are removed here.
+export class Counting implements Plugin {
 
     public obs: EventObserver | null = null;
 
@@ -46,18 +49,12 @@ export class Counting extends JavaObject implements Plugin {
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
-
-                super();
-
-
                 break;
             }
 
             case 1: {
                 const [MINIMUM_PRIORITY] = args as [float];
 
-
-                super();
                 this.MINIMUM_PRIORITY = Float32Math.from(MINIMUM_PRIORITY) as float;
 
 
