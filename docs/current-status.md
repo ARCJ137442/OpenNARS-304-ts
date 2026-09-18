@@ -966,3 +966,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 静态扫描：迁移扫描 `236` 个文件；jree 审计直接导入文件 `88`、`JavaObject` 文件 `21`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`；汉字编码检查和 `git diff --check` 通过。
 
 本批可以宣称：S0 的 A/B/profile 证据链已复核；`Operator.ExecutionResult` 的无行为 JavaObject 外壳已按 canonical Java 普通静态类合同原生化，并经直接回归、M2、操作样本和 T1 gate 保护；代码提交 `8862203`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。
+
+### 2026-09-18：`CompoundTerm.ConvRectangle` 普通几何数据壳原生化
+
+本批承接 `f2d6481`，继续 023 的单一 Java 合同小簇。对照 canonical Java `CompoundTerm.java` 确认 `ConvRectangle` 是无显式父类的 `public static class`，只有 `index_variable`、`term_indices` 两个数据字段和无行为构造器；没有 Serializable、`.class` 或 `getClass()` 消费面。因此只移除嵌套数据壳的 jree 继承，保留外层 `CompoundTerm extends Term`、既有 `Int32Array` 对 Java `int[]` 的表示和全部索引计算。
+
+- `src/language/CompoundTerm.ts`：删除 `JavaObject` 导入、`ConvRectangle` 的 `extends JavaObject` 和空 `super()`；增加 Java 原始类型注释。
+- `test/node/core-runtime.test.ts`：增加 `ConvRectangle` 原型链与默认 `null` 字段回归；已有 `UpdateConvRectangle` 断言继续覆盖几何计算；定向 core-runtime `40/40`。
+- M2-TS：非增量 `tsc=0`；串行单测 `301` 项，`299` 通过、`2` 跳过、`0` 失败；build `sourceFileCount=135`；dist API 通过。
+- 两个 TS-only 冻结标杆 smoke 均 `1/1`，冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，`java_artifact=null`，无 exception、timeout、stall、process limit 或 marker missing。`nal4.7.nal` 结果 SHA-256 `1A04435EC8A920E384999322FA515776E8AAEF08EC7A72A4B9447DCF3A0919E6`；`nal8.add.nal` 结果 SHA-256 `9DD173E3729F45940970229B022E05A82CBFD23C695C695FA5C634E47F83F2D4`。
+- `classify-change-gate --base f2d6481 --head 72161a8`：`T1`、`live_java_required=false`、`m1_minus_required=false`；原因是 `high-risk-path:src/language/CompoundTerm.ts` 与 `semantic-token-change`。本批未重复运行 Java 或 M1-。
+- 静态扫描：迁移扫描 `236` 个文件；jree 审计直接导入文件 `88`、`JavaObject` 文件 `20`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`；编码检查与 `git diff --check` 通过。
+
+本批可以宣称：`CompoundTerm.ConvRectangle` 的无行为 JavaObject 外壳已按 canonical Java 普通静态类合同原生化，并经直接回归、M2、两个 TS-only NAL、静态审计和 T1 gate 保护；代码提交 `72161a8`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。外层 `CompoundTerm` 的继承、几何索引算法和 `int[]` 表示未在本批重写。
