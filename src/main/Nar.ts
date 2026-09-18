@@ -1,5 +1,5 @@
 //! Java source: opennars/main/Nar.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
@@ -178,7 +178,9 @@ export class Nar extends SensoryChannel implements Reasoner {
     public readonly memory: Memory;
 
     public PluginState = (($outer) => {
-        return class PluginState extends JavaObject implements java.io.Serializable {
+        // Java source: public class PluginState implements Serializable.
+        // Serializable is a marker here; plugin lifecycle is the only runtime contract.
+        return class PluginState {
             public readonly plugin: Plugin;
             protected enabled: boolean = false;
 
@@ -189,7 +191,6 @@ export class Nar extends SensoryChannel implements Reasoner {
                 if (args.length === 1 || args.length === 2) {
                     const plugin = args[0] as Plugin;
                     const enabled = args.length === 2 ? args[1] as boolean : true;
-                    super();
                     this.plugin = plugin;
                     this.setEnabled(enabled);
                 } else {

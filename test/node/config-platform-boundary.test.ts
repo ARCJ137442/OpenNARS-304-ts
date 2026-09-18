@@ -96,6 +96,30 @@ test("Nar accepts explicit configuration text without reading a config file", ()
     }
 });
 
+test("Nar.PluginState keeps the Java lifecycle contract without a jree object shell", () => {
+    const transitions: boolean[] = [];
+    const nar = new Nar({ configText: "<config><plugins /></config>" });
+    const plugin = {
+        setEnabled(_owner: Nar, enabled: boolean): boolean {
+            transitions.push(enabled);
+            return true;
+        },
+    };
+
+    try {
+        const state = new nar.PluginState(plugin);
+        assert.equal(Object.getPrototypeOf(Object.getPrototypeOf(state)), Object.prototype);
+        assert.equal(state.isEnabled(), true);
+        assert.deepEqual(transitions, [true]);
+
+        state.setEnabled(false);
+        assert.equal(state.isEnabled(), false);
+        assert.deepEqual(transitions, [true, false]);
+    } finally {
+        nar.stop();
+    }
+});
+
 test("Nar rejects a path passed to the core string configuration overload", () => {
     assert.throws(
         () => new Nar("config/defaultConfig.xml"),
