@@ -853,3 +853,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `27`（本批前 `28`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `232` 个文件，平台审计扫描 `179` 个文件；编码检查与 `git diff --check` 通过。
 
 本批可以宣称：`Emotions` 的无行为 JavaObject 外壳及遗留 `super()` 已原生化，并经直接回归、默认配置路径 M2、代表性 smoke 和修订后 T1 gate 保护。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。代表性 NAL 覆盖默认插件装载路径，但不等于 Emotions 事件行为全覆盖。
+
+### 2026-09-18：`InternalExperience` 隐式 JavaObject 壳原生化
+
+本批承接 `13a1a29` 与门禁修订后的普通类切片。对照 canonical Java `InternalExperience.java` 确认其声明为普通 `public class InternalExperience implements Plugin, EventObserver`；TypeScript 原先的 `JavaObject` 只提供外壳，默认/九参构造器中的 `super()` 是翻译遗留。该插件在默认配置中注册，且通过事件 observer 和 `instanceof` 进入主链，因此保留对象身份、事件类、float32/boolean 配置、异常、字符串和静态方法合同，只移除兼容壳。
+
+- `src/plugin/mental/InternalExperience.ts`：删除 `JavaObject` 导入和继承，移除默认/九参构造器中的空 `super()`，保留 Plugin/EventObserver、float32 配置、事件和静态工具语义。
+- `test/node/internal-experience-boundary.test.ts`：新增默认/九参构造器、float32/boolean 配置、原型链和 `instanceof` 回归；定向测试 `1/1`。
+- M2-TS：非增量 `tsc=0`；串行单测 `294` 项，`292` 通过、`2` 跳过、`0` 失败；build、dist API 通过。
+- 两个代表性 TS-only NAL smoke（`nal4.7.nal`、`nal8.add.nal`）均为 `1/1`，`java_artifact=null`、无异常/timeout/stall/not-run；结果 SHA-256 分别为 `E0F02FC1E175CA1FD4EBEBA651741C584F0E637D4D0982A33BD6C4C670071776` 与 `5F11D684A2750AB5A17E087BB8AAB296CE8B0E8DA7C6808C57B7682AA38BAB3C`。
+- 以 `dcf9597` 为父基线运行修订后的 `classify-change-gate`：`T1`、`live_java_required=false`、`m1_minus_required=false`、生产源改动 `12` 行；原因是 `high-risk-path` 与 `semantic-token-change`。单个普通类不使用 `--scope responsibility`，本批未启动 M1-。
+- jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `26`（本批前 `27`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `233` 个文件，平台审计扫描 `179` 个文件；编码检查与 `git diff --check` 通过。
+
+本批可以宣称：`InternalExperience` 的无行为 JavaObject 外壳及遗留 `super()` 已原生化，并经直接回归、默认配置路径 M2、代表性 smoke 和修订后 T1 gate 保护。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。代表性 NAL 覆盖默认插件装载路径，但不等于 InternalExperience 全部事件分支和静态业务方法的直接覆盖。
