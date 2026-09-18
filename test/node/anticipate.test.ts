@@ -156,6 +156,7 @@ test("Concept stores anticipation entries in a native array", () => {
     );
     const entry = new Concept.AnticipationEntry(0.5, null as never, 0n, 1n);
 
+    assert.equal(Object.getPrototypeOf(Object.getPrototypeOf(entry)), Object.prototype);
     assert.equal(Array.isArray(concept.anticipations), true);
     concept.anticipations.push(entry);
     assert.equal(concept.anticipations.length, 1);

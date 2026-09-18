@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Concept.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
 import type { int, float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
@@ -313,7 +313,9 @@ export class Concept extends Item<Term> {
         return candidate;
     }
 
-    public static AnticipationEntry = class AnticipationEntry extends JavaObject implements java.io.Serializable {
+    // Java source: public static class AnticipationEntry implements Serializable.
+    // Serializable is a marker here; no JavaObject or runtime class contract is consumed.
+    public static AnticipationEntry = class AnticipationEntry {
         public negConfirmationPriority: float = 0.0;
         public negConfirmation: Task | null = null;
         public negConfirm_abort_minTime: long = 0n;
@@ -321,7 +323,6 @@ export class Concept extends Item<Term> {
 
         public constructor(negConfirmationPriority: float, negConfirmation: Task, negConfirm_abort_minTime: long,
             negConfirm_abort_maxTime: long) {
-            super();
             this.negConfirmationPriority = Float32Math.from(negConfirmationPriority) as float;
             this.negConfirmation = negConfirmation;
             this.negConfirm_abort_minTime = negConfirm_abort_minTime;
