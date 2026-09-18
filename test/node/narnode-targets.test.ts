@@ -2,6 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { NarNode } from "../../src/main/NarNode.ts";
 
+test("NarNode.TargetNar keeps the Java plain network-target boundary", () => {
+    assert.equal(Object.getPrototypeOf(NarNode.TargetNar.prototype), Object.prototype);
+});
+
 test("NarNode stores redirection targets in insertion order", () => {
     const first = {} as NarNode.TargetNar;
     const second = {} as NarNode.TargetNar;

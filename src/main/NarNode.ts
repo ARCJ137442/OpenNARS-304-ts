@@ -222,7 +222,9 @@ export class NarNode extends JavaObject implements EventObserver {
     }
 
 
-    public static TargetNar = class TargetNar extends JavaObject {
+    // Java original type: public static class TargetNar;
+    // the socket-bearing target is a plain holder; NarNode retains the host boundary.
+    public static TargetNar = class TargetNar {
 
         /**
          * The target Nar node, specifying under which conditions the current Nar node
@@ -237,7 +239,6 @@ export class NarNode extends JavaObject implements EventObserver {
          */
         public constructor(targetIP: java.lang.String, targetPort: int, threshold: float, mustContainTerm: Term | null,
             sendInput: boolean) {
-            super();
             this.targetAddress = javaNetCompat.InetAddress.getByName(targetIP);
             this.sendSocket = new javaNetCompat.DatagramSocket();
             this.threshold = Float32Math.from(threshold) as float;
