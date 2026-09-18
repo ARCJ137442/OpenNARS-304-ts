@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/Emotions.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { float, int, double, long } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -22,7 +22,10 @@ import { Float32Math } from "../../runtime/Float32.ts";
  * emotional value; self-felt internal mental states; variables used to record
  * emotional values
  */
-export class Emotions extends JavaObject implements Plugin {
+// Java source declares a plain Plugin implementation without a JavaObject base.
+// Keep jree for translated event/exception/string/Math contracts; this class's
+// identity is already provided by the native TypeScript class itself.
+export class Emotions implements Plugin {
 
     public HAPPY_EVENT_HIGHER_THRESHOLD: float = Float32Math.from(0.75) as float;
     public HAPPY_EVENT_LOWER_THRESHOLD: float = Float32Math.from(0.25) as float;
@@ -97,18 +100,12 @@ export class Emotions extends JavaObject implements Plugin {
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
-
-                super();
-
-
                 break;
             }
 
             case 5: {
                 const [HAPPY_EVENT_LOWER_THRESHOLD, HAPPY_EVENT_HIGHER_THRESHOLD, BUSY_EVENT_LOWER_THRESHOLD, BUSY_EVENT_HIGHER_THRESHOLD, CHANGE_STEPS_DEMANDED] = args as [float, float, float, float, int];
 
-
-                super();
                 this.BUSY_EVENT_LOWER_THRESHOLD = Float32Math.from(BUSY_EVENT_LOWER_THRESHOLD) as float;
                 this.BUSY_EVENT_HIGHER_THRESHOLD = Float32Math.from(BUSY_EVENT_HIGHER_THRESHOLD) as float;
                 this.HAPPY_EVENT_LOWER_THRESHOLD = Float32Math.from(HAPPY_EVENT_LOWER_THRESHOLD) as float;
