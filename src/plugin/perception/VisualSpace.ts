@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/perception/VisualSpace.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../../runtime/Float32.ts";
 import { TruthFunctions } from "../../inference/TruthFunctions.ts";
@@ -17,7 +17,8 @@ import type { Term } from "../../language/Term.ts";
  *
  * @author Patrick
  */
-export class VisualSpace extends JavaObject implements ImaginationSpace {
+// Java 原类型：普通 public class VisualSpace implements ImaginationSpace；无 JavaObject 继承。
+export class VisualSpace implements ImaginationSpace {
 
     public readonly source: Float64Array[]; // assumed to be set from outside
     public readonly cropped: Float64Array[]; // all elements assumed to be in [0,1] range
@@ -33,7 +34,6 @@ export class VisualSpace extends JavaObject implements ImaginationSpace {
 
     public constructor(nar: Nar, source: Float64Array[], py: int, px: int, height: int,
         width: int) {
-        super();
         this.nar = nar;
         this.height = height;
         this.width = width;
