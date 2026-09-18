@@ -937,3 +937,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：`ProcessGoal.ExecutablePrecondition` 的无行为 JavaObject 壳已原生化，并通过直接回归、完整串行 M2、两个 TS-only smoke、T1 要求的 M1- 244/244 和静态审计保护；代码提交 `875abba`。
 
 仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期在本批完成、Java/TypeScript 性能等价或正式发布。`EventHandler` 的 JavaObject 继承仍是有证据的反射/类型边界，需独立设计后再处理。
+
+### 2026-09-18：`ItemPriorityComparator` 无行为 JavaObject 壳原生化
+
+本批承接 `39746db`，继续 023 的 Java 合同驱动小簇。对照 canonical Java `Item.java` 确认外层 `Item<K>` 是抽象实体类并实现 `Serializable`，必须保留 JavaObject、equals/hashCode 和实体继承合同；嵌套 `ItemPriorityComparator<E extends Item<?>>` 是普通静态比较器，没有显式父类、`getClass()` 或 `.class` 消费面，因此只移除嵌套比较器的翻译兼容壳。
+
+- `src/entity/Item.ts`：删除 `ItemPriorityComparator` 的 `extends JavaObject`，增加 Java 原始类型注释；外层 `Item` 保持不变。
+- `test/node/core-runtime.test.ts`：增加比较器原型链回归，确认直接继承 `Object.prototype`；定向 core-runtime `38/38`。
+- M2-TS：非增量 `tsc=0`；串行单测 `299` 项，`297` 通过、`2` 跳过、`0` 失败；build `sourceFileCount=135`；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。
+- 两个 TS-only 冻结标杆 smoke（`nal4.7.nal`、`nal8.add.nal`）均 `1/1`，冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，`java_artifact=null`，无 exception、timeout、stall、process limit 或 marker missing。结果 SHA-256 分别为 `D251CBB56C2D741E1CE0A6FD70133F2028D445E832CD8404405E9BF5E0DFDE46` 与 `0A3108471EA2DCC5C2D0707B265E4747EF0DED328D5BBEBC137D93F0326D18BC`。
+- 以 `39746db` 为父基线运行 `classify-change-gate`：`T1`、`live_java_required=false`、`m1_minus_required=false`；原因是 `high-risk-path:src/entity/Item.ts` 与 `semantic-token-change`。本批未重复运行 Java 和 M1-。
+- 生产 jree 审计：直接导入文件 `88`、`JavaObject` 文件 `22`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`。编码检查与 `git diff --check` 通过。
+
+本批可以宣称：`ItemPriorityComparator` 的无行为 JavaObject 外壳已按 canonical Java 合同原生化，并经直接回归、串行 M2、两个 TS-only smoke、静态审计和 T1 gate 保护；代码提交 `b358e4c`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。外层 `Item` 的 JavaObject、equals/hashCode、Serializable 和核心实体行为未在本批重写。
