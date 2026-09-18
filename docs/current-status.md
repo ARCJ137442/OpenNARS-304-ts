@@ -1228,3 +1228,24 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计前→后：`javaObjectFiles=5→4`；当前 summary 为 `sourceFiles=137`、直接导入文件 `88`、`java.util=39`、`java.lang=85`、Java String `52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2`。平台审计扫描 `180` 个文件，`coreCandidateFiles=83`、`mixedBoundaryFiles=5`、`nodeAdapterCandidateFiles=2`、`jreeImportFiles=95`、`browserShimFiles=2`。
 
 本批可以宣称：`Sentence` 的无行为 jree 外层壳已按 Java 类身份合同收窄为项目 `RuntimeObject`，M2-TS、直接回归和 T1 要求的两个 TS-only smoke 通过，未观察到功能回退。仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。代码提交为 `6e2ee4b`；报告为 `reports/20260919-034853.md`，状态收尾待最终检查后提交。
+
+### 2026-09-19：`Term` 运行时身份与字符串边界原生化
+
+本批承接 `2f59905`，对照 canonical Java `Term.java` 与 `AbstractTerm.java` 做前向审查。Java 的 `Term` 原始声明为 `implements AbstractTerm, Serializable`；可观察合同包括 `getClass()` 精确类判等、原子缓存、`SELF`、clone、名称 hash 和文本转换。`AbstractTerm` 的 `Cloneable`/`Comparable` 是领域接口的排序与复制合同，不应把 jree 的反射型 `JavaObject` 要求继续泄漏到 Term 子树。
+
+- `src/language/Term.ts`：移除 jree `JavaObject`，改为项目 `RuntimeObject`；保留 `Term.equals` 的精确运行时类比较、`SELF` 延迟登记、原子缓存、clone、Java 文本 hash 和 `CharSequence` 输入边界。
+- `src/language/AbstractTerm.ts`：改为项目自有的 `clone`/`compareTo` 接口合同，去除只为翻译器引入的 jree `Cloneable`/`Comparable` 反射约束。
+- `src/runtime/RuntimeClass.ts`：为迁移对象集中提供 Java 风格的对象字符串强制转换，调用具体类的 `toString()`；没有把 `jree-compat` 重新引回 RuntimeObject。
+- `src/language/CompoundTerm.ts`、`Variable.ts`、`src/operator/FunctionOperator.ts`：只把领域 equals/equalsTerm 参数从 jree `java.lang.Object` 收窄到 `unknown`，没有修改推理规则、集合实现或调度算法。
+- `test/node/core-runtime.test.ts`：增加 Term 原型、静态/实例 class token、clone、equals/hashCode 与 `String(term)` 回归。
+
+- M2：Term/语言/推理关联定向测试 `62/62`；完整串行单测 `312` 项，`310` 通过、`2` 跳过、`0` 失败；`test/entity/TLink.test.ts` 仍由统一入口纳入；非增量 `npx tsc --noEmit --pretty false --incremental false` 为 `0` 诊断；build `sourceFileCount=136`、build 检查和 dist API 通过。
+- change gate：`classify-change-gate --base 2f59905 --head a9ef59d` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；因修改涉及 6 个高风险源码文件，按 gate 运行冻结 Java 标杆下的 TS-only M1-，没有启动 Java。
+- M1-：单线程、cold、逐文件串行、冻结 Java JSONL、`--cycles 1550`、`--timeout-ms 180000`、`--process-limit-ms 1800000`、`--resource-metrics`，244 个主资源（排除 #245）`244/244` functional/parity；`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`java_ts_diff=0`、`performance_warning=0`。243 行走 marker 路线，1 个 markerless 资源为 `unverified`，不构成长周期等价。
+- M1- 证据位于项目外：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\term-m1-minus-20260919.jsonl`，SHA-256 `75590A757BDDDADC212367174B9BC7BA3F515E1C9207A88A18EDDA3F13D42B93`；TS 总时长 `1,655,234 ms`，最长单文件 `354,893 ms`，最大 RSS `1,022,398,464 bytes`，reasoning cycles `2,288,254`。
+- Java 标杆未变化：冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；canonical Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。本批没有启动 Java。
+- jree 审计前→后：`javaObjectFiles=4→3`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、Java String `52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2`。迁移扫描仍为 `238` 个文件：constructor-delegation `0`、malformed generic/operator/new-this `0`，java-class-literal `220/46`，java-string `230/62`，java-collection `664/104`，jree-runtime-type `1574/143`，static-initializer `7/7`，anonymous-java-class `67/11`。平台扫描 `180` 个文件：core candidate `83`、mixed boundary `5`、Node adapter candidate `2`、jree import `95`、browser shim `2`。
+
+本批可以宣称：`Term` 已脱离 jree `JavaObject` 外层壳并保留 Java 可观察合同，M2、非增量类型检查、构建/API、T1 gate 要求的 TS-only M1- `244/244` 均通过；代码提交 `a9ef59d`，已推送到 `origin/main`，批次报告为 `reports/20260919-040006.md`。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、#245 长期稳定性完成、markerless 资源的 131072 周期等价、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。普通验证继续复用冻结 Java 标杆；仅在 Java artifact/source/classes、runner 合同、配置/线程/随机条件或整体验收阶段变化时重跑 Java。
