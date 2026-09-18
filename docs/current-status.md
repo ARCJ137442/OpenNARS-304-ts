@@ -1005,3 +1005,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 静态审计（HEAD `e03f823`）：迁移扫描 `236` 个文件；jree 审计直接导入文件 `88`、`JavaObject` 文件 `19`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计继续保留宿主边界和核心 jree 风险清单。汉字编码检查与 `git diff --check` 通过。
 
 本批可以宣称：`Anticipate.Prediction` 的无行为 JavaObject 外壳已按 canonical Java 普通类合同原生化，并经身份键/原型链回归、串行 M2-TS、两个 TS-only smoke、T1 gate 和静态审计保护；代码提交 `e03f823`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。外层 `Anticipate`、Map/Set 抽象、预测派发和 `jree-compat` 未在本批重写。
+
+### 2026-09-18：`VisionChannel.Prototype` 普通感知数据壳原生化
+
+本批承接 `352e3ea`，继续按 023 的 Java 合同推进单一普通类切片。对照 canonical Java `VisionChannel.java` 确认 `Prototype` 是包可见普通类，只含 observationCount、Task 和三个普通方法，没有 `.class`、`getClass()` 或 Serializable 消费面。`VisionChannel.class` 仍用于日志反射，和嵌套 `Prototype` 的无行为对象壳是两条独立合同。
+
+- `src/plugin/perception/VisionChannel.ts`：删除 `Prototype` 的 `JavaObject` 导入、继承和空 `super()`；保留外层 `VisionChannel.class`、事件 class token、float32 配置、原生数组顺序和感知算法。
+- `test/node/vision-channel.test.ts`：在现有 prototype 生成测试中增加普通原型链断言。
+- M2-TS：非增量 `tsc=0`；串行单测 `302` 项，`300` 通过、`2` 跳过、`0` 失败；build 源文件 `135` 个成功；dist API 通过。
+- 两个 TS-only 冻结标杆 smoke 均 `functional_pass=true`、`parity=true`，冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，`java_artifact=null`，单线程 cold。`nal4.7.nal` 为 `1550` 周期、`2901 ms`，结果 SHA-256 `38B262E91DDFDD7BA98BBC54AE768F819E49BA08C1E485A78327E1879B29E860`；`nal8.add.nal` 为 `1550` 周期、`3468 ms`，结果 SHA-256 `CA8C8D1FE8727D0BA2536497DB30798167410EEE2A350624382EADC4F8D72405`。两项均无 exception、timeout、stall、process limit 或 marker missing。
+- 以 `352e3ea` 为父基线运行 `classify-change-gate`：T1、`live_java_required=false`、`m1_minus_required=false`；原因是 `high-risk-path:src/plugin/perception/VisionChannel.ts` 与 `semantic-token-change`，本批未启动 M1-。
+- 静态审计（HEAD `65927d9`）：迁移扫描 `236` 个文件；jree 审计直接导入文件 `88`、`JavaObject` 文件 `18`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`。汉字编码检查与 `git diff --check` 通过。
+
+本批可以宣称：`VisionChannel.Prototype` 的无行为 JavaObject 外壳已按 canonical Java 普通类合同原生化，并经原型链/感知生成回归、串行 M2-TS、两个 TS-only smoke、T1 gate 和静态审计保护；代码提交 `65927d9`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。VisionChannel 外层、日志反射、感知算法和 float 合同未在本批重写。
