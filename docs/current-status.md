@@ -879,3 +879,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `25`（本批前 `26`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `234` 个文件。平台审计仍把 Shell 标记为 mixed Node-host boundary；未把宿主 Node 依赖误算作核心去 jree 完成。
 
 本批可以宣称：`Shell` 的无行为 JavaObject 外壳已按 canonical Java 普通类契约原生化，并经直接回归、串行 M2-TS、Shell 无警告测试、两个代表性 smoke、静态审计和 T1 gate 保护；代码提交 `3cb60c8` 已推送到 `origin/main`。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。Shell 的 Node 文件系统、stdin、线程和退出能力仍属于后续 024 宿主适配边界，本批未改变这些行为。
+
+### 2026-09-18：`VisualSpace` 隐式 JavaObject 壳原生化
+
+本批承接 `f1bc27f`，继续 023/024 的感知边界切片。对照 canonical Java `VisualSpace.java` 确认 Java 声明为普通 `public class VisualSpace implements ImaginationSpace`，无显式父类；TypeScript 原先的 `JavaObject` 只提供翻译外壳。`instanceof VisualSpace` 是领域类身份判断，必须保留；图像复制、float 和 ImaginationSpace 算法不在本批改动范围。
+
+- `src/plugin/perception/VisualSpace.ts`：删除 `JavaObject` 导入、外层继承和空 `super()`；保留 ImaginationSpace、`instanceof VisualSpace`、静态 move/zoom 插件、图像快照和数值计算合同。
+- `test/node/visual-space-boundary.test.ts`：新增构造器、原型链、实例身份、源数据复制和插件登记回归；定向测试 `1/1`。
+- M2-TS：非增量 `tsc=0`；串行单测 `296` 项，`294` 通过、`2` 跳过、`0` 失败；build 源文件 `135` 个成功；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。
+- 两个代表性 TS-only NAL smoke（`nal4.7.nal`、`nal8.add.nal`）均 `1/1`，冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，`java_artifact=null`，无 exception/stall/process limit/marker missing。结果 SHA-256 分别为 `41538A9AF4EAC9141FFB8047474D23C8C8FF74C2EFC0DBD7E1DBFD6ABDFC50BD` 与 `517C1DC13C7F7790F1224DAAD54EBB4D46C46D370BEEB04E73B50A9BC2EACAB9`。
+- 以 `f1bc27f` 为父基线运行 `classify-change-gate`：`T1`、`live_java_required=false`、`m1_minus_required=false`、生产源改动 `6` 行；原因是 `high-risk-path:src/plugin/perception/VisualSpace.ts` 与 `semantic-token-change`。单个普通感知类不使用 `--scope responsibility`，本批未启动 M1-。
+- jree 审计去注释 summary：直接导入文件 `88`、`JavaObject` 文件 `24`（本批前 `25`）、`newLinkedHashMap=0`、`newLinkedHashSet=1`；迁移扫描 `235` 个文件。平台审计仍把感知模块和 jree 依赖作为静态边界项记录，本批未误宣称核心 jree 清零。
+
+本批可以宣称：`VisualSpace` 的无行为 JavaObject 外壳已按 canonical Java 普通类契约原生化，并经直接回归、串行 M2-TS、两个 TS-only smoke、静态审计和 T1 gate 保护；代码提交 `6fe4f6e` 已推送到 `origin/main`。仍不能宣称：023/024 完成、生产核心 jree 清零、#245 长期稳定性完成、Java/TypeScript 性能等价或正式发布。VisualSpace 的图像算法、float 合同和 Nar/插件依赖仍未改变。
