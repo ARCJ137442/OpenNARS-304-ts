@@ -979,3 +979,16 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 静态扫描：迁移扫描 `236` 个文件；jree 审计直接导入文件 `88`、`JavaObject` 文件 `20`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`；编码检查与 `git diff --check` 通过。
 
 本批可以宣称：`CompoundTerm.ConvRectangle` 的无行为 JavaObject 外壳已按 canonical Java 普通静态类合同原生化，并经直接回归、M2、两个 TS-only NAL、静态审计和 T1 gate 保护；代码提交 `72161a8`。仍不能宣称：023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。外层 `CompoundTerm` 的继承、几何索引算法和 `int[]` 表示未在本批重写。
+
+### 2026-09-18：`NarNode.TargetNar` 普通网络目标壳原生化
+
+本批承接 `f6b160d`，继续 023/024 的宿主边界小簇。对照 canonical Java `NarNode.java` 确认 `TargetNar` 是无显式父类的 `public static class`，只承载目标地址、DatagramSocket、阈值、Term 和发送标记，没有 Serializable、`.class` 或 `getClass()` 消费面。因此只移除嵌套 holder 的 jree 外壳，不改变 Node socket 兼容、float32 收窄、发送逻辑或 `NarNode` 外层。
+
+- `src/main/NarNode.ts`：删除 `TargetNar` 的 `extends JavaObject` 和空 `super()`，增加 Java 原始类型及宿主边界说明；`NarNode` 外层和 `EventReceivedTask` 仍保留 JavaObject。
+- `test/node/narnode-targets.test.ts`：增加 TargetNar 原型链回归；定向测试 `2/2`。
+- M2-TS：非增量 `tsc=0`；串行单测 `302` 项，`300` 通过、`2` 跳过、`0` 失败；build `sourceFileCount=135`；dist API 通过。
+- 两个 TS-only 主链 smoke 均 `1/1`，冻结 Java baseline SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，`java_artifact=null`，无 exception、timeout、stall、process limit 或 marker missing。由于标准 NAL 不实例化 NarNode 网络路径，它们记录为主链无回退证据，不代替网络宿主测试。结果 SHA-256 分别为 `575FCFB90807D48399A79665D6B297121699C992D4D79D973F1648C8C41D63CE` 与 `B8345CB4D7BC7F50F5AE8D88476F08DF60315B948044DB7F47447C3D777AE76B`。
+- `classify-change-gate --base f6b160d --head be1dd9f`：`T1`、`live_java_required=false`、`m1_minus_required=false`；原因是 `high-risk-path:src/main/NarNode.ts` 与 `semantic-token-change`。本批未重复运行 Java 或 M1-。
+- 静态扫描：迁移扫描 `236` 个文件；jree 审计直接导入文件 `88`、`JavaObject` 文件 `20`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计扫描 `179` 个文件，核心候选 `83`、混合边界 `5`；编码检查与 `git diff --check` 通过。
+
+本批可以宣称：`NarNode.TargetNar` 的无行为 JavaObject 外壳已按 canonical Java 普通静态类合同原生化，并经直接边界回归、M2、主链 smoke、静态审计和 T1 gate 保护；代码提交 `be1dd9f`。仍不能宣称：024 网络宿主完整验收、023/024 完成、生产核心 jree 清零、完整 M1/#245 长周期重新完成、Java/TypeScript 性能等价或正式发布。`NarNode` 外层、`EventReceivedTask` 和真实 socket 通道未在本批重写。
