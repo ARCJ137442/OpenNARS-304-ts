@@ -1,5 +1,5 @@
 //! Java source: opennars/main/Shell.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { readFileSync } from "node:fs";
 import { Nar } from "./Nar.ts";
@@ -19,7 +19,8 @@ import { createNodeRuntimeCapabilities } from "../platform/node/SystemCommandCap
  */
 /* TODO check duplicated code with {@link org.opennars.main.Nar} */
 // Manage the internal working thread. Communicate with Reasoner only.
-export class Shell extends JavaObject {
+// Java 原类型：普通 public class Shell；无 JavaObject 继承。
+export class Shell {
 
     private readonly nar: Nar;
     private out: java.io.PrintStream = java.lang.System.out;
@@ -121,7 +122,6 @@ export class Shell extends JavaObject {
     }
 
     public constructor(n: Nar) {
-        super();
         this.nar = n;
     }
 
