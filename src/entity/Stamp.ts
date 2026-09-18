@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Stamp.java
-import { java, JavaObject, S } from "jree";
+import { java, S } from "jree";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Tense } from "../language/Tense.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -7,6 +7,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
+import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import { addRuntimeLong, subtractRuntimeLong, toRuntimeLong, type JavaLongInput } from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Memory } from "../storage/Memory.ts";
@@ -28,7 +29,9 @@ const runtimeLong = (value: number): long => value as unknown as long;
  * @author Pei Wang
  * @author Patrick Hammer
  */
-export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, java.io.Serializable {
+// Java 原始声明：public class Stamp implements Cloneable, Serializable。
+// 两个接口在本项目只是 marker；RuntimeObject 仅保留项目已观测的类身份合同。
+export class Stamp extends RuntimeObject {
     /**
      * serial numbers. not to be modified after Stamp constructor has initialized it
      */
@@ -314,7 +317,7 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
      *
      * @return The cloned stamp
      */
-    public override  clone(): Stamp {
+    public clone(): Stamp {
         return new Stamp(this);
     }
 
@@ -532,8 +535,8 @@ export class Stamp extends JavaObject implements java.lang.Cloneable<Stamp>, jav
         return this.nameCache;
     }
 
-    public override  toString(): java.lang.String {
-        return this.name().toString();
+    public override toString(): string {
+        return String(this.name().toString());
     }
 
     /**

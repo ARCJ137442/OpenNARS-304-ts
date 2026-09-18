@@ -6,6 +6,15 @@ import { Tense } from "../../src/language/Tense.ts";
 const makeStamp = (narId: number, inputId: number): Stamp =>
     new Stamp(Tense.Present, new Stamp.BaseEntry(narId, inputId));
 
+test("Stamp keeps class identity and clone without a jree JavaObject shell", () => {
+    const stamp = makeStamp(7, 11);
+    const clone = stamp.clone();
+
+    assert.equal(Stamp.class.getName(), "Stamp");
+    assert.equal(stamp.getClass(), Stamp.class);
+    assert.ok(clone instanceof Stamp);
+});
+
 test("Stamp.baseOverlap uses BaseEntry value equality, not object identity", () => {
     const first = makeStamp(7, 11);
     const equalValue = makeStamp(7, 11);
