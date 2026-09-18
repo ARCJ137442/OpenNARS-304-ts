@@ -1,6 +1,7 @@
 //! Java source: opennars/main/NarNode.java
-import { java, JavaObject, closeResources, handleResourceError, throwResourceError, S } from "jree";
+import { java, closeResources, handleResourceError, throwResourceError, S } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
+import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import { Nar } from "./Nar.ts";
@@ -38,11 +39,14 @@ const javaIoCompat = java.io as unknown as JavaIoCompat;
 /**
  * @author Patrick Hammer
  */
-export class NarNode extends JavaObject implements EventObserver {
+// Java 原始声明：public class NarNode implements EventObserver。
+// 旧 TS 仅为提供 .class 身份令牌而继承 jree.JavaObject；RuntimeObject 保留这一窄契约。
+export class NarNode extends RuntimeObject implements EventObserver {
 
     /* An extra event for received tasks */
     public EventReceivedTask = (($outer) => {
-        return class EventReceivedTask extends JavaObject {
+        // Java 原始声明：public class EventReceivedTask；这里只需要 .class 身份令牌。
+        return class EventReceivedTask extends RuntimeObject {
         }
     })(this);
 

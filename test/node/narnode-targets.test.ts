@@ -6,6 +6,11 @@ test("NarNode.TargetNar keeps the Java plain network-target boundary", () => {
     assert.equal(Object.getPrototypeOf(NarNode.TargetNar.prototype), Object.prototype);
 });
 
+test("NarNode keeps class identity without inheriting jree.JavaObject", () => {
+    assert.equal(NarNode.class.getName(), "NarNode");
+    assert.equal(NarNode.class.equals(NarNode.class), true);
+});
+
 test("NarNode stores redirection targets in insertion order", () => {
     const first = {} as NarNode.TargetNar;
     const second = {} as NarNode.TargetNar;
