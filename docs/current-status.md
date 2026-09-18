@@ -1282,3 +1282,22 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计前→后：`javaObjectFiles=2→1`；直接导入文件 `88→88`；`java.util=39`、`java.lang=85`、Java String `52`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`semanticReviewItems=93`、`candidateNativeItems=2`。当前没有 c8/nyc/Istanbul 覆盖率依赖或脚本，NAL 通过数继续不作为源码覆盖率替代。
 
 本批可以宣称：`Memory` 的无行为 jree 外壳已按 canonical Java plain-class 合同原生化，并通过 M2 与 T1 要求的 TS-only M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、markerless 131072 周期等价、Java/TypeScript 性能等价、源码覆盖率目标完成或正式发布。代码提交 `a2de854` 已推送；批次报告为 `reports/20260919-061141.md`，文档收尾提交待完成。
+
+### 2026-09-19：`Memory` 与 `Bag` Java 迭代器边界原生化
+
+本批承接 `75294f9`，继续审查存储层的 Java-shaped 兼容类型。canonical Java 的 `Memory.iterator()` 和 `Bag.iterator()` 返回 `java.util.Iterator<T>`；当前实现实际调用的是 NativeMap/Bag 的 `hasNext/next/remove` 迭代器，因此新增项目自有最小合同，避免把 jree 的类型要求重新泄漏到存储核心。
+
+- `src/runtime/JavaIterator.ts`：新增 `JavaIterator<T>`，定义 `hasNext()`、`next()`、`remove()`；具体对象仍由 NativeMap/Bag 的 TypeScript 原生迭代器实现。
+- `src/storage/Bag.ts`：`iterator()` 从 jree Iterator 类型改为项目 `JavaIterator<Type>`；`[Symbol.iterator]()` 返回 `IterableIterator<Type>`，不改变插入顺序或移除语义。
+- `src/storage/Memory.ts`：`iterator()` 改为 `JavaIterator<Concept>`；`[Symbol.iterator]()` 直接复用 `concepts` 的原生可迭代器，删除中间包装。
+- `test/perf/BagPerf.ts`：性能测试消费者同步使用项目迭代器合同；`test/node/memory-operator-registry.test.ts` 增加双路径回归。
+- M2：专项 `3/3`；串行单测 `315` 项，`313` 通过、`2` 跳过、`0` 失败；非增量 typecheck、build、dist API 均通过，build `sourceFileCount=137`。
+- change gate：`75294f9..c798116` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`，原因包括 Bag/Memory 热路径、3 个生产源文件和责任簇收口。
+- 受影响 NAL smoke：`toothbrush.nal`、`nal8.add.nal` 共 `2/2`，无异常、marker 缺失、停滞或进程限制。
+- M1-：TS-only、单线程、cold、逐文件串行、冻结 Java 标杆；`244/244` functional/parity，`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`java_ts_diff=0`、`performance_warning=0`。243 项走 marker 路线，`nal6.redundant.nal` 运行到 `1650/131072` 周期并标为 `not_reached`。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\iterator-boundary-m1-minus-20260919.jsonl`，SHA-256 `F00DDC2243C28460F5AEA59AFCD381D44D95AADE3B36C5A6C01197989AEB48D4`；总耗时 `1,755,609 ms`，最长单文件 `384,667 ms`，最大 RSS `989,159,424 bytes`，reasoning cycles `2,288,254`。
+- smoke 证据：`iterator-boundary-smoke-20260919.jsonl`，SHA-256 `7B5B690207BE24D242DCAA1FD5C339DE38E92BE4D8F59A27C3ED46CC9472C283`。
+- canonical Java source/JAR 与冻结 JSONL 未变化：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，baseline `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；本批未启动 Java。
+- jree 审计前→后：`directJreeImportFiles=88→88`、`javaObjectFiles=1→1`、`semanticReviewItems=93→92`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。直接导入未减少，因为存储层仍有其他 Java 字符串、异常、随机数和事件边界。
+
+本批可以宣称：Memory/Bag 的 Java 迭代器类型边界已收窄到项目自有合同，并通过 M2、受影响 smoke 和 T1 要求的 M1- `244/244`。仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245、markerless 131072 周期等价、Java/TypeScript 性能等价、源码覆盖率完成或正式发布。代码提交 `c798116`；报告为 `reports/20260919-065512.md`，文档收尾提交待完成。
