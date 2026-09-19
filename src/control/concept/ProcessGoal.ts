@@ -334,8 +334,11 @@ export class ProcessGoal {
         generalPreconditions.push(...concept.general_executable_preconditions);
         // Java 原类型：Map<Operation, List<ExecutablePrecondition>>；实现类型：LinkedHashMap。
         // Keep Map explicit; NativeMap provides Java equals-based Operation keys and order.
-        let anticipationsToMake: java.util.Map<Operation, ProcessGoal.ExecutablePrecondition[]> =
-            nativeJavaMap<Operation, ProcessGoal.ExecutablePrecondition[]>();
+        // Java original type: Map<Operation, List<ExecutablePrecondition>>;
+        // Java implementation: LinkedHashMap. This is a private inference
+        // accumulator, so keep the Map abstraction explicit while using the
+        // project-owned equals/order-compatible implementation directly.
+        let anticipationsToMake = new NativeMap<Operation, ProcessGoal.ExecutablePrecondition[]>();
         // 3. For the more specific hypotheses first and then the general
         for (let table of [concept.executable_preconditions, generalPreconditions]) {
             // 4. Apply choice rule, using the highest truth expectation solution and
@@ -395,7 +398,7 @@ export class ProcessGoal {
      */
     private static calcBestExecutablePrecondition(nal: DerivationContext,
         concept: Concept, projectedGoal: Sentence, execPreconditions: NativeList<Task> | Task[],
-        anticipationsToMake: java.util.Map<Operation, ProcessGoal.ExecutablePrecondition[]>): ProcessGoal.ExecutablePrecondition {
+        anticipationsToMake: NativeMap<Operation, ProcessGoal.ExecutablePrecondition[]>): ProcessGoal.ExecutablePrecondition {
         let result: ProcessGoal.ExecutablePrecondition = new ProcessGoal.ExecutablePrecondition();
         for (let t of execPreconditions) {
             let precTerm: CompoundTerm = ((t.getTerm() as Implication).getSubject() as Conjunction);

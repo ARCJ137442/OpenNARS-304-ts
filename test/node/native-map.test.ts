@@ -98,6 +98,56 @@ test("NativeMap distinguishes a missing key from a mapped null value", () => {
     assert.equal(values.getOrDefault("missing", "default"), "default");
 });
 
+test("NativeMap entry, key, and value views preserve Java removal contracts", () => {
+    const values = new NativeMap<EqualKey, number>([
+        [new EqualKey("first"), 1],
+        [new EqualKey("second"), 2],
+    ]);
+
+    const firstEntry = values.entrySet().toArray()[0];
+    assert.equal(values.entrySet().contains({
+        getKey: () => new EqualKey("first"),
+        getValue: () => 1,
+    }), true);
+    assert.equal(values.entrySet().remove({
+        getKey: () => new EqualKey("first"),
+        getValue: () => 1,
+    }), true);
+    assert.equal(values.entrySet().contains(firstEntry), false);
+    assert.equal(values.keySet().remove(new EqualKey("second")), true);
+    assert.equal(values.values().remove(2), false);
+    assert.equal(values.isEmpty(), true);
+});
+
+test("NativeMap clone, equals, hashCode, and putAll preserve entry values", () => {
+    const source = new NativeMap<string, number>([["first", 1], ["second", 2]]);
+    const clone = source.clone();
+    const copy = new NativeMap<string, number>();
+
+    assert.notEqual(clone, source);
+    assert.equal(clone.equals(source), true);
+    assert.equal(clone.hashCode(), source.hashCode());
+    copy.putAll(source);
+    assert.equal(copy.equals(source), true);
+    copy.put("first", 3);
+    assert.equal(copy.equals(source), false);
+    assert.equal(source.get("first"), 1);
+});
+
+test("NativeMap iterators allow entry updates and only iterator removal changes version", () => {
+    const values = new NativeMap<string, number>([["first", 1], ["second", 2]]);
+    const entries = values.entrySet().iterator();
+
+    assert.throws(() => entries.remove(), /no removable entry/);
+    const first = entries.next();
+    assert.equal(first.setValue(10), 1);
+    assert.equal(entries.hasNext(), true);
+    entries.remove();
+    assert.equal(values.get("first"), null);
+    assert.equal(entries.next().getKey(), "second");
+    assert.throws(() => entries.next(), /exhausted/);
+});
+
 test("NativeMap count entries match jree LinkedHashMap on equal domain keys", async () => {
     const { java } = await import("jree");
     const first = new EqualKey("first");
