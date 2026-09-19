@@ -1680,3 +1680,24 @@ V1 哨兵推进，责任簇出口时才运行一次 M1-。
 项，不作为产品完成率；总体事实仍以 M1/M2/parity 矩阵、自动化测试、Git 和阶段报告
 为准。当前 023 只可宣称若干已验证的局部原生化批次，不能宣称 J3 收口、023/024
 完成、jree 清零、完整 M1/#245 通过、源码覆盖率达标或 Java/TypeScript 性能等价。
+
+### 2026-09-19：Map 合同切片与下一批路线
+
+本批先尝试一次性收窄 substitution/count Map，候选提交 `07f1c55` 同时触及 J1、J2、J3，责任簇门禁拒绝；已通过 `0a15e55` 可逆撤销。这个失败不是语义结论，而是验证边界结论：跨三个责任簇的 Map 合同必须拆开，避免一个切片同时改变运行时、语言和推理核心。
+
+随后完成有效的 J1 切片 `bb688ca`：`src/runtime/NativeMap.ts` 增加项目内 `MapContract<K,V>`，`NativeMap` 显式实现该合同；`test/node/native-map.test.ts` 增加直接合同回归。J1 计划有效，局部直接测试 `9/9`，串行 M2 为 `343` 项、`341` 通过、`2` 跳过、`0` 失败，非增量 typecheck、build、dist API 和审计通过。
+
+J1 受影响 NAL 采用冻结 Java 标杆的 TS-only 串行验证：`nal1.0.nal`、`nal6.17.nal`、`toothbrush.nal` 为 `3/3` functional/parity；0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 Java/TS diff。证据为项目外 `map-contract-j1-20260919-sentinel.jsonl`，SHA-256 `D3722078014F91D8D55EF0E613D77FC832EDAE565AD867C09967D9525461CD48`。
+
+下一系列按单簇推进：先 J2 的 substitution/count Map（`CompoundTerm`、`Term`、`Variable`、`Variables`），再 J3 的推理 Map（`CompositionalRules`、`SyllogisticRules`、`ProcessAnticipation`、`ProcessJudgment`、`ProcessGoal`），之后审计 Set、排序集合、equals/hashCode、迭代删除和 `jree-compat.ts` 桥接职责。每批保留 Java 原类型注释与语义理由；普通切片只跑局部合同、串行 M2 和 2～5 个受影响 NAL，责任簇收口才跑一次 M1-。
+
+```text
+013 Java baseline                         [##########] 完成
+023 jree 原生运行时                       [##--------] J1合同完成，J2/J3/J4/J5待推进
+024 平台中立核心                          [####------] P0-P2完成，P3-P5待推进
+023+024 集成门禁                         [----------] 尚未开始
+020 性能与发布                           [########--] 预算与发布边界待验收
+RC/正式发布                              [----------] 未开始
+```
+
+该图只用于阶段导航；它不把 spec 复选框、测试数量或导入数量当作产品完成率。当前仍不能宣称 023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。
