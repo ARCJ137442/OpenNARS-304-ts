@@ -1482,3 +1482,20 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - Java 标杆未变化：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；本批没有重新启动 Java。
 
 本批可以宣称：`OutputHandler` 的非法参数异常边界已收窄，并通过局部合同、串行 M2、构建/API、静态审计和 T1 要求的 M1- `244/244` 保护矩阵。仍不能宣称 023/024 完成、jree 清零、完整 M1/#245 长期稳定性完成、markerless `131072` 周期等价、源码覆盖率达标、Java/TypeScript 全面性能等价或正式发布。代码提交 `4ea1113118985d659d09697bd9928f70fa65818f`，阶段报告为 `reports/20260919-130804.md`。
+
+### 2026-09-19：`TextOutputHandler` 异常边界收窄
+
+本批继续对照 canonical Java `TextOutputHandler.java` 做单一责任迁移。Java 的构造器重载由编译器约束；TypeScript 通过 varargs 入口承接这些重载，因此必须显式保留非法参数异常。本批只收窄异常类型，不迁移 `java.io.PrintWriter`、`PrintStream`、`StringWriter` 或输出格式实现。
+
+- `src/io/events/TextOutputHandler.ts`：非法输出目标、构造器非法参数、静态重载非法参数、实例重载非法参数共 4 个分支改抛 `JavaIllegalArgumentException`；删除 `S`` 依赖后，空前缀保持为 `new java.lang.String("")`，维持 JavaString 类型合同。
+- `test/node/event-emitter.test.ts`：增加 `TextOutputHandler.getOutputString()` 零参数调用的异常类型与消息回归；定向事件测试 `13/13`。
+- change gate：`3703132..ba832bb` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；本批没有修改 canonical Java，也没有重跑 Java。
+- M2：完整串行单元测试 `324` 项，`322` 通过、`2` 跳过、`0` 失败；非增量 typecheck `0` 诊断；build `sourceFileCount=137`；dist API 通过；迁移扫描结构性异常项为 `0`。
+- M1-：使用冻结 Java JSONL，TS-only、单线程、cold、逐文件串行且排除长期稳定性 #245；`244/244` functional/parity，`0` Java/TS diff、`0` exception、`0` 卡死式 timeout、`0` marker missing、`0` stall、`0` process limit、`0` not-run、`0` performance warning。243 项走 marker 路线；`nal6.redundant.nal` 无 Java marker，运行到 `1650/131072`，为 `unverified/not_reached`，不构成失败。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\text-output-handler-m1-minus-244-20260919.jsonl`，大小 `773800 bytes`，SHA-256 `B9406695A6997606166CCAA9826A11E6FE2D9F34D7E40425C22FAA473A114365`；TS 总时长 `1818691 ms`，最长单文件 `397077 ms`，峰值 RSS `959414272 bytes`（约 `915.0 MiB`），reasoning cycles `2288254`，观测速度约 `813.87 ms/1024 周期`，仅作功能保护和后续性能观测。
+- Java 标杆未变化：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；本批没有重新启动 Java，结果中 `java_artifact=null`。
+- jree 审计前→后：直接导入文件 `78→78`、`java.lang` 文件 `77→77`、Java String 文件 `49→49`、`semanticReviewItems=88→88`；`java.util=38`、`javaObjectFiles=1`、`newLinkedHashMap=0`、`newLinkedHashSet=1` 保持不变。数字不下降是预期结果：本批只移除异常构造和模板字符串依赖，`java.io` 输出类型仍是明确的平台边界。
+
+本批可以宣称：`TextOutputHandler` 的非法参数异常边界已收窄，并通过局部合同、串行 M2、构建/API、静态审计和 T1 要求的 M1- `244/244` 保护矩阵；代码提交为 `ba832bb4465a8e584ebf2431b52f45fbc0018b8b`，阶段报告为 `reports/20260919-134955.md`。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
