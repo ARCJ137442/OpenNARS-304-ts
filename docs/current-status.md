@@ -1368,6 +1368,23 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
 
+### 2026-09-19：`SensoryChannel` Java String 边界收窄
+
+本批继续对照 canonical Java 的 `SensoryChannelConsumer.addSensoryChannel(String, SensoryChannel)` 与 `Nar.addSensoryChannel` 调用链做单一责任迁移。Java 的参数边界是普通 `String`；TypeScript 接口此前直接泄漏 jree boxed `java.lang.String`。本批只把入口收窄到项目内 `JavaStringInput`，保留既有 Narsese 解析、异常和 `NativeMap<Term, SensoryChannel>` 键判等路径，不改推理算法或领域 Map。
+
+- `src/interfaces/SensoryChannelConsumer.ts` 和 `src/main/Nar.ts` 删除该边界上的直接 jree 类型依赖，统一使用 `JavaStringInput`。
+- `test/node/nar-sensory-channel-map.test.ts` 增加 native string 入口回归，同时保留 Java boxed string 的等值 Term 查询回归；定向测试 `3/3`。
+- change gate：`abcd8a5..8f1a5a6` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；本批没有修改 canonical Java，也没有重跑 Java。
+- M2：串行单元测试 `320` 项，`318` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `sourceFileCount=137`；dist API、扫描、审计和受影响 `toothbrush.nal`/`vision.nal` smoke `2/2` 通过。
+- M1-：使用冻结 Java JSONL，TS-only、单线程、cold、逐文件串行；`244/244` functional/parity，`0` Java/TS diff、`0` exception、`0` 卡死式 timeout、`0` marker missing、`0` stall、`0` process limit、`0` not-run、`0` performance warning。243 项走 marker 路线；`nal6.redundant.nal` 仅运行至 `1650/131072`，为 `unverified/not_reached`，不构成功能失败。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\sensory-channel-m1-minus-20260919.jsonl`，大小 `773759 bytes`，SHA-256 `C5097EFFD746D7BA9CB946782F1BD5BFFD48483FAD2EDC8F95740A5B72E9F2C8`；TS 总时长 `1802239 ms`，最长单文件 `400488 ms`，最大 RSS `878.84 MiB`，reasoning cycles `2288254`，观测速度约 `806.51 ms/1024 reasoning cycles`，仅作后续性能数据。
+- Java 标杆未变化：冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，canonical source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`；M1- 行 `java_artifact=null`。
+- jree 审计前→后：直接导入文件 `82→81`、`java.lang` 文件 `81→80`、Java String 文件 `50→49`、`semanticReviewItems=89→88`；`java.util=38`、`javaObjectFiles=1`、`newLinkedHashMap=0`、`newLinkedHashSet=1` 保持不变。迁移扫描 `240` 个文件，结构性异常项为 `0`。
+
+本批可以宣称：`SensoryChannel` 的 Java String 边界已收窄到项目兼容合同，并通过局部回归、M2、构建/API、静态审计、受影响 smoke 和 M1- `244/244` 保护矩阵；代码提交为 `8f1a5a65e77471acbb1decc0c0a787a94f4fe0e4`，阶段报告为 `reports/20260919-101035.md`。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
+
 ### 2026-09-19：`Counting` plain Plugin 字符串与异常边界收窄
 
 本批继续对照 canonical Java `Counting.java` 做前向审查。Java 原实现是 plain `Plugin`，构造器只接受无参或一个 `float` 优先级；非法重载应抛 `IllegalArgumentException`，事件原因是普通字符串。TypeScript 原实现仅为这两个边界直接依赖 jree。本批没有修改 `MINIMUM_PRIORITY` 的 `Float32Math` 收窄、事件筛选、SetExt 基数计算或任务派发逻辑。
