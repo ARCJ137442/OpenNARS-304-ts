@@ -1329,3 +1329,23 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：`AnswerHandler` 的无行为 jree 导入残留已清理，M2、静态审计和 T1 最低门通过。
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245、源码覆盖率目标完成、Java/TypeScript 性能等价或正式发布。
+
+### 2026-09-19：`Product` Java List 输入边界收窄
+
+本批承接 `68d4ac3`，对照 canonical Java `Product.java` 做历史前向审查。Java 原始构造器同时提供 `Product(Term...)` 与 `Product(List<Term>)`；List 路径只通过有序 `toArray(new Term[0])` 转为组件数组，不能把 List 语义未经说明地替换为 Set。TypeScript 原实现还把 `java.util.List`、`IllegalArgumentException` 和 jree 字符串模板直接带入语言模块。
+
+- `src/runtime/jree-compat.ts`：新增结构化 `JavaListInput<T>`、`isJavaListInput` 和 `JavaIllegalArgumentException`，集中保留 Java List 的 `toArray` 观察面与异常继承合同。
+- `src/language/Product.ts`：删除直接 `jree` 导入；保留真实 jree `ArrayList` 的运行时输入、组件顺序、Product 工厂和 clone 行为；非法参数改用兼容边界异常。
+- `test/node/core-runtime.test.ts`：增加真实 jree `ArrayList` 构造顺序与非法工厂参数异常继承回归。
+- M2：核心运行时回归 `42/42`；完整串行单测 `316` 项，`314` 通过、`2` 跳过、`0` 失败；`test/entity/TLink.test.ts` 继续纳入统一入口。
+- 类型检查：`npm run typecheck` 显式使用 `--incremental false`，诊断 `0`；build `sourceFileCount=137`；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。
+- change gate：`classify-change-gate --base 68d4ac3 --head 4d427aa --scope responsibility` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；原因是 Product 高风险路径、jree 兼容热路径、语义 token 和责任簇收口。
+- M1-：TS-only、单线程、cold、逐文件串行，复用冻结 Java JSONL，排除 #245；`244/244` functional/parity，`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`java_ts_diff=0`、`performance_warning=0`。243 项走 marker 等价路线；`nal6.redundant.nal` 无 marker，状态为 `not_reached`，不构成 131072 周期长测结论。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\product-list-boundary-m1-minus-20260919.jsonl`，SHA-256 `001500243773BF865D33F6D5801C2DC680BDA8A824609C989A9D4D21A635E0F6`；TS 总时长 `1,797,344 ms`，最长单文件 `400,484 ms`，最大 RSS `971,739,136 bytes`，reasoning cycles `2,288,254`；观测速度约 `804.3 ms/1024 reasoning cycles`，仅作为后续优化数据。
+- Java 基线未变化且本批未重跑 Java：冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，canonical source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，M1- 行 `java_artifact=null`。
+- jree 审计前→后：直接导入文件 `86→85`、`java.util` 文件 `39→38`、`java.lang` 文件 `85→84`、Java String 文件 `52→52`、`javaObjectFiles=1→1`、`semanticReviewItems=92→91`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。兼容中心仍是 `src/runtime/jree-compat.ts`，不能把导入减少宣称为 jree 运行时退出。
+- 覆盖率状态不变：仓库仍没有 c8/nyc/Istanbul 覆盖率门；NAL 通过数继续不替代源码覆盖率，覆盖率基线与“命中缺口的 NAL”仍留待总体目标阶段。
+
+本批可以宣称：Product 的 Java List 输入边界已收窄到项目兼容合同，直接语言模块 jree 导入减少一项，M2、非增量类型检查、构建/API 及 T1 要求的 M1- `244/244` 均通过，未观察到功能回退。代码提交 `4d427aa4009c51fdc8c5d0a620f664ec3afe9f67`；批次报告为 `reports/20260919-071935.md`。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
