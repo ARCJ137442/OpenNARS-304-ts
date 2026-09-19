@@ -163,8 +163,8 @@ export class LocalRules {
         oldBeliefTerm: Term, recent_ivals: float[], newTruth: TruthValue): boolean {
         let useNewBeliefTerm: boolean = false;
         if (newBeliefTerm.hasInterval()) {
-            const ivalOld: long[] = CompoundTerm.extractIntervals(nal.memory, oldBeliefTerm);
-            const ivalNew: long[] = CompoundTerm.extractIntervals(nal.memory, newBeliefTerm);
+            const ivalOld = CompoundTerm.extractIntervals(nal.memory, oldBeliefTerm);
+            const ivalNew = CompoundTerm.extractIntervals(nal.memory, newBeliefTerm);
             let AbsDiffSumNew: long = 0 as unknown as long;
             let AbsDiffSumOld: long = 0 as unknown as long;
             /* synchronized (recent_ivals) { */
@@ -173,9 +173,9 @@ export class LocalRules {
                     recent_ivals.push(Float32Math.from(Number(l)) as float);
                 }
             }
-            for (let i: int = 0; i < ivalNew.length; i++) {
+            for (let i: int = 0; i < ivalNew.size(); i++) {
                 let inBetween: float = Float32Math.divide(
-                    Float32Math.add(recent_ivals[i], Number(ivalNew[i])),
+                    Float32Math.add(recent_ivals[i], Number(ivalNew.get(i))),
                     2.0,
                 ) as float;
                 // vote as one new entry, turtle style
@@ -192,21 +192,21 @@ export class LocalRules {
                     Float32Math.multiply(speed, Float32Math.subtract(inBetween, recent_ivals[i])),
                 ) as float;
             }
-            for (let i: int = 0; i < ivalNew.length; i++) {
+            for (let i: int = 0; i < ivalNew.size(); i++) {
                 AbsDiffSumNew += java.lang.Math.abs(
-                    Number(ivalNew[i]) - recent_ivals[i],
+                    Number(ivalNew.get(i)) - recent_ivals[i],
                 ) as unknown as long;
             }
-            for (let i: int = 0; i < ivalNew.length; i++) {
+            for (let i: int = 0; i < ivalNew.size(); i++) {
                 AbsDiffSumOld += java.lang.Math.abs(
-                    Number(ivalOld[i]) - recent_ivals[i],
+                    Number(ivalOld.get(i)) - recent_ivals[i],
                 ) as unknown as long;
             }
             /* } */
             let AbsDiffSum: long = 0 as unknown as long;
-            for (let i: int = 0; i < ivalNew.length; i++) {
+            for (let i: int = 0; i < ivalNew.size(); i++) {
                 AbsDiffSum += java.lang.Math.abs(
-                    Number(ivalNew[i]) - Number(ivalOld[i]),
+                    Number(ivalNew.get(i)) - Number(ivalOld.get(i)),
                 ) as unknown as long;
             }
             let a: float = TruthFunctions.temporalProjection(

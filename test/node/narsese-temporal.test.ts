@@ -6,6 +6,7 @@ test("Narsese preserves temporal statement order from Java relation dispatch", a
     const { java } = await import("jree");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { CompoundTerm } = await import("../../src/language/CompoundTerm.ts");
+    const { NativeList } = await import("../../src/runtime/NativeList.ts");
     const { ImageExt } = await import("../../src/language/ImageExt.ts");
     const { ImageInt } = await import("../../src/language/ImageInt.ts");
     const { Product } = await import("../../src/language/Product.ts");
@@ -41,8 +42,14 @@ test("Narsese preserves temporal statement order from Java relation dispatch", a
 
     const intervalConditional = parseRequired(new java.lang.String("<(&/,a,+8,b) =/> c>"));
     const intervals = CompoundTerm.extractIntervals(null, intervalConditional);
-    assert.ok(Array.isArray(intervals));
+    assert.ok(intervals instanceof NativeList);
+    assert.equal(intervals.size(), 1);
+    assert.equal(Number(intervals.get(0)), 8);
     assert.deepEqual(Array.from(intervals).map(Number), [8]);
+
+    const noIntervals = CompoundTerm.extractIntervals(null, forward);
+    assert.ok(noIntervals instanceof NativeList);
+    assert.equal(noIntervals.size(), 0);
 
     const { Nar } = await import("../../src/main/Nar.ts");
     const { LocalRules } = await import("../../src/inference/LocalRules.ts");

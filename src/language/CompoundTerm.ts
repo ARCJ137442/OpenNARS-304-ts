@@ -260,24 +260,24 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return T;
     }
 
-    private static ExtractIntervals(mem: Memory | null, ivals: long[], comp: CompoundTerm): void {
+    private static ExtractIntervals(mem: Memory | null, ivals: NativeList<long>, comp: CompoundTerm): void {
         for (let i: int = 0; i < comp.term.length; i++) {
             let t: Term = comp.term[i];
             if (t instanceof Interval) {
-                ivals.push((t as Interval).time);
+                ivals.add((t as Interval).time);
             } else if (t instanceof CompoundTerm) {
                 CompoundTerm.ExtractIntervals(mem, ivals, t as CompoundTerm);
             }
         }
     }
 
-    /** Java source returns List<Long>; callers use this as an ordered result buffer. */
-    public static extractIntervals(mem: Memory | null, T: Term): long[] {
-        const ret: long[] = [];
+    /** Java source returns List<Long>; preserve its ordered, indexed List contract. */
+    public static extractIntervals(mem: Memory | null, T: Term): java.util.List<long> {
+        const ret = new NativeList<long>();
         if (T instanceof CompoundTerm) {
             CompoundTerm.ExtractIntervals(mem, ret, T as CompoundTerm);
         }
-        return ret;
+        return ret as unknown as java.util.List<long>;
     }
 
     public static UnableToCloneException = class UnableToCloneException extends java.lang.RuntimeException {
