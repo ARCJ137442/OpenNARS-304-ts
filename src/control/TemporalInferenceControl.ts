@@ -6,6 +6,7 @@ import { Stamp } from "../entity/Stamp.ts";
 import { Task } from "../entity/Task.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
+import { NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Events } from "../io/events/Events.ts";
@@ -28,7 +29,7 @@ import type { Memory } from "../storage/Memory.ts";
 export class TemporalInferenceControl {
     public static proceedWithTemporalInduction(newEvent: Sentence, stmLast: Sentence,
         controllerTask: Task, nal: DerivationContext, SucceedingEventsInduction: boolean,
-        addToMemory: boolean, allowSequence: boolean): java.util.List<Task> | null {
+        addToMemory: boolean, allowSequence: boolean): NativeList<Task> | null {
 
         if (SucceedingEventsInduction && !controllerTask.isElemOfSequenceBuffer()) { // todo refine, add directbool in
             // task
@@ -140,7 +141,9 @@ export class TemporalInferenceControl {
                             java.lang.System.out.println("analyze case in TemporalInferenceControl!");
                             continue;
                         }
-                        let seq_op: java.util.List<Task> | null = TemporalInferenceControl.proceedWithTemporalInduction(Toperation.sentence, takeout.sentence,
+                        // Java original: List<Task>; TemporalRules now exposes the
+                        // project NativeList contract for this ordered result.
+                        let seq_op: NativeList<Task> | null = TemporalInferenceControl.proceedWithTemporalInduction(Toperation.sentence, takeout.sentence,
                             nal.memory.lastDecision, nal, true, false, true);
                         if (seq_op !== null) {
                             for (let t of seq_op) {

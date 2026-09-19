@@ -159,7 +159,7 @@ export class TemporalRules {
     // TODO maybe split &/ case into own function
     public static temporalInduction(s1: Sentence, s2: Sentence,
         nal: DerivationContext, SucceedingEventsInduction: boolean,
-        addToMemory: boolean, allowSequence: boolean): java.util.List<Task> {
+        addToMemory: boolean, allowSequence: boolean): NativeList<Task> {
 
         const {
             BudgetFunctions,
@@ -176,14 +176,14 @@ export class TemporalRules {
         if ((s1.truth === null) || (s2.truth === null) || s1.punctuation !== Symbols.JUDGMENT_MARK
             || s2.punctuation !== Symbols.JUDGMENT_MARK
             || s1.isEternal() || s2.isEternal())
-            return java.util.Collections.emptyList();
+            return new NativeList<Task>();
 
         let t1: Term = s1.term;
         let t2: Term = s2.term;
 
         let deriveSequenceOnly: boolean = (!addToMemory) || Statement.invalidStatement(t1, t2, true);
         if (Statement.invalidStatement(t1, t2, false))
-            return java.util.Collections.emptyList();
+            return new NativeList<Task>();
 
         let durationCycles: int = nal.narParameters.DURATION;
         let time1: long = s1.getOccurrenceTime();
@@ -261,9 +261,10 @@ export class TemporalRules {
             }
         }
 
-        // Java uses this list as an ordered short-lived result buffer. Keep the
-        // Java-shaped return type while using the native list implementation.
-        const derivations = new NativeList<Task>() as unknown as java.util.List<Task>;
+        // Java original: List<Task>, implemented as ArrayList<Task>.
+        // This is an ordered short-lived result buffer; expose the project
+        // NativeList contract instead of leaking java.util.List from this rule.
+        const derivations = new NativeList<Task>();
         if (!deriveSequenceOnly) {
             for (let i: int = 0; i < t11s.length; i++) {
                 let t11: Term = t11s[i];
@@ -308,11 +309,13 @@ export class TemporalRules {
     }
 
     private static appendConclusion(nal: DerivationContext, truth1: TruthValue, budget1: BudgetValue,
-        statement1: Statement, success: java.util.List<Task>): void {
+        statement1: Statement, success: NativeList<Task>): void {
         if (!TemporalRules.tooMuchTemporalStatements(statement1)) {
             let t: java.util.List<Task> = nal.doublePremiseTask(statement1, truth1, budget1, true, false);
             if (t !== null) {
-                success.addAll(t);
+                for (const task of t) {
+                    success.add(task);
+                }
             }
         }
     }
