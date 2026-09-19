@@ -9,6 +9,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { javaStringHashCode, javaStringValue, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
 import { NativeSortedSet } from "../runtime/NativeSortedSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
+import type { MapContract } from "../runtime/NativeMap.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import type { Memory } from "../storage/Memory.ts";
 
@@ -436,11 +437,11 @@ export class Term extends RuntimeObject implements AbstractTerm {
      *            occurs
      * @return The counts of the terms
      */
-    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer> | null): java.util.Map<Term, java.lang.Integer> {
+    public countTermRecursively(map: MapContract<Term, java.lang.Integer> | null): MapContract<Term, java.lang.Integer> {
         if (map === null) {
             // Java original type: LinkedHashMap<Term, Integer>. Keep the
             // public Map contract while using the native ordered Map here.
-            map = new NativeMap<Term, java.lang.Integer>() as unknown as java.util.Map<Term, java.lang.Integer>;
+            map = new NativeMap<Term, java.lang.Integer>();
         }
         map.put(this, java.lang.Integer.valueOf(map.getOrDefault(this, java.lang.Integer.valueOf(0)).valueOf() + 1));
         return map;
