@@ -15,6 +15,7 @@ import { javaStringHashCode, javaStringsEqual, type JavaChar } from "../runtime/
 import { NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
+import type { MapContract } from "../runtime/NativeMap.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -721,7 +722,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      *
      * @param subs
      */
-    public applySubstitute(subs: java.util.Map<Term, Term>): Term {
+    public applySubstitute(subs: MapContract<Term, Term>): Term {
         if ((subs === null) || (subs.isEmpty())) {
             return this;// .clone();
         }
@@ -765,7 +766,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * returns result of applySubstitute, if and only if it's a CompoundTerm.
      * otherwise it is null
      */
-    public applySubstituteToCompound(substitute: java.util.Map<Term, Term>): CompoundTerm {
+    public applySubstituteToCompound(substitute: MapContract<Term, Term>): CompoundTerm {
         let t: Term = this.applySubstitute(substitute);
         if (t instanceof CompoundTerm)
             return (t as CompoundTerm);
