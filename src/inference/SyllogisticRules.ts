@@ -23,6 +23,7 @@ import type { DerivationContext } from "../control/DerivationContext.ts";
 import { ProcessAnticipation } from "../control/concept/ProcessAnticipation.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
+import { NativeList } from "../runtime/NativeList.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 const { ORDER_NONE, ORDER_FORWARD, ORDER_BACKWARD, ORDER_INVALID } = TemporalRules;
@@ -776,7 +777,7 @@ export class SyllogisticRules {
         }
 
         nal.getTheNewStamp().setOccurrenceTime(occurrence_time);
-        let ret: java.util.List<Task> = nal.doublePremiseTask(content, truth, budget, false,
+        let ret: NativeList<Task> | null = nal.doublePremiseTask(content, truth, budget, false,
             taskSentence.isJudgment() && deduction); // (allow overlap) when deduction on judgment
         if (!nal.evidentialOverlap && ret !== null && ret.size() > 0 && predictedEvent && taskSentence.isJudgment()
             && truth !== null &&

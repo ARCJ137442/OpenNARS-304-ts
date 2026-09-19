@@ -239,11 +239,11 @@ export class DerivationContext {
      *                          https://groups.google.com/forum/#!topic/open-nars/FVbbKq5En-M
      */
     public doublePremiseTask(newContent: Term, newTruth: TruthValue, newBudget: BudgetValue,
-        temporalInduction: boolean, overlapAllowed: boolean): java.util.List<Task>;
+        temporalInduction: boolean, overlapAllowed: boolean): NativeList<Task> | null;
 
     public doublePremiseTask(newContent: Term, newTruth: TruthValue, newBudget: BudgetValue,
-        temporalInduction: boolean, overlapAllowed: boolean, addToMemory: boolean): java.util.List<Task>;
-    public doublePremiseTask(...args: unknown[]): java.util.List<Task> {
+        temporalInduction: boolean, overlapAllowed: boolean, addToMemory: boolean): NativeList<Task> | null;
+    public doublePremiseTask(...args: unknown[]): NativeList<Task> | null {
         switch (args.length) {
             case 5: {
                 const [newContent, newTruth, newBudget, temporalInduction, overlapAllowed] = args as [Term, TruthValue, BudgetValue, boolean, boolean];
@@ -260,17 +260,17 @@ export class DerivationContext {
 
 
 
-                // Java uses this ArrayList only as a local 0–2 item result buffer.
-                // Keep the public Java-shaped return type, but avoid constructing a
-                // jree collection on every double-premise derivation.
+                // Java original: List<Task>, implemented as ArrayList<Task>.
+                // This is a local 0–2 item result buffer; expose the project
+                // NativeList contract while preserving null for rejected results.
                 const ret = new NativeList<Task>();
                 if (newContent === null || !newBudget.aboveThreshold()) {
-                    return null as unknown as java.util.List<Task>;
+                    return null;
                 }
                 if ((newContent !== null) && (!(newContent instanceof Interval)) && (!(newContent instanceof Variable))) {
 
                     if (newContent.subjectOrPredicateIsIndependentVar()) {
-                        return null as unknown as java.util.List<Task>;
+                        return null;
                     }
                     let derive_stamp: Stamp = this.getTheNewStamp().clone(); // because occurrence time will be reset:
                     this.resetOccurrenceTime(); // stamp was already absorbed into task
@@ -312,9 +312,9 @@ export class DerivationContext {
                             }
                         }
                     }
-                    return ret as unknown as java.util.List<Task>;
+                    return ret;
                 }
-                return null as unknown as java.util.List<Task>;
+                return null;
 
 
                 break;

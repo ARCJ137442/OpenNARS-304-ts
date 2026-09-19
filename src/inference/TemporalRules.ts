@@ -287,7 +287,7 @@ export class TemporalRules {
             if (!allowSequence) {
                 return derivations;
             }
-            let tl: java.util.List<Task> = nal.doublePremiseTask(statement4, truth4, budget4, true, false, addToMemory);
+            let tl: NativeList<Task> | null = nal.doublePremiseTask(statement4, truth4, budget4, true, false, addToMemory);
             if (tl !== null) {
                 for (let t of tl) {
                     // fill sequenceTask buffer due to the new derived sequence
@@ -311,7 +311,7 @@ export class TemporalRules {
     private static appendConclusion(nal: DerivationContext, truth1: TruthValue, budget1: BudgetValue,
         statement1: Statement, success: NativeList<Task>): void {
         if (!TemporalRules.tooMuchTemporalStatements(statement1)) {
-            let t: java.util.List<Task> = nal.doublePremiseTask(statement1, truth1, budget1, true, false);
+            let t: NativeList<Task> | null = nal.doublePremiseTask(statement1, truth1, budget1, true, false);
             if (t !== null) {
                 for (const task of t) {
                     success.add(task);
