@@ -8,7 +8,13 @@ import { Debug } from "../main/Debug.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
-import { addRuntimeLong, subtractRuntimeLong, toRuntimeLong, type JavaLongInput } from "../runtime/jree-compat.ts";
+import {
+    addRuntimeLong,
+    subtractRuntimeLong,
+    toJavaString,
+    toRuntimeLong,
+    type JavaLongInput,
+} from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Parameters } from "../main/Parameters.ts";
@@ -67,7 +73,7 @@ export class Stamp extends RuntimeObject {
     /** caches */
     // Keep the cache separate from name(); otherwise the Java-to-TypeScript
     // translation creates an instance field that shadows the method.
-    protected nameCache: java.lang.CharSequence | null = null;
+    protected nameCache: java.lang.String | null = null;
 
     /**
      * derivation chain containing the used premises and conclusions which made
@@ -459,11 +465,13 @@ export class Stamp extends RuntimeObject {
         this.occurrenceTime = Stamp.ETERNAL;
     }
 
-    public appendOcurrenceTime(sb: java.lang.StringBuilder): java.lang.StringBuilder {
+    public appendOcurrenceTime<T>(sb: T): T {
         if (this.occurrenceTime !== Stamp.ETERNAL) {
-            let estTimeLength: int = 8; /* # digits */
-            sb.ensureCapacity(estTimeLength + 1 + 1);
-            sb.append('[').append(this.occurrenceTime).append(']').toString();
+            // Java source type: StringBuilder.  Keep only the observed
+            // append-and-return contract at this boundary; capacity is an
+            // implementation detail and has no semantic effect here.
+            const append = (sb as unknown as { append: (value: unknown) => unknown }).append;
+            append.call(sb, `[${String(this.occurrenceTime)}]`);
         }
         return sb;
     }
@@ -474,11 +482,7 @@ export class Stamp extends RuntimeObject {
      * @return occurrence time
      */
     public getOccurrenceTimeString(): java.lang.String {
-        if (this.isEternal()) {
-            return S``;
-        } else {
-            return this.appendOcurrenceTime(new java.lang.StringBuilder()).toString();
-        }
+        return toJavaString(this.isEternal() ? "" : `[${String(this.occurrenceTime)}]`);
     }
 
     public getTense(currentTime: JavaLongInput, duration: int): java.lang.String {
@@ -508,29 +512,21 @@ export class Stamp extends RuntimeObject {
         }
     }
 
-    public name(): java.lang.CharSequence {
+    public name(): java.lang.String {
         if (this.nameCache === null) {
-
-            let estimatedInitialSize: int = 10 * this.baseLength;
-
-            let buffer: java.lang.StringBuilder = new java.lang.StringBuilder(estimatedInitialSize);
-            buffer.append(Symbols.STAMP_OPENER).append(this.getCreationTime());
+            const parts: string[] = [String(Symbols.STAMP_OPENER), String(this.getCreationTime())];
             if (!this.isEternal()) {
-                buffer.append('|').append(this.occurrenceTime);
+                parts.push("|", String(this.occurrenceTime));
             }
-            buffer.append(' ').append(Symbols.STAMP_STARTER).append(' ');
+            parts.push(" ", String(Symbols.STAMP_STARTER), " ");
             for (let i: int = 0; i < this.baseLength; i++) {
-                buffer.append(this.evidentialBase[i].toString());
+                parts.push(String(this.evidentialBase[i].toString()));
                 if (i < (this.baseLength - 1)) {
-                    buffer.append(Symbols.STAMP_SEPARATOR);
+                    parts.push(String(Symbols.STAMP_SEPARATOR));
                 }
             }
-            buffer.append(Symbols.STAMP_CLOSER).append(' ');
-
-            // this is for estimating an initial size of the stringbuffer
-            // System.out.println(baseLength + " " + derivationChain.size() + " " +
-            // buffer.baseLength());
-            this.nameCache = buffer;
+            parts.push(String(Symbols.STAMP_CLOSER), " ");
+            this.nameCache = toJavaString(parts.join(""));
         }
         return this.nameCache;
     }
