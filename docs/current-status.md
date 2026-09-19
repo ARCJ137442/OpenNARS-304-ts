@@ -1701,3 +1701,13 @@ RC/正式发布                              [----------] 未开始
 ```
 
 该图只用于阶段导航；它不把 spec 复选框、测试数量或导入数量当作产品完成率。当前仍不能宣称 023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。
+
+### 2026-09-19：J2 substitution Map 合同切片
+
+J2 本批只处理语言层 substitution Map，不把 count Map 的公共返回合同伪装成已完成。`src/language/CompoundTerm.ts` 的 `applySubstitute`/`applySubstituteToCompound` 与 `src/language/Variables.ts` 的 `findSubstitute`、Map 对复制/追加辅助函数已改用 J1 建立的 `MapContract`；两张 Map 的 Java 数组结构、NativeMap 插入顺序、equals/hashCode 和 Java `LinkedHashMap` 输入兼容均保留。`countTermRecursively` 仍保留 Java Map 公共签名，因为当前 `ProcessGoal`、`ProcessJudgment`、`CompositionalRules` 三个 J3 调用点尚未一起迁移。
+
+本批代码提交为 `bb4f112`。J2 T1 计划 `plan_valid=true`，不要求现跑 Java 或 M1-。定向合同/变量统一测试 `7/7`；串行 M2 为 `346` 项、`344` 通过、`2` 跳过、`0` 失败；非增量 typecheck 为 0 诊断；build 源文件 `137`、dist API、迁移扫描和 jree/platform 审计通过。
+
+受影响 NAL 使用冻结 Java 标杆、TS-only、单线程、cold、逐文件串行：`nal4.7.nal`、`nal6.17.nal`、`nal8.add.nal`、`nars_transitivity.nal` 为 `4/4` functional/parity；0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 Java/TS diff。`nars_transitivity.nal` 观察到 `211550` reasoning cycles，耗时约 `105770 ms`，仅作为性能观测。证据文件为项目外 `map-contract-j2-20260919-sentinel.jsonl`，SHA-256 `D4875EED3D7A253568D66CB66496D4CA6F6E0DA25210543794DC0C6D52F055B9`。
+
+下一批应由 J3 owner 处理 count Map 公共返回合同，并同步 `CompositionalRules`、`ProcessGoal`、`ProcessJudgment` 等调用者；之后再处理 J3 的推理 substitution Map、Set/排序集合和迭代删除。当前仍不能宣称 J2 完成、J3 收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。
