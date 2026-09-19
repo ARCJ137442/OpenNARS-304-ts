@@ -31,7 +31,8 @@ import { GeneralInferenceControl } from "../control/GeneralInferenceControl.ts";
 import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import type { Nar } from "../main/Nar.ts";
-import { javaStringValue } from "../runtime/jree-compat.ts";
+import { javaStringValue, toJavaString } from "../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../runtime/jree-compat.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 import type { Resettable } from "../interfaces/Resettable.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -214,12 +215,12 @@ export class Memory implements Iterable<Concept>, Resettable {
     /**
      * add new task that waits to be processed in the next cycleMemory
      */
-    public addNewTask(t: Task, reason: java.lang.String): void {
+    public addNewTask(t: Task, reason: JavaStringInput): void {
         /* synchronized (tasksMutex) { */
         this.novelTasks.putIn(t);
         /* } */
         // logic.TASK_ADD_NEW.commit(t.getPriority());
-        this.emit(Events.TaskAdd.class, t, reason);
+        this.emit(Events.TaskAdd.class, t, toJavaString(reason));
         this.output(t);
     }
 
@@ -308,8 +309,8 @@ export class Memory implements Iterable<Concept>, Resettable {
     }
 
 
-    public removeTask(task: Task, reason: java.lang.String): void {
-        this.emit(TaskRemove.class, task, reason);
+    public removeTask(task: Task, reason: JavaStringInput): void {
+        this.emit(TaskRemove.class, task, toJavaString(reason));
     }
 
     /**
@@ -426,7 +427,7 @@ export class Memory implements Iterable<Concept>, Resettable {
         /* } */
     }
 
-    public getOperator(op: java.lang.String): Operator {
+    public getOperator(op: JavaStringInput): Operator {
         return (this.operators.get(javaStringValue(op)) ?? null) as unknown as Operator;
     }
 
