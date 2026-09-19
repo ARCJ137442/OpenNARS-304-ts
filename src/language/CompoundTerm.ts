@@ -782,12 +782,12 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      *
      * @return A list of TermLink templates
      */
-    public prepareComponentLinks(): java.util.List<TermLink> {
+    public prepareComponentLinks(): NativeList<TermLink> {
         // complexity seems like an upper bound for the resulting number of
         // componentLinks.
         // Capacity is only an optimization; avoid passing a Java short through
         // jree's native ArrayList length constructor.
-        const componentLinks = new NativeList<TermLink>() as unknown as java.util.List<TermLink>;
+        const componentLinks = new NativeList<TermLink>();
         return Terms.prepareComponentLinks(componentLinks, this);
     }
 

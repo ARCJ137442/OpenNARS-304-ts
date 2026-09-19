@@ -71,7 +71,7 @@ export class Concept extends Item<Term> {
      * Link templates of TermLink, only in concepts with CompoundTerm Templates
      * are used to improve the efficiency of TermLink building
      */
-    public readonly termLinkTemplates: java.util.List<TermLink> | null;
+    public readonly termLinkTemplates: NativeList<TermLink> | null;
 
     /**
      * Pending Question directly asked about the term
@@ -525,7 +525,7 @@ export class Concept extends Item<Term> {
      *
      * @return The template get
      */
-    public getTermLinkTemplates(): java.util.List<TermLink> | null {
+    public getTermLinkTemplates(): NativeList<TermLink> | null {
         return this.termLinkTemplates;
     }
 

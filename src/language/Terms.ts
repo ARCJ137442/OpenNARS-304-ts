@@ -10,6 +10,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Term } from "./Term.ts";
 import type { Memory } from "../storage/Memory.ts";
 import { javaValuesEqual } from "../runtime/jree-compat.ts";
+import { NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 
 type TermsRuntime = Record<string, any>;
@@ -495,7 +496,7 @@ export class Terms {
         return true;
     }
 
-    public static prepareComponentLinks(componentLinks: java.util.List<TermLink>, ct: CompoundTerm): java.util.List<TermLink>;
+    public static prepareComponentLinks(componentLinks: NativeList<TermLink>, ct: CompoundTerm): NativeList<TermLink>;
 
     /**
      * Collect TermLink templates into a list, go down one level except in
@@ -506,12 +507,12 @@ export class Terms {
      * @param type           The type of TermLink to be built
      * @param term           The CompoundTerm for which the links are built
      */
-    public static prepareComponentLinks(componentLinks: java.util.List<TermLink>, type: short,
-        term: CompoundTerm): java.util.List<TermLink>;
-    public static prepareComponentLinks(...args: unknown[]): java.util.List<TermLink> {
+    public static prepareComponentLinks(componentLinks: NativeList<TermLink>, type: short,
+        term: CompoundTerm): NativeList<TermLink>;
+    public static prepareComponentLinks(...args: unknown[]): NativeList<TermLink> {
         switch (args.length) {
             case 2: {
-                const [componentLinks, ct] = args as [java.util.List<TermLink>, CompoundTerm];
+                const [componentLinks, ct] = args as [NativeList<TermLink>, CompoundTerm];
 
 
                 let type: short = isStatementTerm(ct) ? TermLink.COMPOUND_STATEMENT : TermLink.COMPOUND; // default
@@ -522,7 +523,7 @@ export class Terms {
             }
 
             case 3: {
-                const [componentLinks, type, term] = args as [java.util.List<TermLink>, short, CompoundTerm];
+                const [componentLinks, type, term] = args as [NativeList<TermLink>, short, CompoundTerm];
 
 
 

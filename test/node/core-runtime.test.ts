@@ -271,6 +271,8 @@ test("CompoundTerm iterator preserves Guava forArray contract", async () => {
 test("CompoundTerm local lists preserve native storage and Java order", async () => {
     const { Product } = await import("../../src/language/Product.ts");
     const { Term } = await import("../../src/language/Term.ts");
+    const { Terms } = await import("../../src/language/Terms.ts");
+    const { TermLink } = await import("../../src/entity/TermLink.ts");
     const { NativeList } = await import("../../src/runtime/NativeList.ts");
 
     const compound = Product.make([Term.get("compound-list-a"), Term.get("compound-list-b")]);
@@ -295,6 +297,11 @@ test("CompoundTerm local lists preserve native storage and Java order", async ()
     assert.ok(links instanceof NativeList);
     assert.equal(links.size(), 2);
     assert.deepEqual(Array.from(links).map((link) => String(link.target.name())), ["compound-list-a", "compound-list-b"]);
+
+    const suppliedLinks = new NativeList<InstanceType<typeof TermLink>>();
+    const returnedLinks = Terms.prepareComponentLinks(suppliedLinks, compound);
+    assert.equal(returnedLinks, suppliedLinks);
+    assert.deepEqual(Array.from(suppliedLinks).map((link) => String(link.target.name())), ["compound-list-a", "compound-list-b"]);
 });
 
 test("decimal perception coordinates remain conceptual like Java Term.get", async () => {
