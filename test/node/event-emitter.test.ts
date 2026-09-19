@@ -4,6 +4,7 @@ import { java } from "jree";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";
+import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
@@ -164,6 +165,20 @@ test("EventHandler preserves the Java illegal-argument boundary", () => {
     }
 
     const Constructor = InvalidHandler as unknown as new (...args: unknown[]) => EventHandler;
+    assert.throws(() => new Constructor(), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalArgumentException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "Invalid number of arguments");
+        return true;
+    });
+});
+
+test("OutputHandler preserves the Java illegal-argument boundary", () => {
+    class InvalidOutputHandler extends OutputHandler {
+        public event(): void {}
+    }
+
+    const Constructor = InvalidOutputHandler as unknown as new (...args: unknown[]) => OutputHandler;
     assert.throws(() => new Constructor(), (error: unknown) => {
         assert.ok(error instanceof JavaIllegalArgumentException);
         assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
