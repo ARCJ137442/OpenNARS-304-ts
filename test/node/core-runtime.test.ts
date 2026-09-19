@@ -520,6 +520,39 @@ test("ProcessGoal executable precondition preserves Java default metadata", asyn
     assert.equal(metadata.substitution, null);
 });
 
+test("ProcessJudgment treats an empty Java Optional search as a null result", async () => {
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
+    const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
+    const { ProcessJudgment } = await import("../../src/control/concept/ProcessJudgment.ts");
+    const { Sentence } = await import("../../src/entity/Sentence.ts");
+    const { Stamp } = await import("../../src/entity/Stamp.ts");
+    const { Task } = await import("../../src/entity/Task.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Implication } = await import("../../src/language/Implication.ts");
+    const { TemporalRules } = await import("../../src/inference/TemporalRules.ts");
+
+    const nar = new Nar();
+    try {
+        const context = new DerivationContext(nar.memory, nar.narParameters, nar);
+        const implication = Implication.make(
+            Term.get("optional-empty-condition"),
+            Term.get("optional-empty-target"),
+            TemporalRules.ORDER_FORWARD,
+        );
+        assert.ok(implication !== null);
+        const task = new Task(
+            new Sentence(implication, ".", null, new Stamp(nar, nar.memory)),
+            new BudgetValue(0.5, 0.5, 0.5, nar.narParameters),
+            Task.EnumType.INPUT,
+        );
+        assert.ok(nar.memory.conceptualize(task.getBudget(), implication));
+        assert.doesNotThrow(() => ProcessJudgment.addToTargetConceptsPreconditions(task, context));
+    } finally {
+        nar.stop();
+    }
+});
+
 test("ProcessGoal question staging preserves the emitted question with a native buffer", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
     const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");

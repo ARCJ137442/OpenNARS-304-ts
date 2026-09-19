@@ -22,13 +22,15 @@ import type { Term } from "../../language/Term.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 import type { Parameters } from "../../main/Parameters.ts";
 
-const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): java.util.Optional<T> => {
+// Java source uses Guava Optional only as a private search result.  The
+// TypeScript boundary is internal, so null represents Java Optional.empty().
+const tryFind = <T>(items: Iterable<T>, predicate: (value: T) => boolean): T | null => {
     for (const item of items) {
         if (predicate(item)) {
-            return java.util.Optional.of(item);
+            return item;
         }
     }
-    return java.util.Optional.empty();
+    return null;
 };
 
 
@@ -170,14 +172,14 @@ export class ProcessJudgment {
             return;
         }
         // get the first eternal. the highest confident one (due to the sorted order):
-        let strongest_target: java.util.Optional<Task> = java.util.Optional.empty();
+        let strongest_target: Task | null = null;
         /* synchronized (origin_concept) { */
         strongest_target = tryFind(origin_concept.beliefs, iTask => iTask.sentence.isEternal());
         /* } */
-        if (!strongest_target.isPresent()) {
+        if (strongest_target === null) {
             return;
         }
-        let prec: Term[] = ((strongest_target.get().getTerm() as Implication).getSubject() as Conjunction).term;
+        let prec: Term[] = ((strongest_target.getTerm() as Implication).getSubject() as Conjunction).term;
         for (let i: int = 0; i < prec.length - 2; i++) {
             if (prec[i] instanceof Operation) { // don't react to precondition with an operation before the last
                 return; // for now, these can be decomposed into smaller such statements anyway
@@ -190,14 +192,14 @@ export class ProcessJudgment {
             }
             // we do not add the target, instead the strongest belief in the target concept
             /* synchronized (target_concept) { */
-            let table: NativeList<Task> = strongest_target.get().sentence.term.hasVar()
+            let table: NativeList<Task> = strongest_target.sentence.term.hasVar()
                 ? target_concept.general_executable_preconditions
                 : target_concept.executable_preconditions;
             // at first we have to remove the last one with same content from table
             let i_delete: int = -1;
             for (let i: int = 0; i < table.size(); i++) {
                 if (CompoundTerm.replaceIntervals(table.get(i).getTerm()).equals(
-                    CompoundTerm.replaceIntervals(strongest_target.get().getTerm()))) {
+                        CompoundTerm.replaceIntervals(strongest_target.getTerm()))) {
                     i_delete = i; // even these with same term but different intervals are removed here
                     break;
                 }
@@ -207,7 +209,7 @@ export class ProcessJudgment {
             }
             // this way the strongest confident result of this content is put into table but
             // the table ranked according to truth expectation
-            target_concept.addToTable(strongest_target.get(), true, table,
+            target_concept.addToTable(strongest_target, true, table,
                 target_concept.memory.narParameters.CONCEPT_BELIEFS_MAX, Events.EnactableExplainationAdd.class,
                 Events.EnactableExplainationRemove.class);
             /* } */
