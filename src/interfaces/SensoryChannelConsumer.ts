@@ -1,5 +1,5 @@
 //! Java source: opennars/interfaces/SensoryChannelConsumer.java
-import { java } from "jree";
+import type { JavaStringInput } from "../runtime/jree-compat.ts";
 import type { SensoryChannel } from "../plugin/perception/SensoryChannel.ts";
 
 
@@ -16,5 +16,6 @@ export interface SensoryChannelConsumer {
      * @param term    term in narsese
      * @param channel the channel to be registered
      */
-    addSensoryChannel(term: java.lang.String, channel: SensoryChannel): void;
+    // Java source type: String. Accept boxed Java and native strings at the boundary.
+    addSensoryChannel(term: JavaStringInput, channel: SensoryChannel): void;
 }

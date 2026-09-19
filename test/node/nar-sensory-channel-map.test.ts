@@ -48,6 +48,22 @@ test("Nar sensory channel registry keeps Java Map and Term equality semantics", 
     }
 });
 
+test("Nar sensory channel consumer accepts a native string boundary", () => {
+    const nar = new Nar({ configText: "<config></config>" });
+    try {
+        const channel = new ProbeChannel(nar);
+        nar.addSensoryChannel("native-probe", channel);
+
+        const channels = (nar as unknown as {
+            sensoryChannels: NativeMap<Term, SensoryChannel>;
+        }).sensoryChannels;
+        assert.equal(channels.size(), 1);
+        assert.equal(channels.get(new Term(new java.lang.String("native-probe"))), channel);
+    } finally {
+        nar.stop();
+    }
+});
+
 test("SensoryChannel keeps the Java plain-base class identity contract", () => {
     assert.equal(Object.getPrototypeOf(SensoryChannel.prototype), RuntimeObject.prototype);
 

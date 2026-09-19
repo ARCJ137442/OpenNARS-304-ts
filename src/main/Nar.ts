@@ -120,7 +120,8 @@ export class Nar extends SensoryChannel implements Reasoner {
     protected sensoryChannels: java.util.Map<Term, SensoryChannel> =
         new NativeMap<Term, SensoryChannel>() as unknown as java.util.Map<Term, SensoryChannel>;
 
-    public addSensoryChannel(term: java.lang.String, channel: SensoryChannel): void {
+    // Java source type: String. Normalize both boxed and native inputs in Narsese.
+    public addSensoryChannel(term: JavaStringInput, channel: SensoryChannel): void {
         try {
             const parsedTerm = new Narsese(this).parseTerm(term);
             if (parsedTerm === null) {
