@@ -1349,3 +1349,21 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：Product 的 Java List 输入边界已收窄到项目兼容合同，直接语言模块 jree 导入减少一项，M2、非增量类型检查、构建/API 及 T1 要求的 M1- `244/244` 均通过，未观察到功能回退。代码提交 `4d427aa4009c51fdc8c5d0a620f664ec3afe9f67`；批次报告为 `reports/20260919-071935.md`。
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
+
+### 2026-09-19：`Count` Java 字符串与异常边界收窄
+
+本批继续对照 canonical Java `Count.java` 做前向审查。Java 原实现的 `requireMessage` 是普通 `String`，两个非法输入分支抛 `IllegalStateException`；TypeScript 原实现却让 `Count` 直接依赖 jree 的 boxed `String` 和异常命名空间。本批只收窄这两个边界，不改变参数判断、SetExt/SetInt 类型判断、集合计数或 FunctionOperator 执行路径。
+
+- `src/runtime/jree-compat.ts`：新增 `JavaIllegalStateException`，集中保留 Java 异常继承关系。
+- `src/operator/misc/Count.ts`：删除直接 `jree` 导入；`requireMessage` 改为 native `string`；两个非法输入分支改抛兼容边界异常。
+- `test/node/operator-boundary.test.ts`：新增 Count protected-function 探针，验证空参数、非集合参数的异常类型、Java 继承关系和消息文本。
+- M2：Count 定向回归 `3/3`；完整串行单测 `317` 项，`315` 通过、`2` 跳过、`0` 失败；非增量 typecheck `0` 诊断；build `sourceFileCount=137`；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。
+- change gate：`17a3cae..fbe4b7e` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；原因包括 `Count`/兼容层高风险路径和责任簇收口。
+- M1-：TS-only、单线程、cold、逐文件串行、冻结 Java 标杆；`244/244` functional/parity，`0` Java/TS diff、`0` exception、`0` marker missing、`0` timeout、`0` stall、`0` process limit、`0` not-run、`0` performance warning。243 项走 marker 等价路线；`nal6.redundant.nal` 无 Java marker，保持 `unverified/not_reached`，不构成 131072 周期结论。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\count-exception-boundary-m1-minus-20260919.jsonl`，SHA-256 `74CCB7BE28A19E7D513AC63CB0AE1104D10031027A4F3A9DB053D79FBCC86CC1`；总耗时 `1,756,222 ms`，最长单文件 `384,361 ms`，最大 RSS `891,342,848 bytes`，reasoning cycles `2,288,254`；观测速度约 `785.9 ms/1024 reasoning cycles`，仅作性能观测。
+- Java 基线未变化且本批未重跑 Java：冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，canonical source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，结果中 `java_artifact=null`。
+- jree 审计前→后：直接导入文件 `85→84`、`javaObjectFiles=1→1`、`java.util=38→38`、`java.lang=84→83`、Java String `52→51`、`semanticReviewItems=91→90`、`candidateNativeItems=2→2`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。
+
+本批可以宣称：`Count` 的 Java 字符串与非法状态异常依赖已收窄到项目兼容边界，并通过局部合同、M2、非增量类型检查、构建/API、静态审计和 T1 要求的 M1- `244/244`；未观察到功能回退。代码提交 `fbe4b7ef5b8dfc534e9c3c3be778777af6867020`；批次报告为 `reports/20260919-080646.md`。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
