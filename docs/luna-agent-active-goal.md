@@ -6,7 +6,7 @@
 
 在 OpenNARS 3.0.4 canonical Java 的固定单线程语义基线上，保留 M1 功能等价与 M2 零诊断构建成果，依次完成 `023` 去 jree、`024` 平台中立、同提交 J/P 集成验收、`020` 正式性能优化、单一 `OpenNARS` 公共门面及单 JS + 单 `.d.ts`、Shell/Web 外壳、文档和发布候选。tag、GitHub Release、npm 与网站覆盖只在用户当次明确授权后执行。
 
-**第一项当前工作不是再做 G0。** `9bd6cc0` 已有完整 G0 证据。最新 Bag `NativeMap` 切片的 `toothbrush2.nal`、`nars_multistep_3.nal` 在 M1- 被进程安全上限截断。先固定 `f1cf976` 与 `f952a02` 做同条件 A/B 和 profile，恢复两项 marker 的可观察性，然后才扩张 023/024。`NativeMap` 线性查找是待证实的热点假说，不是已确认根因。保留来源不明的未跟踪草稿报告。
+**当前工作已越过 S0。** `9bd6cc0` 的 G0 证据、`f1cf976`/`f952a02` A/B 与 profile 已复核；`1faf542` 的 `NativeMap` hash-bucket 最小修复恢复了 `toothbrush2.nal`、`nars_multistep_3.nal` 的 marker 可观察性，S0 已闭环。当前进入 S1：继续按一个 jree 责任或平台边界一个批次推进，不再重复 G0/S0；`NativeMap` 线性查找仍作为后续性能观察项，不能当作当前功能根因。保留来源不明的未跟踪草稿报告。
 
 ## Java 标杆复用的硬条件
 

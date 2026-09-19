@@ -1350,6 +1350,23 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
 
+### 2026-09-19：`EventHandler` 异常边界收窄
+
+本批继续对照 canonical Java `EventHandler.java` 做单一责任迁移。Java 的两个构造器只负责绑定 `EventEmitter`、事件 class token 和 active 状态；TS 的唯一直接 jree 行为是非法参数分支中构造 `java.lang.IllegalArgumentException` 并使用转译模板字符串。本批只收窄该异常边界，不改变事件身份 token、订阅顺序、`setActive` 生命周期或 payload。
+
+- `src/io/events/EventHandler.ts`：删除直接 `jree` 导入，改用项目 `JavaIllegalArgumentException` 与原生消息文本。
+- `test/node/event-emitter.test.ts`：增加异常继承关系与 Java `getMessage()` 观察面的回归；定向事件测试 `10/10`。
+- change gate：`8dcbff7..3510810` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；本批没有修改 canonical Java，也没有启动 Java。
+- M2：串行单元测试 `321` 项，`319` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `sourceFileCount=137`；dist API 通过；迁移扫描结构性异常为 `0`。
+- smoke：`toothbrush.nal` 与 `single_step/nal4.7.nal` TS-only `2/2`，0 exception、0 timeout、0 marker missing、0 Java/TS diff。证据 `event-handler-smoke-20260919.jsonl`，SHA-256 `F03D9224ED6E5FF8D13768C116D91538C6290409D380BFBA199EB2A70308F6DC`。
+- M1- 原始矩阵：TS-only、单线程、cold、逐文件串行，`243/244` functional/parity；唯一异常为 `nal8.4.3.nal` 的 Windows `EXCEPTION_ACCESS_VIOLATION (3221225477)`，没有逻辑分叉证据。异常行同条件 retry `1/1` 通过，因此有效功能证据为 `244/244`；原始矩阵不改写。
+- M1- 主证据：`event-handler-m1-minus-20260919.jsonl`，SHA-256 `EDFB5C499BD99C3DF8396550A846C2B4FA589AEE4D4537EF64C7280804EAFE66`；retry 证据 `event-handler-m1-retry-nal8.4.3-20260919.jsonl`，SHA-256 `F3FF67B8A46FEA7D4E8D175B94233BBDC42B129D9FE775637FF92FBDD8273F39`。原始 timeout、stall、process limit、not-run 均为 `0`；`nal6.redundant.nal` 仍是无 marker 短跑 `unverified/not_reached`。
+- M1- 性能观测：总时长 `1757793 ms`，最长单文件 `389955 ms`，最大 RSS `912.69 MiB`，reasoning cycles `2288254`，约 `786.62 ms/1024 周期`；只作后续性能数据。
+- Java 标杆未变化：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- jree 审计前→后：直接导入文件 `81→80`、`java.lang` 文件 `80→79`、`java.util=38`、`javaObjectFiles=1`、`newLinkedHashMap=0`、`newLinkedHashSet=1` 保持不变。
+
+本批可以宣称：`EventHandler` 的异常边界已完成项目内收窄，且通过直接合同、M2、两个 smoke 和 M1- `244/244` 合并保护证据；不能宣称 023/024 完成、jree 已清零、完整 M1/#245、源码覆盖率、性能等价或正式发布。代码提交 `351081097310b6a6f563bf7021de456d74b506d7`，报告为 `reports/20260919-105710.md`。
+
 ### 2026-09-19：`Plugin` CharSequence 边界收窄
 
 本批承接 `90acd6b`，对照 canonical Java `Plugin.java` 做前向审查。Java 的 `Plugin.name()` 返回 `CharSequence`；TypeScript 原接口直接暴露 `jree` 的 `java.lang.CharSequence` 类型。本批只收窄类型边界，不改 `setEnabled`、插件注册顺序、默认方法语义或插件生命周期。
