@@ -1750,3 +1750,82 @@ J2 本批只处理语言层 substitution Map，不把 count Map 的公共返回�
 - 性能观测：`toothbrush2` 为 201550 周期、106432 ms、峰值 RSS 936.2 MiB；只作为后续性能观测。
 
 下一批优先审查 `ProcessGoal` 私有 substitution Map，再单独处理 `SyllogisticRules`/`TemporalRules` 的 Map/List 边界；继续保持 J3 单责任簇和 V1 哨兵口径。
+
+### 2026-09-19：ProcessGoal/ProcessAnticipation substitution Map 合同切片
+
+本批对照 canonical Java `ProcessGoal.java` 与 `ProcessAnticipation.java`，确认
+`ExecutablePrecondition.substitution`、`subsconc`、`subsBest`、复制表以及
+`anticipate` 参数的原始合同均为 `Map<Term, Term>`，实际实现为 `LinkedHashMap`。
+TypeScript 仅把同一闭环的静态边界收窄为项目 `MapContract<Term, Term>`，并保留
+`NativeMap` 的 Java 值判等、插入顺序和 `entrySet()` 复制兼容；没有把 Map 改成
+List、Set 或普通对象，也没有改变推理算法。
+
+- 代码提交：`270c7f9 refactor(023): 收窄目标预测替换Map合同`，已推送到 `origin/main`。
+- T1 计划：`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`。
+- 直接回归：`58/58`；标准 J3 直接测试：`20/20`；串行 M2：`346` 项，`344` 通过、
+  `2` 跳过、`0` 失败；非增量 `tsc=0`；build `137` 个源文件；dist API 通过。
+- 受影响 NAL：`nal6.17.nal`、`nal4.recursion.nal`、`nars_transitivity.nal`、
+  `toothbrush2.nal` 串行 `4/4` functional/parity；0 exception、0 marker missing、
+  0 stall、0 timeout、0 process limit、0 Java/TS diff。
+- 证据位于项目外
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\process-goal-map-j3-20260919-sentinel.jsonl`，
+  SHA-256：`E193B8BB6BC1B16B1AE63AEB92C47F7D2EE6CD3CF595246EEE4D57CEFD4160D8`。
+- 当前审计：直接 jree 导入文件 `77`、`java.util` 文件 `34`、`java.lang` 文件 `76`、
+  Java String 文件 `47`、`highRiskItems=41`、`semanticReviewItems=81`；
+  `newLinkedHashMap=0`、`newLinkedHashSet=1`。后者仍在兼容路径，不能据此宣称 jree 已退场。
+
+本批之后，J3 的下一组候选已经完成只读审查：先单独收窄 `TemporalRules` 的 Java
+`List<Task>` 返回/参数与 `NativeList` 强制转换，再单独收窄 `SyllogisticRules` 的
+`LinkedHashMap<Term, Term>` 临时替换表；不把 List 与 Map 合并成一个迁移批次。
+
+### 当前全局 spec 级进度（阶段导航，不替代功能事实）
+
+LeanSpec 当前共 15 项：10 项 complete，5 项 in-progress。下面的条形只表达
+spec 的阶段状态和计划项，不把 spec 数量、复选框、测试数量或导入数量当作产品完成率；
+产品事实仍以 M1/M2/parity 矩阵、自动化测试、Git 和阶段报告为准。
+
+```text
+001 翻译评估                         [##########] complete
+002 进度报告                         [##########] complete
+003 依赖简析                         [##########] complete
+004 依赖展开                         [##########] complete
+005 TruthValue 适配                  [#######---] 6/8，in-progress
+006 TruthValue 纯 TS                 [##########] complete
+007 Texts 纯 TS                      [##########] complete
+008 Distributor 纯 TS                [##--------] 2/8，in-progress
+009 Java 源码头                      [##########] complete
+013 Java 3.0.4 canonical             [##########] complete
+018 TS 功能等价                      [##########] complete
+019 tsc 零诊断构建                   [##########] complete
+023 jree 原生运行时                  [##--------] J1合同与J2/J3切片进行中
+024 平台中立核心                     [#####-----] P0-P2完成，P3-P5待做
+020 性能与发布                       [########--] 计划项基本完成，性能预算待验收
+```
+
+### 当前阶段 DAG
+
+```text
+[013 Java canonical]########## 完成
+          |
+          v
+[023 jree 原生运行时]##-------- J1合同 + J2/J3局部切片，J3未收口
+          |
+          +--------[024 平台中立核心]#####----- P0-P2完成，P3-P5待做
+          |                                      |
+          +--------------------------------------+
+                                                 v
+                 [023/024 集成门禁]---------- 未开始：现跑Java、245+1、M2、CLI/API
+                                                 |
+                                                 v
+                 [020 性能与发布]########-- 依赖集成门禁，尚有性能预算验收
+                                                 |
+                                                 v
+                 [RC/正式发布]  ---------- 未开始，需用户明确授权
+```
+
+从项目开始到当前的主线可概括为：先完成 Java 304 canonical、TS 功能等价与零诊断
+构建；随后完成平台边界的 P0-P2；023 先建立 `NativeMap`/MapContract 等项目内
+合同，再按 Java 原始类型逐批迁移数组、字符串、可选结果和 Map。当前静态 jree
+审计从早期 105 个直接导入文件降到 77 个；这只是迁移量指标，不是等价性证明。
+当前仍不能宣称 023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率
+达标或 Java/TypeScript 性能等价。
