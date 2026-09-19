@@ -2028,3 +2028,15 @@ RC/正式发布                    [----------] 未开始，tag/release需用户
 2. **J2/J3 Set**：`CompoundTerm.getContainedTerms`、`addComponentsRecursively` 及 `CompositionalRules` 调用点。保持 Set 抽象，验证 Java equals/hashCode 去重、插入顺序、递归遍历和空集合；不以 NativeSet 的数组底层替代 Set 语义。
 3. **J1/J3 兼容桥**：`src/runtime/jree-compat.ts` 仍集中承载 Java 字符串、异常、类 token、数值/集合过渡和旧 LinkedHashSet 行为。只有调用者合同迁出并有直接回归后，才能逐项删减桥接职责；不能一口气删除。
 4. **验证策略**：普通小簇使用冻结 Java JSONL 的 TS-only 串行局部验证；责任簇收口才运行一次 M1-；023/024 阶段门才现跑单线程 Java 并完成完整 245+1、M2、CLI/API 与浏览器证据。
+
+### 2026-09-20：`CompoundTerm.cloneTermsListDeep` List 合同切片（当前候选 `66bceba`）
+
+本批继续 J2 List 合同审查。canonical Java 的 `cloneTermsListDeep` 返回新建的 `ArrayList<Term>`，逐项调用 `Term.clone()`，保持组件顺序和深拷贝对象身份。TypeScript 原先已经使用 `NativeList`，但公开签名仍是 `java.util.List<Term>` 并通过 cast 返回。本批只收窄该返回边界，并补充“元素不是原引用”的直接回归；没有触及 `asTermList`、`termList`、Set 边界或推理算法。
+
+- 代码提交：`66bceba refactor(023): 收窄深拷贝列表合同`，基线为 `8e4b67d`。
+- 计划器：J2-language-parser、T1，`plan_valid=true`；`live_java_required=false`、`m1_minus_required=false`；生产源码变更 1 个文件、4 行。
+- 直接测试 `7/7`；串行 `npm test`：346 项，344 通过、2 跳过、0 失败；非增量 `tsc=0`；build、dist API、迁移扫描、jree/platform 审计均通过。
+- 受影响 NAL 使用冻结 Java 标杆、TS-only、单线程、cold、1550 周期串行执行：`4/4` functional/parity；0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 not-run、0 Java/TS diff。`nars_transitivity.nal` 为 `211550` 周期/`105352 ms`/`453.3 MiB`，仅作为性能观测。
+- 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compound-clone-list-j2-20260920-sentinel.jsonl`；SHA-256：`6A0CC691677BC9689ACDF870CB367F997DDE9AB506AEC144449462D4FF2581D0`。
+
+本批可以宣称 `cloneTermsListDeep` 的 J2 List 边界已收窄并通过局部合同、M2 和受影响 NAL；不能宣称 J2 责任簇收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或性能等价。下一批应独立处理 `asTermList` 的可变 ArrayList 合同，再处理 Java `Arrays.asList` 固定大小语义的 `termList`，不可把二者混为同一容器。
