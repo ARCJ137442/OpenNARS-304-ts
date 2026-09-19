@@ -1922,3 +1922,69 @@ T1 保护；不能宣称 J3 责任簇收口、023/024 完成、jree 清零或当
 重新通过。下一候选优先是 `CompoundTerm.extractIntervals` 的 Java `List<long>` 输出
 边界；它只有 3 个调用者且已有时间 Narsese 测试。`Terms.prepareComponentLinks` 虽然
 也是 List 边界，但当前缺少直接覆盖，应先补合同测试后再迁移。
+
+### 2026-09-19：CompoundTerm 间隔 List 合同切片
+
+本批继续 J2 List 合同审查。canonical Java `CompoundTerm.extractIntervals` 的公共
+返回类型是有序、可索引的 `List<Long>`；TypeScript 原先已经用 `NativeList<long>`
+实现并由现有时间 Narsese 测试验证顺序、索引和空结果，但对外仍声明为
+`java.util.List<long>`，并通过强制转换抹平了项目内边界。本批只把返回签名收窄为
+`NativeList<long>` 并直接返回，不改变递归提取算法、空结果、调用者或推理调度。
+
+- 代码提交：`2ed3160 refactor(023): 收窄CompoundTerm间隔List合同`；本报告与状态更新随后推送。
+- T1 计划：`base=e6c7f19`、`head=2ed3160`、`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`；直接覆盖为语言运行时、Narsese 边界和时间 Narsese 测试。
+- 串行 M2：`npm test` 为 `346` 项，`344` 通过、`2` 跳过、`0` 失败；非增量 `tsc` 为 0 诊断；build 源文件 `137`；dist API、迁移扫描、jree/platform 审计通过。
+- 最终 4 文件哨兵使用冻结 Java 标杆、TS-only、单线程、cold、逐文件串行：`4/4` functional/parity，0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 Java/TS diff。最终证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compound-intervals-j2-20260919-sentinel-rerun.jsonl`，SHA-256 `477EC4BF6CD4E97D7A24B24DC4CCED827DE78E4CC35BD5C3606498521EB6D65F`。
+- 首次运行曾出现一次未复现的 `NativeMap.findIndex` / `bucket.find is not a function`；上一提交 A/B 与当前候选重复运行均通过，因此本批没有越界修改 NativeMap。原始异常证据保留在 `compound-intervals-j2-20260919-sentinel.jsonl`，SHA-256 `AA853E5D6ADCD37BB89C2E4F04C66922D723E318A5B281FC30980E93BB393BF6`。
+
+本批可以宣称 `CompoundTerm.extractIntervals` 的 List 返回边界已收窄并通过直接测试、M2 和受影响 NAL 哨兵；不能宣称所有 List 边界、J2/J3 责任簇、023/024、jree 清零、当前候选完整 M1/#245、源码覆盖率或性能等价已经完成。下一步优先为 `Terms.prepareComponentLinks` 补直接 List 合同测试，再迁移；随后审查 `CompoundTerm` 的 Set 返回边界，保持 Map/Set/List 抽象分离。
+
+### 当前 spec 级 ASCII 进度快照（2026-09-19）
+
+以下条形只表示各 spec 自身的状态/计划项，不把 spec 数量、复选框或测试数量当作
+产品完成率；产品事实仍以 M1/M2/parity、自动化测试、Git 和阶段报告为准。
+
+```text
+001 翻译评估                 [##########] complete
+002 进度报告                 [##########] complete
+003 依赖简析                 [##########] complete
+004 依赖展开                 [##########] complete
+005 TruthValue 适配          [#######---] 6/8，in-progress
+006 TruthValue 纯 TS         [##########] complete
+007 Texts 纯 TS              [##########] complete
+008 Distributor 纯 TS        [##--------] 2/8，in-progress
+009 Java 源码头              [##########] complete
+013 Java 3.0.4 canonical     [##########] complete
+018 TS 功能等价              [##########] complete
+019 tsc 零诊断构建           [##########] complete
+023 jree 原生运行时          [#---------] 1/7 退出项，切片持续推进
+024 平台中立核心             [####------] 4/11 计划/测试项，P0-P2完成
+020 性能与发布               [########--] 5/6，性能预算未完成
+
+阶段 DAG：
+013 canonical Java  ########## 完成
+        |
+        +--> 018 功能等价       ########## 完成
+        |       |
+        |       +--> 019 零诊断/构建 ########## 完成
+        |                    |
+        +--> 023 去 jree        #--------- 进行中
+        |                    |
+        +--> 024 平台中立       ####------ 进行中
+                             |
+                             v
+                    I 集成门禁   ---------- 未开始
+                             |
+                             v
+                    020 性能/发布 ########-- 依赖集成门禁，预算待验收
+                             |
+                             v
+                    RC/正式发布 ---------- 未开始，需授权
+```
+
+从冻结恢复点到当前，主线已经从“可运行、可测试、可发布入口存在”推进到“按 Java
+原始容器合同逐簇收窄 jree 边界”：直接 jree 导入文件的当前审计值为 `77`，
+`java.util` 文件 `30`，`java.lang` 文件 `76`，Java String 文件 `47`，但仍有
+`newLinkedHashSet=1`、`highRiskItems=41`，且 `package.json` 仍声明 `jree@1.3.0`。
+下一阶段应继续做有直接合同的 List/Set/Map 小簇；只有责任簇收口时才运行 M1-，
+而 023/024 整体验收仍需重新现开 Java、完整 245+1、M2、CLI/API 和平台证据。
