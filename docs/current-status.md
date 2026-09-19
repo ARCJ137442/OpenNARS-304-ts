@@ -1350,6 +1350,22 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
 
+### 2026-09-19：`EventEmitter` 异常边界收窄
+
+本批对照 canonical Java `EventEmitter.java` 做单一责任迁移。Java 的非法构造器参数抛 `IllegalArgumentException`；`off` 的空参数和未知事件抛 `IllegalStateException`。本批只替换直接 jree 异常边界，保留事件 Map、observer 数组、身份删除、pending FIFO、payload 顺序和既有消息拼接。
+
+- `src/io/events/EventEmitter.ts`：删除直接 jree 导入，改用项目 `JavaIllegalArgumentException` 与 `JavaIllegalStateException`。
+- `test/node/event-emitter.test.ts`：增加构造器、空参数和未知事件的异常继承关系及 Java `getMessage()` 观察面回归；定向测试 `11/11`。
+- change gate：`9390646..5406aa7` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；本批未修改 canonical Java，未启动 Java。
+- M2：串行单元测试 `322` 项，`320` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `sourceFileCount=137`；dist API 通过；迁移扫描结构性异常项为 `0`。
+- smoke：`toothbrush.nal` 与 `single_step/nal4.7.nal` TS-only `2/2`，无 exception、timeout、marker missing 或 Java/TS diff。证据 `event-emitter-smoke-20260919.jsonl`，SHA-256 `08C9A7029D07DAC4EDF53FCE7885639656AB8C07A46CB9086E939F7630FA9B85`。
+- M1-：TS-only、单线程、cold、逐文件串行，`244/244` functional/parity，`java_ts_diff=0`、`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`performance_warning=0`。243 项走 marker 路线；`nal6.redundant.nal` 为 `1650/131072`，无 marker，保持 `unverified/not_reached`，不构成 131072 周期等价。
+- M1- 证据：`event-emitter-m1-minus-20260919.jsonl`，大小 `773778 bytes`，SHA-256 `657755735189BB26A3909A4A86A5AB5BF960CEA5B6A05ADD714189C0DFC18E36`；TS 总时长 `1706823 ms`，最长单文件 `363234 ms`，最大 RSS `1021.22 MiB`，reasoning cycles `2288254`，仅作后续性能数据。
+- Java 标杆未变化：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；矩阵 `java_artifact=null`。
+- jree 审计前→后：直接导入文件 `80→79`、`java.lang` 文件 `79→78`；`java.util=38`、`javaObjectFiles=1`、`newLinkedHashMap=0`、`newLinkedHashSet=1` 保持不变。审计证据 `audit-event-emitter-20260919.json`，SHA-256 `594FDEA368192FDFB2030CE9B93FB649D8C439EF47383640941906B68D12A9ED`。
+
+本批可以宣称：`EventEmitter` 的异常边界已完成项目内收窄，并通过局部合同、M2、两个 smoke 和 M1- `244/244` 保护矩阵；不能宣称 023/024 完成、生产核心完全去 jree、完整 M1/#245、源码覆盖率、性能等价或正式发布。代码提交 `5406aa77d4dcf4afcb2d6ba4944b106c7fac40c5`，报告为 `reports/20260919-114104.md`。
+
 ### 2026-09-19：`EventHandler` 异常边界收窄
 
 本批继续对照 canonical Java `EventHandler.java` 做单一责任迁移。Java 的两个构造器只负责绑定 `EventEmitter`、事件 class token 和 active 状态；TS 的唯一直接 jree 行为是非法参数分支中构造 `java.lang.IllegalArgumentException` 并使用转译模板字符串。本批只收窄该异常边界，不改变事件身份 token、订阅顺序、`setActive` 生命周期或 payload。
