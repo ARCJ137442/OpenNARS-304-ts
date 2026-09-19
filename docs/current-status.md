@@ -1516,3 +1516,20 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：`Tense` 的 jree Enum 责任已原生化，并通过局部合同、完整串行 M2、非增量类型检查、构建/API、静态审计、T1 gate 和 M1- `244/244` 保护矩阵；未观察到冻结 Java 标杆上的功能回退。代码提交为 `5721f4c16955e10a183e275e14ae7034ebcf478d`，批次报告为 `reports/20260919-151046.md`。
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、`nal6.redundant.nal` 的 markerless `131072` 周期等价、源码覆盖率目标完成、Java/TypeScript 全面性能等价或正式发布。
+
+### 2026-09-19：`ProcessJudgment` Optional 私有搜索边界原生化
+
+本批对照 canonical Java `ProcessJudgment` 的 Guava `Optional<Task>` 搜索合同做单一责任迁移。Java 的 `tryFind` 只用于表达“是否找到最强 eternal belief”；它不是领域 `Map`、`Set`、迭代器或顺序容器。TypeScript 将该私有结果收窄为 `Task | null`，保持空结果早退、非空任务继续进入既有目标概念前提登记和派发流程。
+
+- `src/control/concept/ProcessJudgment.ts`：`tryFind` 由 `java.util.Optional<T>` 改为 `T | null`；`isPresent()`/`get()` 改为一次 null 守卫后的直接访问；未改变领域 `Map`/`Set`、belief 顺序或推理派发。
+- `test/node/core-runtime.test.ts`：增加无 eternal belief 时 `addToTargetConceptsPreconditions` 安全返回的回归，覆盖 Java `Optional.empty()` 对应路径；定向核心回归 `43/43`。
+- M2：串行单元测试 `325` 项，`323` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `sourceFileCount=137`；dist API 通过；迁移扫描结构性异常为 `0`。
+- change gate：`df91e69..eaa4415` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；本批未修改 Java canonical，复用冻结标杆。
+- M1-：TS-only、单线程、cold、逐文件串行，排除 #245；`244/244` functional/parity，`java_ts_diff=0`、`both_wrong=0`、`exception=0`、卡死式 `timeout=0`、`stall=0`、`marker_missing=0`、`process_limit=0`、`not_run=0`、`performance_warning=0`。243 项走 marker 等价路线；`nal6.redundant.nal` 无 marker，运行到 `1650/131072`，为 `not_reached`，不构成 markerless 长周期等价结论。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\process-judgment-optional-m1-minus-244-20260919.jsonl`，244 行、773835 bytes，SHA-256 `E2927108B39AF0C6D24491EE00A5075066A2D780DDD648A0643EEE95FA0BDD47`；总时长 `1947998 ms`，最长单文件 `446740 ms`，峰值 RSS `959762432 bytes`（约 `915.4 MiB`），reasoning cycles `2288254`，观测速度 `871.73 ms/1024 周期`，仅作后续性能数据。
+- Java 标杆未变化且本批未重跑 Java：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- jree 审计（`eaa4415`）：`directJreeImportFiles=77`、`java.utilFiles=38`、`java.langFiles=76`、`javaStringFiles=48`、`semanticReviewItems=87`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。本批的 Optional 是私有控制流结果，不改变领域集合语义；直接导入计数不下降是预期结果。
+
+本批可以宣称：`ProcessJudgment` 的私有 Optional 空值边界已收窄为原生 `Task | null`，并通过局部合同、M2、非增量类型检查、构建/API、静态审计、T1 gate 和 M1- `244/244` 保护矩阵，未观察到冻结 Java 标杆上的功能回退。代码提交为 `eaa441543380dacc261aa965df74151f17d937ea`，报告为 `reports/20260919-160303.md`。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、`nal6.redundant.nal` 的 markerless `131072` 周期等价、源码覆盖率目标完成、Java/TypeScript 全面性能等价或正式发布。
