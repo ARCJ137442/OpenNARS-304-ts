@@ -1,6 +1,6 @@
 //! Java source: opennars/plugin/Plugin.java
-import type { java } from "jree";
 import type { Nar } from "../main/Nar.ts";
+import type { JavaCharSequenceInput } from "../runtime/jree-compat.ts";
 
 
 
@@ -15,5 +15,7 @@ export interface Plugin {
      */
     setEnabled(n: Nar, enabled: boolean): boolean;
 
-    name?(): java.lang.CharSequence;
+    // Java source return type: CharSequence. Keep the boundary broad enough for
+    // boxed Java strings and native strings without exposing jree here.
+    name?(): JavaCharSequenceInput;
 }
