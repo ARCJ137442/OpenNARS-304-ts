@@ -1721,3 +1721,19 @@ J2 本批只处理语言层 substitution Map，不把 count Map 的公共返回�
 受影响 NAL 使用冻结 Java 标杆、TS-only、单线程、cold、逐文件串行：`nal6.17.nal`、`nal4.recursion.nal`、`nars_transitivity.nal`、`toothbrush2.nal` 为 `4/4` functional/parity；0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 Java/TS diff。`nars_transitivity.nal` 观察 `211550` 周期，`toothbrush2.nal` 观察 `201550` 周期；性能只作为后续观测。证据文件为项目外 `count-map-j3-20260919-sentinel.jsonl`，SHA-256 `11EC6D2EF7342E56FB0AD14FA1AA0D98BA143E1A210F84C521EBBDFB69F0C03E`。
 
 下一批再由 J2 修改 `Term/Variable/CompoundTerm` 的 count Map 生产者返回合同；随后回到 J3 处理推理 substitution Map。当前仍不能宣称 J2 count Map、J3 收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。
+
+### 2026-09-19：J2 count Map 生产者合同切片
+
+本批在 J3 消费者已收窄的基础上，完成 J2 `Term`、`Variable`、`CompoundTerm` 的 count Map 生产者合同。三个 `countTermRecursively` 入口改用 `MapContract<Term, Integer>`，空累加器仍创建有序 `NativeMap`；递归计数、Java 值相等、插入顺序和 Java Map 输入兼容均未改变。
+
+- 代码提交：`b2b8d7e refactor(023): 收窄语言层计数Map生产者合同`。
+- 定向合同测试：`46/46`；串行 M2：`346` 项，`344` 通过、`2` 跳过、`0` 失败。
+- 非增量 `tsc`：0 诊断；build/API、迁移扫描、jree/platform 审计通过。
+- 当前 jree 审计：direct import 77，`java.util` 35，`java.lang` 76，Java String 47，high-risk 41，semantic review 82，`newLinkedHashMap=0`、`newLinkedHashSet=1`。
+- 受影响 NAL 使用冻结 Java 标杆、TS-only、单线程、cold、逐文件串行：`4/4` functional/parity；0 exception、0 marker missing、0 卡死式 timeout、0 stall、0 process limit、0 Java/TS diff。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\count-map-j2-20260919-sentinel.jsonl`，SHA-256 `BB536CF38F60E4BCCBFA07597C65C1E179C931085EA608C097029600A8113F83`。
+- 性能观测：`nars_transitivity` 为 211550 周期、111209 ms、峰值 RSS 390.4 MiB；仅用于后续优化，不改变本批逻辑验收。
+
+本批可以宣称：语言层 count Map 生产者已收窄到项目内 `MapContract`，并通过局部合同、M2、非增量类型检查、build/API、审计和受影响 NAL 标杆对照。仍不能宣称 J2/J3 责任簇整体完成、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。
+
+下一批先做 J3 推理 Map 的前向语义审查，优先核对领域对象 key、Set/Map 交界、equals/hashCode、live view 与迭代删除；仍保持单一责任簇、小范围直接合同、串行 M2 和受影响 NAL，责任簇收口后才运行 M1-。
