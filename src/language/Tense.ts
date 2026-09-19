@@ -1,41 +1,61 @@
 //! Java source: opennars/language/Tense.java
-import { java, S } from "jree";
+import {
+    JavaIllegalArgumentException,
+    javaStringValue,
+    type JavaStringInput,
+} from "../runtime/jree-compat.ts";
 
-export class Tense extends java.lang.Enum<Tense> {
+/** Native enum-like representation of the canonical Java Tense enum. */
+export class Tense {
 
-    public static readonly Past: Tense = new class extends Tense {
-    }(":\\:", S`Past`, 0);
-    public static readonly Present: Tense = new class extends Tense {
-    }(":|:", S`Present`, 1);
-    public static readonly Future: Tense = new class extends Tense {
-    }(":/:", S`Future`, 2);
+    public static readonly Past: Tense = new Tense(":\\:", "Past", 0);
+    public static readonly Present: Tense = new Tense(":|:", "Present", 1);
+    public static readonly Future: Tense = new Tense(":/:", "Future", 2);
 
     public readonly symbol: string;
 
     public static readonly Eternal: Tense = null!;
 
-    protected constructor(string: string, $name$: java.lang.String, $index$: number) {
-        super($name$, $index$);
+    private constructor(string: string, private readonly enumName: string, private readonly enumOrdinal: number) {
         this.symbol = string;
+    }
+
+    public name(): string {
+        return this.enumName;
+    }
+
+    public ordinal(): number {
+        return this.enumOrdinal;
     }
 
     public toString(): string {
         return this.symbol;
     }
 
-    protected static readonly stringToTense: Map<string, Tense> = new Map<string, Tense>();
+    public static values<T extends Tense = Tense>(): T[] {
+        return [Tense.Past, Tense.Present, Tense.Future] as T[];
+    }
+
+    public static valueOf(name: string): Tense {
+        const value = Tense.values().find(tense => tense.name() === name);
+        if (value === undefined) {
+            throw new JavaIllegalArgumentException(`No enum constant Tense.${name}`);
+        }
+        return value;
+    }
+
+    private static readonly stringToTense: Map<string, Tense> = new Map<string, Tense>();
 
     static {
-        for (let t of Tense.values<Tense>()) {
+        for (const t of Tense.values()) {
             Tense.stringToTense.set(t.toString(), t);
         }
     }
 
-    public static tense(s: java.lang.String): Tense {
-        // Java String keys and native JavaScript strings are not interchangeable
-        // in jree-backed maps. Normalize at this parser boundary so Narsese
-        // preserves the Java tense lookup contract.
-        return Tense.stringToTense.get(String(s)) ?? null!;
+    public static tense(s: JavaStringInput): Tense {
+        // Normalize Java String and native JavaScript string inputs at this
+        // parser boundary so Narsese preserves the Java lookup contract.
+        return Tense.stringToTense.get(javaStringValue(s)) ?? null!;
     }
 
 }

@@ -19,6 +19,13 @@ test("native lookup tables preserve Java symbol and tense contracts", async () =
     assert.equal(Tense.tense(new java.lang.String(":|:")), Tense.Present);
     assert.equal(Tense.tense(new java.lang.String(":/:")), Tense.Future);
     assert.equal(Tense.tense(new java.lang.String("")), null);
+    assert.deepEqual(Tense.values(), [Tense.Past, Tense.Present, Tense.Future]);
+    assert.equal(Tense.Present.name(), "Present");
+    assert.equal(Tense.Present.ordinal(), 1);
+    assert.equal(Tense.Present.toString(), ":|:");
+    assert.equal(Tense.valueOf("Present"), Tense.Present);
+    assert.throws(() => Tense.valueOf("Missing"), /No enum constant Tense\.Missing/);
+    assert.equal(Tense.Eternal, null);
 });
 
 test("Term atom cache normalizes Java and native text keys", async () => {
