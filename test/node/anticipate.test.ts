@@ -190,7 +190,7 @@ test("ProcessAnticipation accepts the native Map substitution boundary", async (
             new Stamp(nar, nar.memory),
         );
         type ProcessSubstitution = Parameters<typeof ProcessAnticipation.anticipate>[6];
-        const substitution = new NativeMap<Term, Term>() as unknown as ProcessSubstitution;
+        const substitution: ProcessSubstitution = new NativeMap<Term, Term>();
         substitution.put(variable, grounded);
         const context = new DerivationContext(nar.memory, nar.narParameters, nar);
 
