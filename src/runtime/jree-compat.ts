@@ -113,6 +113,9 @@ export class JavaDoubleCompat extends java.lang.Number {
 /** Keep Java's argument exception at the shared compatibility boundary. */
 export class JavaIllegalArgumentException extends java.lang.IllegalArgumentException {}
 
+/** Keep Java's state exception at the shared compatibility boundary. */
+export class JavaIllegalStateException extends java.lang.IllegalStateException {}
+
 /** jree omits several Java exception classes used by the translated sources. */
 export class JavaAssertionError extends java.lang.Error {}
 export class JavaIllegalAccessError extends java.lang.Error {}
