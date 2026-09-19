@@ -1452,3 +1452,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：`Count` 的 Java 字符串与非法状态异常依赖已收窄到项目兼容边界，并通过局部合同、M2、非增量类型检查、构建/API、静态审计和 T1 要求的 M1- `244/244`；未观察到功能回退。代码提交 `fbe4b7ef5b8dfc534e9c3c3be778777af6867020`；批次报告为 `reports/20260919-080646.md`。
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
+
+### 2026-09-19：`Events.InferenceEvent` 异常边界收窄
+
+本批继续对照 canonical Java `Events.InferenceEvent` 做单一责任迁移。Java 一参构造转发到二参构造，只有 `stackFrames > 0` 才采集栈；TypeScript 的现有非法参数保护分支原先直接构造 `java.lang.IllegalArgumentException`。本批只把该异常边界收窄到项目兼容层，不改变事件 payload、栈追踪、`java.util.List` 或构造器正常路径。`InferenceEvent` 没有安全的公开非法重载实例化入口，因此以公开 `Events.ConceptNew` 正常构造回归和源码审计保护该边界，没有扩大 API。
+
+- `src/io/events/Events.ts`：用 `JavaIllegalArgumentException` 替代该分支的直接 jree 异常命名空间；其他 Java 类型引用仍按原合同保留。
+- change gate：`22a8989..c11d376` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`。
+- M2：定向 `event-emitter.test.ts` `11/11`；完整串行单测 `322` 项，`320` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `sourceFileCount=137`；dist API 和迁移模式扫描通过。
+- smoke：`toothbrush.nal` 与 `single_step/nal4.7.nal` TS-only `2/2`，使用冻结 Java JSONL，`java_artifact=null`；证据 `event-inference-smoke-20260919.jsonl`，SHA-256 `D3A8049514CF4BDBFA9C82655CAFCDC39C1037C732441031A83A2A14DEDB0180`。
+- M1-：冻结标杆、TS-only、单线程、cold、逐文件串行，`244/244` functional/parity；`0` Java/TS diff、`0` exception、`0` marker missing、`0` 卡死式 timeout、`0` stall、`0` process limit、`0` not-run、`0` performance warning。243 项走 marker 路线；`nal6.redundant.nal` 无 marker，运行到 `1650/131072`，为 `unverified/not_reached`，不构成失败。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\event-inference-m1-minus-20260919.jsonl`，大小 `773776 bytes`，SHA-256 `BB56AEDBC510809942FA9E2B21ADEDE06D52CA29E5E965B6C89879B0F9D4CFDE`；TS 总时长 `1674357 ms`，最长单文件 `359585 ms`，最大 RSS `948948992 bytes`（约 `905.0 MiB`），按 `1550` 周期计 `378200` runner cycles，仅作功能保护和后续性能观测。
+- Java 标杆未变化：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；本批没有重新启动 Java。
+- jree 审计：源码文件 `138`，直接导入文件 `79`，`java.lang` 文件 `78`，`semanticReviewItems=88`；本批只收窄异常边界，剩余 Java 集合、栈追踪和类型引用属于后续责任批次，因此不能以导入计数变化作为本批验收。
+
+本批可以宣称：`InferenceEvent` 的异常边界已收窄，并通过局部合同、串行 M2、构建/API、静态审计、smoke 和 M1- `244/244` 保护矩阵。仍不能宣称 023/024 完成、jree 清零、完整 M1/#245 长期稳定性完成、markerless `131072` 周期等价、源码覆盖率达标、Java/TypeScript 全面性能等价或正式发布。代码提交 `c11d3767329564847e7264533ef9cda6a198d0b2`，阶段报告为 `reports/20260919-122358.md`。
