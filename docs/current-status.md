@@ -1563,3 +1563,20 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 当前 jree 审计：`directJreeImportFiles=77`、`java.utilFiles=38`、`java.langFiles=76`、`javaStringFiles=47`、`highRiskItems=41`、`semanticReviewItems=86`、`candidateNativeItems=2`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；唯一显式 `new LinkedHashSet` 位于 `jree-compat.ts` 的兼容性 clone 路径，不作为普通生产 Set 迁移点。
 
 本批可以宣称：`Stamp` 的 occurrence-time、名称缓存和 builder 字符串边界已按 Java 合同原生化，并通过局部回归、M2、T1 gate、静态审计和 M1- `244/244` 保护矩阵。下一批应先做历史 NativeList/原生数组替换的前向语义审计，逐项核对 Java 原类型、equals/hashCode、顺序、迭代和可变性；不能宣称 023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标、Java/TypeScript 全面性能等价或正式发布。
+
+### 2026-09-19：`CompoundTerm.extractIntervals` Java List 契约恢复
+
+本批是历史数组收窄的前向语义审查。canonical Java 的公开方法返回 `List<Long>`，TypeScript 初始转写却返回 `long[]`；本批没有把“当前调用者恰好能用数组”误当成公开契约，而是恢复 Java List 语义。
+
+- `src/language/CompoundTerm.ts`：返回类型恢复为 `java.util.List<long>`，内部使用 `NativeList<long>`，递归收集使用 `add`。
+- `src/inference/LocalRules.ts`：间隔读取恢复为 Java List 的 `size()`/`get()`。
+- `test/node/narsese-temporal.test.ts`：新增 `NativeList` 类型、顺序、`size/get` 和空结果回归；首次定向运行捕获并修复了残留的 `.push()` 调用。
+- M2：串行单元测试 `329` 项，`327` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `137` 个源文件；dist API、迁移扫描和 jree 审计通过。
+- change gate：`ec1b51a..e225312` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；canonical Java 未改变，日常验证复用冻结标杆。
+- M1-：TS-only、单线程、cold、逐文件串行、排除 #245；`244/244` functional/parity，`java_ts_diff=0`、`exception=0`、`marker_missing=0`、卡死式 `timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`performance_warning=0`。243 项走 marker 路线；`nal6.redundant.nal` 为唯一 markerless 未达到 `131072` 周期的样本，观测 `1650/131072`，不构成失败或长周期等价结论。
+- M1- 证据：项目外结果 SHA-256 为 `DEA8AAB1ECEC40976489ACC5B1790F4CF15BA561E6E103D27D536FAFBC2ADC10`；总时长 `1,860,912 ms`，累计 reasoning cycles `2,288,254`，峰值 RSS `995,500,032 bytes`（约 `949.3 MiB`），仅作为后续性能观测。
+- 当前 jree 审计：直接导入文件 `77`、`java.util` 文件 `38`、`java.lang` 文件 `76`、Java String 文件 `47`、`highRiskItems=41`、`semanticReviewItems=86`；`newLinkedHashMap=0`、`newLinkedHashSet=1`，后者位于 `jree-compat.ts` 兼容路径。
+
+本批代码提交为 `e225312`，报告提交为 `f333d23`，均已推送到 `origin/main`。本批可以宣称：`CompoundTerm.extractIntervals` 的 Java List 公开契约已恢复，并通过局部回归、M2、T1 和 M1- 保护矩阵；仍不能宣称完整 M1/#245 当前候选重跑通过、023/024 完成、jree 退场、源码覆盖率达标、性能等价或正式发布。
+
+下一批候选优先审查 `Bag` 的 Java `Map`/哈希键、`equals/hashCode` 判重、迭代器删除与对象身份语义；先按 Java 声明和调用链确认是 Map、Set、List 还是排序集合，再选择 TypeScript 原生抽象，避免用数组冒充集合。
