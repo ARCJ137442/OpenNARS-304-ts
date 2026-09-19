@@ -1533,3 +1533,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：`ProcessJudgment` 的私有 Optional 空值边界已收窄为原生 `Task | null`，并通过局部合同、M2、非增量类型检查、构建/API、静态审计、T1 gate 和 M1- `244/244` 保护矩阵，未观察到冻结 Java 标杆上的功能回退。代码提交为 `eaa441543380dacc261aa965df74151f17d937ea`，报告为 `reports/20260919-160303.md`。
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、`nal6.redundant.nal` 的 markerless `131072` 周期等价、源码覆盖率目标完成、Java/TypeScript 全面性能等价或正式发布。
+
+### 2026-09-19：`Memory` Java String 输入边界原生化
+
+本批继续沿 S1 的单一 jree 责任路线，对照 canonical Java `Memory.java` 收窄字符串输入边界。Java 的 `addNewTask`、`removeTask` 使用 `String reason` 进入事件载荷，`getOperator` 使用字符串作为 operator 注册表查找键；本批没有改变事件顺序、operator 注册表的 Map 语义或推理派发。
+
+- `src/storage/Memory.ts`：`addNewTask`、`removeTask`、`getOperator` 改用项目已有的 `JavaStringInput`；输入同时接受 native string 和 boxed Java `String`，事件 reason 通过 `toJavaString` 保留 Java 字符串载荷，operator 查表通过 `javaStringValue` 归一化。
+- `test/node/memory-string-boundary.test.ts`：新增事件 payload 类型、native/boxed reason 和 native/boxed operator 查表回归；定向测试 `1/1`。
+- change gate：`8318b68..b536180` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；代码提交为 `b5361806a6959e2be93fafe4051b3b485068b9b6`。
+- M2：统一串行单测 `326` 项，`324` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `sourceFileCount=137`；dist API `ok=true`；迁移扫描结构性异常项均为 `0`。
+- M1-：使用冻结 Java JSONL、TS-only、单线程、cold、逐文件串行，`244/244` functional/parity；`0` Java/TS diff、exception、marker missing、卡死式 timeout、stall、process limit、not-run、performance warning。243 项走 marker 路线；`nal6.redundant.nal` 无 marker，短保护运行到 `1650/131072`，为 `not_reached/unverified`，不构成 markerless 长周期等价结论。
+- M1- 证据：`H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts-evidence-archive\\memory-string-boundary-m1-minus-244-20260919.jsonl`，244 行，SHA-256 `DDFF1D28562F50CDC979195254CFB9653ABA5E012AED46C5FCCBCE15A178A7CC`；TS 总时长 `1845766 ms`，最长单文件 `412163 ms`，峰值 RSS `1005223936 bytes`，最高 observed reasoning cycles `502562`，均作为后续性能观测。
+- Java 标杆未变化且本批未重跑 Java：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，结果记录 `java_artifact=null`。
+- 当前 jree 审计（`b536180`）：`directJreeImportFiles=77`、`java.utilFiles=38`、`java.langFiles=76`、`javaStringFiles=47`、`highRiskItems=41`、`semanticReviewItems=86`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；`package.json` 仍声明 `jree@1.3.0`。
+
+本批可以宣称：Memory 的 Java String 输入/事件边界已原生化，并通过局部合同、M2、T1 gate、构建/API、静态审计和 M1- `244/244` 保护矩阵。仍不能宣称 023/024 完成、jree 清零、完整 M1/#245 当前候选通过、`nal6.redundant.nal` 的 markerless `131072` 周期等价、Java/TypeScript 全面性能等价、源码覆盖率达标或正式发布。
