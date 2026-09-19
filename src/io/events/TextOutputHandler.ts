@@ -1,5 +1,5 @@
 //! Java source: opennars/io/events/TextOutputHandler.java
-import { java, S } from "jree";
+import { java } from "jree";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { OutputHandler } from "./OutputHandler.ts";
@@ -8,6 +8,7 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
+import { JavaIllegalArgumentException } from "../../runtime/jree-compat.ts";
 
 const IN = OutputHandler.IN;
 const OUT = OutputHandler.OUT;
@@ -31,7 +32,7 @@ export class TextOutputHandler extends OutputHandler {
 
     private readonly nar: Nar;
 
-    private prefix: java.lang.String = S``;
+    private prefix: java.lang.String = new java.lang.String("");
     private outExp2: TextOutputHandler.LineOutput | null = null;
     private outExp: java.io.PrintWriter | null = null;
     private showErrors: boolean = true;
@@ -90,14 +91,14 @@ export class TextOutputHandler extends OutputHandler {
                 } else if (target instanceof java.io.PrintStream) {
                     this.outExp = new java.io.PrintWriter(target);
                 } else {
-                    throw new java.lang.IllegalArgumentException(S`Invalid output target`);
+                    throw new JavaIllegalArgumentException("Invalid output target");
                 }
                 this.minPriority = minPriority;
                 break;
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -212,7 +213,7 @@ export class TextOutputHandler extends OutputHandler {
                     .append(channel.getSimpleName()).append(": ").append(output).toString();
             }
             default:
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
     }
 
@@ -235,7 +236,7 @@ export class TextOutputHandler extends OutputHandler {
                 );
             }
             default:
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
     }
 
