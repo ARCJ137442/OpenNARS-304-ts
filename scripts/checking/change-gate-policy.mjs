@@ -1,13 +1,6 @@
 const HIGH_RISK_PATHS = [
   /^src\/(?:control|inference|storage|language|entity|operator|plugin|main|runtime|platform|io)\//,
 ];
-const M1_MINUS_HOT_PATHS = [
-  /^src\/(?:control|inference|storage)\//,
-  /^src\/entity\/(?:Task|TaskLink|TermLink|Concept)\.ts$/,
-  /^src\/language\/Variables\.ts$/,
-  /^src\/runtime\/(?:Native\w+|jree-compat|Float32)\.ts$/,
-  /^src\/main\/Nar\.ts$/,
-];
 const BASELINE_PATHS = [
   /^java-master\//,
   /^config\/defaultConfig\.xml$/,
@@ -18,7 +11,6 @@ const BASELINE_PATHS = [
 ];
 const SEMANTIC_TOKENS = /\b(?:equals|hashCode|compareTo|iterator|Map|Set|Random|seed|TermLink|TaskLink|RuleTables|dispatch|instanceof|float|JavaObject|await|async)\b|Math\.fround/;
 const STAGES = new Set(["none", "023", "024", "integration", "rc"]);
-const SCOPES = new Set(["slice", "responsibility"]);
 export function isProductionSourceFile(file) {
   const normalized = file.replaceAll("\\", "/");
   if (!normalized.startsWith("src/")) return false;
@@ -45,9 +37,13 @@ export function runtimeDependencyFingerprint(manifest) {
   ));
 }
 
-export function classifyChangeGate({ files = [], sourceChangedLines = 0, patch = "", stage = "none", scope = "slice", runtimeDependenciesChanged = false } = {}) {
+export function classifyChangeGate({ files = [], sourceChangedLines = 0, patch = "", stage = "none", clusterId = null, closeCluster = false, runtimeDependenciesChanged = false } = {}) {
   if (!STAGES.has(stage)) throw new Error(`unknown stage: ${stage}`);
-  if (!SCOPES.has(scope)) throw new Error(`unknown scope: ${scope}`);
+  if (clusterId !== null && (typeof clusterId !== "string" || clusterId.trim() === "")) {
+    throw new Error("clusterId must be a non-empty string or null");
+  }
+  if (closeCluster && clusterId === null) throw new Error("closeCluster requires clusterId");
+  if (closeCluster && stage !== "none") throw new Error("cluster close and stage acceptance are separate gates");
   const normalized = [...new Set(files.map((file) => file.replaceAll("\\", "/")))];
   const sourceFiles = normalized.filter(isProductionSourceFile);
   const reasons = [];
@@ -58,7 +54,7 @@ export function classifyChangeGate({ files = [], sourceChangedLines = 0, patch =
   };
 
   if (stage !== "none") require(2, `stage:${stage}`);
-  if (scope === "responsibility") require(1, "completed-responsibility");
+  if (closeCluster) require(1, `cluster-close:${clusterId}`);
   for (const file of normalized) {
     if (BASELINE_PATHS.some((pattern) => pattern.test(file))) require(2, `baseline-invariant:${file}`);
     else if (HIGH_RISK_PATHS.some((pattern) => pattern.test(file))) require(1, `high-risk-path:${file}`);
@@ -71,22 +67,21 @@ export function classifyChangeGate({ files = [], sourceChangedLines = 0, patch =
   if (sourceFiles.length > 0 && SEMANTIC_TOKENS.test(patch)) require(1, "semantic-token-change");
   if (reasons.length === 0) reasons.push(sourceFiles.length === 0 ? "non-production-change" : "bounded-low-risk-source-change");
 
-  const m1MinusReasons = [];
-  for (const file of sourceFiles) {
-    if (M1_MINUS_HOT_PATHS.some((pattern) => pattern.test(file))) m1MinusReasons.push(`hot-path:${file}`);
-  }
-  if (sourceFiles.length >= 3) m1MinusReasons.push(`source-file-count:${sourceFiles.length}`);
-  if (sourceChangedLines > 80 && sourceFiles.length > 0) m1MinusReasons.push(`source-line-count:${sourceChangedLines}`);
-  if (scope === "responsibility") m1MinusReasons.push("completed-responsibility");
+  const m1MinusReasons = closeCluster ? [`cluster-close:${clusterId}`] : [];
 
   return {
     tier: `T${tier}`,
     live_java_required: tier === 2,
     m1_minus_required: tier === 1 && m1MinusReasons.length > 0,
+    full_m1_required: tier === 2,
+    affected_nal_required: tier === 1 && !closeCluster,
+    validation_profile: tier === 2 ? "stage" : closeCluster ? "cluster-close" : tier === 1 ? "risk-slice" : "slice",
+    cluster_id: clusterId,
+    cluster_close: closeCluster,
     m1_minus_reasons: m1MinusReasons,
     source_files: sourceFiles.length,
     source_changed_lines: sourceChangedLines,
     reasons,
-    note: "This is a minimum gate. Observed regressions or an invalid frozen baseline always escalate; the tool never certifies semantic equivalence.",
+    note: "T1 slices use affected NALs; only an enumerated cluster close runs M1-. Observed regressions or an invalid frozen baseline always escalate, and the tool never certifies semantic equivalence.",
   };
 }

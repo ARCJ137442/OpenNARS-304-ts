@@ -7,22 +7,42 @@ test("gate policy keeps a bounded documentation or low-risk source edit at T0", 
   assert.equal(classifyChangeGate({ files: ["src/util/ListUtil.ts"], sourceChangedLines: 12, patch: "+return text;" }).tier, "T0");
 });
 
-test("gate policy escalates a single hot Bag edit and semantic collection changes to T1", () => {
+test("gate policy escalates a hot Bag slice to T1 without spending the cluster-close M1 budget", () => {
   const bag = classifyChangeGate({ files: ["src/storage/Bag.ts"], sourceChangedLines: 4 });
   assert.equal(bag.tier, "T1");
-  assert.equal(bag.m1_minus_required, true);
+  assert.equal(bag.m1_minus_required, false);
+  assert.equal(bag.affected_nal_required, true);
+  assert.equal(bag.validation_profile, "risk-slice");
   assert.match(bag.reasons.join(" "), /high-risk-path/);
   assert.equal(classifyChangeGate({ files: ["src/util/ListUtil.ts"], patch: "+const lookup = new Map();" }).tier, "T1");
   assert.equal(classifyChangeGate({ files: ["src/platform/RuntimeCapabilities.ts"], sourceChangedLines: 4 }).tier, "T1");
   assert.equal(classifyChangeGate({ files: ["src/platform/RuntimeCapabilities.ts"], sourceChangedLines: 4 }).m1_minus_required, false);
-  assert.equal(classifyChangeGate({ files: ["src/plugin/Plugin.ts"], scope: "responsibility" }).m1_minus_required, true);
   assert.equal(classifyChangeGate({ files: ["src/runtime/Float32.ts"], sourceChangedLines: 4 }).tier, "T1");
+});
+
+test("only an explicit enumerated cluster close requires M1-minus", () => {
+  const result = classifyChangeGate({
+    files: ["src/runtime/Float32.ts"],
+    clusterId: "J1-runtime-compat",
+    closeCluster: true,
+  });
+  assert.equal(result.tier, "T1");
+  assert.equal(result.m1_minus_required, true);
+  assert.deepEqual(result.m1_minus_reasons, ["cluster-close:J1-runtime-compat"]);
+  assert.equal(result.affected_nal_required, false);
+  assert.equal(result.validation_profile, "cluster-close");
+  assert.throws(() => classifyChangeGate({ closeCluster: true }), /requires clusterId/);
+  assert.throws(() => classifyChangeGate({
+    stage: "023", clusterId: "J1-runtime-compat", closeCluster: true,
+  }), /separate gates/);
 });
 
 test("gate policy escalates baseline changes and milestone acceptance to T2", () => {
   assert.equal(classifyChangeGate({ files: ["java-master/src/main/resources/nal/x.nal"] }).tier, "T2");
   assert.equal(classifyChangeGate({ files: [], stage: "023" }).tier, "T2");
   assert.equal(classifyChangeGate({ files: [], stage: "023" }).m1_minus_required, false);
+  assert.equal(classifyChangeGate({ files: [], stage: "023" }).full_m1_required, true);
+  assert.equal(classifyChangeGate({ files: [], stage: "023" }).validation_profile, "stage");
   assert.equal(classifyChangeGate({ files: ["package.json"], runtimeDependenciesChanged: true }).tier, "T2");
   assert.equal(classifyChangeGate({ files: ["package.json"], patch: '+    "test": "echo ok"' }).tier, "T0");
   assert.equal(classifyChangeGate({ files: ["src/storage/Bag.ts"], patch: "-old code" }).tier, "T1");
@@ -32,7 +52,7 @@ test("gate policy escalates broad production edits", () => {
   assert.equal(classifyChangeGate({ files: ["src/io/Texts.ts", "src/main/Parameters.ts", "src/platform/node/Host.ts"] }).tier, "T1");
   assert.equal(classifyChangeGate({ files: ["src/io/Texts.ts"], sourceChangedLines: 81 }).tier, "T1");
   assert.throws(() => classifyChangeGate({ stage: "unknown" as never }), /unknown stage/);
-  assert.throws(() => classifyChangeGate({ scope: "unknown" as never }), /unknown scope/);
+  assert.throws(() => classifyChangeGate({ clusterId: "" }), /non-empty string/);
 });
 
 test("source-line gate counts only production TypeScript, excluding tests, reports, docs and JavaScript", () => {
@@ -57,8 +77,13 @@ test("source-line gate counts only production TypeScript, excluding tests, repor
   assert.equal(slice.tier, "T1");
   assert.equal(slice.m1_minus_required, false);
   assert.equal(slice.source_changed_lines, 7);
-  const responsibility = classifyChangeGate({ files, sourceChangedLines: countProductionSourceLines(numstat), scope: "responsibility" });
-  assert.equal(responsibility.m1_minus_required, true);
+  const clusterClose = classifyChangeGate({
+    files,
+    sourceChangedLines: countProductionSourceLines(numstat),
+    clusterId: "J4-operator-plugin",
+    closeCluster: true,
+  });
+  assert.equal(clusterClose.m1_minus_required, true);
 });
 
 test("runtime dependency fingerprint ignores ordering and scripts but detects version changes", () => {
