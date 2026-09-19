@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { NativeMap } from "../../src/runtime/NativeMap.ts";
+import { NativeMap, type MapContract } from "../../src/runtime/NativeMap.ts";
 
 class EqualKey {
     public constructor(public readonly name: string) {}
@@ -166,4 +166,14 @@ test("NativeMap count entries match jree LinkedHashMap on equal domain keys", as
     assert.equal(nativeMap.size(), javaMap.size());
     assert.deepEqual(nativeMap.keySet().toArray(), Array.from(javaMap.keySet()));
     assert.equal(nativeMap.get(equalFirst), javaMap.get(equalFirst)?.valueOf());
+});
+
+test("NativeMap implements the project MapContract without erasing Map semantics", () => {
+    const values = new NativeMap<string, number>();
+    const contract: MapContract<string, number> = values;
+
+    contract.put("key", 1);
+    assert.equal(contract.containsKey("key"), true);
+    assert.deepEqual(Array.from(contract.keySet()), ["key"]);
+    assert.equal(contract.get("key"), 1);
 });
