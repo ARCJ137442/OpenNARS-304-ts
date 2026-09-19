@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java } from "jree";
 import { DerivationContext } from "../../src/control/DerivationContext.ts";
 import { CompositionalRules } from "../../src/inference/CompositionalRules.ts";
 import { TruthFunctions } from "../../src/inference/TruthFunctions.ts";
@@ -12,8 +11,10 @@ import { Nar } from "../../src/main/Nar.ts";
 import { javaStringValue } from "../../src/runtime/jree-compat.ts";
 import { NativeSet } from "../../src/runtime/NativeSet.ts";
 
-test("CompositionalRules.powerSet preserves Java subset order without a temporary List", () => {
-    const original = new java.util.LinkedHashSet<string>();
+test("CompositionalRules.powerSet preserves Set order without a temporary List", () => {
+    // Java source type: Set<String> backed by LinkedHashSet.
+    // Current type: NativeSet<String>.
+    const original = new NativeSet<string>();
     original.add("a");
     original.add("b");
     original.add("c");
@@ -26,10 +27,10 @@ test("CompositionalRules.powerSet preserves Java subset order without a temporar
 });
 
 test("CompositionalRules.powerSet handles empty and singleton sets", () => {
-    const empty = new java.util.LinkedHashSet<string>();
+    const empty = new NativeSet<string>();
     assert.deepEqual(Array.from(CompositionalRules.powerSet(empty), subset => Array.from(subset)), [[]]);
 
-    const singleton = new java.util.LinkedHashSet<string>();
+    const singleton = new NativeSet<string>();
     singleton.add("only");
     assert.deepEqual(Array.from(CompositionalRules.powerSet(singleton), subset => Array.from(subset)), [["only"], []]);
 });

@@ -1264,11 +1264,11 @@ export class CompositionalRules {
    * @return
    */
   public static powerSet<T>(
-    originalSet: NativeSet<T> | java.util.Set<T>,
+    originalSet: NativeSet<T>,
   ): NativeSet<NativeSet<T>> {
-    // Java source type: Set<Set<T>> backed by LinkedHashSet. Keep Set
-    // semantics explicit at both nesting levels; keep the input typed as a
-    // Java Set boundary rather than widening it to an arbitrary Iterable.
+    // Java source type: Set<Set<T>> backed by LinkedHashSet.
+    // Current type: NativeSet at both nesting levels. Keep Set semantics
+    // explicit instead of widening the input to an arbitrary Iterable.
     const sets = new NativeSet<NativeSet<T>>();
     const list: T[] = Array.from(originalSet);
     if (list.length === 0) {
@@ -1276,8 +1276,8 @@ export class CompositionalRules {
       return sets;
     }
     // This list is only a temporary ordered view for the recursive split.
-    // Keep the Java Set boundary, but avoid allocating a jree ArrayList and
-    // AbstractList subList on every power-set level.
+    // Keep the ordered Set contract, but avoid allocating a jree ArrayList
+    // and AbstractList subList on every power-set level.
     const head: T = list[0];
     const rest = new NativeSet<T>();
     for (let i = 1; i < list.length; i++) {
