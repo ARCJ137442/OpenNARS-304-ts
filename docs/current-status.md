@@ -1891,3 +1891,34 @@ Java-shaped List 生产者暂不改变，留作下一独立合同批次。
 所有 List 边界已收敛、J3 责任簇收口、023/024 完成、jree 清零、完整 M1/#245
 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。下一步先继续 List
 生产者审查，之后另行处理 `SyllogisticRules` 的 Map 临时表。
+
+### 2026-09-19：SyllogisticRules 预测替换 Map 边界切片
+
+本批对照 canonical Java `SyllogisticRules.java` 与 `ProcessAnticipation.java`，确认
+预测派发处的原始参数合同为 `Map<Term, Term>`，Java 实现为 `LinkedHashMap`。TypeScript
+此前已经创建 `NativeMap<Term, Term>`，但调用处仍用 `as unknown as java.util.Map` 抹平了
+项目内 `MapContract`。本批只删除该强制转换，保留 Map 抽象、Term 的 Java equals/hashCode、
+插入顺序、空 Map 语义和预测派发算法；没有改变 `doublePremiseTaskRevised`，因为它在
+Java/TypeScript 两侧均为 `boolean`。
+
+- 代码提交：`ea202f8 refactor(023): 收窄三段论预测替换Map边界`。
+- T1 计划：`plan_valid=true`、J3 单一 owner、生产源码 1 个文件/2 个改动行，
+  `live_java_required=false`、`m1_minus_required=false`。
+- 串行单测：`346` 项，`344` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build
+  `137` 个源文件；dist API 通过。
+- 迁移扫描：malformed 项均为 0；jree 审计直接导入文件 `77`，`java.util` 文件由
+  `31` 降为 `30`，`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台审计结果未变。
+- 受影响 NAL 使用冻结 Java 标杆、TS-only、单线程、cold、逐文件串行：`4/4`
+  functional/parity，0 exception、0 marker missing、0 stall、0 timeout、0 process
+  limit、0 Java/TS diff。`nal6.17` 为 `1553` 周期/`3149 ms`/`250.1 MiB`，
+  `nal4.recursion` 为 `51550`/`8609 ms`/`331.2 MiB`，`nars_transitivity` 为
+  `211550`/`121238 ms`/`372.3 MiB`，`toothbrush2` 为 `201550`/`115573 ms`/`934.6 MiB`。
+- 证据文件位于项目外
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\syllogistic-map-j3-20260919-sentinel.jsonl`，
+  SHA-256：`F4225A407375CFE4B24173D9D8F2B60B78EC01C2315E90E61D1761D566645D94`。
+
+本批可以宣称 `SyllogisticRules` 的该处预测 Map 调用边界已去除 jree 类型 cast，并通过
+T1 保护；不能宣称 J3 责任簇收口、023/024 完成、jree 清零或当前候选完整 M1/#245
+重新通过。下一候选优先是 `CompoundTerm.extractIntervals` 的 Java `List<long>` 输出
+边界；它只有 3 个调用者且已有时间 Narsese 测试。`Terms.prepareComponentLinks` 虽然
+也是 List 边界，但当前缺少直接覆盖，应先补合同测试后再迁移。
