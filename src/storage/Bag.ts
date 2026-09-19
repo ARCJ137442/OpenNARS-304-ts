@@ -34,11 +34,10 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
      * LinkedHashMap<K, Type>. NativeMap keeps the Map contract, Java equals
      * lookup, and insertion order without a jree-backed table.
      */
-    private nameTable: java.util.HashMap<K, Type> =
-        new NativeMap<K, Type>() as unknown as java.util.HashMap<K, Type>;
+    private nameTable: NativeMap<K, Type> = new NativeMap<K, Type>();
     /** Java hash buckets used to avoid scanning every logical key on each lookup. */
     private equalityBuckets: Map<number, K[]> = new Map<number, K[]>();
-    /** Native FIFO queues for items on different priority levels. */
+    /** Java original type: ArrayList<ArrayList<Type>>; native Type[][] FIFO queues. */
     private itemTable: Type[][] = [];
     /** Native mirror of LinkedHashMap.values() insertion order for JS iteration. */
     private itemOrder: Type[] = [];
@@ -85,7 +84,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
         }
         // Java original type: HashMap<K, Type>; concrete implementation:
         // LinkedHashMap<K, Type>. Keep the ordered Map abstraction native.
-        this.nameTable = new NativeMap<K, Type>() as unknown as java.util.HashMap<K, Type>;
+        this.nameTable = new NativeMap<K, Type>();
         this.equalityBuckets = new Map<number, K[]>();
         this.currentLevel = this.TOTAL_LEVEL - 1;
         this.levelIndex = this.capacity % this.TOTAL_LEVEL; // so that different bags start at different point

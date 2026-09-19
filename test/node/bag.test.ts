@@ -269,3 +269,30 @@ test("Bag native iteration preserves LinkedHashMap insertion order across replac
     assert.equal(bag.pickOut("first"), replacement);
     assert.deepEqual(Array.from(bag), [second]);
 });
+
+test("Bag Java iterator and contains preserve value equality", () => {
+    const bag = new Bag<TestItem, string>(4, 10, new Parameters());
+    const first = new TestItem("first", 0.2);
+    const second = new TestItem("second", 0.9);
+    bag.putIn(first);
+    bag.putIn(second);
+
+    const iterator = bag.iterator();
+    assert.equal(iterator.hasNext(), true);
+    assert.equal(iterator.next(), first);
+    assert.equal(iterator.next(), second);
+    assert.equal(iterator.hasNext(), false);
+    assert.equal(bag.contains(new TestItem("first", 0.2)), true);
+});
+
+test("Bag takeOut removes each selected item and reaches the empty state", () => {
+    const bag = new Bag<TestItem, string>(4, 10, new Parameters());
+    bag.putIn(new TestItem("first", 0.2));
+    bag.putIn(new TestItem("second", 0.9));
+
+    assert.notEqual(bag.takeOut(), null);
+    assert.equal(bag.size(), 1);
+    assert.notEqual(bag.takeOut(), null);
+    assert.equal(bag.size(), 0);
+    assert.equal(bag.takeOut(), null);
+});
