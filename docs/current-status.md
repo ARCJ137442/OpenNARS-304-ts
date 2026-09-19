@@ -1737,3 +1737,16 @@ J2 本批只处理语言层 substitution Map，不把 count Map 的公共返回�
 本批可以宣称：语言层 count Map 生产者已收窄到项目内 `MapContract`，并通过局部合同、M2、非增量类型检查、build/API、审计和受影响 NAL 标杆对照。仍不能宣称 J2/J3 责任簇整体完成、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。
 
 下一批先做 J3 推理 Map 的前向语义审查，优先核对领域对象 key、Set/Map 交界、equals/hashCode、live view 与迭代删除；仍保持单一责任簇、小范围直接合同、串行 M2 和受影响 NAL，责任簇收口后才运行 M1-。
+
+### 2026-09-19：J3 CompositionalRules substitution Map 合同切片
+
+本批对照 canonical Java `CompositionalRules.java`，确认 `res1`～`res4`、`app`、`mapping` 以及私有辅助参数的原始合同为 `Map<Term, Term>`，实现为 `LinkedHashMap`。TypeScript 只将这些短生命周期内部表从 jree `java.util.Map` 静态类型收窄到项目 `MapContract<Term, Term>`，实际仍使用 `NativeMap`；没有改变 Term 的 Java 值判等、插入顺序、随机调用、Set/List 语义或推理算法。
+
+- 代码提交：`9221757 refactor(023): 收窄组合规则替换Map合同`。
+- T1 计划：`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`；直接 J3 测试 `20/20`。
+- 串行 M2：`346` 项，`344` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build/API 通过。
+- 受影响 NAL：`nal6.17 4/4`、`nal4.recursion 1/1`、`nars_transitivity 2/2`、`toothbrush2 2/2`；无 exception、marker missing、stall、卡死式 timeout、process limit 或 Java/TS diff。
+- 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compositional-map-j3-20260919-sentinel.jsonl`，SHA-256 `515D0BE42768D4DA0E5FB0DA7AC0816BB31141357DCC9FFD383F60040463AD3C`。
+- 性能观测：`toothbrush2` 为 201550 周期、106432 ms、峰值 RSS 936.2 MiB；只作为后续性能观测。
+
+下一批优先审查 `ProcessGoal` 私有 substitution Map，再单独处理 `SyllogisticRules`/`TemporalRules` 的 Map/List 边界；继续保持 J3 单责任簇和 V1 哨兵口径。
