@@ -1860,3 +1860,34 @@ Java-shaped List 生产者暂不改变，留作下一独立合同批次。
 源码覆盖率达标或 Java/TypeScript 性能等价。下一批先处理
 `DerivationContext.doublePremiseTask` 的 List 生产者及直接消费者，再单独处理
 `SyllogisticRules` 的 Map 临时表。
+
+### 2026-09-19：DerivationContext 双前提 List 生产者合同切片
+
+本批继续同一 J3 List 合同，核对 canonical Java `DerivationContext.java`：
+`doublePremiseTask` 的两个 overload 和实现原始返回均为 `List<Task>`，实际是
+`ArrayList<Task>` 的短生命周期 0～2 项结果缓冲；拒绝派生时返回 `null`。TypeScript
+原先已经创建 `NativeList`，但 overload、实现和所有返回分支仍以
+`java.util.List<Task>` 强制转换。本批把生产者直接改为 `NativeList<Task> | null`，并同步
+收窄 `TemporalRules`、`SyllogisticRules` 的三个直接局部消费者；没有改变 null、顺序、
+追加、预算阈值、随机调用或推理算法。
+
+- 代码提交：`8d1b28d refactor(023): 收窄双前提List生产者合同`。
+- T1 计划：`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`；
+  生产源码 3 个文件、27 行变更，单一 owner 为 J3。
+- 计划器直接测试：`20/20`；串行 M2：`346` 项，`344` 通过、`2` 跳过、`0` 失败；
+  非增量 `tsc=0`；build `137` 个源文件；dist API 通过。
+- 受影响 NAL：`nal6.17.nal`、`nal4.recursion.nal`、`nars_transitivity.nal`、
+  `toothbrush2.nal` 串行 `4/4` functional/parity；0 exception、0 marker missing、
+  0 stall、0 timeout、0 process limit、0 Java/TS diff。
+- 证据位于项目外
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\double-premise-list-j3-20260919-sentinel.jsonl`，
+  SHA-256：`BDFE13B7BB8AD73E1C728C1F1CAA3219ECBC917D40D3EDDF4029EF45B985D4F1`。
+- 当前审计：直接 jree 导入文件 `77`、`java.util` 文件 `31`、`java.lang` 文件 `76`、
+  Java String 文件 `47`、`highRiskItems=41`、`semanticReviewItems=78`；
+  `newLinkedHashMap=0`、`newLinkedHashSet=1`。
+
+本批可以宣称双前提任务结果生产者及直接 List 消费者已收窄到项目 NativeList，
+并通过局部测试、M2、非增量 typecheck、build/API、审计和受影响 NAL。不能宣称
+所有 List 边界已收敛、J3 责任簇收口、023/024 完成、jree 清零、完整 M1/#245
+当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。下一步先继续 List
+生产者审查，之后另行处理 `SyllogisticRules` 的 Map 临时表。
