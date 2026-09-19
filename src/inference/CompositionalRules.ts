@@ -38,6 +38,7 @@ import { TruthFunctions } from "./TruthFunctions.ts";
 import type { DerivationContext } from "../control/DerivationContext.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
+import type { MapContract } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 
 // Java 原类型：Map<Term, Term>，实现类型：LinkedHashMap。
@@ -1343,7 +1344,7 @@ export class CompositionalRules {
         subject,
       );
     }
-    let termCounts: java.util.Map<Term, java.lang.Integer> =
+    let termCounts: MapContract<Term, java.lang.Integer> =
       implicationEquivalenceOrJunction.countTermRecursively(null);
     let k: int = 0;
     for (let t of candidates) {

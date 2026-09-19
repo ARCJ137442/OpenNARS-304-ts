@@ -14,6 +14,7 @@ import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import { NativeList } from "../../runtime/NativeList.ts";
 import { NativeSet } from "../../runtime/NativeSet.ts";
+import type { MapContract } from "../../runtime/NativeMap.ts";
 import type { Concept } from "../../entity/Concept.ts";
 import type { Sentence } from "../../entity/Sentence.ts";
 import type { Stamp } from "../../entity/Stamp.ts";
@@ -161,7 +162,7 @@ export class ProcessJudgment {
         if (!(task.getTerm() as Implication).getPredicate().hasVar()) {
             targets.add((task.getTerm() as Implication).getPredicate());
         } else {
-            let ret: java.util.Map<Term, java.lang.Integer> = (task.getTerm() as Implication).getPredicate().countTermRecursively(null);
+            let ret: MapContract<Term, java.lang.Integer> = (task.getTerm() as Implication).getPredicate().countTermRecursively(null);
             for (let r of ret.keySet()) {
                 targets.add(r);
             }

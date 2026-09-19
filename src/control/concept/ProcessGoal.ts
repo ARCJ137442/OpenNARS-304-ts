@@ -31,6 +31,7 @@ import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
 import { NativeList } from "../../runtime/NativeList.ts";
 import { NativeMap } from "../../runtime/NativeMap.ts";
+import type { MapContract } from "../../runtime/NativeMap.ts";
 import { NativeSet } from "../../runtime/NativeSet.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 
@@ -302,7 +303,7 @@ export class ProcessGoal {
         // knowledge
         // 1. pull up variable based preconditions from component concepts without
         // replacing them
-        let ret: java.util.Map<Term, java.lang.Integer> = (projectedGoal.getTerm()).countTermRecursively(null);
+        let ret: MapContract<Term, java.lang.Integer> = (projectedGoal.getTerm()).countTermRecursively(null);
         const generalPreconditions: Task[] = [];
         for (let t of ret.keySet()) {
             let get_concept: Concept = nal.memory.concept(t); // the concept to pull preconditions from
