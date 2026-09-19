@@ -13,7 +13,6 @@ import { RuleTables } from "../../inference/RuleTables.ts";
 import { TemporalRules } from "../../inference/TemporalRules.ts";
 import { UtilityFunctions } from "../../inference/UtilityFunctions.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import type { MapContract } from "../../runtime/NativeMap.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { OutputHandler } from "../../io/events/OutputHandler.ts";
@@ -40,7 +39,7 @@ import type { Parameters } from "../../main/Parameters.ts";
 export class ProcessAnticipation {
 
     public static anticipate(nal: DerivationContext, mainSentence: Sentence, budget: BudgetValue,
-        minTime: long, maxTime: long, urgency: float, substitution: MapContract<Term, Term>): void {
+        minTime: long, maxTime: long, urgency: float, substitution: java.util.Map<Term, Term>): void {
         // derivation was successful and it was a judgment event
         let stamp: Stamp = new Stamp(nal.time, nal.memory);
         stamp.setOccurrenceTime(Stamp.ETERNAL);

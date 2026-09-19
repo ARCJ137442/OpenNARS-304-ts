@@ -13,7 +13,7 @@ import { ImageInt } from "./ImageInt.ts";
 import { Inheritance } from "./Inheritance.ts";
 import { Similarity } from "./Similarity.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
-import { NativeMap, type MapContract } from "../runtime/NativeMap.ts";
+import { NativeMap } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import type { Term } from "./Term.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
@@ -21,8 +21,8 @@ import type { JavaChar } from "../runtime/jree-compat.ts";
 // Java 原类型：Map<Term, Term>，实现类型：LinkedHashMap。
 // The two-element array remains the Java Map<Term, Term>[] container; only the
 // concrete map implementation moves to the native ordered Map contract.
-const nativeTermMap = (): NativeMap<Term, Term> =>
-    new NativeMap<Term, Term>();
+const nativeTermMap = (): java.util.Map<Term, Term> =>
+    new NativeMap<Term, Term>() as unknown as java.util.Map<Term, Term>;
 
 
 /**
@@ -41,17 +41,17 @@ export class Variables {
      * wasting them if they are not used.
      */
     public static findSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term,
-        map: MapContract<Term, Term>[]): boolean;
+        map: java.util.Map<Term, Term>[]): boolean;
 
     public static findSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term,
-        map1: MapContract<Term, Term>, map2: MapContract<Term, Term>): boolean;
+        map1: java.util.Map<Term, Term>, map2: java.util.Map<Term, Term>): boolean;
 
     public static findSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term,
-        map: MapContract<Term, Term>[], allowPartial: boolean): boolean;
+        map: java.util.Map<Term, Term>[], allowPartial: boolean): boolean;
     public static findSubstitute(...args: unknown[]): boolean {
         switch (args.length) {
             case 5: {
-                const [rnd, type, term1, term2, map] = args as [java.util.Random, JavaChar, Term, Term, MapContract<Term, Term>[]];
+                const [rnd, type, term1, term2, map] = args as [java.util.Random, JavaChar, Term, Term, java.util.Map<Term, Term>[]];
 
 
                 return Variables.findSubstitute(rnd, type, term1, term2, map, false);
@@ -62,11 +62,11 @@ export class Variables {
 
             case 6: {
                 if (typeof args[5] !== "boolean") {
-                    const [rnd, type, term1, term2, map1, map2] = args as [java.util.Random, JavaChar, Term, Term, MapContract<Term, Term>, MapContract<Term, Term>];
+                    const [rnd, type, term1, term2, map1, map2] = args as [java.util.Random, JavaChar, Term, Term, java.util.Map<Term, Term>, java.util.Map<Term, Term>];
                     return Variables.findSubstitute(rnd, type, term1, term2, [map1, map2]);
                 }
 
-                const [rnd, type, term1, term2, map, allowPartial] = args as [java.util.Random, JavaChar, Term, Term, MapContract<Term, Term>[], boolean];
+                const [rnd, type, term1, term2, map, allowPartial] = args as [java.util.Random, JavaChar, Term, Term, java.util.Map<Term, Term>[], boolean];
 
 
 
@@ -104,11 +104,11 @@ export class Variables {
                                     map[1] = nativeTermMap();
                                 }
 
-                                let mapk: MapContract<Term, Term>[] = Variables.copyMapFrom(map);
+                                let mapk: java.util.Map<Term, Term>[] = Variables.copyMapFrom(map);
                                 let succeeded: boolean = true;
                                 for (let j: int = k; j < k + size_smaller; j++) {
                                     let i: int = j - k;
-                                    let mapNew: MapContract<Term, Term>[] = Variables.copyMapFrom(map);
+                                    let mapNew: java.util.Map<Term, Term>[] = Variables.copyMapFrom(map);
                                     // attempt unification:
                                     if (Variables.findSubstitute(rnd, type, c1.term[i], c2.term[j], mapNew)) {
                                         Variables.appendToMap(mapNew[0], mapk[0]);
@@ -255,7 +255,7 @@ export class Variables {
                                     map[1] = nativeTermMap();
                                 }
 
-                                let mapNew: MapContract<Term, Term>[] = Variables.copyMapFrom(map);
+                                let mapNew: java.util.Map<Term, Term>[] = Variables.copyMapFrom(map);
                                 // attempt unification:
                                 if (Variables.findSubstitute(rnd, type, ti, cTerm2.term[j], mapNew)) {
                                     Variables.appendToMap(mapNew[0], map[0]);
@@ -329,9 +329,9 @@ export class Variables {
      * @param source source maps (two)
      * @return copied maps
      */
-    private static copyMapFrom(source: MapContract<Term, Term>[]): MapContract<Term, Term>[] {
+    private static copyMapFrom(source: java.util.Map<Term, Term>[]): java.util.Map<Term, Term>[] {
         // Java original: Map<Term, Term>[] backed by two LinkedHashMap instances.
-        let destination: MapContract<Term, Term>[] = new Array<MapContract<Term, Term>>(2);
+        let destination: java.util.Map<Term, Term>[] = new Array<java.util.Map<Term, Term>>(2);
 
         destination[0] = nativeTermMap();
         destination[1] = nativeTermMap();
@@ -341,7 +341,7 @@ export class Variables {
         return destination;
     }
 
-    private static appendToMap(source: MapContract<Term, Term>, target: MapContract<Term, Term>): void {
+    private static appendToMap(source: java.util.Map<Term, Term>, target: java.util.Map<Term, Term>): void {
         for (let c of source.keySet()) {
             target.put(c, source.get(c) as unknown as Term);
         }
@@ -455,9 +455,9 @@ export class Variables {
                 const [rnd, type, t1, t2, compound, allowPartial] = args as [java.util.Random, JavaChar, Term, Term, Term[], boolean];
 
 
-                let map: MapContract<Term, Term>[] = [
-                    null as unknown as MapContract<Term, Term>,
-                    null as unknown as MapContract<Term, Term>,
+                let map: java.util.Map<Term, Term>[] = [
+                    null as unknown as java.util.Map<Term, Term>,
+                    null as unknown as java.util.Map<Term, Term>,
                 ]; // begins empty: null,null
 
                 let hasSubs: boolean = Variables.findSubstitute(rnd, type, t1, t2, map, allowPartial);
@@ -501,7 +501,7 @@ export class Variables {
      * appliesSubstitute and renameVariables, resulting in a cloned object,
      * will not change this instance
      */
-    private static applySubstituteAndRenameVariables(t: CompoundTerm, subs: MapContract<Term, Term>): Term {
+    private static applySubstituteAndRenameVariables(t: CompoundTerm, subs: java.util.Map<Term, Term>): Term {
         if ((subs === null) || (subs.isEmpty())) {
             // no change needed
             return t;

@@ -14,7 +14,7 @@ import type { TermLink } from "../entity/TermLink.ts";
 import { javaStringHashCode, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
 import { NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
-import { NativeMap, type MapContract } from "../runtime/NativeMap.ts";
+import { NativeMap } from "../runtime/NativeMap.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -600,11 +600,11 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      *            occurs
      * @return The counts of the terms
      */
-    public countTermRecursively(map: MapContract<Term, java.lang.Integer> | null): MapContract<Term, java.lang.Integer> {
+    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer> | null): java.util.Map<Term, java.lang.Integer> {
         if (map === null) {
             // Java original type: LinkedHashMap<Term, Integer>. Keep the
             // public Map contract while using the native ordered Map here.
-            map = new NativeMap<Term, java.lang.Integer>();
+            map = new NativeMap<Term, java.lang.Integer>() as unknown as java.util.Map<Term, java.lang.Integer>;
         }
         map.put(this, java.lang.Integer.valueOf(map.getOrDefault(this, java.lang.Integer.valueOf(0)).valueOf() + 1));
         for (let term of this.term) {
@@ -721,7 +721,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      *
      * @param subs
      */
-    public applySubstitute(subs: MapContract<Term, Term>): Term {
+    public applySubstitute(subs: java.util.Map<Term, Term>): Term {
         if ((subs === null) || (subs.isEmpty())) {
             return this;// .clone();
         }
@@ -765,7 +765,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * returns result of applySubstitute, if and only if it's a CompoundTerm.
      * otherwise it is null
      */
-    public applySubstituteToCompound(substitute: MapContract<Term, Term>): CompoundTerm {
+    public applySubstituteToCompound(substitute: java.util.Map<Term, Term>): CompoundTerm {
         let t: Term = this.applySubstitute(substitute);
         if (t instanceof CompoundTerm)
             return (t as CompoundTerm);

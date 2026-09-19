@@ -1,22 +1,5 @@
 import { javaValueEquals, javaValueHashCode } from "./NativeSet.ts";
 
-/**
- * Minimal Java Map contract shared by native maps and translated Java map inputs.
- * This is deliberately a Map abstraction, not a replacement for List or Set.
- * It contains only the operations used by the inference substitution/counting
- * paths; richer live-view and iterator behavior remains on NativeMap itself.
- */
-export interface MapContract<K, V> {
-    clear(): void;
-    containsKey(key: K): boolean;
-    get(key: K): V | null;
-    getOrDefault(key: K, defaultValue: V): V;
-    isEmpty(): boolean;
-    keySet(): Iterable<K>;
-    put(key: K, value: V): V | null;
-    size(): number;
-}
-
 interface NativeMapRecord<K, V> {
     key: K;
     value: V;
@@ -36,7 +19,7 @@ interface NativeMapRecord<K, V> {
  * compatible hashCode.  Keys without hashCode retain the previous full
  * equality scan so Map semantics do not depend on JS identity.
  */
-export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
+export class NativeMap<K, V> implements Iterable<[K, V]> {
     private readonly records: NativeMapRecord<K, V>[] = [];
     private readonly hashBuckets = new Map<number, NativeMapRecord<K, V>[]>();
     private modificationCount = 0;
