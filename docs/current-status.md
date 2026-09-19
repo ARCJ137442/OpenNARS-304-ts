@@ -1605,3 +1605,78 @@ Java 原始类型 `ArrayList<ArrayList<Type>>` 与 FIFO 语义，没有改变哈
 完整 M1/#245 当前候选通过或 jree 已清零。下一系列优先继续 J3 的 `NativeMap`、
 领域对象 key、Set/Map 判等和迭代合同；确认责任簇出口前保持 V1 哨兵口径，不扩大
 到完整 M1/#245。
+
+### 2026-09-19：ProcessGoal 私有操作 Map 边界与 NativeMap 合同
+
+本批继续 J3 的 Map 语义审查。canonical Java 的
+`anticipationsToMake` 是 `Map<Operation, List<ExecutablePrecondition>>`，实际实现为
+`LinkedHashMap`；TypeScript 之前已经创建 `NativeMap`，但仍以 jree `java.util.Map`
+类型和通用工厂承载。本批将这一私有推理累积器直接收窄为
+`NativeMap<Operation, ExecutablePrecondition[]>`，保留 Java 原类型、顺序和 equals
+契约说明；Variables 所需的 substitution Map 边界没有改变。
+
+- 代码提交：`898741d`；新增 NativeMap 视图删除、clone/equals/hashCode、putAll、
+  entry 更新和迭代器删除合同测试。
+- 串行 M2：342 项，340 通过、2 跳过、0 失败；非增量 `tsc=0`；build 137 个源文件；
+  dist API 通过。
+- J3 直接测试：Bag、TaskLink key、CompositionalRules `20/20`；NativeMap 单测 `9/9`。
+- 受影响 NAL：`nal6.17.nal`、`nal4.recursion.nal`、`nars_transitivity.nal`、
+  `toothbrush2.nal` 串行 `4/4` 通过；0 exception、0 marker missing、0 stall、
+  0 timeout、0 process limit、0 Java/TS diff。使用冻结 Java 标杆，没有重复运行 Java。
+- 证据文件位于项目外
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\process-goal-native-map-20260919-sentinel.jsonl`，SHA-256：
+  `9A77BCDE2FB2A40C5DD798F5D863D0686804776670E096E0ABE778EEE4EB4367`。
+
+- 当前责任簇验证脚手架已由 `03a15e9` 推送并成为主线 HEAD；本批 ProcessGoal 代码提交位于该脚手架之前，结果与新 T1 risk-slice 规则一致。
+
+本批仍不能宣称 J3 收口、023 完成、完整 M1/#245 当前候选通过、jree 清零或性能
+等价。下一候选继续审查 NativeMap 的领域对象 key、恢复态和 Map/Set 交界；仍按
+V1 哨兵推进，责任簇出口时才运行一次 M1-。
+
+## 2026-09-19：阶段全景与下一系列修改路线
+
+当前没有遗留运行中的实例测试；最近一批 J3 受影响 NAL 已串行完成。下一步不按
+文件数量推进，而按责任簇和 Java 可观察语义推进：
+
+1. J3：继续审计 `CompositionalRules`、`CompoundTerm.countTermRecursively`、
+   `Variables`、`SyllogisticRules`、`Anticipate` 的 Map 外形、领域对象 key、
+   equals/hashCode、插入顺序、live view、迭代删除和恢复态；先处理私有累积器，
+   不把 substitution Map、计数 Map、预测 Map 当成同一种结构。
+2. J3 前向审查：回到更早提交，逐项核对 List/Set/Map/排序集合/数组/builder
+   的 Java 原类型；只有 Java 明确是数组且没有集合行为时才收窄为数组，代码中保留
+   原类型和语义理由。
+3. J1：拆分 `src/runtime/jree-compat.ts` 的纯值语义与宿主能力边界，逐项迁出
+   Java String、数值包装、equals/hash 等可原生化合同；异常、日志、进程退出和
+   Node 能力保留窄桥，并以直接合同和回归验证。
+4. J2→J4→J5：依次处理语言/解析、operator/plugin、Nar/CLI/宿主入口；小簇采用
+   局部合同+串行 M2+2～5 个受影响 NAL，责任簇收口才运行一次 M1-。024 的 P3～P5
+   单独验收，最后与 023 在集成门禁汇合。
+5. 语义稳定后再进入 020 性能优化，记录运行时长/推理周期、marker 时间戳和峰值
+   RSS；日常切片复用冻结 Java 标杆，Java 只在 Java artifact、整项 spec 或集成
+   验收时现开并验证三次存档一致。
+
+### Spec 级 DAG 与 ASCII 进度
+
+```text
+[013 Java canonical]########## 完成
+          |
+          v
+[023 jree 原生运行时]###------- 进行中：J1-J5，当前 J3
+          |
+          +--------[024 平台中立核心]#####----- 进行中：P0-P2 完成
+          |                                      P3-P5 待做
+          v
+[023/024 集成门禁]---------- 尚未开始：245+1、M2、build、CLI/API
+          |
+          v
+[020 性能与发布]########-- 计划大部完成，批准预算/发布边界待验收
+          |
+          v
+[RC/正式发布]  ---------- 未开始
+```
+
+历史 spec 状态：001～004、006～007、009、013、018、019 已完成；005、008、020、
+023、024 仍在 board 的 in-progress。上图的 `#` 只表达各 spec 已明确的计划/测试
+项，不作为产品完成率；总体事实仍以 M1/M2/parity 矩阵、自动化测试、Git 和阶段报告
+为准。当前 023 只可宣称若干已验证的局部原生化批次，不能宣称 J3 收口、023/024
+完成、jree 清零、完整 M1/#245 通过、源码覆盖率达标或 Java/TypeScript 性能等价。
