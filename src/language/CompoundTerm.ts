@@ -427,18 +427,18 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return this.term.length;
     }
 
-    /** Gives a set of all contained term, recursively */
-    public getContainedTerms(): java.util.Set<Term> {
-        // Java source: Set<Term> s = new LinkedHashSet<>(getComplexity());
-        // This public Java Set shape is retained at the boundary; NativeSet
-        // supplies the actual Term.equals-based membership and order.
+    /**
+     * Gives a set of all contained terms, recursively.
+     * Java original type: Set<Term>, backed by LinkedHashSet.
+     */
+    public getContainedTerms(): NativeSet<Term> {
         const s = new NativeSet<Term>();
         for (let t of this.term) {
             s.add(t);
             if (t instanceof CompoundTerm)
                 s.addAll((t as CompoundTerm).getContainedTerms());
         }
-        return s as unknown as java.util.Set<Term>;
+        return s;
     }
 
     /**
@@ -625,10 +625,11 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * @param components The components
      * @return
      */
-    public static addComponentsRecursively(t: Term, components: java.util.Set<Term>): java.util.Set<Term> {
+    /** Java original type: Set<Term>, backed by LinkedHashSet when null. */
+    public static addComponentsRecursively(t: Term, components: NativeSet<Term> | null): NativeSet<Term> {
         if (components === null) {
             // Java source: components = new LinkedHashSet<Term>();
-            components = new NativeSet<Term>() as unknown as java.util.Set<Term>;
+            components = new NativeSet<Term>();
         }
         components.add(t);
         if (t instanceof CompoundTerm) {

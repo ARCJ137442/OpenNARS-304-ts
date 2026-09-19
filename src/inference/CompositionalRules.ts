@@ -1464,9 +1464,9 @@ export class CompositionalRules {
         // transform
         const removals = new NativeSet<Term>();
         if (addSubject && !subjT.hasVar()) {
-          let ret: java.util.Set<Term> = CompoundTerm.addComponentsRecursively(
+          let ret: NativeSet<Term> = CompoundTerm.addComponentsRecursively(
             subjT,
-            null as unknown as java.util.Set<Term>,
+            null,
           );
           for (let ct of ret) {
             if (ct instanceof Image) {
@@ -1478,9 +1478,9 @@ export class CompositionalRules {
         let addPredicate: boolean = !subject || predT instanceof ImageExt; // also allow for images due to
         // equivalence transform
         if (addPredicate && !predT.hasVar()) {
-          let ret: java.util.Set<Term> = CompoundTerm.addComponentsRecursively(
+          let ret: NativeSet<Term> = CompoundTerm.addComponentsRecursively(
             predT,
-            null as unknown as java.util.Set<Term>,
+            null,
           );
           for (let ct of ret) {
             if (ct instanceof Image) {

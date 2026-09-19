@@ -84,26 +84,21 @@ test("CompoundTerm Set helpers preserve Java equality and insertion order", asyn
     const inner = Product.make([first, equivalent]);
     const outer = Product.make([inner, first]);
 
-    const contained = outer.getContainedTerms() as unknown as {
-        size(): number;
-        toArray(): unknown[];
-    };
+    const contained = outer.getContainedTerms();
     assert.equal(contained instanceof NativeSet, true);
     assert.equal(contained.size(), 2);
     assert.deepEqual(contained.toArray(), [inner, first]);
 
-    const allComponents = CompoundTerm.addComponentsRecursively(
-        outer,
-        null as never,
-    ) as unknown as {
-        size(): number;
-        toArray(): unknown[];
-        contains(value: unknown): boolean;
-    };
+    const allComponents = CompoundTerm.addComponentsRecursively(outer, null);
     assert.equal(allComponents instanceof NativeSet, true);
     assert.equal(allComponents.size(), 3);
     assert.deepEqual(allComponents.toArray(), [outer, inner, first]);
     assert.equal(allComponents.contains(equivalent), true);
+
+    const supplied = new NativeSet<ReturnType<typeof Term.get>>();
+    const reused = CompoundTerm.addComponentsRecursively(first, supplied);
+    assert.equal(reused, supplied);
+    assert.deepEqual(supplied.toArray(), [first]);
 });
 
 test("CompoundTerm.termList preserves Java Arrays.asList fixed-size semantics", async () => {
