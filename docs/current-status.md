@@ -1350,6 +1350,23 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
 
+### 2026-09-19：`Counting` plain Plugin 字符串与异常边界收窄
+
+本批继续对照 canonical Java `Counting.java` 做前向审查。Java 原实现是 plain `Plugin`，构造器只接受无参或一个 `float` 优先级；非法重载应抛 `IllegalArgumentException`，事件原因是普通字符串。TypeScript 原实现仅为这两个边界直接依赖 jree。本批没有修改 `MINIMUM_PRIORITY` 的 `Float32Math` 收窄、事件筛选、SetExt 基数计算或任务派发逻辑。
+
+- `src/plugin/mental/Counting.ts`：删除直接 `jree` 导入；非法构造器改抛 `JavaIllegalArgumentException`；事件原因通过 `toJavaString` 进入现有 `Memory.addNewTask` Java 字符串合同。
+- `test/node/counting-boundary.test.ts`：增加非法构造器参数的异常类型、继承关系和消息回归。
+- M2：Counting 定向回归 `2/2`；完整串行单测 `318` 项，`316` 通过、`2` 跳过、`0` 失败；非增量 typecheck `0` 诊断；build `sourceFileCount=137`；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。
+- change gate：`fa823ca..829d4a9` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；原因包括 Counting 高风险插件路径和责任簇收口。
+- M1-：TS-only、单线程、cold、逐文件串行、冻结 Java 标杆；`244/244` functional/parity，`0` Java/TS diff、`0` exception、`0` marker missing、`0` timeout、`0` stall、`0` process limit、`0` not-run、`0` performance warning。243 项走 marker 等价路线；`nal6.redundant.nal` 无 Java marker，保持 `unverified/not_reached`，不构成 131072 周期结论。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\counting-plugin-m1-minus-20260919.jsonl`，SHA-256 `E0CF7BA187E24BB656D2150A0A7FF7B85F8D809797C08C792979063A2DD6CCF3`；总耗时 `1,725,399 ms`，最长单文件 `366,332 ms`，最大 RSS `980,512,768 bytes`，reasoning cycles `2,288,254`；观测速度约 `772.1 ms/1024 reasoning cycles`，仅作性能观测。
+- Java 基线未变化且本批未重跑 Java：冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，canonical source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，结果中 `java_artifact=null`。
+- jree 审计前→后：直接导入文件 `84→83`、`javaObjectFiles=1→1`、`java.util=38→38`、`java.lang=83→82`、Java String `51→51`、`semanticReviewItems=90→90`、`candidateNativeItems=2→2`、`newLinkedHashMap=0`、`newLinkedHashSet=1`。
+
+本批可以宣称：`Counting` 的 jree 字符串和构造器异常依赖已收窄到项目兼容边界，并通过局部合同、M2、非增量类型检查、构建/API、静态审计和 T1 要求的 M1- `244/244`；未观察到功能回退。代码提交 `829d4a9933cf1220c0205cd99c9853f4c6d28d58`；批次报告为 `reports/20260919-084331.md`。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
+
 ### 2026-09-19：`Count` Java 字符串与异常边界收窄
 
 本批继续对照 canonical Java `Count.java` 做前向审查。Java 原实现的 `requireMessage` 是普通 `String`，两个非法输入分支抛 `IllegalStateException`；TypeScript 原实现却让 `Count` 直接依赖 jree 的 boxed `String` 和异常命名空间。本批只收窄这两个边界，不改变参数判断、SetExt/SetInt 类型判断、集合计数或 FunctionOperator 执行路径。
