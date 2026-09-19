@@ -4,6 +4,7 @@ import { java } from "jree";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";
+import { JavaIllegalArgumentException } from "../../src/runtime/jree-compat.ts";
 import { RuntimeObject, type ClassTokenLike } from "../../src/runtime/RuntimeClass.ts";
 
 test("EventEmitter.set subscribes only to the requested event classes", () => {
@@ -124,6 +125,20 @@ test("EventHandler accepts Java-style event varargs", () => {
 test("EventHandler uses the project runtime identity boundary without jree", () => {
     assert.equal(Object.getPrototypeOf(EventHandler.prototype), RuntimeObject.prototype);
     assert.notEqual(Object.getPrototypeOf(EventHandler.prototype), Object.prototype);
+});
+
+test("EventHandler preserves the Java illegal-argument boundary", () => {
+    class InvalidHandler extends EventHandler {
+        public event(): void {}
+    }
+
+    const Constructor = InvalidHandler as unknown as new (...args: unknown[]) => EventHandler;
+    assert.throws(() => new Constructor(), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalArgumentException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "Invalid number of arguments");
+        return true;
+    });
 });
 
 test("Events.ConceptNew preserves the Java InferenceEvent constructor contract", () => {

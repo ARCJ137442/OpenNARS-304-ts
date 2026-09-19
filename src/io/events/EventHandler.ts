@@ -1,6 +1,6 @@
 //! Java source: opennars/io/events/EventHandler.java
-import { java, S } from "jree";
 import { EventEmitter } from "./EventEmitter.ts";
+import { JavaIllegalArgumentException } from "../../runtime/jree-compat.ts";
 import { RuntimeObject, type ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { Nar } from "../../main/Nar.ts";
 
@@ -19,7 +19,7 @@ export abstract class EventHandler extends RuntimeObject implements EventEmitter
     public constructor(source: EventEmitter, active: boolean, ...events: ClassTokenLike[]);
     public constructor(...args: unknown[]) {
         if (args.length < 2) {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
         const [candidate, active] = args as [Nar | EventEmitter, boolean];
         const events = args.slice(2) as ClassTokenLike[];
