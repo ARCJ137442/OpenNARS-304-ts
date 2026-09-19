@@ -1,5 +1,4 @@
 //! Java source: opennars/plugin/mental/Counting.java
-import { java, S } from "jree";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float, double, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -14,6 +13,7 @@ import { Product } from "../../language/Product.ts";
 import { SetExt } from "../../language/SetExt.ts";
 import { Term } from "../../language/Term.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
+import { JavaIllegalArgumentException, toJavaString } from "../../runtime/jree-compat.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
@@ -27,8 +27,8 @@ type EventObserver = EventEmitter.EventObserver;
  * Counting and Cardinality
  */
 // Java source declares a plain Plugin implementation without a JavaObject base.
-// Keep jree for translated event/exception/string contracts; only the empty
-// compatibility shell and its constructor super() calls are removed here.
+// Keep the plugin as a plain TypeScript class; Java exception and string
+// boundaries are concentrated in jree-compat instead of this domain module.
 export class Counting implements Plugin {
 
     public obs: EventObserver | null = null;
@@ -63,7 +63,7 @@ export class Counting implements Plugin {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -122,7 +122,7 @@ export class Counting implements Plugin {
 
                             let newTask: Task = new Task(j, budg, Task.EnumType.INPUT);
 
-                            memory.addNewTask(newTask, S`Derived (Cardinality)`);
+                            memory.addNewTask(newTask, toJavaString("Derived (Cardinality)"));
                         }
                     }
                 }
