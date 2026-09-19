@@ -788,7 +788,7 @@ export class SyllogisticRules {
             // This is a temporary substitution map, so preserve the Java Map
             // boundary while using the native equality-aware ordered map.
             ProcessAnticipation.anticipate(nal, premise1Sentence, budget, minTime, maxTime, 1,
-                new NativeMap<Term, Term>() as unknown as java.util.Map<Term, Term>);
+                new NativeMap<Term, Term>());
         }
     }
 
