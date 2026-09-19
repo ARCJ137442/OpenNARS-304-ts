@@ -1548,3 +1548,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - 当前 jree 审计（`b536180`）：`directJreeImportFiles=77`、`java.utilFiles=38`、`java.langFiles=76`、`javaStringFiles=47`、`highRiskItems=41`、`semanticReviewItems=86`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；`package.json` 仍声明 `jree@1.3.0`。
 
 本批可以宣称：Memory 的 Java String 输入/事件边界已原生化，并通过局部合同、M2、T1 gate、构建/API、静态审计和 M1- `244/244` 保护矩阵。仍不能宣称 023/024 完成、jree 清零、完整 M1/#245 当前候选通过、`nal6.redundant.nal` 的 markerless `131072` 周期等价、Java/TypeScript 全面性能等价、源码覆盖率达标或正式发布。
+
+### 2026-09-19：`Stamp` occurrence-time 与名称缓存字符串边界原生化
+
+本批继续对照 canonical Java `Stamp.java`，只处理 `StringBuilder`、occurrence-time 文本和名称缓存这一类字符串构造责任。Java 的 `appendOcurrenceTime(StringBuilder)` 只要求向调用者提供的 builder 追加文本并返回同一对象；`ensureCapacity` 是容量优化，不是外部语义。`name()` 的声明返回 `CharSequence`，但实际缓存的是构造结果；因此 TypeScript 将内部缓存收窄为 boxed Java `String`，保留下游 `CharSequence` 消费面，不触碰 `Arrays`、随机数、Map/Set 或类身份。
+
+- `src/entity/Stamp.ts`：删除 `Stamp` 对 `java.lang.StringBuilder` 的直接构造；`name()` 改为原生字符串片段拼接后通过 `toJavaString` 缓存，`getOccurrenceTimeString()` 保留 Java `String` 输出；`appendOcurrenceTime` 保留传入 builder identity 与 append-return 合同，并明确标注 Java 原类型。
+- `test/node/stamp-string-boundary.test.ts`：新增非 eternal/eternal occurrence 文本、Java `StringBuilder` 追加、返回对象 identity、名称缓存复用和 occurrence 变化失效回归，定向 `3/3`。
+- 代码提交：`1a14c297618e3c9021399861d7203c7d213e69f7`；T1 gate：`live_java_required=false`、`m1_minus_required=true`，原因是完成责任簇与 Stamp 高风险路径。
+- M2：串行单测 `329` 项，`327` 通过、`2` 按 TS-only 规则跳过、`0` 失败；非增量 `tsc=0`；build、dist API、迁移扫描和 jree 审计通过。
+- M1-：使用冻结 Java JSONL，TS-only、单线程、cold、逐文件串行，`244/244` functional/parity；`exception=0`、`marker_missing=0`、卡死式 `timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`java_ts_diff=0`、`both_wrong=0`。其中 `243` 项走 marker 路线；`nal6.redundant.nal` 无 marker，观察到 `1650/131072` 周期，状态为 `not_reached`，不构成失败或 markerless 长周期等价结论。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\stamp-string-boundary-m1-minus-244-20260919.jsonl`，SHA-256 `93943EC8A7080D561888BA8991F4B0CFC73648C617D48A6F1F5FB9F47DE8FB29`；TS 总时长 `1718635 ms`，最长单文件 `365953 ms`，峰值 RSS `967311360 bytes`（约 `922.5 MiB`），最高 `reasoning_cycles=502562`，均仅作为后续性能观测。
+- Java 标杆未变化且本批未重跑 Java：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，结果中的 `java_artifact=null`。
+- 当前 jree 审计：`directJreeImportFiles=77`、`java.utilFiles=38`、`java.langFiles=76`、`javaStringFiles=47`、`highRiskItems=41`、`semanticReviewItems=86`、`candidateNativeItems=2`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；唯一显式 `new LinkedHashSet` 位于 `jree-compat.ts` 的兼容性 clone 路径，不作为普通生产 Set 迁移点。
+
+本批可以宣称：`Stamp` 的 occurrence-time、名称缓存和 builder 字符串边界已按 Java 合同原生化，并通过局部回归、M2、T1 gate、静态审计和 M1- `244/244` 保护矩阵。下一批应先做历史 NativeList/原生数组替换的前向语义审计，逐项核对 Java 原类型、equals/hashCode、顺序、迭代和可变性；不能宣称 023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标、Java/TypeScript 全面性能等价或正式发布。
