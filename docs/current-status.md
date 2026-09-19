@@ -1467,3 +1467,18 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - jree 审计：源码文件 `138`，直接导入文件 `79`，`java.lang` 文件 `78`，`semanticReviewItems=88`；本批只收窄异常边界，剩余 Java 集合、栈追踪和类型引用属于后续责任批次，因此不能以导入计数变化作为本批验收。
 
 本批可以宣称：`InferenceEvent` 的异常边界已收窄，并通过局部合同、串行 M2、构建/API、静态审计、smoke 和 M1- `244/244` 保护矩阵。仍不能宣称 023/024 完成、jree 清零、完整 M1/#245 长期稳定性完成、markerless `131072` 周期等价、源码覆盖率达标、Java/TypeScript 全面性能等价或正式发布。代码提交 `c11d3767329564847e7264533ef9cda6a198d0b2`，阶段报告为 `reports/20260919-122358.md`。
+
+### 2026-09-19：`OutputHandler` 异常边界收窄
+
+本批继续对照 canonical Java `OutputHandler.java` 做单一责任迁移。Java 只有 1/2 参数构造器：`EventEmitter`、`Memory`、`Nar` 来源路径以及 `Nar` 默认激活路径；默认事件 token 和父类注册顺序是现有行为合同。TypeScript 原实现唯一直接 jree 行为是非法参数分支构造 `java.lang.IllegalArgumentException`。本批只收窄该异常边界，不改变 token、来源解析、默认事件列表或生命周期。
+
+- `src/io/events/OutputHandler.ts`：删除直接 `jree` 导入，非法参数改抛 `JavaIllegalArgumentException`。
+- `test/node/event-emitter.test.ts`：新增零参数构造器异常合同回归；定向测试 `12/12`。
+- change gate：`b9303f8..4ea1113` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；原因包括完成责任边界、io/events 高风险路径和 semantic-token-change。
+- M2：串行单测 `323` 项，`321` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `sourceFileCount=137`；dist API 通过；迁移扫描结构性异常项为 `0`。
+- jree 审计：`sourceFiles=138`、直接导入文件 `78`、`java.lang` 文件 `77`、`semanticReviewItems=88`；本批只减少 `OutputHandler` 的直接 jree 异常依赖。
+- M1-：冻结标杆、TS-only、单线程、cold、逐文件串行，`244/244` functional/parity；`0` Java/TS diff、`0` exception、`0` marker missing、`0` 卡死式 timeout、`0` stall、`0` process limit、`0` not-run、`0` performance warning。243 项走 marker 路线；`nal6.redundant.nal` 无 marker，运行到 `1650/131072`，为 `unverified/not_reached`，不构成失败。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\output-handler-m1-minus-20260919.jsonl`，大小 `773787 bytes`，SHA-256 `A9F5612679EEE60CBF1A9EA450DD9B500AD258E2F93FB36E39FCB3BB3FA4A593`；TS 总时长 `1681853 ms`，最长单文件 `361678 ms`，峰值 RSS `987963392 bytes`（约 `942.2 MiB`），实际 reasoning cycles `2288254`，观测速度约 `752.6 ms/1024 周期`，仅作功能保护和后续性能观测。
+- Java 标杆未变化：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；本批没有重新启动 Java。
+
+本批可以宣称：`OutputHandler` 的非法参数异常边界已收窄，并通过局部合同、串行 M2、构建/API、静态审计和 T1 要求的 M1- `244/244` 保护矩阵。仍不能宣称 023/024 完成、jree 清零、完整 M1/#245 长期稳定性完成、markerless `131072` 周期等价、源码覆盖率达标、Java/TypeScript 全面性能等价或正式发布。代码提交 `4ea1113118985d659d09697bd9928f70fa65818f`，阶段报告为 `reports/20260919-130804.md`。
