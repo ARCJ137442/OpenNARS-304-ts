@@ -1350,6 +1350,24 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长周期完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
 
+### 2026-09-19：`Plugin` CharSequence 边界收窄
+
+本批承接 `90acd6b`，对照 canonical Java `Plugin.java` 做前向审查。Java 的 `Plugin.name()` 返回 `CharSequence`；TypeScript 原接口直接暴露 `jree` 的 `java.lang.CharSequence` 类型。本批只收窄类型边界，不改 `setEnabled`、插件注册顺序、默认方法语义或插件生命周期。
+
+- `src/runtime/jree-compat.ts`：新增 `JavaCharSequenceInput`，集中表示 Java boxed `CharSequence` 与原生 `string` 的输入合同。
+- `src/plugin/Plugin.ts`：删除直接 `jree` 类型导入，`name()` 改用项目内边界类型。
+- `test/node/plugin-boundary.test.ts`：新增 Java `java.lang.String` 与原生 `string` 双路径回归。
+- M2：串行单元测试 `319` 项，`317` 通过、`2` 跳过、`0` 失败；显式非增量 `tsc=0`；`test:build` 的 `sourceFileCount=137`、build 检查和 dist API 均通过；迁移扫描与 jree 审计均完成。首次 M2 因 C: 盘无剩余空间导致临时夹具写入 `ENOSPC`，将 `TEMP/TMP` 改指向项目外 H: 临时目录后重跑通过。
+- change gate：`90acd6b..acb8ffa` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；本批没有重跑 Java，继续复用冻结标杆。
+- M1-：TS-only、单线程、cold、逐文件串行，执行 `244` 个主资源（排除 #245）；`244/244` functional/parity，`exception=0`、`marker_missing=0`、`timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`java_ts_diff=0`、`performance_warning=0`。243 项走 marker 等价路线；`nal6.redundant.nal` 无 marker，`1650/131072` 周期状态为 `not_reached`，不构成 131072 周期等价结论。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\plugin-charsequence-m1-minus-20260919.jsonl`，大小 `773,787 bytes`，SHA-256 `FEFA61ADB1E7046A5D69C7F1E3EB791ECDAFD56E427A332C1F29A449AD522A80`；TS 总时长 `1,815,632 ms`，最长单文件 `394,178 ms`，最大 RSS `874,852,352 bytes`，reasoning cycles `2,288,254`，观测速度约 `812.5 ms/1024 reasoning cycles`，仅作为后续性能数据。
+- Java 基线未变化：冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，canonical source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`；M1- 行 `java_artifact=null`。
+- jree 审计前→后：直接导入文件 `83→82`、`java.lang` 文件 `82→81`、Java String 文件 `51→50`、`semanticReviewItems=90→89`；`java.util=38`、`javaObjectFiles=1`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`candidateNativeItems=2` 保持不变。迁移扫描本批 `240` 个文件，结构性异常项仍为 `0`。
+
+本批可以宣称：`Plugin` 的 `CharSequence` jree 类型边界已收窄到项目兼容层，M2、构建/API、静态审计和 T1 要求的 TS-only M1- `244/244` 均通过，未观察到功能回退。代码提交 `acb8ffa`；报告与状态收尾提交待完成。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
+
 ### 2026-09-19：`Counting` plain Plugin 字符串与异常边界收窄
 
 本批继续对照 canonical Java `Counting.java` 做前向审查。Java 原实现是 plain `Plugin`，构造器只接受无参或一个 `float` 优先级；非法重载应抛 `IllegalArgumentException`，事件原因是普通字符串。TypeScript 原实现仅为这两个边界直接依赖 jree。本批没有修改 `MINIMUM_PRIORITY` 的 `Float32Math` 收窄、事件筛选、SetExt 基数计算或任务派发逻辑。
