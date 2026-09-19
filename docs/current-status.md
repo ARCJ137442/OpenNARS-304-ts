@@ -1580,3 +1580,28 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批代码提交为 `e225312`，报告提交为 `f333d23`，均已推送到 `origin/main`。本批可以宣称：`CompoundTerm.extractIntervals` 的 Java List 公开契约已恢复，并通过局部回归、M2、T1 和 M1- 保护矩阵；仍不能宣称完整 M1/#245 当前候选重跑通过、023/024 完成、jree 退场、源码覆盖率达标、性能等价或正式发布。
 
 下一批候选优先审查 `Bag` 的 Java `Map`/哈希键、`equals/hashCode` 判重、迭代器删除与对象身份语义；先按 Java 声明和调用链确认是 Map、Set、List 还是排序集合，再选择 TypeScript 原生抽象，避免用数组冒充集合。
+
+### 2026-09-19：Bag 名称 Map 类型边界与直接合同回归
+
+本批继续在 023 的 J3 推理核心簇中做前向审查。canonical Java 的 `Bag.nameTable`
+声明为 `HashMap<K, Type>`、实际初始化为有序 `LinkedHashMap`；TypeScript 的实际
+实现已经是项目自有 `NativeMap`，但字段类型仍残留 jree `HashMap` 壳。本批只将
+内部类型收窄为 `NativeMap<K, Type>`，并在 `itemTable` 二维原生数组旁明确注明
+Java 原始类型 `ArrayList<ArrayList<Type>>` 与 FIFO 语义，没有改变哈希、判等、
+插入顺序、分层队列或调度算法。
+
+- 代码提交：`ca2b56a`；新增 Bag `iterator`、`contains`、`takeOut` 直接合同回归。
+- M2：串行单测 `338` 项，`336` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；
+  build `137` 个源文件；dist API 通过；迁移扫描结构性异常为 0。
+- J3 定向回归：Bag、TaskLink key、CompositionalRules 合计 `20/20` 通过。
+- 受影响 NAL：`nal6.17.nal`、`nal4.recursion.nal`、`nars_transitivity.nal`、
+  `toothbrush2.nal` 串行 `4/4` 通过；0 exception、0 marker missing、0 stall、
+  0 timeout、0 process limit、0 Java/TS diff。使用冻结 Java 标杆
+  `g0-java-baseline-26772af-20260917`，没有重复运行 Java。
+- 结果证据位于项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\bag-name-map-20260919-sentinel.jsonl`，SHA-256：
+  `570D20B17F76203071E35C55F84B9A90B5238726D61AEA87FEA7EBDBD91D8509`。
+
+本批只能宣称 Bag 类型边界和受影响哨兵没有回退，不能宣称 J3 收口、023 完成、
+完整 M1/#245 当前候选通过或 jree 已清零。下一系列优先继续 J3 的 `NativeMap`、
+领域对象 key、Set/Map 判等和迭代合同；确认责任簇出口前保持 V1 哨兵口径，不扩大
+到完整 M1/#245。
