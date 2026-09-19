@@ -1,5 +1,5 @@
 //! Java source: opennars/io/events/Events.java
-import "../../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../../runtime/jree-compat.ts";
 import { java, S } from "jree";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
@@ -68,7 +68,7 @@ abstract class InferenceEvent extends RuntimeObject {
     protected constructor(...args: unknown[]) {
         super();
         if (args.length !== 1 && args.length !== 2) {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
 
         const when = args[0] as long;
