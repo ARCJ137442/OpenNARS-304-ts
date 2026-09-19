@@ -220,6 +220,8 @@ export class Terms {
      */
     public static term(compound: CompoundTerm, components: Term[]): Term;
 
+    public static term(compound: CompoundTerm, components: NativeList<Term>): Term;
+
     public static term(compound: CompoundTerm, components: java.util.Collection<Term>): Term;
 
     /**
@@ -235,10 +237,12 @@ export class Terms {
     public static term(...args: unknown[]): Term {
         switch (args.length) {
             case 2: {
-                const [source, rawComponents] = args as [CompoundTerm | Symbols.NativeOperator, Term[] | java.util.Collection<Term>];
+                const [source, rawComponents] = args as [CompoundTerm | Symbols.NativeOperator, Term[] | NativeList<Term> | java.util.Collection<Term>];
                 const componentList: Term[] = Array.isArray(rawComponents)
                     ? rawComponents
-                    : rawComponents.toArray(new Array<Term>(0));
+                    : rawComponents instanceof NativeList
+                        ? rawComponents.toArray()
+                        : rawComponents.toArray(new Array<Term>(0));
                 if (source instanceof CompoundTerm) {
                     // Java preserves the image template's relation index when
                     // rebuilding its components. Re-entering the one-argument

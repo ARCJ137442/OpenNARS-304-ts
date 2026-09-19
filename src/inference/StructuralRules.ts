@@ -23,6 +23,7 @@ import { Statement } from "../language/Statement.ts";
 import { TemporalRules } from "./TemporalRules.ts";
 import { Interval } from "../language/Interval.ts";
 import { Similarity } from "../language/Similarity.ts";
+import { NativeList } from "../runtime/NativeList.ts";
 import { Conjunction } from "../language/Conjunction.ts";
 import { Implication } from "../language/Implication.ts";
 import { Disjunction } from "../language/Disjunction.ts";
@@ -70,7 +71,7 @@ export class StructuralRules {
         }
         let sub: Term = statement.getSubject();
         let pred: Term = statement.getPredicate();
-        let components: java.util.List<Term> = compound.asTermList();
+        let components: NativeList<Term> = compound.asTermList();
         if (((side === 0) && components.contains(pred)) || ((side === 1) && components.contains(sub))) {
             return;
         }

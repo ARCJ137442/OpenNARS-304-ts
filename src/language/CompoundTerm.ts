@@ -457,7 +457,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         // TODO if deep, this wastes created clones that are then removed. correct this
         // inefficiency?
 
-        let l: java.util.List<Term> = this.asTermList();
+        let l: NativeList<Term> = this.asTermList();
         let removed: boolean = false;
 
         for (let t of toRemove) {
@@ -467,7 +467,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         if ((!removed) && (requireModification))
             return null as unknown as Term[];
 
-        return l.toArray(new Array<Term>(0));
+        return l.toArray();
     }
 
     /**
@@ -505,8 +505,8 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     }
 
-    public asTermList(): java.util.List<Term> {
-        return new NativeList<Term>(this.term) as unknown as java.util.List<Term>;
+    public asTermList(): NativeList<Term> {
+        return new NativeList<Term>(this.term);
     }
 
     /** forced deep clone of terms */
@@ -660,7 +660,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * @return The new compound
      */
     public setComponent(index: int, t: Term, memory: Memory): Term {
-        let list: java.util.List<Term> = this.asTermList();// Deep();
+        let list: NativeList<Term> = this.asTermList();// Deep();
         list.remove(index);
         if (t !== null) {
             if (this.getClass() !== t.getClass()) {
@@ -674,7 +674,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             }
         }
         if (this.isCommutative()) {
-            let ret: Term[] = list.toArray(new Array<Term>(0));
+            let ret: Term[] = list.toArray();
             return Terms.term(this, ret);
         }
         return Terms.term(this, list);

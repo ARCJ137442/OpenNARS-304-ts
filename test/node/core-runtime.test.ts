@@ -281,6 +281,11 @@ test("CompoundTerm local lists preserve native storage and Java order", async ()
     const terms = compound.asTermList();
     assert.ok(terms instanceof NativeList);
     assert.deepEqual(Array.from(terms).map((term) => String(term.name())), ["compound-list-a", "compound-list-b"]);
+    const replacement = Term.get("compound-list-replacement");
+    const replaced = terms.set(0, replacement);
+    assert.equal(replaced, compound.term[0]);
+    assert.equal(terms.get(0), replacement);
+    terms.set(0, replaced);
     const removed = terms.remove(0);
     assert.ok(removed);
     assert.equal(String(removed.name()), "compound-list-a");
