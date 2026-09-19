@@ -1988,3 +1988,43 @@ T1 保护；不能宣称 J3 责任簇收口、023/024 完成、jree 清零或当
 `newLinkedHashSet=1`、`highRiskItems=41`，且 `package.json` 仍声明 `jree@1.3.0`。
 下一阶段应继续做有直接合同的 List/Set/Map 小簇；只有责任簇收口时才运行 M1-，
 而 023/024 整体验收仍需重新现开 Java、完整 245+1、M2、CLI/API 和平台证据。
+
+### 2026-09-20：J2 TermLink List 合同切片（当前候选 `08b5cc8`）
+
+本批继续按 Java 原始抽象推进 J2。`Terms.prepareComponentLinks` 的 Java 合同是传入并返回同一个 `List<TermLink>`，`CompoundTerm.prepareComponentLinks` 创建短生命周期 List，`Concept.termLinkTemplates` 保存该 List 供直接消费者遍历。本批先增加直接合同测试，再把 `Terms` 两个 overload、`CompoundTerm` 返回值和 `Concept` 字段/getter 收窄为 `NativeList<TermLink>`；没有把 List 改成 Set/数组，也没有改变 TermLink 生成顺序、对象身份或推理算法。
+
+- 代码提交：`08b5cc8 refactor(023): 收窄TermLink列表合同`，基线为 `132fd58`；本批文档随后单独归档并推送。
+- 计划器：J2-language-parser、T1，`plan_valid=true`；`live_java_required=false`、`m1_minus_required=false`，仅要求局部测试、串行 M2 和 5 个受影响 NAL。
+- 直接合同测试：`27/27`；串行 `npm test`：`346` 项，`344` 通过、`2` 跳过、`0` 失败。
+- 串行非增量 `tsc`、build、dist API、迁移模式扫描、jree 审计和平台审计均通过；jree 审计最新摘要为 `directJreeImportFiles=77`、`newArrayList=0`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、`javaUtilFiles=29`、`javaLangFiles=76`、`javaStringFiles=47`、`highRiskItems=41`、`semanticReviewItems=76`、`candidateNativeItems=2`。
+- 受影响 NAL 以冻结 Java 标杆、TS-only、单线程、cold、1550 周期串行执行：`5/5` functional/parity；0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 not-run、0 Java/TS diff。`nars_transitivity.nal` 为 `211550` 周期/`107396 ms`/`351.6 MiB`，仅记录为后续性能观测。
+- 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\termlink-list-j2-20260920-sentinel.jsonl`；SHA-256：`7639F343A9F4C3F7E4F86D2701E7F4FD97F80F9142D42C95B1B93BB033FF2212`。
+
+本批可以宣称 TermLink 生成路径的 J2 List 边界已收窄并通过局部合同、M2 和受影响 NAL；仍不能宣称 J2/J3 责任簇收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。
+
+### 从项目开始到当前：主线进度导航
+
+```text
+Java 304 canonical / 013       [##########] 完成：source、JAR、哈希与冻结标杆已固定
+TS 功能等价 / 018              [##########] 完成：M1 有效 246/246 证据组合已封存
+TS 零诊断构建 / 019            [##########] 完成：非增量 tsc、build、dist API 已封存
+023 去 jree / J1-J5            [##--------] 进行中：J1合同已建，J2/J3按责任簇切片
+  J1 runtime compat            [###-------] 合同已建立，桥接层仍有残余责任
+  J2 language/parser            [####------] 多个 List/Map/Set 小簇已验证，未收口
+  J3 inference core             [###-------] 多个 Map/List/Set 小簇已验证，未收口
+  J4 operator/plugin            [##--------] 已有数组、字符串与插件边界批次，未收口
+  J5 main/host                 [#---------] 入口与宿主边界仍待最后收口
+024 平台中立 / P0-P5           [#####-----] P0-P2完成，P3-P5待做
+023/024 集成门禁               [----------] 未开始：需现跑Java、245+1、M2、CLI/API、浏览器
+020 性能与发布                 [########--] 计划项大部完成，批准预算和发布边界待验收
+RC/正式发布                    [----------] 未开始，tag/release需用户明确授权
+```
+
+这是一张阶段导航图，不把 spec 复选框、测试数量、导入数量或历史 corpus 通过率当作产品完成率。当前工作继续遵循：先保持 Java 语义和 List/Set/Map 抽象，再逐责任簇验证，最后才进入集成、性能和发布。
+
+### 下一系列修改的事实依据与顺序
+
+1. **J2 List**：`CompoundTerm.cloneTermsListDeep`、`asTermList`、`termList` 与 `StructuralRules` 直接消费者。先核对 Java 的索引、可变性、空结果和返回形状，再补直接合同；不把 List 改成数组，除非 Java 合同明确没有 List 行为。
+2. **J2/J3 Set**：`CompoundTerm.getContainedTerms`、`addComponentsRecursively` 及 `CompositionalRules` 调用点。保持 Set 抽象，验证 Java equals/hashCode 去重、插入顺序、递归遍历和空集合；不以 NativeSet 的数组底层替代 Set 语义。
+3. **J1/J3 兼容桥**：`src/runtime/jree-compat.ts` 仍集中承载 Java 字符串、异常、类 token、数值/集合过渡和旧 LinkedHashSet 行为。只有调用者合同迁出并有直接回归后，才能逐项删减桥接职责；不能一口气删除。
+4. **验证策略**：普通小簇使用冻结 Java JSONL 的 TS-only 串行局部验证；责任簇收口才运行一次 M1-；023/024 阶段门才现跑单线程 Java 并完成完整 245+1、M2、CLI/API 与浏览器证据。
