@@ -37,14 +37,14 @@ import { TemporalRules } from "./TemporalRules.ts";
 import { TruthFunctions } from "./TruthFunctions.ts";
 import type { DerivationContext } from "../control/DerivationContext.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-import { NativeMap } from "../runtime/NativeMap.ts";
+import { MapContract, NativeMap } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 
 // Java 原类型：Map<Term, Term>，实现类型：LinkedHashMap。
 // These local substitution tables keep the Java Map boundary while using the
 // native ordered implementation for their short-lived inference state.
-const nativeTermMap = (): java.util.Map<Term, Term> =>
-  new NativeMap<Term, Term>() as unknown as java.util.Map<Term, Term>;
+const nativeTermMap = (): NativeMap<Term, Term> =>
+  new NativeMap<Term, Term>();
 
 export type Pair<L, R> = {
   getLeft(): L;
@@ -883,10 +883,10 @@ export class CompositionalRules {
     let P1: Term = T2.getPredicate();
     let P2: Term = T1.getPredicate();
 
-    let res1: java.util.Map<Term, Term> = nativeTermMap();
-    let res2: java.util.Map<Term, Term> = nativeTermMap();
-    let res3: java.util.Map<Term, Term> = nativeTermMap();
-    let res4: java.util.Map<Term, Term> = nativeTermMap();
+    let res1: MapContract<Term, Term> = nativeTermMap();
+    let res2: MapContract<Term, Term> = nativeTermMap();
+    let res3: MapContract<Term, Term> = nativeTermMap();
+    let res4: MapContract<Term, Term> = nativeTermMap();
 
     if (figure === 21) {
       Variables.findSubstitute(
@@ -1083,8 +1083,8 @@ export class CompositionalRules {
     nal: DerivationContext,
     s1: Term,
     p2: Term,
-    res3: java.util.Map<Term, Term>,
-    res4: java.util.Map<Term, Term>,
+    res3: MapContract<Term, Term>,
+    res4: MapContract<Term, Term>,
   ): void {
     if (s1 instanceof Conjunction) {
       // try to unify P2 with a component
@@ -1118,8 +1118,8 @@ export class CompositionalRules {
     nal: DerivationContext,
     p1: Term,
     p2: CompoundTerm,
-    res3: java.util.Map<Term, Term>,
-    res4: java.util.Map<Term, Term>,
+    res3: MapContract<Term, Term>,
+    res4: MapContract<Term, Term>,
   ): void {
     for (let s1 of p2.term) {
       res3.clear();
@@ -1151,7 +1151,7 @@ export class CompositionalRules {
     belief: Sentence,
     nal: DerivationContext,
     s1: CompoundTerm,
-    res3: java.util.Map<Term, Term>,
+    res3: MapContract<Term, Term>,
     s12: Term,
   ): void {
     for (let s2 of s1.term) {
@@ -1316,7 +1316,7 @@ export class CompositionalRules {
     if (!validForIntroduction) {
       return result;
     }
-    let app: java.util.Map<Term, Term> = nativeTermMap();
+    let app: MapContract<Term, Term> = nativeTermMap();
     const candidates = new NativeSet<Term>();
     if (
       implicationEquivalenceOrJunction instanceof Implication ||
@@ -1343,7 +1343,7 @@ export class CompositionalRules {
         subject,
       );
     }
-    let termCounts: java.util.Map<Term, java.lang.Integer> =
+    let termCounts: MapContract<Term, java.lang.Integer> =
       implicationEquivalenceOrJunction.countTermRecursively(null);
     let k: int = 0;
     for (let t of candidates) {
@@ -1396,7 +1396,7 @@ export class CompositionalRules {
     }
     const powerset = CompositionalRules.powerSet(selected);
     for (let combo of powerset) {
-      let mapping: java.util.Map<Term, Term> = nativeTermMap();
+      let mapping: MapContract<Term, Term> = nativeTermMap();
       for (let vIntro of combo) {
         mapping.put(vIntro, app.get(vIntro) as unknown as Term);
       }

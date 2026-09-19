@@ -6,7 +6,7 @@ import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { javaIdentityHashCode, javaStringHashCode, javaStringValue, type JavaChar } from "../runtime/jree-compat.ts";
-import { NativeMap } from "../runtime/NativeMap.ts";
+import { NativeMap, type MapContract } from "../runtime/NativeMap.ts";
 
 const VAR_INDEPENDENT = Symbols.VAR_INDEPENDENT;
 const VAR_DEPENDENT = Symbols.VAR_DEPENDENT;
@@ -347,11 +347,11 @@ export class Variable extends Term {
         return new java.lang.String(name);
     }
 
-    public countTermRecursively(map: java.util.Map<Term, java.lang.Integer> | null): java.util.Map<Term, java.lang.Integer> {
+    public countTermRecursively(map: MapContract<Term, java.lang.Integer> | null): MapContract<Term, java.lang.Integer> {
         if (map === null) {
             // Java original type: LinkedHashMap<Term, Integer>. Variables
             // intentionally create the accumulator but do not count.
-            map = new NativeMap<Term, java.lang.Integer>() as unknown as java.util.Map<Term, java.lang.Integer>;
+            map = new NativeMap<Term, java.lang.Integer>();
         }
         return map; // don't count vars
     }
