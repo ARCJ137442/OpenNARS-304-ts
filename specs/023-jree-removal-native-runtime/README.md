@@ -202,3 +202,14 @@ canonical Java source commit 为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JA
 定向回归最终为 `10/10`，完整串行 M2 为 `248/248`，非增量 `tsc` 为 0 诊断，build、dist API、canonical local parity 均通过；`nal8.add.nal` 受影响 smoke 为 `1/1`。首轮 M1- 的原始结果为 `243/244`，唯一异常是 canonical Java 子进程在 `multi_step/nars_multistep_2.nal` 上退出；同一文件 TypeScript 为 `2/2`，独立 canonical 重跑为 `1/1`，因此未形成 TS 语义差异。修复外层 Map 延迟删除后，最终以显式排除 #245 的 244 个文件、canonical JAR、单线程、cold、逐文件单进程方式完成 M1-：`244/244`，分层为 `single_step=215`、`multi_step=24`、`application=5`；Java/TS 均为 0 exception、0 marker missing、0 timeout、0 stall、0 process limit、0 not-run、0 Java/TS diff。
 
 本批首先暴露了 jree `LinkedHashMap` entry iterator 不支持 Java `Iterator.remove()` 的边界，随后保留外层 Map 抽象，以有序 Prediction 临时数组收集待删项，遍历后调用 `Map.remove()`，并增加了对应生命周期回归。最终 M1- Java 总耗时 `159,782 ms`、TypeScript `1,655,338 ms`、合计 `1,815,120 ms`，TS/Java 约 `10.36x`，最大单行 `363,928 ms`；本次未启用 resource metrics，不新增内存节省比例。canonical Java source commit 为 `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 为 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。023 继续保持 `in-progress`，本批不能宣称 jree 已移除、#245 通过、性能等价或里程碑完成。
+
+### 2026-09-20：`CompositionalRules.powerSet` 嵌套 Set 合同切片（`a8da3a5`）
+
+canonical Java 的 `powerSet` 为 `Set<Set<T>>`，实现使用 `LinkedHashSet`，因此外层和内层都必须保留 Set 的值相等、唯一性与插入顺序语义。TypeScript 将输入从兼容边界 `java.util.Set<T>` 收窄为 `NativeSet<T>`；测试去除仅用于构造输入的 jree 导入。代码和测试均注明 Java 原始类型与当前原生类型，未把 Set 冒充成 List/数组，也未重写幂集算法。
+
+- 代码提交：`a8da3a5 refactor(023): 收窄组合规则幂集Set合同`，基线为 `38b4afb`。
+- 直接合同 `5/5`，定向测试 `20/20`，串行统一单测 `347` 项（`345` 通过、`2` 跳过、`0` 失败），非增量 `tsc=0`，build、dist API、迁移扫描、jree/platform 审计均通过。
+- 受影响 NAL 为 `4/4` functional/parity；使用冻结 Java 标杆、TS-only、单线程、cold、1550 周期、逐文件串行运行，0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 not-run、0 Java/TS diff。
+- 项目外证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compositional-powerset-j3-20260920-sentinel.jsonl`；SHA-256：`92FF5494E77ACB771C72CC8D1B2D99073793EFB5A5EF7D7E3AEFFB1184A0F0BF`。
+
+本批只完成 J3 一个 T1 边界切片，不能勾选责任簇、023、jree 清零或性能验收；下一步仍按 `introduceVariables` 的 Set/Map 合同与 J1 兼容桥风险排序。

@@ -1,6 +1,6 @@
 # OpenNARS-304-ts 当前状态
 
-- 状态日期：2026-09-19（Asia/Shanghai）
+- 状态日期：2026-09-20（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
@@ -2076,3 +2076,15 @@ RC/正式发布                    [----------] 未开始，tag/release需用户
 - 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compound-set-j2-j3-20260920-sentinel.jsonl`；SHA-256：`4C32418DAA715DF70526AE9D0C04D1822C683B3AC5832A4744A7CA35EACCBA7A`。
 
 本批可以宣称两个 Set API 的项目内边界已收窄并通过局部合同、M2 和 5 个受影响 NAL；不能宣称 J2/J3 责任簇收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。下一步应继续审查 `CompositionalRules.powerSet/introduceVariables` 中的嵌套 Set/Map 合同，或转入 J1 兼容桥的高风险残余。
+
+### 2026-09-20：`CompositionalRules.powerSet` 嵌套 Set 合同切片（`a8da3a5`）
+
+canonical Java 的 `powerSet` 合同为 `Set<Set<T>>`，实现以 `LinkedHashSet` 保持嵌套集合的唯一性和插入顺序。TypeScript 生产调用本来已经传入 `NativeSet`，但函数输入仍暴露 `java.util.Set`，测试还用 jree 构造输入。本批将输入边界收窄为 `NativeSet<T>`，测试同步改用 `NativeSet`，并在代码与测试中注明“Java 原始 Set/LinkedHashSet → 当前 NativeSet”；没有把 Set 改成 List/数组，也没有改写幂集算法。
+
+- 代码提交：`a8da3a5 refactor(023): 收窄组合规则幂集Set合同`，基线为 `38b4afb`。
+- 计划器：J3-inference-core、T1，`plan_valid=true`；`live_java_required=false`、`m1_minus_required=false`、`full_m1_required=false`。
+- 直接合同：`5/5`；定向集合/推理测试：`20/20`；串行 `npm test`：`347` 项，`345` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build、dist API、迁移扫描、jree 审计和平台审计均成功。
+- 受影响 NAL 使用冻结 Java 标杆、TS-only、单线程、cold、1550 周期逐文件串行运行：`4/4` functional/parity；0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 not-run、0 Java/TS diff。最大 RSS `852.4 MiB`，总时长约 `228.56 s`，仅作为性能观测。
+- 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compositional-powerset-j3-20260920-sentinel.jsonl`；SHA-256：`92FF5494E77ACB771C72CC8D1B2D99073793EFB5A5EF7D7E3AEFFB1184A0F0BF`。
+
+本批将 J3 的一个集合边界从兼容形状收窄到原生抽象，但不能宣称 J3 或 023 收口。下一批优先继续审查 `introduceVariables` 的嵌套 Set/Map 以及 `jree-compat.ts` 的高风险残余；责任簇收口前仍不运行 M1-，阶段门才现跑 Java 与完整 245+1。
