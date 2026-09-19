@@ -292,6 +292,8 @@ test("CompoundTerm local lists preserve native storage and Java order", async ()
     const deepClone = compound.cloneTermsListDeep();
     assert.ok(deepClone instanceof NativeList);
     assert.deepEqual(Array.from(deepClone).map((term) => String(term.name())), ["compound-list-a", "compound-list-b"]);
+    assert.notEqual(deepClone.get(0), compound.term[0]);
+    assert.notEqual(deepClone.get(1), compound.term[1]);
 
     const links = compound.prepareComponentLinks();
     assert.ok(links instanceof NativeList);

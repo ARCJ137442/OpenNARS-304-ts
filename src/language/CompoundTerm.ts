@@ -537,11 +537,11 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     /** forced deep clone of terms */
-    public cloneTermsListDeep(): java.util.List<Term> {
+    public cloneTermsListDeep(): NativeList<Term> {
         const l = new NativeList<Term>();
         for (let t of this.term)
             l.add(t.clone());
-        return l as unknown as java.util.List<Term>;
+        return l;
     }
 
     public static shuffle(ar: Term[], randomNumber: java.util.Random): void {
