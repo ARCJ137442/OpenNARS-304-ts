@@ -4,7 +4,10 @@ import { java } from "jree";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";
-import { JavaIllegalArgumentException } from "../../src/runtime/jree-compat.ts";
+import {
+    JavaIllegalArgumentException,
+    JavaIllegalStateException,
+} from "../../src/runtime/jree-compat.ts";
 import { RuntimeObject, type ClassTokenLike } from "../../src/runtime/RuntimeClass.ts";
 
 test("EventEmitter.set subscribes only to the requested event classes", () => {
@@ -105,6 +108,34 @@ test("EventEmitter preserves native event payload order", () => {
     assert.equal(received[0][1], "native");
     assert.deepEqual(received[0][2], { id: 3 });
     assert.deepEqual(received[0][3], [1, 2]);
+});
+
+test("EventEmitter preserves Java exception boundaries", () => {
+    const Constructor = EventEmitter as unknown as new (...args: unknown[]) => EventEmitter;
+    assert.throws(() => new Constructor(Events.CycleStart.class, Events.CycleEnd.class),
+        (error: unknown) => {
+            assert.ok(error instanceof JavaIllegalArgumentException);
+            assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+                "Invalid number of arguments");
+            return true;
+        });
+
+    const emitter = new EventEmitter();
+    const observer: EventEmitter.EventObserver = { event() {} };
+    assert.throws(() => emitter.off(null as unknown as ClassTokenLike, observer),
+        (error: unknown) => {
+            assert.ok(error instanceof JavaIllegalStateException);
+            assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+                "Invalid parameter");
+            return true;
+        });
+    assert.throws(() => emitter.off(Events.CycleStart.class, observer),
+        (error: unknown) => {
+            assert.ok(error instanceof JavaIllegalStateException);
+            assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+                "Unknown event: [object Object]");
+            return true;
+        });
 });
 
 test("EventHandler accepts Java-style event varargs", () => {
