@@ -12,7 +12,7 @@ import { Terms } from "./Terms.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
 import { javaStringHashCode, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
-import { NativeList } from "../runtime/NativeList.ts";
+import { NativeFixedList, NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
@@ -350,8 +350,12 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return t;
     }
 
-    public static termList(...t: Term[]): java.util.List<Term> {
-        return java.util.Arrays.asList(t as Term[]);
+    /**
+     * Java original type: List<Term> backed by Arrays.asList.
+     * The result is fixed-size but permits element replacement through set.
+     */
+    public static termList(...t: Term[]): NativeFixedList<Term> {
+        return new NativeFixedList<Term>(t);
     }
 
     /* ----- utilities for oldName ----- */

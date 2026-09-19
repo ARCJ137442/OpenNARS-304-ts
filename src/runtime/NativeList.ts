@@ -142,6 +142,125 @@ export class NativeList<T> implements Iterable<T> {
 }
 
 /**
+ * Native fixed-size List for Java `Arrays.asList` contracts.
+ *
+ * Element replacement remains legal through `set`, while every operation
+ * that changes the list size throws the Java-shaped unsupported-operation
+ * error. This is intentionally distinct from NativeList, whose ArrayList
+ * contract permits structural mutation.
+ */
+export class NativeFixedList<T> implements Iterable<T> {
+    private readonly items: T[];
+
+    public constructor(initialValues: Iterable<T> = []) {
+        this.items = Array.from(initialValues);
+    }
+
+    public add(_element: T): never;
+    public add(_index: number, _element: T): never;
+    public add(_first: T | number, _second?: T): never {
+        return NativeFixedList.unsupported();
+    }
+
+    public addAll(_elements: Iterable<T>): never {
+        return NativeFixedList.unsupported();
+    }
+
+    public clear(): never {
+        return NativeFixedList.unsupported();
+    }
+
+    public contains(element: T): boolean {
+        return this.indexOf(element) !== -1;
+    }
+
+    public get(index: number): T {
+        this.checkElementIndex(index);
+        return this.items[index];
+    }
+
+    public indexOf(element: T): number {
+        return this.items.findIndex((candidate) => nativeValuesEqual(candidate, element));
+    }
+
+    public isEmpty(): boolean {
+        return this.items.length === 0;
+    }
+
+    public iterator(): NativeFixedListIterator<T> {
+        return new NativeFixedListIterator(this);
+    }
+
+    public remove(_index: number): never;
+    public remove(_element: T): never;
+    public remove(_value: number | T): never {
+        return NativeFixedList.unsupported();
+    }
+
+    public removeAll(_elements: Iterable<T>): never {
+        return NativeFixedList.unsupported();
+    }
+
+    public retainAll(_elements: Iterable<T>): never {
+        return NativeFixedList.unsupported();
+    }
+
+    public set(index: number, element: T): T {
+        this.checkElementIndex(index);
+        const previous = this.items[index];
+        this.items[index] = element;
+        return previous;
+    }
+
+    public size(): number {
+        return this.items.length;
+    }
+
+    public toArray(): T[] {
+        return this.items.slice();
+    }
+
+    public [Symbol.iterator](): IterableIterator<T> {
+        return this.items[Symbol.iterator]();
+    }
+
+    private checkElementIndex(index: number): void {
+        if (!Number.isInteger(index) || index < 0 || index >= this.items.length) {
+            throw new RangeError(`NativeFixedList index out of bounds: ${index}`);
+        }
+    }
+
+    private static unsupported(): never {
+        const error = new Error("UnsupportedOperationException");
+        error.name = "UnsupportedOperationException";
+        throw error;
+    }
+}
+
+export class NativeFixedListIterator<T> {
+    private cursor = 0;
+
+    public constructor(private readonly owner: NativeFixedList<T>) {}
+
+    public hasNext(): boolean {
+        return this.cursor < this.owner.size();
+    }
+
+    public next(): T {
+        if (!this.hasNext()) {
+            throw new Error("NativeFixedList iterator is exhausted");
+        }
+        return this.owner.get(this.cursor++);
+    }
+
+    public remove(): never {
+        const error = new Error("UnsupportedOperationException");
+        error.name = "UnsupportedOperationException";
+        throw error;
+    }
+}
+
+/**
  * Live, unmodifiable view for translated Java Collections.unmodifiableList.
  *
  * The Java wrapper does not copy its source: later source mutations are

@@ -105,3 +105,21 @@ test("CompoundTerm Set helpers preserve Java equality and insertion order", asyn
     assert.deepEqual(allComponents.toArray(), [outer, inner, first]);
     assert.equal(allComponents.contains(equivalent), true);
 });
+
+test("CompoundTerm.termList preserves Java Arrays.asList fixed-size semantics", async () => {
+    const { CompoundTerm } = await import("../../src/language/CompoundTerm.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { NativeFixedList } = await import("../../src/runtime/NativeList.ts");
+
+    const first = Term.get("term-list-first");
+    const second = Term.get("term-list-second");
+    const list = CompoundTerm.termList(first, second);
+
+    assert.equal(list instanceof NativeFixedList, true);
+    assert.deepEqual(list.toArray(), [first, second]);
+    assert.equal(list.set(0, second), first);
+    assert.equal(list.get(0), second);
+    assert.throws(() => list.add(first), /UnsupportedOperationException/);
+    assert.throws(() => list.remove(0), /UnsupportedOperationException/);
+    assert.equal(list.size(), 2);
+});
