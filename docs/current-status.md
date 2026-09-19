@@ -1829,3 +1829,34 @@ spec 的阶段状态和计划项，不把 spec 数量、复选框、测试数量
 审计从早期 105 个直接导入文件降到 77 个；这只是迁移量指标，不是等价性证明。
 当前仍不能宣称 023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率
 达标或 Java/TypeScript 性能等价。
+
+### 2026-09-19：TemporalRules List 合同切片
+
+本批对照 canonical Java `TemporalRules.java`，确认 `temporalInduction` 的原始返回
+为 `List<Task>`，短生命周期实现为 `ArrayList<Task>`；`appendConclusion` 接受同一
+List 合同。TypeScript 原先已经用 `NativeList` 存储，却用 `java.util.List` 类型和
+强制转换把 jree 边界继续暴露。本批将 `TemporalRules.temporalInduction`、
+`TemporalRules.appendConclusion` 以及直接转发层
+`TemporalInferenceControl.proceedWithTemporalInduction` 收窄到 `NativeList<Task>`，
+空结果也改为新的空 `NativeList`。上游 `DerivationContext.doublePremiseTask` 的
+Java-shaped List 生产者暂不改变，留作下一独立合同批次。
+
+- 代码提交：`0eaf098 refactor(023): 收窄时间规则List合同`。
+- T1 计划：`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`；
+  生产源码 2 个文件、26 行变更，单一 owner 为 J3。
+- 直接相关测试：`44/44`；串行 M2：`346` 项，`344` 通过、`2` 跳过、`0` 失败；
+  非增量 `tsc=0`；build `137` 个源文件；dist API 通过。
+- 受影响 NAL：`nal6.17.nal`、`nal4.recursion.nal`、`nars_transitivity.nal`、
+  `toothbrush2.nal` 串行 `4/4` functional/parity；0 exception、0 marker missing、
+  0 stall、0 timeout、0 process limit、0 Java/TS diff。
+- 证据位于项目外
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\temporal-rules-list-j3-20260919-sentinel.jsonl`，
+  SHA-256：`70B0630235C5187616B7F8DFF61BC73162692E380115C45F38CD0E8E3DAA4AB9`。
+- 性能观测：四个样本分别为 `2919/251.6`、`8328/331.3`、`107938/378.1`、
+  `102467/993.2`（毫秒/MiB）；仅作为后续性能观测。
+
+本批可以宣称 TemporalRules 及其直接转发层的 List 结果边界已原生化并通过验证；
+不能宣称 J3 责任簇收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、
+源码覆盖率达标或 Java/TypeScript 性能等价。下一批先处理
+`DerivationContext.doublePremiseTask` 的 List 生产者及直接消费者，再单独处理
+`SyllogisticRules` 的 Map 临时表。
