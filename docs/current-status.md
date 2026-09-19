@@ -2040,3 +2040,15 @@ RC/正式发布                    [----------] 未开始，tag/release需用户
 - 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compound-clone-list-j2-20260920-sentinel.jsonl`；SHA-256：`6A0CC691677BC9689ACDF870CB367F997DDE9AB506AEC144449462D4FF2581D0`。
 
 本批可以宣称 `cloneTermsListDeep` 的 J2 List 边界已收窄并通过局部合同、M2 和受影响 NAL；不能宣称 J2 责任簇收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或性能等价。下一批应独立处理 `asTermList` 的可变 ArrayList 合同，再处理 Java `Arrays.asList` 固定大小语义的 `termList`，不可把二者混为同一容器。
+
+### 2026-09-20：`CompoundTerm.asTermList` List 合同切片（`aea65d3`）
+
+本批继续 J2 List 合同审查。canonical Java 的 `asTermList` 返回 `new ArrayList<>(term)`，因此是保持顺序的可变副本；它与 Java `termList` 使用的 `Arrays.asList(term)` 固定大小视图分开处理。TypeScript 将 `CompoundTerm.asTermList`、同一路径的局部变量和 `StructuralRules` 消费者收窄到 `NativeList<Term>`，保留 `remove`、`set`、索引访问和顺序语义；`Terms.term` 增加 `NativeList` overload，并在工厂边界显式转为数组。
+
+- 代码提交：`aea65d3 refactor(023): 收窄组件列表合同`，基线为 `c689110`。
+- 直接合同测试：`50/50`；串行 `npm test`：`346` 项，`344` 通过、`2` 跳过、`0` 失败。
+- 非增量 `tsc=0`；build、dist API、迁移模式扫描、jree 审计和平台审计均通过；jree 审计为 `directJreeImportFiles=77`、`javaUtilFiles=28`、`newLinkedHashSet=1`、`highRiskItems=41`。
+- 受影响 NAL 使用冻结 Java 标杆、TS-only、单线程、cold、1550 周期串行执行：`5/5` functional/parity；`0` exception、`0` marker missing、`0` stall、`0` timeout、`0` process limit、`0` not-run、`0` Java/TS diff。最大 RSS `360.5 MiB`，总时长约 `121.31 s`；`nars_transitivity.nal` 为 `211550` 推理周期，仍只作为性能观测。
+- 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compound-as-list-j2-20260920-sentinel.jsonl`；SHA-256：`6A8D9682AEE3BD72EE8375A5DE39D94C24B5ACC4F85B75B598B21DAF5C21A2BD`。
+
+本批可以宣称 `asTermList` 的 J2 List 边界已收窄并通过直接合同、M2 和 5 个受影响 NAL；不能宣称 J2/J3 责任簇收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。下一批应独立处理 `termList` 的固定大小 `Arrays.asList` 语义，再进入 `LinkedHashSet` 去重集合审查。
