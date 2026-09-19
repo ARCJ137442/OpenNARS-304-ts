@@ -2052,3 +2052,15 @@ RC/正式发布                    [----------] 未开始，tag/release需用户
 - 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compound-as-list-j2-20260920-sentinel.jsonl`；SHA-256：`6A8D9682AEE3BD72EE8375A5DE39D94C24B5ACC4F85B75B598B21DAF5C21A2BD`。
 
 本批可以宣称 `asTermList` 的 J2 List 边界已收窄并通过直接合同、M2 和 5 个受影响 NAL；不能宣称 J2/J3 责任簇收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。下一批应独立处理 `termList` 的固定大小 `Arrays.asList` 语义，再进入 `LinkedHashSet` 去重集合审查。
+
+### 2026-09-20：`CompoundTerm.termList` 固定大小 List 合同切片（`8bb14a2`）
+
+本批完成 J2 的下一个 List 合同。canonical Java 的 `termList` 返回 `Arrays.asList(t)`：允许 `get/set/contains/遍历`，但不允许改变列表大小。TypeScript 新增独立的 `NativeFixedList`，没有把固定大小 List 冒充可变 `NativeList`，也没有把它降级为不可变 List；`CompoundTerm.termList` 现在返回该项目内类型并保留 Java 原始合同注释。其他 `TextOutputHandler/Events` 中与堆栈格式化有关的 `Arrays.asList` 暂不迁移。
+
+- 代码提交：`8bb14a2 refactor(023): 原生固定大小列表合同`，基线为 `425422c`。
+- 计划器：J2-language-parser、T1，`plan_valid=true`；`live_java_required=false`、`m1_minus_required=false`、`full_m1_required=false`；owner 为 J2，supporting 为 J1。
+- 直接合同测试：`17/17`；串行 `npm test` 成功，本批新增 1 项测试，较前批 346 项增加为 347 项；非增量 `tsc`、build、dist API、迁移模式扫描、jree 审计和平台审计均成功。
+- 受影响 NAL 使用冻结 Java 标杆、TS-only、单线程、cold、1550 周期串行执行：`5/5` functional/parity；`0` exception、`0` marker missing、`0` stall、`0` timeout、`0` process limit、`0` not-run、`0` Java/TS diff。最大 RSS `362.3 MiB`，总时长约 `114.17 s`；`nars_transitivity.nal` 为 `211550` 推理周期，仅作为性能观测。
+- 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compound-term-list-fixed-j2-20260920-sentinel.jsonl`；SHA-256：`EF2A2D0D3FBE00E3AFC4B42D412BC90DCD6E68A3B0FF08D0E48A541D11099D79`。
+
+本批可以宣称 `termList` 的固定大小 List 合同已收窄并通过局部合同、M2 和 5 个受影响 NAL；不能宣称 J2/J1 责任簇收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。下一步应进入 `getContainedTerms/addComponentsRecursively` 的 `LinkedHashSet` 合同审查。
