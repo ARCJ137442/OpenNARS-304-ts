@@ -1499,3 +1499,20 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 本批可以宣称：`TextOutputHandler` 的非法参数异常边界已收窄，并通过局部合同、串行 M2、构建/API、静态审计和 T1 要求的 M1- `244/244` 保护矩阵；代码提交为 `ba832bb4465a8e584ebf2431b52f45fbc0018b8b`，阶段报告为 `reports/20260919-134955.md`。
 
 本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、`nal6.redundant.nal` 的 131072 周期等价、Java/TypeScript 全面性能等价、源码覆盖率目标完成或正式发布。
+
+### 2026-09-19：`Tense` enum-like 边界原生化
+
+本批对照 canonical Java `Tense.java` 做单一责任迁移。Java 的 `Tense` 只有 `Past`、`Present`、`Future` 三个枚举值，`Eternal` 是运行时 `null` 哨兵；原 TypeScript 通过 jree `java.lang.Enum<Tense>` 继承共享 `values()`，实际运行时返回 22 个值并混入其他枚举，造成枚举边界与 Java 不一致。本批只修正 enum-like 容器责任，不改 NAL 推理规则或时间语义。
+
+- `src/language/Tense.ts`：删除 jree `Enum` 继承与匿名子类，改为原生 enum-like 单例；显式维护三项 `values()`、`name()`、`ordinal()`、`valueOf()`、`toString()` 和符号查表；保留 `Eternal` 运行时 `null`，字符串入口通过 `javaStringValue` 保持 Java boxed string 合同。
+- `test/node/native-lookup-tables.test.ts`：增加三项枚举集合、名称、序号、显示文本、`valueOf` 成功/失败和 `Eternal=null` 回归。
+- M2：完整串行单元测试 `324` 项，`322` 通过、`2` 跳过、`0` 失败；定向查表测试 `2/2`；显式非增量 `typecheck=0`；`test:build` `sourceFileCount=137`；dist API 通过（`cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`）；迁移扫描结构性异常项为 `0`。
+- change gate：`classify-change-gate --base 09ccc4b --head 5721f4c --scope responsibility` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；本批未修改 canonical Java，继续复用冻结标杆。
+- M1-：TS-only、单线程、cold、逐文件串行，明确排除长期稳定性 #245；`244/244` functional/parity，`java_ts_diff=0`、`both_wrong=0`、`exception=0`、`marker_missing=0`、`卡死式 timeout=0`、`stall=0`、`process_limit=0`、`not_run=0`、`performance_warning=0`。243 项达到 Java marker 等价；`nal6.redundant.nal` 无 marker，运行至 `1650/131072`，状态为 `not_reached`，不构成失败或 markerless 长周期等价结论。
+- M1- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\tense-m1-minus-244-20260919.jsonl`，大小 `773793 bytes`，SHA-256 `BFAEFF5F8B4F86475321DD42B14775DC72223205C27B9F7B33E472FF062C5382`；TS 总时长 `1849619 ms`，最长单文件 `399294 ms`，峰值 RSS `1022263296 bytes`（约 `974.91 MiB`），reasoning cycles `2288254`，观测速度约 `827.71 ms/1024 周期`，仅作后续性能优化数据。
+- Java 标杆未变化且本批未重跑 Java：冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，canonical source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，结果行 `java_artifact=null`。
+- jree 审计前→后：直接导入文件 `78→77`、`java.lang` 文件 `77→76`、Java String 文件 `49→48`、`semanticReviewItems=88→87`；`java.util=38`、`javaObjectFiles=1`、`newLinkedHashMap=0`、`newLinkedHashSet=1` 保持不变。`src/runtime/jree-compat.ts` 仍是过渡兼容边界，不能把本批导入减少宣称为 jree 运行时退出。
+
+本批可以宣称：`Tense` 的 jree Enum 责任已原生化，并通过局部合同、完整串行 M2、非增量类型检查、构建/API、静态审计、T1 gate 和 M1- `244/244` 保护矩阵；未观察到冻结 Java 标杆上的功能回退。代码提交为 `5721f4c16955e10a183e275e14ae7034ebcf478d`，批次报告为 `reports/20260919-151046.md`。
+
+本批仍不能宣称：023/024 完成、生产核心完全去 jree、完整 M1/#245 长期稳定性完成、`nal6.redundant.nal` 的 markerless `131072` 周期等价、源码覆盖率目标完成、Java/TypeScript 全面性能等价或正式发布。
