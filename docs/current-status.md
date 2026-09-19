@@ -2064,3 +2064,15 @@ RC/正式发布                    [----------] 未开始，tag/release需用户
 - 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compound-term-list-fixed-j2-20260920-sentinel.jsonl`；SHA-256：`EF2A2D0D3FBE00E3AFC4B42D412BC90DCD6E68A3B0FF08D0E48A541D11099D79`。
 
 本批可以宣称 `termList` 的固定大小 List 合同已收窄并通过局部合同、M2 和 5 个受影响 NAL；不能宣称 J2/J1 责任簇收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。下一步应进入 `getContainedTerms/addComponentsRecursively` 的 `LinkedHashSet` 合同审查。
+
+### 2026-09-20：`CompoundTerm` Set 合同切片（`10caf17`）
+
+本批完成 J2/J3 交界处的一个 Set 合同切片。canonical Java 的 `getContainedTerms` 和 `addComponentsRecursively` 使用 `LinkedHashSet<Term>`：按 Java `equals/hashCode` 去重，保持递归插入顺序；后者在传入非 null 集合时原样复用。TypeScript 将两个 API 及 `CompositionalRules` 两个直接消费者收窄为 `NativeSet<Term>`，没有把 Set 替换成 List/数组，也没有改动 `NativeSet` 算法、候选集或移除逻辑。
+
+- 代码提交：`10caf17 refactor(023): 收窄组件集合合同`，基线为 `6f1b1e8`。
+- 计划器：J2-language-parser、T1，`plan_valid=true`；`live_java_required=false`、`m1_minus_required=false`、`full_m1_required=false`；owner 为 J2，supporting 为 J3。
+- 直接合同测试：`13/13`；串行 `npm test`：`347` 项，`345` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build、dist API、迁移扫描、jree 审计和平台审计均成功。
+- 受影响 NAL 使用冻结 Java 标杆、TS-only、单线程、cold、1550 周期串行执行：`5/5` functional/parity；`0` exception、`0` marker missing、`0` stall、`0` timeout、`0` process limit、`0` not-run、`0` Java/TS diff。最大 RSS `431.8 MiB`，总时长约 `120.48 s`；`nars_transitivity.nal` 为 `211550` 推理周期，仅作为性能观测。
+- 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compound-set-j2-j3-20260920-sentinel.jsonl`；SHA-256：`4C32418DAA715DF70526AE9D0C04D1822C683B3AC5832A4744A7CA35EACCBA7A`。
+
+本批可以宣称两个 Set API 的项目内边界已收窄并通过局部合同、M2 和 5 个受影响 NAL；不能宣称 J2/J3 责任簇收口、023/024 完成、jree 清零、完整 M1/#245 当前候选通过、源码覆盖率达标或 Java/TypeScript 性能等价。下一步应继续审查 `CompositionalRules.powerSet/introduceVariables` 中的嵌套 Set/Map 合同，或转入 J1 兼容桥的高风险残余。
