@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { java, JavaObject } from "jree";
 import {
-    JavaAssertionError,
     JavaClassNotFoundException,
     JavaDoubleCompat,
     JavaIllegalAccessException,
@@ -12,6 +11,7 @@ import {
     javaStringValue,
     javaStringsEqual,
 } from "../../src/runtime/jree-compat.ts";
+import { JavaAssertionError, JavaError, JavaThrowable } from "../../src/runtime/JavaExceptions.ts";
 
 test("javaStringLength normalizes jree and native string representations", () => {
     const boxed = new java.lang.String("abc");
@@ -67,7 +67,9 @@ test("missing jree exception compatibility preserves Java inheritance", () => {
     const access = new JavaIllegalAccessException("access");
     const missing = new JavaClassNotFoundException("missing");
 
-    assert.ok(assertion instanceof java.lang.Error);
+    assert.ok(assertion instanceof Error);
+    assert.ok(assertion instanceof JavaError);
+    assert.ok(assertion instanceof JavaThrowable);
     assert.ok(access instanceof java.lang.Exception);
     assert.ok(missing instanceof java.lang.Exception);
     assert.equal(assertion.getMessage(), "invariant");

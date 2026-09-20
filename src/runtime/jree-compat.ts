@@ -1,5 +1,6 @@
 import { Class, JavaObject, java } from "jree";
 import type { long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+export { JavaAssertionError } from "./JavaExceptions.ts";
 
 // jree 1.3.0 constructs and parses an Error stack in every JavaObject class
 // that has not inherited its internal "#fqn" marker.  The published runtime
@@ -120,7 +121,6 @@ export class JavaIllegalArgumentException extends java.lang.IllegalArgumentExcep
 export class JavaIllegalStateException extends java.lang.IllegalStateException {}
 
 /** jree omits several Java exception classes used by the translated sources. */
-export class JavaAssertionError extends java.lang.Error {}
 export class JavaIllegalAccessError extends java.lang.Error {}
 export class JavaInstantiationException extends java.lang.Exception {}
 export class JavaNoSuchMethodException extends java.lang.Exception {}
