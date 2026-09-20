@@ -2803,3 +2803,61 @@ LeanSpec 15 项
 ├─ in-progress    5/15                           [#####---------------] 33%
 └─ checklist     89/111                          [################----] 80.2%
 ```
+
+### 2026-09-20：J4 `Add.function` 原生数值文本边界切片（`d97593e`）
+
+本批对照 canonical Java `Add.java` 与 Apache Commons Lang 3.7 的
+`StringUtils.isNumeric` 合同，确认 Java 接受非空 ASCII 数字串、拒绝空白/符号/小数/非 ASCII
+数字，并在 `Integer.parseInt` 溢出时抛出 `NumberFormatException`。TypeScript 原实现会
+`trim()` 后判断并依赖 jree 的解析边界，因此不能机械保留。现改为原生文本判断、安全整数
+范围检查和兼容层异常类型；结果仍通过 Java `String.valueOf(n1 + n2)` 形态构造 `Term`。
+
+- 代码提交：`d97593e`；直接合同 `16/16`。
+- M2：串行 `npm test` `369` 项，`367` 通过、`2` 跳过、`0` 失败；非增量 typecheck `0`
+  诊断；build `139` 个源文件；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、
+  `stopped=true`。
+- 计划器：T1，owner=`J4-operator-plugin`，supporting=`J1-runtime-compat`，
+  `plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`、
+  `full_m1_required=false`；本批不运行 M1-。
+- 受影响 NAL：`nal9.believe1.nal`、`nal1.0.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal` 共 `5/5` 通过；证据文件为
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\add-native-int-boundary-20260920-sentinel.jsonl`，SHA-256
+  `289709602589130B1CD55C36A2A15B27F68AA941BB3B05609DBD440203AD4AE3`。
+- 审计变化：direct jree import files `75→74`；migration `jree-runtime-type` `1390/135→1385/134`；
+  platform `coreCandidateFiles` `70→69`、`jreeImportFiles` `82→81`。
+
+本批只能宣称 Add 的 Java 数值/文本边界、M2、构建、dist API 和 5 个受影响 NAL 已验证；
+不能宣称 J4/023 收口、jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。
+下一候选是 `Reflect`：先补 `sop` 的多态输入和异常合同，再决定移除其直接 `java,S` 导入；
+`Count` 已基本原生化，暂不把它列为同等优先级。
+
+#### 当前从头到尾与 spec 级 ASCII 进度
+
+```text
+OpenNARS-304-ts 外部发布主线
+├─ F0 Canonical Java 基线                         [##########] 完成
+├─ F1 M1 功能等价                                 [##########] 完成（G0 有效 246/246）
+├─ F2 M2 零诊断/构建/公开入口                     [##########] 完成
+├─ F3 G0 迁移前保护回归                           [##########] 完成
+├─ 023 去 jree 原生 TypeScript 运行时             [##--------] 进行中
+│  ├─ J1 runtime compat                           [####------] 异常/观察函数已迁，桥清理待做
+│  ├─ J2 language/parser                           [####------] 字符串、解析、List/Map/Set 局部合同已验证
+│  ├─ J3 inference core                            [####------] Map/List/Set/float/数组局部合同已验证
+│  ├─ J4 operator/plugin                           [######----] 异常/数组/反馈/Object/文本/前缀/Add 边界已验证
+│  └─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待收口
+├─ 024 平台中立核心与宿主适配                     [##--------] P0-P2 完成，P3-P5 未完成
+├─ I J/P 汇合集成回归                             [----------] 待开始
+├─ O 正式性能门                                   [----------] 待开始
+└─ R RC、bundle、发布与用户授权 tag               [----------] 待开始
+
+LeanSpec 15 项
+├─ 001/002/003/004                                [##########] complete
+├─ 005/008                                      [#####-----] in-progress
+├─ 006/007/009/013/018/019                       [##########] complete
+└─ 020/023/024                                   [#####-----] in-progress
+
+登记统计（仅导航，不代表产品完成度）
+├─ complete      10/15                           [##########----------] 67%
+├─ in-progress    5/15                           [#####---------------] 33%
+└─ checklist     89/111                          [################----] 80.2%
+```

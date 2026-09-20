@@ -684,3 +684,41 @@ jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价
 - 审计：migration scan `248` 文件，`java-string-method=234/62`、`java-collection-method=753/108`、`jree-runtime-type=1390/135`；jree summary `directJreeImportFiles=75`、`newLinkedHashSet=1`；platform summary `185` 文件、`coreCandidateFiles=70`、`jreeImportFiles=82`。
 
 本批只能宣称 J4 前缀文本边界及其 J2 解析支持点完成局部合同、串行 M2、构建、dist API 与 5 个受影响 NAL 验证；不能宣称 J4/023 收口、jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。下一批首选审查 `Add.function` 的 Java/TS 数值文本合同；当前 TS 的 `isNumeric` 带 `.trim()`，必须先锁定其与 Apache `StringUtils.isNumeric` 的边界，再决定去掉该文件的直接 jree 导入。
+
+### 2026-09-20：J4 `Add.function` 原生数值文本边界切片（`d97593e`）
+
+对照 Java `Add.java` 和 Apache Commons Lang 3.7，确认 `StringUtils.isNumeric` 只接受非空
+ASCII 数字串；`Integer.parseInt` 还要求结果处于 Java `int` 范围。TS 原实现通过 jree 和
+`trim()` 判断，无法保证 Java 的空白、非 ASCII 数字与溢出合同。现以原生正则、Java `int`
+范围检查和 `JavaNumberFormatException` 重现该合同，结果文本仍以 Java `String.valueOf`
+语义交给 `Term` 构造。
+
+- 代码提交：`d97593e`；基线为 `1394b57`。
+- 直接合同：`operator-boundary.test.ts` `16/16`。
+- 串行 M2：`npm test` `369` 项，`367` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；
+  build `139` 个源文件；dist API 通过。
+- 计划器：J4 owner、J1 supporting、T1；`live_java_required=false`、
+  `m1_minus_required=false`、`full_m1_required=false`。
+- 受影响 NAL：5/5 通过，0 exception、0 marker missing、0 stall、0 timeout、0 process limit、
+  0 Java/TS diff。证据 SHA-256：`289709602589130B1CD55C36A2A15B27F68AA941BB3B05609DBD440203AD4AE3`。
+- 审计变化：direct jree import files `75→74`；migration `jree-runtime-type` `1390/135→1385/134`；
+  platform `coreCandidateFiles` `70→69`、`jreeImportFiles` `82→81`。
+
+本批没有勾选 J4 或 023 完成；也没有运行 M1-。下一步优先审查 `Reflect` 的 `sop` 多态输入、
+`Term.get` 文本化与非法参数异常，先补合同再做最小 native 化；`Count` 已基本原生化，暂不作为
+同等优先级候选。
+
+#### 当前阶段进度树
+
+```text
+023 jree 原生 TypeScript 运行时                 [##--------] 进行中
+├─ J1 runtime compat                            [####------] 异常/观察函数已迁，桥清理待做
+├─ J2 language/parser                            [####------] 字符串/解析/List/Map/Set 局部合同
+├─ J3 inference core                            [####------] Map/List/Set/float/数组局部合同
+├─ J4 operator/plugin                           [######----] 异常/数组/反馈/Object/文本/前缀/Add 边界，未收口
+└─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待做
+024 平台中立核心与宿主适配                       [##--------] P0-P2 完成，P3-P5 未完成
+I J/P 汇合集成回归                              [----------] 待开始
+O 正式性能门                                    [----------] 待开始
+R RC/bundle/tag                                [----------] 待开始
+```
