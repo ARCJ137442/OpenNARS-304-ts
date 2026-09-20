@@ -8,6 +8,8 @@ import { Count } from "../../src/operator/misc/Count.ts";
 import { Reflect as ReflectOperator } from "../../src/operator/misc/Reflect.ts";
 import { NullOperator } from "../../src/operator/NullOperator.ts";
 import { Operation } from "../../src/operator/Operation.ts";
+import { FunctionOperator } from "../../src/operator/FunctionOperator.ts";
+import type { Memory } from "../../src/storage/Memory.ts";
 import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
@@ -28,6 +30,23 @@ class AddProbe extends Add {
 class ReflectProbe extends ReflectOperator {
     public evaluate(args: Term[]): Term | null {
         return this.function(null as never, args);
+    }
+}
+
+class FunctionArgumentProbe extends FunctionOperator {
+    public received: Term[] | null = null;
+
+    public constructor() {
+        super("^probe");
+    }
+
+    protected function(_memory: Memory, args: Term[]): Term | null {
+        this.received = args;
+        return null;
+    }
+
+    protected getRange(): Term {
+        return Term.get("range");
     }
 }
 
@@ -126,6 +145,20 @@ test("FunctionOperator preserves Java arity and overload exception contracts", (
             "Invalid number of arguments");
         return true;
     });
+});
+
+test("FunctionOperator copies Java parameter arguments into a fresh shallow array", () => {
+    const probe = new FunctionArgumentProbe();
+    const first = Term.get("first");
+    const second = Term.get("second");
+    const input = [Term.get("self"), first, second, Term.get("output")];
+    const result = (probe as unknown as {
+        execute: (...args: unknown[]) => unknown;
+    }).execute(null, input, null, null);
+
+    assert.equal(result, null);
+    assert.deepEqual(probe.received, [first, second]);
+    assert.notEqual(probe.received, input);
 });
 
 test("Add preserves Java argument and result contracts", () => {

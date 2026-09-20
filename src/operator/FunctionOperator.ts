@@ -81,8 +81,10 @@ export abstract class FunctionOperator extends Operator {
          * }
          */
 
-        let x: Term[] = new Array<Term>(numParam);
-        java.lang.System.arraycopy(args, 1, x, 0, numParam);
+        // Java source: System.arraycopy(args, 1, x, 0, numParam). The target
+        // is a fresh Term[] and the ranges never overlap, so slice preserves
+        // Java's shallow-copy and parameter-order semantics without jree.
+        const x: Term[] = args.slice(1, 1 + numParam);
 
         let y: Term | null;
         // try {
