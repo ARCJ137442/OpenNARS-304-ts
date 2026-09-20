@@ -320,3 +320,47 @@ Java 原始合同推进 J3 `introduceVariables` 的嵌套 Set/Map。
 ├─ J4 operator/plugin                [##--------] 局部反馈/字符串/插件边界已验证
 └─ J5 main/host                     [#---------] 入口宿主边界待推进
 ```
+
+### 2026-09-20：异常捕获边界按责任簇拆分
+
+本批先发现：把 J1 兼容桥、J4 Operator 和 J5 主入口放在同一个提交会使验证计划
+失败关闭。初次尝试 `d681592` 未推送，随后用 `d26255e` 回退，并按责任簇拆成三个
+可独立验证的提交；这不是业务回退，而是修复提交边界和门禁证据。
+
+- `14cbdf4`（J1）：在 `jree-compat.ts` 集中提供 `isJavaThrowable`、
+  `isJavaException`，同时识别原生异常和仍可能存在的旧 jree 异常；3 个 J1 哨兵
+  `3/3` 通过。
+- `d2b4116`（J4）：Operator 的异常生产、捕获和执行反馈改用项目内异常合同；4 个
+  J4 哨兵 `4/4` 通过。
+- `247bc3c`（J5）：Shell、Nar、NarNode、TextOutputHandler 统一异常捕获边界，Nar
+  推理错误包装改用原生异常；3 个 J5 哨兵 `3/3` 通过。
+- 三批均使用冻结 Java baseline JSONL，SHA-256 为
+  `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，未现跑 Java。
+- 最终组合 M2：`npm test` 为 `355` 项，`353` 通过、`2` 跳过、`0` 失败；非增量
+  `tsc=0`；build `139` 个源文件；dist API、迁移扫描、平台审计均通过。
+- 证据位于项目外：J1 `j1-exception-helper-20260920-sentinel.jsonl`，SHA
+  `E36EF575A438A83384DC54981033D73E16F4482FED16A718D2B5C187C19E3444`；J4
+  `j4-operator-exception-20260920-sentinel.jsonl`，SHA
+  `A571E3E397761EF0412C12DC71207DA0DD830C1A4941B1C63E3846A876CB3E52`；J5
+  `j5-entry-exception-20260920-sentinel.jsonl`，SHA
+  `464B482FE5ECD7A7820DA1A34021E046BA049D98939DFFD35EF55702325CD6BD`。
+
+当前只完成异常观察边界切片，不能勾选 J1/J4/J5 或 023 完成；不能宣称 jree 清零、
+完整 M1/#245 当前候选通过或 Java/TypeScript 性能等价。下一步按同簇异常生产者继续
+迁移，待所有生产者和直接回归收口后，才删除异常 `Symbol.hasInstance` 过渡桥；随后
+继续 `introduceVariables` 的嵌套 Set/Map 合同。
+
+#### 本批后的导航进度
+
+```text
+023 jree 原生 TypeScript 运行时     [##--------] 进行中
+├─ J1 runtime compat                [####------] 异常类/观察函数已迁；生产者/桥清理待做
+├─ J2 language/parser               [####------] List/Map/Set 多个切片已验证，未收口
+├─ J3 inference core                [####------] Map/List/Set/float/数组切片已验证，未收口
+├─ J4 operator/plugin               [###-------] 数组/字符串/异常切片已验证，未收口
+└─ J5 main/host                    [##--------] 异常观察切片已验证，平台边界待做
+
+验证链
+冻结 Java 标杆 ──> 同簇切片 ──> 局部合同 + 串行 M2 + 2~5 NAL
+                         └────> 簇出口满足后一次 M1- ──> 023 阶段门
+```

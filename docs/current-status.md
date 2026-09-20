@@ -2208,3 +2208,65 @@ OpenNARS-304-ts
 ├─ 性能正式门                         [----------] 待开始
 └─ RC/bundle/tag                      [----------] 待开始
 ```
+
+### 2026-09-20：异常捕获边界按责任簇拆分（`14cbdf4`、`d2b4116`、`247bc3c`）
+
+本批先发现并修正了一个流程问题：初次实现提交 `d681592` 同时修改 J1、J4、J5，
+验证计划器按项目规则返回 `plan_valid=false`；该提交未推送，使用 `d26255e` 可追溯
+回退，再拆成三个责任簇提交。这个过程保留在 Git 历史中，作为“功能通过但提交边界
+不合规时先修正门禁”的记录。
+
+- `14cbdf4 refactor(023): 集中异常兼容判定`：J1 统一提供
+  `isJavaThrowable`、`isJavaException`；原生异常和旧 jree 异常均有回归断言。计划
+  `plan_valid=true`，3 个 J1 哨兵 `3/3` 通过。
+- `d2b4116 refactor(023): 原生化Operator异常边界`：J4 Operator 的异常生产、捕获和
+  执行反馈统一到项目内异常合同。计划 `plan_valid=true`，4 个 J4 哨兵 `4/4` 通过。
+- `247bc3c refactor(023): 收窄主入口异常捕获边界`：J5 的 Shell、Nar、NarNode、
+  TextOutputHandler 使用统一捕获边界，Nar 推理错误包装改用原生异常。计划
+  `plan_valid=true`，3 个 J5 哨兵 `3/3` 通过。
+- 三批均使用冻结 Java 标杆 JSONL，哈希为
+  `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；未现跑 Java。
+- 最终组合 M2：串行 `npm test` 为 `355` 项、`353` 通过、`2` 跳过、`0` 失败，耗时
+  `103864.9142 ms`；非增量 `tsc=0`；build `139` 个源文件；dist API、迁移扫描和
+  平台审计通过。
+- 最终 jree 审计：直接导入文件 `75`、`java.util` 文件 `25`、`java.lang` 文件 `74`、
+  Java String 文件 `47`、`highRiskItems=41`、`semanticReviewItems=74`、
+  `candidateNativeItems=2`、`newLinkedHashSet=1`；`jree@1.3.0` 仍为声明依赖。
+- 外部证据：J1 `j1-exception-helper-20260920-sentinel.jsonl` SHA
+  `E36EF575A438A83384DC54981033D73E16F4482FED16A718D2B5C187C19E3444`；J4
+  `j4-operator-exception-20260920-sentinel.jsonl` SHA
+  `A571E3E397761EF0412C12DC71207DA0DD830C1A4941B1C63E3846A876CB3E52`；J5
+  `j5-entry-exception-20260920-sentinel.jsonl` SHA
+  `464B482FE5ECD7A7820DA1A34021E046BA049D98939DFFD35EF55702325CD6BD`。
+
+本批只完成异常观察边界切片，不能宣称 J1/J4/J5 责任簇收口、023 完成、jree 清零、
+完整 M1/#245 当前候选通过、性能等价或正式发布。下一系列修改按同簇异常生产者收口，
+随后继续 `introduceVariables` 的嵌套 Set/Map 合同；所有生产者迁出并有直接回归前，
+不删除 `jree-compat.ts` 的异常兼容桥。
+
+#### 当前 spec 与门禁进度（ASCII 导航）
+
+```text
+LeanSpec registry: 15 specs
+├─ complete      10/15  [##########----------] 67%
+└─ in-progress    5/15  [#####---------------] 33%
+
+Macro gates: 4/9 complete, 2/9 in progress, 3/9 pending
+├─ F0/F1/F2/F3 baseline gates      [##########] complete
+├─ 023 jree removal                [##--------] in progress
+├─ 024 platform-neutral core      [##--------] in progress
+├─ integration                     [----------] pending
+├─ performance                     [----------] pending
+└─ release candidate               [----------] pending
+
+023 responsibility clusters
+├─ J1 runtime compat               [####------] exception classes/observers migrated;
+│                                   remaining producers and bridge cleanup pending
+├─ J2 language/parser              [####------] List/Map/Set slices verified; not closed
+├─ J3 inference core               [####------] Map/List/Set/float/array slices verified;
+│                                   substitution/iterator residuals pending
+├─ J4 operator/plugin              [###-------] array/string/exception slices verified;
+│                                   remaining producers/plugin boundary pending
+└─ J5 main/host                   [##--------] exception observation verified;
+                                    platform and producer residuals pending
+```
