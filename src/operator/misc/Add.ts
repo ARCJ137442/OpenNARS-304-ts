@@ -1,17 +1,28 @@
 //! Java source: opennars/operator/misc/Add.java
-import { java } from "jree";
 import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { Term } from "../../language/Term.ts";
 import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
+    JavaNumberFormatException,
+    javaStringValue,
+    toJavaString,
 } from "../../runtime/jree-compat.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
-// Java's StringUtils.isNumeric accepts an integer composed only of digits.
+// Java 3.7's StringUtils.isNumeric accepts a non-empty ASCII digit sequence;
+// it does not trim whitespace or accept signs, decimal points, or Unicode digits.
 // Keep this check local so the operator does not depend on the main entrypoint.
-const isNumeric = (value: unknown): boolean => /^\d+$/.test(String(value).trim());
+const isNumeric = (value: unknown): boolean => /^[0-9]+$/.test(javaStringValue(value));
+
+const parseJavaInt = (value: string): int => {
+    const parsed = Number(value);
+    if (!Number.isSafeInteger(parsed) || parsed > 2_147_483_647) {
+        throw new JavaNumberFormatException(`For input string: "${value}"`);
+    }
+    return parsed as int;
+};
 
 
 
@@ -32,19 +43,21 @@ export class Add extends FunctionOperator {
         let n1: int;
         let n2: int;
 
-        if (isNumeric(x[0].name())) {
-            n1 = java.lang.Integer.parseInt(java.lang.String.valueOf(x[0].name()));
+        const first = javaStringValue(x[0].name());
+        if (isNumeric(first)) {
+            n1 = parseJavaInt(first);
         } else {
             throw new JavaIllegalArgumentException("1st parameter not an integer");
         }
 
-        if (isNumeric(x[1].name())) {
-            n2 = java.lang.Integer.parseInt(java.lang.String.valueOf(x[1].name()));
+        const second = javaStringValue(x[1].name());
+        if (isNumeric(second)) {
+            n2 = parseJavaInt(second);
         } else {
             throw new JavaIllegalArgumentException("2nd parameter not an integer");
         }
 
-        return new Term(java.lang.String.valueOf(n1 + n2));
+        return new Term(toJavaString(String(n1 + n2)));
     }
 
     protected getRange(): Term {

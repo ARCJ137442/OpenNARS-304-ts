@@ -71,6 +71,9 @@ export class JavaAssertionError extends JavaError {}
 /** Java original type: java.lang.IllegalArgumentException. */
 export class JavaIllegalArgumentException extends JavaRuntimeException {}
 
+/** Java original type: java.lang.NumberFormatException. */
+export class JavaNumberFormatException extends JavaIllegalArgumentException {}
+
 /** Java original type: java.lang.IllegalStateException. */
 export class JavaIllegalStateException extends JavaRuntimeException {}
 

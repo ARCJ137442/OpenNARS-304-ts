@@ -15,6 +15,7 @@ import type { Memory } from "../../src/storage/Memory.ts";
 import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
+    JavaNumberFormatException,
 } from "../../src/runtime/jree-compat.ts";
 
 class CountProbe extends Count {
@@ -258,6 +259,30 @@ test("Add preserves Java argument and result contracts", () => {
     });
 
     assert.equal(String(add.evaluate([Term.get("2"), Term.get("3")])?.name()), "5");
+});
+
+test("Add preserves Java StringUtils.isNumeric and Integer.parseInt boundaries", () => {
+    const add = new AddProbe();
+    const named = (name: string): Term => ({ name: () => name } as unknown as Term);
+
+    for (const invalid of [" 1", "1 ", "+1", "-1", "1.0", "１２", "١٢"]) {
+        assert.throws(() => add.evaluate([named(invalid), Term.get("0")]), (error: unknown) => {
+            assert.ok(error instanceof JavaIllegalArgumentException);
+            assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+                "1st parameter not an integer");
+            return true;
+        });
+    }
+
+    assert.equal(String(add.evaluate([named("001"), named("2")])?.name()), "3");
+
+    assert.throws(() => add.evaluate([named("2147483648"), Term.get("0")]), (error: unknown) => {
+        assert.ok(error instanceof JavaNumberFormatException);
+        assert.ok(error instanceof JavaIllegalArgumentException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "For input string: \"2147483648\"");
+        return true;
+    });
 });
 
 test("Reflect preserves Java argument and overload contracts", () => {
