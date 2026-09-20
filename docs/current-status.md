@@ -513,6 +513,45 @@ J4 operator/plugin              [######----] Operation/Null/Function/Add excepti
 └─ Reflect/Anticipate/Operator  [##--------] remaining producers
 ```
 
+### 2026-09-20：J4 `Reflect` 异常生产者切片（`8815a86`）
+
+本批继续 J4 Operator/Plugin 责任簇。对照 canonical Java `Reflect.java`，确认
+`function` 的参数数目错误对应 `IllegalStateException`；TypeScript 静态 `sop` overload
+防线的非法参数对应 `IllegalArgumentException`。本批只替换两个异常生产点，保留
+Reflective-Narsese、`CompoundTerm` 判断、Term 构造和 overload 分派。
+
+- 代码提交：`8815a86cae4488c57fc2c575d1e7dd44ce830c10`，提交信息为
+  `refactor(023): 原生化Reflect异常边界`。
+- 直接合同：`operator-boundary.test.ts` 新增 `ReflectProbe`，覆盖空参数、原子 Term
+  正常返回、静态 `sop()` 非法调用、旧 jree `instanceof` 和消息。
+- 串行 M2：`npm test` 为 359 项，357 通过、2 跳过、0 失败；非增量 `tsc=0`；
+  build 为 139 个源文件；dist API 通过。
+- 计划器：J4/T1、`plan_valid=true`、`live_java_required=false`、
+  `m1_minus_required=false`、`affected_nal_required=true`。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal`，TS-only、单线程、cold、1550 周期串行为 `4/4`；
+  使用冻结 Java JSONL，未启动 Java。
+- 外部证据：
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\reflect-exception-20260920-sentinel.jsonl`；
+  SHA-256 `C2706A3FF18FA75D13ACEF20E3BB71B4FB216B95FA7DEB377F71B3A632A59E07`。
+- 本批审计摘要保持为：`directJreeImportFiles=75`、`java.langFiles=73`、
+  `java.utilFiles=25`、`javaStringFiles=47`、`newLinkedHashSet=1`、
+  `highRiskItems=41`、`semanticReviewItems=74`；`jree@1.3.0` 仍为声明依赖。
+
+本批可以宣称 `Reflect` 的异常生产路径已原生化并通过直接合同、M2、构建、API、静态
+审计和 4 个受影响 NAL；不能宣称 J4 收口、023/024 完成、jree 清零、当前完整
+M1/#245、源码覆盖率、性能等价或发布完成。下一批处理 `Anticipate`/`Operator`；J4
+出口条件满足前不运行 M1-，也不删除异常兼容桥。
+
+```text
+J4 operator/plugin              [######----] Operation/Null/Function/Add/Reflect slices passed
+├─ Operation                    [##########] passed
+├─ NullOperator                 [##########] passed
+├─ FunctionOperator             [##########] passed
+├─ Add                          [##########] passed
+└─ Anticipate/Operator          [##--------] remaining producers
+```
+
 恢复者必须先阅读[开发者指南](developer-guide.md)和[冻结交接报告](../reports/20260827-003242.md)，再运行 LeanSpec board/search/view。不要把未完成 spec 标成 complete，也不要清理当前工作区中来源不明的历史证据或探针。
 
 ### 当前候选：`Terms` 图像/Product 局部 Set 原生化（2026-09-17）

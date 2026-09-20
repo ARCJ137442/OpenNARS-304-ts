@@ -417,3 +417,21 @@ NullOperator 名称行为；没有修改推理规则。
 
 本批不能勾选 J4 或 023 完成。下一批继续 `Reflect`，再处理 `Anticipate`/`Operator`；
 J4 收口前不运行 M1-，异常生产者和捕获端收口前不删除 `jree-compat.ts` 异常兼容桥。
+
+### 2026-09-20：J4 `Reflect` 异常生产者切片（`8815a86`）
+
+对照 canonical Java `Reflect.java`，本批确认 `function` 参数数目错误对应
+`IllegalStateException`，静态 `sop` 非法 overload 对应 `IllegalArgumentException`。
+本批将两个生产点切换到项目内异常类型，保留 Reflective-Narsese、Term 构造、overload
+分派和消息文本。
+
+- 代码提交：`8815a86cae4488c57fc2c575d1e7dd44ce830c10`。
+- T1 J4 计划：`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`。
+- 直接合同：覆盖错误参数、原子 Term 正常返回、静态 `sop()` 错误 overload、异常消息和旧 jree `instanceof`。
+- 串行 M2：359 项，357 通过、2 跳过、0 失败；非增量 `tsc=0`；build 139 个源文件。
+- 受影响 NAL：4/4 通过；使用冻结 Java JSONL，未启动 Java。
+- 证据：项目外 `reflect-exception-20260920-sentinel.jsonl`，SHA-256
+  `C2706A3FF18FA75D13ACEF20E3BB71B4FB216B95FA7DEB377F71B3A632A59E07`。
+
+本批不能勾选 J4 或 023 完成。下一批继续 `Anticipate`/`Operator`；J4 收口前不运行
+M1-，异常生产者和捕获端收口前不删除 `jree-compat.ts` 异常兼容桥。
