@@ -8,7 +8,10 @@ import { Statement } from "../language/Statement.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Operator } from "./Operator.ts";
 import type { Task } from "../entity/Task.ts";
-import { JavaIllegalArgumentException } from "../runtime/jree-compat.ts";
+import {
+    JavaIllegalArgumentException,
+    javaStringValue,
+} from "../runtime/jree-compat.ts";
 
 
 
@@ -121,16 +124,15 @@ export class Operation extends Inheritance {
     }
 
     public static makeName(op: java.lang.CharSequence, arg: Term[]): java.lang.CharSequence {
-        let nameBuilder: java.lang.StringBuilder = new java.lang.StringBuilder(16) // estimate
-            .append(Symbols.NativeOperator.COMPOUND_TERM_OPENER.ch).append(op);
-
-        for (let t of arg) {
-            nameBuilder.append(Symbols.ARGUMENT_SEPARATOR);
-            nameBuilder.append(t.name());
-        }
-
-        nameBuilder.append(Symbols.NativeOperator.COMPOUND_TERM_CLOSER.ch);
-        return nameBuilder.toString();
+        // Java source: StringBuilder → String. The original call surface only
+        // appends in order and calls toString; a native string is the same
+        // semantic representation at this CharSequence compatibility boundary.
+        const separator = Symbols.ARGUMENT_SEPARATOR;
+        const argumentNames = arg.map((term) => javaStringValue(term.name()));
+        const name = `${Symbols.NativeOperator.COMPOUND_TERM_OPENER.ch}${javaStringValue(op)}`
+            + (argumentNames.length > 0 ? `${separator}${argumentNames.join(separator)}` : "")
+            + Symbols.NativeOperator.COMPOUND_TERM_CLOSER.ch;
+        return name as unknown as java.lang.CharSequence;
     }
 
     /**

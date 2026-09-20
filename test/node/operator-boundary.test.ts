@@ -84,6 +84,17 @@ test("Operation and NullOperator preserve Java invalid-argument boundaries", () 
     });
 });
 
+test("Operation.makeName preserves Java StringBuilder text semantics", () => {
+    const javaName = Operation.makeName(new java.lang.String("^add"), [
+        Term.get("a"),
+        Term.get("b"),
+    ]);
+    const emptyName = Operation.makeName(new java.lang.String("^count"), []);
+
+    assert.equal(String(javaName), "(^add,a,b)");
+    assert.equal(String(emptyName), "(^count)");
+});
+
 test("FunctionOperator preserves Java arity and overload exception contracts", () => {
     const add = new Add();
     const execute = (add as unknown as {
