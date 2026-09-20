@@ -2757,3 +2757,49 @@ LeanSpec 15 项
 
 登记统计不替代 M1/M2、NAL 结果矩阵、责任簇证据或发布退出条件；下一道真实门是
 023 五簇收口与 024 P3-P5，随后才是 J/P 集成、正式性能和 RC。
+
+### 2026-09-20：J4 `Operator.addPrefixIfMissing` 原生前缀文本边界切片（`cd38595`）
+
+对照 canonical Java `Operator.addPrefixIfMissing(String)` 与 `Narsese.parseTerm` 的活跃调用链，确认 Java 合同只检查 `^` 前缀并返回最终文本。TypeScript 将输入收窄为项目 `JavaStringInput`，通过 `javaStringValue` 取得文本，使用原生 `startsWith` 与模板字符串生成原生 `string`；Narsese 只同步一个支持性局部类型点。
+
+- 代码提交：`cd3859574d1bd8cddc98096edb3b513ac3a762d3`；文档/报告待随后提交。
+- 直接合同：boxed/native 输入、已有/缺失前缀、原生返回形状与 `add(a,b)` 解析共 `18/18` 通过。
+- 计划器：`T1`，owner=`J4-operator-plugin`，supporting=`J2-language-parser`，`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`、`full_m1_required=false`；受影响 NAL 扩展为 `5` 个。
+- M2：串行 `npm test` `368` 项，`366` 通过、`2` 跳过、`0` 失败，耗时 `103651.5096 ms`；非增量 typecheck `0` 诊断；build `139` 个源文件；dist API 通过。
+- 受影响 NAL：`nal9.believe1.nal`、`nal4.7.nal`、`nal9.wonder1.nal`、`vision.nal`、`simpleOperationTest.nal` 共 `5/5`，0 failure；TS 单线程 cold，使用冻结 Java 标杆。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\operator-prefix-text-20260920-sentinel.jsonl`；SHA-256 `FBEDFB0B258A899691A482F2AB84157872E77BDAA3D4C85E6CA498F976756AB9`。
+- 冻结标杆仍为 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，Java source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 审计：migration scan `248` 文件，`java-string-method=234/62`、`java-collection-method=753/108`、`jree-runtime-type=1390/135`；jree summary `sourceFiles=140`、`directJreeImportFiles=75`、`newLinkedHashSet=1`、`javaObjectFiles=1`、`javaUtilFiles=25`、`javaLangFiles=72`、`javaStringFiles=47`；platform summary `185` 文件、`coreCandidateFiles=70`、`jreeImportFiles=82`。
+
+本批只能宣称 J4 前缀文本边界及其 J2 解析支持点完成局部合同、串行 M2、构建、dist API 与 5 个受影响 NAL 验证；不能宣称 J4/023 收口、jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。下一批首选审查 `Add.function` 的 Java/TS 数值文本合同；当前 TS 的 `isNumeric` 带 `.trim()`，必须先锁定其与 Apache `StringUtils.isNumeric` 的边界，再决定去掉该文件的直接 jree 导入。
+
+#### 当前从头到尾与 spec 级 ASCII 进度
+
+```text
+OpenNARS-304-ts 外部发布主线
+├─ F0 Canonical Java 基线                         [##########] 完成
+├─ F1 M1 功能等价                                 [##########] 完成（G0 有效 246/246）
+├─ F2 M2 零诊断/构建/公开入口                     [##########] 完成
+├─ F3 G0 迁移前保护回归                           [##########] 完成
+├─ 023 去 jree 原生 TypeScript 运行时             [##--------] 进行中
+│  ├─ J1 runtime compat                           [####------] 异常/观察函数已迁，桥清理待做
+│  ├─ J2 language/parser                           [####------] 字符串、解析、List/Map/Set 局部合同已验证
+│  ├─ J3 inference core                            [####------] Map/List/Set/float/数组局部合同已验证
+│  ├─ J4 operator/plugin                           [#####-----] 异常/数组/反馈/Object/执行文本/前缀边界已验证
+│  └─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待收口
+├─ 024 平台中立核心与宿主适配                     [##--------] P0-P2 完成，P3-P5 未完成
+├─ I J/P 汇合集成回归                             [----------] 待开始
+├─ O 正式性能门                                   [----------] 待开始
+└─ R RC、bundle、tag 与发布                       [----------] 待开始
+
+LeanSpec 15 项
+├─ 001/002/003/004                                [##########] complete
+├─ 005/008                                      [#####-----] in-progress
+├─ 006/007/009/013/018/019                       [##########] complete
+└─ 020/023/024                                   [#####-----] in-progress
+
+登记统计（仅导航，不代表产品完成度）
+├─ complete      10/15                           [##########----------] 67%
+├─ in-progress    5/15                           [#####---------------] 33%
+└─ checklist     89/111                          [################----] 80.2%
+```

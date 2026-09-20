@@ -671,3 +671,16 @@ Product 前缀 `"(*,"` 的 `substring(3)` 规则、operator 文本与参数顺�
 本批只完成 J4 一个无调用者的执行文本边界，不能勾选 J4 或本 spec 完成；不能宣称
 jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。下一批先审查
 `addPrefixIfMissing` 的 Java/TS 输入输出合同，再决定是否需要带一个 J2 支持文件迁移。
+
+### 2026-09-20：J4 `Operator.addPrefixIfMissing` 原生前缀文本边界切片（`cd38595`）
+
+对照 canonical Java `Operator.addPrefixIfMissing(String)` 与 `Narsese.parseTerm` 的活跃调用链，确认 Java 合同只检查 `^` 前缀并返回最终文本。TypeScript 将输入收窄为项目 `JavaStringInput`，通过 `javaStringValue` 取得文本，使用原生 `startsWith` 与模板字符串生成原生 `string`；Narsese 只同步一个支持性局部类型点。
+
+- 代码提交：`cd3859574d1bd8cddc98096edb3b513ac3a762d3`；本批仍未勾选本 spec 完成。
+- 直接合同：boxed/native 输入、已有/缺失前缀、原生返回形状与 `add(a,b)` 解析共 `18/18` 通过。
+- 计划器：`T1`，owner=`J4-operator-plugin`，supporting=`J2-language-parser`，`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`、`full_m1_required=false`；受影响 NAL 为 `5` 个。
+- M2：串行 `npm test` `368` 项，`366` 通过、`2` 跳过、`0` 失败，耗时 `103651.5096 ms`；非增量 typecheck `0` 诊断；build `139` 个源文件；dist API 通过。
+- 受影响 NAL：`nal9.believe1.nal`、`nal4.7.nal`、`nal9.wonder1.nal`、`vision.nal`、`simpleOperationTest.nal` 共 `5/5`，0 failure；证据 SHA-256 `FBEDFB0B258A899691A482F2AB84157872E77BDAA3D4C85E6CA498F976756AB9`。
+- 审计：migration scan `248` 文件，`java-string-method=234/62`、`java-collection-method=753/108`、`jree-runtime-type=1390/135`；jree summary `directJreeImportFiles=75`、`newLinkedHashSet=1`；platform summary `185` 文件、`coreCandidateFiles=70`、`jreeImportFiles=82`。
+
+本批只能宣称 J4 前缀文本边界及其 J2 解析支持点完成局部合同、串行 M2、构建、dist API 与 5 个受影响 NAL 验证；不能宣称 J4/023 收口、jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。下一批首选审查 `Add.function` 的 Java/TS 数值文本合同；当前 TS 的 `isNumeric` 带 `.trim()`，必须先锁定其与 Apache `StringUtils.isNumeric` 的边界，再决定去掉该文件的直接 jree 导入。
