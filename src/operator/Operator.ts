@@ -139,7 +139,7 @@ export abstract class Operator extends Term implements Plugin {
                     memory.executedTask(time, operation, TruthValue.fromFrequencyConfidence(1, executionConfidence, memory.narParameters));
                 }
 
-                Operator.reportExecution(operation, operationArgs, feedback as unknown as java.lang.Object, memory);
+                Operator.reportExecution(operation, operationArgs, feedback, memory);
 
                 if (feedback !== null) {
                     for (let t of feedback) {
@@ -178,7 +178,9 @@ export abstract class Operator extends Term implements Plugin {
     // * <p>
     // * @param operation The content of the operation to be executed
     // */
-    public static reportExecution(operation: Operation, args: Term[], feedback: java.lang.Object,
+    // Java original type: Object. This boundary carries arbitrary feedback and
+    // only applies the Exception -> text conversion before emitting the payload.
+    public static reportExecution(operation: Operation, args: Term[], feedback: unknown,
         memory: Memory): void {
 
         let opT: Term = operation.getPredicate();
@@ -189,8 +191,13 @@ export abstract class Operator extends Term implements Plugin {
         if (memory.emitting(OutputHandler.EXE.class)) {
             // final Operator operator = (Operator) opT;
 
-            if (isJavaException(feedback))
-                feedback = new java.lang.String(String(feedback.getClass().getSimpleName()) + ": " + String((feedback as unknown as java.lang.Throwable).getMessage()));
+            if (isJavaException(feedback)) {
+                const exception = feedback as JavaExceptionView;
+                const className = typeof exception.getClass === "function"
+                    ? javaStringValue(exception.getClass().getSimpleName())
+                    : exception.name;
+                feedback = new java.lang.String(`${className}: ${javaStringValue(exception.getMessage())}`);
+            }
 
             memory.emit(OutputHandler.EXE.class, new Operator.ExecutionResult(operation, feedback));
         }
@@ -200,9 +207,11 @@ export abstract class Operator extends Term implements Plugin {
     // it is a plain event payload; no JavaObject/reflection contract is consumed.
     public static ExecutionResult = class ExecutionResult {
         private readonly operation: Operation;
-        private readonly feedback: java.lang.Object;
+        // Java original field type: Object. No Object identity/reflection
+        // contract is consumed by this event payload.
+        private readonly feedback: unknown;
 
-        public constructor(op: Operation, feedback: java.lang.Object) {
+        public constructor(op: Operation, feedback: unknown) {
             this.operation = op;
             this.feedback = feedback;
         }
@@ -235,6 +244,12 @@ export abstract class Operator extends Term implements Plugin {
     }
 
 }
+
+type JavaExceptionView = {
+    name: string;
+    getMessage(): unknown;
+    getClass?: () => { getSimpleName(): unknown };
+};
 
 Inheritance.registerOperatorPredicate((value) => value instanceof Operator);
 

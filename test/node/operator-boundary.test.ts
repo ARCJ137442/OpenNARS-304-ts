@@ -197,6 +197,21 @@ test("Operator.call preserves null and ordered empty feedback contracts", () => 
     assert.deepEqual(received, []);
 });
 
+test("Operator.reportExecution accepts native event payloads at the Java Object boundary", () => {
+    const emitted: unknown[][] = [];
+    const probe = new FeedbackProbe(null);
+    const operation = Operation.make(probe, [Term.SELF, Term.get("target")], true);
+    const memory = {
+        emitting: () => true,
+        emit: (...args: unknown[]) => emitted.push(args),
+    } as unknown as Memory;
+
+    Operator.reportExecution(operation, operation.getArguments().term, "native-feedback", memory);
+
+    assert.equal(emitted.length, 1);
+    assert.equal((emitted[0][1] as { feedback?: unknown }).feedback, "native-feedback");
+});
+
 test("Add preserves Java argument and result contracts", () => {
     const add = new AddProbe();
 
