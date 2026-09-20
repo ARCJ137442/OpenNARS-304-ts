@@ -233,3 +233,27 @@ float 赋值点收窄；没有把 `Math.pow` 一律提前 `Math.fround`，也没
 本批只完成 J3 一个数学边界切片，不能勾选 J3/023 完成。下一步优先审查
 `introduceVariables` 的嵌套 Set/Map 合同，或把 `jree-compat.ts` 的异常桥责任拆成
 可独立验证的小簇；责任簇收口后再运行 M1-。
+
+### 2026-09-20：J3 链接数组合同切片（`6aeae85`）
+
+对照 canonical Java 的 `TermLink`、`TaskLink`，确认索引字段原始类型是 `short[]`，
+判等和哈希依赖 `Arrays.equals`、`Arrays.hashCode`；`TermLink` 还依赖
+`Objects.hash`。本批新增 `src/runtime/JavaArrays.ts`，以原生 `Int16Array` 保留
+null、长度、顺序、short 值和 Java 31 倍哈希语义；两个链接类删除直接 jree 导入，
+异常仍通过 `JavaIllegalArgumentException` 保持兼容观察面。
+
+- 代码提交：`6aeae85 refactor(023): 原生化链接数组合同`，基线为 `78dac6a`。
+- 计划器：J3 owner、J1 supporting、T1、`plan_valid=true`，不要求 M1-。
+- 直接测试：`21/21`；串行统一单测：`351` 项，`349` 通过、`2` 跳过、`0` 失败。
+- 非增量 `tsc=0`；build、dist API、迁移扫描、jree/platform 审计均通过。
+- 审计前→后：直接 jree 导入 `77→75`，`java.util` 文件 `27→25`，
+  `java.lang` 文件 `76→74`。
+- 受影响 NAL：`5/5` functional/parity；0 exception、0 marker missing、0 stall、
+  0 timeout、0 process limit、0 Java/TS diff。冻结标杆未改变，本批未运行 live Java、
+  M1- 或 #245。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\j3-link-arrays-20260920-sentinel.jsonl`。
+- 证据 SHA-256：`310FF5E595282CEF62C0FD16111804EDA68B8866DA293CD9151CB47B1E76A987`。
+
+本批只完成 J3 一个链接数组边界切片，不能勾选 J3/023 完成。下一步优先拆解
+J1 异常桥责任，保留 `instanceof`、`getMessage()` 和继承关系；J2 count Map 与
+J3 `introduceVariables` 的 Set/Map 继续按共同合同推进。

@@ -2112,3 +2112,30 @@ SHA-256：`1DC5D44E36A84ACDF36B68F9F2173D4603AC3CCAC83CB496A8BA902E6612383A`。
 `in-progress`。下一批按风险优先审查 `introduceVariables` 的嵌套 Set/Map，或拆解
 `jree-compat.ts` 的异常责任簇，保持 Java `instanceof`、`getMessage()`、null 和
 字符串规范化合同；责任簇收口后再运行 M1-。
+
+### 2026-09-20：J3 链接数组合同切片（`6aeae85`）
+
+本批对照 canonical Java 的 `TermLink`、`TaskLink`，确认两者的索引字段是 Java
+`short[]`，判等和哈希分别使用 `Arrays.equals`、`Arrays.hashCode`；`TermLink` 另
+使用 `Objects.hash`。TypeScript 以 `Int16Array` 表示同一有序数组，并新增
+`src/runtime/JavaArrays.ts` 提供项目内 `short[]` equals/hashCode 和 `Objects.hash`
+合同；两个链接类删除直接 jree 导入，非法参数仍抛 `JavaIllegalArgumentException`。
+
+- 代码提交：`6aeae85 refactor(023): 原生化链接数组合同`，基线为 `78dac6a`。
+- 计划器：`J3-inference-core` owner、`J1-runtime-compat` supporting，T1，
+  `plan_valid=true`；不要求 M1-，要求 5 个受影响 NAL。
+- 直接测试：`21/21`；串行 `npm test`：`351` 项，`349` 通过、`2` 跳过、`0` 失败。
+- 非增量 `tsc=0`；build 源文件 `138`、dist API、迁移扫描、jree/platform 审计均通过。
+- 审计前→后：直接 jree 导入文件 `77→75`，`java.util` 文件 `27→25`，
+  `java.lang` 文件 `76→74`；`newLinkedHashSet=1` 保持不变。
+- 受影响 NAL：`5/5` functional/parity；0 exception、0 marker missing、0 stall、
+  0 timeout、0 process limit、0 Java/TS diff。使用冻结 Java 标杆、TS-only、单线程、
+  cold、逐文件串行运行；`nars_transitivity` 与 `toothbrush2` 达到 `131072` 周期。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\j3-link-arrays-20260920-sentinel.jsonl`。
+- 证据 SHA-256：`310FF5E595282CEF62C0FD16111804EDA68B8866DA293CD9151CB47B1E76A987`。
+
+本批可以宣称：链接索引的 Java 数组判等/哈希边界已原生化并通过 T1；不能宣称
+J3/023 收口、jree 清零、完整 M1/#245 当前候选通过或性能等价。下一步优先拆解
+J1 异常桥（Argument/State/Assertion），同时继续规划 J2 count Map 生产者和 J3
+`introduceVariables` 嵌套 Set/Map；异常迁移必须保留 `instanceof`、`getMessage()`
+和继承观察面。
