@@ -160,11 +160,13 @@ export abstract class Operator extends Term implements Plugin {
     }
 
 
-    public static operationExecutionString(operation: Statement): java.lang.String {
-        let operator: Term = operation.getPredicate();
-        let operationArguments: Term = operation.getSubject();
-        let argList: java.lang.String = new java.lang.String(String(operationArguments.toString()).substring(3)); // skip the product prefix "(*,"
-        return new java.lang.String(javaStringValue(operator) + "(" + String(argList));
+    public static operationExecutionString(operation: Statement): string {
+        const operator: Term = operation.getPredicate();
+        const operationArguments: Term = operation.getSubject();
+        // Java source returns the final String after skipping the Product prefix
+        // "(*,"; no caller consumes Java String identity at this output boundary.
+        const argList = javaStringValue(operationArguments.toString()).substring(3);
+        return `${javaStringValue(operator)}(${argList}`;
     }
 
     public clone(): Operator {
