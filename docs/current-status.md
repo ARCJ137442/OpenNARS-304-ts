@@ -435,6 +435,45 @@ M1-，也不删除 `jree-compat.ts` 的异常兼容桥。
 └─ J5 main/host                  [##--------] exception observation; producers remain
 ```
 
+### 2026-09-20：J4 `FunctionOperator` 异常生产者切片（`3f2a050`）
+
+本批继续 J4 Operator/Plugin 责任簇。对照 canonical Java `FunctionOperator.java`，
+确认执行前置条件 `numArgs < 1` 与 `numArgs < 2` 分别抛出
+`IllegalStateException`；TypeScript 额外保留的 equals 重载参数防线在非法参数时抛出
+`IllegalArgumentException`。本批将这 3 个生产点改为项目内异常类型，保留消息、参数
+计算、数组复制、Task 生成和真值/预算计算；没有修改推理算法。
+
+- 代码提交：`3f2a0504a648ba54e59e7acb1cd4d9d18e63970c`，提交信息为
+  `refactor(023): 原生化FunctionOperator异常边界`。
+- 计划器：J4 owner、T1、`plan_valid=true`；`live_java_required=false`、
+  `m1_minus_required=false`；生产源码 1 个文件、10 行变更。
+- 直接合同：`test/node/operator-boundary.test.ts` 通过 `Add` 暴露受保护执行路径，
+  覆盖两个 arity 前置条件和非法 equals 重载，同时断言项目异常、旧 jree
+  `instanceof` 与 `getMessage()`。
+- 串行 M2：`npm test` 为 357 项，355 通过、2 跳过、0 失败；非增量 `tsc=0`；
+  build 为 139 个源文件；dist API、迁移模式、jree/platform 审计通过。
+- 受影响 NAL：复用 J4 计划列出的 4 个样本，TS-only、单线程、cold、1550 周期串行
+  为 `4/4`，0 failure，使用冻结 Java JSONL，未启动 Java。
+- 外部证据：
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\functionoperator-exception-20260920-sentinel.jsonl`；
+  SHA-256 `2BB402B3E0A387B16449AA33698076D3E8F38753B9993A6205DB6C177B5941AF`。
+- 本批后审计摘要：`directJreeImportFiles=75`、`java.langFiles=73`、
+  `java.utilFiles=25`、`javaStringFiles=47`、`newLinkedHashSet=1`、
+  `highRiskItems=41`、`semanticReviewItems=74`；`jree@1.3.0` 仍为声明依赖。
+
+本批可以宣称 `FunctionOperator` 的异常生产路径已原生化并通过局部合同、M2、构建、
+API、静态审计和 4 个受影响 NAL；不能宣称 J4 收口、023/024 完成、jree 清零、当前
+完整 M1/#245、源码覆盖率、性能等价或发布完成。下一批继续审查 `Add`/`Reflect`，
+J4 出口条件满足前不运行 M1-，所有异常生产者和捕获端收口前不删除异常兼容桥。
+
+```text
+J4 operator/plugin              [####------] Operation/Null/Function exception slices passed
+├─ Operation                    [##########] passed
+├─ NullOperator                 [##########] passed
+├─ FunctionOperator             [##########] passed
+└─ Add/Reflect/mental operators  [##--------] remaining producers
+```
+
 恢复者必须先阅读[开发者指南](developer-guide.md)和[冻结交接报告](../reports/20260827-003242.md)，再运行 LeanSpec board/search/view。不要把未完成 spec 标成 complete，也不要清理当前工作区中来源不明的历史证据或探针。
 
 ### 当前候选：`Terms` 图像/Product 局部 Set 原生化（2026-09-17）

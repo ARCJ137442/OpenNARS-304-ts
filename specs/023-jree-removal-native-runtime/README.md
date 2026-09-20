@@ -383,3 +383,20 @@ NullOperator 名称行为；没有修改推理规则。
 本批不能勾选 J4 或 023 完成。下一批继续 `FunctionOperator`、`Add`、`Reflect` 的
 异常生产者合同；J4 收口前不运行 M1-，所有生产者和捕获端收口前不删除
 `jree-compat.ts` 异常兼容桥。
+
+### 2026-09-20：J4 `FunctionOperator` 异常生产者切片（`3f2a050`）
+
+对照 canonical Java `FunctionOperator.java`，本批确认 `numArgs < 1`、`numArgs < 2`
+分别对应 `IllegalStateException`；TypeScript equals 重载防线的非法参数对应
+`IllegalArgumentException`。本批将 3 个生产点切换到项目内异常类型，保留消息、参数
+计算、数组复制、Task 生成和真值/预算计算，没有修改推理算法。
+
+- 代码提交：`3f2a0504a648ba54e59e7acb1cd4d9d18e63970c`。
+- T1 J4 计划：`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`。
+- 串行 M2：357 项，355 通过、2 跳过、0 失败；非增量 `tsc=0`；build 139 个源文件。
+- 受影响 NAL：4/4 通过；使用冻结 Java JSONL，未启动 Java。
+- 证据：项目外 `functionoperator-exception-20260920-sentinel.jsonl`，SHA-256
+  `2BB402B3E0A387B16449AA33698076D3E8F38753B9993A6205DB6C177B5941AF`。
+
+本批不能勾选 J4 或 023 完成。下一批继续 `Add`/`Reflect` 异常生产者合同；J4 收口
+前不运行 M1-，所有异常生产者和捕获端收口前不删除 `jree-compat.ts` 异常兼容桥。
