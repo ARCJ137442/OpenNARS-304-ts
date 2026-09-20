@@ -329,6 +329,7 @@ test("countTermRecursively accepts a null accumulator like Java", async () => {
 
     assert.ok(counts instanceof NativeMap);
     assert.equal(counts.size(), 3);
+    assert.equal(typeof counts.get(term), "number");
     assert.equal(counts.get(term)?.valueOf(), 1);
     assert.equal(counts.get(Term.get("subject"))?.valueOf(), 1);
     assert.equal(counts.get(Term.get("predicate"))?.valueOf(), 1);

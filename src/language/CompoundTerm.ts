@@ -605,13 +605,15 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      *            occurs
      * @return The counts of the terms
      */
-    public countTermRecursively(map: MapContract<Term, java.lang.Integer> | null): MapContract<Term, java.lang.Integer> {
+    // Java source type: Map<Term, Integer>. Integer is only a count value;
+    // preserve the Map/Term key contract while using a native int value.
+    public countTermRecursively(map: MapContract<Term, int> | null): MapContract<Term, int> {
         if (map === null) {
             // Java original type: LinkedHashMap<Term, Integer>. Keep the
             // public Map contract while using the native ordered Map here.
-            map = new NativeMap<Term, java.lang.Integer>();
+            map = new NativeMap<Term, int>();
         }
-        map.put(this, java.lang.Integer.valueOf(map.getOrDefault(this, java.lang.Integer.valueOf(0)).valueOf() + 1));
+        map.put(this, map.getOrDefault(this, 0) + 1);
         for (let term of this.term) {
             term.countTermRecursively(map);
         }

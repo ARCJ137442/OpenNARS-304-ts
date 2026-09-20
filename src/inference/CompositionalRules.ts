@@ -1344,12 +1344,12 @@ export class CompositionalRules {
         subject,
       );
     }
-    let termCounts: MapContract<Term, java.lang.Integer> =
+    let termCounts: MapContract<Term, int> =
       implicationEquivalenceOrJunction.countTermRecursively(null);
     let k: int = 0;
     for (let t of candidates) {
       if (
-        termCounts.getOrDefault(t, java.lang.Integer.valueOf(0)).valueOf() > 1
+        termCounts.getOrDefault(t, 0) > 1
       ) {
         // ok it appeared as subject or predicate but appears in the Conjunction more
         // than once

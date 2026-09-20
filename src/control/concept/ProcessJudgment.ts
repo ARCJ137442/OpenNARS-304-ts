@@ -162,7 +162,7 @@ export class ProcessJudgment {
         if (!(task.getTerm() as Implication).getPredicate().hasVar()) {
             targets.add((task.getTerm() as Implication).getPredicate());
         } else {
-            let ret: MapContract<Term, java.lang.Integer> = (task.getTerm() as Implication).getPredicate().countTermRecursively(null);
+            let ret: MapContract<Term, int> = (task.getTerm() as Implication).getPredicate().countTermRecursively(null);
             for (let r of ret.keySet()) {
                 targets.add(r);
             }

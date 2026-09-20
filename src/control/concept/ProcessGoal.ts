@@ -311,7 +311,7 @@ export class ProcessGoal {
         // knowledge
         // 1. pull up variable based preconditions from component concepts without
         // replacing them
-        let ret: MapContract<Term, java.lang.Integer> = (projectedGoal.getTerm()).countTermRecursively(null);
+        let ret: MapContract<Term, int> = (projectedGoal.getTerm()).countTermRecursively(null);
         const generalPreconditions: Task[] = [];
         for (let t of ret.keySet()) {
             let get_concept: Concept = nal.memory.concept(t); // the concept to pull preconditions from

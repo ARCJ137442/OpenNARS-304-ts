@@ -437,13 +437,16 @@ export class Term extends RuntimeObject implements AbstractTerm {
      *            occurs
      * @return The counts of the terms
      */
-    public countTermRecursively(map: MapContract<Term, java.lang.Integer> | null): MapContract<Term, java.lang.Integer> {
+    // Java source type: Map<Term, Integer>. Integer is only an unboxed count
+    // at every TypeScript call site; keep Map semantics for Term keys while
+    // storing the value as the native int alias.
+    public countTermRecursively(map: MapContract<Term, int> | null): MapContract<Term, int> {
         if (map === null) {
             // Java original type: LinkedHashMap<Term, Integer>. Keep the
             // public Map contract while using the native ordered Map here.
-            map = new NativeMap<Term, java.lang.Integer>();
+            map = new NativeMap<Term, int>();
         }
-        map.put(this, java.lang.Integer.valueOf(map.getOrDefault(this, java.lang.Integer.valueOf(0)).valueOf() + 1));
+        map.put(this, map.getOrDefault(this, 0) + 1);
         return map;
     }
 

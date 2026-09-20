@@ -348,11 +348,13 @@ export class Variable extends Term {
         return new java.lang.String(name);
     }
 
-    public countTermRecursively(map: MapContract<Term, java.lang.Integer> | null): MapContract<Term, java.lang.Integer> {
+    // Java source type: Map<Term, Integer>; variables intentionally do not
+    // increment the count, but still accept and return the native count Map.
+    public countTermRecursively(map: MapContract<Term, int> | null): MapContract<Term, int> {
         if (map === null) {
             // Java original type: LinkedHashMap<Term, Integer>. Variables
             // intentionally create the accumulator but do not count.
-            map = new NativeMap<Term, java.lang.Integer>();
+            map = new NativeMap<Term, int>();
         }
         return map; // don't count vars
     }
