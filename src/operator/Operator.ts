@@ -18,6 +18,12 @@ import type { Task } from "../entity/Task.ts";
 import type { Nar } from "../main/Nar.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
 
+// Java original type: List<Task> | null. Every current TypeScript operator
+// produces a transient ordered Task[] or null, and call() only consumes
+// emptiness and iteration. Keep this as a named operator feedback contract
+// instead of mechanically weakening domain Set/Map abstractions elsewhere.
+export type OperatorFeedback = Task[] | null;
+
 
 
 /**
@@ -75,7 +81,7 @@ export abstract class Operator extends Term implements Plugin {
      *         reportExecution
      */
     protected abstract execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> | Task[] | null;
+        time: Timable): OperatorFeedback;
 
     public call(op: Operation, memory: Memory, time: Timable): boolean;
 
@@ -110,7 +116,7 @@ export abstract class Operator extends Term implements Plugin {
                 const [operation, operationArgs, memory, time] = args as [Operation, Term[], Memory, Timable];
 
 
-                let feedback: java.util.List<Task> | Task[] | null = null;
+                let feedback: OperatorFeedback = null;
                 try {
                     feedback = this.execute(operation, operationArgs, memory, time);
                 } catch (ex) {
@@ -129,7 +135,7 @@ export abstract class Operator extends Term implements Plugin {
                 }
 
                 let executionConfidence: float = memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE;
-                if (feedback === null || (Array.isArray(feedback) ? feedback.length === 0 : feedback.isEmpty())) { // null operator case
+                if (feedback === null || feedback.length === 0) { // null operator case
                     memory.executedTask(time, operation, TruthValue.fromFrequencyConfidence(1, executionConfidence, memory.narParameters));
                 }
 

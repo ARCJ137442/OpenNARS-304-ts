@@ -25,7 +25,7 @@ import { Product } from "../../language/Product.ts";
 import { Term } from "../../language/Term.ts";
 import type { Nar } from "../../main/Nar.ts";
 import { Operation } from "../Operation.ts";
-import { Operator } from "../Operator.ts";
+import { Operator, type OperatorFeedback } from "../Operator.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import { NativeMap } from "../../runtime/NativeMap.ts";
 import { NativeSet } from "../../runtime/NativeSet.ts";
@@ -238,16 +238,16 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
     // to create a judgment with a given statement
     protected execute(operation: Operation, args: Term[], memory: Memory,
-        time: Timable): java.util.List<Task> {
+        time: Timable): OperatorFeedback {
         if (operation === null) {
-            return null as unknown as java.util.List<Task>; // not as mental operator but as fundamental principle
+            return null; // not as mental operator but as fundamental principle
         }
 
         this.anticipate(args[1], memory,
             (Number(time.time() as unknown as number) + memory.narParameters.DURATION) as unknown as long,
             null as unknown as Task, time);
 
-        return null as unknown as java.util.List<Task>;
+        return null;
     }
 
     protected anticipationOperator: boolean = true; // a parameter which tells whether NARS should know if it anticipated or not

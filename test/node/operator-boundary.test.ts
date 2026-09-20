@@ -9,6 +9,8 @@ import { Reflect as ReflectOperator } from "../../src/operator/misc/Reflect.ts";
 import { NullOperator } from "../../src/operator/NullOperator.ts";
 import { Operation } from "../../src/operator/Operation.ts";
 import { FunctionOperator } from "../../src/operator/FunctionOperator.ts";
+import { Operator, type OperatorFeedback } from "../../src/operator/Operator.ts";
+import { Parameters } from "../../src/main/Parameters.ts";
 import type { Memory } from "../../src/storage/Memory.ts";
 import {
     JavaIllegalArgumentException,
@@ -47,6 +49,16 @@ class FunctionArgumentProbe extends FunctionOperator {
 
     protected getRange(): Term {
         return Term.get("range");
+    }
+}
+
+class FeedbackProbe extends Operator {
+    public constructor(private readonly feedback: OperatorFeedback) {
+        super("^feedback-probe");
+    }
+
+    protected execute(): OperatorFeedback {
+        return this.feedback;
     }
 }
 
@@ -159,6 +171,30 @@ test("FunctionOperator copies Java parameter arguments into a fresh shallow arra
     assert.equal(result, null);
     assert.deepEqual(probe.received, [first, second]);
     assert.notEqual(probe.received, input);
+});
+
+test("Operator.call preserves null and ordered empty feedback contracts", () => {
+    const parameters = new Parameters();
+    const executed: unknown[][] = [];
+    const received: unknown[][] = [];
+    const memory = {
+        narParameters: parameters,
+        emitting: () => false,
+        executedTask: (...args: unknown[]) => executed.push(args),
+        inputTask: (...args: unknown[]) => received.push(args),
+    } as unknown as Memory;
+
+    const run = (feedback: OperatorFeedback) => {
+        const probe = new FeedbackProbe(feedback);
+        const operation = Operation.make(probe, [Term.SELF, Term.get("target")], true);
+        assert.equal(probe.call(operation, operation.getArguments().term, memory, null as never), true);
+    };
+
+    run(null);
+    run([]);
+
+    assert.equal(executed.length, 2);
+    assert.deepEqual(received, []);
 });
 
 test("Add preserves Java argument and result contracts", () => {
