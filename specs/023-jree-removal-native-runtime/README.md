@@ -651,7 +651,7 @@ Product 参数的最终文本，没有 TypeScript 调用者，也没有 Java `St
 Product 前缀 `"(*,"` 的 `substring(3)` 规则、operator 文本与参数顺序；`addPrefixIfMissing`
 仍在 Narsese 活跃解析链中，本批不混改。
 
-- 代码提交：`5c8042b173fed85762df2c4ce603f3747dfa15d4`，基线为 `ec3e014`。
+- 代码提交：`5c8042b173fed85762df2c4ce603f3747dfa15d4`，测试补强与阶段文档提交为 `6e6f873`，基线为 `ec3e014`。
 - 直接合同：`operator-boundary.test.ts` `14/14`，新增 `typeof` 与 `^add(a,b)` 断言。
 - M2：串行 `npm test` `366` 项，`364` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；
   build `139` 个源文件；dist API 通过。

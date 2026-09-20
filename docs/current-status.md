@@ -2700,7 +2700,7 @@ J4 本批链路：异常生产者/捕获 → Operation 字符串 → FunctionOpe
 Java 的 Product 前缀 `"(*,"` 跳过规则、operator 文本和参数顺序。`addPrefixIfMissing` 仍在
 Narsese 活跃解析链中，未与本批混改。
 
-- 代码提交：`5c8042b173fed85762df2c4ce603f3747dfa15d4`，基线为 `ec3e014`。
+- 代码提交：`5c8042b173fed85762df2c4ce603f3747dfa15d4`，测试补强与阶段文档提交为 `6e6f873`，基线为 `ec3e014`。
 - 直接合同：`operator-boundary.test.ts` `14/14`，新增原生返回形状与 `^add(a,b)` 输出断言。
 - M2：串行 `npm test` `366` 项，`364` 通过、`2` 跳过、`0` 失败，耗时约 `106823 ms`；
   非增量 typecheck `0` 诊断；build `139` 个源文件；dist API `cycles=2`、`cycleEnds=2`、
