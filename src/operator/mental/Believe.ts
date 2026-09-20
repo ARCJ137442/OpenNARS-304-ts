@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/mental/Believe.java
-import { java } from "jree";
 import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Operator } from "../Operator.ts";
 import { Operation } from "../Operation.ts";
@@ -14,6 +13,7 @@ import { Memory } from "../../storage/Memory.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import type { Term } from "../../language/Term.ts";
 import type { TruthValue } from "../../entity/TruthValue.ts";
+import { JavaNullPointerException } from "../../runtime/JavaExceptions.ts";
 
 
 
@@ -46,7 +46,7 @@ export class Believe extends Operator {
             truth,
             new Stamp(time, memory));
         if (truth === null) {
-            throw new java.lang.NullPointerException();
+            throw new JavaNullPointerException();
         }
 
         let quality: float = BudgetFunctions.truthToQuality(truth);

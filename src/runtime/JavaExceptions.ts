@@ -77,6 +77,9 @@ export class JavaNumberFormatException extends JavaIllegalArgumentException {}
 /** Java original type: java.lang.IllegalStateException. */
 export class JavaIllegalStateException extends JavaRuntimeException {}
 
+/** Java original type: java.lang.NullPointerException. */
+export class JavaNullPointerException extends JavaRuntimeException {}
+
 /** Java original type: java.lang.IllegalAccessError. */
 export class JavaIllegalAccessError extends JavaError {}
 

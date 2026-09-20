@@ -879,6 +879,37 @@ test("Believe emits native array feedback after the remaining operator migration
     }
 });
 
+test("Believe keeps Java's null truth exception boundary", async () => {
+    const { Believe } = await import("../../src/operator/mental/Believe.ts");
+    const { JavaNullPointerException } = await import("../../src/runtime/JavaExceptions.ts");
+    const { Nar } = await import("../../src/main/Nar.ts");
+    const { Operation } = await import("../../src/operator/Operation.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+
+    const nar = new Nar();
+    try {
+        const believe = new Believe();
+        const operation = Operation.make(believe, [
+            Term.SELF,
+            Term.get("invalid-belief-target"),
+            Term.get("not-a-truth-word"),
+        ], true);
+
+        assert.throws(() => (believe as any).execute(
+            operation,
+            operation.getArguments().term,
+            nar.memory,
+            nar,
+        ), (error: unknown) => {
+            assert.ok(error instanceof JavaNullPointerException);
+            assert.equal((error as Error).message, "");
+            return true;
+        });
+    } finally {
+        nar.stop();
+    }
+});
+
 test("Abbreviation emits native array feedback for empty and single-task results", async () => {
     const { Abbreviation } = await import("../../src/plugin/mental/Abbreviation.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
