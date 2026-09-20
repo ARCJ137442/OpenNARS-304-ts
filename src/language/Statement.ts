@@ -1,5 +1,4 @@
 //! Java source: opennars/language/Statement.java
-import { java, S } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
@@ -7,10 +6,39 @@ import { Symbols } from "../io/Symbols.ts";
 import { Terms } from "./Terms.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { javaStringValue } from "../runtime/jree-compat.ts";
 
 type StatementFactory = (subject: Term, predicate: Term, order: int) => Statement;
 type StatementRuntime = Record<string, any>;
 type NativeOperator = Symbols.NativeOperator;
+type StatementName = ReturnType<CompoundTerm["name"]>;
+
+const javaArrayToString = (values: unknown[]): string =>
+    `[${values.map(value => value === null || value === undefined ? "null" : javaStringValue(value)).join(", ")}]`;
+
+/** Java original type: Statement.EnumStatementSide. */
+class EnumStatementSide {
+    public static readonly SUBJECT = new EnumStatementSide("SUBJECT", 0);
+    public static readonly PREDICATE = new EnumStatementSide("PREDICATE", 1);
+
+    private constructor(
+        private readonly enumName: string,
+        private readonly enumOrdinal: int,
+    ) {}
+
+    public name(): string {
+        return this.enumName;
+    }
+
+    public ordinal(): int {
+        return this.enumOrdinal;
+    }
+
+    public toString(): string {
+        return this.enumName;
+    }
+}
 
 
 
@@ -58,7 +86,7 @@ export abstract class Statement extends CompoundTerm {
 
     private static getRuntime(): StatementRuntime {
         if (Statement.runtime === null) {
-            throw new java.lang.IllegalStateException("Statement runtime classes are not registered");
+            throw new JavaIllegalStateException("Statement runtime classes are not registered");
         }
         return Statement.runtime;
     }
@@ -79,16 +107,16 @@ export abstract class Statement extends CompoundTerm {
 
     protected init(t: Term[]): void {
         if (t.length !== 2)
-            throw new java.lang.IllegalStateException("Requires 2 terms: " + java.util.Arrays.toString(t));
+            throw new JavaIllegalStateException("Requires 2 terms: " + javaArrayToString(t));
         if (t[0] === null)
-            throw new java.lang.IllegalStateException("Null subject: " + this);
+            throw new JavaIllegalStateException("Null subject: " + this);
         if (t[1] === null)
-            throw new java.lang.IllegalStateException("Null predicate: " + this);
+            throw new JavaIllegalStateException("Null predicate: " + this);
         if (Debug.DETAILED) {
                     if (this.isCommutative()) {
                 if (t[0].compareTo(t[1]) === 1) {
-                    throw new java.lang.IllegalStateException(
-                        "Commutative term requires natural order of subject,predicate: " + java.util.Arrays.toString(t));
+                    throw new JavaIllegalStateException(
+                        "Commutative term requires natural order of subject,predicate: " + javaArrayToString(t));
                 }
             }
         }
@@ -203,7 +231,7 @@ export abstract class Statement extends CompoundTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -237,16 +265,15 @@ export abstract class Statement extends CompoundTerm {
      *
      * @return the nameStr of the term
      */
-    protected makeName(): java.lang.CharSequence {
+    protected makeName(): StatementName {
         return Statement.makeStatementName(this.getSubject(), this.operator(), this.getPredicate());
     }
 
     protected static makeStatementName(subject: Term, relation: NativeOperator,
-        predicate: Term): java.lang.CharSequence {
-        const subjectName = String(subject.name());
-        const predicateName = String(predicate.name());
-        return new java.lang.String(
-            `${Symbols.NativeOperator.STATEMENT_OPENER.ch}${subjectName} ${relation.toString()} ${predicateName}${Symbols.NativeOperator.STATEMENT_CLOSER.ch}`);
+        predicate: Term): StatementName {
+        const subjectName = javaStringValue(subject.name());
+        const predicateName = javaStringValue(predicate.name());
+        return `${Symbols.NativeOperator.STATEMENT_OPENER.ch}${subjectName} ${relation.toString()} ${predicateName}${Symbols.NativeOperator.STATEMENT_CLOSER.ch}` as unknown as StatementName;
     }
 
     public static invalidStatement(subject: Term, predicate: Term): boolean;
@@ -305,7 +332,7 @@ export abstract class Statement extends CompoundTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -385,12 +412,7 @@ export abstract class Statement extends CompoundTerm {
         return side === Statement.EnumStatementSide.SUBJECT ? Statement.EnumStatementSide.PREDICATE : Statement.EnumStatementSide.SUBJECT;
     }
 
-    public static EnumStatementSide = class EnumStatementSide extends java.lang.Enum<EnumStatementSide> {
-        public static readonly SUBJECT: EnumStatementSide = new class extends EnumStatementSide {
-        }(S`SUBJECT`, 0);
-        public static readonly PREDICATE: EnumStatementSide = new class extends EnumStatementSide {
-        }(S`PREDICATE`, 1);
-    };
+    public static EnumStatementSide = EnumStatementSide;
 
 
     public abstract clone(): Statement;
@@ -398,7 +420,7 @@ export abstract class Statement extends CompoundTerm {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Statement {
-    export type EnumStatementSide = InstanceType<typeof Statement.EnumStatementSide>;
+    export type EnumStatementSide = typeof Statement.EnumStatementSide.SUBJECT;
 }
 
 

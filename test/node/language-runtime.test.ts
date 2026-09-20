@@ -2,6 +2,30 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { java } from "jree";
 
+test("Statement keeps Java side-enum and native exception boundaries", async () => {
+    const { Statement } = await import("../../src/language/Statement.ts");
+    const { Inheritance } = await import("../../src/language/Inheritance.ts");
+    const { Term } = await import("../../src/language/Term.ts");
+    const { JavaIllegalArgumentException } = await import("../../src/runtime/JavaExceptions.ts");
+
+    const subject = Statement.EnumStatementSide.SUBJECT;
+    const predicate = Statement.EnumStatementSide.PREDICATE;
+    assert.equal(subject.name(), "SUBJECT");
+    assert.equal(subject.ordinal(), 0);
+    assert.equal(String(predicate), "PREDICATE");
+    assert.equal(Statement.retOppositeSide(subject), predicate);
+
+    const statement = Inheritance.make(Term.get("statement-subject"), Term.get("statement-predicate"));
+    assert.equal(String(statement.name()), "<statement-subject --> statement-predicate>");
+
+    const make = Statement.make as unknown as (...args: unknown[]) => unknown;
+    assert.throws(
+        () => make(),
+        (error: unknown) => error instanceof JavaIllegalArgumentException
+            && error.message === "Invalid number of arguments",
+    );
+});
+
 test("Implication.clone preserves the source term and runtime type", async () => {
     const { Implication } = await import("../../src/language/Implication.ts");
     const { Term } = await import("../../src/language/Term.ts");
