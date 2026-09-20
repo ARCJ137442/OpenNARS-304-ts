@@ -35,6 +35,15 @@ export const Float32Math = {
         return narrow(Math.pow(narrow(base), exponent));
     },
 
+    /**
+     * Java Math.pow receives a float operand as a widened double and returns a
+     * double. Keep the binary32 input boundary, but do not round the result
+     * until the translated caller stores it in a Java float variable.
+     */
+    powDouble(base: number, exponent: number): number {
+        return Math.pow(narrow(base), exponent);
+    },
+
     sqrt(value: number): Float32 {
         return narrow(Math.sqrt(narrow(value)));
     },

@@ -1388,7 +1388,9 @@ export class CompositionalRules {
     for (let t of shuffledVariables) {
       selected.add(t);
       if (
-        java.lang.Math.pow(2.0, i) >
+        // Java Math.pow(double, double) has no binary32 result boundary here;
+        // native Math.pow preserves the same double comparison semantics.
+        Math.pow(2.0, i) >
         nal.narParameters.VARIABLE_INTRODUCTION_COMBINATIONS_MAX
       ) {
         break;

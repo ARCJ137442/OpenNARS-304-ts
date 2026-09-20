@@ -31,6 +31,15 @@ test("Float32Math.pow matches Java float storage after Math.pow", () => {
     assert.equal(Float32Math.pow(0.9, 2), 0.809999942779541);
 });
 
+test("Float32Math.powDouble preserves Java Math.pow double result", () => {
+    const base = Math.fround(0.123456789);
+    const exponent = 1.234567;
+    const javaDoubleResult = Math.pow(base, exponent);
+
+    assert.equal(Float32Math.powDouble(0.123456789, exponent), javaDoubleResult);
+    assert.notEqual(Float32Math.powDouble(0.123456789, exponent), Math.fround(javaDoubleResult));
+});
+
 test("Float32Math.truthToQuality preserves Java float complement boundaries", () => {
     const cases = [
         0.3672657907009125,

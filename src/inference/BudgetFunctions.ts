@@ -145,7 +145,9 @@ export class BudgetFunctions extends UtilityFunctions {
      */
     public static distributeAmongLinks(b: BudgetValue, n: int, narParameters: Parameters): BudgetValue {
         // Java narrows the division result at the float local-variable write.
-        let priority: float = Math.fround(b.getPriority() / java.lang.Math.sqrt(n)) as float;
+        // Java Math.sqrt returns double; the assignment to the float local is
+        // the only narrowing point in this expression.
+        let priority: float = Float32Math.from(b.getPriority() / Math.sqrt(n)) as float;
         return new BudgetValue(priority, b.getDurability(), b.getQuality(), narParameters);
     }
 
@@ -201,7 +203,9 @@ export class BudgetFunctions extends UtilityFunctions {
         let quality: float = Math.fround(budget.getQuality() * javaRelativeThreshold) as float; // re-scaled quality
         let p: float = Math.fround(budget.getPriority() - quality) as float; // priority above quality
         if (p > 0) {
-            quality = Math.fround(quality + p * java.lang.Math.pow(
+            // Java widens the float base for Math.pow and narrows only when
+            // quality is stored back into its float local.
+            quality = Float32Math.from(quality + p * Float32Math.powDouble(
                 budget.getDurability(),
                 1.0 / Float32Math.multiply(javaForgetCycles, p),
             )) as float;
