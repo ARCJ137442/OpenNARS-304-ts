@@ -474,6 +474,45 @@ J4 operator/plugin              [####------] Operation/Null/Function exception s
 └─ Add/Reflect/mental operators  [##--------] remaining producers
 ```
 
+### 2026-09-20：J4 `Add` 异常生产者切片（`a91d928`）
+
+本批继续 J4 Operator/Plugin 责任簇。对照 canonical Java `Add.java`，确认参数数目
+错误对应 `IllegalStateException`，第一、第二参数非整数分别对应
+`IllegalArgumentException`。本批只替换三个异常生产点，保留 Java 数字文本判断、
+`Integer.parseInt`、整数相加和结果 Term，不改变推理算法。
+
+- 代码提交：`a91d92825200af1bae759eb15feff22fcf818578`，提交信息为
+  `refactor(023): 原生化Add异常边界`。
+- 直接合同：`operator-boundary.test.ts` 新增 `AddProbe`，覆盖错误参数数量、两个非法
+  整数参数、旧 jree `instanceof`、消息和 `2 + 3 = 5` 正常结果。
+- 串行 M2：`npm test` 为 358 项，356 通过、2 跳过、0 失败；非增量 `tsc=0`；
+  build 为 139 个源文件；dist API 通过。
+- 计划器：J4/T1、`plan_valid=true`、`live_java_required=false`、
+  `m1_minus_required=false`、`affected_nal_required=true`。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal`，TS-only、单线程、cold、1550 周期串行为 `4/4`；
+  使用冻结 Java JSONL，未启动 Java。
+- 外部证据：
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\add-exception-20260920-sentinel.jsonl`；
+  SHA-256 `2CD49FC9C1BE20774F8396F449C91D45C4D2D187973F485D4D15144786D83F1A`。
+- 本批审计摘要：`directJreeImportFiles=75`、`java.langFiles=73`、
+  `java.utilFiles=25`、`javaStringFiles=47`、`newLinkedHashSet=1`、
+  `highRiskItems=41`、`semanticReviewItems=74`；`jree@1.3.0` 仍为声明依赖。
+
+本批可以宣称 `Add` 的异常生产路径已原生化并通过直接合同、M2、构建、API、静态审计
+和 4 个受影响 NAL；不能宣称 J4 收口、023/024 完成、jree 清零、当前完整 M1/#245、
+源码覆盖率、性能等价或发布完成。下一批继续 `Reflect`，再处理 `Anticipate`/`Operator`
+剩余异常生产点；J4 出口条件满足前不运行 M1-，也不删除异常兼容桥。
+
+```text
+J4 operator/plugin              [######----] Operation/Null/Function/Add exception slices passed
+├─ Operation                    [##########] passed
+├─ NullOperator                 [##########] passed
+├─ FunctionOperator             [##########] passed
+├─ Add                          [##########] passed
+└─ Reflect/Anticipate/Operator  [##--------] remaining producers
+```
+
 恢复者必须先阅读[开发者指南](developer-guide.md)和[冻结交接报告](../reports/20260827-003242.md)，再运行 LeanSpec board/search/view。不要把未完成 spec 标成 complete，也不要清理当前工作区中来源不明的历史证据或探针。
 
 ### 当前候选：`Terms` 图像/Product 局部 Set 原生化（2026-09-17）

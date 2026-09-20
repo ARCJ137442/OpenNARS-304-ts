@@ -400,3 +400,20 @@ NullOperator 名称行为；没有修改推理规则。
 
 本批不能勾选 J4 或 023 完成。下一批继续 `Add`/`Reflect` 异常生产者合同；J4 收口
 前不运行 M1-，所有异常生产者和捕获端收口前不删除 `jree-compat.ts` 异常兼容桥。
+
+### 2026-09-20：J4 `Add` 异常生产者切片（`a91d928`）
+
+对照 canonical Java `Add.java`，本批确认参数数目错误对应 `IllegalStateException`，
+两个非法整数参数分别对应 `IllegalArgumentException`。本批将三个生产点切换到项目内
+异常类型，保留 Java 数字判断、整数解析、整数相加、结果 Term 和消息文本。
+
+- 代码提交：`a91d92825200af1bae759eb15feff22fcf818578`。
+- T1 J4 计划：`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`。
+- 直接合同：覆盖参数数量、两个非法整数参数、异常消息、旧 jree `instanceof` 和正常结果。
+- 串行 M2：358 项，356 通过、2 跳过、0 失败；非增量 `tsc=0`；build 139 个源文件。
+- 受影响 NAL：4/4 通过；使用冻结 Java JSONL，未启动 Java。
+- 证据：项目外 `add-exception-20260920-sentinel.jsonl`，SHA-256
+  `2CD49FC9C1BE20774F8396F449C91D45C4D2D187973F485D4D15144786D83F1A`。
+
+本批不能勾选 J4 或 023 完成。下一批继续 `Reflect`，再处理 `Anticipate`/`Operator`；
+J4 收口前不运行 M1-，异常生产者和捕获端收口前不删除 `jree-compat.ts` 异常兼容桥。
