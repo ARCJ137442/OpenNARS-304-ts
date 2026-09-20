@@ -8,8 +8,7 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
-import { isJavaThrowable } from "../../runtime/jree-compat.ts";
-import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException } from "../../runtime/jree-compat.ts";
 
 const IN = OutputHandler.IN;
 const OUT = OutputHandler.OUT;
@@ -250,8 +249,8 @@ export class TextOutputHandler extends OutputHandler {
             buffer.append(channel.getSimpleName()).append(": ");
 
         if (channel === ERR.class) {
-            if (isJavaThrowable(signal)) {
-                const e: java.lang.Throwable = signal as unknown as java.lang.Throwable;
+            if (signal instanceof java.lang.Throwable) {
+                const e: java.lang.Throwable = signal as java.lang.Throwable;
                 buffer.append(e.toString());
                 if (showStackTrace) {
                     buffer.append(" ").append(java.util.Arrays.asList(e.getStackTrace()));
@@ -296,8 +295,8 @@ export class TextOutputHandler extends OutputHandler {
         showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String {
         buffer.setLength(0);
 
-        if (isJavaThrowable(signal)) {
-            const error = signal as unknown as java.lang.Throwable;
+        if (signal instanceof java.lang.Throwable) {
+            const error = signal as java.lang.Throwable;
             buffer.append(error.toString()).append(" ")
                 .append(java.util.Arrays.asList(error.getStackTrace()));
         } else if (signal instanceof Task) {

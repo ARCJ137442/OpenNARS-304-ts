@@ -11,7 +11,7 @@ import { CompoundTerm } from "../language/CompoundTerm.ts";
 import { Term } from "../language/Term.ts";
 import { Task } from "../entity/Task.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
-import { isJavaException, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
+import { JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 type DatagramPacketCompat = { getLength(): number };
@@ -106,7 +106,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
                             }
                         }
                     } catch (ex) {
-                        if (isJavaException(ex)) { // log any type of exception, also parsing exceptions, because it shouldn't
+                        if (ex instanceof java.lang.Exception) { // log any type of exception, also parsing exceptions, because it shouldn't
                             // crash on wrong parses or temporary network issues
                             JavaSystemLoggerCompat.getLogger(NarNode.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                         } else {
@@ -131,7 +131,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
             try {
                 this.sendTask(t);
             } catch (ex) {
-                if (isJavaException(ex)) {
+                if (ex instanceof java.lang.Exception) {
                     JavaSystemLoggerCompat.getLogger(NarNode.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                 } else {
                     throw ex;
@@ -342,7 +342,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
                     }
                 // not an object NarNode could digest
             } catch (ex) {
-                if (isJavaException(ex)) {
+                if (ex instanceof java.lang.Exception) {
                     // object wasn't retrieved, maybe it wasn't one
                 } else {
                     throw ex;

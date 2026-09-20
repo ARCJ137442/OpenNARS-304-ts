@@ -12,7 +12,7 @@ import {
     JavaThrowable,
 } from "../../src/runtime/JavaExceptions.ts";
 import { java } from "jree";
-import { isJavaException, isJavaThrowable } from "../../src/runtime/jree-compat.ts";
+import "../../src/runtime/jree-compat.ts";
 
 test("native Java throwable hierarchy preserves type and message contracts", () => {
     const cause = new Error("cause");
@@ -38,8 +38,6 @@ test("native Java exception layers retain Java-shaped subclassing", () => {
     assert.ok(error instanceof java.lang.Exception);
     assert.ok(error instanceof java.lang.RuntimeException);
     assert.ok(error instanceof java.lang.IllegalArgumentException);
-    assert.ok(isJavaException(error));
-    assert.ok(isJavaThrowable(error));
 });
 
 test("native Java throwable supports Java-style cause and message updates", () => {
@@ -61,8 +59,6 @@ test("native Java exception compatibility preserves old jree instanceof checks",
     assert.ok(state instanceof java.lang.RuntimeException);
     assert.ok(missing instanceof java.lang.Exception);
     assert.ok(missing instanceof java.lang.Throwable);
-    assert.ok(isJavaException(state));
-    assert.ok(isJavaThrowable(missing));
     assert.equal(state.getMessage(), "state");
     assert.equal(missing.getMessage(), "missing");
 });

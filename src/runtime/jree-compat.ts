@@ -178,19 +178,6 @@ registerJreeInstanceof(java.lang.IllegalArgumentException,
 registerJreeInstanceof(java.lang.IllegalStateException,
     value => value instanceof JavaIllegalStateException);
 
-/**
- * Temporary exception observation boundary.
- *
- * Native exceptions are the target contract.  The legacy branch is retained
- * until every translated producer has left jree, because jree can still
- * create exceptions from untouched compatibility APIs.
- */
-export const isJavaThrowable = (value: unknown): value is JavaThrowable =>
-    value instanceof JavaThrowable || value instanceof java.lang.Throwable;
-
-export const isJavaException = (value: unknown): value is JavaException =>
-    value instanceof JavaException || value instanceof java.lang.Exception;
-
 /** jree declares primitive char as a number, while translated Narsese uses string code units at runtime. */
 export type JavaChar = string;
 

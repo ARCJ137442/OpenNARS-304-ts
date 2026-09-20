@@ -31,8 +31,7 @@ import { Stamp } from "../entity/Stamp.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeReadOnlyList } from "../runtime/NativeList.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
-import { isJavaException, JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
-import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { Task } from "../entity/Task.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
@@ -841,13 +840,13 @@ export class Nar extends SensoryChannel implements Reasoner {
             this.cycleCounter++;
             /* } */
         } catch (e) {
-            if (isJavaException(e)) {
+            if (e instanceof java.lang.Exception) {
                 if (Debug.SHOW_REASONING_ERRORS) {
                     this.emit(OutputHandler.ERR.class, e);
                 }
                 e.printStackTrace();
                 if (!Debug.REASONING_ERRORS_CONTINUE) {
-                    throw new JavaIllegalStateException("Reasoning error:\n", e);
+                    throw new java.lang.IllegalStateException("Reasoning error:\n", e);
                 }
             } else {
                 throw e;
