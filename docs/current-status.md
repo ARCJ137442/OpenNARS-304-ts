@@ -2164,3 +2164,47 @@ J1 异常桥（Argument/State/Assertion），同时继续规划 J2 count Map 生
 本批可以宣称 J1 的 `AssertionError` 原生合同已通过 M2 和风险哨兵；不能宣称
 J1 责任簇、023、jree 清零、当前完整 M1/#245 或性能验收完成。下一步应迁移
 `IllegalArgument/StateException` 的抛出端与 `instanceof` 捕获端，避免异常观察面分叉。
+
+### 2026-09-20：J1 Java 异常族原生化（`caf6516`）
+
+本批承接 `b640677` 的断言错误基座，继续处理 `IllegalArgumentException`、
+`IllegalStateException`、`IllegalAccessError` 和 jree 缺失的 checked-exception 类。
+这些类型现在由无 jree 运行时导入的 `JavaExceptions.ts` 承载；`jree-compat.ts` 只保留
+过渡导出与 `Symbol.hasInstance` 注册，以确保既有 `java.lang.Throwable/Error/
+Exception/RuntimeException` 捕获面在逐步迁移期间不回退。`printStackTrace` 也有项目内
+的 `println` 边界，默认输出仍为宿主控制台。
+
+- 代码提交：`caf6516 refactor(023): 原生化Java异常合同`，基线为 `4481d7e`。
+- 计划器：J1-runtime-compat、T1、`plan_valid=true`；不要求 live Java、M1- 或 #245。
+- 串行 `npm test`：`355` 项，`353` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`。
+- build：`139` 个源文件；dist API、迁移扫描、jree 审计和平台审计均通过。
+- 当前 jree 审计：`directJreeImportFiles=75`、`newLinkedHashSet=1`、
+  `javaObjectFiles=1`、`javaUtilFiles=25`、`javaLangFiles=74`。异常仍通过兼容桥再导出，
+  因而不能把本批解释为 jree 依赖清零。
+- 受影响 NAL：`nal1.0.nal`、`nal6.17.nal`、`toothbrush.nal`，冻结 Java 标杆的
+  TS-only、单线程、cold、1550 周期串行验证为 `3/3` functional/parity；0 exception、
+  0 marker missing、0 stall、0 timeout、0 process limit、0 Java/TS diff。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\j1-exception-family-20260920-sentinel.jsonl`；
+  SHA-256 `DC9D4F95CD6585DC2A10CC6EE93F535B11856BD5C6891D1A159589314DE1C4FF`。
+
+本批可以宣称 J1 异常族原生实现与旧 jree `instanceof` 观察面在 M2 和 3 个受影响
+NAL 上保持一致；不能宣称 J1 收口、023/024 完成、jree 已删除、完整 M1/#245 当前候选
+已重跑、性能等价或正式发布。下一批先迁移直接异常捕获端，再按责任簇收口；不要先删
+`Symbol.hasInstance` 过渡桥。
+
+#### 当前阶段树（导航，不是完成率）
+
+```text
+OpenNARS-304-ts
+├─ F0/F1/F2/F3 基线与冻结回归       [##########] 完成
+├─ 023 去 jree 原生运行时            [##--------] 进行中
+│  ├─ J1 runtime compat              [####------] 异常族已迁，捕获面未收口
+│  ├─ J2 language/parser              [####------] 多个 List/Map/Set 合同已验证
+│  ├─ J3 inference core               [####------] 多个 Map/List/Set/float/数组合同已验证
+│  ├─ J4 operator/plugin              [##--------] 局部数组/字符串/插件边界已验证
+│  └─ J5 main/host                   [#---------] 待推进
+├─ 024 平台中立核心与宿主适配         [##--------] P0-P2 完成，P3-P5 未完成
+├─ 集成回归                           [----------] 待开始
+├─ 性能正式门                         [----------] 待开始
+└─ RC/bundle/tag                      [----------] 待开始
+```

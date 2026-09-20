@@ -279,3 +279,44 @@ message、cause、`instanceof Error` 和异常名称；没有迁移 `IllegalArgu
 
 本批只完成 J1 的一个异常合同切片，不能勾选 J1、023 或 jree 清零。下一批继续
 处理 `IllegalArgument/StateException`，要求抛出、捕获、消息和 cause 一起迁移。
+
+### 2026-09-20：J1 Java 异常族原生化（`caf6516`）
+
+本批把 J1 异常族从 jree 子类迁移到 `src/runtime/JavaExceptions.ts`：
+`JavaIllegalArgumentException`、`JavaIllegalStateException`、`JavaIllegalAccessError`、
+以及 jree 缺失的 checked-exception 类型均继承项目内的 Java 风格异常层级。
+`JavaThrowable.printStackTrace` 支持显式 `println` 输出边界。为避免直接迁移生产者后使
+旧捕获端失效，`src/runtime/jree-compat.ts` 暂时通过 `Symbol.hasInstance` 保留
+`java.lang.Throwable/Error/Exception/RuntimeException/IllegalArgumentException/
+IllegalStateException` 的观察面；这是过渡适配，不是最终核心依赖。
+
+- 代码提交：`caf6516 refactor(023): 原生化Java异常合同`，基线 `4481d7e`。
+- 计划器：J1-runtime-compat、T1、`plan_valid=true`；`live_java_required=false`、
+  `m1_minus_required=false`、`full_m1_required=false`。
+- 串行 M2：`npm test` 为 `355` 项，`353` 通过、`2` 跳过、`0` 失败；非增量
+  `tsc=0`；build 源文件 `139`；dist API、迁移扫描、jree/platform 审计均通过。
+- 受影响 NAL：`nal1.0.nal`、`nal6.17.nal`、`toothbrush.nal`，冻结 Java 标杆、
+  TS-only、单线程、cold、1550 周期串行为 `3/3` functional/parity；0 exception、
+  0 marker missing、0 stall、0 timeout、0 process limit、0 Java/TS diff。
+- 项目外证据：
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\j1-exception-family-20260920-sentinel.jsonl`；
+  SHA-256 `DC9D4F95CD6585DC2A10CC6EE93F535B11856BD5C6891D1A159589314DE1C4FF`。
+- 当前生产 jree 审计为 `directJreeImportFiles=75`、`newLinkedHashSet=1`、
+  `javaObjectFiles=1`、`javaUtilFiles=25`、`javaLangFiles=74`；异常仍经桥接导出，
+  不得把本批写成 jree 清零。
+
+本批只完成 J1 异常实现层和兼容观察面的验证，不勾选 J1、023 或发布门。下一批应先
+审查并迁移 `Shell`、`Operator`、`Nar`、`NarNode`、`TextOutputHandler` 的直接异常
+捕获端；在这些捕获端有直接回归以前，不得删除 `Symbol.hasInstance` 适配。随后再按
+Java 原始合同推进 J3 `introduceVariables` 的嵌套 Set/Map。
+
+#### 023 责任簇导航
+
+```text
+023 jree 原生 TypeScript 运行时     [##--------] 进行中
+├─ J1 runtime compat                [####------] 异常族已迁，捕获端/桥接清理待做
+├─ J2 language/parser                [####------] List/Map/Set 多个局部合同已验证
+├─ J3 inference core                 [####------] Map/List/Set/float/short[] 已验证
+├─ J4 operator/plugin                [##--------] 局部反馈/字符串/插件边界已验证
+└─ J5 main/host                     [#---------] 入口宿主边界待推进
+```
