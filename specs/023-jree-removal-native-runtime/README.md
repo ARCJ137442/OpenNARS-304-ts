@@ -490,3 +490,36 @@ J4 收口前不运行 M1-，异常生产者和捕获端收口前不删除 `jree-
 
 本批不能勾选 J4 或 023 完成。下一批继续 `Anticipate`/`Operator`；J4 收口前不运行
 M1-，异常生产者和捕获端收口前不删除 `jree-compat.ts` 异常兼容桥。
+
+### 2026-09-20：J4 `Operation.makeName` 字符串边界切片（`20b519a`）
+
+对照 canonical Java `Operation.makeName`，确认其 `StringBuilder` 只承担固定顺序的
+`append` 与最终 `toString()`：开括号、operator 文本、逗号分隔的 `Term.name()`、闭括号。
+没有容量复用、插入/删除、共享可变 builder 或中途暴露 builder 的语义，因此本批将局部
+实现替换为原生字符串拼接；公开返回类型仍保留 `java.lang.CharSequence`，并通过
+`javaStringValue` 处理 Java `String` 与原生字符串边界。没有改变 Operation 名称文本、
+推理规则或公共调用合同。
+
+- 代码提交：`20b519ab15164ccb864664d1c217dc4d587deb45`，基线为 `6ecac1d`。
+- 直接回归：Java `String` operator、多参数顺序、空参数共 `2` 个测试断言通过。
+- 串行 M2：`npm test` 为 `362` 项，`360` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；
+  build `139` 个源文件；dist API 通过。
+- 计划器：J4 owner、T1、`plan_valid=true`；不要求 live Java、M1- 或完整 M1。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal`，冻结 Java 标杆 TS-only 对照 `4/4` functional/parity；0
+  exception、0 marker missing、0 stall、0 timeout、0 process limit、0 not-run、0 Java/TS diff。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\operation-makename-20260920-sentinel.jsonl`；
+  SHA-256 `AE5A4CD9119C9CA264998056DE4B53D136F9D95229A7A8EFF86BAA78F2E5ED3A`。
+- 冻结 Java 标杆 JSONL SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；
+  Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；artifact SHA-256
+  `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 审计：migration scan `248` 文件，`java-string-method=235/63`、
+  `java-collection-method=744/108`、`jree-runtime-type=1409/135`；jree direct import files
+  `75`、`newLinkedHashSet=1`、`javaObjectFiles=1`、`javaUtilFiles=25`、`javaLangFiles=72`、
+  `javaStringFiles=47`。direct jree 数未下降是预期结果：`Operation` 仍保留 Java 类型与异常边界。
+
+本批只完成 J4 一个低风险字符串实现切片，不能勾选 J4 或 023 完成，也不能宣称 jree
+清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。下一批优先审查
+J4 `FunctionOperator` 的 `System.arraycopy`/数组边界与 `Operator` 公共 CharSequence/List
+边界，随后处理 J3 `introduceVariables` 嵌套 Set/Map；责任簇收口前继续使用冻结 Java
+标杆，不运行 M1-。
