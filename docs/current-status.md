@@ -391,6 +391,50 @@
        用户批准后 tag/release
 ```
 
+### 2026-09-20：J4 `Operation`/`NullOperator` 异常生产者切片（`9c9a71d`）
+
+本批继续 023 的 J4 Operator/Plugin 责任簇。对照 canonical Java
+`Operation.java` 与 `NullOperator.java`，确认 Java 只暴露固定的构造器/工厂签名；
+TypeScript 为保留运行时 overload 防线而保留非法参数分支，原先这些分支直接构造
+`java.lang.IllegalArgumentException`。本批只把 3 个非法参数路径切换为项目内
+`JavaIllegalArgumentException`，保留 `Invalid number of arguments` 消息、合法重载、
+Operation 运行时类型和 NullOperator 的 `^sample`/自定义名称行为；没有修改推理规则。
+
+- 代码提交：`9c9a71d69c3c4d4edb4e2175b4c9c1071912f1e3`，提交信息为
+  `refactor(023): 原生化Operation与NullOperator异常边界`。
+- 计划器：J4 owner、T1、`plan_valid=true`；`live_java_required=false`、
+  `m1_minus_required=false`；生产源码 2 个文件、12 行变更。
+- 直接合同：`test/node/operator-boundary.test.ts` 新增 Operation 工厂与
+  NullOperator 非法参数测试，同时断言项目异常、旧 jree `instanceof` 和 `getMessage()`。
+- 串行 M2：`npm test` 为 356 项，354 通过、2 跳过、0 失败；非增量 `tsc=0`；
+  build 为 139 个源文件；dist API 通过。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal`，TS-only、单线程、cold、1550 周期串行为 `4/4`；
+  0 failure，使用冻结 Java JSONL，未启动 Java。
+- 外部证据：
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\operation-nulloperator-exception-20260920-sentinel.jsonl`；
+  SHA-256 `8B5804243A8129A6F3BD0459989CBA91BC32C79B2251497E075D02B8FA97D558`。
+- 本批审计：`directJreeImportFiles=75`、`java.langFiles=73`、
+  `java.utilFiles=25`、`javaStringFiles=47`、`newLinkedHashSet=1`、
+  `highRiskItems=41`、`semanticReviewItems=74`；`jree@1.3.0` 仍为声明依赖。
+
+本批可以宣称 J4 两个 Operator 异常生产路径已原生化并通过局部合同、M2、构建、
+API、迁移/平台审计及 4 个受影响 NAL；不能宣称 J4 收口、023/024 完成、jree
+清零、当前完整 M1/#245、源码覆盖率、性能等价或发布完成。下一批继续 J4 的
+`FunctionOperator` 参数防线，再审查 `Add`/`Reflect`；J4 出口条件满足前不运行
+M1-，也不删除 `jree-compat.ts` 的异常兼容桥。
+
+#### 当前责任簇进度树
+
+```text
+023 jree removal                 [##--------] in progress
+├─ J1 runtime compat             [####------] exception classes/observers migrated
+├─ J2 language/parser             [####------] List/Map/Set contracts sliced
+├─ J3 inference core              [####------] Map/List/Set/float/array sliced
+├─ J4 operator/plugin             [###-------] Operation/NullOperator now native
+└─ J5 main/host                  [##--------] exception observation; producers remain
+```
+
 恢复者必须先阅读[开发者指南](developer-guide.md)和[冻结交接报告](../reports/20260827-003242.md)，再运行 LeanSpec board/search/view。不要把未完成 spec 标成 complete，也不要清理当前工作区中来源不明的历史证据或探针。
 
 ### 当前候选：`Terms` 图像/Product 局部 Set 原生化（2026-09-17）

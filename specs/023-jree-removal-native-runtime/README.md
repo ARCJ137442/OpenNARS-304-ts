@@ -364,3 +364,22 @@ Java 原始合同推进 J3 `introduceVariables` 的嵌套 Set/Map。
 冻结 Java 标杆 ──> 同簇切片 ──> 局部合同 + 串行 M2 + 2~5 NAL
                          └────> 簇出口满足后一次 M1- ──> 023 阶段门
 ```
+
+### 2026-09-20：J4 `Operation`/`NullOperator` 异常生产者切片（`9c9a71d`）
+
+对照 canonical Java `Operation.java` 与 `NullOperator.java`，本批确认 Java 只暴露
+固定构造器/工厂签名；TypeScript 为保留运行时 overload 防线而保留非法参数分支。
+`Operation.ts` 的 2 个非法参数路径和 `NullOperator.ts` 的构造器路径改用项目内
+`JavaIllegalArgumentException`，保留 Java 原始消息、合法重载、Operation 类型和
+NullOperator 名称行为；没有修改推理规则。
+
+- 代码提交：`9c9a71d69c3c4d4edb4e2175b4c9c1071912f1e3`。
+- T1 J4 计划：`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`。
+- 串行 M2：356 项，354 通过、2 跳过、0 失败；非增量 `tsc=0`；build 139 个源文件。
+- 受影响 NAL：4/4 通过；使用冻结 Java JSONL，未启动 Java。
+- 证据：项目外 `operation-nulloperator-exception-20260920-sentinel.jsonl`，SHA-256
+  `8B5804243A8129A6F3BD0459989CBA91BC32C79B2251497E075D02B8FA97D558`。
+
+本批不能勾选 J4 或 023 完成。下一批继续 `FunctionOperator`、`Add`、`Reflect` 的
+异常生产者合同；J4 收口前不运行 M1-，所有生产者和捕获端收口前不删除
+`jree-compat.ts` 异常兼容桥。
