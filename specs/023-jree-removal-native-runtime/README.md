@@ -704,6 +704,26 @@ jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价
 本批没有勾选 J4 或 023 完成，也没有运行 M1-。下一步先补 `Statement` 重载的真实调用对照，
 再继续剩余 J4 字符串/异常边界。
 
+### 2026-09-20：J4 `Operator` 原生字符串边界切片（`a37ed46`、`551e2ce`）
+
+对照 Java `Operator.java`，确认构造器、异常反馈和 `ExecutionResult.toString` 的可观察文本
+合同。本批以 `JavaStringInput`、`toJavaString`、`javaStringValue` 和局部
+`javaArrayToString` 移除直接 `jree`/`S` 依赖；执行、反馈派发和 Java 异常类型不变。首次
+尝试遗漏了 `Operator.call` 默认分支的 `S`，产生 `ReferenceError`，已在 `551e2ce` 修复。
+
+- 代码提交：`a37ed46`、`551e2ce`；基线为 `0818515`。
+- 直接合同：`operator-boundary.test.ts` `17/17`；串行 M2 `370` 项，`368` 通过、`2` 跳过、
+  `0` 失败；非增量 `tsc=0`；build `139` 个源文件；dist API 通过。
+- 计划器：J4 owner、T1 risk-slice；`live_java_required=false`、`m1_minus_required=false`、
+  `full_m1_required=false`。
+- 受影响 NAL：4/4 通过，0 exception、0 marker missing、0 stall、0 timeout、0 process limit、
+  0 Java/TS diff。证据 SHA-256：`465C63FAFAA992A00BF23D2255443C9CC508EB5F69BC89D2BFBFD8DCEDAE3133`。
+- 审计变化：direct jree import files `73→72`；migration `jree-runtime-type` `1382/133→1376/132`；
+  platform `coreCandidateFiles` `68→67`、`jreeImportFiles` `80→79`。
+
+本批没有勾选 J4 或 023 完成，也没有运行 M1-。下一步继续审查 `FunctionOperator` 与
+`NullOperator` 的剩余字符串/异常桥接，但仍需先对照 Java 合同再拆批。
+
 #### 当前阶段进度树
 
 ```text

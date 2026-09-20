@@ -2804,6 +2804,59 @@ LeanSpec 15 项
 └─ checklist     89/111                          [################----] 80.2%
 ```
 
+### 2026-09-20：J4 `Operator` 原生字符串边界切片（`a37ed46`、`551e2ce`）
+
+对照 canonical Java `Operator.java`，确认构造器只要求 Java `String` 和 `^` 前缀检查；本批
+同时处理了同文件的异常反馈与 `ExecutionResult.toString` 文本边界。第一次移除构造器依赖后，
+focused 测试发现 `Operator.call` 默认分支仍引用 `S`，产生 `ReferenceError`；随后以
+`551e2ce` 补齐 `S`、`java.lang.String` 和 `Arrays.toString` 的残留，执行控制流未改。
+
+- 代码提交：`a37ed46`、`551e2ce`；focused 合同 `17/17`。
+- M2：串行 `npm test` `370` 项，`368` 通过、`2` 跳过、`0` 失败，耗时约 `103898 ms`；
+  非增量 typecheck `0` 诊断；build `139` 个源文件；dist API 通过。
+- 计划器：T1 risk-slice，owner=`J4-operator-plugin`，`plan_valid=true`、
+  `live_java_required=false`、`m1_minus_required=false`、`full_m1_required=false`。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal` 共 `4/4` 通过；证据文件为
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\operator-native-string-boundary-20260920-sentinel.jsonl`，SHA-256
+  `465C63FAFAA992A00BF23D2255443C9CC508EB5F69BC89D2BFBFD8DCEDAE3133`。
+- 审计变化：direct jree import files `73→72`；migration `jree-runtime-type` `1382/133→1376/132`；
+  platform `coreCandidateFiles` `68→67`、`jreeImportFiles` `80→79`。
+
+本批只能宣称 Operator 的 Java/native 字符串、异常反馈和数组文本边界已验证；不能宣称
+J4/023 收口、jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。
+
+#### 当前从头到尾与 spec 级 ASCII 进度
+
+```text
+OpenNARS-304-ts 外部发布主线
+├─ F0 Canonical Java 基线                         [##########] 完成
+├─ F1 M1 功能等价                                 [##########] 完成（G0 有效 246/246）
+├─ F2 M2 零诊断/构建/公开入口                     [##########] 完成
+├─ F3 G0 迁移前保护回归                           [##########] 完成
+├─ 023 去 jree 原生 TypeScript 运行时             [##--------] 进行中
+│  ├─ J1 runtime compat                           [####------] 异常/观察函数已迁，桥清理待做
+│  ├─ J2 language/parser                           [####------] 字符串、解析、List/Map/Set 局部合同已验证
+│  ├─ J3 inference core                            [####------] Map/List/Set/float/数组局部合同已验证
+│  ├─ J4 operator/plugin                           [#######---] Operator/Add/Reflect 与反馈/文本边界已验证
+│  └─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待收口
+├─ 024 平台中立核心与宿主适配                     [##--------] P0-P2 完成，P3-P5 未完成
+├─ I J/P 汇合集成回归                             [----------] 待开始
+├─ O 正式性能门                                   [----------] 待开始
+└─ R RC、bundle、发布与用户授权 tag               [----------] 待开始
+
+LeanSpec 15 项
+├─ 001/002/003/004                                [##########] complete
+├─ 005/008                                      [#####-----] in-progress
+├─ 006/007/009/013/018/019                       [##########] complete
+└─ 020/023/024                                   [#####-----] in-progress
+
+登记统计（仅导航，不代表产品完成度）
+├─ complete      10/15                           [##########----------] 67%
+├─ in-progress    5/15                           [#####---------------] 33%
+└─ checklist     89/111                          [################----] 80.2%
+```
+
 ### 2026-09-20：J4 `Reflect` 原生字符串边界切片（`921fb10`）
 
 对照 canonical Java `Reflect.java`，确认 `sop` 存在四组重载，并且 `getMetaTerm` 继续负责
