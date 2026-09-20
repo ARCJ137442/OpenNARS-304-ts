@@ -739,6 +739,56 @@ O 正式性能门                                    [----------] 待开始
 R RC/bundle/tag                                [----------] 待开始
 ```
 
+### 2026-09-20：J4 `Believe` 空真值异常边界切片（`3a0ed7f`）
+
+对照 canonical Java `Believe.java` 确认：`truthFromWordTerm` 没有返回真值时，Java 后续调用
+形成 `java.lang.NullPointerException`。本批只将异常构造切换为项目内
+`JavaNullPointerException`，不改变真值函数、反馈数组、操作派发或 marker。
+
+- 代码提交：`3a0ed7f refactor(023): 原生化Believe空真值异常`。
+- 计划器：J4 owner、J1 supporting、T1 risk slice，`plan_valid=true`；不需要 live Java、
+  M1- 或完整 M1。
+- 直接合同：core-runtime `44/44`；计划器列出的 6 个直接测试文件 `31/31`。
+- 串行 M2：`npm test` `373` 项，`371` 通过、`2` 跳过、`0` 失败；非增量 typecheck `0`；
+  build `139`；dist API 通过。
+- 受影响 NAL：`5/5` 功能通过，0 exception、0 marker missing、0 stall、0 timeout、
+  0 process limit、0 Java/TS diff。证据 SHA-256：
+  `E643D313FFBFC8D1A8B2667A63F9407DC399135F719F55C6BE46F26796F87768`。
+  其中 4 个样本走 marker 等价路线；无 marker 的 `simpleOperationTest.nal` 只记录功能通过。
+- 冻结 Java 标杆 JSONL SHA-256：
+  `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；Java source
+  `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；artifact SHA-256
+  `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 当前审计：src direct jree import files `68`；migration `jree-runtime-type=1356/128`、
+  `javaLangFiles=65`、`javaStringFiles=42`；platform `coreCandidateFiles=63`、
+  `jreeImportFiles=75`；`package.json` 仍声明 `jree@1.3.0`。
+
+本批不勾选 J4 或 023 完成。下一系列先审查 J4 `Statement` relation factory/异常/文本合同，
+随后按调用者拆分 J1 `isJavaThrowable`、`runtimeLong`、`javaStringValue`、
+`javaStringHashCode`，并前向审查历史 NativeList/数组化提交。普通切片只运行直接合同和受影响
+NAL；责任簇闭合后才运行一次 M1-。不能据此宣称 jree 清零、完整 M1/#245、源码覆盖率、
+性能等价、024 完成或正式发布。
+
+#### 本批后的完整进度树
+
+```text
+OpenNARS-304-ts 外部发布主线
+├─ F0 Canonical Java 基线                         [##########] 完成
+├─ F1 M1 功能等价                                 [##########] 完成（G0 有效 246/246）
+├─ F2 M2 零诊断/构建/公开入口                     [##########] 完成
+├─ F3 G0 迁移前保护回归                           [##########] 完成
+├─ 023 去 jree 原生 TypeScript 运行时             [##--------] 进行中
+│  ├─ J1 runtime compat                           [####------] 异常/观察函数已迁，桥清理待做
+│  ├─ J2 language/parser                           [####------] 字符串、解析、List/Map/Set 局部合同已验证
+│  ├─ J3 inference core                            [#####-----] Map/List/Set/float/数组/计数值局部合同已验证
+│  ├─ J4 operator/plugin                           [########--] Operator/Add/Reflect/Function/Null/Feel/Believe 边界已验证
+│  └─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待收口
+├─ 024 平台中立核心与宿主适配                     [##--------] P0-P2 完成，P3-P5 未完成
+├─ I J/P 汇合集成回归                             [----------] 待开始
+├─ O 正式性能门                                   [----------] 待开始
+└─ R RC、bundle、发布与用户授权 tag               [----------] 待开始
+```
+
 ### 2026-09-20：J4 `Feel` 原生字符串边界切片（`9990bb0`）
 
 对照 canonical Java `Feel.java` 确认：构造器名称只参与 Operator 名称传递和 `^feel` 前缀
