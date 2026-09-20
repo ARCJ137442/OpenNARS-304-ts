@@ -2088,3 +2088,27 @@ canonical Java 的 `powerSet` 合同为 `Set<Set<T>>`，实现以 `LinkedHashSet
 - 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compositional-powerset-j3-20260920-sentinel.jsonl`；SHA-256：`92FF5494E77ACB771C72CC8D1B2D99073793EFB5A5EF7D7E3AEFFB1184A0F0BF`。
 
 本批将 J3 的一个集合边界从兼容形状收窄到原生抽象，但不能宣称 J3 或 023 收口。下一批优先继续审查 `introduceVariables` 的嵌套 Set/Map 以及 `jree-compat.ts` 的高风险残余；责任簇收口前仍不运行 M1-，阶段门才现跑 Java 与完整 245+1。
+
+### 2026-09-20：J3 数学浮点边界切片（`cd33361`）
+
+本批对照 canonical Java 的 `Math.sqrt`、`Math.pow(float,double)` 和 double 比较路径，
+在 `Float32Math` 中新增 `powDouble`，并将 `BudgetFunctions`、`CompositionalRules`
+的调用点按 Java 的 float 输入、double 运算、float 赋值边界收窄。没有改写推理规则，
+也没有把性能观测混入语义修复。直接 Float32/预算/推理测试为 `27/27`；串行统一单测
+`348` 项，`346` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`，build、dist API、
+迁移扫描、jree/platform 审计均通过。
+
+5 个受影响 NAL 使用冻结 Java 标杆、TS-only、单线程、cold、逐文件串行运行，
+`5/5` functional/parity，0 exception、0 marker missing、0 stall、0 timeout、
+0 process limit、0 Java/TS diff。`nars_transitivity.nal` 与 `toothbrush2.nal`
+达到 `131072` 周期并按 marker 路径等价；其余样本的 Java marker 已在 TS 对应位置
+复刻。证据位于项目外：
+
+`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\j3-float-math-20260920-sentinel.jsonl`
+
+SHA-256：`1DC5D44E36A84ACDF36B68F9F2173D4603AC3CCAC83CB496A8BA902E6612383A`。
+
+本批仍不改变 M1/M2 冻结结论，也未运行 live Java、M1- 或 #245；023 仍为
+`in-progress`。下一批按风险优先审查 `introduceVariables` 的嵌套 Set/Map，或拆解
+`jree-compat.ts` 的异常责任簇，保持 Java `instanceof`、`getMessage()`、null 和
+字符串规范化合同；责任簇收口后再运行 M1-。

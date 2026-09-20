@@ -213,3 +213,23 @@ canonical Java 的 `powerSet` 为 `Set<Set<T>>`，实现使用 `LinkedHashSet`�
 - 项目外证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\compositional-powerset-j3-20260920-sentinel.jsonl`；SHA-256：`92FF5494E77ACB771C72CC8D1B2D99073793EFB5A5EF7D7E3AEFFB1184A0F0BF`。
 
 本批只完成 J3 一个 T1 边界切片，不能勾选责任簇、023、jree 清零或性能验收；下一步仍按 `introduceVariables` 的 Set/Map 合同与 J1 兼容桥风险排序。
+
+### 2026-09-20：J3 数学浮点边界切片（`cd33361`）
+
+对照 canonical Java 的 `Math.sqrt`、`Math.pow(float,double)` 和 double 比较路径，
+本批在 `Float32Math` 中新增 `powDouble`，并修正 `BudgetFunctions`、
+`CompositionalRules` 的调用边界。Java 的 float 输入先收窄，double 运算结果只在对应
+float 赋值点收窄；没有把 `Math.pow` 一律提前 `Math.fround`，也没有改写推理规则。
+
+- 代码提交：`cd33361 refactor(023): 收敛J3数学浮点边界`，基线为 `fb9a7dd`。
+- 直接测试：`27/27`；串行统一单测：`348` 项，`346` 通过、`2` 跳过、`0` 失败。
+- 非增量 `tsc=0`；build、dist API、迁移扫描、jree/platform 审计均通过。
+- 受影响 NAL：`5/5` functional/parity；0 exception、0 marker missing、0 stall、
+  0 timeout、0 process limit、0 Java/TS diff。冻结 Java 标杆未改变，因此本批未启动
+  live Java、M1- 或 #245。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\j3-float-math-20260920-sentinel.jsonl`。
+- 证据 SHA-256：`1DC5D44E36A84ACDF36B68F9F2173D4603AC3CCAC83CB496A8BA902E6612383A`。
+
+本批只完成 J3 一个数学边界切片，不能勾选 J3/023 完成。下一步优先审查
+`introduceVariables` 的嵌套 Set/Map 合同，或把 `jree-compat.ts` 的异常桥责任拆成
+可独立验证的小簇；责任簇收口后再运行 M1-。
