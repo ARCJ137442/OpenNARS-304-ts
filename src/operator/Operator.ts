@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/Operator.java
-import { java, S } from "jree";
 import type { float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "../language/Term.ts";
 import { Inheritance } from "../language/Inheritance.ts";
@@ -36,7 +35,7 @@ export abstract class Operator extends Term implements Plugin {
 
     protected constructor();
 
-    protected constructor(name: string | java.lang.String);
+    protected constructor(name: JavaStringInput);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -48,10 +47,10 @@ export abstract class Operator extends Term implements Plugin {
             }
 
             case 1: {
-                const [name] = args as [string | java.lang.String];
+                const [name] = args as [JavaStringInput];
 
 
-                super(java.lang.String.valueOf(name));
+                super(javaStringValue(name));
                 if (!javaStringValue(name).startsWith("^"))
                     throw new JavaIllegalStateException("Operator name needs ^ prefix");
 
@@ -60,7 +59,7 @@ export abstract class Operator extends Term implements Plugin {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -154,7 +153,7 @@ export abstract class Operator extends Term implements Plugin {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }

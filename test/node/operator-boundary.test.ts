@@ -68,6 +68,7 @@ test("operator constructors preserve Java string boundaries", () => {
     assert.equal(String(new Count().name()), "^count");
     assert.equal(String(new NullOperator().name()), "^sample");
     assert.equal(String(new NullOperator("^native").name()), "^native");
+    assert.equal(String(new NullOperator(new java.lang.String("^boxed")).name()), "^boxed");
 });
 
 test("Reflect.sop preserves the translated Java varargs-array overload", () => {
