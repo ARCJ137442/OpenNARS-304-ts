@@ -9,6 +9,10 @@ import { Similarity } from "../../language/Similarity.ts";
 import type { Statement } from "../../language/Statement.ts";
 import { Term } from "../../language/Term.ts";
 import { Symbols } from "../../io/Symbols.ts";
+import {
+    JavaIllegalArgumentException,
+    JavaIllegalStateException,
+} from "../../runtime/jree-compat.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -34,7 +38,7 @@ export class Reflect extends FunctionOperator {
     protected function(memory: Memory, x: Term[]): Term {
 
         if (x.length !== 1) {
-            throw new java.lang.IllegalStateException("Requires 1 Term argument");
+            throw new JavaIllegalStateException("Requires 1 Term argument");
         }
 
         let content: Term = x[0];
@@ -93,7 +97,7 @@ export class Reflect extends FunctionOperator {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }

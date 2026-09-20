@@ -24,6 +24,12 @@ class AddProbe extends Add {
     }
 }
 
+class ReflectProbe extends ReflectOperator {
+    public evaluate(args: Term[]): Term | null {
+        return this.function(null as never, args);
+    }
+}
+
 test("operator constructors preserve Java string boundaries", () => {
     assert.equal(String(new Add().name()), "^add");
     assert.equal(String(new Count().name()), "^count");
@@ -138,4 +144,27 @@ test("Add preserves Java argument and result contracts", () => {
     });
 
     assert.equal(String(add.evaluate([Term.get("2"), Term.get("3")])?.name()), "5");
+});
+
+test("Reflect preserves Java argument and overload contracts", () => {
+    const reflect = new ReflectProbe();
+
+    assert.throws(() => reflect.evaluate([]), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalStateException);
+        assert.ok(error instanceof java.lang.IllegalStateException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "Requires 1 Term argument");
+        return true;
+    });
+
+    assert.equal(String(reflect.evaluate([Term.get("a")])?.name()), "a");
+
+    const sop = ReflectOperator.sop as unknown as (...args: unknown[]) => unknown;
+    assert.throws(() => sop(), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalArgumentException);
+        assert.ok(error instanceof java.lang.IllegalArgumentException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "Invalid number of arguments");
+        return true;
+    });
 });
