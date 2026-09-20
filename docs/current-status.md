@@ -2558,3 +2558,35 @@ Spec checklist snapshot
 ```
 
 这里的 spec/复选框条目只表示规格登记状态，不替代 M1/M2、责任簇证据或发布门。
+
+### 2026-09-20：J4 `FunctionOperator` 参数复制边界切片（`b75137f`）
+
+对照 canonical Java `FunctionOperator.execute`，确认 Java 使用新建的 `Term[numParam]`
+并执行 `System.arraycopy(args, 1, x, 0, numParam)`。上游 `numArgs` 检查确保复制区间
+合法；目标数组与源数组不重叠，函数只接收浅复制后的参数引用。因此本批以
+`args.slice(1, 1 + numParam)` 替换这一 jree 运行时调用，保留参数顺序、引用元素和新数组
+身份；没有改变 arity、函数派发、推理结果或 Operation 更新逻辑。
+
+- 代码提交：`b75137f67e499eee35138d731190d0a37f3b1d8e`，基线为 `9ca9ffc`。
+- 直接合同：`operator-boundary.test.ts` `11/11`，新增测试同时断言参数内容和新数组身份。
+- 串行 M2：`npm test` 为 `363` 项，`361` 通过、`2` 跳过、`0` 失败；耗时约 `107833 ms`。
+- 非增量 `tsc=0`；build `139` 个源文件；dist API 通过。
+- 计划器：J4 owner、T1、`plan_valid=true`；不要求 live Java、M1- 或完整 M1。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal`，TS-only 冻结标杆对照 `4/4` functional/parity；0 exception、
+  0 marker missing、0 stall、0 timeout、0 process limit、0 not-run、0 Java/TS diff。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\functionoperator-arraycopy-20260920-sentinel.jsonl`；
+  SHA-256 `B00E415B046161810EFD3CC0B5D53CE1550EC84C68E7706D6F67B6FE257E758E`。
+- 冻结 Java 标杆 JSONL SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；
+  Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；artifact SHA-256
+  `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 审计：migration scan `248` 文件，`java-collection-method=749/108`、
+  `jree-runtime-type=1408/135`；jree direct import files `75`、`newLinkedHashSet=1`、
+  `javaObjectFiles=1`、`javaUtilFiles=25`、`javaLangFiles=72`、`javaStringFiles=47`；
+  platform 扫描 `185` 文件，核心候选 `70`。direct jree 数不变是预期结果：本批只移除
+  `System.arraycopy` 调用，`FunctionOperator` 仍保留 Java 类型边界。
+
+本批可以宣称 J4 一个参数数组复制切片完成 M2/T1 哨兵验证；不能宣称 J4、023 收口，
+jree 清零，完整 M1/#245 当前候选重跑，源码覆盖率，性能等价或正式发布。下一批优先
+继续 J4 `Operator` 公共 CharSequence/List 边界，然后处理 J3 `introduceVariables` 的
+Set/Map 合同；责任簇收口前不运行 M1-。
