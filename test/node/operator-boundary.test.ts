@@ -53,6 +53,20 @@ class FunctionArgumentProbe extends FunctionOperator {
     }
 }
 
+class BoxedFunctionArgumentProbe extends FunctionOperator {
+    public constructor() {
+        super(new java.lang.String("^boxed-function-probe"));
+    }
+
+    protected function(_memory: Memory, _args: Term[]): Term | null {
+        return null;
+    }
+
+    protected getRange(): Term {
+        return Term.get("range");
+    }
+}
+
 class FeedbackProbe extends Operator {
     public constructor(private readonly feedback: OperatorFeedback) {
         super("^feedback-probe");
@@ -69,6 +83,12 @@ test("operator constructors preserve Java string boundaries", () => {
     assert.equal(String(new NullOperator().name()), "^sample");
     assert.equal(String(new NullOperator("^native").name()), "^native");
     assert.equal(String(new NullOperator(new java.lang.String("^boxed")).name()), "^boxed");
+});
+
+test("FunctionOperator accepts the Java String constructor boundary", () => {
+    const probe = new BoxedFunctionArgumentProbe();
+
+    assert.equal(String(probe.name()), "^boxed-function-probe");
 });
 
 test("Reflect.sop preserves the translated Java varargs-array overload", () => {

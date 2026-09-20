@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/NullOperator.java
-import { java, S } from "jree";
 import { Operator } from "./Operator.ts";
 import { Operation } from "./Operation.ts";
 import { Term } from "../language/Term.ts";
@@ -29,7 +28,7 @@ export class NullOperator extends Operator {
         } else if (args.length === 1) {
             super(args[0] as JavaStringInput);
         } else {
-            throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
     }
 

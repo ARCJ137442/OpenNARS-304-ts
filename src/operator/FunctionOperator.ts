@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/FunctionOperator.java
-import { java } from "jree";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Operator } from "./Operator.ts";
 import { BudgetValue } from "../entity/BudgetValue.ts";
@@ -17,6 +16,7 @@ import type { CompoundTerm } from "../language/CompoundTerm.ts";
 import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
+    type JavaStringInput,
 } from "../runtime/jree-compat.ts";
 
 // Keep FunctionOperator below the inference layer. Importing BudgetFunctions
@@ -36,7 +36,7 @@ const truthToQuality = (truth: any): float => {
  */
 export abstract class FunctionOperator extends Operator {
 
-    protected constructor(name: string | java.lang.String) {
+    protected constructor(name: JavaStringInput) {
         super(name);
     }
 
