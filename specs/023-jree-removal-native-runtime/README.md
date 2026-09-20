@@ -739,6 +739,26 @@ O 正式性能门                                    [----------] 待开始
 R RC/bundle/tag                                [----------] 待开始
 ```
 
+### 2026-09-20：J4 `Feel` 原生字符串边界切片（`9990bb0`）
+
+对照 canonical Java `Feel.java` 确认：构造器名称只参与 Operator 名称传递和 `^feel` 前缀
+截取，不需要 jree String 身份、集合、异常或宿主行为。移除 `Feel.ts` 直接 jree 导入，参数
+改为原生 `string`，仍经项目 `javaStringValue` 边界；新增 `FeelBusy`、`FeelSatisfied` 名称回归。
+
+- 代码提交：`9990bb0`；直接合同 `22/22`；串行 M2 `372` 项，`370` 通过、`2` 跳过、`0` 失败；
+  非增量 `tsc=0`；build `139`；dist API 通过。
+- 计划器：`J4-operator-plugin`、`T1` risk-slice、`plan_valid=true`、`live_java_required=false`、
+  `m1_minus_required=false`、`full_m1_required=false`。
+- 受影响 NAL `4/4` 通过，使用冻结 Java 标杆；证据 SHA-256
+  `EDF09D61F766CF41B6276C3B1BA7EEF9840451B9959BAC0DCDFA4A3EF0585B3F`。
+- 审计前→后：src direct jree imports `70→69`、javaString files `43→42`；migration 当前
+  `jree-runtime-type=1357/129`。platform audit 的 `coreCandidateFiles=64`、`jreeImportFiles=76`
+  包含 web-demo/工具，不与 src direct-import 计数混用。
+
+本批不勾选 J4 或 023 完成；不能宣称 jree 清零、完整 M1/#245、131072 长周期全面等价、源码
+覆盖率、性能等价、024 完成或正式发布。下一步先做 `Statement` Java relation factory/异常文本
+合同，再按调用者分拆 `javaStringValue`、`javaStringHashCode`、`isJavaThrowable`、`runtimeLong`。
+
 ### 2026-09-20：J3 计数值边界（`af3fad7`）
 
 对照 Java `Map<Term, Integer>` 的生产者和消费者，确认本处 `Integer` 只表示递归出现次数；

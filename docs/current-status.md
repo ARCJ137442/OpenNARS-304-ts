@@ -2755,6 +2755,65 @@ LeanSpec 15 项
 └─ checklist     89/111                          [################----] 80.2%
 ```
 
+### 2026-09-20：J4 `Feel` 原生字符串边界切片（`9990bb0`）
+
+对照 canonical Java `Feel.java`，确认构造器的 `name` 只用于传递 Operator 名称并截取
+`^feel` 前缀后的 feeling term，不需要 jree `String` 身份、集合、异常或宿主行为。本批移除
+`Feel.ts` 的直接 jree 导入，将参数收窄为原生 `string`，保留 `javaStringValue` 作为统一项目
+文本边界；新增 `FeelBusy`、`FeelSatisfied` 名称合同回归。
+
+- 代码提交：`9990bb0 refactor(023): 原生化Feel字符串边界`。
+- 直接合同：`operator-boundary.test.ts` `22/22`；串行 `npm test` `372` 项，`370` 通过、
+  `2` 跳过、`0` 失败；非增量 `tsc=0`；build `139` 个源文件；dist API 通过。
+- 计划器：首次误选 `J1-runtime-compat` 得到 `plan_valid=false`，按源码归类改用
+  `J4-operator-plugin` 后为 `T1` risk-slice、`plan_valid=true`、`live_java_required=false`、
+  `m1_minus_required=false`、`full_m1_required=false`。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal` 串行 `4/4` 通过；无 exception、marker missing、stall、timeout、
+  process limit 或 Java/TS diff。证据文件为
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\feel-native-20260920.jsonl`，
+  SHA-256 `EDF09D61F766CF41B6276C3B1BA7EEF9840451B9959BAC0DCDFA4A3EF0585B3F`。
+- Java 标杆未变化：冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；
+  source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；canonical JAR SHA-256
+  `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 审计前→后：src direct jree import files `70→69`；javaString files `43→42`；当前 migration
+  scanner `jree-runtime-type=1357/129`；platform audit 当前 `coreCandidateFiles=64`、
+  `jreeImportFiles=76`，后者含 web-demo/工具范围，不能与 src direct-import 混算。
+
+本批只能宣称 Feel 的 Java/native 文本构造边界、M2、构建、dist API 与 4 个受影响 NAL 已验证；
+不能宣称 J4/023 收口、jree 清零、完整 M1/#245 当前候选重跑、131072 长周期全面等价、源码覆盖率、
+性能等价、024 完成或正式发布。
+
+#### 当前从头到尾与 spec 级 ASCII 进度
+
+```text
+OpenNARS-304-ts 外部发布主线
+├─ F0 Canonical Java 基线                         [##########] 完成
+├─ F1 M1 功能等价                                 [##########] 完成（G0 有效 246/246）
+├─ F2 M2 零诊断/构建/公开入口                     [##########] 完成
+├─ F3 G0 迁移前保护回归                           [##########] 完成
+├─ 023 去 jree 原生 TypeScript 运行时             [##--------] 进行中
+│  ├─ J1 runtime compat                           [####------] 观察/异常函数已迁，桥清理待做
+│  ├─ J2 language/parser                           [####------] 字符串、解析、List/Map/Set 局部合同已验证
+│  ├─ J3 inference core                            [#####-----] Map/List/Set/float/数组/计数值局部合同已验证
+│  ├─ J4 operator/plugin                           [#######---] Operator/Add/Reflect/Function/Null/Feel 边界已验证
+│  └─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待收口
+├─ 024 平台中立核心与宿主适配                     [##--------] P0-P2 完成，P3-P5 未完成
+├─ I J/P 汇合集成回归                             [----------] 待开始
+├─ O 正式性能门                                   [----------] 待开始
+└─ R RC、bundle、发布与用户授权 tag               [----------] 待开始
+
+LeanSpec 15 项（仅登记导航，不代表产品完成度）
+├─ 001/002/003/004                                [##########] complete
+├─ 005/008                                        [#####-----] in-progress
+├─ 006/007/009/013/018/019                       [##########] complete
+└─ 020/023/024                                   [#####-----] in-progress
+```
+
+下一系列按责任簇推进：先审查 `Statement` 的 Java relation factory/异常文本边界，再分拆
+`javaStringValue` 的名称/显示文本调用者；`Task`、`Sentence`、`Item` 的字符串与 hash/equality
+边界暂不批量删除。随后独立审查 `javaStringHashCode`、`isJavaThrowable` 和 `runtimeLong`。
+
 ### 2026-09-20：J3 `countTermRecursively` 计数值原生化（`af3fad7`）
 
 对照 canonical Java 的 `Term`、`CompoundTerm`、`Variable` 与全部调用点，确认原始
