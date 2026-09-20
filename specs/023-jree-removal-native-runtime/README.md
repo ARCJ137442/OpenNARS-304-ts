@@ -556,3 +556,39 @@ J4 `FunctionOperator` 的 `System.arraycopy`/数组边界与 `Operator` 公共 C
 jree 清零，完整 M1/#245 当前候选重跑，源码覆盖率，性能等价或正式发布。下一批优先
 继续 J4 `Operator` 公共 CharSequence/List 边界，然后处理 J3 `introduceVariables` 的
 Set/Map 合同。
+
+### 2026-09-20：J4 `OperatorFeedback` 反馈序列边界切片（`1bfcf8c`）
+
+对照 canonical Java `Operator.execute`，确认 Java 的声明类型是 `List<Task> | null`，
+但当前 TypeScript 的全部 operator 实现都只产生临时、有序的 `Task[] | null`；`Operator.call`
+只读取反馈是否为空并按顺序迭代，没有调用 List 的插入、删除或索引能力。因此本批建立
+项目内命名合同 `OperatorFeedback = Task[] | null`，收窄 `Operator.execute`、`Operator.call`
+和 `Anticipate.execute`，并将两个 Java `List` 的 null 强制转换改为真实 `null`。这不是
+将领域 Set/Map 机械替换成数组，而是对已审计的 transient operator feedback 进行窄化；
+CharSequence、java.lang.Object 和异常桥仍保留在后续边界批次。本批不勾选 J4 或本 spec
+完成，责任簇收口前继续使用冻结 Java 标杆，不运行 M1-。
+
+- 代码提交：`1bfcf8ce3a210a293f720155fc9f6bcc34edab2f`，基线为 `6e21b11`。
+- 直接合同：`operator-boundary.test.ts` `12/12`，覆盖 null 和空有序反馈的 executedTask
+  语义以及不误派发输入任务。
+- 串行 M2：`npm test` 为 `364` 项，`362` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；
+  build `139` 个源文件；dist API 通过。
+- 计划器：J4 owner、T1、`plan_valid=true`、`live_java_required=false`、
+  `m1_minus_required=false`、`full_m1_required=false`。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal`，TS-only 冻结标杆对照 `4/4` functional/parity；0 exception、
+  0 marker missing、0 stall、0 timeout、0 process limit、0 not-run、0 Java/TS diff。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\operator-feedback-20260920-sentinel.jsonl`；
+  SHA-256 `4B1CD04CA0C00C47956266569926FD2351B7B0000F16E82DD04310AE677898DC`。
+- 冻结 Java 标杆 SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；
+  Java source commit `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；artifact SHA-256
+  `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 审计：migration scan `248` 文件，`java-string-method=234/62`、
+  `java-collection-method=750/108`、`jree-runtime-type=1403/135`；jree direct import files
+  `75`、`javaUtilFiles=25`、`javaLangFiles=72`、`javaStringFiles=47`；platform 扫描
+  `185` 文件，核心候选 `70` 个。
+
+本批可以宣称 J4 的 operator feedback `List/null/empty` 边界完成局部合同、M2、T1
+受影响 NAL 验证；不能宣称 J4/023 收口、jree 清零、完整 M1/#245 当前候选重跑、源码
+覆盖率、性能等价或正式发布。下一批继续审查 `Operator` 的 CharSequence/Object 输出边界，
+仍保持 J4 单簇。
