@@ -26,6 +26,16 @@ test("Statement keeps Java side-enum and native exception boundaries", async () 
     );
 });
 
+test("AbstractTerm keeps the Java CharSequence name contract without a direct jree import", async () => {
+    const { Term } = await import("../../src/language/Term.ts");
+    const term = Term.get("abstract-term");
+
+    assert.equal(String(term.name()), "abstract-term");
+    assert.equal(typeof term.hasVar, "function");
+    assert.equal(typeof term.isConstant, "function");
+    assert.equal(typeof term.compareTo, "function");
+});
+
 test("Implication.clone preserves the source term and runtime type", async () => {
     const { Implication } = await import("../../src/language/Implication.ts");
     const { Term } = await import("../../src/language/Term.ts");
