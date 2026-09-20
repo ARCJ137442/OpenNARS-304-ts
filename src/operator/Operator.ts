@@ -10,7 +10,8 @@ import { Debug } from "../main/Debug.ts";
 import type { Product } from "../language/Product.ts";
 import type { Statement } from "../language/Statement.ts";
 import type { BudgetValue } from "../entity/BudgetValue.ts";
-import { javaStringValue } from "../runtime/jree-compat.ts";
+import { isJavaException, javaStringValue } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Task } from "../entity/Task.ts";
@@ -46,14 +47,14 @@ export abstract class Operator extends Term implements Plugin {
 
                 super(java.lang.String.valueOf(name));
                 if (!javaStringValue(name).startsWith("^"))
-                    throw new java.lang.IllegalStateException("Operator name needs ^ prefix");
+                    throw new JavaIllegalStateException("Operator name needs ^ prefix");
 
 
                 break;
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -113,12 +114,12 @@ export abstract class Operator extends Term implements Plugin {
                 try {
                     feedback = this.execute(operation, operationArgs, memory, time);
                 } catch (ex) {
-                    if (ex instanceof java.lang.Exception) {// peripherie, maybe used incorrectly, failure is unavoidable
+                    if (isJavaException(ex)) {// peripherie, maybe used incorrectly, failure is unavoidable
                         if (Debug.SHOW_EXECUTION_ERRORS) {
                             memory.event.emit(OutputHandler.ERR.class, ex);
                         }
                         if (!Debug.EXECUTION_ERRORS_CONTINUE) {
-                            throw new java.lang.IllegalStateException("Execution error:\n", ex);
+                            throw new JavaIllegalStateException("Execution error:\n", ex);
                         } else {
                             return false; // failure on execution
                         }
@@ -182,8 +183,8 @@ export abstract class Operator extends Term implements Plugin {
         if (memory.emitting(OutputHandler.EXE.class)) {
             // final Operator operator = (Operator) opT;
 
-            if (feedback instanceof java.lang.Exception)
-                feedback = new java.lang.String(String(feedback.getClass().getSimpleName()) + ": " + String((feedback as java.lang.Throwable).getMessage()));
+            if (isJavaException(feedback))
+                feedback = new java.lang.String(String(feedback.getClass().getSimpleName()) + ": " + String((feedback as unknown as java.lang.Throwable).getMessage()));
 
             memory.emit(OutputHandler.EXE.class, new Operator.ExecutionResult(operation, feedback));
         }

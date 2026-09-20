@@ -8,7 +8,7 @@ import { Term } from "../language/Term.ts";
 import { Debug } from "./Debug.ts";
 import { TextOutputHandler } from "../io/events/TextOutputHandler.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
-import { javaSystemExit } from "../runtime/jree-compat.ts";
+import { isJavaException, javaSystemExit } from "../runtime/jree-compat.ts";
 import { NodeStdinInputStream } from "../runtime/NodeStdinInputStream.ts";
 import { createNodeRuntimeCapabilities } from "../platform/node/SystemCommandCapabilities.ts";
 
@@ -144,7 +144,7 @@ export class Shell {
                             try {
                                 this.nar.addInput(line);
                             } catch (ex) {
-                                if (ex instanceof java.lang.Exception) {
+                                if (isJavaException(ex)) {
                                     if (Debug.DETAILED) {
                                         java.lang.System.out.println(S`ERROR: error parsing:${line}`);
                                         ex.printStackTrace();
