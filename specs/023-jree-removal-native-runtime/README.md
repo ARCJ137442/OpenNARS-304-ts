@@ -350,6 +350,61 @@ Java 原始合同推进 J3 `introduceVariables` 的嵌套 Set/Map。
 迁移，待所有生产者和直接回归收口后，才删除异常 `Symbol.hasInstance` 过渡桥；随后
 继续 `introduceVariables` 的嵌套 Set/Map 合同。
 
+### 2026-09-20：J4 `Anticipate`/`Operator.call` 异常边界切片（`123a212`）
+
+本批继续 J4 Operator/Plugin 责任簇的异常生产者收口。对照 canonical Java，确认
+`Anticipate` 的非法构造器参数和 `Operator.call` 的非法参数数量都是 TypeScript 为
+保留 Java overload 运行时防线而存在的边界；本批只将它们改为项目
+`JavaIllegalArgumentException`，保留消息、合法路径、旧 jree `instanceof` 观察面和
+推理算法。没有把该异常切片扩大为字符串、数组、插件或输出边界迁移。
+
+- 代码提交：`123a212a07e147f19670a05a43eb5d7f61db3828`。
+- 直接合同测试：`9/9`；覆盖 Anticipate 非法构造器和 Operator.call 非法 overload。
+- 串行 `npm test`：`361` 项，`359` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `139` 个源文件；dist API 通过。
+- 计划器：J4 owner、T1、`plan_valid=true`、不需要 live Java、M1- 或完整 M1。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal`，冻结 Java 标杆 TS-only 串行结果 `4/4` functional/parity；
+  0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 not-run、0 Java/TS diff。
+- 项目外证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\anticipate-operator-exception-20260920-sentinel.jsonl`；
+  SHA-256 `F1E74BB0D9CEF993A524CDF425CB8CAE0562BB463B951E765F99234E2C193322`。
+- 当前 jree 审计：直接导入文件 `75`、`java.util=25`、`java.lang=72`、Java String `47`、
+  high-risk `41`、semantic-review `74`、candidate-native `2`、`newLinkedHashSet=1`；
+  `jree@1.3.0` 仍为声明依赖。
+
+本批可以宣称 J4 两个异常生产点已完成项目异常边界迁移并通过 M2 与受影响 NAL；
+不能勾选 J4 或 023 完成，也不能宣称 jree 清零、当前候选完整 M1/#245、源码覆盖率
+或性能等价。J4 仍有字符串、数组、插件和输出边界残余，因此本批不运行 M1-。
+
+#### 当前阶段与完整项目导航
+
+```text
+OpenNARS-304-ts
+├─ F0/F1/F2/F3 Java canonical、M1、M2、G0    [##########] 完成
+├─ 023 去 jree 原生运行时                       [##--------] 进行中
+│  ├─ J1 runtime compat                         [####------] 异常类/观察函数已迁，桥清理待做
+│  ├─ J2 language/parser                         [####------] List/Map/Set 多个合同切片已验证
+│  ├─ J3 inference core                         [####------] Map/List/Set/float/short[] 已验证
+│  ├─ J4 operator/plugin                        [###-------] 数组/字符串/异常切片已验证，未收口
+│  └─ J5 main/host                              [##--------] 异常观察已验证，宿主边界未收口
+├─ 024 平台中立核心与宿主适配                    [##--------] P0-P2 完成，P3-P5 未完成
+├─ I 集成回归                                   [----------] 待开始
+├─ O 正式性能门                                 [----------] 待开始
+└─ R RC/bundle/tag                             [----------] 待开始
+
+LeanSpec registry: 15 specs
+├─ complete       10/15  [##########----------] 67%
+└─ in-progress     5/15  [#####---------------] 33%
+
+Spec checklist snapshot: 89/111
+├─ checked         89  [################----] 80.2%（仅登记规格条目，不是产品完成率）
+└─ open            22  [####----------------] 19.8%
+```
+
+后续优先级：先按 Java 合同审查 J4 的 StringBuilder/String/数组复制和公共类型边界，
+再补 J3 `introduceVariables` 的嵌套 Set/Map 合同，随后继续 J1 异常生产/捕获端与桥接
+清理。普通切片复用冻结 Java 标杆；责任簇出口才运行一次 M1-，023/024 阶段验收再
+现跑 live Java、完整 245+1 与严格 markerless 长测。
+
 #### 本批后的导航进度
 
 ```text

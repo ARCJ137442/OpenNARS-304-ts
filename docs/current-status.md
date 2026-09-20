@@ -391,6 +391,71 @@
        用户批准后 tag/release
 ```
 
+### 2026-09-20：J4 `Anticipate`/`Operator.call` 异常边界切片（`123a212`）
+
+本批承接 `Reflect` 异常生产者切片，沿同一 J4 责任簇只处理两个 TypeScript 运行时
+overload 防线：`Anticipate` 非法构造器参数和 `Operator.call` 非法参数数量。对照
+canonical Java，保留原始 `Invalid number of arguments` 消息、合法构造/调用路径与旧
+jree `instanceof` 观察面，仅把生产异常切换到项目 `JavaIllegalArgumentException`。
+没有改动 Anticipate 预测、Operation 执行、反馈派发或 Float32 计算。
+
+- 代码提交：`123a212a07e147f19670a05a43eb5d7f61db3828`。
+- 直接合同测试：`9/9`；新增 Anticipate 非法构造器与 Operator.call 非法 overload 两项。
+- 串行 `npm test`：`361` 项，`359` 通过、`2` 跳过、`0` 失败；耗时约 `104.1 s`。
+- 非增量 `npm run typecheck`：`0` 诊断；build 源文件 `139`；dist API 通过。
+- 计划器：J4 owner、T1、`plan_valid=true`、`live_java_required=false`、
+  `m1_minus_required=false`、`full_m1_required=false`。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal`，TS-only 冻结 Java 标杆串行结果 `4/4` functional/parity；
+  0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 not-run、0 Java/TS diff。
+- 证据文件：项目外 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\anticipate-operator-exception-20260920-sentinel.jsonl`；
+  SHA-256 `F1E74BB0D9CEF993A524CDF425CB8CAE0562BB463B951E765F99234E2C193322`。
+- 本批审计：direct jree import files `75`、`java.util=25`、`java.lang=72`、Java String `47`、
+  high-risk `41`、semantic-review `74`、candidate-native `2`、`newLinkedHashSet=1`；
+  `jree@1.3.0` 仍为声明依赖。
+
+本批可以宣称 J4 两个异常生产点已完成项目异常边界迁移并通过 M2 与 4 个受影响 NAL；
+不能勾选 J4 或 023 完成，不能宣称 jree 清零、当前候选完整 M1/#245、源码覆盖率或
+性能等价。本批也没有运行 M1-，因为 J4 仍有字符串、数组、插件和输出边界残余。
+
+#### 从项目开始到当前的阶段导航
+
+```text
+OpenNARS-304-ts
+├─ F0/F1/F2/F3 Java canonical、M1、M2、G0    [##########] 完成
+├─ 023 去 jree 原生运行时                       [##--------] 进行中
+│  ├─ J1 runtime compat                         [####------] 异常类/观察函数已迁，桥清理待做
+│  ├─ J2 language/parser                         [####------] List/Map/Set 多个合同切片已验证
+│  ├─ J3 inference core                         [####------] Map/List/Set/float/short[] 已验证
+│  ├─ J4 operator/plugin                        [###-------] 数组/字符串/异常切片已验证，未收口
+│  └─ J5 main/host                              [##--------] 异常观察已验证，宿主边界未收口
+├─ 024 平台中立核心与宿主适配                    [##--------] P0-P2 完成，P3-P5 未完成
+├─ I 集成回归                                   [----------] 待开始
+├─ O 正式性能门                                 [----------] 待开始
+└─ R RC/bundle/tag                             [----------] 待开始
+
+LeanSpec registry: 15 specs
+├─ complete       10/15  [##########----------] 67%
+└─ in-progress     5/15  [#####---------------] 33%
+
+Spec checklist snapshot: 89/111
+├─ checked         89  [################----] 80.2%（不是产品完成率）
+└─ open            22  [####----------------] 19.8%
+```
+
+#### 下一系列修改
+
+1. J4：按 Java 合同分别审查 `Operation.ts`、`FunctionOperator.ts`、`Operator.ts` 的
+   StringBuilder、String、数组复制和公共类型边界。
+2. J3：补 `introduceVariables` 的嵌套 Set/Map 直接合同，保持 Map/Set 抽象及 Java
+   equals/hashCode、顺序和递归更新语义。
+3. J1：继续迁移异常生产/捕获端，所有生产者和回归收口后再删除 `jree-compat.ts` 的
+   `Symbol.hasInstance` 过渡观察桥。
+4. J4/J5：最后收窄 System、Node 和浏览器宿主边界，避免把副作用扩散到核心。
+
+普通切片继续复用冻结 Java 标杆；责任簇出口才运行一次 M1-，023/024 阶段验收再
+现跑 live Java、完整 245+1 和严格 markerless 长测。
+
 ### 2026-09-20：J4 `Operation`/`NullOperator` 异常生产者切片（`9c9a71d`）
 
 本批继续 023 的 J4 Operator/Plugin 责任簇。对照 canonical Java
