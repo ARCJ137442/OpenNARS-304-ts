@@ -1983,8 +1983,8 @@ T1 保护；不能宣称 J3 责任簇收口、023/024 完成、jree 清零或当
 ```
 
 从冻结恢复点到当前，主线已经从“可运行、可测试、可发布入口存在”推进到“按 Java
-原始容器合同逐簇收窄 jree 边界”：直接 jree 导入文件的当前审计值为 `77`，
-`java.util` 文件 `30`，`java.lang` 文件 `76`，Java String 文件 `47`，但仍有
+原始容器合同逐簇收窄 jree 边界”：直接 jree 导入文件的当前审计值为 `75`，
+`java.util` 文件 `25`，`java.lang` 文件 `74`，Java String 文件 `47`，但仍有
 `newLinkedHashSet=1`、`highRiskItems=41`，且 `package.json` 仍声明 `jree@1.3.0`。
 下一阶段应继续做有直接合同的 List/Set/Map 小簇；只有责任簇收口时才运行 M1-，
 而 023/024 整体验收仍需重新现开 Java、完整 245+1、M2、CLI/API 和平台证据。
