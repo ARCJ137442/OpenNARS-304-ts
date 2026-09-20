@@ -2968,3 +2968,48 @@ LeanSpec 15 项
 ├─ in-progress    5/15                           [#####---------------] 33%
 └─ checklist     89/111                          [################----] 80.2%
 ```
+### 2026-09-20：J4 `FunctionOperator`/`NullOperator` 原生字符串边界切片（`10473c4`）
+
+对照 canonical Java `FunctionOperator(String)` 与 `NullOperator(String)`，确认两者的名字输入都只转交 `Operator`，没有额外执行算法或 jree 对象身份要求。本批移除两个文件的直接 `jree`/`S` 运行时导入：`FunctionOperator` 的构造参数改用项目已有的 `JavaStringInput`，`NullOperator` 的非法参数消息改用原生字符串；执行、反馈和异常类型保持不变。新增 boxed `java.lang.String` 构造回归，避免只验证 native string 而漏掉 Java 输入边界。
+
+- 代码提交：`10473c4 refactor(023): 原生化Function与Null操作符边界`；基线为 `29eb859`。
+- focused 合同：`operator-boundary.test.ts` `18/18`。
+- M2：串行 `npm test` `371` 项，`369` 通过、`2` 跳过、`0` 失败；非增量 typecheck `0` 诊断；build `139` 个源文件；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。
+- 计划器：J4 owner、T1 risk-slice，`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`、`full_m1_required=false`。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、`simpleOperationTest.nal` 共 `4/4` 通过，0 failure；TS-only 使用冻结 Java 标杆。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\null-function-native-string-boundary-20260920-sentinel.jsonl`；SHA-256 `87D9507EDBA8C7F2A6C986369F93B194259646EA16E410331081E9AA3CC45C98`。
+- 冻结标杆：JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；Java source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；artifact SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 审计变化：direct jree import files `72→70`；migration `jree-runtime-type=1376/132→1376/131`；platform `coreCandidateFiles=67→65`、`jreeImportFiles=79→77`。当前 jree summary 仍有 `newLinkedHashSet=1`、`javaObjectFiles=1`，且 `package.json` 仍依赖 `jree@1.3.0`。
+
+本批只完成 J4 两个操作符的构造/异常文本边界，不勾选 J4 或 023 完成，不运行 M1-。下一步优先进入 J3 `introduceVariables` 的嵌套 Set/Map 合同审查；若扩大到责任簇收口，再按门禁提升到 M1-。后续 J1 桥接清理和 J5 宿主边界仍需独立验证。
+
+#### 本批后的完整进度树
+
+```text
+OpenNARS-304-ts 外部发布主线
+├─ F0 Canonical Java 基线                         [##########] 完成
+├─ F1 M1 功能等价                                 [##########] 完成（G0 有效 246/246）
+├─ F2 M2 零诊断/构建/公开入口                     [##########] 完成
+├─ F3 G0 迁移前保护回归                           [##########] 完成
+├─ 023 去 jree 原生 TypeScript 运行时             [##--------] 进行中
+│  ├─ J1 runtime compat                           [####------] 异常/观察函数已迁，桥清理待做
+│  ├─ J2 language/parser                           [####------] 字符串、解析、List/Map/Set 局部合同已验证
+│  ├─ J3 inference core                            [####------] Map/List/Set/float/数组局部合同已验证
+│  ├─ J4 operator/plugin                           [#######---] Operator/Add/Reflect/Function/Null 与反馈/文本边界已验证
+│  └─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待收口
+├─ 024 平台中立核心与宿主适配                     [##--------] P0-P2 完成，P3-P5 未完成
+├─ I J/P 汇合集成回归                             [----------] 待开始
+├─ O 正式性能门                                   [----------] 待开始
+└─ R RC、bundle、发布与用户授权 tag               [----------] 待开始
+
+LeanSpec 15 项
+├─ 001/002/003/004                                [##########] complete
+├─ 005/008                                      [#####-----] in-progress
+├─ 006/007/009/013/018/019                       [##########] complete
+└─ 020/023/024                                   [#####-----] in-progress
+
+登记统计（仅导航，不代表产品完成度）
+├─ complete      10/15                           [##########----------] 67%
+├─ in-progress    5/15                           [#####---------------] 33%
+└─ checklist     89/111                          [################----] 80.2%
+```

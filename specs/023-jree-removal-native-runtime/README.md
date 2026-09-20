@@ -739,6 +739,28 @@ O 正式性能门                                    [----------] 待开始
 R RC/bundle/tag                                [----------] 待开始
 ```
 
+### 2026-09-20：J4 `FunctionOperator`/`NullOperator` 原生字符串边界切片（`10473c4`）
+
+对照 canonical Java 确认 `FunctionOperator(String)` 与 `NullOperator(String)` 都只把名字
+传递给 `Operator`；本批不改执行算法，只把构造输入和异常文本边界从直接 jree 依赖收窄到
+项目兼容层/原生字符串。`FunctionOperator` 使用 `JavaStringInput`，`NullOperator` 使用原生
+`"Invalid number of arguments"` 创建既有异常类型；新增 boxed Java String 构造回归。
+
+- 代码提交：`10473c4`，基线 `29eb859`。
+- 直接合同：`operator-boundary.test.ts` `18/18`。
+- M2：`npm test` `371` 项，`369` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `139`；dist API 通过。
+- 计划器：J4、T1 risk-slice、`live_java_required=false`、`m1_minus_required=false`、
+  `full_m1_required=false`；不运行 M1-。
+- 受影响 NAL：4 个冻结 Java 标杆 TS-only 对照 `4/4`，无失败；证据 SHA-256
+  `87D9507EDBA8C7F2A6C986369F93B194259646EA16E410331081E9AA3CC45C98`。
+- 审计：direct jree import files `72→70`；migration `jree-runtime-type=1376/132→1376/131`；
+  platform `coreCandidateFiles=67→65`、`jreeImportFiles=79→77`。`jree@1.3.0`、运行时类身份、
+  领域 Map/Set 和兼容桥仍未收口。
+
+本批只完成 J4 两个操作符的局部合同，不能勾选 J4 或 023 完成，也不能宣称 jree 清零、
+完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。下一步优先审查 J3
+`introduceVariables` 的嵌套 Set/Map 判等、顺序、替换和空值合同。
+
 ### 2026-09-20：J4 `Add.function` 原生数值文本边界切片（`d97593e`）
 
 对照 Java `Add.java` 和 Apache Commons Lang 3.7，确认 `StringUtils.isNumeric` 只接受非空
