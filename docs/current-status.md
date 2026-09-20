@@ -2139,3 +2139,28 @@ J3/023 收口、jree 清零、完整 M1/#245 当前候选通过或性能等价�
 J1 异常桥（Argument/State/Assertion），同时继续规划 J2 count Map 生产者和 J3
 `introduceVariables` 嵌套 Set/Map；异常迁移必须保留 `instanceof`、`getMessage()`
 和继承观察面。
+
+### 2026-09-20：J1 原生断言错误合同切片（`b640677`）
+
+本批沿 J1 运行时兼容簇处理最小异常合同。Java 原始 `java.lang.AssertionError` 当前
+只有 `Sentence` 的 5 个生产调用，没有通用 `java.lang.Exception` 捕获链；因此先把
+它从 jree 继承改为项目内 `JavaThrowable -> JavaError -> JavaAssertionError`，并保留
+消息、cause、`instanceof Error` 和异常名称。`JavaIllegalArgumentException`、
+`JavaIllegalStateException` 仍留在兼容桥中，等待下一批连同捕获端一起迁移。
+
+- 代码提交：`b640677 refactor(023): 原生化断言错误合同`，基线为 `72d2e92`。
+- 计划器：J1 owner、T1、`plan_valid=true`；生产源码 2 个文件、62 行；不要求
+  live Java、M1- 或完整 M1，只要求 J1 定向测试和 3 个受影响 NAL。
+- 定向异常/Bag 测试：`13/13`；串行统一单测：`354` 项，`352` 通过、`2` 跳过、
+  `0` 失败；非增量 `tsc=0`；build/API、迁移扫描和平台审计均通过。
+- jree 审计：直接导入文件 `75`、`java.util=25`、`java.lang=74`、
+  `newLinkedHashSet=1`、高风险项 `41`。本批异常由 `jree-compat.ts` 再导出，
+  因而没有把导入计数下降误报为已去 jree。
+- 受影响 NAL：`nal1.0.nal`、`nal6.17.nal`、`toothbrush.nal` 共 `3/3` parity；
+  0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 Java/TS diff。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\j1-exception-assertion-20260920-sentinel.jsonl`。
+- 证据 SHA-256：`5A88870C71349172E6067C4841F4B98E3B901D96A374718D5F1E16D5EA95D3C6`。
+
+本批可以宣称 J1 的 `AssertionError` 原生合同已通过 M2 和风险哨兵；不能宣称
+J1 责任簇、023、jree 清零、当前完整 M1/#245 或性能验收完成。下一步应迁移
+`IllegalArgument/StateException` 的抛出端与 `instanceof` 捕获端，避免异常观察面分叉。

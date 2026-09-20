@@ -257,3 +257,25 @@ null、长度、顺序、short 值和 Java 31 倍哈希语义；两个链接类�
 本批只完成 J3 一个链接数组边界切片，不能勾选 J3/023 完成。下一步优先拆解
 J1 异常桥责任，保留 `instanceof`、`getMessage()` 和继承关系；J2 count Map 与
 J3 `introduceVariables` 的 Set/Map 继续按共同合同推进。
+
+### 2026-09-20：J1 原生断言错误合同切片（`b640677`）
+
+本批处理 J1 异常桥中最小且没有通用捕获链的 `AssertionError` 合同。新增
+`src/runtime/JavaExceptions.ts`，以无 jree 运行时导入的 `JavaThrowable`、`JavaError`、
+`JavaException`、`JavaRuntimeException` 建立项目内异常层级，并将
+`JavaAssertionError` 接入 `jree-compat.ts` 的兼容导出。保留 `getMessage()`、localized
+message、cause、`instanceof Error` 和异常名称；没有迁移 `IllegalArgument/StateException`，
+避免先改变抛出端而遗漏 `java.lang.Exception` 捕获端。
+
+- 代码提交：`b640677 refactor(023): 原生化断言错误合同`，基线 `72d2e92`。
+- 计划器：J1 owner、T1、`plan_valid=true`；不要求 M1-，要求 J1 定向合同和 3 个 NAL。
+- 定向测试 `13/13`；串行 M2 `354` 项，`352` 通过、`2` 跳过、`0` 失败；非增量
+  `tsc=0`；build、dist API、迁移扫描、平台审计通过。
+- 受影响 NAL `3/3` functional/parity；0 exception、0 marker missing、0 stall、
+  0 timeout、0 process limit、0 Java/TS diff。
+- 证据位于项目外：
+  `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\j1-exception-assertion-20260920-sentinel.jsonl`。
+- 证据 SHA-256：`5A88870C71349172E6067C4841F4B98E3B901D96A374718D5F1E16D5EA95D3C6`。
+
+本批只完成 J1 的一个异常合同切片，不能勾选 J1、023 或 jree 清零。下一批继续
+处理 `IllegalArgument/StateException`，要求抛出、捕获、消息和 cause 一起迁移。
