@@ -3,6 +3,10 @@ import { java } from "jree";
 import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { Term } from "../../language/Term.ts";
+import {
+    JavaIllegalArgumentException,
+    JavaIllegalStateException,
+} from "../../runtime/jree-compat.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
 // Java's StringUtils.isNumeric accepts an integer composed only of digits.
@@ -22,7 +26,7 @@ export class Add extends FunctionOperator {
 
     protected function(memory: Memory, x: Term[]): Term {
         if (x.length !== 2) {
-            throw new java.lang.IllegalStateException("Requires 2 arguments");
+            throw new JavaIllegalStateException("Requires 2 arguments");
         }
 
         let n1: int;
@@ -31,13 +35,13 @@ export class Add extends FunctionOperator {
         if (isNumeric(x[0].name())) {
             n1 = java.lang.Integer.parseInt(java.lang.String.valueOf(x[0].name()));
         } else {
-            throw new java.lang.IllegalArgumentException("1st parameter not an integer");
+            throw new JavaIllegalArgumentException("1st parameter not an integer");
         }
 
         if (isNumeric(x[1].name())) {
             n2 = java.lang.Integer.parseInt(java.lang.String.valueOf(x[1].name()));
         } else {
-            throw new java.lang.IllegalArgumentException("2nd parameter not an integer");
+            throw new JavaIllegalArgumentException("2nd parameter not an integer");
         }
 
         return new Term(java.lang.String.valueOf(n1 + n2));

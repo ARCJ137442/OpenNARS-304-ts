@@ -18,6 +18,12 @@ class CountProbe extends Count {
     }
 }
 
+class AddProbe extends Add {
+    public evaluate(args: Term[]): Term | null {
+        return this.function(null as never, args);
+    }
+}
+
 test("operator constructors preserve Java string boundaries", () => {
     assert.equal(String(new Add().name()), "^add");
     assert.equal(String(new Count().name()), "^count");
@@ -102,4 +108,34 @@ test("FunctionOperator preserves Java arity and overload exception contracts", (
             "Invalid number of arguments");
         return true;
     });
+});
+
+test("Add preserves Java argument and result contracts", () => {
+    const add = new AddProbe();
+
+    assert.throws(() => add.evaluate([]), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalStateException);
+        assert.ok(error instanceof java.lang.IllegalStateException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "Requires 2 arguments");
+        return true;
+    });
+
+    assert.throws(() => add.evaluate([Term.get("a"), Term.get("2")]), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalArgumentException);
+        assert.ok(error instanceof java.lang.IllegalArgumentException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "1st parameter not an integer");
+        return true;
+    });
+
+    assert.throws(() => add.evaluate([Term.get("1"), Term.get("b")]), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalArgumentException);
+        assert.ok(error instanceof java.lang.IllegalArgumentException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "2nd parameter not an integer");
+        return true;
+    });
+
+    assert.equal(String(add.evaluate([Term.get("2"), Term.get("3")])?.name()), "5");
 });
