@@ -2,16 +2,20 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { java, JavaObject } from "jree";
 import {
-    JavaClassNotFoundException,
     JavaDoubleCompat,
-    JavaIllegalAccessException,
     javaIdentityHashCode,
     javaStringHashCode,
     javaStringLength,
     javaStringValue,
     javaStringsEqual,
 } from "../../src/runtime/jree-compat.ts";
-import { JavaAssertionError, JavaError, JavaThrowable } from "../../src/runtime/JavaExceptions.ts";
+import {
+    JavaAssertionError,
+    JavaClassNotFoundException,
+    JavaError,
+    JavaIllegalAccessException,
+    JavaThrowable,
+} from "../../src/runtime/JavaExceptions.ts";
 
 test("javaStringLength normalizes jree and native string representations", () => {
     const boxed = new java.lang.String("abc");

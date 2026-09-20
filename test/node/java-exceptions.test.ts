@@ -3,11 +3,16 @@ import test from "node:test";
 
 import {
     JavaAssertionError,
+    JavaClassNotFoundException,
     JavaError,
     JavaException,
+    JavaIllegalArgumentException,
+    JavaIllegalStateException,
     JavaRuntimeException,
     JavaThrowable,
 } from "../../src/runtime/JavaExceptions.ts";
+import { java } from "jree";
+import "../../src/runtime/jree-compat.ts";
 
 test("native Java throwable hierarchy preserves type and message contracts", () => {
     const cause = new Error("cause");
@@ -23,13 +28,16 @@ test("native Java throwable hierarchy preserves type and message contracts", () 
 });
 
 test("native Java exception layers retain Java-shaped subclassing", () => {
-    class NativeIllegalArgumentException extends JavaRuntimeException {}
-    const error = new NativeIllegalArgumentException("bad argument");
+    const error = new JavaIllegalArgumentException("bad argument");
 
     assert.ok(error instanceof JavaException);
     assert.ok(error instanceof JavaRuntimeException);
     assert.equal(error.getMessage(), "bad argument");
-    assert.equal(error.toString(), "NativeIllegalArgumentException: bad argument");
+    assert.equal(error.toString(), "JavaIllegalArgumentException: bad argument");
+    assert.ok(error instanceof java.lang.Throwable);
+    assert.ok(error instanceof java.lang.Exception);
+    assert.ok(error instanceof java.lang.RuntimeException);
+    assert.ok(error instanceof java.lang.IllegalArgumentException);
 });
 
 test("native Java throwable supports Java-style cause and message updates", () => {
@@ -41,4 +49,16 @@ test("native Java throwable supports Java-style cause and message updates", () =
     assert.equal(error.getMessage(), "updated");
     assert.equal(error.getCause(), cause);
     assert.equal(error.message, "updated");
+});
+
+test("native Java exception compatibility preserves old jree instanceof checks", () => {
+    const state = new JavaIllegalStateException("state");
+    const missing = new JavaClassNotFoundException("missing");
+
+    assert.ok(state instanceof java.lang.IllegalStateException);
+    assert.ok(state instanceof java.lang.RuntimeException);
+    assert.ok(missing instanceof java.lang.Exception);
+    assert.ok(missing instanceof java.lang.Throwable);
+    assert.equal(state.getMessage(), "state");
+    assert.equal(missing.getMessage(), "missing");
 });

@@ -1,6 +1,37 @@
 import { Class, JavaObject, java } from "jree";
 import type { long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
-export { JavaAssertionError } from "./JavaExceptions.ts";
+import {
+    JavaAssertionError,
+    JavaClassNotFoundException,
+    JavaError,
+    JavaException,
+    JavaIllegalAccessError,
+    JavaIllegalAccessException,
+    JavaIllegalArgumentException,
+    JavaIllegalStateException,
+    JavaInstantiationException,
+    JavaInvocationTargetException,
+    JavaNoSuchMethodException,
+    JavaParseException,
+    JavaParserConfigurationException,
+    JavaRuntimeException,
+    JavaSAXException,
+    JavaThrowable,
+} from "./JavaExceptions.ts";
+export {
+    JavaAssertionError,
+    JavaClassNotFoundException,
+    JavaIllegalAccessError,
+    JavaIllegalAccessException,
+    JavaIllegalArgumentException,
+    JavaIllegalStateException,
+    JavaInstantiationException,
+    JavaInvocationTargetException,
+    JavaNoSuchMethodException,
+    JavaParseException,
+    JavaParserConfigurationException,
+    JavaSAXException,
+} from "./JavaExceptions.ts";
 
 // jree 1.3.0 constructs and parses an Error stack in every JavaObject class
 // that has not inherited its internal "#fqn" marker.  The published runtime
@@ -114,22 +145,38 @@ export class JavaDoubleCompat extends java.lang.Number {
     }
 }
 
-/** Keep Java's argument exception at the shared compatibility boundary. */
-export class JavaIllegalArgumentException extends java.lang.IllegalArgumentException {}
+/**
+ * Keep the old jree instanceof observations while the compatibility bridge
+ * still exists.  The native exception hierarchy remains jree-free; these
+ * predicates are only a temporary adapter for translated catch sites.
+ */
+type JavaConstructor = Function & {
+    [Symbol.hasInstance]?: (value: unknown) => boolean;
+};
 
-/** Keep Java's state exception at the shared compatibility boundary. */
-export class JavaIllegalStateException extends java.lang.IllegalStateException {}
+const registerJreeInstanceof = (
+    constructor: unknown,
+    predicate: (value: unknown) => boolean,
+): void => {
+    if (typeof constructor !== "function") return;
+    const target = constructor as JavaConstructor;
+    const original = target[Symbol.hasInstance];
+    Object.defineProperty(target, Symbol.hasInstance, {
+        configurable: true,
+        value(value: unknown): boolean {
+            return predicate(value) || (original?.call(target, value) ?? false);
+        },
+    });
+};
 
-/** jree omits several Java exception classes used by the translated sources. */
-export class JavaIllegalAccessError extends java.lang.Error {}
-export class JavaInstantiationException extends java.lang.Exception {}
-export class JavaNoSuchMethodException extends java.lang.Exception {}
-export class JavaIllegalAccessException extends java.lang.Exception {}
-export class JavaClassNotFoundException extends java.lang.Exception {}
-export class JavaInvocationTargetException extends java.lang.Exception {}
-export class JavaParserConfigurationException extends java.lang.Exception {}
-export class JavaSAXException extends java.lang.Exception {}
-export class JavaParseException extends java.lang.Exception {}
+registerJreeInstanceof(java.lang.Throwable, value => value instanceof JavaThrowable);
+registerJreeInstanceof(java.lang.Error, value => value instanceof JavaError);
+registerJreeInstanceof(java.lang.Exception, value => value instanceof JavaException);
+registerJreeInstanceof(java.lang.RuntimeException, value => value instanceof JavaRuntimeException);
+registerJreeInstanceof(java.lang.IllegalArgumentException,
+    value => value instanceof JavaIllegalArgumentException);
+registerJreeInstanceof(java.lang.IllegalStateException,
+    value => value instanceof JavaIllegalStateException);
 
 /** jree declares primitive char as a number, while translated Narsese uses string code units at runtime. */
 export type JavaChar = string;

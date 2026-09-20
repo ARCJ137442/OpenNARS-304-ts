@@ -45,6 +45,15 @@ export class JavaThrowable extends Error {
         this.message = this.detailMessage ?? "";
         return this;
     }
+
+    public printStackTrace(stream?: { println(value: unknown): void }): void {
+        const lines = `${this.name}: ${this.detailMessage ?? ""}\n${this.stack ?? ""}`;
+        if (stream !== undefined) {
+            stream.println(lines);
+            return;
+        }
+        console.error(lines);
+    }
 }
 
 /** Java original type: java.lang.Error. */
@@ -58,3 +67,22 @@ export class JavaRuntimeException extends JavaException {}
 
 /** Java original type: java.lang.AssertionError. */
 export class JavaAssertionError extends JavaError {}
+
+/** Java original type: java.lang.IllegalArgumentException. */
+export class JavaIllegalArgumentException extends JavaRuntimeException {}
+
+/** Java original type: java.lang.IllegalStateException. */
+export class JavaIllegalStateException extends JavaRuntimeException {}
+
+/** Java original type: java.lang.IllegalAccessError. */
+export class JavaIllegalAccessError extends JavaError {}
+
+/** Java original types: checked exceptions omitted by jree. */
+export class JavaInstantiationException extends JavaException {}
+export class JavaNoSuchMethodException extends JavaException {}
+export class JavaIllegalAccessException extends JavaException {}
+export class JavaClassNotFoundException extends JavaException {}
+export class JavaInvocationTargetException extends JavaException {}
+export class JavaParserConfigurationException extends JavaException {}
+export class JavaSAXException extends JavaException {}
+export class JavaParseException extends JavaException {}
