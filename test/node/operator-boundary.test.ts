@@ -76,6 +76,14 @@ test("Reflect.sop preserves the translated Java varargs-array overload", () => {
     assert.equal(String(reflected.name()), "<(*,a) --> inheritance>");
 });
 
+test("Reflect.sop normalizes native and boxed Java string operator names", () => {
+    const native = ReflectOperator.sop("inheritance", [Term.get("a")]);
+    const boxed = ReflectOperator.sop(new java.lang.String("inheritance"), [Term.get("a")]);
+
+    assert.equal(String(native.name()), "<(*,a) --> inheritance>");
+    assert.equal(String(boxed.name()), "<(*,a) --> inheritance>");
+});
+
 test("Count preserves Java's invalid-input exception contract", () => {
     const count = new CountProbe();
 

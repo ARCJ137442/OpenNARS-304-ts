@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/misc/Reflect.java
-import { java, S } from "jree";
 import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { CompoundTerm } from "../../language/CompoundTerm.ts";
@@ -12,7 +11,9 @@ import { Symbols } from "../../io/Symbols.ts";
 import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
+    javaStringValue,
 } from "../../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -46,13 +47,13 @@ export class Reflect extends FunctionOperator {
         return Reflect.getMetaTerm(content);
     }
 
-    public static sop(s: Statement, operatorName: string | java.lang.String): Term;
+    public static sop(s: Statement, operatorName: JavaStringInput): Term;
 
     public static sop(s: Statement, predicate: Term): Term;
 
-    public static sop(operatorName: string | java.lang.String, t: Term[]): Term;
+    public static sop(operatorName: JavaStringInput, t: Term[]): Term;
 
-    public static sop(operatorName: string | java.lang.String, ...t: Term[]): Term;
+    public static sop(operatorName: JavaStringInput, ...t: Term[]): Term;
 
     /**
      * <(*,subject,object) --> predicate>
@@ -74,10 +75,10 @@ export class Reflect extends FunctionOperator {
                     const product = Product.make(Reflect.getMetaTerm(s.getSubject()), Reflect.getMetaTerm(s.getPredicate()));
                     const predicate = second instanceof Term
                         ? second
-                        : Term.get(second as java.lang.String);
+                        : Term.get(javaStringValue(second));
                     return Inheritance.make(product, predicate);
                 }
-                const operatorName = String(first);
+                const operatorName = javaStringValue(first);
                 const terms = second as Term[];
                 let m: Term[] = new Array<Term>(terms.length);
                 let i: int = 0;
@@ -97,7 +98,7 @@ export class Reflect extends FunctionOperator {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
