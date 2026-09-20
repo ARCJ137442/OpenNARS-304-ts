@@ -9,7 +9,12 @@ import { Debug } from "../main/Debug.ts";
 import type { Product } from "../language/Product.ts";
 import type { Statement } from "../language/Statement.ts";
 import type { BudgetValue } from "../entity/BudgetValue.ts";
-import { isJavaException, javaStringValue, type JavaStringInput } from "../runtime/jree-compat.ts";
+import {
+    isJavaException,
+    javaStringValue,
+    toJavaString,
+    type JavaStringInput,
+} from "../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -22,6 +27,9 @@ import type { Plugin } from "../plugin/Plugin.ts";
 // emptiness and iteration. Keep this as a named operator feedback contract
 // instead of mechanically weakening domain Set/Map abstractions elsewhere.
 export type OperatorFeedback = Task[] | null;
+
+const javaArrayToString = (values: unknown[]): string =>
+    `[${values.map((value) => value === null || value === undefined ? "null" : javaStringValue(value)).join(", ")}]`;
 
 
 
@@ -50,7 +58,7 @@ export abstract class Operator extends Term implements Plugin {
                 const [name] = args as [JavaStringInput];
 
 
-                super(javaStringValue(name));
+                super(toJavaString(name));
                 if (!javaStringValue(name).startsWith("^"))
                     throw new JavaIllegalStateException("Operator name needs ^ prefix");
 
@@ -197,7 +205,7 @@ export abstract class Operator extends Term implements Plugin {
                 const className = typeof exception.getClass === "function"
                     ? javaStringValue(exception.getClass().getSimpleName())
                     : exception.name;
-                feedback = new java.lang.String(`${className}: ${javaStringValue(exception.getMessage())}`);
+                feedback = `${className}: ${javaStringValue(exception.getMessage())}`;
             }
 
             memory.emit(OutputHandler.EXE.class, new Operator.ExecutionResult(operation, feedback));
@@ -221,7 +229,7 @@ export abstract class Operator extends Term implements Plugin {
             return this.operation.getTask();
         }
 
-        public toString(): java.lang.String {
+        public toString(): string {
             let b: BudgetValue = null as unknown as BudgetValue;
             const task = this.getTask();
             if (task !== null) {
@@ -231,8 +239,8 @@ export abstract class Operator extends Term implements Plugin {
             let operator: Operator = this.operation.getOperator();
 
             const budgetPrefix = b !== null ? javaStringValue(b.toStringExternal()) + " " : "";
-            return new java.lang.String(budgetPrefix + javaStringValue(operator) +
-                "(" + String(java.util.Arrays.toString(args)) + ")=" + javaStringValue(this.feedback));
+            return budgetPrefix + javaStringValue(operator) +
+                "(" + javaArrayToString(args) + ")=" + javaStringValue(this.feedback);
         }
 
     };
