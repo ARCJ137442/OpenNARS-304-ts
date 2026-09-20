@@ -70,3 +70,36 @@ test("Operation and NullOperator preserve Java invalid-argument boundaries", () 
         return true;
     });
 });
+
+test("FunctionOperator preserves Java arity and overload exception contracts", () => {
+    const add = new Add();
+    const execute = (add as unknown as {
+        execute: (...args: unknown[]) => unknown;
+    }).execute.bind(add);
+
+    assert.throws(() => execute(null, [], null, null), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalStateException);
+        assert.ok(error instanceof java.lang.IllegalStateException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "Requires at least 1 arguments");
+        return true;
+    });
+
+    assert.throws(() => execute(null, [Term.get("a"), Term.get("b")], null, null),
+        (error: unknown) => {
+            assert.ok(error instanceof JavaIllegalStateException);
+            assert.ok(error instanceof java.lang.IllegalStateException);
+            assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+                "Requires at least 2 arguments");
+            return true;
+        });
+
+    const equals = (add as unknown as { equals: (...args: unknown[]) => unknown }).equals.bind(add);
+    assert.throws(() => equals(), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalArgumentException);
+        assert.ok(error instanceof java.lang.IllegalArgumentException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "Invalid number of arguments");
+        return true;
+    });
+});
