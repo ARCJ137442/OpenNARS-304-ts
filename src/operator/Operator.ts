@@ -10,7 +10,7 @@ import { Debug } from "../main/Debug.ts";
 import type { Product } from "../language/Product.ts";
 import type { Statement } from "../language/Statement.ts";
 import type { BudgetValue } from "../entity/BudgetValue.ts";
-import { isJavaException, javaStringValue } from "../runtime/jree-compat.ts";
+import { isJavaException, javaStringValue, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -239,10 +239,9 @@ export abstract class Operator extends Term implements Plugin {
     };
 
 
-    public static addPrefixIfMissing(opName: java.lang.String): java.lang.String {
-        if (!opName.startsWith(new java.lang.String("^")))
-            return new java.lang.String("^" + String(opName));
-        return opName;
+    public static addPrefixIfMissing(opName: JavaStringInput): string {
+        const text = javaStringValue(opName);
+        return text.startsWith("^") ? text : `^${text}`;
     }
 
 }

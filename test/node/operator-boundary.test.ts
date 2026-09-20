@@ -138,6 +138,12 @@ test("Operator.operationExecutionString returns native Java-equivalent output te
     assert.equal(emptyRendered, "^count()");
 });
 
+test("Operator.addPrefixIfMissing normalizes boxed and native Java String inputs", () => {
+    assert.equal(Operator.addPrefixIfMissing(new java.lang.String("add")), "^add");
+    assert.equal(Operator.addPrefixIfMissing("^add"), "^add");
+    assert.equal(typeof Operator.addPrefixIfMissing("add"), "string");
+});
+
 test("FunctionOperator preserves Java arity and overload exception contracts", () => {
     const add = new Add();
     const execute = (add as unknown as {

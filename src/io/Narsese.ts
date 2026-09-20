@@ -398,7 +398,7 @@ export class Narsese implements Parser {
             let pClose: int = s.lastIndexOf(')'.charCodeAt(0));
             if ((pOpen !== -1) && (pClose !== -1) && (pClose === s.length() - 1)) {
 
-                let operatorString: java.lang.String = Operator.addPrefixIfMissing(s.substring(0, pOpen));
+                const operatorString: string = Operator.addPrefixIfMissing(s.substring(0, pOpen));
 
                 let operator: Operator = this.memory.getOperator(operatorString);
 
