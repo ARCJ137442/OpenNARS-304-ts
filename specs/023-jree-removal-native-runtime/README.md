@@ -685,6 +685,40 @@ jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价
 
 本批只能宣称 J4 前缀文本边界及其 J2 解析支持点完成局部合同、串行 M2、构建、dist API 与 5 个受影响 NAL 验证；不能宣称 J4/023 收口、jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。下一批首选审查 `Add.function` 的 Java/TS 数值文本合同；当前 TS 的 `isNumeric` 带 `.trim()`，必须先锁定其与 Apache `StringUtils.isNumeric` 的边界，再决定去掉该文件的直接 jree 导入。
 
+### 2026-09-20：J4 `Reflect` 原生字符串边界切片（`921fb10`）
+
+对照 Java `Reflect.java`，确认 `sop` 四组重载和 `getMetaTerm` 元项递归结构。本批只移除
+直接 `jree`/`S` 导入：用 `JavaStringInput` 描述 Java/native 字符串重载，用
+`javaStringValue` 归一化 operator name 与 `Term.get` 输入，保留异常消息和原有元项构造。
+
+- 代码提交：`921fb10`；基线为 `180ec03`。
+- 直接合同：`operator-boundary.test.ts` `17/17`；串行 M2 `370` 项，`368` 通过、`2` 跳过、
+  `0` 失败；非增量 `tsc=0`；build `139` 个源文件；dist API 通过。
+- 计划器：J4 owner、T1 risk-slice；`live_java_required=false`、`m1_minus_required=false`、
+  `full_m1_required=false`。
+- 受影响 NAL：4/4 通过，0 exception、0 marker missing、0 stall、0 timeout、0 process limit、
+  0 Java/TS diff。证据 SHA-256：`4B8404B37715BCD4CADF642E662F19CE485BB0EBE43389C25B37DBA6A9C899E5`。
+- 审计变化：direct jree import files `74→73`；migration `jree-runtime-type` `1385/134→1382/133`；
+  platform `coreCandidateFiles` `69→68`、`jreeImportFiles` `81→80`。
+
+本批没有勾选 J4 或 023 完成，也没有运行 M1-。下一步先补 `Statement` 重载的真实调用对照，
+再继续剩余 J4 字符串/异常边界。
+
+#### 当前阶段进度树
+
+```text
+023 jree 原生 TypeScript 运行时                 [##--------] 进行中
+├─ J1 runtime compat                            [####------] 异常/观察函数已迁，桥清理待做
+├─ J2 language/parser                            [####------] 字符串/解析/List/Map/Set 局部合同
+├─ J3 inference core                            [####------] Map/List/Set/float/数组局部合同
+├─ J4 operator/plugin                           [######----] 异常/数组/反馈/Object/文本/前缀/Add/Reflect，未收口
+└─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待做
+024 平台中立核心与宿主适配                       [##--------] P0-P2 完成，P3-P5 未完成
+I J/P 汇合集成回归                              [----------] 待开始
+O 正式性能门                                    [----------] 待开始
+R RC/bundle/tag                                [----------] 待开始
+```
+
 ### 2026-09-20：J4 `Add.function` 原生数值文本边界切片（`d97593e`）
 
 对照 Java `Add.java` 和 Apache Commons Lang 3.7，确认 `StringUtils.isNumeric` 只接受非空
