@@ -8,6 +8,7 @@ import { Statement } from "../language/Statement.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Operator } from "./Operator.ts";
 import type { Task } from "../entity/Task.ts";
+import { JavaIllegalArgumentException } from "../runtime/jree-compat.ts";
 
 
 
@@ -50,7 +51,7 @@ export class Operation extends Inheritance {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -106,7 +107,7 @@ export class Operation extends Inheritance {
         if (args.length === 5) {
             return Statement.make(...args as [Symbols.NativeOperator, Term, Term, boolean, int]);
         }
-        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
     }
 
     public getOperator(): Operator {

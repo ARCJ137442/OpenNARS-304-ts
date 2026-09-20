@@ -6,7 +6,11 @@ import { Add } from "../../src/operator/misc/Add.ts";
 import { Count } from "../../src/operator/misc/Count.ts";
 import { Reflect as ReflectOperator } from "../../src/operator/misc/Reflect.ts";
 import { NullOperator } from "../../src/operator/NullOperator.ts";
-import { JavaIllegalStateException } from "../../src/runtime/jree-compat.ts";
+import { Operation } from "../../src/operator/Operation.ts";
+import {
+    JavaIllegalArgumentException,
+    JavaIllegalStateException,
+} from "../../src/runtime/jree-compat.ts";
 
 class CountProbe extends Count {
     public evaluate(args: Term[]): Term | null {
@@ -40,6 +44,29 @@ test("Count preserves Java's invalid-input exception contract", () => {
 
     assert.throws(() => count.evaluate([Term.get("a")]), (error: unknown) => {
         assert.ok(error instanceof JavaIllegalStateException);
+        return true;
+    });
+});
+
+test("Operation and NullOperator preserve Java invalid-argument boundaries", () => {
+    const operationFactory = Operation.make as unknown as (...args: unknown[]) => unknown;
+
+    assert.throws(() => operationFactory(Term.get("a")), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalArgumentException);
+        assert.ok(error instanceof java.lang.IllegalArgumentException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "Invalid number of arguments");
+        return true;
+    });
+
+    assert.throws(() => new (NullOperator as unknown as new (...args: unknown[]) => NullOperator)(
+        "^native",
+        "unexpected",
+    ), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalArgumentException);
+        assert.ok(error instanceof java.lang.IllegalArgumentException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "Invalid number of arguments");
         return true;
     });
 });
