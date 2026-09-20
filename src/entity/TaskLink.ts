@@ -1,5 +1,4 @@
 //! Java source: opennars/entity/TaskLink.java
-import { java, S } from "jree";
 import type { int, long, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { Task } from "./Task.ts";
@@ -9,7 +8,14 @@ import type { TLink } from "./TLink.ts";
 import type { Parameters } from "../main/Parameters.ts";
 import type { Term } from "../language/Term.ts";
 import { NativeDeque } from "../runtime/NativeDeque.ts";
-import { javaStringValue } from "../runtime/jree-compat.ts";
+import {
+    JavaIllegalArgumentException,
+    javaStringValue,
+} from "../runtime/jree-compat.ts";
+import {
+    javaInt16ArrayEquals,
+    javaInt16ArrayHashCode,
+} from "../runtime/JavaArrays.ts";
 
 
 
@@ -94,7 +100,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
         this.targetTask = t;
         this.recordLength = recordLength;
         this.records = new NativeDeque<TaskLink.Recording>();
-        this.hash = (((this.targetTask.hashCode() * 31) + this.type) * 31) + (this.index !== null ? java.util.Arrays.hashCode(this.index) : 0);
+        this.hash = (((this.targetTask.hashCode() * 31) + this.type) * 31) + javaInt16ArrayHashCode(this.index);
     }
 
     public hashCode(): int {
@@ -111,7 +117,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
         if (obj instanceof TaskLink) {
             let t: TaskLink = obj as TaskLink;
             return this.hash === t.hash && this.type === t.type
-                && java.util.Arrays.equals(this.index ?? undefined, t.index ?? undefined)
+                && javaInt16ArrayEquals(this.index, t.index)
                 && this.targetTask.equals(t.targetTask);
         }
         return false;
@@ -203,7 +209,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }

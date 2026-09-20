@@ -1,12 +1,19 @@
 //! Java source: opennars/entity/TermLink.java
-import { java, S } from "jree";
 import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { Term } from "../language/Term.ts";
 import { BudgetValue } from "./BudgetValue.ts";
 import { Symbols } from "../io/Symbols.ts";
 import type { TLink } from "./TLink.ts";
-import { javaStringValue } from "../runtime/jree-compat.ts";
+import {
+    JavaIllegalArgumentException,
+    javaStringValue,
+} from "../runtime/jree-compat.ts";
+import {
+    javaInt16ArrayEquals,
+    javaInt16ArrayHashCode,
+    javaObjectsHash,
+} from "../runtime/JavaArrays.ts";
 
 
 
@@ -177,7 +184,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -203,7 +210,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
 
             if (this.type !== t.type)
                 return false;
-            if (!java.util.Arrays.equals(t.index, this.index))
+            if (!javaInt16ArrayEquals(t.index, this.index))
                 return false;
 
             let tt: Term = t.target;
@@ -223,7 +230,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      */
     protected init(): int {
         // TODO lazy calculate this?
-        let h: int = java.util.Objects.hash(this.target, this.type, java.util.Arrays.hashCode(this.index));
+        let h: int = javaObjectsHash(this.target, this.type, javaInt16ArrayHashCode(this.index));
         return h;
     }
 
