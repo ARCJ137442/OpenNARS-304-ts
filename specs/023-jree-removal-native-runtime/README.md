@@ -642,3 +642,32 @@ R RC/bundle/tag                                [----------] 待开始
 J4 切片序列：异常生产者/捕获 → Operation 字符串 → FunctionOperator.arraycopy
           → OperatorFeedback List/null/empty → Operator Object 事件载荷（3585f6a）
 ```
+
+### 2026-09-20：J4 `Operator.operationExecutionString` 原生文本边界切片（`5c8042b`）
+
+对照 canonical Java `Operator.operationExecutionString`，确认该方法只读取 operator 与
+Product 参数的最终文本，没有 TypeScript 调用者，也没有 Java `String` 对象身份、反射或
+可变方法的消费。将局部 `java.lang.String` 中间值和返回包装改为原生 `string`，保留
+Product 前缀 `"(*,"` 的 `substring(3)` 规则、operator 文本与参数顺序；`addPrefixIfMissing`
+仍在 Narsese 活跃解析链中，本批不混改。
+
+- 代码提交：`5c8042b173fed85762df2c4ce603f3747dfa15d4`，基线为 `ec3e014`。
+- 直接合同：`operator-boundary.test.ts` `14/14`，新增 `typeof` 与 `^add(a,b)` 断言。
+- M2：串行 `npm test` `366` 项，`364` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；
+  build `139` 个源文件；dist API 通过。
+- 计划器：J4 owner、T1、`plan_valid=true`、`live_java_required=false`、
+  `m1_minus_required=false`、`full_m1_required=false`；未运行 M1-/#245。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal` 共 `4/4`，0 exception、0 marker missing、0 stall、0 timeout、
+  0 process limit、0 Java/TS diff；TS 单线程 cold。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\operator-execution-text-20260920-sentinel.jsonl`；
+  SHA-256 `E99B718DCE8724AE9EB9611AADC22B5E884BF698F98FE5F57C59C5D1D64D7F1C`。
+- 当前审计：migration scan `248` 文件，`java-string-method=234/62`、
+  `java-collection-method=753/108`、`jree-runtime-type=1394/135`；jree summary
+  `directJreeImportFiles=75`、`newArrayList=0`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、
+  `javaObjectFiles=1`；platform summary `185` 文件、`coreCandidateFiles=70`、
+  `jreeImportFiles=82`。
+
+本批只完成 J4 一个无调用者的执行文本边界，不能勾选 J4 或本 spec 完成；不能宣称
+jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。下一批先审查
+`addPrefixIfMissing` 的 Java/TS 输入输出合同，再决定是否需要带一个 J2 支持文件迁移。

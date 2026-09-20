@@ -129,9 +129,13 @@ test("Operation.makeName preserves Java StringBuilder text semantics", () => {
 test("Operator.operationExecutionString returns native Java-equivalent output text", () => {
     const operation = Operation.make(new Add(), [Term.get("a"), Term.get("b")], true);
     const rendered = Operator.operationExecutionString(operation);
+    const emptyOperation = Operation.make(new Count(), [], true);
+    const emptyRendered = Operator.operationExecutionString(emptyOperation);
 
     assert.equal(typeof rendered, "string");
     assert.equal(rendered, "^add(a,b)");
+    assert.equal(typeof emptyRendered, "string");
+    assert.equal(emptyRendered, "^count()");
 });
 
 test("FunctionOperator preserves Java arity and overload exception contracts", () => {

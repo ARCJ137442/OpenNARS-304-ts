@@ -2690,3 +2690,70 @@ OpenNARS-304-ts
 J4 本批链路：异常生产者/捕获 → Operation 字符串 → FunctionOperator 参数复制
           → OperatorFeedback List/null/empty → Operator Object 事件载荷（3585f6a）
 ```
+
+### 2026-09-20：J4 `Operator.operationExecutionString` 原生文本边界切片（`5c8042b`）
+
+对照 canonical Java `Operator.operationExecutionString`，确认该方法仅从
+`Statement.getPredicate()` 与 `getSubject().toString()` 生成最终执行文本；当前 TypeScript
+没有调用者，也没有消费者依赖 Java `String` 的对象身份、反射或可变方法。因此本批只移除
+局部 `java.lang.String` 中间值和返回包装，改用 `javaStringValue` 加原生模板字符串；保留
+Java 的 Product 前缀 `"(*,"` 跳过规则、operator 文本和参数顺序。`addPrefixIfMissing` 仍在
+Narsese 活跃解析链中，未与本批混改。
+
+- 代码提交：`5c8042b173fed85762df2c4ce603f3747dfa15d4`，基线为 `ec3e014`。
+- 直接合同：`operator-boundary.test.ts` `14/14`，新增原生返回形状与 `^add(a,b)` 输出断言。
+- M2：串行 `npm test` `366` 项，`364` 通过、`2` 跳过、`0` 失败，耗时约 `106823 ms`；
+  非增量 typecheck `0` 诊断；build `139` 个源文件；dist API `cycles=2`、`cycleEnds=2`、
+  `outputSignals=1`、`stopped=true`。
+- 计划器：J4 owner、T1、`plan_valid=true`、`live_java_required=false`、
+  `m1_minus_required=false`、`full_m1_required=false`；本批不满足责任簇收口条件，未运行 M1-/#245。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal` 共 `4/4`；0 exception、0 marker missing、0 stall、0 timeout、
+  0 process limit、0 Java/TS diff；TS 单线程 cold 运行。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\operator-execution-text-20260920-sentinel.jsonl`；
+  SHA-256 `E99B718DCE8724AE9EB9611AADC22B5E884BF698F98FE5F57C59C5D1D64D7F1C`。
+- 冻结 Java 标杆仍为 JSONL `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，
+  source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，canonical JAR
+  `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 当前审计：migration scan `248` 文件，`java-string-method=234/62`、
+  `java-collection-method=753/108`、`jree-runtime-type=1394/135`；jree summary
+  `directJreeImportFiles=75`、`newArrayList=0`、`newLinkedHashMap=0`、`newLinkedHashSet=1`、
+  `javaObjectFiles=1`；platform summary `185` 文件、`coreCandidateFiles=70`、`jreeImportFiles=82`。
+
+本批只完成 J4 一个无调用者的执行文本边界，不能宣称 J4/023 收口、jree 清零、完整
+M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。普通切片继续复用冻结 Java 标杆；
+责任簇收口或 023/024 阶段验收时才现跑 live Java 与完整矩阵。
+
+#### 当前从头到尾与 spec 级 ASCII 进度（不替代功能事实）
+
+```text
+OpenNARS-304-ts 外部发布主线
+├─ F0 Canonical Java 基线                         [##########] 完成
+├─ F1 M1 功能等价                                 [##########] 完成（G0 有效 246/246）
+├─ F2 M2 零诊断/构建/公开入口                     [##########] 完成
+├─ F3 G0 迁移前保护回归                           [##########] 完成
+├─ 023 去 jree 原生 TypeScript 运行时             [##--------] 进行中
+│  ├─ J1 runtime compat                           [####------] 异常/观察函数已迁，桥清理待做
+│  ├─ J2 language/parser                           [####------] 字符串、解析、List/Map/Set 局部合同
+│  ├─ J3 inference core                            [####------] Map/List/Set/float/数组局部合同
+│  ├─ J4 operator/plugin                           [####------] 异常/数组/反馈/Object/文本边界切片
+│  └─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待做
+├─ 024 平台中立核心与宿主适配                     [##--------] P0-P2 完成，P3-P5 未完成
+├─ I J/P 汇合集成回归                             [----------] 待开始
+├─ O 正式性能门                                   [----------] 待开始
+└─ R RC、bundle、发布与用户授权 tag              [----------] 待开始
+
+LeanSpec 15 项
+├─ 001/002/003/004                                [##########] complete
+├─ 005/008                                      [#####-----] in-progress
+├─ 006/007/009/013/018/019                       [##########] complete
+└─ 020/023/024                                   [#####-----] in-progress
+
+登记统计（仅导航）
+├─ complete      10/15                           [##########----------] 67%
+├─ in-progress    5/15                           [#####---------------] 33%
+└─ checklist     89/111                          [################----] 80.2%
+```
+
+登记统计不替代 M1/M2、NAL 结果矩阵、责任簇证据或发布退出条件；下一道真实门是
+023 五簇收口与 024 P3-P5，随后才是 J/P 集成、正式性能和 RC。
