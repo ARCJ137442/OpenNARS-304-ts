@@ -10,7 +10,11 @@ import { Task } from "../../entity/Task.ts";
 import { TruthValue } from "../../entity/TruthValue.ts";
 import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { toRuntimeLong, type JavaLongInput } from "../../runtime/jree-compat.ts";
+import {
+    JavaIllegalArgumentException,
+    toRuntimeLong,
+    type JavaLongInput,
+} from "../../runtime/jree-compat.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { Events } from "../../io/events/Events.ts";
@@ -86,7 +90,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }

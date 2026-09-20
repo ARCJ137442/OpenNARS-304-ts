@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { java } from "jree";
 import { Term } from "../../src/language/Term.ts";
+import { Anticipate } from "../../src/operator/mental/Anticipate.ts";
 import { Add } from "../../src/operator/misc/Add.ts";
 import { Count } from "../../src/operator/misc/Count.ts";
 import { Reflect as ReflectOperator } from "../../src/operator/misc/Reflect.ts";
@@ -161,6 +162,29 @@ test("Reflect preserves Java argument and overload contracts", () => {
 
     const sop = ReflectOperator.sop as unknown as (...args: unknown[]) => unknown;
     assert.throws(() => sop(), (error: unknown) => {
+        assert.ok(error instanceof JavaIllegalArgumentException);
+        assert.ok(error instanceof java.lang.IllegalArgumentException);
+        assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+            "Invalid number of arguments");
+        return true;
+    });
+});
+
+test("Anticipate preserves its invalid-constructor exception contract", () => {
+    assert.throws(() => new (Anticipate as unknown as new (...args: unknown[]) => Anticipate)(0.1),
+        (error: unknown) => {
+            assert.ok(error instanceof JavaIllegalArgumentException);
+            assert.ok(error instanceof java.lang.IllegalArgumentException);
+            assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
+                "Invalid number of arguments");
+            return true;
+        });
+});
+
+test("Operator.call preserves its invalid-overload exception contract", () => {
+    const call = new Add().call as unknown as (...args: unknown[]) => unknown;
+
+    assert.throws(() => call(), (error: unknown) => {
         assert.ok(error instanceof JavaIllegalArgumentException);
         assert.ok(error instanceof java.lang.IllegalArgumentException);
         assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
