@@ -9,6 +9,8 @@ import { Reflect as ReflectOperator } from "../../src/operator/misc/Reflect.ts";
 import { NullOperator } from "../../src/operator/NullOperator.ts";
 import { Operation } from "../../src/operator/Operation.ts";
 import { FunctionOperator } from "../../src/operator/FunctionOperator.ts";
+import { FeelBusy } from "../../src/operator/mental/FeelBusy.ts";
+import { FeelSatisfied } from "../../src/operator/mental/FeelSatisfied.ts";
 import { Operator, type OperatorFeedback } from "../../src/operator/Operator.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import type { Memory } from "../../src/storage/Memory.ts";
@@ -83,6 +85,11 @@ test("operator constructors preserve Java string boundaries", () => {
     assert.equal(String(new NullOperator().name()), "^sample");
     assert.equal(String(new NullOperator("^native").name()), "^native");
     assert.equal(String(new NullOperator(new java.lang.String("^boxed")).name()), "^boxed");
+});
+
+test("Feel constructors preserve the Java native String contract", () => {
+    assert.equal(String(new FeelBusy().name()), "^feelBusy");
+    assert.equal(String(new FeelSatisfied().name()), "^feelSatisfied");
 });
 
 test("FunctionOperator accepts the Java String constructor boundary", () => {

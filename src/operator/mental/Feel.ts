@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/mental/Feel.java
-import { java } from "jree";
 import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -25,11 +24,11 @@ import { javaStringValue } from "../../runtime/jree-compat.ts";
 export abstract class Feel extends Operator {
     private readonly feelingTerm: Term;
 
-    public constructor(name: java.lang.String | string) {
-        super(javaStringValue(name));
+    public constructor(name: string) {
+        super(name);
 
         // remove the "^feel" prefix from name
-        this.feelingTerm = Term.get(java.lang.String.valueOf(javaStringValue(name).substring(5).toLowerCase()));
+        this.feelingTerm = Term.get(javaStringValue(name).substring(5).toLowerCase());
     }
 
     protected static readonly selfSubject: Term = Term.SELF;
