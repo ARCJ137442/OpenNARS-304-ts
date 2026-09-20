@@ -739,6 +739,23 @@ O 正式性能门                                    [----------] 待开始
 R RC/bundle/tag                                [----------] 待开始
 ```
 
+### 2026-09-20：J3 计数值边界（`af3fad7`）
+
+对照 Java `Map<Term, Integer>` 的生产者和消费者，确认本处 `Integer` 只表示递归出现次数；
+Term key 的 Java 值判等、哈希、插入顺序和 Map 抽象仍然是推理合同。本批将
+`Term.countTermRecursively`、`CompoundTerm.countTermRecursively`、`Variable.countTermRecursively`
+及三个调用方的 value 收窄为原生 `int/number`，保留 `NativeMap + MapContract`，没有把 Map
+或 Set 改成数组。
+
+- 代码提交：`af3fad7`；focused 合同 `51/51`；串行单测 `371` 项，`369` 通过、`2` 跳过、`0` 失败；非增量 typecheck、build、dist API、canonical local parity 通过。
+- 变更门禁：`T1`，无需 live Java、M1- 或完整 M1；计划器因跨簇 supporting source file 数量限制给出 `plan_valid=false`，该限制已记录，未把本批冒充 cluster close。
+- 受影响 NAL：5/5 通过；证据文件为 `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\term-count-native-int-20260920-sentinel.jsonl`，SHA-256 `F774121C92B080A6803D1E098B67D4CE3A42584B1EBDDB95E8A7190A2EA236FF`。
+- 审计前→后：`javaLangFiles 68→67`、`jree-runtime-type 1376/131→1359/130`；direct jree import files 保持 `70`，因为本批未删除仍有职责的兼容导入。
+
+本批仍不能勾选 023 完成；后续 J1 应按兼容桥函数责任簇继续处理，而不是按 `java.lang.*`
+文本命中批量删除。完整阶段树与当前不可宣称边界见 `docs/current-status.md` 和本批报告
+`reports/20260920-144910.md`。
+
 ### 2026-09-20：J4 `FunctionOperator`/`NullOperator` 原生字符串边界切片（`10473c4`）
 
 对照 canonical Java 确认 `FunctionOperator(String)` 与 `NullOperator(String)` 都只把名字

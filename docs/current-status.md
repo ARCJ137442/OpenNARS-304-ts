@@ -2755,6 +2755,58 @@ LeanSpec 15 项
 └─ checklist     89/111                          [################----] 80.2%
 ```
 
+### 2026-09-20：J3 `countTermRecursively` 计数值原生化（`af3fad7`）
+
+对照 canonical Java 的 `Term`、`CompoundTerm`、`Variable` 与全部调用点，确认原始
+`Map<Term, Integer>` 中的 `Integer` 只承担出现次数、默认值和大于 1 的比较；Term 仍是
+Map key，必须保留 Java `equals/hashCode`、插入顺序和 Map 抽象。本批没有把 Map 改成数组
+或 JavaScript identity Map，只将 value 收窄为项目 `int/number`，并让
+`CompositionalRules`、`ProcessGoal`、`ProcessJudgment` 使用原生数值默认值。
+
+- 代码提交：`af3fad7 refactor(023): 原生化Term计数值边界`；基线为 `55f8029`。
+- focused 合同：`core-runtime.test.ts`、`compositional-rules.test.ts`、`map-contract.test.ts` 共 `51/51`。
+- M2：串行单测 `371` 项，`369` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0` 诊断；build `139` 个源文件；dist API 和 canonical local parity 通过。
+- 计划器：`T1`，`live_java_required=false`、`m1_minus_required=false`、`full_m1_required=false`；由于 3 个跨簇语言支持文件超过 supporting-source-files 限制，计划器 `plan_valid=false`，未将其误报为整簇关闭，按生成的 5 个 NAL 列表人工串行复核。
+- 受影响 NAL：`nal6.17.nal`、`nal4.7.nal`、`nal4.recursion.nal`、`nars_transitivity.nal`、`toothbrush2.nal` 为 `5/5`；0 exception、0 marker missing、0 stall、0 timeout、0 process limit、0 Java/TS diff。TS 总时长 `220553 ms`，最大峰值 RSS `993185792 bytes`，仅作为性能观测。
+- 证据：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\term-count-native-int-20260920-sentinel.jsonl`；SHA-256 `F774121C92B080A6803D1E098B67D4CE3A42584B1EBDDB95E8A7190A2EA236FF`。
+- 审计前→后：jree summary `javaLangFiles 68→67`、direct import files `70→70`、`newLinkedHashSet 1→1`；migration `jree-runtime-type 1376/131→1359/130`；platform 当前 `coreCandidateFiles=65`、`jreeImportFiles=77`。
+
+本批只能宣称 J3 计数值局部合同、M2、构建、dist API、canonical local parity 和 5 个
+受影响 NAL 已验证；不能宣称 J3/023 收口、jree 清零、完整 M1/#245 当前候选重跑、源码
+覆盖率、性能等价、024 P3-P5 完成或正式发布。`jree-compat.ts` 仍有真实职责，后续应按
+`javaStringValue`、哈希、异常识别和 long 边界等函数责任簇继续下沉。
+
+#### 本批后的完整进度树
+
+```text
+OpenNARS-304-ts 外部发布主线
+├─ F0 Canonical Java 基线                         [##########] 完成
+├─ F1 M1 功能等价                                 [##########] 完成（G0 有效 246/246）
+├─ F2 M2 零诊断/构建/公开入口                     [##########] 完成
+├─ F3 G0 迁移前保护回归                           [##########] 完成
+├─ 023 去 jree 原生 TypeScript 运行时             [##--------] 进行中
+│  ├─ J1 runtime compat                           [####------] 兼容桥仍有真实职责
+│  ├─ J2 language/parser                           [####------] 字符串、解析、List/Map/Set 局部合同已验证
+│  ├─ J3 inference core                            [#####-----] Map/List/Set/float/数组/计数值局部合同已验证
+│  ├─ J4 operator/plugin                           [#######---] Operator/Add/Reflect/Function/Null 边界已验证
+│  └─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待收口
+├─ 024 平台中立核心与宿主适配                     [##--------] P0-P2 完成，P3-P5 未完成
+├─ I J/P 汇合集成回归                             [----------] 待开始
+├─ O 正式性能门                                   [----------] 待开始
+└─ R RC、bundle、发布与用户授权 tag               [----------] 待开始
+
+LeanSpec 15 项
+├─ 001/002/003/004                                [##########] complete
+├─ 005/008                                        [#####-----] in-progress
+├─ 006/007/009/013/018/019                       [##########] complete
+└─ 020/023/024                                   [#####-----] in-progress
+
+登记统计（仅导航，不代表产品完成度）
+├─ complete      10/15                           [##########----------] 67%
+├─ in-progress    5/15                           [#####---------------] 33%
+└─ checklist     89/111                          [################----] 80.2%
+```
+
 登记统计不替代 M1/M2、NAL 结果矩阵、责任簇证据或发布退出条件；下一道真实门是
 023 五簇收口与 024 P3-P5，随后才是 J/P 集成、正式性能和 RC。
 
