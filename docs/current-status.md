@@ -2652,3 +2652,41 @@ LeanSpec registry
 ├─ OperatorFeedback List/null/empty                 [##########] 已验证，提交 1bfcf8c
 └─ Operator CharSequence/Object 与插件边界         [##--------] 待审计
 ```
+
+### 2026-09-20：J4 `Operator` 对象反馈边界切片（`3585f6a`）
+
+本批承接 `e5602d7`。对照 canonical Java `Operator.java`，确认 `reportExecution` 与内部 `ExecutionResult` 的 `Object feedback` 只承担任意事件载荷：异常时读取类名与消息并文本化，随后作为 EXE 事件传递；没有使用 JavaObject 身份、反射或 Object 方法契约。因此只将这 4 处 TypeScript 静态边界从 `java.lang.Object` 收窄为 `unknown`，保留 Java `String` 包装、异常识别、事件输出和反馈序列行为。`operationExecutionString` 仍返回 Java `String`，且当前无调用者，未与本批混改。
+
+- 代码提交：`3585f6ac5f19895da3bc184fbad5ea64909388ac`；文档归档提交随后补录。
+- 直接合同：`operator-boundary.test.ts` `13/13`。
+- M2：串行 `npm test` `365` 项，`363` 通过、`2` 跳过、`0` 失败，耗时约 `102775.7389 ms`；显式非增量 typecheck `0` 诊断；build `139` 个源文件；dist API `cycles=2`、`cycleEnds=2`、`outputSignals=1`、`stopped=true`。
+- 计划器：J4 owner、T1、`plan_valid=true`、`live_java_required=false`、`m1_minus_required=false`、`full_m1_required=false`。
+- 受影响 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、`simpleOperationTest.nal`，TS-only 对照冻结 Java 标杆 `4/4` 通过，0 失败。
+- 证据文件：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\operator-object-output-20260920-sentinel.jsonl`；SHA-256 `9B91D20B4442BB4C4FD003BFCA0D3A1D165987A1DBDF5E47CF980E240FB4552C`。
+- 冻结标杆：JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；Java source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`；canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`。
+- 静态审计：迁移扫描 `248` 个文件，`java-string-method=234/62`、`java-collection-method=751/108`、`jree-runtime-type=1398/135`；jree summary 为 `directJreeImportFiles=75`、`newArrayList=0`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；平台 summary 为 `filesScanned=185`、`coreCandidateFiles=70`、`jreeImportFiles=82`。
+
+本批只能宣称 J4 一个 `Object` 事件载荷切片完成局部合同、M2 和 4 个受影响 NAL 验证；不能宣称 J4/023 收口、jree 清零、完整 M1/#245 当前候选重跑、源码覆盖率、性能等价或正式发布。普通切片继续复用冻结 Java 标杆；责任簇收口或 023/024 阶段验收时才现跑 live Java 与完整矩阵。
+
+#### 当前全局与责任簇进度树
+
+```text
+OpenNARS-304-ts
+├─ F0 Canonical Java 基线                         [##########] 完成
+├─ F1 M1 功能等价                                 [##########] 完成（G0 有效 246/246）
+├─ F2 M2 零诊断/构建/公开入口                     [##########] 完成
+├─ F3 G0 迁移前保护回归                           [##########] 完成
+├─ 023 去 jree 原生运行时                         [##--------] 进行中
+│  ├─ J1 runtime compat                           [####------] 异常/观察函数已迁，桥清理待做
+│  ├─ J2 language/parser                           [####------] 字符串、解析、List/Map/Set 局部合同已验证
+│  ├─ J3 inference core                            [####------] Map/List/Set/float/数组局部合同已验证
+│  ├─ J4 operator/plugin                           [####------] 异常、数组、反馈、Object 边界已验证，未收口
+│  └─ J5 main/host                                [##--------] 异常观察已验证，宿主边界待收口
+├─ 024 平台中立核心与宿主适配                     [##--------] 进行中（P0-P2 完成）
+├─ I J/P 汇合集成回归                             [----------] 待开始
+├─ O 正式性能门                                   [----------] 待开始
+└─ R RC、bundle、发布与用户授权 tag               [----------] 待开始
+
+J4 本批链路：异常生产者/捕获 → Operation 字符串 → FunctionOperator 参数复制
+          → OperatorFeedback List/null/empty → Operator Object 事件载荷（3585f6a）
+```
