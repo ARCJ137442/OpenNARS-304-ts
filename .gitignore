@@ -26,3 +26,6 @@ __pycache__/
 /output/
 /META-INF/
 /reports/evidence/**/*.class
+
+# Local canonical Java fixture link
+java-master
