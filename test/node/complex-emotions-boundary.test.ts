@@ -18,3 +18,10 @@ test("ComplexEmotions keeps event text on the native string boundary", () => {
     assert.doesNotMatch(source, /new java\.lang\.String/);
     assert.doesNotMatch(source, /java\.lang\.System\.out/);
 });
+
+test("Emotions keeps math and text on project boundaries", () => {
+    const source = readFileSync("src/plugin/mental/Emotions.ts", "utf8");
+
+    assert.doesNotMatch(source, /from ["']jree["']/);
+    assert.doesNotMatch(source, /java\.lang\.(Math|String)/);
+});
