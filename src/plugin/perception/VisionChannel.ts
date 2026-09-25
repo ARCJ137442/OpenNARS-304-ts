@@ -1,5 +1,4 @@
 //! Java source: opennars/plugin/perception/VisionChannel.java
-import { java, S } from "jree";
 import { JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
 import type { float, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../../io/Texts.ts";
@@ -189,7 +188,7 @@ export class VisionChannel extends SensoryChannel {
                 // 2. replace the rarest seen prototype with the new prototype when full
                 // else just add it
                 if (this.prototypes.length >= this.nPrototypes) {
-                    let lowestValue: int = java.lang.Integer.MAX_VALUE;
+                    let lowestValue: int = Number.MAX_SAFE_INTEGER;
                     let lowestIndex: int = -1;
                     for (let i: int = 0; i < this.prototypes.length; i++) {
                         let cur: VisionChannel.Prototype = this.prototypes[i];
@@ -222,18 +221,18 @@ export class VisionChannel extends SensoryChannel {
                     let newFocusY: int = newSpace.py;
                     let dx: float = 0;
                     let dy: float = 0;
-                    let minusX: java.lang.String = S``;
-                    let minusY: java.lang.String = S``;
+                    let minusX = "";
+                    let minusY = "";
                     if (newFocusX >= oldFocusX) {
                         dx = newFocusX - oldFocusX;
                     } else {
-                        minusX = S`-`;
+                        minusX = "-";
                         dx = oldFocusX - newFocusX;
                     }
                     if (newFocusY >= oldFocusY) {
                         dy = newFocusY - oldFocusY;
                     } else {
-                        minusY = S`-`;
+                        minusY = "-";
                         dy = oldFocusY - newFocusY;
                     }
                     let xParam: float = Float32Math.divide(dx, this.width) as float;
