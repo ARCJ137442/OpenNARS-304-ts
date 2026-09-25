@@ -4,6 +4,7 @@ import test from "node:test";
 
 const sourceFiles = [
     "src/operator/misc/System.ts",
+    "src/operator/mental/Anticipate.ts",
     "src/plugin/mental/Abbreviation.ts",
     "src/plugin/perception/VisionChannel.ts",
     "src/plugin/perception/SensoryChannel.ts",
