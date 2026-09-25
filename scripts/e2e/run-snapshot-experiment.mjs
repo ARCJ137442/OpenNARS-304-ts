@@ -17,6 +17,32 @@ function fingerprint(value) {
   return createHash("sha256").update(JSON.stringify(value)).digest("hex");
 }
 
+function stateProjection(nar) {
+  const bagProjection = (bag) => [...bag].map((item) => (
+    typeof item?.toStringLong === "function" ? String(item.toStringLong()) : String(item)
+  ));
+  const parameters = {};
+  for (const key of Object.keys(nar.narParameters).sort()) {
+    const value = nar.narParameters[key];
+    if (typeof value !== "function") parameters[key] = String(value);
+  }
+  return {
+    cycle: Number(nar.time()),
+    narId: String(nar.memory.narId),
+    bags: {
+      concepts: bagProjection(nar.memory.concepts),
+      novelTasks: bagProjection(nar.memory.novelTasks),
+      sequence: bagProjection(nar.memory.seq_current),
+      operations: bagProjection(nar.memory.recent_operations),
+    },
+    parameters,
+  };
+}
+
+function stateDigest(nar) {
+  return fingerprint(stateProjection(nar));
+}
+
 function attachEvents(nar) {
   const events = [];
   const observer = {
@@ -49,10 +75,20 @@ function createNar(input) {
   return nar;
 }
 
-async function saveReplayCheckpoint(directory, checkpoint, input, events) {
+async function saveReplayCheckpoint(directory, checkpoint, input, events, nar) {
   const temporary = join(directory, `nar-${checkpoint}.json.tmp`);
   const snapshot = join(directory, `nar-${checkpoint}.json`);
-  const manifest = JSON.stringify({ schema: 1, kind: "replay", checkpoint, inputHash: fingerprint(input), eventHash: fingerprint(events) });
+  const manifest = JSON.stringify({
+    schema: 2,
+    kind: "nar-state-contract",
+    restorationMode: "replay-verified",
+    complete: false,
+    checkpoint,
+    cycle: Number(nar.time()),
+    inputHash: fingerprint(input),
+    eventHash: fingerprint(events),
+    stateDigest: stateDigest(nar),
+  });
   await writeFile(temporary, manifest, "utf8");
   await rename(temporary, snapshot);
   return JSON.parse(await readFile(snapshot, "utf8"));
@@ -69,25 +105,32 @@ async function runWithSnapshots(cycles, checkpoints, input, directory) {
   let nar = createNar(input);
   let activeEvents = attachEvents(nar);
   const events = [];
+  const stateSnapshots = [];
   let completed = 0;
   for (const checkpoint of [...checkpoints, cycles]) {
     nar.cycles(checkpoint - completed);
     completed = checkpoint;
     events.push(...activeEvents);
     if (checkpoint === cycles) break;
-    const snapshot = await saveReplayCheckpoint(directory, checkpoint, input, events);
-    if (snapshot.schema !== 1 || snapshot.kind !== "replay" || snapshot.inputHash !== fingerprint(input)) {
+    const snapshot = await saveReplayCheckpoint(directory, checkpoint, input, events, nar);
+    if (snapshot.schema !== 2 || snapshot.kind !== "nar-state-contract"
+      || snapshot.restorationMode !== "replay-verified" || snapshot.complete !== false
+      || snapshot.inputHash !== fingerprint(input)) {
       throw new Error("replay checkpoint provenance mismatch");
     }
+    stateSnapshots.push(snapshot);
     nar = createNar(input);
     const prefixEvents = attachEvents(nar);
     nar.cycles(snapshot.checkpoint);
     if (fingerprint(prefixEvents) !== snapshot.eventHash) {
       throw new Error(`replay checkpoint diverged at cycle ${checkpoint}`);
     }
+    if (stateDigest(nar) !== snapshot.stateDigest) {
+      throw new Error(`replay checkpoint state diverged at cycle ${checkpoint}`);
+    }
     activeEvents = attachEvents(nar);
   }
-  return { cycles, events };
+  return { cycles, events, stateSnapshots };
 }
 
 export async function runSnapshotExperiment({ cycles = 8, checkpoints = [2, 4], input = defaultInput } = {}) {
@@ -100,14 +143,22 @@ export async function runSnapshotExperiment({ cycles = 8, checkpoints = [2, 4], 
       && baseline.events.every((event, index) => JSON.stringify(event) === JSON.stringify(resumed.events[index]))
       ? []
       : [{ baseline: baseline.events, resumed: resumed.events }];
-    return { ok: mismatches.length === 0, checkpoints: normalized, baseline, resumed, mismatches };
+    return {
+      ok: mismatches.length === 0,
+      restorationMode: "replay-verified",
+      checkpoints: normalized,
+      stateSnapshots: resumed.stateSnapshots,
+      baseline,
+      resumed,
+      mismatches,
+    };
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  runSnapshotExperiment({ cycles: 8, checkpoints: [2, 4, 6] })
+  runSnapshotExperiment({ cycles: 240, checkpoints: [50, 100, 200] })
     .then((result) => {
       console.log(JSON.stringify(result, null, 2));
       if (!result.ok) process.exitCode = 1;

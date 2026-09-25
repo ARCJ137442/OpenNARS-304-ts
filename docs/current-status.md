@@ -8,7 +8,8 @@
 
 - 当前已确认远端主线：`4b1b8d9`；`Symbols`、`Interval` 边界切片和检查点实验报告已推送；本地状态同步提交 `6a80c99` 尚待网络恢复后推送。
 - 当前候选完整 TS-only M2：`454 tests`、`449 passed`、`0 failed`、`5 skipped`；非增量 typecheck、build、定向时间/Narsese 合同均通过。
-- 多检查点实验已验证 `[2, 4, 6]` 的重放轨迹与从零基线一致：两侧均为 `8` 个事件，`mismatches=0`。
+- 多检查点实验已验证 `240` 周期中的 `[50, 100, 200]` 重放轨迹与从零基线一致：包含 `200` 周期后的检查点，`mismatches=0`；每个检查点另有状态摘要校验通过。
+- 当前检查点文件仍是 `schema=2` 的 `nar-state-contract`，恢复模式明确为 `replay-verified`，`complete=false`；这是真实对象快照适配器完成前的诚实边界，不得当作已实现的内存对象快照。
 - 该实验是“重放检查点”，不是 NAR 内存对象快照；`Nar.SaveToFile()` 当前在 TS 运行时因 `ObjectOutputStream` 不可构造而不可用于真正恢复，Node `v8.serialize(Nar)` 也因事件函数不可克隆失败。
 - 当前完整 M1 原始 checkpoint 仍为 `244/245`；第 `245` 项 `stability/long_term_stability.nal` 尚未完成，不得改写为完整 M1 通过。
 - 当前生产源码直接 jree 导入文件为 `23`；023、024、020 仍进行中，不得标记 complete。
