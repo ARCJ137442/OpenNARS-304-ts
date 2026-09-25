@@ -1,5 +1,4 @@
 //! Java source: opennars/plugin/perception/VisualSpace.java
-import { java, S } from "jree";
 import type { int, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../../runtime/Float32.ts";
 import { TruthFunctions } from "../../inference/TruthFunctions.ts";
@@ -28,8 +27,8 @@ export class VisualSpace implements ImaginationSpace {
     public py: int = 0;
 
     // those are the same for each instance:
-    public static readonly move: NullOperator = new NullOperator(S`^move`);
-    public static readonly zoom: NullOperator = new NullOperator(S`^zoom`);
+    public static readonly move: NullOperator = new NullOperator("^move");
+    public static readonly zoom: NullOperator = new NullOperator("^zoom");
     private readonly nar: Nar;
 
     public constructor(nar: Nar, source: Float64Array[], py: int, px: int, height: int,
@@ -130,10 +129,10 @@ export class VisualSpace implements ImaginationSpace {
         // copying the necessary part of source into data and setting width and height
         // for visual space the operation doesn't matter for constructing the compound
         // imagination
-        let minPX: int = java.lang.Math.min(this.px, B.px);
-        let maxPX: int = java.lang.Math.min(this.px + this.width, B.px + B.width);
-        let minPY: int = java.lang.Math.min(this.py, B.py);
-        let maxPY: int = java.lang.Math.min(this.py + this.height, B.py + B.height);
+        let minPX: int = Math.min(this.px, B.px) as int;
+        let maxPX: int = Math.min(this.px + this.width, B.px + B.width) as int;
+        let minPY: int = Math.min(this.py, B.py) as int;
+        let maxPY: int = Math.min(this.py + this.height, B.py + B.height) as int;
         let progressed: VisualSpace = new VisualSpace(this.nar, this.source, minPY, minPX, maxPY, maxPX);
         return progressed;
     }
