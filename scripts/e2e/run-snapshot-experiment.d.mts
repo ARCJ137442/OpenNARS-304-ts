@@ -2,6 +2,7 @@ export interface SnapshotExperimentResult {
   ok: boolean;
   restorationMode: "replay-verified";
   checkpoints: number[];
+  checkpointDirectory: string | null;
   stateSnapshots: Array<{
     schema: 2;
     kind: "nar-state-contract";
@@ -30,4 +31,5 @@ export function runSnapshotExperiment(options?: {
   cycles?: number;
   checkpoints?: number[];
   input?: string;
+  checkpointDirectory?: string;
 }): Promise<SnapshotExperimentResult>;

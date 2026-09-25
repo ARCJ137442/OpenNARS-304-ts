@@ -1,4 +1,7 @@
 import test from "node:test";
+import { mkdtemp, readdir, rm } from "node:fs/promises";
+import { join } from "node:path";
+import { tmpdir } from "node:os";
 import assert from "node:assert/strict";
 
 import { runSnapshotExperiment } from "../../scripts/e2e/run-snapshot-experiment.mjs";
@@ -28,4 +31,22 @@ test("snapshot experiment rejects an endpoint checkpoint", async () => {
     () => runSnapshotExperiment({ cycles: 4, checkpoints: [0, 4] }),
     /checkpoint must be between 1 and cycles/,
   );
+});
+
+test("snapshot experiment preserves checkpoint manifests for process recovery", async () => {
+  const checkpointDirectory = await mkdtemp(join(tmpdir(), "opennars-persisted-checkpoints-"));
+  try {
+    const result = await runSnapshotExperiment({
+      cycles: 240,
+      checkpoints: [50, 100, 200],
+      checkpointDirectory,
+    });
+    assert.equal(result.checkpointDirectory, checkpointDirectory);
+    assert.deepEqual(
+      (await readdir(checkpointDirectory)).sort(),
+      ["nar-100.json", "nar-200.json", "nar-50.json"],
+    );
+  } finally {
+    await rm(checkpointDirectory, { recursive: true, force: true });
+  }
 });

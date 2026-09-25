@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rename, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -142,9 +142,15 @@ async function runWithSnapshots(cycles, checkpoints, input, directory) {
   return { cycles, events, stateSnapshots };
 }
 
-export async function runSnapshotExperiment({ cycles = 240, checkpoints = [50, 100, 200], input = defaultInput } = {}) {
+export async function runSnapshotExperiment({
+  cycles = 240,
+  checkpoints = [50, 100, 200],
+  input = defaultInput,
+  checkpointDirectory = null,
+} = {}) {
   const normalized = validateOptions(cycles, checkpoints);
-  const directory = await mkdtemp(join(tmpdir(), "opennars-snapshot-"));
+  const directory = checkpointDirectory ?? await mkdtemp(join(tmpdir(), "opennars-snapshot-"));
+  if (checkpointDirectory !== null) await mkdir(checkpointDirectory, { recursive: true });
   try {
     const baseline = await runBaseline(cycles, input);
     baseline.runner = { engine: "ts", tsMode: "in-process", cycleTarget: cycles, checkpoints: normalized };
@@ -157,13 +163,14 @@ export async function runSnapshotExperiment({ cycles = 240, checkpoints = [50, 1
       ok: mismatches.length === 0,
       restorationMode: "replay-verified",
       checkpoints: normalized,
+      checkpointDirectory,
       stateSnapshots: resumed.stateSnapshots,
       baseline,
       resumed,
       mismatches,
     };
   } finally {
-    await rm(directory, { recursive: true, force: true });
+    if (checkpointDirectory === null) await rm(directory, { recursive: true, force: true });
   }
 }
 
