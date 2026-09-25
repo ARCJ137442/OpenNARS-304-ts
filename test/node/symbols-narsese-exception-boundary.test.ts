@@ -21,3 +21,11 @@ test("Symbols and Narsese use project-owned argument exceptions", () => {
         (error: unknown) => error instanceof JavaIllegalArgumentException,
     );
 });
+
+test("Symbols keeps the NativeOperator contract without a direct jree import", () => {
+    const symbolsSource = readFileSync("src/io/Symbols.ts", "utf8");
+    assert.doesNotMatch(symbolsSource, /from "jree"/);
+    assert.equal(Symbols.NativeOperator.INHERITANCE.name(), "INHERITANCE");
+    assert.equal(Symbols.NativeOperator.INHERITANCE.ordinal(), 21);
+    assert.equal(Symbols.NativeOperator.INHERITANCE.toString(), "-->");
+});
