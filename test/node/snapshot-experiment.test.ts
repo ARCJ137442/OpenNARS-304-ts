@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import assert from "node:assert/strict";
 
-import { runSnapshotExperiment } from "../../scripts/e2e/run-snapshot-experiment.mjs";
+import { recoverSnapshotCheckpoint, runSnapshotExperiment } from "../../scripts/e2e/run-snapshot-experiment.mjs";
 
 test("checkpoint recovery stays consistent beyond 200 reasoning cycles", async () => {
   const result = await runSnapshotExperiment({ cycles: 240, checkpoints: [50, 100, 200] });
@@ -46,6 +46,26 @@ test("snapshot experiment preserves checkpoint manifests for process recovery", 
       (await readdir(checkpointDirectory)).sort(),
       ["nar-100.json", "nar-200.json", "nar-50.json"],
     );
+  } finally {
+    await rm(checkpointDirectory, { recursive: true, force: true });
+  }
+});
+
+test("a fresh recovery entry point matches the zero-run tail and final state", async () => {
+  const checkpointDirectory = await mkdtemp(join(tmpdir(), "opennars-fresh-recovery-"));
+  try {
+    const baseline = await runSnapshotExperiment({
+      cycles: 240,
+      checkpoints: [50, 100, 200],
+      checkpointDirectory,
+    });
+    const recovered = await recoverSnapshotCheckpoint(
+      join(checkpointDirectory, "nar-200.json"),
+      { input: "<a --> b>.\n<b --> c>.\n<a --> c>?\n", cycles: 240 },
+    );
+    assert.equal(recovered.ok, true);
+    assert.deepEqual(recovered.events, baseline.resumed.events.slice(baseline.stateSnapshots.at(-1)?.eventCount ?? 0));
+    assert.equal(recovered.finalStateDigest, baseline.finalStateDigest);
   } finally {
     await rm(checkpointDirectory, { recursive: true, force: true });
   }

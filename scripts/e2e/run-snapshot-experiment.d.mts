@@ -14,6 +14,7 @@ export interface SnapshotExperimentResult {
     fixtureSha256: string;
     javaArtifactSha256: string | null;
     eventHash: string;
+    eventCount: number;
     stateDigest: string;
     runner: {
       engine: "ts";
@@ -23,7 +24,8 @@ export interface SnapshotExperimentResult {
     };
   }>;
   baseline: { cycles: number; events: Array<{ channel: string; text: string }> };
-  resumed: { cycles: number; events: Array<{ channel: string; text: string }>; stateSnapshots: SnapshotExperimentResult["stateSnapshots"] };
+  resumed: { cycles: number; events: Array<{ channel: string; text: string }>; stateSnapshots: SnapshotExperimentResult["stateSnapshots"]; finalStateDigest: string };
+  finalStateDigest: string;
   mismatches: unknown[];
 }
 
@@ -33,3 +35,10 @@ export function runSnapshotExperiment(options?: {
   input?: string;
   checkpointDirectory?: string;
 }): Promise<SnapshotExperimentResult>;
+
+export function recoverSnapshotCheckpoint(snapshotPath: string, options: { input?: string; cycles: number }): Promise<{
+  ok: true;
+  checkpoint: number;
+  events: Array<{ channel: string; text: string }>;
+  finalStateDigest: string;
+}>;

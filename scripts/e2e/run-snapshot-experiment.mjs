@@ -90,6 +90,7 @@ async function saveReplayCheckpoint(directory, checkpoint, input, events, nar, r
     fixtureSha256: inputHash,
     javaArtifactSha256: null,
     eventHash: fingerprint(events),
+    eventCount: events.length,
     stateDigest: stateDigest(nar),
     runner: {
       ...runner,
@@ -139,7 +140,29 @@ async function runWithSnapshots(cycles, checkpoints, input, directory) {
     }
     activeEvents = attachEvents(nar);
   }
-  return { cycles, events, stateSnapshots };
+  return { cycles, events, stateSnapshots, finalStateDigest: stateDigest(nar) };
+}
+
+export async function recoverSnapshotCheckpoint(snapshotPath, { input = defaultInput, cycles } = {}) {
+  const snapshot = JSON.parse(await readFile(snapshotPath, "utf8"));
+  if (snapshot.schema !== 2 || snapshot.kind !== "nar-state-contract"
+    || snapshot.restorationMode !== "replay-verified" || snapshot.complete !== false) {
+    throw new Error("unsupported snapshot checkpoint");
+  }
+  if (!Number.isInteger(cycles) || cycles <= snapshot.checkpoint) {
+    throw new RangeError("cycles must be greater than checkpoint");
+  }
+  if (fingerprint(input) !== snapshot.inputHash) throw new Error("snapshot fixture mismatch");
+  const nar = createNar(input);
+  const prefixEvents = attachEvents(nar);
+  nar.cycles(snapshot.checkpoint);
+  if (prefixEvents.length !== snapshot.eventCount || fingerprint(prefixEvents) !== snapshot.eventHash) {
+    throw new Error("snapshot event prefix mismatch");
+  }
+  if (stateDigest(nar) !== snapshot.stateDigest) throw new Error("snapshot state mismatch");
+  const events = attachEvents(nar);
+  nar.cycles(cycles - snapshot.checkpoint);
+  return { ok: true, checkpoint: snapshot.checkpoint, events, finalStateDigest: stateDigest(nar) };
 }
 
 export async function runSnapshotExperiment({
@@ -165,6 +188,7 @@ export async function runSnapshotExperiment({
       checkpoints: normalized,
       checkpointDirectory,
       stateSnapshots: resumed.stateSnapshots,
+      finalStateDigest: resumed.finalStateDigest,
       baseline,
       resumed,
       mismatches,
