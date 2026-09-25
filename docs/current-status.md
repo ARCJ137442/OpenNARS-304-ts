@@ -6,7 +6,7 @@
 
 ## 2026-09-25 之后的可验证增量
 
-- 当前远端主线：`44119fe`；已推送 J3 `Symbols`、`Interval` 边界切片和检查点实验报告。
+- 当前已确认远端主线：`4b1b8d9`；`Symbols`、`Interval` 边界切片和检查点实验报告已推送；本地状态同步提交 `6a80c99` 尚待网络恢复后推送。
 - 当前候选完整 TS-only M2：`454 tests`、`449 passed`、`0 failed`、`5 skipped`；非增量 typecheck、build、定向时间/Narsese 合同均通过。
 - 多检查点实验已验证 `[2, 4, 6]` 的重放轨迹与从零基线一致：两侧均为 `8` 个事件，`mismatches=0`。
 - 该实验是“重放检查点”，不是 NAR 内存对象快照；`Nar.SaveToFile()` 当前在 TS 运行时因 `ObjectOutputStream` 不可构造而不可用于真正恢复，Node `v8.serialize(Nar)` 也因事件函数不可克隆失败。
