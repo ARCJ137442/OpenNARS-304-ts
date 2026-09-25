@@ -10,8 +10,16 @@ export interface SnapshotExperimentResult {
     checkpoint: number;
     cycle: number;
     inputHash: string;
+    fixtureSha256: string;
+    javaArtifactSha256: string | null;
     eventHash: string;
     stateDigest: string;
+    runner: {
+      engine: "ts";
+      tsMode: "in-process";
+      cycleTarget: number;
+      checkpoints: number[];
+    };
   }>;
   baseline: { cycles: number; events: Array<{ channel: string; text: string }> };
   resumed: { cycles: number; events: Array<{ channel: string; text: string }>; stateSnapshots: SnapshotExperimentResult["stateSnapshots"] };

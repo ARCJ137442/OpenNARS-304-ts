@@ -75,9 +75,10 @@ function createNar(input) {
   return nar;
 }
 
-async function saveReplayCheckpoint(directory, checkpoint, input, events, nar) {
+async function saveReplayCheckpoint(directory, checkpoint, input, events, nar, runner) {
   const temporary = join(directory, `nar-${checkpoint}.json.tmp`);
   const snapshot = join(directory, `nar-${checkpoint}.json`);
+  const inputHash = fingerprint(input);
   const manifest = JSON.stringify({
     schema: 2,
     kind: "nar-state-contract",
@@ -85,9 +86,14 @@ async function saveReplayCheckpoint(directory, checkpoint, input, events, nar) {
     complete: false,
     checkpoint,
     cycle: Number(nar.time()),
-    inputHash: fingerprint(input),
+    inputHash,
+    fixtureSha256: inputHash,
+    javaArtifactSha256: null,
     eventHash: fingerprint(events),
     stateDigest: stateDigest(nar),
+    runner: {
+      ...runner,
+    },
   });
   await writeFile(temporary, manifest, "utf8");
   await rename(temporary, snapshot);
@@ -106,16 +112,19 @@ async function runWithSnapshots(cycles, checkpoints, input, directory) {
   let activeEvents = attachEvents(nar);
   const events = [];
   const stateSnapshots = [];
+  const runner = { engine: "ts", tsMode: "in-process", cycleTarget: cycles, checkpoints };
   let completed = 0;
   for (const checkpoint of [...checkpoints, cycles]) {
     nar.cycles(checkpoint - completed);
     completed = checkpoint;
     events.push(...activeEvents);
     if (checkpoint === cycles) break;
-    const snapshot = await saveReplayCheckpoint(directory, checkpoint, input, events, nar);
+    const snapshot = await saveReplayCheckpoint(directory, checkpoint, input, events, nar, runner);
     if (snapshot.schema !== 2 || snapshot.kind !== "nar-state-contract"
       || snapshot.restorationMode !== "replay-verified" || snapshot.complete !== false
-      || snapshot.inputHash !== fingerprint(input)) {
+      || snapshot.inputHash !== fingerprint(input)
+      || snapshot.fixtureSha256 !== snapshot.inputHash
+      || snapshot.javaArtifactSha256 !== null) {
       throw new Error("replay checkpoint provenance mismatch");
     }
     stateSnapshots.push(snapshot);
@@ -133,11 +142,12 @@ async function runWithSnapshots(cycles, checkpoints, input, directory) {
   return { cycles, events, stateSnapshots };
 }
 
-export async function runSnapshotExperiment({ cycles = 8, checkpoints = [2, 4], input = defaultInput } = {}) {
+export async function runSnapshotExperiment({ cycles = 240, checkpoints = [50, 100, 200], input = defaultInput } = {}) {
   const normalized = validateOptions(cycles, checkpoints);
   const directory = await mkdtemp(join(tmpdir(), "opennars-snapshot-"));
   try {
     const baseline = await runBaseline(cycles, input);
+    baseline.runner = { engine: "ts", tsMode: "in-process", cycleTarget: cycles, checkpoints: normalized };
     const resumed = await runWithSnapshots(cycles, normalized, input, directory);
     const mismatches = baseline.events.length === resumed.events.length
       && baseline.events.every((event, index) => JSON.stringify(event) === JSON.stringify(resumed.events[index]))
