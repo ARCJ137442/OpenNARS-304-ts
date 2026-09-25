@@ -10,6 +10,8 @@
 - 当前候选完整 TS-only M2：`454 tests`、`449 passed`、`0 failed`、`5 skipped`；非增量 typecheck、build、定向时间/Narsese 合同均通过。
 - 多检查点实验已验证 `240` 周期中的 `[50, 100, 200]` 重放轨迹与从零基线一致：包含 `200` 周期后的检查点，`mismatches=0`；每个检查点另有状态摘要校验通过。
 - 当前检查点文件仍是 `schema=2` 的 `nar-state-contract`，恢复模式明确为 `replay-verified`，`complete=false`；这是真实对象快照适配器完成前的诚实边界，不得当作已实现的内存对象快照。
+- 本轮继续完成并推送三个 J4 小切片：`Operation.ts`、`VisualSpace.ts`、`Emotions.ts`；各自通过局部回归、非增量 typecheck、迁移扫描、jree 审计和平台审计。
+- 生产源码直接 jree 导入当前为 `19` 个；J4 与 023 仍进行中，不能据此标记责任簇或阶段门完成。
 - 该实验是“重放检查点”，不是 NAR 内存对象快照；`Nar.SaveToFile()` 当前在 TS 运行时因 `ObjectOutputStream` 不可构造而不可用于真正恢复，Node `v8.serialize(Nar)` 也因事件函数不可克隆失败。
 - 当前完整 M1 原始 checkpoint 仍为 `244/245`；第 `245` 项 `stability/long_term_stability.nal` 尚未完成，不得改写为完整 M1 通过。
 - 当前生产源码直接 jree 导入文件为 `23`；023、024、020 仍进行中，不得标记 complete。
