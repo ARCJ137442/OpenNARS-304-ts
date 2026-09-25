@@ -6,9 +6,10 @@
 
 ## 2026-09-25 之后的可验证增量
 
-- 当前已确认远端主线：`80858c8`；检查点长周期脚手架、独立恢复入口与三个 J4 边界切片均已推送。
+- 当前已确认远端主线：`8ed8090`；检查点长周期脚手架、独立恢复入口与四个 J4 边界切片均已推送。
 - 当前候选完整 TS-only M2：`459 tests`、`454 passed`、`0 failed`、`5 skipped`；非增量 typecheck、build、定向时间/Narsese 合同均通过。
 - 多检查点实验已验证 `240` 周期中的 `[50, 100, 200]` 重放轨迹与从零基线一致：包含 `200` 周期后的检查点，`mismatches=0`；每个检查点另有状态摘要校验通过。
+- 本轮使用持久化目录重新验证：manifest 文件为 `nar-50.json`、`nar-100.json`、`nar-200.json`；独立读取 `nar-200.json` 恢复到 `240`，恢复尾部与从零运行一致，最终状态摘要一致。
 - 当前检查点文件仍是 `schema=2` 的 `nar-state-contract`，恢复模式明确为 `replay-verified`，`complete=false`；这是真实对象快照适配器完成前的诚实边界，不得当作已实现的内存对象快照。
 - Manifest 现同时固定 `runner` 参数、fixture SHA-256 和 Java artifact SHA-256（TS-only 时为 `null`），调用默认值也固定为 `240` 周期与 `[50, 100, 200]` 检查点，避免回退到短测。
 - 检查点实验支持显式 `checkpointDirectory`：外部目录保留 `nar-50.json`、`nar-100.json`、`nar-200.json` 供进程崩溃后重新读取；未指定目录时仍自动清理临时文件。
