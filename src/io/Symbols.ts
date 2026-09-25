@@ -1,6 +1,7 @@
 //! Java source: opennars/io/Symbols.java
 import { java, S } from "jree";
 import type { char } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 
 
 
@@ -206,7 +207,7 @@ export class Symbols {
             } else if (args.length === 3) {
                 [string, name, index] = args as [string, java.lang.String, number];
             } else {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
             super(name, index);
             this.symbol = string;
@@ -259,7 +260,7 @@ export class Symbols {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -315,5 +316,4 @@ export namespace Symbols {
         toString(): string;
     };
 }
-
 

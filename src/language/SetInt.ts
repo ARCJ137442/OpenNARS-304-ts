@@ -1,8 +1,9 @@
 //! Java source: opennars/language/SetInt.java
-import { java, S } from "jree";
 import { SetTensional } from "./SetTensional.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { type JavaCharSequence, type JavaListInput } from "../runtime/jree-compat.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -65,27 +66,27 @@ export class SetInt extends SetTensional {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
 
 
     public static make(t: Term[]): SetInt;
-    public static make(l: java.util.Collection<Term>): SetInt;
+    public static make(l: JavaListInput<Term>): SetInt;
 
     public static make(...t: Term[]): SetInt;
     public static make(...args: unknown[]): SetInt | null {
         switch (args.length) {
             case 1: {
-                const [l] = args as [java.util.Collection<Term> | Term[]];
+                const [l] = args as [JavaListInput<Term> | Term[]];
                 if (Array.isArray(l)) {
                     const sorted = Term.toSortedSetArray(...l);
                     if (sorted.length === 0) return null;
                     return new SetInt(...sorted);
                 }
                 if (typeof (l as { toArray?: unknown }).toArray === "function") {
-                    return SetInt.make((l as java.util.Collection<Term>).toArray(new Array<Term>(0)));
+                    return SetInt.make((l as JavaListInput<Term>).toArray(new Array<Term>(0)));
                 }
                 return new SetInt(l as unknown as Term);
 
@@ -105,7 +106,7 @@ export class SetInt extends SetTensional {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -125,7 +126,7 @@ export class SetInt extends SetTensional {
      *
      * @return true for communitative
      */
-    public makeName(): java.lang.CharSequence {
+    public makeName(): JavaCharSequence {
         return SetInt.makeSetName(SET_INT_OPENER.ch, this.term, SET_INT_CLOSER.ch);
     }
 

@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/RuleTables.java
-import { java, S } from "jree";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Events } from "../io/events/Events.ts";
@@ -42,6 +42,30 @@ const {
     VAR_INDEPENDENT, VAR_DEPENDENT, VAR_QUERY, QUESTION_MARK, GOAL_MARK,
 } = Symbols;
 const retOppositeSide = Statement.retOppositeSide;
+
+/** Java original type: RuleTables.EnumFigureSide. */
+class EnumFigureSide {
+    public static readonly LEFT = new EnumFigureSide("LEFT", 0);
+    public static readonly RIGHT = new EnumFigureSide("RIGHT", 1);
+
+    private constructor(
+        private readonly enumName: string,
+        private readonly enumOrdinal: int,
+    ) {}
+
+    public name(): string {
+        return this.enumName;
+    }
+
+    public ordinal(): int {
+        return this.enumOrdinal;
+    }
+
+    public toString(): string {
+        return this.enumName;
+    }
+}
+
 
 
 
@@ -304,7 +328,7 @@ export class RuleTables {
         nal: DerivationContext, beliefTerm: Term): void {
         if (task.sentence.isJudgment() && tIndex === 0 && bIndex === 1 && taskTerm instanceof Operation) {
             let op: Operation = taskTerm as Operation;
-            if (op.getPredicate() === nal.memory.getOperator(S`^want`)) {
+            if (op.getPredicate() === nal.memory.getOperator("^want")) {
                 let newTruth: TruthValue = TruthFunctions.deduction(task.sentence.getTruth(), nal.narParameters.reliance,
                     nal.narParameters);
                 nal.singlePremiseTask((taskTerm as Operation).getArguments().term[1], Symbols.GOAL_MARK, newTruth,
@@ -658,15 +682,10 @@ export class RuleTables {
             }
         }
 
-        throw new java.lang.IllegalArgumentException("figure is invalid");
+        throw new JavaIllegalArgumentException("figure is invalid");
     }
 
-    public static EnumFigureSide = class EnumFigureSide extends java.lang.Enum<EnumFigureSide> {
-        public static readonly LEFT: EnumFigureSide = new class extends EnumFigureSide {
-        }(S`LEFT`, 0);
-        public static readonly RIGHT: EnumFigureSide = new class extends EnumFigureSide {
-        }(S`RIGHT`, 1);
-    };
+    public static EnumFigureSide = EnumFigureSide;
 
 
     /**
@@ -804,7 +823,7 @@ export class RuleTables {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -1047,7 +1066,7 @@ export class RuleTables {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace RuleTables {
-    export type EnumFigureSide = InstanceType<typeof RuleTables.EnumFigureSide>;
+    export type EnumFigureSide = typeof RuleTables.EnumFigureSide.LEFT;
 }
 
 

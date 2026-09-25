@@ -1,5 +1,4 @@
 //! Java source: opennars/control/concept/ProcessAnticipation.java
-import { java } from "jree";
 import type { long, float, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { DerivationContext } from "../DerivationContext.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -13,6 +12,7 @@ import { RuleTables } from "../../inference/RuleTables.ts";
 import { TemporalRules } from "../../inference/TemporalRules.ts";
 import { UtilityFunctions } from "../../inference/UtilityFunctions.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
+import { toJavaString } from "../../runtime/jree-compat.ts";
 import type { MapContract } from "../../runtime/NativeMap.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";
@@ -107,7 +107,7 @@ export class ProcessAnticipation {
             let impOrEqu: Statement = toInsert.negConfirmation.sentence.term as Statement;
             let cTarget: Concept = nal.memory.concept(impOrEqu.getPredicate());
             if (cTarget !== null) {
-                let anticipate_op: Operator = (c.memory.getOperator(new java.lang.String("^anticipate")) as Anticipate);
+                let anticipate_op: Operator = (c.memory.getOperator(toJavaString("^anticipate")) as Anticipate);
                 if (anticipate_op !== null && anticipate_op instanceof Anticipate) {
                     (anticipate_op as Anticipate).anticipationFeedback(impOrEqu.getPredicate(), null, c.memory,
                         nal.time);

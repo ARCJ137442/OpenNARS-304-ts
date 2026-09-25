@@ -7,6 +7,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { javaStringHashCode, javaStringValue, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { NativeSortedSet } from "../runtime/NativeSortedSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
@@ -138,7 +139,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -215,7 +216,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -365,7 +366,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -505,14 +506,14 @@ export class Term extends RuntimeObject implements AbstractTerm {
                     default:
 
                 }
-                throw new java.lang.IllegalStateException("Invalid variable type: " + type);
+                throw new JavaIllegalStateException("Invalid variable type: " + type);
 
 
                 break;
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -581,7 +582,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
                     // verify consistency of compareTo() and equals()
                     let equal: boolean = a.equals(b);
                     if ((equal && (c !== 0)) || (!equal && (c === 0))) {
-                        throw new java.lang.IllegalStateException("invalid order: " + a + " = " + b);
+                        throw new JavaIllegalStateException("invalid order: " + a + " = " + b);
                     }
                 }
 

@@ -132,7 +132,10 @@ export class Nar extends SensoryChannel implements Reasoner {
         } catch (ex) {
             if (ex instanceof Parser.InvalidInputException) {
                 JavaSystemLoggerCompat.getLogger(Nar.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
-                throw new java.lang.IllegalStateException("Could not add sensory channel.", ex);
+                throw new java.lang.IllegalStateException(
+                    "Could not add sensory channel.",
+                    ex as unknown as java.lang.Throwable,
+                );
             } else {
                 throw ex;
             }
@@ -480,7 +483,10 @@ export class Nar extends SensoryChannel implements Reasoner {
                             this.emit(OutputHandler.ERR.class, e);
                         }
                         if (!Debug.INPUT_ERRORS_CONTINUE) {
-                            throw new java.lang.IllegalStateException("Invalid input: " + inputText, e);
+                            throw new java.lang.IllegalStateException(
+                                "Invalid input: " + inputText,
+                                e as unknown as java.lang.Throwable,
+                            );
                         }
                         return;
                     } else {
@@ -915,5 +921,4 @@ export class Nar extends SensoryChannel implements Reasoner {
 export namespace Nar {
     export type PluginState = InstanceType<Nar["PluginState"]>;
 }
-
 

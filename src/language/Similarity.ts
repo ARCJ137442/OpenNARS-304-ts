@@ -1,10 +1,10 @@
 //! Java source: opennars/language/Similarity.java
-import { java, S } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -53,7 +53,7 @@ export class Similarity extends Statement {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -92,7 +92,7 @@ export class Similarity extends Statement {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }

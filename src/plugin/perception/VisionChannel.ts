@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/perception/VisionChannel.java
 import { java, S } from "jree";
+import { JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
 import type { float, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
@@ -131,9 +132,9 @@ export class VisionChannel extends SensoryChannel {
         this.termid++;
         let V: Term;
         if (this.isEternal) {
-            V = SetExt.make(new Term(new java.lang.String(this.subj)));
+            V = SetExt.make(new Term(toJavaString(this.subj)));
         } else {
-            V = SetExt.make(new Term(new java.lang.String(this.subj + this.termid)));
+            V = SetExt.make(new Term(toJavaString(this.subj + this.termid)));
         }
         // the visual space has to be a copy.
         let cpy: Float64Array[] = VisionChannel.emptyInputs(this.height, this.width);
@@ -213,7 +214,7 @@ export class VisionChannel extends SensoryChannel {
                     let lastSpace: VisualSpace = (this.lastPrototype.task.getTerm() as Inheritance)
                         .getSubject().imagination as VisualSpace;
                     if (best === null)
-                        throw new java.lang.IllegalStateException("No prototype found");
+                        throw new JavaIllegalStateException("No prototype found");
                     let newSpace: VisualSpace = (best.task.getTerm() as Inheritance).getSubject().imagination as VisualSpace;
                     let oldFocusX: int = lastSpace.px;
                     let oldFocusY: int = lastSpace.py;
@@ -241,8 +242,8 @@ export class VisionChannel extends SensoryChannel {
                         // timing to make sure procedure learning observes the operation after the last
                         // prototype
                         this.nar.cycles(this.nar.narParameters.DURATION);
-                        let taskX: Task = new Narsese(this.nar).parseTask(new java.lang.String("(^move,{SELF}," + minusX + Texts.n1(xParam) + ","
-                            + minusY + Texts.n1(yParam) + "). :|:"));
+                        let taskX: Task = new Narsese(this.nar).parseTask("(^move,{SELF}," + minusX + Texts.n1(xParam) + ","
+                            + minusY + Texts.n1(yParam) + "). :|:");
                         taskX.setElemOfSequenceBuffer(true);
                         this.results.push(taskX);
                         this.step_finished(time);
@@ -265,7 +266,7 @@ export class VisionChannel extends SensoryChannel {
                 // 4. add the best prototype as identified sensation
                 // but with current time stamp
                 if (best === null)
-                    throw new java.lang.IllegalStateException("No prototype found");
+                    throw new JavaIllegalStateException("No prototype found");
                 let bestSentence: Sentence = new Sentence(best.task.getTerm(),
                     best.task.sentence.punctuation,
                     bestTruth,

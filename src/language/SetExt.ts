@@ -1,8 +1,9 @@
 //! Java source: opennars/language/SetExt.java
-import { java, S } from "jree";
 import { SetTensional } from "./SetTensional.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { type JavaCharSequence, type JavaListInput } from "../runtime/jree-compat.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -67,7 +68,7 @@ export class SetExt extends SetTensional {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -76,14 +77,14 @@ export class SetExt extends SetTensional {
     public static make(t: Term[]): SetExt;
     public static make(...t: Term[]): SetExt;
 
-    public static make(l: java.util.Collection<Term>): SetExt;
+    public static make(l: JavaListInput<Term>): SetExt;
     public static make(...args: unknown[]): SetExt | null {
         switch (args.length) {
             case 1: {
-                const [t] = args as [Term[] | java.util.Collection<Term>];
+                const [t] = args as [Term[] | JavaListInput<Term>];
                 if (!Array.isArray(t)) {
                     if (typeof (t as { toArray?: unknown }).toArray === "function") {
-                        return SetExt.make((t as java.util.Collection<Term>).toArray(new Array<Term>(0)));
+                        return SetExt.make((t as JavaListInput<Term>).toArray(new Array<Term>(0)));
                     }
                     return new SetExt(t as unknown as Term);
                 }
@@ -97,7 +98,7 @@ export class SetExt extends SetTensional {
             }
 
             case 1: {
-                const [l] = args as [java.util.Collection<Term>];
+                const [l] = args as [JavaListInput<Term>];
                 return SetExt.make(l.toArray(new Array<Term>(0)));
 
 
@@ -105,7 +106,7 @@ export class SetExt extends SetTensional {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -125,7 +126,7 @@ export class SetExt extends SetTensional {
      *
      * @return true for communitative
      */
-    public makeName(): java.lang.CharSequence {
+    public makeName(): JavaCharSequence {
         return SetExt.makeSetName(SET_EXT_OPENER.ch, this.term, SET_EXT_CLOSER.ch);
     }
 }

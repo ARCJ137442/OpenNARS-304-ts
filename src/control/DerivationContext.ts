@@ -1,5 +1,5 @@
 //! Java source: opennars/control/DerivationContext.java
-import { java, S } from "jree";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { double, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Stamp } from "../entity/Stamp.ts";
@@ -21,7 +21,7 @@ import type { Concept } from "../entity/Concept.ts";
 import type { TermLink } from "../entity/TermLink.ts";
 import type { TaskLink } from "../entity/TaskLink.ts";
 import type { Parameters } from "../main/Parameters.ts";
-import type { JavaChar } from "../runtime/jree-compat.ts";
+import type { JavaChar, JavaStringInput } from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import { NativeList } from "../runtime/NativeList.ts";
 
@@ -97,21 +97,21 @@ export class DerivationContext {
                     return false; // implication and equivalence goals and quests are not supported anymore
                 }
                 if (!task.getBudget().aboveThreshold()) {
-                    this.memory.removeTask(task, S`Insufficient Budget`);
+                    this.memory.removeTask(task, "Insufficient Budget");
                     return false;
                 }
                 if (task.sentence !== null && task.sentence.truth !== null) {
                     let conf: double = task.sentence.truth.confidence;
                     if (conf < this.narParameters.TRUTH_EPSILON) {
                         // no confidence - we can delete the wrongs out that way.
-                        this.memory.removeTask(task, S`Ignored (zero confidence)`);
+                        this.memory.removeTask(task, "Ignored (zero confidence)");
                         return false;
                     }
                 }
                 if (task.sentence.term instanceof Operation) {
                     let op: Operation = task.sentence.term as Operation;
                     if (op.getSubject() instanceof Variable || op.getPredicate() instanceof Variable) {
-                        this.memory.removeTask(task, S`Operation with variable as subject or predicate`);
+                        this.memory.removeTask(task, "Operation with variable as subject or predicate");
                         return false;
                     }
                 }
@@ -120,7 +120,7 @@ export class DerivationContext {
                     // while the term was constructed optimistically
                     // example: (&,a,b) --> (&,b,a) which gets normalized to (&,a,b) --> (&,a,b)
                     // which is invalid.
-                    this.memory.removeTask(task, S`Wrong Format`);
+                    this.memory.removeTask(task, "Wrong Format");
                     return false;
                 }
 
@@ -132,13 +132,13 @@ export class DerivationContext {
                     // belief or not!!
                     let doublePremiseEvidentialBaseOverlap: boolean = !single && this.evidentialOverlap;
                     if (doublePremiseEvidentialBaseOverlap) {
-                        this.memory.removeTask(task, S`overlapping evidential base`);
+                        this.memory.removeTask(task, "overlapping evidential base");
                         return false;
                     }
 
                     let selfOverlap: boolean = stamp.evidenceIsCyclic();
                     if (selfOverlap) {
-                        this.memory.removeTask(task, S`overlapping evidential base`);
+                        this.memory.removeTask(task, "overlapping evidential base");
                         return false;
                     }
                 }
@@ -175,7 +175,7 @@ export class DerivationContext {
                 // memory.logic.TASK_DERIVED.commit(task.budget.getPriority());
 
                 if (addToMemory) {
-                    this.addTask(task, S`Derived`);
+                    this.addTask(task, "Derived");
                 }
                 return true;
 
@@ -184,7 +184,7 @@ export class DerivationContext {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -321,7 +321,7 @@ export class DerivationContext {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -418,7 +418,7 @@ export class DerivationContext {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -446,7 +446,7 @@ export class DerivationContext {
     public requireCurrentTask(): Task {
         const currentTask = this.currentTask;
         if (currentTask === null) {
-            throw new java.lang.IllegalStateException("DerivationContext.currentTask is not initialized");
+            throw new JavaIllegalStateException("DerivationContext.currentTask is not initialized");
         }
         return currentTask;
     }
@@ -474,7 +474,7 @@ export class DerivationContext {
             // value as newStamp
             const builder = this.newStampBuilder;
             if (builder === null) {
-                throw new java.lang.IllegalStateException("Cannot build new stamp without a StampBuilder");
+                throw new JavaIllegalStateException("Cannot build new stamp without a StampBuilder");
             }
             stamp = builder.build();
             this.newStamp = stamp;
@@ -487,7 +487,7 @@ export class DerivationContext {
     public resetOccurrenceTime(): void {
         const stamp = this.newStamp;
         if (stamp === null) {
-            throw new java.lang.IllegalStateException("Cannot reset occurrence time without a new stamp");
+            throw new JavaIllegalStateException("Cannot reset occurrence time without a new stamp");
         }
         stamp.setOccurrenceTime(this.original_time);
     }
@@ -528,7 +528,7 @@ export class DerivationContext {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -572,7 +572,7 @@ export class DerivationContext {
     public requireCurrentTaskLink(): TaskLink {
         const currentTaskLink = this.currentTaskLink;
         if (currentTaskLink === null) {
-            throw new java.lang.IllegalStateException("DerivationContext.currentTaskLink is not initialized");
+            throw new JavaIllegalStateException("DerivationContext.currentTaskLink is not initialized");
         }
         return currentTaskLink;
     }
@@ -594,7 +594,7 @@ export class DerivationContext {
     public requireCurrentTerm(): Term {
         const currentTerm = this.currentTerm;
         if (currentTerm === null) {
-            throw new java.lang.IllegalStateException("DerivationContext.currentTerm is not initialized");
+            throw new JavaIllegalStateException("DerivationContext.currentTerm is not initialized");
         }
         return currentTerm;
     }
@@ -616,7 +616,7 @@ export class DerivationContext {
     public requireCurrentConcept(): Concept {
         const currentConcept = this.currentConcept;
         if (currentConcept === null) {
-            throw new java.lang.IllegalStateException("DerivationContext.currentConcept is not initialized");
+            throw new JavaIllegalStateException("DerivationContext.currentConcept is not initialized");
         }
         return currentConcept;
     }
@@ -629,7 +629,7 @@ export class DerivationContext {
      * tasks added with this method will be remembered by this NAL instance; useful
      * for feedback
      */
-    public addTask(t: Task, reason: java.lang.String): void;
+    public addTask(t: Task, reason: JavaStringInput): void;
 
     /**
      * Activated task called in MatchingRules.trySolution and
@@ -645,7 +645,7 @@ export class DerivationContext {
     public addTask(...args: unknown[]): void {
         switch (args.length) {
             case 2: {
-                const [t, reason] = args as [Task, java.lang.String];
+                const [t, reason] = args as [Task, JavaStringInput];
 
 
                 if (t.sentence.term === null) {
@@ -661,21 +661,21 @@ export class DerivationContext {
                 const [currentTask, budget, sentence, candidateBelief] = args as [Task, BudgetValue, Sentence, Sentence | null];
 
 
-                this.addTask(new Task(sentence, budget, sentence, candidateBelief as Sentence), S`Activated`);
+                this.addTask(new Task(sentence, budget, sentence, candidateBelief as Sentence), "Activated");
 
 
                 break;
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
 
 
-    public toString(): java.lang.String {
-        return S`DerivationContext[${this.currentConcept},${this.currentTaskLink}]`;
+    public toString(): string {
+        return `DerivationContext[${this.currentConcept},${this.currentTaskLink}]`;
     }
 }
 

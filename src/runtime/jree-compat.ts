@@ -52,6 +52,8 @@ if (!(JREE_FQN_MARKER in javaObjectConstructor)) {
 
 /** Text accepted at Node-facing Java string input boundaries. */
 export type JavaStringInput = java.lang.String | string;
+export type JavaString = java.lang.String;
+export type JavaCharSequence = java.lang.CharSequence;
 
 /** Values accepted by the Java Plugin.name() CharSequence boundary. */
 export type JavaCharSequenceInput = java.lang.CharSequence | string;

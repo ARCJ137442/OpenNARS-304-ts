@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/perception/SensoryChannel.java
 import { java, S } from "jree";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
 import type { int, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Narsese } from "../../io/Narsese.ts";
 import { Parser } from "../../io/Parser.ts";
@@ -106,7 +107,7 @@ export abstract class SensoryChannel extends RuntimeObject implements Plugin {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -121,9 +122,9 @@ export abstract class SensoryChannel extends RuntimeObject implements Plugin {
                 JavaSystemLoggerCompat.getLogger(SensoryChannel.class.getName()).log(
                     JavaSystemLoggerCompat.Level.SEVERE,
                     null,
-                    ex as java.lang.Throwable,
+                    ex as unknown as java.lang.Throwable,
                 );
-                throw new java.lang.IllegalStateException("Could not parse input", ex);
+                throw new JavaIllegalStateException("Could not parse input", ex);
             }
             throw ex;
         }

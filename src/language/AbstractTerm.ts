@@ -1,6 +1,6 @@
 //! Java source: opennars/language/AbstractTerm.java
 
-import { java } from "jree";
+import type { JavaCharSequence } from "../runtime/jree-compat.ts";
 import type { int } from "../types.ts";
 
 
@@ -39,6 +39,6 @@ export interface AbstractTerm {
      *
      * @return The name of the term as a String
      */
-    name(): java.lang.CharSequence;
+    name(): JavaCharSequence;
 
 }

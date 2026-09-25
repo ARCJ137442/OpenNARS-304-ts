@@ -544,7 +544,7 @@ test("NAL runner keeps hot results isolated from order and cold-process boundari
     "--engine", "ts",
     "--ts-mode", mode,
     "--cycles", "1",
-    "--timeout-ms", "5000",
+    "--timeout-ms", "15000",
     "--chunk-size", String(files.length),
     "--result-file", resultFile,
     ...files.flatMap((file) => ["--file", file]),

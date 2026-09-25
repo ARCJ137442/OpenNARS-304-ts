@@ -2,6 +2,7 @@
 import { java, S } from "jree";
 import type { int, long, float, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../io/Texts.ts";
+import { javaObjectsHash } from "../runtime/JavaArrays.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Term } from "../language/Term.ts";
 import { CompoundTerm } from "../language/CompoundTerm.ts";
@@ -19,7 +20,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Nar } from "../main/Nar.ts";
 import type { Parameters } from "../main/Parameters.ts";
-import { addRuntimeLongValues, JavaAssertionError, javaStringValue, subtractRuntimeLongValues } from "../runtime/jree-compat.ts";
+import { addRuntimeLongValues, JavaAssertionError, JavaIllegalArgumentException, JavaIllegalStateException, javaStringValue, subtractRuntimeLongValues } from "../runtime/jree-compat.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 
@@ -100,7 +101,7 @@ export class Sentence extends RuntimeObject {
         } else if (args.length === 5) {
             [_content, punctuation, truth, stamp, normalize] = args as [Term, JavaChar, TruthValue | null, Stamp, boolean];
         } else {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
 
 
@@ -122,7 +123,7 @@ export class Sentence extends RuntimeObject {
                                 }
 
                                 let term2: Term[] = new Array<Term>(c.term.length - u);
-                                java.lang.System.arraycopy(c.term, 0, term2, 0, term2.length);
+                                term2 = c.term.slice(0, term2.length);
                                 _content = Conjunction.make(term2, c.getTemporalOrder(), c.isSpatial);
                                 // ok we removed a part of the interval, we have to transform the occurence time
                                 // of the sentence back
@@ -141,7 +142,7 @@ export class Sentence extends RuntimeObject {
                                 }
 
                                 let term2: Term[] = new Array<Term>(c.term.length - u);
-                                java.lang.System.arraycopy(c.term, u, term2, 0, term2.length);
+                                term2 = c.term.slice(u, u + term2.length);
                                 _content = Conjunction.make(term2, c.getTemporalOrder(), c.isSpatial);
                                 // ok we removed a part of the interval, we have to transform the occurence time
                                 // of the sentence back
@@ -167,20 +168,20 @@ export class Sentence extends RuntimeObject {
                     } else if (_content instanceof Interval && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
                         truth.confidence = 0.0; // do it that way for now, because else further inference is interrupted.
                         if (Debug.DETAILED && Debug.DETAILED_SENTENCES)
-                            throw new java.lang.IllegalStateException(
+                            throw new JavaIllegalStateException(
                                 "Sentence content must not be Interval: " + _content + punctuation + " " + stamp);
                     }
 
                     if ((!this.isQuestion() && !this.isQuest()) && (truth === null)
                         && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
-                        throw new java.lang.IllegalStateException("Judgment and Goal sentences require non-null truth value");
+                        throw new JavaIllegalStateException("Judgment and Goal sentences require non-null truth value");
                     }
 
                     if (_content.subjectOrPredicateIsIndependentVar()
                         && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
                         truth.confidence = 0.0; // do it that way for now, because else further inference is interrupted.
                         if (Debug.DETAILED && Debug.DETAILED_SENTENCES)
-                            throw new java.lang.IllegalStateException(
+                            throw new JavaIllegalStateException(
                                 "A statement sentence is not allowed to have a independent variable as subj or pred");
                     }
 
@@ -336,10 +337,10 @@ export class Sentence extends RuntimeObject {
         if (this.isNotTermlinkNormalizer()) {
             if (this.stamp === null)
                 throw new JavaAssertionError("Stamp should not be null");
-            this.hash = java.util.Objects.hash(this.term, this.punctuation, this.truth,
+            this.hash = javaObjectsHash(this.term, this.punctuation, this.truth,
                 this.stamp.getOccurrenceTime());
         } else {
-            this.hash = java.util.Objects.hash(this.term, this.punctuation, this.truth);
+            this.hash = javaObjectsHash(this.term, this.punctuation, this.truth);
         }
     }
 
@@ -386,7 +387,7 @@ export class Sentence extends RuntimeObject {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -417,7 +418,7 @@ export class Sentence extends RuntimeObject {
 
     public projectionTruth(targetTime: long, currentTime: long, mem: Memory): TruthValue {
         if (this.truth === null) {
-            throw new java.lang.IllegalStateException(S`Cannot project a sentence without a truth value`);
+            throw new JavaIllegalStateException("Cannot project a sentence without a truth value");
         }
         const truth = this.truth;
         let newTruth: TruthValue | null = null;
@@ -580,7 +581,7 @@ export class Sentence extends RuntimeObject {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -638,7 +639,7 @@ export class Sentence extends RuntimeObject {
      */
     public discountConfidence(narParameters: Parameters): void {
         if (this.truth === null) {
-            throw new java.lang.IllegalStateException(S`Cannot discount a sentence without a truth value`);
+            throw new JavaIllegalStateException("Cannot discount a sentence without a truth value");
         }
         this.truth.confidence = this.truth.confidence * narParameters.DISCOUNT_RATE;
         this.truth.analytic = false;

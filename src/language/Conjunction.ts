@@ -1,5 +1,4 @@
 //! Java source: opennars/language/Conjunction.java
-import { java, S } from "jree";
 import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
@@ -8,6 +7,8 @@ import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 import { Terms } from "./Terms.ts";
+import { toJavaString, type JavaCharSequence, type JavaListInput, type JavaString } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -72,7 +73,7 @@ export class Conjunction extends CompoundTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -110,7 +111,7 @@ export class Conjunction extends CompoundTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -251,7 +252,7 @@ export class Conjunction extends CompoundTerm {
                 }
                 if (typeof (first as { toArray?: unknown })?.toArray === "function") {
                     return Conjunction.make(
-                        (first as java.util.Collection<Term>).toArray(new Array<Term>(0)),
+                        (first as JavaListInput<Term>).toArray(new Array<Term>(0)),
                         second as int,
                         third as boolean,
                     );
@@ -296,7 +297,9 @@ export class Conjunction extends CompoundTerm {
                         let cterm2: CompoundTerm = term2 as CompoundTerm;
                         components = new Array<Term>((term2 as CompoundTerm).size() + 1);
                         components[0] = term1;
-                        java.lang.System.arraycopy(cterm2.term, 0, components, 1, cterm2.size());
+                        for (let i = 0; i < cterm2.size(); i++) {
+                            components[i + 1] = cterm2.term[i];
+                        }
                     } else {
                         components = [term1, term2];
                     }
@@ -331,7 +334,7 @@ export class Conjunction extends CompoundTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -372,11 +375,11 @@ export class Conjunction extends CompoundTerm {
         return ret;
     }
 
-    public static PositiveIntString(value: int): java.lang.String {
+    public static PositiveIntString(value: int): JavaString {
         if (value === 0) {
-            return new java.lang.String("");
+            return toJavaString("");
         } else {
-            return new java.lang.String("+" + String(value));
+            return toJavaString("+" + String(value));
         }
     }
 
@@ -402,7 +405,7 @@ export class Conjunction extends CompoundTerm {
                     ",j" + Conjunction.PositiveIntString(relativeSizeY);
                 s += ",k" + Conjunction.PositiveIntString(relativePositionX);
                 s += ",l" + Conjunction.PositiveIntString(relativePositionY) + "]";
-                let ret: Term = Term.get(new java.lang.String(s));
+                let ret: Term = Term.get(toJavaString(s));
                 ret.term_indices = term.term_indices;
                 ret.index_variable = term.index_variable;
                 return ret;
@@ -437,7 +440,7 @@ export class Conjunction extends CompoundTerm {
         return ret;
     }
 
-    protected makeName(): java.lang.CharSequence {
+    protected makeName(): JavaCharSequence {
         return Conjunction.makeCompoundName(this.operator(), ...this.term);
     }
 

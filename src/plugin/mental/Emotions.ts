@@ -1,5 +1,6 @@
 //! Java source: opennars/plugin/mental/Emotions.java
 import { java, S } from "jree";
+import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 import type { float, int, double, long } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -117,7 +118,7 @@ export class Emotions implements Plugin {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }

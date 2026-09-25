@@ -1,5 +1,4 @@
 //! Java source: opennars/entity/BudgetValue.java
-import { java, S } from "jree";
 import type { float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Texts } from "../io/Texts.ts";
@@ -7,8 +6,7 @@ import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { TruthValue } from "./TruthValue.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-
-type char = string
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 
 /**
  * A triple of priority (current), durability (decay), and quality (long-term
@@ -28,9 +26,9 @@ export class BudgetValue {
     }
 
     /** character that marks the two ends of a budget value */
-    private static readonly MARK: char = Symbols.BUDGET_VALUE_MARK;
+    private static readonly MARK: string = Symbols.BUDGET_VALUE_MARK;
     /** character that separates the factors in a budget value */
-    private static readonly SEPARATOR: char = Symbols.VALUE_SEPARATOR;
+    private static readonly SEPARATOR: string = Symbols.VALUE_SEPARATOR;
 
     /** relative share of time resource to be allocated */
     private priority: float;
@@ -93,7 +91,7 @@ export class BudgetValue {
                 this.quality = BudgetValue.float(third);
             }
         } else {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
 
         if (this.durability >= 1.0) {
@@ -131,7 +129,7 @@ export class BudgetValue {
     public setPriority(v: float): void {
         const javaV = BudgetValue.float(v);
         if (javaV > 1.0) {
-            throw new java.lang.IllegalStateException("Priority > 1.0: " + javaV);
+            throw new JavaIllegalStateException("Priority > 1.0: " + javaV);
             // v=1.0f;
         }
         this.priority = javaV;
@@ -143,7 +141,7 @@ export class BudgetValue {
      * @param v The increasing percent
      */
     public incPriority(v: float): void {
-        this.setPriority(java.lang.Math.min(1.0, UtilityFunctions.or(this.priority, v)) as float);
+        this.setPriority(Math.min(1.0, UtilityFunctions.or(this.priority, v)) as float);
     }
 
     /** AND's (multiplies) priority with another value */
@@ -271,7 +269,7 @@ export class BudgetValue {
         return UtilityFunctions.aveGeo(this.priority, this.durability, this.quality);
     }
 
-    public equalsByPrecision(that: java.lang.Object): boolean {
+    public equalsByPrecision(that: unknown): boolean {
         if (that instanceof BudgetValue) {
             let t: BudgetValue = (that as BudgetValue);
             let dPrio: float = Float32Math.from(Math.abs(Float32Math.subtract(this.getPriority(), t.getPriority()))) as float;
@@ -302,8 +300,8 @@ export class BudgetValue {
      *
      * @return String representation of the value
      */
-    public toString(): java.lang.String {
-        return S`${BudgetValue.MARK}${Texts.n4(this.priority)}${BudgetValue.SEPARATOR}${Texts.n4(this.durability)}${BudgetValue.SEPARATOR}${Texts.n4(this.quality)}${BudgetValue.MARK}`;
+    public toString(): string {
+        return `${BudgetValue.MARK}${Texts.n4(this.priority)}${BudgetValue.SEPARATOR}${Texts.n4(this.durability)}${BudgetValue.SEPARATOR}${Texts.n4(this.quality)}${BudgetValue.MARK}`;
     }
 
     /**
@@ -311,14 +309,14 @@ export class BudgetValue {
      *
      * @return String representation of the value with 2-digit accuracy
      */
-    public toStringExternal(): java.lang.String {
+    public toStringExternal(): string {
         // return MARK + priority.toStringBrief() + SEPARATOR +
         // durability.toStringBrief() + SEPARATOR + quality.toStringBrief() + MARK;
 
         let priorityString: string = Texts.n2(this.priority);
         let durabilityString: string = Texts.n2(this.durability);
         let qualityString: string = Texts.n2(this.quality);
-        return S`${BudgetValue.MARK}${priorityString}${BudgetValue.SEPARATOR}${durabilityString}${BudgetValue.SEPARATOR}${qualityString}${BudgetValue.MARK}`;
+        return `${BudgetValue.MARK}${priorityString}${BudgetValue.SEPARATOR}${durabilityString}${BudgetValue.SEPARATOR}${qualityString}${BudgetValue.MARK}`;
     }
 
     /**

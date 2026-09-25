@@ -1,11 +1,11 @@
 //! Java source: opennars/language/Equivalence.java
-import { java, S } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Interval } from "./Interval.ts";
 import { Symbols } from "../io/Symbols.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -67,7 +67,7 @@ export class Equivalence extends Statement {
                     return null;
                 }
                 if (t.length !== 2)
-                    throw new java.lang.IllegalStateException("Equivalence requires 2 components: " + java.util.Arrays.toString(t));
+                    throw new JavaIllegalStateException("Equivalence requires 2 components: [" + t.map(String).join(", ") + "]");
 
                 return Equivalence.make(t[0], t[1], this.temporalOrder);
 
@@ -76,7 +76,7 @@ export class Equivalence extends Statement {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -188,7 +188,7 @@ export class Equivalence extends Statement {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { DerivationContext } from "../../src/control/DerivationContext.ts";
 import { CompositionalRules } from "../../src/inference/CompositionalRules.ts";
@@ -10,6 +11,14 @@ import { Term } from "../../src/language/Term.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { javaStringValue } from "../../src/runtime/jree-compat.ts";
 import { NativeSet } from "../../src/runtime/NativeSet.ts";
+
+
+test("CompositionalRules keeps logging and map boundaries project-owned", () => {
+    const source = readFileSync(new URL("../../src/inference/CompositionalRules.ts", import.meta.url), "utf8");
+    assert.doesNotMatch(source, /from ["']jree["']/);
+    assert.doesNotMatch(source, /java\.lang\.System/);
+    assert.match(source, /JavaSystemLoggerCompat/);
+});
 
 test("CompositionalRules.powerSet preserves Set order without a temporary List", () => {
     // Java source type: Set<String> backed by LinkedHashSet.

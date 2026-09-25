@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/BudgetFunctions.java
-import { java, S } from "jree";
+import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import type { float, double, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -15,6 +15,28 @@ import { Concept } from "../entity/Concept.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { UtilityFunctions } from "./UtilityFunctions.ts";
 import type { Parameters } from "../main/Parameters.ts";
+
+class Activating {
+    public static readonly Max = new Activating("Max", 0);
+    public static readonly TaskLink = new Activating("TaskLink", 1);
+
+    private constructor(
+        private readonly enumName: string,
+        private readonly enumOrdinal: int,
+    ) {}
+
+    public name(): string {
+        return this.enumName;
+    }
+
+    public ordinal(): int {
+        return this.enumOrdinal;
+    }
+
+    public toString(): string {
+        return this.enumName;
+    }
+}
 
 
 
@@ -54,7 +76,7 @@ export class BudgetFunctions extends UtilityFunctions {
         }
         const truth = judg.truth;
         if (truth === null) {
-            throw new java.lang.IllegalStateException(S`Cannot rank a sentence without a truth value`);
+            throw new JavaIllegalStateException("Cannot rank a sentence without a truth value");
         }
         let confidence: double = truth.confidence;
         // final float originality = judg.stamp.getOriginality();
@@ -151,11 +173,7 @@ export class BudgetFunctions extends UtilityFunctions {
         return new BudgetValue(priority, b.getDurability(), b.getQuality(), narParameters);
     }
 
-    public static Activating = class Activating extends java.lang.Enum<Activating> {
-        public static Max: Activating = new class extends Activating {
-        }(S`Max`, 0); public static TaskLink: Activating = new class extends Activating {
-        }(S`TaskLink`, 1)
-    };
+    public static Activating = Activating;
 
 
     /* ----------------------- Concept ----------------------- */
@@ -350,7 +368,7 @@ export class BudgetFunctions extends UtilityFunctions {
 
     protected static solutionEval(problem: Sentence, solution: Sentence, task: Task,
         memory: Memory): BudgetValue {
-        throw new java.lang.IllegalStateException("Moved to TemporalRules.java");
+        throw new JavaIllegalStateException("Moved to TemporalRules.java");
     }
 
     public static budgetTermLinkConcept(c: Concept, taskBudget: BudgetValue,
@@ -362,7 +380,7 @@ export class BudgetFunctions extends UtilityFunctions {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace BudgetFunctions {
-    export type Activating = InstanceType<typeof BudgetFunctions.Activating>;
+    export type Activating = typeof BudgetFunctions.Activating.Max;
 }
 
 

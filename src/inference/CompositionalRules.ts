@@ -1,5 +1,4 @@
 //! Java source: opennars/inference/CompositionalRules.java
-import { java } from "jree";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import type { Concept } from "../entity/Concept.ts";
@@ -40,6 +39,7 @@ import { Float32Math } from "../runtime/Float32.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
+import { JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
 
 // Java 原类型：Map<Term, Term>，实现类型：LinkedHashMap。
 // 当前实现：NativeMap + MapContract；保留 Java 的值判等、插入顺序和 Map 操作面，
@@ -651,8 +651,10 @@ export class CompositionalRules {
     let truthB: TruthValue | null = currentBelief.truth;
     if (truthT === null || truthB === null) {
       if (Debug.DETAILED) {
-        java.lang.System.out.println(
+        JavaSystemLoggerCompat.getLogger("CompositionalRules").log(
+          JavaSystemLoggerCompat.Level.SEVERE,
           "ERROR: Belief with null truth value. (introVarOuter)",
+          null,
         );
       }
       return;

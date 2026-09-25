@@ -1,5 +1,6 @@
 //! Java source: opennars/storage/Memory.java
-import { java, S } from "jree";
+import { java } from "jree";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, float, int, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
@@ -84,7 +85,7 @@ export class Memory implements Iterable<Concept>, Resettable {
     public readonly operators: Map<string, Operator>;
 
     /* a mutex for novel and new tasks */
-    private readonly tasksMutex: java.lang.Boolean = java.lang.Boolean.TRUE;
+    private readonly tasksMutex: boolean = true;
 
     /* New tasks with novel composed terms, for delayed and selective processing */
     public readonly novelTasks: Bag<Task, Sentence>;
@@ -292,9 +293,9 @@ export class Memory implements Iterable<Concept>, Resettable {
                     }
 
                     if (task.getBudget().aboveThreshold()) {
-                        this.addNewTask(task, S`Perceived`);
+                        this.addNewTask(task, "Perceived");
                     } else {
-                        this.removeTask(task, S`Neglected`);
+                        this.removeTask(task, "Neglected");
                     }
                 }
 
@@ -303,7 +304,7 @@ export class Memory implements Iterable<Concept>, Resettable {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -336,7 +337,7 @@ export class Memory implements Iterable<Concept>, Resettable {
         let newTask: Task = new Task(sentence, budgetForNewTask, Task.EnumType.INPUT);
 
         newTask.setElemOfSequenceBuffer(true);
-        this.addNewTask(newTask, S`Executed`);
+        this.addNewTask(newTask, "Executed");
     }
 
     public output(t: Task): void {

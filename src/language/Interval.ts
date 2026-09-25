@@ -1,8 +1,10 @@
 //! Java source: opennars/language/Interval.java
-import { java, S } from "jree";
+import { java } from "jree";
 import type { long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
+import { toJavaString } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 
 
 
@@ -20,7 +22,7 @@ import { Symbols } from "../io/Symbols.ts";
 export class Interval extends Term {
 
     public static interval(i: java.lang.String): Interval {
-        return new Interval(java.lang.Long.parseLong(new java.lang.String(String(i).substring(1))) as unknown as long);
+        return new Interval(java.lang.Long.parseLong(toJavaString(String(i).substring(1))) as unknown as long);
     }
 
     public hasInterval(): boolean {
@@ -39,7 +41,7 @@ export class Interval extends Term {
     public constructor(i: java.lang.String);
     public constructor(...args: unknown[]) {
         if (args.length !== 1) {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
         const value = args[0] as long | java.lang.String;
         super();
@@ -48,7 +50,7 @@ export class Interval extends Term {
             ? Number(java.lang.Long.parseLong((value as java.lang.String).substring(1))) - 1
             : Number(value);
         this.time = time as unknown as long;
-        this.setName(new java.lang.String(String(Symbols.INTERVAL_PREFIX) + String(time)));
+        this.setName(toJavaString(String(Symbols.INTERVAL_PREFIX) + String(time)));
     }
 
 
