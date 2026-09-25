@@ -1,0 +1,3653 @@
+
+> opennars-304-ts@0.1.0 audit:jree
+> node scripts/converting/audit-jree-dependencies.mjs
+
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-25T19:57:04.183Z",
+  "gitCommit": "89af938175a26e46ce31793b0b51f30d4405447e",
+  "scope": [
+    "src"
+  ],
+  "sourceFiles": 140,
+  "summary": {
+    "directJreeImportFiles": 15,
+    "directJreeImportOccurrences": 15,
+    "newArrayListOccurrences": 0,
+    "newLinkedListOccurrences": 0,
+    "newLinkedHashMapOccurrences": 0,
+    "newLinkedHashSetOccurrences": 1,
+    "javaObjectFiles": 1,
+    "javaUtilFiles": 9,
+    "javaLangFiles": 13,
+    "javaStringFiles": 17,
+    "highRiskItems": 41,
+    "semanticReviewItems": 37,
+    "candidateNativeItems": 1
+  },
+  "textualBaseline": {
+    "directJreeImportFiles": 16,
+    "newArrayListOccurrences": 0,
+    "newLinkedListOccurrences": 0,
+    "newLinkedHashMapOccurrences": 0,
+    "newLinkedHashSetOccurrences": 1,
+    "javaObjectFiles": 31,
+    "javaUtilFiles": 14,
+    "javaLangFiles": 16,
+    "note": "包含注释和禁用代码；summary基于去除注释后的代码命中，作为迁移前后计数参照。"
+  },
+  "dependency": {
+    "package": "jree",
+    "declaredVersion": "1.3.0",
+    "declaredIn": "package.json"
+  },
+  "classification": {
+    "A": "可直接原生化候选，但仍需局部契约验证",
+    "B": "需要Java语义兼容实现",
+    "C": "高风险运行时边界"
+  },
+  "items": [
+    {
+      "file": "src/control/DerivationContext.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        174
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/control/GeneralInferenceControl.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        122,
+        129
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/control/TemporalInferenceControl.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        73
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/control/concept/ProcessAnticipation.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        116,
+        167,
+        173,
+        255
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/control/concept/ProcessGoal.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        190,
+        233,
+        550
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/control/concept/ProcessJudgment.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        89,
+        213,
+        214
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/control/concept/ProcessQuestion.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 5,
+      "lines": [
+        65,
+        69,
+        87,
+        125,
+        169
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/entity/Concept.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 8,
+      "lines": [
+        374,
+        384,
+        387,
+        390,
+        445,
+        449,
+        452,
+        548
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/entity/Sentence.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/entity/Sentence.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 27,
+      "lines": [
+        191,
+        233,
+        237,
+        239,
+        241,
+        246,
+        259,
+        497,
+        504,
+        505,
+        509,
+        520,
+        525,
+        531,
+        532,
+        536,
+        543,
+        557,
+        563,
+        612,
+        618
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/entity/Sentence.ts",
+      "symbols": [
+        "java.lang.String",
+        "java.lang.CharSequence"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 20,
+      "lines": [
+        191,
+        233,
+        237,
+        239,
+        241,
+        246,
+        259,
+        497,
+        504,
+        505,
+        509,
+        520,
+        532,
+        536,
+        543,
+        557,
+        612
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/entity/Stamp.ts",
+      "symbols": [
+        "JavaString"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 5,
+      "lines": [
+        18,
+        78,
+        502,
+        506,
+        533
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/entity/TaskLink.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 1,
+      "lines": [
+        183
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/inference/CompositionalRules.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        137,
+        787
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/inference/LocalRules.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 6,
+      "lines": [
+        241,
+        246,
+        259,
+        261,
+        265,
+        271
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/inference/RuleTables.ts",
+      "symbols": [
+        ".class",
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 5,
+      "lines": [
+        145,
+        916,
+        944
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/inference/StructuralRules.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        125
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/inference/SyllogisticRules.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        659,
+        846
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/io/Narsese.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/io/Narsese.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 36,
+      "lines": [
+        68,
+        69,
+        70,
+        71,
+        72,
+        156,
+        158,
+        159,
+        161,
+        197,
+        205,
+        222,
+        231,
+        247,
+        278,
+        323,
+        325,
+        411,
+        448,
+        449,
+        486,
+        487,
+        492,
+        516,
+        517,
+        526,
+        577,
+        578,
+        607,
+        631,
+        656,
+        673,
+        687
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/io/Narsese.ts",
+      "symbols": [
+        "java.lang.String"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 31,
+      "lines": [
+        68,
+        69,
+        70,
+        71,
+        72,
+        158,
+        159,
+        161,
+        197,
+        205,
+        222,
+        231,
+        247,
+        278,
+        325,
+        411,
+        448,
+        449,
+        486,
+        487,
+        492,
+        516,
+        517,
+        526,
+        577,
+        578,
+        607,
+        631,
+        656,
+        673,
+        687
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/io/Symbols.ts",
+      "symbols": [
+        "static {"
+      ],
+      "kind": "static-initialization",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        248
+      ],
+      "runtimeUse": "静态命中static-initialization；需结合调用点确认运行时用途。",
+      "alternative": "显式初始化函数、工厂或注册表；按数据结构到入口方向安排依赖。",
+      "semanticRisk": "模块求值顺序和循环依赖可能造成未初始化导出或错误类身份。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "ES modules",
+        "jree"
+      ],
+      "requiredContracts": [
+        "初始化顺序可说明",
+        "循环依赖和首次导入路径有测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/io/events/AnswerHandler.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        26,
+        42
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/io/events/Events.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        3
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/io/events/Events.ts",
+      "symbols": [
+        "java.util."
+      ],
+      "kind": "java-util-runtime",
+      "layer": "container",
+      "occurrences": 4,
+      "lines": [
+        60,
+        79,
+        80,
+        355
+      ],
+      "runtimeUse": "静态命中java-util-runtime；需结合调用点确认运行时用途。",
+      "alternative": "按具体符号决定原生数组、Map/Set、项目内兼容集合或保留边界。",
+      "semanticRisk": "只看包名不能判定集合是否依赖Java的判等、顺序和迭代契约。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "逐符号归类",
+        "高风险集合必须有行为对照测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/io/events/Events.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 9,
+      "lines": [
+        51,
+        54,
+        60,
+        79,
+        80,
+        116,
+        117,
+        118,
+        355
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/io/events/Events.ts",
+      "symbols": [
+        "java.util.List"
+      ],
+      "kind": "java-collection",
+      "layer": "container",
+      "occurrences": 3,
+      "lines": [
+        60,
+        79,
+        355
+      ],
+      "runtimeUse": "静态命中java-collection；需结合调用点确认运行时用途。",
+      "alternative": "原生数组/Map/Set，或项目内NativeLinkedHashMap、NativeLinkedHashSet、NativeDeque及最小接口。",
+      "semanticRisk": "Java equals/hashCode、插入顺序、null、iterator.remove和恢复态bucket可能与JS身份语义不同。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "领域对象key先验证Java equals/hashCode",
+        "插入、替换、删除和迭代顺序有回归测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/io/events/Events.ts",
+      "symbols": [
+        "java.lang.String"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        51,
+        54,
+        116,
+        118
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/io/events/Events.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        98
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/io/events/OutputHandler.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 10,
+      "lines": [
+        52,
+        53
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/io/events/TextOutputHandler.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/io/events/TextOutputHandler.ts",
+      "symbols": [
+        "java.util."
+      ],
+      "kind": "java-util-runtime",
+      "layer": "container",
+      "occurrences": 3,
+      "lines": [
+        257,
+        302,
+        312
+      ],
+      "runtimeUse": "静态命中java-util-runtime；需结合调用点确认运行时用途。",
+      "alternative": "按具体符号决定原生数组、Map/Set、项目内兼容集合或保留边界。",
+      "semanticRisk": "只看包名不能判定集合是否依赖Java的判等、顺序和迭代契约。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "逐符号归类",
+        "高风险集合必须有行为对照测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/io/events/TextOutputHandler.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 50,
+      "lines": [
+        36,
+        111,
+        116,
+        144,
+        145,
+        147,
+        159,
+        161,
+        180,
+        185,
+        186,
+        188,
+        189,
+        191,
+        192,
+        194,
+        197,
+        199,
+        203,
+        204,
+        207,
+        209,
+        213,
+        221,
+        222,
+        225,
+        226,
+        227,
+        230,
+        234,
+        244,
+        245,
+        246,
+        254,
+        295,
+        296,
+        300,
+        326
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/io/events/TextOutputHandler.ts",
+      "symbols": [
+        "java.lang.String"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 16,
+      "lines": [
+        36,
+        111,
+        145,
+        161,
+        180,
+        186,
+        189,
+        192,
+        194,
+        222,
+        226,
+        227,
+        246,
+        296,
+        326
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/io/events/TextOutputHandler.ts",
+      "symbols": [
+        "instanceof java.",
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 24,
+      "lines": [
+        75,
+        77,
+        79,
+        90,
+        92,
+        115,
+        137,
+        140,
+        203,
+        252,
+        262,
+        263,
+        264,
+        265,
+        266,
+        274,
+        276,
+        308
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/language/CompoundTerm.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/CompoundTerm.ts",
+      "symbols": [
+        "java.util."
+      ],
+      "kind": "java-util-runtime",
+      "layer": "container",
+      "occurrences": 6,
+      "lines": [
+        552,
+        767,
+        802,
+        847,
+        856,
+        863
+      ],
+      "runtimeUse": "静态命中java-util-runtime；需结合调用点确认运行时用途。",
+      "alternative": "按具体符号决定原生数组、Map/Set、项目内兼容集合或保留边界。",
+      "semanticRisk": "只看包名不能判定集合是否依赖Java的判等、顺序和迭代契约。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "逐符号归类",
+        "高风险集合必须有行为对照测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/CompoundTerm.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 14,
+      "lines": [
+        110,
+        111,
+        115,
+        116,
+        192,
+        208,
+        285,
+        287,
+        291,
+        310,
+        369,
+        373,
+        390,
+        861
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/CompoundTerm.ts",
+      "symbols": [
+        "java.util.Collection",
+        "java.util.Iterator"
+      ],
+      "kind": "java-collection",
+      "layer": "container",
+      "occurrences": 3,
+      "lines": [
+        802,
+        847,
+        863
+      ],
+      "runtimeUse": "静态命中java-collection；需结合调用点确认运行时用途。",
+      "alternative": "原生数组/Map/Set，或项目内NativeLinkedHashMap、NativeLinkedHashSet、NativeDeque及最小接口。",
+      "semanticRisk": "Java equals/hashCode、插入顺序、null、iterator.remove和恢复态bucket可能与JS身份语义不同。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "领域对象key先验证Java equals/hashCode",
+        "插入、替换、删除和迭代顺序有回归测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/CompoundTerm.ts",
+      "symbols": [
+        "java.lang.CharSequence",
+        "java.lang.String"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 5,
+      "lines": [
+        192,
+        287,
+        369,
+        373,
+        390
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/CompoundTerm.ts",
+      "symbols": [
+        "java.util.Random"
+      ],
+      "kind": "java-random",
+      "layer": "inference",
+      "occurrences": 1,
+      "lines": [
+        552
+      ],
+      "runtimeUse": "静态命中java-random；需结合调用点确认运行时用途。",
+      "alternative": "项目内固定Java Random兼容实现；不得直接以Math.random替代。",
+      "semanticRisk": "随机序列改变会影响统一、任务选择、Bag调度和NAL事件顺序。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "固定seed序列与Java一致",
+        "随机调用次数和调用顺序不变"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/CompoundTerm.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 8,
+      "lines": [
+        205,
+        309,
+        655,
+        674
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/language/CompoundTerm.ts",
+      "symbols": [
+        "java.util.Iterator"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 2,
+      "lines": [
+        847,
+        863
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/Conjunction.ts",
+      "symbols": [
+        "JavaString"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        10,
+        378
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/Image.ts",
+      "symbols": [
+        "JavaString"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        8,
+        68
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/Image.ts",
+      "symbols": [
+        "getClass(",
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        52
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/language/Inheritance.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        86
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/language/Tense.ts",
+      "symbols": [
+        "static {"
+      ],
+      "kind": "static-initialization",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        48
+      ],
+      "runtimeUse": "静态命中static-initialization；需结合调用点确认运行时用途。",
+      "alternative": "显式初始化函数、工厂或注册表；按数据结构到入口方向安排依赖。",
+      "semanticRisk": "模块求值顺序和循环依赖可能造成未初始化导出或错误类身份。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "ES modules",
+        "jree"
+      ],
+      "requiredContracts": [
+        "初始化顺序可说明",
+        "循环依赖和首次导入路径有测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/language/Term.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Term.ts",
+      "symbols": [
+        "java.util."
+      ],
+      "kind": "java-util-runtime",
+      "layer": "container",
+      "occurrences": 2,
+      "lines": [
+        538,
+        544
+      ],
+      "runtimeUse": "静态命中java-util-runtime；需结合调用点确认运行时用途。",
+      "alternative": "按具体符号决定原生数组、Map/Set、项目内兼容集合或保留边界。",
+      "semanticRisk": "只看包名不能判定集合是否依赖Java的判等、顺序和迭代契约。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "逐符号归类",
+        "高风险集合必须有行为对照测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Term.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 23,
+      "lines": [
+        68,
+        119,
+        131,
+        150,
+        157,
+        167,
+        170,
+        172,
+        174,
+        176,
+        185,
+        193,
+        195,
+        212,
+        230,
+        233,
+        236,
+        387,
+        393,
+        464,
+        472
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Term.ts",
+      "symbols": [
+        "java.util.Set"
+      ],
+      "kind": "java-collection",
+      "layer": "container",
+      "occurrences": 2,
+      "lines": [
+        538,
+        544
+      ],
+      "runtimeUse": "静态命中java-collection；需结合调用点确认运行时用途。",
+      "alternative": "原生数组/Map/Set，或项目内NativeLinkedHashMap、NativeLinkedHashSet、NativeDeque及最小接口。",
+      "semanticRisk": "Java equals/hashCode、插入顺序、null、iterator.remove和恢复态bucket可能与JS身份语义不同。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "领域对象key先验证Java equals/hashCode",
+        "插入、替换、删除和迭代顺序有回归测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/Term.ts",
+      "symbols": [
+        "JavaString",
+        "java.lang.CharSequence",
+        "java.lang.String"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 23,
+      "lines": [
+        2,
+        68,
+        118,
+        119,
+        131,
+        150,
+        157,
+        167,
+        170,
+        172,
+        174,
+        176,
+        193,
+        195,
+        230,
+        233,
+        236,
+        387,
+        393,
+        464,
+        472
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/Term.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        273
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/language/Terms.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Terms.ts",
+      "symbols": [
+        "java.util."
+      ],
+      "kind": "java-util-runtime",
+      "layer": "container",
+      "occurrences": 11,
+      "lines": [
+        226,
+        241,
+        639,
+        672,
+        677,
+        694,
+        709,
+        718,
+        722,
+        728
+      ],
+      "runtimeUse": "静态命中java-util-runtime；需结合调用点确认运行时用途。",
+      "alternative": "按具体符号决定原生数组、Map/Set、项目内兼容集合或保留边界。",
+      "semanticRisk": "只看包名不能判定集合是否依赖Java的判等、顺序和迭代契约。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "逐符号归类",
+        "高风险集合必须有行为对照测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Terms.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        85
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Terms.ts",
+      "symbols": [
+        "java.util.Collection"
+      ],
+      "kind": "java-collection",
+      "layer": "container",
+      "occurrences": 5,
+      "lines": [
+        226,
+        241,
+        639,
+        672,
+        677
+      ],
+      "runtimeUse": "静态命中java-collection；需结合调用点确认运行时用途。",
+      "alternative": "原生数组/Map/Set，或项目内NativeLinkedHashMap、NativeLinkedHashSet、NativeDeque及最小接口。",
+      "semanticRisk": "Java equals/hashCode、插入顺序、null、iterator.remove和恢复态bucket可能与JS身份语义不同。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "领域对象key先验证Java equals/hashCode",
+        "插入、替换、删除和迭代顺序有回归测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/Terms.ts",
+      "symbols": [
+        "java.lang.CharSequence"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        85
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/Terms.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        339,
+        361
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/language/Variable.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Variable.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 18,
+      "lines": [
+        33,
+        40,
+        50,
+        64,
+        81,
+        83,
+        268,
+        292,
+        310,
+        311,
+        312,
+        314,
+        318,
+        333,
+        342
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Variable.ts",
+      "symbols": [
+        "java.lang.CharSequence",
+        "java.lang.String"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 17,
+      "lines": [
+        33,
+        40,
+        50,
+        64,
+        81,
+        83,
+        268,
+        310,
+        311,
+        312,
+        314,
+        318,
+        333,
+        342
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/Variables.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Variables.ts",
+      "symbols": [
+        "java.util."
+      ],
+      "kind": "java-util-runtime",
+      "layer": "container",
+      "occurrences": 13,
+      "lines": [
+        45,
+        48,
+        51,
+        56,
+        67,
+        71,
+        417,
+        430,
+        432,
+        437,
+        447,
+        457,
+        567
+      ],
+      "runtimeUse": "静态命中java-util-runtime；需结合调用点确认运行时用途。",
+      "alternative": "按具体符号决定原生数组、Map/Set、项目内兼容集合或保留边界。",
+      "semanticRisk": "只看包名不能判定集合是否依赖Java的判等、顺序和迭代契约。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "逐符号归类",
+        "高风险集合必须有行为对照测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Variables.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 5,
+      "lines": [
+        243,
+        247,
+        266,
+        359,
+        365
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/language/Variables.ts",
+      "symbols": [
+        "java.lang.CharSequence"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        359,
+        365
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/Variables.ts",
+      "symbols": [
+        "java.util.Random"
+      ],
+      "kind": "java-random",
+      "layer": "inference",
+      "occurrences": 13,
+      "lines": [
+        45,
+        48,
+        51,
+        56,
+        67,
+        71,
+        417,
+        430,
+        432,
+        437,
+        447,
+        457,
+        567
+      ],
+      "runtimeUse": "静态命中java-random；需结合调用点确认运行时用途。",
+      "alternative": "项目内固定Java Random兼容实现；不得直接以Math.random替代。",
+      "semanticRisk": "随机序列改变会影响统一、任务选择、Bag调度和NAL事件顺序。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "固定seed序列与Java一致",
+        "随机调用次数和调用顺序不变"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/language/Variables.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        203
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/main/Nar.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/main/Nar.ts",
+      "symbols": [
+        "java.util."
+      ],
+      "kind": "java-util-runtime",
+      "layer": "container",
+      "occurrences": 12,
+      "lines": [
+        58,
+        121,
+        122,
+        164,
+        243,
+        249,
+        252,
+        261,
+        290,
+        308,
+        319,
+        906
+      ],
+      "runtimeUse": "静态命中java-util-runtime；需结合调用点确认运行时用途。",
+      "alternative": "按具体符号决定原生数组、Map/Set、项目内兼容集合或保留边界。",
+      "semanticRisk": "只看包名不能判定集合是否依赖Java的判等、顺序和迭代契约。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "逐符号归类",
+        "高风险集合必须有行为对照测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/main/Nar.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 79,
+      "lines": [
+        58,
+        68,
+        106,
+        111,
+        116,
+        129,
+        135,
+        137,
+        145,
+        155,
+        179,
+        202,
+        231,
+        243,
+        249,
+        252,
+        260,
+        261,
+        279,
+        282,
+        283,
+        286,
+        290,
+        293,
+        296,
+        299,
+        305,
+        308,
+        313,
+        316,
+        319,
+        321,
+        344,
+        360,
+        361,
+        371,
+        384,
+        389,
+        394,
+        407,
+        408,
+        411,
+        425,
+        431,
+        456,
+        467,
+        472,
+        479,
+        486,
+        488,
+        523,
+        561,
+        571,
+        573,
+        580,
+        601,
+        604,
+        608,
+        630,
+        638,
+        663,
+        772,
+        872,
+        906,
+        908,
+        909
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/main/Nar.ts",
+      "symbols": [
+        "java.util.Map"
+      ],
+      "kind": "java-collection",
+      "layer": "container",
+      "occurrences": 12,
+      "lines": [
+        58,
+        121,
+        122,
+        164,
+        243,
+        249,
+        252,
+        261,
+        290,
+        308,
+        319,
+        906
+      ],
+      "runtimeUse": "静态命中java-collection；需结合调用点确认运行时用途。",
+      "alternative": "原生数组/Map/Set，或项目内NativeLinkedHashMap、NativeLinkedHashSet、NativeDeque及最小接口。",
+      "semanticRisk": "Java equals/hashCode、插入顺序、null、iterator.remove和恢复态bucket可能与JS身份语义不同。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "领域对象key先验证Java equals/hashCode",
+        "插入、替换、删除和迭代顺序有回归测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/main/Nar.ts",
+      "symbols": [
+        "java.lang.String"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 31,
+      "lines": [
+        58,
+        106,
+        111,
+        116,
+        145,
+        155,
+        179,
+        231,
+        243,
+        249,
+        252,
+        260,
+        261,
+        290,
+        308,
+        319,
+        344,
+        360,
+        361,
+        371,
+        394,
+        407,
+        408,
+        456,
+        467,
+        479,
+        580,
+        601,
+        604,
+        906,
+        908
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/main/Nar.ts",
+      "symbols": [
+        ".class",
+        "instanceof java."
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 16,
+      "lines": [
+        134,
+        213,
+        279,
+        293,
+        435,
+        439,
+        462,
+        471,
+        483,
+        712,
+        731,
+        795,
+        803,
+        814,
+        816,
+        852
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/main/NarNode.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/main/NarNode.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 21,
+      "lines": [
+        87,
+        99,
+        104,
+        105,
+        181,
+        183,
+        188,
+        211,
+        221,
+        242,
+        279,
+        294,
+        304,
+        316,
+        323,
+        331,
+        332,
+        353,
+        355
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/main/NarNode.ts",
+      "symbols": [
+        "java.lang.String"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 13,
+      "lines": [
+        104,
+        105,
+        181,
+        183,
+        188,
+        211,
+        242,
+        279,
+        294,
+        331,
+        353
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/main/NarNode.ts",
+      "symbols": [
+        ".class",
+        "instanceof java."
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 7,
+      "lines": [
+        93,
+        102,
+        104,
+        111,
+        129,
+        135,
+        331
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/main/Shell.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/main/Shell.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 25,
+      "lines": [
+        26,
+        28,
+        34,
+        57,
+        64,
+        70,
+        72,
+        74,
+        76,
+        84,
+        86,
+        94,
+        109,
+        114,
+        115,
+        116,
+        142,
+        149,
+        152,
+        161,
+        173,
+        175,
+        190,
+        205
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/main/Shell.ts",
+      "symbols": [
+        "java.lang.String"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 7,
+      "lines": [
+        28,
+        84,
+        94,
+        114,
+        116,
+        142,
+        190
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/main/Shell.ts",
+      "symbols": [
+        "instanceof java."
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        160
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/operator/NullOperator.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        40
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/operator/Operator.ts",
+      "symbols": [
+        ".class",
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        132,
+        200,
+        206,
+        211
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/operator/mental/Anticipate.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 9,
+      "lines": [
+        99,
+        190,
+        218,
+        233,
+        271,
+        273,
+        333
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/operator/mental/Anticipate.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 2,
+      "lines": [
+        125,
+        171
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/plugin/mental/Abbreviation.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        119,
+        143
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/plugin/mental/ComplexEmotions.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 5,
+      "lines": [
+        37,
+        38,
+        63,
+        71
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/plugin/mental/Counting.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 3,
+      "lines": [
+        79,
+        133
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/plugin/mental/InternalExperience.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        189,
+        192,
+        243,
+        257
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/plugin/perception/SensoryChannel.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        129
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/plugin/perception/VisionChannel.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 5,
+      "lines": [
+        56,
+        61,
+        69,
+        70,
+        258
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/runtime/NativeDeque.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 1,
+      "lines": [
+        42
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/NativeList.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 2,
+      "lines": [
+        117,
+        348
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/NativeMap.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 3,
+      "lines": [
+        366,
+        404,
+        446
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/NativeSet.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 1,
+      "lines": [
+        163
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/NodeStdinInputStream.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        1
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        1
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "symbols": [
+        "java.util."
+      ],
+      "kind": "java-util-runtime",
+      "layer": "container",
+      "occurrences": 3,
+      "lines": [
+        423,
+        489,
+        583
+      ],
+      "runtimeUse": "静态命中java-util-runtime；需结合调用点确认运行时用途。",
+      "alternative": "按具体符号决定原生数组、Map/Set、项目内兼容集合或保留边界。",
+      "semanticRisk": "只看包名不能判定集合是否依赖Java的判等、顺序和迭代契约。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "逐符号归类",
+        "高风险集合必须有行为对照测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "symbols": [
+        "java.lang."
+      ],
+      "kind": "java-lang-runtime",
+      "layer": "runtime",
+      "occurrences": 26,
+      "lines": [
+        54,
+        55,
+        56,
+        59,
+        75,
+        76,
+        111,
+        118,
+        123,
+        124,
+        127,
+        176,
+        177,
+        178,
+        179,
+        180,
+        182,
+        193,
+        196,
+        286,
+        312,
+        324,
+        325,
+        366,
+        367
+      ],
+      "runtimeUse": "静态命中java-lang-runtime；需结合调用点确认运行时用途。",
+      "alternative": "优先使用原生string/number/boolean和显式项目适配器。",
+      "semanticRisk": "wrapper、Object和CharSequence可能携带class、equals或UTF-16语义。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.lang",
+        "jree"
+      ],
+      "requiredContracts": [
+        "区分类型标记与运行时行为",
+        "保留项说明兼容边界"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "symbols": [
+        "java.util.LinkedHashSet"
+      ],
+      "kind": "java-collection",
+      "layer": "container",
+      "occurrences": 2,
+      "lines": [
+        489,
+        583
+      ],
+      "runtimeUse": "静态命中java-collection；需结合调用点确认运行时用途。",
+      "alternative": "原生数组/Map/Set，或项目内NativeLinkedHashMap、NativeLinkedHashSet、NativeDeque及最小接口。",
+      "semanticRisk": "Java equals/hashCode、插入顺序、null、iterator.remove和恢复态bucket可能与JS身份语义不同。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "领域对象key先验证Java equals/hashCode",
+        "插入、替换、删除和迭代顺序有回归测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "symbols": [
+        "new java.util.LinkedHashSet"
+      ],
+      "kind": "new-linked-hash-set",
+      "layer": "container",
+      "occurrences": 1,
+      "lines": [
+        583
+      ],
+      "runtimeUse": "静态命中new-linked-hash-set；需结合调用点确认运行时用途。",
+      "alternative": "原生Set仅在元素身份语义已证明时使用，否则实现Java equals/hash/order兼容Set。",
+      "semanticRisk": "结构项和集合项的Java equals/hashCode与JS对象身份不同。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "元素判等",
+        "插入和删除后的遍历顺序"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "symbols": [
+        "JavaObject"
+      ],
+      "kind": "java-object",
+      "layer": "runtime",
+      "occurrences": 7,
+      "lines": [
+        1,
+        45,
+        614,
+        616,
+        617,
+        618,
+        620
+      ],
+      "runtimeUse": "静态命中java-object；需结合调用点确认运行时用途。",
+      "alternative": "普通TypeScript类；class identity和clone契约由项目内显式适配器承接。",
+      "semanticRisk": "移除可能改变class、clone、继承和静态初始化的可观察行为。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "class identity/instanceof行为可观察且有测试",
+        "公共类型不暴露jree JavaObject"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "symbols": [
+        "java.lang.String",
+        "JavaString",
+        "java.lang.CharSequence"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 18,
+      "lines": [
+        54,
+        55,
+        56,
+        59,
+        75,
+        76,
+        118,
+        123,
+        124,
+        127,
+        286,
+        312,
+        324,
+        325,
+        366,
+        367
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "symbols": [
+        "java.util.Random"
+      ],
+      "kind": "java-random",
+      "layer": "inference",
+      "occurrences": 1,
+      "lines": [
+        423
+      ],
+      "runtimeUse": "静态命中java-random；需结合调用点确认运行时用途。",
+      "alternative": "项目内固定Java Random兼容实现；不得直接以Math.random替代。",
+      "semanticRisk": "随机序列改变会影响统一、任务选择、Bag调度和NAL事件顺序。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "固定seed序列与Java一致",
+        "随机调用次数和调用顺序不变"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "symbols": [
+        "instanceof java.",
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        76,
+        193,
+        196,
+        617
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/storage/Bag.ts",
+      "symbols": [
+        "JavaString"
+      ],
+      "kind": "java-string",
+      "layer": "runtime",
+      "occurrences": 4,
+      "lines": [
+        9,
+        496,
+        508,
+        520
+      ],
+      "runtimeUse": "静态命中java-string；需结合调用点确认运行时用途。",
+      "alternative": "原生string；UTF-16 code unit、hash、compare和Java输入边界集中在项目内适配器。",
+      "semanticRisk": "JavaString的UTF-16、hash和compare差异会改变Narsese key与集合判等。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang"
+      ],
+      "requiredContracts": [
+        "UTF-16 code unit行为保持",
+        "hash、compare和大小写边界有Java/TS对照测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/storage/Bag.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 2,
+      "lines": [
+        509,
+        516
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/storage/Bag.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 3,
+      "lines": [
+        376,
+        538,
+        546
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/storage/Memory.ts",
+      "symbols": [
+        "from \"jree\""
+      ],
+      "kind": "direct-jree-import",
+      "layer": "boundary",
+      "occurrences": 1,
+      "lines": [
+        2
+      ],
+      "runtimeUse": "静态命中direct-jree-import；需结合调用点确认运行时用途。",
+      "alternative": "迁移到项目内原生实现；必要时只保留单一、窄化的兼容适配器。",
+      "semanticRisk": "直接耦合 npm jree，可能把 jree 类型和运行时初始化泄漏到公共模块。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree"
+      ],
+      "requiredContracts": [
+        "公共API不得泄漏jree类型",
+        "保留项必须有无法移除的证据和回归测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/storage/Memory.ts",
+      "symbols": [
+        "java.util."
+      ],
+      "kind": "java-util-runtime",
+      "layer": "container",
+      "occurrences": 2,
+      "lines": [
+        78
+      ],
+      "runtimeUse": "静态命中java-util-runtime；需结合调用点确认运行时用途。",
+      "alternative": "按具体符号决定原生数组、Map/Set、项目内兼容集合或保留边界。",
+      "semanticRisk": "只看包名不能判定集合是否依赖Java的判等、顺序和迭代契约。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "逐符号归类",
+        "高风险集合必须有行为对照测试"
+      ],
+      "status": "inventory-pending"
+    },
+    {
+      "file": "src/storage/Memory.ts",
+      "symbols": [
+        "java.util.Random"
+      ],
+      "kind": "java-random",
+      "layer": "inference",
+      "occurrences": 2,
+      "lines": [
+        78
+      ],
+      "runtimeUse": "静态命中java-random；需结合调用点确认运行时用途。",
+      "alternative": "项目内固定Java Random兼容实现；不得直接以Math.random替代。",
+      "semanticRisk": "随机序列改变会影响统一、任务选择、Bag调度和NAL事件顺序。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "固定seed序列与Java一致",
+        "随机调用次数和调用顺序不变"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/storage/Memory.ts",
+      "symbols": [
+        ".class"
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 14,
+      "lines": [
+        121,
+        137,
+        189,
+        224,
+        292,
+        314,
+        352,
+        354,
+        355,
+        371,
+        376,
+        383,
+        403,
+        412
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/storage/Memory.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 1,
+      "lines": [
+        463
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/types.ts",
+      "symbols": [
+        "type int",
+        "type char",
+        "type short",
+        "type long",
+        "type float",
+        "type double"
+      ],
+      "kind": "java-primitive-alias",
+      "layer": "data-structure",
+      "occurrences": 6,
+      "lines": [
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "runtimeUse": "静态命中java-primitive-alias；需结合调用点确认运行时用途。",
+      "alternative": "TypeScript原生number、bigint、boolean或项目内明确的Float32/int32边界类型。",
+      "semanticRisk": "删除别名可能掩盖Java float binary32、int32溢出或long精度契约。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree type aliases"
+      ],
+      "requiredContracts": [
+        "float在每个Java运算操作数处binary32收窄",
+        "long超出安全整数范围时有明确策略"
+      ],
+      "status": "candidate-native"
+    }
+  ],
+  "limitations": [
+    "静态扫描不能证明调用点的真实语义；每条记录仍需局部代码审阅和测试。",
+    "集合构造计数需按专用构造表达式另行核对，不能用java.util总命中替代。",
+    "本报告只覆盖src；使用--include-tests可生成包含测试代码的辅助盘点。"
+  ]
+}
