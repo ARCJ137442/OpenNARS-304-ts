@@ -12,12 +12,13 @@
 - 当前检查点文件仍是 `schema=2` 的 `nar-state-contract`，恢复模式明确为 `replay-verified`，`complete=false`；这是真实对象快照适配器完成前的诚实边界，不得当作已实现的内存对象快照。
 - Manifest 现同时固定 `runner` 参数、fixture SHA-256 和 Java artifact SHA-256（TS-only 时为 `null`），调用默认值也固定为 `240` 周期与 `[50, 100, 200]` 检查点，避免回退到短测。
 - 检查点实验支持显式 `checkpointDirectory`：外部目录保留 `nar-50.json`、`nar-100.json`、`nar-200.json` 供进程崩溃后重新读取；未指定目录时仍自动清理临时文件。
+- `SensoryChannel` J4 风险切片提交为 `16efbcd`；冻结 baseline 哨兵 4/4 通过，Java/TS parity 全部一致，无超时、无进程限制；`vision.nal` 与 `simpleOperationTest.nal` 分别耗时约 189 秒与 300 秒。
 - 已新增独立 `recoverSnapshotCheckpoint()` 入口：新调用路径只读取 `nar-200.json`，重建 NAR，校验 200 周期前缀事件/状态摘要，再继续到 240 周期；尾部事件与最终状态摘要均与从零运行一致。
-- 本轮继续完成并推送三个 J4 小切片：`Operation.ts`、`VisualSpace.ts`、`Emotions.ts`；各自通过局部回归、非增量 typecheck、迁移扫描、jree 审计和平台审计。
-- 生产源码直接 jree 导入当前为 `19` 个；J4 与 023 仍进行中，不能据此标记责任簇或阶段门完成。
+- 本轮继续完成并推送三个 J4 小切片：`Operation.ts`、`VisualSpace.ts`、`Emotions.ts`；随后完成 `SensoryChannel.ts` 边界切片，均通过局部回归、非增量 typecheck、迁移扫描、jree 审计和平台审计。
+- 生产源码直接 jree 导入当前为 `18` 个；J4 与 023 仍进行中，不能据此标记责任簇或阶段门完成。
 - 该实验是“重放检查点”，不是 NAR 内存对象快照；`Nar.SaveToFile()` 当前在 TS 运行时因 `ObjectOutputStream` 不可构造而不可用于真正恢复，Node `v8.serialize(Nar)` 也因事件函数不可克隆失败。
 - 当前完整 M1 原始 checkpoint 仍为 `244/245`；第 `245` 项 `stability/long_term_stability.nal` 尚未完成，不得改写为完整 M1 通过。
-- 当前生产源码直接 jree 导入文件为 `19`；023、024、020 仍进行中，不得标记 complete。
+- 当前生产源码直接 jree 导入文件为 `18`；023、024、020 仍进行中，不得标记 complete。
 
 本文是项目封存后的唯一状态入口。README 只保留必要摘要；历史报告、旧战略和 Agent 提示词不得覆盖本文的状态结论。
 
