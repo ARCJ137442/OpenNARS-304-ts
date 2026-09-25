@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/Operation.java
-import { java, S } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Inheritance } from "../language/Inheritance.ts";
 import { Product } from "../language/Product.ts";
@@ -10,8 +9,11 @@ import { Operator } from "./Operator.ts";
 import type { Task } from "../entity/Task.ts";
 import {
     JavaIllegalArgumentException,
+    type JavaCharSequence,
+    type JavaCharSequenceInput,
     javaStringValue,
 } from "../runtime/jree-compat.ts";
+import { JavaNullPointerException } from "../runtime/JavaExceptions.ts";
 
 
 
@@ -54,7 +56,7 @@ export class Operation extends Inheritance {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -110,20 +112,20 @@ export class Operation extends Inheritance {
         if (args.length === 5) {
             return Statement.make(...args as [Symbols.NativeOperator, Term, Term, boolean, int]);
         }
-        throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+        throw new JavaIllegalArgumentException("Invalid number of arguments");
     }
 
     public getOperator(): Operator {
         return this.getPredicate() as Operator;
     }
 
-    protected makeName(): java.lang.CharSequence {
+    protected makeName(): JavaCharSequence {
         if (this.getSubject() instanceof Product && this.getPredicate() instanceof Operator)
             return Operation.makeName(this.getPredicate().name(), (this.getSubject() as Product).term);
         return Statement.makeStatementName(this.getSubject(), Symbols.NativeOperator.INHERITANCE, this.getPredicate());
     }
 
-    public static makeName(op: java.lang.CharSequence, arg: Term[]): java.lang.CharSequence {
+    public static makeName(op: JavaCharSequenceInput, arg: Term[]): JavaCharSequence {
         // Java source: StringBuilder → String. The original call surface only
         // appends in order and calls toString; a native string is the same
         // semantic representation at this CharSequence compatibility boundary.
@@ -132,7 +134,7 @@ export class Operation extends Inheritance {
         const name = `${Symbols.NativeOperator.COMPOUND_TERM_OPENER.ch}${javaStringValue(op)}`
             + (argumentNames.length > 0 ? `${separator}${argumentNames.join(separator)}` : "")
             + Symbols.NativeOperator.COMPOUND_TERM_CLOSER.ch;
-        return name as unknown as java.lang.CharSequence;
+        return name as unknown as JavaCharSequence;
     }
 
     /**
@@ -150,7 +152,7 @@ export class Operation extends Inheritance {
     public requireTask(): Task {
         const task = this.task;
         if (task === null) {
-            throw new java.lang.NullPointerException(S`Operation task is not initialized`);
+            throw new JavaNullPointerException("Operation task is not initialized");
         }
         return task;
     }

@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import test from "node:test";
 import { java } from "jree";
 import { Term } from "../../src/language/Term.ts";
@@ -161,6 +163,11 @@ test("Operation.makeName preserves Java StringBuilder text semantics", () => {
 
     assert.equal(String(javaName), "(^add,a,b)");
     assert.equal(String(emptyName), "(^count)");
+});
+
+test("Operation keeps CharSequence and exceptions behind project boundaries", () => {
+    const source = readFileSync(fileURLToPath(new URL("../../src/operator/Operation.ts", import.meta.url)), "utf8");
+    assert.doesNotMatch(source, /from ["']jree["']/);
 });
 
 test("Operator.operationExecutionString returns native Java-equivalent output text", () => {
