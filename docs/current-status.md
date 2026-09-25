@@ -7,7 +7,7 @@
 ## 2026-09-25 之后的可验证增量
 
 - 当前已确认远端主线：`73ebdbd`；检查点长周期脚手架与三个 J4 边界切片均已推送。
-- 当前候选完整 TS-only M2：`454 tests`、`449 passed`、`0 failed`、`5 skipped`；非增量 typecheck、build、定向时间/Narsese 合同均通过。
+- 当前候选完整 TS-only M2：`457 tests`、`452 passed`、`0 failed`、`5 skipped`；非增量 typecheck、build、定向时间/Narsese 合同均通过。
 - 多检查点实验已验证 `240` 周期中的 `[50, 100, 200]` 重放轨迹与从零基线一致：包含 `200` 周期后的检查点，`mismatches=0`；每个检查点另有状态摘要校验通过。
 - 当前检查点文件仍是 `schema=2` 的 `nar-state-contract`，恢复模式明确为 `replay-verified`，`complete=false`；这是真实对象快照适配器完成前的诚实边界，不得当作已实现的内存对象快照。
 - Manifest 现同时固定 `runner` 参数、fixture SHA-256 和 Java artifact SHA-256（TS-only 时为 `null`），调用默认值也固定为 `240` 周期与 `[50, 100, 200]` 检查点，避免回退到短测。
