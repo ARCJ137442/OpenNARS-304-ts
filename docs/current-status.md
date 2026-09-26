@@ -51,7 +51,7 @@
 - 受影响 NAL `3/3` 通过：`nal1.0.nal` `8072 ms`、`toothbrush.nal` `39030 ms`、`simpleOperationTest.nal` `355552 ms`；均无 timeout、process limit、exception 或 not-run。
 - 资源峰值：三份样本分别为 `251080704`、`322588672`、`302759936` 字节；最高约 `307.6 MiB`，运行期间保持单进程。
 - 证据目录：`reports/evidence/j5-lineoutput-20260926/`；JSONL SHA-256 分别为 `30a69cd1fe713a54b4894dbb7fd3a693e525e3cabb9c6f0f7255a2cf2f3902b4`、`4d2727b7a92040259099f34674994c7e5e9889dbadc2d37827c9ce18b7e1bcf8`、`c79497fc8dd062944d0230ac106c2ac5c0d9e3f294975ba845f88bcf9d197f84`。
-- 本批真实门禁以 `1c4f0a2` 为基线，结果为 `tier=T1`、`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`validation_profile=risk-slice`；本批是 J5 T1 risk-slice，不是责任簇收口，不运行 M1--。Termux 中后续所有 M1 相关测试仍统一采用 M1--（243 项），完整 245 留给高性能环境。
+- 本批已提交并推送至 `origin/main`，当前远端为 `03dd492`；真实门禁以 `1c4f0a2` 为基线，结果为 `tier=T1`、`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`validation_profile=risk-slice`；本批是 J5 T1 risk-slice，不是责任簇收口，不运行 M1--。Termux 中后续所有 M1 相关测试仍统一采用 M1--（243 项），完整 245 留给高性能环境。
 - `020`、`023`、`024` 继续保持 `in-progress`；本批不能宣称 J5、023、jree 清零、完整 M1 或发布完成。
 
 ## 2026-09-26 J5 Nar.addInputText 两参数文本边界切片
