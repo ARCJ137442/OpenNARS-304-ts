@@ -324,9 +324,8 @@ export class TextOutputHandler extends OutputHandler {
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace TextOutputHandler {
     export interface LineOutput {
-        println(s: java.lang.String): void;
+        println(s: JavaStringInput): void;
     }
 
 }
-
 

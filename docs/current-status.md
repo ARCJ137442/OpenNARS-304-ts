@@ -40,7 +40,19 @@
 - 受影响 NAL `3/3` 通过：`nal1.0.nal` `7921 ms`，`toothbrush.nal` `44591 ms`，`simpleOperationTest.nal` `410289 ms`；均无 timeout/process limit。
 - 证据目录：`reports/evidence/j5-prefix-20260926/`；JSONL 哈希已记录在阶段报告中，冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
 - 本批是 J5 T1 risk-slice，不是责任簇收口；未运行 M1 矩阵。Termux 中后续任何 M1 保护仍统一使用 M1--（`243` 项）。
-- 本批代码、报告和证据已完成本地提交 `d60d68e`；真实门禁为 T1 risk-slice，旧未跟踪 J4/M1 调试文件不会混入，推送待完成。
+- 本批代码、报告和证据已完成本地提交；真实门禁为 T1 risk-slice，旧未跟踪 J4/M1 调试文件不会混入，推送待完成。
+
+## 2026-09-26 J5 TextOutputHandler LineOutput 文本边界切片
+
+- 阶段报告：`reports/20260926-235959.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`TextOutputHandler.LineOutput.println` 的宿主文本参数从 `java.lang.String` 收窄为项目自有 `JavaStringInput`，不改变 LineOutput 的调用方向和输出语义。
+- 直接合同 `17/17` 通过；非增量 `typecheck`、`test:build`、`test:api:dist`、迁移扫描、jree 审计、平台审计和汉字编码检查均通过。
+- TS-only M2：`467` 项，`462` 通过、`0` 失败、`5` 跳过；本轮未启动 Java 子进程。
+- 受影响 NAL `3/3` 通过：`nal1.0.nal` `8072 ms`、`toothbrush.nal` `39030 ms`、`simpleOperationTest.nal` `355552 ms`；均无 timeout、process limit、exception 或 not-run。
+- 资源峰值：三份样本分别为 `251080704`、`322588672`、`302759936` 字节；最高约 `307.6 MiB`，运行期间保持单进程。
+- 证据目录：`reports/evidence/j5-lineoutput-20260926/`；JSONL SHA-256 分别为 `30a69cd1fe713a54b4894dbb7fd3a693e525e3cabb9c6f0f7255a2cf2f3902b4`、`4d2727b7a92040259099f34674994c7e5e9889dbadc2d37827c9ce18b7e1bcf8`、`c79497fc8dd062944d0230ac106c2ac5c0d9e3f294975ba845f88bcf9d197f84`。
+- 本批是 J5 T1 risk-slice，不是责任簇收口；不运行 M1--。Termux 中后续所有 M1 相关测试仍统一采用 M1--（243 项），完整 245 留给高性能环境。
+- `020`、`023`、`024` 继续保持 `in-progress`；本批不能宣称 J5、023、jree 清零、完整 M1 或发布完成。
 
 ## 2026-09-26 崩溃恢复与 M1 245 前置复验
 

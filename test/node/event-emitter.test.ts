@@ -257,3 +257,8 @@ test("TextOutputHandler keeps line prefixes on the native string boundary", () =
 
     assert.deepEqual(lines.map(String), ["boxed: OUT: signal"]);
 });
+
+test("TextOutputHandler.LineOutput accepts project-owned text values", () => {
+    const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
+    assert.doesNotMatch(source, /println\(s: java\.lang\.String\): void/);
+});
