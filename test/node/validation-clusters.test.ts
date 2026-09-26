@@ -71,7 +71,8 @@ test("a cluster close creates one M1-minus command and omits the redundant senti
   assert.equal(plan.plan_valid, true);
   assert.equal(plan.validation_profile, "cluster-close");
   assert.equal(plan.affected_nal_command, null);
-  assert.ok(plan.m1_minus_command?.includes("244"));
+  assert.ok(plan.m1_minus_command?.includes("--m-minus"));
+  assert.equal(plan.m1_minus_command?.includes("--limit"), false);
 });
 
 test("one explicit owner may carry at most one small supporting cluster", () => {

@@ -34,15 +34,15 @@ $all = @($main) + @($extra)
 $all | Where-Object { -not $_.functional_pass } | Select-Object file, functional_pass, parity, java_ts_diff, timeout_classification, java_exception, ts_exception
 ```
 
-### M1-：日常保护回归
+### M1--：Termux/受限设备日常保护回归
 
-长期稳定性样本 `long_term_stability.nal` 是 #245。按当前语料排序，它位于 245 个主资源的最后一项；因此普通去 jree 批次只运行 M1-，即排除该项的前 244 个主资源。完整 M1（含 #245）只在一次去 jree 提交前执行并调试，避免把长期稳定性成本混入每轮局部迁移。
+M1-- 仅适用于 Termux、Android 及其他性能/内存受限环境。按当前 runner 的字典序，排除两个已知最慢样本：`#25 multi_step/nars_multistep_3.nal` 与 `#245 stability/long_term_stability.nal`，明确选择剩余 243 项；它不是完整 M1 阶段门。
 
 ```powershell
-node scripts/e2e/run-nal-corpus.mjs --engine parity --all --limit 244 --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 3600000 --ts-mode cold --resource-metrics --java-jar H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\opennars-3.0.4-SNAPSHOT.jar --java-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\classes --java-test-classes H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build\target\test-classes --result-file reports\evidence\m1-minus245-parity-YYYYMMDD-v1.jsonl --summary
+node scripts/e2e/run-nal-corpus.mjs --engine ts --java-baseline <frozen-baseline.jsonl> --all --m-minus --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 3600000 --ts-mode cold --resource-metrics --result-file reports\evidence\m1-minus-termux-YYYYMMDD-v1.jsonl --summary
 ```
 
-M1- 仍须追加执行 `simpleOperationTest.nal`；该夹具不属于 #245。每次运行前应确认语料清单末项仍是 `stability\long_term_stability.nal`，若主语料数量或排序发生变化，先调整 `--limit`，不能静默漏测。M1 与 M1- 的时间节省按两次结果行 `duration_ms` 求和比较；内存节省按启用 `--resource-metrics` 后两批 TS 子进程的最大 `resource_metrics.peak_rss_bytes` 比较，并同时记录系统可用内存最低值。
+M1-- 不追加 `simpleOperationTest.nal`；该额外夹具属于完整 M1 阶段门。runner 会断言主语料总数为 245、排除项为 2、最终选择为 243，并把 `corpus_profile=m1--` 与排除清单写入结果和 `run_key`。中断后只能以同一参数追加 `--resume`，不能用 `--limit 243` 替代。
 
 带 marker 的样本按 marker 对照判定；没有 marker 的样本才使用 131072 周期内部轨迹判定。运行较慢本身是性能记录，不等于功能失败；只有无进展 watchdog 或进程安全上限命中，才作为异常类别单独记录。
 

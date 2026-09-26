@@ -17,6 +17,12 @@ const javaAdapterSource = join(projectRoot, "scripts", "e2e", "NalParityRunner.j
 const DEFAULT_PERFORMANCE_BUDGET_MS_PER_1024_CYCLES = 120_000;
 const PROGRESS_INTERVAL_CYCLES = 256;
 const LONG_CYCLE_EQUIVALENCE_TARGET = 131_072;
+const M1_MINUS_SOURCE_COUNT = 245;
+const M1_MINUS_SELECTED_COUNT = 243;
+const M1_MINUS_EXCLUDED_FILES = [
+  "java-master/src/main/resources/nal/multi_step/nars_multistep_3.nal",
+  "java-master/src/main/resources/nal/stability/long_term_stability.nal",
+];
 
 const corpusDirectories = [
   join(javaRoot, "src", "main", "resources", "nal", "single_step"),
@@ -43,6 +49,7 @@ function parseArgs(argv) {
     javaTestClasses: defaultJavaTestClasses,
     javaBaseline: null,
     all: false,
+    mMinus: false,
     summary: false,
     resultFile: null,
     resume: false,
@@ -69,6 +76,7 @@ function parseArgs(argv) {
     else if (argument === "--java-test-classes") options.javaTestClasses = argv[++i];
     else if (argument === "--java-baseline") options.javaBaseline = argv[++i];
     else if (argument === "--all") options.all = true;
+    else if (argument === "--m-minus") options.mMinus = true;
     else if (argument === "--summary") options.summary = true;
     else if (argument === "--result-file") options.resultFile = argv[++i];
     else if (argument === "--resume") options.resume = true;
@@ -102,6 +110,18 @@ function parseArgs(argv) {
   }
   if (options.resume && options.resultFile === null) {
     throw new Error("--resume requires --result-file PATH");
+  }
+  if (options.mMinus && !options.all) {
+    throw new Error("--m-minus requires --all");
+  }
+  if (options.mMinus && options.limit !== null) {
+    throw new Error("--m-minus cannot be combined with --limit");
+  }
+  if (options.mMinus && options.start !== 0) {
+    throw new Error("--m-minus cannot be combined with --start");
+  }
+  if (options.mMinus && options.filePaths.length > 0) {
+    throw new Error("--m-minus cannot be combined with --file");
   }
   if (options.javaBaseline !== null && options.engine !== "ts") {
     throw new Error("--java-baseline requires --engine ts; it is a frozen reference for TS-only runs");
@@ -1138,6 +1158,36 @@ function assertUniqueFiles(files) {
   }
 }
 
+function selectCorpusFiles(files, options) {
+  if (options.filePaths.length > 0) return files;
+  if (options.mMinus) {
+    if (files.length !== M1_MINUS_SOURCE_COUNT) {
+      throw new Error(`M1-- requires exactly ${M1_MINUS_SOURCE_COUNT} source files; found ${files.length}`);
+    }
+    const excluded = new Set();
+    const selected = files.filter((file) => {
+      const normalized = String(file).replace(/\\/g, "/");
+      const match = M1_MINUS_EXCLUDED_FILES.find((candidate) =>
+        normalized === candidate || normalized.endsWith(`/${candidate}`));
+      if (match === undefined) return true;
+      excluded.add(match);
+      return false;
+    });
+    const missing = M1_MINUS_EXCLUDED_FILES.filter((file) => !excluded.has(file));
+    if (missing.length > 0) {
+      throw new Error(`M1-- exclusion files are missing: ${missing.join(", ")}`);
+    }
+    if (selected.length !== M1_MINUS_SELECTED_COUNT) {
+      throw new Error(`M1-- must select ${M1_MINUS_SELECTED_COUNT} files; selected ${selected.length}`);
+    }
+    return selected;
+  }
+  let selected = files.slice(options.start);
+  if (options.limit !== null) selected = selected.slice(0, options.limit);
+  else if (!options.all) selected = selected.slice(0, 10);
+  return selected;
+}
+
 function resultKey(options, javaArtifact) {
   return JSON.stringify({
     engine: options.engine,
@@ -1147,6 +1197,8 @@ function resultKey(options, javaArtifact) {
     tsMode: options.engine === "java" ? null : options.tsMode,
     tsCli: options.engine === "java" ? null : options.tsCli,
     resourceMetrics: options.resourceMetrics,
+    corpusProfile: options.mMinus ? "m1--" : "default",
+    excludedFiles: options.mMinus ? M1_MINUS_EXCLUDED_FILES : [],
     javaArtifactSha256: javaArtifact?.sha256 ?? null,
     javaBaselineSha256: options.javaBaseline?.sha256 ?? null,
   });
@@ -1200,14 +1252,10 @@ async function main() {
   }
   const runKey = resultKey(options, javaArtifact);
   const checkpoint = loadCheckpoint(resultFile, runKey);
-  let files = options.filePaths.length > 0
+  const discoveredFiles = options.filePaths.length > 0
     ? options.filePaths.map((file) => requirePath(file, "--file", "file"))
     : (await Promise.all(corpusDirectories.map(findNalFiles))).flat().sort();
-  if (options.filePaths.length === 0) {
-    files = files.slice(options.start);
-    if (options.limit !== null) files = files.slice(0, options.limit);
-    else if (!options.all) files = files.slice(0, 10);
-  }
+  const files = selectCorpusFiles(discoveredFiles, options);
   if (files.length === 0) throw new Error("No NAL files found");
   assertUniqueFiles(files);
 
@@ -1322,6 +1370,8 @@ async function main() {
     tsProcessMode: options.engine === "java" ? null : options.tsMode,
     ts_cli: options.engine === "java" ? null : options.tsCli,
     resource_metrics: options.resourceMetrics,
+    corpus_profile: options.mMinus ? "m1--" : "default",
+    excluded_files: options.mMinus ? M1_MINUS_EXCLUDED_FILES : [],
     files: rows.length,
     passed: rows.length - failures.length,
     failed: failures.length,
@@ -1350,6 +1400,8 @@ async function main() {
       timeoutMs: summary.timeoutMs,
       processLimitMs: summary.processLimitMs,
       ts_cli: summary.ts_cli,
+      corpus_profile: summary.corpus_profile,
+      excluded_files: summary.excluded_files,
       files: summary.files,
       passed: summary.passed,
       failed: summary.failed,
@@ -1384,6 +1436,7 @@ export {
   parseProgressLine,
   isProgressHeartbeat,
   runTs,
+  selectCorpusFiles,
   parseJsonLines,
   classifyTimeoutObservation,
   projectFileKey,
