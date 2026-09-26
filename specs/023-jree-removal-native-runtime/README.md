@@ -950,3 +950,15 @@ OpenNARS-304-ts 外部发布主线
 
 下一步继续按共同合同拆分 J4/J1 兼容桥责任；只有 J4 出口条件全部满足后，才允许唯一一次
 `--close-cluster` M1-，不能用本批定向哨兵或 M2 通过替代责任簇收口。
+
+### 2026-09-26：插件 `PluginName` 项目边界前置切片
+
+在崩溃恢复后保留并验证未提交的 J4 小切片：`Plugin.name()` 不再从 `jree-compat.ts`
+泄漏 `JavaCharSequenceInput`，而改用项目自有的 `PluginName` 结构类型。该类型保留
+Java `CharSequence` 所需的 `charAt`、`length`、`subSequence` 和 `toString` 形状，
+同时允许原生 `string`；没有修改插件执行算法、字符串实现或事件派发。
+
+- 定向插件边界测试 `2/2` 通过；非增量 `npm run typecheck` 通过。
+- 当前仍属于 J4 T1 局部切片；不能据此宣称 J4、023 或 jree 去除完成，也不触发 M1-。
+- 本轮同时复验多检查点脚手架：360 周期、`[50, 200, 350]` 检查点和独立恢复均一致；恢复模式仍诚实标为 `replay-verified`，不是 NAR 对象快照。
+- 下一阶段在切片提交后，使用冻结 Java 基线和唯一逐文件 JSONL 证据前缀启动完整 M1 245+1；中断后只追加相同参数的 `--resume`。

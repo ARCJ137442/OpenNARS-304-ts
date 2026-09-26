@@ -4,6 +4,14 @@
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
+
+## 2026-09-26 崩溃恢复与 M1 245 前置复验
+
+- 崩溃恢复后确认工作区只剩 `Plugin.ts` 与 `plugin-boundary.test.ts` 的未提交 J4 `PluginName` 边界切片；没有发现残留 M1/检查点进程，用户已有 demo 服务未触碰。
+- 已从 `/data/data/com.termux/files/home/A137442/nars/304-ts/OpenNARS 304 TS Termux搬迁资料.zip` 提取仓库外冻结 Java 基线 `g0-java-baseline-frozen-26772af-20260917.jsonl` 与 manifest；基线 `246` 行，SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，与活动目标一致。
+- `PluginName` 定向测试 `2/2` 通过，非增量 typecheck 通过；360 周期多检查点合同 `4/4` 通过，覆盖 `[50, 200, 350]`，并验证独立恢复与从零运行尾部/最终状态一致。
+- 本轮后续 M1 245 将使用单进程、`--chunk-size 1`、唯一 JSONL、逐文件落盘和同参数 `--resume`；当前仅完成前置复验，尚未宣称 M1 245 新一轮通过。
+
 ## 2026-09-25 之后的可验证增量
 
 - `2026-09-26` J4 异常生产者切片：`FunctionOperator`、`NullOperator`、`Operation`、`Operator`、`Anticipate`、`Add`、`Count`、`Reflect` 与 `Counting` 直接使用项目内 `JavaExceptions`，保留 `jree-compat.ts` 的字符串、long、类身份和观察桥责任。

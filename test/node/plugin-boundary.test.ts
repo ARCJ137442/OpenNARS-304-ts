@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { java } from "jree";
 
@@ -16,4 +17,10 @@ test("Plugin CharSequence boundary accepts Java and native string values", () =>
 
     assert.equal(String(javaNamedPlugin.name?.()), "JavaNamedPlugin");
     assert.equal(nativeNamedPlugin.name?.(), "NativeNamedPlugin");
+});
+
+test("Plugin names use a project-owned CharSequence boundary", () => {
+    const source = readFileSync("src/plugin/Plugin.ts", "utf8");
+
+    assert.doesNotMatch(source, /from ["'][^"']*jree-compat\.ts["']/);
 });
