@@ -218,3 +218,21 @@ test("Events.ConceptNew keeps event text on the project-owned string boundary", 
     assert.doesNotMatch(source, /public override toString\(\): java\.lang\.String/);
     assert.doesNotMatch(source, /new java\.lang\.StringBuilder\(\)\.append\(S`Concept Created: `/);
 });
+
+test("Events.TaskAdd accepts native and Java string reasons at the event boundary", () => {
+    const source = readFileSync("src/io/events/Events.ts", "utf8");
+    assert.doesNotMatch(source, /onTaskAdd\(t: Task, reason: java\.lang\.String/);
+
+    const received: unknown[] = [];
+    const observer = new class extends Events.TaskAdd {
+        public override onTaskAdd(_task: unknown, reason: string | java.lang.String): void {
+            received.push(reason);
+        }
+    }();
+
+    observer.event(Events.TaskAdd.class, [null, "native-reason"]);
+    observer.event(Events.TaskAdd.class, [null, new java.lang.String("boxed-reason")]);
+
+    assert.equal(String(received[0]), "native-reason");
+    assert.equal(String(received[1]), "boxed-reason");
+});

@@ -1,5 +1,6 @@
 //! Java source: opennars/io/events/Events.java
 import { JavaIllegalArgumentException, javaStringValue } from "../../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import { java } from "jree";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
@@ -48,10 +49,10 @@ abstract class TaskImmediateProcess extends RuntimeObject implements EventObserv
 }
 
 abstract class TaskAdd extends RuntimeObject implements EventObserver {
-    public abstract onTaskAdd(t: Task, reason: java.lang.String): void;
+    public abstract onTaskAdd(t: Task, reason: JavaStringInput): void;
 
     public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
-        this.onTaskAdd(args[0] as unknown as Task, args[1] as unknown as java.lang.String);
+        this.onTaskAdd(args[0] as unknown as Task, args[1] as JavaStringInput);
     }
 }
 

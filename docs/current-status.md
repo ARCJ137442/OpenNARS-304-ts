@@ -22,6 +22,16 @@
 - 本批是 J5 风险切片，不是责任簇收口；未运行 M1 矩阵。当前 Termux 的全部 M1 相关测试仍必须使用 M1--（243 项），完整 245 不在本环境执行。
 - 旧未跟踪 J4/M1 调试证据未纳入本批提交； `020`、 `023`、 `024` 仍为 `in-progress`。
 
+## 2026-09-26 J5 TaskAdd Java/native 字符串边界切片
+
+- 阶段报告：`reports/20260926-225357.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`Events.TaskAdd.onTaskAdd` 的 `reason` 从 `java.lang.String` 收窄为 `JavaStringInput`，事件转发保持 native 与 boxed 字符串均可用。
+- 局部合同 `15/15` 通过；完整 TS-only M2 为 `465` 项，`460` 通过、`0` 失败、`5` 跳过。
+- 受影响 NAL `3/3` 通过：`nal1.0.nal` `8565 ms`，`toothbrush.nal` `37796 ms`，`simpleOperationTest.nal` `389632 ms`；均无 timeout/process limit。
+- 证据：`reports/evidence/j5-taskadd-20260926/`；冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- 本批是 J5 T1 risk-slice，不是责任簇收口；未运行 M1 矩阵。Termux 中后续任何 M1 保护仍统一使用 M1--（`243` 项）。
+- 本批代码、测试、报告、状态和证据已完成本地提交；旧未跟踪 J4/M1 调试文件不会混入，远端推送待网络恢复。
+
 ## 2026-09-26 崩溃恢复与 M1 245 前置复验
 
 - 崩溃恢复后确认工作区只剩 `Plugin.ts` 与 `plugin-boundary.test.ts` 的未提交 J4 `PluginName` 边界切片；没有发现残留 M1/检查点进程，用户已有 demo 服务未触碰。
