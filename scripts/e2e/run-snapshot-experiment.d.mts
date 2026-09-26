@@ -23,7 +23,17 @@ export interface SnapshotExperimentResult {
       checkpoints: number[];
     };
   }>;
-  baseline: { cycles: number; events: Array<{ channel: string; text: string }> };
+  baseline: {
+    cycles: number;
+    events: Array<{ channel: string; text: string }>;
+    finalStateDigest: string;
+    runner: {
+      engine: "ts";
+      tsMode: "in-process";
+      cycleTarget: number;
+      checkpoints: number[];
+    };
+  };
   resumed: { cycles: number; events: Array<{ channel: string; text: string }>; stateSnapshots: SnapshotExperimentResult["stateSnapshots"]; finalStateDigest: string };
   finalStateDigest: string;
   mismatches: unknown[];

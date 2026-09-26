@@ -7,23 +7,46 @@ import assert from "node:assert/strict";
 import { recoverSnapshotCheckpoint, runSnapshotExperiment } from "../../scripts/e2e/run-snapshot-experiment.mjs";
 
 test("checkpoint recovery stays consistent beyond 200 reasoning cycles", async () => {
-  const result = await runSnapshotExperiment({ cycles: 240, checkpoints: [50, 100, 200] });
-  assert.equal(result.ok, true);
-  assert.deepEqual(result.mismatches, []);
-  assert.deepEqual(result.checkpoints, [50, 100, 200]);
-  assert.equal(result.restorationMode, "replay-verified");
-  assert.equal(result.stateSnapshots.length, 3);
-  assert.deepEqual(result.stateSnapshots.map((snapshot) => snapshot.cycle), [50, 100, 200]);
-  assert.match(result.stateSnapshots[0].stateDigest, /^[0-9a-f]{64}$/);
-  assert.equal(result.stateSnapshots[0].complete, false);
-  assert.equal(result.stateSnapshots[0].fixtureSha256, result.stateSnapshots[0].inputHash);
-  assert.equal(result.stateSnapshots[0].javaArtifactSha256, null);
-  assert.deepEqual(result.stateSnapshots[0].runner, {
-    engine: "ts",
-    tsMode: "in-process",
-    cycleTarget: 240,
-    checkpoints: [50, 100, 200],
-  });
+  const checkpointDirectory = await mkdtemp(join(tmpdir(), "opennars-long-recovery-"));
+  try {
+    const result = await runSnapshotExperiment({
+      cycles: 360,
+      checkpoints: [50, 200, 350],
+      checkpointDirectory,
+    });
+    assert.equal(result.ok, true);
+    assert.deepEqual(result.mismatches, []);
+    assert.deepEqual(result.checkpoints, [50, 200, 350]);
+    assert.equal(result.restorationMode, "replay-verified");
+    assert.equal(result.stateSnapshots.length, 3);
+    assert.deepEqual(result.stateSnapshots.map((snapshot) => snapshot.cycle), [50, 200, 350]);
+    assert.match(result.stateSnapshots[0].stateDigest, /^[0-9a-f]{64}$/);
+    assert.equal(result.stateSnapshots[0].complete, false);
+    assert.equal(result.stateSnapshots[0].fixtureSha256, result.stateSnapshots[0].inputHash);
+    assert.equal(result.stateSnapshots[0].javaArtifactSha256, null);
+    assert.deepEqual(result.stateSnapshots[0].runner, {
+      engine: "ts",
+      tsMode: "in-process",
+      cycleTarget: 360,
+      checkpoints: [50, 200, 350],
+    });
+    assert.equal(result.baseline.finalStateDigest, result.finalStateDigest);
+    assert.equal(result.resumed.finalStateDigest, result.baseline.finalStateDigest);
+
+    for (const snapshot of result.stateSnapshots) {
+      const recovered = await recoverSnapshotCheckpoint(
+        join(checkpointDirectory, `nar-${snapshot.checkpoint}.json`),
+        { cycles: 360 },
+      );
+      assert.deepEqual(
+        recovered.events,
+        result.baseline.events.slice(snapshot.eventCount),
+      );
+      assert.equal(recovered.finalStateDigest, result.baseline.finalStateDigest);
+    }
+  } finally {
+    await rm(checkpointDirectory, { recursive: true, force: true });
+  }
 });
 
 test("snapshot experiment rejects an endpoint checkpoint", async () => {
@@ -64,8 +87,8 @@ test("a fresh recovery entry point matches the zero-run tail and final state", a
       { input: "<a --> b>.\n<b --> c>.\n<a --> c>?\n", cycles: 240 },
     );
     assert.equal(recovered.ok, true);
-    assert.deepEqual(recovered.events, baseline.resumed.events.slice(baseline.stateSnapshots.at(-1)?.eventCount ?? 0));
-    assert.equal(recovered.finalStateDigest, baseline.finalStateDigest);
+    assert.deepEqual(recovered.events, baseline.baseline.events.slice(baseline.stateSnapshots.at(-1)?.eventCount ?? 0));
+    assert.equal(recovered.finalStateDigest, baseline.baseline.finalStateDigest);
   } finally {
     await rm(checkpointDirectory, { recursive: true, force: true });
   }

@@ -105,7 +105,7 @@ async function runBaseline(cycles, input) {
   const nar = createNar(input);
   const events = attachEvents(nar);
   nar.cycles(cycles);
-  return { cycles, events };
+  return { cycles, events, finalStateDigest: stateDigest(nar) };
 }
 
 async function runWithSnapshots(cycles, checkpoints, input, directory) {
@@ -178,10 +178,26 @@ export async function runSnapshotExperiment({
     const baseline = await runBaseline(cycles, input);
     baseline.runner = { engine: "ts", tsMode: "in-process", cycleTarget: cycles, checkpoints: normalized };
     const resumed = await runWithSnapshots(cycles, normalized, input, directory);
-    const mismatches = baseline.events.length === resumed.events.length
-      && baseline.events.every((event, index) => JSON.stringify(event) === JSON.stringify(resumed.events[index]))
-      ? []
-      : [{ baseline: baseline.events, resumed: resumed.events }];
+    const firstEventDifference = baseline.events.findIndex((event, index) => (
+      JSON.stringify(event) !== JSON.stringify(resumed.events[index])
+    ));
+    const eventsMatch = baseline.events.length === resumed.events.length && firstEventDifference === -1;
+    const mismatches = [];
+    if (!eventsMatch) {
+      mismatches.push({
+        kind: "events",
+        firstDifferenceIndex: firstEventDifference,
+        baselineEventCount: baseline.events.length,
+        resumedEventCount: resumed.events.length,
+      });
+    }
+    if (baseline.finalStateDigest !== resumed.finalStateDigest) {
+      mismatches.push({
+        kind: "final-state",
+        baselineFinalStateDigest: baseline.finalStateDigest,
+        resumedFinalStateDigest: resumed.finalStateDigest,
+      });
+    }
     return {
       ok: mismatches.length === 0,
       restorationMode: "replay-verified",

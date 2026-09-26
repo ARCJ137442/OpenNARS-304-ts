@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "restorationMode": "replay-verified",
+  "actualObjectSnapshot": false,
+  "cycles": 360,
+  "checkpoints": [
+    {
+      "checkpoint": 50,
+      "cycle": 50,
+      "eventCount": 29,
+      "eventHash": "e30d47d3b4986090096d1f534d0a3c27dad898ce3b5e504f18390625ce064f54",
+      "stateDigest": "52b27394a212fbdc12a17f922f75ef85cc05ba8100c5e7ce65fdde1458783c62",
+      "runner": {
+        "engine": "ts",
+        "tsMode": "in-process",
+        "cycleTarget": 360,
+        "checkpoints": [
+          50,
+          200,
+          350
+        ]
+      }
+    },
+    {
+      "checkpoint": 200,
+      "cycle": 200,
+      "eventCount": 114,
+      "eventHash": "e5dfdb37f09f1aea8240b43c55aee5e067e598f9fcceb9b8ac4a956993f9a915",
+      "stateDigest": "aa76dfd7c5ba130df1d2d213d40239b6f7572dcf5bbf7f45110fdf578717055e",
+      "runner": {
+        "engine": "ts",
+        "tsMode": "in-process",
+        "cycleTarget": 360,
+        "checkpoints": [
+          50,
+          200,
+          350
+        ]
+      }
+    },
+    {
+      "checkpoint": 350,
+      "cycle": 350,
+      "eventCount": 217,
+      "eventHash": "51b88378820e4477088eeb880a44bb53a7faaf1c15878712447a78d8cddf529f",
+      "stateDigest": "a31ff2122a3ccd0d7d3e2079d845b5f7b614ff19df6464ffd3c1af1ef2e0a368",
+      "runner": {
+        "engine": "ts",
+        "tsMode": "in-process",
+        "cycleTarget": 360,
+        "checkpoints": [
+          50,
+          200,
+          350
+        ]
+      }
+    }
+  ],
+  "fixtureSha256": "16fcec13143fe161f912b52490d49446b90b8aaabef3b8cc95fcbfa8eeb04fa8",
+  "javaArtifactSha256": null,
+  "zeroRun": {
+    "eventCount": 217,
+    "finalStateDigest": "39a1cbfc983e432944a86e3852bfeea943d05903ab39af7b4c8b69651d91af58",
+    "eventSha256": "51b88378820e4477088eeb880a44bb53a7faaf1c15878712447a78d8cddf529f"
+  },
+  "segmentedRun": {
+    "eventCount": 217,
+    "finalStateDigest": "39a1cbfc983e432944a86e3852bfeea943d05903ab39af7b4c8b69651d91af58",
+    "eventSha256": "51b88378820e4477088eeb880a44bb53a7faaf1c15878712447a78d8cddf529f",
+    "eventsMatchZeroRun": true
+  },
+  "recoveries": [
+    {
+      "checkpoint": 50,
+      "checkpointCycle": 50,
+      "prefixEventCount": 29,
+      "tailEventCount": 188,
+      "tailMatchesZeroRun": true,
+      "tailSha256": "368d04aeccf23a2f67969307584f0ed84cebc70dbb8a1440cdcd8eba599ae5c3",
+      "finalStateDigestMatchesZeroRun": true
+    },
+    {
+      "checkpoint": 200,
+      "checkpointCycle": 200,
+      "prefixEventCount": 114,
+      "tailEventCount": 103,
+      "tailMatchesZeroRun": true,
+      "tailSha256": "41c8cee0cebf5e62b0d6123521fa59ebe033ca4bb3ac8a3260ff4365c7c54bc8",
+      "finalStateDigestMatchesZeroRun": true
+    },
+    {
+      "checkpoint": 350,
+      "checkpointCycle": 350,
+      "prefixEventCount": 217,
+      "tailEventCount": 0,
+      "tailMatchesZeroRun": true,
+      "tailSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "finalStateDigestMatchesZeroRun": true
+    }
+  ],
+  "ok": true
+}
