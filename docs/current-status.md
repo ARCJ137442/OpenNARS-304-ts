@@ -7,10 +7,20 @@
 
 ## 2026-09-26 阶段报告与 M1-- 设备适配口径
 
-- 阶段报告已落盘为 `reports/20260926-203902.md`；当前代码 HEAD 为 `bc602ea`，远端主线已同步。
+- 阶段报告已落盘为 `reports/20260926-203902.md`；本轮 J5 切片另见 `reports/20260926-221639.md`，当前代码 HEAD 以 Git 主线为准。
 - 当前 Termux、Android 及其他性能/内存受限环境的全部 M1 相关测试统一采用 **M1--**：按 runner 实际排序从 245 个主资源中排除 `#25 nars_multistep_3.nal` 与 `#245 stability/long_term_stability.nal`，运行 243 项。
 - M1-- 是设备适配回归口径，不是完整 M1 阶段门；它不证明两个排除样本通过，也不能替代其他环境的完整 M1 245+1。
 - 后续若需要 M1 保护，必须使用唯一 M1-- 证据前缀、单进程、逐文件 checkpoint 和 `--resume`；不得在当前 Termux 启动完整 245。
+
+## 2026-09-26 J5 ConceptNew 文本边界切片
+
+- 阶段报告： `reports/20260926-221639.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动： `Events.ConceptNew.toString()` 从 `java.lang.String`/`StringBuilder` 改为原生 `string` 并使用 `javaStringValue()`，保留 `Concept Created: ...` 文本合同。
+- 直接合同： `32/32` 通过；非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查通过。
+- 受影响 NAL： `nal1.0.nal`、 `toothbrush.nal`、 `simpleOperationTest.nal` 均通过， `3/3`；均无 TS timeout、process limit 或异常。
+- 证据目录： `reports/evidence/j5-events-text-20260926/`；逐文件 JSONL 哈希分别为 `6781b2c8...544b0`、 `911b6c69...a395`、 `ca15343c...5149`。
+- 本批是 J5 风险切片，不是责任簇收口；未运行 M1 矩阵。当前 Termux 的全部 M1 相关测试仍必须使用 M1--（243 项），完整 245 不在本环境执行。
+- 旧未跟踪 J4/M1 调试证据未纳入本批提交； `020`、 `023`、 `024` 仍为 `in-progress`。
 
 ## 2026-09-26 崩溃恢复与 M1 245 前置复验
 

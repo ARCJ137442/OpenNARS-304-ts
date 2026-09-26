@@ -1,6 +1,6 @@
 //! Java source: opennars/io/events/Events.java
-import { JavaIllegalArgumentException } from "../../runtime/jree-compat.ts";
-import { java, S } from "jree";
+import { JavaIllegalArgumentException, javaStringValue } from "../../runtime/jree-compat.ts";
+import { java } from "jree";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
@@ -113,9 +113,8 @@ class ConceptNew extends ParametricInferenceEvent<Concept> {
         super(c, when);
     }
 
-    public override toString(): java.lang.String {
-        return new java.lang.StringBuilder().append(S`Concept Created: `)
-            .append(java.lang.String.valueOf(this.object)).toString();
+    public override toString(): string {
+        return `Concept Created: ${javaStringValue(this.object)}`;
     }
 }
 
@@ -357,5 +356,4 @@ export namespace Events {
 	};
 	export type ParametricInferenceEvent<O> = InferenceEvent & { readonly object: O };
 }
-
 

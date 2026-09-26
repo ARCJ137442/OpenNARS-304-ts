@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { java } from "jree";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
@@ -209,4 +210,11 @@ test("Events.ConceptNew preserves the Java InferenceEvent constructor contract",
     assert.equal(event.getType(), event.getClass());
     assert.equal(event.getType(), Events.ConceptNew.class);
     assert.equal(String(event.toString()), "Concept Created: fake-concept");
+});
+
+test("Events.ConceptNew keeps event text on the project-owned string boundary", () => {
+    const source = readFileSync("src/io/events/Events.ts", "utf8");
+
+    assert.doesNotMatch(source, /public override toString\(\): java\.lang\.String/);
+    assert.doesNotMatch(source, /new java\.lang\.StringBuilder\(\)\.append\(S`Concept Created: `/);
 });
