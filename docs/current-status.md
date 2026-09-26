@@ -32,6 +32,16 @@
 - 本批是 J5 T1 risk-slice，不是责任簇收口；未运行 M1 矩阵。Termux 中后续任何 M1 保护仍统一使用 M1--（`243` 项）。
 - 本批代码、测试、报告、状态和证据已完成提交并推送；本地与 `origin/main` 均为 `aaba9e4`，旧未跟踪 J4/M1 调试文件不会混入。
 
+## 2026-09-26 J5 TextOutputHandler prefix 字符串边界切片
+
+- 阶段报告：`reports/20260926-233520.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`TextOutputHandler.prefix` 改为原生 `string`；`setLinePrefix` 收窄为项目 `JavaStringInput`，保留 native/boxed 输入语义。
+- 局部合同 `16/16` 通过；完整 TS-only M2 为 `466` 项，`461` 通过、`0` 失败、`5` 跳过。
+- 受影响 NAL `3/3` 通过：`nal1.0.nal` `7921 ms`，`toothbrush.nal` `44591 ms`，`simpleOperationTest.nal` `410289 ms`；均无 timeout/process limit。
+- 证据目录：`reports/evidence/j5-prefix-20260926/`；JSONL 哈希已记录在阶段报告中，冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- 本批是 J5 T1 risk-slice，不是责任簇收口；未运行 M1 矩阵。Termux 中后续任何 M1 保护仍统一使用 M1--（`243` 项）。
+- 本批代码、报告和证据已完成本地提交 `d60d68e`；真实门禁为 T1 risk-slice，旧未跟踪 J4/M1 调试文件不会混入，推送待完成。
+
 ## 2026-09-26 崩溃恢复与 M1 245 前置复验
 
 - 崩溃恢复后确认工作区只剩 `Plugin.ts` 与 `plugin-boundary.test.ts` 的未提交 J4 `PluginName` 边界切片；没有发现残留 M1/检查点进程，用户已有 demo 服务未触碰。

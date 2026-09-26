@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { java } from "jree";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
+import { Nar } from "../../src/main/Nar.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
@@ -235,4 +236,24 @@ test("Events.TaskAdd accepts native and Java string reasons at the event boundar
 
     assert.equal(String(received[0]), "native-reason");
     assert.equal(String(received[1]), "boxed-reason");
+});
+
+
+test("TextOutputHandler keeps line prefixes on the native string boundary", () => {
+    const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
+    assert.doesNotMatch(source, /private prefix: java\.lang\.String/);
+    assert.doesNotMatch(source, /setLinePrefix\(prefix: java\.lang\.String/);
+
+    const lines: unknown[] = [];
+    const nar = new Nar();
+    const handler = new TextOutputHandler(nar, {
+        println(value: unknown): void {
+            lines.push(value);
+        },
+    });
+
+    assert.equal(handler.setLinePrefix(new java.lang.String("boxed: ")), handler);
+    handler.event(OutputHandler.OUT.class, [new java.lang.String("signal")]);
+
+    assert.deepEqual(lines.map(String), ["boxed: OUT: signal"]);
 });

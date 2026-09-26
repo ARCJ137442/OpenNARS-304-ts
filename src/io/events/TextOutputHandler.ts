@@ -8,7 +8,8 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
-import { isJavaThrowable } from "../../runtime/jree-compat.ts";
+import { isJavaThrowable, javaStringValue } from "../../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 
 const IN = OutputHandler.IN;
@@ -33,7 +34,7 @@ export class TextOutputHandler extends OutputHandler {
 
     private readonly nar: Nar;
 
-    private prefix: java.lang.String = new java.lang.String("");
+    private prefix: string = "";
     private outExp2: TextOutputHandler.LineOutput | null = null;
     private outExp: java.io.PrintWriter | null = null;
     private showErrors: boolean = true;
@@ -177,8 +178,8 @@ export class TextOutputHandler extends OutputHandler {
         return this;
     }
 
-    public setLinePrefix(prefix: java.lang.String): TextOutputHandler {
-        this.prefix = prefix;
+    public setLinePrefix(prefix: JavaStringInput): TextOutputHandler {
+        this.prefix = javaStringValue(prefix);
         return this;
     }
 
