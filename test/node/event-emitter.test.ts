@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { join } from "node:path";
 import test from "node:test";
 import { java } from "jree";
+import { tmpdir } from "node:os";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
@@ -261,4 +263,26 @@ test("TextOutputHandler keeps line prefixes on the native string boundary", () =
 test("TextOutputHandler.LineOutput accepts project-owned text values", () => {
     const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
     assert.doesNotMatch(source, /println\(s: java\.lang\.String\): void/);
+});
+
+test("TextOutputHandler.openSaveFile accepts project-owned text paths", () => {
+    const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
+    assert.doesNotMatch(source, /openSaveFile\(path: java\.lang\.String\)/);
+
+    const directory = mkdtempSync(join(tmpdir(), "opennars-text-output-"));
+    const nativePath = join(directory, "native.log");
+    const boxedPath = join(directory, "boxed.log");
+    const handler = new TextOutputHandler(new Nar());
+
+    try {
+        handler.openSaveFile(nativePath);
+        handler.closeSaveFile();
+        handler.openSaveFile(new java.lang.String(boxedPath));
+        handler.closeSaveFile();
+
+        assert.equal(existsSync(nativePath), true);
+        assert.equal(existsSync(boxedPath), true);
+    } finally {
+        rmSync(directory, { recursive: true, force: true });
+    }
 });

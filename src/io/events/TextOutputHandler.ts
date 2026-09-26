@@ -8,7 +8,7 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
-import { isJavaThrowable, javaStringValue } from "../../runtime/jree-compat.ts";
+import { isJavaThrowable, javaStringValue, toJavaString } from "../../runtime/jree-compat.ts";
 import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 
@@ -109,9 +109,9 @@ export class TextOutputHandler extends OutputHandler {
     /**
      * Open an output experience file
      */
-    public openSaveFile(path: java.lang.String): void {
+    public openSaveFile(path: JavaStringInput): void {
         try {
-            this.outExp = new java.io.PrintWriter(new java.io.FileWriter(path));
+            this.outExp = new java.io.PrintWriter(new java.io.FileWriter(toJavaString(path)));
         } catch (ex) {
             if (ex instanceof java.io.IOException) {
                 throw new java.lang.IllegalStateException("Could not open save file.", ex);
@@ -328,4 +328,3 @@ export namespace TextOutputHandler {
     }
 
 }
-

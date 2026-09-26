@@ -54,6 +54,20 @@
 - 本批是 J5 T1 risk-slice，不是责任簇收口；不运行 M1--。Termux 中后续所有 M1 相关测试仍统一采用 M1--（243 项），完整 245 留给高性能环境。
 - `020`、`023`、`024` 继续保持 `in-progress`；本批不能宣称 J5、023、jree 清零、完整 M1 或发布完成。
 
+## 2026-09-26 J5 TextOutputHandler openSaveFile 路径文本边界切片
+
+- 阶段报告：`reports/20260926-235959 - continuation.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`TextOutputHandler.openSaveFile` 的路径参数从 `java.lang.String` 收窄为项目自有 `JavaStringInput`，进入 jree `FileWriter` 前通过 `toJavaString` 统一 native/boxed 表示；文件打开、关闭和异常语义未改变。
+- 直接合同 `18/18` 通过；其中新增合同先以 `17/18` 红灯证明旧签名确实被命中，再以 `18/18` 转绿。
+- 非增量 `typecheck`、`test:build`、`test:api:dist`、迁移扫描、jree 审计、平台审计和汉字编码检查均通过。
+- TS-only M2：`468` 项，`463` 通过、`0` 失败、`5` 跳过；本轮未启动 Java 子进程。
+- 受影响 NAL `3/3` 通过：`nal1.0.nal` `5071 ms`、`toothbrush.nal` `24833 ms`、`simpleOperationTest.nal` `304093 ms`；均无 timeout、process limit、exception、stall 或 not-run。
+- 资源峰值：三份样本分别为 `247025664`、`371621888`、`401137664` 字节；最高约 `382.5 MiB`，运行期间保持单进程。
+- 证据：`reports/evidence/j5-opensave-20260926-sentinel.jsonl` 与 `.stdout`；SHA-256 分别为 `6627b0c447ee53c94c9b58170bad70ff042bda519d97045b0f95e4892d12d00f`、`2084e64ba1f0da8d77c097dd5c3901a662505be5981644a7c6e599635c91bd23`；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- 本批已本地提交；真实门禁以 `c9de5be` 为基线，结果为 `tier=T1`、`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`validation_profile=risk-slice`。
+- 本批是 J5 T1 risk-slice，不是责任簇收口；不运行 M1--。Termux 中后续所有 M1 相关测试仍统一采用 M1--（243 项），完整 245 留给高性能环境。
+- `020`、`023`、`024` 继续保持 `in-progress`；本批不能宣称 J5、023、jree 清零、完整 M1 或发布完成。
+
 ## 2026-09-26 崩溃恢复与 M1 245 前置复验
 
 - 崩溃恢复后确认工作区只剩 `Plugin.ts` 与 `plugin-boundary.test.ts` 的未提交 J4 `PluginName` 边界切片；没有发现残留 M1/检查点进程，用户已有 demo 服务未触碰。
