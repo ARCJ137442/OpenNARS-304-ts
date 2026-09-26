@@ -30,7 +30,7 @@
 - 受影响 NAL `3/3` 通过：`nal1.0.nal` `8565 ms`，`toothbrush.nal` `37796 ms`，`simpleOperationTest.nal` `389632 ms`；均无 timeout/process limit。
 - 证据：`reports/evidence/j5-taskadd-20260926/`；冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
 - 本批是 J5 T1 risk-slice，不是责任簇收口；未运行 M1 矩阵。Termux 中后续任何 M1 保护仍统一使用 M1--（`243` 项）。
-- 本批代码、测试、报告、状态和证据已完成本地提交；旧未跟踪 J4/M1 调试文件不会混入，远端推送待网络恢复。
+- 本批代码、测试、报告、状态和证据已完成提交并推送；本地与 `origin/main` 均为 `aaba9e4`，旧未跟踪 J4/M1 调试文件不会混入。
 
 ## 2026-09-26 崩溃恢复与 M1 245 前置复验
 
