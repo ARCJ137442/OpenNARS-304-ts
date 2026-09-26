@@ -2,7 +2,7 @@
 import { java, S } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
-import { toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
+import { toJavaString, toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { Parameters } from "./Parameters.ts";
 import { Debug } from "./Debug.ts";
 import { ConfigReader } from "../io/ConfigReader.ts";
@@ -142,8 +142,8 @@ export class Nar extends SensoryChannel implements Reasoner {
         }
     }
 
-    public SaveToFile(name: java.lang.String): void {
-        let outStream: java.io.FileOutputStream = new java.io.FileOutputStream(name);
+    public SaveToFile(name: JavaStringInput): void {
+        let outStream: java.io.FileOutputStream = new java.io.FileOutputStream(toJavaString(name));
         const ObjectOutputStream = (java.io as unknown as {
             ObjectOutputStream: new (stream: java.io.FileOutputStream) => ObjectOutputStreamCompat;
         }).ObjectOutputStream;
@@ -152,8 +152,8 @@ export class Nar extends SensoryChannel implements Reasoner {
         outStream.close();
     }
 
-    public static LoadFromFile(name: java.lang.String): Nar {
-        let inStream: java.io.FileInputStream = new java.io.FileInputStream(name);
+    public static LoadFromFile(name: JavaStringInput): Nar {
+        let inStream: java.io.FileInputStream = new java.io.FileInputStream(toJavaString(name));
         const ObjectInputStream = (java.io as unknown as {
             ObjectInputStream: new (stream: java.io.FileInputStream) => ObjectInputStreamCompat;
         }).ObjectInputStream;
