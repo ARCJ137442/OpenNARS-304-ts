@@ -10,10 +10,10 @@ import { TruthValue } from "../../entity/TruthValue.ts";
 import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import {
-    JavaIllegalArgumentException,
     toRuntimeLong,
     type JavaLongInput,
 } from "../../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { Events } from "../../io/events/Events.ts";
@@ -355,5 +355,4 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 export namespace Anticipate {
     export type Prediction = InstanceType<Anticipate["Prediction"]>;
 }
-
 

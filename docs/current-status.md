@@ -6,6 +6,11 @@
 
 ## 2026-09-25 之后的可验证增量
 
+- `2026-09-26` J4 异常生产者切片：`FunctionOperator`、`NullOperator`、`Operation`、`Operator`、`Anticipate`、`Add`、`Count`、`Reflect` 与 `Counting` 直接使用项目内 `JavaExceptions`，保留 `jree-compat.ts` 的字符串、long、类身份和观察桥责任。
+- 本切片定向 J4 测试 `39/39` 通过；冻结 Java 标杆 TS-only 哨兵 `4/4` functional/parity，通过 `0` exception、`0` marker missing、`0` timeout、`0` process limit；证据 `reports/evidence/j4-exception-boundary-20260926-sentinel.jsonl`，SHA-256 `B0628A57A327CBAFEF41CF96C18DCF59408D7AEB9ABAB0122CA5EF635572F01A`。
+- 本切片完整串行 M2 为 `460` 项、`455` 通过、`0` 失败、`5` 跳过；非增量 typecheck、build、dist API、迁移扫描和 jree/platform 审计通过。
+- 本切片仍是 J4 T1 risk-slice，不运行 M1-，不勾选 J4 或 023 完成；生产直接 jree 导入文件仍为 `15`，因为兼容桥仍承担字符串、long、类身份和观察职责。
+
 - `2026-09-26` 多检查点实验提升到 `360` 周期与 `[50, 200, 350]`：从零运行、分段恢复与每个检查点独立恢复的尾部事件和最终状态摘要全部一致，`summary.ok=true`。
 - J4 收口候选 M1- 主证据仍是 `244` 项中 `242` 功能通过、`2` 项 `process_limit`；对 `toothbrush2.nal` 与 `nars_multistep_3.nal` 将看门狗提高到 `360000 ms`、进程安全上限提高到 `3600000 ms` 串行复核，两项仍在一小时上限触发 `process_limit`。
 - 两个长样本在触发上限时仍有周期进展，最后观测周期分别为 `185036` 与 `341112`；这是资源观察未完成，不是语义失败，也不是通过。

@@ -8,12 +8,11 @@ import { Symbols } from "../io/Symbols.ts";
 import { Operator } from "./Operator.ts";
 import type { Task } from "../entity/Task.ts";
 import {
-    JavaIllegalArgumentException,
     type JavaCharSequence,
     type JavaCharSequenceInput,
     javaStringValue,
 } from "../runtime/jree-compat.ts";
-import { JavaNullPointerException } from "../runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException, JavaNullPointerException } from "../runtime/JavaExceptions.ts";
 
 
 

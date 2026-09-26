@@ -5,7 +5,7 @@ import { Term } from "../../language/Term.ts";
 import { SetExt } from "../../language/SetExt.ts";
 import { SetInt } from "../../language/SetInt.ts";
 import { CompoundTerm } from "../../language/CompoundTerm.ts";
-import { JavaIllegalStateException } from "../../runtime/jree-compat.ts";
+import { JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
 

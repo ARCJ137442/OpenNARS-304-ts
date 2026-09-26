@@ -3,12 +3,14 @@ import type { int } from "../../types.ts"; // Java primitive aliases formerly im
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { Term } from "../../language/Term.ts";
 import {
-    JavaIllegalArgumentException,
-    JavaIllegalStateException,
-    JavaNumberFormatException,
     javaStringValue,
     toJavaString,
 } from "../../runtime/jree-compat.ts";
+import {
+    JavaIllegalArgumentException,
+    JavaIllegalStateException,
+    JavaNumberFormatException,
+} from "../../runtime/JavaExceptions.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
 // Java 3.7's StringUtils.isNumeric accepts a non-empty ASCII digit sequence;

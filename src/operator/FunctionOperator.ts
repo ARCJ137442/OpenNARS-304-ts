@@ -14,10 +14,9 @@ import type { Operation } from "./Operation.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { CompoundTerm } from "../language/CompoundTerm.ts";
 import {
-    JavaIllegalArgumentException,
-    JavaIllegalStateException,
     type JavaStringInput,
 } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 
 // Keep FunctionOperator below the inference layer. Importing BudgetFunctions
 // here would close the FunctionOperator -> Memory -> BudgetFunctions cycle.

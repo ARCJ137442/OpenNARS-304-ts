@@ -13,7 +13,8 @@ import { Product } from "../../language/Product.ts";
 import { SetExt } from "../../language/SetExt.ts";
 import { Term } from "../../language/Term.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { JavaIllegalArgumentException, toJavaString } from "../../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
+import { toJavaString } from "../../runtime/jree-compat.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
@@ -27,8 +28,8 @@ type EventObserver = EventEmitter.EventObserver;
  * Counting and Cardinality
  */
 // Java source declares a plain Plugin implementation without a JavaObject base.
-// Keep the plugin as a plain TypeScript class; Java exception and string
-// boundaries are concentrated in jree-compat instead of this domain module.
+// Keep the plugin as a plain TypeScript class; only its boxed-string boundary
+// remains in jree-compat while exception identity stays project-owned.
 export class Counting implements Plugin {
 
     public obs: EventObserver | null = null;

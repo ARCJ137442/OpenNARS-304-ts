@@ -9,10 +9,9 @@ import type { Statement } from "../../language/Statement.ts";
 import { Term } from "../../language/Term.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import {
-    JavaIllegalArgumentException,
-    JavaIllegalStateException,
     javaStringValue,
 } from "../../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
 import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import type { Memory } from "../../storage/Memory.ts";
 

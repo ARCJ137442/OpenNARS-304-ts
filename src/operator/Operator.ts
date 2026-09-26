@@ -266,4 +266,3 @@ export namespace Operator {
     export type ExecutionResult = InstanceType<typeof Operator.ExecutionResult>;
 }
 
-

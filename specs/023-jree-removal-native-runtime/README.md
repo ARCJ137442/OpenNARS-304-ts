@@ -930,3 +930,23 @@ OpenNARS-304-ts 外部发布主线
 ├─ O 正式性能门                                   [----------] 待开始
 └─ R RC、bundle、发布与用户授权 tag               [----------] 待开始
 ```
+
+
+### 2026-09-26：J4 异常生产者兼容桥切片
+
+对照 canonical Java 的异常继承和消息观察合同，本批只处理 J4 operator/plugin 文件中仍从
+`jree-compat.ts` 引入的异常类：`FunctionOperator`、`NullOperator`、`Operation`、`Operator`、
+`Anticipate`、`Add`、`Count`、`Reflect` 与 `Counting`。异常类改为直接来自项目内
+`src/runtime/JavaExceptions.ts`；字符串、long、类身份、事件派发、集合和推理算法保持原样。
+
+- 计划器归类为 J4 owner、T1 risk-slice；不要求 live Java、M1- 或完整 M1。
+- 定向 J4 测试 `39/39` 通过；完整串行 M2 为 `460` 项，`455` 通过、`0` 失败、`5` 跳过。
+- 非增量 typecheck、build、dist API、迁移扫描、jree 审计和 platform 审计均通过。
+- 冻结 Java 标杆 TS-only 哨兵 `4/4` functional/parity；0 exception、0 marker missing、0 timeout、
+  0 process limit、0 Java/TS diff。证据：`reports/evidence/j4-exception-boundary-20260926-sentinel.jsonl`；
+  SHA-256：`B0628A57A327CBAFEF41CF96C18DCF59408D7AEB9ABAB0122CA5EF635572F01A`。
+- 审计中生产直接 jree 导入文件仍为 `15`，因为本批只迁移异常类导入，兼容桥仍承担字符串、
+  long、类身份和观察责任；因此不能宣称 jree 已移除、J4 已收口或 023 完成。
+
+下一步继续按共同合同拆分 J4/J1 兼容桥责任；只有 J4 出口条件全部满足后，才允许唯一一次
+`--close-cluster` M1-，不能用本批定向哨兵或 M2 通过替代责任簇收口。
