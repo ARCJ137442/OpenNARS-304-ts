@@ -598,10 +598,10 @@ export class Nar extends SensoryChannel implements Reasoner {
      * two-argument form remains the Java sensory-channel task overload.
      */
     public addInputText(source: JavaStringInput): void;
-    public addInputText(text: java.lang.String, time: Timable): void;
+    public addInputText(text: JavaStringInput, time: Timable): void;
     public addInputText(...args: unknown[]): void {
         if (args.length === 2) {
-            super.addInputText(args[0] as java.lang.String, args[1] as Timable);
+            super.addInputText(args[0] as JavaStringInput, args[1] as Timable);
             return;
         }
         if (args.length !== 1) {
@@ -921,4 +921,3 @@ export class Nar extends SensoryChannel implements Reasoner {
 export namespace Nar {
     export type PluginState = InstanceType<Nar["PluginState"]>;
 }
-

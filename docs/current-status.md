@@ -51,6 +51,19 @@
 - 受影响 NAL `3/3` 通过：`nal1.0.nal` `8072 ms`、`toothbrush.nal` `39030 ms`、`simpleOperationTest.nal` `355552 ms`；均无 timeout、process limit、exception 或 not-run。
 - 资源峰值：三份样本分别为 `251080704`、`322588672`、`302759936` 字节；最高约 `307.6 MiB`，运行期间保持单进程。
 - 证据目录：`reports/evidence/j5-lineoutput-20260926/`；JSONL SHA-256 分别为 `30a69cd1fe713a54b4894dbb7fd3a693e525e3cabb9c6f0f7255a2cf2f3902b4`、`4d2727b7a92040259099f34674994c7e5e9889dbadc2d37827c9ce18b7e1bcf8`、`c79497fc8dd062944d0230ac106c2ac5c0d9e3f294975ba845f88bcf9d197f84`。
+- 本批真实门禁以 `1c4f0a2` 为基线，结果为 `tier=T1`、`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`validation_profile=risk-slice`；本批是 J5 T1 risk-slice，不是责任簇收口，不运行 M1--。Termux 中后续所有 M1 相关测试仍统一采用 M1--（243 项），完整 245 留给高性能环境。
+- `020`、`023`、`024` 继续保持 `in-progress`；本批不能宣称 J5、023、jree 清零、完整 M1 或发布完成。
+
+## 2026-09-26 J5 Nar.addInputText 两参数文本边界切片
+
+- 阶段报告：`reports/20260926-235959 - nar-input.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`Nar.addInputText(text, time)` 的文本参数从 `java.lang.String` 收窄为项目自有 `JavaStringInput`，转发至既有 `SensoryChannel.addInputText` 时保持 native/boxed 字符串输入兼容。
+- 直接合同 `2/2` 通过；合同先命中旧声明红灯，后在不扩大范围的前提下改用真实 `SensoryChannel` 子类验证 native/boxed 输入均能解析并派发 Task。
+- 非增量 `typecheck`、`test:build`、`test:api:dist`、迁移扫描、jree 审计、平台审计和汉字编码检查均通过。
+- TS-only M2：`469` 项，`464` 通过、`0` 失败、`5` 跳过；本轮未启动 Java 子进程。
+- 受影响 NAL `3/3` 通过：`nal1.0.nal` `3328 ms`、`toothbrush.nal` `16526 ms`、`simpleOperationTest.nal` `190018 ms`；均无 timeout、process limit、exception、stall 或 not-run。
+- 资源峰值：三份样本分别为 `248287232`、`377528320`、`410005504` 字节；最高约 `391.0 MiB`，运行期间保持单进程。
+- 证据：`reports/evidence/j5-nar-input-20260926-sentinel.jsonl` 与 `.stdout`；SHA-256 分别为 `f69c19adb0418928cad4a7666b613214604122e02f71e988dd7973c300194f69`、`2084e64ba1f0da8d77c097dd5c3901a662505be5981644a7c6e599635c91bd23`；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
 - 本批是 J5 T1 risk-slice，不是责任簇收口；不运行 M1--。Termux 中后续所有 M1 相关测试仍统一采用 M1--（243 项），完整 245 留给高性能环境。
 - `020`、`023`、`024` 继续保持 `in-progress`；本批不能宣称 J5、023、jree 清零、完整 M1 或发布完成。
 
