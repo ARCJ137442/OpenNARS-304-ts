@@ -11,6 +11,14 @@
 - 当前已提交 J5 Shell 与 NarNode `S` 固定文本边界切片：`82c3ce1`；该候选仍不是 J5 收口。
 - 普通切片不运行 M1--；仅责任簇出口时运行 Termux M1-- `243` 项。M1 相关测试不运行完整 `245` 项或 `#245`。
 
+## 2026-09-27 J5 NarNode 资源异常边界切片
+
+- 阶段报告：`reports/20260927-165500.md`；当前候选未提交，模型身份为 `GPT 5.6 sol xhigh`。
+- 生产改动：`NarNode.ts` 移除 jree 资源辅助函数；新增 `ResourceCompat.ts`；`JavaThrowable` 增加 suppressed 异常观察面。
+- 定向资源与异常合同 `14/14` 通过；TS-only M2 `482` 项，`477` 通过、`0` 失败、`5` 跳过，耗时 `498909.276 ms`。
+- 非增量 typecheck、build（`140` 个源文件）、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过。
+- 本批是 J5 owner + J1 supporting 的 T1 候选，提交后重跑计划器；责任簇收口前不运行 M1--。
+
 ## 2026-09-27 J5 Shell/NarNode 固定文本边界切片
 
 - 代码提交：`82c3ce1`；阶段报告：`reports/20260927-155423.md`；模型身份为 `GPT 5.6 sol xhigh`。

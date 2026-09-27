@@ -1,0 +1,22 @@
+✔ native Java throwable hierarchy preserves type and message contracts (2.173125ms)
+✔ native Java exception layers retain Java-shaped subclassing (0.503593ms)
+✔ native Java throwable supports Java-style cause and message updates (0.28776ms)
+✔ native Java exception compatibility preserves old jree instanceof checks (0.315156ms)
+✔ NarNode network text boundaries stay project-owned (2.90599ms)
+✔ resource helpers close in reverse order and preserve suppressed failures (4.604271ms)
+✔ resource helpers attach close failures to the primary error and rethrow (0.745729ms)
+✔ javaStringLength normalizes jree and native string representations (2.459791ms)
+✔ javaStringValue applies Java toString before JS interpolation (0.409167ms)
+✔ Java string equality and hashing use exact UTF-16 code units (0.628282ms)
+✔ jree Double compatibility preserves boxed numeric operations (0.419583ms)
+✔ identity hash compatibility is stable and distinguishes object identity (0.292291ms)
+✔ missing jree exception compatibility preserves Java inheritance (0.568802ms)
+✔ jree object FQN marker is inherited without changing class identity (0.378698ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7983.446663
