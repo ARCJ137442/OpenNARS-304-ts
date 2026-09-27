@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
+import { java } from "jree";
 import { NodeStdinInputStream, type NodeReadableInput } from "../../src/runtime/NodeStdinInputStream.ts";
 
 class FakeReadable implements NodeReadableInput {
@@ -19,6 +21,13 @@ class FakeReadable implements NodeReadableInput {
     }
 }
 
+test("Node stdin adapter stays independent from the jree InputStream runtime", () => {
+    const source = readFileSync("src/runtime/NodeStdinInputStream.ts", "utf8");
+    assert.doesNotMatch(source, /from ["']jree["']/);
+    assert.doesNotMatch(source, /extends\s+java\.io\.InputStream/);
+    assert.match(source, /public ready\(\): boolean/);
+});
+
 test("Node stdin adapter exposes queued bytes through Java InputStream", () => {
     const source = new FakeReadable();
     const stream = new NodeStdinInputStream(source);
@@ -31,4 +40,17 @@ test("Node stdin adapter exposes queued bytes through Java InputStream", () => {
     assert.deepEqual(Array.from(buffer), [97, 10]);
     assert.equal(stream.available(), 0);
     assert.equal(stream.read(), -1);
+});
+
+test("Node stdin adapter feeds the Java line reader through the narrow host boundary", () => {
+    const source = new FakeReadable();
+    const stream = new NodeStdinInputStream(source);
+    const reader = new java.io.BufferedReader(
+        new java.io.InputStreamReader(stream as unknown as java.io.InputStream),
+    );
+
+    source.emit("data", new TextEncoder().encode("first\r\nsecond\n"));
+    assert.equal(String(reader.readLine()), "first");
+    assert.equal(String(reader.readLine()), "second");
+    assert.equal(reader.readLine(), null);
 });

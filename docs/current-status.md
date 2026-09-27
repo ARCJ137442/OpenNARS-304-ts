@@ -11,6 +11,14 @@
 - 当前已提交 J5 Shell 与 NarNode `S` 固定文本边界切片：`82c3ce1`；该候选仍不是 J5 收口。
 - 普通切片不运行 M1--；仅责任簇出口时运行 Termux M1-- `243` 项。M1 相关测试不运行完整 `245` 项或 `#245`。
 
+## 2026-09-27 J5 Node stdin 宿主边界切片（候选）
+
+- 阶段报告：`reports/20260927-173826.md`；代码尚未提交，模型身份为 `GPT 5.6 sol xhigh`。
+- `NodeStdinInputStream.ts` 移除 jree 导入与 `java.io.InputStream` 继承；`Shell.ts` 在 jree IO wrapper 入口保留显式窄类型断言。
+- 定向 Shell/Node stdin 合同 `6/6` 通过；TS-only M2 `484/479/0/5`，耗时 `559325.966 ms`。
+- typecheck、build（`140` 个源文件）、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过；jree 直接导入文件数 `14→13`。
+- 本批是 J5 普通 T1 候选，提交后运行计划器与受影响 NAL；责任簇收口前不运行 M1--。
+
 ## 2026-09-27 J5 NarNode 资源异常边界切片（已验收）
 
 - 代码提交：`1d50973`；阶段报告：`reports/20260927-165500.md`。

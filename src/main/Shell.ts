@@ -199,7 +199,8 @@ export class Shell {
         if (hasInputFile) {
             this.nar.addInputText(readFileSync(String(args[2]), "utf8"));
         }
-        it = new this.InputThread(new NodeStdinInputStream(), this.nar);
+        const inputStream = new NodeStdinInputStream() as unknown as java.io.InputStream;
+        it = new this.InputThread(inputStream, this.nar);
         it.start();
 
         let numberOfSteps: int = hasNumberOfSteps ? java.lang.Integer.parseInt(String(args[3])) : -1;
