@@ -1,0 +1,14 @@
+✔ Shell keeps the Java plain-class boundary and ThreadCompat remains local (26.523959ms)
+✔ Node stdin adapter stays independent from the jree InputStream runtime (2.719531ms)
+✔ Node stdin adapter exposes queued bytes through Java InputStream (3.17ms)
+✔ Node stdin adapter feeds the Java line reader through the narrow host boundary (2.757656ms)
+✔ Shell command-line text boundaries accept project-owned strings (17.180833ms)
+✔ Shell log preserves native and boxed string output (41.495625ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33475.433112

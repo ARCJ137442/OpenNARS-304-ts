@@ -9,6 +9,7 @@
 export class JavaThrowable extends Error {
     private detailMessage: string | null;
     private causeValue: unknown | null;
+    private readonly suppressedValues: JavaThrowable[] = [];
 
     public constructor(message?: unknown, cause: unknown | null = null) {
         const normalizedMessage = message === null || message === undefined
@@ -36,6 +37,17 @@ export class JavaThrowable extends Error {
     public initCause(cause: unknown | null): this {
         this.causeValue = cause;
         return this;
+    }
+
+    public addSuppressed(exception: JavaThrowable): void {
+        if (exception === this) {
+            throw new JavaIllegalArgumentException();
+        }
+        this.suppressedValues.push(exception);
+    }
+
+    public getSuppressed(): readonly JavaThrowable[] {
+        return this.suppressedValues;
     }
 
     public setMessage(message: unknown): this {

@@ -1,0 +1,10 @@
+✔ Shell command-line text boundaries accept project-owned strings (15.578073ms)
+✔ Shell log preserves native and boxed string output (29.258281ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8496.011923

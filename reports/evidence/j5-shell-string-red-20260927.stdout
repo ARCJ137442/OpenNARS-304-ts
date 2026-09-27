@@ -1,0 +1,254 @@
+✖ Shell command-line text boundaries accept project-owned strings (41.225521ms)
+✔ Shell log preserves native and boxed string output (43.356823ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22621.20895
+
+✖ failing tests:
+
+test at test/node/shell-string-boundary.test.ts:7:1
+✖ Shell command-line text boundaries accept project-owned strings (41.225521ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /\bS`/. Input:
+  
+  '//! Java source: opennars/main/Shell.java\n' +
+    'import { java, S } from "jree";\n' +
+    'import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.\n' +
+    'import { readFileSync } from "node:fs";\n' +
+    'import { Nar } from "./Nar.ts";\n' +
+    'import { NarNode } from "./NarNode.ts";\n' +
+    'import { Term } from "../language/Term.ts";\n' +
+    'import { Debug } from "./Debug.ts";\n' +
+    'import { TextOutputHandler } from "../io/events/TextOutputHandler.ts";\n' +
+    'import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";\n' +
+    'import { isJavaException, javaSystemExit, type JavaStringInput } from "../runtime/jree-compat.ts";\n' +
+    'import { NodeStdinInputStream } from "../runtime/NodeStdinInputStream.ts";\n' +
+    'import { createNodeRuntimeCapabilities } from "../platform/node/SystemCommandCapabilities.ts";\n' +
+    '\n' +
+    '\n' +
+    '\n' +
+    '/**\n' +
+    ' * Run Reasoner inside a command line application for batch processing\n' +
+    ' */\n' +
+    '/* TODO check duplicated code with {@link org.opennars.main.Nar} */\n' +
+    '// Manage the internal working thread. Communicate with Reasoner only.\n' +
+    '// Java 原类型：普通 public class Shell；无 JavaObject 继承。\n' +
+    'export class Shell {\n' +
+    '\n' +
+    '    private readonly nar: Nar;\n' +
+    '    private out: java.io.PrintStream = java.lang.System.out;\n' +
+    '\n' +
+    '    public static createNar(args: JavaStringInput[]): Nar {\n' +
+    '        let nar: Nar | null = null;\n' +
+    '        let id: number | null = null;\n' +
+    '        const narPath = String(args[0]);\n' +
+    '        const idText = String(args[1]);\n' +
+    '        if (idText.toLowerCase() !== "null") {\n' +
+    '            id = java.lang.Integer.parseInt(idText);\n' +
+    '        }\n' +
+    '\n' +
+    '        if (narPath.toLowerCase() === "null") {\n' +
+    '            if (id === null) {\n' +
+    '                nar = new Nar({ capabilities: createNodeRuntimeCapabilities() });\n' +
+    '            } else {\n' +
+    '                nar = new Nar({ narId: BigInt(id), capabilities: createNodeRuntimeCapabilities() });\n' +
+    '            }\n' +
+    '        } else if (narPath.endsWith(".xml")) {\n' +
+    '            const configText = readFileSync(narPath, "utf8");\n' +
+    '            if (id === null) {\n' +
+    '                nar = new Nar({ configText, configSource: narPath, capabilities: createNodeRuntimeCapabilities() });\n' +
+    '            } else {\n' +
+    '                nar = new Nar({\n' +
+    '                    narId: BigInt(id),\n' +
+    '                    configText,\n' +
+    '                    configSource: narPath,\n' +
+    '                    capabilities: createNodeRuntimeCapabilities(),\n' +
+    '                });\n' +
+    '            }\n' +
+    '        } else {\n' +
+    '            if (id !== null) {\n' +
+    '                java.lang.System.out.println(\n' +
+    '                    S`Identity of loaded nar can not be changed, set idOrNull to null if Nar from file should be used!`);\n' +
+    '                javaSystemExit(1);\n' +
+    '            }\n' +
+    '            nar = Nar.LoadFromFile(S`${narPath}`);\n' +
+    '        }\n' +
+    '        if (nar === null) {\n' +
+    '            throw new java.lang.IllegalStateException(S`Unable to create Nar from the supplied arguments`);\n' +
+    '        }\n' +
+    '        return nar;\n' +
+    '    }\n' +
+    '\n' +
+    '    public static argInfo(): void {\n' +
+    '        java.lang.System.out.println(\n' +
+    '            S`expected arguments: none, or: narOrConfigFileOrNull idOrNull nalFileOrNull cyclesToRunOrNull`);\n' +
+    '        java.lang.System.out.println(S`or for UDP networking support:`);\n' +
+    '        // args length check, it has to be 5+5*k, with k in N0\n' +
+    '        java.lang.System.out.println(\n' +
+    '            S`narOrConfigFileOrNull idOrNull nalFileOrNull cyclesToRunOrNull listenPort targetIP1 targetPort1 prioThres1 mustContainTermOrNull1 sendInput1 ... targetIPN targetPortN prioThresN mustContainTermOrNullN sendInputN`);\n' +
+    '        java.lang.System.out.println(\n' +
+    '            S`Here, OrNull means they can be null too, example: null null null null 64001 127.0.0.1 64002 0.5 null True`);\n' +
+    '    }\n' +
+    '\n' +
+    '    /**\n' +
+    '     * logging\n' +
+    '     *\n' +
+    '     */\n' +
+    '    protected static log(message: JavaStringInput): void {\n' +
+    '        // l for log\n' +
+    '        java.lang.System.out.println(S`[l]: ${message}`);\n' +
+    '    }\n' +
+    '\n' +
+    '    /**\n' +
+    '     * The entry point of the standalone application.\n' +
+    '     *\n' +
+    '     * @param args command line arguments\n' +
+    '     */\n' +
+    '    public static main(args: JavaStringInput[]): void {\n' +
+    '        if (args.length === 0) { // in that case just run the instance\n' +
+    '            args = [S`null`, S`null`, S`null`, S`null`];\n' +
+    '        }\n' +
+    '        if (args.length !== 4 && ((args.length - 5) % 5 !== 0 || args.length < 5)) { // args length check\n' +
+    '            Shell.argInfo();\n' +
+    '            javaSystemExit(0);\n' +
+    '        }\n' +
+    '\n' +
+    '        const argList = args.map((arg) => String(arg)).join(", ");\n' +
+    '        Shell.log(S`creating Nar with args [${argList}] ...`);\n' +
+    '        let nar: Nar = Shell.createNar(args);\n' +
+    '\n' +
+    '        if (args.length > 4) {\n' +
+    '            Shell.log(S`attaching NarNode networking features to Nar...`);\n' +
+    '            let nar1port: int = java.lang.Integer.parseInt(String(args[4]));\n' +
+    '            let nar1: NarNode = new NarNode(nar, nar1port);\n' +
+    '            for (let i: int = 5; i < args.length; i += 5) {\n' +
+    '                let T: Term | null = String(args[i + 3]).toLowerCase() === "null"\n' +
+    '                    ? null\n' +
+    '                    : new Term(java.lang.String.valueOf(args[i + 3]));\n' +
+    '                nar1.addRedirectionTo(args[i], java.lang.Integer.parseInt(String(args[i + 1])), Math.fround(Number.parseFloat(String(args[i + 2]))), T,\n' +
+    '                    java.lang.Boolean.parseBoolean(java.lang.String.valueOf(args[i + 4])));\n' +
+    '            }\n' +
+    '        }\n' +
+    '\n' +
+    '        Shell.log(S`attaching Shell to Nar...`);\n' +
+    '        new Shell(nar).run(args);\n' +
+    '    }\n' +
+    '\n' +
+    '    public constructor(n: Nar) {\n' +
+    '        this.nar = n;\n' +
+    '    }\n' +
+    '\n' +
+    '    public InputThread = (($outer) => {\n' +
+    '        return class InputThread extends ThreadCompat {\n' +
+    '            private readonly bufIn: java.io.BufferedReader;\n' +
+    '            protected readonly nar: Nar;\n' +
+    '\n' +
+    '            public constructor(input: java.io.InputStream, nar: Nar) {\n' +
+    '                super();\n' +
+    '                this.bufIn = new java.io.BufferedReader(new java.io.InputStreamReader(input));\n' +
+    '                this.nar = nar;\n' +
+    '            }\n' +
+    '\n' +
+    '            public override  run(): void {\n' +
+    '                while (true) {\n' +
+    '                    try {\n' +
+    '                        let line: java.lang.String | null = this.bufIn.readLine();\n' +
+    '                        if (line !== null) {\n' +
+    '                            try {\n' +
+    '                                this.nar.addInput(line);\n' +
+    '                            } catch (ex) {\n' +
+    '                                if (isJavaException(ex)) {\n' +
+    '                                    if (Debug.DETAILED) {\n' +
+    '                                        java.lang.System.out.println(S`ERROR: error parsing:${line}`);\n' +
+    '                                        ex.printStackTrace();\n' +
+    '                                    } else\n' +
+    '                                    java.lang.System.out.println(S`ERROR: parsing error`);\n' +
+    '                                } else {\n' +
+    '                                    throw ex;\n' +
+    '                                }\n' +
+    '                            }\n' +
+    '                        }\n' +
+    '\n' +
+    '                    } catch (e) {\n' +
+    '                        if (e instanceof java.io.IOException) {\n' +
+    '                            throw new java.lang.IllegalStateException(S`ERROR: Could not read line.`, e);\n' +
+    '                        } else {\n' +
+    '                            throw e;\n' +
+    '                        }\n' +
+    '                    }\n' +
+    '\n' +
+    '                    try {\n' +
+    '                        ThreadCompat.sleep(1);\n' +
+    '                    } catch (e) {\n' +
+    '                        if (e instanceof InterruptedExceptionCompat) {\n' +
+    '                            // The translated Java Shell still exposes a jree Throwable cause;\n' +
+    '                            // keep that compatibility boundary local to the legacy entry point.\n' +
+    '                            throw new java.lang.IllegalStateException(\n' +
+    '                                S`ERROR: Unexpectedly interrupted while sleeping.`,\n' +
+    '                                e as unknown as java.lang.Throwable);\n' +
+    '                        } else {\n' +
+    '                            throw e;\n' +
+    '                        }\n' +
+    '                    }\n' +
+    '                }\n' +
+    '            }\n' +
+    '        }\n' +
+    '    })(this);\n' +
+    '\n' +
+    '\n' +
+    '    /**\n' +
+    '     * non-static equivalent to {@link #main(String[])} : finish to completion from\n' +
+    '     * an addInput file\n' +
+    '     */\n' +
+    '    public run(args: JavaStringInput[]): void {\n' +
+    '        let output: TextOutputHandler = new TextOutputHandler(this.nar, new java.io.PrintWriter(this.out, true));\n' +
+    '        output.setErrors(true);\n' +
+    '        output.setErrorStackTrace(true);\n' +
+    '        let it: Shell.InputThread;\n' +
+    '\n' +
+    '        let hasInputFile: boolean = String(args[2]).toLowerCase() !== "null";\n' +
+    '        let hasNumberOfSteps: boolean = String(args[3]).toLowerCase() !== "null";\n' +
+    '\n' +
+    '        if (hasInputFile) {\n' +
+    '            this.nar.addInputText(readFileSync(String(args[2]), "utf8"));\n' +
+    '        }\n' +
+    '        it = new this.InputThread(new NodeStdinInputStream(), this.nar);\n' +
+    '        it.start();\n' +
+    '\n' +
+    '        let numberOfSteps: int = hasNumberOfSteps ? java.lang.Integer.parseInt(String(args[3])) : -1;\n' +
+    '\n' +
+    '        if (hasNumberOfSteps) {\n' +
+    '            this.nar.cycles(numberOfSteps);\n' +
+    '            javaSystemExit(0);\n' +
+    '        } else {\n' +
+    '            this.nar.start(-1n); // 现在使用「-1」默认关闭「自动步进」功能\n' +
+    '        }\n' +
+    '    }\n' +
+    '\n' +
+    '    public setPrintStream(out: java.io.PrintStream): void {\n' +
+    '        this.out = out;\n' +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    '// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare\n' +
+    'export namespace Shell {\n' +
+    '    export type InputThread = InstanceType<Shell["InputThread"]>;\n' +
+    '}\n' +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///data/data/com.termux/files/home/A137442/nars/OpenNARS-304-TS/test/node/shell-string-boundary.test.ts:9:12)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.start (node:internal/test_runner/test:1003:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '//! Java source: opennars/main/Shell.java\nimport { java, S } from "jree";\nimport type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.\nimport { readFileSync } from "node:fs";\nimport { Nar } from "./Nar.ts";\nimport { NarNode } from "./NarNode.ts";\nimport { Term } from "../language/Term.ts";\nimport { Debug } from "./Debug.ts";\nimport { TextOutputHandler } from "../io/events/TextOutputHandler.ts";\nimport { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";\nimport { isJavaException, javaSystemExit, type JavaStringInput } from "../runtime/jree-compat.ts";\nimport { NodeStdinInputStream } from "../runtime/NodeStdinInputStream.ts";\nimport { createNodeRuntimeCapabilities } from "../platform/node/SystemCommandCapabilities.ts";\n\n\n\n/**\n * Run Reasoner inside a command line application for batch processing\n */\n/* TODO check duplicated code with {@link org.opennars.main.Nar} */\n// Manage the internal working thread. Communicate with Reasoner only.\n// Java 原类型：普通 public class Shell；无 JavaObject 继承。\nexport class Shell {\n\n    private readonly nar: Nar;\n    private out: java.io.PrintStream = java.lang.System.out;\n\n    public static createNar(args: JavaStringInput[]): Nar {\n        let nar: Nar | null = null;\n        let id: number | null = null;\n        const narPath = String(args[0]);\n        const idText = String(args[1]);\n        if (idText.toLowerCase() !== "null") {\n            id = java.lang.Integer.parseInt(idText);\n        }\n\n        if (narPath.toLowerCase() === "null") {\n            if (id === null) {\n                nar = new Nar({ capabilities: createNodeRuntimeCapabilities() });\n            } else {\n                nar = new Nar({ narId: BigInt(id), capabilities: createNodeRuntimeCapabilities() });\n            }\n        } else if (narPath.endsWith(".xml")) {\n            const configText = readFileSync(narPath, "utf8");\n            if (id === null) {\n                nar = new Nar({ configText, configSource: narPath, capabilities: createNodeRuntimeCapabilities() });\n            } else {\n                nar = new Nar({\n                    narId: BigInt(id),\n                    configText,\n                    configSource: narPath,\n                    capabilities: createNodeRuntimeCapabilities(),\n                });\n            }\n        } else {\n            if (id !== null) {\n                java.lang.System.out.println(\n                    S`Identity of loaded nar can not be changed, set idOrNull to null if Nar from file should be used!`);\n                javaSystemExit(1);\n            }\n            nar = Nar.LoadFromFile(S`${narPath}`);\n        }\n        if (nar === null) {\n            throw new java.lang.IllegalStateException(S`Unable to create Nar from the supplied arguments`);\n        }\n        return nar;\n    }\n\n    public static argInfo(): void {\n        java.lang.System.out.println(\n            S`expected arguments: none, or: narOrConfigFileOrNull idOrNull nalFileOrNull cyclesToRunOrNull`);\n        java.lang.System.out.println(S`or for UDP networking support:`);\n        // args length check, it has to be 5+5*k, with k in N0\n        java.lang.System.out.println(\n            S`narOrConfigFileOrNull idOrNull nalFileOrNull cyclesToRunOrNull listenPort targetIP1 targetPort1 prioThres1 mustContainTermOrNull1 sendInput1 ... targetIPN targetPortN prioThresN mustContainTermOrNullN sendInputN`);\n        java.lang.System.out.println(\n            S`Here, OrNull means they can be null too, example: null null null null 64001 127.0.0.1 64002 0.5 null True`);\n    }\n\n    /**\n     * logging\n     *\n     */\n    protected static log(message: JavaStringInput): void {\n        // l for log\n        java.lang.System.out.println(S`[l]: ${message}`);\n    }\n\n    /**\n     * The entry point of the standalone application.\n     *\n     * @param args command line arguments\n     */\n    public static main(args: JavaStringInput[]): void {\n        if (args.length === 0) { // in that case just run the instance\n            args = [S`null`, S`null`, S`null`, S`null`];\n        }\n        if (args.length !== 4 && ((args.length - 5) % 5 !== 0 || args.length < 5)) { // args length check\n            Shell.argInfo();\n            javaSystemExit(0);\n        }\n\n        const argList = args.map((arg) => String(arg)).join(", ");\n        Shell.log(S`creating Nar with args [${argList}] ...`);\n        let nar: Nar = Shell.createNar(args);\n\n        if (args.length > 4) {\n            Shell.log(S`attaching NarNode networking features to Nar...`);\n            let nar1port: int = java.lang.Integer.parseInt(String(args[4]));\n            let nar1: NarNode = new NarNode(nar, nar1port);\n            for (let i: int = 5; i < args.length; i += 5) {\n                let T: Term | null = String(args[i + 3]).toLowerCase() === "null"\n                    ? null\n                    : new Term(java.lang.String.valueOf(args[i + 3]));\n                nar1.addRedirectionTo(args[i], java.lang.Integer.parseInt(String(args[i + 1])), Math.fround(Number.parseFloat(String(args[i + 2]))), T,\n                    java.lang.Boolean.parseBoolean(java.lang.String.valueOf(args[i + 4])));\n            }\n        }\n\n        Shell.log(S`attaching Shell to Nar...`);\n        new Shell(nar).run(args);\n    }\n\n    public constructor(n: Nar) {\n        this.nar = n;\n    }\n\n    public InputThread = (($outer) => {\n        return class InputThread extends ThreadCompat {\n            private readonly bufIn: java.io.BufferedReader;\n            protected readonly nar: Nar;\n\n            public constructor(input: java.io.InputStream, nar: Nar) {\n                super();\n                this.bufIn = new java.io.BufferedReader(new java.io.InputStreamReader(input));\n                this.nar = nar;\n            }\n\n            public override  run(): void {\n                while (true) {\n                    try {\n                        let line: java.lang.String | null = this.bufIn.readLine();\n                        if (line !== null) {\n                            try {\n                                this.nar.addInput(line);\n                            } catch (ex) {\n                                if (isJavaException(ex)) {\n                                    if (Debug.DETAILED) {\n                                        java.lang.System.out.println(S`ERROR: error parsing:${line}`);\n                                        ex.printStackTrace();\n                                    } else\n                                    java.lang.System.out.println(S`ERROR: parsing error`);\n                                } else {\n                                    throw ex;\n                                }\n                            }\n                        }\n\n                    } catch (e) {\n                        if (e instanceof java.io.IOException) {\n                            throw new java.lang.IllegalStateException(S`ERROR: Could not read line.`, e);\n                        } else {\n                            throw e;\n                        }\n                    }\n\n                    try {\n                        ThreadCompat.sleep(1);\n                    } catch (e) {\n                        if (e instanceof InterruptedExceptionCompat) {\n                            // The translated Java Shell still exposes a jree Throwable cause;\n                            // keep that compatibility boundary local to the legacy entry point.\n                            throw new java.lang.IllegalStateException(\n                                S`ERROR: Unexpectedly interrupted while sleeping.`,\n                                e as unknown as java.lang.Throwable);\n                        } else {\n                            throw e;\n                        }\n                    }\n                }\n            }\n        }\n    })(this);\n\n\n    /**\n     * non-static equivalent to {@link #main(String[])} : finish to completion from\n     * an addInput file\n     */\n    public run(args: JavaStringInput[]): void {\n        let output: TextOutputHandler = new TextOutputHandler(this.nar, new java.io.PrintWriter(this.out, true));\n        output.setErrors(true);\n        output.setErrorStackTrace(true);\n        let it: Shell.InputThread;\n\n        let hasInputFile: boolean = String(args[2]).toLowerCase() !== "null";\n        let hasNumberOfSteps: boolean = String(args[3]).toLowerCase() !== "null";\n\n        if (hasInputFile) {\n            this.nar.addInputText(readFileSync(String(args[2]), "utf8"));\n        }\n        it = new this.InputThread(new NodeStdinInputStream(), this.nar);\n        it.start();\n\n        let numberOfSteps: int = hasNumberOfSteps ? java.lang.Integer.parseInt(String(args[3])) : -1;\n\n        if (hasNumberOfSteps) {\n            this.nar.cycles(numberOfSteps);\n            javaSystemExit(0);\n        } else {\n            this.nar.start(-1n); // 现在使用「-1」默认关闭「自动步进」功能\n        }\n    }\n\n    public setPrintStream(out: java.io.PrintStream): void {\n        this.out = out;\n    }\n}\n\n// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare\nexport namespace Shell {\n    export type InputThread = InstanceType<Shell["InputThread"]>;\n}\n\n',
+    expected: /\bS`/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

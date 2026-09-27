@@ -1,10 +1,11 @@
 import { execFileSync } from "node:child_process";
 
-import type { RuntimeCapabilities } from "../RuntimeCapabilities.ts";
+import { defaultCurrentTimeMillis, type RuntimeCapabilities } from "../RuntimeCapabilities.ts";
 
 /** Provide the Java-compatible ^system command capability to a Node host. */
 export function createNodeRuntimeCapabilities(): RuntimeCapabilities {
     return {
+        currentTimeMillis: defaultCurrentTimeMillis,
         executeSystemCommand(command: string): string {
             return execFileSync("bash", ["-c", command], {
                 encoding: "utf8",

@@ -1,19 +1,26 @@
-import { java } from "jree";
-
 export type NodeReadableInput = {
     on(event: "data" | "end", listener: (...args: unknown[]) => void): NodeReadableInput;
     resume(): NodeReadableInput;
 };
 
-/** Bridges Node's evented stdin to the blocking-shaped Java InputStream API. */
-export class NodeStdinInputStream extends java.io.InputStream {
+/** Narrow byte-stream contract consumed by the Node Shell adapter. */
+export type NodeInputStream = {
+    available(): number;
+    read(): number;
+    read(buffer: Int8Array): number;
+    read(buffer: Int8Array, offset: number, length: number): number;
+    ready(): boolean;
+    close(): void;
+};
+
+/** Bridges Node's evented stdin to the blocking-shaped byte stream API. */
+export class NodeStdinInputStream implements NodeInputStream {
     private readonly chunks: Uint8Array[] = [];
     private chunkIndex = 0;
     private availableBytes = 0;
     private closed = false;
 
     public constructor(input: NodeReadableInput = process.stdin as unknown as NodeReadableInput) {
-        super();
         input.on("data", (chunk: unknown) => {
             if (this.closed) return;
             const bytes = typeof chunk === "string"
@@ -26,19 +33,23 @@ export class NodeStdinInputStream extends java.io.InputStream {
             this.availableBytes += bytes.length;
         });
         input.on("end", () => {
-            // InputStream.read() already reports -1 once all queued bytes are consumed.
+            // read() already reports -1 once all queued bytes are consumed.
         });
         input.resume();
     }
 
-    public override available(): number {
+    public available(): number {
         return this.availableBytes;
     }
 
-    public override read(): number;
-    public override read(buffer: Int8Array): number;
-    public override read(buffer: Int8Array, offset: number, length: number): number;
-    public override read(...args: unknown[]): number {
+    public ready(): boolean {
+        return !this.closed && this.availableBytes > 0;
+    }
+
+    public read(): number;
+    public read(buffer: Int8Array): number;
+    public read(buffer: Int8Array, offset: number, length: number): number;
+    public read(...args: unknown[]): number {
         if (args.length === 0) {
             return this.readByte();
         }
@@ -74,7 +85,7 @@ export class NodeStdinInputStream extends java.io.InputStream {
         return value;
     }
 
-    public override close(): void {
+    public close(): void {
         this.closed = true;
         this.chunks.length = 0;
         this.chunkIndex = 0;

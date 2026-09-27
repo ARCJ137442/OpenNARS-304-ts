@@ -1,5 +1,5 @@
 //! Java source: opennars/main/NarNode.java
-import { java, closeResources, handleResourceError, throwResourceError, S } from "jree";
+import { java } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
@@ -11,6 +11,7 @@ import { CompoundTerm } from "../language/CompoundTerm.ts";
 import { Term } from "../language/Term.ts";
 import { Task } from "../entity/Task.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
+import { closeResourcesCompat, handleResourceErrorCompat, throwResourceErrorCompat } from "../runtime/ResourceCompat.ts";
 import { isJavaException, JavaSystemLoggerCompat, toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
 
 type EventObserver = EventEmitter.EventObserver;
@@ -84,7 +85,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
         } else if (args.length === 2) {
             [nar, listenPort] = args as [Nar, int];
         } else {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new java.lang.IllegalArgumentException("Invalid number of arguments");
         }
 
         this.nar = nar;
@@ -218,7 +219,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new java.lang.IllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -301,7 +302,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new java.lang.IllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -320,7 +321,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
         if (packet.getLength() > 0) {
             try {
                     // This holds the final error to throw (if any).
-                    let error: java.lang.Throwable | undefined;
+                    let error: ReturnType<typeof closeResourcesCompat>;
 
                     const iStream: ObjectInputStreamCompat = new javaIoCompat.ObjectInputStream(
                         new javaIoCompat.ByteArrayInputStream(recBytes),
@@ -333,12 +334,12 @@ export class NarNode extends RuntimeObject implements EventObserver {
                             }
                         }
                         finally {
-                            error = closeResources([iStream as unknown as java.io.Closeable]);
+                            error = closeResourcesCompat([iStream]);
                         }
                     } catch (e) {
-                        error = handleResourceError(e, error);
+                        error = handleResourceErrorCompat(e, error);
                     } finally {
-                        throwResourceError(error);
+                        throwResourceErrorCompat(error);
                     }
                 // not an object NarNode could digest
             } catch (ex) {

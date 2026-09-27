@@ -39,7 +39,7 @@ import type { Plugin } from "../plugin/Plugin.ts";
 import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import { DEFAULT_CONFIG_XML } from "../io/DefaultConfig.ts";
-import type { RuntimeCapabilities } from "../platform/RuntimeCapabilities.ts";
+import { defaultCurrentTimeMillis, type RuntimeCapabilities } from "../platform/RuntimeCapabilities.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 type ObjectOutputStreamCompat = {
@@ -99,6 +99,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     // translated Java contract, while the project time adapter still uses
     // numeric clock values at runtime.
     private cycleCounter: long = 0 as unknown as long;
+    private currentTimeMillis: (() => bigint) | undefined;
 
     /**
      * The information about the version of the project
@@ -322,6 +323,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         }
 
         super();
+        this.currentTimeMillis = capabilities?.currentTimeMillis ?? defaultCurrentTimeMillis;
         let pluginsToAdd: Plugin[] = ConfigReader.loadParamsFromConfigTextAndReturnPlugins(configText, this,
             this.narParameters, capabilities);
         if (parameterOverrides !== null) {
@@ -869,7 +871,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         if (this.narParameters.STEPS_CLOCK) {
             return this.cycleCounter;
         } else {
-            return java.lang.System.currentTimeMillis();
+            return (this.currentTimeMillis ?? defaultCurrentTimeMillis)();
         }
     }
 

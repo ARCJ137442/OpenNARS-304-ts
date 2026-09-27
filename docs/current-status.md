@@ -4,16 +4,53 @@
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
+## 2026-09-27 阶段性封存与 PC Agent 交接
+
+- 本轮报告：`reports/20260927-182859.md`；交接包：`docs/pc-agent-handoff-20260927.md`；模型身份为 `GPT 5.6 sol xhigh`。
+- 本轮实现 Nar 时钟宿主边界：`Nar.time()` 在 `STEPS_CLOCK=false` 时通过 `RuntimeCapabilities.currentTimeMillis` 读取时间；Node 宿主显式提供 bigint 毫秒时钟；步进时钟保持独立。
+- 时钟定向合同 `4/4`、配置/输入/Shell/Node stdin 回归合同 `23/23` 通过；typecheck、build、dist API、迁移模式、jree/platform 审计通过。
+- 唯一串行 TS-only M2 已完成运行：`488` 项，`482` 通过、`1` 失败、`5` 跳过，耗时 `1384270.300357 ms`。严格零失败 M2 不能标记为通过；唯一失败为 hot/cold 隔离长测在 Termux 启动/进程边界上非零退出，交给 PC Agent 用完整 stdout/stderr 与更宽裕预算复现分类。
+- 当前本轮不运行 M1--：这是 J5 T1 risk-slice，不是责任簇收口。Termux 中全部 M1 相关测试继续严格使用 M1-- 243 项；完整 245+1 只由 PC 阶段门执行。
+- 当前 jree 直接导入文件数为 `13`；本轮代码与报告提交后由 PC Agent 继续执行 J5 出口、受影响 NAL、J5 M1--（仅在收口允许时）及 `--stage 023/024`。
+- 本轮不宣称 J5、023、024 或 luna 目标完成；不执行 `sleep 3600s`。
+
 ## 2026-09-27 恢复开发：023 五责任簇归属审计
 
 - 阶段报告：`reports/20260927-135702.md`；身份为 `GPT 5.6 sol xhigh`。
-- 以 `35cab26` 为审计基线，生产直接 jree 导入共 `14` 个文件；J1/J2/J3/J4/J5 分布为
-  `1/6/2/0/5`，全部恰好映射到一个 owner。详细残余路径、Java 合同、直接测试、哨兵 NAL、
-  出口条件与可回退切片记录在 `specs/023-jree-removal-native-runtime/README.md`。
-- 原始审计：`reports/evidence/023-owner-audit-jree-20260927.json`；恢复现场重分类：
-  `reports/evidence/023-resume-reclass-20260927.json`，有效 `T0`，不要求 NAL 或 M1--。
-- 当前选择继续 J5 的 Shell `S` 模板字符串边界；尚未改源码，计划先提交簇清单，再按 TDD 实施。
+- 以 `35cab26` 为审计基线，生产直接 jree 导入共 `14` 个文件；J1/J2/J3/J4/J5 分布为 `1/6/2/0/5`。
+- 当前已提交 J5 Shell 与 NarNode `S` 固定文本边界切片：`82c3ce1`；该候选仍不是 J5 收口。
 - 普通切片不运行 M1--；仅责任簇出口时运行 Termux M1-- `243` 项。M1 相关测试不运行完整 `245` 项或 `#245`。
+
+## 2026-09-27 J5 Node stdin 宿主边界切片（已验收）
+
+- 代码提交：`8adbc1a`；阶段报告：`reports/20260927-173826.md`；模型身份为 `GPT 5.6 sol xhigh`。
+- `NodeStdinInputStream.ts` 移除 jree 导入与 `java.io.InputStream` 继承；`Shell.ts` 在 jree IO wrapper 入口保留显式窄类型断言。
+- 定向 Shell/Node stdin 合同 `6/6` 通过；TS-only M2 `484/479/0/5`，耗时 `559325.966 ms`。
+- typecheck、build（`140` 个源文件）、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过；jree 直接导入文件数 `14→13`。
+- 计划器：`plan_valid=true`、`T1 risk-slice`、`affected_nal_required=true`、`m1_minus_required=false`；受影响 NAL `3/3` functional/parity 通过。
+- NAL 耗时：`nal1.0.nal` `22608 ms`、`toothbrush.nal` `81381 ms`、`simpleOperationTest.nal` `888937 ms`；0 异常、0 超时、0 stall、0 进程限制、0 marker 缺失。
+- `simpleOperationTest.nal` 在 Termux 上明显偏慢；本批只证明功能/对照通过，不代表性能等价或 J5 收口。责任簇收口前不运行 M1--。
+- 证据：`reports/evidence/j5-node-stdin-plan-20260927-sentinel.jsonl`。
+
+## 2026-09-27 J5 NarNode 资源异常边界切片（已验收）
+
+- 代码提交：`1d50973`；阶段报告：`reports/20260927-165500.md`。
+- 计划器：`plan_valid=true`、`T1 risk-slice`、J5 owner + J1 supporting；`m1_minus_required=false`。
+- 定向资源与异常合同 `14/14` 通过；TS-only M2 `482/477/0/5`，耗时 `498909.276 ms`。
+- 受影响 NAL `4/4` functional/parity 通过：`nal1.0.nal` `5223 ms` / RSS `247144448`，`nal6.17.nal` `8642 ms` / RSS `283459584`，`toothbrush.nal` `26382 ms` / RSS `376197120`，`simpleOperationTest.nal` `312337 ms` / RSS `416854016`。
+- 无异常、超时、进程限制、stall 或 marker 缺失；本批不是 J5 责任簇收口，不运行 M1--。
+- 证据：`reports/evidence/j5-narnode-resource-plan-20260927-sentinel.jsonl`。
+
+## 2026-09-27 J5 Shell/NarNode 固定文本边界切片
+
+- 代码提交：`82c3ce1`；阶段报告：`reports/20260927-155423.md`；模型身份为 `GPT 5.6 sol xhigh`。
+- `Shell.ts` 移除全部 `S` 模板标签及导入；`NarNode.ts` 移除 3 处 `S` 固定异常文本及导入。
+- 定向 J5 合同 `21/21` 通过；TS-only M2 `480` 项，`475` 通过、`0` 失败、`5` 跳过，耗时 `554954.414 ms`。
+- typecheck、build（`139` 个源文件）、dist API、迁移扫描、jree 审计、平台审计和汉字编码检查均通过。
+- 计划器：`T1 risk-slice`、`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`；受影响 NAL `3/3` functional/parity 通过。
+- NAL 资源峰值：`nal1.0.nal` `247812096`、`toothbrush.nal` `374751232`、`simpleOperationTest.nal` `396980224` bytes；0 异常、0 超时、0 进程限制、0 marker 缺失。
+- 本批不是 J5 责任簇收口，不能宣称 J5、`023`、`024` 或 luna 目标完成；Termux M1 相关测试继续统一使用 M1-- `243` 项。
+- 证据：`reports/evidence/j5-shell-narnode-plan-20260927-sentinel.jsonl`。
 
 ## 2026-09-27 J5 Events 栈帧采集边界切片
 
