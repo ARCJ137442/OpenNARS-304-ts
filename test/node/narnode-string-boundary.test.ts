@@ -7,6 +7,8 @@ import { toJavaString } from "../../src/runtime/jree-compat.ts";
 
 test("NarNode network text boundaries stay project-owned", () => {
     const source = readFileSync("src/main/NarNode.ts", "utf8");
+    assert.doesNotMatch(source, /\bS`/);
+    assert.doesNotMatch(source, /import\s*\{[^}]*\bS\b[^}]*\}\s*from\s*["']jree["']/);
     assert.match(source, /sendNarsese\(input: JavaStringInput, target: NarNode\.TargetNar\)/);
     assert.match(source, /sendNarsese\(input: JavaStringInput, targetIP: JavaStringInput/);
     assert.match(source, /constructor\(targetIP: JavaStringInput/);

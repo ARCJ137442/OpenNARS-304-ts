@@ -1,5 +1,5 @@
 //! Java source: opennars/main/Shell.java
-import { java, S } from "jree";
+import { java } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { readFileSync } from "node:fs";
 import { Nar } from "./Nar.ts";
@@ -55,26 +55,26 @@ export class Shell {
         } else {
             if (id !== null) {
                 java.lang.System.out.println(
-                    S`Identity of loaded nar can not be changed, set idOrNull to null if Nar from file should be used!`);
+                    "Identity of loaded nar can not be changed, set idOrNull to null if Nar from file should be used!");
                 javaSystemExit(1);
             }
-            nar = Nar.LoadFromFile(S`${narPath}`);
+            nar = Nar.LoadFromFile(narPath);
         }
         if (nar === null) {
-            throw new java.lang.IllegalStateException(S`Unable to create Nar from the supplied arguments`);
+            throw new java.lang.IllegalStateException("Unable to create Nar from the supplied arguments");
         }
         return nar;
     }
 
     public static argInfo(): void {
         java.lang.System.out.println(
-            S`expected arguments: none, or: narOrConfigFileOrNull idOrNull nalFileOrNull cyclesToRunOrNull`);
-        java.lang.System.out.println(S`or for UDP networking support:`);
+            "expected arguments: none, or: narOrConfigFileOrNull idOrNull nalFileOrNull cyclesToRunOrNull");
+        java.lang.System.out.println("or for UDP networking support:");
         // args length check, it has to be 5+5*k, with k in N0
         java.lang.System.out.println(
-            S`narOrConfigFileOrNull idOrNull nalFileOrNull cyclesToRunOrNull listenPort targetIP1 targetPort1 prioThres1 mustContainTermOrNull1 sendInput1 ... targetIPN targetPortN prioThresN mustContainTermOrNullN sendInputN`);
+            "narOrConfigFileOrNull idOrNull nalFileOrNull cyclesToRunOrNull listenPort targetIP1 targetPort1 prioThres1 mustContainTermOrNull1 sendInput1 ... targetIPN targetPortN prioThresN mustContainTermOrNullN sendInputN");
         java.lang.System.out.println(
-            S`Here, OrNull means they can be null too, example: null null null null 64001 127.0.0.1 64002 0.5 null True`);
+            "Here, OrNull means they can be null too, example: null null null null 64001 127.0.0.1 64002 0.5 null True");
     }
 
     /**
@@ -83,7 +83,7 @@ export class Shell {
      */
     protected static log(message: JavaStringInput): void {
         // l for log
-        java.lang.System.out.println(S`[l]: ${message}`);
+        java.lang.System.out.println(`[l]: ${message}`);
     }
 
     /**
@@ -93,7 +93,7 @@ export class Shell {
      */
     public static main(args: JavaStringInput[]): void {
         if (args.length === 0) { // in that case just run the instance
-            args = [S`null`, S`null`, S`null`, S`null`];
+            args = ["null", "null", "null", "null"];
         }
         if (args.length !== 4 && ((args.length - 5) % 5 !== 0 || args.length < 5)) { // args length check
             Shell.argInfo();
@@ -101,11 +101,11 @@ export class Shell {
         }
 
         const argList = args.map((arg) => String(arg)).join(", ");
-        Shell.log(S`creating Nar with args [${argList}] ...`);
+        Shell.log(`creating Nar with args [${argList}] ...`);
         let nar: Nar = Shell.createNar(args);
 
         if (args.length > 4) {
-            Shell.log(S`attaching NarNode networking features to Nar...`);
+            Shell.log("attaching NarNode networking features to Nar...");
             let nar1port: int = java.lang.Integer.parseInt(String(args[4]));
             let nar1: NarNode = new NarNode(nar, nar1port);
             for (let i: int = 5; i < args.length; i += 5) {
@@ -117,7 +117,7 @@ export class Shell {
             }
         }
 
-        Shell.log(S`attaching Shell to Nar...`);
+        Shell.log("attaching Shell to Nar...");
         new Shell(nar).run(args);
     }
 
@@ -146,10 +146,10 @@ export class Shell {
                             } catch (ex) {
                                 if (isJavaException(ex)) {
                                     if (Debug.DETAILED) {
-                                        java.lang.System.out.println(S`ERROR: error parsing:${line}`);
+                                        java.lang.System.out.println(`ERROR: error parsing:${line}`);
                                         ex.printStackTrace();
                                     } else
-                                    java.lang.System.out.println(S`ERROR: parsing error`);
+                                    java.lang.System.out.println("ERROR: parsing error");
                                 } else {
                                     throw ex;
                                 }
@@ -158,7 +158,7 @@ export class Shell {
 
                     } catch (e) {
                         if (e instanceof java.io.IOException) {
-                            throw new java.lang.IllegalStateException(S`ERROR: Could not read line.`, e);
+                            throw new java.lang.IllegalStateException("ERROR: Could not read line.", e);
                         } else {
                             throw e;
                         }
@@ -171,7 +171,7 @@ export class Shell {
                             // The translated Java Shell still exposes a jree Throwable cause;
                             // keep that compatibility boundary local to the legacy entry point.
                             throw new java.lang.IllegalStateException(
-                                S`ERROR: Unexpectedly interrupted while sleeping.`,
+                                "ERROR: Unexpectedly interrupted while sleeping.",
                                 e as unknown as java.lang.Throwable);
                         } else {
                             throw e;

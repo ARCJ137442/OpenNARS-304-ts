@@ -1,5 +1,5 @@
 //! Java source: opennars/main/NarNode.java
-import { java, closeResources, handleResourceError, throwResourceError, S } from "jree";
+import { java, closeResources, handleResourceError, throwResourceError } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
@@ -84,7 +84,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
         } else if (args.length === 2) {
             [nar, listenPort] = args as [Nar, int];
         } else {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new java.lang.IllegalArgumentException("Invalid number of arguments");
         }
 
         this.nar = nar;
@@ -218,7 +218,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new java.lang.IllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -301,7 +301,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new java.lang.IllegalArgumentException("Invalid number of arguments");
             }
         }
     }
