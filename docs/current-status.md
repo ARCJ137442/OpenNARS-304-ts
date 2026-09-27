@@ -5,6 +5,18 @@
 - 包版本：`0.1.0`
 
 
+## 2026-09-27 J5 NarNode 网络文本边界切片
+
+- 阶段报告：`reports/20260927-084037.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`NarNode.sendNarsese`、`TargetNar` 与 `addRedirectionTo` 文本输入收窄为 `JavaStringInput`，序列化和 host 解析边界调用 `toJavaString`。
+- 直接合同 `22/22` 通过；TS-only M2 `471` 项，`466` 通过、`0` 失败、`5` 跳过。
+- 非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `3268 ms` / RSS `240603136`，`toothbrush.nal` `16621 ms` / RSS `367083520`，`simpleOperationTest.nal` `189506 ms` / RSS `437993472`；无 timeout、process limit、exception 或 marker missing。
+- 冻结 Java baseline SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；sentinel SHA-256：`a76ebd5962f50f66b87ceae697567c53cdb5f534bbcb823a951a14733efd673c`。
+- T1 gate：`45c0771`；`plan_valid=true`、`affected_nal_required=true`；`m1_minus_required=false`。
+- 本批不是 J5 责任簇收口，不启动 M1--；Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本轮可以宣称 `NarNode` 文本边界已收窄，不能宣称网络传输或对象序列化已完成。
+
 ## 2026-09-27 J5 Nar 文件路径边界切片
 
 - 阶段报告：`reports/20260927-075138.md`；本批模型身份为 `GPT-6-sol`。
