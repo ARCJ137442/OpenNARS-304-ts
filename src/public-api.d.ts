@@ -210,6 +210,7 @@ export interface NarOptions {
 
 export interface RuntimeCapabilities {
     readonly executeSystemCommand?: (command: string) => string;
+    readonly currentTimeMillis?: () => bigint;
 }
 
 export class MissingRuntimeCapabilityError extends Error {

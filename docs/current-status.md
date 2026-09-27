@@ -4,6 +4,16 @@
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
+## 2026-09-27 阶段性封存与 PC Agent 交接
+
+- 本轮报告：`reports/20260927-182859.md`；交接包：`docs/pc-agent-handoff-20260927.md`；模型身份为 `GPT 5.6 sol xhigh`。
+- 本轮实现 Nar 时钟宿主边界：`Nar.time()` 在 `STEPS_CLOCK=false` 时通过 `RuntimeCapabilities.currentTimeMillis` 读取时间；Node 宿主显式提供 bigint 毫秒时钟；步进时钟保持独立。
+- 时钟定向合同 `4/4`、配置/输入/Shell/Node stdin 回归合同 `23/23` 通过；typecheck、build、dist API、迁移模式、jree/platform 审计通过。
+- 唯一串行 TS-only M2 已完成运行：`488` 项，`482` 通过、`1` 失败、`5` 跳过，耗时 `1384270.300357 ms`。严格零失败 M2 不能标记为通过；唯一失败为 hot/cold 隔离长测在 Termux 启动/进程边界上非零退出，交给 PC Agent 用完整 stdout/stderr 与更宽裕预算复现分类。
+- 当前本轮不运行 M1--：这是 J5 T1 risk-slice，不是责任簇收口。Termux 中全部 M1 相关测试继续严格使用 M1-- 243 项；完整 245+1 只由 PC 阶段门执行。
+- 当前 jree 直接导入文件数为 `13`；本轮代码与报告提交后由 PC Agent 继续执行 J5 出口、受影响 NAL、J5 M1--（仅在收口允许时）及 `--stage 023/024`。
+- 本轮不宣称 J5、023、024 或 luna 目标完成；不执行 `sleep 3600s`。
+
 ## 2026-09-27 恢复开发：023 五责任簇归属审计
 
 - 阶段报告：`reports/20260927-135702.md`；身份为 `GPT 5.6 sol xhigh`。
