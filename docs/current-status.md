@@ -7,22 +7,20 @@
 ## 2026-09-27 恢复开发：023 五责任簇归属审计
 
 - 阶段报告：`reports/20260927-135702.md`；身份为 `GPT 5.6 sol xhigh`。
-- 以 `35cab26` 为审计基线，生产直接 jree 导入共 `14` 个文件；J1/J2/J3/J4/J5 分布为
-  `1/6/2/0/5`，全部恰好映射到一个 owner。详细残余路径、Java 合同、直接测试、哨兵 NAL、
-  出口条件与可回退切片记录在 `specs/023-jree-removal-native-runtime/README.md`。
-- 原始审计：`reports/evidence/023-owner-audit-jree-20260927.json`；恢复现场重分类：
-  `reports/evidence/023-resume-reclass-20260927.json`，有效 `T0`，不要求 NAL 或 M1--。
-- 当前工作区已完成 J5 的 Shell 与 NarNode `S` 模板字符串边界切片实现，提交前验证已完成；Shell 绿灯证据、NarNode 定向合同和串行 M2 证据均已生成。该候选仍不是 J5 收口，暂不运行 M1--。
+- 以 `35cab26` 为审计基线，生产直接 jree 导入共 `14` 个文件；J1/J2/J3/J4/J5 分布为 `1/6/2/0/5`。
+- 当前已提交 J5 Shell 与 NarNode `S` 固定文本边界切片：`82c3ce1`；该候选仍不是 J5 收口。
 - 普通切片不运行 M1--；仅责任簇出口时运行 Termux M1-- `243` 项。M1 相关测试不运行完整 `245` 项或 `#245`。
 
-## 2026-09-27 J5 Shell/NarNode 固定文本边界切片（候选验证中）
+## 2026-09-27 J5 Shell/NarNode 固定文本边界切片
 
-- 本候选基于工作区提交 `4bc94f9`，尚未提交；阶段报告：`reports/20260927-155423.md`；模型身份为 `GPT 5.6 sol xhigh`。
-- 生产改动：`src/main/Shell.ts` 移除全部 `S` 模板标签及导入；`src/main/NarNode.ts` 移除 3 处 `S` 固定异常文本及导入。未改变异常类型、网络、序列化、文件读取或线程行为。
-- 定向 J5 合同 `21/21` 通过；RED 阶段曾按预期因 NarNode 残留 `S` 导入/模板失败，GREEN 后通过。
-- 非增量 typecheck、build（`139` 个源文件）、dist API、迁移扫描、jree 审计、平台审计和汉字编码检查均通过；迁移扫描 A 类 malformed 命中为 `0`。
-- 串行 TS-only M2 已完成：`480` 项，`475` 通过、`0` 失败、`5` 跳过，耗时 `554954.414 ms`；测试期间未运行 M1 或 M1--，未修改被测源码。证据：`reports/evidence/j5-shell-narnode-m2-20260927.stdout`。
-- 本候选仍是 J5 普通风险切片，不能宣称 J5、`023`、`024` 或 luna 目标完成；Termux 的 M1 相关测试继续统一使用 M1-- `243` 项，仅责任簇收口时运行一次。
+- 代码提交：`82c3ce1`；阶段报告：`reports/20260927-155423.md`；模型身份为 `GPT 5.6 sol xhigh`。
+- `Shell.ts` 移除全部 `S` 模板标签及导入；`NarNode.ts` 移除 3 处 `S` 固定异常文本及导入。
+- 定向 J5 合同 `21/21` 通过；TS-only M2 `480` 项，`475` 通过、`0` 失败、`5` 跳过，耗时 `554954.414 ms`。
+- typecheck、build（`139` 个源文件）、dist API、迁移扫描、jree 审计、平台审计和汉字编码检查均通过。
+- 计划器：`T1 risk-slice`、`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`；受影响 NAL `3/3` functional/parity 通过。
+- NAL 资源峰值：`nal1.0.nal` `247812096`、`toothbrush.nal` `374751232`、`simpleOperationTest.nal` `396980224` bytes；0 异常、0 超时、0 进程限制、0 marker 缺失。
+- 本批不是 J5 责任簇收口，不能宣称 J5、`023`、`024` 或 luna 目标完成；Termux M1 相关测试继续统一使用 M1-- `243` 项。
+- 证据：`reports/evidence/j5-shell-narnode-plan-20260927-sentinel.jsonl`。
 
 ## 2026-09-27 J5 Events 栈帧采集边界切片
 
