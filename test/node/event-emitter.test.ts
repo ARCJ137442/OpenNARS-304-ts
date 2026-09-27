@@ -215,6 +215,12 @@ test("Events.ConceptNew preserves the Java InferenceEvent constructor contract",
     assert.equal(String(event.toString()), "Concept Created: fake-concept");
 });
 
+test("Events captures stack frames through the project ThreadCompat boundary", () => {
+    const source = readFileSync("src/io/events/Events.ts", "utf8");
+    assert.doesNotMatch(source, /from ["']jree["']/);
+    assert.match(source, /ThreadCompat/);
+});
+
 test("InferenceEvent keeps optional stack frames in a native ordered array", () => {
     const source = readFileSync("src/io/events/Events.ts", "utf8");
     assert.doesNotMatch(source, /java\.util\.List<java\.lang\.StackTraceElement>/);

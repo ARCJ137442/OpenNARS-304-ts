@@ -1,7 +1,6 @@
 //! Java source: opennars/io/events/Events.java
 import { JavaIllegalArgumentException, javaStringValue } from "../../runtime/jree-compat.ts";
 import type { JavaStringInput } from "../../runtime/jree-compat.ts";
-import { java } from "jree";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
@@ -11,7 +10,7 @@ import type { Task } from "../../entity/Task.ts";
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import type { GeneralInferenceControl } from "../../control/GeneralInferenceControl.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
-import type { StackTraceElementCompat } from "../../runtime/ThreadCompat.ts";
+import { ThreadCompat, type StackTraceElementCompat } from "../../runtime/ThreadCompat.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 
@@ -79,7 +78,7 @@ abstract class InferenceEvent extends RuntimeObject {
 
         if (stackFrames > 0) {
             const sl = Array.from(
-                new java.lang.Throwable().getStackTrace() as unknown as StackTraceElementCompat[],
+                ThreadCompat.currentThread().getStackTrace() as StackTraceElementCompat[],
             );
             let frame: int = 0;
 
