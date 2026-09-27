@@ -4,6 +4,16 @@
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
+## 2026-09-27 J5 Nar 内部输入文本边界切片
+
+- 阶段报告：`reports/20260927-101459.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`cdbbfe2`；`Nar` 的多行输入、命令解析和内部 Narsese/感知重投递路径去除不必要的 jree `String` 包装，数值解析保留 `toJavaString` 兼容桥。
+- 相关合同 `20/20` 通过；TS-only M2 `474` 项，`469` 通过、`0` 失败、`5` 跳过；非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查通过。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `7014 ms` / RSS `246259712`，`toothbrush.nal` `25471 ms` / RSS `368115712`，`simpleOperationTest.nal` `327695 ms` / RSS `352788480`；均无 timeout、process limit、exception 或 marker missing。
+- 冻结 Java baseline SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；证据：`reports/evidence/j5-nar-input-internal-20260927-sentinel.jsonl`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`；本轮不启动 M1--。Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本批不是 J5 责任簇收口；可以宣称 Nar 内部输入字符串边界切片完成，不能宣称 J5、023、024、完整 M1 或 luna 目标完成。
+
 ## 2026-09-27 J5 Nar 元数据与配置路径字符串边界切片
 
 - 阶段报告：`reports/20260927-090843.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
