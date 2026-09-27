@@ -1,5 +1,6 @@
 import { Class, JavaObject, java } from "jree";
 import type { long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import { JavaRandom } from "./JavaRandom.ts";
 import {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -83,25 +84,53 @@ export const toJavaString = (value: JavaStringInput): java.lang.String =>
  */
 export type JavaLongInput = long | number;
 
-export const toRuntimeLong = (value: JavaLongInput): long => value as long;
+const normalizeLongNumber = (value: number): number => {
+    if (!Number.isSafeInteger(value)) {
+        throw new RangeError(`Java long number must be a safe integer: ${value}`);
+    }
+    return value;
+};
 
-export const addRuntimeLong = (value: JavaLongInput, delta: number): long =>
-    (typeof value === "bigint" ? value + BigInt(delta) : value + delta) as long;
+const normalizeLongInput = (value: JavaLongInput): JavaLongInput =>
+    typeof value === "number" ? normalizeLongNumber(value) : value;
 
-export const subtractRuntimeLong = (value: JavaLongInput, delta: number): long =>
-    (typeof value === "bigint" ? value - BigInt(delta) : value - delta) as long;
+const normalizeLongDelta = (delta: number): number => normalizeLongNumber(delta);
+
+export const toRuntimeLong = (value: JavaLongInput): long => normalizeLongInput(value) as long;
+
+export const addRuntimeLong = (value: JavaLongInput, delta: number): long => {
+    const normalized = normalizeLongInput(value);
+    const safeDelta = normalizeLongDelta(delta);
+    return (typeof normalized === "bigint"
+        ? normalized + BigInt(safeDelta)
+        : normalizeLongNumber(normalized + safeDelta)) as long;
+};
+
+export const subtractRuntimeLong = (value: JavaLongInput, delta: number): long => {
+    const normalized = normalizeLongInput(value);
+    const safeDelta = normalizeLongDelta(delta);
+    return (typeof normalized === "bigint"
+        ? normalized - BigInt(safeDelta)
+        : normalizeLongNumber(normalized - safeDelta)) as long;
+};
 
 /** Add two Java long values while preserving the active runtime representation. */
-export const addRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long =>
-    (typeof left === "bigint" || typeof right === "bigint"
-        ? BigInt(left) + BigInt(right)
-        : left + right) as long;
+export const addRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long => {
+    const normalizedLeft = normalizeLongInput(left);
+    const normalizedRight = normalizeLongInput(right);
+    return (typeof normalizedLeft === "bigint" || typeof normalizedRight === "bigint"
+        ? BigInt(normalizedLeft) + BigInt(normalizedRight)
+        : normalizeLongNumber(normalizedLeft + normalizedRight)) as long;
+};
 
 /** Subtract two Java long values while preserving the active runtime representation. */
-export const subtractRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long =>
-    (typeof left === "bigint" || typeof right === "bigint"
-        ? BigInt(left) - BigInt(right)
-        : left - right) as long;
+export const subtractRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long => {
+    const normalizedLeft = normalizeLongInput(left);
+    const normalizedRight = normalizeLongInput(right);
+    return (typeof normalizedLeft === "bigint" || typeof normalizedRight === "bigint"
+        ? BigInt(normalizedLeft) - BigInt(normalizedRight)
+        : normalizeLongNumber(normalizedLeft - normalizedRight)) as long;
+};
 
 /**
  * jree 1.3.0 does not ship java.lang.Double. Keep the boxed-number contract
@@ -202,7 +231,8 @@ export type JavaChar = string;
  * Java string concatenation can produce either a jree JavaString or a native
  * JavaScript string after migration. Both use UTF-16 code units for length.
  */
-export const javaStringLength = (value: unknown): number => String(value).length;
+export const javaStringLength = (value: unknown): number =>
+    javaCharSequenceView(value)?.length ?? javaStringValue(value).length;
 
 type JavaCharSequenceView = {
     length: number;
@@ -406,12 +436,9 @@ export const javaSystemExit = (status: number): never => {
     throw new Error(`Process exit requested with status ${status}`);
 };
 
-// jree 1.3.0 uses Java's 48-bit LCG but applies JavaScript bitwise operators
-// to the 48-bit state.  That truncates next(>16) to 32 bits, and its
-// nextDouble additionally performs integer BigInt division.  OpenNARS uses
-// java.util.Random for both probabilistic plugins and randomized unification;
-// keep the Java-compatible state at this runtime boundary instead of
-// changing translated logic.
+// Keep a thin jree adapter until J2-J4 move their Random constructor types to
+// the project-owned implementation. The state machine itself lives in
+// JavaRandom so there is one source of Java's 48-bit semantics.
 type RandomCompat = {
     next?: (bits: number) => number;
     nextInt?: (bound?: number) => number;
@@ -421,49 +448,30 @@ type RandomCompat = {
 };
 
 const randomPrototype = java.util.Random.prototype as unknown as RandomCompat;
-const randomState = new WeakMap<object, bigint>();
-const RANDOM_MULTIPLIER = 0x5deece66dn;
-const RANDOM_ADDEND = 0xbn;
-const RANDOM_MASK = (1n << 48n) - 1n;
-
-const nextRandomBits = (random: object, bits: number): number => {
-    const state = ((randomState.get(random) ?? 0n) * RANDOM_MULTIPLIER + RANDOM_ADDEND) & RANDOM_MASK;
-    randomState.set(random, state);
-    return Number(state >> BigInt(48 - bits));
+const randomInstances = new WeakMap<object, JavaRandom>();
+const randomInstance = (random: object): JavaRandom => {
+    const existing = randomInstances.get(random);
+    if (existing !== undefined) return existing;
+    const created = new JavaRandom(0n);
+    randomInstances.set(random, created);
+    return created;
 };
 
 if (randomPrototype.next && randomPrototype.nextInt && randomPrototype.nextDouble && randomPrototype.setSeed) {
     randomPrototype.setSeed = function setSeed(seed: bigint | number): void {
-        randomState.set(this as unknown as object, (BigInt(seed) ^ RANDOM_MULTIPLIER) & RANDOM_MASK);
+        randomInstance(this as unknown as object).setSeed(seed);
     };
     randomPrototype.next = function next(bits: number): number {
-        return nextRandomBits(this as unknown as object, bits);
+        return randomInstance(this as unknown as object).next(bits);
     };
     randomPrototype.nextInt = function nextInt(bound?: number): number {
-        if (bound === undefined) {
-            const value = nextRandomBits(this as unknown as object, 32);
-            return value >= 2 ** 31 ? value - 2 ** 32 : value;
-        }
-        if (bound <= 0) {
-            throw new Error("bound must be positive");
-        }
-        if ((bound & -bound) === bound) {
-            return Math.floor((bound * nextRandomBits(this as unknown as object, 31)) / 2 ** 31);
-        }
-        let bits: number;
-        let value: number;
-        do {
-            bits = nextRandomBits(this as unknown as object, 31);
-            value = bits % bound;
-        } while (((bits - value + (bound - 1)) | 0) < 0);
-        return value;
+        return randomInstance(this as unknown as object).nextInt(bound);
     };
     randomPrototype.nextFloat = function nextFloat(): number {
-        return nextRandomBits(this as unknown as object, 24) / 2 ** 24;
+        return randomInstance(this as unknown as object).nextFloat();
     };
     randomPrototype.nextDouble = function nextDouble(): number {
-        return (nextRandomBits(this as unknown as object, 26) * 2 ** 27
-            + nextRandomBits(this as unknown as object, 27)) / 2 ** 53;
+        return randomInstance(this as unknown as object).nextDouble();
     };
 }
 

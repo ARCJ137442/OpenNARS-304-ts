@@ -193,3 +193,21 @@ marker 样本严格长周期验证、包含 Java 的完整 M2、Node 与真实�
 立即停止扩大范围。报告先写“可以/不能宣称”，再列 commit、计划器 JSON、标杆
 SHA、验证命令与分类、原始证据、实际周期、依赖审计差值、剩余问题和下一项可
 证伪实验。LeanSpec 状态只按真实验收更新，不因暂停或局部通过标记 complete。
+
+## 2026-09-28 J1 Runtime Compatibility Recovery Plan
+
+- Re-read after context compaction: `reports/probes/20260928-J1-runtime-compat.md` is the active J1 short-term memory.
+- Current base commit is `9605701429b000aa88987e2161d1d1816c22761e`; the worktree contains the in-progress J1 runtime batch plus pre-existing untracked reports/evidence. Do not discard either class of changes.
+- J1 owns `src/runtime/**`, `src/util/**`, and `src/types.ts`. The implementation is one cohesive runtime batch; downstream Random consumers, Shell, logger users, Charset users, and the twelve non-bridge direct `jree` imports stay with J2-J5.
+- The batch adds a project-owned Java 48-bit LCG, strengthens RuntimeClassToken and JavaExceptions, enforces UTF-16/hash/compare and safe long boundaries, and adds direct project-owned runtime contract tests. The bridge keeps only documented compatibility behavior required by live downstream callers.
+- Implementation checkpoint: `JavaRandom.ts`, the bridge delegation, `RuntimeConstructor`, safe long checks, UTF-16 sequence length handling, and JavaThrowable cause/suppressed lifecycle are implemented and covered by direct tests.
+- `arc137-dev-standard` is active for this batch. New responsibilities stay behind explicit adapters, legacy compatibility is kept local with removal conditions, and no unrelated cleanup is included.
+- Completion claims remain limited to J1 evidence. J2-J5, stage 023, and stage 024 are not complete until their own gates pass.
+
+### J1 validation checkpoint
+
+- Direct contracts `19/19` passed; non-incremental typecheck, build (`141` source files), and dist API passed.
+- Affected NALs `nal1.0.nal`, `nal6.17.nal`, and `toothbrush.nal` passed `3/3`; evidence SHA-256 is `4E4E9C7F030EB7C80E25DA75D6FC18CA41E876A3CB109CDA63BDFBDEA1891442`.
+- TS-only M2 passed `493/495` with `2` skips and `0` failures; elapsed `151833.9708 ms`. The duplicate invocation was stopped and is excluded.
+- Jree/platform inventories remain `13/41/35/1` and `coreCandidateFiles=11`, `mixedBoundaryFiles=4`, `nodeAdapterCandidateFiles=2`, `browserSourceFiles=2`, `jreeImportFiles=20`; these are remaining owner-cluster work.
+- J1 is ready for its one post-commit PC full M1 close gate. No J1, 023, 024, or downstream-cluster completion claim is made before that gate.

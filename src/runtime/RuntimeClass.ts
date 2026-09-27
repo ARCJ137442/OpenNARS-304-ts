@@ -11,7 +11,7 @@ export interface ClassTokenLike {
     equals(other: unknown): boolean;
 }
 
-type RuntimeConstructor<T> = (new (...args: never[]) => T) & {
+export type RuntimeConstructor<T> = (new (...args: never[]) => T) & {
     name: string;
     prototype: T;
 };

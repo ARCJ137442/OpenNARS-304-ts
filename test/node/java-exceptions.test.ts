@@ -8,6 +8,7 @@ import {
     JavaException,
     JavaIllegalArgumentException,
     JavaIllegalStateException,
+    JavaNullPointerException,
     JavaRuntimeException,
     JavaThrowable,
 } from "../../src/runtime/JavaExceptions.ts";
@@ -51,6 +52,30 @@ test("native Java throwable supports Java-style cause and message updates", () =
     assert.equal(error.getMessage(), "updated");
     assert.equal(error.getCause(), cause);
     assert.equal(error.message, "updated");
+});
+
+test("native Java throwable distinguishes uninitialized and explicit-null causes", () => {
+    const defaultCause = new JavaThrowable();
+    assert.equal(defaultCause.getCause(), null);
+    defaultCause.initCause(null);
+    assert.throws(() => defaultCause.initCause(new Error("late")), JavaIllegalStateException);
+
+    const explicitNull = new JavaThrowable("already initialized", null);
+    assert.equal(explicitNull.getCause(), null);
+    assert.throws(() => explicitNull.initCause(new Error("late")), JavaIllegalStateException);
+});
+
+test("native Java throwable protects suppressed state and returns a snapshot", () => {
+    const error = new JavaThrowable("primary");
+    const suppressed = new JavaIllegalStateException("suppressed");
+
+    error.addSuppressed(suppressed);
+    const snapshot = error.getSuppressed();
+    assert.deepEqual(snapshot, [suppressed]);
+    (snapshot as JavaThrowable[]).length = 0;
+    assert.deepEqual(error.getSuppressed(), [suppressed]);
+    assert.throws(() => error.addSuppressed(error), JavaIllegalArgumentException);
+    assert.throws(() => error.addSuppressed(null as unknown as JavaThrowable), JavaNullPointerException);
 });
 
 test("native Java exception compatibility preserves old jree instanceof checks", () => {

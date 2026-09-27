@@ -3,12 +3,15 @@ import test from "node:test";
 import { java, JavaObject } from "jree";
 import {
     JavaDoubleCompat,
+    addRuntimeLong,
     javaIdentityHashCode,
     javaStringHashCode,
     javaStringLength,
     javaStringValue,
     javaStringsEqual,
+    toRuntimeLong,
 } from "../../src/runtime/jree-compat.ts";
+import { RuntimeClassToken } from "../../src/runtime/RuntimeClass.ts";
 import {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -24,6 +27,31 @@ test("javaStringLength normalizes jree and native string representations", () =>
     assert.equal(javaStringLength("abc"), 3);
     assert.equal(javaStringLength(boxed), 3);
     assert.equal(javaStringLength(built), 3);
+});
+
+test("project runtime class tokens preserve constructor identity and instance checks", () => {
+    class Probe {}
+    class Other {}
+    const token = RuntimeClassToken.fromConstructor(Probe);
+    const sameToken = RuntimeClassToken.fromConstructor(Probe);
+    const otherToken = RuntimeClassToken.fromConstructor(Other);
+
+    assert.equal(token, sameToken);
+    assert.notEqual(token, otherToken);
+    assert.equal(token.getName(), "Probe");
+    assert.equal(token.getSimpleName(), "Probe");
+    assert.equal(token.isInstance(new Probe()), true);
+    assert.equal(token.isInstance(new Other()), false);
+    assert.equal(token.equals(sameToken), true);
+    assert.equal(token.equals(otherToken), false);
+});
+
+test("runtime long boundaries reject unsafe numbers before arithmetic", () => {
+    assert.equal(toRuntimeLong(42), 42);
+    assert.equal(addRuntimeLong(42, 8), 50);
+    assert.equal(addRuntimeLong(42n, 8), 50n);
+    assert.throws(() => toRuntimeLong(Number.MAX_SAFE_INTEGER + 1), RangeError);
+    assert.throws(() => addRuntimeLong(Number.MAX_SAFE_INTEGER, 1), RangeError);
 });
 
 test("javaStringValue applies Java toString before JS interpolation", () => {
