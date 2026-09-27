@@ -4,6 +4,18 @@
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
+## 2026-09-27 J5 Nar 配置与状态文本边界切片
+
+- 阶段报告：`reports/20260927-104525.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`96a8f6d`；`Nar.name` 与配置覆盖键的内部状态收窄为原生 `string`，并保留 boxed `java.lang.String` 键的 Java Map 进入合同。
+- 直接合同 `21/21` 通过；TS-only M2 `475` 项，`470` 通过、`0` 失败、`5` 跳过。
+- 非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过；迁移扫描 A 类 malformed 命中为 `0`。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `1551` 周期 / `4850 ms` / RSS `242348032`，`toothbrush.nal` `11550` 周期 / `24369 ms` / RSS `370384896`，`simpleOperationTest.nal` `51564` 周期 / `289505 ms` / RSS `371400704`。
+- 三个样本均无 timeout、process limit、exception 或 marker missing；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`、`validation_profile=risk-slice`；本轮不启动 M1--。Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本批可以宣称 `Nar` 配置状态文本边界切片已完成，不能宣称 J5、`023`、`024`、完整 M1 或 luna 目标已完成。
+
+
 ## 2026-09-27 J5 Nar 内部输入文本边界切片
 
 - 阶段报告：`reports/20260927-101459.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
