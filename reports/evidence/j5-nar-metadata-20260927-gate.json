@@ -1,0 +1,129 @@
+{
+  "base": "88caf8138750ae3a55436d47ebb7ce058a041ed0",
+  "head": "48406e98aad80860e11f8db029b1894da8ae39ce",
+  "files": [
+    "src/main/Nar.ts",
+    "src/public-api.d.ts",
+    "test/node/nar-metadata-string-boundary.test.ts"
+  ],
+  "frozen_java_baseline": "/data/data/com.termux/files/home/A137442/nars/304-ts/OpenNARS-304-ts-evidence-archive/g0-java-baseline-frozen-26772af-20260917.jsonl",
+  "frozen_java_baseline_sha256": "264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954",
+  "tier": "T1",
+  "live_java_required": false,
+  "m1_minus_required": false,
+  "full_m1_required": false,
+  "affected_nal_required": true,
+  "validation_profile": "risk-slice",
+  "cluster_id": "J5-main-io-host",
+  "cluster_close": false,
+  "m1_minus_reasons": [],
+  "source_files": 2,
+  "source_changed_lines": 22,
+  "reasons": [
+    "high-risk-path:src/main/Nar.ts"
+  ],
+  "note": "T1 slices use affected NALs; only an enumerated cluster close runs M1-. Observed regressions or an invalid frozen baseline always escalate, and the tool never certifies semantic equivalence.",
+  "validation_plan": {
+    "plan_valid": true,
+    "validation_profile": "risk-slice",
+    "selected_cluster": {
+      "id": "J5-main-io-host",
+      "title": "Main、IO 与宿主收口簇",
+      "directTests": [
+        "test/node/config-platform-boundary.test.ts",
+        "test/node/shell-boundary.test.ts",
+        "test/node/shell-runtime.test.ts"
+      ],
+      "affectedNals": [
+        "java-master/src/main/resources/nal/single_step/nal1.0.nal",
+        "java-master/src/main/resources/nal/application/toothbrush.nal",
+        "java-master/src/test/simpleOperationTest.nal"
+      ]
+    },
+    "supporting_clusters": [],
+    "touched_clusters": [
+      "J5-main-io-host"
+    ],
+    "unassigned_source_files": [],
+    "multiply_assigned_source_files": [],
+    "plan_errors": [],
+    "direct_test_hints": [
+      "test/node/config-platform-boundary.test.ts",
+      "test/node/shell-boundary.test.ts",
+      "test/node/shell-runtime.test.ts"
+    ],
+    "affected_nal_files": [
+      "java-master/src/main/resources/nal/single_step/nal1.0.nal",
+      "java-master/src/main/resources/nal/application/toothbrush.nal",
+      "java-master/src/test/simpleOperationTest.nal"
+    ],
+    "common_commands": [
+      [
+        "npm",
+        "test"
+      ],
+      [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      [
+        "npm",
+        "run",
+        "test:build"
+      ],
+      [
+        "npm",
+        "run",
+        "test:api:dist"
+      ],
+      [
+        "npm",
+        "run",
+        "scan:migration-patterns"
+      ],
+      [
+        "npm",
+        "run",
+        "audit:jree"
+      ],
+      [
+        "npm",
+        "run",
+        "audit:platform"
+      ]
+    ],
+    "affected_nal_command": [
+      "node",
+      "scripts/e2e/run-nal-corpus.mjs",
+      "--engine",
+      "ts",
+      "--java-baseline",
+      "/data/data/com.termux/files/home/A137442/nars/304-ts/OpenNARS-304-ts-evidence-archive/g0-java-baseline-frozen-26772af-20260917.jsonl",
+      "--file",
+      "java-master/src/main/resources/nal/single_step/nal1.0.nal",
+      "--file",
+      "java-master/src/main/resources/nal/application/toothbrush.nal",
+      "--file",
+      "java-master/src/test/simpleOperationTest.nal",
+      "--cycles",
+      "1550",
+      "--timeout-ms",
+      "180000",
+      "--process-limit-ms",
+      "1800000",
+      "--ts-mode",
+      "cold",
+      "--resource-metrics",
+      "--chunk-size",
+      "1",
+      "--summary",
+      "--result-file",
+      "/data/data/com.termux/files/home/A137442/nars/OpenNARS-304-TS/reports/evidence/j5-nar-metadata-20260927-sentinel.jsonl"
+    ],
+    "m1_minus_command": null,
+    "live_java_required": false,
+    "full_m1_required": false,
+    "strict_markerless_required": false
+  }
+}

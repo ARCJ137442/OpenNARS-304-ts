@@ -1,0 +1,25 @@
+✔ ConfigReader keeps the Java plain-class boundary without a jree Object shell (2.364114ms)
+✔ parseConfigXml returns a native configuration tree (4.12974ms)
+✔ parseConfigXml rejects empty, missing-root and incomplete configuration (1.116198ms)
+✔ embedded default configuration stays byte-for-byte aligned after line-ending normalization (9.014427ms)
+✔ Nar accepts explicit configuration text without reading a config file (142.29651ms)
+✔ Nar.PluginState keeps the Java lifecycle contract without a jree object shell (134.492292ms)
+✔ Nar rejects a path passed to the core string configuration overload (1.2025ms)
+✔ Nar records a missing capability instead of loading a Node-only plugin (129.727605ms)
+✔ Nar registers the system plugin when the Node capability is supplied (133.502709ms)
+✔ PluginRegistry returns a native ordered plugin sequence and diagnostics (0.643177ms)
+✔ PluginRegistry consumes Java constructor arguments with float32 narrowing (0.663489ms)
+✔ PluginRegistry accepts Java no-argument constructors (0.643177ms)
+✔ PluginRegistry diagnoses invalid and repeated registrations without reordering valid instances (0.325ms)
+✔ PluginRegistry accepts an empty plugin section without diagnostics (0.227135ms)
+✔ ConfigReader forwards the native plugin sequence without a jree list wrapper (126.796823ms)
+✔ Nar exposes a live native read-only plugin list (133.359479ms)
+✔ Nar metadata and configuration paths stay native strings (145.191354ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11523.491975
