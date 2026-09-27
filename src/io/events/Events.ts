@@ -11,6 +11,7 @@ import type { Task } from "../../entity/Task.ts";
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import type { GeneralInferenceControl } from "../../control/GeneralInferenceControl.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
+import type { StackTraceElementCompat } from "../../runtime/ThreadCompat.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 
@@ -58,7 +59,7 @@ abstract class TaskAdd extends RuntimeObject implements EventObserver {
 
 abstract class InferenceEvent extends RuntimeObject {
     public readonly when: long;
-    public readonly stack: java.util.List<java.lang.StackTraceElement> | null;
+    public readonly stack: readonly StackTraceElementCompat[] | null;
 
     // how many stack frames down to record from; we don't need to include the
     // current and the previous (InferenceEvent subclass's constructor
@@ -77,8 +78,9 @@ abstract class InferenceEvent extends RuntimeObject {
         this.when = when;
 
         if (stackFrames > 0) {
-            const sl: java.util.List<java.lang.StackTraceElement> =
-                java.util.Arrays.asList(new java.lang.Throwable().getStackTrace());
+            const sl = Array.from(
+                new java.lang.Throwable().getStackTrace() as unknown as StackTraceElementCompat[],
+            );
             let frame: int = 0;
 
             for (const e of sl) {
@@ -89,7 +91,7 @@ abstract class InferenceEvent extends RuntimeObject {
             }
             if (frame - this.STACK_PREFIX > stackFrames)
                 frame = this.STACK_PREFIX + stackFrames;
-            this.stack = sl.subList(this.STACK_PREFIX, frame);
+            this.stack = sl.slice(this.STACK_PREFIX, frame);
         } else {
             this.stack = null;
         }
@@ -352,7 +354,7 @@ export namespace Events {
 	export type ConceptDirectProcessedTask = InstanceType<typeof Events.ConceptDirectProcessedTask>;
 	export type InferenceEvent = {
 		readonly when: long;
-		readonly stack: java.util.List<java.lang.StackTraceElement> | null;
+		readonly stack: readonly StackTraceElementCompat[] | null;
 		getType(): ClassTokenLike;
 	};
 	export type ParametricInferenceEvent<O> = InferenceEvent & { readonly object: O };

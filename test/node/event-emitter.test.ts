@@ -215,6 +215,19 @@ test("Events.ConceptNew preserves the Java InferenceEvent constructor contract",
     assert.equal(String(event.toString()), "Concept Created: fake-concept");
 });
 
+test("InferenceEvent keeps optional stack frames in a native ordered array", () => {
+    const source = readFileSync("src/io/events/Events.ts", "utf8");
+    assert.doesNotMatch(source, /java\.util\.List<java\.lang\.StackTraceElement>/);
+    assert.doesNotMatch(source, /java\.util\.Arrays\.asList/);
+    assert.match(source, /readonly stack: readonly StackTraceElementCompat\[\] \| null/);
+
+    const Base = Events.InferenceEvent as unknown as {
+        new (when: bigint, stackFrames: number): { stack: unknown };
+    };
+    const event = new Base(3n, 2);
+    assert.ok(Array.isArray(event.stack));
+});
+
 test("Events.ConceptNew keeps event text on the project-owned string boundary", () => {
     const source = readFileSync("src/io/events/Events.ts", "utf8");
 
