@@ -1,0 +1,10 @@
+
+> opennars-304-ts@0.1.0 test:build
+> npm run build && node scripts/check-build.mjs
+
+
+> opennars-304-ts@0.1.0 build
+> node scripts/build.mjs
+
+{"output":"/data/data/com.termux/files/home/A137442/nars/OpenNARS-304-TS/dist","sourceFileCount":139,"typescript":"5.4.5"}
+{"ok":true,"entry":"index.js","cli":"cli.mjs","declarations":"index.d.ts","sourceFileCount":139,"exports":["Nar","Narsese","Term","TruthValue","BudgetValue"]}

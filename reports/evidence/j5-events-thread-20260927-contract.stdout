@@ -1,0 +1,29 @@
+✔ EventEmitter.set subscribes only to the requested event classes (3.047239ms)
+✔ Events keeps the Java plain namespace-holder boundary (0.206354ms)
+✔ native event classes keep stable runtime identity tokens (0.228438ms)
+✔ EventEmitter uses native map and observer arrays while preserving identity removal (0.187344ms)
+✔ EventEmitter.synch applies pending operations in FIFO order (0.300365ms)
+✔ EventEmitter preserves native event payload order (0.210729ms)
+✔ EventEmitter preserves Java exception boundaries (0.676511ms)
+✔ EventHandler accepts Java-style event varargs (0.273177ms)
+✔ EventHandler uses the project runtime identity boundary without jree (0.215313ms)
+✔ EventHandler preserves the Java illegal-argument boundary (0.328698ms)
+✔ OutputHandler preserves the Java illegal-argument boundary (0.292032ms)
+✔ TextOutputHandler preserves the Java illegal-argument boundary (0.253959ms)
+✔ Events.ConceptNew preserves the Java InferenceEvent constructor contract (0.296458ms)
+✔ Events captures stack frames through the project ThreadCompat boundary (0.490625ms)
+✔ InferenceEvent keeps optional stack frames in a native ordered array (0.28776ms)
+✔ Events.ConceptNew keeps event text on the project-owned string boundary (0.167865ms)
+✔ Events.TaskAdd accepts native and Java string reasons at the event boundary (0.28875ms)
+✔ TextOutputHandler formats throwable and array output without Java Arrays helpers (100.801041ms)
+✔ TextOutputHandler keeps line prefixes on the native string boundary (90.656928ms)
+✔ TextOutputHandler.LineOutput accepts project-owned text values (0.243907ms)
+✔ TextOutputHandler.openSaveFile accepts project-owned text paths (108.037031ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3561.858853
