@@ -5,6 +5,18 @@
 - 包版本：`0.1.0`
 
 
+## 2026-09-27 J5 Shell 命令行文本边界切片
+
+- 阶段报告：`reports/20260927-085953.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`Shell.createNar`、`Shell.log`、`Shell.main` 与 `Shell.run` 的文本输入从 jree `String` 收窄为 `JavaStringInput`边界，保留 Node 宿主行为。
+- 直接合同 `5/5` 通过；TS-only M2 `472` 项，`467` 通过、`0` 失败、`5` 跳过。
+- 非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `3226 ms` / RSS `249176064`，`toothbrush.nal` `16680 ms` / RSS `374173696`，`simpleOperationTest.nal` `184561 ms` / RSS `440107008`；无 timeout、process limit、exception 或 marker missing。
+- 冻结 Java baseline SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；sentinel SHA-256：`a8db42f3d3c8cff258abd027928b8fc0800ba283f7e392497a70af276736a80a`。
+- T1 gate：`502ccfb`；`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`。
+- 本批不是 J5 责任簇收口，不启动 M1--；Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本轮可以宣称 Shell 命令行文本边界已收窄，不能宣称 J5 或宿主功能整体完成。
+
 ## 2026-09-27 J5 NarNode 网络文本边界切片
 
 - 阶段报告：`reports/20260927-084037.md`；本批模型身份为 `GPT-6-sol`。
