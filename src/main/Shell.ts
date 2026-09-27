@@ -8,7 +8,7 @@ import { Term } from "../language/Term.ts";
 import { Debug } from "./Debug.ts";
 import { TextOutputHandler } from "../io/events/TextOutputHandler.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
-import { isJavaException, javaSystemExit } from "../runtime/jree-compat.ts";
+import { isJavaException, javaSystemExit, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { NodeStdinInputStream } from "../runtime/NodeStdinInputStream.ts";
 import { createNodeRuntimeCapabilities } from "../platform/node/SystemCommandCapabilities.ts";
 
@@ -25,7 +25,7 @@ export class Shell {
     private readonly nar: Nar;
     private out: java.io.PrintStream = java.lang.System.out;
 
-    public static createNar(args: java.lang.String[]): Nar {
+    public static createNar(args: JavaStringInput[]): Nar {
         let nar: Nar | null = null;
         let id: number | null = null;
         const narPath = String(args[0]);
@@ -81,7 +81,7 @@ export class Shell {
      * logging
      *
      */
-    protected static log(message: java.lang.String): void {
+    protected static log(message: JavaStringInput): void {
         // l for log
         java.lang.System.out.println(S`[l]: ${message}`);
     }
@@ -91,7 +91,7 @@ export class Shell {
      *
      * @param args command line arguments
      */
-    public static main(args: java.lang.String[]): void {
+    public static main(args: JavaStringInput[]): void {
         if (args.length === 0) { // in that case just run the instance
             args = [S`null`, S`null`, S`null`, S`null`];
         }
@@ -187,7 +187,7 @@ export class Shell {
      * non-static equivalent to {@link #main(String[])} : finish to completion from
      * an addInput file
      */
-    public run(args: java.lang.String[]): void {
+    public run(args: JavaStringInput[]): void {
         let output: TextOutputHandler = new TextOutputHandler(this.nar, new java.io.PrintWriter(this.out, true));
         output.setErrors(true);
         output.setErrorStackTrace(true);
@@ -221,5 +221,4 @@ export class Shell {
 export namespace Shell {
     export type InputThread = InstanceType<Shell["InputThread"]>;
 }
-
 
