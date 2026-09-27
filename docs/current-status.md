@@ -5,6 +5,19 @@
 - 包版本：`0.1.0`
 
 
+
+## 2026-09-27 J5 TextOutputHandler Arrays 边界切片
+
+- 阶段报告：`reports/20260927-130901.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`b42f4d8`；`TextOutputHandler` 移除两个 `java.util.Arrays` 运行时调用，改用项目内局部格式化函数，保留异常堆栈和普通数组文本输出行为。
+- 直接合同 `20/20` 通过；TS-only M2 `478` 项，`473` 通过、`0` 失败、`5` 跳过，用时 `314348 ms`。
+- 非增量 typecheck `0` 诊断；build `139` 个源文件；dist API、迁移扫描、jree/platform 审计通过，A 类 malformed 命中为 `0`。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `1551` 周期 / `3355 ms` / RSS `246927360`，`toothbrush.nal` `11550` 周期 / `16617 ms` / RSS `369442816`，`simpleOperationTest.nal` `51564` 周期 / `226938 ms` / RSS `425811968`。
+- 三个样本均无 timeout、process limit、exception 或 marker missing；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`、`validation_profile=risk-slice`；本批不启动 M1--。Termux 中所有 M1 相关测试统一使用 M1-- `243` 项。
+- 证据 sentinel JSONL SHA-256：`f62c5e9292cf996b089c14a6217c12a204576d247fdb31e97d30018182138ef3`；汉字编码检查结果为 `[]`。
+- 本批可以宣称 `TextOutputHandler` Arrays 文本边界切片已完成，不能宣称 J5、`023`、`024` 或 luna 总目标已完成。
+
 ## 2026-09-27 J5 InferenceEvent 栈帧边界切片
 
 - 阶段报告：`reports/20260927-122532.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
