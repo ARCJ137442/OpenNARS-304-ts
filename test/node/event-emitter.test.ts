@@ -254,6 +254,31 @@ test("Events.TaskAdd accepts native and Java string reasons at the event boundar
 });
 
 
+test("TextOutputHandler formats throwable and array output without Java Arrays helpers", () => {
+    const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
+    assert.doesNotMatch(source, /java\.util\.Arrays\.(asList|toString)/);
+
+    const nar = new Nar();
+    try {
+        const error = new java.lang.IllegalStateException("boom");
+        assert.equal(
+            String(TextOutputHandler.getOutputString(OutputHandler.ERR.class, error, true, nar)),
+            "IllegalStateException: boom []",
+        );
+        assert.equal(
+            String(TextOutputHandler.getOutputString(
+                OutputHandler.OUT.class,
+                [new java.lang.String("a"), 2] as unknown as java.lang.Object,
+                true,
+                nar,
+            )),
+            "[{},2]",
+        );
+    } finally {
+        nar.stop();
+    }
+});
+
 test("TextOutputHandler keeps line prefixes on the native string boundary", () => {
     const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
     assert.doesNotMatch(source, /private prefix: java\.lang\.String/);

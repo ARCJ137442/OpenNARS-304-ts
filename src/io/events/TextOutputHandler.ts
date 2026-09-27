@@ -23,6 +23,8 @@ const CONFIRM = OutputHandler.CONFIRM;
 const DISAPPOINT = OutputHandler.DISAPPOINT;
 const Answer = Events.Answer;
 
+const formatJavaArray = (values: readonly unknown[]): string => JSON.stringify(values) ?? "null";
+const formatJavaList = (values: readonly unknown[]): string => `[${values.map(value => String(value)).join(", ")}]`;
 
 
 /**
@@ -255,7 +257,7 @@ export class TextOutputHandler extends OutputHandler {
                 const e: java.lang.Throwable = signal as unknown as java.lang.Throwable;
                 buffer.append(e.toString());
                 if (showStackTrace) {
-                    buffer.append(" ").append(java.util.Arrays.asList(e.getStackTrace()));
+                    buffer.append(" ").append(formatJavaList(e.getStackTrace()));
                 }
             } else {
                 buffer.append(signal.toString());
@@ -300,7 +302,7 @@ export class TextOutputHandler extends OutputHandler {
         if (isJavaThrowable(signal)) {
             const error = signal as unknown as java.lang.Throwable;
             buffer.append(error.toString()).append(" ")
-                .append(java.util.Arrays.asList(error.getStackTrace()));
+                .append(formatJavaList(error.getStackTrace()));
         } else if (signal instanceof Task) {
             buffer.append(signal.sentence.toString(nar, showStamp));
         } else if (signal instanceof Sentence) {
@@ -310,7 +312,7 @@ export class TextOutputHandler extends OutputHandler {
                 const answer = (signal as unknown[])[1] as Sentence;
                 buffer.append(answer.toString(nar, showStamp));
             } else {
-                buffer.append(java.util.Arrays.toString(signal as unknown[]));
+                buffer.append(formatJavaArray(signal as unknown[]));
             }
         } else {
             buffer.append(signal.toString());
