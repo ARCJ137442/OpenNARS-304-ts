@@ -1,9 +1,21 @@
 # OpenNARS-304-ts 当前状态
 
-- 状态日期：2026-09-26（Asia/Shanghai）
+- 状态日期：2026-09-27（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
+
+## 2026-09-27 J5 Nar 文件路径边界切片
+
+- 阶段报告：`reports/20260927-075138.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`Nar.SaveToFile` / `Nar.LoadFromFile` 路径参数从 `java.lang.String` 收窄为 `JavaStringInput`，文件流入口统一通过 `toJavaString` 归一化。
+- 直接合同：`1/1` 通过；合同同时记录当前 `jree@1.3.0` 无 `ObjectInputStream` / `ObjectOutputStream`。
+- TS-only M2：`470` 项，`465` 通过、`0` 失败、`5` 跳过；非增量 typecheck 、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过。
+- 受影响 NAL `3/3` 功能/parity 通过：`nal1.0.nal` `3305 ms` / RSS `251322368`，`toothbrush.nal` `16536 ms` / RSS `370339840`，`simpleOperationTest.nal` `188141 ms` / RSS `416530432`；无 timeout、process limit、exception或 marker missing。
+- 冻结 Java baseline SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；sentinel SHA-256：`b38e7dc50061f0184a31fa9c70477699930f30ec856ad8cddfb41336cb270eb3`。
+- T1 gate：`c45afe9`；`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`validation_profile=risk-slice`。
+- 本批不是 J5 责任簇收口，不启动 M1--；Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本轮可以宣称路径文本边界已收窄，不能宣称对象序列化和真实 snapshot restore 已完成。
 
 ## 2026-09-26 阶段报告与 M1-- 设备适配口径
 

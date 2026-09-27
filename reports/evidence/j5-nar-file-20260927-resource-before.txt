@@ -1,0 +1,11 @@
+timestamp=2026-09-27T07:34:15+08:00
+--- free ---
+               total        used        free      shared  buff/cache   available
+Mem:           7.3Gi       5.0Gi       118Mi        35Mi       2.2Gi       2.2Gi
+Swap:          8.0Gi       3.3Gi       4.7Gi
+--- meminfo ---
+MemTotal:        7643104 kB
+MemAvailable:    2294524 kB
+SwapTotal:       8388604 kB
+SwapFree:        4929256 kB
+--- cpu ---

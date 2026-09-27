@@ -1,0 +1,5 @@
+
+> opennars-304-ts@0.1.0 test:api:dist
+> node scripts/check-built-api.mjs dist/index.js
+
+{"ok":true,"entry":"/data/data/com.termux/files/home/A137442/nars/OpenNARS-304-TS/dist/index.js","cycles":2,"cycleEnds":2,"outputSignals":1,"stopped":true}
