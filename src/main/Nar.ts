@@ -357,8 +357,8 @@ export class Nar extends SensoryChannel implements Reasoner {
      * will be set to the current memory cycle time, but may be processed by
      * memory later according to the length of the input queue.
      */
-    private addMultiLineInput(text: java.lang.String): boolean {
-        let lines: java.lang.String[] = text.split("\n");
+    private addMultiLineInput(text: string): boolean {
+        const lines = text.split("\n");
         for (let s of lines) {
             this.addInput(s);
             if (!this.running) {
@@ -368,30 +368,30 @@ export class Nar extends SensoryChannel implements Reasoner {
         return true;
     }
 
-    private addCommand(text: java.lang.String): boolean {
+    private addCommand(text: string): boolean {
         // 重置
-        if (text.startsWith(S`**`) || text.startsWith(S`*reset`)) {
+        if (text.startsWith("**") || text.startsWith("*reset")) {
             this.reset();
             return true;
         } // 决策阈值
-        else if (text.startsWith(S`*decisionthreshold=`)) { // TODO use reflection for narParameters, allow to set
+        else if (text.startsWith("*decisionthreshold=")) { // TODO use reflection for narParameters, allow to set
             // others too
             let value: JavaDoubleCompat = JavaDoubleCompat.valueOf(text.split("decisionthreshold=")[1]);
             this.narParameters.DECISION_THRESHOLD = Float32Math.from(value.floatValue()) as float;
             return true;
         } // 音量
-        else if (text.startsWith(S`*volume=`)) {
-            let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("volume=")[1]);
+        else if (text.startsWith("*volume=")) {
+            let value: java.lang.Integer = java.lang.Integer.valueOf(toJavaString(text.split("volume=")[1]));
             this.narParameters.VOLUME = value.intValue();
             return true;
         } // 线程数
-        else if (text.startsWith(S`*threads=`)) {
-            let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("threads=")[1]);
+        else if (text.startsWith("*threads=")) {
+            let value: java.lang.Integer = java.lang.Integer.valueOf(toJavaString(text.split("threads=")[1]));
             this.narParameters.THREADS_AMOUNT = value.intValue();
             return true;
         } // 保存
-        else if (text.startsWith(S`*save=`)) {
-            let filename: java.lang.String = text.split("save=")[1];
+        else if (text.startsWith("*save=")) {
+            const filename = text.split("save=")[1];
             let wasRunning: boolean = this.isRunning();
             if (wasRunning) {
                 this.stop();
@@ -403,11 +403,11 @@ export class Nar extends SensoryChannel implements Reasoner {
             return true;
         }
         // 设置运行速度（负数为关闭）
-        else if (text.startsWith(S`*speed`)) {
-            let split: java.lang.String[] = text.split("speed");
-            let stripped: java.lang.String = split.length > 1 ? split[1] : S``;
+        else if (text.startsWith("*speed")) {
+            const split = text.split("speed");
+            const stripped = split.length > 1 ? split[1] : "";
             // 若带等号⇒修改
-            if (stripped.startsWith(S`=`)) {
+            if (stripped.startsWith("=")) {
                 let value: java.lang.Long = java.lang.Long.valueOf(stripped.split("=")[1]);
                 this.minCyclePeriodMS = value.longValue();
             }
@@ -421,8 +421,8 @@ export class Nar extends SensoryChannel implements Reasoner {
             return true;
         }
         // 设置运行速度（负数为关闭）
-        else if (text.startsWith(S`*speed=`)) {
-            let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("speed=")[1]);
+        else if (text.startsWith("*speed=")) {
+            let value: java.lang.Integer = java.lang.Integer.valueOf(toJavaString(text.split("speed=")[1]));
             this.minCyclePeriodMS = BigInt(value.intValue());
             return true;
         }
@@ -453,7 +453,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                 const [rawText] = args as [JavaStringInput];
                 const inputText = String(rawText).trim();
                 let narsese: Parser = new Narsese(this);
-                if (inputText.includes("\n") && this.addMultiLineInput(new java.lang.String(inputText))) {
+                if (inputText.includes("\n") && this.addMultiLineInput(inputText)) {
                     return;
                 }
                 // Ignore any input that is just a comment
@@ -464,7 +464,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                     return;
                 }
                 try {
-                    if (this.addCommand(inputText as unknown as java.lang.String)) {
+                    if (this.addCommand(inputText)) {
                         return;
                     }
                 } catch (ex) {
@@ -476,7 +476,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                 }
                 let task: Task | null = null;
                 try {
-                    task = narsese.parseTask(new java.lang.String(inputText));
+                    task = narsese.parseTask(inputText);
                 } catch (e) {
                     if (e instanceof Parser.InvalidInputException) {
                         if (Debug.SHOW_INPUT_ERRORS) {
@@ -577,7 +577,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                             task.sentence.punctuation + ev + task.sentence.getTruth().toString();
                         // this.emit(OutputHandler.IN.class, task); too expensive to print each input
                         // task, consider vision :)
-                        this.addInput(new java.lang.String(newInput));
+                        this.addInput(newInput);
                         return true;
                     }
                 }
