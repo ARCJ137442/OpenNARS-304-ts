@@ -11,13 +11,16 @@
 - 当前已提交 J5 Shell 与 NarNode `S` 固定文本边界切片：`82c3ce1`；该候选仍不是 J5 收口。
 - 普通切片不运行 M1--；仅责任簇出口时运行 Termux M1-- `243` 项。M1 相关测试不运行完整 `245` 项或 `#245`。
 
-## 2026-09-27 J5 Node stdin 宿主边界切片（候选）
+## 2026-09-27 J5 Node stdin 宿主边界切片（已验收）
 
-- 阶段报告：`reports/20260927-173826.md`；代码尚未提交，模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`8adbc1a`；阶段报告：`reports/20260927-173826.md`；模型身份为 `GPT 5.6 sol xhigh`。
 - `NodeStdinInputStream.ts` 移除 jree 导入与 `java.io.InputStream` 继承；`Shell.ts` 在 jree IO wrapper 入口保留显式窄类型断言。
 - 定向 Shell/Node stdin 合同 `6/6` 通过；TS-only M2 `484/479/0/5`，耗时 `559325.966 ms`。
 - typecheck、build（`140` 个源文件）、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过；jree 直接导入文件数 `14→13`。
-- 本批是 J5 普通 T1 候选，提交后运行计划器与受影响 NAL；责任簇收口前不运行 M1--。
+- 计划器：`plan_valid=true`、`T1 risk-slice`、`affected_nal_required=true`、`m1_minus_required=false`；受影响 NAL `3/3` functional/parity 通过。
+- NAL 耗时：`nal1.0.nal` `22608 ms`、`toothbrush.nal` `81381 ms`、`simpleOperationTest.nal` `888937 ms`；0 异常、0 超时、0 stall、0 进程限制、0 marker 缺失。
+- `simpleOperationTest.nal` 在 Termux 上明显偏慢；本批只证明功能/对照通过，不代表性能等价或 J5 收口。责任簇收口前不运行 M1--。
+- 证据：`reports/evidence/j5-node-stdin-plan-20260927-sentinel.jsonl`。
 
 ## 2026-09-27 J5 NarNode 资源异常边界切片（已验收）
 
