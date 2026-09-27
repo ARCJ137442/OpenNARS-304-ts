@@ -11,13 +11,14 @@
 - 当前已提交 J5 Shell 与 NarNode `S` 固定文本边界切片：`82c3ce1`；该候选仍不是 J5 收口。
 - 普通切片不运行 M1--；仅责任簇出口时运行 Termux M1-- `243` 项。M1 相关测试不运行完整 `245` 项或 `#245`。
 
-## 2026-09-27 J5 NarNode 资源异常边界切片
+## 2026-09-27 J5 NarNode 资源异常边界切片（已验收）
 
-- 阶段报告：`reports/20260927-165500.md`；当前候选未提交，模型身份为 `GPT 5.6 sol xhigh`。
-- 生产改动：`NarNode.ts` 移除 jree 资源辅助函数；新增 `ResourceCompat.ts`；`JavaThrowable` 增加 suppressed 异常观察面。
-- 定向资源与异常合同 `14/14` 通过；TS-only M2 `482` 项，`477` 通过、`0` 失败、`5` 跳过，耗时 `498909.276 ms`。
-- 非增量 typecheck、build（`140` 个源文件）、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过。
-- 本批是 J5 owner + J1 supporting 的 T1 候选，提交后重跑计划器；责任簇收口前不运行 M1--。
+- 代码提交：`1d50973`；阶段报告：`reports/20260927-165500.md`。
+- 计划器：`plan_valid=true`、`T1 risk-slice`、J5 owner + J1 supporting；`m1_minus_required=false`。
+- 定向资源与异常合同 `14/14` 通过；TS-only M2 `482/477/0/5`，耗时 `498909.276 ms`。
+- 受影响 NAL `4/4` functional/parity 通过：`nal1.0.nal` `5223 ms` / RSS `247144448`，`nal6.17.nal` `8642 ms` / RSS `283459584`，`toothbrush.nal` `26382 ms` / RSS `376197120`，`simpleOperationTest.nal` `312337 ms` / RSS `416854016`。
+- 无异常、超时、进程限制、stall 或 marker 缺失；本批不是 J5 责任簇收口，不运行 M1--。
+- 证据：`reports/evidence/j5-narnode-resource-plan-20260927-sentinel.jsonl`。
 
 ## 2026-09-27 J5 Shell/NarNode 固定文本边界切片
 
