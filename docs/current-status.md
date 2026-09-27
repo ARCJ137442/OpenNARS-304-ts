@@ -4,6 +4,19 @@
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
+
+## 2026-09-27 J5 InferenceEvent 栈帧边界切片
+
+- 阶段报告：`reports/20260927-122532.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`e7b496a`；`InferenceEvent.stack` 从 Java `List<StackTraceElement>` 收窄为项目内只读 `StackTraceElementCompat[] | null`，使用原生 `Array.from`/`slice` 保持顺序、截断和空值语义。
+- 直接合同 `19/19` 通过；TS-only M2 `477` 项，`472` 通过、`0` 失败、`5` 跳过，用时 `558604 ms`。
+- 非增量 typecheck `0` 诊断；build `139` 个源文件；dist API、迁移扫描、jree/platform 审计通过，A 类 malformed 命中为 `0`。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `1551` 周期 / `5870 ms` / RSS `247902208`，`toothbrush.nal` `11550` 周期 / `26615 ms` / RSS `367886336`，`simpleOperationTest.nal` `51564` 周期 / `427023 ms` / RSS `455835648`。
+- 三个样本均无 timeout、process limit、exception 或 marker missing；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`、`validation_profile=risk-slice`；本批不启动 M1--。Termux 中所有 M1 相关测试统一使用 M1-- `243` 项。
+- 证据 JSONL SHA-256：`da620a84c43f27e49202e1ffeedea2925147ebdf5f75e886f06e49bbc00e04f1`；汉字编码检查结果为 `[]`。
+- 本批可以宣称 `InferenceEvent` 栈帧边界切片已完成，不能宣称 J5、`023`、`024` 或 luna 总目标已完成。
+
 ## 2026-09-27 J5 Nar 诊断与固定文本边界切片
 
 - 阶段报告：`reports/20260927-113604.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
