@@ -103,17 +103,17 @@ export class Nar extends SensoryChannel implements Reasoner {
     /**
      * The information about the version of the project
      */
-    public static readonly VERSION: java.lang.String = S`v3.0.4`;
+    public static readonly VERSION: string = "v3.0.4";
 
     /**
      * Name of the reasoner of the project
      */
-    public static readonly NAME: java.lang.String = S`Open-NARS`;
+    public static readonly NAME: string = "Open-NARS";
 
     /**
      * The project web sites.
      */
-    public static readonly WEBSITE: java.lang.String = S` Open-NARS website:  http://code.google.com/p/open-org.opennars/ \n      NARS website:  http://sites.google.com/site/narswang/ \n    Github website:  http://github.com/opennars/ \n    IRC:  http://webchat.freenode.net/?channels=org.opennars \n`;
+    public static readonly WEBSITE: string = " Open-NARS website:  http://code.google.com/p/open-org.opennars/ \n      NARS website:  http://sites.google.com/site/narswang/ \n    Github website:  http://github.com/opennars/ \n    IRC:  http://webchat.freenode.net/?channels=org.opennars \n";
 
     private threads: ThreadCompat[] | null = null;
     // Java `Map<Term, SensoryChannel>` backed by `LinkedHashMap`; NativeMap
@@ -228,7 +228,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     private stopped: boolean = false;
     private threadYield: boolean = false;
 
-    public static readonly DEFAULTCONFIG_FILEPATH: java.lang.String = S`./config/defaultConfig.xml`;
+    public static readonly DEFAULTCONFIG_FILEPATH: string = "./config/defaultConfig.xml";
 
     /** Constructs the NAR with the embedded default configuration text. */
     public constructor();
@@ -257,7 +257,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         // TypeScript. Resolve all overloads before the one and only `super()`.
         let narId: long = Nar.randomId();
         let configText = DEFAULT_CONFIG_XML;
-        let configSource: java.lang.String = Nar.DEFAULTCONFIG_FILEPATH;
+        let configSource: string = Nar.DEFAULTCONFIG_FILEPATH;
         let parameterOverrides: java.util.Map<java.lang.String, java.lang.Object> | null = null;
         let capabilities: RuntimeCapabilities | undefined;
 
@@ -273,7 +273,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                 const options = value as NarOptions;
                 if (options.narId !== undefined) narId = toRuntimeLong(options.narId);
                 if (options.configText !== undefined) configText = options.configText;
-                if (options.configSource !== undefined) configSource = S`${options.configSource}`;
+                if (options.configSource !== undefined) configSource = options.configSource;
                 if (options.parameterOverrides !== undefined) parameterOverrides = options.parameterOverrides;
                 if (options.capabilities !== undefined) capabilities = options.capabilities;
             } else if (typeof value === "number" || typeof value === "bigint" || value instanceof java.lang.Number) {
@@ -341,7 +341,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     }
 
 
-    public usedConfigFilePath: java.lang.String = S``;
+    public usedConfigFilePath: string = "";
 
     /**
      * Reset the system with an empty memory and reset clock. Called locally.

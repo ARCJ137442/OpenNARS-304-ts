@@ -171,12 +171,12 @@ export class Debug {
 }
 
 export class Nar {
-    static readonly VERSION: StringLike;
-    static readonly NAME: StringLike;
-    static readonly DEFAULTCONFIG_FILEPATH: StringLike;
+    static readonly VERSION: string;
+    static readonly NAME: string;
+    static readonly DEFAULTCONFIG_FILEPATH: string;
     readonly memory: MemoryLike;
     narParameters: Parameters;
-    usedConfigFilePath: StringLike;
+    usedConfigFilePath: string;
     constructor(options: NarOptions);
     constructor();
     constructor(configText: StringLike);
