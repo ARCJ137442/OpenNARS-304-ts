@@ -4,8 +4,16 @@
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
+## 2026-09-27 恢复开发：023 五责任簇归属审计
 
-
+- 阶段报告：`reports/20260927-135702.md`；身份为 `GPT 5.6 sol xhigh`。
+- 以 `35cab26` 为审计基线，生产直接 jree 导入共 `14` 个文件；J1/J2/J3/J4/J5 分布为
+  `1/6/2/0/5`，全部恰好映射到一个 owner。详细残余路径、Java 合同、直接测试、哨兵 NAL、
+  出口条件与可回退切片记录在 `specs/023-jree-removal-native-runtime/README.md`。
+- 原始审计：`reports/evidence/023-owner-audit-jree-20260927.json`；恢复现场重分类：
+  `reports/evidence/023-resume-reclass-20260927.json`，有效 `T0`，不要求 NAL 或 M1--。
+- 当前选择继续 J5 的 Shell `S` 模板字符串边界；尚未改源码，计划先提交簇清单，再按 TDD 实施。
+- 普通切片不运行 M1--；仅责任簇出口时运行 Termux M1-- `243` 项。M1 相关测试不运行完整 `245` 项或 `#245`。
 
 ## 2026-09-27 J5 Events 栈帧采集边界切片
 
