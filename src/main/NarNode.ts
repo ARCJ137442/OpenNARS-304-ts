@@ -11,7 +11,7 @@ import { CompoundTerm } from "../language/CompoundTerm.ts";
 import { Term } from "../language/Term.ts";
 import { Task } from "../entity/Task.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
-import { isJavaException, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
+import { isJavaException, JavaSystemLoggerCompat, toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 type DatagramPacketCompat = { getLength(): number };
@@ -178,19 +178,19 @@ export class NarNode extends RuntimeObject implements EventObserver {
      * @param target
      * @throws IOException
      */
-    public static sendNarsese(input: java.lang.String, target: NarNode.TargetNar): void;
+    public static sendNarsese(input: JavaStringInput, target: NarNode.TargetNar): void;
 
-    public static sendNarsese(input: java.lang.String, targetIP: java.lang.String, targetPort: int, taskThreshold: float,
+    public static sendNarsese(input: JavaStringInput, targetIP: JavaStringInput, targetPort: int, taskThreshold: float,
         mustContainTerm: Term | null): void;
     public static sendNarsese(...args: unknown[]): void {
         switch (args.length) {
             case 2: {
-                const [input, target] = args as [java.lang.String, NarNode.TargetNar];
+                const [input, target] = args as [JavaStringInput, NarNode.TargetNar];
 
 
                 let bStream: java.io.ByteArrayOutputStream = new java.io.ByteArrayOutputStream();
                 let oo: ObjectOutputCompat = new javaIoCompat.ObjectOutputStream(bStream);
-                oo.writeObject(input);
+                oo.writeObject(toJavaString(input));
                 oo.close();
                 let serializedMessage: Int8Array = bStream.toByteArray();
                 let searchTerm: boolean = target.mustContainTerm !== null;
@@ -208,7 +208,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
             }
 
             case 5: {
-                const [input, targetIP, targetPort, taskThreshold, mustContainTerm] = args as [java.lang.String, java.lang.String, int, float, Term | null];
+                const [input, targetIP, targetPort, taskThreshold, mustContainTerm] = args as [JavaStringInput, JavaStringInput, int, float, Term | null];
 
 
                 NarNode.sendNarsese(input, new NarNode.TargetNar(targetIP, targetPort, taskThreshold, mustContainTerm, true));
@@ -239,9 +239,9 @@ export class NarNode extends RuntimeObject implements EventObserver {
          * @throws SocketException
          * @throws UnknownHostException
          */
-        public constructor(targetIP: java.lang.String, targetPort: int, threshold: float, mustContainTerm: Term | null,
+        public constructor(targetIP: JavaStringInput, targetPort: int, threshold: float, mustContainTerm: Term | null,
             sendInput: boolean) {
-            this.targetAddress = javaNetCompat.InetAddress.getByName(targetIP);
+            this.targetAddress = javaNetCompat.InetAddress.getByName(toJavaString(targetIP));
             this.sendSocket = new javaNetCompat.DatagramSocket();
             this.threshold = Float32Math.from(threshold) as float;
             this.targetPort = targetPort;
@@ -276,7 +276,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
      * @throws SocketException
      * @throws UnknownHostException
      */
-    public addRedirectionTo(targetIP: java.lang.String, targetPort: int, taskThreshold: float,
+    public addRedirectionTo(targetIP: JavaStringInput, targetPort: int, taskThreshold: float,
         mustContainTerm: Term | null, sendInput: boolean): void;
     public addRedirectionTo(...args: unknown[]): void {
         switch (args.length) {
@@ -291,7 +291,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
             }
 
             case 5: {
-                const [targetIP, targetPort, taskThreshold, mustContainTerm, sendInput] = args as [java.lang.String, int, float, Term | null, boolean];
+                const [targetIP, targetPort, taskThreshold, mustContainTerm, sendInput] = args as [JavaStringInput, int, float, Term | null, boolean];
 
 
                 this.addRedirectionTo(new NarNode.TargetNar(targetIP, targetPort, taskThreshold, mustContainTerm, sendInput));
@@ -361,5 +361,4 @@ export namespace NarNode {
     export type EventReceivedTask = InstanceType<NarNode["EventReceivedTask"]>;
     export type TargetNar = InstanceType<typeof NarNode.TargetNar>;
 }
-
 

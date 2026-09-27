@@ -2,6 +2,7 @@
 import { java, S } from "jree";
 import type { int, float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import { Parser } from "./Parser.ts";
 import { Symbols } from "./Symbols.ts";
 import { Tense } from "../language/Tense.ts";
@@ -137,7 +138,7 @@ export class Narsese implements Parser {
     public constructor(n: Nar);
     public constructor(...args: unknown[]) {
         if (args.length !== 1 || args[0] === null) {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
         }
         const value = args[0] as Memory | Nar;
         this.memory = (value as Nar).memory ?? value as Memory;
@@ -367,13 +368,13 @@ export class Narsese implements Parser {
                     }
                 case SET_EXT_OPENER:
                     if (last === SET_EXT_CLOSER.ch) {
-                        return SetExt.make(this.parseArguments(new java.lang.String(String(s.substring(1, index)) + ARGUMENT_SEPARATOR)));
+                        return SetExt.make(this.parseArguments(toJavaString(String(s.substring(1, index)) + ARGUMENT_SEPARATOR)));
                     } else {
                         throw new Parser.InvalidInputException(S`missing ExtensionSet closer`);
                     }
                 case SET_INT_OPENER:
                     if (last === SET_INT_CLOSER.ch) {
-                        return SetInt.make(this.parseArguments(new java.lang.String(String(s.substring(1, index)) + ARGUMENT_SEPARATOR)));
+                        return SetInt.make(this.parseArguments(toJavaString(String(s.substring(1, index)) + ARGUMENT_SEPARATOR)));
                     } else {
                         throw new Parser.InvalidInputException(S`missing IntensionSet closer`);
                     }
@@ -531,7 +532,7 @@ export class Narsese implements Parser {
         }
 
         const arg: Term[] = (firstSeparator < 0) ? []
-            : this.parseArguments(new java.lang.String(String(s.substring(firstSeparator + 1)) + ARGUMENT_SEPARATOR));
+            : this.parseArguments(toJavaString(String(s.substring(firstSeparator + 1)) + ARGUMENT_SEPARATOR));
 
         const argA: Term[] = arg;
 

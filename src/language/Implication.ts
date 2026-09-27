@@ -1,5 +1,4 @@
 //! Java source: opennars/language/Implication.java
-import { java, S } from "jree";
 import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
@@ -7,6 +6,8 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Conjunction } from "./Conjunction.ts";
 import { Interval } from "./Interval.ts";
 import { Symbols } from "../io/Symbols.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import type { JavaCharSequence } from "../runtime/jree-compat.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -78,7 +79,7 @@ export class Implication extends Statement {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -110,7 +111,7 @@ export class Implication extends Statement {
                     return null;
                 }
                 if (t.length !== 2)
-                    throw new java.lang.IllegalStateException("Implication requires 2 components: " + java.util.Arrays.toString(t));
+                    throw new JavaIllegalStateException("Implication requires 2 components: [" + t.map(String).join(", ") + "]");
 
                 return Implication.make(t[0], t[1], this.temporalOrder);
 
@@ -119,7 +120,7 @@ export class Implication extends Statement {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -205,13 +206,13 @@ export class Implication extends Statement {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
 
 
-    public static makeName(subject: Term, temporalOrder: int, predicate: Term): java.lang.CharSequence {
+    public static makeName(subject: Term, temporalOrder: int, predicate: Term): JavaCharSequence {
         let copula: NativeOperator;
         switch (temporalOrder) {
             case TemporalRules.ORDER_FORWARD:

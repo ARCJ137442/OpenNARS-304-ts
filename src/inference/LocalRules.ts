@@ -1,5 +1,4 @@
 //! Java source: opennars/inference/LocalRules.java
-import { java } from "jree";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Concept } from "../entity/Concept.ts";
@@ -88,9 +87,9 @@ export class LocalRules {
      * @return If revision is possible between the two sentences
      */
     public static revisable(s1: Sentence, s2: Sentence, narParameters: Parameters): boolean {
-        if (!s1.isEternal() && !s2.isEternal() && java.lang.Math
-            .abs(s1.getOccurrenceTime()
-                - s2.getOccurrenceTime()) > narParameters.REVISION_MAX_OCCURRENCE_DISTANCE) {
+        if (!s1.isEternal() && !s2.isEternal() && Math
+            .abs(Number(s1.getOccurrenceTime()
+                - s2.getOccurrenceTime())) > narParameters.REVISION_MAX_OCCURRENCE_DISTANCE) {
             return false;
         }
         if (s1.term.term_indices !== null && s2.term.term_indices !== null) {
@@ -193,19 +192,19 @@ export class LocalRules {
                 ) as float;
             }
             for (let i: int = 0; i < ivalNew.size(); i++) {
-                AbsDiffSumNew += java.lang.Math.abs(
+                AbsDiffSumNew += Math.abs(
                     Number(ivalNew.get(i)) - recent_ivals[i],
                 ) as unknown as long;
             }
             for (let i: int = 0; i < ivalNew.size(); i++) {
-                AbsDiffSumOld += java.lang.Math.abs(
+                AbsDiffSumOld += Math.abs(
                     Number(ivalOld.get(i)) - recent_ivals[i],
                 ) as unknown as long;
             }
             /* } */
             let AbsDiffSum: long = 0 as unknown as long;
             for (let i: int = 0; i < ivalNew.size(); i++) {
-                AbsDiffSum += java.lang.Math.abs(
+                AbsDiffSum += Math.abs(
                     Number(ivalNew.get(i)) - Number(ivalOld.get(i)),
                 ) as unknown as long;
             }
@@ -313,8 +312,8 @@ export class LocalRules {
                 solution.term.getComplexity(),
                 memory.narParameters.COMPLEXITY_UNIT,
             ) as float;
-            return Float32Math.from(truth.getExpectation() / java.lang.Math
-                .sqrt(java.lang.Math.sqrt(java.lang.Math.sqrt(complexityFactor)))) as float;
+            return Float32Math.from(truth.getExpectation() / Math
+                .sqrt(Math.sqrt(Math.sqrt(complexityFactor)))) as float;
         } else {
             return Float32Math.from(truth.confidence) as float;
         }
@@ -359,14 +358,14 @@ export class LocalRules {
             // https://groups.google.com/forum/#!topic/open-nars/ZfCM416Dx1M
             budget = new BudgetValue(UtilityFunctions.or(taskPriority, quality), task.getDurability(),
                 BudgetFunctions.truthToQuality(solution.getTruth()), nal.narParameters);
-            task.setPriority(Float32Math.from(java.lang.Math.min(
+            task.setPriority(Float32Math.from(Math.min(
                 Float32Math.subtract(1, quality),
                 taskPriority,
             )) as float);
         }
         if (feedbackToLinks) {
             let tLink: TaskLink = nal.requireCurrentTaskLink();
-            tLink.setPriority(Float32Math.from(java.lang.Math.min(
+            tLink.setPriority(Float32Math.from(Math.min(
                 Float32Math.subtract(1, quality),
                 tLink.getPriority(),
             )) as float);

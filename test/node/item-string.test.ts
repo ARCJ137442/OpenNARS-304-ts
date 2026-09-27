@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { Item } from "../../src/entity/Item.ts";
 import { BudgetValue } from "../../src/entity/BudgetValue.ts";
@@ -38,4 +39,12 @@ test("Item text methods retain Java null/string conversion at the boundary", () 
 
     const objectName = new TextItem({ toString: () => "object-name" }, new BudgetValue(0.1, 0.2, 0.3, new Parameters()));
     assert.equal(objectName.toStringExternal(), "$0.10;0.20;0.30$ object-name");
+});
+
+test("Item keeps Java runtime types behind project boundaries", () => {
+    const source = readFileSync("src/entity/Item.ts", "utf8");
+    assert.doesNotMatch(source, /from ["']jree["']/);
+    assert.doesNotMatch(source, /java\.lang\.(Iterable|CharSequence|NullPointerException)/);
+    assert.match(source, /JavaCharSequenceInput/);
+    assert.match(source, /JavaNullPointerException/);
 });

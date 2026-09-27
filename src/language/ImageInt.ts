@@ -1,5 +1,5 @@
 //! Java source: opennars/language/ImageInt.java
-import { java, S } from "jree";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Image } from "./Image.ts";
 import { Term } from "./Term.ts";
@@ -61,8 +61,8 @@ export class ImageInt extends Image {
                     return null;
                 }
                 if (replaced.length !== this.term.length)
-                    throw new java.lang.IllegalStateException("Replaced terms not the same amount as existing terms (" + this.term.length
-                        + "): " + java.util.Arrays.toString(replaced));
+                    throw new JavaIllegalStateException("Replaced terms not the same amount as existing terms (" + this.term.length
+                        + "): [" + replaced.map(String).join(", ") + "]");
 
                 return new ImageInt(replaced, this.relationIndex);
 
@@ -71,7 +71,7 @@ export class ImageInt extends Image {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -183,7 +183,7 @@ export class ImageInt extends Image {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }

@@ -1,5 +1,4 @@
 //! Java source: opennars/inference/StructuralRules.java
-import { java } from "jree";
 import type { short, int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -652,11 +651,11 @@ export class StructuralRules {
                 // normal one already is flattened
                 conjComponent.getTemporalOrder() === TemporalRules.ORDER_FORWARD &&
                 conjCompound.getIsSpatial() === conjComponent.getIsSpatial()) { // because also when both are tmporal
-                let newTerm: Term[] = new Array<Term>(conjCompound.size() - 1 + conjComponent.size());
-                java.lang.System.arraycopy(conjCompound.term, 0, newTerm, 0, index);
-                java.lang.System.arraycopy(conjComponent.term, 0, newTerm, index + 0, conjComponent.size());
-                java.lang.System.arraycopy(conjCompound.term, index + conjComponent.size() - conjComponent.size() + 1, newTerm,
-                    index + conjComponent.size(), newTerm.length - (index + conjComponent.size()));
+                let newTerm: Term[] = [
+                    ...conjCompound.term.slice(0, index),
+                    ...conjComponent.term,
+                    ...conjCompound.term.slice(index + 1),
+                ];
                 let cont: Conjunction = Conjunction.make(newTerm, conjCompound.getTemporalOrder(),
                     conjCompound.getIsSpatial()) as Conjunction;
                 let truth: TruthValue = nal.getCurrentTask().sentence.getTruth().clone();
@@ -681,9 +680,10 @@ export class StructuralRules {
         index: int, nal: DerivationContext): void {
         if (compound instanceof Conjunction) {
             let conjCompound: Conjunction = compound as Conjunction;
-            let newTerm: Term[] = new Array<Term>(conjCompound.size() - 1);
-            java.lang.System.arraycopy(conjCompound.term, 0, newTerm, 0, index);
-            java.lang.System.arraycopy(conjCompound.term, index + 1, newTerm, index, newTerm.length - index);
+            let newTerm: Term[] = [
+                ...conjCompound.term.slice(0, index),
+                ...conjCompound.term.slice(index + 1),
+            ];
             let cont: Term = Conjunction.make(newTerm, conjCompound.getTemporalOrder(), conjCompound.getIsSpatial());
             let curS: Sentence = nal.getCurrentTask().sentence;
             let truth: TruthValue = null as unknown as TruthValue;
@@ -724,11 +724,15 @@ export class StructuralRules {
             if (conjCompound.term.length < newTermLeft.length) {
                 return;
             }
-            java.lang.System.arraycopy(conjCompound.term, 0, newTermLeft, 0, newTermLeft.length);
+            for (let position: int = 0; position < newTermLeft.length; position++) {
+                newTermLeft[position] = conjCompound.term[position];
+            }
             if (conjCompound.term.length - index < newTermRight.length) {
                 return;
             }
-            java.lang.System.arraycopy(conjCompound.term, 0 + index, newTermRight, 0, newTermRight.length);
+            for (let position: int = 0; position < newTermRight.length; position++) {
+                newTermRight[position] = conjCompound.term[index + position];
+            }
             let curS: Sentence = nal.getCurrentTask().sentence;
             let truth: TruthValue = null as unknown as TruthValue;
             if (curS.isJudgment()) {

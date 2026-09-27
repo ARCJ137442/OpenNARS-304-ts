@@ -1,5 +1,5 @@
 //! Java source: opennars/control/TemporalInferenceControl.java
-import { java } from "jree";
+import { JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Stamp } from "../entity/Stamp.ts";
@@ -138,7 +138,7 @@ export class TemporalInferenceControl {
                         let x: long = Toperation.sentence.getOccurrenceTime();
                         let y: long = takeout.sentence.getOccurrenceTime();
                         if (y > x) { // something wrong here?
-                            java.lang.System.out.println("analyze case in TemporalInferenceControl!");
+                            JavaSystemLoggerCompat.getLogger("TemporalInferenceControl").log("INFO", "analyze case in TemporalInferenceControl!", null);
                             continue;
                         }
                         // Java original: List<Task>; TemporalRules now exposes the
@@ -216,7 +216,7 @@ export class TemporalInferenceControl {
             let event_quality: float = BudgetFunctions.truthToQuality(newEvent.sentence.getTruth());
             let event_priority: float = event_quality;
             if (c !== null) {
-                event_priority = java.lang.Math.max(event_quality, c.getPriority());
+                event_priority = Math.max(event_quality, c.getPriority());
             }
             let t2: Task = new Task(newEvent.sentence,
                 new BudgetValue(event_priority, Float32Math.divide(1.0, newEvent.sentence.term.getComplexity()) as float,

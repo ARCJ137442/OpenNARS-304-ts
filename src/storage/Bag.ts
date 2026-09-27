@@ -1,12 +1,12 @@
 //! Java source: opennars/storage/Bag.java
-import { java, S } from "jree";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "../entity/Item.ts";
 import { Distributor } from "./Distributor.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-import { javaValuesEqual } from "../runtime/jree-compat.ts";
+import { javaValuesEqual, toJavaString, type JavaString } from "../runtime/jree-compat.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { JavaIterator } from "../runtime/JavaIterator.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
@@ -61,7 +61,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
     public constructor(...args: unknown[]) {
         super();
         if (args.length !== 3) {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
         const [levels, capacity, third] = args as [int, int, Parameters | int];
         const thresholdLevel = typeof third === "number"
@@ -234,7 +234,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
     public pickOut(val: Type): Type;
     public pickOut(...args: unknown[]): Type {
         if (args.length !== 1) {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
 
         // Java overloads pickOut(K) and pickOut(Type) have the same arity.
@@ -288,10 +288,6 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
             for (const existingKey of rebuilt) {
                 if (javaValuesEqual(existingKey, key)) return existingKey;
             }
-            return null as unknown as K;
-        }
-
-        if (hashCode !== null) {
             return null as unknown as K;
         }
 
@@ -441,7 +437,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
         // 80.000001... in JavaScript and move to the next level.
         // Java multiplies two float operands here before Math.ceil.
         let fl: float = Float32Math.multiply(item.getPriority(), this.TOTAL_LEVEL) as float;
-        let level: int = java.lang.Math.ceil(fl) as int - 1;
+        let level: int = Math.ceil(fl) as int - 1;
         return (level < 0) ? 0 : level; // cannot be -1
     }
 
@@ -497,45 +493,40 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
     /**
      * Collect Bag content into a String for display
      */
-    public toString(): java.lang.String {
-        let buf: java.lang.StringBuffer = new java.lang.StringBuffer(" ");
+    public toString(): JavaString {
+        const parts: string[] = [" "];
         for (let i: int = this.TOTAL_LEVEL; i >= 0; i--) {
             if (!this.emptyLevel(i - 1)) {
-                buf = buf.append("\n --- Level " + i + ":\n ");
-                for (let j: int = 0; j < this.itemTable[i - 1].length; j++) {
-                    buf = buf.append(this.itemTable[i - 1][j].toString() + "\n ");
-                }
+                parts.push("\n --- Level ", String(i), ":\n ");
+                for (const item of this.itemTable[i - 1]) parts.push(String(item), "\n ");
             }
         }
-        return buf.toString();
+        return toJavaString(parts.join(""));
     }
 
     /** TODO bad paste from preceding */
-    public toStringLong(): java.lang.String {
-        let buf: java.lang.StringBuffer = new java.lang.StringBuffer(" BAG " + this.getClass().getSimpleName());
-        buf.append(" ").append(this.showSizes());
+    public toStringLong(): JavaString {
+        const parts: string[] = [" BAG ", this.getClass().getSimpleName(), " ", String(this.showSizes())];
         for (let i: int = this.TOTAL_LEVEL; i >= 0; i--) {
             if (!this.emptyLevel(i - 1)) {
-                buf = buf.append("\n --- LEVEL " + i + ":\n ");
-                for (let j: int = 0; j < this.itemTable[i - 1].length; j++) {
-                    buf = buf.append(this.itemTable[i - 1][j].toStringLong() + "\n ");
-                }
+                parts.push("\n --- LEVEL ", String(i), ":\n ");
+                for (const item of this.itemTable[i - 1]) parts.push(item.toStringLong(), "\n ");
             }
         }
-        buf.append(">>>> end of Bag").append(this.getClass().getSimpleName());
-        return buf.toString();
+        parts.push(">>>> end of Bag", this.getClass().getSimpleName());
+        return toJavaString(parts.join(""));
     }
 
-    protected showSizes(): java.lang.String {
-        let buf: java.lang.StringBuilder = new java.lang.StringBuilder(" ");
+    protected showSizes(): JavaString {
+        const sizes: string[] = [" "];
         let levels: int = 0;
-        for (let items of this.itemTable) {
-            if ((items !== null) && items.length > 0) {
+        for (const items of this.itemTable) {
+            if (items.length > 0) {
                 levels++;
-                buf.append(items.length).append(" ");
+                sizes.push(String(items.length), " ");
             }
         }
-        return S`Levels: ${levels}, sizes: ${buf}`;
+        return toJavaString(`Levels: ${levels}, sizes: ${sizes.join("")}`);
     }
 
     public size(): int {

@@ -1,5 +1,4 @@
 //! Java source: opennars/control/concept/ProcessGoal.java
-import { java } from "jree";
 import type { double, float, long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -26,7 +25,8 @@ import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { JavaIllegalAccessError, javaStringValue } from "../../runtime/jree-compat.ts";
+import { JavaIllegalAccessError, JavaSystemLoggerCompat, javaStringValue } from "../../runtime/jree-compat.ts";
+import { JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
 import { NativeList } from "../../runtime/NativeList.ts";
@@ -45,8 +45,12 @@ const trySolution = LocalRules.trySolution;
  * Java 的 LinkedHashMap(Map) 复制构造仍按 entrySet() 复制；NativeMap 输入则
  * 按自身的有序迭代器复制，不能把 Java Map 当成 JavaScript 的键值对象。
  */
+type JavaMapInput<K, V> = {
+    entrySet(): Iterable<{ getKey(): K; getValue(): V }>;
+};
+
 const nativeJavaMap = <K, V>(
-    source?: MapContract<K, V> | java.util.Map<K, V>,
+    source?: MapContract<K, V> | JavaMapInput<K, V>,
 ): MapContract<K, V> => {
     const map = new NativeMap<K, V>();
     if (source !== undefined && source !== null) {
@@ -55,7 +59,7 @@ const nativeJavaMap = <K, V>(
                 map.put(key, value);
             }
         } else {
-            for (const entry of (source as java.util.Map<K, V>).entrySet()) {
+            for (const entry of (source as JavaMapInput<K, V>).entrySet()) {
                 map.put(entry.getKey(), entry.getValue());
             }
         }
@@ -359,7 +363,7 @@ export class ProcessGoal {
                 const bestOp = bestOpWithMeta.bestOp;
                 const executablePrecondition = bestOpWithMeta.executable_precondition;
                 if (bestOp === null || executablePrecondition === null) {
-                    throw new java.lang.IllegalStateException("Executable precondition metadata is incomplete");
+                    throw new JavaIllegalStateException("Executable precondition metadata is incomplete");
                 }
                 let op: Concept = nal.memory.concept(bestOp);
                 if (op !== null && executablePrecondition.sentence.getTruth()
@@ -368,16 +372,16 @@ export class ProcessGoal {
                     op.allowBabbling = false;
                     /* } */
                 }
-                java.lang.System.out.println(`Executed based on: ${javaStringValue(executablePrecondition)}`);
+                JavaSystemLoggerCompat.getLogger("ProcessGoal").log("INFO", `Executed based on: ${javaStringValue(executablePrecondition)}`, null);
                 const anticipations = anticipationsToMake.get(bestOp);
                 if (anticipations === null) {
-                    throw new java.lang.IllegalStateException("Executable precondition anticipation list is missing");
+                    throw new JavaIllegalStateException("Executable precondition anticipation list is missing");
                 }
                 for (let precon of anticipations) {
                     const preconditionTask = precon.executable_precondition;
                     const substitution = precon.substitution;
                     if (preconditionTask === null || substitution === null) {
-                        throw new java.lang.IllegalStateException("Executable precondition result is incomplete");
+                        throw new JavaIllegalStateException("Executable precondition result is incomplete");
                     }
                     let distance: float = Float32Math.subtract(precon.timeOffset, Number(nal.time.time())) as float;
                     let urgency: float = Float32Math.add(
@@ -413,7 +417,7 @@ export class ProcessGoal {
             let precTerm: CompoundTerm = ((t.getTerm() as Implication).getSubject() as Conjunction);
             let prec: Term[] = precTerm.term;
             let newprec: Term[] = new Array<Term>(prec.length - 3);
-            java.lang.System.arraycopy(prec, 0, newprec, 0, prec.length - 3);
+            newprec.splice(0, prec.length - 3, ...prec.slice(0, prec.length - 3));
             let timeOffset: float = Float32Math.from(Number((prec[prec.length - 1] as Interval).time)) as float;
             let timeWindowHalf: float = Float32Math.multiply(
                 timeOffset,
@@ -588,7 +592,7 @@ export class ProcessGoal {
             return false;
         }
         if (Debug.DETAILED) {
-            java.lang.System.out.println(t.toStringLong());
+            JavaSystemLoggerCompat.getLogger("ProcessGoal").log("INFO", t.toStringLong(), null);
         }
         return true;
     }

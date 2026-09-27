@@ -1,11 +1,46 @@
 //! Java source: opennars/inference/TruthFunctions.java
-import { java, S } from "jree";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import type { int, float, double, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { UtilityFunctions } from "./UtilityFunctions.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { subtractRuntimeLongValues, type JavaLongInput } from "../runtime/jree-compat.ts";
+
+class EnumType {
+    public static readonly DESIREDED = new EnumType("DESIREDED", 0);
+    public static readonly DESIREIND = new EnumType("DESIREIND", 1);
+    public static readonly DESIREWEAK = new EnumType("DESIREWEAK", 2);
+    public static readonly DESIRESTRONG = new EnumType("DESIRESTRONG", 3);
+    public static readonly COMPARISON = new EnumType("COMPARISON", 4);
+    public static readonly ANALOGY = new EnumType("ANALOGY", 5);
+    public static readonly ANONYMOUSANALOGY = new EnumType("ANONYMOUSANALOGY", 6);
+    public static readonly DEDUCTION = new EnumType("DEDUCTION", 7);
+    public static readonly EXEMPLIFICATION = new EnumType("EXEMPLIFICATION", 8);
+    public static readonly ABDUCTION = new EnumType("ABDUCTION", 9);
+    public static readonly RESEMBLENCE = new EnumType("RESEMBLENCE", 10);
+    public static readonly REDUCECONJUNCTION = new EnumType("REDUCECONJUNCTION", 11);
+    public static readonly REDUCEDISJUNCTION = new EnumType("REDUCEDISJUNCTION", 12);
+    public static readonly REDUCEDISJUNCTIONREV = new EnumType("REDUCEDISJUNCTIONREV", 13);
+    public static readonly REDUCECONJUNCTIONNEG = new EnumType("REDUCECONJUNCTIONNEG", 14);
+
+    private constructor(
+        private readonly enumName: string,
+        private readonly enumOrdinal: int,
+    ) {}
+
+    public name(): string {
+        return this.enumName;
+    }
+
+    public ordinal(): int {
+        return this.enumOrdinal;
+    }
+
+    public toString(): string {
+        return this.enumName;
+    }
+}
 
 
 
@@ -17,38 +52,7 @@ import { subtractRuntimeLongValues, type JavaLongInput } from "../runtime/jree-c
  * @author Robert Wünsche
  */
 export class TruthFunctions extends UtilityFunctions {
-    public static EnumType = class EnumType extends java.lang.Enum<EnumType> {
-        public static readonly DESIREDED: EnumType = new class extends EnumType {
-        }(S`DESIREDED`, 0);
-        public static readonly DESIREIND: EnumType = new class extends EnumType {
-        }(S`DESIREIND`, 1);
-        public static readonly DESIREWEAK: EnumType = new class extends EnumType {
-        }(S`DESIREWEAK`, 2);
-        public static readonly DESIRESTRONG: EnumType = new class extends EnumType {
-        }(S`DESIRESTRONG`, 3);
-        public static readonly COMPARISON: EnumType = new class extends EnumType {
-        }(S`COMPARISON`, 4);
-        public static readonly ANALOGY: EnumType = new class extends EnumType {
-        }(S`ANALOGY`, 5);
-        public static readonly ANONYMOUSANALOGY: EnumType = new class extends EnumType {
-        }(S`ANONYMOUSANALOGY`, 6);
-        public static readonly DEDUCTION: EnumType = new class extends EnumType {
-        }(S`DEDUCTION`, 7);
-        public static readonly EXEMPLIFICATION: EnumType = new class extends EnumType {
-        }(S`EXEMPLIFICATION`, 8);
-        public static readonly ABDUCTION: EnumType = new class extends EnumType {
-        }(S`ABDUCTION`, 9);
-        public static readonly RESEMBLENCE: EnumType = new class extends EnumType {
-        }(S`RESEMBLENCE`, 10);
-        public static readonly REDUCECONJUNCTION: EnumType = new class extends EnumType {
-        }(S`REDUCECONJUNCTION`, 11);
-        public static readonly REDUCEDISJUNCTION: EnumType = new class extends EnumType {
-        }(S`REDUCEDISJUNCTION`, 12);
-        public static readonly REDUCEDISJUNCTIONREV: EnumType = new class extends EnumType {
-        }(S`REDUCEDISJUNCTIONREV`, 13);
-        public static readonly REDUCECONJUNCTIONNEG: EnumType = new class extends EnumType {
-        }(S`REDUCECONJUNCTIONNEG`, 14);
-    };
+    public static EnumType = EnumType;
 
 
     /**
@@ -93,7 +97,7 @@ export class TruthFunctions extends UtilityFunctions {
             case REDUCECONJUNCTIONNEG:
                 return TruthFunctions.reduceConjunctionNeg(a, b, narParameters);
             default:
-                throw new java.lang.IllegalArgumentException("Encountered unimplemented case!"); // internal error
+                throw new JavaIllegalArgumentException("Encountered unimplemented case!"); // internal error
         }
     }
 
@@ -217,7 +221,7 @@ export class TruthFunctions extends UtilityFunctions {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -275,7 +279,7 @@ export class TruthFunctions extends UtilityFunctions {
                 let c: double = and(f1, c1, reliance);
                 return TruthValue.fromFrequencyConfidence(f1, c, narParameters, true);
         }
-        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        throw new JavaIllegalArgumentException("Invalid number of arguments");
     }
 
 
@@ -359,7 +363,7 @@ export class TruthFunctions extends UtilityFunctions {
                 let c: double = w2c(w, narParameters);
                 return TruthValue.fromFrequencyConfidence(f1, c, narParameters, true);
         }
-        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        throw new JavaIllegalArgumentException("Invalid number of arguments");
     }
 
 
@@ -636,7 +640,7 @@ const {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace TruthFunctions {
-    export type EnumType = InstanceType<typeof TruthFunctions.EnumType>;
+    export type EnumType = typeof TruthFunctions.EnumType.DEDUCTION;
     export type EternalizedTruthValue = InstanceType<typeof TruthFunctions.EternalizedTruthValue>;
 }
 

@@ -1,5 +1,4 @@
 //! Java source: opennars/io/ConfigReader.java
-import { java } from "jree";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -9,6 +8,7 @@ import type { Plugin } from "../plugin/Plugin.ts";
 import { parseConfigXml } from "./ConfigParser.ts";
 import { PluginRegistry } from "./ConfigPluginRegistry.ts";
 import type { RuntimeCapabilities } from "../platform/RuntimeCapabilities.ts";
+import type { JavaStringInput } from "../runtime/jree-compat.ts";
 
 export { parseConfigXml } from "./ConfigParser.ts";
 
@@ -73,7 +73,7 @@ export class ConfigReader {
         return ConfigReader.loadNodeConfigText(text, reasoner, parameters, capabilities);
     }
 
-    public static loadParamsFromFileAndReturnPlugins(filepath: java.lang.String, reasoner: Reasoner,
+    public static loadParamsFromFileAndReturnPlugins(filepath: JavaStringInput, reasoner: Reasoner,
         parameters: Parameters): Plugin[] {
 
         if (typeof process !== "undefined" && process.versions?.node !== undefined) {

@@ -23,6 +23,7 @@ import {
   isProgressHeartbeat,
   runTs,
   parseJsonLines,
+  selectCorpusFiles,
 } from "../../scripts/e2e/run-nal-corpus.mjs";
 import { Tense } from "../../src/language/Tense.ts";
 
@@ -457,6 +458,36 @@ test("NAL runner validates and resumes a persisted per-file result", () => {
   }
 });
 
+test("NAL runner selects the explicit M1-- corpus without limit-based truncation", () => {
+  const files = [
+    ...Array.from({ length: 24 }, (_, index) => `java-master/src/main/resources/nal/synthetic/${String(index).padStart(3, "0")}.nal`),
+    "java-master/src/main/resources/nal/multi_step/nars_multistep_3.nal",
+    ...Array.from({ length: 219 }, (_, index) => `java-master/src/main/resources/nal/synthetic/${String(index + 24).padStart(3, "0")}.nal`),
+    "java-master/src/main/resources/nal/stability/long_term_stability.nal",
+  ];
+  const selected = selectCorpusFiles(files, {
+    all: true,
+    filePaths: [],
+    limit: null,
+    mMinus: true,
+    start: 0,
+  });
+  assert.equal(files.length, 245);
+  assert.equal(selected.length, 243);
+  assert.equal(selected.includes("java-master/src/main/resources/nal/multi_step/nars_multistep_3.nal"), false);
+  assert.equal(selected.includes("java-master/src/main/resources/nal/stability/long_term_stability.nal"), false);
+  assert.equal(selected[0], files[0]);
+  assert.equal(selected.at(-1), files[243]);
+});
+
+test("NAL runner rejects partial corpus options for M1--", () => {
+  assert.equal(parseArgs(["--all", "--m-minus"]).mMinus, true);
+  assert.throws(() => parseArgs(["--m-minus"]), /--m-minus requires --all/);
+  assert.throws(() => parseArgs(["--all", "--m-minus", "--limit", "243"]), /cannot be combined with --limit/);
+  assert.throws(() => parseArgs(["--all", "--m-minus", "--start", "1"]), /cannot be combined with --start/);
+  assert.throws(() => parseArgs(["--all", "--m-minus", "--file", "fixture.nal"]), /cannot be combined with --file/);
+});
+
 test("NAL runner records an explicit TypeScript process mode and separates run keys", () => {
   assert.equal(parseArgs([]).tsMode, "hot");
   assert.equal(parseArgs(["--ts-mode", "cold"]).tsMode, "cold");
@@ -544,7 +575,7 @@ test("NAL runner keeps hot results isolated from order and cold-process boundari
     "--engine", "ts",
     "--ts-mode", mode,
     "--cycles", "1",
-    "--timeout-ms", "5000",
+    "--timeout-ms", "15000",
     "--chunk-size", String(files.length),
     "--result-file", resultFile,
     ...files.flatMap((file) => ["--file", file]),

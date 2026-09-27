@@ -5,7 +5,8 @@ import { Texts } from "../io/Texts.ts";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { javaIdentityHashCode, javaStringHashCode, javaStringValue, type JavaChar } from "../runtime/jree-compat.ts";
+import { javaIdentityHashCode, javaStringHashCode, javaStringValue, toJavaString, type JavaChar } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
 
@@ -47,7 +48,7 @@ export class Variable extends Term {
         switch (args.length) {
             case 1: {
                 const [rawName] = args as [java.lang.CharSequence | string];
-                const name = typeof rawName === "string" ? new java.lang.String(rawName) : rawName;
+                const name = typeof rawName === "string" ? toJavaString(rawName) : rawName;
 
 
                 // Java constructor delegation (`this(name, null)`) is not legal
@@ -61,7 +62,7 @@ export class Variable extends Term {
 
             case 2: {
                 const [rawName, scope] = args as [java.lang.CharSequence | string, Term];
-                const name = typeof rawName === "string" ? new java.lang.String(rawName) : rawName;
+                const name = typeof rawName === "string" ? toJavaString(rawName) : rawName;
 
 
                 this.setScope(scope, name);
@@ -71,7 +72,7 @@ export class Variable extends Term {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -84,7 +85,7 @@ export class Variable extends Term {
         this.scope = scope !== null ? scope : this;
         this.hash = 0; // calculate lazily
         if (!Variable.validVariableType(this.type))
-            throw new java.lang.IllegalStateException("Invalid variable type: " + n);
+            throw new JavaIllegalStateException("Invalid variable type: " + n);
         return this;
     }
 
@@ -326,7 +327,7 @@ export class Variable extends Term {
                 cache = Variable.vn3;
                 break;
             default:
-                throw new java.lang.IllegalStateException("Invalid variable type");
+                throw new JavaIllegalStateException("Invalid variable type");
         }
 
         let c: java.lang.CharSequence = cache[index];
@@ -345,7 +346,7 @@ export class Variable extends Term {
             name += (index % 16).toString(16);
             index = Math.trunc(index / 16);
         } while (index !== 0);
-        return new java.lang.String(name);
+        return toJavaString(name);
     }
 
     // Java source type: Map<Term, Integer>; variables intentionally do not

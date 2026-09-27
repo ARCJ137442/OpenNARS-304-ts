@@ -930,3 +930,116 @@ OpenNARS-304-ts 外部发布主线
 ├─ O 正式性能门                                   [----------] 待开始
 └─ R RC、bundle、发布与用户授权 tag               [----------] 待开始
 ```
+
+
+### 2026-09-26：J4 异常生产者兼容桥切片
+
+对照 canonical Java 的异常继承和消息观察合同，本批只处理 J4 operator/plugin 文件中仍从
+`jree-compat.ts` 引入的异常类：`FunctionOperator`、`NullOperator`、`Operation`、`Operator`、
+`Anticipate`、`Add`、`Count`、`Reflect` 与 `Counting`。异常类改为直接来自项目内
+`src/runtime/JavaExceptions.ts`；字符串、long、类身份、事件派发、集合和推理算法保持原样。
+
+- 计划器归类为 J4 owner、T1 risk-slice；不要求 live Java、M1- 或完整 M1。
+- 定向 J4 测试 `39/39` 通过；完整串行 M2 为 `460` 项，`455` 通过、`0` 失败、`5` 跳过。
+- 非增量 typecheck、build、dist API、迁移扫描、jree 审计和 platform 审计均通过。
+- 冻结 Java 标杆 TS-only 哨兵 `4/4` functional/parity；0 exception、0 marker missing、0 timeout、
+  0 process limit、0 Java/TS diff。证据：`reports/evidence/j4-exception-boundary-20260926-sentinel.jsonl`；
+  SHA-256：`B0628A57A327CBAFEF41CF96C18DCF59408D7AEB9ABAB0122CA5EF635572F01A`。
+- 审计中生产直接 jree 导入文件仍为 `15`，因为本批只迁移异常类导入，兼容桥仍承担字符串、
+  long、类身份和观察责任；因此不能宣称 jree 已移除、J4 已收口或 023 完成。
+
+下一步继续按共同合同拆分 J4/J1 兼容桥责任；只有 J4 出口条件全部满足后，才允许唯一一次
+`--close-cluster` M1-，不能用本批定向哨兵或 M2 通过替代责任簇收口。
+
+### 2026-09-26：插件 `PluginName` 项目边界前置切片
+
+在崩溃恢复后保留并验证未提交的 J4 小切片：`Plugin.name()` 不再从 `jree-compat.ts`
+泄漏 `JavaCharSequenceInput`，而改用项目自有的 `PluginName` 结构类型。该类型保留
+Java `CharSequence` 所需的 `charAt`、`length`、`subSequence` 和 `toString` 形状，
+同时允许原生 `string`；没有修改插件执行算法、字符串实现或事件派发。
+
+- 定向插件边界测试 `2/2` 通过；非增量 `npm run typecheck` 通过。
+- 当前仍属于 J4 T1 局部切片；不能据此宣称 J4、023 或 jree 去除完成，也不触发 M1-。
+- 本轮同时复验多检查点脚手架：360 周期、`[50, 200, 350]` 检查点和独立恢复均一致；恢复模式仍诚实标为 `replay-verified`，不是 NAR 对象快照。
+- 下一阶段在切片提交后，使用冻结 Java 基线和唯一逐文件 JSONL 证据前缀启动完整 M1 245+1；中断后只追加相同参数的 `--resume`。
+
+### 2026-09-27：五责任簇唯一归属与恢复批次计划
+
+本清单依据 `scripts/checking/validation-clusters.mjs` 和
+`scripts/converting/audit-jree-dependencies.mjs`，审计基线为 `35cab26`。生产源码中
+直接导入 jree 的文件共 `14` 个、导入命中 `14` 次；按唯一 owner 分布为
+J1/J2/J3/J4/J5=`1/6/2/0/5`。本扫描另记录 `javaStringFiles=16`、
+`javaUtilFiles=7`、`javaLangFiles=12`、`highRiskItems=41`、
+`semanticReviewItems=35`、`candidateNativeItems=1`。静态命中是审查清单，不等于
+语义风险已经解决或簇已完成。
+
+- 原始机器清单：`reports/evidence/023-owner-audit-jree-20260927.json`。
+- 恢复现场重分类：`reports/evidence/023-resume-reclass-20260927.json`；基线
+  `d1727bc..35cab26` 只有文档/证据变化，计划有效、`T0`、不要求 NAL 或 M1--。
+- 冻结 Java baseline SHA-256：
+  `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+
+#### J1：Runtime Compat
+
+- 剩余审计路径：`src/runtime/jree-compat.ts`、`src/types.ts`、
+  `src/runtime/NativeDeque.ts`、`NativeList.ts`、`NativeMap.ts`、`NativeSet.ts`。
+- Java 合同：Java 字符串/CharSequence 与 UTF-16 转换、异常族和旧异常观察、类 token/
+  `JavaObject`、随机数序列、`LinkedHashSet` 判等与顺序、迭代器删除/遍历，以及 primitive
+  aliases 的 binary32、int32 和 long 精度边界。
+- 直接测试：`runtime-compat.test.ts`、`random-compat.test.ts`、
+  `native-interface-boundaries.test.ts`。
+- 哨兵 NAL：`nal1.0.nal`、`nal6.17.nal`、`toothbrush.nal`。
+- 出口：项目内合同有正常/异常回归，运行时桥不再直接依赖 jree，所有保留语义均有调用方
+  与证据；三个哨兵通过后，簇尾只执行一次 M1-- `243` 项矩阵。
+- 可回退切片：字符串/异常边界、类身份边界、随机与集合/迭代边界、primitive 数值边界。
+
+#### J2：语言与解析
+
+- 剩余审计路径：`src/io/Narsese.ts`、`src/io/Symbols.ts`，以及
+  `src/language/CompoundTerm.ts`、`Conjunction.ts`、`Image.ts`、`Inheritance.ts`、
+  `Term.ts`、`Terms.ts`、`Tense.ts`、`Variable.ts`、`Variables.ts`。
+- 直接 jree 导入：`Narsese.ts`、`CompoundTerm.ts`、`Term.ts`、`Terms.ts`、
+  `Variable.ts`、`Variables.ts`。
+- Java 合同：原生字符串与 UTF-16 code unit、字符串 hash/compare、解析与 Narsese 输出、
+  `CharSequence`、类 token、随机调用次序、集合/迭代顺序及静态初始化顺序。
+- 直接测试：`language-runtime.test.ts`、`narsese-boundary.test.ts`、
+  `narsese-temporal.test.ts`。
+- 哨兵 NAL：`nal4.7.nal`、`nal6.17.nal`、`nal8.add.nal`、`nars_transitivity.nal`。
+- 出口：六个直接导入全部移除或归并到有证明的项目边界，字符串/解析/比较合同稳定，四个
+  哨兵通过后只执行一次 M1-- `243` 项矩阵。
+- 可回退切片：Narsese 字符串转换、CompoundTerm 集合/迭代/随机、Term 与 Variables 的
+  字符串和类身份、Symbols/Tense 初始化边界。
+
+#### J3：推理核心
+
+- 剩余审计路径：`src/control/DerivationContext.ts`、`GeneralInferenceControl.ts`、
+  `TemporalInferenceControl.ts`、`src/control/concept/ProcessAnticipation.ts`、
+  `ProcessGoal.ts`、`ProcessJudgment.ts`、`ProcessQuestion.ts`；`src/entity/Concept.ts`、
+  `Sentence.ts`、`Stamp.ts`、`TaskLink.ts`；`src/inference/CompositionalRules.ts`、
+  `LocalRules.ts`、`RuleTables.ts`、`StructuralRules.ts`、`SyllogisticRules.ts`；
+  `src/storage/Bag.ts`、`Memory.ts`。
+- 直接 jree 导入：`Sentence.ts`、`Memory.ts`。
+- Java 合同：领域对象 equals/hashCode 与 Map/Set 键语义、插入/迭代顺序、随机调用次数、
+  float32 收窄、TaskLink/TermLink 类型与顺序、Bag/Memory 状态和事件派发。
+- 直接测试：`bag.test.ts`、`tasklink-key.test.ts`、`compositional-rules.test.ts`。
+- 哨兵 NAL：`nal6.17.nal`、`nal4.recursion.nal`、`nars_transitivity.nal`、
+  `toothbrush2.nal`。
+- 出口：Sentence/Memory 运行时边界与剩余类身份、迭代、字符串合同均有定向回归；推理
+  状态、次序和数值哨兵通过后只执行一次 M1-- `243` 项矩阵。
+- 可回退切片：Sentence 字符串边界、Memory 随机/Map 边界、Bag 与链接迭代/类身份、推理
+  规则类 token。
+
+#### J4：Operator 与 Plugin
+
+- 剩余审计路径：`src/operator/NullOperator.ts`、`Operator.ts`、
+  `src/operator/mental/Anticipate.ts`、`src/plugin/mental/Abbreviation.ts`、
+  `ComplexEmotions.ts`、`Counting.ts`、`InternalExperience.ts`、
+  `src/plugin/perception/SensoryChannel.ts`、`VisionChannel.ts`。
+- 直接 jree 导入：`0`；剩余静态观察主要是九处类身份/类 token 和
+  `Anticipate` 的迭代边界。
+- Java 合同：Operator 名称/类身份、插件注册与构造参数次序、反馈序列、异常和字符串边界、
+  Anticipate 集合迭代顺序。
+- 直接测试：`operator-boundary.test.ts`、`plugin-boundary.test.ts`、
+  `vision-channel.test.ts`。
+- 哨兵 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
+  `simpleOperationTest.nal`。

@@ -1,11 +1,11 @@
 //! Java source: opennars/language/DifferenceInt.java
-import { java, S } from "jree";
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import { Terms } from "./Terms.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { SetInt } from "./SetInt.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -36,11 +36,11 @@ export class DifferenceInt extends CompoundTerm {
 
     public static ensureValidDifferenceArguments(arg: Term[]): void {
         if (arg.length !== 2)
-            throw new java.lang.IllegalStateException("Requires 2 components");
+            throw new JavaIllegalStateException("Requires 2 components");
 
         if (Debug.DETAILED) {
             if (arg[0].equals(arg[1]))
-                throw new java.lang.IllegalStateException("Equal arguments invalid");
+                throw new JavaIllegalStateException("Equal arguments invalid");
         }
     }
 
@@ -76,7 +76,7 @@ export class DifferenceInt extends CompoundTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -143,7 +143,7 @@ export class DifferenceInt extends CompoundTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }

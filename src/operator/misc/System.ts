@@ -1,8 +1,8 @@
 //! Java source: opennars/operator/misc/System.java
-import { java } from "jree";
 import { FunctionOperator } from "../FunctionOperator.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import { Term } from "../../language/Term.ts";
+import { toJavaString } from "../../runtime/jree-compat.ts";
 import { MissingRuntimeCapabilityError, type RuntimeCapabilities } from "../../platform/RuntimeCapabilities.ts";
 
 
@@ -14,7 +14,7 @@ export class System extends FunctionOperator {
     private readonly executeSystemCommand: RuntimeCapabilities["executeSystemCommand"];
 
     public constructor(capabilities?: RuntimeCapabilities) {
-        super(new java.lang.String("^system"));
+        super("^system");
         this.executeSystemCommand = capabilities?.executeSystemCommand;
     }
 
@@ -32,11 +32,11 @@ export class System extends FunctionOperator {
         } catch {
             // Java catches Exception here and returns an empty Term.
         }
-        return new Term(new java.lang.String(ret));
+        return new Term(toJavaString(ret));
     }
 
     protected getRange(): Term {
-        return Term.get(new java.lang.String("system_called"));
+        return Term.get(toJavaString("system_called"));
     }
 
 }

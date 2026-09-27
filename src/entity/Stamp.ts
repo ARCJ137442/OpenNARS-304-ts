@@ -1,5 +1,4 @@
 //! Java source: opennars/entity/Stamp.java
-import { java, S } from "jree";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Tense } from "../language/Tense.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -11,9 +10,12 @@ import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import {
     addRuntimeLong,
     subtractRuntimeLong,
+    JavaIllegalArgumentException,
+    JavaIllegalStateException,
     toJavaString,
     toRuntimeLong,
     type JavaLongInput,
+    type JavaString,
 } from "../runtime/jree-compat.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Memory } from "../storage/Memory.ts";
@@ -56,7 +58,7 @@ export class Stamp extends RuntimeObject {
      * default for atemporal events means "always" in Judgment/Question, but
      * "current" in Goal/Quest
      */
-    public static readonly ETERNAL: long = runtimeLong(java.lang.Integer.MIN_VALUE);
+    public static readonly ETERNAL: long = runtimeLong(-2147483648);
 
     /**
      * caches evidentialBase as a set for comparisons and hashcode, stores the
@@ -73,7 +75,7 @@ export class Stamp extends RuntimeObject {
     /** caches */
     // Keep the cache separate from name(); otherwise the Java-to-TypeScript
     // translation creates an instance field that shadows the method.
-    protected nameCache: java.lang.String | null = null;
+    protected nameCache: JavaString | null = null;
 
     /**
      * derivation chain containing the used premises and conclusions which made
@@ -236,7 +238,7 @@ export class Stamp extends RuntimeObject {
             return;
         }
 
-        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        throw new JavaIllegalArgumentException("Invalid number of arguments");
     }
 
     private initializeInputStamp(time: long, tense: Tense, memory: Memory): void {
@@ -288,7 +290,7 @@ export class Stamp extends RuntimeObject {
 
         if (Debug.DETAILED) {
             if (eternalOccurrence && this.tense !== Tense.Eternal) {
-                throw new java.lang.IllegalStateException(
+                throw new JavaIllegalStateException(
                     "Stamp has inconsistent tense and eternal ocurrenceTime: tense=" + this.tense);
             }
         }
@@ -367,16 +369,32 @@ export class Stamp extends RuntimeObject {
      *
      * @return The NavigableSet representation of the evidential base
      */
+    private static hashCode(values: Stamp.BaseEntry[]): int {
+        let hash = 1;
+        for (const value of values) {
+            hash = (Math.imul(31, hash) + value.hashCode()) | 0;
+        }
+        return hash;
+    }
+
+    private static arraysEqual(left: Stamp.BaseEntry[], right: Stamp.BaseEntry[]): boolean {
+        if (left.length !== right.length) return false;
+        for (let index = 0; index < left.length; index++) {
+            if (!left[index].equals(right[index])) return false;
+        }
+        return true;
+    }
+
     private toSet(): Stamp.BaseEntry[] {
         if (this.evidentialSet === null) {
             this.evidentialSet = Stamp.toSetArray(this.evidentialBase);
-            this.evidentialHashValue = java.util.Arrays.hashCode(this.evidentialSet);
+            this.evidentialHashValue = Stamp.hashCode(this.evidentialSet);
         }
 
         return this.evidentialSet;
     }
 
-    public override  equals(that: java.lang.Object): boolean;
+    public override  equals(that: unknown): boolean;
 
     /**
      * Check if two stamps contains the same types of content
@@ -389,10 +407,10 @@ export class Stamp extends RuntimeObject {
     public override equals(...args: unknown[]): boolean {
         switch (args.length) {
             case 1: {
-                const [that] = args as [java.lang.Object];
+                const [that] = args as [unknown];
 
 
-                throw new java.lang.IllegalStateException("Use other equals() method");
+                throw new JavaIllegalStateException("Use other equals() method");
 
 
                 break;
@@ -414,7 +432,7 @@ export class Stamp extends RuntimeObject {
                 if (evidentialBase) {
                     if (this.evidentialHash() !== s.evidentialHash())
                         return false;
-                    return java.util.Arrays.equals(this.toSet(), s.toSet());
+                    return Stamp.arraysEqual(this.toSet(), s.toSet());
                 }
 
                 return true;
@@ -424,7 +442,7 @@ export class Stamp extends RuntimeObject {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -481,22 +499,22 @@ export class Stamp extends RuntimeObject {
      *
      * @return occurrence time
      */
-    public getOccurrenceTimeString(): java.lang.String {
+    public getOccurrenceTimeString(): JavaString {
         return toJavaString(this.isEternal() ? "" : `[${String(this.occurrenceTime)}]`);
     }
 
-    public getTense(currentTime: JavaLongInput, duration: int): java.lang.String {
+    public getTense(currentTime: JavaLongInput, duration: int): JavaString {
 
         if (this.isEternal()) {
-            return S``;
+            return toJavaString("");
         }
         switch (TemporalRules.order(toRuntimeLong(currentTime), this.occurrenceTime, duration)) {
             case TemporalRules.ORDER_FORWARD:
-                return S`${Symbols.TENSE_FUTURE}`;
+                return toJavaString(String(Symbols.TENSE_FUTURE));
             case TemporalRules.ORDER_BACKWARD:
-                return S`${Symbols.TENSE_PAST}`;
+                return toJavaString(String(Symbols.TENSE_PAST));
             default:
-                return S`${Symbols.TENSE_PRESENT}`;
+                return toJavaString(String(Symbols.TENSE_PRESENT));
         }
     }
 
@@ -512,7 +530,7 @@ export class Stamp extends RuntimeObject {
         }
     }
 
-    public name(): java.lang.String {
+    public name(): JavaString {
         if (this.nameCache === null) {
             const parts: string[] = [String(Symbols.STAMP_OPENER), String(this.getCreationTime())];
             if (!this.isEternal()) {

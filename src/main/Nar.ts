@@ -1,8 +1,8 @@
 //! Java source: opennars/main/Nar.java
-import { java, S } from "jree";
+import { java } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
-import { toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
+import { toJavaString, toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { Parameters } from "./Parameters.ts";
 import { Debug } from "./Debug.ts";
 import { ConfigReader } from "../io/ConfigReader.ts";
@@ -65,7 +65,7 @@ const CyclesStart = Events.CyclesStart;
 const CyclesEnd = Events.CyclesEnd;
 const printInfo = (message: unknown): void => {
     if (typeof process === "undefined" || process.release?.name !== "node") {
-        java.lang.System.out.println(S`${String(message)}`);
+        java.lang.System.out.println(String(message));
     }
 };
 
@@ -103,17 +103,17 @@ export class Nar extends SensoryChannel implements Reasoner {
     /**
      * The information about the version of the project
      */
-    public static readonly VERSION: java.lang.String = S`v3.0.4`;
+    public static readonly VERSION: string = "v3.0.4";
 
     /**
      * Name of the reasoner of the project
      */
-    public static readonly NAME: java.lang.String = S`Open-NARS`;
+    public static readonly NAME: string = "Open-NARS";
 
     /**
      * The project web sites.
      */
-    public static readonly WEBSITE: java.lang.String = S` Open-NARS website:  http://code.google.com/p/open-org.opennars/ \n      NARS website:  http://sites.google.com/site/narswang/ \n    Github website:  http://github.com/opennars/ \n    IRC:  http://webchat.freenode.net/?channels=org.opennars \n`;
+    public static readonly WEBSITE: string = " Open-NARS website:  http://code.google.com/p/open-org.opennars/ \n      NARS website:  http://sites.google.com/site/narswang/ \n    Github website:  http://github.com/opennars/ \n    IRC:  http://webchat.freenode.net/?channels=org.opennars \n";
 
     private threads: ThreadCompat[] | null = null;
     // Java `Map<Term, SensoryChannel>` backed by `LinkedHashMap`; NativeMap
@@ -126,21 +126,24 @@ export class Nar extends SensoryChannel implements Reasoner {
         try {
             const parsedTerm = new Narsese(this).parseTerm(term);
             if (parsedTerm === null) {
-                throw new java.lang.IllegalArgumentException(S`Invalid sensory channel term`);
+                throw new java.lang.IllegalArgumentException("Invalid sensory channel term");
             }
             this.sensoryChannels.put(parsedTerm, channel);
         } catch (ex) {
             if (ex instanceof Parser.InvalidInputException) {
                 JavaSystemLoggerCompat.getLogger(Nar.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
-                throw new java.lang.IllegalStateException("Could not add sensory channel.", ex);
+                throw new java.lang.IllegalStateException(
+                    "Could not add sensory channel.",
+                    ex as unknown as java.lang.Throwable,
+                );
             } else {
                 throw ex;
             }
         }
     }
 
-    public SaveToFile(name: java.lang.String): void {
-        let outStream: java.io.FileOutputStream = new java.io.FileOutputStream(name);
+    public SaveToFile(name: JavaStringInput): void {
+        let outStream: java.io.FileOutputStream = new java.io.FileOutputStream(toJavaString(name));
         const ObjectOutputStream = (java.io as unknown as {
             ObjectOutputStream: new (stream: java.io.FileOutputStream) => ObjectOutputStreamCompat;
         }).ObjectOutputStream;
@@ -149,8 +152,8 @@ export class Nar extends SensoryChannel implements Reasoner {
         outStream.close();
     }
 
-    public static LoadFromFile(name: java.lang.String): Nar {
-        let inStream: java.io.FileInputStream = new java.io.FileInputStream(name);
+    public static LoadFromFile(name: JavaStringInput): Nar {
+        let inStream: java.io.FileInputStream = new java.io.FileInputStream(toJavaString(name));
         const ObjectInputStream = (java.io as unknown as {
             ObjectInputStream: new (stream: java.io.FileInputStream) => ObjectInputStreamCompat;
         }).ObjectInputStream;
@@ -173,7 +176,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     /**
      * The name of the reasoner
      */
-    protected name: java.lang.String | null = null;
+    protected name: string | null = null;
     /**
      * The memory of the reasoner
      */
@@ -196,7 +199,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                     this.plugin = plugin;
                     this.setEnabled(enabled);
                 } else {
-                    throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                    throw new java.lang.IllegalArgumentException("Invalid number of arguments");
                 }
             }
 
@@ -225,7 +228,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     private stopped: boolean = false;
     private threadYield: boolean = false;
 
-    public static readonly DEFAULTCONFIG_FILEPATH: java.lang.String = S`./config/defaultConfig.xml`;
+    public static readonly DEFAULTCONFIG_FILEPATH: string = "./config/defaultConfig.xml";
 
     /** Constructs the NAR with the embedded default configuration text. */
     public constructor();
@@ -254,7 +257,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         // TypeScript. Resolve all overloads before the one and only `super()`.
         let narId: long = Nar.randomId();
         let configText = DEFAULT_CONFIG_XML;
-        let configSource: java.lang.String = Nar.DEFAULTCONFIG_FILEPATH;
+        let configSource: string = Nar.DEFAULTCONFIG_FILEPATH;
         let parameterOverrides: java.util.Map<java.lang.String, java.lang.Object> | null = null;
         let capabilities: RuntimeCapabilities | undefined;
 
@@ -270,7 +273,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                 const options = value as NarOptions;
                 if (options.narId !== undefined) narId = toRuntimeLong(options.narId);
                 if (options.configText !== undefined) configText = options.configText;
-                if (options.configSource !== undefined) configSource = S`${options.configSource}`;
+                if (options.configSource !== undefined) configSource = options.configSource;
                 if (options.parameterOverrides !== undefined) parameterOverrides = options.parameterOverrides;
                 if (options.capabilities !== undefined) capabilities = options.capabilities;
             } else if (typeof value === "number" || typeof value === "bigint" || value instanceof java.lang.Number) {
@@ -280,7 +283,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             } else if (value !== null && typeof (value as java.lang.Object).toString === "function") {
                 const text = String(value);
                 if (!text.trimStart().startsWith("<")) {
-                    throw new java.lang.IllegalArgumentException(S`Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText`);
+                    throw new java.lang.IllegalArgumentException("Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText");
                 }
                 configText = text;
             } else {
@@ -293,13 +296,13 @@ export class Nar extends SensoryChannel implements Reasoner {
                     : (args[0] as java.lang.Number).longValue();
                 const text = String(args[1]);
                 if (!text.trimStart().startsWith("<")) {
-                    throw new java.lang.IllegalArgumentException(S`Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText`);
+                    throw new java.lang.IllegalArgumentException("Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText");
                 }
                 configText = text;
             } else {
                 const text = String(args[0]);
                 if (!text.trimStart().startsWith("<")) {
-                    throw new java.lang.IllegalArgumentException(S`Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText`);
+                    throw new java.lang.IllegalArgumentException("Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText");
                 }
                 configText = text;
                 parameterOverrides = args[1] as java.util.Map<java.lang.String, java.lang.Object>;
@@ -310,12 +313,12 @@ export class Nar extends SensoryChannel implements Reasoner {
                 : (args[0] as java.lang.Number).longValue();
             const text = String(args[1]);
             if (!text.trimStart().startsWith("<")) {
-                throw new java.lang.IllegalArgumentException(S`Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText`);
+                throw new java.lang.IllegalArgumentException("Nar configuration must be XML text; read files in the host adapter and pass NarOptions.configText");
             }
             configText = text;
             parameterOverrides = args[2] as java.util.Map<java.lang.String, java.lang.Object>;
         } else {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new java.lang.IllegalArgumentException("Invalid number of arguments");
         }
 
         super();
@@ -338,7 +341,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     }
 
 
-    public usedConfigFilePath: java.lang.String = S``;
+    public usedConfigFilePath: string = "";
 
     /**
      * Reset the system with an empty memory and reset clock. Called locally.
@@ -354,8 +357,8 @@ export class Nar extends SensoryChannel implements Reasoner {
      * will be set to the current memory cycle time, but may be processed by
      * memory later according to the length of the input queue.
      */
-    private addMultiLineInput(text: java.lang.String): boolean {
-        let lines: java.lang.String[] = text.split("\n");
+    private addMultiLineInput(text: string): boolean {
+        const lines = text.split("\n");
         for (let s of lines) {
             this.addInput(s);
             if (!this.running) {
@@ -365,30 +368,30 @@ export class Nar extends SensoryChannel implements Reasoner {
         return true;
     }
 
-    private addCommand(text: java.lang.String): boolean {
+    private addCommand(text: string): boolean {
         // 重置
-        if (text.startsWith(S`**`) || text.startsWith(S`*reset`)) {
+        if (text.startsWith("**") || text.startsWith("*reset")) {
             this.reset();
             return true;
         } // 决策阈值
-        else if (text.startsWith(S`*decisionthreshold=`)) { // TODO use reflection for narParameters, allow to set
+        else if (text.startsWith("*decisionthreshold=")) { // TODO use reflection for narParameters, allow to set
             // others too
             let value: JavaDoubleCompat = JavaDoubleCompat.valueOf(text.split("decisionthreshold=")[1]);
             this.narParameters.DECISION_THRESHOLD = Float32Math.from(value.floatValue()) as float;
             return true;
         } // 音量
-        else if (text.startsWith(S`*volume=`)) {
-            let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("volume=")[1]);
+        else if (text.startsWith("*volume=")) {
+            let value: java.lang.Integer = java.lang.Integer.valueOf(toJavaString(text.split("volume=")[1]));
             this.narParameters.VOLUME = value.intValue();
             return true;
         } // 线程数
-        else if (text.startsWith(S`*threads=`)) {
-            let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("threads=")[1]);
+        else if (text.startsWith("*threads=")) {
+            let value: java.lang.Integer = java.lang.Integer.valueOf(toJavaString(text.split("threads=")[1]));
             this.narParameters.THREADS_AMOUNT = value.intValue();
             return true;
         } // 保存
-        else if (text.startsWith(S`*save=`)) {
-            let filename: java.lang.String = text.split("save=")[1];
+        else if (text.startsWith("*save=")) {
+            const filename = text.split("save=")[1];
             let wasRunning: boolean = this.isRunning();
             if (wasRunning) {
                 this.stop();
@@ -400,11 +403,11 @@ export class Nar extends SensoryChannel implements Reasoner {
             return true;
         }
         // 设置运行速度（负数为关闭）
-        else if (text.startsWith(S`*speed`)) {
-            let split: java.lang.String[] = text.split("speed");
-            let stripped: java.lang.String = split.length > 1 ? split[1] : S``;
+        else if (text.startsWith("*speed")) {
+            const split = text.split("speed");
+            const stripped = split.length > 1 ? split[1] : "";
             // 若带等号⇒修改
-            if (stripped.startsWith(S`=`)) {
+            if (stripped.startsWith("=")) {
                 let value: java.lang.Long = java.lang.Long.valueOf(stripped.split("=")[1]);
                 this.minCyclePeriodMS = value.longValue();
             }
@@ -418,8 +421,8 @@ export class Nar extends SensoryChannel implements Reasoner {
             return true;
         }
         // 设置运行速度（负数为关闭）
-        else if (text.startsWith(S`*speed=`)) {
-            let value: java.lang.Integer = java.lang.Integer.valueOf(text.split("speed=")[1]);
+        else if (text.startsWith("*speed=")) {
+            let value: java.lang.Integer = java.lang.Integer.valueOf(toJavaString(text.split("speed=")[1]));
             this.minCyclePeriodMS = BigInt(value.intValue());
             return true;
         }
@@ -450,7 +453,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                 const [rawText] = args as [JavaStringInput];
                 const inputText = String(rawText).trim();
                 let narsese: Parser = new Narsese(this);
-                if (inputText.includes("\n") && this.addMultiLineInput(new java.lang.String(inputText))) {
+                if (inputText.includes("\n") && this.addMultiLineInput(inputText)) {
                     return;
                 }
                 // Ignore any input that is just a comment
@@ -461,7 +464,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                     return;
                 }
                 try {
-                    if (this.addCommand(inputText as unknown as java.lang.String)) {
+                    if (this.addCommand(inputText)) {
                         return;
                     }
                 } catch (ex) {
@@ -473,14 +476,17 @@ export class Nar extends SensoryChannel implements Reasoner {
                 }
                 let task: Task | null = null;
                 try {
-                    task = narsese.parseTask(new java.lang.String(inputText));
+                    task = narsese.parseTask(inputText);
                 } catch (e) {
                     if (e instanceof Parser.InvalidInputException) {
                         if (Debug.SHOW_INPUT_ERRORS) {
                             this.emit(OutputHandler.ERR.class, e);
                         }
                         if (!Debug.INPUT_ERRORS_CONTINUE) {
-                            throw new java.lang.IllegalStateException("Invalid input: " + inputText, e);
+                            throw new java.lang.IllegalStateException(
+                                "Invalid input: " + inputText,
+                                e as unknown as java.lang.Throwable,
+                            );
                         }
                         return;
                     } else {
@@ -514,7 +520,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new java.lang.IllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -533,7 +539,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             if (t instanceof Inheritance) {
                 predicate = (t as Inheritance).getPredicate();
             } else {
-                predicate = SetInt.make(new Term(S`OBSERVED`));
+                predicate = SetInt.make(new Term(toJavaString("OBSERVED")));
             }
             if (this.sensoryChannels.containsKey(predicate)) {
                 const channel = this.sensoryChannels.get(predicate);
@@ -571,7 +577,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                             task.sentence.punctuation + ev + task.sentence.getTruth().toString();
                         // this.emit(OutputHandler.IN.class, task); too expensive to print each input
                         // task, consider vision :)
-                        this.addInput(new java.lang.String(newInput));
+                        this.addInput(newInput);
                         return true;
                     }
                 }
@@ -592,14 +598,14 @@ export class Nar extends SensoryChannel implements Reasoner {
      * two-argument form remains the Java sensory-channel task overload.
      */
     public addInputText(source: JavaStringInput): void;
-    public addInputText(text: java.lang.String, time: Timable): void;
+    public addInputText(text: JavaStringInput, time: Timable): void;
     public addInputText(...args: unknown[]): void {
         if (args.length === 2) {
-            super.addInputText(args[0] as java.lang.String, args[1] as Timable);
+            super.addInputText(args[0] as JavaStringInput, args[1] as Timable);
             return;
         }
         if (args.length !== 1) {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new java.lang.IllegalArgumentException("Invalid number of arguments");
         }
 
         const source = String(args[0]);
@@ -621,7 +627,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     public concept(concept: JavaStringInput): Concept {
         const parsedTerm = new Narsese(this).parseTerm(concept);
         if (parsedTerm === null) {
-            throw new java.lang.IllegalArgumentException(S`Invalid concept term`);
+            throw new java.lang.IllegalArgumentException("Invalid concept term");
         }
         return this.memory.concept(parsedTerm);
     }
@@ -629,7 +635,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     public ask(termString: JavaStringInput, answered: AnswerHandler): Nar {
         const parsedTerm = new Narsese(this).parseTerm(termString);
         if (parsedTerm === null) {
-            throw new java.lang.IllegalArgumentException(S`Invalid question term`);
+            throw new java.lang.IllegalArgumentException("Invalid question term");
         }
         let sentenceForNewTask: Sentence = new Sentence(
             parsedTerm,
@@ -654,7 +660,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     public askNow(termString: JavaStringInput, answered: AnswerHandler): Nar {
         const parsedTerm = new Narsese(this).parseTerm(termString);
         if (parsedTerm === null) {
-            throw new java.lang.IllegalArgumentException(S`Invalid question term`);
+            throw new java.lang.IllegalArgumentException("Invalid question term");
         }
         let sentenceForNewTask: Sentence = new Sentence(
             parsedTerm,
@@ -763,7 +769,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new java.lang.IllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -899,10 +905,10 @@ export class Nar extends SensoryChannel implements Reasoner {
      */
     private static overrideParameters(parameters: Parameters, overrides: java.util.Map<java.lang.String, java.lang.Object>): void {
         for (let iOverride of overrides.entrySet()) {
-            let propertyName: java.lang.String = iOverride.getKey();
+            const propertyName = String(iOverride.getKey());
             let value: java.lang.Object = iOverride.getValue();
 
-            const key = String(propertyName);
+            const key = propertyName;
             const parameterRecord = parameters as unknown as Record<string, unknown>;
             if (key in parameterRecord) {
                 parameterRecord[key] = value;
@@ -915,5 +921,3 @@ export class Nar extends SensoryChannel implements Reasoner {
 export namespace Nar {
     export type PluginState = InstanceType<Nar["PluginState"]>;
 }
-
-

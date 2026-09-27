@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/InternalExperience.java
-import { java, S } from "jree";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float, double, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -176,7 +176,7 @@ export class InternalExperience implements Plugin, EventObserver {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -197,25 +197,25 @@ export class InternalExperience implements Plugin, EventObserver {
     }
 
     public static toTerm(s: Sentence, mem: Memory, time: Timable): Term | null {
-        let opName: java.lang.String;
+        let opName: string;
         switch (s.punctuation) {
             case Symbols.JUDGMENT_MARK:
-                opName = S`^believe`;
+                opName = "^believe";
                 if (!mem.internalExperience.ALLOW_WANT_BELIEF) {
                     return null;
                 }
                 break;
             case Symbols.GOAL_MARK:
-                opName = S`^want`;
+                opName = "^want";
                 if (!mem.internalExperience.ALLOW_WANT_BELIEF) {
                     return null;
                 }
                 break;
             case Symbols.QUESTION_MARK:
-                opName = S`^wonder`;
+                opName = "^wonder";
                 break;
             case Symbols.QUEST_MARK:
-                opName = S`^evaluate`;
+                opName = "^evaluate";
                 break;
             default:
                 return null;
@@ -232,8 +232,8 @@ export class InternalExperience implements Plugin, EventObserver {
         // Operation.make ?
         let operation: Term = Inheritance.make(new Product(arg), opTerm);
         if (operation === null) {
-            throw new java.lang.IllegalStateException(
-                S`Unable to create Inheritance: ${opTerm}, ${java.util.Arrays.toString(arg)}`);
+            throw new JavaIllegalStateException(
+                "Unable to create Inheritance: " + opTerm + ", " + arg.map(String).join(", "));
         }
         return operation;
     }
@@ -339,12 +339,12 @@ export class InternalExperience implements Plugin, EventObserver {
 
         let newTask: Task = new Task(j, newbudget, Task.EnumType.INPUT);
 
-        memory.addNewTask(newTask, S`Reflected mental operation (Internal Experience)`);
+        memory.addNewTask(newTask, "Reflected mental operation (Internal Experience)");
         return false;
     }
 
-    protected static readonly nonInnateBeliefOperators: java.lang.String[] = [
-        S`^remind`, S`^doubt`, S`^consider`, S`^evaluate`, S`hestitate`, S`^wonder`, S`^belief`, S`^want`
+    protected static readonly nonInnateBeliefOperators: string[] = [
+        "^remind", "^doubt", "^consider", "^evaluate", "hestitate", "^wonder", "^belief", "^want"
     ];
 
     /** used in full internal experience mode only */
@@ -409,9 +409,9 @@ export class InternalExperience implements Plugin, EventObserver {
                 }
 
                 if (valid) {
-                    let op: Operator = memory.getOperator(S`^anticipate`);
+                    let op: Operator = memory.getOperator("^anticipate");
                     if (op === null)
-                        throw new java.lang.IllegalStateException(S`${this} requires ^anticipate operator`);
+                        throw new JavaIllegalStateException(`${this} requires ^anticipate operator`);
 
                     let args: Product = new Product(imp.getPredicate());
                     let new_term: Term = Operation.make(args, op);

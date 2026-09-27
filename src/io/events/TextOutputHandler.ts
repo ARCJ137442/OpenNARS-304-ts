@@ -8,7 +8,8 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
-import { isJavaThrowable } from "../../runtime/jree-compat.ts";
+import { isJavaThrowable, javaStringValue, toJavaString } from "../../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 
 const IN = OutputHandler.IN;
@@ -22,6 +23,8 @@ const CONFIRM = OutputHandler.CONFIRM;
 const DISAPPOINT = OutputHandler.DISAPPOINT;
 const Answer = Events.Answer;
 
+const formatJavaArray = (values: readonly unknown[]): string => JSON.stringify(values) ?? "null";
+const formatJavaList = (values: readonly unknown[]): string => `[${values.map(value => String(value)).join(", ")}]`;
 
 
 /**
@@ -33,7 +36,7 @@ export class TextOutputHandler extends OutputHandler {
 
     private readonly nar: Nar;
 
-    private prefix: java.lang.String = new java.lang.String("");
+    private prefix: string = "";
     private outExp2: TextOutputHandler.LineOutput | null = null;
     private outExp: java.io.PrintWriter | null = null;
     private showErrors: boolean = true;
@@ -108,9 +111,9 @@ export class TextOutputHandler extends OutputHandler {
     /**
      * Open an output experience file
      */
-    public openSaveFile(path: java.lang.String): void {
+    public openSaveFile(path: JavaStringInput): void {
         try {
-            this.outExp = new java.io.PrintWriter(new java.io.FileWriter(path));
+            this.outExp = new java.io.PrintWriter(new java.io.FileWriter(toJavaString(path)));
         } catch (ex) {
             if (ex instanceof java.io.IOException) {
                 throw new java.lang.IllegalStateException("Could not open save file.", ex);
@@ -177,8 +180,8 @@ export class TextOutputHandler extends OutputHandler {
         return this;
     }
 
-    public setLinePrefix(prefix: java.lang.String): TextOutputHandler {
-        this.prefix = prefix;
+    public setLinePrefix(prefix: JavaStringInput): TextOutputHandler {
+        this.prefix = javaStringValue(prefix);
         return this;
     }
 
@@ -254,7 +257,7 @@ export class TextOutputHandler extends OutputHandler {
                 const e: java.lang.Throwable = signal as unknown as java.lang.Throwable;
                 buffer.append(e.toString());
                 if (showStackTrace) {
-                    buffer.append(" ").append(java.util.Arrays.asList(e.getStackTrace()));
+                    buffer.append(" ").append(formatJavaList(e.getStackTrace()));
                 }
             } else {
                 buffer.append(signal.toString());
@@ -299,7 +302,7 @@ export class TextOutputHandler extends OutputHandler {
         if (isJavaThrowable(signal)) {
             const error = signal as unknown as java.lang.Throwable;
             buffer.append(error.toString()).append(" ")
-                .append(java.util.Arrays.asList(error.getStackTrace()));
+                .append(formatJavaList(error.getStackTrace()));
         } else if (signal instanceof Task) {
             buffer.append(signal.sentence.toString(nar, showStamp));
         } else if (signal instanceof Sentence) {
@@ -309,7 +312,7 @@ export class TextOutputHandler extends OutputHandler {
                 const answer = (signal as unknown[])[1] as Sentence;
                 buffer.append(answer.toString(nar, showStamp));
             } else {
-                buffer.append(java.util.Arrays.toString(signal as unknown[]));
+                buffer.append(formatJavaArray(signal as unknown[]));
             }
         } else {
             buffer.append(signal.toString());
@@ -323,9 +326,7 @@ export class TextOutputHandler extends OutputHandler {
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace TextOutputHandler {
     export interface LineOutput {
-        println(s: java.lang.String): void;
+        println(s: JavaStringInput): void;
     }
 
 }
-
-

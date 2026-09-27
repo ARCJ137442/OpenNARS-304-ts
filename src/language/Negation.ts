@@ -1,10 +1,11 @@
 //! Java source: opennars/language/Negation.java
-import { java, S } from "jree";
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import { Terms } from "./Terms.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import type { JavaCharSequence } from "../runtime/jree-compat.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -29,7 +30,7 @@ export class Negation extends CompoundTerm {
         this.init(this.term);
     }
 
-    protected makeName(): java.lang.CharSequence {
+    protected makeName(): JavaCharSequence {
         return Negation.makeCompoundName(NativeOperator.NEGATION, this.term[0]);
     }
 
@@ -67,7 +68,7 @@ export class Negation extends CompoundTerm {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -90,7 +91,7 @@ export class Negation extends CompoundTerm {
     public static make(argument: Term[]): Term | null;
     public static make(...args: unknown[]): Term | null {
         if (args.length !== 1) {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
 
         // Java overloads make(Term) and make(Term[]) have the same arity.

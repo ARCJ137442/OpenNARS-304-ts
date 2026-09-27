@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/Abbreviation.java
-import { java, S } from "jree";
+import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { double, int, float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -16,7 +16,7 @@ import { Similarity } from "../../language/Similarity.ts";
 import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
-import type { JavaChar } from "../../runtime/jree-compat.ts";
+import { toJavaString, type JavaChar } from "../../runtime/jree-compat.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
@@ -92,7 +92,7 @@ export class Abbreviation implements Plugin {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -107,7 +107,7 @@ export class Abbreviation implements Plugin {
     public setEnabled(n: Nar, enabled: boolean): boolean {
         let memory: Memory = n.memory;
 
-        let _abbreviate: Operator = memory.getOperator(new java.lang.String("^abbreviate"));
+        let _abbreviate: Operator = memory.getOperator("^abbreviate");
         if (_abbreviate === null) {
             _abbreviate = memory.addOperator(new Abbreviation.Abbreviate());
         }
@@ -160,7 +160,7 @@ export class Abbreviation implements Plugin {
             /* synchronized (currentTermSerial) { */
             Abbreviate.currentTermSerial++;
             /* } */
-            return new Term(new java.lang.String(String(prefix) + String(Abbreviate.currentTermSerial)));
+            return new Term(toJavaString(String(prefix) + String(Abbreviate.currentTermSerial)));
         }
 
         /**
@@ -209,5 +209,4 @@ export class Abbreviation implements Plugin {
 export namespace Abbreviation {
     export type Abbreviate = InstanceType<typeof Abbreviation.Abbreviate>;
 }
-
 

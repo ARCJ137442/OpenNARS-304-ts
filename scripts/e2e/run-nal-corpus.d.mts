@@ -49,4 +49,5 @@ export function parseArgs(...args: unknown[]): Record<string, unknown>;
 export function parseProgressLine(...args: unknown[]): NalRunnerRow | null;
 export function isProgressHeartbeat(...args: unknown[]): boolean;
 export function runTs(...args: unknown[]): Promise<NalRunnerRow[]>;
+export function selectCorpusFiles(...args: unknown[]): string[];
 export function parseJsonLines(...args: unknown[]): NalRunnerRow[];

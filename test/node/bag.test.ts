@@ -1,4 +1,6 @@
+import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
+
 import test from "node:test";
 import { java } from "jree";
 import { Bag } from "../../src/storage/Bag.ts";
@@ -6,6 +8,7 @@ import { Item } from "../../src/entity/Item.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import { Term } from "../../src/language/Term.ts";
 import { NativeMap } from "../../src/runtime/NativeMap.ts";
+import { JavaIllegalArgumentException } from "../../src/runtime/JavaExceptions.ts";
 
 class TestItem extends Item<string> {
     private readonly key: string;
@@ -30,6 +33,14 @@ class TestItem extends Item<string> {
     }
 }
 
+
+test("Bag keeps math and string boundaries project-owned", () => {
+    const source = readFileSync(new URL("../../src/storage/Bag.ts", import.meta.url), "utf8");
+    assert.doesNotMatch(source, /from ["']jree["']/);
+    assert.doesNotMatch(source, /java\.lang\.(?:Math|String(?:Buffer|Builder))/);
+    assert.match(source, /toJavaString/);
+});
+
 test("Bag.pickOut supports both Java overload shapes", () => {
     const bag = new Bag<TestItem, string>(4, 10, new Parameters());
     const item = new TestItem("item", 0.8);
@@ -41,6 +52,17 @@ test("Bag.pickOut supports both Java overload shapes", () => {
     bag.putIn(item);
     assert.equal(bag.pickOut("item"), item);
     assert.equal(bag.size(), 0);
+});
+
+
+test("Bag rejects invalid overload arity with the project Java exception", () => {
+    const BagConstructor = Bag as unknown as new (...args: unknown[]) => unknown;
+
+    assert.throws(() => new BagConstructor(4, 10), JavaIllegalArgumentException);
+
+    const bag = new Bag<TestItem, string>(4, 10, new Parameters());
+    const pickOut = bag.pickOut as unknown as (...args: unknown[]) => unknown;
+    assert.throws(() => pickOut(), JavaIllegalArgumentException);
 });
 
 test("Bag keeps its observed runtime class identity without jree JavaObject", () => {
@@ -127,6 +149,50 @@ test("Bag merges distinct object keys through Java equals semantics", () => {
 
     assert.equal(bag.size(), 1);
     assert.equal(bag.pickOut(new EqualKey("same")), second);
+    assert.equal(bag.size(), 0);
+});
+
+test("Bag recovers Java-equal keys when a restored key hash differs", () => {
+    class EqualKey {
+        public constructor(
+            public readonly value: string,
+            private readonly hash: number,
+        ) {}
+
+        public equals(other: unknown): boolean {
+            return other instanceof EqualKey && other.value === this.value;
+        }
+
+        public hashCode(): number {
+            return this.hash;
+        }
+    }
+
+    class EqualKeyItem extends Item<EqualKey> {
+        public constructor(private readonly key: EqualKey) {
+            super();
+        }
+
+        public name(): EqualKey {
+            return this.key;
+        }
+
+        public getPriority(): number {
+            return 0.8;
+        }
+
+        public merge(): Item<unknown> {
+            return this;
+        }
+    }
+
+    const bag = new Bag<EqualKeyItem, EqualKey>(4, 10, new Parameters());
+    const item = new EqualKeyItem(new EqualKey("same", 4));
+
+    bag.putIn(item);
+
+    assert.equal(bag.get(new EqualKey("same", 9)), item);
+    assert.equal(bag.pickOut(new EqualKey("same", 9)), item);
     assert.equal(bag.size(), 0);
 });
 
@@ -295,4 +361,11 @@ test("Bag takeOut removes each selected item and reaches the empty state", () =>
     assert.notEqual(bag.takeOut(), null);
     assert.equal(bag.size(), 0);
     assert.equal(bag.takeOut(), null);
+});
+
+
+test("Bag keeps native math and string boundaries", () => {
+    const source = readFileSync(new URL("../../src/storage/Bag.ts", import.meta.url), "utf8");
+    assert.doesNotMatch(source, /from ["']jree["']/);
+    assert.doesNotMatch(source, /java\.lang\.(?:Math|StringBuffer|StringBuilder)/);
 });

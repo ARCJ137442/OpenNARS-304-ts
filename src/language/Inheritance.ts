@@ -1,5 +1,4 @@
 //! Java source: opennars/language/Inheritance.java
-import { java, S } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
@@ -7,6 +6,8 @@ import { CompoundTerm } from "./CompoundTerm.ts";
 import { Product } from "./Product.ts";
 import { Debug } from "../main/Debug.ts";
 import { Symbols } from "../io/Symbols.ts";
+import { toJavaString } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -48,7 +49,7 @@ export class Inheritance extends Statement {
             terms = [args[0] as Term, args[1] as Term];
         } else {
             super([]);
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
         super(terms);
         this.init(terms);
@@ -81,8 +82,8 @@ export class Inheritance extends Statement {
                     return null;
                 }
                 if (t.length !== 2)
-                    throw new java.lang.IllegalArgumentException(
-                        "Invalid terms for " + this.getClass().getSimpleName() + ": " + java.util.Arrays.toString(t));
+                    throw new JavaIllegalArgumentException(
+                        "Invalid terms for " + this.getClass().getSimpleName() + ": [" + t.map(String).join(", ") + "]");
 
                 return Inheritance.make(t[0], t[1]);
 
@@ -91,7 +92,7 @@ export class Inheritance extends Statement {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -142,8 +143,8 @@ export class Inheritance extends Statement {
         let predicateOperator: boolean = Inheritance.operatorPredicate?.(predicate) ?? false;
 
         if (Debug.DETAILED) {
-            if (!predicateOperator && predicate.toString().startsWith(new java.lang.String("^"))) {
-                throw new java.lang.IllegalStateException("operator term detected but is not an operator: " + predicate);
+            if (!predicateOperator && predicate.toString().startsWith(toJavaString("^"))) {
+                throw new JavaIllegalStateException("operator term detected but is not an operator: " + predicate);
             }
         }
 

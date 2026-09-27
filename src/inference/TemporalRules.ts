@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/TemporalRules.java
-import { java, S } from "jree";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Stamp } from "../entity/Stamp.ts";
@@ -35,7 +35,7 @@ export class TemporalRules {
 
     private static getRuntime(): TemporalRuntime {
         if (TemporalRules.runtime === null) {
-            throw new java.lang.IllegalStateException("Temporal rules runtime classes are not registered");
+            throw new JavaIllegalStateException("Temporal rules runtime classes are not registered");
         }
         return TemporalRules.runtime;
     }
@@ -68,7 +68,7 @@ export class TemporalRules {
                 (first as Sentence).getTemporalOrder() === TemporalRules.ORDER_NONE ||
                 (second as Sentence).getTemporalOrder() === TemporalRules.ORDER_NONE;
         }
-        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        throw new JavaIllegalArgumentException("Invalid number of arguments");
     }
 
 
@@ -192,7 +192,7 @@ export class TemporalRules {
         let interval: Interval | null = null;
 
         if (!TemporalRules.concurrent(time1, time2, durationCycles)) {
-            interval = new Interval(java.lang.Math.abs(timeDiff));
+            interval = new Interval(Math.abs(Number(timeDiff)));
             if (timeDiff > 0) {
                 t1 = Conjunction.make(t1, interval, TemporalRules.ORDER_FORWARD);
             } else {
@@ -352,7 +352,7 @@ export class TemporalRules {
 
 
                 if ((a === Stamp.ETERNAL) || (b === Stamp.ETERNAL))
-                    throw new java.lang.IllegalStateException("order() does not compare ETERNAL times");
+                    throw new JavaIllegalStateException("order() does not compare ETERNAL times");
 
                 return TemporalRules.order(b - a, durationCycles);
 
@@ -361,7 +361,7 @@ export class TemporalRules {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }

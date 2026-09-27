@@ -1,6 +1,12 @@
 //! Java source: opennars/plugin/Plugin.java
 import type { Nar } from "../main/Nar.ts";
-import type { JavaCharSequenceInput } from "../runtime/jree-compat.ts";
+
+export type PluginName = string | {
+    charAt(index: number): number | null;
+    length(): number;
+    subSequence(start: number, end: number): unknown;
+    toString(): unknown;
+};
 
 
 
@@ -17,5 +23,5 @@ export interface Plugin {
 
     // Java source return type: CharSequence. Keep the boundary broad enough for
     // boxed Java strings and native strings without exposing jree here.
-    name?(): JavaCharSequenceInput;
+    name?(): PluginName;
 }

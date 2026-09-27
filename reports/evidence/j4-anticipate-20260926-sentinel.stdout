@@ -1,0 +1,24 @@
+running chunk 1/4 (1 files)
+running chunk 2/4 (1 files)
+running chunk 3/4 (1 files)
+running chunk 4/4 (1 files)
+{
+  "engine": "ts",
+  "cycles": 1550,
+  "timeoutMs": 180000,
+  "processLimitMs": 1800000,
+  "ts_cli": "/data/data/com.termux/files/home/A137442/nars/OpenNARS-304-TS/scripts/cli.mjs",
+  "files": 4,
+  "passed": 4,
+  "failed": 0,
+  "java_artifact": null,
+  "java_baseline": {
+    "path": "/data/data/com.termux/files/home/A137442/nars/OpenNARS-304-TS/.local/304-ts-assets/OpenNARS-304-ts-evidence-archive/g0-java-baseline-frozen-26772af-20260917.jsonl",
+    "sha256": "264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954",
+    "baseline_id": "g0-java-baseline-26772af-20260917",
+    "schema": "opennars-304-ts.java-functional-baseline.v1",
+    "java_source_commit": "8675b76fe8c21ee20a7b8c1b63408fb05327210d",
+    "java_artifact_sha256": "2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5"
+  },
+  "failures": []
+}

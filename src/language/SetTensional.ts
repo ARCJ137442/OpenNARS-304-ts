@@ -1,12 +1,12 @@
 //! Java source: opennars/language/SetTensional.java
-import { java } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { Terms } from "./Terms.ts";
 import type { Term } from "./Term.ts";
-import type { JavaChar } from "../runtime/jree-compat.ts";
+import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
+import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 
 const ARGUMENT_SEPARATOR = Symbols.ARGUMENT_SEPARATOR;
 
@@ -27,7 +27,7 @@ export abstract class SetTensional extends CompoundTerm {
         super(arg);
 
         if (arg.length === 0)
-            throw new java.lang.IllegalStateException("0-arg empty set");
+            throw new JavaIllegalStateException("0-arg empty set");
 
         if (Debug.DETAILED) {
             Terms.verifySortedAndUnique(arg, true);
@@ -48,9 +48,9 @@ export abstract class SetTensional extends CompoundTerm {
      * @param arg    the list of term
      * @return the oldName of the term
      */
-    protected static makeSetName(opener: JavaChar, arg: Term[], closer: JavaChar): java.lang.CharSequence {
+    protected static makeSetName(opener: JavaChar, arg: Term[], closer: JavaChar): JavaCharSequence {
         const names = arg.map((t) => String(t.name()));
-        return new java.lang.String(`${String(opener)}${names.join(Symbols.ARGUMENT_SEPARATOR)}${String(closer)}`);
+        return toJavaString(`${String(opener)}${names.join(Symbols.ARGUMENT_SEPARATOR)}${String(closer)}`);
     }
 
     /**

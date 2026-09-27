@@ -10,6 +10,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Term } from "./Term.ts";
 import type { Memory } from "../storage/Memory.ts";
 import { javaValuesEqual } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 
@@ -125,7 +126,7 @@ export class Terms {
 
     private static getRuntime(): TermsRuntime {
         if (Terms.runtime === null) {
-            throw new java.lang.IllegalStateException("Terms runtime classes are not registered");
+            throw new JavaIllegalStateException("Terms runtime classes are not registered");
         }
         return Terms.runtime;
     }
@@ -311,7 +312,7 @@ export class Terms {
                     case EQUIVALENCE_AFTER:
                         return runtime.Equivalence.make(componentList[0], componentList[1], TemporalRules.ORDER_FORWARD);
                     default:
-                        throw new java.lang.IllegalStateException("Unknown Term operator: " + copula + " (" + copula.name() + ")");
+                        throw new JavaIllegalStateException("Unknown Term operator: " + copula + " (" + copula.name() + ")");
                 }
 
 
@@ -319,7 +320,7 @@ export class Terms {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -452,7 +453,7 @@ export class Terms {
         }
 
         if (sa === null || sb === null)
-            throw new java.lang.IllegalStateException("Equivalence requires 2 components: " + sa + sb);
+            throw new JavaIllegalStateException("Equivalence requires 2 components: " + sa + sb);
         let sat: Term[] = (sa as CompoundTerm).term;
         let sbt: Term[] = (sb as CompoundTerm).term;
 
@@ -592,7 +593,7 @@ export class Terms {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -678,7 +679,7 @@ export class Terms {
 
                 for (let o of t)
                     if (o === null)
-                        throw new java.lang.IllegalStateException("Element null in: " + t);
+                        throw new JavaIllegalStateException("Element null in: " + t);
 
 
                 break;
@@ -690,14 +691,14 @@ export class Terms {
 
                 for (let o of t)
                     if (o === null)
-                        throw new java.lang.IllegalStateException("Element null in: " + java.util.Arrays.toString(t));
+                        throw new JavaIllegalStateException("Element null in: " + java.util.Arrays.toString(t));
 
 
                 break;
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -705,25 +706,25 @@ export class Terms {
     public static verifyNonNullTerms(...t: Term[]): void {
         for (let o of t)
             if (o === null)
-                throw new java.lang.IllegalStateException("Element null in: " + java.util.Arrays.toString(t));
+                throw new JavaIllegalStateException("Element null in: " + java.util.Arrays.toString(t));
     }
 
 
     public static verifySortedAndUnique(arg: Term[], allowSingleton: boolean): Term[] {
         if (arg.length === 0) {
-            throw new java.lang.IllegalStateException("Needs >0 components");
+            throw new JavaIllegalStateException("Needs >0 components");
         }
         if (!allowSingleton && (arg.length === 1)) {
-            throw new java.lang.IllegalStateException("Needs >1 components: " + java.util.Arrays.toString(arg));
+            throw new JavaIllegalStateException("Needs >1 components: " + java.util.Arrays.toString(arg));
         }
         let s: Term[] = Term.toSortedSetArray(...arg);
         if (arg.length !== s.length) {
-            throw new java.lang.IllegalStateException("Contains duplicates: " + java.util.Arrays.toString(arg));
+            throw new JavaIllegalStateException("Contains duplicates: " + java.util.Arrays.toString(arg));
         }
         let j: int = 0;
         for (let t of s) {
             if (!t.equals(arg[j++]))
-                throw new java.lang.IllegalStateException(
+                throw new JavaIllegalStateException(
                     "Un-ordered: " + java.util.Arrays.toString(arg) + " , correct order=" + java.util.Arrays.toString(s));
         }
         return s;

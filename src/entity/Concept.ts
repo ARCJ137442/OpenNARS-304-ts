@@ -1,5 +1,4 @@
 //! Java source: opennars/entity/Concept.java
-import { java, S } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
 import type { int, float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
@@ -19,6 +18,7 @@ import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeList, NativeReadOnlyList } from "../runtime/NativeList.ts";
 import { javaStringValue } from "../runtime/jree-compat.ts";
+import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { LocalRules } from "../inference/LocalRules.ts";
 import { Events } from "../io/events/Events.ts";
 import { ProcessQuestion } from "../control/concept/ProcessQuestion.ts";
@@ -467,7 +467,7 @@ export class Concept extends Item<Term> {
      * called from {@link Shell}
      */
     public toStringLong(): string {
-        const res: java.lang.String = S`${this.toStringExternal()} ${this.term.name()}${this.toStringIfNotNull(this.termLinks.size(), S`termLinks`)}${this.toStringIfNotNull(this.taskLinks.size(), S`taskLinks`)}${this.toStringIfNotNull(this.beliefs.size(), S`beliefs`)}${this.toStringIfNotNull(this.desires.size(), S`desires`)}${this.toStringIfNotNull(this.questions.size(), S`questions`)}${this.toStringIfNotNull(this.quests.size(), S`quests`)}`;
+        const res = `${this.toStringExternal()} ${this.term.name()}${this.toStringIfNotNull(this.termLinks.size(), "termLinks")}${this.toStringIfNotNull(this.taskLinks.size(), "taskLinks")}${this.toStringIfNotNull(this.beliefs.size(), "beliefs")}${this.toStringIfNotNull(this.desires.size(), "desires")}${this.toStringIfNotNull(this.questions.size(), "questions")}${this.toStringIfNotNull(this.quests.size(), "quests")}`;
 
         // + toStringIfNotNull(null, "questions");
         /*
@@ -479,12 +479,12 @@ export class Concept extends Item<Term> {
         return javaStringValue(res);
     }
 
-    private toStringIfNotNull(item: unknown, title: java.lang.String): java.lang.String {
+    private toStringIfNotNull(item: unknown, title: string): string {
         if (item === null) {
-            return S``;
+            return "";
         }
 
-        return S` ${title}:${String(item)}`;
+        return ` ${title}:${String(item)}`;
     }
 
     public acquiredQuality: float = 0.0;
@@ -512,7 +512,7 @@ export class Concept extends Item<Term> {
         ) as float;
         let result: float = UtilityFunctions.or(this.acquiredQuality, linkPriority, termComplexityFactor);
         if (result < 0) {
-            throw new java.lang.IllegalStateException("Concept.getQuality < 0:  result=" + result + ", linkPriority="
+            throw new JavaIllegalStateException("Concept.getQuality < 0:  result=" + result + ", linkPriority="
                 + linkPriority + " ,termComplexityFactor=" + termComplexityFactor + ", termLinks.size="
                 + this.termLinks.size());
         }
@@ -650,5 +650,4 @@ export class Concept extends Item<Term> {
 export namespace Concept {
     export type AnticipationEntry = InstanceType<typeof Concept.AnticipationEntry>;
 }
-
 

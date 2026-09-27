@@ -18,6 +18,7 @@ import type { MapContract } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import type { Term } from "./Term.ts";
 import type { JavaChar } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 
 // Java 原类型：Map<Term, Term>，实现类型：LinkedHashMap。
 // The two-element array remains the Java Map<Term, Term>[] container; only the
@@ -288,7 +289,7 @@ export class Variables {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -398,7 +399,7 @@ export class Variables {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -492,7 +493,7 @@ export class Variables {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }

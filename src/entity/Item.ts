@@ -1,9 +1,10 @@
 //! Java source: opennars/entity/Item.java
-import { java, S } from "jree";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
 import { javaStringHashCode, javaStringValue, javaValuesEqual } from "../runtime/jree-compat.ts";
+import type { JavaCharSequenceInput } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException, JavaNullPointerException } from "../runtime/JavaExceptions.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 
 interface ItemComparator<E> {
@@ -72,7 +73,7 @@ export abstract  class Item<K> extends RuntimeObject {
             const [budget] = args as [BudgetValue];
             this.budget = budget !== null ? budget.clone() : null; // clone, not assignment
         } else {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
 	}
 
@@ -253,7 +254,7 @@ export abstract  class Item<K> extends RuntimeObject {
     public static StringKeyItem: typeof StringKeyItem;
 
 
-    public static  getPrioritySum(c: java.lang.Iterable< Item<unknown>>):  float {
+    public static  getPrioritySum(c: Iterable<Item<unknown>>):  float {
         let  totalPriority: float = 0;
         for (let i of c)
             totalPriority = Float32Math.add(totalPriority, i.getPriority()) as float;
@@ -262,7 +263,7 @@ export abstract  class Item<K> extends RuntimeObject {
 
     protected requireBudget(): BudgetValue {
         if (this.budget === null) {
-            throw new java.lang.NullPointerException(S`Item has no budget`);
+            throw new JavaNullPointerException("Item has no budget");
         }
         return this.budget;
     }
@@ -272,7 +273,7 @@ export abstract  class Item<K> extends RuntimeObject {
     }
 }
 
-abstract class StringKeyItem extends Item<java.lang.CharSequence> {
+abstract class StringKeyItem extends Item<JavaCharSequenceInput> {
 
     public constructor(budget: BudgetValue) {
         super(budget);
@@ -299,5 +300,4 @@ export namespace Item {
 	export type ItemPriorityComparator<E extends Item<unknown>> = InstanceType<typeof Item.ItemPriorityComparator<E>>;
 	export type StringKeyItem = InstanceType<typeof Item.StringKeyItem>;
 }
-
 

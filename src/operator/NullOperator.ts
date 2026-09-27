@@ -3,10 +3,8 @@ import { Operator } from "./Operator.ts";
 import { Operation } from "./Operation.ts";
 import { Term } from "../language/Term.ts";
 import { Debug } from "../main/Debug.ts";
-import {
-    JavaIllegalArgumentException,
-    type JavaStringInput,
-} from "../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
 import type { Timable } from "../interfaces/Timable.ts";

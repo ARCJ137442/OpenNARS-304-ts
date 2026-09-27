@@ -11,7 +11,8 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Terms } from "./Terms.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
-import { javaStringHashCode, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
+import { javaStringHashCode, javaStringsEqual, toJavaString, type JavaChar } from "../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import { NativeFixedList, NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
@@ -389,7 +390,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     protected static makeCompoundName(op: NativeOperator, ...arg: Term[]): java.lang.CharSequence {
         const opString = op.toString();
         const names = arg.map((t) => String(t.name()));
-        return new java.lang.String(
+        return toJavaString(
             `${COMPOUND_TERM_OPENER.ch}${opString}${Symbols.ARGUMENT_SEPARATOR}${names.join(Symbols.ARGUMENT_SEPARATOR)}${COMPOUND_TERM_CLOSER.ch}`);
     }
 
@@ -704,7 +705,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         if (args.length === 1) {
             return super.hasVar(args[0] as JavaChar);
         }
-        throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+        throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
     }
 
     public hasVarDep(): boolean {

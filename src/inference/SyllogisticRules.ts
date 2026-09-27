@@ -1,5 +1,4 @@
 //! Java source: opennars/inference/SyllogisticRules.java
-import { java, S } from "jree";
 import type { int, long, short, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Statement } from "../language/Statement.ts";
@@ -24,6 +23,7 @@ import { ProcessAnticipation } from "../control/concept/ProcessAnticipation.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import { NativeList } from "../runtime/NativeList.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 const { ORDER_NONE, ORDER_FORWARD, ORDER_BACKWARD, ORDER_INVALID } = TemporalRules;
@@ -593,7 +593,7 @@ export class SyllogisticRules {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }

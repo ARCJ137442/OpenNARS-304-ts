@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/Emotions.java
-import { java, S } from "jree";
+import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 import type { float, int, double, long } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -15,6 +15,7 @@ import type { DerivationContext } from "../../control/DerivationContext.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
+import { toJavaString } from "../../runtime/jree-compat.ts";
 
 
 
@@ -117,7 +118,7 @@ export class Emotions implements Plugin {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -153,7 +154,7 @@ export class Emotions implements Plugin {
         }
 
         let frequency: float = -1;
-        if (java.lang.Math.abs(this.happyValue - this.lasthappy) > this.CHANGE_THRESHOLD
+        if (Math.abs(this.happyValue - this.lasthappy) > this.CHANGE_THRESHOLD
             && nal.time.time() - this.last_happy_time > this.CHANGE_STEPS_DEMANDED) {
             if (this.happyValue > this.HAPPY_EVENT_HIGHER_THRESHOLD && this.lasthappy <= this.HAPPY_EVENT_HIGHER_THRESHOLD) {
                 frequency = 1.0;
@@ -166,7 +167,7 @@ export class Emotions implements Plugin {
         }
 
         if (frequency !== -1) { // ok lets add an event now
-            let predicate: Term = SetInt.make(new Term(S`satisfied`));
+            let predicate: Term = SetInt.make(new Term(toJavaString("satisfied")));
             let subject: Term = Term.SELF;
             let inh: Inheritance = Inheritance.make(subject, predicate);
             let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.happyValue, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
@@ -180,7 +181,7 @@ export class Emotions implements Plugin {
                 nal.narParameters);
             let t: Task = new Task(s, budgetOfNewTask, Task.EnumType.INPUT);
 
-            nal.addTask(t, S`emotion`);
+            nal.addTask(t, "emotion");
             /*
              * if(Parameters.REFLECT_META_HAPPY_GOAL) { //remind on the goal whenever
              * happyness changes, should suffice for now
@@ -248,7 +249,7 @@ export class Emotions implements Plugin {
         }
 
         let frequency: float = -1;
-        if (java.lang.Math.abs(this.busyValue - this.lastbusy) > this.CHANGE_THRESHOLD && nal.time.time() - this.last_busy_time > this.CHANGE_STEPS_DEMANDED) {
+        if (Math.abs(this.busyValue - this.lastbusy) > this.CHANGE_THRESHOLD && nal.time.time() - this.last_busy_time > this.CHANGE_STEPS_DEMANDED) {
             if (this.busyValue > this.BUSY_EVENT_HIGHER_THRESHOLD && this.lastbusy <= this.BUSY_EVENT_HIGHER_THRESHOLD) {
                 frequency = 1.0;
             }
@@ -260,8 +261,8 @@ export class Emotions implements Plugin {
         }
 
         if (frequency !== -1) { // ok lets add an event now
-            let predicate: Term = SetInt.make(new Term(S`busy`));
-            let subject: Term = new Term(java.lang.String.valueOf("SELF"));
+            let predicate: Term = SetInt.make(new Term(toJavaString("busy")));
+            let subject: Term = new Term(toJavaString("SELF"));
             let inh: Inheritance = Inheritance.make(subject, predicate);
             let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.busyValue, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
                 nal.narParameters);
@@ -276,7 +277,7 @@ export class Emotions implements Plugin {
                 nal.narParameters.DEFAULT_JUDGMENT_DURABILITY,
                 BudgetFunctions.truthToQuality(truth), nal.narParameters);
             let t: Task = new Task(s, budgetForNewTask, Task.EnumType.INPUT);
-            nal.addTask(t, S`emotion`);
+            nal.addTask(t, "emotion");
         }
     }
 

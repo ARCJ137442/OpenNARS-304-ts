@@ -1,10 +1,11 @@
 //! Java source: opennars/language/Image.java
-import { java } from "jree";
 import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
+import { javaObjectsHash } from "../runtime/JavaArrays.ts";
+import { javaStringValue, toJavaString, type JavaCharSequence, type JavaString } from "../runtime/jree-compat.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -31,7 +32,7 @@ export abstract class Image extends CompoundTerm {
 
     protected init(components: Term[]): void {
         super.init(components);
-        this.hash = java.util.Objects.hash(super.hashCode(), this.relationIndex);
+        this.hash = javaObjectsHash(super.hashCode(), this.relationIndex);
     }
 
     public compareTo(that: AbstractTerm): int {
@@ -50,7 +51,7 @@ export abstract class Image extends CompoundTerm {
         // which changes image parsing for a derived term named "_".
         if (!(t instanceof Term) || t.getClass() !== Term.class)
             return false;
-        let n: java.lang.CharSequence = t.name();
+        let n: JavaCharSequence = t.name();
         if (String(n).length !== 1)
             return false;
         return String(n) === Symbols.IMAGE_PLACE_HOLDER;
@@ -64,25 +65,17 @@ export abstract class Image extends CompoundTerm {
      * @param relationIndex the location of the place holder
      * @return the oldName of the term
      */
-    protected static makeImageName(op: NativeOperator, arg: Term[], relationIndex: int): java.lang.String {
-        let sizeEstimate: int = 12 * arg.length + 2;
-
-        let name: java.lang.StringBuilder = new java.lang.StringBuilder(sizeEstimate)
-            .append(COMPOUND_TERM_OPENER.ch)
-            .append(op.toString())
-            .append(Symbols.ARGUMENT_SEPARATOR)
-            .append(arg[relationIndex].name());
+    protected static makeImageName(op: NativeOperator, arg: Term[], relationIndex: int): JavaString {
+        let name = `${COMPOUND_TERM_OPENER.ch}${op.toString()}${Symbols.ARGUMENT_SEPARATOR}${javaStringValue(arg[relationIndex].name())}`;
 
         for (let i: int = 0; i < arg.length; i++) {
-            name.append(Symbols.ARGUMENT_SEPARATOR);
-            if (i === relationIndex) {
-                name.append(Symbols.IMAGE_PLACE_HOLDER);
-            } else {
-                name.append(arg[i].name());
-            }
+            name += Symbols.ARGUMENT_SEPARATOR;
+            name += i === relationIndex
+                ? Symbols.IMAGE_PLACE_HOLDER
+                : javaStringValue(arg[i].name());
         }
-        name.append(COMPOUND_TERM_CLOSER.ch);
-        return name.toString();
+        name += COMPOUND_TERM_CLOSER.ch;
+        return toJavaString(name);
     }
 
     /**
@@ -91,7 +84,7 @@ export abstract class Image extends CompoundTerm {
      * @return The term relaterom existing fields
      * @return the name of the term
      */
-    public makeName(): java.lang.CharSequence {
+    public makeName(): JavaCharSequence {
         return Image.makeImageName(this.operator(), this.term, this.relationIndex);
     }
 

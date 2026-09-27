@@ -1,0 +1,73 @@
+{
+  "base": "d1727bc1b17a3a74216552e75396646a2d07f9f9",
+  "head": "35cab26a5cab07f5043c971f624a9f8671ce5327",
+  "files": [
+    "docs/current-status.md",
+    "reports/20260927-133213.md",
+    "reports/evidence/j5-events-thread-20260927-build.stdout",
+    "reports/evidence/j5-events-thread-20260927-contract.stdout",
+    "reports/evidence/j5-events-thread-20260927-dist-api.stdout",
+    "reports/evidence/j5-events-thread-20260927-gate.json",
+    "reports/evidence/j5-events-thread-20260927-hanzi-report.json",
+    "reports/evidence/j5-events-thread-20260927-hanzi.stdout",
+    "reports/evidence/j5-events-thread-20260927-jree-audit.stdout",
+    "reports/evidence/j5-events-thread-20260927-m2.stdout",
+    "reports/evidence/j5-events-thread-20260927-migration.stdout",
+    "reports/evidence/j5-events-thread-20260927-platform-audit.stdout",
+    "reports/evidence/j5-events-thread-20260927-sentinel.jsonl",
+    "reports/evidence/j5-events-thread-20260927-sentinel.stdout",
+    "reports/evidence/j5-events-thread-20260927-typecheck.stdout"
+  ],
+  "frozen_java_baseline": "/data/data/com.termux/files/home/A137442/nars/304-ts/OpenNARS-304-ts-evidence-archive/g0-java-baseline-frozen-26772af-20260917.jsonl",
+  "frozen_java_baseline_sha256": "264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954",
+  "tier": "T0",
+  "live_java_required": false,
+  "m1_minus_required": false,
+  "full_m1_required": false,
+  "affected_nal_required": false,
+  "validation_profile": "slice",
+  "cluster_id": "J5-main-io-host",
+  "cluster_close": false,
+  "m1_minus_reasons": [],
+  "source_files": 0,
+  "source_changed_lines": 0,
+  "reasons": [
+    "non-production-change"
+  ],
+  "note": "T1 slices use affected NALs; only an enumerated cluster close runs M1-. Observed regressions or an invalid frozen baseline always escalate, and the tool never certifies semantic equivalence.",
+  "validation_plan": {
+    "plan_valid": true,
+    "validation_profile": "slice",
+    "selected_cluster": {
+      "id": "J5-main-io-host",
+      "title": "Main、IO 与宿主收口簇",
+      "directTests": [
+        "test/node/config-platform-boundary.test.ts",
+        "test/node/shell-boundary.test.ts",
+        "test/node/shell-runtime.test.ts"
+      ],
+      "affectedNals": [
+        "java-master/src/main/resources/nal/single_step/nal1.0.nal",
+        "java-master/src/main/resources/nal/application/toothbrush.nal",
+        "java-master/src/test/simpleOperationTest.nal"
+      ]
+    },
+    "supporting_clusters": [],
+    "touched_clusters": [],
+    "unassigned_source_files": [],
+    "multiply_assigned_source_files": [],
+    "plan_errors": [],
+    "direct_test_hints": [
+      "test/node/config-platform-boundary.test.ts",
+      "test/node/shell-boundary.test.ts",
+      "test/node/shell-runtime.test.ts"
+    ],
+    "affected_nal_files": [],
+    "common_commands": [],
+    "affected_nal_command": null,
+    "m1_minus_command": null,
+    "live_java_required": false,
+    "full_m1_required": false,
+    "strict_markerless_required": false
+  }
+}

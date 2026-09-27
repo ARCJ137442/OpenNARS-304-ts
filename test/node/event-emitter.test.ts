@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { join } from "node:path";
 import test from "node:test";
 import { java } from "jree";
+import { tmpdir } from "node:os";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
+import { Nar } from "../../src/main/Nar.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
@@ -209,4 +213,120 @@ test("Events.ConceptNew preserves the Java InferenceEvent constructor contract",
     assert.equal(event.getType(), event.getClass());
     assert.equal(event.getType(), Events.ConceptNew.class);
     assert.equal(String(event.toString()), "Concept Created: fake-concept");
+});
+
+test("Events captures stack frames through the project ThreadCompat boundary", () => {
+    const source = readFileSync("src/io/events/Events.ts", "utf8");
+    assert.doesNotMatch(source, /from ["']jree["']/);
+    assert.match(source, /ThreadCompat/);
+});
+
+test("InferenceEvent keeps optional stack frames in a native ordered array", () => {
+    const source = readFileSync("src/io/events/Events.ts", "utf8");
+    assert.doesNotMatch(source, /java\.util\.List<java\.lang\.StackTraceElement>/);
+    assert.doesNotMatch(source, /java\.util\.Arrays\.asList/);
+    assert.match(source, /readonly stack: readonly StackTraceElementCompat\[\] \| null/);
+
+    const Base = Events.InferenceEvent as unknown as {
+        new (when: bigint, stackFrames: number): { stack: unknown };
+    };
+    const event = new Base(3n, 2);
+    assert.ok(Array.isArray(event.stack));
+});
+
+test("Events.ConceptNew keeps event text on the project-owned string boundary", () => {
+    const source = readFileSync("src/io/events/Events.ts", "utf8");
+
+    assert.doesNotMatch(source, /public override toString\(\): java\.lang\.String/);
+    assert.doesNotMatch(source, /new java\.lang\.StringBuilder\(\)\.append\(S`Concept Created: `/);
+});
+
+test("Events.TaskAdd accepts native and Java string reasons at the event boundary", () => {
+    const source = readFileSync("src/io/events/Events.ts", "utf8");
+    assert.doesNotMatch(source, /onTaskAdd\(t: Task, reason: java\.lang\.String/);
+
+    const received: unknown[] = [];
+    const observer = new class extends Events.TaskAdd {
+        public override onTaskAdd(_task: unknown, reason: string | java.lang.String): void {
+            received.push(reason);
+        }
+    }();
+
+    observer.event(Events.TaskAdd.class, [null, "native-reason"]);
+    observer.event(Events.TaskAdd.class, [null, new java.lang.String("boxed-reason")]);
+
+    assert.equal(String(received[0]), "native-reason");
+    assert.equal(String(received[1]), "boxed-reason");
+});
+
+
+test("TextOutputHandler formats throwable and array output without Java Arrays helpers", () => {
+    const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
+    assert.doesNotMatch(source, /java\.util\.Arrays\.(asList|toString)/);
+
+    const nar = new Nar();
+    try {
+        const error = new java.lang.IllegalStateException("boom");
+        assert.equal(
+            String(TextOutputHandler.getOutputString(OutputHandler.ERR.class, error, true, nar)),
+            "IllegalStateException: boom []",
+        );
+        assert.equal(
+            String(TextOutputHandler.getOutputString(
+                OutputHandler.OUT.class,
+                [new java.lang.String("a"), 2] as unknown as java.lang.Object,
+                true,
+                nar,
+            )),
+            "[{},2]",
+        );
+    } finally {
+        nar.stop();
+    }
+});
+
+test("TextOutputHandler keeps line prefixes on the native string boundary", () => {
+    const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
+    assert.doesNotMatch(source, /private prefix: java\.lang\.String/);
+    assert.doesNotMatch(source, /setLinePrefix\(prefix: java\.lang\.String/);
+
+    const lines: unknown[] = [];
+    const nar = new Nar();
+    const handler = new TextOutputHandler(nar, {
+        println(value: unknown): void {
+            lines.push(value);
+        },
+    });
+
+    assert.equal(handler.setLinePrefix(new java.lang.String("boxed: ")), handler);
+    handler.event(OutputHandler.OUT.class, [new java.lang.String("signal")]);
+
+    assert.deepEqual(lines.map(String), ["boxed: OUT: signal"]);
+});
+
+test("TextOutputHandler.LineOutput accepts project-owned text values", () => {
+    const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
+    assert.doesNotMatch(source, /println\(s: java\.lang\.String\): void/);
+});
+
+test("TextOutputHandler.openSaveFile accepts project-owned text paths", () => {
+    const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
+    assert.doesNotMatch(source, /openSaveFile\(path: java\.lang\.String\)/);
+
+    const directory = mkdtempSync(join(tmpdir(), "opennars-text-output-"));
+    const nativePath = join(directory, "native.log");
+    const boxedPath = join(directory, "boxed.log");
+    const handler = new TextOutputHandler(new Nar());
+
+    try {
+        handler.openSaveFile(nativePath);
+        handler.closeSaveFile();
+        handler.openSaveFile(new java.lang.String(boxedPath));
+        handler.closeSaveFile();
+
+        assert.equal(existsSync(nativePath), true);
+        assert.equal(existsSync(boxedPath), true);
+    } finally {
+        rmSync(directory, { recursive: true, force: true });
+    }
 });

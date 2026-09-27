@@ -1,0 +1,16 @@
+running chunk 1/1 (1 files)
+{
+  "engine": "ts",
+  "cycles": 1550,
+  "timeoutMs": 300000,
+  "processLimitMs": 600000,
+  "ts_cli": "/data/data/com.termux/files/home/A137442/nars/OpenNARS-304-TS/scripts/cli.mjs",
+  "corpus_profile": "default",
+  "excluded_files": [],
+  "files": 1,
+  "passed": 1,
+  "failed": 0,
+  "java_artifact": null,
+  "java_baseline": null,
+  "failures": []
+}

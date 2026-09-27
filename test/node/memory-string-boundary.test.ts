@@ -1,5 +1,12 @@
+
+test("Memory keeps task reason literals native until event conversion", () => {
+    const source = readFileSync(new URL("../../src/storage/Memory.ts", import.meta.url), "utf8");
+    assert.doesNotMatch(source, /\bS`/);
+});
+
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 
 test("Memory accepts native string reasons and preserves Java event payloads", async () => {
     const { java } = await import("jree");

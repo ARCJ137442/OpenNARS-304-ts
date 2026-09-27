@@ -1,5 +1,4 @@
 //! Java source: opennars/operator/mental/Anticipate.java
-import { java, S } from "jree";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float, long, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { DerivationContext } from "../../control/DerivationContext.ts";
@@ -11,10 +10,10 @@ import { TruthValue } from "../../entity/TruthValue.ts";
 import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import {
-    JavaIllegalArgumentException,
     toRuntimeLong,
     type JavaLongInput,
 } from "../../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { Events } from "../../io/events/Events.ts";
@@ -47,8 +46,8 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
     // Prediction has no equals/hashCode override. NativeMap replaces only the
     // concrete Map implementation; NativeSet preserves value membership, order,
     // and Iterator.remove() for each prediction's terms.
-    public readonly anticipations: java.util.Map<Anticipate.Prediction, NativeSet<Term>> =
-        new NativeMap<Anticipate.Prediction, NativeSet<Term>>() as unknown as java.util.Map<Anticipate.Prediction, NativeSet<Term>>;
+    public readonly anticipations: NativeMap<Anticipate.Prediction, NativeSet<Term>> =
+        new NativeMap<Anticipate.Prediction, NativeSet<Term>>();
 
     // Java source: transient Set<Term> newTasks = new LinkedHashSet<>();
     // NativeSet preserves Java equals-based uniqueness and insertion order.
@@ -90,7 +89,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -123,10 +122,10 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         // completes. The array is only a temporary ordered key accumulator.
         const predictionsToRemove: Anticipate.Prediction[] = [];
 
-        let aei: java.util.Iterator<java.util.Map.Entry<Anticipate.Prediction, NativeSet<Term>>> = this.anticipations.entrySet().iterator();
+        const aei = this.anticipations.entrySet().iterator();
         while (aei.hasNext()) {
 
-            let ae: java.util.Map.Entry<Anticipate.Prediction, NativeSet<Term>> = aei.next();
+            const ae = aei.next();
 
             let aTime: long = ae.getKey().predictedOccurenceTime;
             let predictionstarted: long = ae.getKey().predictionCreationTime;
@@ -307,7 +306,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
                 BudgetFunctions.truthToQuality(truth), memory.narParameters);
             let newTask: Task = new Task(s, budgetForNewTask, Task.EnumType.INPUT);
 
-            memory.addNewTask(newTask, S`Perceived (Internal Experience: Anticipation)`);
+            memory.addNewTask(newTask, "Perceived (Internal Experience: Anticipation)");
         }
     }
 
@@ -356,5 +355,4 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 export namespace Anticipate {
     export type Prediction = InstanceType<Anticipate["Prediction"]>;
 }
-
 

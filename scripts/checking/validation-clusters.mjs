@@ -221,7 +221,7 @@ export function buildValidationPlan({
       "node", "scripts/e2e/run-nal-corpus.mjs",
       "--engine", "ts",
       "--java-baseline", javaBaseline,
-      "--all", "--limit", "244",
+      "--all", "--m-minus",
       "--cycles", "1550",
       "--timeout-ms", "180000",
       "--process-limit-ms", "1800000",

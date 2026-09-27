@@ -1,6 +1,6 @@
 //! Java source: opennars/io/events/Events.java
-import { JavaIllegalArgumentException } from "../../runtime/jree-compat.ts";
-import { java, S } from "jree";
+import { JavaIllegalArgumentException, javaStringValue } from "../../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
@@ -10,6 +10,7 @@ import type { Task } from "../../entity/Task.ts";
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import type { GeneralInferenceControl } from "../../control/GeneralInferenceControl.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
+import { ThreadCompat, type StackTraceElementCompat } from "../../runtime/ThreadCompat.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 
@@ -48,16 +49,16 @@ abstract class TaskImmediateProcess extends RuntimeObject implements EventObserv
 }
 
 abstract class TaskAdd extends RuntimeObject implements EventObserver {
-    public abstract onTaskAdd(t: Task, reason: java.lang.String): void;
+    public abstract onTaskAdd(t: Task, reason: JavaStringInput): void;
 
     public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
-        this.onTaskAdd(args[0] as unknown as Task, args[1] as unknown as java.lang.String);
+        this.onTaskAdd(args[0] as unknown as Task, args[1] as JavaStringInput);
     }
 }
 
 abstract class InferenceEvent extends RuntimeObject {
     public readonly when: long;
-    public readonly stack: java.util.List<java.lang.StackTraceElement> | null;
+    public readonly stack: readonly StackTraceElementCompat[] | null;
 
     // how many stack frames down to record from; we don't need to include the
     // current and the previous (InferenceEvent subclass's constructor
@@ -76,8 +77,9 @@ abstract class InferenceEvent extends RuntimeObject {
         this.when = when;
 
         if (stackFrames > 0) {
-            const sl: java.util.List<java.lang.StackTraceElement> =
-                java.util.Arrays.asList(new java.lang.Throwable().getStackTrace());
+            const sl = Array.from(
+                ThreadCompat.currentThread().getStackTrace() as StackTraceElementCompat[],
+            );
             let frame: int = 0;
 
             for (const e of sl) {
@@ -88,7 +90,7 @@ abstract class InferenceEvent extends RuntimeObject {
             }
             if (frame - this.STACK_PREFIX > stackFrames)
                 frame = this.STACK_PREFIX + stackFrames;
-            this.stack = sl.subList(this.STACK_PREFIX, frame);
+            this.stack = sl.slice(this.STACK_PREFIX, frame);
         } else {
             this.stack = null;
         }
@@ -113,9 +115,8 @@ class ConceptNew extends ParametricInferenceEvent<Concept> {
         super(c, when);
     }
 
-    public override toString(): java.lang.String {
-        return new java.lang.StringBuilder().append(S`Concept Created: `)
-            .append(java.lang.String.valueOf(this.object)).toString();
+    public override toString(): string {
+        return `Concept Created: ${javaStringValue(this.object)}`;
     }
 }
 
@@ -352,10 +353,9 @@ export namespace Events {
 	export type ConceptDirectProcessedTask = InstanceType<typeof Events.ConceptDirectProcessedTask>;
 	export type InferenceEvent = {
 		readonly when: long;
-		readonly stack: java.util.List<java.lang.StackTraceElement> | null;
+		readonly stack: readonly StackTraceElementCompat[] | null;
 		getType(): ClassTokenLike;
 	};
 	export type ParametricInferenceEvent<O> = InferenceEvent & { readonly object: O };
 }
-
 

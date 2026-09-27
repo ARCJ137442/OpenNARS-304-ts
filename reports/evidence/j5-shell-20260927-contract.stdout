@@ -1,0 +1,13 @@
+✔ Shell keeps the Java plain-class boundary and ThreadCompat remains local (9.065937ms)
+✔ shell parses the Java-like interactive control commands (2.962604ms)
+✔ shell rejects invalid automatic cycle counts (0.480261ms)
+✔ Node stdin adapter exposes queued bytes through Java InputStream (3.047864ms)
+✔ Shell command-line text boundaries accept project-owned strings (2.945521ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9236.668798

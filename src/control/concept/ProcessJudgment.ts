@@ -1,5 +1,4 @@
 //! Java source: opennars/control/concept/ProcessJudgment.java
-import { java, S } from "jree";
 import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
@@ -63,7 +62,7 @@ export class ProcessJudgment {
             let newStamp: Stamp = judg.stamp;
             let oldStamp: Stamp = oldBelief.stamp; // when table is full, the latter check is especially important too
             if (newStamp.equals(oldStamp, false, false, true)) {
-                concept.memory.removeTask(task, S`Duplicated`);
+                concept.memory.removeTask(task, "Duplicated");
                 return;
             } else if (oldBelief !== null && LocalRules.revisable(judg, oldBelief, nal.narParameters)) {
                 nal.setTheNewStamp(newStamp, oldStamp, nal.time.time());

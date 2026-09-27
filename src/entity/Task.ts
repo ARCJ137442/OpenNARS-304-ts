@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Task.java
-import { java, S } from "jree";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
@@ -23,6 +23,28 @@ import type { Term } from "../language/Term.ts";
  * @author Pei Wang
  * @author Patrick Hammer
  */
+class EnumType {
+    public static readonly INPUT = new EnumType("INPUT", 0);
+    public static readonly DERIVED = new EnumType("DERIVED", 1);
+
+    private constructor(
+        private readonly enumName: string,
+        private readonly enumOrdinal: int,
+    ) {}
+
+    public name(): string {
+        return this.enumName;
+    }
+
+    public ordinal(): int {
+        return this.enumOrdinal;
+    }
+
+    public toString(): string {
+        return this.enumName;
+    }
+}
+
 export class Task extends Item<Sentence> {
 
     /** Every Java Task constructor requires a budget; refine Item's nullable base field here. */
@@ -72,7 +94,7 @@ export class Task extends Item<Sentence> {
     public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence | null, solution: Sentence | null);
     public constructor(...args: unknown[]) {
         if (args.length !== 3 && args.length !== 4) {
-            throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+            throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
         const budget = args[1] as BudgetValue;
         super(budget);
@@ -101,7 +123,7 @@ export class Task extends Item<Sentence> {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -199,12 +221,11 @@ export class Task extends Item<Sentence> {
      * @return The Task as a String
      */
     public toStringLong(): string {
-        let s: java.lang.StringBuilder = new java.lang.StringBuilder();
-        s.append(super.toString()).append(' ').append(this.sentence.stamp.name());
+        let result = `${javaStringValue(super.toString())} ${javaStringValue(this.sentence.stamp.name())}`;
         if (this.bestSolution !== null) {
-            s.append("  \n solution: ").append(this.bestSolution.toString());
+            result += `  \n solution: ${javaStringValue(this.bestSolution.toString())}`;
         }
-        return javaStringValue(s);
+        return result;
     }
 
     /**
@@ -222,18 +243,13 @@ export class Task extends Item<Sentence> {
         return this.sentence.getTerm();
     }
 
-    public static EnumType = class EnumType extends java.lang.Enum<EnumType> {
-        public static readonly INPUT: EnumType = new class extends EnumType {
-        }(S`INPUT`, 0);
-        public static readonly DERIVED: EnumType = new class extends EnumType {
-        }(S`DERIVED`, 1);
-    };
+    public static EnumType = EnumType;
 
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Task {
-    export type EnumType = InstanceType<typeof Task.EnumType>;
+    export type EnumType = typeof Task.EnumType.INPUT;
 }
 
 

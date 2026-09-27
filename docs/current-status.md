@@ -1,8 +1,250 @@
 # OpenNARS-304-ts 当前状态
 
-- 状态日期：2026-09-20（Asia/Shanghai）
+- 状态日期：2026-09-27（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
+
+## 2026-09-27 恢复开发：023 五责任簇归属审计
+
+- 阶段报告：`reports/20260927-135702.md`；身份为 `GPT 5.6 sol xhigh`。
+- 以 `35cab26` 为审计基线，生产直接 jree 导入共 `14` 个文件；J1/J2/J3/J4/J5 分布为
+  `1/6/2/0/5`，全部恰好映射到一个 owner。详细残余路径、Java 合同、直接测试、哨兵 NAL、
+  出口条件与可回退切片记录在 `specs/023-jree-removal-native-runtime/README.md`。
+- 原始审计：`reports/evidence/023-owner-audit-jree-20260927.json`；恢复现场重分类：
+  `reports/evidence/023-resume-reclass-20260927.json`，有效 `T0`，不要求 NAL 或 M1--。
+- 当前选择继续 J5 的 Shell `S` 模板字符串边界；尚未改源码，计划先提交簇清单，再按 TDD 实施。
+- 普通切片不运行 M1--；仅责任簇出口时运行 Termux M1-- `243` 项。M1 相关测试不运行完整 `245` 项或 `#245`。
+
+## 2026-09-27 J5 Events 栈帧采集边界切片
+
+- 阶段报告：`reports/20260927-133213.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`d1727bc`；`Events.ts` 移除直接 jree 导入，改经 `ThreadCompat.currentThread().getStackTrace()` 获取只读原生栈帧数组。
+- 直接合同 `21/21` 通过；TS-only M2 `479` 项，`474` 通过、`0` 失败、`5` 跳过，用时 `360772 ms`。
+- 非增量 typecheck `0` 诊断；build `139` 个源文件；dist API、迁移扫描、jree/platform 审计通过，A 类 malformed 命中为 `0`。
+- jree 直接导入文件数 `15→14`；platform core candidate 文件数 `12→11`。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `1551` 周期 / `3418 ms` / RSS `247836672`，`toothbrush.nal` `11550` 周期 / `18653 ms` / RSS `375865344`，`simpleOperationTest.nal` `51564` 周期 / `252943 ms` / RSS `468148224`。
+- 三个样本均无 timeout、process limit、exception 或 marker missing；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`、`validation_profile=risk-slice`；本批不启动 M1--。Termux 中 M1 相关矩阵统一使用 M1-- `243` 项。
+- 证据 sentinel JSONL SHA-256：`15ac441a950c22fd8b205aa2fdd46464691f01440e2decc8d9f634b9186f7a5f`；汉字编码检查结果为 `[]`。
+- 本批可以宣称 `Events` 栈帧采集边界切片通过，不能宣称 J5、`023`、`024` 或 luna 目标完成。
+
+## 2026-09-27 J5 TextOutputHandler Arrays 边界切片
+
+- 阶段报告：`reports/20260927-130901.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`b42f4d8`；`TextOutputHandler` 移除两个 `java.util.Arrays` 运行时调用，改用项目内局部格式化函数，保留异常堆栈和普通数组文本输出行为。
+- 直接合同 `20/20` 通过；TS-only M2 `478` 项，`473` 通过、`0` 失败、`5` 跳过，用时 `314348 ms`。
+- 非增量 typecheck `0` 诊断；build `139` 个源文件；dist API、迁移扫描、jree/platform 审计通过，A 类 malformed 命中为 `0`。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `1551` 周期 / `3355 ms` / RSS `246927360`，`toothbrush.nal` `11550` 周期 / `16617 ms` / RSS `369442816`，`simpleOperationTest.nal` `51564` 周期 / `226938 ms` / RSS `425811968`。
+- 三个样本均无 timeout、process limit、exception 或 marker missing；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`、`validation_profile=risk-slice`；本批不启动 M1--。Termux 中所有 M1 相关测试统一使用 M1-- `243` 项。
+- 证据 sentinel JSONL SHA-256：`f62c5e9292cf996b089c14a6217c12a204576d247fdb31e97d30018182138ef3`；汉字编码检查结果为 `[]`。
+- 本批可以宣称 `TextOutputHandler` Arrays 文本边界切片已完成，不能宣称 J5、`023`、`024` 或 luna 总目标已完成。
+
+## 2026-09-27 J5 InferenceEvent 栈帧边界切片
+
+- 阶段报告：`reports/20260927-122532.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`e7b496a`；`InferenceEvent.stack` 从 Java `List<StackTraceElement>` 收窄为项目内只读 `StackTraceElementCompat[] | null`，使用原生 `Array.from`/`slice` 保持顺序、截断和空值语义。
+- 直接合同 `19/19` 通过；TS-only M2 `477` 项，`472` 通过、`0` 失败、`5` 跳过，用时 `558604 ms`。
+- 非增量 typecheck `0` 诊断；build `139` 个源文件；dist API、迁移扫描、jree/platform 审计通过，A 类 malformed 命中为 `0`。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `1551` 周期 / `5870 ms` / RSS `247902208`，`toothbrush.nal` `11550` 周期 / `26615 ms` / RSS `367886336`，`simpleOperationTest.nal` `51564` 周期 / `427023 ms` / RSS `455835648`。
+- 三个样本均无 timeout、process limit、exception 或 marker missing；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`、`validation_profile=risk-slice`；本批不启动 M1--。Termux 中所有 M1 相关测试统一使用 M1-- `243` 项。
+- 证据 JSONL SHA-256：`da620a84c43f27e49202e1ffeedea2925147ebdf5f75e886f06e49bbc00e04f1`；汉字编码检查结果为 `[]`。
+- 本批可以宣称 `InferenceEvent` 栈帧边界切片已完成，不能宣称 J5、`023`、`024` 或 luna 总目标已完成。
+
+## 2026-09-27 J5 Nar 诊断与固定文本边界切片
+
+- 阶段报告：`reports/20260927-113604.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`8a2b249`；`Nar.ts` 移除 `S` 模板文本，固定诊断消息使用原生字符串，`OBSERVED` 仍通过 `toJavaString` 进入 `Term` 的 Java 字符串边界。
+- 直接合同 `19/19` 通过；TS-only M2 `476` 项，`471` 通过、`0` 失败、`5` 跳过。
+- 非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计均通过；A 类 malformed 命中为 `0`。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `1551` 周期 / `5254 ms` / RSS `247869440`，`toothbrush.nal` `11550` 周期 / `25671 ms` / RSS `373440512`，`simpleOperationTest.nal` `51564` 周期 / `301173 ms` / RSS `400474112`。
+- 三个样本均无 timeout、process limit、exception 或 marker missing；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`、`validation_profile=risk-slice`；本轮不启动 M1--。Termux 中所有 M1 相关测试统一使用 M1-- `243` 项。
+- 本批可以宣称 `Nar` 诊断与固定文本边界切片已完成，不能宣称 J5、`023`、`024` 或 luna 目标已完成。
+
+
+## 2026-09-27 J5 Nar 配置与状态文本边界切片
+
+- 阶段报告：`reports/20260927-104525.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`96a8f6d`；`Nar.name` 与配置覆盖键的内部状态收窄为原生 `string`，并保留 boxed `java.lang.String` 键的 Java Map 进入合同。
+- 直接合同 `21/21` 通过；TS-only M2 `475` 项，`470` 通过、`0` 失败、`5` 跳过。
+- 非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过；迁移扫描 A 类 malformed 命中为 `0`。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `1551` 周期 / `4850 ms` / RSS `242348032`，`toothbrush.nal` `11550` 周期 / `24369 ms` / RSS `370384896`，`simpleOperationTest.nal` `51564` 周期 / `289505 ms` / RSS `371400704`。
+- 三个样本均无 timeout、process limit、exception 或 marker missing；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`、`validation_profile=risk-slice`；本轮不启动 M1--。Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本批可以宣称 `Nar` 配置状态文本边界切片已完成，不能宣称 J5、`023`、`024`、完整 M1 或 luna 目标已完成。
+
+
+## 2026-09-27 J5 Nar 内部输入文本边界切片
+
+- 阶段报告：`reports/20260927-101459.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`cdbbfe2`；`Nar` 的多行输入、命令解析和内部 Narsese/感知重投递路径去除不必要的 jree `String` 包装，数值解析保留 `toJavaString` 兼容桥。
+- 相关合同 `20/20` 通过；TS-only M2 `474` 项，`469` 通过、`0` 失败、`5` 跳过；非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查通过。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `7014 ms` / RSS `246259712`，`toothbrush.nal` `25471 ms` / RSS `368115712`，`simpleOperationTest.nal` `327695 ms` / RSS `352788480`；均无 timeout、process limit、exception 或 marker missing。
+- 冻结 Java baseline SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；证据：`reports/evidence/j5-nar-input-internal-20260927-sentinel.jsonl`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`；本轮不启动 M1--。Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本批不是 J5 责任簇收口；可以宣称 Nar 内部输入字符串边界切片完成，不能宣称 J5、023、024、完整 M1 或 luna 目标完成。
+
+## 2026-09-27 J5 Nar 元数据与配置路径字符串边界切片
+
+- 阶段报告：`reports/20260927-090843.md`；本批模型身份为 `GPT 5.6 sol xhigh`。
+- 代码提交：`48406e9`；`Nar` 的版本、名称、网站、默认配置路径、配置来源和已使用配置路径均收窄为原生 `string`；公共声明同步更新。
+- 局部合同 `17/17` 通过；TS-only M2 `473` 项，`468` 通过、`0` 失败、`5` 跳过；非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查通过。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `4315 ms` / RSS `250736640`，`toothbrush.nal` `17390 ms` / RSS `382160896`，`simpleOperationTest.nal` `227681 ms` / RSS `432742400`；均无 timeout、process limit、exception 或 marker missing。
+- 冻结 Java baseline SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；证据：`reports/evidence/j5-nar-metadata-20260927-sentinel.jsonl`。
+- T1 gate：`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`full_m1_required=false`；本轮不启动 M1--。Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本批不是 J5 责任簇收口；可以宣称 Nar 字符串边界切片完成，不能宣称 J5、023、024、完整 M1 或 luna 目标完成。
+
+
+## 2026-09-27 J5 Shell 命令行文本边界切片
+
+- 阶段报告：`reports/20260927-085953.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`Shell.createNar`、`Shell.log`、`Shell.main` 与 `Shell.run` 的文本输入从 jree `String` 收窄为 `JavaStringInput`边界，保留 Node 宿主行为。
+- 直接合同 `5/5` 通过；TS-only M2 `472` 项，`467` 通过、`0` 失败、`5` 跳过。
+- 非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `3226 ms` / RSS `249176064`，`toothbrush.nal` `16680 ms` / RSS `374173696`，`simpleOperationTest.nal` `184561 ms` / RSS `440107008`；无 timeout、process limit、exception 或 marker missing。
+- 冻结 Java baseline SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；sentinel SHA-256：`a8db42f3d3c8cff258abd027928b8fc0800ba283f7e392497a70af276736a80a`。
+- T1 gate：`502ccfb`；`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`。
+- 本批不是 J5 责任簇收口，不启动 M1--；Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本轮可以宣称 Shell 命令行文本边界已收窄，不能宣称 J5 或宿主功能整体完成。
+
+## 2026-09-27 J5 NarNode 网络文本边界切片
+
+- 阶段报告：`reports/20260927-084037.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`NarNode.sendNarsese`、`TargetNar` 与 `addRedirectionTo` 文本输入收窄为 `JavaStringInput`，序列化和 host 解析边界调用 `toJavaString`。
+- 直接合同 `22/22` 通过；TS-only M2 `471` 项，`466` 通过、`0` 失败、`5` 跳过。
+- 非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过。
+- 受影响 NAL `3/3` functional/parity 通过：`nal1.0.nal` `3268 ms` / RSS `240603136`，`toothbrush.nal` `16621 ms` / RSS `367083520`，`simpleOperationTest.nal` `189506 ms` / RSS `437993472`；无 timeout、process limit、exception 或 marker missing。
+- 冻结 Java baseline SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；sentinel SHA-256：`a76ebd5962f50f66b87ceae697567c53cdb5f534bbcb823a951a14733efd673c`。
+- T1 gate：`45c0771`；`plan_valid=true`、`affected_nal_required=true`；`m1_minus_required=false`。
+- 本批不是 J5 责任簇收口，不启动 M1--；Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本轮可以宣称 `NarNode` 文本边界已收窄，不能宣称网络传输或对象序列化已完成。
+
+## 2026-09-27 J5 Nar 文件路径边界切片
+
+- 阶段报告：`reports/20260927-075138.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`Nar.SaveToFile` / `Nar.LoadFromFile` 路径参数从 `java.lang.String` 收窄为 `JavaStringInput`，文件流入口统一通过 `toJavaString` 归一化。
+- 直接合同：`1/1` 通过；合同同时记录当前 `jree@1.3.0` 无 `ObjectInputStream` / `ObjectOutputStream`。
+- TS-only M2：`470` 项，`465` 通过、`0` 失败、`5` 跳过；非增量 typecheck 、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查均通过。
+- 受影响 NAL `3/3` 功能/parity 通过：`nal1.0.nal` `3305 ms` / RSS `251322368`，`toothbrush.nal` `16536 ms` / RSS `370339840`，`simpleOperationTest.nal` `188141 ms` / RSS `416530432`；无 timeout、process limit、exception或 marker missing。
+- 冻结 Java baseline SHA-256：`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`；sentinel SHA-256：`b38e7dc50061f0184a31fa9c70477699930f30ec856ad8cddfb41336cb270eb3`。
+- T1 gate：`c45afe9`；`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`validation_profile=risk-slice`。
+- 本批不是 J5 责任簇收口，不启动 M1--；Termux 中所有 M1 相关测试仍统一使用 M1-- `243` 项。
+- 本轮可以宣称路径文本边界已收窄，不能宣称对象序列化和真实 snapshot restore 已完成。
+
+## 2026-09-26 阶段报告与 M1-- 设备适配口径
+
+- 阶段报告已落盘为 `reports/20260926-203902.md`；本轮 J5 切片另见 `reports/20260926-221639.md`，当前代码 HEAD 以 Git 主线为准。
+- 当前 Termux、Android 及其他性能/内存受限环境的全部 M1 相关测试统一采用 **M1--**：按 runner 实际排序从 245 个主资源中排除 `#25 nars_multistep_3.nal` 与 `#245 stability/long_term_stability.nal`，运行 243 项。
+- M1-- 是设备适配回归口径，不是完整 M1 阶段门；它不证明两个排除样本通过，也不能替代其他环境的完整 M1 245+1。
+- 后续若需要 M1 保护，必须使用唯一 M1-- 证据前缀、单进程、逐文件 checkpoint 和 `--resume`；不得在当前 Termux 启动完整 245。
+
+## 2026-09-26 J5 ConceptNew 文本边界切片
+
+- 阶段报告： `reports/20260926-221639.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动： `Events.ConceptNew.toString()` 从 `java.lang.String`/`StringBuilder` 改为原生 `string` 并使用 `javaStringValue()`，保留 `Concept Created: ...` 文本合同。
+- 直接合同： `32/32` 通过；非增量 typecheck、build、dist API、迁移扫描、jree/platform 审计和汉字编码检查通过。
+- 受影响 NAL： `nal1.0.nal`、 `toothbrush.nal`、 `simpleOperationTest.nal` 均通过， `3/3`；均无 TS timeout、process limit 或异常。
+- 证据目录： `reports/evidence/j5-events-text-20260926/`；逐文件 JSONL 哈希分别为 `6781b2c8...544b0`、 `911b6c69...a395`、 `ca15343c...5149`。
+- 本批是 J5 风险切片，不是责任簇收口；未运行 M1 矩阵。当前 Termux 的全部 M1 相关测试仍必须使用 M1--（243 项），完整 245 不在本环境执行。
+- 旧未跟踪 J4/M1 调试证据未纳入本批提交； `020`、 `023`、 `024` 仍为 `in-progress`。
+
+## 2026-09-26 J5 TaskAdd Java/native 字符串边界切片
+
+- 阶段报告：`reports/20260926-225357.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`Events.TaskAdd.onTaskAdd` 的 `reason` 从 `java.lang.String` 收窄为 `JavaStringInput`，事件转发保持 native 与 boxed 字符串均可用。
+- 局部合同 `15/15` 通过；完整 TS-only M2 为 `465` 项，`460` 通过、`0` 失败、`5` 跳过。
+- 受影响 NAL `3/3` 通过：`nal1.0.nal` `8565 ms`，`toothbrush.nal` `37796 ms`，`simpleOperationTest.nal` `389632 ms`；均无 timeout/process limit。
+- 证据：`reports/evidence/j5-taskadd-20260926/`；冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- 本批是 J5 T1 risk-slice，不是责任簇收口；未运行 M1 矩阵。Termux 中后续任何 M1 保护仍统一使用 M1--（`243` 项）。
+- 本批代码、测试、报告、状态和证据已完成提交并推送；本地与 `origin/main` 均为 `aaba9e4`，旧未跟踪 J4/M1 调试文件不会混入。
+
+## 2026-09-26 J5 TextOutputHandler prefix 字符串边界切片
+
+- 阶段报告：`reports/20260926-233520.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`TextOutputHandler.prefix` 改为原生 `string`；`setLinePrefix` 收窄为项目 `JavaStringInput`，保留 native/boxed 输入语义。
+- 局部合同 `16/16` 通过；完整 TS-only M2 为 `466` 项，`461` 通过、`0` 失败、`5` 跳过。
+- 受影响 NAL `3/3` 通过：`nal1.0.nal` `7921 ms`，`toothbrush.nal` `44591 ms`，`simpleOperationTest.nal` `410289 ms`；均无 timeout/process limit。
+- 证据目录：`reports/evidence/j5-prefix-20260926/`；JSONL 哈希已记录在阶段报告中，冻结 Java baseline SHA-256 为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- 本批是 J5 T1 risk-slice，不是责任簇收口；未运行 M1 矩阵。Termux 中后续任何 M1 保护仍统一使用 M1--（`243` 项）。
+- 本批代码、报告和证据已提交并推送；当前远端包含提交 `c9de5be`，真实门禁为 T1 risk-slice，旧未跟踪 J4/M1 调试文件不会混入。
+
+## 2026-09-26 J5 TextOutputHandler LineOutput 文本边界切片
+
+- 阶段报告：`reports/20260926-235959.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`TextOutputHandler.LineOutput.println` 的宿主文本参数从 `java.lang.String` 收窄为项目自有 `JavaStringInput`，不改变 LineOutput 的调用方向和输出语义。
+- 直接合同 `17/17` 通过；非增量 `typecheck`、`test:build`、`test:api:dist`、迁移扫描、jree 审计、平台审计和汉字编码检查均通过。
+- TS-only M2：`467` 项，`462` 通过、`0` 失败、`5` 跳过；本轮未启动 Java 子进程。
+- 受影响 NAL `3/3` 通过：`nal1.0.nal` `8072 ms`、`toothbrush.nal` `39030 ms`、`simpleOperationTest.nal` `355552 ms`；均无 timeout、process limit、exception 或 not-run。
+- 资源峰值：三份样本分别为 `251080704`、`322588672`、`302759936` 字节；最高约 `307.6 MiB`，运行期间保持单进程。
+- 证据目录：`reports/evidence/j5-lineoutput-20260926/`；JSONL SHA-256 分别为 `30a69cd1fe713a54b4894dbb7fd3a693e525e3cabb9c6f0f7255a2cf2f3902b4`、`4d2727b7a92040259099f34674994c7e5e9889dbadc2d37827c9ce18b7e1bcf8`、`c79497fc8dd062944d0230ac106c2ac5c0d9e3f294975ba845f88bcf9d197f84`。
+- 本批已提交并推送至 `origin/main`，当前远端为 `03dd492`；真实门禁以 `1c4f0a2` 为基线，结果为 `tier=T1`、`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`validation_profile=risk-slice`；本批是 J5 T1 risk-slice，不是责任簇收口，不运行 M1--。Termux 中后续所有 M1 相关测试仍统一采用 M1--（243 项），完整 245 留给高性能环境。
+- `020`、`023`、`024` 继续保持 `in-progress`；本批不能宣称 J5、023、jree 清零、完整 M1 或发布完成。
+
+## 2026-09-26 J5 Nar.addInputText 两参数文本边界切片
+
+- 阶段报告：`reports/20260926-235959 - nar-input.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`Nar.addInputText(text, time)` 的文本参数从 `java.lang.String` 收窄为项目自有 `JavaStringInput`，转发至既有 `SensoryChannel.addInputText` 时保持 native/boxed 字符串输入兼容。
+- 直接合同 `2/2` 通过；合同先命中旧声明红灯，后在不扩大范围的前提下改用真实 `SensoryChannel` 子类验证 native/boxed 输入均能解析并派发 Task。
+- 非增量 `typecheck`、`test:build`、`test:api:dist`、迁移扫描、jree 审计、平台审计和汉字编码检查均通过。
+- TS-only M2：`469` 项，`464` 通过、`0` 失败、`5` 跳过；本轮未启动 Java 子进程。
+- 受影响 NAL `3/3` 通过：`nal1.0.nal` `3328 ms`、`toothbrush.nal` `16526 ms`、`simpleOperationTest.nal` `190018 ms`；均无 timeout、process limit、exception、stall 或 not-run。
+- 资源峰值：三份样本分别为 `248287232`、`377528320`、`410005504` 字节；最高约 `391.0 MiB`，运行期间保持单进程。
+- 证据：`reports/evidence/j5-nar-input-20260926-sentinel.jsonl` 与 `.stdout`；SHA-256 分别为 `f69c19adb0418928cad4a7666b613214604122e02f71e988dd7973c300194f69`、`2084e64ba1f0da8d77c097dd5c3901a662505be5981644a7c6e599635c91bd23`；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- 本批是 J5 T1 risk-slice，不是责任簇收口；不运行 M1--。Termux 中后续所有 M1 相关测试仍统一采用 M1--（243 项），完整 245 留给高性能环境。
+- `020`、`023`、`024` 继续保持 `in-progress`；本批不能宣称 J5、023、jree 清零、完整 M1 或发布完成。
+
+## 2026-09-26 J5 TextOutputHandler openSaveFile 路径文本边界切片
+
+- 阶段报告：`reports/20260926-235959 - continuation.md`；本批模型身份为 `GPT-6-sol`。
+- 生产改动：`TextOutputHandler.openSaveFile` 的路径参数从 `java.lang.String` 收窄为项目自有 `JavaStringInput`，进入 jree `FileWriter` 前通过 `toJavaString` 统一 native/boxed 表示；文件打开、关闭和异常语义未改变。
+- 直接合同 `18/18` 通过；其中新增合同先以 `17/18` 红灯证明旧签名确实被命中，再以 `18/18` 转绿。
+- 非增量 `typecheck`、`test:build`、`test:api:dist`、迁移扫描、jree 审计、平台审计和汉字编码检查均通过。
+- TS-only M2：`468` 项，`463` 通过、`0` 失败、`5` 跳过；本轮未启动 Java 子进程。
+- 受影响 NAL `3/3` 通过：`nal1.0.nal` `5071 ms`、`toothbrush.nal` `24833 ms`、`simpleOperationTest.nal` `304093 ms`；均无 timeout、process limit、exception、stall 或 not-run。
+- 资源峰值：三份样本分别为 `247025664`、`371621888`、`401137664` 字节；最高约 `382.5 MiB`，运行期间保持单进程。
+- 证据：`reports/evidence/j5-opensave-20260926-sentinel.jsonl` 与 `.stdout`；SHA-256 分别为 `6627b0c447ee53c94c9b58170bad70ff042bda519d97045b0f95e4892d12d00f`、`2084e64ba1f0da8d77c097dd5c3901a662505be5981644a7c6e599635c91bd23`；冻结 Java baseline SHA-256 仍为 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`。
+- 本批已提交并推送至 `origin/main`，当前远端为 `85d40ba`；真实门禁以 `c9de5be` 为基线，结果为 `tier=T1`、`plan_valid=true`、`affected_nal_required=true`、`m1_minus_required=false`、`validation_profile=risk-slice`。
+- 本批是 J5 T1 risk-slice，不是责任簇收口；不运行 M1--。Termux 中后续所有 M1 相关测试仍统一采用 M1--（243 项），完整 245 留给高性能环境。
+- `020`、`023`、`024` 继续保持 `in-progress`；本批不能宣称 J5、023、jree 清零、完整 M1 或发布完成。
+
+## 2026-09-26 崩溃恢复与 M1 245 前置复验
+
+- 崩溃恢复后确认工作区只剩 `Plugin.ts` 与 `plugin-boundary.test.ts` 的未提交 J4 `PluginName` 边界切片；没有发现残留 M1/检查点进程，用户已有 demo 服务未触碰。
+- 已从 `/data/data/com.termux/files/home/A137442/nars/304-ts/OpenNARS 304 TS Termux搬迁资料.zip` 提取仓库外冻结 Java 基线 `g0-java-baseline-frozen-26772af-20260917.jsonl` 与 manifest；基线 `246` 行，SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，与活动目标一致。
+- `PluginName` 定向测试 `2/2` 通过，非增量 typecheck 通过；360 周期多检查点合同 `4/4` 通过，覆盖 `[50, 200, 350]`，并验证独立恢复与从零运行尾部/最终状态一致。
+- 本轮后续 M1 245 将使用单进程、`--chunk-size 1`、唯一 JSONL、逐文件落盘和同参数 `--resume`；当前仅完成前置复验，尚未宣称 M1 245 新一轮通过。
+
+## 2026-09-25 之后的可验证增量
+
+- `2026-09-26` J4 异常生产者切片：`FunctionOperator`、`NullOperator`、`Operation`、`Operator`、`Anticipate`、`Add`、`Count`、`Reflect` 与 `Counting` 直接使用项目内 `JavaExceptions`，保留 `jree-compat.ts` 的字符串、long、类身份和观察桥责任。
+- 本切片定向 J4 测试 `39/39` 通过；冻结 Java 标杆 TS-only 哨兵 `4/4` functional/parity，通过 `0` exception、`0` marker missing、`0` timeout、`0` process limit；证据 `reports/evidence/j4-exception-boundary-20260926-sentinel.jsonl`，SHA-256 `B0628A57A327CBAFEF41CF96C18DCF59408D7AEB9ABAB0122CA5EF635572F01A`。
+- 本切片完整串行 M2 为 `460` 项、`455` 通过、`0` 失败、`5` 跳过；非增量 typecheck、build、dist API、迁移扫描和 jree/platform 审计通过。
+- 本切片仍是 J4 T1 risk-slice，不运行 M1-，不勾选 J4 或 023 完成；生产直接 jree 导入文件仍为 `15`，因为兼容桥仍承担字符串、long、类身份和观察职责。
+
+- `2026-09-26` 多检查点实验提升到 `360` 周期与 `[50, 200, 350]`：从零运行、分段恢复与每个检查点独立恢复的尾部事件和最终状态摘要全部一致，`summary.ok=true`。
+- J4 收口候选 M1- 主证据仍是 `244` 项中 `242` 功能通过、`2` 项 `process_limit`；对 `toothbrush2.nal` 与 `nars_multistep_3.nal` 将看门狗提高到 `360000 ms`、进程安全上限提高到 `3600000 ms` 串行复核，两项仍在一小时上限触发 `process_limit`。
+- 两个长样本在触发上限时仍有周期进展，最后观测周期分别为 `185036` 与 `341112`；这是资源观察未完成，不是语义失败，也不是通过。
+- 本轮长测严格单进程、单文件运行，系统可用内存观测低点约 `749 MiB`；原始证据为 `reports/evidence/j4-close-timeout-2x-20260926.jsonl`，SHA-256 `CC0CA2CE8868630A7FCA884F153FF864BAE3F4B9A67CDC5C53EDBEB8FC92DFFF`。
+
+- 当前已确认远端主线：`8ed8090`；检查点长周期脚手架、独立恢复入口与四个 J4 边界切片均已推送。
+- 当前候选完整 TS-only M2：`459 tests`、`454 passed`、`0 failed`、`5 skipped`；非增量 typecheck、build、定向时间/Narsese 合同均通过。
+- 多检查点实验已验证 `240` 周期中的 `[50, 100, 200]` 重放轨迹与从零基线一致：包含 `200` 周期后的检查点，`mismatches=0`；每个检查点另有状态摘要校验通过。
+- 本轮使用持久化目录重新验证：manifest 文件为 `nar-50.json`、`nar-100.json`、`nar-200.json`；独立读取 `nar-200.json` 恢复到 `240`，恢复尾部与从零运行一致，最终状态摘要一致。
+- 当前检查点文件仍是 `schema=2` 的 `nar-state-contract`，恢复模式明确为 `replay-verified`，`complete=false`；这是真实对象快照适配器完成前的诚实边界，不得当作已实现的内存对象快照。
+- Manifest 现同时固定 `runner` 参数、fixture SHA-256 和 Java artifact SHA-256（TS-only 时为 `null`），调用默认值也固定为 `240` 周期与 `[50, 100, 200]` 检查点，避免回退到短测。
+- 检查点实验支持显式 `checkpointDirectory`：外部目录保留 `nar-50.json`、`nar-100.json`、`nar-200.json` 供进程崩溃后重新读取；未指定目录时仍自动清理临时文件。
+- `SensoryChannel` J4 风险切片提交为 `16efbcd`；冻结 baseline 哨兵 4/4 通过，Java/TS parity 全部一致，无超时、无进程限制；`vision.nal` 与 `simpleOperationTest.nal` 分别耗时约 189 秒与 300 秒。
+- `Anticipate` J4 风险切片提交为 `84ac251`；同一冻结 baseline 哨兵 4/4 通过，Java/TS parity 全部一致，无超时、无进程限制；`vision.nal` 与 `simpleOperationTest.nal` 分别耗时约 160 秒与 305 秒。
+- `InternalExperience` J4 风险切片提交为 `fc079f0`；同一冻结 baseline 哨兵 4/4 通过，Java/TS parity 全部一致，无超时、无进程限制；`vision.nal` 与 `simpleOperationTest.nal` 分别耗时约 135 秒与 264 秒。
+- `VisionChannel` J4 风险切片提交为 `ce50840`；同一冻结 baseline 哨兵 4/4 通过，Java/TS parity 全部一致，无超时、无进程限制；`vision.nal` 与 `simpleOperationTest.nal` 分别耗时约 134 秒与 311 秒。
+- 已新增独立 `recoverSnapshotCheckpoint()` 入口：新调用路径只读取 `nar-200.json`，重建 NAR，校验 200 周期前缀事件/状态摘要，再继续到 240 周期；尾部事件与最终状态摘要均与从零运行一致。
+- 本轮继续完成并推送三个 J4 小切片：`Operation.ts`、`VisualSpace.ts`、`Emotions.ts`；随后完成 `SensoryChannel.ts`、`Anticipate.ts`、`InternalExperience.ts` 与 `VisionChannel.ts` 边界切片，均通过局部回归、非增量 typecheck、迁移扫描、jree 审计和平台审计。
+- 生产源码直接 jree 导入当前为 `15` 个；J4 与 023 仍进行中，不能据此标记责任簇或阶段门完成。
+- 该实验是“重放检查点”，不是 NAR 内存对象快照；`Nar.SaveToFile()` 当前在 TS 运行时因 `ObjectOutputStream` 不可构造而不可用于真正恢复，Node `v8.serialize(Nar)` 也因事件函数不可克隆失败。
+- 当前完整 M1 原始 checkpoint 仍为 `244/245`；第 `245` 项 `stability/long_term_stability.nal` 尚未完成，不得改写为完整 M1 通过。
+- 当前生产源码直接 jree 导入文件为 `15`；023、024、020 仍进行中，不得标记 complete。
 
 本文是项目封存后的唯一状态入口。README 只保留必要摘要；历史报告、旧战略和 Agent 提示词不得覆盖本文的状态结论。
 

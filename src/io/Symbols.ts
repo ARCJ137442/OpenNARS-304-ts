@@ -1,6 +1,9 @@
 //! Java source: opennars/io/Symbols.java
-import { java, S } from "jree";
 import type { char } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { RuntimeObject } from "../runtime/RuntimeClass.ts";
+
+const S = (strings: TemplateStringsArray): string => strings[0] ?? "";
 
 
 
@@ -80,7 +83,14 @@ export class Symbols {
 
     public static SELF: string = "SELF";
 
-    public static NativeOperator = class NativeOperator extends java.lang.Enum<NativeOperator> {
+    public static NativeOperator = class NativeOperator extends RuntimeObject {
+        private static readonly members: NativeOperator[] = [];
+        private readonly enumName: string;
+        private readonly enumOrdinal: number;
+
+        public static values<T>(): T[] {
+            return [...NativeOperator.members] as T[];
+        }
 
         /* CompountTerm operators, length = 1 */
         public static readonly INTERSECTION_EXT: NativeOperator = new class extends NativeOperator {
@@ -187,37 +197,46 @@ export class Symbols {
         /** closer? */
         public readonly closer: boolean;
 
-        protected constructor(string: string, $name$: java.lang.String, $index$: number);
+        protected constructor(string: string, $name$: string, $index$: number);
 
-        protected constructor(string: string, relation: boolean, $name$: java.lang.String, $index$: number);
+        protected constructor(string: string, relation: boolean, $name$: string, $index$: number);
 
-        protected constructor(string: string, relation: boolean, innate: boolean, $name$: java.lang.String, $index$: number);
+        protected constructor(string: string, relation: boolean, innate: boolean, $name$: string, $index$: number);
         protected constructor(...args: unknown[]) {
             let string: string;
             let relation = false;
             let innate = false;
-            let name: java.lang.String;
+            let name: string;
             let index: number;
             if (args.length === 5) {
-                [string, relation, innate, name, index] = args as [string, boolean, boolean, java.lang.String, number];
+                [string, relation, innate, name, index] = args as [string, boolean, boolean, string, number];
             } else if (args.length === 4) {
-                [string, relation, name, index] = args as [string, boolean, java.lang.String, number];
+                [string, relation, name, index] = args as [string, boolean, string, number];
                 innate = !relation;
             } else if (args.length === 3) {
-                [string, name, index] = args as [string, java.lang.String, number];
+                [string, name, index] = args as [string, string, number];
             } else {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
-            super(name, index);
+            super();
+            this.enumName = name;
+            this.enumOrdinal = index;
+            NativeOperator.members.push(this);
             this.symbol = string;
             this.relation = relation;
             this.isNative = innate;
             this.ch = string.length === 1 ? string.charAt(0) : "";
-            const enumName = this.name().valueOf();
-            this.opener = enumName.endsWith("_OPENER");
-            this.closer = enumName.endsWith("_CLOSER");
+            this.opener = this.enumName.endsWith("_OPENER");
+            this.closer = this.enumName.endsWith("_CLOSER");
         }
 
+        public name(): string {
+            return this.enumName;
+        }
+
+        public ordinal(): number {
+            return this.enumOrdinal;
+        }
 
         public toString(): string {
             return this.symbol;
@@ -259,7 +278,7 @@ export class Symbols {
             }
 
             default: {
-                throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
             }
         }
     }
@@ -305,15 +324,16 @@ export class Symbols {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace Symbols {
-    export type NativeOperator = java.lang.Enum<NativeOperator> & {
+    export type NativeOperator = {
         symbol: string;
         ch: string;
         relation: boolean;
         isNative: boolean;
         opener: boolean;
         closer: boolean;
+        name(): string;
+        ordinal(): number;
+        equals(other: unknown): boolean;
         toString(): string;
     };
 }
-
-
