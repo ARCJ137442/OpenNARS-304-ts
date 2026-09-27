@@ -176,7 +176,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     /**
      * The name of the reasoner
      */
-    protected name: java.lang.String | null = null;
+    protected name: string | null = null;
     /**
      * The memory of the reasoner
      */
@@ -905,10 +905,10 @@ export class Nar extends SensoryChannel implements Reasoner {
      */
     private static overrideParameters(parameters: Parameters, overrides: java.util.Map<java.lang.String, java.lang.Object>): void {
         for (let iOverride of overrides.entrySet()) {
-            let propertyName: java.lang.String = iOverride.getKey();
+            const propertyName = String(iOverride.getKey());
             let value: java.lang.Object = iOverride.getValue();
 
-            const key = String(propertyName);
+            const key = propertyName;
             const parameterRecord = parameters as unknown as Record<string, unknown>;
             if (key in parameterRecord) {
                 parameterRecord[key] = value;
