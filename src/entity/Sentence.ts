@@ -1,5 +1,4 @@
 //! Java source: opennars/entity/Sentence.java
-import { java, S } from "jree";
 import type { int, long, float, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../io/Texts.ts";
 import { javaObjectsHash } from "../runtime/JavaArrays.ts";
@@ -20,9 +19,23 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Nar } from "../main/Nar.ts";
 import type { Parameters } from "../main/Parameters.ts";
-import { addRuntimeLongValues, JavaAssertionError, JavaIllegalArgumentException, JavaIllegalStateException, javaStringValue, subtractRuntimeLongValues } from "../runtime/jree-compat.ts";
-import type { JavaChar } from "../runtime/jree-compat.ts";
+import { addRuntimeLongValues, javaStringValue, javaStringsEqual, subtractRuntimeLongValues, toJavaString } from "../runtime/jree-compat.ts";
+import type { JavaChar, JavaCharSequence, JavaString } from "../runtime/jree-compat.ts";
+import { JavaAssertionError, JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
+
+class SentenceStringBuilder {
+    private value = "";
+
+    public append(value: string): this {
+        this.value += value;
+        return this;
+    }
+
+    public toString(): string {
+        return this.value;
+    }
+}
 
 
 
@@ -188,7 +201,7 @@ export class Sentence extends RuntimeObject {
                     if (Debug.DETAILED && Debug.DETAILED_SENTENCES && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
                         if (!Term.valid(_content)) {
                             let ntc: CompoundTerm.UnableToCloneException = new CompoundTerm.UnableToCloneException(
-                                new java.lang.String("Invalid term discovered " + _content));
+                                "Invalid term discovered " + _content);
                             ntc.printStackTrace();
                             throw ntc;
                         }
@@ -230,20 +243,20 @@ export class Sentence extends RuntimeObject {
                     // Java's normalization table uses only the variable-name text
                     // as its key; retain the mapped Java CharSequence as the value
                     // so duplicate variables share the same generated object.
-                    let rename: Map<string, java.lang.CharSequence> = new Map();
+                    let rename: Map<string, JavaCharSequence> = new Map();
                     let renamed: boolean = false;
 
                     for (let v of vars) {
-                        let vname: java.lang.CharSequence = v.name();
+                        let vname: JavaCharSequence = v.name();
                         if (!v.hasVarIndep())
-                            vname = new java.lang.String(String(vname) + " " + String(v.getScope().name()));
+                            vname = toJavaString(`${javaStringValue(vname)} ${javaStringValue(v.getScope().name())}`);
                         const renameKey = javaStringValue(vname);
-                        let n: java.lang.CharSequence | null = rename.get(renameKey) ?? null;
+                        let n: JavaCharSequence | null = rename.get(renameKey) ?? null;
                         if (n == null) {
                             // type + id
                             n = Variable.getName(v.getType(), rename.size + 1);
                             rename.set(renameKey, n);
-                            if (!java.lang.String.valueOf(n).equals(java.lang.String.valueOf(vname)))
+                            if (!javaStringsEqual(n, vname))
                                 renamed = true;
                         }
 
@@ -256,8 +269,8 @@ export class Sentence extends RuntimeObject {
                         if (Debug.DETAILED && Debug.DETAILED_SENTENCES) {
                             if (!Term.valid(c)) {
                                 let ntc: CompoundTerm.UnableToCloneException = new CompoundTerm.UnableToCloneException(
-                                    new java.lang.String("Invalid term discovered after normalization: " + c + " ; prior to normalization: "
-                                    + _content));
+                                    "Invalid term discovered after normalization: " + c + " ; prior to normalization: "
+                                    + _content);
                                 ntc.printStackTrace();
                                 throw ntc;
                             }
@@ -494,19 +507,19 @@ export class Sentence extends RuntimeObject {
      *
      * @return The String
      */
-    public override  toString(): java.lang.String;
+    public override toString(): JavaString;
 
     /**
      * @param nar       Reasoner instance
      * @param showStamp must the stamp get appended to the string?
      * @return textural representation of the sentence for humans
      */
-    public override  toString(nar: Nar, showStamp: boolean): java.lang.CharSequence;
-    public override toString(...args: unknown[]): java.lang.String | java.lang.CharSequence {
+    public override toString(nar: Nar, showStamp: boolean): JavaString;
+    public override toString(...args: unknown[]): JavaString {
         switch (args.length) {
             case 0: {
 
-                return new java.lang.String(this.getKey());
+                return toJavaString(this.getKey());
 
 
                 break;
@@ -517,30 +530,30 @@ export class Sentence extends RuntimeObject {
 
 
 
-                let contentName: java.lang.CharSequence = this.term.name();
+                let contentName: JavaCharSequence = this.term.name();
 
                 // final long t = nar.time();
 
                 let diff: long = this.stamp.getOccurrenceTime() - nar.time();
-                let diffabs: long = java.lang.Math.abs(diff);
+                const diffNumber = Number(diff);
+                let diffabs = Math.abs(diffNumber);
 
                 let timediff: string = "";
                 if (diffabs < nar.narParameters.DURATION) {
                     timediff = "|";
                 } else {
-                    let Int: java.lang.Long = new java.lang.Long(diffabs);
-                    timediff = diff > 0 ? "+" + java.lang.String.valueOf(Int) : "-" + java.lang.String.valueOf(Int);
+                    timediff = diffNumber > 0 ? `+${diffabs}` : `-${diffabs}`;
                 }
 
                 if (Debug.TEST) {
-                    timediff = "!" + java.lang.String.valueOf(this.stamp.getOccurrenceTime());
+                    timediff = `!${String(this.stamp.getOccurrenceTime())}`;
                 }
 
                 let tenseString: string = ":" + timediff + ":";
                 if (this.stamp.getOccurrenceTime() === Stamp.ETERNAL)
                     tenseString = "";
 
-                let stampString: java.lang.CharSequence | null = showStamp ? this.stamp.name() : null;
+                let stampString: JavaCharSequence | null = showStamp ? this.stamp.name() : null;
 
                 let stringLength: int = String(contentName).length + String(tenseString).length + 1 + 1;
 
@@ -554,27 +567,29 @@ export class Sentence extends RuntimeObject {
                 if (this.term.term_indices !== null) {
                     conv = " [i,j,k,l]=[";
                     for (let i: int = 0; i < 4; i++) { // skip min sizes
-                        conv += java.lang.String.valueOf(this.term.term_indices[i]) + ",";
+                        conv += String(this.term.term_indices[i]) + ",";
                     }
                     // Java String.length() becomes the JS string length property.
                     conv = conv.substring(0, conv.length - 1) + "]";
                 }
 
-                let buffer: java.lang.StringBuilder = new java.lang.StringBuilder(stringLength).append(contentName).append(this.punctuation)
+                const buffer = new SentenceStringBuilder()
+                    .append(javaStringValue(contentName))
+                    .append(this.punctuation)
                     .append(conv);
 
                 if (String(tenseString).length > 0)
-                    buffer.append(' ').append(tenseString);
+                    buffer.append(" ").append(tenseString);
 
                 if (this.truth !== null) {
-                    buffer.append(' ');
+                    buffer.append(" ");
                     this.truth.appendString(buffer, true);
                 }
 
                 if (showStamp)
-                    buffer.append(' ').append(stampString);
+                    buffer.append(" ").append(javaStringValue(stampString));
 
-                return buffer;
+                return toJavaString(buffer.toString());
 
 
                 break;
@@ -609,26 +624,26 @@ export class Sentence extends RuntimeObject {
             if (this.term.term_indices !== null) {
                 conv = " [i,j,k,l]=[";
                 for (let i: int = 0; i < 4; i++) { // skip min sizes
-                    conv += java.lang.String.valueOf(this.term.term_indices[i]) + ",";
+                conv += String(this.term.term_indices[i]) + ",";
                 }
                 conv = conv.substring(0, conv.length - 1) + "]";
             }
 
             // suffix = [punctuation][ ][truthString][ ][occurenceTimeString]
-            let suffix: java.lang.StringBuilder = new java.lang.StringBuilder(stringLength).append(this.punctuation).append(conv);
+            const suffix = new SentenceStringBuilder().append(this.punctuation).append(conv);
 
             if (this.truth !== null) {
-                suffix.append(' ');
+                suffix.append(" ");
                 this.truth.appendString(suffix, false);
             }
             if ((showOcurrenceTime) && (this.stamp !== null)) {
-                suffix.append(' ');
+                suffix.append(" ");
                 this.stamp.appendOcurrenceTime(suffix);
             }
 
             this.key = Texts.yarn(
                 contentName,
-                String(suffix.toString())) ?? "";
+                suffix.toString()) ?? "";
         }
         return this.key;
     }

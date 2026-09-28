@@ -1,5 +1,4 @@
 //! Java source: opennars/storage/Memory.java
-import { java } from "jree";
 import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, float, int, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
@@ -35,6 +34,7 @@ import type { Nar } from "../main/Nar.ts";
 import { javaStringValue, toJavaString } from "../runtime/jree-compat.ts";
 import type { JavaStringInput } from "../runtime/jree-compat.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
+import { JavaRandom } from "../runtime/JavaRandom.ts";
 import type { Resettable } from "../interfaces/Resettable.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 
@@ -75,7 +75,7 @@ export class Memory implements Iterable<Concept>, Resettable {
     public allowExecution: boolean = true;
 
     public readonly randomSeed: long = 1n;
-    public readonly randomNumber: java.util.Random = new java.util.Random(this.randomSeed);
+    public readonly randomNumber: JavaRandom = new JavaRandom(this.randomSeed);
 
     // todo make sense of this class and de-obfuscate
     public readonly concepts: Bag<Concept, Term>;

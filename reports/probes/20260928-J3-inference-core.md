@@ -38,3 +38,22 @@
 
 - J3 residual direct imports, hot contracts, batch boundaries, and validation requirements are recorded.
 - J2 is awaiting its full M1 close gate; J3, stage 023, stage 024, and release readiness remain unclaimed.
+
+## J3 implementation checkpoint (2026-09-28)
+
+- Implemented the cohesive direct-runtime migration in `src/storage/Memory.ts` and `src/entity/Sentence.ts`: `Memory.randomNumber` now uses `JavaRandom`; `Sentence` uses project-owned Java text/exception helpers, a local append builder, native normalization keys, and boxed JavaString output only at the compatibility boundary.
+- Non-incremental typecheck, build, dist API, migration scan, and the J3 direct regression slice passed. The direct slice covered Bag, compositional rules, Sentence/Stamp boundaries, random contracts, variable substitution/query behavior, toothbrush ordering, and link contracts: 52/52 passed.
+- J3 sentinel NAL run: `nal6.17.nal`, `nal4.recursion.nal`, and `nars_transitivity.nal` passed. `application/toothbrush2.nal` reached 201,550 cycles and was classified as `process_limit` at 900,000 ms with last progress 160,277; no exception or semantic cause is established. Raw evidence is `reports/evidence/j3-affected-nal-20260928.jsonl`.
+- The next required evidence is full TS-only M2, then an immutable J3 commit and one PC full M1 close gate. J3, 023, 024, and release readiness are not complete yet.
+
+## J3 local validation close checkpoint (2026-09-28)
+
+- Full TS-only M2 completed with `494 passed / 0 failed / 2 skipped`; raw TAP is
+  `reports/evidence/j3-ts-only-m2-20260928.tap`, SHA-256
+  `0C830BA6000337C911A3C0CD74694C52D5B4ABB9601D29A93095D9E81FF71EDE`.
+- J3 affected NAL evidence is `reports/evidence/j3-affected-nal-20260928.jsonl`, SHA-256
+  `5111686D2D8B7BF1F7CE4C37B5D262900571D2E2386858744EFE27F460600F38`. Three sentinels pass;
+  `application/toothbrush2.nal` is one `process_limit` at 900,000 ms with no exception or
+  semantic diagnosis.
+- The source batch is ready for an immutable J3 commit. The PC full M1 close gate remains
+  mandatory before J3 can be declared complete.
