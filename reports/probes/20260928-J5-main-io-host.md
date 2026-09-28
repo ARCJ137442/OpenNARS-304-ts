@@ -30,3 +30,16 @@
 
 - J5 host boundary responsibilities and remaining direct imports are recorded.
 - No J5 implementation or completion claim has been made.
+
+## J5 adapter checkpoint (2026-09-28)
+
+- Moved the four J5 entry modules (`Nar.ts`, `NarNode.ts`, `Shell.ts`, and
+  `TextOutputHandler.ts`) from direct npm `jree` imports to the project-owned
+  `jree-compat` host boundary. Java IO/network/serialization objects remain inside
+  that explicit adapter because their stream and packet contracts are still required.
+- Non-incremental typecheck and build passed. J5 host direct contracts are 29/29 passed;
+  raw TAP is `reports/evidence/j5-direct-20260928.tap`, SHA-256
+  `55B2E43CBA37BBB52A5B0FABEF508576C573F5AAEBF4AB3BCBAB23C884D0D639`.
+- Frozen-baseline J5 sentinels passed 4/4 in the shared J4 evidence. The post-batch jree
+  audit reports one direct import file, the compatibility adapter itself; platform audit
+  exits 0. J5 still needs immutable close evidence and its PC M1 close gate.

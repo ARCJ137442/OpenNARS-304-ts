@@ -1,5 +1,4 @@
 //! Java source: opennars/main/Nar.java
-import { java } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { toJavaString, toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
@@ -31,7 +30,7 @@ import { Stamp } from "../entity/Stamp.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeReadOnlyList } from "../runtime/NativeList.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
-import { isJavaException, JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
+import { isJavaException, java, JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
 import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { Task } from "../entity/Task.ts";

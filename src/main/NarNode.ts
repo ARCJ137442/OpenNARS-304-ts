@@ -1,5 +1,4 @@
 //! Java source: opennars/main/NarNode.java
-import { java } from "jree";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
@@ -12,7 +11,7 @@ import { Term } from "../language/Term.ts";
 import { Task } from "../entity/Task.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { closeResourcesCompat, handleResourceErrorCompat, throwResourceErrorCompat } from "../runtime/ResourceCompat.ts";
-import { isJavaException, JavaSystemLoggerCompat, toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
+import { isJavaException, java, JavaSystemLoggerCompat, toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 type DatagramPacketCompat = { getLength(): number };

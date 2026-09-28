@@ -1,5 +1,4 @@
 //! Java source: opennars/main/Shell.java
-import { java } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { readFileSync } from "node:fs";
 import { Nar } from "./Nar.ts";
@@ -8,7 +7,7 @@ import { Term } from "../language/Term.ts";
 import { Debug } from "./Debug.ts";
 import { TextOutputHandler } from "../io/events/TextOutputHandler.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
-import { isJavaException, javaSystemExit, type JavaStringInput } from "../runtime/jree-compat.ts";
+import { isJavaException, java, javaSystemExit, type JavaStringInput } from "../runtime/jree-compat.ts";
 import { NodeStdinInputStream } from "../runtime/NodeStdinInputStream.ts";
 import { createNodeRuntimeCapabilities } from "../platform/node/SystemCommandCapabilities.ts";
 

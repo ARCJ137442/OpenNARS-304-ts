@@ -1,0 +1,184 @@
+TAP version 13
+# Subtest: ConfigReader keeps the Java plain-class boundary without a jree Object shell
+ok 1 - ConfigReader keeps the Java plain-class boundary without a jree Object shell
+  ---
+  duration_ms: 0.5795
+  type: 'test'
+  ...
+# Subtest: parseConfigXml returns a native configuration tree
+ok 2 - parseConfigXml returns a native configuration tree
+  ---
+  duration_ms: 0.9746
+  type: 'test'
+  ...
+# Subtest: parseConfigXml rejects empty, missing-root and incomplete configuration
+ok 3 - parseConfigXml rejects empty, missing-root and incomplete configuration
+  ---
+  duration_ms: 0.4003
+  type: 'test'
+  ...
+# Subtest: embedded default configuration stays byte-for-byte aligned after line-ending normalization
+ok 4 - embedded default configuration stays byte-for-byte aligned after line-ending normalization
+  ---
+  duration_ms: 0.569
+  type: 'test'
+  ...
+# Subtest: Nar accepts explicit configuration text without reading a config file
+ok 5 - Nar accepts explicit configuration text without reading a config file
+  ---
+  duration_ms: 70.0952
+  type: 'test'
+  ...
+# Subtest: Nar.PluginState keeps the Java lifecycle contract without a jree object shell
+ok 6 - Nar.PluginState keeps the Java lifecycle contract without a jree object shell
+  ---
+  duration_ms: 68.2209
+  type: 'test'
+  ...
+# Subtest: Nar rejects a path passed to the core string configuration overload
+ok 7 - Nar rejects a path passed to the core string configuration overload
+  ---
+  duration_ms: 0.3557
+  type: 'test'
+  ...
+# Subtest: Nar records a missing capability instead of loading a Node-only plugin
+ok 8 - Nar records a missing capability instead of loading a Node-only plugin
+  ---
+  duration_ms: 68.3139
+  type: 'test'
+  ...
+# Subtest: Nar registers the system plugin when the Node capability is supplied
+ok 9 - Nar registers the system plugin when the Node capability is supplied
+  ---
+  duration_ms: 66.1368
+  type: 'test'
+  ...
+# Subtest: PluginRegistry returns a native ordered plugin sequence and diagnostics
+ok 10 - PluginRegistry returns a native ordered plugin sequence and diagnostics
+  ---
+  duration_ms: 0.5584
+  type: 'test'
+  ...
+# Subtest: PluginRegistry consumes Java constructor arguments with float32 narrowing
+ok 11 - PluginRegistry consumes Java constructor arguments with float32 narrowing
+  ---
+  duration_ms: 0.2874
+  type: 'test'
+  ...
+# Subtest: PluginRegistry accepts Java no-argument constructors
+ok 12 - PluginRegistry accepts Java no-argument constructors
+  ---
+  duration_ms: 0.2232
+  type: 'test'
+  ...
+# Subtest: PluginRegistry diagnoses invalid and repeated registrations without reordering valid instances
+ok 13 - PluginRegistry diagnoses invalid and repeated registrations without reordering valid instances
+  ---
+  duration_ms: 0.1418
+  type: 'test'
+  ...
+# Subtest: PluginRegistry accepts an empty plugin section without diagnostics
+ok 14 - PluginRegistry accepts an empty plugin section without diagnostics
+  ---
+  duration_ms: 0.1589
+  type: 'test'
+  ...
+# Subtest: ConfigReader forwards the native plugin sequence without a jree list wrapper
+ok 15 - ConfigReader forwards the native plugin sequence without a jree list wrapper
+  ---
+  duration_ms: 68.0226
+  type: 'test'
+  ...
+# Subtest: Nar exposes a live native read-only plugin list
+ok 16 - Nar exposes a live native read-only plugin list
+  ---
+  duration_ms: 75.2612
+  type: 'test'
+  ...
+# Subtest: Parser and ConfigReader keep Java input types behind project boundaries
+ok 17 - Parser and ConfigReader keep Java input types behind project boundaries
+  ---
+  duration_ms: 0.6677
+  type: 'test'
+  ...
+# Subtest: Nar file persistence exposes project-owned text path boundaries
+ok 18 - Nar file persistence exposes project-owned text path boundaries
+  ---
+  duration_ms: 0.7654
+  type: 'test'
+  ...
+# Subtest: Nar internal input helpers keep native string values
+ok 19 - Nar internal input helpers keep native string values
+  ---
+  duration_ms: 78.9582
+  type: 'test'
+  ...
+# Subtest: Nar metadata and configuration paths stay native strings
+ok 20 - Nar metadata and configuration paths stay native strings
+  ---
+  duration_ms: 76.7172
+  type: 'test'
+  ...
+# Subtest: NarNode network text boundaries stay project-owned
+ok 21 - NarNode network text boundaries stay project-owned
+  ---
+  duration_ms: 0.8854
+  type: 'test'
+  ...
+# Subtest: NarNode.TargetNar keeps the Java plain network-target boundary
+ok 22 - NarNode.TargetNar keeps the Java plain network-target boundary
+  ---
+  duration_ms: 0.4532
+  type: 'test'
+  ...
+# Subtest: NarNode keeps class identity without inheriting jree.JavaObject
+ok 23 - NarNode keeps class identity without inheriting jree.JavaObject
+  ---
+  duration_ms: 0.0838
+  type: 'test'
+  ...
+# Subtest: NarNode stores redirection targets in insertion order
+ok 24 - NarNode stores redirection targets in insertion order
+  ---
+  duration_ms: 0.3906
+  type: 'test'
+  ...
+# Subtest: Shell keeps the Java plain-class boundary and ThreadCompat remains local
+ok 25 - Shell keeps the Java plain-class boundary and ThreadCompat remains local
+  ---
+  duration_ms: 3.156
+  type: 'test'
+  ...
+# Subtest: shell parses the Java-like interactive control commands
+ok 26 - shell parses the Java-like interactive control commands
+  ---
+  duration_ms: 0.9126
+  type: 'test'
+  ...
+# Subtest: shell rejects invalid automatic cycle counts
+ok 27 - shell rejects invalid automatic cycle counts
+  ---
+  duration_ms: 0.2591
+  type: 'test'
+  ...
+# Subtest: Shell command-line text boundaries accept project-owned strings
+ok 28 - Shell command-line text boundaries accept project-owned strings
+  ---
+  duration_ms: 1.3088
+  type: 'test'
+  ...
+# Subtest: Shell log preserves native and boxed string output
+ok 29 - Shell log preserves native and boxed string output
+  ---
+  duration_ms: 3.2956
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14438.9438

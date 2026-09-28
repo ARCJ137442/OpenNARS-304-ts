@@ -1,5 +1,4 @@
 //! Java source: opennars/io/events/TextOutputHandler.java
-import { java } from "jree";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { OutputHandler } from "./OutputHandler.ts";
@@ -8,7 +7,7 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
-import { isJavaThrowable, javaStringValue, toJavaString } from "../../runtime/jree-compat.ts";
+import { isJavaThrowable, java, javaStringValue, toJavaString } from "../../runtime/jree-compat.ts";
 import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 
