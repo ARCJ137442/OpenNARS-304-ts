@@ -94,3 +94,21 @@
   `734C31CB900578A50C4C55B15BA77D0C4B1B79D486B0163A802B99E323942999`.
 - These retries use the frozen Java baseline only; no Java process was started. The two
   remaining process limits are performance/resource observations, not semantic regressions.
+
+- Final long-stability baseline retry: `reports/evidence/j3-retry-baseline-long-stability-7200s-20260928.jsonl`,
+  SHA-256 `A0838286861DBE158904A8CFB595C4AE01533FEFD6D4EE18F4EC3A45FCB04D75`. It ran
+  TS-only for `7,200,045 ms`, reached `438,184` progress cycles, and was classified as
+  `process_limit` with no exception or stall. This is the final bounded resource observation;
+  prior 131,072-cycle markerless stage-digest evidence remains the functional equivalence route.
+
+## J3 final bounded observations
+
+- TS-only frozen-baseline retry for `application/toothbrush2.nal` with a 3,600,000 ms limit
+  passed both markers in 1,154,353 ms; peak RSS was 876,658,688 bytes. Evidence SHA-256:
+  `188BD390BB87B824683CF26BCEFF5C41F64EE907A2035A3D4F32944B32A5DE1B`.
+- TS-only frozen-baseline retry for `multi_step/nars_multistep_3.nal` with a 3,600,000 ms limit
+  passed both markers in 2,145,511 ms; peak RSS was 1,027,907,584 bytes. Evidence SHA-256:
+  `ADA368AC6CB4D9D57E65037930E77EA9169E099CF51C0BB60B4D1BC3B4883FC6`.
+- J3 direct contracts and M2 are green, and all semantic marker retries now pass. The raw live-Java
+  matrix remains preserved with its environment classifications; J3 is ready for documentation
+  closure but no stage 023/024 completion claim is made.

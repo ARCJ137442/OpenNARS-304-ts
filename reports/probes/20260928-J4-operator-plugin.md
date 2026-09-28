@@ -30,3 +30,12 @@
 
 - J4 direct-import scan is currently clean; semantic responsibility and test boundary are recorded.
 - No J4 implementation or completion claim has been made.
+
+## J4 local validation checkpoint (2026-09-28)
+
+- Direct operator/plugin contracts: 34/34 passed.
+- Frozen-baseline TS-only sentinel NALs `nal9.believe1.nal`, `nal9.wonder1.nal`, `vision.nal`,
+  and `simpleOperationTest.nal`: 4/4 passed. Evidence: `reports/evidence/j4-affected-nal-20260928.jsonl`,
+  SHA-256 `066DDA9194ED1BC84885695E7A8B9D2B472BB9961951A5DC037E295EECB2308C`.
+- No J4 source edit is currently required by the direct contract or sentinel evidence. J4 still
+  requires its own immutable close evidence and PC M1 close gate before it can be called complete.
