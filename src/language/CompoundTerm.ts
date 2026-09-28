@@ -1,5 +1,4 @@
 //! Java source: opennars/language/CompoundTerm.java
-import { java, S } from "jree";
 import type { short, int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
@@ -11,12 +10,22 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Terms } from "./Terms.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
-import { javaStringHashCode, javaStringsEqual, toJavaString, type JavaChar } from "../runtime/jree-compat.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { javaStringHashCode, javaStringsEqual, toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
+import {
+    JavaIllegalArgumentException,
+    JavaNoSuchElementException,
+    JavaRuntimeException,
+    JavaUnsupportedOperationException,
+} from "../runtime/JavaExceptions.ts";
 import { NativeFixedList, NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
+import type { JavaIterator } from "../runtime/JavaIterator.ts";
+
+type RandomLike = { nextInt(bound?: number): number };
+type CollectionLike<T> = { add(value: T): unknown };
+const INTEGER_MAX_VALUE = 0x7fffffff;
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -107,13 +116,13 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     public static UpdateConvRectangle(term: Term[]): CompoundTerm.ConvRectangle {
         let index_last_var: string | null = null;
-        let minX: int = java.lang.Integer.MAX_VALUE;
-        let minY: int = java.lang.Integer.MAX_VALUE;
+        let minX: int = INTEGER_MAX_VALUE;
+        let minY: int = INTEGER_MAX_VALUE;
         let maxX: int = 0;
         let maxY: int = 0;
         let
-            minsX: int = java.lang.Integer.MAX_VALUE;
-        let minsY: int = java.lang.Integer.MAX_VALUE;
+            minsX: int = INTEGER_MAX_VALUE;
+        let minsY: int = INTEGER_MAX_VALUE;
         let hasTermIndices: boolean = false;
         let calculateTermIndices: boolean = true;
         for (let t of term) {
@@ -189,7 +198,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     public invalidateName(): void {
-        this.setName(null as unknown as java.lang.CharSequence); // invalidate name so it will be (re-)created lazily
+        this.setName(null); // invalidate name so it will be (re-)created lazily
         for (let t of this.term) {
             if (t.hasVar())
                 if (t instanceof CompoundTerm)
@@ -205,7 +214,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         if (Debug.DETAILED && c.getClass() !== this.getClass()) // debug relevant, while it is natural due to interval
             // simplification to reduce to other term type,
             // other cases should not appear
-            java.lang.System.out.println("cloneDeep resulted in different class: " + c + " from " + this);
+            console.warn("cloneDeep resulted in different class: " + c + " from " + this);
         if (this.isNormalized())
             (c as CompoundTerm).setNormalized(true);
         if (!(c instanceof CompoundTerm)) {
@@ -282,19 +291,15 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return ret;
     }
 
-    public static UnableToCloneException = class UnableToCloneException extends java.lang.RuntimeException {
+    public static UnableToCloneException = class UnableToCloneException extends JavaRuntimeException {
 
-        public constructor(message: java.lang.String) {
+        public constructor(message: unknown) {
             super(message);
         }
 
-        public override  fillInStackTrace(): java.lang.Throwable {
-            if (Debug.DETAILED) {
-                return super.fillInStackTrace();
-            } else {
-                // avoid recording stack trace for efficiency reasons
-                return this;
-            }
+        public fillInStackTrace(): this {
+            // Keep the Java method available without reintroducing a jree Throwable type.
+            return this;
         }
 
     };
@@ -307,7 +312,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             return null as unknown as CompoundTerm;
 
         if (Debug.DETAILED && c.getClass() !== this.getClass())
-            java.lang.System.out.println("cloneDeepVariables resulted in different class: " + c + " from " + this);
+            console.warn("cloneDeepVariables resulted in different class: " + c + " from " + this);
 
         let cc: CompoundTerm = c as CompoundTerm;
         cc.setNormalized(this.isNormalized());
@@ -366,11 +371,11 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      *
      * @return the oldName of the term
      */
-    protected makeName(): java.lang.CharSequence {
+    protected makeName(): JavaCharSequence {
         return CompoundTerm.makeCompoundName(this.operator(), ...this.term);
     }
 
-    public name(): java.lang.CharSequence {
+    public name(): JavaCharSequence {
         const currentName = this.nameInternal();
         if (currentName === null) {
             const rebuiltName = this.makeName();
@@ -387,7 +392,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * @param arg the list of term
      * @return the oldName of the term
      */
-    protected static makeCompoundName(op: NativeOperator, ...arg: Term[]): java.lang.CharSequence {
+    protected static makeCompoundName(op: NativeOperator, ...arg: Term[]): JavaCharSequence {
         const opString = op.toString();
         const names = arg.map((t) => String(t.name()));
         return toJavaString(
@@ -549,7 +554,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return l;
     }
 
-    public static shuffle(ar: Term[], randomNumber: java.util.Random): void {
+    public static shuffle(ar: Term[], randomNumber: RandomLike): void {
         if (ar.length < 2) {
             return;
         }
@@ -705,7 +710,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         if (args.length === 1) {
             return super.hasVar(args[0] as JavaChar);
         }
-        throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+        throw new JavaIllegalArgumentException("Invalid number of arguments");
     }
 
     public hasVarDep(): boolean {
@@ -764,7 +769,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             return this;
 
         if (this.isCommutative()) {
-            java.util.Arrays.sort(tt);
+            tt.sort((left, right) => left.compareTo(right));
         }
 
         return this.clone(tt);
@@ -799,7 +804,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return Terms.prepareComponentLinks(componentLinks, this);
     }
 
-    public addTermsTo(c: java.util.Collection<Term>): void {
+    public addTermsTo(c: CollectionLike<Term>): void {
         for (const term of this.term) {
             c.add(term);
         }
@@ -844,7 +849,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return y;
     }
 
-    public iterator(): java.util.Iterator<Term> {
+    public iterator(): JavaIterator<Term> {
         // Java delegates to Guava Iterators.forArray(term), whose
         // UnmodifiableIterator reads this array in order and rejects remove().
         const terms = this.term;
@@ -853,14 +858,14 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             hasNext: (): boolean => index < terms.length,
             next: (): Term => {
                 if (index >= terms.length) {
-                    throw new java.util.NoSuchElementException();
+                    throw new JavaNoSuchElementException();
                 }
                 return terms[index++];
             },
             remove: (): void => {
-                throw new java.lang.UnsupportedOperationException();
+                    throw new JavaUnsupportedOperationException();
             },
-        } as unknown as java.util.Iterator<Term>;
+        };
     }
 
     public [Symbol.iterator](): IterableIterator<Term> {

@@ -1,11 +1,17 @@
 //! Java source: opennars/language/Variable.java
-import { java, S } from "jree";
 import type { int, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../io/Texts.ts";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { javaIdentityHashCode, javaStringHashCode, javaStringValue, toJavaString, type JavaChar } from "../runtime/jree-compat.ts";
+import {
+    javaIdentityHashCode,
+    javaStringHashCode,
+    javaStringValue,
+    toJavaString,
+    type JavaChar,
+    type JavaCharSequence,
+} from "../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
@@ -30,14 +36,14 @@ export class Variable extends Term {
 
     private hash: int;
 
-    public constructor(name: java.lang.CharSequence | string);
+    public constructor(name: JavaCharSequence | string);
 
     /**
      * Constructor, from a given variable name
      *
      * @param name A String read from input
      */
-    public constructor(name: java.lang.CharSequence | string, scope: Term);
+    public constructor(name: JavaCharSequence | string, scope: Term);
     public constructor(...args: unknown[]) {
         super();
         // Java exposes the object only after setScope establishes this invariant;
@@ -47,7 +53,7 @@ export class Variable extends Term {
 
         switch (args.length) {
             case 1: {
-                const [rawName] = args as [java.lang.CharSequence | string];
+                const [rawName] = args as [JavaCharSequence | string];
                 const name = typeof rawName === "string" ? toJavaString(rawName) : rawName;
 
 
@@ -61,7 +67,7 @@ export class Variable extends Term {
             }
 
             case 2: {
-                const [rawName, scope] = args as [java.lang.CharSequence | string, Term];
+                const [rawName, scope] = args as [JavaCharSequence | string, Term];
                 const name = typeof rawName === "string" ? toJavaString(rawName) : rawName;
 
 
@@ -72,15 +78,15 @@ export class Variable extends Term {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
 
 
-    public setScope(scope: Term | null, n: java.lang.CharSequence): Variable {
+    public setScope(scope: Term | null, n: JavaCharSequence): Variable {
         this.setName(n);
-        const first = java.lang.String.valueOf(n).charAt(0);
+        const first = javaStringValue(n).charAt(0);
         this.type = typeof first === "number" ? String.fromCharCode(first) : first;
         this.scope = scope !== null ? scope : this;
         this.hash = 0; // calculate lazily
@@ -265,7 +271,7 @@ export class Variable extends Term {
     }
 
     public isCommon(): boolean {
-        let n: java.lang.CharSequence = this.name();
+        let n: JavaCharSequence = this.name();
         let l: int = n.length();
         const last = n.charAt(l - 1);
         // jree exposes Java charAt() as a numeric code unit in this runtime;
@@ -289,7 +295,7 @@ export class Variable extends Term {
                 // so use their identityHashCode to determine a stable ordering
                 let as: int = javaIdentityHashCode(a.scope);
                 let bs: int = javaIdentityHashCode(b.scope);
-                return java.lang.Integer.compare(as, bs);
+                return as < bs ? -1 : as > bs ? 1 : 0;
             } else if (ascoped && !bscoped) {
                 return -1;
             } else if (bscoped && !ascoped) {
@@ -307,15 +313,15 @@ export class Variable extends Term {
     }
 
     private static readonly MAX_CACHED_VARNAME_INDEXES: int = 64;
-    private static readonly vn1: java.lang.CharSequence[] = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
-    private static readonly vn2: java.lang.CharSequence[] = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
-    private static readonly vn3: java.lang.CharSequence[] = new Array<java.lang.CharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
+    private static readonly vn1: JavaCharSequence[] = new Array<JavaCharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
+    private static readonly vn2: JavaCharSequence[] = new Array<JavaCharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
+    private static readonly vn3: JavaCharSequence[] = new Array<JavaCharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
 
-    public static getName(type: JavaChar, index: int): java.lang.CharSequence {
+    public static getName(type: JavaChar, index: int): JavaCharSequence {
         if (index > Variable.MAX_CACHED_VARNAME_INDEXES)
             return Variable.newName(type, index);
 
-        let cache: java.lang.CharSequence[];
+        let cache: JavaCharSequence[];
         switch (type) {
             case VAR_INDEPENDENT:
                 cache = Variable.vn1;
@@ -330,7 +336,7 @@ export class Variable extends Term {
                 throw new JavaIllegalStateException("Invalid variable type");
         }
 
-        let c: java.lang.CharSequence = cache[index];
+        let c: JavaCharSequence = cache[index];
         if (c == null) {
             c = Variable.newName(type, index);
             cache[index] = c;
@@ -339,7 +345,7 @@ export class Variable extends Term {
         return c;
     }
 
-    protected static newName(type: JavaChar, index: int): java.lang.CharSequence {
+    protected static newName(type: JavaChar, index: int): JavaCharSequence {
         const typeText = typeof type === "number" ? String.fromCharCode(type) : String(type);
         let name = typeText;
         do {

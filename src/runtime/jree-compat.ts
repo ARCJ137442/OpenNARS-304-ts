@@ -14,9 +14,11 @@ import {
     JavaInvocationTargetException,
     JavaNoSuchMethodException,
     JavaNumberFormatException,
+    JavaNoSuchElementException,
     JavaParseException,
     JavaParserConfigurationException,
     JavaRuntimeException,
+    JavaUnsupportedOperationException,
     JavaSAXException,
     JavaThrowable,
 } from "./JavaExceptions.ts";
@@ -31,9 +33,11 @@ export {
     JavaInvocationTargetException,
     JavaNoSuchMethodException,
     JavaNumberFormatException,
+    JavaNoSuchElementException,
     JavaParseException,
     JavaParserConfigurationException,
     JavaSAXException,
+    JavaUnsupportedOperationException,
 } from "./JavaExceptions.ts";
 
 // jree 1.3.0 constructs and parses an Error stack in every JavaObject class
@@ -210,6 +214,10 @@ registerJreeInstanceof(java.lang.IllegalArgumentException,
     value => value instanceof JavaIllegalArgumentException);
 registerJreeInstanceof(java.lang.IllegalStateException,
     value => value instanceof JavaIllegalStateException);
+registerJreeInstanceof(java.util.NoSuchElementException,
+    value => value instanceof JavaNoSuchElementException);
+registerJreeInstanceof(java.lang.UnsupportedOperationException,
+    value => value instanceof JavaUnsupportedOperationException);
 
 /**
  * Temporary exception observation boundary.

@@ -1,12 +1,20 @@
 //! Java source: opennars/language/Term.java
-import { java, type JavaString, S } from "jree";
 import type { int, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
-import { javaStringHashCode, javaStringValue, javaStringsEqual, type JavaChar } from "../runtime/jree-compat.ts";
+import {
+    javaStringHashCode,
+    javaStringValue,
+    javaStringsEqual,
+    toJavaString,
+    type JavaChar,
+    type JavaCharSequence,
+    type JavaString,
+    type JavaStringInput,
+} from "../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { NativeSortedSet } from "../runtime/NativeSortedSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
@@ -65,7 +73,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
     // Java permits a field and a method to share a name; an instance property
     // with that name would shadow `name()` in JavaScript. Keep the cache under a
     // distinct name so the translated method remains callable at runtime.
-    private nameValue: java.lang.CharSequence | null = null;
+    private nameValue: JavaCharSequence | null = null;
 
     public static isSelf(t: Term): boolean {
         return Term.SELF.equals(t);
@@ -115,8 +123,8 @@ export class Term extends RuntimeObject implements AbstractTerm {
      *
      * @param name A String as the name of the Term
      */
-    public constructor(name: JavaString);
-    public constructor(name: java.lang.CharSequence);
+    public constructor(name: JavaStringInput);
+    public constructor(name: JavaCharSequence);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -128,7 +136,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             case 1: {
-                const [name] = args as [java.lang.CharSequence];
+                const [name] = args as [JavaStringInput];
 
 
                 super();
@@ -139,7 +147,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -147,14 +155,14 @@ export class Term extends RuntimeObject implements AbstractTerm {
 
     /** gets the atomic term given a name */
     public static get(name: string): Term;
-    public static get(name: java.lang.CharSequence): Term;
+    public static get(name: JavaCharSequence): Term;
 
     /** gets the atomic term of an integer */
     public static get(i: int): Term;
     public static get(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
-                const [name] = args as [java.lang.CharSequence];
+                const [name] = args as [JavaStringInput];
 
 
                 const nativeName = javaStringValue(name);
@@ -164,16 +172,16 @@ export class Term extends RuntimeObject implements AbstractTerm {
                     return x;
                 }
 
-                let nameStr: java.lang.String = nativeName as unknown as java.lang.String;
+                let nameStr = nativeName;
                 // p[s,i,j]
                 let term_indices: Int32Array | null = null;
-                let before_indices_str: java.lang.String | null = null;
+                let before_indices_str: string | null = null;
                 if (javaStringValue(nameStr).endsWith("]") && javaStringValue(nameStr).includes("[")) { // simple check, failing for most terms
-                    let indices_str: java.lang.String = nameStr.split("[")[1].split("]")[0];
+                    let indices_str: string = nameStr.split("[")[1].split("]")[0];
                     before_indices_str = nameStr.split("[")[0];
-                    let ind_s: java.lang.String[] = indices_str.split(",");
+                    let ind_s: string[] = indices_str.split(",");
                     if (ind_s.length === 2) { // only position info given
-                        indices_str = java.lang.String.valueOf("1,1," + indices_str);
+                        indices_str = "1,1," + indices_str;
                         ind_s = indices_str.split(",");
                     }
                     term_indices = new Int32Array(ind_s.length);
@@ -182,7 +190,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
                         // Decimal coordinates such as -1.0 therefore stay conceptual and
                         // are mapped by Nar.dispatchToSensoryChannel before matrix access.
                         if (/^\d+$/.test(String(ind_s[i]).trim()))
-                            term_indices[i] = java.lang.Integer.valueOf(ind_s[i]).valueOf();
+                            term_indices[i] = Number.parseInt(ind_s[i], 10);
                         else {
                             term_indices = null;
                             break;
@@ -190,9 +198,9 @@ export class Term extends RuntimeObject implements AbstractTerm {
                     }
                 }
 
-                let name2: java.lang.CharSequence = nativeName as unknown as java.lang.CharSequence;
+                let name2: JavaStringInput = nativeName;
                 if (term_indices !== null) { // only on conceptual level not
-                    name2 = (String(before_indices_str) + "[i,j,k,l]") as unknown as java.lang.CharSequence;
+                    name2 = String(before_indices_str) + "[i,j,k,l]";
                 }
                 x = new Term(name2);
                 x.term_indices = term_indices;
@@ -209,14 +217,14 @@ export class Term extends RuntimeObject implements AbstractTerm {
                 const [i] = args as [int];
 
 
-                return Term.get(java.lang.Integer.toString(i));
+                return Term.get(String(i));
 
 
                 break;
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -227,13 +235,13 @@ export class Term extends RuntimeObject implements AbstractTerm {
      *
      * @return The name of the term as a String
      */
-    public name(): java.lang.CharSequence {
+    public name(): JavaCharSequence {
         // Java's internal field is nullable: CompoundTerm.name() relies on
         // null to invalidate and lazily rebuild compound names.
-        return this.nameInternal() as java.lang.CharSequence;
+        return this.nameInternal() as JavaCharSequence;
     }
 
-    protected nameInternal(): java.lang.CharSequence | null {
+    protected nameInternal(): JavaCharSequence | null {
         return this.nameValue;
     }
 
@@ -366,7 +374,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -384,13 +392,13 @@ export class Term extends RuntimeObject implements AbstractTerm {
      * set the name
      */
     // only method that should modify Term.name
-    protected setName(newName: java.lang.CharSequence | null): void {
+    protected setName(newName: JavaCharSequence | string | null): void {
         // Java callers expect CharSequence methods (hashCode/equals/etc.),
         // while translated literals arrive as native strings.
         this.nameValue = newName === null
             ? null
             : typeof newName === "string"
-            ? java.lang.String.valueOf(newName)
+            ? toJavaString(newName)
             : newName;
     }
 
@@ -461,7 +469,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
      *
      * @return The name of the term as a String
      */
-    public override toString(): java.lang.String {
+    public override toString(): JavaString {
         return this.name().toString();
     }
 
@@ -469,7 +477,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
      * Creates a quote-escaped term from a string. Useful for an atomic term that is
      * meant to contain a message as its name
      */
-    public static text(t: java.lang.String): Term {
+    public static text(t: JavaStringInput): Term {
         return Term.get("\"" + t + "\"");
     }
 
@@ -513,7 +521,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -535,13 +543,13 @@ export class Term extends RuntimeObject implements AbstractTerm {
         return false;
     }
 
-    public static toSortedSet(...arg: Term[]): java.util.Set<Term> {
+    public static toSortedSet(...arg: Term[]): NativeSortedSet<Term> {
         // jree does not provide java.util.TreeSet. Keep the actual Set
         // contract native instead of returning an ArrayList with a Set cast.
         return new NativeSortedSet(
             Term.toSortedSetArray(...arg),
             (left, right) => left.compareTo(right),
-        ) as unknown as java.util.Set<Term>;
+        );
     }
 
     /**

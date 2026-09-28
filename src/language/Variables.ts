@@ -1,5 +1,4 @@
 //! Java source: opennars/language/Variables.java
-import { java, S } from "jree";
 import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Variable } from "./Variable.ts";
@@ -17,8 +16,10 @@ import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import type { Term } from "./Term.ts";
-import type { JavaChar } from "../runtime/jree-compat.ts";
+import { javaStringLength, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+
+type RandomLike = { nextInt(bound?: number): number };
 
 // Java 原类型：Map<Term, Term>，实现类型：LinkedHashMap。
 // The two-element array remains the Java Map<Term, Term>[] container; only the
@@ -42,18 +43,18 @@ export class Variables {
      * this is to delay the instantiation of the 2 Map until necessary to avoid
      * wasting them if they are not used.
      */
-    public static findSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term,
+    public static findSubstitute(rnd: RandomLike, type: JavaChar, term1: Term, term2: Term,
         map: MapContract<Term, Term>[]): boolean;
 
-    public static findSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term,
+    public static findSubstitute(rnd: RandomLike, type: JavaChar, term1: Term, term2: Term,
         map1: MapContract<Term, Term>, map2: MapContract<Term, Term>): boolean;
 
-    public static findSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term,
+    public static findSubstitute(rnd: RandomLike, type: JavaChar, term1: Term, term2: Term,
         map: MapContract<Term, Term>[], allowPartial: boolean): boolean;
     public static findSubstitute(...args: unknown[]): boolean {
         switch (args.length) {
             case 5: {
-                const [rnd, type, term1, term2, map] = args as [java.util.Random, JavaChar, Term, Term, MapContract<Term, Term>[]];
+                const [rnd, type, term1, term2, map] = args as [RandomLike, JavaChar, Term, Term, MapContract<Term, Term>[]];
 
 
                 return Variables.findSubstitute(rnd, type, term1, term2, map, false);
@@ -64,11 +65,11 @@ export class Variables {
 
             case 6: {
                 if (typeof args[5] !== "boolean") {
-                    const [rnd, type, term1, term2, map1, map2] = args as [java.util.Random, JavaChar, Term, Term, MapContract<Term, Term>, MapContract<Term, Term>];
+                    const [rnd, type, term1, term2, map1, map2] = args as [RandomLike, JavaChar, Term, Term, MapContract<Term, Term>, MapContract<Term, Term>];
                     return Variables.findSubstitute(rnd, type, term1, term2, [map1, map2]);
                 }
 
-                const [rnd, type, term1, term2, map, allowPartial] = args as [java.util.Random, JavaChar, Term, Term, MapContract<Term, Term>[], boolean];
+                const [rnd, type, term1, term2, map, allowPartial] = args as [RandomLike, JavaChar, Term, Term, MapContract<Term, Term>[], boolean];
 
 
 
@@ -240,11 +241,11 @@ export class Variables {
                         }
                         // Java source: final Set<Integer> matchedJ = new LinkedHashSet<>(list.length * 2);
                         // Keep Integer wrapper values at the translated Java boundary; NativeSet preserves Set uniqueness.
-                        const matchedJ = new NativeSet<java.lang.Integer>();
+                        const matchedJ = new NativeSet<number>();
                         for (let i: int = 0; i < list.length; i++) {
                             let succeeded: boolean = false;
                             for (let j: int = 0; j < list.length; j++) {
-                                if (matchedJ.contains(java.lang.Integer.valueOf(j))) { // this one already was used to match one of the i's
+                                if (matchedJ.contains(j)) { // this one already was used to match one of the i's
                                     continue;
                                 }
                                 let ti: Term = list[i].clone();
@@ -263,7 +264,7 @@ export class Variables {
                                     Variables.appendToMap(mapNew[0], map[0]);
                                     Variables.appendToMap(mapNew[1], map[1]);
                                     succeeded = true;
-                                    matchedJ.add(java.lang.Integer.valueOf(j));
+                                    matchedJ.add(j);
                                     break;
                                 }
                             }
@@ -289,7 +290,7 @@ export class Variables {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -356,20 +357,24 @@ export class Variables {
      * @param n The string name to be checked
      * @return Whether the name contains a variable
      */
-    public static containVar(n: java.lang.CharSequence): boolean;
+    public static containVar(n: JavaCharSequence | string): boolean;
 
     public static containVar(t: Term[]): boolean;
     public static containVar(...args: unknown[]): boolean {
         switch (args.length) {
             case 1: {
-                const [n] = args as [java.lang.CharSequence];
+                const [n] = args as [JavaCharSequence | string];
 
 
                 if (n === null)
                     return false;
-                let l: int = n.length();
+                let l: int = javaStringLength(n);
                 for (let i: int = 0; i < l; i++) {
-                    switch (String.fromCharCode(n.charAt(i) as unknown as number)) {
+                    const rawChar = n.charAt(i);
+                    const character = typeof rawChar === "number"
+                        ? String.fromCharCode(rawChar)
+                        : String(rawChar);
+                    switch (character) {
                         case Symbols.VAR_INDEPENDENT:
                         case Symbols.VAR_DEPENDENT:
                         case Symbols.VAR_QUERY:
@@ -399,7 +404,7 @@ export class Variables {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -414,7 +419,7 @@ export class Variables {
      * @return Whether the unification is possible. 't' will refer to the unified
      *         terms
      */
-    public static unify(rnd: java.util.Random, type: JavaChar, t: Term[]): boolean;
+    public static unify(rnd: RandomLike, type: JavaChar, t: Term[]): boolean;
 
     /**
      * To unify two terms
@@ -427,14 +432,14 @@ export class Variables {
      * @return Whether the unification is possible. 't' will refer to the unified
      *         terms
      */
-    public static unify(rnd: java.util.Random, type: JavaChar, t1: Term, t2: Term, compound: Term[]): boolean;
+    public static unify(rnd: RandomLike, type: JavaChar, t1: Term, t2: Term, compound: Term[]): boolean;
 
-    public static unify(rnd: java.util.Random, type: JavaChar, t1: Term, t2: Term, compound: Term[],
+    public static unify(rnd: RandomLike, type: JavaChar, t1: Term, t2: Term, compound: Term[],
         allowPartial: boolean): boolean;
     public static unify(...args: unknown[]): boolean {
         switch (args.length) {
             case 3: {
-                const [rnd, type, t] = args as [java.util.Random, JavaChar, Term[]];
+                const [rnd, type, t] = args as [RandomLike, JavaChar, Term[]];
 
 
                 return Variables.unify(rnd, type, t[0], t[1], t);
@@ -444,7 +449,7 @@ export class Variables {
             }
 
             case 5: {
-                const [rnd, type, t1, t2, compound] = args as [java.util.Random, JavaChar, Term, Term, Term[]];
+                const [rnd, type, t1, t2, compound] = args as [RandomLike, JavaChar, Term, Term, Term[]];
 
 
                 return Variables.unify(rnd, type, t1, t2, compound, false);
@@ -454,7 +459,7 @@ export class Variables {
             }
 
             case 6: {
-                const [rnd, type, t1, t2, compound, allowPartial] = args as [java.util.Random, JavaChar, Term, Term, Term[], boolean];
+                const [rnd, type, t1, t2, compound, allowPartial] = args as [RandomLike, JavaChar, Term, Term, Term[], boolean];
 
 
                 let map: MapContract<Term, Term>[] = [
@@ -493,7 +498,7 @@ export class Variables {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -564,7 +569,7 @@ export class Variables {
      * @param term2 The second term to be unified
      * @return Whether there is a substitution
      */
-    public static hasSubstitute(rnd: java.util.Random, type: JavaChar, term1: Term, term2: Term): boolean {
+    public static hasSubstitute(rnd: RandomLike, type: JavaChar, term1: Term, term2: Term): boolean {
         return Variables.findSubstitute(rnd, type, term1, term2, nativeTermMap(), nativeTermMap());
     }
 

@@ -123,6 +123,10 @@ export class JavaIllegalStateException extends JavaRuntimeException {}
 
 /** Java original type: java.lang.NullPointerException. */
 export class JavaNullPointerException extends JavaRuntimeException {}
+/** Java original type: java.util.NoSuchElementException. */
+export class JavaNoSuchElementException extends JavaRuntimeException {}
+/** Java original type: java.lang.UnsupportedOperationException. */
+export class JavaUnsupportedOperationException extends JavaRuntimeException {}
 
 /** Java original type: java.lang.IllegalAccessError. */
 export class JavaIllegalAccessError extends JavaError {}

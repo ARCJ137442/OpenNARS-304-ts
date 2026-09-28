@@ -1,5 +1,4 @@
 //! Java source: opennars/language/Terms.java
-import { java, S } from "jree";
 import type { int, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -10,8 +9,13 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Term } from "./Term.ts";
 import type { Memory } from "../storage/Memory.ts";
 import { javaValuesEqual } from "../runtime/jree-compat.ts";
+import type { JavaCharSequence } from "../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { NativeList } from "../runtime/NativeList.ts";
+
+type CollectionInput<T> = Iterable<T> & { toArray(array?: T[]): T[] };
+const javaArrayToString = (values: readonly unknown[]): string =>
+    `[${values.map((value) => String(value)).join(", ")}]`;
 import { NativeSet } from "../runtime/NativeSet.ts";
 
 type TermsRuntime = Record<string, any>;
@@ -82,7 +86,7 @@ const normalizeComponentForLinks = (term: Term): Term => {
         }
     });
 
-    const rename = new Map<string, java.lang.CharSequence>();
+    const rename = new Map<string, JavaCharSequence>();
     let renamed = false;
     for (const variable of variables) {
         let variableName = String(variable.name());
@@ -223,7 +227,7 @@ export class Terms {
 
     public static term(compound: CompoundTerm, components: NativeList<Term>): Term;
 
-    public static term(compound: CompoundTerm, components: java.util.Collection<Term>): Term;
+    public static term(compound: CompoundTerm, components: CollectionInput<Term>): Term;
 
     /**
      * Try to make a compound term from an operator and a list of term
@@ -238,7 +242,7 @@ export class Terms {
     public static term(...args: unknown[]): Term {
         switch (args.length) {
             case 2: {
-                const [source, rawComponents] = args as [CompoundTerm | Symbols.NativeOperator, Term[] | NativeList<Term> | java.util.Collection<Term>];
+                const [source, rawComponents] = args as [CompoundTerm | Symbols.NativeOperator, Term[] | NativeList<Term> | CollectionInput<Term>];
                 const componentList: Term[] = Array.isArray(rawComponents)
                     ? rawComponents
                     : rawComponents instanceof NativeList
@@ -320,7 +324,7 @@ export class Terms {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -593,7 +597,7 @@ export class Terms {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -636,7 +640,7 @@ export class Terms {
     }
 
     /** a contains any of b NOT TESTED YET */
-    public static containsAny(a: Term[], b: java.util.Collection<Term>): boolean {
+    public static containsAny(a: Term[], b: CollectionInput<Term>): boolean {
         for (let bx of b) {
             if (Terms.contains(a, bx))
                 return true;
@@ -669,12 +673,12 @@ export class Terms {
         return true;
     }
 
-    public static verifyNonNull(t: java.util.Collection<unknown>): void;
+    public static verifyNonNull(t: CollectionInput<unknown>): void;
 
     public static verifyNonNull(...args: unknown[]): void {
         switch (args.length) {
             case 1: {
-                const [t] = args as [java.util.Collection<unknown>];
+                const [t] = args as [CollectionInput<unknown>];
 
 
                 for (let o of t)
@@ -691,14 +695,14 @@ export class Terms {
 
                 for (let o of t)
                     if (o === null)
-                        throw new JavaIllegalStateException("Element null in: " + java.util.Arrays.toString(t));
+                        throw new JavaIllegalStateException("Element null in: " + javaArrayToString(t));
 
 
                 break;
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new JavaIllegalArgumentException("Invalid number of arguments");
             }
         }
     }
@@ -706,7 +710,7 @@ export class Terms {
     public static verifyNonNullTerms(...t: Term[]): void {
         for (let o of t)
             if (o === null)
-                throw new JavaIllegalStateException("Element null in: " + java.util.Arrays.toString(t));
+                throw new JavaIllegalStateException("Element null in: " + javaArrayToString(t));
     }
 
 
@@ -715,17 +719,17 @@ export class Terms {
             throw new JavaIllegalStateException("Needs >0 components");
         }
         if (!allowSingleton && (arg.length === 1)) {
-            throw new JavaIllegalStateException("Needs >1 components: " + java.util.Arrays.toString(arg));
+            throw new JavaIllegalStateException("Needs >1 components: " + javaArrayToString(arg));
         }
         let s: Term[] = Term.toSortedSetArray(...arg);
         if (arg.length !== s.length) {
-            throw new JavaIllegalStateException("Contains duplicates: " + java.util.Arrays.toString(arg));
+            throw new JavaIllegalStateException("Contains duplicates: " + javaArrayToString(arg));
         }
         let j: int = 0;
         for (let t of s) {
             if (!t.equals(arg[j++]))
                 throw new JavaIllegalStateException(
-                    "Un-ordered: " + java.util.Arrays.toString(arg) + " , correct order=" + java.util.Arrays.toString(s));
+                    "Un-ordered: " + javaArrayToString(arg) + " , correct order=" + javaArrayToString(s));
         }
         return s;
     }

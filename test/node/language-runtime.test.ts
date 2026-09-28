@@ -36,6 +36,22 @@ test("AbstractTerm keeps the Java CharSequence name contract without a direct jr
     assert.equal(typeof term.compareTo, "function");
 });
 
+test("J2 text boundaries preserve supplementary UTF-16 units and Java hash", async () => {
+    const { Term } = await import("../../src/language/Term.ts");
+    const { Variable } = await import("../../src/language/Variable.ts");
+    const { javaStringHashCode, javaStringsEqual } = await import("../../src/runtime/jree-compat.ts");
+
+    const supplementary = "term-😀";
+    const term = Term.get(supplementary);
+    assert.equal(String(term.name()), supplementary);
+    assert.equal(term.hashCode(), javaStringHashCode(supplementary));
+    assert.equal(javaStringsEqual(term.name(), supplementary), true);
+
+    const variable = new Variable(`$${supplementary}`);
+    assert.equal(String(variable.name()), `$${supplementary}`);
+    assert.equal(variable.getType(), "$");
+});
+
 test("Implication.clone preserves the source term and runtime type", async () => {
     const { Implication } = await import("../../src/language/Implication.ts");
     const { Term } = await import("../../src/language/Term.ts");
