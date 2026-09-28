@@ -141,3 +141,11 @@ No J3/J4/J5 production file is part of this batch. If a public type adjustment r
 - Static migration outputs are saved as `reports/evidence/j2-audit-jree-20260928.json` and `reports/evidence/j2-audit-platform-20260928.json`; both commands exit 0. The J2-owned direct-import count is zero; the remaining seven direct-import files belong to later responsibility clusters or the compatibility bridge.
 - J2 is ready for its immutable close commit and PC full M1 close gate. J2 is not complete until that M1 evidence is recorded; 023, 024, and release readiness remain unclaimed.
 
+## J2 PC close-gate evidence (2026-09-28)
+
+- Immutable code commit under test: `e17247a`.
+- PC full M1 command used canonical Java, single-file chunks, cold TS, `cycles=1550`, `timeout-ms=180000`, `process-limit-ms=900000`, and resource metrics. Evidence: `reports/evidence/pc-goal-j2-full-m1-20260928.jsonl`, 245 rows, 242 functional/parity passes, 3 `process_limit`, 0 timeout, 0 exception, 0 stall, 0 not_run. The three process-limited rows are `application/toothbrush2.nal` (last progress 173590), `multi_step/nars_multistep_3.nal` (last progress 278901), and `stability/long_term_stability.nal` (last progress 85569); Java passed each row and no semantic regression is claimed. SHA-256: `E66534EECA4FA02057E1283DC2FBA8164CDB342B0A9FA5955661873A1FA5E0DD`.
+- Required extra #246 evidence: `reports/evidence/pc-goal-j2-extra-simple-20260928.jsonl`, functional/parity 1/1, 94,483 ms, peak RSS 339,230,720 bytes. SHA-256: `C1F05EF1945060B01632EBFE2BC60E48F6F4B6EDB3DCED47C12C87904E752882`.
+- The affected `nars_transitivity.nal` 900-second rerun remains a clean 2/2 marker pass (226,869 ms, peak RSS 304,193,536 bytes), confirming that the earlier 180-second row was a process-limit observation.
+- J2 exit evidence is now complete: direct tests, non-incremental typecheck, build/API, migration audits, affected NALs, TS-only M2, PC full M1, and #246 are all recorded. J2 may be marked complete in the controlling spec only after the corresponding LeanSpec status update and a traceable documentation commit; stage 023/024 and overall release readiness remain incomplete.
+

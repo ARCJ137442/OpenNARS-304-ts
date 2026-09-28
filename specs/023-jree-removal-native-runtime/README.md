@@ -1043,3 +1043,19 @@ J1/J2/J3/J4/J5=`1/6/2/0/5`。本扫描另记录 `javaStringFiles=16`、
   `vision-channel.test.ts`。
 - 哨兵 NAL：`nal9.believe1.nal`、`nal9.wonder1.nal`、`vision.nal`、
   `simpleOperationTest.nal`。
+
+### 2026-09-28：J2 语言与解析责任簇批量收口
+
+在不可变提交 `e17247a` 上一次性迁移 `CompoundTerm`、`Term`、`Terms`、`Variable`、
+`Variables` 和 `Narsese` 六个直接入口，使用项目内 UTF-16 字符串、异常、集合、迭代器和
+随机合同；补充平面文本/Java hash 回归也已加入。J2 直接导入数降为 `0`，其余直接入口
+属于后续责任簇或兼容桥，不能据此宣称 023 完成。
+
+- TS-only M2：`494 passed / 0 failed / 2 skipped`，完整 TAP 证据为
+  `reports/evidence/j2-ts-only-m2-20260928.tap`。
+- 四个 J2 哨兵均通过；`nars_transitivity.nal` 在 180 秒首次观察为
+  `process_limit`，提高到 900 秒后两个 marker 均通过。
+- PC 完整 245 项 M1：`242 passed / 3 process_limit`，0 exception、0 timeout、0 stall、
+  0 not_run；第 246 项 `simpleOperationTest.nal` parity `1/1`。完整原始证据和 SHA-256
+  记录在 `reports/probes/20260928-J2-language-parser.md`。
+- 本条只收口 J2 责任簇；J3/J4/J5、023 stage gate、024 和 020 仍保持未完成状态。
