@@ -43,3 +43,15 @@
 - Frozen-baseline J5 sentinels passed 4/4 in the shared J4 evidence. The post-batch jree
   audit reports one direct import file, the compatibility adapter itself; platform audit
   exits 0. J5 still needs immutable close evidence and its PC M1 close gate.
+
+## J5 local validation close checkpoint (2026-09-28)
+
+- Validation planner direct contracts passed serially after a transient multi-file runner OOM:
+  config platform 16/16, shell boundary 1/1, shell runtime 3/3, runtime compat 9/9, random
+  compat 3/3, native interface 1/1.
+- Full TS-only M2 is `494 passed / 0 failed / 2 skipped`; TAP SHA-256
+  `9B357BD04A9693ABE43430216B38C94512A5AC9EE2D826BE87FDC5802615B857`.
+- Planner sentinel evidence remains 4/4 against frozen baseline; SHA-256
+  `7E9DB84FC40214242101131D0C7F053D8A0FC86CF3ED869E2E156325196B4394`.
+- The J5 adapter batch is locally validated. J5 cluster close, stage 023/024, and release
+  readiness remain unclaimed until their immutable full gates and browser/Node integration evidence.
