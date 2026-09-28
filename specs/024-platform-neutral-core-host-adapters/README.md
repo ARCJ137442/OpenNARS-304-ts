@@ -69,3 +69,13 @@ transitions:
 截至当前候选 `673d390`，P3 的实现已落地但阶段门仍未关闭：插件注册表已经显式支持 Java 构造参数类型与顺序、float32 边界收窄、非法参数/重复 classpath 诊断、缺少宿主能力与宿主命令异常的区分，并补齐 `Anticipate`、`Emotions`、`InternalExperience` 三个 Java 合法无参构造路径。相关局部测试为 `14/14`，串行单测为 `212/212`，非增量 typecheck 为 0 诊断，build、dist API、局部 parity 和 `vision.nal` 均通过。
 
 P3 仍不能单独宣称完成，因为当前候选的 M1 保护矩阵为 245 个主资源中 244 个实际 marker parity，`long_term_stability.nal` 仍有进程资源上限与空 marker 观测缺口；P4、P5 以及 J/P 同提交集成回归尚未完成。P3 的实现、测试和当前候选证据应在后续与 M1 复验结果一起收口，而不是把局部通过率替代阶段门。
+
+### 2026-09-29：P5 浏览器宿主 adapter 批次
+
+在 web-demo 提交 `180924f` 中，将 Worker 构建脚本内联的 `virtualModules`、
+`nodeShimPlugin` 和 `processShim` 替换为显式 `src/browser-adapters/*` 模块；默认配置通过
+浏览器宿主 banner 注入，缺少文件/进程能力时抛出明确错误。Worker build、demo check、5 个
+demo 单测和真实浏览器 Worker 输入/输出验证通过。
+
+这只完成 P5 的 adapter 结构切片，浏览器 bundle 仍包含 jree 兼容桥，P3/P4、023/024
+阶段门和集成 M1/M2 尚未完成，不能据此标记 spec024 complete。
