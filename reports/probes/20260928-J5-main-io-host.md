@@ -55,3 +55,20 @@
   `7E9DB84FC40214242101131D0C7F053D8A0FC86CF3ED869E2E156325196B4394`.
 - The J5 adapter batch is locally validated. J5 cluster close, stage 023/024, and release
   readiness remain unclaimed until their immutable full gates and browser/Node integration evidence.
+
+## J5 PC M1 close evidence (2026-09-29)
+
+- After a Windows memory crash interrupted the first run at 24/245, the same JSONL was resumed
+  twice without repeating completed rows. Final TS-only frozen-baseline evidence on commit
+  `a320464`: `reports/evidence/pc-goal-j5-full-m1-20260928.jsonl`, 245 rows, 244 functional/
+  parity passes, 1 process_limit, 0 timeout, 0 exception, 0 stall, 0 not_run. SHA-256:
+  `026387A3E863996A7DEB1FD1B281E93A1BCBB5004C202B5806AC95674464ED3C`.
+- The only process-limited row is `stability/long_term_stability.nal`; its last bounded run
+  used 7,200,050 ms and is a resource observation. No Java process was started during these
+  retries; all rows use frozen baseline SHA `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`.
+- Extra #246 TS-only evidence passed: `reports/evidence/pc-goal-j5-extra-simple-20260929.jsonl`,
+  86,372 ms, peak RSS 354,512,896 bytes, SHA-256
+  `F37E0252FBEF1BBDCE240E0EC7B2FAC3236437FB9B1BDE8C40ECFE64830FD2C0`.
+- J5 responsibility evidence is complete for local contracts, M2, sentinels, audits, 245+1
+  TS-only M1, and the interrupted-run recovery. Stage 023/024 and browser integration gates
+  remain incomplete.
