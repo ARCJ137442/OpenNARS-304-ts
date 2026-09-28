@@ -197,12 +197,21 @@ SHA、验证命令与分类、原始证据、实际周期、依赖审计差值�
 ## 2026-09-28 J1 Runtime Compatibility Recovery Plan
 
 - Re-read after context compaction: `reports/probes/20260928-J1-runtime-compat.md` is the active J1 short-term memory.
-- Current base commit is `9605701429b000aa88987e2161d1d1816c22761e`; the worktree contains the in-progress J1 runtime batch plus pre-existing untracked reports/evidence. Do not discard either class of changes.
+- J1 implementation commit is `7d95bf697396958b04c9d2152eae95ce8951538a`; the worktree contains only pre-existing untracked reports/evidence after the commit. Do not discard those historical paths.
 - J1 owns `src/runtime/**`, `src/util/**`, and `src/types.ts`. The implementation is one cohesive runtime batch; downstream Random consumers, Shell, logger users, Charset users, and the twelve non-bridge direct `jree` imports stay with J2-J5.
 - The batch adds a project-owned Java 48-bit LCG, strengthens RuntimeClassToken and JavaExceptions, enforces UTF-16/hash/compare and safe long boundaries, and adds direct project-owned runtime contract tests. The bridge keeps only documented compatibility behavior required by live downstream callers.
 - Implementation checkpoint: `JavaRandom.ts`, the bridge delegation, `RuntimeConstructor`, safe long checks, UTF-16 sequence length handling, and JavaThrowable cause/suppressed lifecycle are implemented and covered by direct tests.
 - `arc137-dev-standard` is active for this batch. New responsibilities stay behind explicit adapters, legacy compatibility is kept local with removal conditions, and no unrelated cleanup is included.
 - Completion claims remain limited to J1 evidence. J2-J5, stage 023, and stage 024 are not complete until their own gates pass.
+
+## 2026-09-28 J2 Language and Parser Probe
+
+- Short-term memory: `reports/probes/20260928-J2-language-parser.md`.
+- J2 is the next responsibility cluster after J1. Its six direct `jree` production imports are `CompoundTerm.ts`, `Term.ts`, `Terms.ts`, `Variable.ts`, `Variables.ts`, and `Narsese.ts`; `Parser.ts` uses only the project-owned input type, while `Symbols.ts` and `Texts.ts` remain in the semantic surface.
+- The J2 batch is organized around four contracts: UTF-16 Java text/hash/compare, project-owned collections/arrays/iterators, native exception/class identity, and Narsese `StringBuilder`/nested parser indices. It is one coherent responsibility-cluster implementation, not six file tasks.
+- Existing replacements are `jree-compat` string helpers, `NativeList`/`NativeFixedList`/`NativeSet` and iterators, `JavaRandom`, `JavaExceptions`, and `RuntimeClassToken`. The bridge remains available to later owners until their migrations.
+- J2 direct tests are `language-runtime.test.ts`, `narsese-boundary.test.ts`, and `narsese-temporal.test.ts`, with focused string/exception boundary tests selected by the validation plan. Sentinel NALs are `nal4.7.nal`, `nal6.17.nal`, `nal8.add.nal`, and `nars_transitivity.nal`.
+- J2 exit requires no direct `jree` import in its six owned production files, no public J2 declaration leaking jree types, all direct checks and sentinels passing, and one PC full M1 at cluster close. J2 implementation may start only after the J1 close evidence and its remaining process-limit diagnosis are recorded.
 
 ### J1 validation checkpoint
 
@@ -210,4 +219,22 @@ SHA、验证命令与分类、原始证据、实际周期、依赖审计差值�
 - Affected NALs `nal1.0.nal`, `nal6.17.nal`, and `toothbrush.nal` passed `3/3`; evidence SHA-256 is `4E4E9C7F030EB7C80E25DA75D6FC18CA41E876A3CB109CDA63BDFBDEA1891442`.
 - TS-only M2 passed `493/495` with `2` skips and `0` failures; elapsed `151833.9708 ms`. The duplicate invocation was stopped and is excluded.
 - Jree/platform inventories remain `13/41/35/1` and `coreCandidateFiles=11`, `mixedBoundaryFiles=4`, `nodeAdapterCandidateFiles=2`, `browserSourceFiles=2`, `jreeImportFiles=20`; these are remaining owner-cluster work.
-- J1 is ready for its one post-commit PC full M1 close gate. No J1, 023, 024, or downstream-cluster completion claim is made before that gate.
+- The post-commit PC full M1 close gate completed as one cold TS process with all 245 main resources and `--process-limit-ms 7200000`. The JSONL contains `244 passed` and one `process_limit` for the known 2,001,974-cycle `stability/long_term_stability.nal` sample; there are zero timeout, exception, stall, or not-run records. The required extra `simpleOperationTest.nal` evidence passed separately in `92206 ms`, with peak RSS `340078592` bytes. Full evidence SHA-256 is `68C039636163DFA6AEF62082F6773BB84E8C667B2D3AB52B763951B13F46A813`; extra evidence SHA-256 is `B93A6668AE1DAE385254598C752665800CEF15BF3A5C77DC479380DECD939F27`.
+
+### J2 read-only follow-up (2026-09-28)
+
+- CodeGraph remains indexed and current. The J2 source scan confirms the same six direct imports and no required supporting-cluster production edit; the existing project-owned runtime contracts are sufficient as the migration boundary.
+- The J1 full M1 process has exited. Its final classification is `244 passed`, `1 process_limit`, `0 timeout`, `0 exception`, `0 stall`, `0 not_run`; the extra 246th evidence is `passed`. J1 remains open only for a bounded markerless diagnostic and the cluster-close validation plan; J2 production implementation remains paused until that diagnosis is recorded.
+
+### J1 post-M1 diagnosis checkpoint (2026-09-28)
+
+- The bounded single-process markerless diagnostic is complete at commit `7d95bf697396958b04c9d2152eae95ce8951538a`. TS and canonical Java both reached `131072` cycles, `128` windows, and `2279730` events with `incomplete=false`; the comparison is `equal=true` and `first_difference=null`.
+- TS exited with code `0`, no signal, and peak RSS `979410944` bytes after `1632775.876 ms`. Java exited with code `0`, no signal, and peak RSS `9019392` bytes after `11395.8333 ms`. The evidence preserves stdout, process metadata, RSS, and comparison hashes under `reports/evidence/j1-markerless-diagnostic-20260928/`.
+- The full M1 `process_limit` for `stability/long_term_stability.nal` is therefore classified as a TS resource/performance observation, not a semantic regression, timeout, exception, stall, or not-run result. No JavaRandom or UTF-16 semantic divergence was observed in the diagnostic.
+- J1 may proceed to its `--close-cluster` validation plan. J2 production work is unblocked by this diagnosis, but no cluster or stage completion claim is valid until its own gate passes.
+
+### J1 closure state
+
+- Local J1 contracts, build, API, affected NALs, and TS-only M2 are complete; PC full M1 is recorded as `244 passed + 1 process_limit`, with the required 246th evidence passed.
+- Supported claim: J1 implementation and local validation are complete; the PC matrix has one explicitly classified process-limit observation; and the markerless TS/Java diagnostic is semantically equal with complete evidence.
+- Prohibited claim: J1 cluster-close, 023, 024, zero production jree imports, complete Java M2, or release readiness remain unclaimed until the `--close-cluster` plan and its required matrix pass.

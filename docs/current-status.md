@@ -4,6 +4,17 @@
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
+## 2026-09-28 J1 PC full M1 and markerless diagnosis
+
+- 当前提交：`7d95bf697396958b04c9d2152eae95ce8951538a`；工作区保留历史未跟踪证据，未使用 `git add -A`。
+- J1 本地实现与验证已完成：直接合同 `19/19`、非增量 typecheck、build、dist API、受影响 NAL `3/3`、TS-only M2 `493 passed / 2 skipped / 0 failed`。
+- PC 完整 M1 使用单一 cold TS 进程、全部 `245` 个主资源和 `--process-limit-ms 7200000`，最终分类为 `244 passed`、`1 process_limit`、`0 timeout`、`0 exception`、`0 stall`、`0 not_run`。唯一受限项为 `stability/long_term_stability.nal`：观察到 `2,001,974` 周期，最后进度 `513089`，安全上限 `7,200,000 ms`；不能称为语义回归。
+- M1 JSONL：`reports/evidence/pc-goal-j1-full-m1-20260928.jsonl`，SHA-256 `68C039636163DFA6AEF62082F6773BB84E8C667B2D3AB52B763951B13F46A813`。额外第 `246` 项 `simpleOperationTest.nal` 通过，耗时 `92206 ms`，峰值 RSS `340078592` bytes；证据 SHA-256 `B93A6668AE1DAE385254598C752665800CEF15BF3A5C77DC479380DECD939F27`。
+- J1 尚未标记责任簇收口：完整 M1 的唯一 `process_limit` 已通过单进程 markerless 诊断归类为 TS 性能/资源观察。TS 与 canonical Java 均完成 `131072` 周期、`128` 窗口、`2279730` 事件，`incomplete=false`，比较 `equal=true`、`first_difference=null`。
+- TS 诊断退出码 `0`、信号 `null`、耗时 `1632775.876 ms`、峰值 RSS `979410944` bytes；Java 退出码 `0`、信号 `null`、耗时 `11395.8333 ms`、峰值 RSS `9019392` bytes。完整 stdout/stderr/process/RSS/比较证据位于 `reports/evidence/j1-markerless-diagnostic-20260928/`，提交 SHA 为 `7d95bf697396958b04c9d2152eae95ce8951538a`。
+- 诊断哈希：TS stdout `17585DC92E0658513EE963D1F90E5469CB713CD0B840F662431FCF5B3736473F`，TS process `62AFE64B0C35A3121A8BBACDD802DD2107A5D908F6AB6799A4CDBFE57A81959A`，Java stdout `B4BBD998D831173EFD063915DF7A8336464923D829DE3DE86F9E953542C34875`，Java process `2F03F2ED7FB66188400B4D68C710AC4B20F38394857403C83D62B886F4F5BE54`，comparison `FE5D951C031772C2EBF08D947FEF80D9E79BF0E23D232826BE0F7984AFDE19`。
+- 该结果不是 timeout、exception、stall、not_run 或语义回归；未观察到 JavaRandom 或 UTF-16 helper 差异。下一步运行 J1 `validation:plan --close-cluster`，计划有效后才进入 J2。
+
 ## 2026-09-27 阶段性封存与 PC Agent 交接
 
 - 本轮报告：`reports/20260927-182859.md`；交接包：`docs/pc-agent-handoff-20260927.md`；模型身份为 `GPT 5.6 sol xhigh`。

@@ -3,8 +3,8 @@
 ## Checkpoint
 
 - Date: 2026-09-28 (Asia/Shanghai)
-- Baseline commit: `9605701429b000aa88987e2161d1d1816c22761e`
-- Worktree: `main` matches `origin/main`; existing untracked reports and evidence are preserved.
+- Baseline commit for the implementation batch: `7d95bf697396958b04c9d2152eae95ce8951538a`.
+- Worktree: `main` is ahead of `origin/main` by this commit; existing untracked reports and evidence are preserved.
 - Environment: `java-master` is a valid junction to `H:\A137442\Develop\AGI\NARS\opennars-304-master`; target contains 4 JARs and 491 NAL files. The frozen Java JSONL is available at the active-goal archive path with SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`; `node_modules` is present.
 - Discovery tools: CodeGraph is current; LeanSpec board and exact 023/024 searches work. The broad phrase `runtime jree platform neutral` returned no match, which is a query result rather than a tool outage.
 - Read-only baseline plan: `npm run validation:plan -- -- --base HEAD --head HEAD --cluster J1-runtime-compat --java-baseline <frozen-jsonl> --expected-baseline-sha256 264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954 --evidence-prefix reports/evidence/pc-goal-stage0-plan-20260928` returned `plan_valid=true`, `T0`, no changed files. Bare `npm run validation:plan` is invalid because the classifier requires `--base` and `--head`; npm on this host requires the documented doubled separator.
@@ -116,16 +116,27 @@ The batch owns `src/runtime/**`, `src/types.ts`, and `src/util/**` only. It may 
 - TS-only M2: `495` total, `493` passed, `2` skipped, `0` failed, `0` timeout, `0` process-limit, `0` exception, `0` stall; elapsed `151833.9708 ms`. A duplicate invocation was stopped before completion and is excluded from evidence.
 - The J1 batch changes only `src/runtime/**` plus direct runtime tests and planning memory. The bridge retains compatibility behavior required by J2-J5; the 13 direct jree files and 41/35/1 inventory remain open under their owning clusters.
 
+### Post-commit full M1 result (2026-09-28)
+
+- The single PC full M1 process completed from the unique checkpoint `reports/evidence/pc-goal-j1-full-m1-20260928.jsonl` using cold TS, all 245 main resources, and `--process-limit-ms 7200000`.
+- Aggregate classification is `244 passed`, `1 process_limit`, `0 timeout`, `0 exception`, `0 stall`, `0 not_run`. The only process-limited record is `stability/long_term_stability.nal`, which observed `2,001,974` cycles and last progress at cycle `513089` before the 7,200,000 ms safety limit. This is a process-limit/performance observation, not a semantic regression claim.
+- Full JSONL SHA-256: `68C039636163DFA6AEF62082F6773BB84E8C667B2D3AB52B763951B13F46A813`.
+- The required extra 246th evidence `reports/evidence/pc-goal-j1-extra-simple-20260928/simpleOperationTest.jsonl` passed with `1/1`, `92206 ms`, and peak RSS `340078592` bytes. SHA-256: `B93A6668AE1DAE385254598C752665800CEF15BF3A5C77DC479380DECD939F27`.
+
 ### Supported claims
 
 - The project-owned JavaRandom LCG, JavaThrowable cause/suppressed lifecycle, RuntimeClassToken identity, safe numeric long boundary, and UTF-16 string helpers have direct project-owned tests and pass the J1 local validation set.
 - J1 local build, API, M2, audits, and three affected NALs pass against frozen baseline SHA `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`.
+- The PC full M1 result is fully accounted for as `244 passed + 1 process_limit`, and the extra 246th evidence passed.
 
 ### Prohibited claims
 
-- J1 is not closed until the post-commit PC full M1 (245 main resources plus the required 246th evidence) passes.
+- J1 is not yet cluster-closed: the full M1 contains one explicitly classified process-limit result, and the bounded markerless diagnosis plus close-cluster plan still need to be recorded.
 - This checkpoint does not claim J2-J5 completion, stage 023/024 completion, zero production jree imports, complete M1/M2 with Java, markerless long-cycle equivalence, or release readiness.
 
 ### Next falsifiable experiment
 
-- Commit this exact J1 batch, run `npm run validation:plan` with `--close-cluster`, then execute the single PC full M1 and compare its 246/246 evidence. Any failed marker, process-limit, timeout, exception, stall, or audit scope error keeps J1 open and is diagnosed before J2.
+- Completed the single-process markerless stage digest at `131072` cycles with `--skip-embedded --window-size 1024` for both TS and canonical Java at commit `7d95bf697396958b04c9d2152eae95ce8951538a`. Both sides reached `131072` cycles, `128` windows, and `2279730` events with `incomplete=false`; comparison is `equal=true`, `first_difference=null`.
+- TS process metadata: exit code `0`, signal `null`, elapsed `1632775.876 ms`, peak RSS `979410944` bytes. Java process metadata: exit code `0`, signal `null`, elapsed `11395.8333 ms`, peak RSS `9019392` bytes. The full stdout/stderr/process/RSS/comparison evidence is in `reports/evidence/j1-markerless-diagnostic-20260928/`.
+- Evidence hashes: TS stdout `17585DC92E0658513EE963D1F90E5469CB713CD0B840F662431FCF5B3736473F`; TS process `62AFE64B0C35A3121A8BBACDD802DD2107A5D908F6AB6799A4CDBFE57A81959A`; Java stdout `B4BBD998D831173EFD063915DF7A8336464923D829DE3DE86F9E953542C34875`; Java process `2F03F2ED7FB66188400B4D68C710AC4B20F38394857403C83D62B886F4F5BE54`; comparison `FE5D951C031772C2EBF08D947FEF80D9E79BF0E23D232826BE0F7984AFDE19`.
+- Classification: the M1 `process_limit` is a TS performance/resource observation. It is not a timeout, exception, stall, not-run result, or semantic regression. No JavaRandom or UTF-16 helper divergence was observed. J1 is ready for the close-cluster plan; J2 production implementation may start after that plan is accepted.
