@@ -13,7 +13,7 @@ test("Java and TypeScript local algorithm fixtures remain in parity", {
     skip: process.env.OPENNARS_TEST_MODE === "ts-only" || !javaArtifactsAvailable,
 }, () => {
     const result = spawnSync(process.execPath, [
-        "--experimental-strip-types",
+        "--import", "./scripts/register-ts-loader.mjs",
         "scripts/parity/run-local-algorithm-parity.mjs",
     ], {
         cwd: projectRoot,

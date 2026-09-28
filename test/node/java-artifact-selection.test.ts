@@ -21,7 +21,7 @@ const frozenJavaBaseline = join(
 );
 
 function run(script: string, args: string[]) {
-  const nodeArgs = script === localRunner ? ["--experimental-strip-types", script, ...args] : [script, ...args];
+  const nodeArgs = ["--import", "./scripts/register-ts-loader.mjs", script, ...args];
   return spawnSync(process.execPath, nodeArgs, {
     cwd: projectRoot,
     encoding: "utf8",
