@@ -57,3 +57,40 @@
   semantic diagnosis.
 - The source batch is ready for an immutable J3 commit. The PC full M1 close gate remains
   mandatory before J3 can be declared complete.
+
+## J3 PC M1 classification and retry evidence (2026-09-28)
+
+- Immutable code commit under test: `a07b235`.
+- Live-Java PC M1 evidence: `reports/evidence/pc-goal-j3-full-m1-20260928.jsonl`, SHA-256
+  `F8F79A6429CFD4E3B04A6F750299D8FC87776547099E5D3BE584ED210FF9E34B`. Summary: 245 rows,
+  239 functional passes, 240 parity rows, 2 process limits, 4 exception/exception-linked rows,
+  0 plain timeout, 0 stall, 0 not_run. Java exception rows are Windows page-file exhaustion
+  (`errno=1455`); TS exception rows exited with `0xE06D7363`.
+- Independent TS-only retries classified the two `0xE06D7363` rows as transient process/resource
+  failures: `nars_multistep_2.nal` passed 2/2 in 499,144 ms (peak RSS 468,885,504 bytes), and
+  `nars_spatialSeq1.nal` passed 2/2 in 92,396 ms (peak RSS 345,772,032 bytes).
+- `nars_transitivity.nal` also passed independently in TS-only mode; its prior 900-second J3
+  row was affected by the live-Java page-file failure, not a stable TS semantic mismatch.
+- Frozen Java baseline for further retries: `g0-java-baseline-26772af-20260917.jsonl`, SHA-256
+  `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`. Future retries use
+  `--engine ts --java-baseline` and do not launch Java unless code/behavior changes or a stage
+  gate explicitly requires live Java.
+- J3 cannot yet be declared complete: `toothbrush2.nal` and `long_term_stability.nal` remain
+  process-limit observations, and the original full matrix contains environment exceptions.
+
+## Frozen-baseline retry record (2026-09-28)
+
+- `nars_multistep_2.nal` TS-only retry passed 2/2: SHA-256
+  `2A88722FCF3E18C5E335B239397F3F4C2F1562828BB590721EDD760969A9B92A`.
+- `nars_spatialSeq1.nal` TS-only retry passed 2/2: SHA-256
+  `27DD0591CDAA2087E0413669D5862C9B217A0C8ECC9D094DEE87BB1F5D624126`.
+- `nars_transitivity.nal` TS-only retry passed 2/2: SHA-256
+  `99B7F889A40E228DE892102992F7C4AB482444ACDBFD64AF4474587B3B7BFDD0`.
+- Frozen-baseline TS-only retry for `application/toothbrush2.nal` remained `process_limit` at
+  900,000 ms, last progress 165860: SHA-256
+  `8DE628EA12338E71CEC9CB19A63EAD1B2B60432D67C9450DA95DB3511FBDDE14`.
+- Frozen-baseline TS-only retry for `stability/long_term_stability.nal` remained
+  `process_limit` at 900,000 ms, last progress 77357: SHA-256
+  `734C31CB900578A50C4C55B15BA77D0C4B1B79D486B0163A802B99E323942999`.
+- These retries use the frozen Java baseline only; no Java process was started. The two
+  remaining process limits are performance/resource observations, not semantic regressions.
