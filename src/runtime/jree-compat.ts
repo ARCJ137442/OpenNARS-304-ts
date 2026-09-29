@@ -1,7 +1,7 @@
-import { Class, JavaObject, java } from "jree";
+import { Class, JavaObject, java } from "../platform/node/jree-host-adapter.ts";
 // Host-facing legacy Java objects are exported only through this adapter. Core
 // and entry modules must not import npm jree directly.
-export { java } from "jree";
+export { java } from "../platform/node/jree-host-adapter.ts";
 import type { long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { JavaRandom } from "./JavaRandom.ts";
 import {
