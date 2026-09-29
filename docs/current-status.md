@@ -6,7 +6,7 @@
 
 ## 2026-09-29 J1-J5 native contract batch (working tree)
 
-- 当前候选为已提交 `86e9536`；历史未跟踪证据保留不动。
+- 当前候选为已提交 `c740c42`；历史未跟踪证据保留不动。
 - 项目内 `java-text`、`java-values`、`native-host-boundary` 已承接纯文本、long、logger、boxed number 合同；语言、实体、存储、推理、operator、plugin 和接口调用者已批量改用这些模块。
 - Node process exit 已收窄到 `src/platform/node/process-boundary.ts`；Node `java`、Java I/O 与 parity 仍只在主入口/IO host-facing 路径可达。
 - 非增量 typecheck、build、dist API、24 项直接宿主回归和 TS-only M2（`494/496`，2 skipped）通过。原始 TAP：`reports/evidence/jree-native-batch-ts-m2-20260929.tap`，SHA-256 `7DAFF51E696931E0CF6BC8875B49FD371D39010805E35CBE6CA4610A4252C1A7`。
@@ -20,6 +20,7 @@
 - 当前 HEAD `cbe0e32` 的 markerless：`simpleOperationTest.nal` 与 `long_term_stability.nal` 均完成 Java/TS `131072` cycles、`128` windows，`equal=true`、`first_difference=null`；证据目录 `reports/evidence/markerless-cbe0e32-20260929/`。simple Java/TS/comparison SHA-256：`B4BBD998D831173EFD063915DF7A8336464923D829DE3DE86F9E953542C34875` / `17585DC92E0658513EE963D1F90E5469CB713CD0B840F662431FCF5B3736473F` / `9631076595A4FAD6432EAA7E18C5B2DB836FA4B7FE37F0369A462BC8BFFA0388`；long Java/TS/comparison SHA-256：`64214FF3769A278301DFBBC4146433DF8B6BD27C0EE662D149FD274EC468B993` / `B71878257F96B82F6F9330F24442934D0F293F1B069B96B9070495536A599140` / `9631076595A4FAD6432EAA7E18C5B2DB836FA4B7FE37F0369A462BC8BFFA0388`。
 - 当前 HEAD 的 #245 65536 证据：Java 完成，TS 在 `1800034 ms` `process_limit`，最后进度 `205074`、observed cycles `2065960`、marker missing；JSONL SHA-256 `8B9D372C1F6B7D992D6036F35C2A6030B4F76D8902BE0DB9F861E78D815FE5CE`。M1' 仍回落 M1-，长期瓶颈不宣称通过。
 - 新策略的当前 HEAD 2048 估计实验已完成：Java 2048 请求步数通过；TS 在 `1800040 ms` `process_limit`，最后进度 `206379`、observed cycles `2002472`、marker missing；证据 SHA-256 `5AD7C9610A1D8222270B31747983F265EC4961102F1F7FDDF5E286EF34C3EA80`。按策略“2048 估计超过 1200 秒则不跑 65536”，因此本轮不再运行 65536，采用 2048 process_limit 作为长期系统瓶颈证据。
+- 当前 M1-prime 汇总：244/244 ordinary、正确 65536 fixture #245 parity、#246 parity、两个 markerless equal、含 Java M2 496/496。2048 telemetry estimate 为 4225 ms，故 65536 按新策略获准。汇总：`reports/evidence/m1-prime-c740c42-summary-20260930.json`。
 
 ### 2026-09-29 M1' fallback evidence on `4b817bf`
 

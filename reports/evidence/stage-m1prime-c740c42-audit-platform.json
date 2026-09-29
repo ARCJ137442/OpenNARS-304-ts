@@ -1,0 +1,2175 @@
+
+> opennars-304-ts@0.1.0 audit:platform
+> node scripts/converting/audit-platform-boundaries.mjs
+
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-29T17:05:31.405Z",
+  "projectRoot": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts",
+  "demoRoot": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts-web-demo",
+  "scopes": [
+    "browser-build-tool",
+    "browser-source",
+    "core-candidate",
+    "generated-browser-bundle",
+    "mixed-boundary",
+    "node-adapter-candidate",
+    "node-tooling"
+  ],
+  "summary": {
+    "filesScanned": 205,
+    "filesWithPlatformOrJreeMatches": 49,
+    "coreCandidateFiles": 2,
+    "mixedBoundaryFiles": 4,
+    "nodeAdapterCandidateFiles": 4,
+    "browserSourceFiles": 5,
+    "jreeImportFiles": 7,
+    "jreeImportOccurrences": 7,
+    "nodeImportFiles": 36,
+    "nodeImportOccurrences": 111,
+    "nodeGlobalFiles": 39,
+    "nodeGlobalOccurrences": 221,
+    "browserShimFiles": 1,
+    "browserShimOccurrences": 3
+  },
+  "entries": [
+    {
+      "file": "../OpenNARS-304-ts-web-demo/public/nars-worker.js",
+      "scope": "generated-browser-bundle",
+      "matches": [
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            11,
+            11,
+            11,
+            11,
+            241
+          ],
+          "samples": [
+            "process.cwd",
+            "process.cwd",
+            "process.versions",
+            "process.release",
+            "process.release"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/scripts/build-opennars-worker.mjs",
+      "scope": "browser-build-tool",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "samples": [
+            "from \"node:child_process\"",
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 11,
+          "lines": [
+            1,
+            2,
+            2,
+            10,
+            14,
+            27,
+            31,
+            34,
+            37,
+            37,
+            245
+          ],
+          "samples": [
+            "execFileSync",
+            "readFileSync",
+            "writeFileSync",
+            "process.env",
+            "execFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            215
+          ],
+          "samples": [
+            "stdin"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/scripts/build.mjs",
+      "scope": "browser-build-tool",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            2,
+            3
+          ],
+          "samples": [
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            1,
+            1,
+            19,
+            21
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "readFileSync",
+            "writeFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/scripts/check-build.mjs",
+      "scope": "browser-build-tool",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            2,
+            3
+          ],
+          "samples": [
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            1,
+            13,
+            18,
+            23,
+            29
+          ],
+          "samples": [
+            "readFileSync",
+            "readFileSync",
+            "readFileSync",
+            "readFileSync",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/scripts/deploy-pages.mjs",
+      "scope": "browser-build-tool",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "samples": [
+            "from \"node:child_process\"",
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            1,
+            7,
+            7,
+            21,
+            22
+          ],
+          "samples": [
+            "execFileSync",
+            "process.argv",
+            "process.env",
+            "execFileSync",
+            "execFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/src/app.js",
+      "scope": "browser-source",
+      "matches": [
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            12,
+            14,
+            15,
+            16,
+            58
+          ],
+          "samples": [
+            "terminal",
+            "terminal",
+            "terminal",
+            "terminal",
+            "terminal"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/src/browser-adapters/child_process.js",
+      "scope": "browser-source",
+      "matches": [
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            4,
+            7
+          ],
+          "samples": [
+            "execFileSync",
+            "execFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/src/browser-adapters/fs.js",
+      "scope": "browser-source",
+      "matches": [
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            6,
+            21
+          ],
+          "samples": [
+            "readFileSync",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/src/browser-adapters/process.js",
+      "scope": "browser-source",
+      "matches": [
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            10,
+            11,
+            23,
+            23,
+            24,
+            24
+          ],
+          "samples": [
+            "stdout",
+            "stderr",
+            "stdout",
+            "stdout",
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "../OpenNARS-304-ts-web-demo/src/index.html",
+      "scope": "browser-source",
+      "matches": [
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 16,
+          "lines": [
+            15,
+            45,
+            45,
+            49,
+            57,
+            58,
+            60,
+            62,
+            62,
+            63,
+            63,
+            64,
+            66,
+            73,
+            81,
+            82
+          ],
+          "samples": [
+            "terminal",
+            "terminal",
+            "terminal",
+            "terminal",
+            "terminal"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/annotate-java-sources.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from 'node:fs/promises'",
+            "from 'node:path'",
+            "from 'node:url'"
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            91,
+            166,
+            169,
+            175
+          ],
+          "samples": [
+            "process.argv",
+            "process.exit",
+            "process.exit",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/build.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            131
+          ],
+          "samples": [
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/check-build.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "samples": [
+            "from \"node:assert/strict\"",
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/check-built-api.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:assert/strict\"",
+            "from \"node:url\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            7
+          ],
+          "samples": [
+            "process.argv"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/check-release-package.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "samples": [
+            "from \"node:assert/strict\"",
+            "from \"node:crypto\"",
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 9,
+          "lines": [
+            9,
+            12,
+            13,
+            16,
+            20,
+            35,
+            89,
+            95,
+            102
+          ],
+          "samples": [
+            "spawnSync",
+            "process.platform",
+            "process.platform",
+            "process.platform",
+            "spawnSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 15,
+          "lines": [
+            27,
+            27,
+            31,
+            31,
+            31,
+            31,
+            43,
+            43,
+            44,
+            44,
+            64,
+            90,
+            98,
+            104,
+            120
+          ],
+          "samples": [
+            "stdout",
+            "stderr",
+            "stdout",
+            "stdout",
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/checking/classify-change-gate.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:child_process\"",
+            "from \"node:crypto\"",
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 18,
+          "lines": [
+            1,
+            3,
+            16,
+            17,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            28,
+            29,
+            30,
+            31,
+            42,
+            57,
+            81,
+            90
+          ],
+          "samples": [
+            "execFileSync",
+            "readFileSync",
+            "process.env",
+            "process.env",
+            "process.argv"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            81
+          ],
+          "samples": [
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/cli.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:perf_hooks\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 10,
+          "lines": [
+            28,
+            76,
+            77,
+            78,
+            80,
+            86,
+            104,
+            210,
+            214,
+            220
+          ],
+          "samples": [
+            "process.exit",
+            "process.env",
+            "process.resourceUsage",
+            "process.memoryUsage",
+            "process.memoryUsage"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            104
+          ],
+          "samples": [
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/converting/apply-migration-patterns.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            2,
+            3
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            107,
+            134,
+            139
+          ],
+          "samples": [
+            "process.argv",
+            "process.exit",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/converting/audit-jree-dependencies.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:child_process\"",
+            "from \"node:fs/promises\"",
+            "from \"node:util\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            312,
+            434
+          ],
+          "samples": [
+            "process.argv",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            304,
+            305
+          ],
+          "samples": [
+            "stdout",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/converting/audit-platform-boundaries.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            2,
+            3
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 9,
+          "lines": [
+            28,
+            28,
+            28,
+            28,
+            40,
+            187,
+            188,
+            193,
+            196
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "execFileSync",
+            "spawnSync",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 13,
+          "lines": [
+            28,
+            28,
+            28,
+            32,
+            34,
+            34,
+            34,
+            34,
+            34,
+            34,
+            34,
+            35,
+            193
+          ],
+          "samples": [
+            "stdin",
+            "stdout",
+            "stderr",
+            "terminal",
+            "stdin"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        },
+        {
+          "id": "browser-node-shim",
+          "layer": "browser-shim",
+          "occurrences": 3,
+          "lines": [
+            40,
+            40,
+            40
+          ],
+          "samples": [
+            "virtualModules",
+            "nodeShimPlugin",
+            "processShim"
+          ],
+          "recommendation": "replace the shim with explicit browser configuration and capabilities"
+        }
+      ]
+    },
+    {
+      "file": "scripts/converting/scan-migration-patterns.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            1,
+            2,
+            3
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            190,
+            202
+          ],
+          "samples": [
+            "process.argv",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/ConceptSelectionProbe.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            2
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            8
+          ],
+          "samples": [
+            "readFileSync",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalResourceTelemetryRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            2
+          ],
+          "samples": [
+            "from \"node:fs\"",
+            "from \"node:perf_hooks\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 10,
+          "lines": [
+            1,
+            1,
+            23,
+            65,
+            96,
+            111,
+            121,
+            177,
+            217,
+            218
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "process.exit",
+            "process.memoryUsage",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            177,
+            218
+          ],
+          "samples": [
+            "stdout",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalStageDigestRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            4
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            2
+          ],
+          "samples": [
+            "from \"node:crypto\"",
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            2,
+            220,
+            274,
+            305,
+            307,
+            315,
+            322
+          ],
+          "samples": [
+            "readFileSync",
+            "process.stdout",
+            "readFileSync",
+            "process.argv",
+            "process.stdout"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            220,
+            307,
+            315
+          ],
+          "samples": [
+            "stdout",
+            "stdout",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/NalTraceRunner.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            1,
+            146,
+            154,
+            164,
+            173,
+            175,
+            182
+          ],
+          "samples": [
+            "readFileSync",
+            "process.argv",
+            "process.stdout",
+            "readFileSync",
+            "process.stdout"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            154,
+            173,
+            175
+          ],
+          "samples": [
+            "stdout",
+            "stdout",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/compare-nal-stage-digest.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            1,
+            105,
+            105,
+            108,
+            109,
+            111
+          ],
+          "samples": [
+            "readFileSync",
+            "readFileSync",
+            "readFileSync",
+            "process.argv",
+            "process.argv"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            111
+          ],
+          "samples": [
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/run-m3-benchmark.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "samples": [
+            "from \"node:crypto\"",
+            "from \"node:fs\"",
+            "from \"node:os\"",
+            "from \"node:path\"",
+            "from \"node:perf_hooks\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 14,
+          "lines": [
+            4,
+            4,
+            8,
+            53,
+            110,
+            114,
+            141,
+            147,
+            246,
+            260,
+            281,
+            283,
+            286,
+            286
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "spawnSync",
+            "process.exit",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            115,
+            115,
+            156,
+            156,
+            167,
+            167
+          ],
+          "samples": [
+            "stdout",
+            "stderr",
+            "stderr",
+            "stderr",
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/run-nal-corpus.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "samples": [
+            "from \"node:crypto\"",
+            "from \"node:fs\"",
+            "from \"node:fs/promises\"",
+            "from \"node:os\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 24,
+          "lines": [
+            2,
+            6,
+            148,
+            158,
+            169,
+            170,
+            171,
+            171,
+            172,
+            172,
+            219,
+            249,
+            250,
+            317,
+            399,
+            400,
+            718,
+            718,
+            1209,
+            1240,
+            1419,
+            1445,
+            1445,
+            1448
+          ],
+          "samples": [
+            "readFileSync",
+            "spawnSync",
+            "spawnSync",
+            "readFileSync",
+            "process.env"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 26,
+          "lines": [
+            154,
+            154,
+            324,
+            324,
+            418,
+            421,
+            454,
+            479,
+            517,
+            518,
+            520,
+            539,
+            540,
+            587,
+            593,
+            593,
+            631,
+            679,
+            721,
+            727,
+            768,
+            774,
+            787,
+            816,
+            830,
+            830
+          ],
+          "samples": [
+            "stdout",
+            "stderr",
+            "stdout",
+            "stderr",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/run-snapshot-experiment.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:crypto\"",
+            "from \"node:path\"",
+            "from \"node:os\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            217,
+            221,
+            225
+          ],
+          "samples": [
+            "process.argv",
+            "process.exit",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/summarize-nal-matrix.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            2
+          ],
+          "samples": [
+            "from \"node:fs\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 9,
+          "lines": [
+            1,
+            1,
+            55,
+            264,
+            299,
+            300,
+            301,
+            307,
+            307
+          ],
+          "samples": [
+            "readFileSync",
+            "writeFileSync",
+            "readFileSync",
+            "process.argv",
+            "writeFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/e2e/summarize-toothbrush2-cycle-47286.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            24,
+            33,
+            244
+          ],
+          "samples": [
+            "process.exit",
+            "readFileSync",
+            "process.argv"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            6,
+            7,
+            17,
+            18,
+            23,
+            23
+          ],
+          "samples": [
+            "stderr",
+            "stderr",
+            "stderr",
+            "stderr",
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/jree-entry.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            10
+          ],
+          "samples": [
+            "require(\"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        },
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"node:module\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/parity/run-local-algorithm-parity.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 6,
+          "lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "samples": [
+            "from \"node:crypto\"",
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:child_process\"",
+            "from \"node:os\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            2,
+            4,
+            30,
+            46,
+            65,
+            204,
+            217
+          ],
+          "samples": [
+            "readFileSync",
+            "spawnSync",
+            "readFileSync",
+            "process.exit",
+            "spawnSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            72,
+            72,
+            74
+          ],
+          "samples": [
+            "stdout",
+            "stderr",
+            "stdout"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/register-ts-loader.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            2
+          ],
+          "samples": [
+            "from \"node:url\"",
+            "from \"node:module\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/shell.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "samples": [
+            "from \"node:readline\"",
+            "from \"node:fs\"",
+            "from \"node:url\"",
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 10,
+          "lines": [
+            4,
+            94,
+            100,
+            100,
+            109,
+            112,
+            158,
+            158,
+            160,
+            163
+          ],
+          "samples": [
+            "readFileSync",
+            "readFileSync",
+            "process.argv",
+            "process.stdin",
+            "process.stdout"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 7,
+          "lines": [
+            100,
+            109,
+            109,
+            112,
+            113,
+            117,
+            147
+          ],
+          "samples": [
+            "stdin",
+            "terminal",
+            "stdout",
+            "stdout",
+            "terminal"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/testing/deny-java-processes.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            2
+          ],
+          "samples": [
+            "from \"node:child_process\"",
+            "from \"node:module\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            5,
+            5
+          ],
+          "samples": [
+            "spawnSync",
+            "execFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/testing/java-process-policy.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:path\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        }
+      ]
+    },
+    {
+      "file": "scripts/testing/run-ts-only-unit-tests.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "samples": [
+            "from \"node:fs/promises\"",
+            "from \"node:child_process\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            17,
+            25,
+            31,
+            32,
+            34
+          ],
+          "samples": [
+            "process.env",
+            "process.env",
+            "process.stderr",
+            "process.exit",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            31
+          ],
+          "samples": [
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "scripts/ts-loader.mjs",
+      "scope": "node-tooling",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:fs/promises\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/io/ConfigReader.ts",
+      "scope": "mixed-boundary",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            2,
+            3,
+            4
+          ],
+          "samples": [
+            "from \"node:fs\"",
+            "from \"node:path\"",
+            "from \"node:url\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 5,
+          "lines": [
+            2,
+            43,
+            45,
+            55,
+            79
+          ],
+          "samples": [
+            "readFileSync",
+            "process.cwd",
+            "process.cwd",
+            "readFileSync",
+            "process.versions"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/main/Nar.ts",
+      "scope": "mixed-boundary",
+      "matches": [
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            69
+          ],
+          "samples": [
+            "process.release"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/main/Shell.ts",
+      "scope": "mixed-boundary",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            3
+          ],
+          "samples": [
+            "from \"node:fs\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 3,
+          "lines": [
+            3,
+            46,
+            202
+          ],
+          "samples": [
+            "readFileSync",
+            "readFileSync",
+            "readFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            135,
+            204
+          ],
+          "samples": [
+            "InputStream",
+            "InputStream"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "src/platform/node/SystemCommandCapabilities.ts",
+      "scope": "node-adapter-candidate",
+      "matches": [
+        {
+          "id": "node-import",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            1
+          ],
+          "samples": [
+            "from \"node:child_process\""
+          ],
+          "recommendation": "move the import to a Node host adapter"
+        },
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            1,
+            10
+          ],
+          "samples": [
+            "execFileSync",
+            "execFileSync"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            12,
+            13
+          ],
+          "samples": [
+            "stdout",
+            "stderr"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "src/platform/node/jree-host-adapter.ts",
+      "scope": "node-adapter-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            9
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    },
+    {
+      "file": "src/platform/node/process-boundary.ts",
+      "scope": "node-adapter-candidate",
+      "matches": [
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            3,
+            3
+          ],
+          "samples": [
+            "process.exit",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/runtime/NodeStdinInputStream.ts",
+      "scope": "node-adapter-candidate",
+      "matches": [
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            23
+          ],
+          "samples": [
+            "process.stdin"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        },
+        {
+          "id": "terminal-or-stream",
+          "layer": "node-host",
+          "occurrences": 2,
+          "lines": [
+            16,
+            23
+          ],
+          "samples": [
+            "stdin",
+            "stdin"
+          ],
+          "recommendation": "keep terminal and stream adaptation outside the platform-neutral core"
+        }
+      ]
+    },
+    {
+      "file": "src/runtime/jree-compat.ts",
+      "scope": "mixed-boundary",
+      "matches": [
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 4,
+          "lines": [
+            381,
+            385,
+            444,
+            445
+          ],
+          "samples": [
+            "process.memoryUsage",
+            "process.memoryUsage",
+            "process.exit",
+            "process.exit"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/storage/Memory.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "node-global",
+          "layer": "node-host",
+          "occurrences": 1,
+          "lines": [
+            230
+          ],
+          "samples": [
+            "process.release"
+          ],
+          "recommendation": "pass an explicit capability or keep the access in a host adapter"
+        }
+      ]
+    },
+    {
+      "file": "src/util/ListUtil.ts",
+      "scope": "core-candidate",
+      "matches": [
+        {
+          "id": "jree-import",
+          "layer": "jree-runtime",
+          "occurrences": 1,
+          "lines": [
+            4
+          ],
+          "samples": [
+            "from \"jree\""
+          ],
+          "recommendation": "move the public dependency behind a project-owned native contract"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "This is a static inventory; it does not prove that an import is reachable from the browser bundle.",
+    "Generated public/nars-worker.js is included only to expose the current browser artifact boundary.",
+    "Each candidate still requires a Java/TypeScript contract test before migration."
+  ]
+}

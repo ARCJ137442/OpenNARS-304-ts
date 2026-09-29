@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "commit": "c740c42",
+  "gate": "M1-prime",
+  "ordinaryMain": {
+    "rows": 244,
+    "functional_pass": 244,
+    "parity": 244,
+    "process_limit": 0,
+    "timeout": 0,
+    "exception": 0,
+    "stall": 0,
+    "not_run": 0
+  },
+  "reduced245": {
+    "fixture": "reports/probes/long_term_stability-65536.nal",
+    "functional_pass": true,
+    "parity": true,
+    "duration_ms": 377665,
+    "peak_rss_bytes": 525971456,
+    "observed_cycles": 67510,
+    "process_limit": false,
+    "policy": "2048 telemetry estimate 4225ms -> 65536 allowed"
+  },
+  "extra246": {
+    "functional_pass": true,
+    "parity": true,
+    "duration_ms": 61007,
+    "peak_rss_bytes": 346427392
+  },
+  "markerless": {
+    "simple": "equal=true",
+    "long": "equal=true",
+    "cycles": 131072,
+    "windows": 128
+  },
+  "javaM2": "496/496 passed",
+  "hashes": {
+    "reports/evidence/m1-dcb78a9-full-20260929.jsonl": "BE98B94CBD089493DAD9E4A116153F1D77172FC91130029FA062E0FBF0F53CD5",
+    "reports/evidence/m1-c740c42-long-65536-correct-20260929.jsonl": "31D7722739C04E63EE220B7362FD7EC3157AC0E8C0A4C3752A559495EA314CA5",
+    "reports/evidence/m1-dcb78a9-extra-246-20260929.jsonl": "990194E35B4F936A82EDA39658E128E788CD7C463C0B52042EBE8C5B20B21ECB",
+    "reports/evidence/markerless-cbe0e32-20260929/simple-comparison.json": "9631076595A4FAD6432EAA7E18C5B2DB836FA4B7FE37F0369A462BC8BFFA0388",
+    "reports/evidence/markerless-cbe0e32-20260929/long-comparison.json": "9631076595A4FAD6432EAA7E18C5B2DB836FA4B7FE37F0369A462BC8BFFA0388",
+    "reports/evidence/stage-java-m2-dcb78a9-20260929.tap": "E1F162242BF8F3478709EE12699561C9345DF3DBECCD9DF36386A549FA2DAD70"
+  }
+}

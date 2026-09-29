@@ -146,3 +146,13 @@ test("stage acceptance requests live Java, full M1 and strict markerless evidenc
   assert.equal(plan.full_m1_required, true);
   assert.equal(plan.strict_markerless_required, true);
 });
+
+test("stage M1-prime explicitly replaces only the approved long-cycle contract", () => {
+  const plan = (buildValidationPlan as any)({ files: [], tier: "T2", m1Profile: "prime" });
+  assert.equal(plan.plan_valid, true);
+  assert.equal(plan.live_java_required, true);
+  assert.equal(plan.full_m1_required, false);
+  assert.equal(plan.m1_prime_required, true);
+  assert.equal(plan.m1_profile, "prime");
+  assert.equal(plan.strict_markerless_required, true);
+});

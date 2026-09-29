@@ -121,7 +121,10 @@ function main() {
   for (const rawLine of readFileSync(options.file, "utf8").split(/\r?\n/)) {
     const line = rawLine.trim();
     const prefix = "''outputMustContain('";
-    if (line.startsWith(prefix) && line.endsWith("')")) expectedMarkers.push(line.slice(prefix.length, -2));
+    if (line.startsWith(prefix) && line.endsWith("')")) {
+      const marker = line.slice(prefix.length, -2);
+      if (marker.length > 0) expectedMarkers.push(marker);
+    }
   }
   const matched = new Array(expectedMarkers.length).fill(false);
   const markerTimes = new Array(expectedMarkers.length).fill(null);

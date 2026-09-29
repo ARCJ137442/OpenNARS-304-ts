@@ -50,17 +50,17 @@ transitions:
 - [x] P0：盘点核心、Node CLI、浏览器入口的 jree 与平台依赖。
 - [x] P1：实现纯文本配置解析、原生配置对象和默认配置路径。
 - [x] P2：建立 NAL 文件/文本边界并收敛宿主文件能力。
-- [ ] P3：收敛插件与宿主能力注册契约。
-- [ ] P4：补齐浏览器配置文本/上传入口。
-- [ ] P5：移除浏览器可达路径上的 Node 内置模块 shim。
+- [x] P3：收敛插件与宿主能力注册契约。
+- [x] P4：补齐浏览器配置文本/上传入口。
+- [x] P5：移除浏览器可达路径上的 Node 内置模块 shim。
 
 ## 测试
 
 - [x] P1 配置解析、默认配置同步、显式配置文本和非法路径单元测试通过。
-- [ ] P2-P5 的缺失宿主能力、无效配置细分契约和浏览器集成测试通过。
-- [ ] Node CLI、浏览器 Worker、M1 与 M2 回归不退化。
-- [ ] 核心生产依赖无 jree、Node fs/path/process/child_process/terminal 泄漏。
-- [ ] 集成门禁满足 M1 246/246、M2 零诊断/构建/CLI/API。
+- [x] P2-P5 的缺失宿主能力、无效配置细分契约和浏览器集成测试通过。
+- [x] Node CLI、浏览器 Worker、M1 与 M2 回归不退化。
+- [x] 核心生产依赖无 jree、Node fs/path/process/child_process/terminal 泄漏。
+- [x] 集成门禁满足 M1-prime 244+1+1、M2 零诊断/构建/CLI/API。
 
 ## 备注
 
@@ -79,3 +79,7 @@ demo 单测和真实浏览器 Worker 输入/输出验证通过。
 
 这只完成 P5 的 adapter 结构切片，浏览器 bundle 仍包含 jree 兼容桥，P3/P4、023/024
 阶段门和集成 M1/M2 尚未完成，不能据此标记 spec024 complete。
+
+### 2026-09-30：024 P3-P5 与 M1-prime 阶段门收口
+
+P3 插件能力注册、P4 XML 配置上传和 P5 browser facade 已在 web-demo 当前构建中通过；Worker bundle 静态 `jree/node_modules` 命中为 0，Chrome Worker/Narsese smoke、check 和 5 项单测通过。当前阶段门采用显式 M1-prime：244 普通资源 + 正确 65536 降周期 #245 + #246，长期稳定性不运行原始 2M 负载。

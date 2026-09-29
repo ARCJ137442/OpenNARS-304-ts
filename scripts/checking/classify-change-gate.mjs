@@ -16,6 +16,7 @@ const options = {
   javaBaseline: process.env.OPENNARS_FROZEN_JAVA_BASELINE ?? null,
   expectedBaselineSha256: process.env.OPENNARS_FROZEN_JAVA_BASELINE_SHA256 ?? null,
   evidencePrefix: null,
+  m1Profile: "full",
 };
 for (let index = 2; index < process.argv.length; index += 1) {
   const argument = process.argv[index];
@@ -27,13 +28,14 @@ for (let index = 2; index < process.argv.length; index += 1) {
   else if (argument === "--java-baseline") options.javaBaseline = process.argv[++index];
   else if (argument === "--expected-baseline-sha256") options.expectedBaselineSha256 = process.argv[++index];
   else if (argument === "--evidence-prefix") options.evidencePrefix = process.argv[++index];
+  else if (argument === "--m1-profile") options.m1Profile = process.argv[++index];
   else if (argument === "--scope") {
     throw new Error("--scope is obsolete; use --cluster ID for a slice and add --close-cluster only when that enumerated cluster is complete");
   }
   else throw new Error(`unknown argument: ${argument}`);
 }
 if (!options.base || !options.head) {
-  throw new Error("usage: classify-change-gate.mjs --base COMMIT [--head COMMIT] [--cluster J1-runtime-compat] [--close-cluster] [--stage none|023|024|integration|rc] [--java-baseline FILE] [--expected-baseline-sha256 HEX] [--evidence-prefix PATH]");
+  throw new Error("usage: classify-change-gate.mjs --base COMMIT [--head COMMIT] [--cluster J1-runtime-compat] [--close-cluster] [--stage none|023|024|integration|rc] [--m1-profile full|prime] [--java-baseline FILE] [--expected-baseline-sha256 HEX] [--evidence-prefix PATH]");
 }
 
 function git(...args) {
@@ -65,6 +67,7 @@ const result = classifyChangeGate({
   clusterId: options.cluster,
   closeCluster: options.closeCluster,
   runtimeDependenciesChanged,
+  m1Profile: options.m1Profile,
 });
 const validationPlan = buildValidationPlan({
   files,
@@ -73,6 +76,7 @@ const validationPlan = buildValidationPlan({
   closeCluster: options.closeCluster,
   javaBaseline,
   evidencePrefix: options.evidencePrefix === null ? null : resolve(options.evidencePrefix),
+  m1Profile: options.m1Profile,
 });
 process.stdout.write(`${JSON.stringify({
   base: git("rev-parse", options.base).trim(),

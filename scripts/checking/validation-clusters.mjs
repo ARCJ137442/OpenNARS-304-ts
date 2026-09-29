@@ -149,6 +149,7 @@ export function buildValidationPlan({
   closeCluster = false,
   javaBaseline = null,
   evidencePrefix = null,
+  m1Profile = "full",
 } = {}) {
   const sourceFiles = [...new Set(files.map(normalize).filter(isProductionSourceFile))];
   const assignments = sourceFiles.map((file) => ({ file, clusters: validationClustersForFile(file) }));
@@ -248,7 +249,9 @@ export function buildValidationPlan({
     affected_nal_command: affectedNalCommand,
     m1_minus_command: m1MinusCommand,
     live_java_required: tier === "T2",
-    full_m1_required: tier === "T2",
+    full_m1_required: tier === "T2" && m1Profile === "full",
+    m1_prime_required: tier === "T2" && m1Profile === "prime",
+    m1_profile: m1Profile,
     strict_markerless_required: tier === "T2",
   };
 }

@@ -37,8 +37,12 @@ export function runtimeDependencyFingerprint(manifest) {
   ));
 }
 
-export function classifyChangeGate({ files = [], sourceChangedLines = 0, patch = "", stage = "none", clusterId = null, closeCluster = false, runtimeDependenciesChanged = false } = {}) {
+export function classifyChangeGate({ files = [], sourceChangedLines = 0, patch = "", stage = "none", clusterId = null, closeCluster = false, runtimeDependenciesChanged = false, m1Profile = "full" } = {}) {
   if (!STAGES.has(stage)) throw new Error(`unknown stage: ${stage}`);
+  if (m1Profile !== "full" && m1Profile !== "prime") throw new Error("unknown m1 profile");
+  if (m1Profile === "prime" && (stage !== "023" && stage !== "024")) {
+    throw new Error("m1-prime profile is only valid for stage 023 or stage 024");
+  }
   if (clusterId !== null && (typeof clusterId !== "string" || clusterId.trim() === "")) {
     throw new Error("clusterId must be a non-empty string or null");
   }
@@ -73,7 +77,9 @@ export function classifyChangeGate({ files = [], sourceChangedLines = 0, patch =
     tier: `T${tier}`,
     live_java_required: tier === 2,
     m1_minus_required: tier === 1 && m1MinusReasons.length > 0,
-    full_m1_required: tier === 2,
+    full_m1_required: tier === 2 && m1Profile === "full",
+    m1_prime_required: tier === 2 && m1Profile === "prime",
+    m1_profile: m1Profile,
     affected_nal_required: tier === 1 && !closeCluster,
     validation_profile: tier === 2 ? "stage" : closeCluster ? "cluster-close" : tier === 1 ? "risk-slice" : "slice",
     cluster_id: clusterId,
