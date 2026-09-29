@@ -68,3 +68,11 @@
 - Replace pure helper imports across language/entity/storage/inference/operator/plugin files.
 - Move remaining host-only imports in `Nar`, `NarNode`, `Shell`, `TextOutputHandler` behind explicit Node adapter contracts.
 - Then remove the experimental runtime patch import cycle and validate Node/browser entrypoints.
+
+## Final current-head validation checkpoint (`16751ea`)
+
+- TS-only M2: `494 passed / 0 failed / 2 skipped` out of `496`; TAP SHA-256 `123750AFE664D649ECB571F045039F6E4DAC8A657E83C64B3CEB9124044047E9`.
+- Non-incremental typecheck, build (`148` source files), and dist API passed.
+- J5/browser audits are saved as `reports/evidence/j5-browser-facade-audit-jree-20260929.json` and `reports/evidence/j5-browser-facade-audit-platform-20260929.json`.
+- The last M1' experiment remains authoritative: M1-- `243/243` passed, #244 and #246 passed, #245 65536 process-limited; no original 2M long-cycle claim.
+- The next stage-gate run must use the immutable current head if 023/024 completion is attempted; no LeanSpec status was changed in this batch.
