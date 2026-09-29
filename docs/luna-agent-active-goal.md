@@ -238,3 +238,17 @@ SHA、验证命令与分类、原始证据、实际周期、依赖审计差值�
 - Local J1 contracts, build, API, affected NALs, and TS-only M2 are complete; PC full M1 is recorded as `244 passed + 1 process_limit`, with the required 246th evidence passed.
 - Supported claim: J1 implementation and local validation are complete; the PC matrix has one explicitly classified process-limit observation; and the markerless TS/Java diagnostic is semantically equal with complete evidence.
 - Prohibited claim: J1 cluster-close, 023, 024, zero production jree imports, complete Java M2, or release readiness remain unclaimed until the `--close-cluster` plan and its required matrix pass.
+
+### Spec024 stage-gate recovery checkpoint (2026-09-29)
+
+- Repository HEAD is `5d8cae9` (`test: 统一含Java parity测试加载器`); tracked worktree content is clean and only historical/untracked evidence remains. The browser demo adapter source is at `180924f`.
+- Final live-Java M1 evidence is complete: `245` main rows contain `244` functional/parity passes and one `process_limit` observation for `stability/long_term_stability.nal`, with zero timeout, exception, stall, or not-run rows. The required 246th `simpleOperationTest.nal` evidence passed. SHA-256 values are recorded in `reports/probes/20260929-spec024-stage-gate.md`.
+- Fixed-loader Java M2 evidence exists at `reports/evidence/stage-java-m2-20260929.tap`; no new Java run is warranted unless the source or runner contract changes.
+- `node scripts/checking/classify-change-gate.mjs --stage 024 ...` returns `plan_valid=true`. On this npm version the package script requires a second separator (`npm run validation:plan -- -- --base ...`) for option names to reach the script; this is a CLI forwarding quirk, not a core behavior failure.
+- Strict markerless stage evidence is the active experiment. It uses one process per engine, `131072` cycles, `1024`-cycle windows, and a unique evidence prefix for `simpleOperationTest.nal` and `stability/long_term_stability.nal`. Do not update 023/024 status until both comparisons, Java M2, Node, browser, audit, and build gates are complete on one immutable commit.
+
+### Spec024 stage-gate evidence checkpoint (2026-09-29)
+
+- Both strict markerless validations completed on `5d8cae9`. `simpleOperationTest.nal` and `stability/long_term_stability.nal` each reached `131072` cycles and `128` windows with Java/TS `equal=true`, `first_difference=null`, and `incomplete=false`. The long sample's first Java attempt hit a Windows JVM `0xc0000005`; a single retry completed and is the authoritative Java comparison. Raw files and process metrics are under `reports/evidence/spec024-markerless-20260929/`.
+- The fixed-loader complete Java M2 rerun passed `496/496`, with the earlier isolated `shell-string-boundary` `0xc0000005` preserved and its `2/2` retry passing. Node CLI, dist API, typecheck, build, demo build/check/unit tests, real browser Worker, final audits and Hanzi encoding check all completed.
+- The remaining stage blocker is explicit: `audit:jree` still reports `src/runtime/jree-compat.ts` as the only production direct jree import file (two occurrences). This bridge is reachable by shared core and browser paths, so 023 and 024 must remain `in-progress` until its responsibilities are moved behind project-owned runtime modules or the contract is otherwise closed.
