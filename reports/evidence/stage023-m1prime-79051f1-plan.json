@@ -1,0 +1,183 @@
+
+> opennars-304-ts@0.1.0 validation:plan
+> node scripts/checking/classify-change-gate.mjs --base 4b817bf --head HEAD --stage 023 --m1-profile prime --java-baseline H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\g0-java-baseline-frozen-26772af-20260917.jsonl --expected-baseline-sha256 264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954 --evidence-prefix stage023-m1prime-79051f1
+
+{
+  "base": "4b817bf8730aa0f6fcd7c163a76117dcfc449a1c",
+  "head": "79051f133a4de57965097ecbb1753c038646719d",
+  "files": [
+    "docs/current-status.md",
+    "reports/evidence/j5-bridge-closure-audit-jree-20260929.json",
+    "reports/evidence/j5-bridge-closure-audit-platform-20260929.json",
+    "reports/evidence/j5-bridge-closure-ts-m2-20260929.tap",
+    "reports/evidence/j5-browser-facade-audit-jree-20260929.json",
+    "reports/evidence/j5-browser-facade-audit-platform-20260929.json",
+    "reports/evidence/j5-browser-facade-ts-m2-20260929.tap",
+    "reports/evidence/long-term-65536-2048-telemetry-c740c42.json",
+    "reports/evidence/m1-a951cd8-long-65536-20260929.jsonl",
+    "reports/evidence/m1-c740c42-long-65536-correct-20260929.jsonl",
+    "reports/evidence/m1-cbe0e32-long-2048-estimate-20260929.jsonl",
+    "reports/evidence/m1-dcb78a9-extra-246-20260929.jsonl",
+    "reports/evidence/m1-dcb78a9-full-20260929.jsonl",
+    "reports/evidence/m1-dcb78a9-policy-stop-20260929.json",
+    "reports/evidence/m1-dcb78a9-safety-stop-20260929.json",
+    "reports/evidence/m1-prime-4b817bf-extra-246-20260929.jsonl",
+    "reports/evidence/m1-prime-4b817bf-long-term-65536-20260929.jsonl",
+    "reports/evidence/m1-prime-4b817bf-m1minus-20260929.jsonl",
+    "reports/evidence/m1-prime-4b817bf-nars-multistep-3-20260929.jsonl",
+    "reports/evidence/m1-prime-c740c42-summary-20260930.json",
+    "reports/evidence/m1-prime-summary-4b817bf-20260929.json",
+    "reports/evidence/markerless-cbe0e32-20260929/java-long.jsonl",
+    "reports/evidence/markerless-cbe0e32-20260929/java-simple.jsonl",
+    "reports/evidence/markerless-cbe0e32-20260929/long-comparison.json",
+    "reports/evidence/markerless-cbe0e32-20260929/simple-comparison.json",
+    "reports/evidence/markerless-cbe0e32-20260929/ts-long.jsonl",
+    "reports/evidence/markerless-cbe0e32-20260929/ts-simple.jsonl",
+    "reports/evidence/stage-java-m2-dcb78a9-20260929.tap",
+    "reports/evidence/stage-m1prime-c740c42-audit-jree.json",
+    "reports/evidence/stage-m1prime-c740c42-audit-platform.json",
+    "reports/probes/20260929-j1-j5-batch-plan.md",
+    "scripts/checking/change-gate-policy.mjs",
+    "scripts/checking/classify-change-gate.mjs",
+    "scripts/checking/validation-clusters.mjs",
+    "scripts/e2e/NalResourceTelemetryRunner.mjs",
+    "specs/023-jree-removal-native-runtime/README.md",
+    "specs/024-platform-neutral-core-host-adapters/README.md",
+    "src/entity/Stamp.ts",
+    "src/io/events/TextOutputHandler.ts",
+    "src/main/Nar.ts",
+    "src/main/NarNode.ts",
+    "src/main/Shell.ts",
+    "src/platform/browser/jree-compat.ts",
+    "src/platform/browser/jree-host-adapter.ts",
+    "src/platform/node/jree-host-adapter.ts",
+    "src/storage/Memory.ts",
+    "test/node/validation-clusters.test.ts"
+  ],
+  "frozen_java_baseline": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts-evidence-archive\\g0-java-baseline-frozen-26772af-20260917.jsonl",
+  "frozen_java_baseline_sha256": "264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954",
+  "tier": "T2",
+  "live_java_required": true,
+  "m1_minus_required": false,
+  "full_m1_required": false,
+  "m1_prime_required": true,
+  "m1_profile": "prime",
+  "affected_nal_required": false,
+  "validation_profile": "stage",
+  "cluster_id": null,
+  "cluster_close": false,
+  "m1_minus_reasons": [],
+  "source_files": 9,
+  "source_changed_lines": 201,
+  "reasons": [
+    "stage:023",
+    "high-risk-path:src/entity/Stamp.ts",
+    "high-risk-path:src/io/events/TextOutputHandler.ts",
+    "high-risk-path:src/main/Nar.ts",
+    "high-risk-path:src/main/NarNode.ts",
+    "high-risk-path:src/main/Shell.ts",
+    "high-risk-path:src/platform/browser/jree-compat.ts",
+    "high-risk-path:src/platform/browser/jree-host-adapter.ts",
+    "high-risk-path:src/platform/node/jree-host-adapter.ts",
+    "high-risk-path:src/storage/Memory.ts",
+    "source-file-count:9",
+    "source-line-count:201",
+    "semantic-token-change"
+  ],
+  "note": "T1 slices use affected NALs; only an enumerated cluster close runs M1-. Observed regressions or an invalid frozen baseline always escalate, and the tool never certifies semantic equivalence.",
+  "validation_plan": {
+    "plan_valid": true,
+    "validation_profile": "stage",
+    "selected_cluster": null,
+    "supporting_clusters": [
+      {
+        "id": "J3-inference-core",
+        "title": "推理核心簇",
+        "directTests": [
+          "test/node/bag.test.ts",
+          "test/node/tasklink-key.test.ts",
+          "test/node/compositional-rules.test.ts"
+        ],
+        "affectedNals": [
+          "java-master/src/main/resources/nal/single_step/nal6.17.nal",
+          "java-master/src/main/resources/nal/multi_step/nal4.recursion.nal",
+          "java-master/src/main/resources/nal/multi_step/nars_transitivity.nal",
+          "java-master/src/main/resources/nal/application/toothbrush2.nal"
+        ]
+      },
+      {
+        "id": "J5-main-io-host",
+        "title": "Main、IO 与宿主收口簇",
+        "directTests": [
+          "test/node/config-platform-boundary.test.ts",
+          "test/node/shell-boundary.test.ts",
+          "test/node/shell-runtime.test.ts"
+        ],
+        "affectedNals": [
+          "java-master/src/main/resources/nal/single_step/nal1.0.nal",
+          "java-master/src/main/resources/nal/application/toothbrush.nal",
+          "java-master/src/test/simpleOperationTest.nal"
+        ]
+      }
+    ],
+    "touched_clusters": [
+      "J3-inference-core",
+      "J5-main-io-host"
+    ],
+    "unassigned_source_files": [],
+    "multiply_assigned_source_files": [],
+    "plan_errors": [],
+    "direct_test_hints": [
+      "test/node/bag.test.ts",
+      "test/node/tasklink-key.test.ts",
+      "test/node/compositional-rules.test.ts",
+      "test/node/config-platform-boundary.test.ts",
+      "test/node/shell-boundary.test.ts",
+      "test/node/shell-runtime.test.ts"
+    ],
+    "affected_nal_files": [],
+    "common_commands": [
+      [
+        "npm",
+        "test"
+      ],
+      [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      [
+        "npm",
+        "run",
+        "test:build"
+      ],
+      [
+        "npm",
+        "run",
+        "test:api:dist"
+      ],
+      [
+        "npm",
+        "run",
+        "scan:migration-patterns"
+      ],
+      [
+        "npm",
+        "run",
+        "audit:jree"
+      ],
+      [
+        "npm",
+        "run",
+        "audit:platform"
+      ]
+    ],
+    "affected_nal_command": null,
+    "m1_minus_command": null,
+    "live_java_required": true,
+    "full_m1_required": false,
+    "m1_prime_required": true,
+    "m1_profile": "prime",
+    "strict_markerless_required": true
+  }
+}
