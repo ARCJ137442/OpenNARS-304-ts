@@ -252,3 +252,8 @@ SHA、验证命令与分类、原始证据、实际周期、依赖审计差值�
 - Both strict markerless validations completed on `5d8cae9`. `simpleOperationTest.nal` and `stability/long_term_stability.nal` each reached `131072` cycles and `128` windows with Java/TS `equal=true`, `first_difference=null`, and `incomplete=false`. The long sample's first Java attempt hit a Windows JVM `0xc0000005`; a single retry completed and is the authoritative Java comparison. Raw files and process metrics are under `reports/evidence/spec024-markerless-20260929/`.
 - The fixed-loader complete Java M2 rerun passed `496/496`, with the earlier isolated `shell-string-boundary` `0xc0000005` preserved and its `2/2` retry passing. Node CLI, dist API, typecheck, build, demo build/check/unit tests, real browser Worker, final audits and Hanzi encoding check all completed.
 - The remaining stage blocker is explicit: `audit:jree` still reports `src/runtime/jree-compat.ts` as the only production direct jree import file (two occurrences). This bridge is reachable by shared core and browser paths, so 023 and 024 must remain `in-progress` until its responsibilities are moved behind project-owned runtime modules or the contract is otherwise closed.
+
+### Jree host adapter boundary checkpoint (2026-09-29)
+
+- Commit `b094296` moved the only direct npm jree import into `src/platform/node/jree-host-adapter.ts`; `src/runtime/jree-compat.ts` now imports through that explicit host boundary.
+- Typecheck, build, dist API and TS-only M2 passed (`494 passed / 0 failed / 2 skipped`). This is a dependency-boundary slice, not J1/023/024 completion; browser bundle resolution and the remaining boxed Java runtime contracts still require migration.

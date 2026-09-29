@@ -7,6 +7,13 @@
 - 当前桥同时承担四类职责：Java 字符串/CharSequence 输入形状、项目异常与 jree 异常的观察兼容、jree 原型修补（Random、LinkedHashSet、Charset、JavaObject.class）、以及 Node 进程/内存边界。
 - 生产调用者仍有约 72 个 `jree-compat` 导入点。高频合同为 `toJavaString`、`javaStringValue`、`JavaStringInput`、`JavaCharSequence`、`JavaString`、`JavaSystemLoggerCompat`、`javaValuesEqual` 和 long 边界；`Nar.ts`、`NarNode.ts`、`Shell.ts`、`TextOutputHandler.ts` 仍直接消费桥导出的 `java` 命名空间。
 
+### 2026-09-29 边界批次 `b094296`
+
+- 新增 `src/platform/node/jree-host-adapter.ts`，将 npm jree 的两处直接导入集中为一个 Node/parity host adapter；`src/runtime/jree-compat.ts` 不再直接导入 npm 包。
+- `audit:jree`：直接导入文件仍为 `1`，但直接导入出现次数由 `2` 降为 `1`；新增文件被明确归入 Node host 边界。
+- 非增量 typecheck、build、dist API 通过；TS-only M2 为 `494 passed / 0 failed / 2 skipped`，TAP 原始证据：`reports/evidence/jree-host-adapter-ts-m2-20260929.tap`。
+- 该批次只完成依赖归属收敛，未宣称 J1、023、024 或浏览器去 jree 完成。
+
 ## 结论
 
 不能仅删除两行 `jree` 导入。桥的原型修补仍影响类身份、Random、LinkedHashSet 和 Charset；直接把这些逻辑复制到多个调用者会破坏单一变化源，也无法证明浏览器 Worker 与 Node 仍共享同一合同。阶段门必须保持未完成，直到桥职责被拆成明确的项目内运行时合同，并由宿主适配器承接真正的 jree/Node 依赖。
