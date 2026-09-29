@@ -39,6 +39,14 @@
 - Production `runtime/jree-compat.ts` imports reduced to `Memory.ts` and `Stamp.ts`; direct npm jree remains one Node adapter file.
 - Browser work remains open because the worker still imports the legacy bridge and its current build asserts the jree package as a dependency.
 
+## Browser facade checkpoint
+
+- Added a project-owned browser `jree-host-adapter` and browser `jree-compat` facade with no npm import.
+- web-demo worker build now resolves both host adapter and legacy bridge imports to the browser facade and no longer requires a jree package assertion.
+- Worker bundle static scan found zero `jree` or `node_modules` tokens; bundle SHA-256 `A6649EE4DDE497E45ED7AD12C0A848B3335F2D6EFBA69D084341261961D7C4F1`.
+- Real Chrome smoke at `http://127.0.0.1:4178/` showed `WORKER ONLINE`; submitting `<bird --> animal>.` produced `OUT: <bird --> animal>. %1.00;0.90%`. Screenshot SHA-256 `43E7DF0AB4283D8E160F193D8668E81B97C4FA270019C28F13752A060A527BBE`.
+- web-demo check and 5 unit tests passed. This is a P5/browser adapter slice; 024 stage gate remains open until the full immutable-commit gate is rerun.
+
 ## M1' fallback checkpoint on `4b817bf`
 
 - M1-- protection matrix: `243/243` passed; all failure classes are zero.

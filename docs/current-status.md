@@ -12,6 +12,7 @@
 - 非增量 typecheck、build、dist API、24 项直接宿主回归和 TS-only M2（`494/496`，2 skipped）通过。原始 TAP：`reports/evidence/jree-native-batch-ts-m2-20260929.tap`，SHA-256 `7DAFF51E696931E0CF6BC8875B49FD371D39010805E35CBE6CA4610A4252C1A7`。
 - 审计当前为生产直接 npm `jree` 导入文件 `1`、出现 `1`；该数字不等于 023/024 完成。M1'/stage 023/stage 024 尚未在本批提交上复验，不能宣称责任簇或规格完成。
 - J5 host import closure slice：`Nar`、`NarNode`、`Shell`、`TextOutputHandler` 已直接使用 Node host adapter，typecheck 与 25 项宿主/事件合同通过；生产 `runtime/jree-compat.ts` 遗留调用仅为 `Memory` 事件 boxed String 与 `Stamp` Java String 返回。浏览器 worker 仍需独立 adapter 替换，不能宣称 024 完成。
+- Browser facade slice：web-demo worker 已解析到项目内 browser adapter，bundle 静态 `jree/node_modules` 命中为 0；Chrome smoke 的 Worker、Narsese 输入和 OUT 输出通过。该切片不改变 024 stage gate 未完成事实。
 
 ### 2026-09-29 M1' fallback evidence on `4b817bf`
 
