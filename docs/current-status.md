@@ -6,7 +6,7 @@
 
 ## 2026-09-29 J1-J5 native contract batch (working tree)
 
-- 当前候选为已提交 `16751ea`；历史未跟踪证据保留不动。
+- 当前候选为已提交 `cb8330b`；历史未跟踪证据保留不动。
 - 项目内 `java-text`、`java-values`、`native-host-boundary` 已承接纯文本、long、logger、boxed number 合同；语言、实体、存储、推理、operator、plugin 和接口调用者已批量改用这些模块。
 - Node process exit 已收窄到 `src/platform/node/process-boundary.ts`；Node `java`、Java I/O 与 parity 仍只在主入口/IO host-facing 路径可达。
 - 非增量 typecheck、build、dist API、24 项直接宿主回归和 TS-only M2（`494/496`，2 skipped）通过。原始 TAP：`reports/evidence/jree-native-batch-ts-m2-20260929.tap`，SHA-256 `7DAFF51E696931E0CF6BC8875B49FD371D39010805E35CBE6CA4610A4252C1A7`。
@@ -14,6 +14,7 @@
 - J5 host import closure slice：`Nar`、`NarNode`、`Shell`、`TextOutputHandler` 已直接使用 Node host adapter，typecheck 与 25 项宿主/事件合同通过；生产 `runtime/jree-compat.ts` 遗留调用仅为 `Memory` 事件 boxed String 与 `Stamp` Java String 返回。浏览器 worker 仍需独立 adapter 替换，不能宣称 024 完成。
 - Browser facade slice：web-demo worker 已解析到项目内 browser adapter，bundle 静态 `jree/node_modules` 命中为 0；Chrome smoke 的 Worker、Narsese 输入和 OUT 输出通过。该切片不改变 024 stage gate 未完成事实。
 - `16751ea` 后复验：TS-only M2 `494/496`（2 skipped、0 failed），TAP SHA-256 `123750AFE664D649ECB571F045039F6E4DAC8A657E83C64B3CEB9124044047E9`；typecheck、build（148 source files）、dist API 均通过。J5/browser facade 审计 SHA-256：jree `1DEE3C3E380AC292E74BAFE6F528F5D8D6442F69144991C01BCC886A72007142`，platform `61A518575200F0F06F64625B570CCFA64177E71D252687F70B602242BEF3CD2D`。
+- `cb8330b` bridge closure：生产核心 `runtime/jree-compat` 导入为 0，Node host adapter 仍是唯一直接 npm jree 文件；TS-only M2 `494/496`、0 failed，TAP SHA-256 `D76F6BC4CC73AD0B7DF598CC024E2B613BFF9AB835F95E8079D61339FFC1B0EB`。最新 jree/platform 审计 SHA-256：`0340276FCA524153B6967C9399D8EB6D1F0B1A195ED6070A3FCC5A380B7D683B` / `4A762C50D94F0F75357B389857D84023D543AD35AE1DA86968D566B905E40C79`。
 
 ### 2026-09-29 M1' fallback evidence on `4b817bf`
 

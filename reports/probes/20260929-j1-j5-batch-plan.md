@@ -76,3 +76,11 @@
 - J5/browser audits are saved as `reports/evidence/j5-browser-facade-audit-jree-20260929.json` and `reports/evidence/j5-browser-facade-audit-platform-20260929.json`.
 - The last M1' experiment remains authoritative: M1-- `243/243` passed, #244 and #246 passed, #245 65536 process-limited; no original 2M long-cycle claim.
 - The next stage-gate run must use the immutable current head if 023/024 completion is attempted; no LeanSpec status was changed in this batch.
+
+## Bridge closure checkpoint (`cb8330b`)
+
+- Production `runtime/jree-compat.ts` import count is now zero; only `src/platform/node/jree-host-adapter.ts` imports npm `jree`.
+- Node host adapter explicitly owns JavaRandom prototype installation, boxed String conversion, and project/jree exception observation.
+- Full TS-only M2: `494/496`, zero failures; TAP SHA-256 `D76F6BC4CC73AD0B7DF598CC024E2B613BFF9AB835F95E8079D61339FFC1B0EB`.
+- Latest audits: jree `0340276FCA524153B6967C9399D8EB6D1F0B1A195ED6070A3FCC5A380B7D683B`, platform `4A762C50D94F0F75357B389857D84023D543AD35AE1DA86968D566B905E40C79`.
+- This closes the implementation-side bridge migration slice. It does not certify stage 023/024, because the stage gate still requires the full immutable-commit Java/M1/markerless/browser integration set.
