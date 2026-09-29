@@ -5,7 +5,8 @@ import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { javaObjectsHash } from "../runtime/JavaArrays.ts";
-import { javaStringValue, toJavaString, type JavaCharSequence, type JavaString } from "../runtime/jree-compat.ts";
+import { toJavaString, type JavaCharSequence, type JavaString } from "../runtime/jree-compat.ts";
+import { javaStringValue } from "../runtime/java-text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;

@@ -7,7 +7,7 @@ import { Terms } from "./Terms.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
-import { javaStringValue } from "../runtime/jree-compat.ts";
+import { javaStringValue } from "../runtime/java-text.ts";
 
 type StatementFactory = (subject: Term, predicate: Term, order: int) => Statement;
 type StatementRuntime = Record<string, any>;

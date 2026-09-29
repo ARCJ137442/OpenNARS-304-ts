@@ -7,8 +7,8 @@ import { Symbols } from "../io/Symbols.ts";
 import type { TLink } from "./TLink.ts";
 import {
     JavaIllegalArgumentException,
-    javaStringValue,
 } from "../runtime/jree-compat.ts";
+import { javaStringValue } from "../runtime/java-text.ts";
 import {
     javaInt16ArrayEquals,
     javaInt16ArrayHashCode,

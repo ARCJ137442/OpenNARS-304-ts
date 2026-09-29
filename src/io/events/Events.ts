@@ -1,5 +1,6 @@
 //! Java source: opennars/io/events/Events.java
-import { JavaIllegalArgumentException, javaStringValue } from "../../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../../runtime/jree-compat.ts";
+import { javaStringValue } from "../../runtime/java-text.ts";
 import type { JavaStringInput } from "../../runtime/jree-compat.ts";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";

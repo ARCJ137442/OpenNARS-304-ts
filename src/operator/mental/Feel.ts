@@ -14,7 +14,7 @@ import { Tense } from "../../language/Tense.ts";
 import { Operator } from "../Operator.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
-import { javaStringValue } from "../../runtime/jree-compat.ts";
+import { javaStringValue } from "../../runtime/java-text.ts";
 
 
 
