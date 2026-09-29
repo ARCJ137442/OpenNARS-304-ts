@@ -3,9 +3,9 @@ import type { int } from "../../types.ts"; // Java primitive aliases formerly im
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { Term } from "../../language/Term.ts";
 import {
-    javaStringValue,
     toJavaString,
 } from "../../runtime/jree-compat.ts";
+import { javaStringValue } from "../../runtime/java-text.ts";
 import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
