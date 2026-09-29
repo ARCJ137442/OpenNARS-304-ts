@@ -1,0 +1,415 @@
+src\operator\FunctionOperator.ts:17:    type JavaStringInput,
+src\operator\FunctionOperator.ts:38:    protected constructor(name: JavaStringInput) {
+src\interfaces\NarseseConsumer.ts:3:import type { JavaStringInput } from "../runtime/jree-compat.ts";
+src\interfaces\NarseseConsumer.ts:21:    addInput(narsese: JavaStringInput): void;
+src\control\TemporalInferenceControl.ts:2:import { JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
+src\control\TemporalInferenceControl.ts:141:                            JavaSystemLoggerCompat.getLogger("TemporalInferenceControl").log("INFO", "analyze case in TemporalInferenceControl!", null);
+src\main\Shell.ts:10:import { isJavaException, java, javaSystemExit, type JavaStringInput } from "../runtime/jree-compat.ts";
+src\main\Shell.ts:27:    public static createNar(args: JavaStringInput[]): Nar {
+src\main\Shell.ts:83:    protected static log(message: JavaStringInput): void {
+src\main\Shell.ts:93:    public static main(args: JavaStringInput[]): void {
+src\main\Shell.ts:146:                                if (isJavaException(ex)) {
+src\main\Shell.ts:189:    public run(args: JavaStringInput[]): void {
+src\control\DerivationContext.ts:24:import type { JavaChar, JavaStringInput } from "../runtime/jree-compat.ts";
+src\control\DerivationContext.ts:632:    public addTask(t: Task, reason: JavaStringInput): void;
+src\control\DerivationContext.ts:648:                const [t, reason] = args as [Task, JavaStringInput];
+src\main\NarNode.ts:14:import { isJavaException, java, JavaSystemLoggerCompat, toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
+src\main\NarNode.ts:109:                        if (isJavaException(ex)) { // log any type of exception, also parsing exceptions, because it shouldn't
+src\main\NarNode.ts:111:                            JavaSystemLoggerCompat.getLogger(NarNode.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+src\main\NarNode.ts:134:                if (isJavaException(ex)) {
+src\main\NarNode.ts:135:                    JavaSystemLoggerCompat.getLogger(NarNode.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+src\main\NarNode.ts:181:    public static sendNarsese(input: JavaStringInput, target: NarNode.TargetNar): void;
+src\main\NarNode.ts:183:    public static sendNarsese(input: JavaStringInput, targetIP: JavaStringInput, targetPort: int, taskThreshold: float,
+src\main\NarNode.ts:188:                const [input, target] = args as [JavaStringInput, NarNode.TargetNar];
+src\main\NarNode.ts:193:                oo.writeObject(toJavaString(input));
+src\main\NarNode.ts:211:                const [input, targetIP, targetPort, taskThreshold, mustContainTerm] = args as [JavaStringInput, JavaStringInput, int, float, Term | null];
+src\main\NarNode.ts:242:        public constructor(targetIP: JavaStringInput, targetPort: int, threshold: float, mustContainTerm: Term | null,
+src\main\NarNode.ts:244:            this.targetAddress = javaNetCompat.InetAddress.getByName(toJavaString(targetIP));
+src\main\NarNode.ts:279:    public addRedirectionTo(targetIP: JavaStringInput, targetPort: int, taskThreshold: float,
+src\main\NarNode.ts:294:                const [targetIP, targetPort, taskThreshold, mustContainTerm, sendInput] = args as [JavaStringInput, int, float, Term | null, boolean];
+src\main\NarNode.ts:345:                if (isJavaException(ex)) {
+src\main\Nar.ts:4:import { toJavaString, toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
+src\main\Nar.ts:33:import { isJavaException, java, JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
+src\main\Nar.ts:54:    readonly narId?: JavaLongInput;
+src\main\Nar.ts:125:    public addSensoryChannel(term: JavaStringInput, channel: SensoryChannel): void {
+src\main\Nar.ts:134:                JavaSystemLoggerCompat.getLogger(Nar.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+src\main\Nar.ts:145:    public SaveToFile(name: JavaStringInput): void {
+src\main\Nar.ts:146:        let outStream: java.io.FileOutputStream = new java.io.FileOutputStream(toJavaString(name));
+src\main\Nar.ts:155:    public static LoadFromFile(name: JavaStringInput): Nar {
+src\main\Nar.ts:156:        let inStream: java.io.FileInputStream = new java.io.FileInputStream(toJavaString(name));
+src\main\Nar.ts:237:    public constructor(narId: JavaLongInput);
+src\main\Nar.ts:240:    public constructor(configText: JavaStringInput);
+src\main\Nar.ts:246:    public constructor(narId: JavaLongInput, configText: JavaStringInput);
+src\main\Nar.ts:249:    public constructor(configText: JavaStringInput, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
+src\main\Nar.ts:252:    public constructor(narId: JavaLongInput, configText: JavaStringInput, parameterOverrides: java.util.Map<java.lang.String, java.lang.Object>);
+src\main\Nar.ts:295:                    ? toRuntimeLong(args[0] as JavaLongInput)
+src\main\Nar.ts:312:                ? toRuntimeLong(args[0] as JavaLongInput)
+src\main\Nar.ts:380:            let value: JavaDoubleCompat = JavaDoubleCompat.valueOf(text.split("decisionthreshold=")[1]);
+src\main\Nar.ts:385:            let value: java.lang.Integer = java.lang.Integer.valueOf(toJavaString(text.split("volume=")[1]));
+src\main\Nar.ts:390:            let value: java.lang.Integer = java.lang.Integer.valueOf(toJavaString(text.split("threads=")[1]));
+src\main\Nar.ts:426:            let value: java.lang.Integer = java.lang.Integer.valueOf(toJavaString(text.split("speed=")[1]));
+src\main\Nar.ts:448:    public addInput(text: JavaStringInput): void;
+src\main\Nar.ts:454:                const [rawText] = args as [JavaStringInput];
+src\main\Nar.ts:543:                predicate = SetInt.make(new Term(toJavaString("OBSERVED")));
+src\main\Nar.ts:601:    public addInputText(source: JavaStringInput): void;
+src\main\Nar.ts:602:    public addInputText(text: JavaStringInput, time: Timable): void;
+src\main\Nar.ts:605:            super.addInputText(args[0] as JavaStringInput, args[1] as Timable);
+src\main\Nar.ts:628:    public concept(concept: JavaStringInput): Concept {
+src\main\Nar.ts:636:    public ask(termString: JavaStringInput, answered: AnswerHandler): Nar {
+src\main\Nar.ts:661:    public askNow(termString: JavaStringInput, answered: AnswerHandler): Nar {
+src\main\Nar.ts:851:            if (isJavaException(e)) {
+src\io\Parser.ts:4:import type { JavaStringInput } from "../runtime/jree-compat.ts";
+src\io\Parser.ts:14:    parseTask(narsese: JavaStringInput): Task;
+src\io\Parser.ts:23:    public constructor(s: JavaStringInput) {
+src\operator\Operator.ts:13:    isJavaException,
+src\operator\Operator.ts:14:    javaStringValue,
+src\operator\Operator.ts:15:    toJavaString,
+src\operator\Operator.ts:16:    type JavaStringInput,
+src\operator\Operator.ts:32:    `[${values.map((value) => value === null || value === undefined ? "null" : javaStringValue(value)).join(", ")}]`;
+src\operator\Operator.ts:46:    protected constructor(name: JavaStringInput);
+src\operator\Operator.ts:58:                const [name] = args as [JavaStringInput];
+src\operator\Operator.ts:61:                super(toJavaString(name));
+src\operator\Operator.ts:62:                if (!javaStringValue(name).startsWith("^"))
+src\operator\Operator.ts:130:                    if (isJavaException(ex)) {// peripherie, maybe used incorrectly, failure is unavoidable
+src\operator\Operator.ts:175:        const argList = javaStringValue(operationArguments.toString()).substring(3);
+src\operator\Operator.ts:176:        return `${javaStringValue(operator)}(${argList}`;
+src\operator\Operator.ts:203:            if (isJavaException(feedback)) {
+src\operator\Operator.ts:206:                    ? javaStringValue(exception.getClass().getSimpleName())
+src\operator\Operator.ts:208:                feedback = `${className}: ${javaStringValue(exception.getMessage())}`;
+src\operator\Operator.ts:241:            const budgetPrefix = b !== null ? javaStringValue(b.toStringExternal()) + " " : "";
+src\operator\Operator.ts:242:            return budgetPrefix + javaStringValue(operator) +
+src\operator\Operator.ts:243:                "(" + javaArrayToString(args) + ")=" + javaStringValue(this.feedback);
+src\operator\Operator.ts:249:    public static addPrefixIfMissing(opName: JavaStringInput): string {
+src\operator\Operator.ts:250:        const text = javaStringValue(opName);
+src\interfaces\SensoryChannelConsumer.ts:2:import type { JavaStringInput } from "../runtime/jree-compat.ts";
+src\interfaces\SensoryChannelConsumer.ts:20:    addSensoryChannel(term: JavaStringInput, channel: SensoryChannel): void;
+src\io\Narsese.ts:3:import { javaStringValue, type JavaStringInput } from "../runtime/jree-compat.ts";
+src\io\Narsese.ts:67:const getOperator = (value: string) => Symbols.getOperator(javaStringValue(value));
+src\io\Narsese.ts:68:const getRelation = (value: string) => Symbols.getRelation(javaStringValue(value));
+src\io\Narsese.ts:69:const getOpener = (value: string) => Symbols.getOpener(javaStringValue(value));
+src\io\Narsese.ts:70:const getCloser = (value: string) => Symbols.getCloser(javaStringValue(value));
+src\io\Narsese.ts:71:const isRelation = (value: string) => Symbols.isRelation(javaStringValue(value));
+src\io\Narsese.ts:81:    public constructor(value: JavaStringInput = "") {
+src\io\Narsese.ts:82:        this.value = javaStringValue(value);
+src\io\Narsese.ts:196:    public parseTask(s: JavaStringInput): Task {
+src\io\Narsese.ts:391:    public parseTerm(s: JavaStringInput): Term | null {
+src\io\Narsese.ts:392:        const text = javaStringValue(s).trim();
+src\io\Narsese.ts:728:    public static possiblyNarsese(s: JavaStringInput): boolean {
+src\io\Narsese.ts:729:        const native = javaStringValue(s);
+src\control\concept\ProcessGoal.ts:28:import { JavaIllegalAccessError, JavaSystemLoggerCompat, javaStringValue } from "../../runtime/jree-compat.ts";
+src\control\concept\ProcessGoal.ts:375:                JavaSystemLoggerCompat.getLogger("ProcessGoal").log("INFO", `Executed based on: ${javaStringValue(executablePrecondition)}`, null);
+src\control\concept\ProcessGoal.ts:595:            JavaSystemLoggerCompat.getLogger("ProcessGoal").log("INFO", t.toStringLong(), null);
+src\operator\Operation.ts:11:    type JavaCharSequence,
+src\operator\Operation.ts:12:    type JavaCharSequenceInput,
+src\operator\Operation.ts:13:    javaStringValue,
+src\operator\Operation.ts:121:    protected makeName(): JavaCharSequence {
+src\operator\Operation.ts:127:    public static makeName(op: JavaCharSequenceInput, arg: Term[]): JavaCharSequence {
+src\operator\Operation.ts:132:        const argumentNames = arg.map((term) => javaStringValue(term.name()));
+src\operator\Operation.ts:133:        const name = `${Symbols.NativeOperator.COMPOUND_TERM_OPENER.ch}${javaStringValue(op)}`
+src\operator\Operation.ts:136:        return name as unknown as JavaCharSequence;
+src\inference\TruthFunctions.ts:8:import { subtractRuntimeLongValues, type JavaLongInput } from "../runtime/jree-compat.ts";
+src\inference\TruthFunctions.ts:603:    public static temporalProjection(sourceTime: JavaLongInput, targetTime: JavaLongInput, currentTime: JavaLongInput,
+src\control\concept\ProcessAnticipation.ts:15:import { toJavaString } from "../../runtime/jree-compat.ts";
+src\control\concept\ProcessAnticipation.ts:110:                let anticipate_op: Operator = (c.memory.getOperator(toJavaString("^anticipate")) as Anticipate);
+src\entity\TermLink.ts:10:    javaStringValue,
+src\entity\TermLink.ts:240:        const targetText = this.target !== null ? javaStringValue(this.target.name()) : "";
+src\operator\NullOperator.ts:6:import type { JavaStringInput } from "../runtime/jree-compat.ts";
+src\operator\NullOperator.ts:22:    public constructor(name: JavaStringInput);
+src\operator\NullOperator.ts:27:            super(args[0] as JavaStringInput);
+src\entity\TaskLink.ts:13:    javaStringValue,
+src\entity\TaskLink.ts:222:        return `${javaStringValue(super.toString())} ${javaStringValue(this.getTarget().sentence.stamp)}`;
+src\storage\Memory.ts:34:import { javaStringValue, toJavaString } from "../runtime/jree-compat.ts";
+src\storage\Memory.ts:35:import type { JavaStringInput } from "../runtime/jree-compat.ts";
+src\storage\Memory.ts:219:    public addNewTask(t: Task, reason: JavaStringInput): void {
+src\storage\Memory.ts:224:        this.emit(Events.TaskAdd.class, t, toJavaString(reason));
+src\storage\Memory.ts:313:    public removeTask(task: Task, reason: JavaStringInput): void {
+src\storage\Memory.ts:314:        this.emit(TaskRemove.class, task, toJavaString(reason));
+src\storage\Memory.ts:431:    public getOperator(op: JavaStringInput): Operator {
+src\storage\Memory.ts:432:        return (this.operators.get(javaStringValue(op)) ?? null) as unknown as Operator;
+src\storage\Memory.ts:436:        this.operators.set(javaStringValue(op.name()), op);
+src\storage\Memory.ts:441:        const key = javaStringValue(op.name());
+src\entity\Task.ts:6:import { javaStringValue } from "../runtime/jree-compat.ts";
+src\entity\Task.ts:224:        let result = `${javaStringValue(super.toString())} ${javaStringValue(this.sentence.stamp.name())}`;
+src\entity\Task.ts:226:            result += `  \n solution: ${javaStringValue(this.bestSolution.toString())}`;
+src\io\ConfigReader.ts:11:import type { JavaStringInput } from "../runtime/jree-compat.ts";
+src\io\ConfigReader.ts:76:    public static loadParamsFromFileAndReturnPlugins(filepath: JavaStringInput, reasoner: Reasoner,
+src\interfaces\pub\Reasoner.ts:2:import type { JavaStringInput } from "../../runtime/jree-compat.ts";
+src\interfaces\pub\Reasoner.ts:29:    addInput(narsese: JavaStringInput): void;
+src\interfaces\pub\Reasoner.ts:40:    ask(termString: JavaStringInput, answered: AnswerHandler): Reasoner;
+src\interfaces\pub\Reasoner.ts:50:    askNow(termString: JavaStringInput, answered: AnswerHandler): Reasoner;
+src\interfaces\pub\Reasoner.ts:59:    concept(concept: JavaStringInput): Concept;
+src\language\Conjunction.ts:10:import { toJavaString, type JavaCharSequence, type JavaListInput, type JavaString } from "../runtime/jree-compat.ts";
+src\language\Conjunction.ts:380:            return toJavaString("");
+src\language\Conjunction.ts:382:            return toJavaString("+" + String(value));
+src\language\Conjunction.ts:408:                let ret: Term = Term.get(toJavaString(s));
+src\language\Conjunction.ts:443:    protected makeName(): JavaCharSequence {
+src\entity\Stamp.ts:15:    toJavaString,
+src\entity\Stamp.ts:17:    type JavaLongInput,
+src\entity\Stamp.ts:136:    public constructor(old: Stamp, creationTime: JavaLongInput);
+src\entity\Stamp.ts:141:    public constructor(old: Stamp, creationTime: JavaLongInput, useEvidentialBase: Stamp);
+src\entity\Stamp.ts:150:    public constructor(time: JavaLongInput, tense: Tense, serial: Stamp.BaseEntry, duration: int);
+src\entity\Stamp.ts:159:    public constructor(first: Stamp, second: Stamp, time: JavaLongInput, narParameters: Parameters);
+src\entity\Stamp.ts:175:            const [old, creationTime] = args as [Stamp, JavaLongInput];
+src\entity\Stamp.ts:200:            const [old, creationTime, useEvidentialBase] = args as [Stamp, JavaLongInput, Stamp];
+src\entity\Stamp.ts:216:            const [first, second, time, narParameters] = args as [Stamp, Stamp, JavaLongInput, Parameters];
+src\entity\Stamp.ts:233:            const [time, tense, serial, duration] = args as [JavaLongInput, Tense, Stamp.BaseEntry, int];
+src\entity\Stamp.ts:305:    public setCreationTime(time: JavaLongInput, duration: int): void {
+src\entity\Stamp.ts:462:    public cloneWithNewOccurrenceTime(newOcurrenceTime: JavaLongInput): Stamp {
+src\entity\Stamp.ts:503:        return toJavaString(this.isEternal() ? "" : `[${String(this.occurrenceTime)}]`);
+src\entity\Stamp.ts:506:    public getTense(currentTime: JavaLongInput, duration: int): JavaString {
+src\entity\Stamp.ts:509:            return toJavaString("");
+src\entity\Stamp.ts:513:                return toJavaString(String(Symbols.TENSE_FUTURE));
+src\entity\Stamp.ts:515:                return toJavaString(String(Symbols.TENSE_PAST));
+src\entity\Stamp.ts:517:                return toJavaString(String(Symbols.TENSE_PRESENT));
+src\entity\Stamp.ts:521:    public setOccurrenceTime(time: JavaLongInput): void {
+src\entity\Stamp.ts:547:            this.nameCache = toJavaString(parts.join(""));
+src\entity\Stamp.ts:587:        public constructor(narId: JavaLongInput, inputId: JavaLongInput) {
+src\storage\Bag.ts:9:import { javaValuesEqual, toJavaString, type JavaString } from "../runtime/jree-compat.ts";
+src\storage\Bag.ts:264:            if (directKey === key || javaValuesEqual(directKey, key)) {
+src\storage\Bag.ts:276:                if (javaValuesEqual(existingKey, key)) {
+src\storage\Bag.ts:289:                if (javaValuesEqual(existingKey, key)) return existingKey;
+src\storage\Bag.ts:296:            if (javaValuesEqual(existingKey, key)) {
+src\storage\Bag.ts:342:                    const index = bucket.findIndex((existingKey) => javaValuesEqual(existingKey, key));
+src\storage\Bag.ts:358:                            if (javaValuesEqual(restoredList.get(index), key)) {
+src\storage\Bag.ts:378:                                if (javaValuesEqual(iterator.next(), key)) {
+src\storage\Bag.ts:386:                            const index = values.findIndex((existingKey) => javaValuesEqual(existingKey, key));
+src\storage\Bag.ts:504:        return toJavaString(parts.join(""));
+src\storage\Bag.ts:517:        return toJavaString(parts.join(""));
+src\storage\Bag.ts:529:        return toJavaString(`Levels: ${levels}, sizes: ${sizes.join("")}`);
+src\io\events\Events.ts:2:import { JavaIllegalArgumentException, javaStringValue } from "../../runtime/jree-compat.ts";
+src\io\events\Events.ts:3:import type { JavaStringInput } from "../../runtime/jree-compat.ts";
+src\io\events\Events.ts:52:    public abstract onTaskAdd(t: Task, reason: JavaStringInput): void;
+src\io\events\Events.ts:55:        this.onTaskAdd(args[0] as unknown as Task, args[1] as JavaStringInput);
+src\io\events\Events.ts:119:        return `Concept Created: ${javaStringValue(this.object)}`;
+src\language\CompoundTerm.ts:13:import { javaStringHashCode, javaStringsEqual, toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
+src\language\CompoundTerm.ts:374:    protected makeName(): JavaCharSequence {
+src\language\CompoundTerm.ts:378:    public name(): JavaCharSequence {
+src\language\CompoundTerm.ts:395:    protected static makeCompoundName(op: NativeOperator, ...arg: Term[]): JavaCharSequence {
+src\language\CompoundTerm.ts:398:        return toJavaString(
+src\language\CompoundTerm.ts:815:        return javaStringHashCode(this.name());
+src\language\CompoundTerm.ts:830:        return javaStringsEqual(this.name(), (that as Term).name());
+src\entity\Sentence.ts:22:import { addRuntimeLongValues, javaStringValue, javaStringsEqual, subtractRuntimeLongValues, toJavaString } from "../runtime/jree-compat.ts";
+src\entity\Sentence.ts:23:import type { JavaChar, JavaCharSequence, JavaString } from "../runtime/jree-compat.ts";
+src\entity\Sentence.ts:246:                    let rename: Map<string, JavaCharSequence> = new Map();
+src\entity\Sentence.ts:250:                        let vname: JavaCharSequence = v.name();
+src\entity\Sentence.ts:252:                            vname = toJavaString(`${javaStringValue(vname)} ${javaStringValue(v.getScope().name())}`);
+src\entity\Sentence.ts:253:                        const renameKey = javaStringValue(vname);
+src\entity\Sentence.ts:254:                        let n: JavaCharSequence | null = rename.get(renameKey) ?? null;
+src\entity\Sentence.ts:259:                            if (!javaStringsEqual(n, vname))
+src\entity\Sentence.ts:522:                return toJavaString(this.getKey());
+src\entity\Sentence.ts:533:                let contentName: JavaCharSequence = this.term.name();
+src\entity\Sentence.ts:556:                let stampString: JavaCharSequence | null = showStamp ? this.stamp.name() : null;
+src\entity\Sentence.ts:577:                    .append(javaStringValue(contentName))
+src\entity\Sentence.ts:590:                    buffer.append(" ").append(javaStringValue(stampString));
+src\entity\Sentence.ts:592:                return toJavaString(buffer.toString());
+src\plugin\perception\VisionChannel.ts:6:import { JavaSystemLoggerCompat, toJavaString, type JavaStringInput } from "../../runtime/jree-compat.ts";
+src\plugin\perception\VisionChannel.ts:43:    public constructor(label: JavaStringInput, nar: Reasoner, reportResultsTo: Reasoner, width: int,
+src\plugin\perception\VisionChannel.ts:47:            SetInt.make(new Term(toJavaString(label))));
+src\plugin\perception\VisionChannel.ts:49:        this.label = SetInt.make(new Term(toJavaString(label)));
+src\plugin\perception\VisionChannel.ts:134:            V = SetExt.make(new Term(toJavaString(this.subj)));
+src\plugin\perception\VisionChannel.ts:136:            V = SetExt.make(new Term(toJavaString(this.subj + this.termid)));
+src\plugin\perception\VisionChannel.ts:258:                            JavaSystemLoggerCompat.getLogger(VisionChannel.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+src\language\AbstractTerm.ts:3:import type { JavaCharSequence } from "../runtime/jree-compat.ts";
+src\language\AbstractTerm.ts:42:    name(): JavaCharSequence;
+src\io\events\TextOutputHandler.ts:10:import { isJavaThrowable, java, javaStringValue, toJavaString } from "../../runtime/jree-compat.ts";
+src\io\events\TextOutputHandler.ts:11:import type { JavaStringInput } from "../../runtime/jree-compat.ts";
+src\io\events\TextOutputHandler.ts:113:    public openSaveFile(path: JavaStringInput): void {
+src\io\events\TextOutputHandler.ts:115:            this.outExp = new java.io.PrintWriter(new java.io.FileWriter(toJavaString(path)));
+src\io\events\TextOutputHandler.ts:182:    public setLinePrefix(prefix: JavaStringInput): TextOutputHandler {
+src\io\events\TextOutputHandler.ts:183:        this.prefix = javaStringValue(prefix);
+src\io\events\TextOutputHandler.ts:255:            if (isJavaThrowable(signal)) {
+src\io\events\TextOutputHandler.ts:301:        if (isJavaThrowable(signal)) {
+src\io\events\TextOutputHandler.ts:328:        println(s: JavaStringInput): void;
+src\language\Negation.ts:8:import type { JavaCharSequence } from "../runtime/jree-compat.ts";
+src\language\Negation.ts:33:    protected makeName(): JavaCharSequence {
+src\entity\Item.ts:5:import { javaStringHashCode, javaStringValue, javaValuesEqual } from "../runtime/jree-compat.ts";
+src\entity\Item.ts:6:import type { JavaCharSequenceInput } from "../runtime/jree-compat.ts";
+src\entity\Item.ts:19:    return javaStringHashCode(value) as int;
+src\entity\Item.ts:200:        const budgetText = this.budget !== null ? javaStringValue(this.budget.toString()) : "";
+src\entity\Item.ts:201:        const nameText = javaStringValue(this.name());
+src\entity\Item.ts:213:        const budgetText = javaStringValue(this.requireBudget().toStringExternal());
+src\entity\Item.ts:214:        const nameText = javaStringValue(this.name());
+src\entity\Item.ts:222:        const budgetText = javaStringValue(this.requireBudget().toStringExternal());
+src\entity\Item.ts:223:        const nameText = javaStringValue(this.name());
+src\entity\Item.ts:249:            return javaValuesEqual((obj as Item<unknown>).name(), this.name());
+src\entity\Item.ts:276:abstract class StringKeyItem extends Item<JavaCharSequenceInput> {
+src\entity\Item.ts:290:            return javaValuesEqual((obj as Item<unknown>).name(), this.name());
+src\plugin\perception\SensoryChannel.ts:7:    JavaSystemLoggerCompat,
+src\plugin\perception\SensoryChannel.ts:9:    toJavaString,
+src\plugin\perception\SensoryChannel.ts:11:    type JavaStringInput,
+src\plugin\perception\SensoryChannel.ts:123:    public addInputText(text: JavaStringInput, time: Timable): void {
+src\plugin\perception\SensoryChannel.ts:129:                JavaSystemLoggerCompat.getLogger(SensoryChannel.class.getName()).log(
+src\plugin\perception\SensoryChannel.ts:130:                    JavaSystemLoggerCompat.Level.SEVERE,
+src\plugin\perception\SensoryChannel.ts:177:    public setName(val: JavaStringInput): void {
+src\plugin\perception\SensoryChannel.ts:178:        this.label = new Term(toJavaString(val));
+src\inference\CompositionalRules.ts:42:import { JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
+src\inference\CompositionalRules.ts:63:const javaStringHashCode = (value: string): number => {
+src\inference\CompositionalRules.ts:75:  return javaStringHashCode(String(value));
+src\inference\CompositionalRules.ts:654:        JavaSystemLoggerCompat.getLogger("CompositionalRules").log(
+src\inference\CompositionalRules.ts:655:          JavaSystemLoggerCompat.Level.SEVERE,
+src\language\Inheritance.ts:9:import { toJavaString } from "../runtime/jree-compat.ts";
+src\language\Inheritance.ts:146:            if (!predicateOperator && predicate.toString().startsWith(toJavaString("^"))) {
+src\language\Interval.ts:5:import { toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
+src\language\Interval.ts:23:    public static interval(i: JavaStringInput): Interval {
+src\language\Interval.ts:40:    public constructor(i: JavaStringInput);
+src\language\Interval.ts:45:        const value = args[0] as long | JavaStringInput;
+src\language\Interval.ts:50:        this.setName(toJavaString(String(Symbols.INTERVAL_PREFIX) + String(time)));
+src\operator\misc\System.ts:5:import { toJavaString } from "../../runtime/jree-compat.ts";
+src\operator\misc\System.ts:35:        return new Term(toJavaString(ret));
+src\operator\misc\System.ts:39:        return Term.get(toJavaString("system_called"));
+src\entity\Concept.ts:20:import { javaStringValue } from "../runtime/jree-compat.ts";
+src\entity\Concept.ts:479:        return javaStringValue(res);
+src\language\Image.ts:8:import { javaStringValue, toJavaString, type JavaCharSequence, type JavaString } from "../runtime/jree-compat.ts";
+src\language\Image.ts:54:        let n: JavaCharSequence = t.name();
+src\language\Image.ts:69:        let name = `${COMPOUND_TERM_OPENER.ch}${op.toString()}${Symbols.ARGUMENT_SEPARATOR}${javaStringValue(arg[relationIndex].name())}`;
+src\language\Image.ts:75:                : javaStringValue(arg[i].name());
+src\language\Image.ts:78:        return toJavaString(name);
+src\language\Image.ts:87:    public makeName(): JavaCharSequence {
+src\operator\misc\Reflect.ts:12:    javaStringValue,
+src\operator\misc\Reflect.ts:15:import type { JavaStringInput } from "../../runtime/jree-compat.ts";
+src\operator\misc\Reflect.ts:49:    public static sop(s: Statement, operatorName: JavaStringInput): Term;
+src\operator\misc\Reflect.ts:53:    public static sop(operatorName: JavaStringInput, t: Term[]): Term;
+src\operator\misc\Reflect.ts:55:    public static sop(operatorName: JavaStringInput, ...t: Term[]): Term;
+src\operator\misc\Reflect.ts:77:                        : Term.get(javaStringValue(second));
+src\operator\misc\Reflect.ts:80:                const operatorName = javaStringValue(first);
+src\language\Implication.ts:10:import type { JavaCharSequence } from "../runtime/jree-compat.ts";
+src\language\Implication.ts:215:    public static makeName(subject: Term, temporalOrder: int, predicate: Term): JavaCharSequence {
+src\language\Variables.ts:19:import { javaStringLength, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
+src\language\Variables.ts:360:    public static containVar(n: JavaCharSequence | string): boolean;
+src\language\Variables.ts:366:                const [n] = args as [JavaCharSequence | string];
+src\language\Variables.ts:371:                let l: int = javaStringLength(n);
+src\language\SetTensional.ts:8:import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
+src\language\SetTensional.ts:51:    protected static makeSetName(opener: JavaChar, arg: Term[], closer: JavaChar): JavaCharSequence {
+src\language\SetTensional.ts:53:        return toJavaString(`${String(opener)}${names.join(Symbols.ARGUMENT_SEPARATOR)}${String(closer)}`);
+src\language\Variable.ts:9:    javaStringHashCode,
+src\language\Variable.ts:10:    javaStringValue,
+src\language\Variable.ts:11:    toJavaString,
+src\language\Variable.ts:13:    type JavaCharSequence,
+src\language\Variable.ts:39:    public constructor(name: JavaCharSequence | string);
+src\language\Variable.ts:46:    public constructor(name: JavaCharSequence | string, scope: Term);
+src\language\Variable.ts:56:                const [rawName] = args as [JavaCharSequence | string];
+src\language\Variable.ts:57:                const name = typeof rawName === "string" ? toJavaString(rawName) : rawName;
+src\language\Variable.ts:70:                const [rawName, scope] = args as [JavaCharSequence | string, Term];
+src\language\Variable.ts:71:                const name = typeof rawName === "string" ? toJavaString(rawName) : rawName;
+src\language\Variable.ts:87:    public setScope(scope: Term | null, n: JavaCharSequence): Variable {
+src\language\Variable.ts:89:        const first = javaStringValue(n).charAt(0);
+src\language\Variable.ts:165:        if (javaStringValue(this.name()) !== javaStringValue(v.name())) {
+src\language\Variable.ts:172:        return javaStringValue(v.getScope().name()) === javaStringValue(this.getScope().name());
+src\language\Variable.ts:180:            return javaStringValue(this.name()) === javaStringValue(v.name());
+src\language\Variable.ts:186:            if (javaStringValue(this.name()) !== javaStringValue(v.name()))
+src\language\Variable.ts:202:            return javaStringValue(this.scope.name()) === javaStringValue(v.scope.name());
+src\language\Variable.ts:209:                this.hash = 31 * javaStringHashCode(this.name()) + this.scope.hashCode();
+src\language\Variable.ts:211:                this.hash = javaStringHashCode(this.name());
+src\language\Variable.ts:274:        let n: JavaCharSequence = this.name();
+src\language\Variable.ts:289:        let i: int = Texts.compareTo(javaStringValue(a.name()), javaStringValue(b.name()));
+src\language\Variable.ts:304:                return Texts.compareTo(javaStringValue(a.getScope().name()), javaStringValue(b.getScope().name()));
+src\language\Variable.ts:316:    private static readonly vn1: JavaCharSequence[] = new Array<JavaCharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
+src\language\Variable.ts:317:    private static readonly vn2: JavaCharSequence[] = new Array<JavaCharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
+src\language\Variable.ts:318:    private static readonly vn3: JavaCharSequence[] = new Array<JavaCharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
+src\language\Variable.ts:320:    public static getName(type: JavaChar, index: int): JavaCharSequence {
+src\language\Variable.ts:324:        let cache: JavaCharSequence[];
+src\language\Variable.ts:339:        let c: JavaCharSequence = cache[index];
+src\language\Variable.ts:348:    protected static newName(type: JavaChar, index: int): JavaCharSequence {
+src\language\Variable.ts:355:        return toJavaString(name);
+src\language\SetExt.ts:6:import { type JavaCharSequence, type JavaListInput } from "../runtime/jree-compat.ts";
+src\language\SetExt.ts:129:    public makeName(): JavaCharSequence {
+src\plugin\mental\Emotions.ts:18:import { toJavaString } from "../../runtime/jree-compat.ts";
+src\plugin\mental\Emotions.ts:170:            let predicate: Term = SetInt.make(new Term(toJavaString("satisfied")));
+src\plugin\mental\Emotions.ts:264:            let predicate: Term = SetInt.make(new Term(toJavaString("busy")));
+src\plugin\mental\Emotions.ts:265:            let subject: Term = new Term(toJavaString("SELF"));
+src\operator\mental\Anticipate.ts:14:    type JavaLongInput,
+src\operator\mental\Anticipate.ts:264:    public anticipate(content: Term, memory: Memory, occurenceTime: JavaLongInput, t: Task | null,
+src\operator\mental\Anticipate.ts:345:            public constructor(predictionCreationTime: JavaLongInput, predictedOccurenceTime: JavaLongInput) { // rest of the crap:
+src\language\SetInt.ts:6:import { type JavaCharSequence, type JavaListInput } from "../runtime/jree-compat.ts";
+src\language\SetInt.ts:129:    public makeName(): JavaCharSequence {
+src\operator\misc\Add.ts:6:    javaStringValue,
+src\operator\misc\Add.ts:7:    toJavaString,
+src\operator\misc\Add.ts:19:const isNumeric = (value: unknown): boolean => /^[0-9]+$/.test(javaStringValue(value));
+src\operator\misc\Add.ts:48:        const first = javaStringValue(x[0].name());
+src\operator\misc\Add.ts:55:        const second = javaStringValue(x[1].name());
+src\operator\misc\Add.ts:62:        return new Term(toJavaString(String(n1 + n2)));
+src\language\Tense.ts:4:    javaStringValue,
+src\language\Tense.ts:5:    type JavaStringInput,
+src\language\Tense.ts:55:    public static tense(s: JavaStringInput): Tense {
+src\language\Tense.ts:58:        return Tense.stringToTense.get(javaStringValue(s)) ?? null!;
+src\language\Terms.ts:11:import { javaValuesEqual } from "../runtime/jree-compat.ts";
+src\language\Terms.ts:12:import type { JavaCharSequence } from "../runtime/jree-compat.ts";
+src\language\Terms.ts:89:    const rename = new Map<string, JavaCharSequence>();
+src\language\Terms.ts:493:                    if (javaValuesEqual(sA.name(), sB.name())) {
+src\language\Terms.ts:617:            if (javaValuesEqual(v, e)) {
+src\language\Terms.ts:659:            if (javaValuesEqual(v, e)) {
+src\language\Term.ts:9:    javaStringHashCode,
+src\language\Term.ts:10:    javaStringValue,
+src\language\Term.ts:11:    javaStringsEqual,
+src\language\Term.ts:12:    toJavaString,
+src\language\Term.ts:14:    type JavaCharSequence,
+src\language\Term.ts:16:    type JavaStringInput,
+src\language\Term.ts:76:    private nameValue: JavaCharSequence | null = null;
+src\language\Term.ts:126:    public constructor(name: JavaStringInput);
+src\language\Term.ts:127:    public constructor(name: JavaCharSequence);
+src\language\Term.ts:139:                const [name] = args as [JavaStringInput];
+src\language\Term.ts:158:    public static get(name: JavaCharSequence): Term;
+src\language\Term.ts:165:                const [name] = args as [JavaStringInput];
+src\language\Term.ts:168:                const nativeName = javaStringValue(name);
+src\language\Term.ts:179:                if (javaStringValue(nameStr).endsWith("]") && javaStringValue(nameStr).includes("[")) { // simple check, failing for most terms
+src\language\Term.ts:201:                let name2: JavaStringInput = nativeName;
+src\language\Term.ts:208:                Term.atoms.set(javaStringValue(name2), x);
+src\language\Term.ts:238:    public name(): JavaCharSequence {
+src\language\Term.ts:241:        return this.nameInternal() as JavaCharSequence;
+src\language\Term.ts:244:    protected nameInternal(): JavaCharSequence | null {
+src\language\Term.ts:287:            && javaStringsEqual(this.name(), (that as Term).name());
+src\language\Term.ts:298:        return javaStringHashCode(this.name());
+src\language\Term.ts:395:    protected setName(newName: JavaCharSequence | string | null): void {
+src\language\Term.ts:401:            ? toJavaString(newName)
+src\language\Term.ts:480:    public static text(t: JavaStringInput): Term {
+src\plugin\mental\Counting.ts:17:import { toJavaString } from "../../runtime/jree-compat.ts";
+src\plugin\mental\Counting.ts:126:                            memory.addNewTask(newTask, toJavaString("Derived (Cardinality)"));
+src\language\Statement.ts:10:import { javaStringValue } from "../runtime/jree-compat.ts";
+src\language\Statement.ts:18:    `[${values.map(value => value === null || value === undefined ? "null" : javaStringValue(value)).join(", ")}]`;
+src\language\Statement.ts:274:        const subjectName = javaStringValue(subject.name());
+src\language\Statement.ts:275:        const predicateName = javaStringValue(predicate.name());
+src\plugin\mental\Abbreviation.ts:19:import { toJavaString, type JavaChar } from "../../runtime/jree-compat.ts";
+src\plugin\mental\Abbreviation.ts:163:            return new Term(toJavaString(String(prefix) + String(Abbreviate.currentTermSerial)));
+src\operator\mental\Feel.ts:17:import { javaStringValue } from "../../runtime/jree-compat.ts";
+src\operator\mental\Feel.ts:31:        this.feelingTerm = Term.get(javaStringValue(name).substring(5).toLowerCase());
+src\runtime\jree-compat.ts:62:export type JavaStringInput = java.lang.String | string;
+src\runtime\jree-compat.ts:64:export type JavaCharSequence = java.lang.CharSequence;
+src\runtime\jree-compat.ts:67:export type JavaCharSequenceInput = java.lang.CharSequence | string;
+src\runtime\jree-compat.ts:83:export const toJavaString = (value: JavaStringInput): java.lang.String =>
+src\runtime\jree-compat.ts:92:export type JavaLongInput = long | number;
+src\runtime\jree-compat.ts:101:const normalizeLongInput = (value: JavaLongInput): JavaLongInput =>
+src\runtime\jree-compat.ts:106:export const toRuntimeLong = (value: JavaLongInput): long => normalizeLongInput(value) as long;
+src\runtime\jree-compat.ts:108:export const addRuntimeLong = (value: JavaLongInput, delta: number): long => {
+src\runtime\jree-compat.ts:116:export const subtractRuntimeLong = (value: JavaLongInput, delta: number): long => {
+src\runtime\jree-compat.ts:125:export const addRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long => {
+src\runtime\jree-compat.ts:134:export const subtractRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long => {
+src\runtime\jree-compat.ts:147:export class JavaDoubleCompat extends java.lang.Number {
+src\runtime\jree-compat.ts:163:    public static valueOf(value: number | string | java.lang.String): JavaDoubleCompat {
+src\runtime\jree-compat.ts:164:        return new JavaDoubleCompat(value);
+src\runtime\jree-compat.ts:232:export const isJavaThrowable = (value: unknown): value is JavaThrowable =>
+src\runtime\jree-compat.ts:235:export const isJavaException = (value: unknown): value is JavaException =>
+src\runtime\jree-compat.ts:245:export const javaStringLength = (value: unknown): number =>
+src\runtime\jree-compat.ts:246:    javaCharSequenceView(value)?.length ?? javaStringValue(value).length;
+src\runtime\jree-compat.ts:248:type JavaCharSequenceView = {
+src\runtime\jree-compat.ts:259:const javaCharSequenceView = (value: unknown): JavaCharSequenceView | null => {
+src\runtime\jree-compat.ts:288:export const javaStringsEqual = (left: unknown, right: unknown): boolean => {
+src\runtime\jree-compat.ts:307:export const javaStringValue = (value: unknown): string => {
+src\runtime\jree-compat.ts:319:export class JavaSystemLoggerCompat {
+src\runtime\jree-compat.ts:327:    public static getLogger(name: java.lang.String | string): JavaSystemLoggerCompat {
+src\runtime\jree-compat.ts:328:        return new JavaSystemLoggerCompat(javaStringValue(name));
+src\runtime\jree-compat.ts:336:            console.error(prefix, javaStringValue(message));
+src\runtime\jree-compat.ts:354:        const normalized = javaStringValue(pattern);
+src\runtime\jree-compat.ts:396:    public constructor(delimiter: JavaStringInput, prefix: JavaStringInput = "", suffix: JavaStringInput = "") {
+src\runtime\jree-compat.ts:397:        this.delimiter = javaStringValue(delimiter);
+src\runtime\jree-compat.ts:398:        this.prefix = javaStringValue(prefix);
+src\runtime\jree-compat.ts:399:        this.suffix = javaStringValue(suffix);
+src\runtime\jree-compat.ts:402:    public add(value: JavaStringInput): JavaStringJoinerCompat {
+src\runtime\jree-compat.ts:403:        this.values.push(javaStringValue(value));
+src\runtime\jree-compat.ts:413:export const javaStringHashCode = (value: unknown): number => {
+src\runtime\jree-compat.ts:422:    const text = javaStringValue(value);
+src\runtime\jree-compat.ts:519:export const javaValuesEqual = (left: unknown, right: unknown): boolean => {
+src\runtime\jree-compat.ts:561:            const index = values.findIndex((candidate) => javaValuesEqual(candidate, value));
+src\runtime\jree-compat.ts:577:            const retained = candidates.some((candidate) => javaValuesEqual(candidate, value));
+src\runtime\NativeSet.ts:25:        return Number.isInteger(value) ? value | 0 : javaStringHashCode(String(value));
+src\runtime\NativeSet.ts:27:    return javaStringHashCode(String(value));
+src\runtime\NativeSet.ts:30:const javaStringHashCode = (value: string): number => {
