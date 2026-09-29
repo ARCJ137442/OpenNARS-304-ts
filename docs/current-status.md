@@ -6,7 +6,7 @@
 
 ## 2026-09-29 J1-J5 native contract batch (working tree)
 
-- 当前候选为已提交 `dcb78a9`；历史未跟踪证据保留不动。
+- 当前候选为已提交 `cbe0e32`；历史未跟踪证据保留不动。
 - 项目内 `java-text`、`java-values`、`native-host-boundary` 已承接纯文本、long、logger、boxed number 合同；语言、实体、存储、推理、operator、plugin 和接口调用者已批量改用这些模块。
 - Node process exit 已收窄到 `src/platform/node/process-boundary.ts`；Node `java`、Java I/O 与 parity 仍只在主入口/IO host-facing 路径可达。
 - 非增量 typecheck、build、dist API、24 项直接宿主回归和 TS-only M2（`494/496`，2 skipped）通过。原始 TAP：`reports/evidence/jree-native-batch-ts-m2-20260929.tap`，SHA-256 `7DAFF51E696931E0CF6BC8875B49FD371D39010805E35CBE6CA4610A4252C1A7`。
@@ -17,6 +17,8 @@
 - `cb8330b` bridge closure：生产核心 `runtime/jree-compat` 导入为 0，Node host adapter 仍是唯一直接 npm jree 文件；TS-only M2 `494/496`、0 failed，TAP SHA-256 `D76F6BC4CC73AD0B7DF598CC024E2B613BFF9AB835F95E8079D61339FFC1B0EB`。最新 jree/platform 审计 SHA-256：`0340276FCA524153B6967C9399D8EB6D1F0B1A195ED6070A3FCC5A380B7D683B` / `4A762C50D94F0F75357B389857D84023D543AD35AE1DA86968D566B905E40C79`。
 - `dcb78a9` 当前 HEAD 的 PC 完整 M1 在前 244 个主资源后因系统内存 `33.06/39.16 GiB`（84%，超过 75% 硬停止线）人工停止；checkpoint 行 `244`，#245 `long_term_stability.nal` 未启动结果，分类为 `not_run`。安全停止证据：`reports/evidence/m1-dcb78a9-safety-stop-20260929.json`，checkpoint SHA-256 `BE98B94CBD089493DAD9E4A116153F1D77172FC91130029FA062E0FBF0F53CD5`，停止证据 SHA-256 `8622718A8649189E15FCAF56F51F4A913204E991EFA03E8BB48CD90D884B6881`。本事实不构成完整 M1 或 stage gate 通过。
 - 后续恢复检测到原始 2,000,000 周期 #245 后立即按 M1' 策略停止，未产生新结果行；policy-stop SHA-256 `7E15B35C81F5EE5C2EACF332197D406D79D224569E93F26E1860E150B0A0EF85`。当前只承认已保存的 65536 周期 `process_limit` 证据，不再运行原始长周期。
+- 当前 HEAD `cbe0e32` 的 markerless：`simpleOperationTest.nal` 与 `long_term_stability.nal` 均完成 Java/TS `131072` cycles、`128` windows，`equal=true`、`first_difference=null`；证据目录 `reports/evidence/markerless-cbe0e32-20260929/`。simple Java/TS/comparison SHA-256：`B4BBD998D831173EFD063915DF7A8336464923D829DE3DE86F9E953542C34875` / `17585DC92E0658513EE963D1F90E5469CB713CD0B840F662431FCF5B3736473F` / `9631076595A4FAD6432EAA7E18C5B2DB836FA4B7FE37F0369A462BC8BFFA0388`；long Java/TS/comparison SHA-256：`64214FF3769A278301DFBBC4146433DF8B6BD27C0EE662D149FD274EC468B993` / `B71878257F96B82F6F9330F24442934D0F293F1B069B96B9070495536A599140` / `9631076595A4FAD6432EAA7E18C5B2DB836FA4B7FE37F0369A462BC8BFFA0388`。
+- 当前 HEAD 的 #245 65536 证据：Java 完成，TS 在 `1800034 ms` `process_limit`，最后进度 `205074`、observed cycles `2065960`、marker missing；JSONL SHA-256 `8B9D372C1F6B7D992D6036F35C2A6030B4F76D8902BE0DB9F861E78D815FE5CE`。M1' 仍回落 M1-，长期瓶颈不宣称通过。
 
 ### 2026-09-29 M1' fallback evidence on `4b817bf`
 

@@ -92,3 +92,9 @@
 - #245 `long_term_stability.nal` 未产生结果行，分类为 `not_run`；不得把这次运行称为完整 M1 通过。
 - 安全停止 JSON 与 checkpoint 路径、SHA-256 已写入 `docs/current-status.md`；当前不启动任何恢复副本，待系统内存回落后再做可证伪续跑。
 - 内存回落后恢复检测到原始 2M #245，按已确认的 M1' 策略立即 policy-stop；没有新增结果行。原始 2M 不再运行，65536 process_limit 作为长期系统瓶颈证据保留。
+
+## Current HEAD markerless checkpoint (`cbe0e32`)
+
+- `simpleOperationTest.nal` and `long_term_stability.nal` each completed Java/TS `131072` cycles and `128` windows; both comparisons are `equal=true`, `first_difference=null`.
+- Current HEAD 65536 #245 still reaches `process_limit` at `1800034 ms`, last progress `205074`; this is the sustained long-cycle bottleneck, not a semantic regression.
+- These markerless and reduced-cycle results are current implementation evidence, but the full stage gate remains open because the PC M1 #245 row is intentionally not run beyond the approved policy.
