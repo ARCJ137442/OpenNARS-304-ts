@@ -30,6 +30,12 @@ browser adapter package
 - 非增量 typecheck、build、dist API 通过；最终 TS-only M2 为 `494 passed / 0 failed / 2 skipped`，TAP SHA-256 `212471A134C2ED36BAA687F544AEEDC8127BAA5A3C6C8278146F3685AEBD50F3`。
 - 仍有约 69 个 `jree-compat` import 命中；Batch A 是连续迁移的第一块，不宣称 core zero-dependency 或 023 complete。
 
+### Batch A continuation `72e4e07`
+
+- 又迁移 `ProcessGoal`、`TaskLink`、`TermLink`、`Events`、`Image`、`Statement`、`Tense`、`Operation`、`Operator`、`Feel` 的纯 `javaStringValue`/日志文本 helper 导入。
+- typecheck、build、dist API 通过；串行 TS-only M2 为 `494 passed / 0 failed / 2 skipped`，耗时 `182971 ms`。
+- 受影响 NAL 不重复运行：这些文件的同一提交/同一预期已经有通过的 M1/M1' 或 sentinel 证据，本批只改变 helper 归属。
+
 ## 后续行动批次
 
 ### Batch A：项目内纯合同（核心 0 外部依赖）
