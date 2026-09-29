@@ -1068,3 +1068,7 @@ J1/J2/J3/J4/J5=`1/6/2/0/5`。本扫描另记录 `javaStringFiles=16`、
 ### 2026-09-30：023 stage M1-prime 收口
 
 当前阶段门采用显式 `--m1-profile prime`：244 个普通主资源与第 246 项通过，#245 使用正确的 `long_term_stability-65536.nal` parity 证据。长期 fixture 先以 2048 请求步数估计；原始 fixture 的 2048 估计已触发 process_limit，因此不再扩张原始长周期。正确降周期 fixture 的 Java/TS parity 通过，TS `377665 ms`、峰值 RSS `525971456`、observed cycles `67510`，证据 `reports/evidence/m1-c740c42-long-65536-correct-20260929.jsonl`。严格 markerless 两样本和含 Java M2 同时通过。此处将长期稳定性 process_limit 记录为系统性能观察，不改写为语义失败。
+
+### Agent 工作流披露
+
+023 的实现与收口由 `GPT-6 Sol High` 按责任簇推进：以 Java 合同和现有证据为输入，批量实现 J1-J5 的项目内 runtime、集合、异常和类身份边界，按簇运行局部合同、M2、受影响 NAL 和阶段门；阶段状态通过 LeanSpec 工具维护，历史证据不删除。该身份披露不把 Agent 产出冒充人工编写，也不把自动测试替代人工发布批准。详见 [`docs/agent-workflow-disclosure.md`](../../docs/agent-workflow-disclosure.md)。

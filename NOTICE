@@ -1,0 +1,16 @@
+OpenNARS 3.0.4 TypeScript
+
+This project is a TypeScript rewrite and adaptation of the OpenNARS 3.0.4
+Java implementation. The Java source, behavior baseline, and original project
+are attributed to The OpenNARS authors and remain available under the MIT
+License in LICENSE.
+
+OpenNARS upstream:
+
+- Project: https://www.opennars.org/
+- Canonical source lineage: https://github.com/opennars/opennars
+
+The TypeScript source, project-owned runtime contracts, native containers,
+Node.js host adapter, browser adapter, tests, documentation, and release
+automation in this repository are maintained as the OpenNARS-304-ts project.
+This repository is not the original OpenNARS Java distribution.

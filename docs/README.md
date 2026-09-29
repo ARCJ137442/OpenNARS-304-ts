@@ -1,5 +1,7 @@
 # 文档索引
 
+[English documentation](README.en.md)
+
 本索引用于区分“当前事实”“可执行说明”“历史证据”和“尚未实施的计划”。如果文档之间出现冲突，按下列优先级解释。
 
 ## 外部用户入口
@@ -11,6 +13,8 @@
 5. [架构说明](architecture.md)：核心、Node adapter、Browser Worker 和数据流。
 6. [运行手册](operator-runbook.md)：构建、验证、部署和故障排查。
 7. [发布检查](release-checklist.md)：公开仓库、npm 和 Pages 发布前检查。
+
+中英文入口均提供；发行包使用 `npm run release:bundle` 生成，Agent 工作流和身份披露见 [agent-workflow-disclosure.md](agent-workflow-disclosure.md)。
 
 ## 开发与维护入口
 

@@ -87,3 +87,7 @@ demo 单测和真实浏览器 Worker 输入/输出验证通过。
 ### 2026-09-30：024 P3-P5 与 M1-prime 阶段门收口
 
 P3 插件能力注册、P4 XML 配置上传和 P5 browser facade 已在 web-demo 当前构建中通过；Worker bundle 静态 `jree/node_modules` 命中为 0，Chrome Worker/Narsese smoke、check 和 5 项单测通过。当前阶段门采用显式 M1-prime：244 普通资源 + 正确 65536 降周期 #245 + #246，长期稳定性不运行原始 2M 负载。
+
+### Agent 工作流披露
+
+024 的 P3-P5 与阶段门收口由 `GPT-6 Sol High` 执行：先核对核心、Node 和浏览器边界，再批量更新 adapter、文档和验证入口，使用 Worker 静态扫描、demo check、单测、浏览器 smoke 与 M1-prime 证据复核。Agent 只推送了代码和文档提交，没有自动改变仓库可见性或代替人工进行公开发布批准。详见 [`docs/agent-workflow-disclosure.md`](../../docs/agent-workflow-disclosure.md)。

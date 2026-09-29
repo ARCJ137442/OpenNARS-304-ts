@@ -36,3 +36,9 @@ transitions:
 - [ ] 主要 NAL 工作负载在批准的性能预算内完成。
 - [x] 优化后 M1 和 M2 门禁仍保持通过。
 - [x] 正式构建、CLI、核心 API、基准和发布证据可复现。
+
+## Agent 工作流与身份披露
+
+2026-09-30 的发行准备由 `GPT-6 Sol High` 执行：先读取仓库规则、当前状态、LeanSpec 和既有证据，再在同一责任边界内批量修改公开文档、归属声明和发行脚本；随后运行非增量 typecheck、串行 M2、build、dist API、release package、编码检查和 demo 验证，审阅 diff 后提交并推送。Agent 没有自动改变 GitHub 可见性、发布 npm 或创建不可逆 release tag；这些操作保留给仓库所有者确认。
+
+完整工作流记录见 [`docs/agent-workflow-disclosure.md`](../../docs/agent-workflow-disclosure.md)。

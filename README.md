@@ -1,5 +1,7 @@
 # OpenNARS 3.0.4 TypeScript
 
+[English](README.en.md)
+
 OpenNARS 3.0.4 的 TypeScript 实现，提供 Node.js CLI、交互式 Shell、ESM 库入口，以及独立的浏览器 Worker demo。
 
 ## 5 分钟运行
@@ -71,3 +73,11 @@ nar.stop();
 023 原生运行时和 024 平台适配阶段已按 M1-prime 门禁完成。性能优化与正式发布候选属于 020，仍在推进；长期稳定性原始 2,000,000 周期不属于日常运行负载。详见[运行与验证手册](docs/operator-runbook.md)。
 
 本仓库采用 MIT License，见 [LICENSE](LICENSE)。
+
+本项目改写自 OpenNARS 3.0.4 Java 实现，感谢 OpenNARS authors；详细来源、许可证和项目边界见 [NOTICE](NOTICE)。
+
+生成可下载的 npm 发行包：
+
+```bash
+npm run release:bundle
+```
