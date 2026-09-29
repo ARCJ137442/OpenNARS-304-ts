@@ -5,10 +5,8 @@ import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
+import { javaStringHashCode, javaStringValue, javaStringsEqual } from "../runtime/java-text.ts";
 import {
-    javaStringHashCode,
-    javaStringValue,
-    javaStringsEqual,
     toJavaString,
     type JavaChar,
     type JavaCharSequence,

@@ -4,14 +4,9 @@ import { Texts } from "../io/Texts.ts";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
-import {
-    javaIdentityHashCode,
-    javaStringHashCode,
-    javaStringValue,
-    toJavaString,
-    type JavaChar,
-    type JavaCharSequence,
-} from "../runtime/jree-compat.ts";
+import { javaStringHashCode, javaStringValue } from "../runtime/java-text.ts";
+import { javaIdentityHashCode } from "../runtime/java-values.ts";
+import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";

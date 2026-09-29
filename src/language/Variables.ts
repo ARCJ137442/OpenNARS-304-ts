@@ -16,7 +16,8 @@ import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import type { Term } from "./Term.ts";
-import { javaStringLength, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
+import { javaStringLength } from "../runtime/java-text.ts";
+import type { JavaChar, JavaCharSequence } from "../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 
 type RandomLike = { nextInt(bound?: number): number };

@@ -140,3 +140,6 @@ export class JavaInvocationTargetException extends JavaException {}
 export class JavaParserConfigurationException extends JavaException {}
 export class JavaSAXException extends JavaException {}
 export class JavaParseException extends JavaException {}
+
+export const isJavaThrowable = (value: unknown): value is JavaThrowable => value instanceof JavaThrowable;
+export const isJavaException = (value: unknown): value is JavaException => value instanceof JavaException;

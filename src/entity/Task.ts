@@ -3,7 +3,7 @@ import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
-import { javaStringValue } from "../runtime/jree-compat.ts";
+import { javaStringValue } from "../runtime/java-text.ts";
 import type { Sentence } from "./Sentence.ts";
 import type { BudgetValue } from "./BudgetValue.ts";
 import type { Memory } from "../storage/Memory.ts";

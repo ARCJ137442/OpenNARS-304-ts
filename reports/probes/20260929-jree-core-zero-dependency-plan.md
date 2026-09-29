@@ -23,6 +23,13 @@ browser adapter package
 - `src/runtime/jree-compat.ts` 仍被 `62` 个生产文件使用、命中 `73` 个 import 文本；其中只有 `Nar`、`NarNode`、`Shell`、`TextOutputHandler` 等少数文件需要完整 `java.*` 运行时对象，其余大部分只需要字符串、异常、long、值判等和类型别名。
 - 这使当前状态适合做“按职责提取合同”的批量迁移，而不是继续把 npm jree 入口扩散到新文件。
 
+### Batch A 当前结果
+
+- 新增 `src/runtime/java-text.ts`、`src/runtime/java-values.ts`；异常识别函数下沉到 `JavaExceptions.ts`。
+- 已迁移 `Item`、`Sentence`、`Term`、`CompoundTerm`、`Terms`、`Variable`、`Variables`、`Bag`、`Memory`、`Task`、`Concept`、`Narsese` 的纯文本/值 helper 导入。
+- 非增量 typecheck、build、dist API 通过；最终 TS-only M2 为 `494 passed / 0 failed / 2 skipped`，TAP SHA-256 `212471A134C2ED36BAA687F544AEEDC8127BAA5A3C6C8278146F3685AEBD50F3`。
+- 仍有约 69 个 `jree-compat` import 命中；Batch A 是连续迁移的第一块，不宣称 core zero-dependency 或 023 complete。
+
 ## 后续行动批次
 
 ### Batch A：项目内纯合同（核心 0 外部依赖）

@@ -2,7 +2,8 @@
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
-import { javaStringHashCode, javaStringValue, javaValuesEqual } from "../runtime/jree-compat.ts";
+import { javaStringHashCode, javaStringValue } from "../runtime/java-text.ts";
+import { javaValuesEqual } from "../runtime/java-values.ts";
 import type { JavaCharSequenceInput } from "../runtime/jree-compat.ts";
 import { JavaIllegalArgumentException, JavaNullPointerException } from "../runtime/JavaExceptions.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";

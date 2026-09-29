@@ -34,6 +34,7 @@ P5 explicit browser adapters ─────────────────
 
 - `stage-14ed360-full-m1-20260929.jsonl`：245 项 live Java/TS parity，当前最后一项仍在运行。
 - M1 结束后：解析 245 行分类、补第 246 项、计算 SHA-256、更新 023/024 stage 证据。
+- #245 原始 2,000,000 周期因系统瓶颈停止；65536 周期替代实验已通过 parity：TS `495117 ms`、`67510` cycles、峰值 RSS `464674816`，Java `4231 ms`，SHA-256 `0D60FA82F33B3557965F1FAFCB8C42402AAD130160B77E8A180594FE1A2B0A10`。后续用 `M1'` 表示 `244` 个普通主资源 + 65536 周期 #245 + #246；不再运行原始 2M 版本，除非专门性能调研。
 - 然后提交主仓库和 web-demo，并 `git push origin main`。
 
 ## Java 痕迹态势

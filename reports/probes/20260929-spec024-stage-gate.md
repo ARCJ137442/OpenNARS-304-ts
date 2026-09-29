@@ -9,6 +9,12 @@
 - Frozen baseline: `g0-java-baseline-26772af-20260917.jsonl`, SHA-256
   `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`.
 
+## M1' policy
+
+- User decision: for #245, replace the 2,000,000 embedded-cycle run with a 65,536-cycle version when a bounded short run extrapolates above 30 minutes. Keep the result explicitly labelled as reduced-cycle #245 evidence; do not claim the original 2,000,000-cycle workload completed.
+- The 65,536 fixture at `reports/probes/long_term_stability-65536.nal` passed live Java/TS parity: Java `4231 ms`; TS `495117 ms`, peak RSS `464674816`; `67510` actual reasoning cycles; marker, functional and parity passed; no timeout/process limit/exception/stall. Linear projection to 2,000,000 cycles is about 244 minutes.
+- M1' is defined as the 244 ordinary main resources plus this reduced-cycle #245 parity row and the required 246th `simpleOperationTest.nal`. The 14ed360 run produced 244 passing rows before restart; its missing original #245 row is not treated as pass. Revalidate the assembled M1' evidence and #246 on the candidate before stage acceptance.
+
 ## What is already true
 
 - P0-P2 and the existing P3 plugin capability work are recorded in spec024.

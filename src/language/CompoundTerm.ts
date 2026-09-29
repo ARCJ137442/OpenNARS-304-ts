@@ -10,7 +10,8 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Terms } from "./Terms.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
-import { javaStringHashCode, javaStringsEqual, toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
+import { javaStringHashCode, javaStringsEqual } from "../runtime/java-text.ts";
+import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
 import {
     JavaIllegalArgumentException,
     JavaNoSuchElementException,

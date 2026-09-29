@@ -257,3 +257,10 @@ SHA、验证命令与分类、原始证据、实际周期、依赖审计差值�
 
 - Commit `b094296` moved the only direct npm jree import into `src/platform/node/jree-host-adapter.ts`; `src/runtime/jree-compat.ts` now imports through that explicit host boundary.
 - Typecheck, build, dist API and TS-only M2 passed (`494 passed / 0 failed / 2 skipped`). This is a dependency-boundary slice, not J1/023/024 completion; browser bundle resolution and the remaining boxed Java runtime contracts still require migration.
+
+### M1' 长周期预算决策与 Batch A（2026-09-29）
+
+- 用户批准 #245 `long_term_stability.nal` 以 `65536` 个嵌入周期作为后续 M1' 的周期步长。若短跑实测推算原始 `2000000` 周期超过 30 分钟，则后续不再运行原始长周期版本；#245 用 65536 周期 Java/TS parity 作为门禁行，并明确标注这是降周期验证，不宣称完整原始长期稳定性。
+- 首次 65536 样本 parity 通过：Java `4231 ms`，TS `495117 ms`，TS 峰值 RSS `464674816` bytes；`67510` reasoning cycles、marker 通过、`functional_pass=true`、`parity=true`、无 process limit/timeout/exception/stall。原始 2,000,000 周期外推约 `244` 分钟，超过 30 分钟阈值。
+- 本轮 PC 完整 live M1 前 `244/245` 行通过；第 245 行原始 2,000,000 周期样本在重启前持续运行超过多小时，未产生结果行。恢复后该轮不得伪称通过；将按 M1' 明确组合既有同提交 244 行 checkpoint、65536 #245 parity 和第 246 项，完整重跑/复验该组合后才可宣称 M1' 通过。
+- Batch A 已开始：新增 `src/runtime/java-text.ts` 与 `src/runtime/java-values.ts`，并把 `isJavaException/isJavaThrowable` 放到项目异常模块；已迁移 Item、Sentence、Term、CompoundTerm、Terms、Variable、Variables、Bag、Memory、Task、Concept、Narsese 的纯文本/值 helper 导入。当前非增量 typecheck 为 0 诊断；TS-only M2 与受影响 NAL 待本批实现完成后执行。

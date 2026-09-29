@@ -17,7 +17,7 @@ import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeList, NativeReadOnlyList } from "../runtime/NativeList.ts";
-import { javaStringValue } from "../runtime/jree-compat.ts";
+import { javaStringValue } from "../runtime/java-text.ts";
 import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { LocalRules } from "../inference/LocalRules.ts";
 import { Events } from "../io/events/Events.ts";
