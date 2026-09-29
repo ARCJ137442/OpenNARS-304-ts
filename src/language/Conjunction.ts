@@ -7,7 +7,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 import { Terms } from "./Terms.ts";
-import { toJavaString, type JavaCharSequence, type JavaListInput, type JavaString } from "../runtime/jree-compat.ts";
+import { toJavaString, type JavaCharSequence, type JavaListInput, type JavaString } from "../runtime/java-text.ts";
 import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 
 const NativeOperator = Symbols.NativeOperator;

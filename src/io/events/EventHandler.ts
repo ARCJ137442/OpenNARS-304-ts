@@ -1,6 +1,6 @@
 //! Java source: opennars/io/events/EventHandler.java
 import { EventEmitter } from "./EventEmitter.ts";
-import { JavaIllegalArgumentException } from "../../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 import { RuntimeObject, type ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { Nar } from "../../main/Nar.ts";
 

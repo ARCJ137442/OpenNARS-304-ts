@@ -2,7 +2,7 @@
 import { FunctionOperator } from "../FunctionOperator.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import { Term } from "../../language/Term.ts";
-import { toJavaString } from "../../runtime/jree-compat.ts";
+import { toJavaString } from "../../runtime/java-text.ts";
 import { MissingRuntimeCapabilityError, type RuntimeCapabilities } from "../../platform/RuntimeCapabilities.ts";
 
 

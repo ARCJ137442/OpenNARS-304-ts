@@ -5,7 +5,7 @@ import { UtilityFunctions } from "./UtilityFunctions.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-import { subtractRuntimeLongValues, type JavaLongInput } from "../runtime/jree-compat.ts";
+import { subtractRuntimeLongValues, type JavaLongInput } from "../runtime/java-values.ts";
 
 class EnumType {
     public static readonly DESIREDED = new EnumType("DESIREDED", 0);

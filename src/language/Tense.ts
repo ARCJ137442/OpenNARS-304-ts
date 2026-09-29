@@ -1,7 +1,7 @@
 //! Java source: opennars/language/Tense.java
 import { javaStringValue } from "../runtime/java-text.ts";
 import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
-import type { JavaStringInput } from "../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../runtime/java-text.ts";
 
 /** Native enum-like representation of the canonical Java Tense enum. */
 export class Tense {

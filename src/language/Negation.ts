@@ -5,7 +5,7 @@ import { Terms } from "./Terms.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
-import type { JavaCharSequence } from "../runtime/jree-compat.ts";
+import type { JavaCharSequence } from "../runtime/java-text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;

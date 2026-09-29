@@ -3,7 +3,8 @@ import { JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
 import type { float, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { JavaSystemLoggerCompat, toJavaString, type JavaStringInput } from "../../runtime/jree-compat.ts";
+import { JavaSystemLoggerCompat } from "../../runtime/native-host-boundary.ts";
+import { toJavaString, type JavaStringInput } from "../../runtime/java-text.ts";
 import { Events } from "../../io/events/Events.ts";
 import type { EventEmitter } from "../../io/events/EventEmitter.ts";
 import { Narsese } from "../../io/Narsese.ts";

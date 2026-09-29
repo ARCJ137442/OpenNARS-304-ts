@@ -4,6 +4,14 @@
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
 - 包版本：`0.1.0`
 
+## 2026-09-29 J1-J5 native contract batch (working tree)
+
+- 当前候选仍基于 `8305a67`，尚未提交；历史未跟踪证据保留不动。
+- 项目内 `java-text`、`java-values`、`native-host-boundary` 已承接纯文本、long、logger、boxed number 合同；语言、实体、存储、推理、operator、plugin 和接口调用者已批量改用这些模块。
+- Node process exit 已收窄到 `src/platform/node/process-boundary.ts`；Node `java`、Java I/O 与 parity 仍只在主入口/IO host-facing 路径可达。
+- 非增量 typecheck、build、dist API、24 项直接宿主回归和 TS-only M2（`494/496`，2 skipped）通过。原始 TAP：`reports/evidence/jree-native-batch-ts-m2-20260929.tap`，SHA-256 `7DAFF51E696931E0CF6BC8875B49FD371D39010805E35CBE6CA4610A4252C1A7`。
+- 审计当前为生产直接 npm `jree` 导入文件 `1`、出现 `1`；该数字不等于 023/024 完成。M1'/stage 023/stage 024 尚未在本批提交上复验，不能宣称责任簇或规格完成。
+
 ## 2026-09-28 J1 PC full M1 and markerless diagnosis
 
 - 当前提交：`7d95bf697396958b04c9d2152eae95ce8951538a`；工作区保留历史未跟踪证据，未使用 `git add -A`。

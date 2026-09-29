@@ -12,7 +12,7 @@ import {
     type JavaCharSequence,
     type JavaString,
     type JavaStringInput,
-} from "../runtime/jree-compat.ts";
+} from "../runtime/java-text.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { NativeSortedSet } from "../runtime/NativeSortedSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";

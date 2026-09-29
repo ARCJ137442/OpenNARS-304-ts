@@ -15,7 +15,7 @@ import type { DerivationContext } from "../../control/DerivationContext.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { toJavaString } from "../../runtime/jree-compat.ts";
+import { toJavaString } from "../../runtime/java-text.ts";
 
 
 

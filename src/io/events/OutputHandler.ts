@@ -1,5 +1,5 @@
 //! Java source: opennars/io/events/OutputHandler.java
-import { JavaIllegalArgumentException } from "../../runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import { EventHandler } from "./EventHandler.ts";

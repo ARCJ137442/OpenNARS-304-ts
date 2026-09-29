@@ -12,6 +12,12 @@ const normalizeLong = (value: JavaLongInput): JavaLongInput =>
 
 export const toRuntimeLong = (value: JavaLongInput): long => normalizeLong(value) as long;
 
+export const addRuntimeLong = (value: JavaLongInput, delta: number): long =>
+    addRuntimeLongValues(value, delta);
+
+export const subtractRuntimeLong = (value: JavaLongInput, delta: number): long =>
+    subtractRuntimeLongValues(value, delta);
+
 export const addRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long => {
     const a = normalizeLong(left);
     const b = normalizeLong(right);

@@ -1,6 +1,6 @@
 //! Java source: opennars/interfaces/NarseseConsumer.java
 
-import type { JavaStringInput } from "../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../runtime/java-text.ts";
 
 
 

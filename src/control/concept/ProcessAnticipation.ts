@@ -12,7 +12,7 @@ import { RuleTables } from "../../inference/RuleTables.ts";
 import { TemporalRules } from "../../inference/TemporalRules.ts";
 import { UtilityFunctions } from "../../inference/UtilityFunctions.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { toJavaString } from "../../runtime/jree-compat.ts";
+import { toJavaString } from "../../runtime/java-text.ts";
 import type { MapContract } from "../../runtime/NativeMap.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";

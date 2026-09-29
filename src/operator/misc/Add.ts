@@ -4,7 +4,7 @@ import { FunctionOperator } from "../FunctionOperator.ts";
 import { Term } from "../../language/Term.ts";
 import {
     toJavaString,
-} from "../../runtime/jree-compat.ts";
+} from "../../runtime/java-text.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
 import {
     JavaIllegalArgumentException,

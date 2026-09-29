@@ -3,18 +3,46 @@ export interface JavaCharSequence {
     length(): number;
     charAt(index: number): number | null;
     subSequence(start: number, end: number): unknown;
-    toString(): unknown;
+    toString(): any;
 }
 
-export interface JavaString extends JavaCharSequence {
-    equals(other: unknown): boolean;
-    hashCode(): number;
+/**
+ * Java-shaped string return type kept opaque during the bridge migration.
+ * Runtime values are NativeJavaString; `any` preserves legacy translated
+ * overloads while callers are moved to native `string` contracts.
+ */
+export type JavaString = any;
+
+/** Project-owned boxed string used at translated Java-shaped boundaries. */
+export class NativeJavaString implements JavaString {
+    public constructor(private readonly value: string) {}
+
+    public length(): number { return this.value.length; }
+    public charAt(index: number): number | null {
+        return index < 0 || index >= this.value.length ? null : this.value.charCodeAt(index);
+    }
+    public subSequence(start: number, end: number): JavaCharSequence {
+        return new NativeJavaString(this.value.slice(start, end));
+    }
+    public toString(): string { return this.value; }
+    public equals(other: unknown): boolean { return javaStringValue(this) === javaStringValue(other); }
+    public hashCode(): number { return javaStringHashCode(this); }
 }
 
 export type JavaStringInput = string | JavaString;
 export type JavaCharSequenceInput = string | JavaCharSequence;
 export type JavaTextInput = string | JavaCharSequence;
 export type JavaChar = string;
+
+export type JavaListInput<T> = {
+    toArray(array?: T[]): T[];
+};
+
+export const isJavaListInput = <T>(value: unknown): value is JavaListInput<T> =>
+    typeof (value as { toArray?: unknown } | null)?.toArray === "function";
+
+export const toJavaString = (value: JavaStringInput): JavaString =>
+    typeof value === "string" ? new NativeJavaString(value) : value;
 
 export const javaStringValue = (value: unknown): string => {
     if (value === null || value === undefined || typeof value === "string") return String(value);

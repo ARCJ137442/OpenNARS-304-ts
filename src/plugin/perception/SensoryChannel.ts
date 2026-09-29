@@ -5,11 +5,8 @@ import { Narsese } from "../../io/Narsese.ts";
 import { Parser } from "../../io/Parser.ts";
 import {
     JavaSystemLoggerCompat,
-    isJavaListInput,
-    toJavaString,
-    type JavaListInput,
-    type JavaStringInput,
-} from "../../runtime/jree-compat.ts";
+} from "../../runtime/native-host-boundary.ts";
+import { isJavaListInput, toJavaString, type JavaListInput, type JavaStringInput } from "../../runtime/java-text.ts";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import { Term } from "../../language/Term.ts";
 import { Concept } from "../../entity/Concept.ts";

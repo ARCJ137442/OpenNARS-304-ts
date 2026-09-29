@@ -8,7 +8,7 @@ import type { Plugin } from "../plugin/Plugin.ts";
 import { parseConfigXml } from "./ConfigParser.ts";
 import { PluginRegistry } from "./ConfigPluginRegistry.ts";
 import type { RuntimeCapabilities } from "../platform/RuntimeCapabilities.ts";
-import type { JavaStringInput } from "../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../runtime/java-text.ts";
 
 export { parseConfigXml } from "./ConfigParser.ts";
 

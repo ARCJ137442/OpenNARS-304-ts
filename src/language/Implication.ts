@@ -7,7 +7,7 @@ import { Conjunction } from "./Conjunction.ts";
 import { Interval } from "./Interval.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
-import type { JavaCharSequence } from "../runtime/jree-compat.ts";
+import type { JavaCharSequence } from "../runtime/java-text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;

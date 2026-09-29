@@ -9,7 +9,7 @@ import type { Concept } from "../../entity/Concept.ts";
 import type { Task } from "../../entity/Task.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
-import type { JavaChar } from "../../runtime/jree-compat.ts";
+import type { JavaChar } from "../../runtime/java-text.ts";
 
 
 

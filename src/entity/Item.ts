@@ -4,7 +4,7 @@ import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
 import { javaStringHashCode, javaStringValue } from "../runtime/java-text.ts";
 import { javaValuesEqual } from "../runtime/java-values.ts";
-import type { JavaCharSequenceInput } from "../runtime/jree-compat.ts";
+import type { JavaCharSequenceInput } from "../runtime/java-text.ts";
 import { JavaIllegalArgumentException, JavaNullPointerException } from "../runtime/JavaExceptions.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 

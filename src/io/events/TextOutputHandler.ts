@@ -7,10 +7,9 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
-import { java, toJavaString } from "../../runtime/jree-compat.ts";
-import { isJavaThrowable } from "../../runtime/JavaExceptions.ts";
+import { isJavaThrowable, java, toJavaString as toHostJavaString } from "../../runtime/jree-compat.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
-import type { JavaStringInput } from "../../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../../runtime/java-text.ts";
 import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 
 const IN = OutputHandler.IN;
@@ -114,7 +113,7 @@ export class TextOutputHandler extends OutputHandler {
      */
     public openSaveFile(path: JavaStringInput): void {
         try {
-            this.outExp = new java.io.PrintWriter(new java.io.FileWriter(toJavaString(path)));
+            this.outExp = new java.io.PrintWriter(new java.io.FileWriter(toHostJavaString(path)));
         } catch (ex) {
             if (ex instanceof java.io.IOException) {
                 throw new java.lang.IllegalStateException("Could not open save file.", ex);

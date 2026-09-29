@@ -11,7 +11,7 @@ import { Terms } from "./Terms.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
 import { javaStringHashCode, javaStringsEqual } from "../runtime/java-text.ts";
-import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
+import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/java-text.ts";
 import {
     JavaIllegalArgumentException,
     JavaNoSuchElementException,

@@ -1,5 +1,5 @@
 //! Java source: opennars/interfaces/SensoryChannelConsumer.java
-import type { JavaStringInput } from "../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../runtime/java-text.ts";
 import type { SensoryChannel } from "../plugin/perception/SensoryChannel.ts";
 
 

@@ -9,10 +9,7 @@ import { Debug } from "../main/Debug.ts";
 import type { Product } from "../language/Product.ts";
 import type { Statement } from "../language/Statement.ts";
 import type { BudgetValue } from "../entity/BudgetValue.ts";
-import {
-    toJavaString,
-    type JavaStringInput,
-} from "../runtime/jree-compat.ts";
+import { toJavaString, type JavaStringInput } from "../runtime/java-text.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
 import { isJavaException } from "../runtime/JavaExceptions.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";

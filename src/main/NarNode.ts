@@ -11,7 +11,10 @@ import { Term } from "../language/Term.ts";
 import { Task } from "../entity/Task.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { closeResourcesCompat, handleResourceErrorCompat, throwResourceErrorCompat } from "../runtime/ResourceCompat.ts";
-import { isJavaException, java, JavaSystemLoggerCompat, toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
+import { isJavaException, java } from "../runtime/jree-compat.ts";
+import { toJavaString as toHostJavaString } from "../runtime/jree-compat.ts";
+import { JavaSystemLoggerCompat } from "../runtime/native-host-boundary.ts";
+import { toJavaString, type JavaStringInput } from "../runtime/java-text.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 type DatagramPacketCompat = { getLength(): number };
@@ -190,7 +193,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
 
                 let bStream: java.io.ByteArrayOutputStream = new java.io.ByteArrayOutputStream();
                 let oo: ObjectOutputCompat = new javaIoCompat.ObjectOutputStream(bStream);
-                oo.writeObject(toJavaString(input));
+                oo.writeObject(toHostJavaString(input));
                 oo.close();
                 let serializedMessage: Int8Array = bStream.toByteArray();
                 let searchTerm: boolean = target.mustContainTerm !== null;
@@ -241,7 +244,7 @@ export class NarNode extends RuntimeObject implements EventObserver {
          */
         public constructor(targetIP: JavaStringInput, targetPort: int, threshold: float, mustContainTerm: Term | null,
             sendInput: boolean) {
-            this.targetAddress = javaNetCompat.InetAddress.getByName(toJavaString(targetIP));
+                this.targetAddress = javaNetCompat.InetAddress.getByName(toHostJavaString(targetIP));
             this.sendSocket = new javaNetCompat.DatagramSocket();
             this.threshold = Float32Math.from(threshold) as float;
             this.targetPort = targetPort;

@@ -32,8 +32,8 @@ import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import type { Nar } from "../main/Nar.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
-import { toJavaString } from "../runtime/jree-compat.ts";
-import type { JavaStringInput } from "../runtime/jree-compat.ts";
+import { toJavaString as toHostJavaString } from "../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../runtime/java-text.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { JavaRandom } from "../runtime/JavaRandom.ts";
 import type { Resettable } from "../interfaces/Resettable.ts";
@@ -222,7 +222,7 @@ export class Memory implements Iterable<Concept>, Resettable {
         this.novelTasks.putIn(t);
         /* } */
         // logic.TASK_ADD_NEW.commit(t.getPriority());
-        this.emit(Events.TaskAdd.class, t, toJavaString(reason));
+        this.emit(Events.TaskAdd.class, t, toHostJavaString(reason));
         this.output(t);
     }
 
@@ -312,7 +312,7 @@ export class Memory implements Iterable<Concept>, Resettable {
 
 
     public removeTask(task: Task, reason: JavaStringInput): void {
-        this.emit(TaskRemove.class, task, toJavaString(reason));
+        this.emit(TaskRemove.class, task, toHostJavaString(reason));
     }
 
     /**

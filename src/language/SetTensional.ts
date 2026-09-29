@@ -5,7 +5,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { Terms } from "./Terms.ts";
 import type { Term } from "./Term.ts";
-import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/jree-compat.ts";
+import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/java-text.ts";
 import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 
 const ARGUMENT_SEPARATOR = Symbols.ARGUMENT_SEPARATOR;

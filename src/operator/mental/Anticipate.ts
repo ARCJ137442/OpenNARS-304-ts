@@ -12,7 +12,7 @@ import { Float32Math } from "../../runtime/Float32.ts";
 import {
     toRuntimeLong,
     type JavaLongInput,
-} from "../../runtime/jree-compat.ts";
+} from "../../runtime/java-values.ts";
 import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";

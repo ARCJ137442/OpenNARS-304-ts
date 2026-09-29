@@ -10,7 +10,7 @@ import type { Task } from "../entity/Task.ts";
 import {
     type JavaCharSequence,
     type JavaCharSequenceInput,
-} from "../runtime/jree-compat.ts";
+} from "../runtime/java-text.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
 import { JavaIllegalArgumentException, JavaNullPointerException } from "../runtime/JavaExceptions.ts";
 

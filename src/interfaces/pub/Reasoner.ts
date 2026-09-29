@@ -1,5 +1,5 @@
 //! Java source: opennars/interfaces/pub/Reasoner.java
-import type { JavaStringInput } from "../../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../../runtime/java-text.ts";
 import type { SensoryChannelConsumer } from "../SensoryChannelConsumer.ts";
 import type { Resettable } from "../Resettable.ts";
 import type { NarseseConsumer } from "../NarseseConsumer.ts";

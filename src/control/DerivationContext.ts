@@ -21,7 +21,7 @@ import type { Concept } from "../entity/Concept.ts";
 import type { TermLink } from "../entity/TermLink.ts";
 import type { TaskLink } from "../entity/TaskLink.ts";
 import type { Parameters } from "../main/Parameters.ts";
-import type { JavaChar, JavaStringInput } from "../runtime/jree-compat.ts";
+import type { JavaChar, JavaStringInput } from "../runtime/java-text.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import { NativeList } from "../runtime/NativeList.ts";
 

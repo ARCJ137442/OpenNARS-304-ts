@@ -10,13 +10,12 @@ import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import {
     addRuntimeLong,
     subtractRuntimeLong,
-    JavaIllegalArgumentException,
-    JavaIllegalStateException,
-    toJavaString,
     toRuntimeLong,
     type JavaLongInput,
-    type JavaString,
-} from "../runtime/jree-compat.ts";
+} from "../runtime/java-values.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { toJavaString } from "../runtime/jree-compat.ts";
+import type { JavaString } from "../runtime/java-text.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Parameters } from "../main/Parameters.ts";

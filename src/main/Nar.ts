@@ -1,7 +1,8 @@
 //! Java source: opennars/main/Nar.java
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
-import { toJavaString, toRuntimeLong, type JavaLongInput, type JavaStringInput } from "../runtime/jree-compat.ts";
+import { toJavaString as toNativeJavaString, type JavaStringInput } from "../runtime/java-text.ts";
+import { toRuntimeLong, type JavaLongInput } from "../runtime/java-values.ts";
 import { Parameters } from "./Parameters.ts";
 import { Debug } from "./Debug.ts";
 import { ConfigReader } from "../io/ConfigReader.ts";
@@ -30,7 +31,9 @@ import { Stamp } from "../entity/Stamp.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeReadOnlyList } from "../runtime/NativeList.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
-import { isJavaException, java, JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
+import { isJavaException, java } from "../runtime/jree-compat.ts";
+import { toJavaString } from "../runtime/jree-compat.ts";
+import { JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/native-host-boundary.ts";
 import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { Task } from "../entity/Task.ts";
@@ -540,7 +543,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             if (t instanceof Inheritance) {
                 predicate = (t as Inheritance).getPredicate();
             } else {
-                predicate = SetInt.make(new Term(toJavaString("OBSERVED")));
+                predicate = SetInt.make(new Term(toNativeJavaString("OBSERVED")));
             }
             if (this.sensoryChannels.containsKey(predicate)) {
                 const channel = this.sensoryChannels.get(predicate);

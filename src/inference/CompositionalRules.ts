@@ -39,7 +39,7 @@ import { Float32Math } from "../runtime/Float32.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
-import { JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
+import { JavaSystemLoggerCompat } from "../runtime/native-host-boundary.ts";
 
 // Java 原类型：Map<Term, Term>，实现类型：LinkedHashMap。
 // 当前实现：NativeMap + MapContract；保留 Java 的值判等、插入顺序和 Map 操作面，

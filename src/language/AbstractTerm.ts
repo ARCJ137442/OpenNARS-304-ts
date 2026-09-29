@@ -1,6 +1,6 @@
 //! Java source: opennars/language/AbstractTerm.java
 
-import type { JavaCharSequence } from "../runtime/jree-compat.ts";
+import type { JavaCharSequence } from "../runtime/java-text.ts";
 import type { int } from "../types.ts";
 
 

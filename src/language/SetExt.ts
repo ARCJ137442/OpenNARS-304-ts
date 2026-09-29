@@ -3,7 +3,7 @@ import { SetTensional } from "./SetTensional.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
-import { type JavaCharSequence, type JavaListInput } from "../runtime/jree-compat.ts";
+import { type JavaCharSequence, type JavaListInput } from "../runtime/java-text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;

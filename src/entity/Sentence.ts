@@ -21,8 +21,8 @@ import type { Nar } from "../main/Nar.ts";
 import type { Parameters } from "../main/Parameters.ts";
 import { javaStringValue, javaStringsEqual } from "../runtime/java-text.ts";
 import { addRuntimeLongValues, subtractRuntimeLongValues } from "../runtime/java-values.ts";
-import { toJavaString } from "../runtime/jree-compat.ts";
-import type { JavaChar, JavaCharSequence, JavaString } from "../runtime/jree-compat.ts";
+import { toJavaString } from "../runtime/java-text.ts";
+import type { JavaChar, JavaCharSequence, JavaString } from "../runtime/java-text.ts";
 import { JavaAssertionError, JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 

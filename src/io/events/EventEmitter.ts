@@ -2,7 +2,7 @@
 import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
-} from "../../runtime/jree-compat.ts";
+} from "../../runtime/JavaExceptions.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 
 type PendingOperation = [

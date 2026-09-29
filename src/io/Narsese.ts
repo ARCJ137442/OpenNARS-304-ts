@@ -1,7 +1,7 @@
 //! Java source: opennars/io/Narsese.java
 import type { int, float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { javaStringValue } from "../runtime/java-text.ts";
-import type { JavaStringInput } from "../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../runtime/java-text.ts";
 import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import { Parser } from "./Parser.ts";
 import { Symbols } from "./Symbols.ts";
@@ -40,7 +40,7 @@ import { Implication } from "../language/Implication.ts";
 import { Equivalence } from "../language/Equivalence.ts";
 import { Similarity } from "../language/Similarity.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
-import type { JavaChar } from "../runtime/jree-compat.ts";
+import type { JavaChar } from "../runtime/java-text.ts";
 import { CompositionalRules } from "../inference/CompositionalRules.ts";
 import { TruthFunctions } from "../inference/TruthFunctions.ts";
 import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts";

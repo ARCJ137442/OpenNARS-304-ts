@@ -7,7 +7,7 @@ import { Parameters } from "../main/Parameters.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { javaValuesEqual } from "../runtime/java-values.ts";
-import { toJavaString, type JavaString } from "../runtime/jree-compat.ts";
+import { toJavaString, type JavaString } from "../runtime/java-text.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { JavaIterator } from "../runtime/JavaIterator.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";

@@ -9,7 +9,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Term } from "./Term.ts";
 import type { Memory } from "../storage/Memory.ts";
 import { javaValuesEqual } from "../runtime/java-values.ts";
-import type { JavaCharSequence } from "../runtime/jree-compat.ts";
+import type { JavaCharSequence } from "../runtime/java-text.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import { NativeList } from "../runtime/NativeList.ts";
 

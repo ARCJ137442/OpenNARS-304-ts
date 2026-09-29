@@ -15,7 +15,7 @@ import type { Timable } from "../interfaces/Timable.ts";
 import type { CompoundTerm } from "../language/CompoundTerm.ts";
 import {
     type JavaStringInput,
-} from "../runtime/jree-compat.ts";
+} from "../runtime/java-text.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 
 // Keep FunctionOperator below the inference layer. Importing BudgetFunctions

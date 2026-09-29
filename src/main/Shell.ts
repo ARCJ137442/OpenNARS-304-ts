@@ -7,7 +7,9 @@ import { Term } from "../language/Term.ts";
 import { Debug } from "./Debug.ts";
 import { TextOutputHandler } from "../io/events/TextOutputHandler.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
-import { isJavaException, java, javaSystemExit, type JavaStringInput } from "../runtime/jree-compat.ts";
+import { isJavaException, java } from "../runtime/jree-compat.ts";
+import { javaSystemExit } from "../platform/node/process-boundary.ts";
+import type { JavaStringInput } from "../runtime/java-text.ts";
 import { NodeStdinInputStream } from "../runtime/NodeStdinInputStream.ts";
 import { createNodeRuntimeCapabilities } from "../platform/node/SystemCommandCapabilities.ts";
 

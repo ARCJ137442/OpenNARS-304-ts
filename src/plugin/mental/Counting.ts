@@ -14,7 +14,7 @@ import { SetExt } from "../../language/SetExt.ts";
 import { Term } from "../../language/Term.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
-import { toJavaString } from "../../runtime/jree-compat.ts";
+import { toJavaString } from "../../runtime/java-text.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";

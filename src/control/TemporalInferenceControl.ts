@@ -1,5 +1,5 @@
 //! Java source: opennars/control/TemporalInferenceControl.java
-import { JavaSystemLoggerCompat } from "../runtime/jree-compat.ts";
+import { JavaSystemLoggerCompat } from "../runtime/native-host-boundary.ts";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Stamp } from "../entity/Stamp.ts";

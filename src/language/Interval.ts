@@ -2,7 +2,7 @@
 import type { long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { toJavaString, type JavaStringInput } from "../runtime/jree-compat.ts";
+import { toJavaString, type JavaStringInput } from "../runtime/java-text.ts";
 import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 
 

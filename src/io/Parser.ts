@@ -1,7 +1,7 @@
 //! Java source: opennars/io/Parser.java
 import type { Task } from "../entity/Task.ts";
 import { JavaException } from "../runtime/JavaExceptions.ts";
-import type { JavaStringInput } from "../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../runtime/java-text.ts";
 
 
 

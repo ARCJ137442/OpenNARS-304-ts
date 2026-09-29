@@ -10,7 +10,7 @@ import { Term } from "../../language/Term.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
-import type { JavaStringInput } from "../../runtime/jree-compat.ts";
+import type { JavaStringInput } from "../../runtime/java-text.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;

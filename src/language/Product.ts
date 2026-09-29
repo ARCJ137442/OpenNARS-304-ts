@@ -5,9 +5,9 @@ import { Symbols } from "../io/Symbols.ts";
 import type { Term } from "./Term.ts";
 import {
     isJavaListInput,
-    JavaIllegalArgumentException,
-} from "../runtime/jree-compat.ts";
-import type { JavaListInput } from "../runtime/jree-compat.ts";
+} from "../runtime/java-text.ts";
+import type { JavaListInput } from "../runtime/java-text.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;

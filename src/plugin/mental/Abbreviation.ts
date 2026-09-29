@@ -16,7 +16,7 @@ import { Similarity } from "../../language/Similarity.ts";
 import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
-import { toJavaString, type JavaChar } from "../../runtime/jree-compat.ts";
+import { toJavaString, type JavaChar } from "../../runtime/java-text.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
