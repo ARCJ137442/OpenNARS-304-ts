@@ -1,10 +1,10 @@
 # OpenNARS 3.0.4 TypeScript
 
-OpenNARS 3.0.4 的 TypeScript/Node.js 迁移实现。项目以可复现的 Java 3.0.4 产物为语义基线，保留交互式 Shell、批处理 CLI 和 ESM 库入口。
+OpenNARS 3.0.4 的 TypeScript 实现，提供 Node.js CLI、交互式 Shell、ESM 库入口，以及独立的浏览器 Worker demo。
 
-> **项目已于 2026-08-27 进入阶段封存。** M1 功能等价与 M2 零诊断构建基线已经冻结；去 jree 化、浏览器平台中立化、正式性能门和发布候选尚未完成。精确证据、剩余边界和恢复方式见[当前状态](docs/current-status.md)。
+## 5 分钟运行
 
-## 快速开始
+需要 Node.js 22+ 和 npm。
 
 ```bash
 git clone https://github.com/ARCJ137442/OpenNARS-304-ts.git
@@ -13,59 +13,61 @@ npm ci
 npm run build
 ```
 
-启动交互式 Shell：
+启动 Shell：
 
 ```bash
 npm run shell
 ```
 
-或直接运行构建产物：
+试着输入：
 
-```bash
-node dist/shell.mjs
+```text
+<bird --> animal>.
+<robin --> bird>.
+<robin --> animal>?
+:cycles 100
+:quit
 ```
 
-在 Shell 中输入 Narsese 或裸整数周期命令；输入 `:help` 查看命令，输入 `:quit` 退出。
-
-批量执行 NAL 文件：
+运行 NAL 文件：
 
 ```bash
 node dist/cli.mjs --cycles 1550 path/to/example.nal
 ```
 
-## 作为库使用
-
-当前公开入口是 ESM `dist/index.js`，主类为 `Nar`：
+## 作为库集成
 
 ```js
-import { Nar, OutputHandler } from "./dist/index.js";
+import { Nar, OutputHandler } from "opennars-304-ts";
 
 const nar = new Nar();
-const output = {
-  event(_channel, args = []) {
-    console.log(...args.map(String));
+const observer = {
+  event(channel, args = []) {
+    if (channel === OutputHandler.OUT.class) console.log(...args.map(String));
   },
 };
-
-nar.on(OutputHandler.OUT.class, output);
+nar.on(OutputHandler.OUT.class, observer);
 nar.addInput("<bird --> animal>.");
 nar.cycles(10);
-nar.off(OutputHandler.OUT.class, output);
+nar.off(OutputHandler.OUT.class, observer);
 nar.stop();
 ```
 
-更完整的输入、配置、生命周期和限制说明见[用户指南](docs/user-guide.md)。
+浏览器体验：<https://arcj137442.github.io/opennars-304-ts/>。Web demo 源码：[OpenNARS-304-ts-web-demo](https://github.com/ARCJ137442/OpenNARS-304-ts-web-demo)。
 
-## 文档入口
+## 文档
 
-- [当前状态](docs/current-status.md)：封存点、可信证据、未完成项和恢复条件。
-- [用户指南](docs/user-guide.md)：Shell、CLI 与 ESM 库的使用方法。
-- [开发者指南](docs/developer-guide.md)：架构、测试门禁、LeanSpec 与接手流程。
-- [文档索引](docs/README.md)：当前文档、维护资料、历史资料和后续计划的分类。
+- [上手指南](docs/getting-started.md)
+- [用户指南](docs/user-guide.md)
+- [集成指南](docs/integration-guide.md)
+- [架构说明](docs/architecture.md)
+- [运行与验证手册](docs/operator-runbook.md)
+- [发布前检查清单](docs/release-checklist.md)
+- [开发者指南](docs/developer-guide.md)
+- [当前状态与证据](docs/current-status.md)
 
-## 版本与发布边界
+## 状态与许可证
 
-- 包版本：`0.1.0`。
-- 模块格式：ESM。
-- `package.json` 声明许可证为 MIT；封存点尚未补入独立 `LICENSE` 文件。
-- 当前仓库是经过 M1/M2 验证的开发冻结点，不是完成去 jree 化、浏览器中立化和正式性能验收后的 Release Candidate。
+023 原生运行时和 024 平台适配阶段已按 M1-prime 门禁完成。性能优化与正式发布候选属于 020，仍在推进；长期稳定性原始 2,000,000 周期不属于日常运行负载。详见[运行与验证手册](docs/operator-runbook.md)。
+
+本仓库采用 MIT License，见 [LICENSE](LICENSE)。

@@ -4,9 +4,13 @@
 
 ## 外部用户入口
 
-1. [当前状态](current-status.md)：封存点、验证范围、未完成项和恢复条件；这是状态事实的最高优先级入口。
-2. [用户指南](user-guide.md)：Shell、CLI、ESM 库、配置与限制。
-3. [仓库 README](../README.md)：项目简介、快速开始和导航。
+1. [仓库 README](../README.md)：安装、最小示例和导航。
+2. [上手指南](getting-started.md)：第一次 clone 后的运行方式。
+3. [用户指南](user-guide.md)：Shell、CLI、ESM 库、配置与限制。
+4. [集成指南](integration-guide.md)：Node/TypeScript、浏览器和 NAL 集成方式。
+5. [架构说明](architecture.md)：核心、Node adapter、Browser Worker 和数据流。
+6. [运行手册](operator-runbook.md)：构建、验证、部署和故障排查。
+7. [发布检查](release-checklist.md)：公开仓库、npm 和 Pages 发布前检查。
 
 ## 开发与维护入口
 
@@ -17,7 +21,7 @@
 - [AGENTS.md](../AGENTS.md)：Agent 在本仓库工作的强制规则。
 - [诊断归档说明](diagnostic-archive.md)：仓库外临时产物的范围、去向和逐脚本归档理由。
 
-`current-status-and-runbook.md` 只保留为旧链接兼容页，不再承载状态或运行手册。
+`current-status.md`、`luna-agent-active-goal.md`、`reports/` 和历史 spec 记录维护过程与机器证据；它们不是第一次使用项目所需的入口。
 
 ## 历史资料
 

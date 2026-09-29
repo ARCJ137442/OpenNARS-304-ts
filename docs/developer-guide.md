@@ -1,6 +1,6 @@
 # OpenNARS-304-ts 开发者指南
 
-本文面向维护、审阅或恢复开发的贡献者。2026-08-27 封存点仍是历史恢复基线；当前恢复开发的执行顺序以[现行开发目标](luna-agent-active-goal.md)为准，不能直接执行两份历史 Luna 提示词。
+本文面向维护、审阅或恢复开发的贡献者。023/024 的实现阶段已经完成；当前维护主线是 020 性能与发布准备。2026-08-27 封存点和历史 Luna 文档只用于追溯，不能直接当作执行计划。
 
 ## 开始前
 
@@ -69,9 +69,9 @@ python scripts/checking/check_hanzi_encoding.py --json-output scripts/checking/h
 
 当前 LeanSpec 主线为：
 
-- `023-jree-removal-native-runtime`：进行中；
-- `024-platform-neutral-core-host-adapters`：进行中；
-- `020-ts-performance-and-release`：进行中，但依赖 023/024 且性能测试仍有未勾选项。
+- `023-jree-removal-native-runtime`：complete；生产核心无直接 `runtime/jree-compat.ts` 导入，Node host adapter 是唯一直接 npm `jree` 入口。
+- `024-platform-neutral-core-host-adapters`：complete；Node 与浏览器 adapter、Worker bundle 和阶段门已按 M1-prime 口径收口。
+- `020-ts-performance-and-release`：in-progress；性能基线、npm/Pages 发布和长期稳定性优化仍未完成。
 
 推荐恢复 DAG：
 
@@ -87,11 +87,11 @@ python scripts/checking/check_hanzi_encoding.py --json-output scripts/checking/h
         单文件 bundle、公共门面、文档、RC
 ```
 
-不要因阶段封存而把 020/023/024 标成 complete；LeanSpec 状态描述实现事实，不描述“是否暂停”。
+LeanSpec 状态描述实现事实，不描述“是否暂停”。完成 023/024 不等于性能优化或公开发布候选完成；发布前仍需运行本页的 M2、包检查、demo 检查和人工 smoke。
 
 ## 去 jree 化策略
 
-冻结点仍有 105 个生产源码直接 jree 导入。后续迁移不能按字符串机械替换：
+当前仍可观察到 Java 兼容形状（`java.lang` 名称、类 token、集合合同和宿主 adapter），它们集中在兼容边界，不应在新核心代码继续扩散。若继续削减，不能按字符串机械替换：
 
 1. 选择一个容器或运行时边界簇；
 2. 阅读对应 Java 3.0.4 实现和 TypeScript 调用路径；

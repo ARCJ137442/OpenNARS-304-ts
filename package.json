@@ -14,7 +14,7 @@
         "opennars-304": "dist/cli.mjs",
         "opennars-304-shell": "dist/shell.mjs"
     },
-    "description": "OpenNARS 3.0.4 的 TypeScript 迁移版（开发中 🚧）。当前主线优先保证 Java canonical 基线与 TypeScript 的功能证据一致，再进入性能与发布门禁。",
+    "description": "OpenNARS 3.0.4 的 TypeScript 实现，提供 Node.js CLI、ESM API 与独立浏览器 Worker demo；023/024 已完成，020 性能优化持续推进。",
     "directories": {
         "doc": "docs",
         "test": "test"
@@ -56,7 +56,12 @@
         "src",
         "config",
         "scripts/cli.mjs",
-        "README.md"
+        "README.md",
+        "LICENSE",
+        "docs/getting-started.md",
+        "docs/user-guide.md",
+        "docs/integration-guide.md",
+        "docs/architecture.md"
     ],
     "dependencies": {
         "jree": "1.3.0"
