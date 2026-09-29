@@ -31,6 +31,14 @@
 - Full TS-only M2: `494 passed / 0 failed / 2 skipped` out of `496`; TAP SHA-256 `7DAFF51E696931E0CF6BC8875B49FD371D39010805E35CBE6CA4610A4252C1A7`.
 - Current static audit before commit: one production npm jree import file (`jree-host-adapter.ts`), one occurrence; remaining hits are Java class identity, host I/O and adapter contracts.
 
+## M1' fallback checkpoint on `4b817bf`
+
+- M1-- protection matrix: `243/243` passed; all failure classes are zero.
+- Ordinary #244 `nars_multistep_3.nal`: parity passed, TS `1021011 ms`, peak RSS `732987392`, observed cycles `502562`.
+- #245 `long_term_stability.nal` at 65536 requested cycles: Java passed, TS process limit at `1800044 ms`, last progress `217676`, marker missing. The gate therefore falls back to M1-- and records the sustained long-cycle system bottleneck; the original 2M workload remains unrun.
+- #246 `simpleOperationTest.nal`: parity passed, TS `61265 ms`, peak RSS `344444928`.
+- Summary: `reports/evidence/m1-prime-summary-4b817bf-20260929.json`.
+
 ## Exit checks
 
 - typecheck and build remain clean after each mechanical import batch.

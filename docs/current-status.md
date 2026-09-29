@@ -6,11 +6,19 @@
 
 ## 2026-09-29 J1-J5 native contract batch (working tree)
 
-- 当前候选为已提交 `0dcb7cc`；历史未跟踪证据保留不动。
+- 当前候选为已提交 `4b817bf`；历史未跟踪证据保留不动。
 - 项目内 `java-text`、`java-values`、`native-host-boundary` 已承接纯文本、long、logger、boxed number 合同；语言、实体、存储、推理、operator、plugin 和接口调用者已批量改用这些模块。
 - Node process exit 已收窄到 `src/platform/node/process-boundary.ts`；Node `java`、Java I/O 与 parity 仍只在主入口/IO host-facing 路径可达。
 - 非增量 typecheck、build、dist API、24 项直接宿主回归和 TS-only M2（`494/496`，2 skipped）通过。原始 TAP：`reports/evidence/jree-native-batch-ts-m2-20260929.tap`，SHA-256 `7DAFF51E696931E0CF6BC8875B49FD371D39010805E35CBE6CA4610A4252C1A7`。
 - 审计当前为生产直接 npm `jree` 导入文件 `1`、出现 `1`；该数字不等于 023/024 完成。M1'/stage 023/stage 024 尚未在本批提交上复验，不能宣称责任簇或规格完成。
+
+### 2026-09-29 M1' fallback evidence on `4b817bf`
+
+- 243 项 M1-- 保护矩阵通过 `243/243`，分类为 `0 failed / 0 timeout / 0 process_limit / 0 exception / 0 stall / 0 not_run`。
+- 普通第 244 项 `nars_multistep_3.nal` parity 通过；TS `1021011 ms`、峰值 RSS `732987392` bytes、observed cycles `502562`。
+- #245 `long_term_stability.nal` 的 65536 周期实验仍在 `1800044 ms` 被 `process_limit` 截止，最后进度 `217676`、observed cycles `2065960`、marker missing；Java 行通过。按用户约定，M1' 回落为 M1-，并标注“长周期行为遇到持续性系统瓶颈，暂不完整运行”。不宣称原始 2M 长周期通过。
+- #246 `simpleOperationTest.nal` parity 通过，TS `61265 ms`、峰值 RSS `344444928` bytes。
+- 汇总与 SHA-256：`reports/evidence/m1-prime-summary-4b817bf-20260929.json`。023/024 stage gate 仍未通过，不更新 LeanSpec 状态。
 
 ## 2026-09-28 J1 PC full M1 and markerless diagnosis
 

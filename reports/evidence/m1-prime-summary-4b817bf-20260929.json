@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "commit": "4b817bf8730aa0f6fcd7c163a76117dcfc449a1c",
+  "generatedAt": "2026-09-29T11:34:39.1440988Z",
+  "gate": "M1-prime-fallback-M1-minus",
+  "m1Minus": {
+    "files": 243,
+    "passed": 243,
+    "failed": 0,
+    "processLimit": 0,
+    "timeout": 0,
+    "exception": 0,
+    "stall": 0,
+    "notRun": 0
+  },
+  "ordinary244": {
+    "file": "nars_multistep_3.nal",
+    "functional_pass": true,
+    "parity": true,
+    "ts_runtime_ms": 1021011,
+    "ts_peak_rss_bytes": 732987392,
+    "observed_cycles": 502562,
+    "process_limit": false
+  },
+  "longTerm65536": {
+    "file": "long_term_stability.nal",
+    "functional_pass": false,
+    "parity": false,
+    "process_limit": true,
+    "timeout": "process_limit",
+    "last_progress_cycle": 217676,
+    "observed_cycles": 2065960,
+    "ts_runtime_ms": 1800044,
+    "marker_missing": true,
+    "note": "持续性系统瓶颈，暂不完整运行"
+  },
+  "extra246": {
+    "functional_pass": true,
+    "parity": true,
+    "ts_runtime_ms": 61265,
+    "ts_peak_rss_bytes": 344444928
+  },
+  "hashes": {
+    "reports/evidence/m1-prime-4b817bf-m1minus-20260929.jsonl": "40DE72E0BD1C5ADEA8D561635BEE68F39361F2423D70C86D5D0B1A55FEA7C554",
+    "reports/evidence/m1-prime-4b817bf-nars-multistep-3-20260929.jsonl": "EF57FF40417DA38A9560A33B9DD31E6B7A3607BAA1BE65D6DEDF9A1703D0C02B",
+    "reports/evidence/m1-prime-4b817bf-long-term-65536-20260929.jsonl": "3E54D8E6B06373A13B07DCBB9FB28232E1A3E8C068DA5092840777C8D76F1B24",
+    "reports/evidence/m1-prime-4b817bf-extra-246-20260929.jsonl": "DD656B363B3913AAB3840B35E92ED11A86B92C539D868FC1B377CF26B11CF5FA"
+  }
+}
