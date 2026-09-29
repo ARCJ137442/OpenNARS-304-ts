@@ -91,3 +91,4 @@
 - PC full M1 已完成并写入前 `244` 个主资源；系统实时内存达到 `33.06/39.16 GiB`（84%），超过 75% 硬停止线后人工终止 runner。
 - #245 `long_term_stability.nal` 未产生结果行，分类为 `not_run`；不得把这次运行称为完整 M1 通过。
 - 安全停止 JSON 与 checkpoint 路径、SHA-256 已写入 `docs/current-status.md`；当前不启动任何恢复副本，待系统内存回落后再做可证伪续跑。
+- 内存回落后恢复检测到原始 2M #245，按已确认的 M1' 策略立即 policy-stop；没有新增结果行。原始 2M 不再运行，65536 process_limit 作为长期系统瓶颈证据保留。

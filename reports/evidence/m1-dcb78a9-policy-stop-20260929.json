@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "commit": "dcb78a9",
+  "runnerPid": 36996,
+  "stoppedAt": "2026-09-29T14:11:02.5188799Z",
+  "checkpoint": "reports/evidence/m1-dcb78a9-full-20260929.jsonl",
+  "checkpointRows": 244,
+  "nextFile": "java-master/src/main/resources/nal/stability/long_term_stability.nal",
+  "classification": "not_run",
+  "reason": "policy stop: original 2000000-cycle #245 was detected after resume; current policy permits only the 65536-cycle experiment, whose authoritative result is process_limit; no result row emitted",
+  "stdout": "E:\\tmp\\m1-dcb78a9-20260929.stdout.log",
+  "stderr": "E:\\tmp\\m1-dcb78a9-20260929.stderr.log"
+}
