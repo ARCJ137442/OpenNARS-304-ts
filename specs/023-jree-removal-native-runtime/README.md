@@ -1,5 +1,5 @@
 ---
-status: in-progress
+status: complete
 created: 2026-08-26
 priority: medium
 tags:
@@ -7,11 +7,16 @@ tags:
 - native-typescript
 - milestone
 created_at: 2026-08-26T05:36:04.576870200Z
-updated_at: 2026-08-26T05:46:50.864563400Z
+updated_at: 2026-09-29T17:11:27.065162200Z
+completed_at: 2026-09-29T17:11:27.065162200Z
 transitions:
 - status: in-progress
   at: 2026-08-26T05:36:10.563187Z
+- status: complete
+  at: 2026-09-29T17:11:27.065162200Z
 ---
+
+
 
 # jree原生TypeScript运行时
 
