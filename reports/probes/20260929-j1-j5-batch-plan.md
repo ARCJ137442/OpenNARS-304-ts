@@ -98,3 +98,9 @@
 - `simpleOperationTest.nal` and `long_term_stability.nal` each completed Java/TS `131072` cycles and `128` windows; both comparisons are `equal=true`, `first_difference=null`.
 - Current HEAD 65536 #245 still reaches `process_limit` at `1800034 ms`, last progress `205074`; this is the sustained long-cycle bottleneck, not a semantic regression.
 - These markerless and reduced-cycle results are current implementation evidence, but the full stage gate remains open because the PC M1 #245 row is intentionally not run beyond the approved policy.
+
+## Revised long-cycle estimation policy
+
+- First run #245 with `2048` requested cycles and a `1800s` process limit.
+- If that estimate exceeds `1200s`, do not run `65536`; use the 2048 evidence to classify the bottleneck and avoid another high-memory expansion.
+- Current HEAD 2048 result: TS process limit at `1800040 ms`, last progress `206379`, observed cycles `2002472`; SHA-256 `5AD7C9610A1D8222270B31747983F265EC4961102F1F7FDDF5E286EF34C3EA80`.
