@@ -20,7 +20,8 @@
 - `native-host-boundary.ts` owns logger and boxed numeric compatibility without npm imports.
 - 50+ language, entity, storage, inference, operator, plugin and interface files now import those contracts directly.
 - Node process termination moved to `platform/node/process-boundary.ts`; Java I/O remains explicit in the main/IO host-facing files.
-- The Memory event boundary still converts reasons to jree boxed strings because existing Java-facing event consumers require `instanceof java.lang.String`.
+- `Nar`, `NarNode`, `Shell`, and `TextOutputHandler` now import Java/I/O compatibility directly from the Node host adapter; their exception predicates observe both project and jree hierarchies.
+- Two legacy bridge consumers remain: `Memory` converts event reasons to jree boxed strings, and `Stamp` returns a jree String for the translated Java-facing API. These are explicit host compatibility boundaries for the next adapter batch.
 
 ## Verification checkpoint
 
@@ -30,6 +31,13 @@
 - Direct host/runtime slice: `24/24` passed.
 - Full TS-only M2: `494 passed / 0 failed / 2 skipped` out of `496`; TAP SHA-256 `7DAFF51E696931E0CF6BC8875B49FD371D39010805E35CBE6CA4610A4252C1A7`.
 - Current static audit before commit: one production npm jree import file (`jree-host-adapter.ts`), one occurrence; remaining hits are Java class identity, host I/O and adapter contracts.
+
+## J5 host import closure checkpoint
+
+- `npm run typecheck`: passed.
+- Direct host/event slice: `25/25` passed.
+- Production `runtime/jree-compat.ts` imports reduced to `Memory.ts` and `Stamp.ts`; direct npm jree remains one Node adapter file.
+- Browser work remains open because the worker still imports the legacy bridge and its current build asserts the jree package as a dependency.
 
 ## M1' fallback checkpoint on `4b817bf`
 

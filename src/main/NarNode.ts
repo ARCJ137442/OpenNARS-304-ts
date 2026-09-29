@@ -11,8 +11,8 @@ import { Term } from "../language/Term.ts";
 import { Task } from "../entity/Task.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { closeResourcesCompat, handleResourceErrorCompat, throwResourceErrorCompat } from "../runtime/ResourceCompat.ts";
-import { isJavaException, java } from "../runtime/jree-compat.ts";
-import { toJavaString as toHostJavaString } from "../runtime/jree-compat.ts";
+import { java, toJavaString as toHostJavaString } from "../platform/node/jree-host-adapter.ts";
+import { isJavaException } from "../platform/node/jree-host-adapter.ts";
 import { JavaSystemLoggerCompat } from "../runtime/native-host-boundary.ts";
 import { toJavaString, type JavaStringInput } from "../runtime/java-text.ts";
 
