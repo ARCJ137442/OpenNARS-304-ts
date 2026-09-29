@@ -265,3 +265,4 @@ SHA、验证命令与分类、原始证据、实际周期、依赖审计差值�
 - 本轮 PC 完整 live M1 前 `244/245` 行通过；第 245 行原始 2,000,000 周期样本在重启前持续运行超过多小时，未产生结果行。恢复后该轮不得伪称通过；将按 M1' 明确组合既有同提交 244 行 checkpoint、65536 #245 parity 和第 246 项，完整重跑/复验该组合后才可宣称 M1' 通过。
 - Batch A 已开始：新增 `src/runtime/java-text.ts` 与 `src/runtime/java-values.ts`，并把 `isJavaException/isJavaThrowable` 放到项目异常模块；已迁移 Item、Sentence、Term、CompoundTerm、Terms、Variable、Variables、Bag、Memory、Task、Concept、Narsese 的纯文本/值 helper 导入。当前非增量 typecheck 为 0 诊断；TS-only M2 与受影响 NAL 待本批实现完成后执行。
 - Batch A continuation `72e4e07` 又迁移 ProcessGoal、TaskLink、TermLink、Events、Image、Statement、Tense、Operation、Operator、Feel 的纯文本 helper；typecheck/build/dist API 通过，TS-only M2 `494 passed / 0 failed / 2 skipped`。受影响 NAL 复用已有同合同通过证据，不重复运行。
+- Exception helper continuation `8aab324` 将 Operator、TermLink、TaskLink、Events、TextOutputHandler 的异常识别/异常类导入移到项目 `JavaExceptions.ts`；typecheck/build/dist API 通过，未重复已有同合同 NAL。

@@ -36,6 +36,11 @@ browser adapter package
 - typecheck、build、dist API 通过；串行 TS-only M2 为 `494 passed / 0 failed / 2 skipped`，耗时 `182971 ms`。
 - 受影响 NAL 不重复运行：这些文件的同一提交/同一预期已经有通过的 M1/M1' 或 sentinel 证据，本批只改变 helper 归属。
 
+### Exception helper continuation `8aab324`
+
+- `Operator`、`TermLink`、`TaskLink`、`Events`、`TextOutputHandler` 的异常识别/异常类导入已移到项目 `JavaExceptions.ts`；host `java.*` 形状仍留在 Node/browser adapter 边界。
+- typecheck、build、dist API 通过；没有重复运行已有同合同 NAL。
+
 ## 后续行动批次
 
 ### Batch A：项目内纯合同（核心 0 外部依赖）
