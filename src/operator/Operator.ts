@@ -10,11 +10,11 @@ import type { Product } from "../language/Product.ts";
 import type { Statement } from "../language/Statement.ts";
 import type { BudgetValue } from "../entity/BudgetValue.ts";
 import {
-    isJavaException,
     toJavaString,
     type JavaStringInput,
 } from "../runtime/jree-compat.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
+import { isJavaException } from "../runtime/JavaExceptions.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";

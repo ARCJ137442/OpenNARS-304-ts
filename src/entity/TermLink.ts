@@ -5,10 +5,8 @@ import { Term } from "../language/Term.ts";
 import { BudgetValue } from "./BudgetValue.ts";
 import { Symbols } from "../io/Symbols.ts";
 import type { TLink } from "./TLink.ts";
-import {
-    JavaIllegalArgumentException,
-} from "../runtime/jree-compat.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
+import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
 import {
     javaInt16ArrayEquals,
     javaInt16ArrayHashCode,
