@@ -1,0 +1,49 @@
+{
+  "schema": "opennars-304-ts/m1-prime-summary/v1",
+  "commit": "1a51c76",
+  "policy": {
+    "ordinary_main_resources": 244,
+    "reduced_long_term_resource": "reports/probes/long_term_stability-65536.nal",
+    "reduced_embedded_cycles": 65536,
+    "original_embedded_cycles": 2000000,
+    "projection_ms": 15109772,
+    "projection_minutes": 251.83,
+    "threshold_minutes": 30,
+    "original_long_run": "not_run_after_budget_decision"
+  },
+  "ordinary_main": {
+    "rows": 244,
+    "functional_pass": 244,
+    "parity_pass": 244,
+    "process_limit": 0,
+    "timeout": 0,
+    "exception": 0,
+    "stall": 0,
+    "not_run": 0,
+    "evidence": "reports/evidence/stage-14ed360-full-m1-20260929.jsonl",
+    "sha256": "72B2E1E91D0444F4067A22DD97D99EBD5F62BBC46B1E34A354E2687285C08526",
+    "note": "244 rows are reused from the same runner contract checkpoint; #245 was intentionally excluded from this file after the budget decision."
+  },
+  "reduced_long_term": {
+    "functional_pass": true,
+    "parity": true,
+    "marker_missing": false,
+    "process_limit": false,
+    "timeout": false,
+    "exception": false,
+    "stall": false,
+    "observed_cycles": 67510,
+    "ts_duration_ms": 495117,
+    "ts_peak_rss_bytes": 464674816,
+    "java_duration_ms": 4231,
+    "evidence": "reports/evidence/long-term-stability-65536-live-20260929.jsonl",
+    "sha256": "0D60FA82F33B3557965F1FAFCB8C42402AAD130160B77E8A180594FE1A2B0A10"
+  },
+  "extra_246": {
+    "functional_pass": true,
+    "parity": true,
+    "evidence": "reports/evidence/stage-final-live-extra-246-20260929.jsonl",
+    "sha256": "FD24B3B3CF03CB13E7EE28C18E84202EDCB5162E8226B558791941A5D1A7140A"
+  },
+  "claim": "M1' candidate: 244 ordinary main resources + reduced-cycle #245 + extra #246. This does not claim completion of the original 2,000,000-cycle workload."
+}
