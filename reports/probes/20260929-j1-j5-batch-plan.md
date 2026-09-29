@@ -84,3 +84,10 @@
 - Full TS-only M2: `494/496`, zero failures; TAP SHA-256 `D76F6BC4CC73AD0B7DF598CC024E2B613BFF9AB835F95E8079D61339FFC1B0EB`.
 - Latest audits: jree `0340276FCA524153B6967C9399D8EB6D1F0B1A195ED6070A3FCC5A380B7D683B`, platform `4A762C50D94F0F75357B389857D84023D543AD35AE1DA86968D566B905E40C79`.
 - This closes the implementation-side bridge migration slice. It does not certify stage 023/024, because the stage gate still requires the full immutable-commit Java/M1/markerless/browser integration set.
+
+## Current-head M1 safety checkpoint (`dcb78a9`)
+
+-含 Java M2 在当前 HEAD 已通过 `496/496`。
+- PC full M1 已完成并写入前 `244` 个主资源；系统实时内存达到 `33.06/39.16 GiB`（84%），超过 75% 硬停止线后人工终止 runner。
+- #245 `long_term_stability.nal` 未产生结果行，分类为 `not_run`；不得把这次运行称为完整 M1 通过。
+- 安全停止 JSON 与 checkpoint 路径、SHA-256 已写入 `docs/current-status.md`；当前不启动任何恢复副本，待系统内存回落后再做可证伪续跑。

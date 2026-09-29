@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "commit": "dcb78a9",
+  "runnerPid": 42704,
+  "stoppedAt": "2026-09-29T13:55:37.0475238Z",
+  "checkpoint": "reports/evidence/m1-dcb78a9-full-20260929.jsonl",
+  "checkpointRows": 244,
+  "nextFile": "java-master/src/main/resources/nal/stability/long_term_stability.nal",
+  "classification": "not_run",
+  "reason": "manual safety stop because system memory was 33.06/39.16 GiB (84%), above 75% hard stop line; no #245 result row emitted",
+  "stdout": "E:\\tmp\\m1-dcb78a9-20260929.stdout.log",
+  "stderr": "E:\\tmp\\m1-dcb78a9-20260929.stderr.log"
+}
