@@ -2,7 +2,7 @@
 
 ## Current checkpoint
 
-- HEAD: `8305a67`.
+- HEAD: `0dcb7cc` (committed batch).
 - The incomplete `jree-compat` facade experiment was restored to a typecheck-clean baseline.
 - Historical untracked evidence remains untouched.
 - The abandoned `jree-runtime-patches.ts` experiment was removed; the existing bridge remains the sole owner of legacy prototype patching.
