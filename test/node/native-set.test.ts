@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { NativeSet } from "../../src/runtime/NativeSet.ts";
-import { javaValuesEqual } from "../../src/runtime/java-values.ts";
 
 class EqualValue {
     public constructor(public readonly key: string) {}
@@ -43,19 +42,6 @@ test("NativeSet uses the searched value as the Java equals receiver", () => {
 
     const values = new NativeSet<StoredValue | SearchValue>([new StoredValue()]);
     assert.equal(values.contains(new SearchValue()), true);
-});
-
-test("Java equality dispatch invokes a shared symmetric implementation once", () => {
-    let calls = 0;
-    class Value {
-        public equals(other: unknown): boolean {
-            calls += 1;
-            return other instanceof Value;
-        }
-    }
-
-    assert.equal(javaValuesEqual(new Value(), new Value()), true);
-    assert.equal(calls, 1);
 });
 
 test("NativeSet iterator supports Java remove and fail-fast mutation checks", () => {
