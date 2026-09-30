@@ -4,7 +4,7 @@
 
 - 状态日期：2026-09-30（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
-- 包版本：`0.1.0`
+- 包版本：`1.0.0`（正式发行提交）
 
 ## 2026-09-29 J1-J5 native contract batch (working tree)
 

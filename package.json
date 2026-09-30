@@ -1,6 +1,6 @@
 {
     "name": "opennars-304-ts",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "type": "module",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -41,6 +41,7 @@
         "test:parity:local": "node --import ./scripts/register-ts-loader.mjs scripts/parity/run-local-algorithm-parity.mjs",
         "benchmark:m3": "node scripts/e2e/run-m3-benchmark.mjs",
         "benchmark:rps": "node --import ./scripts/register-ts-loader.mjs scripts/e2e/run-rps-benchmark.mjs",
+        "benchmark:demo-workload": "node --import ./scripts/register-ts-loader.mjs scripts/e2e/run-demo-workload-benchmark.mjs",
         "cli": "node --import ./scripts/register-ts-loader.mjs scripts/cli.mjs",
         "shell": "node --import ./scripts/register-ts-loader.mjs scripts/shell.mjs",
         "shell:dist": "node --import ./scripts/register-ts-loader.mjs dist/shell.mjs",

@@ -30,6 +30,6 @@ Run a NAL file:
 node dist/cli.mjs --cycles 1550 path/to/example.nal
 ```
 
-Online demo: <https://arcj137442.github.io/opennars-304-ts/>. Use `:version` to see the core commit bound to the Worker.
+Online demo: <https://arcj137442.github.io/opennars-304-ts-lab/>. Use `:version` to see the core commit bound to the Worker.
 
 Continue with the [integration guide](integration-guide.en.md) or [architecture](architecture.en.md).
