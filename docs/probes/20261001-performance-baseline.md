@@ -22,6 +22,12 @@ Exploratory result on the same working tree before commit:
 
 The candidate still requires full serial M2 and the appropriate NAL/M1-prime protection before being accepted. Do not attribute the RSS increase to the candidate without a repeated controlled sample.
 
+## Gate result
+
+- TS-only serial M2 after the candidate: `496 pass / 0 fail / 2 skipped`; TAP SHA-256 `D4F12FD46DE0601C1C2A33195DF90D5689015E79E43464709FFB2C0C35E8AE08`.
+- Java serial M2 after the candidate: `498 pass / 0 fail / 0 skipped`; TAP SHA-256 `3AD4DEB24E496F0443A6784CD81F292A5404B2021F893F164C077FF2F91C8DEC`.
+- M3 remains functional/parity equivalent across all four workloads. The candidate is accepted as a protected runtime round; affected NAL and M1-prime closure are still pending.
+
 ## Next profile target
 
 If the candidate survives the gates, profile allocation and equality dispatch in `CompoundTerm.equals`, `javaValuesEqual`, Bag lookup/removal, parser input normalization, and per-cycle event/diagnostic formatting. The Demo concept-growth tail remains the primary user-visible bottleneck.

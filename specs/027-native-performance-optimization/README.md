@@ -17,7 +17,6 @@ transitions:
 - status: in-progress
   at: 2026-09-30T16:40:23.324421800Z
 ---
-
 # Native TypeScript performance optimization
 
 ## Goal
@@ -47,17 +46,17 @@ After strict jree removal, optimize measured OpenNARS reasoning throughput and b
 
 ## Plan
 
-- [ ] Freeze clean native-runtime RPS and M3 baselines on the current commit.
+- [x] Freeze clean native-runtime RPS and M3 baselines on the current commit.
 - [ ] Capture CPU/heap evidence for the highest-cost runtime and demo paths.
-- [ ] Optimize one measured runtime hot path at a time with direct contract tests.
+- [x] Optimize one measured runtime hot path at a time with direct contract tests.
 - [ ] Optimize demo Worker scheduling, input/log allocation, and telemetry only when profiling assigns cost there.
-- [ ] Re-run M2, M3, affected NALs, M1-prime and markerless checks after each accepted batch.
+- [x] Re-run M2, M3, affected NALs, M1-prime and markerless checks after each accepted batch.
 - [ ] Document final improvements, residual bottlenecks, and the three-round convergence decision.
 
 ## Acceptance tests
 
-- [ ] Core RPS and M3 baselines and post-optimization evidence are reproducible and linked to immutable commits.
-- [ ] All direct runtime contracts, typecheck, build, dist API, TS-only M2 and Java M2 pass with zero failures.
+- [x] Core RPS and M3 baselines and post-optimization evidence are reproducible and linked to immutable commits.
+- [x] All direct runtime contracts, typecheck, build, dist API, TS-only M2 and Java M2 pass with zero failures.
 - [ ] Affected NAL parity and required M1/M1-prime/markerless evidence remain equivalent.
 - [ ] Demo browser smoke, operation behavior, RPS/TPS HUD and sync/async controls remain valid.
 - [ ] The final report distinguishes measured gains from unresolved long-cycle resource bottlenecks and records remaining Java-shaped paths.
