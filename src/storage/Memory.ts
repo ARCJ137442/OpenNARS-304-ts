@@ -222,7 +222,9 @@ export class Memory implements Iterable<Concept>, Resettable {
         this.novelTasks.putIn(t);
         /* } */
         // logic.TASK_ADD_NEW.commit(t.getPriority());
-        this.emit(Events.TaskAdd.class, t, toHostJavaString(reason));
+        if (this.emitting(Events.TaskAdd.class)) {
+            this.emit(Events.TaskAdd.class, t, toHostJavaString(reason));
+        }
         this.output(t);
     }
 
@@ -312,7 +314,9 @@ export class Memory implements Iterable<Concept>, Resettable {
 
 
     public removeTask(task: Task, reason: JavaStringInput): void {
-        this.emit(TaskRemove.class, task, toHostJavaString(reason));
+        if (this.emitting(TaskRemove.class)) {
+            this.emit(TaskRemove.class, task, toHostJavaString(reason));
+        }
     }
 
     /**

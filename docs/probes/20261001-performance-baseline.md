@@ -44,6 +44,33 @@ After removing the mutable term/map caches, the immutable-string-only candidate 
 
 The safe-string candidate is the current accepted optimization. Its RPS median is `4366.278 cycles/s` against the original `3843.848` baseline; this is a benchmark gain, not yet a complete M1-prime closure.
 
+## Current safe-version recheck
+
+The accepted safe-string source was rechecked on `cbe9c7860747975b38aa03c61fba95abb4107bbf` after removing two exploratory candidates. TypeScript M2 remained `496 pass / 0 fail / 2 skipped`; Java M2 remained `498 pass / 0 fail / 0 skipped`. The corrected M3 workload set was functional and parity equivalent in every sample:
+
+- `nal8.add.nal`: `1.720x` TS/Java wall ratio;
+- `nars_multistep_1.nal`: `7.490x`;
+- `toothbrush.nal`: `4.230x`;
+- `nal4.recursion.small.nal`: `6.210x`.
+
+Raw M3 evidence: `reports/evidence/m3-native-safe-string-correct-20261001.json`, SHA-256 `00AF18838CB8D2DEEAA1EDE471DD1D8E4E114B21C5EEC1170ACF2EC7118A0173`.
+
+Two additional measured candidates were rejected and reverted:
+
+- `javaValuesEqual` boxed-string `instanceof` fast path: `3989.627 cycles/s` median, about `-8.6%` versus the accepted `4366.278` baseline. Evidence: `reports/evidence/rps-native-opt4-java-values-20261001.json`.
+- Per-instance `RuntimeClassToken` cache: `4205.462 cycles/s`, about `-3.7%`. Evidence: `reports/evidence/rps-native-opt5-runtime-class-20261001.json`.
+- `NativeJavaString.equals` direct private-field comparison: `4210.260 cycles/s`, about `-3.6%`. Evidence: `reports/evidence/rps-native-opt6-string-equals-20261001.json`.
+
+These results do not justify replacing Java equality or class-token contracts with a native shortcut. The remaining measurable hotspots are `CompoundTerm` equality/name work, Bag/NativeMap lookup and removal allocation, and concept growth/GC tails in the demo workload. They require a contract-preserving structural experiment rather than another local dispatch branch.
+
+## Accepted round: lazy inactive-event payload conversion
+
+`Memory.addNewTask` and `Memory.removeTask` now convert their Java-shaped reason payload only when the corresponding event has observers. With an observer, the existing boxed payload, event class, ordering, and callback contract are unchanged; without one, the event emitter was already a no-op, so the conversion was dead work.
+
+On the same single-process RPS workload with 50 repetitions, the safe-string reference measured `2613.224 cycles/s` median, `59.293 ms` p95 latency, and `276729856` bytes peak RSS. The lazy-event candidate measured `2672.096 cycles/s` median (`+2.25%`), `57.670 ms` p95 (`-2.7%`), and `277577728` bytes peak RSS. Demo telemetry on a 20-tick CartPole workload recorded `4.105 RPS`, `1.214 TPS` in the first segment and `0.247 TPS` in the growth segment; this is a shorter probe than the 50-tick baseline and is not presented as a direct aggregate comparison.
+
+Evidence: `reports/evidence/rps-native-safe-string-recheck50-20261001.json`, `reports/evidence/rps-native-opt8-event-lazy-20261001.json`, `reports/evidence/demo-workload-opt8-event-lazy-20261001.json`, and `reports/evidence/perf-opt8-affected-nal-20261001.jsonl`. TS M2 was `496 pass / 0 fail / 2 skipped`; Java M2 was `498 pass / 0 fail / 0 skipped`; affected NAL parity was `3/3`; M3 remained `4/4` functional/parity.
+
 ## Next profile target
 
 If the candidate survives the gates, profile allocation and equality dispatch in `CompoundTerm.equals`, `javaValuesEqual`, Bag lookup/removal, parser input normalization, and per-cycle event/diagnostic formatting. The Demo concept-growth tail remains the primary user-visible bottleneck.
