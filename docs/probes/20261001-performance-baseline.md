@@ -34,6 +34,16 @@ The candidate still requires full serial M2 and the appropriate NAL/M1-prime pro
 - Java serial M2 after the candidate: `498 pass / 0 fail / 0 skipped`; TAP SHA-256 `3AD4DEB24E496F0443A6784CD81F292A5404B2021F893F164C077FF2F91C8DEC`.
 - M3 remains functional/parity equivalent across all four workloads. The candidate is accepted as a protected runtime round; affected NAL and M1-prime closure are still pending.
 
+## Safe-string closure evidence
+
+After removing the mutable term/map caches, the immutable-string-only candidate restored `nars_transitivity.nal` parity. Final gate TAPs on the safe code are:
+
+- TS-only M2: `496 pass / 0 fail / 2 skipped`, SHA-256 `18595D8E2A66FA08A083D07F655E62FDD9AE2F3EA1B4325DD317459C38899708`.
+- Java M2: `498 pass / 0 fail / 0 skipped`, SHA-256 `4A29A26BCD46F75D4131854E2E7F1657DA0A124EAC41552B1F631EDF9318B709`.
+- Affected transitivity parity: `1/1`, with no timeout, process limit, exception, or marker ambiguity in the retry evidence.
+
+The safe-string candidate is the current accepted optimization. Its RPS median is `4366.278 cycles/s` against the original `3843.848` baseline; this is a benchmark gain, not yet a complete M1-prime closure.
+
 ## Next profile target
 
 If the candidate survives the gates, profile allocation and equality dispatch in `CompoundTerm.equals`, `javaValuesEqual`, Bag lookup/removal, parser input normalization, and per-cycle event/diagnostic formatting. The Demo concept-growth tail remains the primary user-visible bottleneck.
