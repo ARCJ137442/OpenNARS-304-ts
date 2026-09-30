@@ -40,6 +40,7 @@
         "apply:migration-patterns": "node scripts/converting/apply-migration-patterns.mjs",
         "test:parity:local": "node --import ./scripts/register-ts-loader.mjs scripts/parity/run-local-algorithm-parity.mjs",
         "benchmark:m3": "node scripts/e2e/run-m3-benchmark.mjs",
+        "benchmark:rps": "node --import ./scripts/register-ts-loader.mjs scripts/e2e/run-rps-benchmark.mjs",
         "cli": "node --import ./scripts/register-ts-loader.mjs scripts/cli.mjs",
         "shell": "node --import ./scripts/register-ts-loader.mjs scripts/shell.mjs",
         "shell:dist": "node --import ./scripts/register-ts-loader.mjs dist/shell.mjs",
