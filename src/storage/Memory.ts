@@ -346,6 +346,9 @@ export class Memory implements Iterable<Concept>, Resettable {
     }
 
     public output(t: Task): void {
+        const shouldOutput = this.emitting(OUT.class);
+        const shouldDebug = Debug.PARENTS && this.emitting(DEBUG.class);
+        if (!shouldOutput && !shouldDebug) return;
 
         let budget: float = t.getBudget().summary();
         // Java evaluates both the division and subtraction as float because
@@ -354,8 +357,8 @@ export class Memory implements Iterable<Concept>, Resettable {
         let noiseLevel: float = Float32Math.subtract(1.0, volumeRatio) as float;
 
         if (budget >= noiseLevel) { // only report significant derived Tasks
-            this.emit(OUT.class, t);
-            if (Debug.PARENTS) {
+            if (shouldOutput) this.emit(OUT.class, t);
+            if (shouldDebug) {
                 this.emit(DEBUG.class, "Parent Belief\t" + t.parentBelief);
                 this.emit(DEBUG.class, "Parent Task\t" + t.parentTask + "\n\n");
             }

@@ -68,6 +68,9 @@ export const javaStringLength = (value: unknown): number => javaStringValue(valu
 
 export const javaStringsEqual = (left: unknown, right: unknown): boolean => {
     if (left === right) return true;
+    if (left instanceof NativeJavaString && right instanceof NativeJavaString) {
+        return left.toString() === right.toString();
+    }
     return javaStringValue(left) === javaStringValue(right);
 };
 

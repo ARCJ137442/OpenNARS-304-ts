@@ -71,6 +71,26 @@ On the same single-process RPS workload with 50 repetitions, the safe-string ref
 
 Evidence: `reports/evidence/rps-native-safe-string-recheck50-20261001.json`, `reports/evidence/rps-native-opt8-event-lazy-20261001.json`, `reports/evidence/demo-workload-opt8-event-lazy-20261001.json`, and `reports/evidence/perf-opt8-affected-nal-20261001.jsonl`. TS M2 was `496 pass / 0 fail / 2 skipped`; Java M2 was `498 pass / 0 fail / 0 skipped`; affected NAL parity was `3/3`; M3 remained `4/4` functional/parity.
 
+## Accepted round: lazy output formatting
+
+`Memory.output` now checks whether an `OUT` or active `DEBUG` observer exists before calculating the budget threshold and constructing parent diagnostics. If either observer is active, event order and payloads remain unchanged; when neither is active, the method has no observable effect and returns before formatting.
+
+The first 50-run sample measured `2719.727 cycles/s`; an independent same-configuration recheck measured `2810.655 cycles/s`, `35.430 ms` median latency, `57.162 ms` p95 latency, `1749.408 cycles/s` p05, and `257499136` bytes peak RSS. Relative to opt9 (`2741.476 cycles/s`), the recheck is `+2.5%`. This is the third consecutive accepted round below 5% after opt8 (`+2.25%`) and opt9 (`+2.6%`), so the planned convergence rule is met.
+
+Opt10 mixed boxed/native equality (`2727.382 cycles/s`) and opt11 native hash entry (`2733.174 cycles/s`) were rejected because both were below opt9. Their raw evidence remains under `reports/evidence/`.
+
+Opt12 evidence: `reports/evidence/rps-native-opt12-lazy-output-recheck-20261001.json`, `reports/evidence/m3-native-opt12-lazy-output-20261001.json` (SHA-256 `0A8E002DD79E8EE4B92CD2ED43B0C9EE66BE2F6038491A57BF33BDDA2D8B695E`), `reports/evidence/m1prime-opt12-mminus-20261001.jsonl`, `reports/evidence/m1prime-opt12-nars-multistep-3-20261001.jsonl`, `reports/evidence/m1prime-opt12-long-65536-20261001.jsonl`, `reports/evidence/m1prime-opt12-simple-246-20261001.jsonl`, `reports/evidence/markerless-opt12-long-ts-20261001.jsonl`, and `reports/evidence/markerless-opt12-simple-ts-20261001.jsonl`. The 243-item M1-- body was `243/243`; #25, #245 65536, and #246 were functional/parity equivalent; both markerless comparisons were equal; TS M2 was `496/496` effective with 2 documented Java skips; Java M2 was `498/498`.
+
+The 50-tick CartPole demo probe on the preceding accepted source recorded `3.024 RPS`, `2520.025 ms` median step, `8388.976 ms` p95, and `340709376` bytes peak RSS. This remains far below a 20 TPS target because concept growth and inference/GC tails dominate after the first ten ticks; the accepted runtime optimizations do not solve that state-growth bottleneck.
+
+## Accepted round: native boxed-string equality
+
+`javaStringsEqual` now compares the immutable native payload directly when both values are `NativeJavaString`; all mixed/native-legacy CharSequence pairs continue through the established conversion path. This avoids allocating two temporary CharSequence view closures for the dominant boxed-string comparison while keeping UTF-16 equality exact.
+
+On the same 50-repetition RPS workload, the immediately previous accepted round measured `2672.096 cycles/s` median, `57.670 ms` p95 latency, and `277577728` bytes peak RSS. This candidate measured `2741.476 cycles/s` (`+2.6%`), `57.414 ms` p95, and `273944576` bytes peak RSS. M3 was functional/parity equivalent in all four workloads; ratios were `1.730x`, `7.090x`, `4.050x`, and `5.160x` in the usual file order. Build and dist API smoke passed; TS M2 was `496 pass / 0 fail / 2 skipped`; Java M2 was `498 pass / 0 fail / 0 skipped`.
+
+Raw evidence: `reports/evidence/rps-native-opt9-native-string-equality-20261001.json` and `reports/evidence/m3-native-opt9-native-string-equality-20261001.json` (M3 SHA-256 `420C492ACA6C7DA764A049CD502C7FBDDAC7E9E4325E0525A4799A45F0A12210`). M1-prime 243-item main body is in progress under `reports/evidence/m1prime-opt9-mminus-20261001.jsonl`; then rerun #25, #245 65536, #246, and markerless comparisons on this candidate before accepting it. Do not claim this round is closed until those results are final.
+
 ## Next profile target
 
-If the candidate survives the gates, profile allocation and equality dispatch in `CompoundTerm.equals`, `javaValuesEqual`, Bag lookup/removal, parser input normalization, and per-cycle event/diagnostic formatting. The Demo concept-growth tail remains the primary user-visible bottleneck.
+The optimization convergence gate is closed for this batch. The remaining performance work is a separate, larger investigation of concept growth, Bag/NativeMap allocation and long-tail GC behavior; it must establish a new benchmark baseline before changing inference state ownership or retention policy. The Demo concept-growth tail remains the primary user-visible bottleneck.
