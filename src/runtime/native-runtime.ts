@@ -404,8 +404,13 @@ export const javaSystemExit = (status: number): never => {
 export const javaValuesEqual = (left: unknown, right: unknown): boolean => {
     if (left === right) return true;
     const leftEquals = (left as { equals?: unknown } | null)?.equals;
-    if (typeof leftEquals === "function" && Boolean(leftEquals.call(left, right))) return true;
     const rightEquals = (right as { equals?: unknown } | null)?.equals;
+    if (typeof leftEquals === "function" && leftEquals === rightEquals
+        && (left as { constructor?: unknown } | null)?.constructor
+        === (right as { constructor?: unknown } | null)?.constructor) {
+        return Boolean(leftEquals.call(left, right));
+    }
+    if (typeof leftEquals === "function" && Boolean(leftEquals.call(left, right))) return true;
     return typeof rightEquals === "function" && Boolean(rightEquals.call(right, left));
 };
 

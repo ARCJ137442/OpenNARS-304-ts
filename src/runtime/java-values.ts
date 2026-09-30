@@ -37,8 +37,17 @@ export const subtractRuntimeLongValues = (left: JavaLongInput, right: JavaLongIn
 export const javaValuesEqual = (left: unknown, right: unknown): boolean => {
     if (left === right) return true;
     const leftEquals = (left as { equals?: unknown } | null)?.equals;
-    if (typeof leftEquals === "function" && Boolean(leftEquals.call(left, right))) return true;
     const rightEquals = (right as { equals?: unknown } | null)?.equals;
+    // Java value objects normally implement one symmetric equals method. If
+    // both operands expose the same function, one dispatch avoids repeating
+    // the dynamic lookup while preserving the fallback for asymmetric or
+    // heterogeneous translated objects.
+    if (typeof leftEquals === "function" && leftEquals === rightEquals
+        && (left as { constructor?: unknown } | null)?.constructor
+        === (right as { constructor?: unknown } | null)?.constructor) {
+        return Boolean(leftEquals.call(left, right));
+    }
+    if (typeof leftEquals === "function" && Boolean(leftEquals.call(left, right))) return true;
     return typeof rightEquals === "function" && Boolean(rightEquals.call(right, left));
 };
 
