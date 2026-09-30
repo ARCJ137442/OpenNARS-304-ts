@@ -1,0 +1,15 @@
+
+> opennars-304-ts@1.0.0 scan:migration-patterns
+> node scripts/converting/scan-migration-patterns.mjs
+
+scanned files: 319
+B constructor-delegation: 0 occurrences in 0 files
+B java-class-literal: 229 occurrences in 46 files
+A malformed-generic: 0 occurrences in 0 files
+A malformed-operator: 0 occurrences in 0 files
+B malformed-new-this: 0 occurrences in 0 files
+C java-string-method: 220 occurrences in 64 files
+C java-collection-method: 806 occurrences in 119 files
+C jree-runtime-type: 852 occurrences in 76 files
+B static-initializer: 7 occurrences in 7 files
+B anonymous-java-class: 42 occurrences in 6 files
