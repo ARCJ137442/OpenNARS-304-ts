@@ -4,7 +4,11 @@
 
 - 状态日期：2026-09-30（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
-- 包版本：`1.0.0`（正式发行提交）
+- 当前发布提交：`8568ebd`
+- 包版本：`1.0.0`（GitHub Release `v1.0.0` 已发布）
+- LeanSpec：023、024、020 均为 `complete`
+- M1-prime：243/243 M1--、#25、#245 降载、#246 均通过；两个 markerless digest equal；含 Java M2 `498/498`
+- Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，metadata 绑定核心 `8568ebd`
 
 ## 2026-09-29 J1-J5 native contract batch (working tree)
 

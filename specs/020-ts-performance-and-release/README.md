@@ -1,5 +1,5 @@
 ---
-status: in-progress
+status: complete
 created: 2026-08-24
 priority: medium
 depends_on:
@@ -7,10 +7,13 @@ depends_on:
 - 023-jree-removal-native-runtime
 - 024-platform-neutral-core-host-adapters
 created_at: 2026-08-24T01:48:53.859499900Z
-updated_at: 2026-08-26T07:14:22.603632Z
+updated_at: 2026-09-30T11:31:45.199421Z
+completed_at: 2026-09-30T11:31:45.199421Z
 transitions:
 - status: in-progress
   at: 2026-08-25T11:48:42.932070800Z
+- status: complete
+  at: 2026-09-30T11:31:45.199421Z
 ---
 
 # TypeScript performance and release
@@ -33,9 +36,15 @@ transitions:
 
 ## 测试
 
-- [ ] 主要 NAL 工作负载在批准的性能预算内完成。
+- [x] 主要 NAL 工作负载在批准的性能预算内完成。
 - [x] 优化后 M1 和 M2 门禁仍保持通过。
 - [x] 正式构建、CLI、核心 API、基准和发布证据可复现。
+
+### 2026-09-30：NativeMap 性能批次与 v1.0.0 收口
+
+`8e1855c` 的 NativeMap 哈希命中路径移除 `records.indexOf(record)` 线性回表，并由直接合同、完整 TS-only M2、代表性 M3 workload 和阶段 M1-prime 保护。M3 四个 workload 全部 functional/parity，通过 `60000 ms/1024 cycles` 预算；M1-prime 组合为 M1-- `243/243`、#25 `1/1`、#245 降载 `1/1`、#246 `1/1`，两个 `131072` 周期 markerless digest 均 `equal=true`，含 Java M2 `498/498`。release package 的外部 tsc、公共 API、CLI、Shell、配置和包内容检查通过。
+
+正式发行提交为 `8568ebd`，版本为 `1.0.0`，GitHub Release 为 `v1.0.0`。原始 2,000,000 周期长期稳定性仍记录为当前设备的持续系统瓶颈，不作为日常发布门。
 
 ## Agent 工作流与身份披露
 
