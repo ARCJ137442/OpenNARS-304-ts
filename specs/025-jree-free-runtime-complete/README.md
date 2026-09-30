@@ -20,7 +20,6 @@ transitions:
 - status: in-progress
   at: 2026-09-30T15:15:40.466017800Z
 ---
-
 ## Goal
 
 Finish the native TypeScript runtime begun by spec 023. The maintained library, Node CLI, public API, test fixtures, build scripts, and published artifacts must run without installing, importing, requiring, or rewriting to jree. Preserve the OpenNARS 3.0.4 behavioral contracts already protected by spec 023 and 024.
@@ -49,19 +48,19 @@ Finish the native TypeScript runtime begun by spec 023. The maintained library, 
 
 ## Plan
 
-- [ ] Inventory every maintained-source and package-level jree import, require, rewrite, and generated artifact.
-- [ ] Implement native Node host capabilities and remove the Node adapter's jree boundary.
-- [ ] Replace or delete the jree entry rewrite and update build, CLI, Shell, dist API, and package scripts.
-- [ ] Migrate all maintained test fixtures and direct contract tests to project-native runtime primitives.
-- [ ] Remove jree from package metadata and lockfiles; verify a clean install works without it.
-- [ ] Rebuild and inspect dist, release tarball, browser Worker, and demo Worker for forbidden dependency traces.
+- [x] Inventory every maintained-source and package-level jree import, require, rewrite, and generated artifact.
+- [x] Implement native Node host capabilities and remove the Node adapter's jree boundary.
+- [x] Replace or delete the jree entry rewrite and update build, CLI, Shell, dist API, and package scripts.
+- [x] Migrate all maintained test fixtures and direct contract tests to project-native runtime primitives.
+- [x] Remove jree from package metadata and lockfiles; verify a clean install works without it.
+- [x] Rebuild and inspect dist, release tarball, browser Worker, and demo Worker for forbidden dependency traces.
 
 ## Acceptance tests
 
-- [ ] Maintained src, scripts, test, package.json, lockfiles, and generated dist have zero jree imports, requires, dependency entries, or rewrite rules.
+- [x] Maintained src, scripts, test, package.json, lockfiles, and generated dist have zero jree imports, requires, dependency entries, or rewrite rules.
 - [ ] External Node consumer, CLI, Shell, save/load, stdin, process, UDP/Node host, exception, class identity, boxed string/number, iterator/collection, and Random contracts pass without jree installed.
 - [ ] Non-incremental typecheck, build, dist API, serial TS-only M2, Java M2, affected NAL parity, M1-prime, and markerless digests pass on one immutable commit.
-- [ ] npm pack or equivalent release inspection proves the package installs and runs with no jree dependency or bundled copy.
+- [x] npm pack or equivalent release inspection proves the package installs and runs with no jree dependency or bundled copy.
 - [ ] Node and browser smoke tests pass, and audit:jree, audit:platform, migration scan, and encoding checks report no maintained-source dependency.
 - [ ] LeanSpec 023 is not re-marked complete until this successor's acceptance evidence is complete; this spec is the strict closure gate.
 
