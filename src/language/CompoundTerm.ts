@@ -200,7 +200,6 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     public invalidateName(): void {
         this.setName(null); // invalidate name so it will be (re-)created lazily
-        this.hashComputed = false;
         for (let t of this.term) {
             if (t.hasVar())
                 if (t instanceof CompoundTerm)
@@ -813,11 +812,8 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     public hashCode(): int {
-        if (this.hashComputed) return this.hash;
         // jree JavaString.equals/hashCode may fold case; Java String does not.
-        this.hash = javaStringHashCode(this.name());
-        this.hashComputed = true;
-        return this.hash;
+        return javaStringHashCode(this.name());
     }
 
     public compareTo(that: AbstractTerm): int {

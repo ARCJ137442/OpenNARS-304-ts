@@ -12,7 +12,7 @@ Raw files: `reports/evidence/rps-native-baseline-20261001.json`, `reports/eviden
 
 ## Round 1 candidate
 
-The candidate caches Java-compatible text hashes for immutable `NativeJavaString`, `Term` and `CompoundTerm` names, fast-paths native boxed string observation, and caches stable object-key hash codes inside `NativeMap`. Equality direction, hash fallback, insertion order, iterator behavior and invalidation paths are unchanged.
+The candidate caches Java-compatible text hashes for immutable `NativeJavaString` values and fast-paths native boxed string observation. Mutable `Term`/`CompoundTerm` names and object-key `NativeMap` hashes are deliberately not cached because translated code can mutate those structures in place.
 
 Exploratory result on the same working tree before commit:
 
@@ -23,6 +23,8 @@ Exploratory result on the same working tree before commit:
 ## Rejected round 2 candidate
 
 The symmetric-equals single-dispatch fast path was measured at `4032.567 cycles/s` median, below round 1's `4048.927 cycles/s` median. It was reverted in `2ec3b5a`; the raw rejected sample is `reports/evidence/rps-native-opt2-20261001.json`. The fallback direction and asymmetric equality behavior remain unchanged.
+
+The mutable hash-cache candidate initially caused `nars_transitivity.nal` to miss its second marker after 211550 cycles. Removing it restored parity (`1/1`) in `reports/evidence/perf-opt1-transitivity-retry-20261001.jsonl`. The safe immutable-string subset measured `4366.278 cycles/s` median; raw evidence is `reports/evidence/rps-native-safe-string-20261001.json`.
 
 The candidate still requires full serial M2 and the appropriate NAL/M1-prime protection before being accepted. Do not attribute the RSS increase to the candidate without a repeated controlled sample.
 
