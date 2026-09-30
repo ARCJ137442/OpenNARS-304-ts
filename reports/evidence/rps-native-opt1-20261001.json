@@ -1,0 +1,223 @@
+{
+  "schema": "opennars-304-ts/rps-benchmark/v1",
+  "git_commit": "c84a1ab199010920fd52644f8f88d34f46764e9c",
+  "node": "v22.17.0",
+  "configuration": {
+    "cycles": 100,
+    "warmupRuns": 2,
+    "repetitions": 20,
+    "input": "<{bird} --> [animal]>. :|:",
+    "output": "reports/evidence/rps-native-opt1-20261001.json"
+  },
+  "warmups": [
+    {
+      "run": 0,
+      "warmup": true,
+      "cycles": 100,
+      "elapsed_ms": 11.396,
+      "cycles_per_second": 8775.086,
+      "request_per_second": 87.751,
+      "rss_bytes": 219803648
+    },
+    {
+      "run": 1,
+      "warmup": true,
+      "cycles": 100,
+      "elapsed_ms": 54.634,
+      "cycles_per_second": 1830.352,
+      "request_per_second": 18.304,
+      "rss_bytes": 236175360
+    }
+  ],
+  "samples": [
+    {
+      "run": 2,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 11.492,
+      "cycles_per_second": 8701.933,
+      "request_per_second": 87.019,
+      "rss_bytes": 241639424
+    },
+    {
+      "run": 3,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 18.752,
+      "cycles_per_second": 5332.907,
+      "request_per_second": 53.329,
+      "rss_bytes": 246173696
+    },
+    {
+      "run": 4,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 44.247,
+      "cycles_per_second": 2260.061,
+      "request_per_second": 22.601,
+      "rss_bytes": 245354496
+    },
+    {
+      "run": 5,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 60.842,
+      "cycles_per_second": 1643.596,
+      "request_per_second": 16.436,
+      "rss_bytes": 243249152
+    },
+    {
+      "run": 6,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 43.497,
+      "cycles_per_second": 2298.983,
+      "request_per_second": 22.99,
+      "rss_bytes": 245477376
+    },
+    {
+      "run": 7,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 48.984,
+      "cycles_per_second": 2041.47,
+      "request_per_second": 20.415,
+      "rss_bytes": 246317056
+    },
+    {
+      "run": 8,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 56.189,
+      "cycles_per_second": 1779.72,
+      "request_per_second": 17.797,
+      "rss_bytes": 244850688
+    },
+    {
+      "run": 9,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 32.874,
+      "cycles_per_second": 3041.908,
+      "request_per_second": 30.419,
+      "rss_bytes": 248242176
+    },
+    {
+      "run": 10,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 8.028,
+      "cycles_per_second": 12456.868,
+      "request_per_second": 124.569,
+      "rss_bytes": 248344576
+    },
+    {
+      "run": 11,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 24.698,
+      "cycles_per_second": 4048.927,
+      "request_per_second": 40.489,
+      "rss_bytes": 247726080
+    },
+    {
+      "run": 12,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 9.137,
+      "cycles_per_second": 10944.152,
+      "request_per_second": 109.442,
+      "rss_bytes": 247058432
+    },
+    {
+      "run": 13,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 18.355,
+      "cycles_per_second": 5448.226,
+      "request_per_second": 54.482,
+      "rss_bytes": 249679872
+    },
+    {
+      "run": 14,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 21.921,
+      "cycles_per_second": 4561.898,
+      "request_per_second": 45.619,
+      "rss_bytes": 250978304
+    },
+    {
+      "run": 15,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 37.147,
+      "cycles_per_second": 2692,
+      "request_per_second": 26.92,
+      "rss_bytes": 255062016
+    },
+    {
+      "run": 16,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 18.535,
+      "cycles_per_second": 5395.315,
+      "request_per_second": 53.953,
+      "rss_bytes": 251019264
+    },
+    {
+      "run": 17,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 66.171,
+      "cycles_per_second": 1511.234,
+      "request_per_second": 15.112,
+      "rss_bytes": 257376256
+    },
+    {
+      "run": 18,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 18.305,
+      "cycles_per_second": 5463.108,
+      "request_per_second": 54.631,
+      "rss_bytes": 258109440
+    },
+    {
+      "run": 19,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 16.371,
+      "cycles_per_second": 6108.362,
+      "request_per_second": 61.084,
+      "rss_bytes": 258703360
+    },
+    {
+      "run": 20,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 24.369,
+      "cycles_per_second": 4103.625,
+      "request_per_second": 41.036,
+      "rss_bytes": 259330048
+    },
+    {
+      "run": 21,
+      "warmup": false,
+      "cycles": 100,
+      "elapsed_ms": 37.898,
+      "cycles_per_second": 2638.634,
+      "request_per_second": 26.386,
+      "rss_bytes": 260366336
+    }
+  ],
+  "aggregate": {
+    "repetitions": 20,
+    "median_latency_ms": 24.369,
+    "p95_latency_ms": 60.842,
+    "median_cycles_per_second": 4048.927,
+    "p05_cycles_per_second": 1511.234,
+    "median_request_per_second": 40.489,
+    "peak_rss_bytes": 260366336
+  }
+}

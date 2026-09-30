@@ -41,6 +41,7 @@ interface NativeMapRecord<K, V> {
 export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
     private readonly records: NativeMapRecord<K, V>[] = [];
     private readonly hashBuckets = new Map<number, NativeMapRecord<K, V>[]>();
+    private readonly objectHashCache = new WeakMap<object, number>();
     private modificationCount = 0;
 
     public constructor(initialEntries: Iterable<readonly [K, V]> = []) {
@@ -245,7 +246,12 @@ export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
             return javaValueHashCode(key);
         }
         const hashCode = (key as unknown as { hashCode?: unknown }).hashCode;
-        return typeof hashCode === "function" ? Number(hashCode.call(key)) : null;
+        if (typeof hashCode !== "function") return null;
+        const cached = this.objectHashCache.get(key as object);
+        if (cached !== undefined) return cached;
+        const computed = Number(hashCode.call(key));
+        this.objectHashCache.set(key as object, computed);
+        return computed;
     }
 
     private addToHashIndex(record: NativeMapRecord<K, V>): void {

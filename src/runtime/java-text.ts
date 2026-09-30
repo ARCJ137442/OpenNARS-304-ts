@@ -15,6 +15,7 @@ export type JavaString = any;
 
 /** Project-owned boxed string used at translated Java-shaped boundaries. */
 export class NativeJavaString implements JavaString {
+    private hashValue: number | null = null;
     public constructor(private readonly value: string) {}
 
     public length(): number { return this.value.length; }
@@ -32,7 +33,13 @@ export class NativeJavaString implements JavaString {
     public indexOf(value: string | NativeJavaString): number { return this.value.indexOf(String(value)); }
     public trim(): NativeJavaString { return new NativeJavaString(this.value.trim()); }
     public equals(other: unknown): boolean { return javaStringValue(this) === javaStringValue(other); }
-    public hashCode(): number { return javaStringHashCode(this); }
+    public hashCode(): number {
+        if (this.hashValue !== null) return this.hashValue;
+        let hash = 0;
+        for (let index = 0; index < this.value.length; index += 1) hash = Math.imul(31, hash) + this.value.charCodeAt(index);
+        this.hashValue = hash;
+        return hash;
+    }
 }
 
 export type JavaStringInput = string | JavaString;
@@ -52,6 +59,7 @@ export const toJavaString = (value: JavaStringInput): JavaString =>
 
 export const javaStringValue = (value: unknown): string => {
     if (value === null || value === undefined || typeof value === "string") return String(value);
+    if (value instanceof NativeJavaString) return value.toString();
     const toString = (value as { toString?: unknown }).toString;
     return typeof toString === "function" ? String(toString.call(value)) : String(value);
 };
@@ -64,6 +72,7 @@ export const javaStringsEqual = (left: unknown, right: unknown): boolean => {
 };
 
 export const javaStringHashCode = (value: unknown): number => {
+    if (value instanceof NativeJavaString) return value.hashCode();
     const text = javaStringValue(value);
     let hash = 0;
     for (let index = 0; index < text.length; index += 1) hash = Math.imul(31, hash) + text.charCodeAt(index);

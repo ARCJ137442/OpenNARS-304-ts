@@ -1,5 +1,5 @@
 ---
-status: planned
+status: in-progress
 created: 2026-09-30
 priority: high
 tags:
@@ -12,7 +12,10 @@ depends_on:
 - 025-jree-free-runtime-complete
 - 020-ts-performance-and-release
 created_at: 2026-09-30T16:36:56.402637900Z
-updated_at: 2026-09-30T16:36:56.402637900Z
+updated_at: 2026-09-30T16:40:23.324421800Z
+transitions:
+- status: in-progress
+  at: 2026-09-30T16:40:23.324421800Z
 ---
 
 # Native TypeScript performance optimization

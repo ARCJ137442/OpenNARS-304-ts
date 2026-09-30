@@ -72,6 +72,8 @@ export class Term extends RuntimeObject implements AbstractTerm {
     // with that name would shadow `name()` in JavaScript. Keep the cache under a
     // distinct name so the translated method remains callable at runtime.
     private nameValue: JavaCharSequence | null = null;
+    private hashValue = 0;
+    protected hashComputed = false;
 
     public static isSelf(t: Term): boolean {
         return Term.SELF.equals(t);
@@ -291,9 +293,12 @@ export class Term extends RuntimeObject implements AbstractTerm {
      * @return An integer hash code
      */
     public hashCode(): int {
+        if (this.hashComputed) return this.hashValue;
         // Match java.lang.String.hashCode() instead of jree's typed-array hash
         // fallback, which otherwise gives unrelated term names the same hash.
-        return javaStringHashCode(this.name());
+        this.hashValue = javaStringHashCode(this.name());
+        this.hashComputed = true;
+        return this.hashValue;
     }
 
     /**
@@ -398,6 +403,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             : typeof newName === "string"
             ? toJavaString(newName)
             : newName;
+        this.hashComputed = false;
     }
 
     /**
