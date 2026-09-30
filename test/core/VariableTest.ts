@@ -1,4 +1,4 @@
-import { java, JavaObject } from "jree";
+import { java, JavaObject } from "../../src/runtime/native-runtime.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { EventHandler } from "../../src/io/events/EventHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";

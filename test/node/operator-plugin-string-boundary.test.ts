@@ -39,7 +39,7 @@ test("operator and plugin exceptions use the project-owned exception layer", () 
 
     for (const file of exceptionFiles) {
         const source = readFileSync(file, "utf8");
-        const jreeImports = [...source.matchAll(/import\s*(?:type\s*)?\{([^}]*)\}\s*from\s*["'][^"']*jree-compat\.ts["']/g)]
+        const jreeImports = [...source.matchAll(/import\s*(?:type\s*)?\{([^}]*)\}\s*from\s*["'][^"']*native-runtime\.ts["']/g)]
             .map((match) => match[1]);
         for (const importedNames of jreeImports) {
             assert.doesNotMatch(importedNames, /\bJava(?:Illegal|Null|NumberFormat|Runtime|Exception|Error)[A-Z]\w*/, file);

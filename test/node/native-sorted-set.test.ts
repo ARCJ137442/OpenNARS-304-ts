@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java } from "jree";
+import { java } from "../../src/runtime/native-runtime.ts";
 
 import { Term } from "../../src/language/Term.ts";
 import { NativeSortedSet } from "../../src/runtime/NativeSortedSet.ts";

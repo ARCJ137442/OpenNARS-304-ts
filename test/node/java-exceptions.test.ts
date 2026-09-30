@@ -12,8 +12,8 @@ import {
     JavaRuntimeException,
     JavaThrowable,
 } from "../../src/runtime/JavaExceptions.ts";
-import { java } from "jree";
-import { isJavaException, isJavaThrowable } from "../../src/runtime/jree-compat.ts";
+import { java } from "../../src/runtime/native-runtime.ts";
+import { isJavaException, isJavaThrowable } from "../../src/runtime/native-runtime.ts";
 
 test("native Java throwable hierarchy preserves type and message contracts", () => {
     const cause = new Error("cause");

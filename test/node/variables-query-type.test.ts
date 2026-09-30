@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 test("compound hasVar(type) preserves Java variable-kind dispatch", async () => {
-    const { java } = await import("jree");
+    const { java } = await import("../../src/runtime/native-runtime.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { Symbols } = await import("../../src/io/Symbols.ts");

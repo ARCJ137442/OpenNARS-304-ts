@@ -1,0 +1,162 @@
+import { NativeList } from "./NativeList.ts";
+import { NativeMap } from "./NativeMap.ts";
+import { NativeSet } from "./NativeSet.ts";
+import { javaStringHashCode, NativeJavaString } from "./java-text.ts";
+import {
+    JavaError,
+    JavaException,
+    JavaIllegalArgumentException,
+    JavaIllegalStateException,
+    JavaNumberFormatException,
+    JavaNoSuchElementException,
+    JavaUnsupportedOperationException,
+    JavaRuntimeException,
+    JavaThrowable,
+} from "./JavaExceptions.ts";
+import { JavaRandom } from "./JavaRandom.ts";
+import { RuntimeClassToken } from "./RuntimeClass.ts";
+
+type Constructor<T> = new (...args: never[]) => T;
+
+class NativeNumber extends Number {
+    public constructor(value: number | string | NativeJavaString = 0) { super(Number(String(value))); }
+    public doubleValue(): number { return Number(this.valueOf()); }
+    public floatValue(): number { return Math.fround(this.doubleValue()); }
+    public intValue(): number { return Math.trunc(this.doubleValue()); }
+    public longValue(): bigint { return BigInt(this.intValue()); }
+}
+
+class NativeInteger extends NativeNumber {
+    public static valueOf(value: number | string | NativeJavaString): NativeInteger { return new NativeInteger(value); }
+    public static parseInt(value: string | NativeJavaString, radix = 10): number { return Number.parseInt(String(value), radix); }
+}
+
+class NativeLong extends NativeNumber {
+    public static valueOf(value: number | string | bigint | NativeJavaString): NativeLong { return new NativeLong(Number(value)); }
+    public static parseLong(value: string | NativeJavaString, radix = 10): bigint { return BigInt(Number.parseInt(String(value), radix)); }
+}
+
+class NativeFloat extends NativeNumber {
+    public static valueOf(value: number | string | NativeJavaString): NativeFloat { return new NativeFloat(value); }
+    public static parseFloat(value: string | NativeJavaString): number { return Number.parseFloat(String(value)); }
+}
+
+class NativeDouble extends NativeNumber {
+    public static readonly POSITIVE_INFINITY = Number.POSITIVE_INFINITY;
+    public static readonly NEGATIVE_INFINITY = Number.NEGATIVE_INFINITY;
+    public static readonly NaN = Number.NaN;
+    public static valueOf(value: number | string | NativeJavaString): NativeDouble { return new NativeDouble(value); }
+    public static parseDouble(value: string | NativeJavaString): number { return Number.parseFloat(String(value)); }
+}
+
+class NativeBoolean {
+    public constructor(public readonly value: boolean) {}
+    public valueOf(): boolean { return this.value; }
+    public toString(): string { return String(this.value); }
+    public static parseBoolean(value: string | NativeJavaString): boolean { return String(value).toLowerCase() === "true"; }
+    public static valueOf(value: boolean): NativeBoolean { return new NativeBoolean(value); }
+}
+
+class NativeStringBuilder {
+    private value: string;
+    public constructor(initial = "") { this.value = String(initial); }
+    public append(value: unknown): this { this.value += String(value); return this; }
+    public setLength(length: number): void { this.value = this.value.slice(0, length); }
+    public toString(): NativeJavaString { return new NativeJavaString(this.value); }
+}
+
+class NativeClass {
+    public static fromConstructor<T>(owner: Constructor<T>): RuntimeClassToken<T> {
+        return RuntimeClassToken.fromConstructor(owner as never);
+    }
+}
+
+class NativeObject {
+    public static get class(): RuntimeClassToken<NativeObject> { return NativeClass.fromConstructor(this as never); }
+    public getClass(): RuntimeClassToken<NativeObject> { return NativeClass.fromConstructor(this.constructor as never); }
+    public hashCode(): number { return 0; }
+    public equals(other: unknown): boolean { return other === this; }
+    public toString(): string { return this.constructor.name; }
+}
+
+export type NativeJavaFacade = {
+    lang: Record<string, unknown>;
+    util: Record<string, unknown>;
+};
+
+export type NativeJavaNamespace = NativeJavaFacade & {
+    lang: any;
+    util: Record<string, unknown> & {
+        LinkedHashMap: new <K, V>(...args: unknown[]) => java.util.Map<K, V>;
+        HashMap: new <K, V>(...args: unknown[]) => java.util.Map<K, V>;
+        ArrayList: new <T>(...args: unknown[]) => java.util.List<T>;
+        LinkedList: new <T>(...args: unknown[]) => java.util.List<T>;
+        LinkedHashSet: new <T>(...args: unknown[]) => java.util.LinkedHashSet<T>;
+        HashSet: new <T>(...args: unknown[]) => java.util.Set<T>;
+        Random: new (seed?: bigint | number) => java.util.Random;
+        Arrays: any;
+        NoSuchElementException: any;
+        UnsupportedOperationException: any;
+        concurrent: any;
+    };
+    io: any;
+    net: any;
+    nio: any;
+};
+
+/** Build the platform-neutral portion of the translated Java namespace. */
+export function createNativeJavaFacade(): NativeJavaFacade {
+    return {
+        lang: {
+            Object: NativeObject,
+            String: NativeJavaString,
+            CharSequence: NativeJavaString,
+            Number: NativeNumber,
+            Integer: NativeInteger,
+            Long: NativeLong,
+            Float: NativeFloat,
+            Double: NativeDouble,
+            Boolean: NativeBoolean,
+            StringBuilder: NativeStringBuilder,
+            Throwable: JavaThrowable,
+            Error: JavaError,
+            Exception: JavaException,
+            RuntimeException: JavaRuntimeException,
+            IllegalArgumentException: JavaIllegalArgumentException,
+            IllegalStateException: JavaIllegalStateException,
+            NumberFormatException: JavaNumberFormatException,
+            NoSuchElementException: JavaNoSuchElementException,
+            UnsupportedOperationException: JavaUnsupportedOperationException,
+            Math,
+            System: {
+                out: { println: (value: unknown): void => console.log(String(value)), print: (value: unknown): void => console.log(String(value)) },
+                err: { println: (value: unknown): void => console.error(String(value)), print: (value: unknown): void => console.error(String(value)) },
+                currentTimeMillis: (): bigint => BigInt(Date.now()),
+                lineSeparator: (): NativeJavaString => new NativeJavaString("\n"),
+                identityHashCode: (value: object): number => javaStringHashCode(String(value)),
+            },
+        },
+        util: {
+            Random: JavaRandom,
+            ArrayList: NativeList,
+            LinkedList: NativeList,
+            LinkedHashSet: NativeSet,
+            HashSet: NativeSet,
+            HashMap: NativeMap,
+            LinkedHashMap: NativeMap,
+            Collections: { emptyList: (): unknown[] => [], emptySet: (): NativeSet<unknown> => new NativeSet(), unmodifiableList: (value: unknown): unknown => value },
+            UUID: { randomUUID: (): { toString(): string } => ({ toString: () => globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}` }) },
+            NoSuchElementException: JavaNoSuchElementException,
+            UnsupportedOperationException: JavaUnsupportedOperationException,
+            Arrays: { hashCode: (values: unknown[]): number => values.reduce<number>((hash, value) => Math.imul(31, hash) + Number(value), 1) },
+        },
+    };
+}
+
+export { NativeClass as Class, NativeObject as JavaObject };
+export { NativeJavaString };
+export type JavaStringInput = NativeJavaString | string;
+export const toJavaString = (value: JavaStringInput): NativeJavaString =>
+    value instanceof NativeJavaString ? value : new NativeJavaString(value);
+export const isJavaThrowable = (value: unknown): value is JavaThrowable => value instanceof JavaThrowable;
+export const isJavaException = (value: unknown): value is JavaException => value instanceof JavaException;

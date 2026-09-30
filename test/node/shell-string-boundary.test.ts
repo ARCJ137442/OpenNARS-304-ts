@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { java } from "jree";
+import { java } from "../../src/runtime/native-runtime.ts";
 
-import { toJavaString, type JavaStringInput } from "../../src/runtime/jree-compat.ts";
+import { toJavaString, type JavaStringInput } from "../../src/runtime/native-runtime.ts";
 import { Shell } from "../../src/main/Shell.ts";
 
 test("Shell command-line text boundaries accept project-owned strings", () => {

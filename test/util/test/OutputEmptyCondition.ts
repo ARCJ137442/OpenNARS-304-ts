@@ -1,4 +1,4 @@
-import { java } from "jree";
+import { java } from "../../../src/runtime/native-runtime.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import { OutputCondition } from "./OutputCondition.ts";

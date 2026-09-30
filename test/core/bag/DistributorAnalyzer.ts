@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type double } from "jree";
+import { java, JavaObject, type int, type double } from "../../../src/runtime/native-runtime.ts";
 import { Distributor } from "../../../src/storage/Distributor.ts";
 
 

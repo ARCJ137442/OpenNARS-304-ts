@@ -1,4 +1,4 @@
-import { java, JavaObject, S, type float } from "jree";
+import { java, JavaObject, S, type float } from "../../../src/runtime/native-runtime.ts";
 import {
     JavaClassNotFoundException,
     JavaIllegalAccessException,
@@ -8,7 +8,7 @@ import {
     JavaParseException,
     JavaParserConfigurationException,
     JavaSAXException,
-} from "../../../src/runtime/jree-compat.ts";
+} from "../../../src/runtime/native-runtime.ts";
 import { BudgetValue } from "../../../src/entity/BudgetValue.ts";
 import { Concept } from "../../../src/entity/Concept.ts";
 import { Item } from "../../../src/entity/Item.ts";

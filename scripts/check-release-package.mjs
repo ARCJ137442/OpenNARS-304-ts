@@ -68,7 +68,6 @@ try {
         "dist/index.d.ts",
         "dist/cli.mjs",
         "dist/shell.mjs",
-        "dist/jree-entry.mjs",
         "config/defaultConfig.xml",
     ]) assert.ok(packageFiles.includes(required), `tarball is missing ${required}`);
     for (const forbidden of ["reports/", "scripts/e2e/", "java-master/", "output/", "META-INF/"]) {

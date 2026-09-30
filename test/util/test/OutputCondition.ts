@@ -1,4 +1,4 @@
-import { java, type int } from "jree";
+import { java, type int } from "../../../src/runtime/native-runtime.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import type { EventEmitter } from "../../../src/io/events/EventEmitter.ts";

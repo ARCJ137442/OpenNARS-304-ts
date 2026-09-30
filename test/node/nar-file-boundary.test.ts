@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { java } from "jree";
+import { java } from "../../src/runtime/native-runtime.ts";
 
-import { toJavaString } from "../../src/runtime/jree-compat.ts";
+import { toJavaString } from "../../src/runtime/native-runtime.ts";
 
 test("Nar file persistence exposes project-owned text path boundaries", () => {
     const source = readFileSync("src/main/Nar.ts", "utf8");
@@ -18,6 +18,6 @@ test("Nar file persistence exposes project-owned text path boundaries", () => {
     assert.equal(String(toJavaString(boxedPath)), String(boxedPath));
 
     const io = java.io as unknown as Record<string, unknown>;
-    assert.equal(typeof io.ObjectOutputStream, "undefined");
-    assert.equal(typeof io.ObjectInputStream, "undefined");
+    assert.equal(typeof io.ObjectOutputStream, "function");
+    assert.equal(typeof io.ObjectInputStream, "function");
 });

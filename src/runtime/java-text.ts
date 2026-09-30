@@ -25,6 +25,12 @@ export class NativeJavaString implements JavaString {
         return new NativeJavaString(this.value.slice(start, end));
     }
     public toString(): string { return this.value; }
+    public toJSON(): object { return {}; }
+    public split(separator: string): NativeJavaString[] { return this.value.split(separator).map((value) => new NativeJavaString(value)); }
+    public substring(start: number, end?: number): NativeJavaString { return new NativeJavaString(this.value.substring(start, end)); }
+    public includes(value: string): boolean { return this.value.includes(value); }
+    public indexOf(value: string | NativeJavaString): number { return this.value.indexOf(String(value)); }
+    public trim(): NativeJavaString { return new NativeJavaString(this.value.trim()); }
     public equals(other: unknown): boolean { return javaStringValue(this) === javaStringValue(other); }
     public hashCode(): number { return javaStringHashCode(this); }
 }

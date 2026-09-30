@@ -27,16 +27,8 @@ function rewriteRelativeTypeScriptImports(source) {
     return source.replace(/(["'])(\.\.?\/[^"']+?)\.ts\1/g, "$1$2.js$1");
 }
 
-function runtimeAdapterImport(outputPath) {
-    const adapterPath = join(outputRoot, "jree-entry.mjs");
-    const importPath = relative(dirname(outputPath), adapterPath).replaceAll("\\", "/");
-    return importPath.startsWith(".") ? importPath : `./${importPath}`;
-}
-
 function rewritePublishedImports(source, outputPath) {
-    const runtimeImport = runtimeAdapterImport(outputPath);
-    return rewriteRelativeTypeScriptImports(source)
-        .replace(/(["'])jree\1/g, `$1${runtimeImport}$1`);
+    return rewriteRelativeTypeScriptImports(source);
 }
 
 function formatDiagnostics(diagnostics) {
@@ -111,7 +103,6 @@ async function main() {
     }
     await emitScript("cli.mjs");
     await emitScript("shell.mjs");
-    await copyFile(join(projectRoot, "scripts", "jree-entry.mjs"), join(outputRoot, "jree-entry.mjs"));
     await emitPublicDeclarations();
     await writeFile(join(outputRoot, "build-manifest.json"), `${JSON.stringify({
         source: "src",

@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 test("metrics and output conditions load without an ESM initialization cycle", async () => {
-    const { java } = await import("jree");
+    const { java } = await import("../../src/runtime/native-runtime.ts");
     const { NalTestMetrics } = await import("../../test/metrics/NalTestMetrics.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { OutputHandler } = await import("../../src/io/events/OutputHandler.ts");
     const { TextOutputHandler } = await import("../../src/io/events/TextOutputHandler.ts");
     const { JavaDecimalFormatCompat, JavaRuntimeCompat, JavaStringJoinerCompat } =
-        await import("../../src/runtime/jree-compat.ts");
+        await import("../../src/runtime/native-runtime.ts");
     const { OutputCondition } = await import("../../test/util/test/OutputCondition.ts");
 
     const values = new java.util.ArrayList<number>();

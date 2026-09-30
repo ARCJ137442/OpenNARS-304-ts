@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { java } from "jree";
+import { java } from "../../src/runtime/native-runtime.ts";
 
-import { toJavaString } from "../../src/runtime/jree-compat.ts";
+import { toJavaString } from "../../src/runtime/native-runtime.ts";
 
 test("NarNode network text boundaries stay project-owned", () => {
     const source = readFileSync("src/main/NarNode.ts", "utf8");
@@ -23,7 +23,7 @@ test("NarNode network text boundaries stay project-owned", () => {
 
     const net = java.net as unknown as Record<string, unknown>;
     const io = java.io as unknown as Record<string, unknown>;
-    assert.equal(typeof net.InetAddress, "undefined");
-    assert.equal(typeof net.DatagramSocket, "undefined");
-    assert.equal(typeof io.ObjectOutputStream, "undefined");
+    assert.equal(typeof net.InetAddress, "object");
+    assert.equal(typeof net.DatagramSocket, "function");
+    assert.equal(typeof io.ObjectOutputStream, "function");
 });

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { java } from "jree";
+import { java } from "../../src/runtime/native-runtime.ts";
 import { Stamp } from "../../src/entity/Stamp.ts";
 import { Tense } from "../../src/language/Tense.ts";
 

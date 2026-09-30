@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { Counting } from "../../src/plugin/mental/Counting.ts";
-import { JavaIllegalArgumentException } from "../../src/runtime/jree-compat.ts";
+import { JavaIllegalArgumentException } from "../../src/runtime/native-runtime.ts";
 
 test("Counting keeps Java's plain-plugin boundary and constructor contracts", () => {
     const defaultPlugin = new Counting();

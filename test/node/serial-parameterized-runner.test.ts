@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java, JavaObject } from "jree";
-import { javaStringValue } from "../../src/runtime/jree-compat.ts";
+import { java, JavaObject } from "../../src/runtime/native-runtime.ts";
+import { javaStringValue } from "../../src/runtime/native-runtime.ts";
 import { runSerialParameterized } from "../util/serial-parameterized-runner.ts";
 
 test("serial parameterized runner continues after a case failure", () => {

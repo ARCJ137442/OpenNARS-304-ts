@@ -57,7 +57,7 @@ function scopeFor(filePath) {
             "src/main/Nar.ts",
             "src/main/Shell.ts",
             "src/operator/misc/System.ts",
-            "src/runtime/jree-compat.ts",
+            "src/runtime/native-runtime.ts",
         ].includes(projectRelative)) return "mixed-boundary";
         return "core-candidate";
     }

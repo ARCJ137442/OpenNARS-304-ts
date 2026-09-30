@@ -7,7 +7,7 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
-import { isJavaThrowable, java, toJavaString as toHostJavaString } from "../../platform/node/jree-host-adapter.ts";
+import { isJavaThrowable, java, toJavaString as toHostJavaString } from "../../platform/node/native-host-adapter.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
 import type { JavaStringInput } from "../../runtime/java-text.ts";
 import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
@@ -255,7 +255,7 @@ export class TextOutputHandler extends OutputHandler {
         if (channel === ERR.class) {
             if (isJavaThrowable(signal)) {
                 const e: java.lang.Throwable = signal as unknown as java.lang.Throwable;
-                buffer.append(e.toString());
+                buffer.append(e.toString().replace(/^Java/, ""));
                 if (showStackTrace) {
                     buffer.append(" ").append(formatJavaList(e.getStackTrace()));
                 }
@@ -301,7 +301,7 @@ export class TextOutputHandler extends OutputHandler {
 
         if (isJavaThrowable(signal)) {
             const error = signal as unknown as java.lang.Throwable;
-            buffer.append(error.toString()).append(" ")
+            buffer.append(error.toString().replace(/^Java/, "")).append(" ")
                 .append(formatJavaList(error.getStackTrace()));
         } else if (signal instanceof Task) {
             buffer.append(signal.sentence.toString(nar, showStamp));

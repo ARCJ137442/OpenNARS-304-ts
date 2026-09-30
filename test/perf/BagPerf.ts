@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type float, type double, S } from "jree";
+import { java, JavaObject, type int, type float, type double, S } from "../../src/runtime/native-runtime.ts";
 import {
     JavaClassNotFoundException,
     JavaIllegalAccessException,
@@ -10,7 +10,7 @@ import {
     JavaParseException,
     JavaSystemLoggerCompat,
     JavaStringJoinerCompat,
-} from "../../src/runtime/jree-compat.ts";
+} from "../../src/runtime/native-runtime.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import { Bag } from "../../src/storage/Bag.ts";

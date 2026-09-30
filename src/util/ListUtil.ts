@@ -1,8 +1,6 @@
 //! Java source: opennars/util/ListUtil.java
 //! 🚩【2026-01-12 09:31:41】废弃：实际代码并不会调用该处逻辑，且此内包含的逻辑在TypeScript标准库内就可实现
 
-// import { java, JavaObject } from "jree";
-
 // export class ListUtil extends JavaObject {
 //     /**
 //      * tries to select the first element where the predicate matches from front

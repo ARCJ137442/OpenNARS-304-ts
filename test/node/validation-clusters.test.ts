@@ -61,7 +61,7 @@ test("a risk slice selects cluster sentinels and never creates an M1-minus comma
 
 test("a cluster close creates one M1-minus command and omits the redundant sentinel run", () => {
   const plan = buildValidationPlan({
-    files: ["src/runtime/Float32.ts", "src/runtime/jree-compat.ts"],
+    files: ["src/runtime/Float32.ts", "src/runtime/native-runtime.ts"],
     tier: "T1",
     requestedClusterId: "J1-runtime-compat",
     closeCluster: true,

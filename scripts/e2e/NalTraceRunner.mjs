@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-import { java } from "jree";
+import { java } from "../../src/runtime/native-runtime.ts";
 import { Concept } from "../../src/entity/Concept.ts";
 import { Sentence } from "../../src/entity/Sentence.ts";
 import { Task } from "../../src/entity/Task.ts";
@@ -11,7 +11,7 @@ import { Events } from "../../src/io/events/Events.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
-import { javaValuesEqual } from "../../src/runtime/jree-compat.ts";
+import { javaValuesEqual } from "../../src/runtime/native-runtime.ts";
 
 const eventDefinitions = [
     ["TaskAdd", Events.TaskAdd.class],

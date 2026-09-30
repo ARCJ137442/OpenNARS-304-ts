@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { performance } from "node:perf_hooks";
-import { java } from "jree";
+import { java } from "../../src/runtime/native-runtime.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { Events } from "../../src/io/events/Events.ts";
 import { Debug } from "../../src/main/Debug.ts";

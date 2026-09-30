@@ -1,5 +1,5 @@
-import { java, JavaObject, type double, type int } from "jree";
-import { JavaDoubleCompat } from "../../src/runtime/jree-compat.ts";
+import { java, JavaObject, type double, type int } from "../../src/runtime/native-runtime.ts";
+import { JavaDoubleCompat } from "../../src/runtime/native-runtime.ts";
 import { NALTest } from "../core/NALTest.ts";
 
 

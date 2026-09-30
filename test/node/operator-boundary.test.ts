@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
-import { java } from "jree";
+import { java } from "../../src/runtime/native-runtime.ts";
 import { Term } from "../../src/language/Term.ts";
 import { Anticipate } from "../../src/operator/mental/Anticipate.ts";
 import { Add } from "../../src/operator/misc/Add.ts";
@@ -20,7 +20,7 @@ import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
     JavaNumberFormatException,
-} from "../../src/runtime/jree-compat.ts";
+} from "../../src/runtime/native-runtime.ts";
 
 class CountProbe extends Count {
     public evaluate(args: Term[]): Term | null {

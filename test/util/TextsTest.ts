@@ -1,4 +1,4 @@
-import { java, JavaObject } from "jree";
+import { java, JavaObject } from "../../src/runtime/native-runtime.ts";
 
 
 

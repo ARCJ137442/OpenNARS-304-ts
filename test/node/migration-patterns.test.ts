@@ -83,14 +83,14 @@ test("migration codemod adds extensions only to relative ESM imports", async () 
     await writeFile(file, [
       "import { Term } from '../language/Term';",
       "import { Texts } from '../io/Texts.ts';",
-      "import { java } from 'jree';",
+      "import { java } from '../../src/runtime/native-runtime.ts';",
     ].join("\n"), "utf8");
     const write = await runCodemod(["--write", "--file", file, "--pattern", "esm-relative-extension"]);
     assert.equal(write.code, 0);
     assert.equal(await readFile(file, "utf8"), [
       "import { Term } from '../language/Term.ts';",
       "import { Texts } from '../io/Texts.ts';",
-      "import { java } from 'jree';",
+      "import { java } from '../../src/runtime/native-runtime.ts';",
     ].join("\n"));
   } finally {
     await rm(directory, { recursive: true, force: true });

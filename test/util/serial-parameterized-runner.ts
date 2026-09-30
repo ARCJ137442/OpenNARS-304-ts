@@ -1,4 +1,4 @@
-import { java, JavaObject } from "jree";
+import { java, JavaObject } from "../../src/runtime/native-runtime.ts";
 
 export type SerialTestCase = (argumentsForTest: JavaObject[]) => void;
 export type SerialTestFailureHandler = (argumentsForTest: JavaObject[], error: unknown) => void;

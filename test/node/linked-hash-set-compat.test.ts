@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import "../../src/runtime/jree-compat.ts";
-import { java } from "jree";
+import "../../src/runtime/native-runtime.ts";
+import { java } from "../../src/runtime/native-runtime.ts";
 
 test("LinkedHashSet keeps insertion order for hashable Java objects", () => {
     const first = new java.util.LinkedHashSet<number>();

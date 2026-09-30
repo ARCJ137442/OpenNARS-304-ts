@@ -1,5 +1,5 @@
-import { java, JavaObject, type int, type double, S } from "jree";
-import { JavaDecimalFormatCompat, JavaRuntimeCompat } from "../../src/runtime/jree-compat.ts";
+import { java, JavaObject, type int, type double, S } from "../../src/runtime/native-runtime.ts";
+import { JavaDecimalFormatCompat, JavaRuntimeCompat } from "../../src/runtime/native-runtime.ts";
 
 
 

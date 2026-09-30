@@ -9,7 +9,7 @@ import { Inheritance } from "../../src/language/Inheritance.ts";
 import { Implication } from "../../src/language/Implication.ts";
 import { Term } from "../../src/language/Term.ts";
 import { Nar } from "../../src/main/Nar.ts";
-import { javaStringValue } from "../../src/runtime/jree-compat.ts";
+import { javaStringValue } from "../../src/runtime/native-runtime.ts";
 import { NativeSet } from "../../src/runtime/NativeSet.ts";
 
 

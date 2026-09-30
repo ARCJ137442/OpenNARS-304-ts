@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java, JavaObject } from "jree";
+import { java, JavaObject } from "../../src/runtime/native-runtime.ts";
 import {
     JavaDoubleCompat,
     addRuntimeLong,
@@ -10,7 +10,7 @@ import {
     javaStringValue,
     javaStringsEqual,
     toRuntimeLong,
-} from "../../src/runtime/jree-compat.ts";
+} from "../../src/runtime/native-runtime.ts";
 import { RuntimeClassToken } from "../../src/runtime/RuntimeClass.ts";
 import {
     JavaAssertionError,
@@ -109,13 +109,13 @@ test("missing jree exception compatibility preserves Java inheritance", () => {
     assert.equal(missing.getMessage(), "missing");
 });
 
-test("jree object FQN marker is inherited without changing class identity", () => {
+test("native object class identity does not require a legacy FQN marker", () => {
     const javaObjectConstructor = JavaObject as unknown as Record<string, unknown>;
-    assert.equal(javaObjectConstructor["#fqn"], true);
+    assert.equal(javaObjectConstructor["#fqn"], undefined);
 
     class Probe extends JavaObject {}
     const probe = new Probe();
-    assert.equal("#fqn" in Probe, true);
+    assert.equal("#fqn" in Probe, false);
     assert.equal(probe.getClass().getName(), "Probe");
     assert.equal(probe.getClass().getSimpleName(), "Probe");
 });

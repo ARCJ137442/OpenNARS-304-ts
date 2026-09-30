@@ -1,4 +1,4 @@
-import { java, type double, JavaObject, type int, type char } from "jree";
+import { java, type double, JavaObject, type int, type char } from "../../../src/runtime/native-runtime.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { Sentence } from "../../../src/entity/Sentence.ts";
 import { Task } from "../../../src/entity/Task.ts";

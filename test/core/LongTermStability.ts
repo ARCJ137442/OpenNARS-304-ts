@@ -1,7 +1,7 @@
-import { java, JavaObject, type long, type int } from "jree";
+import { java, JavaObject, type long, type int } from "../../src/runtime/native-runtime.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
-import type { JavaStringInput } from "../../src/runtime/jree-compat.ts";
+import type { JavaStringInput } from "../../src/runtime/native-runtime.ts";
 
 
 

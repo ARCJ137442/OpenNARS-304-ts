@@ -1,7 +1,8 @@
-import { Class, JavaObject, java } from "../platform/node/jree-host-adapter.ts";
+import { Class, JavaObject, java } from "../platform/node/native-host-adapter.ts";
+export { Class, JavaObject };
 // Host-facing legacy Java objects are exported only through this adapter. Core
 // and entry modules must not import npm jree directly.
-export { java } from "../platform/node/jree-host-adapter.ts";
+export { java } from "../platform/node/native-host-adapter.ts";
 import type { long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { JavaRandom } from "./JavaRandom.ts";
 import {
@@ -42,21 +43,6 @@ export {
     JavaSAXException,
     JavaUnsupportedOperationException,
 } from "./JavaExceptions.ts";
-
-// jree 1.3.0 constructs and parses an Error stack in every JavaObject class
-// that has not inherited its internal "#fqn" marker.  The published runtime
-// only writes this marker; Class.getName()/getSimpleName() use the constructor
-// name, and no jree or OpenNARS source reads "#fqn".  Seed the inherited
-// marker at the compatibility boundary so translated objects keep their
-// observable class identity without paying for a dead stack-parsing path.
-const JREE_FQN_MARKER = "#fqn";
-const javaObjectConstructor = JavaObject as unknown as Record<string, unknown>;
-if (!(JREE_FQN_MARKER in javaObjectConstructor)) {
-    Object.defineProperty(javaObjectConstructor, JREE_FQN_MARKER, {
-        configurable: true,
-        value: true,
-    });
-}
 
 /** Text accepted at Node-facing Java string input boundaries. */
 export type JavaStringInput = java.lang.String | string;
@@ -190,38 +176,6 @@ export class JavaDoubleCompat extends java.lang.Number {
  * still exists.  The native exception hierarchy remains jree-free; these
  * predicates are only a temporary adapter for translated catch sites.
  */
-type JavaConstructor = Function & {
-    [Symbol.hasInstance]?: (value: unknown) => boolean;
-};
-
-const registerJreeInstanceof = (
-    constructor: unknown,
-    predicate: (value: unknown) => boolean,
-): void => {
-    if (typeof constructor !== "function") return;
-    const target = constructor as JavaConstructor;
-    const original = target[Symbol.hasInstance];
-    Object.defineProperty(target, Symbol.hasInstance, {
-        configurable: true,
-        value(value: unknown): boolean {
-            return predicate(value) || (original?.call(target, value) ?? false);
-        },
-    });
-};
-
-registerJreeInstanceof(java.lang.Throwable, value => value instanceof JavaThrowable);
-registerJreeInstanceof(java.lang.Error, value => value instanceof JavaError);
-registerJreeInstanceof(java.lang.Exception, value => value instanceof JavaException);
-registerJreeInstanceof(java.lang.RuntimeException, value => value instanceof JavaRuntimeException);
-registerJreeInstanceof(java.lang.IllegalArgumentException,
-    value => value instanceof JavaIllegalArgumentException);
-registerJreeInstanceof(java.lang.IllegalStateException,
-    value => value instanceof JavaIllegalStateException);
-registerJreeInstanceof(java.util.NoSuchElementException,
-    value => value instanceof JavaNoSuchElementException);
-registerJreeInstanceof(java.lang.UnsupportedOperationException,
-    value => value instanceof JavaUnsupportedOperationException);
-
 /**
  * Temporary exception observation boundary.
  *
@@ -447,75 +401,6 @@ export const javaSystemExit = (status: number): never => {
     throw new Error(`Process exit requested with status ${status}`);
 };
 
-// Keep a thin jree adapter until J2-J4 move their Random constructor types to
-// the project-owned implementation. The state machine itself lives in
-// JavaRandom so there is one source of Java's 48-bit semantics.
-type RandomCompat = {
-    next?: (bits: number) => number;
-    nextInt?: (bound?: number) => number;
-    nextFloat?: () => number;
-    nextDouble?: () => number;
-    setSeed?: (seed: bigint | number) => void;
-};
-
-const randomPrototype = java.util.Random.prototype as unknown as RandomCompat;
-const randomInstances = new WeakMap<object, JavaRandom>();
-const randomInstance = (random: object): JavaRandom => {
-    const existing = randomInstances.get(random);
-    if (existing !== undefined) return existing;
-    const created = new JavaRandom(0n);
-    randomInstances.set(random, created);
-    return created;
-};
-
-if (randomPrototype.next && randomPrototype.nextInt && randomPrototype.nextDouble && randomPrototype.setSeed) {
-    randomPrototype.setSeed = function setSeed(seed: bigint | number): void {
-        randomInstance(this as unknown as object).setSeed(seed);
-    };
-    randomPrototype.next = function next(bits: number): number {
-        return randomInstance(this as unknown as object).next(bits);
-    };
-    randomPrototype.nextInt = function nextInt(bound?: number): number {
-        return randomInstance(this as unknown as object).nextInt(bound);
-    };
-    randomPrototype.nextFloat = function nextFloat(): number {
-        return randomInstance(this as unknown as object).nextFloat();
-    };
-    randomPrototype.nextDouble = function nextDouble(): number {
-        return randomInstance(this as unknown as object).nextDouble();
-    };
-}
-
-// jree 1.3.0's LinkedHashSet inherits HashSet's immutable hash backend, so
-// iteration of values with Java hashCode methods is not insertion ordered.
-// OpenNARS relies on LinkedHashSet order for powersets and deterministic rule
-// dispatch; keep the backend for membership/hash semantics and add an explicit
-// insertion-order view at this compatibility boundary.
-type LinkedHashSetCompat = {
-    add?: (value: unknown) => boolean;
-    addAll?: (collection: Iterable<unknown>) => boolean;
-    clear?: () => void;
-    clone?: () => unknown;
-    contains?: (value: unknown) => boolean;
-    iterator?: () => unknown;
-    remove?: (value: unknown) => boolean;
-    removeAll?: (collection: Iterable<unknown>) => boolean;
-    retainAll?: (collection: Iterable<unknown>) => boolean;
-    toArray?: (array?: unknown[]) => unknown[];
-    [Symbol.iterator]?: () => IterableIterator<unknown>;
-};
-
-const linkedHashSetPrototype = java.util.LinkedHashSet.prototype as unknown as LinkedHashSetCompat;
-const linkedHashSetOrder = new WeakMap<object, unknown[]>();
-const originalLinkedHashSetAdd = linkedHashSetPrototype.add;
-const originalLinkedHashSetClear = linkedHashSetPrototype.clear;
-const originalLinkedHashSetClone = linkedHashSetPrototype.clone;
-const originalLinkedHashSetContains = linkedHashSetPrototype.contains;
-const originalLinkedHashSetIterator = linkedHashSetPrototype.iterator;
-const originalLinkedHashSetRemove = linkedHashSetPrototype.remove;
-const originalLinkedHashSetRemoveAll = linkedHashSetPrototype.removeAll;
-const originalLinkedHashSetRetainAll = linkedHashSetPrototype.retainAll;
-
 export const javaValuesEqual = (left: unknown, right: unknown): boolean => {
     if (left === right) return true;
     const leftEquals = (left as { equals?: unknown } | null)?.equals;
@@ -524,121 +409,11 @@ export const javaValuesEqual = (left: unknown, right: unknown): boolean => {
     return typeof rightEquals === "function" && Boolean(rightEquals.call(right, left));
 };
 
-const linkedHashSetValues = (set: object): unknown[] => {
-    const current = linkedHashSetOrder.get(set);
-    if (current !== undefined) return current;
-    const values = originalLinkedHashSetIterator === undefined
-        ? []
-        : Array.from(originalLinkedHashSetIterator.call(set) as Iterable<unknown>);
-    linkedHashSetOrder.set(set, values);
-    return values;
-};
-
-if (originalLinkedHashSetAdd && originalLinkedHashSetContains && originalLinkedHashSetIterator && originalLinkedHashSetRemove
-    && originalLinkedHashSetClear && originalLinkedHashSetRemoveAll && originalLinkedHashSetRetainAll) {
-    linkedHashSetPrototype.add = function add(value: unknown): boolean {
-        if (!linkedHashSetOrder.has(this as object)) linkedHashSetOrder.set(this as object, []);
-        const alreadyPresent = originalLinkedHashSetContains.call(this, value);
-        const added = originalLinkedHashSetAdd.call(this, value);
-        if (added && !alreadyPresent) linkedHashSetValues(this as object).push(value);
-        return added && !alreadyPresent;
-    };
-    linkedHashSetPrototype.addAll = function addAll(collection: Iterable<unknown>): boolean {
-        let changed = false;
-        for (const value of collection) {
-            changed = this.add!(value) || changed;
-        }
-        return changed;
-    };
-    linkedHashSetPrototype.clear = function clear(): void {
-        originalLinkedHashSetClear.call(this);
-        linkedHashSetValues(this as object).length = 0;
-    };
-    linkedHashSetPrototype.remove = function remove(value: unknown): boolean {
-        const removed = originalLinkedHashSetRemove.call(this, value);
-        if (removed) {
-            const values = linkedHashSetValues(this as object);
-            const index = values.findIndex((candidate) => javaValuesEqual(candidate, value));
-            if (index >= 0) values.splice(index, 1);
-        }
-        return removed;
-    };
-    linkedHashSetPrototype.removeAll = function removeAll(collection: Iterable<unknown>): boolean {
-        let changed = false;
-        for (const value of Array.from(collection)) {
-            changed = this.remove!(value) || changed;
-        }
-        return changed;
-    };
-    linkedHashSetPrototype.retainAll = function retainAll(collection: Iterable<unknown>): boolean {
-        const candidates = Array.from(collection);
-        let changed = false;
-        for (const value of [...linkedHashSetValues(this as object)]) {
-            const retained = candidates.some((candidate) => javaValuesEqual(candidate, value));
-            if (!retained) changed = this.remove!(value) || changed;
-        }
-        return changed;
-    };
-    linkedHashSetPrototype.iterator = function iterator(): unknown {
-        const values = [...linkedHashSetValues(this as object)];
-        let index = 0;
-        const result = {
-            hasNext: () => index < values.length,
-            next: () => values[index++],
-            [Symbol.iterator]() {
-                return this;
-            },
-        };
-        return result;
-    };
-    linkedHashSetPrototype[Symbol.iterator] = function* iterator(): IterableIterator<unknown> {
-        yield* linkedHashSetValues(this as object);
-    };
-    linkedHashSetPrototype.toArray = function toArray(): unknown[] {
-        return [...linkedHashSetValues(this as object)];
-    };
-    if (originalLinkedHashSetClone) {
-        linkedHashSetPrototype.clone = function clone(): unknown {
-            return new java.util.LinkedHashSet(this as never);
-        };
-    }
-}
-
-// jree 1.3.0's Charset static initializer asynchronously assigns a Charset
-// instance to the defaultCharset method.  PrintStream calls that method after
-// the timer fires, so the assignment becomes a process-wide runtime failure.
-// Keep this external-runtime workaround at the compatibility boundary rather
-// than replacing Java-facing output calls throughout the reasoning core.
-type CharsetConstructor = {
-    new (name: string): unknown;
-    defaultCharset: unknown;
-};
-
-const charsetClass = java.nio.charset.Charset as unknown as CharsetConstructor;
-const defaultCharset = charsetClass.defaultCharset;
-const stableDefaultCharset = typeof defaultCharset === "function"
-    ? (defaultCharset as () => unknown).bind(charsetClass)
-    : () => new charsetClass("utf-8");
-
-Object.defineProperty(charsetClass, "defaultCharset", {
-    configurable: true,
-    get: () => stableDefaultCharset,
-    // jree's delayed initializer writes the broken instance here.
-    set: () => undefined,
-});
-
-// jree 1.3.0's published JavaObject.class getter passes Function instead of
-// the receiver class to Class.fromConstructor(). That collapses every
-// translated Java class literal to one token and breaks event dispatch.
-const descriptor = Object.getOwnPropertyDescriptor(JavaObject, "class");
-if (descriptor?.configurable && descriptor.get) {
-    const javaObjectClass = Class.fromConstructor(JavaObject);
-    if (JavaObject.class !== javaObjectClass) {
-        Object.defineProperty(JavaObject, "class", {
-            configurable: true,
-            get(this: typeof JavaObject) {
-                return Class.fromConstructor(this);
-            },
-        });
-    }
-}
+export type { int, char, short, long, float, double } from "../types.ts";
+export {
+    closeResourcesCompat as closeResources,
+    handleResourceErrorCompat as handleResourceError,
+    throwResourceErrorCompat as throwResourceError,
+} from "./ResourceCompat.ts";
+export const S = (strings: TemplateStringsArray, ...values: unknown[]): java.lang.String =>
+    new java.lang.String(strings.reduce((result, text, index) => result + text + (values[index] ?? ""), ""));

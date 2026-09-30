@@ -165,7 +165,7 @@ test("NativeMap iterators allow entry updates and only iterator removal changes 
 });
 
 test("NativeMap count entries match jree LinkedHashMap on equal domain keys", async () => {
-    const { java } = await import("jree");
+    const { java } = await import("../../src/runtime/native-runtime.ts");
     const first = new EqualKey("first");
     const equalFirst = new EqualKey("first");
     const second = new EqualKey("second");

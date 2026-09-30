@@ -29,7 +29,7 @@ type EventObserver = EventEmitter.EventObserver;
  */
 // Java source declares a plain Plugin implementation without a JavaObject base.
 // Keep the plugin as a plain TypeScript class; only its boxed-string boundary
-// remains in jree-compat while exception identity stays project-owned.
+// remains in native-runtime while exception identity stays project-owned.
 export class Counting implements Plugin {
 
     public obs: EventObserver | null = null;

@@ -1,4 +1,4 @@
-import { java, JavaObject, type int } from "jree";
+import { java, JavaObject, type int } from "../../src/runtime/native-runtime.ts";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";

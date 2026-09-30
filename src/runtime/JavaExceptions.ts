@@ -98,6 +98,10 @@ export class JavaThrowable extends Error {
         }
         console.error(lines);
     }
+
+    public getStackTrace(): readonly unknown[] {
+        return [];
+    }
 }
 
 /** Java original type: java.lang.Error. */

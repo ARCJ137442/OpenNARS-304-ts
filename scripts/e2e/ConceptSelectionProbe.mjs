@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { java } from "jree";
+import { java } from "../../src/runtime/native-runtime.ts";
 import { DerivationContext } from "../../src/control/DerivationContext.ts";
 import { Events } from "../../src/io/events/Events.ts";
 import { Nar } from "../../src/main/Nar.ts";
