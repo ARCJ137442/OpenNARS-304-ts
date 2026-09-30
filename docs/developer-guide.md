@@ -54,6 +54,19 @@ python scripts/checking/check_hanzi_encoding.py --json-output scripts/checking/h
 
 完整参数、canonical Java 路径和长测规则见[M1/M2/M3 核实手册](verification-commands.md)。
 
+### In-process RPS 基线
+
+Demo 的 `RPS` 指 NARS 推理周期/秒，不是 Worker 请求数/秒。用单一复用的 `Nar` 实例测量输入解析加推理的总延迟：
+
+```powershell
+npm run typecheck
+node --import ./scripts/register-ts-loader.mjs scripts/e2e/run-rps-benchmark.mjs `
+  --cycles 100 --warmup-runs 2 --repetitions 20 `
+  --output reports/evidence/rps-baseline-YYYYMMDD.json
+```
+
+报告同时记录 `request_per_second`、`cycles_per_second`、中位数与 p95 延迟、峰值 RSS。异步 Demo 的 TPS 提升不能替代 RPS 基线；性能优化必须保持功能和 parity 证据，并以稳定 `RPS >= 1.0` 作为最低可用门槛。
+
 ## M1/M2 保护纪律
 
 - M1 以固定 Java artifact、固定随机/周期/超时口径和逐文件 checkpoint 为准。
