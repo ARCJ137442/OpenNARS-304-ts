@@ -20,6 +20,10 @@ Exploratory result on the same working tree before commit:
 - Demo workload: `2.951 RPS`, median step `2620.048 ms`, p95 `8816.522 ms`, peak RSS `385564672` bytes, approximately `+8.5%` RPS. Concept growth remained `1025 -> 3731`; this round does not solve state-growth/GC tails.
 - M3 functional/parity remained true; ratios were `1.740x`, `7.669x`, `4.213x`, and `5.846x` in the same file order.
 
+## Rejected round 2 candidate
+
+The symmetric-equals single-dispatch fast path was measured at `4032.567 cycles/s` median, below round 1's `4048.927 cycles/s` median. It was reverted in `2ec3b5a`; the raw rejected sample is `reports/evidence/rps-native-opt2-20261001.json`. The fallback direction and asymmetric equality behavior remain unchanged.
+
 The candidate still requires full serial M2 and the appropriate NAL/M1-prime protection before being accepted. Do not attribute the RSS increase to the candidate without a repeated controlled sample.
 
 ## Gate result
