@@ -61,6 +61,22 @@ test("NativeMap scans hash collisions and removes indexed records", () => {
     assert.equal(values.get(new EqualKey("other")), 3);
 });
 
+test("NativeMap keeps hash hits aligned with insertion order after middle removal", () => {
+    const values = new NativeMap<EqualKey, number>();
+    const first = new EqualKey("first");
+    const middle = new EqualKey("middle");
+    const last = new EqualKey("last");
+    values.put(first, 1);
+    values.put(middle, 2);
+    values.put(last, 3);
+
+    assert.equal(values.remove(new EqualKey("middle")), 2);
+    assert.equal(values.get(new EqualKey("last")), 3);
+    assert.deepEqual(values.keySet().toArray(), [first, last]);
+    assert.equal(values.put(new EqualKey("last"), 4), 3);
+    assert.deepEqual(values.entrySet().toArray().map((entry) => entry.getValue()), [1, 4]);
+});
+
 test("NativeMap preserves equality fallback for object keys without hashCode", () => {
     const values = new NativeMap<EqualsOnlyKey, number>();
     values.put(new EqualsOnlyKey("same"), 1);

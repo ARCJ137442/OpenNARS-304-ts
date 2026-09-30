@@ -20,6 +20,8 @@ export interface MapContract<K, V> {
 interface NativeMapRecord<K, V> {
     key: K;
     value: V;
+    /** Current position in the insertion-ordered record table. */
+    index: number;
     /** Java HashMap-compatible lookup hash; null means equality-only fallback. */
     hashCode: number | null;
 }
@@ -127,6 +129,7 @@ export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
             const record: NativeMapRecord<K, V> = {
                 key,
                 value,
+                index: this.records.length,
                 hashCode: this.keyHashCode(key),
             };
             this.records.push(record);
@@ -159,6 +162,7 @@ export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
         }
         const [removed] = this.records.splice(index, 1);
         this.removeFromHashIndex(removed);
+        this.reindexFrom(index);
         this.modificationCount += 1;
         return removed.value;
     }
@@ -215,20 +219,21 @@ export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
         }
         this.removeFromHashIndex(record);
         this.records.splice(index, 1);
+        this.reindexFrom(index);
         this.modificationCount += 1;
     }
 
     private findIndex(key: K): number {
         const hashCode = this.keyHashCode(key);
         if (hashCode === null) {
-            return this.records.findIndex((record) => javaValueEquals(record.key, key));
+            return this.records.findIndex((record) => record.key === key || javaValueEquals(record.key, key));
         }
         const bucket = this.hashBuckets.get(hashCode);
         if (bucket === undefined) {
             return -1;
         }
-        const record = bucket.find((candidate) => javaValueEquals(candidate.key, key));
-        return record === undefined ? -1 : this.records.indexOf(record);
+        const record = bucket.find((candidate) => candidate.key === key || javaValueEquals(candidate.key, key));
+        return record?.index ?? -1;
     }
 
     private keyHashCode(key: K): number | null {
@@ -269,6 +274,12 @@ export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
         }
         if (bucket.length === 0) {
             this.hashBuckets.delete(record.hashCode);
+        }
+    }
+
+    private reindexFrom(start: number): void {
+        for (let index = start; index < this.records.length; index += 1) {
+            this.records[index].index = index;
         }
     }
 }
