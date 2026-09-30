@@ -10,6 +10,15 @@
 - M1-prime：243/243 M1--、#25、#245 降载、#246 均通过；两个 markerless digest equal；含 Java M2 `498/498`
 - Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，metadata 绑定核心 `8568ebd`
 
+## 2026-10-01 native performance closure
+
+- 当前性能提交：`5e2a3bf`（已推送 `origin/main`）；历史未跟踪 evidence 保留。
+- 027 性能优化已通过 LeanSpec 更新为 `complete`。接受的三轮低于 5% 优化依次为：inactive event payload lazy conversion（opt8，RPS `+2.25%`）、boxed native string equality（opt9，`+2.6%`）、lazy output formatting（opt12，较 opt9 `+2.5%`）。opt10/opt11 均低于 opt9，已拒绝并保留 raw evidence。
+- 当前 opt12 的 TS-only M2 为 `496 pass / 0 fail / 2 skipped`，Java M2 为 `498 pass / 0 fail / 0 skipped`；build、dist API、M3 四 workload functional/parity 均通过。
+- opt12 M1-prime 主体 `243/243` 通过；#25 `nars_multistep_3.nal`、#245 65536 fixture、#246 `simpleOperationTest.nal` 均 functional/parity 通过；两项 strict markerless 均 `131072/131072`、`128` windows、`equal=true`、`first_difference=null`。
+- opt12 50-tick CartPole probe：`3.024 RPS`、median step `2520.025 ms`、p95 `8388.976 ms`、peak RSS `340709376` bytes。概念增长和推理/GC 长尾仍使 TPS 远低于 20；这属于后续独立性能主线，不是本轮语义失败。
+- 本轮没有把原始 2,000,000 周期长期稳定性宣称为日常通过；M1-prime 使用已批准的 65536 fixture，并保留原始长周期系统瓶颈证据。
+
 ## 2026-09-29 J1-J5 native contract batch (working tree)
 
 - 当前候选为已提交 `32021e5`；历史未跟踪证据保留不动。
