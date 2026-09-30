@@ -11,7 +11,12 @@ depends_on:
 - 023-jree-removal-native-runtime
 - 024-platform-neutral-core-host-adapters
 created_at: 2026-09-30T14:12:18.920154100Z
-updated_at: 2026-09-30T14:12:18.920154100Z
+updated_at: 2026-09-30T14:28:03.410637700Z
+transitions:
+- status: in-progress
+  at: 2026-09-30T14:21:31.107804600Z
+- status: planned
+  at: 2026-09-30T14:28:03.410637700Z
 ---
 
 ## Goal
