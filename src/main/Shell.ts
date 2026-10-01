@@ -26,7 +26,7 @@ export type ShellCommand =
 /** The platform-neutral command/text runner for a NARS instance. */
 export class Shell {
     private readonly nar: Nar;
-    private readonly reasonerOutput: TextOutputHandler;
+    private readonly reasonerOutput: TextOutputHandler | null;
     private output: ShellOutput = {
         println: (_value: unknown) => undefined,
     };
@@ -34,7 +34,9 @@ export class Shell {
     public constructor(nar: Nar, output?: ShellOutput) {
         this.nar = nar;
         if (output !== undefined) this.output = output;
-        this.reasonerOutput = new TextOutputHandler(nar, this.output).setErrors(true);
+        this.reasonerOutput = typeof (nar as { on?: unknown }).on === "function"
+            ? new TextOutputHandler(nar, this.output).setErrors(true)
+            : null;
     }
 
     public static parseCommand(rawLine: string): ShellCommand {
