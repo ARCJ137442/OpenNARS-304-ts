@@ -25,7 +25,7 @@ import { asText } from "../runtime/Text.ts";
 import type { TextCharacter, TextString } from "../runtime/Text.ts";
 import { ReasonerInvariantError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import { RuntimeObject } from "../runtime/RuntimeClass.ts";
+import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 
 class SentenceStringBuilder {
     private value = "";
@@ -56,8 +56,8 @@ const formatTermIndices = (indices: Int32Array): string => {
  * @author Patrick Hammer
  */
 // Java 原始声明：public class Sentence implements Cloneable, Serializable。
-// Sentence 自身承载值相等、哈希和 clone；RuntimeObject 只替换无行为的类身份壳。
-export class Sentence extends RuntimeObject {
+// Sentence 自身承载值相等、哈希和 clone；ReasonerObject 只替换无行为的类身份壳。
+export class Sentence extends ReasonerObject {
 
     public producedByTemporalInduction: boolean = false;
 

@@ -1,6 +1,6 @@
 //! Java source: opennars/plugin/mental/Abbreviation.java
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
-import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
 import type { double, int, float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";

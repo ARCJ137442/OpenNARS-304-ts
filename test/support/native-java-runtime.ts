@@ -14,7 +14,7 @@ import {
     JavaThrowable,
 } from "./legacy-exceptions.ts";
 import { ReasonerRandom as JavaRandom } from "../../src/runtime/ReasonerRandom.ts";
-import { RuntimeClassToken } from "../../src/runtime/RuntimeClass.ts";
+import { ClassToken } from "../../src/runtime/ClassIdentity.ts";
 
 export class NativeJavaString {
     public constructor(private readonly value: string) {}
@@ -85,14 +85,14 @@ class NativeStringBuilder {
 }
 
 class NativeClass {
-    public static fromConstructor<T>(owner: Constructor<T>): RuntimeClassToken<T> {
-        return RuntimeClassToken.fromConstructor(owner as never);
+    public static fromConstructor<T>(owner: Constructor<T>): ClassToken<T> {
+        return ClassToken.fromConstructor(owner as never);
     }
 }
 
 class NativeObject {
-    public static get class(): RuntimeClassToken<NativeObject> { return NativeClass.fromConstructor(this as never); }
-    public getClass(): RuntimeClassToken<NativeObject> { return NativeClass.fromConstructor(this.constructor as never); }
+    public static get class(): ClassToken<NativeObject> { return NativeClass.fromConstructor(this as never); }
+    public getClass(): ClassToken<NativeObject> { return NativeClass.fromConstructor(this.constructor as never); }
     public hashCode(): number { return 0; }
     public equals(other: unknown): boolean { return other === this; }
     public toString(): string { return this.constructor.name; }

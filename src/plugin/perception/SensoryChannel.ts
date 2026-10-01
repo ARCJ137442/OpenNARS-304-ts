@@ -5,7 +5,7 @@ import { Narsese } from "../../io/Narsese.ts";
 import { Parser } from "../../io/Parser.ts";
 import { Logger } from "../../runtime/Logger.ts";
 import { isArrayConvertible, asText, type ArrayConvertible, type TextInput } from "../../runtime/Text.ts";
-import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
+import { ReasonerObject } from "../../runtime/ClassIdentity.ts";
 import { Term } from "../../language/Term.ts";
 import { Concept } from "../../entity/Concept.ts";
 import type { Plugin } from "../Plugin.ts";
@@ -16,7 +16,7 @@ import type { Timable } from "../../interfaces/Timable.ts";
 
 
 /** Java原始类型：抽象普通基类；无Serializable、equals/hashCode或专用JavaObject行为。 */
-export abstract class SensoryChannel extends RuntimeObject implements Plugin {
+export abstract class SensoryChannel extends ReasonerObject implements Plugin {
     /**
      * Java Plugin provides this default implementation; SensoryChannel does
      * not make the method abstract. Keeping the default here also lets Nar

@@ -21,16 +21,16 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const truth = TruthValue.fromFrequencyConfidence(0.7, 0.6, parameters);
     const stamp = new Stamp(0, Tense.Present, new Stamp.BaseEntry(0, 1), parameters.DURATION);
     const sentence = new Sentence(term, ".", truth, stamp);
-    const { RuntimeObject } = await import("../../src/runtime/RuntimeClass.ts");
+    const { ReasonerObject } = await import("../../src/runtime/ClassIdentity.ts");
 
-    assert.equal(Object.getPrototypeOf(Term.prototype), RuntimeObject.prototype);
+    assert.equal(Object.getPrototypeOf(Term.prototype), ReasonerObject.prototype);
     assert.equal(Term.class.getSimpleName(), "Term");
     assert.equal(term.getClass(), Term.class);
     const termClone = term.clone();
     assert.equal(term.equals(termClone), true);
     assert.equal(term.hashCode(), termClone.hashCode());
     assert.equal(String(term), "A");
-    assert.equal(Object.getPrototypeOf(Sentence.prototype), RuntimeObject.prototype);
+    assert.equal(Object.getPrototypeOf(Sentence.prototype), ReasonerObject.prototype);
     assert.equal(Sentence.class.getSimpleName(), "Sentence");
     assert.equal(sentence.getClass(), Sentence.class);
     const sentenceClone = sentence.clone();
@@ -1165,7 +1165,7 @@ test("Item keeps its value contract while using the project runtime class bounda
 
     const first = new ProbeItem("same");
     const second = new ProbeItem("same");
-    assert.equal(Object.getPrototypeOf(Item.prototype).constructor.name, "RuntimeObject");
+    assert.equal(Object.getPrototypeOf(Item.prototype).constructor.name, "ReasonerObject");
     assert.equal(first.getClass().getSimpleName(), "ProbeItem");
     assert.equal(first.getClass().isInstance(first), true);
     assert.equal(first.equals(second), true);

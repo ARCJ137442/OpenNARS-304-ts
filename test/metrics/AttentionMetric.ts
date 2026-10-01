@@ -8,7 +8,7 @@ import {
     JavaParseException,
 } from "../support/legacy-runtime-facade.ts";
 import { Nar } from "../../src/main/Nar.ts";
-import type { ClassTokenLike } from "../../src/runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../src/runtime/ClassIdentity.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
 import { Parser } from "../../src/io/Parser.ts";
 import { Narsese } from "../../src/io/Narsese.ts";

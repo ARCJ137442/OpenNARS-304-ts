@@ -1,5 +1,5 @@
 //! Java source: opennars/main/Nar.java
-import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
 import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { textValue, asText as toNativeTextString, type TextInput } from "../runtime/Text.ts";
 import { toRuntimeLong, type RuntimeLongInput } from "../runtime/runtime-numbers.ts";

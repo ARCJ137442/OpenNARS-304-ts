@@ -1,6 +1,6 @@
 //! Java source: opennars/control/DerivationContext.java
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
 import type { double, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Stamp } from "../entity/Stamp.ts";
 import { BudgetValue } from "../entity/BudgetValue.ts";

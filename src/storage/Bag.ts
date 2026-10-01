@@ -10,7 +10,7 @@ import { runtimeValueEquals } from "../runtime/runtime-numbers.ts";
 import { asText, type TextString } from "../runtime/Text.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MutableIterator } from "../runtime/MutableIterator.ts";
-import { RuntimeObject } from "../runtime/RuntimeClass.ts";
+import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 import type { Memory } from "./Memory.ts";
 
 
@@ -19,10 +19,10 @@ import type { Memory } from "./Memory.ts";
  * discrete levels (queues) according to priority
  */
 // Java original type: Bag<Type, K> implements Serializable, Iterable<Type>.
-// Serializable is a marker here; RuntimeObject preserves the observed
+// Serializable is a marker here; ReasonerObject preserves the observed
 // getClass().getSimpleName() boundary used by toStringLong without retaining
 // the translated jree JavaObject shell.
-export class Bag<Type extends Item<K>, K> extends RuntimeObject {
+export class Bag<Type extends Item<K>, K> extends ReasonerObject {
 
     /** priority levels */
     private readonly TOTAL_LEVEL: int;

@@ -1,6 +1,6 @@
 //! Java source: opennars/io/events/EventEmitter.java
 import { ReasonerInputError, ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
-import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
 
 type PendingOperation = [
     enabled: boolean,

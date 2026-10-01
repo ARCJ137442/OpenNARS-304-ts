@@ -1,6 +1,6 @@
 //! Java source: opennars/interfaces/Eventable.java
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
-import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
 
 
 

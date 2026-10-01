@@ -10,7 +10,7 @@ import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerError
 import { NativeSortedSet } from "../runtime/NativeSortedSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
-import { RuntimeObject } from "../runtime/RuntimeClass.ts";
+import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 import type { Memory } from "../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -36,8 +36,8 @@ const compoundTerms = (value: unknown): Term[] | null => {
  * @author Patrick Hammer
  */
 // Java 原始声明：public class Term implements AbstractTerm, Serializable。
-// Term 自身承载精确类判等、文本哈希和 clone；RuntimeObject 只替换无行为类身份壳。
-export class Term extends RuntimeObject implements AbstractTerm {
+// Term 自身承载精确类判等、文本哈希和 clone；ReasonerObject 只替换无行为类身份壳。
+export class Term extends ReasonerObject implements AbstractTerm {
     // Java initializes this reference to null; keeping that default matters for
     // inference branches that test whether a term has an imagination space.
     public imagination: any = null;

@@ -6,7 +6,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
-import { RuntimeObject } from "../runtime/RuntimeClass.ts";
+import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 import {
     addRuntimeLong,
     subtractRuntimeLong,
@@ -37,8 +37,8 @@ const runtimeLong = (value: number): long => value as unknown as long;
  * @author Patrick Hammer
  */
 // Java 原始声明：public class Stamp implements Cloneable, Serializable。
-// 两个接口在本项目只是 marker；RuntimeObject 仅保留项目已观测的类身份合同。
-export class Stamp extends RuntimeObject {
+// 两个接口在本项目只是 marker；ReasonerObject 仅保留项目已观测的类身份合同。
+export class Stamp extends ReasonerObject {
     /**
      * serial numbers. not to be modified after Stamp constructor has initialized it
      */

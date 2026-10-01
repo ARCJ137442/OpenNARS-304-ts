@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Concept.java
-import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
 import type { int, float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";

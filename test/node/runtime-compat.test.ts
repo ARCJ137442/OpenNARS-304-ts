@@ -11,7 +11,7 @@ import {
     javaStringsEqual,
     toRuntimeLong,
 } from "../support/legacy-runtime-facade.ts";
-import { RuntimeClassToken } from "../../src/runtime/RuntimeClass.ts";
+import { ClassToken } from "../../src/runtime/ClassIdentity.ts";
 import {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -32,9 +32,9 @@ test("javaStringLength normalizes jree and native string representations", () =>
 test("project runtime class tokens preserve constructor identity and instance checks", () => {
     class Probe {}
     class Other {}
-    const token = RuntimeClassToken.fromConstructor(Probe);
-    const sameToken = RuntimeClassToken.fromConstructor(Probe);
-    const otherToken = RuntimeClassToken.fromConstructor(Other);
+    const token = ClassToken.fromConstructor(Probe);
+    const sameToken = ClassToken.fromConstructor(Probe);
+    const otherToken = ClassToken.fromConstructor(Other);
 
     assert.equal(token, sameToken);
     assert.notEqual(token, otherToken);

@@ -418,6 +418,18 @@ The 023/031 scheduler batch is behaviorally protected; it does not close the
 specs because RuntimeClass, collections, remaining Java-named helpers, and
 host separation still have open contracts.
 
+## Next batch: project class-identity boundary
+
+The current `RuntimeClass.ts` implementation carries two distinct contracts:
+stable constructor identity tokens for event/plugin dispatch, and a small base
+object that supplies `getClass`, default identity equality, and string
+coercion. Neither contract requires a Java `Object` name. This batch will move
+the module to `ClassIdentity.ts`, rename `RuntimeClassToken` to `ClassToken`,
+`RuntimeConstructor` to `ConstructorShape`, and `RuntimeObject` to
+`ReasonerObject`, preserving token equality, `isInstance`, `newInstance`,
+default identity equality, and string coercion. No event identity or class
+dispatch behavior is changed.
+
 ## Next batch: native reasoner scheduler boundary
 
 `ThreadCompat` is a project-local single-thread scheduler adapter. Its
@@ -429,3 +441,14 @@ boundary to `ReasonerScheduler`, `RunnableTask`, `StackFrame`, and
 `Reasoner.run()` task contract. `Nar`, `Memory`, and `Events` will consume the
 native names; the test-only translated harness may retain compatibility aliases
 where it describes historical Java fixtures.
+
+### Class-identity implementation result
+
+The implementation is complete on the working tree: production callers use
+`ClassIdentity.ts`, `ClassToken`, `ConstructorShape`, and `ReasonerObject`; the
+old `RuntimeClass*`/`RuntimeObject` symbols are gone from `src`. Focused
+class/event/core contracts passed `78/78`, and non-incremental typecheck
+passed. TS-only M2 passed `505/507` (two documented skips), Java M2 passed
+`507/507`, and release/build/dist API checks passed. The M2 TAP hashes are
+`4BAFE29BB3500B000419506D808382AD7A164661BAECB79124E0EA9E58CF762C` and
+`58DB74FF41DC6BD13EDBFF61CAEB3930340828F3A3C96B66E8BE18B7403E5162`.

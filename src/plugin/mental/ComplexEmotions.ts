@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/ComplexEmotions.java
-import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
 import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { LocalRules } from "../../inference/LocalRules.ts";

@@ -2,7 +2,7 @@ import { java } from "../../support/legacy-runtime-facade.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import { OutputCondition } from "./OutputCondition.ts";
-import type { ClassTokenLike } from "../../../src/runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../../src/runtime/ClassIdentity.ts";
 
 const OUT = OutputHandler.OUT;
 const ERR = OutputHandler.ERR;

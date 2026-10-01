@@ -3,7 +3,7 @@ import type { TextInput } from "../../../src/runtime/Text.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import type { EventEmitter } from "../../../src/io/events/EventEmitter.ts";
-import type { ClassTokenLike } from "../../../src/runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../../src/runtime/ClassIdentity.ts";
 
 const OUT = OutputHandler.OUT;
 const EXE = OutputHandler.EXE;

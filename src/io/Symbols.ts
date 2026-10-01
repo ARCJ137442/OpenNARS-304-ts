@@ -1,7 +1,7 @@
 //! Java source: opennars/io/Symbols.java
 import type { char } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import { RuntimeObject } from "../runtime/RuntimeClass.ts";
+import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 
 const S = (strings: TemplateStringsArray): string => strings[0] ?? "";
 
@@ -83,7 +83,7 @@ export class Symbols {
 
     public static SELF: string = "SELF";
 
-    public static NativeOperator = class NativeOperator extends RuntimeObject {
+    public static NativeOperator = class NativeOperator extends ReasonerObject {
         private static readonly members: NativeOperator[] = [];
         private readonly enumName: string;
         private readonly enumOrdinal: number;

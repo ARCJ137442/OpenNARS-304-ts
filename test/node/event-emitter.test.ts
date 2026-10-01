@@ -14,7 +14,7 @@ import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
 } from "../support/legacy-runtime-facade.ts";
-import { RuntimeObject, type ClassTokenLike } from "../../src/runtime/RuntimeClass.ts";
+import { ReasonerObject, type ClassTokenLike } from "../../src/runtime/ClassIdentity.ts";
 
 test("EventEmitter.set subscribes only to the requested event classes", () => {
     const emitter = new EventEmitter();
@@ -160,7 +160,7 @@ test("EventHandler accepts Java-style event varargs", () => {
 });
 
 test("EventHandler uses the project runtime identity boundary without jree", () => {
-    assert.equal(Object.getPrototypeOf(EventHandler.prototype), RuntimeObject.prototype);
+    assert.equal(Object.getPrototypeOf(EventHandler.prototype), ReasonerObject.prototype);
     assert.notEqual(Object.getPrototypeOf(EventHandler.prototype), Object.prototype);
 });
 

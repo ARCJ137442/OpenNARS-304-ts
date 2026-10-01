@@ -1,5 +1,5 @@
-import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
-import { RuntimeObject } from "../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
+import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 import type { int, float } from "../types.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { Nar } from "./Nar.ts";
@@ -34,8 +34,8 @@ export function attachNetworkCapabilities(nar: Nar, capabilities: NetworkCapabil
 }
 
 /** Optional message routing around a NAR; all socket and wire details are injected. */
-export class NarNode extends RuntimeObject implements EventObserver {
-    public EventReceivedTask = class EventReceivedTask extends RuntimeObject {};
+export class NarNode extends ReasonerObject implements EventObserver {
+    public EventReceivedTask = class EventReceivedTask extends ReasonerObject {};
     public readonly nar: Nar;
     private readonly transport: MessageTransport;
     private readonly targets: NarNode.TargetNar[] = [];

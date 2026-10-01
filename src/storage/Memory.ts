@@ -1,6 +1,6 @@
 //! Java source: opennars/storage/Memory.java
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
 import type { long, float, int, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import type { MutableIterator } from "../runtime/MutableIterator.ts";

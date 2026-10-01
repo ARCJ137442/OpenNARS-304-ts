@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/mental/Anticipate.java
-import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
 import type { float, long, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";

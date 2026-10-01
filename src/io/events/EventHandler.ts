@@ -1,15 +1,15 @@
 //! Java source: opennars/io/events/EventHandler.java
 import { EventEmitter } from "./EventEmitter.ts";
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
-import { RuntimeObject, type ClassTokenLike } from "../../runtime/RuntimeClass.ts";
+import { ReasonerObject, type ClassTokenLike } from "../../runtime/ClassIdentity.ts";
 import type { Nar } from "../../main/Nar.ts";
 
 
 
 /**
  */
-// Java 原始声明为 implements EventObserver；RuntimeObject 只承接已观测的 class/getClass，替代转写器添加的 JavaObject 壳。
-export abstract class EventHandler extends RuntimeObject implements EventEmitter.EventObserver {
+// Java 原始声明为 implements EventObserver；ReasonerObject 只承接已观测的 class/getClass，替代转写器添加的 JavaObject 壳。
+export abstract class EventHandler extends ReasonerObject implements EventEmitter.EventObserver {
     protected readonly source: EventEmitter;
     protected active: boolean = false;
     private readonly events: ClassTokenLike[];

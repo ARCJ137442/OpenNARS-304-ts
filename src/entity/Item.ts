@@ -7,7 +7,7 @@ import { runtimeValueEquals } from "../runtime/runtime-numbers.ts";
 import type { TextInput } from "../runtime/Text.ts";
 import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import { RuntimeObject } from "../runtime/RuntimeClass.ts";
+import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 
 interface ItemComparator<E> {
     compare(a: E, b: E): int;
@@ -32,9 +32,9 @@ const javaObjectHashCode = (value: unknown): int => {
  * @author Patrick Hammer
  */
 // Java original type: abstract Item<K> implements Serializable; it has its own
-// value equality, hashCode and text methods. RuntimeObject replaces only the
+// value equality, hashCode and text methods. ReasonerObject replaces only the
 // translated JavaObject class-identity shell; Serializable has no runtime use.
-export abstract  class Item<K> extends RuntimeObject {
+export abstract  class Item<K> extends ReasonerObject {
 
     // Java original type: static class ItemPriorityComparator implements Comparator;
     // it has no JavaObject/reflection contract of its own.

@@ -2,8 +2,8 @@
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
 import { textValue } from "../../runtime/Text.ts";
 import type { TextInput } from "../../runtime/Text.ts";
-import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
-import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
+import { ReasonerObject } from "../../runtime/ClassIdentity.ts";
+import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
 import type { long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { Concept } from "../../entity/Concept.ts";
 import type { Sentence } from "../../entity/Sentence.ts";
@@ -15,7 +15,7 @@ import { ReasonerScheduler, type StackFrame } from "../../runtime/ReasonerSchedu
 
 type EventObserver = EventEmitter.EventObserver;
 
-abstract class ConceptBeliefAdd extends RuntimeObject implements EventObserver {
+abstract class ConceptBeliefAdd extends ReasonerObject implements EventObserver {
     public abstract onBeliefAdd(c: Concept, t: Task, extra: EventEmitter.EventPayload): void;
 
     public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
@@ -24,7 +24,7 @@ abstract class ConceptBeliefAdd extends RuntimeObject implements EventObserver {
     }
 }
 
-abstract class ConceptBeliefRemove extends RuntimeObject implements EventObserver {
+abstract class ConceptBeliefRemove extends ReasonerObject implements EventObserver {
     public abstract onBeliefRemove(c: Concept, removed: Sentence, t: Task, extra: EventEmitter.EventPayload): void;
 
     public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
@@ -33,7 +33,7 @@ abstract class ConceptBeliefRemove extends RuntimeObject implements EventObserve
     }
 }
 
-abstract class ConceptFire extends RuntimeObject implements EventObserver {
+abstract class ConceptFire extends ReasonerObject implements EventObserver {
     public abstract onFire(n: GeneralInferenceControl): void;
 
     public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
@@ -41,7 +41,7 @@ abstract class ConceptFire extends RuntimeObject implements EventObserver {
     }
 }
 
-abstract class TaskImmediateProcess extends RuntimeObject implements EventObserver {
+abstract class TaskImmediateProcess extends ReasonerObject implements EventObserver {
     public abstract onProcessed(t: Task, n: DerivationContext): void;
 
     public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
@@ -49,7 +49,7 @@ abstract class TaskImmediateProcess extends RuntimeObject implements EventObserv
     }
 }
 
-abstract class TaskAdd extends RuntimeObject implements EventObserver {
+abstract class TaskAdd extends ReasonerObject implements EventObserver {
     public abstract onTaskAdd(t: Task, reason: TextInput): void;
 
     public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
@@ -57,7 +57,7 @@ abstract class TaskAdd extends RuntimeObject implements EventObserver {
     }
 }
 
-abstract class InferenceEvent extends RuntimeObject {
+abstract class InferenceEvent extends ReasonerObject {
     public readonly when: long;
     public readonly stack: readonly StackFrame[] | null;
 
@@ -132,58 +132,58 @@ class ConceptNew extends ParametricInferenceEvent<Concept> {
 export class Events {
 
     /** fired at the beginning of each Nar multi-cycle execution */
-    public static CyclesStart =  class CyclesStart extends RuntimeObject {
+    public static CyclesStart =  class CyclesStart extends ReasonerObject {
     };
 
 
     /** fired at the end of each Nar multi-cycle execution */
-    public static CyclesEnd =  class CyclesEnd extends RuntimeObject {
+    public static CyclesEnd =  class CyclesEnd extends ReasonerObject {
     };
 
 
     /** fired at the beginning of each memory cycle */
-    public static CycleStart =  class CycleStart extends RuntimeObject {
+    public static CycleStart =  class CycleStart extends ReasonerObject {
     };
 
 
     /** fired at the end of each memory cycle */
-    public static CycleEnd =  class CycleEnd extends RuntimeObject {
+    public static CycleEnd =  class CycleEnd extends ReasonerObject {
     };
 
 
     /** fired at the beginning of each individual Memory work cycle */
-    public static WorkCycleStart =  class WorkCycleStart extends RuntimeObject {
+    public static WorkCycleStart =  class WorkCycleStart extends ReasonerObject {
     };
 
 
     /** fired at the end of each Memory individual cycle */
-    public static WorkCycleEnd =  class WorkCycleEnd extends RuntimeObject {
+    public static WorkCycleEnd =  class WorkCycleEnd extends ReasonerObject {
     };
 
 
     /** called before memory.reset() proceeds */
-    public static ResetStart =  class ResetStart extends RuntimeObject {
+    public static ResetStart =  class ResetStart extends ReasonerObject {
     };
 
 
     /** called after memory.reset() proceeds */
-    public static ResetEnd =  class ResetEnd extends RuntimeObject {
+    public static ResetEnd =  class ResetEnd extends ReasonerObject {
     };
 
 
-    public static Perceive =  class Perceive extends RuntimeObject {
+    public static Perceive =  class Perceive extends ReasonerObject {
     };
 
 
-    public static ConceptForget =  class ConceptForget extends RuntimeObject {
+    public static ConceptForget =  class ConceptForget extends ReasonerObject {
     };
 
 
-    public static EnactableExplainationAdd =  class EnactableExplainationAdd extends RuntimeObject {
+    public static EnactableExplainationAdd =  class EnactableExplainationAdd extends ReasonerObject {
     };
 
 
-    public static EnactableExplainationRemove =  class EnactableExplainationRemove extends RuntimeObject {
+    public static EnactableExplainationRemove =  class EnactableExplainationRemove extends ReasonerObject {
     };
 
 
@@ -193,64 +193,64 @@ export class Events {
     public static ConceptBeliefRemove = ConceptBeliefRemove;
 
 
-    public static ConceptGoalAdd =  class ConceptGoalAdd extends RuntimeObject {
+    public static ConceptGoalAdd =  class ConceptGoalAdd extends ReasonerObject {
     };
 
 
-    public static ConceptGoalRemove =  class ConceptGoalRemove extends RuntimeObject {
+    public static ConceptGoalRemove =  class ConceptGoalRemove extends ReasonerObject {
     };
 
 
-    public static ConceptQuestionAdd =  class ConceptQuestionAdd extends RuntimeObject {
+    public static ConceptQuestionAdd =  class ConceptQuestionAdd extends ReasonerObject {
     };
 
 
-    public static ConceptQuestionRemove =  class ConceptQuestionRemove extends RuntimeObject {
+    public static ConceptQuestionRemove =  class ConceptQuestionRemove extends ReasonerObject {
     };
 
 
     // Executive & Planning
-    public static UnexecutableGoal =  class UnexecutableGoal extends RuntimeObject {
+    public static UnexecutableGoal =  class UnexecutableGoal extends ReasonerObject {
     };
 
 
-    public static UnexecutableOperation =  class UnexecutableOperation extends RuntimeObject {
+    public static UnexecutableOperation =  class UnexecutableOperation extends ReasonerObject {
     };
 
 
-    public static NewTaskExecution =  class NewTaskExecution extends RuntimeObject {
+    public static NewTaskExecution =  class NewTaskExecution extends ReasonerObject {
     };
 
 
-    public static InduceSucceedingEvent =  class InduceSucceedingEvent extends RuntimeObject {
+    public static InduceSucceedingEvent =  class InduceSucceedingEvent extends ReasonerObject {
     };
 
 
-    public static TermLinkAdd =  class TermLinkAdd extends RuntimeObject {
+    public static TermLinkAdd =  class TermLinkAdd extends ReasonerObject {
     };
 
 
-    public static TermLinkRemove =  class TermLinkRemove extends RuntimeObject {
+    public static TermLinkRemove =  class TermLinkRemove extends ReasonerObject {
     };
 
 
-    public static TaskLinkAdd =  class TaskLinkAdd extends RuntimeObject {
+    public static TaskLinkAdd =  class TaskLinkAdd extends ReasonerObject {
     };
 
 
-    public static TaskLinkRemove =  class TaskLinkRemove extends RuntimeObject {
+    public static TaskLinkRemove =  class TaskLinkRemove extends ReasonerObject {
     };
 
 
-    public static Answer =  class Answer extends RuntimeObject {
+    public static Answer =  class Answer extends ReasonerObject {
     };
 
 
-    public static Unsolved =  class Unsolved extends RuntimeObject {
+    public static Unsolved =  class Unsolved extends ReasonerObject {
     };
 
 
-    public static TrySolution =  class TrySolution extends RuntimeObject {
+    public static TrySolution =  class TrySolution extends ReasonerObject {
     };
 
 
@@ -260,41 +260,41 @@ export class Events {
     public static TaskImmediateProcess = TaskImmediateProcess;
 
 
-    public static TermLinkSelect =  class TermLinkSelect extends RuntimeObject {
+    public static TermLinkSelect =  class TermLinkSelect extends ReasonerObject {
     };
 
 
-    public static BeliefSelect =  class BeliefSelect extends RuntimeObject {
+    public static BeliefSelect =  class BeliefSelect extends ReasonerObject {
     };
 
 
     /** called from RuleTables.reason for a given Belief */
-    public static BeliefReason =  class BeliefReason extends RuntimeObject {
+    public static BeliefReason =  class BeliefReason extends ReasonerObject {
     };
 
 
-    public static ConceptUnification =  class ConceptUnification extends RuntimeObject {
+    public static ConceptUnification =  class ConceptUnification extends ReasonerObject {
     };
  // 2nd level unification in CompositionalRules
 
     public static TaskAdd = TaskAdd;
 
 
-    public static TaskRemove =  class TaskRemove extends RuntimeObject {
+    public static TaskRemove =  class TaskRemove extends ReasonerObject {
     };
 
 
-    public static TaskDerive =  class TaskDerive extends RuntimeObject {
+    public static TaskDerive =  class TaskDerive extends ReasonerObject {
     };
 
 
-    public static PluginsChange =  class PluginsChange extends RuntimeObject {
+    public static PluginsChange =  class PluginsChange extends ReasonerObject {
     };
 
 
     // public static class UnExecutedGoal { }
 
-    public static ConceptDirectProcessedTask =  class ConceptDirectProcessedTask extends RuntimeObject {
+    public static ConceptDirectProcessedTask =  class ConceptDirectProcessedTask extends ReasonerObject {
     };
 
 

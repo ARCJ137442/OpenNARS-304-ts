@@ -3,7 +3,7 @@ import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { NarNode } from "../../src/main/NarNode.ts";
 import { Task } from "../../src/entity/Task.ts";
-import type { ClassTokenLike } from "../../src/runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../src/runtime/ClassIdentity.ts";
 
 const IN = OutputHandler.IN;
 const TargetNar = NarNode.TargetNar;

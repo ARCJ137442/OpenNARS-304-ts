@@ -1,24 +1,24 @@
 //! Java source: opennars/io/events/OutputHandler.java
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
-import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
-import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
+import { ReasonerObject } from "../../runtime/ClassIdentity.ts";
+import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
 import { EventHandler } from "./EventHandler.ts";
 import { Events } from "./Events.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
-const InputChannel = class IN extends RuntimeObject {
+const InputChannel = class IN extends ReasonerObject {
 };
-const OutputChannel = class OUT extends RuntimeObject {
+const OutputChannel = class OUT extends ReasonerObject {
 };
-const ErrorChannel = class ERR extends RuntimeObject {
+const ErrorChannel = class ERR extends ReasonerObject {
 };
-const EchoChannel = class ECHO extends RuntimeObject {
+const EchoChannel = class ECHO extends ReasonerObject {
 };
-const DebugChannel = class DEBUG extends RuntimeObject {
+const DebugChannel = class DEBUG extends ReasonerObject {
 };
-const ExecuteChannel = class EXE extends RuntimeObject {
+const ExecuteChannel = class EXE extends ReasonerObject {
 };
 
 
@@ -37,15 +37,15 @@ export abstract class OutputHandler extends EventHandler {
     public static readonly DEBUG = DebugChannel;
     public static readonly EXE = ExecuteChannel;
 
-    public static ANTICIPATE = class ANTICIPATE extends RuntimeObject {
+    public static ANTICIPATE = class ANTICIPATE extends ReasonerObject {
     };
 
 
-    public static CONFIRM = class CONFIRM extends RuntimeObject {
+    public static CONFIRM = class CONFIRM extends ReasonerObject {
     };
 
 
-    public static DISAPPOINT = class DISAPPOINT extends RuntimeObject {
+    public static DISAPPOINT = class DISAPPOINT extends ReasonerObject {
     };
 
 

@@ -5,7 +5,7 @@ import { java } from "../support/legacy-runtime-facade.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { Term } from "../../src/language/Term.ts";
 import { NativeMap } from "../../src/runtime/NativeMap.ts";
-import { RuntimeObject } from "../../src/runtime/RuntimeClass.ts";
+import { ReasonerObject } from "../../src/runtime/ClassIdentity.ts";
 import { SensoryChannel } from "../../src/plugin/perception/SensoryChannel.ts";
 import type { Task } from "../../src/entity/Task.ts";
 import type { Timable } from "../../src/interfaces/Timable.ts";
@@ -65,7 +65,7 @@ test("Nar sensory channel consumer accepts a native string boundary", () => {
 });
 
 test("SensoryChannel keeps the Java plain-base class identity contract", () => {
-    assert.equal(Object.getPrototypeOf(SensoryChannel.prototype), RuntimeObject.prototype);
+    assert.equal(Object.getPrototypeOf(SensoryChannel.prototype), ReasonerObject.prototype);
 
     const nar = new Nar({ configText: "<config></config>" });
     try {

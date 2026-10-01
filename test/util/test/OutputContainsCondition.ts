@@ -6,7 +6,7 @@ import { Operator } from "../../../src/operator/Operator.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import { TextOutputHandler } from "../../../src/io/events/TextOutputHandler.ts";
 import { OutputCondition } from "./OutputCondition.ts";
-import type { ClassTokenLike } from "../../../src/runtime/RuntimeClass.ts";
+import type { ClassTokenLike } from "../../../src/runtime/ClassIdentity.ts";
 
 const OUT = OutputHandler.OUT;
 const EXE = OutputHandler.EXE;
