@@ -6,15 +6,7 @@ export interface JavaCharSequence {
     toString(): any;
 }
 
-/**
- * Java-shaped string return type kept opaque during the bridge migration.
- * Runtime values are NativeJavaString; `any` preserves legacy translated
- * overloads while callers are moved to native `string` contracts.
- */
-export type JavaString = any;
-
-/** Project-owned boxed string used at translated Java-shaped boundaries. */
-export class NativeJavaString implements JavaString {
+export class NativeJavaString {
     private hashValue: number | null = null;
     public constructor(private readonly value: string) {}
 
@@ -41,6 +33,9 @@ export class NativeJavaString implements JavaString {
         return hash;
     }
 }
+
+/** Project-owned boxed string used at translated Java-shaped boundaries. */
+export type JavaString = NativeJavaString;
 
 export type JavaStringInput = string | JavaString;
 export type JavaCharSequenceInput = string | JavaCharSequence;
