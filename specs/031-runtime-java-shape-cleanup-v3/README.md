@@ -54,7 +54,7 @@ Reduce residual Java-shaped code in `src/runtime` and its direct callers after s
 - [x] Inventory runtime modules, direct callers, public declarations, and tests; classify each Java shape as removable, narrowable, or required.
 - [x] Establish a runtime-shape baseline: typecheck, serial TS M2, Java M2, M3/RPS, one affected NAL set, and jree/platform audits.
 - [x] Refactor one contract family at a time, beginning with duplicated text/value/class helper layers; add focused direct contracts before changing callers.
-- [ ] Remove dead aliases and wrapper allocations only after native and compatibility paths are both covered.
+- [x] Remove dead aliases and wrapper allocations only after native and compatibility paths are both covered.
 - [ ] Re-run M2, M3/RPS, affected NALs, M1-prime, markerless digests, and browser/Node smoke on one immutable commit.
 - [ ] Record accepted/rejected candidates, residual Java shapes, and human takeover guidance; close only after all gates pass.
 
@@ -76,3 +76,9 @@ Store inventory, focused contracts, benchmark output, hashes, and rejected exper
 `native-runtime.ts` now re-exports the shared `java-text.ts` and `java-values.ts` contracts instead of carrying duplicate implementations for UTF-16 text, long arithmetic, value equality, and identity hashing. The Node facade, exceptions, boxed number compatibility, and host I/O remain separate because they still represent distinct host-facing responsibilities.
 
 Focused runtime contracts: `28/28` passed. TS-only M2: `496 pass / 0 fail / 2 skipped`; Java M2: `498 pass / 0 fail / 0 skipped`; typecheck, build, and dist API passed. RPS rechecks were `2676.559` and `2799.897 cycles/s`; against the opt12 reference `2810.655`, this batch is performance-neutral within measurement variation and is retained for reduced duplication and clearer ownership, not as a throughput claim.
+
+## Batch 2 result
+
+The browser host adapter now reuses the shared native Java facade for boxed numbers, StringBuilder, Class/Object tokens, collections, Random, and common language exceptions. Browser-only I/O, network-unavailable capabilities, output, UUID and clock behavior remain local to the adapter. A direct browser adapter smoke confirmed native String/hash, boxed Integer conversion, class token construction, and Random availability.
+
+Typecheck, build, dist API, TS M2, and Java M2 remain green. The demo worker build was attempted with `ALLOW_DIRTY_OPENNARS=1` and is currently blocked by the pre-existing 023 boundary: `Nar.ts` and related core files still import the Node host adapter, so esbuild reaches `node:v8` in the browser bundle. This is recorded as an open platform-boundary dependency; the batch does not claim browser bundle closure until that 023 worktree change is resolved.
