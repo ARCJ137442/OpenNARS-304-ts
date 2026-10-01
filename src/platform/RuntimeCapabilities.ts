@@ -18,6 +18,7 @@ export interface MessageTransportCapability {
 }
 
 export interface RuntimeCapabilities {
+    readonly readTextFile?: (path: string) => string;
     readonly executeSystemCommand?: (command: string) => string;
     readonly currentTimeMillis?: CurrentTimeMillis;
     readonly saveSnapshot?: (name: string, value: unknown) => void;

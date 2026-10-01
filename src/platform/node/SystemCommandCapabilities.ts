@@ -8,6 +8,9 @@ import { UdpMessageTransport } from "./UdpMessageTransport.ts";
 /** Provide the Java-compatible ^system command capability to a Node host. */
 export function createNodeRuntimeCapabilities(): RuntimeCapabilities {
     return {
+        readTextFile(path: string): string {
+            return readFileSync(path, "utf8");
+        },
         currentTimeMillis: defaultCurrentTimeMillis,
         executeSystemCommand(command: string): string {
             return execFileSync("bash", ["-c", command], {

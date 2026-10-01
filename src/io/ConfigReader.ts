@@ -1,7 +1,4 @@
 //! Java source: opennars/io/ConfigReader.java
-import { existsSync, readFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
 import { Parameters } from "../main/Parameters.ts";
 import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
@@ -9,6 +6,7 @@ import { parseConfigXml } from "./ConfigParser.ts";
 import { PluginRegistry } from "./ConfigPluginRegistry.ts";
 import type { RuntimeCapabilities } from "../platform/RuntimeCapabilities.ts";
 import type { TextInput } from "../runtime/Text.ts";
+import { HostCapabilityError, ReasonerIoError } from "../runtime/ReasonerErrors.ts";
 
 export { parseConfigXml } from "./ConfigParser.ts";
 
@@ -36,23 +34,16 @@ export class ConfigReader {
     /** Classpaths repeated in the XML; instances are still kept in declaration order. */
     public static lastDuplicatePluginClasspaths: string[] = [];
 
-    private static nodeConfigPath(filepath: string): string | null {
-        const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
-        const candidates = [
-            resolve(filepath),
-            resolve(process.cwd(), filepath),
-            resolve(packageRoot, "config", "defaultConfig.xml"),
-            resolve(process.cwd(), "java-master", "src", "main", "resources", "config", "defaultConfig.xml"),
-        ];
-        return candidates.find(candidate => existsSync(candidate)) ?? null;
-    }
-
-    public static loadConfigTextFromFile(filepath: string): string {
-        const path = ConfigReader.nodeConfigPath(filepath);
-        if (path === null) {
-            throw new Error(`Configuration file not found: ${filepath}`);
+    public static loadConfigTextFromFile(filepath: TextInput, capabilities?: RuntimeCapabilities): string {
+        const readTextFile = capabilities?.readTextFile;
+        if (readTextFile === undefined) {
+            throw new HostCapabilityError("readTextFile");
         }
-        return readFileSync(path, "utf8");
+        try {
+            return readTextFile(String(filepath));
+        } catch (error) {
+            throw new ReasonerIoError(`Could not read configuration: ${String(filepath)}`, { cause: error });
+        }
     }
 
     private static loadNodeConfigText(text: string, reasoner: Reasoner, parameters: Parameters,
@@ -74,11 +65,9 @@ export class ConfigReader {
     }
 
     public static loadParamsFromFileAndReturnPlugins(filepath: TextInput, reasoner: Reasoner,
-        parameters: Parameters): Plugin[] {
+        parameters: Parameters, capabilities?: RuntimeCapabilities): Plugin[] {
 
-        if (typeof process !== "undefined" && process.versions?.node !== undefined) {
-            return ConfigReader.loadNodeConfigText(ConfigReader.loadConfigTextFromFile(String(filepath)), reasoner, parameters);
-        }
-        throw new Error("ConfigReader requires the Node.js runtime");
+        const text = ConfigReader.loadConfigTextFromFile(filepath, capabilities);
+        return ConfigReader.loadNodeConfigText(text, reasoner, parameters, capabilities);
     }
 }

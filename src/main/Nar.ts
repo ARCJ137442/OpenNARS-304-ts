@@ -153,7 +153,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         ret.plugins = [];
         ret.sensoryChannels = new NativeMap<Term, SensoryChannel>();
         let pluginsToAdd: Plugin[] = ConfigReader.loadParamsFromFileAndReturnPlugins(ret.usedConfigFilePath, ret,
-            ret.narParameters);
+            ret.narParameters, capabilities);
         for (let p of pluginsToAdd) {
             ret.addPlugin(p);
         }

@@ -17,9 +17,23 @@ import { InternalExperience } from "../../src/plugin/mental/InternalExperience.t
 
 test("ConfigReader keeps the Java plain-class boundary without a jree Object shell", () => {
     const reader = new ConfigReader();
+    const source = readFileSync("src/io/ConfigReader.ts", "utf8");
 
     assert.equal(Object.getPrototypeOf(ConfigReader.prototype), Object.prototype);
     assert.equal(Object.getPrototypeOf(reader), ConfigReader.prototype);
+    assert.doesNotMatch(source, /from ["']node:/);
+    assert.match(source, /readTextFile/);
+});
+
+test("ConfigReader reads file configuration through an injected host capability", () => {
+    const text = "<config><conf name=\"DURATION\" value=\"7\" /><plugins /></config>";
+    const plugins = ConfigReader.loadParamsFromFileAndReturnPlugins(
+        "virtual-config.xml",
+        undefined as unknown as Reasoner,
+        new Parameters(),
+        { readTextFile: path => path === "virtual-config.xml" ? text : "" },
+    );
+    assert.deepEqual(plugins, []);
 });
 
 function normalizeXml(text: string): string {

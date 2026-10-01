@@ -458,3 +458,26 @@ with zero failure, exception, timeout, process-limit, stall, or not-run rows.
 The JSONL SHA-256 is
 `8FDAD01DBDAA2D0C257EB58B2D4D12A655E867195BAEB04AE2F8943C18FD78FD`.
 The empty historical `Term.ts.codex-corrupt` placeholder remains untracked.
+
+## Configuration host-capability implementation result
+
+`ConfigReader` no longer imports Node built-ins or consults `process.cwd`.
+Configuration file text is supplied through `RuntimeCapabilities.readTextFile`,
+with Node implementing that capability in `SystemCommandCapabilities`.
+Missing capabilities and read failures use project host/I/O errors. Full M2 TAP
+hashes are `698A892E8757BDA9C83AD7C7A7F3B5A04A270926846AC981C8557F3937365BA6`
+(TS-only, 506 passed / 2 skipped) and
+`A6133658F11E8AF320E796D801DFF214EB0B8363D686E8760357781CA69D9F19` (Java,
+508/508). Exact-commit M1' remains required.
+
+## Next batch: configuration host capability
+
+`ConfigReader` was the remaining maintained `src/io` module importing
+`node:fs`, `node:path`, `node:url`, and `process.cwd`. Its domain work is XML
+parsing and built-in plugin construction; file lookup is a Node host concern.
+The batch removes those Node imports from `ConfigReader`, adds the narrow
+`RuntimeCapabilities.readTextFile` capability, and makes Node provide it from
+`SystemCommandCapabilities`. Missing capability and read failures now use the
+project host/I/O errors. This keeps `src/main`/core imports browser-resolvable
+without changing XML, plugin order, diagnostics, or default configuration
+values.
