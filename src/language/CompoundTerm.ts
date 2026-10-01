@@ -263,11 +263,6 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     public static replaceIntervals(T: Term): Term {
         if (T instanceof CompoundTerm) {
-            // Most concept lookups contain no intervals. The Java implementation
-            // cloned before discovering that fact; translated terms are treated
-            // as immutable by this call graph, so avoid the deep copy when the
-            // replacement pass is provably a no-op.
-            if (!T.hasInterval()) return T;
             T = T.cloneDeep(); // we will operate on a copy
             if (T === null) {
                 return null as unknown as Term; // not a valid concept term
