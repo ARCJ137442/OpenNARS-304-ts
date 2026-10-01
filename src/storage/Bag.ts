@@ -6,7 +6,7 @@ import { Distributor } from "./Distributor.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-import { javaValuesEqual } from "../runtime/java-values.ts";
+import { runtimeValueEquals } from "../runtime/runtime-numbers.ts";
 import { asText, type TextString } from "../runtime/Text.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MutableIterator } from "../runtime/MutableIterator.ts";
@@ -262,7 +262,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
             // item's current name is sufficient for an equivalent-key
             // operation even when the map retained an older equal key object.
             const directKey = directItem.name();
-            if (directKey === key || javaValuesEqual(directKey, key)) {
+            if (directKey === key || runtimeValueEquals(directKey, key)) {
                 return directKey;
             }
         }
@@ -274,7 +274,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
             : undefined;
         if (typeof candidateIterator === "function") {
             for (const existingKey of candidates as K[]) {
-                if (javaValuesEqual(existingKey, key)) {
+                if (runtimeValueEquals(existingKey, key)) {
                     return existingKey;
                 }
             }
@@ -287,14 +287,14 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
             // Java map, then keep the fast lookup path for subsequent calls.
             const rebuilt = this.rebuildEqualityBucket(hashCode);
             for (const existingKey of rebuilt) {
-                if (javaValuesEqual(existingKey, key)) return existingKey;
+                if (runtimeValueEquals(existingKey, key)) return existingKey;
             }
             return null as unknown as K;
         }
 
         for (const entry of this.nameTable.entrySet()) {
             const existingKey = entry.getKey();
-            if (javaValuesEqual(existingKey, key)) {
+            if (runtimeValueEquals(existingKey, key)) {
                 return existingKey;
             }
         }
@@ -340,7 +340,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
             const bucket = this.equalityBuckets.get(hashCode);
             if (bucket !== undefined) {
                 if (Array.isArray(bucket)) {
-                    const index = bucket.findIndex((existingKey) => javaValuesEqual(existingKey, key));
+                    const index = bucket.findIndex((existingKey) => runtimeValueEquals(existingKey, key));
                     if (index >= 0) bucket.splice(index, 1);
                     if (bucket.length === 0) this.equalityBuckets.delete(hashCode);
                 } else {
@@ -356,7 +356,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
                         && typeof restoredList.get === "function"
                         && typeof restoredList.remove === "function") {
                         for (let index = 0; index < restoredList.size(); index += 1) {
-                            if (javaValuesEqual(restoredList.get(index), key)) {
+                            if (runtimeValueEquals(restoredList.get(index), key)) {
                                 restoredList.remove(index);
                                 break;
                             }
@@ -376,7 +376,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
                             && typeof restoredCollection.iterator === "function") {
                             const iterator = restoredCollection.iterator();
                             while (iterator.hasNext()) {
-                                if (javaValuesEqual(iterator.next(), key)) {
+                if (runtimeValueEquals(iterator.next(), key)) {
                                     iterator.remove();
                                     break;
                                 }
@@ -384,7 +384,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
                             if (restoredCollection.size() === 0) this.equalityBuckets.delete(hashCode);
                         } else if (typeof restoredCollection[Symbol.iterator] === "function") {
                             const values = [...bucket as unknown as Iterable<K>];
-                            const index = values.findIndex((existingKey) => javaValuesEqual(existingKey, key));
+                            const index = values.findIndex((existingKey) => runtimeValueEquals(existingKey, key));
                             if (index >= 0) values.splice(index, 1);
                             if (values.length === 0) this.equalityBuckets.delete(hashCode);
                             else this.equalityBuckets.set(hashCode, values);

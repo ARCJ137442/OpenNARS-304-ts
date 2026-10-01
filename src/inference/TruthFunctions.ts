@@ -5,7 +5,7 @@ import { UtilityFunctions } from "./UtilityFunctions.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-import { subtractRuntimeLongValues, type JavaLongInput } from "../runtime/java-values.ts";
+import { subtractRuntimeLongValues, type RuntimeLongInput } from "../runtime/runtime-numbers.ts";
 
 class EnumType {
     public static readonly DESIREDED = new EnumType("DESIREDED", 0);
@@ -600,7 +600,7 @@ export class TruthFunctions extends UtilityFunctions {
         return new TruthFunctions.EternalizedTruthValue(f1, c, narParameters);
     }
 
-    public static temporalProjection(sourceTime: JavaLongInput, targetTime: JavaLongInput, currentTime: JavaLongInput,
+    public static temporalProjection(sourceTime: RuntimeLongInput, targetTime: RuntimeLongInput, currentTime: RuntimeLongInput,
         param: Parameters): float {
         let a: double = 100000.0 * param.PROJECTION_DECAY; // projection less strict as we changed in v2.0.0 10000.0
         // slower decay than 100000.0

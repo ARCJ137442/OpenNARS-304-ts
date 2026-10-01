@@ -2,7 +2,7 @@
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { textValue, asText as toNativeTextString, type TextInput } from "../runtime/Text.ts";
-import { toRuntimeLong, type JavaLongInput } from "../runtime/java-values.ts";
+import { toRuntimeLong, type RuntimeLongInput } from "../runtime/runtime-numbers.ts";
 import { Parameters } from "./Parameters.ts";
 import { Debug } from "./Debug.ts";
 import { ConfigReader } from "../io/ConfigReader.ts";
@@ -42,7 +42,7 @@ import { defaultCurrentTimeMillis, type RuntimeCapabilities } from "../platform/
 
 type EventObserver = EventEmitter.EventObserver;
 export interface NarOptions {
-    readonly narId?: JavaLongInput;
+    readonly narId?: RuntimeLongInput;
     readonly configText?: string;
     readonly configSource?: string;
     readonly parameterOverrides?: NativeMap<string, unknown>;
@@ -223,7 +223,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     public constructor();
 
     /** Constructs the NAR with the embedded default configuration text. */
-    public constructor(narId: JavaLongInput);
+    public constructor(narId: RuntimeLongInput);
 
     /** Constructs the NAR from explicit XML configuration text. */
     public constructor(configText: TextInput);
@@ -232,13 +232,13 @@ export class Nar extends SensoryChannel implements Reasoner {
     public constructor(parameterOverrides: NativeMap<string, unknown>);
 
     /** Constructs the NAR with an id and explicit XML configuration text. */
-    public constructor(narId: JavaLongInput, configText: TextInput);
+    public constructor(narId: RuntimeLongInput, configText: TextInput);
 
     /** Constructs the NAR from XML text with parameter overrides. */
     public constructor(configText: TextInput, parameterOverrides: NativeMap<string, unknown>);
 
     /** Constructs the NAR with an id, XML text and parameter overrides. */
-    public constructor(narId: JavaLongInput, configText: TextInput, parameterOverrides: NativeMap<string, unknown>);
+    public constructor(narId: RuntimeLongInput, configText: TextInput, parameterOverrides: NativeMap<string, unknown>);
     /** Constructs the NAR from explicit configuration text without file I/O. */
     public constructor(options: NarOptions);
     public constructor(...args: unknown[]) {
@@ -281,7 +281,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         } else if (args.length === 2) {
             if (typeof args[0] === "number" || typeof args[0] === "bigint" || isLongLike(args[0])) {
                 narId = typeof args[0] === "number" || typeof args[0] === "bigint"
-                    ? toRuntimeLong(args[0] as JavaLongInput)
+                    ? toRuntimeLong(args[0] as RuntimeLongInput)
                     : (args[0] as { longValue(): bigint }).longValue();
                 const text = String(args[1]);
                 if (!text.trimStart().startsWith("<")) {
@@ -298,7 +298,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             }
         } else if (args.length === 3) {
             narId = typeof args[0] === "number" || typeof args[0] === "bigint"
-                ? toRuntimeLong(args[0] as JavaLongInput)
+                ? toRuntimeLong(args[0] as RuntimeLongInput)
                 : (args[0] as { longValue(): bigint }).longValue();
             const text = String(args[1]);
             if (!text.trimStart().startsWith("<")) {

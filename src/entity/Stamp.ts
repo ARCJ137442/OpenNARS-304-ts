@@ -11,8 +11,8 @@ import {
     addRuntimeLong,
     subtractRuntimeLong,
     toRuntimeLong,
-    type JavaLongInput,
-} from "../runtime/java-values.ts";
+    type RuntimeLongInput,
+} from "../runtime/runtime-numbers.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { asText } from "../runtime/Text.ts";
 import type { TextString } from "../runtime/Text.ts";
@@ -132,12 +132,12 @@ export class Stamp extends RuntimeObject {
      * @param old          The stamp of the single premise
      * @param creationTime The current time
      */
-    public constructor(old: Stamp, creationTime: JavaLongInput);
+    public constructor(old: Stamp, creationTime: RuntimeLongInput);
 
     /** creates a stamp with default Present tense */
     public constructor(time: Timable, memory: Memory);
 
-    public constructor(old: Stamp, creationTime: JavaLongInput, useEvidentialBase: Stamp);
+    public constructor(old: Stamp, creationTime: RuntimeLongInput, useEvidentialBase: Stamp);
 
     public constructor(time: Timable, memory: Memory, tense: Tense);
 
@@ -146,7 +146,7 @@ export class Stamp extends RuntimeObject {
      *
      * @param time Creation time of the stamp
      */
-    public constructor(time: JavaLongInput, tense: Tense, serial: Stamp.BaseEntry, duration: int);
+    public constructor(time: RuntimeLongInput, tense: Tense, serial: Stamp.BaseEntry, duration: int);
 
     /**
      * Generate a new stamp for derived sentence by merging the two from parents
@@ -155,7 +155,7 @@ export class Stamp extends RuntimeObject {
      * @param first  The first Stamp
      * @param second The second Stamp
      */
-    public constructor(first: Stamp, second: Stamp, time: JavaLongInput, narParameters: Parameters);
+    public constructor(first: Stamp, second: Stamp, time: RuntimeLongInput, narParameters: Parameters);
     public constructor(...args: unknown[]) {
         // Java constructor delegation (`this(...)`) is not legal in TypeScript.
         // Resolve the overload first, then call `super()` exactly once.
@@ -171,7 +171,7 @@ export class Stamp extends RuntimeObject {
         }
 
         if (args.length === 2 && args[0] instanceof Stamp) {
-            const [old, creationTime] = args as [Stamp, JavaLongInput];
+            const [old, creationTime] = args as [Stamp, RuntimeLongInput];
             this.evidentialBase = old.evidentialBase;
             this.baseLength = old.baseLength;
             this.creationTime = toRuntimeLong(creationTime);
@@ -196,7 +196,7 @@ export class Stamp extends RuntimeObject {
         }
 
         if (args.length === 3 && args[0] instanceof Stamp) {
-            const [old, creationTime, useEvidentialBase] = args as [Stamp, JavaLongInput, Stamp];
+            const [old, creationTime, useEvidentialBase] = args as [Stamp, RuntimeLongInput, Stamp];
             this.evidentialBase = useEvidentialBase.evidentialBase;
             this.baseLength = useEvidentialBase.baseLength;
             this.creationTime = toRuntimeLong(creationTime);
@@ -212,7 +212,7 @@ export class Stamp extends RuntimeObject {
         }
 
         if (args.length === 4 && args[0] instanceof Stamp) {
-            const [first, second, time, narParameters] = args as [Stamp, Stamp, JavaLongInput, Parameters];
+            const [first, second, time, narParameters] = args as [Stamp, Stamp, RuntimeLongInput, Parameters];
             let i1 = 0;
             let i2 = 0;
             let j = 0;
@@ -229,7 +229,7 @@ export class Stamp extends RuntimeObject {
         }
 
         if (args.length === 4) {
-            const [time, tense, serial, duration] = args as [JavaLongInput, Tense, Stamp.BaseEntry, int];
+            const [time, tense, serial, duration] = args as [RuntimeLongInput, Tense, Stamp.BaseEntry, int];
             this.baseLength = 1;
             this.evidentialBase = [serial];
             this.tense = tense;
@@ -301,7 +301,7 @@ export class Stamp extends RuntimeObject {
      * sets the creation time; used to set input tasks with the actual time they
      * enter Memory
      */
-    public setCreationTime(time: JavaLongInput, duration: int): void {
+    public setCreationTime(time: RuntimeLongInput, duration: int): void {
         const runtimeTime = toRuntimeLong(time);
         this.creationTime = runtimeTime;
 
@@ -458,7 +458,7 @@ export class Stamp extends RuntimeObject {
         return this.evidentialHashValue;
     }
 
-    public cloneWithNewOccurrenceTime(newOcurrenceTime: JavaLongInput): Stamp {
+    public cloneWithNewOccurrenceTime(newOcurrenceTime: RuntimeLongInput): Stamp {
         let s: Stamp = this.clone();
         if (newOcurrenceTime === Stamp.ETERNAL)
             s.tense = Tense.Eternal;
@@ -502,7 +502,7 @@ export class Stamp extends RuntimeObject {
         return asText(this.isEternal() ? "" : `[${String(this.occurrenceTime)}]`);
     }
 
-    public getTense(currentTime: JavaLongInput, duration: int): TextString {
+    public getTense(currentTime: RuntimeLongInput, duration: int): TextString {
 
         if (this.isEternal()) {
             return asText("");
@@ -517,7 +517,7 @@ export class Stamp extends RuntimeObject {
         }
     }
 
-    public setOccurrenceTime(time: JavaLongInput): void {
+    public setOccurrenceTime(time: RuntimeLongInput): void {
         const runtimeTime = toRuntimeLong(time);
         if (this.occurrenceTime !== runtimeTime) {
             this.occurrenceTime = runtimeTime;
@@ -583,7 +583,7 @@ export class Stamp extends RuntimeObject {
          * @param narId   The id of the NAR the input evidence was obtained from
          * @param inputId The nar-specific input id of the input
          */
-        public constructor(narId: JavaLongInput, inputId: JavaLongInput) {
+        public constructor(narId: RuntimeLongInput, inputId: RuntimeLongInput) {
             this.narId = toRuntimeLong(narId);
             this.inputId = toRuntimeLong(inputId);
         }

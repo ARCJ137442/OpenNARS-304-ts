@@ -5,7 +5,7 @@ import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { textHashCode, textValue } from "../runtime/Text.ts";
-import { javaIdentityHashCode } from "../runtime/java-values.ts";
+import { identityHashCode } from "../runtime/runtime-numbers.ts";
 import { asText, type TextCharacter, type TextString } from "../runtime/Text.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
@@ -284,8 +284,8 @@ export class Variable extends Term {
             if (!ascoped && !bscoped) {
                 // if the two variables are each without scope, they are not equal.
                 // so use their identityHashCode to determine a stable ordering
-                let as: int = javaIdentityHashCode(a.scope);
-                let bs: int = javaIdentityHashCode(b.scope);
+                let as: int = identityHashCode(a.scope);
+                let bs: int = identityHashCode(b.scope);
                 return as < bs ? -1 : as > bs ? 1 : 0;
             } else if (ascoped && !bscoped) {
                 return -1;

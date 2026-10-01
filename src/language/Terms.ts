@@ -8,7 +8,7 @@ import { Variable } from "./Variable.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Term } from "./Term.ts";
 import type { Memory } from "../storage/Memory.ts";
-import { javaValuesEqual } from "../runtime/java-values.ts";
+import { runtimeValueEquals } from "../runtime/runtime-numbers.ts";
 import type { TextString } from "../runtime/Text.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { NativeList } from "../runtime/NativeList.ts";
@@ -490,7 +490,7 @@ export class Terms {
             let had: boolean = false;
             for (let sB of componentsB) {
                 if (sA instanceof Variable && sB instanceof Variable) {
-                    if (javaValuesEqual(sA.name(), sB.name())) {
+                    if (runtimeValueEquals(sA.name(), sB.name())) {
                         had = true;
                     }
                 } else if (sA.equals(sB)) {
@@ -614,7 +614,7 @@ export class Terms {
          */
         let i: int = 0;
         for (let e of array) {
-            if (javaValuesEqual(v, e)) {
+            if (runtimeValueEquals(v, e)) {
                 return i;
             }
             i++;
@@ -656,7 +656,7 @@ export class Terms {
 
     public static contains<T>(array: T[], v: T): boolean {
         for (let e of array) {
-            if (javaValuesEqual(v, e)) {
+            if (runtimeValueEquals(v, e)) {
                 return true;
             }
         }

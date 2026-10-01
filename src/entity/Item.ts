@@ -3,7 +3,7 @@ import type { int, float } from "../types.ts"; // Java primitive aliases formerl
 import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
 import { textHashCode, textValue } from "../runtime/Text.ts";
-import { javaValuesEqual } from "../runtime/java-values.ts";
+import { runtimeValueEquals } from "../runtime/runtime-numbers.ts";
 import type { TextInput } from "../runtime/Text.ts";
 import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
@@ -248,7 +248,7 @@ export abstract  class Item<K> extends RuntimeObject {
         if (obj === this)
             return true;
         if (obj instanceof Item) {
-            return javaValuesEqual((obj as Item<unknown>).name(), this.name());
+            return runtimeValueEquals((obj as Item<unknown>).name(), this.name());
         }
         return false;
     }
@@ -289,7 +289,7 @@ abstract class StringKeyItem extends Item<TextInput> {
         if (obj === this)
             return true;
         if (obj instanceof Item) {
-            return javaValuesEqual((obj as Item<unknown>).name(), this.name());
+            return runtimeValueEquals((obj as Item<unknown>).name(), this.name());
         }
         return false;
     }

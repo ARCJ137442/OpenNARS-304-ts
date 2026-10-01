@@ -20,7 +20,7 @@ import type { Memory } from "../storage/Memory.ts";
 import type { Nar } from "../main/Nar.ts";
 import type { Parameters } from "../main/Parameters.ts";
 import { textValue, textEquals } from "../runtime/Text.ts";
-import { addRuntimeLongValues, subtractRuntimeLongValues } from "../runtime/java-values.ts";
+import { addRuntimeLongValues, subtractRuntimeLongValues } from "../runtime/runtime-numbers.ts";
 import { asText } from "../runtime/Text.ts";
 import type { TextCharacter, TextString } from "../runtime/Text.ts";
 import { ReasonerInvariantError } from "../runtime/ReasonerErrors.ts";

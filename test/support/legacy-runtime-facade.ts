@@ -6,6 +6,7 @@ export { Class, JavaObject };
 /** Legacy translated namespace. New code must use native capabilities instead. */
 export const java = createNodeLegacyNamespace();
 import { textHashCode, textValue } from "../../src/runtime/Text.ts";
+import { identityHashCode, runtimeValueEquals } from "../../src/runtime/runtime-numbers.ts";
 import { ReasonerRandom as JavaRandom } from "../../src/runtime/ReasonerRandom.ts";
 import {
     JavaAssertionError,
@@ -46,13 +47,15 @@ export const javaStringsEqual = (left: unknown, right: unknown): boolean => java
 export {
     addRuntimeLong,
     addRuntimeLongValues,
-    javaIdentityHashCode,
-    javaValuesEqual,
+    identityHashCode,
+    runtimeValueEquals,
     subtractRuntimeLong,
     subtractRuntimeLongValues,
     toRuntimeLong,
-} from "../../src/runtime/java-values.ts";
-export type { JavaLongInput } from "../../src/runtime/java-values.ts";
+} from "../../src/runtime/runtime-numbers.ts";
+export type { RuntimeLongInput } from "../../src/runtime/runtime-numbers.ts";
+export const javaIdentityHashCode = identityHashCode;
+export const javaValuesEqual = runtimeValueEquals;
 export {
     JavaAssertionError,
     JavaClassNotFoundException,

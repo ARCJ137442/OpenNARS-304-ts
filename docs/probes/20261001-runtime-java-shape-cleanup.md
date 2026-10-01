@@ -340,3 +340,32 @@ under `reports/evidence/m1prime-9c4d76b-long-65536-20261002-memory-protected.jso
 This is a performance/resource limitation, not a semantic regression or a
 process-limit/timeout/stall result, and the original 2,000,000-cycle workload
 remains unclaimed.
+
+## Next batch: native runtime number boundary
+
+`src/runtime/java-values.ts` does not implement a Java-specific observable
+algorithm. It only accepts the project runtime's safe integer/bigint time
+values, rejects unsafe numeric input, and performs checked addition and
+subtraction. The Java-shaped names (`JavaLongInput`, `java-values`) therefore
+add migration residue without protecting a NARS contract.
+
+This batch will rename the module to `runtime-numbers.ts` and the input type to
+`RuntimeLongInput`, preserving `toRuntimeLong`, checked arithmetic, bigint
+behavior, and every public call signature's value semantics. The compatibility
+test facade will import the native number boundary by its new name. No class
+identity, collection, event ordering, or scheduler behavior is changed here.
+
+Acceptance is non-incremental typecheck, focused numeric contracts, serial
+TS-only and Java M2, build/dist API, and a new exact-commit M1' risk slice.
+
+### Implementation result
+
+The boundary is now `src/runtime/runtime-numbers.ts` with
+`RuntimeLongInput`, `runtimeValueEquals`, and `identityHashCode`. Production
+callers no longer import `java-values.ts` or use the `JavaLongInput`,
+`javaValuesEqual`, or `javaIdentityHashCode` names. The test-only legacy facade
+exports compatibility aliases so old translated fixtures remain testable.
+The safe-integer check now reports a runtime-number error rather than a Java
+language error. Focused numeric, Bag, Item, Variable, and core runtime tests
+passed `73/73`; non-incremental typecheck passed. Full M2 and exact-commit
+M1' remain required before treating this batch as a protected release point.

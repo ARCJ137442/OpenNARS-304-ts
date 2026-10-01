@@ -11,8 +11,8 @@ import { BudgetFunctions } from "../../inference/BudgetFunctions.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import {
     toRuntimeLong,
-    type JavaLongInput,
-} from "../../runtime/java-values.ts";
+    type RuntimeLongInput,
+} from "../../runtime/runtime-numbers.ts";
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";
@@ -261,7 +261,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         this.anticipationOperator = val;
     }
 
-    public anticipate(content: Term, memory: Memory, occurenceTime: JavaLongInput, t: Task | null,
+    public anticipate(content: Term, memory: Memory, occurenceTime: RuntimeLongInput, t: Task | null,
         time: Timable): void {
         if (t !== null && t.sentence.getTruth().getExpectation() < memory.narParameters.DEFAULT_CONFIRMATION_EXPECTATION) {
             return;
@@ -342,7 +342,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             // simple?
             public readonly predictedOccurenceTime: long;
 
-            public constructor(predictionCreationTime: JavaLongInput, predictedOccurenceTime: JavaLongInput) { // rest of the crap:
+            public constructor(predictionCreationTime: RuntimeLongInput, predictedOccurenceTime: RuntimeLongInput) { // rest of the crap:
                 this.predictionCreationTime = toRuntimeLong(predictionCreationTime); // when the prediction happened
                 this.predictedOccurenceTime = toRuntimeLong(predictedOccurenceTime); // when the event is expected
             }
