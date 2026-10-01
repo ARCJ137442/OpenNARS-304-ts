@@ -389,3 +389,35 @@ This closes the numeric-boundary batch only. It does not close 023 or 031:
 runtime class identity, scheduler ownership, collection semantics, remaining
 Java-named helpers, and platform host separation still require their own
 contracts and gates.
+
+## Scheduler boundary implementation
+
+The former `ThreadCompat` adapter is now `ReasonerScheduler` with
+`RunnableTask`, `StackFrame`, and `ReasonerInterruptedError`. The scheduler
+still provides the same single-thread behavior: queued `start`, synchronous
+bounded sleep, no-op yield, interruption state, and an empty stack-frame view.
+`Nar`, `Memory`, and `Events` now use `current()`/`stackFrames()` and native
+scheduler terminology; no Java Thread names remain in production `src`.
+Focused scheduler/event/core contracts passed `68/68`, and non-incremental
+typecheck passed. Full M2 and exact-commit M1' are required before closing
+this batch.
+
+Full M2 and release checks for this scheduler batch passed:
+
+- TS-only M2: `505 passed / 0 failed / 2 skipped`, TAP SHA-256
+  `2BC5A5F8CB07E035CD431D438E4C1CE83E1F05DC8F4CC160FB1AC931E0B32B78`.
+- Java M2: `507/507`, TAP SHA-256
+  `83927710F02D90228F54109C1B9075411CF402DC6EB2A99A6C5D3BB64843A1F8`.
+- Release package, build and dist API checks passed with no runtime warnings.
+
+## Next batch: native reasoner scheduler boundary
+
+`ThreadCompat` is a project-local single-thread scheduler adapter. Its
+observable contract is asynchronous start, synchronous bounded sleep, a no-op
+yield hint, interruption state, and an empty stack-frame view; it does not
+provide Java shared-memory threads. The next batch will therefore rename this
+boundary to `ReasonerScheduler`, `RunnableTask`, `StackFrame`, and
+`ReasonerInterruptedError`, while preserving those behaviors and the
+`Reasoner.run()` task contract. `Nar`, `Memory`, and `Events` will consume the
+native names; the test-only translated harness may retain compatibility aliases
+where it describes historical Java fixtures.

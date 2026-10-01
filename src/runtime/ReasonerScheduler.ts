@@ -4,31 +4,31 @@
  * TypeScript values. It does not claim that Node has Java's shared-memory
  * thread model.
  */
-export interface RunnableCompat {
+export interface RunnableTask {
     run(): void;
 }
 
-export interface StackTraceElementCompat {
+export interface StackFrame {
     getClassName(): string;
 }
 
-export class ThreadCompat {
-    private readonly target: RunnableCompat | null;
+export class ReasonerScheduler {
+    private readonly target: RunnableTask | null;
     private readonly threadName: string | null;
     private interrupted = false;
 
     public constructor();
-    public constructor(target: RunnableCompat, name?: string);
+    public constructor(target: RunnableTask, name?: string);
     public constructor(...args: unknown[]) {
-        this.target = args.length > 0 ? args[0] as RunnableCompat : null;
+        this.target = args.length > 0 ? args[0] as RunnableTask : null;
         this.threadName = args.length > 1 ? String(args[1]) : null;
     }
 
     public start(): void {
         if (this.target !== null) {
-            ThreadCompat.schedule(() => this.target?.run());
+            ReasonerScheduler.schedule(() => this.target?.run());
         } else {
-            ThreadCompat.schedule(() => this.run());
+            ReasonerScheduler.schedule(() => this.run());
         }
     }
 
@@ -60,11 +60,11 @@ export class ThreadCompat {
         return;
     }
 
-    public static currentThread(): ThreadCompat {
-        return new ThreadCompat();
+    public static current(): ReasonerScheduler {
+        return new ReasonerScheduler();
     }
 
-    public getStackTrace(): StackTraceElementCompat[] {
+    public stackFrames(): StackFrame[] {
         return [];
     }
 
@@ -80,10 +80,10 @@ export class ThreadCompat {
     }
 }
 
-export class InterruptedExceptionCompat extends Error {
+export class ReasonerInterruptedError extends Error {
     public constructor(message = "Thread interrupted") {
         super(message);
-        this.name = "InterruptedExceptionCompat";
+        this.name = "ReasonerInterruptedError";
         Object.setPrototypeOf(this, new.target.prototype);
     }
 }

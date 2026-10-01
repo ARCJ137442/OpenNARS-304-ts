@@ -34,7 +34,7 @@ import type { Nar } from "../main/Nar.ts";
 import { textValue } from "../runtime/Text.ts";
 import { asText as toHostTextString } from "../runtime/Text.ts";
 import type { TextInput } from "../runtime/Text.ts";
-import { ThreadCompat } from "../runtime/ThreadCompat.ts";
+import { ReasonerScheduler } from "../runtime/ReasonerScheduler.ts";
 import { ReasonerRandom } from "../runtime/ReasonerRandom.ts";
 import type { Resettable } from "../interfaces/Resettable.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -232,7 +232,7 @@ export class Memory implements Iterable<Concept>, Resettable {
         if (typeof process !== "undefined" && process.release?.name === "node") {
             return false;
         }
-        const stackTrace = ThreadCompat.currentThread().getStackTrace();
+        const stackTrace = ReasonerScheduler.current().stackFrames();
         for (let element of stackTrace) {
             if (element.getClassName().startsWith("org.junit.")) {
                 return true;

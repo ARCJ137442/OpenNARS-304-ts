@@ -32,7 +32,7 @@ import { Float32Math } from "../runtime/Float32.ts";
 import { NativeReadOnlyList } from "../runtime/NativeList.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
+import { ReasonerInterruptedError, ReasonerScheduler } from "../runtime/ReasonerScheduler.ts";
 import { Task } from "../entity/Task.ts";
 import type { Plugin } from "../plugin/Plugin.ts";
 import type { Reasoner } from "../interfaces/pub/Reasoner.ts";
@@ -79,7 +79,7 @@ const isLongLike = (value: unknown): value is { longValue(): bigint } =>
  * @author Pei Wang
  * @author Patrick Hammer
  */
-// Java 原始类型实现 Runnable；Reasoner 已声明 run()，ThreadCompat 只消费该运行合同。
+// The reasoner itself supplies the runnable task consumed by the scheduler.
 export class Nar extends SensoryChannel implements Reasoner {
     public narParameters: Parameters = new Parameters();
 
@@ -108,7 +108,7 @@ export class Nar extends SensoryChannel implements Reasoner {
      */
     public static readonly WEBSITE: string = " Open-NARS website:  http://code.google.com/p/open-org.opennars/ \n      NARS website:  http://sites.google.com/site/narswang/ \n    Github website:  http://github.com/opennars/ \n    IRC:  http://webchat.freenode.net/?channels=org.opennars \n";
 
-    private threads: ThreadCompat[] | null = null;
+    private schedulers: ReasonerScheduler[] | null = null;
     // Java `Map<Term, SensoryChannel>` backed by `LinkedHashMap`; NativeMap
     // preserves Term.equals lookup, insertion order, and Map views.
     protected sensoryChannels: NativeMap<Term, SensoryChannel> = new NativeMap<Term, SensoryChannel>();
@@ -215,7 +215,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     private running: boolean = false;
     /** used by stop() to signal that a running loop should be interrupted */
     private stopped: boolean = false;
-    private threadYield: boolean = false;
+    private yieldEnabled = false;
 
     public static readonly DEFAULTCONFIG_FILEPATH: string = "./config/defaultConfig.xml";
 
@@ -739,12 +739,12 @@ export class Nar extends SensoryChannel implements Reasoner {
 
 
                 this.minCyclePeriodMS = minCyclePeriodMS;
-                if (this.threads === null) {
-                    let n_threads: int = this.narParameters.THREADS_AMOUNT;
-                    this.threads = new Array<ThreadCompat>(n_threads);
-                    for (let i: int = 0; i < n_threads; i++) {
-                        this.threads[i] = new ThreadCompat(this, `Inference${i}`);
-                        this.threads[i].start();
+                if (this.schedulers === null) {
+                    const schedulerCount: int = this.narParameters.THREADS_AMOUNT;
+                    this.schedulers = new Array<ReasonerScheduler>(schedulerCount);
+                    for (let i: int = 0; i < schedulerCount; i++) {
+                        this.schedulers[i] = new ReasonerScheduler(this, `Inference${i}`);
+                        this.schedulers[i].start();
                     }
                 }
                 this.running = true;
@@ -764,11 +764,11 @@ export class Nar extends SensoryChannel implements Reasoner {
      * Stop the inference process, killing its thread.
      */
     public stop(): void {
-        if (this.threads !== null) {
-            for (let thread of this.threads) {
-                thread.interrupt();
+        if (this.schedulers !== null) {
+            for (const scheduler of this.schedulers) {
+                scheduler.interrupt();
             }
-            this.threads = null;
+            this.schedulers = null;
         }
         this.stopped = true;
         this.running = false;
@@ -788,7 +788,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         this.emit(CyclesEnd.class);
     }
 
-    /** Main loop executed by the Thread. Should not be called directly. */
+    /** Main loop executed by the scheduler. Should not be called directly. */
     public run(): void {
         this.stopped = false;
 
@@ -802,15 +802,15 @@ export class Nar extends SensoryChannel implements Reasoner {
 
             if (this.minCyclePeriodMS > 0n) {
                 try {
-                    ThreadCompat.sleep(this.minCyclePeriodMS);
+                    ReasonerScheduler.sleep(this.minCyclePeriodMS);
                 } catch (e) {
-                    if (e instanceof InterruptedExceptionCompat) {
+                    if (e instanceof ReasonerInterruptedError) {
                     } else {
                         throw e;
                     }
                 }
-            } else if (this.threadYield) {
-                ThreadCompat.yield();
+            } else if (this.yieldEnabled) {
+                ReasonerScheduler.yield();
             }
         }
     }
@@ -878,7 +878,7 @@ export class Nar extends SensoryChannel implements Reasoner {
      * This is for improving program responsiveness when Nar is run with no delay.
      */
     public setThreadYield(b: boolean): void {
-        this.threadYield = b;
+        this.yieldEnabled = b;
     }
 
     /**

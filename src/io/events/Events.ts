@@ -11,7 +11,7 @@ import type { Task } from "../../entity/Task.ts";
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import type { GeneralInferenceControl } from "../../control/GeneralInferenceControl.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
-import { ThreadCompat, type StackTraceElementCompat } from "../../runtime/ThreadCompat.ts";
+import { ReasonerScheduler, type StackFrame } from "../../runtime/ReasonerScheduler.ts";
 
 type EventObserver = EventEmitter.EventObserver;
 
@@ -59,7 +59,7 @@ abstract class TaskAdd extends RuntimeObject implements EventObserver {
 
 abstract class InferenceEvent extends RuntimeObject {
     public readonly when: long;
-    public readonly stack: readonly StackTraceElementCompat[] | null;
+    public readonly stack: readonly StackFrame[] | null;
 
     // how many stack frames down to record from; we don't need to include the
     // current and the previous (InferenceEvent subclass's constructor
@@ -79,7 +79,7 @@ abstract class InferenceEvent extends RuntimeObject {
 
         if (stackFrames > 0) {
             const sl = Array.from(
-                ThreadCompat.currentThread().getStackTrace() as StackTraceElementCompat[],
+                ReasonerScheduler.current().stackFrames() as StackFrame[],
             );
             let frame: int = 0;
 
@@ -354,7 +354,7 @@ export namespace Events {
 	export type ConceptDirectProcessedTask = InstanceType<typeof Events.ConceptDirectProcessedTask>;
 	export type InferenceEvent = {
 		readonly when: long;
-		readonly stack: readonly StackTraceElementCompat[] | null;
+		readonly stack: readonly StackFrame[] | null;
 		getType(): ClassTokenLike;
 	};
 	export type ParametricInferenceEvent<O> = InferenceEvent & { readonly object: O };

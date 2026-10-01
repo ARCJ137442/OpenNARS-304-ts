@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { InterruptedExceptionCompat, ThreadCompat } from "../../src/runtime/ThreadCompat.ts";
+import { ReasonerInterruptedError, ReasonerScheduler } from "../../src/runtime/ReasonerScheduler.ts";
 
-test("ThreadCompat uses native scheduling and preserves the translated call surface", async () => {
+test("ReasonerScheduler uses native scheduling and preserves the translated call surface", async () => {
     const calls: string[] = [];
-    const thread = new ThreadCompat({
+    const thread = new ReasonerScheduler({
         run(): void {
             calls.push("target");
         },
@@ -12,7 +12,7 @@ test("ThreadCompat uses native scheduling and preserves the translated call surf
 
     assert.equal(thread.getName(), "native-test");
     assert.equal(thread.isInterrupted(), false);
-    assert.deepEqual(thread.getStackTrace(), []);
+    assert.deepEqual(thread.stackFrames(), []);
 
     thread.start();
     assert.deepEqual(calls, []);
@@ -23,12 +23,12 @@ test("ThreadCompat uses native scheduling and preserves the translated call surf
     assert.equal(thread.isInterrupted(), true);
 });
 
-test("ThreadCompat keeps synchronous sleep and native interruption errors", () => {
-    ThreadCompat.sleep(0);
-    ThreadCompat.sleep(1);
-    const error = new InterruptedExceptionCompat();
+test("ReasonerScheduler keeps synchronous sleep and native interruption errors", () => {
+    ReasonerScheduler.sleep(0);
+    ReasonerScheduler.sleep(1);
+    const error = new ReasonerInterruptedError();
 
-    assert.equal(error.name, "InterruptedExceptionCompat");
+    assert.equal(error.name, "ReasonerInterruptedError");
     assert.equal(error instanceof Error, true);
-    assert.equal(error instanceof InterruptedExceptionCompat, true);
+    assert.equal(error instanceof ReasonerInterruptedError, true);
 });
