@@ -70,7 +70,7 @@ nar.stop();
 
 ## 状态与许可证
 
-024 平台适配、027 性能收敛和 `v1.0.1` fix release 已完成；023/025 严格 host 边界与 031 Java-shape cleanup 仍在推进。长期稳定性原始 2,000,000 周期不属于日常运行负载。详见[运行与验证手册](docs/operator-runbook.md)和[开源就绪评估](docs/open-source-readiness-v1.0.1.md)。
+024 平台适配、027 性能收敛和 `v1.0.2` fix release 已完成；023/025 严格 host 边界与 031 Java-shape cleanup 仍在推进。长期稳定性原始 2,000,000 周期不属于日常运行负载。详见[运行与验证手册](docs/operator-runbook.md)和[开源就绪评估](docs/open-source-readiness-v1.0.2.md)。
 
 本仓库采用 MIT License，见 [LICENSE](LICENSE)。
 

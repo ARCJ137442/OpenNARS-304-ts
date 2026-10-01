@@ -7,7 +7,7 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
-import { isJavaThrowable, java, toJavaString as toHostJavaString } from "../../platform/node/native-host-adapter.ts";
+import { isJavaThrowable, java, toJavaString as toHostJavaString } from "../../platform/host-adapter.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
 import type { JavaStringInput } from "../../runtime/java-text.ts";
 import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";

@@ -60,7 +60,7 @@ Run `npm run release:bundle` to create a reproducible npm tarball and a SHA-256 
 - [User guide](docs/user-guide.en.md)
 - [Integration guide](docs/integration-guide.en.md)
 - [Architecture](docs/architecture.en.md)
-- [Open-source readiness](docs/open-source-readiness-v1.0.1.md)
+- [Open-source readiness](docs/open-source-readiness-v1.0.2.md)
 - [中文文档索引](docs/README.md)
 
 ## Attribution and license

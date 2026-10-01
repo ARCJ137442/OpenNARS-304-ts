@@ -14,7 +14,7 @@ import {
     type JavaLongInput,
 } from "../runtime/java-values.ts";
 import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
-import { toJavaString } from "../platform/node/native-host-adapter.ts";
+import { toJavaString } from "../platform/host-adapter.ts";
 import type { JavaString } from "../runtime/java-text.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Memory } from "../storage/Memory.ts";

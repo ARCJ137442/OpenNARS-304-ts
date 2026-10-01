@@ -1,6 +1,6 @@
 # 发布检查清单
 
-## v1.0.1 验证状态（2026-10-01）
+## v1.0.2 验证状态（2026-10-01）
 
 - [x] `LICENSE`、`NOTICE` 和中英文 README 存在。
 - [x] `npm run test:release`、`npm pack --dry-run`、`npm run release:bundle` 通过。

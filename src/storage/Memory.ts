@@ -32,7 +32,7 @@ import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import type { Nar } from "../main/Nar.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
-import { toJavaString as toHostJavaString } from "../platform/node/native-host-adapter.ts";
+import { toJavaString as toHostJavaString } from "../platform/host-adapter.ts";
 import type { JavaStringInput } from "../runtime/java-text.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { JavaRandom } from "../runtime/JavaRandom.ts";
