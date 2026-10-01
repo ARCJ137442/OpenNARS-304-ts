@@ -141,6 +141,29 @@ or restored instance changes the cached name. Different component counts can
 therefore still compare equal. The candidate was rejected and reverted before
 M1-prime acceptance; do not use its `243/243` matrix as candidate evidence.
 
+## Rejected fast-path audit
+
+Three local equality/clone shortcuts were rejected after direct counterexamples:
+
+- `javaValuesEqual` hash mismatch rejection broke Bag lookup when a restored
+  equal key has a different hash. Reverted in `4d40872`.
+- `CompoundTerm.replaceIntervals` returning the original no-interval term
+  changed `stresstest_bird1.nal`; its call graph can observe mutation, so the
+  apparent no-op clone was not unobservable. Reverted in `bf03206`.
+- `CompoundTerm.equals` complexity/arity rejection broke the established
+  name-based equality contract for restored terms. Reverted in `9575a0b`.
+
+After those reverts, `git diff --stat 60f0a27..HEAD -- src` is empty. Thus the
+last full M1-prime evidence on `60f0a27` still covers current production source;
+the rejected candidates are not present in the delivered tree. Their raw
+benchmark and failed-test evidence remains for diagnosis.
+
+The current measured profile still points at `CompoundTerm.equals` and
+`Bag.findEquivalentKey`, but their Java equality, mutable restored-key and
+insertion-order contracts constrain safe indexing. Next work should profile
+and reduce allocations in callers/temporary traversal without changing key
+identity or bypassing equals.
+
 The candidate was rejected: `stresstest_bird1.nal` lost its marker on the
 candidate and recovered after reverting the fast path. The call graph mutates
 some compound terms after lookup, so the apparent no-op clone is observable.
