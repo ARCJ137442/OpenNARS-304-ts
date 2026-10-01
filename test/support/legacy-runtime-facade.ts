@@ -1,11 +1,11 @@
 import { createNodeLegacyNamespace, Class, JavaObject, NativeJavaString } from "./node-legacy-namespace.ts";
-import type { JavaCharSequence as NativeCharSequence } from "../../src/runtime/java-text.ts";
+import type { TextString as NativeCharSequence } from "../../src/runtime/Text.ts";
 export { Class, JavaObject };
 // Host-facing legacy Java objects are exported only through this adapter. Core
 // and entry modules must not import npm jree directly.
 /** Legacy translated namespace. New code must use native capabilities instead. */
 export const java = createNodeLegacyNamespace();
-import { javaStringValue } from "../../src/runtime/java-text.ts";
+import { textHashCode, textValue } from "../../src/runtime/Text.ts";
 import { ReasonerRandom as JavaRandom } from "../../src/runtime/ReasonerRandom.ts";
 import {
     JavaAssertionError,
@@ -29,13 +29,20 @@ import {
     JavaThrowable,
 } from "./legacy-exceptions.ts";
 
-export {
-    javaStringHashCode,
-    javaStringLength,
-    javaStringValue,
-    javaStringsEqual,
-} from "../../src/runtime/java-text.ts";
-export type { JavaChar } from "../../src/runtime/java-text.ts";
+export type JavaChar = string;
+export const javaStringValue = (value: unknown): string => {
+    if (value instanceof NativeJavaString) return value.toString();
+    if (value === null || value === undefined) return String(value);
+    const toString = (value as { toString?: unknown }).toString;
+    if (typeof toString === "function" && toString !== Object.prototype.toString) {
+        const result = toString.call(value);
+        if (result !== value) return javaStringValue(result);
+    }
+    return textValue(value);
+};
+export const javaStringLength = (value: unknown): number => javaStringValue(value).length;
+export const javaStringHashCode = (value: unknown): number => textHashCode(javaStringValue(value));
+export const javaStringsEqual = (left: unknown, right: unknown): boolean => javaStringValue(left) === javaStringValue(right);
 export {
     addRuntimeLong,
     addRuntimeLongValues,

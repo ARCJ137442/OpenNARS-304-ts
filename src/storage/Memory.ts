@@ -31,9 +31,9 @@ import { GeneralInferenceControl } from "../control/GeneralInferenceControl.ts";
 import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import type { Nar } from "../main/Nar.ts";
-import { javaStringValue } from "../runtime/java-text.ts";
-import { toJavaString as toHostJavaString } from "../runtime/java-text.ts";
-import type { JavaStringInput } from "../runtime/java-text.ts";
+import { textValue } from "../runtime/Text.ts";
+import { asText as toHostTextString } from "../runtime/Text.ts";
+import type { TextInput } from "../runtime/Text.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { ReasonerRandom } from "../runtime/ReasonerRandom.ts";
 import type { Resettable } from "../interfaces/Resettable.ts";
@@ -217,13 +217,13 @@ export class Memory implements Iterable<Concept>, Resettable {
     /**
      * add new task that waits to be processed in the next cycleMemory
      */
-    public addNewTask(t: Task, reason: JavaStringInput): void {
+    public addNewTask(t: Task, reason: TextInput): void {
         /* synchronized (tasksMutex) { */
         this.novelTasks.putIn(t);
         /* } */
         // logic.TASK_ADD_NEW.commit(t.getPriority());
         if (this.emitting(Events.TaskAdd.class)) {
-            this.emit(Events.TaskAdd.class, t, toHostJavaString(reason));
+            this.emit(Events.TaskAdd.class, t, toHostTextString(reason));
         }
         this.output(t);
     }
@@ -313,9 +313,9 @@ export class Memory implements Iterable<Concept>, Resettable {
     }
 
 
-    public removeTask(task: Task, reason: JavaStringInput): void {
+    public removeTask(task: Task, reason: TextInput): void {
         if (this.emitting(TaskRemove.class)) {
-            this.emit(TaskRemove.class, task, toHostJavaString(reason));
+            this.emit(TaskRemove.class, task, toHostTextString(reason));
         }
     }
 
@@ -436,17 +436,17 @@ export class Memory implements Iterable<Concept>, Resettable {
         /* } */
     }
 
-    public getOperator(op: JavaStringInput): Operator {
-        return (this.operators.get(javaStringValue(op)) ?? null) as unknown as Operator;
+    public getOperator(op: TextInput): Operator {
+        return (this.operators.get(textValue(op)) ?? null) as unknown as Operator;
     }
 
     public addOperator(op: Operator): Operator {
-        this.operators.set(javaStringValue(op.name()), op);
+        this.operators.set(textValue(op.name()), op);
         return op;
     }
 
     public removeOperator(op: Operator): Operator {
-        const key = javaStringValue(op.name());
+        const key = textValue(op.name());
         const previous = this.operators.get(key) ?? null;
         this.operators.delete(key);
         return previous as unknown as Operator;

@@ -19,10 +19,10 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Nar } from "../main/Nar.ts";
 import type { Parameters } from "../main/Parameters.ts";
-import { javaStringValue, javaStringsEqual } from "../runtime/java-text.ts";
+import { textValue, textEquals } from "../runtime/Text.ts";
 import { addRuntimeLongValues, subtractRuntimeLongValues } from "../runtime/java-values.ts";
-import { toJavaString } from "../runtime/java-text.ts";
-import type { JavaChar, JavaCharSequence, JavaString } from "../runtime/java-text.ts";
+import { asText } from "../runtime/Text.ts";
+import type { TextCharacter, TextString } from "../runtime/Text.ts";
 import { ReasonerInvariantError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
@@ -39,6 +39,11 @@ class SentenceStringBuilder {
         return this.value;
     }
 }
+
+const formatTermIndices = (indices: Int32Array): string => {
+    const coordinates = Array.from({ length: 4 }, (_, index) => String(indices[index]));
+    return ` [i,j,k,l]=[${coordinates.join(",")}]`;
+};
 
 
 
@@ -65,7 +70,7 @@ export class Sentence extends RuntimeObject {
      * The punctuation indicates the type of the Sentence:
      * Judgment '.', Question '?', Goal '!', or Quest '@'
      */
-    public readonly punctuation: JavaChar;
+    public readonly punctuation: TextCharacter;
 
     /**
      * The truth value of Judgment, or desire value of Goal
@@ -91,7 +96,7 @@ export class Sentence extends RuntimeObject {
 
     private hash: int = 0;
 
-    public constructor(term: Term, punctuation: JavaChar, newTruth: TruthValue | null, newStamp: Stamp);
+    public constructor(term: Term, punctuation: TextCharacter, newTruth: TruthValue | null, newStamp: Stamp);
 
     /**
      * Create a Sentence with the given fields
@@ -103,19 +108,19 @@ export class Sentence extends RuntimeObject {
      *                    and
      *                    base
      */
-    public constructor(_content: Term, punctuation: JavaChar, truth: TruthValue | null, stamp: Stamp,
+    public constructor(_content: Term, punctuation: TextCharacter, truth: TruthValue | null, stamp: Stamp,
         normalize: boolean);
     public constructor(...args: unknown[]) {
         let _content: Term;
-        let punctuation: JavaChar;
+        let punctuation: TextCharacter;
         let truth: TruthValue | null;
         let stamp: Stamp;
         let normalize: boolean;
         if (args.length === 4) {
-            [_content, punctuation, truth, stamp] = args as [Term, JavaChar, TruthValue | null, Stamp];
+            [_content, punctuation, truth, stamp] = args as [Term, TextCharacter, TruthValue | null, Stamp];
             normalize = true;
         } else if (args.length === 5) {
-            [_content, punctuation, truth, stamp, normalize] = args as [Term, JavaChar, TruthValue | null, Stamp, boolean];
+            [_content, punctuation, truth, stamp, normalize] = args as [Term, TextCharacter, TruthValue | null, Stamp, boolean];
         } else {
             throw new ReasonerInputError("Invalid number of arguments");
         }
@@ -204,7 +209,7 @@ export class Sentence extends RuntimeObject {
                     if (Debug.DETAILED && Debug.DETAILED_SENTENCES && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
                         if (!Term.valid(_content)) {
                             let ntc: CompoundTerm.UnableToCloneException = new CompoundTerm.UnableToCloneException(
-                                "Invalid term discovered " + _content);
+                                `Invalid term discovered ${_content}`);
                             console.error(ntc.stack ?? ntc.message);
                             throw ntc;
                         }
@@ -246,20 +251,20 @@ export class Sentence extends RuntimeObject {
                     // Java's normalization table uses only the variable-name text
                     // as its key; retain the mapped Java CharSequence as the value
                     // so duplicate variables share the same generated object.
-                    let rename: Map<string, JavaCharSequence> = new Map();
+                    let rename: Map<string, TextString> = new Map();
                     let renamed: boolean = false;
 
                     for (let v of vars) {
-                        let vname: JavaCharSequence = v.name();
+                        let vname: TextString = v.name();
                         if (!v.hasVarIndep())
-                            vname = toJavaString(`${javaStringValue(vname)} ${javaStringValue(v.getScope().name())}`);
-                        const renameKey = javaStringValue(vname);
-                        let n: JavaCharSequence | null = rename.get(renameKey) ?? null;
+                            vname = asText(`${textValue(vname)} ${textValue(v.getScope().name())}`);
+                        const renameKey = textValue(vname);
+                        let n: TextString | null = rename.get(renameKey) ?? null;
                         if (n == null) {
                             // type + id
                             n = Variable.getName(v.getType(), rename.size + 1);
                             rename.set(renameKey, n);
-                            if (!javaStringsEqual(n, vname))
+                            if (!textEquals(n, vname))
                                 renamed = true;
                         }
 
@@ -272,8 +277,7 @@ export class Sentence extends RuntimeObject {
                         if (Debug.DETAILED && Debug.DETAILED_SENTENCES) {
                             if (!Term.valid(c)) {
                                 let ntc: CompoundTerm.UnableToCloneException = new CompoundTerm.UnableToCloneException(
-                                    "Invalid term discovered after normalization: " + c + " ; prior to normalization: "
-                                    + _content);
+                                    `Invalid term discovered after normalization: ${c} ; prior to normalization: ${_content}`);
                                 console.error(ntc.stack ?? ntc.message);
                                 throw ntc;
                             }
@@ -510,19 +514,19 @@ export class Sentence extends RuntimeObject {
      *
      * @return The String
      */
-    public override toString(): JavaString;
+    public override toString(): TextString;
 
     /**
      * @param nar       Reasoner instance
      * @param showStamp must the stamp get appended to the string?
      * @return textural representation of the sentence for humans
      */
-    public override toString(nar: Nar, showStamp: boolean): JavaString;
-    public override toString(...args: unknown[]): JavaString {
+    public override toString(nar: Nar, showStamp: boolean): TextString;
+    public override toString(...args: unknown[]): TextString {
         switch (args.length) {
             case 0: {
 
-                return toJavaString(this.getKey());
+                return asText(this.getKey());
 
 
                 break;
@@ -533,7 +537,7 @@ export class Sentence extends RuntimeObject {
 
 
 
-                let contentName: JavaCharSequence = this.term.name();
+                let contentName: TextString = this.term.name();
 
                 // final long t = nar.time();
 
@@ -552,11 +556,11 @@ export class Sentence extends RuntimeObject {
                     timediff = `!${String(this.stamp.getOccurrenceTime())}`;
                 }
 
-                let tenseString: string = ":" + timediff + ":";
+                let tenseString: string = `:${timediff}:`;
                 if (this.stamp.getOccurrenceTime() === Stamp.ETERNAL)
                     tenseString = "";
 
-                let stampString: JavaCharSequence | null = showStamp ? this.stamp.name() : null;
+                let stampString: TextString | null = showStamp ? this.stamp.name() : null;
 
                 let stringLength: int = String(contentName).length + String(tenseString).length + 1 + 1;
 
@@ -566,18 +570,10 @@ export class Sentence extends RuntimeObject {
                 if (showStamp && stampString !== null)
                     stringLength += String(stampString).length + 1;
 
-                let conv: string = "";
-                if (this.term.term_indices !== null) {
-                    conv = " [i,j,k,l]=[";
-                    for (let i: int = 0; i < 4; i++) { // skip min sizes
-                        conv += String(this.term.term_indices[i]) + ",";
-                    }
-                    // Java String.length() becomes the JS string length property.
-                    conv = conv.substring(0, conv.length - 1) + "]";
-                }
+                const conv = this.term.term_indices === null ? "" : formatTermIndices(this.term.term_indices);
 
                 const buffer = new SentenceStringBuilder()
-                    .append(javaStringValue(contentName))
+                    .append(textValue(contentName))
                     .append(this.punctuation)
                     .append(conv);
 
@@ -590,9 +586,9 @@ export class Sentence extends RuntimeObject {
                 }
 
                 if (showStamp)
-                    buffer.append(" ").append(javaStringValue(stampString));
+                    buffer.append(" ").append(textValue(stampString));
 
-                return toJavaString(buffer.toString());
+                return asText(buffer.toString());
 
 
                 break;
@@ -623,14 +619,7 @@ export class Sentence extends RuntimeObject {
                 stringLength += (showOcurrenceTime ? 8 : 0) + 11 /* truthString.length() */;
             }
 
-            let conv: string = "";
-            if (this.term.term_indices !== null) {
-                conv = " [i,j,k,l]=[";
-                for (let i: int = 0; i < 4; i++) { // skip min sizes
-                conv += String(this.term.term_indices[i]) + ",";
-                }
-                conv = conv.substring(0, conv.length - 1) + "]";
-            }
+            const conv = this.term.term_indices === null ? "" : formatTermIndices(this.term.term_indices);
 
             // suffix = [punctuation][ ][truthString][ ][occurenceTimeString]
             const suffix = new SentenceStringBuilder().append(this.punctuation).append(conv);

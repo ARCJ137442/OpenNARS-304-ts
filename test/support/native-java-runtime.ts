@@ -1,7 +1,7 @@
 import { NativeList } from "../../src/runtime/NativeList.ts";
 import { NativeMap } from "../../src/runtime/NativeMap.ts";
 import { NativeSet } from "../../src/runtime/NativeSet.ts";
-import { javaStringHashCode, NativeJavaString } from "../../src/runtime/java-text.ts";
+import { textHashCode } from "../../src/runtime/Text.ts";
 import {
     JavaError,
     JavaException,
@@ -15,6 +15,25 @@ import {
 } from "./legacy-exceptions.ts";
 import { ReasonerRandom as JavaRandom } from "../../src/runtime/ReasonerRandom.ts";
 import { RuntimeClassToken } from "../../src/runtime/RuntimeClass.ts";
+
+export class NativeJavaString {
+    public constructor(private readonly value: string) {}
+    public length(): number { return this.value.length; }
+    public charAt(index: number): number | null { return index < 0 || index >= this.value.length ? null : this.value.charCodeAt(index); }
+    public subSequence(start: number, end: number): NativeJavaString { return new NativeJavaString(this.value.slice(start, end)); }
+    public substring(start: number, end?: number): NativeJavaString { return new NativeJavaString(this.value.substring(start, end)); }
+    public split(separator: string): NativeJavaString[] { return this.value.split(separator).map(value => new NativeJavaString(value)); }
+    public trim(): NativeJavaString { return new NativeJavaString(this.value.trim()); }
+    public indexOf(value: string | NativeJavaString): number { return this.value.indexOf(String(value)); }
+    public toString(): string { return this.value; }
+    public hashCode(): number { return textHashCode(this.value); }
+    public equals(other: unknown): boolean {
+        if (other instanceof NativeJavaString) return other.value === this.value;
+        if (other === null || other === undefined) return false;
+        const toString = (other as { toString?: unknown }).toString;
+        return typeof toString === "function" && String(toString.call(other)) === this.value;
+    }
+}
 
 type Constructor<T> = new (...args: never[]) => T;
 
@@ -163,7 +182,7 @@ export function createNativeJavaFacade(): NativeJavaFacade {
                 err: { println: (value: unknown): void => console.error(String(value)), print: (value: unknown): void => console.error(String(value)) },
                 currentTimeMillis: (): bigint => BigInt(Date.now()),
                 lineSeparator: (): NativeJavaString => new NativeJavaString("\n"),
-                identityHashCode: (value: object): number => javaStringHashCode(String(value)),
+                identityHashCode: (value: object): number => textHashCode(String(value)),
             },
         },
         util: {
@@ -184,7 +203,6 @@ export function createNativeJavaFacade(): NativeJavaFacade {
 }
 
 export { NativeClass as Class, NativeObject as JavaObject };
-export { NativeJavaString };
 export type JavaStringInput = NativeJavaString | string;
 export const toJavaString = (value: JavaStringInput): NativeJavaString =>
     value instanceof NativeJavaString ? value : new NativeJavaString(value);

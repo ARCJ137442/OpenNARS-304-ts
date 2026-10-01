@@ -80,7 +80,7 @@ export abstract class RuntimeObject {
     /**
      * Java's string concatenation and String(value) call toString on an
      * object.  Translated OpenNARS toString methods still return jree's boxed
-     * JavaString, so keep this coercion at the project-owned runtime boundary
+     * TextString, so keep this coercion at the project-owned runtime boundary
      * while the domain classes are migrated away from JavaObject.
      */
     public [Symbol.toPrimitive](): string {

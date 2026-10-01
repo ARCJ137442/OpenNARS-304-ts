@@ -7,7 +7,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 import { Terms } from "./Terms.ts";
-import { toJavaString, type JavaCharSequence, type JavaListInput, type JavaString } from "../runtime/java-text.ts";
+import { asText, type TextString, type ArrayConvertible } from "../runtime/Text.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -252,7 +252,7 @@ export class Conjunction extends CompoundTerm {
                 }
                 if (typeof (first as { toArray?: unknown })?.toArray === "function") {
                     return Conjunction.make(
-                        (first as JavaListInput<Term>).toArray(new Array<Term>(0)),
+                        (first as ArrayConvertible<Term>).toArray(new Array<Term>(0)),
                         second as int,
                         third as boolean,
                     );
@@ -375,11 +375,11 @@ export class Conjunction extends CompoundTerm {
         return ret;
     }
 
-    public static PositiveIntString(value: int): JavaString {
+    public static PositiveIntString(value: int): TextString {
         if (value === 0) {
-            return toJavaString("");
+            return asText("");
         } else {
-            return toJavaString("+" + String(value));
+            return asText(`+${value}`);
         }
     }
 
@@ -401,11 +401,10 @@ export class Conjunction extends CompoundTerm {
                 let relativePositionX: int = term.term_indices[2] - minX;
                 let relativePositionY: int = term.term_indices[3] - minY;
 
-                s += "[i" + Conjunction.PositiveIntString(relativeSizeX) +
-                    ",j" + Conjunction.PositiveIntString(relativeSizeY);
-                s += ",k" + Conjunction.PositiveIntString(relativePositionX);
-                s += ",l" + Conjunction.PositiveIntString(relativePositionY) + "]";
-                let ret: Term = Term.get(toJavaString(s));
+                s += `[i${Conjunction.PositiveIntString(relativeSizeX)},j${Conjunction.PositiveIntString(relativeSizeY)}`;
+                s += `,k${Conjunction.PositiveIntString(relativePositionX)}`;
+                s += `,l${Conjunction.PositiveIntString(relativePositionY)}]`;
+                let ret: Term = Term.get(asText(s));
                 ret.term_indices = term.term_indices;
                 ret.index_variable = term.index_variable;
                 return ret;
@@ -440,7 +439,7 @@ export class Conjunction extends CompoundTerm {
         return ret;
     }
 
-    protected makeName(): JavaCharSequence {
+    protected makeName(): TextString {
         return Conjunction.makeCompoundName(this.operator(), ...this.term);
     }
 

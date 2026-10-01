@@ -2,7 +2,7 @@
 import { FunctionOperator } from "../FunctionOperator.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import { Term } from "../../language/Term.ts";
-import { toJavaString } from "../../runtime/java-text.ts";
+import { asText } from "../../runtime/Text.ts";
 import { MissingRuntimeCapabilityError, type RuntimeCapabilities } from "../../platform/RuntimeCapabilities.ts";
 
 
@@ -19,10 +19,8 @@ export class System extends FunctionOperator {
     }
 
     protected function(_memory: Memory, x: Term[]): Term {
-        let cmd = "";
-        for (let i = 0; i < x.length; ++i) {
-            cmd += String(x[i].name()) + " ";
-        }
+        const argumentsText = x.map((term) => String(term.name())).join(" ");
+        const cmd = x.length > 0 ? `${argumentsText} ` : "";
         let ret = "";
         if (this.executeSystemCommand === undefined) {
             throw new MissingRuntimeCapabilityError("executeSystemCommand");
@@ -32,11 +30,11 @@ export class System extends FunctionOperator {
         } catch {
             // Java catches Exception here and returns an empty Term.
         }
-        return new Term(toJavaString(ret));
+        return new Term(asText(ret));
     }
 
     protected getRange(): Term {
-        return Term.get(toJavaString("system_called"));
+        return Term.get(asText("system_called"));
     }
 
 }

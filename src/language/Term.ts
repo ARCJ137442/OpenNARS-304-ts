@@ -5,14 +5,7 @@ import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
-import { javaStringHashCode, javaStringValue, javaStringsEqual } from "../runtime/java-text.ts";
-import {
-    toJavaString,
-    type JavaChar,
-    type JavaCharSequence,
-    type JavaString,
-    type JavaStringInput,
-} from "../runtime/java-text.ts";
+import { asText, textHashCode, textValue, textEquals, type TextCharacter, type TextString, type TextInput } from "../runtime/Text.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { NativeSortedSet } from "../runtime/NativeSortedSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
@@ -71,7 +64,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
     // Java permits a field and a method to share a name; an instance property
     // with that name would shadow `name()` in JavaScript. Keep the cache under a
     // distinct name so the translated method remains callable at runtime.
-    private nameValue: JavaCharSequence | null = null;
+    private nameValue: TextString | null = null;
 
     public static isSelf(t: Term): boolean {
         return Term.SELF.equals(t);
@@ -121,8 +114,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
      *
      * @param name A String as the name of the Term
      */
-    public constructor(name: JavaStringInput);
-    public constructor(name: JavaCharSequence);
+    public constructor(name: TextInput);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -134,11 +126,11 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             case 1: {
-                const [name] = args as [JavaStringInput];
+                const [name] = args as [TextInput];
 
 
                 super();
-                this.setName(name);
+                this.setName(asText(name));
 
 
                 break;
@@ -152,18 +144,17 @@ export class Term extends RuntimeObject implements AbstractTerm {
 
 
     /** gets the atomic term given a name */
-    public static get(name: string): Term;
-    public static get(name: JavaCharSequence): Term;
+    public static get(name: TextInput): Term;
 
     /** gets the atomic term of an integer */
     public static get(i: int): Term;
     public static get(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
-                const [name] = args as [JavaStringInput];
+                const [name] = args as [TextInput];
 
 
-                const nativeName = javaStringValue(name);
+                const nativeName = textValue(name);
                 const nativeNameKey = nativeName;
                 let x: Term | null = Term.atoms.get(nativeNameKey) ?? null; // only
                 if (x !== null && !String(x).endsWith("]")) { // return only if it isn't an index term
@@ -174,12 +165,12 @@ export class Term extends RuntimeObject implements AbstractTerm {
                 // p[s,i,j]
                 let term_indices: Int32Array | null = null;
                 let before_indices_str: string | null = null;
-                if (javaStringValue(nameStr).endsWith("]") && javaStringValue(nameStr).includes("[")) { // simple check, failing for most terms
+                if (textValue(nameStr).endsWith("]") && textValue(nameStr).includes("[")) { // simple check, failing for most terms
                     let indices_str: string = nameStr.split("[")[1].split("]")[0];
                     before_indices_str = nameStr.split("[")[0];
                     let ind_s: string[] = indices_str.split(",");
                     if (ind_s.length === 2) { // only position info given
-                        indices_str = "1,1," + indices_str;
+                        indices_str = `1,1,${indices_str}`;
                         ind_s = indices_str.split(",");
                     }
                     term_indices = new Int32Array(ind_s.length);
@@ -196,14 +187,14 @@ export class Term extends RuntimeObject implements AbstractTerm {
                     }
                 }
 
-                let name2: JavaStringInput = nativeName;
+                let name2: TextInput = nativeName;
                 if (term_indices !== null) { // only on conceptual level not
-                    name2 = String(before_indices_str) + "[i,j,k,l]";
+                    name2 = `${String(before_indices_str)}[i,j,k,l]`;
                 }
                 x = new Term(name2);
                 x.term_indices = term_indices;
                 x.index_variable = before_indices_str === null ? null : String(before_indices_str);
-                Term.atoms.set(javaStringValue(name2), x);
+                Term.atoms.set(textValue(name2), x);
 
                 return x;
 
@@ -233,13 +224,11 @@ export class Term extends RuntimeObject implements AbstractTerm {
      *
      * @return The name of the term as a String
      */
-    public name(): JavaCharSequence {
-        // Java's internal field is nullable: CompoundTerm.name() relies on
-        // null to invalidate and lazily rebuild compound names.
-        return this.nameInternal() as JavaCharSequence;
+    public name(): string {
+        return this.nameInternal() as TextString;
     }
 
-    protected nameInternal(): JavaCharSequence | null {
+    protected nameInternal(): string | null {
         return this.nameValue;
     }
 
@@ -278,11 +267,11 @@ export class Term extends RuntimeObject implements AbstractTerm {
             return true;
         if (that === null || !(that instanceof Term) || this.getClass() !== (that as Term).getClass())
             return false; // optimization, if complexity is different they cant be equal
-        // jree's JavaString currently compares its UTF-16 backing arrays through
+        // jree's TextString currently compares its UTF-16 backing arrays through
         // a case-insensitive locale path. Term equality is Java's exact string
         // equality, so cross the boundary through the native text value here.
         return this.getComplexity() === (that as Term).getComplexity()
-            && javaStringsEqual(this.name(), (that as Term).name());
+            && textEquals(this.name(), (that as Term).name());
     }
 
     /**
@@ -293,7 +282,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
     public hashCode(): int {
         // Match java.lang.String.hashCode() instead of jree's typed-array hash
         // fallback, which otherwise gives unrelated term names the same hash.
-        return javaStringHashCode(this.name());
+        return textHashCode(this.name());
     }
 
     /**
@@ -390,14 +379,8 @@ export class Term extends RuntimeObject implements AbstractTerm {
      * set the name
      */
     // only method that should modify Term.name
-    protected setName(newName: JavaCharSequence | string | null): void {
-        // Java callers expect CharSequence methods (hashCode/equals/etc.),
-        // while translated literals arrive as native strings.
-        this.nameValue = newName === null
-            ? null
-            : typeof newName === "string"
-            ? toJavaString(newName)
-            : newName;
+    protected setName(newName: string | null): void {
+        this.nameValue = newName;
     }
 
     /**
@@ -467,16 +450,16 @@ export class Term extends RuntimeObject implements AbstractTerm {
      *
      * @return The name of the term as a String
      */
-    public override toString(): JavaString {
-        return this.name().toString();
+    public override toString(): string {
+        return this.name();
     }
 
     /**
      * Creates a quote-escaped term from a string. Useful for an atomic term that is
      * meant to contain a message as its name
      */
-    public static text(t: JavaStringInput): Term {
-        return Term.get("\"" + t + "\"");
+    public static text(t: TextInput): Term {
+        return Term.get(`"${textValue(t)}"`);
     }
 
     /**
@@ -486,7 +469,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
      */
     public hasVar(): boolean;
 
-    public hasVar(type: JavaChar): boolean;
+    public hasVar(type: TextCharacter): boolean;
     public hasVar(...args: unknown[]): boolean {
         switch (args.length) {
             case 0: {
@@ -498,7 +481,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             case 1: {
-                const [type] = args as [JavaChar];
+                const [type] = args as [TextCharacter];
 
 
                 switch (type) {

@@ -14,8 +14,8 @@ import type { Operation } from "./Operation.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { CompoundTerm } from "../language/CompoundTerm.ts";
 import {
-    type JavaStringInput,
-} from "../runtime/java-text.ts";
+    type TextInput,
+} from "../runtime/Text.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 
 // Keep FunctionOperator below the inference layer. Importing BudgetFunctions
@@ -35,7 +35,7 @@ const truthToQuality = (truth: any): float => {
  */
 export abstract class FunctionOperator extends Operator {
 
-    protected constructor(name: JavaStringInput) {
+    protected constructor(name: TextInput) {
         super(name);
     }
 

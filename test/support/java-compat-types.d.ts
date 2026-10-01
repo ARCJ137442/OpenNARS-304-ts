@@ -1,4 +1,4 @@
-import type { NativeJavaString } from "../../src/runtime/java-text.js";
+import type { NativeJavaString } from "./native-java-runtime.js";
 import type { JavaThrowable, JavaException, JavaRuntimeException } from "./legacy-exceptions.js";
 
 declare global {

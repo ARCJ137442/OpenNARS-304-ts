@@ -8,9 +8,9 @@ import { Similarity } from "../../language/Similarity.ts";
 import type { Statement } from "../../language/Statement.ts";
 import { Term } from "../../language/Term.ts";
 import { Symbols } from "../../io/Symbols.ts";
-import { javaStringValue } from "../../runtime/java-text.ts";
+import { textValue } from "../../runtime/Text.ts";
 import { ReasonerInputError, ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
-import type { JavaStringInput } from "../../runtime/java-text.ts";
+import type { TextInput } from "../../runtime/Text.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -44,13 +44,13 @@ export class Reflect extends FunctionOperator {
         return Reflect.getMetaTerm(content);
     }
 
-    public static sop(s: Statement, operatorName: JavaStringInput): Term;
+    public static sop(s: Statement, operatorName: TextInput): Term;
 
     public static sop(s: Statement, predicate: Term): Term;
 
-    public static sop(operatorName: JavaStringInput, t: Term[]): Term;
+    public static sop(operatorName: TextInput, t: Term[]): Term;
 
-    public static sop(operatorName: JavaStringInput, ...t: Term[]): Term;
+    public static sop(operatorName: TextInput, ...t: Term[]): Term;
 
     /**
      * <(*,subject,object) --> predicate>
@@ -72,10 +72,10 @@ export class Reflect extends FunctionOperator {
                     const product = Product.make(Reflect.getMetaTerm(s.getSubject()), Reflect.getMetaTerm(s.getPredicate()));
                     const predicate = second instanceof Term
                         ? second
-                        : Term.get(javaStringValue(second));
+                        : Term.get(textValue(second));
                     return Inheritance.make(product, predicate);
                 }
-                const operatorName = javaStringValue(first);
+                const operatorName = textValue(first);
                 const terms = second as Term[];
                 let m: Term[] = new Array<Term>(terms.length);
                 let i: int = 0;

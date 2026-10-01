@@ -21,7 +21,7 @@ import type { Concept } from "../entity/Concept.ts";
 import type { TermLink } from "../entity/TermLink.ts";
 import type { TaskLink } from "../entity/TaskLink.ts";
 import type { Parameters } from "../main/Parameters.ts";
-import type { JavaChar, JavaStringInput } from "../runtime/java-text.ts";
+import type { TextCharacter, TextInput } from "../runtime/Text.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import { NativeList } from "../runtime/NativeList.ts";
 
@@ -348,7 +348,7 @@ export class DerivationContext {
      * @param newTruth    The truth value of the sentence in task
      * @param newBudget   The budget value in task
      */
-    public singlePremiseTask(newContent: Term, punctuation: JavaChar, newTruth: TruthValue,
+    public singlePremiseTask(newContent: Term, punctuation: TextCharacter, newTruth: TruthValue,
         newBudget: BudgetValue): boolean;
     public singlePremiseTask(...args: unknown[]): boolean {
         switch (args.length) {
@@ -378,7 +378,7 @@ export class DerivationContext {
             }
 
             case 4: {
-                const [newContent, punctuation, newTruth, newBudget] = args as [Term, JavaChar, TruthValue, BudgetValue];
+                const [newContent, punctuation, newTruth, newBudget] = args as [Term, TextCharacter, TruthValue, BudgetValue];
 
 
                 if (!newBudget.aboveThreshold())
@@ -629,7 +629,7 @@ export class DerivationContext {
      * tasks added with this method will be remembered by this NAL instance; useful
      * for feedback
      */
-    public addTask(t: Task, reason: JavaStringInput): void;
+    public addTask(t: Task, reason: TextInput): void;
 
     /**
      * Activated task called in MatchingRules.trySolution and
@@ -645,7 +645,7 @@ export class DerivationContext {
     public addTask(...args: unknown[]): void {
         switch (args.length) {
             case 2: {
-                const [t, reason] = args as [Task, JavaStringInput];
+                const [t, reason] = args as [Task, TextInput];
 
 
                 if (t.sentence.term === null) {

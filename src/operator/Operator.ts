@@ -9,8 +9,8 @@ import { Debug } from "../main/Debug.ts";
 import type { Product } from "../language/Product.ts";
 import type { Statement } from "../language/Statement.ts";
 import type { BudgetValue } from "../entity/BudgetValue.ts";
-import { toJavaString, type JavaStringInput } from "../runtime/java-text.ts";
-import { javaStringValue } from "../runtime/java-text.ts";
+import { asText, type TextInput } from "../runtime/Text.ts";
+import { textValue } from "../runtime/Text.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -25,7 +25,7 @@ import type { Plugin } from "../plugin/Plugin.ts";
 export type OperatorFeedback = Task[] | null;
 
 const javaArrayToString = (values: unknown[]): string =>
-    `[${values.map((value) => value === null || value === undefined ? "null" : javaStringValue(value)).join(", ")}]`;
+    `[${values.map((value) => value === null || value === undefined ? "null" : textValue(value)).join(", ")}]`;
 
 
 
@@ -39,7 +39,7 @@ export abstract class Operator extends Term implements Plugin {
 
     protected constructor();
 
-    protected constructor(name: JavaStringInput);
+    protected constructor(name: TextInput);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -51,11 +51,11 @@ export abstract class Operator extends Term implements Plugin {
             }
 
             case 1: {
-                const [name] = args as [JavaStringInput];
+                const [name] = args as [TextInput];
 
 
-                super(toJavaString(name));
-                if (!javaStringValue(name).startsWith("^"))
+                super(asText(name));
+                if (!textValue(name).startsWith("^"))
                     throw new ReasonerStateError("Operator name needs ^ prefix");
 
 
@@ -168,8 +168,8 @@ export abstract class Operator extends Term implements Plugin {
         const operationArguments: Term = operation.getSubject();
         // Java source returns the final String after skipping the Product prefix
         // "(*,"; no caller consumes Java String identity at this output boundary.
-        const argList = javaStringValue(operationArguments.toString()).substring(3);
-        return `${javaStringValue(operator)}(${argList}`;
+        const argList = textValue(operationArguments.toString()).substring(3);
+        return `${textValue(operator)}(${argList}`;
     }
 
     public clone(): Operator {
@@ -230,16 +230,15 @@ export abstract class Operator extends Term implements Plugin {
             let args: Term[] = this.operation.getArguments().term;
             let operator: Operator = this.operation.getOperator();
 
-            const budgetPrefix = b !== null ? javaStringValue(b.toStringExternal()) + " " : "";
-            return budgetPrefix + javaStringValue(operator) +
-                "(" + javaArrayToString(args) + ")=" + javaStringValue(this.feedback);
+            const budgetPrefix = b !== null ? `${textValue(b.toStringExternal())} ` : "";
+            return `${budgetPrefix}${textValue(operator)}(${javaArrayToString(args)})=${textValue(this.feedback)}`;
         }
 
     };
 
 
-    public static addPrefixIfMissing(opName: JavaStringInput): string {
-        const text = javaStringValue(opName);
+    public static addPrefixIfMissing(opName: TextInput): string {
+        const text = textValue(opName);
         return text.startsWith("^") ? text : `^${text}`;
     }
 

@@ -2,9 +2,9 @@
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
-import { javaStringHashCode, javaStringValue } from "../runtime/java-text.ts";
+import { textHashCode, textValue } from "../runtime/Text.ts";
 import { javaValuesEqual } from "../runtime/java-values.ts";
-import type { JavaCharSequenceInput } from "../runtime/java-text.ts";
+import type { TextInput } from "../runtime/Text.ts";
 import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
@@ -18,7 +18,7 @@ const javaObjectHashCode = (value: unknown): int => {
     if (typeof hashCode === "function") {
         return hashCode.call(value) as int;
     }
-    return javaStringHashCode(value) as int;
+    return textHashCode(textValue(value)) as int;
 };
 
 
@@ -199,8 +199,8 @@ export abstract  class Item<K> extends RuntimeObject {
         // This builder is local, consumed once, and never observed as a mutable
         // object.  Keep Java String.valueOf/toString conversion explicit, then
         // use the native string concatenation equivalent.
-        const budgetText = this.budget !== null ? javaStringValue(this.budget.toString()) : "";
-        const nameText = javaStringValue(this.name());
+        const budgetText = this.budget !== null ? textValue(this.budget.toString()) : "";
+        const nameText = textValue(this.name());
         return `${budgetText} ${nameText}`;
     }
 
@@ -212,8 +212,8 @@ export abstract  class Item<K> extends RuntimeObject {
     public toStringExternal(): string {
         // Java source type: StringBuilder -> String; StringBuilder(briefBudget.length() + n.length() + 1)
         //              .append(briefBudget).append(' ').append(n).toString();
-        const budgetText = javaStringValue(this.requireBudget().toStringExternal());
-        const nameText = javaStringValue(this.name());
+        const budgetText = textValue(this.requireBudget().toStringExternal());
+        const nameText = textValue(this.name());
         return `${budgetText} ${nameText}`;
     }
 
@@ -221,8 +221,8 @@ export abstract  class Item<K> extends RuntimeObject {
     public toStringExternal2(): string {
         // Java source type: StringBuilder -> String; StringBuilder(briefBudget.length() + n.length() + 1)
         //              .append(n).append(' ').append(briefBudget).toString();
-        const budgetText = javaStringValue(this.requireBudget().toStringExternal());
-        const nameText = javaStringValue(this.name());
+        const budgetText = textValue(this.requireBudget().toStringExternal());
+        const nameText = textValue(this.name());
         return `${nameText} ${budgetText}`;
     }
 
@@ -275,7 +275,7 @@ export abstract  class Item<K> extends RuntimeObject {
     }
 }
 
-abstract class StringKeyItem extends Item<JavaCharSequenceInput> {
+abstract class StringKeyItem extends Item<TextInput> {
 
     public constructor(budget: BudgetValue) {
         super(budget);

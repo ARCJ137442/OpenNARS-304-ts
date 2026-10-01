@@ -9,7 +9,7 @@ import type { Concept } from "../../entity/Concept.ts";
 import type { Task } from "../../entity/Task.ts";
 import type { DerivationContext } from "../DerivationContext.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
-import type { JavaChar } from "../../runtime/java-text.ts";
+import type { TextCharacter } from "../../runtime/Text.ts";
 
 
 
@@ -45,7 +45,7 @@ export class ProcessTask {
         /* synchronized (concept) { */
         const inputTask = task.isInput();
         concept.observable = concept.observable || inputTask;
-        let type: JavaChar = task.sentence.punctuation;
+        let type: TextCharacter = task.sentence.punctuation;
         switch (type) {
             case Symbols.JUDGMENT_MARK:
                 ProcessJudgment.processJudgment(concept, nal, task);

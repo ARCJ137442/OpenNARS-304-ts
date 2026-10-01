@@ -1,4 +1,5 @@
 import { java, type int } from "../../support/legacy-runtime-facade.ts";
+import type { TextInput } from "../../../src/runtime/Text.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import type { EventEmitter } from "../../../src/io/events/EventEmitter.ts";
@@ -7,8 +8,8 @@ import type { ClassTokenLike } from "../../../src/runtime/RuntimeClass.ts";
 const OUT = OutputHandler.OUT;
 const EXE = OutputHandler.EXE;
 
-type OutputContainsFactory = (nar: Nar, containing: java.lang.String, maxSimilars: int) => OutputCondition;
-type OutputNotContainsFactory = (nar: Nar, containing: java.lang.String) => OutputCondition;
+type OutputContainsFactory = (nar: Nar, containing: TextInput, maxSimilars: int) => OutputCondition;
+type OutputNotContainsFactory = (nar: Nar, containing: TextInput) => OutputCondition;
 type OutputEmptyFactory = (nar: Nar) => OutputCondition;
 
 
@@ -90,10 +91,10 @@ export abstract class OutputCondition extends OutputHandler {
      * reads an example file line-by-line, before being processed, to extract
      * expectations
      */
-    public static getConditions(n: Nar, example: java.lang.String,
+    public static getConditions(n: Nar, example: TextInput,
         similarResultsToSave: int): java.util.List<OutputCondition> {
         const conditions: java.util.List<OutputCondition> = new java.util.ArrayList<OutputCondition>();
-        let lines: java.lang.String[] = example.split("\n");
+        let lines: string[] = String(example).split("\n");
 
         for (let s of lines) {
             s = s.trim();
@@ -103,7 +104,7 @@ export abstract class OutputCondition extends OutputHandler {
             if (s.indexOf(expectOutContains2) === 0) {
 
                 // remove ') suffix:
-                let e: java.lang.String = s.substring(expectOutContains2.length(), s.length() - 2);
+                let e: string = s.substring(expectOutContains2.length(), s.length - 2);
 
                 /*
                  * try {
@@ -127,7 +128,7 @@ export abstract class OutputCondition extends OutputHandler {
             if (s.indexOf(expectOutNotContains2) === 0) {
 
                 // remove ') suffix:
-                let e: java.lang.String = s.substring(expectOutNotContains2.length(), s.length() - 2);
+                let e: string = s.substring(expectOutNotContains2.length(), s.length - 2);
                 const createOutputNotContains = OutputCondition.requireFactory(
                     OutputCondition.outputNotContainsFactory,
                     "OutputNotContainsCondition",

@@ -1,5 +1,5 @@
 //! Java source: opennars/interfaces/SensoryChannelConsumer.java
-import type { JavaStringInput } from "../runtime/java-text.ts";
+import type { TextInput } from "../runtime/Text.ts";
 import type { SensoryChannel } from "../plugin/perception/SensoryChannel.ts";
 
 
@@ -17,5 +17,5 @@ export interface SensoryChannelConsumer {
      * @param channel the channel to be registered
      */
     // Java source type: String. Accept boxed Java and native strings at the boundary.
-    addSensoryChannel(term: JavaStringInput, channel: SensoryChannel): void;
+    addSensoryChannel(term: TextInput, channel: SensoryChannel): void;
 }

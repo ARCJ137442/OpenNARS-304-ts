@@ -34,11 +34,12 @@ class TestItem extends Item<string> {
 }
 
 
-test("Bag keeps math and string boundaries project-owned", () => {
+test("Bag uses native string conversion without Java text wrappers", () => {
     const source = readFileSync(new URL("../../src/storage/Bag.ts", import.meta.url), "utf8");
     assert.doesNotMatch(source, /from ["']jree["']/);
     assert.doesNotMatch(source, /java\.lang\.(?:Math|String(?:Buffer|Builder))/);
-    assert.match(source, /toJavaString/);
+    assert.match(source, /asText/);
+    assert.doesNotMatch(source, /toJavaString|NativeJavaString/);
 });
 
 test("Bag.pickOut supports both Java overload shapes", () => {

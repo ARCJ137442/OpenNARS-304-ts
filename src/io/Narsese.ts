@@ -1,7 +1,7 @@
 //! Java source: opennars/io/Narsese.java
 import type { int, float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
-import { javaStringValue } from "../runtime/java-text.ts";
-import type { JavaStringInput } from "../runtime/java-text.ts";
+import { textValue } from "../runtime/Text.ts";
+import type { TextInput } from "../runtime/Text.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { Parser } from "./Parser.ts";
 import { Symbols } from "./Symbols.ts";
@@ -40,7 +40,7 @@ import { Implication } from "../language/Implication.ts";
 import { Equivalence } from "../language/Equivalence.ts";
 import { Similarity } from "../language/Similarity.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
-import type { JavaChar } from "../runtime/java-text.ts";
+import type { TextCharacter } from "../runtime/Text.ts";
 import { CompositionalRules } from "../inference/CompositionalRules.ts";
 import { TruthFunctions } from "../inference/TruthFunctions.ts";
 import { TemporalInferenceControl } from "../control/TemporalInferenceControl.ts";
@@ -65,11 +65,11 @@ const SET_INT_OPENER = NativeOperator.SET_INT_OPENER;
 const SET_INT_CLOSER = NativeOperator.SET_INT_CLOSER;
 const STATEMENT_OPENER = NativeOperator.STATEMENT_OPENER;
 const STATEMENT_CLOSER = NativeOperator.STATEMENT_CLOSER;
-const getOperator = (value: string) => Symbols.getOperator(javaStringValue(value));
-const getRelation = (value: string) => Symbols.getRelation(javaStringValue(value));
-const getOpener = (value: string) => Symbols.getOpener(javaStringValue(value));
-const getCloser = (value: string) => Symbols.getCloser(javaStringValue(value));
-const isRelation = (value: string) => Symbols.isRelation(javaStringValue(value));
+const getOperator = (value: string) => Symbols.getOperator(textValue(value));
+const getRelation = (value: string) => Symbols.getRelation(textValue(value));
+const getOpener = (value: string) => Symbols.getOpener(textValue(value));
+const getCloser = (value: string) => Symbols.getCloser(textValue(value));
+const isRelation = (value: string) => Symbols.isRelation(textValue(value));
 
 /**
  * Minimal UTF-16 mutable buffer used by the parser's prefix/suffix passes.
@@ -79,8 +79,8 @@ const isRelation = (value: string) => Symbols.isRelation(javaStringValue(value))
 class Utf16Builder {
     private value: string;
 
-    public constructor(value: JavaStringInput = "") {
-        this.value = javaStringValue(value);
+    public constructor(value: TextInput = "") {
+        this.value = textValue(value);
     }
 
     public length(): number {
@@ -194,7 +194,7 @@ export class Narsese implements Parser {
      * @param s the single-line addInput String
      * @return An experienced task
      */
-    public parseTask(s: JavaStringInput): Task {
+    public parseTask(s: TextInput): Task {
         const buffer = new Utf16Builder(s);
 
         const budgetString = Narsese.getBudgetString(buffer);
@@ -202,7 +202,7 @@ export class Narsese implements Parser {
         const tense = Narsese.parseTense(buffer);
         const str = buffer.toString().trim();
         let last: int = str.length - 1;
-        let punc: JavaChar = str.charAt(last);
+        let punc: TextCharacter = str.charAt(last);
 
         let stamp: Stamp = new Stamp(-1 as unknown as long /* if -1, will be set right before the Task is input */,
             tense, this.memory.newStampSerial(), this.memory.narParameters.DURATION);
@@ -286,7 +286,7 @@ export class Narsese implements Parser {
      * @param type Task type
      * @return the addInput TruthValue
      */
-    private parseTruth(s: string | null, type: JavaChar): TruthValue | null {
+    private parseTruth(s: string | null, type: TextCharacter): TruthValue | null {
         if ((type === QUESTION_MARK) || (type === QUEST_MARK)) {
             return null;
         }
@@ -317,7 +317,7 @@ export class Narsese implements Parser {
      * @throws Parser.InvalidInputException If the String cannot be parsed into a
      *                                      BudgetValue
      */
-    private parseBudget(s: string | null, punctuation: JavaChar, truth: TruthValue | null): BudgetValue {
+    private parseBudget(s: string | null, punctuation: TextCharacter, truth: TruthValue | null): BudgetValue {
         let priority: float;
         let durability: float;
         switch (punctuation) {
@@ -389,15 +389,15 @@ export class Narsese implements Parser {
      * @throws Parser.InvalidInputException if the String couldn't get parsed to a
      *                                      term
      */
-    public parseTerm(s: JavaStringInput): Term | null {
-        const text = javaStringValue(s).trim();
+    public parseTerm(s: TextInput): Term | null {
+        const text = textValue(s).trim();
 
         if (text.length === 0)
             return null;
 
         let index: int = text.length - 1;
-        let first: JavaChar = text.charAt(0);
-        let last: JavaChar = text.charAt(index);
+        let first: TextCharacter = text.charAt(0);
+        let last: TextCharacter = text.charAt(index);
 
         let opener: NativeOperator | null = getOpener(first);
         if (opener !== null) {
@@ -502,7 +502,7 @@ export class Narsese implements Parser {
             throw new Parser.InvalidInputException(`invalid term: ${s}`);
         }
 
-        let c: JavaChar = s.charAt(0);
+        let c: TextCharacter = s.charAt(0);
         // jree's Java String charAt boundary is not a native JS string value.
         // Normalize it before comparing with the wire-level interval prefix.
         if (c === Symbols.INTERVAL_PREFIX) {
@@ -696,7 +696,7 @@ export class Narsese implements Parser {
      * @param i The starting index
      */
     private static isOpener(s: string, i: int): boolean {
-        let c: JavaChar = s.charAt(i);
+        let c: TextCharacter = s.charAt(i);
 
         let b: boolean = (getOpener(c) !== null);
         if (!b)
@@ -713,7 +713,7 @@ export class Narsese implements Parser {
      * @param i The starting index
      */
     private static isCloser(s: string, i: int): boolean {
-        let c: JavaChar = s.charAt(i);
+        let c: TextCharacter = s.charAt(i);
 
         let b: boolean = (getCloser(c) !== null);
         if (!b)
@@ -726,8 +726,8 @@ export class Narsese implements Parser {
      * @param s string to get checked if it may be narsese
      * @return returns if the string may be narsese
      */
-    public static possiblyNarsese(s: JavaStringInput): boolean {
-        const native = javaStringValue(s);
+    public static possiblyNarsese(s: TextInput): boolean {
+        const native = textValue(s);
         return !native.includes("(") && !native.includes(")") && !native.includes("<") && !native.includes(">");
     }
 }

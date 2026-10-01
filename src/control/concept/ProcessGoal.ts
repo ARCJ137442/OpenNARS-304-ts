@@ -27,7 +27,7 @@ import { ProcessAnticipation } from "./ProcessAnticipation.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import { Logger } from "../../runtime/Logger.ts";
 import { ReasonerInvariantError } from "../../runtime/ReasonerErrors.ts";
-import { javaStringValue } from "../../runtime/java-text.ts";
+import { textValue } from "../../runtime/Text.ts";
 import { ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
@@ -374,7 +374,7 @@ export class ProcessGoal {
                     op.allowBabbling = false;
                     /* } */
                 }
-                Logger.named("ProcessGoal").log("INFO", `Executed based on: ${javaStringValue(executablePrecondition)}`);
+                Logger.named("ProcessGoal").log("INFO", `Executed based on: ${textValue(executablePrecondition)}`);
                 const anticipations = anticipationsToMake.get(bestOp);
                 if (anticipations === null) {
                     throw new ReasonerStateError("Executable precondition anticipation list is missing");

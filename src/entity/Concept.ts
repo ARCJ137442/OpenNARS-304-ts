@@ -17,7 +17,7 @@ import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeList, NativeReadOnlyList } from "../runtime/NativeList.ts";
-import { javaStringValue } from "../runtime/java-text.ts";
+import { textValue } from "../runtime/Text.ts";
 import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { LocalRules } from "../inference/LocalRules.ts";
 import { Events } from "../io/events/Events.ts";
@@ -476,7 +476,7 @@ export class Concept extends Item<Term> {
          * }
          */
         // TODO other details?
-        return javaStringValue(res);
+        return textValue(res);
     }
 
     private toStringIfNotNull(item: unknown, title: string): string {

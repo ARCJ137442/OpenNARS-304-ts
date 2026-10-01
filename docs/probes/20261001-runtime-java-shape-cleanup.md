@@ -258,3 +258,66 @@ Exact M2 evidence on `d08a7aa97ae126b3b85361c02d164ba1ae255453`:
 - TS-only: `503 passed / 0 failed / 2 skipped`, SHA-256 `1ADA1B40C905885CA07A4603844F5B9EE37D82EEB18846D24923F430E0D6A84E`.
 - Java: `507/507`, SHA-256 `CE1D6A1D264DB99D630945AE6C60471875464B880A6CB60A654F6185E9FE5752`.
 - Source audit: direct jree `0/0`, Java object/util/lang code hits all zero; SHA-256 `F5FC7FE7C822D3A19AF65997159FF84B92217188A3E8F9AC33056C2129D6030A`.
+
+## Next batch plan: native text throughout the reasoner
+
+CodeGraph confirms `Term.name()` is the central text contract. `NativeJavaString`
+currently allocates a wrapper around each term name and exposes Java methods
+(`length`, `charAt`, `subSequence`, `equals`, `hashCode`). Its behavior is not
+the NARS domain contract: NARS needs exact UTF-16 code-unit text, stable
+case-sensitive name equality, Java-compatible hash/order where those values
+affect term maps and canonical ordering. TypeScript `string` already provides
+UTF-16 storage/indexing and direct equality; only the explicitly observed
+hash/order formulas need small semantic helpers.
+
+The batch will move core signatures to `string`, remove boxed `NativeJavaString`
+construction from production, replace `JavaCharSequence`/`JavaStringInput`
+with native text types, and migrate string method callsites to `.length`,
+`.charAt`, `.slice`, and direct equality. Helpers will be renamed to domain
+names (`textValue`, `textEquals`, `textHashCode`, `compareText`) and retained
+only where they encode canonical behavior. The legacy test facade may provide
+a boxed-string fixture to continue testing interop, but production `src` and
+public API must not depend on it. This is a direct step toward the requested
+independent TypeScript NARS implementation.
+
+Risk/verification contract: compare exact term spellings, supplementary
+characters, isolated surrogate code units, case sensitivity, parser indices,
+sorting order, hashes, Map/Bag lookups, and output strings. Direct text tests
+run first, then typecheck, serial TS-only/Java M2, affected NALs, M1' and strict
+markerless on the final immutable commit. Any changed hash/order or marker is
+a blocker, not an acceptable cost of native strings.
+
+## 2026-10-02 native text and TypeScript idiom batch
+
+The current batch moves reasoner text construction toward native TypeScript:
+clear diagnostic and Narsese formatting uses template literals, fixed term
+index output uses an array plus `join`, and image/variable names use native
+string assembly. `TextString` is now `string` in production; boxed text remains
+only in `test/support` as an interop fixture. Variable constructors normalize
+boxed inputs before establishing type/scope, preserving equality and Java
+UTF-16 hash behavior.
+
+The read-only idiom survey found three boundaries that must remain explicit:
+Java-compatible UTF-16 hash/order, runtime class identity, and collection
+iterator/remove semantics. They are not mechanical template-string or
+`Map`/`Set` replacements. Overload dispatch and nullable sentinels likewise
+remain compatibility contracts until their callers are migrated as a separate
+batch.
+
+Verification on the current uncommitted tree:
+
+- non-incremental typecheck: passed;
+- focused native-text and output contracts: 25/25 passed, then core/runtime
+  regression set 77/77 passed;
+- TS-only serial M2: 507 total, 505 passed, 0 failed, 2 skipped, 129607 ms;
+  raw TAP: `reports/evidence/m2-native-text-idioms-ts-final2-20261002.tap`,
+  SHA-256 `48FB7C2E195BFCBBA549F76B042EE4BC2DDFA6E160E9297E06ABE5A8C9DF3DD1`;
+- Java serial M2: 507/507, 0 failed, 0 skipped, 131973 ms;
+  raw TAP: `reports/evidence/m2-native-text-idioms-java-20261002.tap`,
+  SHA-256 `CED702229FF1986F5B817E06BF3F4735A7DAFE0040FFDFBFC2092E464B52F4FA`;
+- build, build checks, and dist API checks: passed;
+- source jree audit: direct imports 0/0; platform audit remains an inventory,
+  not proof that every browser/runtime boundary is platform-neutral.
+
+This batch does not claim M1-prime, NAL parity, markerless equality, or spec
+031 completion. Those require a new immutable commit and their own evidence.

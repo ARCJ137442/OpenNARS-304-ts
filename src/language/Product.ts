@@ -4,9 +4,9 @@ import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import type { Term } from "./Term.ts";
 import {
-    isJavaListInput,
-} from "../runtime/java-text.ts";
-import type { JavaListInput } from "../runtime/java-text.ts";
+    isArrayConvertible,
+} from "../runtime/Text.ts";
+import type { ArrayConvertible } from "../runtime/Text.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -31,12 +31,12 @@ export class Product extends CompoundTerm {
     public constructor(...arg: Term[]);
 
     // Java 原始重载：Product(List<Term>)；保留 List 的有序 toArray 合同。
-    public constructor(x: JavaListInput<Term>);
+    public constructor(x: ArrayConvertible<Term>);
     public constructor(...args: unknown[]) {
         let terms: Term[];
         if (args.length === 1 && Array.isArray(args[0])) {
             terms = args[0] as Term[];
-        } else if (args.length === 1 && isJavaListInput<Term>(args[0])) {
+        } else if (args.length === 1 && isArrayConvertible<Term>(args[0])) {
             terms = args[0].toArray(new Array<Term>(0));
         } else {
             terms = args as Term[];

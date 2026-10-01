@@ -6,7 +6,7 @@ import { CompoundTerm } from "./CompoundTerm.ts";
 import { Product } from "./Product.ts";
 import { Debug } from "../main/Debug.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { toJavaString } from "../runtime/java-text.ts";
+import { asText } from "../runtime/Text.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -143,7 +143,7 @@ export class Inheritance extends Statement {
         let predicateOperator: boolean = Inheritance.operatorPredicate?.(predicate) ?? false;
 
         if (Debug.DETAILED) {
-            if (!predicateOperator && String(predicate.toString()).startsWith(String(toJavaString("^")))) {
+            if (!predicateOperator && String(predicate.toString()).startsWith(String(asText("^")))) {
                 throw new ReasonerStateError(`Operator term detected but is not an operator: ${predicate}`);
             }
         }

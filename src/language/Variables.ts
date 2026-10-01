@@ -16,8 +16,8 @@ import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import type { Term } from "./Term.ts";
-import { javaStringLength } from "../runtime/java-text.ts";
-import type { JavaChar, JavaCharSequence } from "../runtime/java-text.ts";
+import { textLength } from "../runtime/Text.ts";
+import type { TextCharacter, TextString } from "../runtime/Text.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 type RandomLike = { nextInt(bound?: number): number };
@@ -44,18 +44,18 @@ export class Variables {
      * this is to delay the instantiation of the 2 Map until necessary to avoid
      * wasting them if they are not used.
      */
-    public static findSubstitute(rnd: RandomLike, type: JavaChar, term1: Term, term2: Term,
+    public static findSubstitute(rnd: RandomLike, type: TextCharacter, term1: Term, term2: Term,
         map: MapContract<Term, Term>[]): boolean;
 
-    public static findSubstitute(rnd: RandomLike, type: JavaChar, term1: Term, term2: Term,
+    public static findSubstitute(rnd: RandomLike, type: TextCharacter, term1: Term, term2: Term,
         map1: MapContract<Term, Term>, map2: MapContract<Term, Term>): boolean;
 
-    public static findSubstitute(rnd: RandomLike, type: JavaChar, term1: Term, term2: Term,
+    public static findSubstitute(rnd: RandomLike, type: TextCharacter, term1: Term, term2: Term,
         map: MapContract<Term, Term>[], allowPartial: boolean): boolean;
     public static findSubstitute(...args: unknown[]): boolean {
         switch (args.length) {
             case 5: {
-                const [rnd, type, term1, term2, map] = args as [RandomLike, JavaChar, Term, Term, MapContract<Term, Term>[]];
+                const [rnd, type, term1, term2, map] = args as [RandomLike, TextCharacter, Term, Term, MapContract<Term, Term>[]];
 
 
                 return Variables.findSubstitute(rnd, type, term1, term2, map, false);
@@ -66,11 +66,11 @@ export class Variables {
 
             case 6: {
                 if (typeof args[5] !== "boolean") {
-                    const [rnd, type, term1, term2, map1, map2] = args as [RandomLike, JavaChar, Term, Term, MapContract<Term, Term>, MapContract<Term, Term>];
+                    const [rnd, type, term1, term2, map1, map2] = args as [RandomLike, TextCharacter, Term, Term, MapContract<Term, Term>, MapContract<Term, Term>];
                     return Variables.findSubstitute(rnd, type, term1, term2, [map1, map2]);
                 }
 
-                const [rnd, type, term1, term2, map, allowPartial] = args as [RandomLike, JavaChar, Term, Term, MapContract<Term, Term>[], boolean];
+                const [rnd, type, term1, term2, map, allowPartial] = args as [RandomLike, TextCharacter, Term, Term, MapContract<Term, Term>[], boolean];
 
 
 
@@ -297,7 +297,7 @@ export class Variables {
     }
 
 
-    public static allowUnification(type: JavaChar, uniType: JavaChar): boolean { // it is valid to allow dependent var
+    public static allowUnification(type: TextCharacter, uniType: TextCharacter): boolean { // it is valid to allow dependent var
         // unification in case that a
         // independent var unification is
         // happening,
@@ -358,23 +358,19 @@ export class Variables {
      * @param n The string name to be checked
      * @return Whether the name contains a variable
      */
-    public static containVar(n: JavaCharSequence | string): boolean;
+    public static containVar(n: TextString | string): boolean;
 
     public static containVar(t: Term[]): boolean;
     public static containVar(...args: unknown[]): boolean {
         switch (args.length) {
             case 1: {
-                const [n] = args as [JavaCharSequence | string];
+                const [n] = args as [TextString | string];
 
 
                 if (n === null)
                     return false;
-                let l: int = javaStringLength(n);
-                for (let i: int = 0; i < l; i++) {
-                    const rawChar = n.charAt(i);
-                    const character = typeof rawChar === "number"
-                        ? String.fromCharCode(rawChar)
-                        : String(rawChar);
+                for (let i: int = 0; i < n.length; i++) {
+                    const character = n.charAt(i);
                     switch (character) {
                         case Symbols.VAR_INDEPENDENT:
                         case Symbols.VAR_DEPENDENT:
@@ -420,7 +416,7 @@ export class Variables {
      * @return Whether the unification is possible. 't' will refer to the unified
      *         terms
      */
-    public static unify(rnd: RandomLike, type: JavaChar, t: Term[]): boolean;
+    public static unify(rnd: RandomLike, type: TextCharacter, t: Term[]): boolean;
 
     /**
      * To unify two terms
@@ -433,14 +429,14 @@ export class Variables {
      * @return Whether the unification is possible. 't' will refer to the unified
      *         terms
      */
-    public static unify(rnd: RandomLike, type: JavaChar, t1: Term, t2: Term, compound: Term[]): boolean;
+    public static unify(rnd: RandomLike, type: TextCharacter, t1: Term, t2: Term, compound: Term[]): boolean;
 
-    public static unify(rnd: RandomLike, type: JavaChar, t1: Term, t2: Term, compound: Term[],
+    public static unify(rnd: RandomLike, type: TextCharacter, t1: Term, t2: Term, compound: Term[],
         allowPartial: boolean): boolean;
     public static unify(...args: unknown[]): boolean {
         switch (args.length) {
             case 3: {
-                const [rnd, type, t] = args as [RandomLike, JavaChar, Term[]];
+                const [rnd, type, t] = args as [RandomLike, TextCharacter, Term[]];
 
 
                 return Variables.unify(rnd, type, t[0], t[1], t);
@@ -450,7 +446,7 @@ export class Variables {
             }
 
             case 5: {
-                const [rnd, type, t1, t2, compound] = args as [RandomLike, JavaChar, Term, Term, Term[]];
+                const [rnd, type, t1, t2, compound] = args as [RandomLike, TextCharacter, Term, Term, Term[]];
 
 
                 return Variables.unify(rnd, type, t1, t2, compound, false);
@@ -460,7 +456,7 @@ export class Variables {
             }
 
             case 6: {
-                const [rnd, type, t1, t2, compound, allowPartial] = args as [RandomLike, JavaChar, Term, Term, Term[], boolean];
+                const [rnd, type, t1, t2, compound, allowPartial] = args as [RandomLike, TextCharacter, Term, Term, Term[], boolean];
 
 
                 let map: MapContract<Term, Term>[] = [
@@ -528,7 +524,7 @@ export class Variables {
 
     public static makeCommonVariable(v1: Term, v2: Term): Variable {
         // TODO use more efficient string construction
-        const generatedName = String(v2.toString()) + String(v1.toString()) + '$';
+        const generatedName = `${v2.toString()}${v1.toString()}$`;
         return new Variable(generatedName); // v2 first since when type does not match
     } // but it is an allowed rename like $1 -> #1 then the second type should be used
 
@@ -570,7 +566,7 @@ export class Variables {
      * @param term2 The second term to be unified
      * @return Whether there is a substitution
      */
-    public static hasSubstitute(rnd: RandomLike, type: JavaChar, term1: Term, term2: Term): boolean {
+    public static hasSubstitute(rnd: RandomLike, type: TextCharacter, term1: Term, term2: Term): boolean {
         return Variables.findSubstitute(rnd, type, term1, term2, nativeTermMap(), nativeTermMap());
     }
 

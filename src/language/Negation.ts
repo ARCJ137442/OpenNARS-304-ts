@@ -5,7 +5,7 @@ import { Terms } from "./Terms.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import type { JavaCharSequence } from "../runtime/java-text.ts";
+import type { TextString } from "../runtime/Text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -30,7 +30,7 @@ export class Negation extends CompoundTerm {
         this.init(this.term);
     }
 
-    protected makeName(): JavaCharSequence {
+    protected makeName(): TextString {
         return Negation.makeCompoundName(NativeOperator.NEGATION, this.term[0]);
     }
 

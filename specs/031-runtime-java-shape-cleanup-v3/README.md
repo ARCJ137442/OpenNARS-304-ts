@@ -185,3 +185,15 @@ TS-only M2 (`503 passed / 0 failed / 2 skipped`) and Java M2 (`507/507`) pass.
 031 remains in progress because Java-compatible text/hash, class identity,
 collection order, iterator removal and Random semantics still need either a
 native public representation or an explicit narrow semantic module.
+
+## Next responsibility batch: native text model
+
+The next implementation batch targets the central term-name path, not a
+cosmetic rename. Replace boxed string instances and Java-shaped
+`CharSequence` method calls in production with native TypeScript `string`,
+while keeping narrowly scoped text hashing/comparison only where NARS
+canonical ordering, map keys or frozen Java parity observe those rules.
+Preserve supplementary UTF-16 pairs, isolated surrogate units, case-sensitive
+term equality, exact Narsese output, and index parsing. Test-only boxed-string
+fixtures may remain in `test/support`; they must not leak into `src`, public
+types, dist, or release package.

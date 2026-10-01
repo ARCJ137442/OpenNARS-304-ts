@@ -4,7 +4,7 @@ import type { int, double } from "../../types.ts"; // Java primitive aliases for
 import { Narsese } from "../../io/Narsese.ts";
 import { Parser } from "../../io/Parser.ts";
 import { Logger } from "../../runtime/Logger.ts";
-import { isJavaListInput, toJavaString, type JavaListInput, type JavaStringInput } from "../../runtime/java-text.ts";
+import { isArrayConvertible, asText, type ArrayConvertible, type TextInput } from "../../runtime/Text.ts";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import { Term } from "../../language/Term.ts";
 import { Concept } from "../../entity/Concept.ts";
@@ -66,7 +66,7 @@ export abstract class SensoryChannel extends RuntimeObject implements Plugin {
 
     public constructor();
 
-    public constructor(nar: Nar, reportResultsTo: JavaListInput<SensoryChannel> | SensoryChannel[], width: int,
+    public constructor(nar: Nar, reportResultsTo: ArrayConvertible<SensoryChannel> | SensoryChannel[], width: int,
         height: int, duration: int, label: Term);
 
     public constructor(nar: Nar, reportResultsTo: SensoryChannel, width: int, height: int,
@@ -84,7 +84,7 @@ export abstract class SensoryChannel extends RuntimeObject implements Plugin {
             case 6: {
                 const [nar, reportResultsTo, width, height, duration, label] = args as [
                     Nar,
-                    JavaListInput<SensoryChannel> | SensoryChannel[] | SensoryChannel,
+                    ArrayConvertible<SensoryChannel> | SensoryChannel[] | SensoryChannel,
                     int,
                     int,
                     int,
@@ -96,7 +96,7 @@ export abstract class SensoryChannel extends RuntimeObject implements Plugin {
                     ? [reportResultsTo]
                     : Array.isArray(reportResultsTo)
                         ? reportResultsTo
-                        : isJavaListInput<SensoryChannel>(reportResultsTo)
+                        : isArrayConvertible<SensoryChannel>(reportResultsTo)
                         ? reportResultsTo.toArray([])
                         : [];
                 this.nar = nar;
@@ -115,7 +115,7 @@ export abstract class SensoryChannel extends RuntimeObject implements Plugin {
     }
 
     /** Java's String overload is kept separate because the Task overload is abstract. */
-    public addInputText(text: JavaStringInput, time: Timable): void {
+    public addInputText(text: TextInput, time: Timable): void {
         try {
             let parsedTask: Task = new Narsese(this.nar).parseTask(text);
             this.addInput(parsedTask, time);
@@ -169,8 +169,8 @@ export abstract class SensoryChannel extends RuntimeObject implements Plugin {
         return String(this.label.toString());
     }
 
-    public setName(val: JavaStringInput): void {
-        this.label = new Term(toJavaString(val));
+    public setName(val: TextInput): void {
+        this.label = new Term(asText(val));
         this.nar.removePlugin(new this.nar.PluginState(this));
         this.nar.addPlugin(this);
     }

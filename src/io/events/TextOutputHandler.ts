@@ -7,8 +7,8 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
-import { javaStringValue } from "../../runtime/java-text.ts";
-import type { JavaStringInput } from "../../runtime/java-text.ts";
+import { textValue } from "../../runtime/Text.ts";
+import type { TextInput } from "../../runtime/Text.ts";
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
 import { ReasonerIoError } from "../../runtime/ReasonerErrors.ts";
 
@@ -63,7 +63,7 @@ const CONFIRM = OutputHandler.CONFIRM;
 const DISAPPOINT = OutputHandler.DISAPPOINT;
 const Answer = Events.Answer;
 
-const formatJavaArray = (values: readonly unknown[]): string => JSON.stringify(values) ?? "null";
+const formatArray = (values: readonly unknown[]): string => `[${values.map(String).join(", ")}]`;
 const formatJavaList = (values: readonly unknown[]): string => `[${values.map(value => String(value)).join(", ")}]`;
 
 
@@ -141,15 +141,15 @@ export class TextOutputHandler extends OutputHandler {
     /**
      * Open an output experience file
      */
-    public openSaveFile(path: JavaStringInput): void {
+    public openSaveFile(path: TextInput): void {
         const openTextWriter = this.nar.getRuntimeCapabilities()?.openTextWriter;
         if (openTextWriter === undefined) {
             throw new ReasonerIoError("Opening an output file requires the host text-writer capability");
         }
         try {
-            this.outExp = openTextWriter(javaStringValue(path));
+            this.outExp = openTextWriter(textValue(path));
         } catch (ex) {
-            throw new ReasonerIoError(`Could not open save file: ${javaStringValue(path)}`, { cause: ex });
+            throw new ReasonerIoError(`Could not open save file: ${textValue(path)}`, { cause: ex });
         }
     }
 
@@ -210,8 +210,8 @@ export class TextOutputHandler extends OutputHandler {
         return this;
     }
 
-    public setLinePrefix(prefix: JavaStringInput): TextOutputHandler {
-        this.prefix = javaStringValue(prefix);
+    public setLinePrefix(prefix: TextInput): TextOutputHandler {
+        this.prefix = textValue(prefix);
         return this;
     }
 
@@ -341,7 +341,7 @@ export class TextOutputHandler extends OutputHandler {
                 const answer = (signal as unknown[])[1] as Sentence;
                 buffer.append(answer.toString(nar, showStamp));
             } else {
-                buffer.append(formatJavaArray(signal as unknown[]));
+                buffer.append(formatArray(signal as unknown[]));
             }
         } else {
             buffer.append(String(signal));
@@ -355,7 +355,7 @@ export class TextOutputHandler extends OutputHandler {
 // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace TextOutputHandler {
     export interface LineOutput {
-        println(s: JavaStringInput): void;
+        println(s: TextInput): void;
     }
 
 }

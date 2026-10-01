@@ -16,7 +16,7 @@ import { Similarity } from "../../language/Similarity.ts";
 import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
-import { toJavaString, type JavaChar } from "../../runtime/java-text.ts";
+import { asText, type TextCharacter } from "../../runtime/Text.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
@@ -156,11 +156,11 @@ export class Abbreviation implements Plugin {
 
         private static currentTermSerial: int = 1;
 
-        public newSerialTerm(prefix: JavaChar): Term {
+        public newSerialTerm(prefix: TextCharacter): Term {
             /* synchronized (currentTermSerial) { */
             Abbreviate.currentTermSerial++;
             /* } */
-            return new Term(toJavaString(String(prefix) + String(Abbreviate.currentTermSerial)));
+            return new Term(asText(`${prefix}${Abbreviate.currentTermSerial}`));
         }
 
         /**

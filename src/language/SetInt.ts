@@ -3,7 +3,7 @@ import { SetTensional } from "./SetTensional.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import { type JavaCharSequence, type JavaListInput } from "../runtime/java-text.ts";
+import { type TextString, type ArrayConvertible } from "../runtime/Text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -73,20 +73,20 @@ export class SetInt extends SetTensional {
 
 
     public static make(t: Term[]): SetInt;
-    public static make(l: JavaListInput<Term>): SetInt;
+    public static make(l: ArrayConvertible<Term>): SetInt;
 
     public static make(...t: Term[]): SetInt;
     public static make(...args: unknown[]): SetInt | null {
         switch (args.length) {
             case 1: {
-                const [l] = args as [JavaListInput<Term> | Term[]];
+                const [l] = args as [ArrayConvertible<Term> | Term[]];
                 if (Array.isArray(l)) {
                     const sorted = Term.toSortedSetArray(...l);
                     if (sorted.length === 0) return null;
                     return new SetInt(...sorted);
                 }
                 if (typeof (l as { toArray?: unknown }).toArray === "function") {
-                    return SetInt.make((l as JavaListInput<Term>).toArray(new Array<Term>(0)));
+                    return SetInt.make((l as ArrayConvertible<Term>).toArray(new Array<Term>(0)));
                 }
                 return new SetInt(l as unknown as Term);
 
@@ -126,7 +126,7 @@ export class SetInt extends SetTensional {
      *
      * @return true for communitative
      */
-    public makeName(): JavaCharSequence {
+    public makeName(): TextString {
         return SetInt.makeSetName(SET_INT_OPENER.ch, this.term, SET_INT_CLOSER.ch);
     }
 

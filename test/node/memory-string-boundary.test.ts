@@ -8,8 +8,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
 
-test("Memory accepts native string reasons and preserves Java event payloads", async () => {
-    const { java } = await import("../support/legacy-runtime-facade.ts");
+test("Memory emits native string reasons in task events", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Events } = await import("../../src/io/events/Events.ts");
     const { Sentence } = await import("../../src/entity/Sentence.ts");
@@ -52,12 +51,12 @@ test("Memory accepts native string reasons and preserves Java event payloads", a
     nar.memory.removeTask(task, "native-remove-reason");
 
     assert.equal(String(additions[0]?.[1]), "native-add-reason");
-    assert.ok(additions[0]?.[1] instanceof java.lang.String);
+    assert.equal(typeof additions[0]?.[1], "string");
     assert.equal(String(removals[0]?.[1]), "native-remove-reason");
-    assert.ok(removals[0]?.[1] instanceof java.lang.String);
+    assert.equal(typeof removals[0]?.[1], "string");
 
     const add = new Add();
     nar.memory.addOperator(add);
     assert.equal(nar.memory.getOperator("^add"), add);
-    assert.equal(nar.memory.getOperator(new java.lang.String("^add")), add);
+    assert.equal(nar.memory.getOperator("^add"), add);
 });

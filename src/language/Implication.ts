@@ -7,7 +7,7 @@ import { Conjunction } from "./Conjunction.ts";
 import { Interval } from "./Interval.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import type { JavaCharSequence } from "../runtime/java-text.ts";
+import type { TextString } from "../runtime/Text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -212,7 +212,7 @@ export class Implication extends Statement {
     }
 
 
-    public static makeName(subject: Term, temporalOrder: int, predicate: Term): JavaCharSequence {
+    public static makeName(subject: Term, temporalOrder: int, predicate: Term): TextString {
         let copula: NativeOperator;
         switch (temporalOrder) {
             case TemporalRules.ORDER_FORWARD:

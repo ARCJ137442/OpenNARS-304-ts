@@ -4,9 +4,9 @@ import { Texts } from "../io/Texts.ts";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { javaStringHashCode, javaStringValue } from "../runtime/java-text.ts";
+import { textHashCode, textValue } from "../runtime/Text.ts";
 import { javaIdentityHashCode } from "../runtime/java-values.ts";
-import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/java-text.ts";
+import { asText, type TextCharacter, type TextString } from "../runtime/Text.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
@@ -25,20 +25,20 @@ const VAR_QUERY = Symbols.VAR_QUERY;
  */
 export class Variable extends Term {
     /** caches the type character for faster lookup than charAt(0) */
-    private type: JavaChar = "";
+    private type: TextCharacter = "";
 
     private scope: Term;
 
     private hash: int;
 
-    public constructor(name: JavaCharSequence | string);
+    public constructor(name: TextString | string);
 
     /**
      * Constructor, from a given variable name
      *
      * @param name A String read from input
      */
-    public constructor(name: JavaCharSequence | string, scope: Term);
+    public constructor(name: TextString | string, scope: Term);
     public constructor(...args: unknown[]) {
         super();
         // Java exposes the object only after setScope establishes this invariant;
@@ -48,8 +48,8 @@ export class Variable extends Term {
 
         switch (args.length) {
             case 1: {
-                const [rawName] = args as [JavaCharSequence | string];
-                const name = typeof rawName === "string" ? toJavaString(rawName) : rawName;
+                const [rawName] = args as [TextString | string];
+                const name = asText(rawName as TextString | { toString(): string });
 
 
                 // Java constructor delegation (`this(name, null)`) is not legal
@@ -62,8 +62,8 @@ export class Variable extends Term {
             }
 
             case 2: {
-                const [rawName, scope] = args as [JavaCharSequence | string, Term];
-                const name = typeof rawName === "string" ? toJavaString(rawName) : rawName;
+                const [rawName, scope] = args as [TextString | string, Term];
+                const name = asText(rawName as TextString | { toString(): string });
 
 
                 this.setScope(scope, name);
@@ -79,9 +79,9 @@ export class Variable extends Term {
     }
 
 
-    public setScope(scope: Term | null, n: JavaCharSequence): Variable {
+    public setScope(scope: Term | null, n: TextString): Variable {
         this.setName(n);
-        const first = javaStringValue(n).charAt(0);
+        const first = textValue(n).charAt(0);
         this.type = typeof first === "number" ? String.fromCharCode(first) : first;
         this.scope = scope !== null ? scope : this;
         this.hash = 0; // calculate lazily
@@ -107,7 +107,7 @@ export class Variable extends Term {
      *
      * @return The variable type
      */
-    public getType(): JavaChar {
+    public getType(): TextCharacter {
         return this.type;
     }
 
@@ -157,14 +157,14 @@ export class Variable extends Term {
             return false;
         }
         let v: Variable = that as Variable;
-        if (javaStringValue(this.name()) !== javaStringValue(v.name())) {
+        if (textValue(this.name()) !== textValue(v.name())) {
             return false;
         }
         if ((this.getScope() === this && v.getScope() !== v) ||
             (this.getScope() !== this && v.getScope() === v)) {
             return false;
         }
-        return javaStringValue(v.getScope().name()) === javaStringValue(this.getScope().name());
+        return textValue(v.getScope().name()) === textValue(this.getScope().name());
     }
 
     public equalsTerm(that: unknown): boolean {
@@ -172,13 +172,13 @@ export class Variable extends Term {
         let v: Variable = that as Variable;
         if ((v.scope === v) && (this.scope === this))
             // both are unscoped, so compare by name only
-            return javaStringValue(this.name()) === javaStringValue(v.name());
+            return textValue(this.name()) === textValue(v.name());
         else if ((v.scope !== v) && (this.scope === this))
             return false;
         else if ((v.scope === v) && (this.scope !== this))
             return false;
         else {
-            if (javaStringValue(this.name()) !== javaStringValue(v.name()))
+            if (textValue(this.name()) !== textValue(v.name()))
                 return false;
 
             if (this.scope === v.scope)
@@ -194,16 +194,16 @@ export class Variable extends Term {
             // until then, we'll use the name for comparison because it wont
             // invoke infinite recursion
 
-            return javaStringValue(this.scope.name()) === javaStringValue(v.scope.name());
+            return textValue(this.scope.name()) === textValue(v.scope.name());
         }
     }
 
     public hashCode(): int {
         if (this.hash === 0) {
             if (this.scope !== this)
-                this.hash = 31 * javaStringHashCode(this.name()) + this.scope.hashCode();
+                this.hash = 31 * textHashCode(this.name()) + this.scope.hashCode();
             else
-                this.hash = javaStringHashCode(this.name());
+                this.hash = textHashCode(this.name());
         }
         return this.hash;
     }
@@ -222,7 +222,7 @@ export class Variable extends Term {
 
         let thatVar: Variable = that as Variable;
         // Java compares these names with String.compareTo (UTF-16 code-unit
-        // order). jree's JavaString comparator applies locale punctuation
+        // order). jree's TextString comparator applies locale punctuation
         // ordering, which reverses terms such as `#` and `[` and changes the
         // TreeSet order used by commutative compound terms.
         let nameCmp: int = Texts.compareTo(String(this.name()), String(thatVar.name()));
@@ -266,12 +266,8 @@ export class Variable extends Term {
     }
 
     public isCommon(): boolean {
-        let n: JavaCharSequence = this.name();
-        let l: int = n.length();
-        const last = n.charAt(l - 1);
-        // jree exposes Java charAt() as a numeric code unit in this runtime;
-        // normalize it before applying the Java character comparison.
-        return (typeof last === "number" ? String.fromCharCode(last) : String(last)) === '$';
+        const name = this.name();
+        return name.charAt(name.length - 1) === '$';
     }
 
     public getScope(): Term {
@@ -281,7 +277,7 @@ export class Variable extends Term {
     // ported back from 1.7, sehs addition
     public static compare(a: Variable, b: Variable): int {
         // int i = a.name().compareTo(b.name());
-        let i: int = Texts.compareTo(javaStringValue(a.name()), javaStringValue(b.name()));
+        let i: int = Texts.compareTo(textValue(a.name()), textValue(b.name()));
         if (i === 0) {
             let ascoped: boolean = a.scope !== a;
             let bscoped: boolean = b.scope !== b;
@@ -296,27 +292,27 @@ export class Variable extends Term {
             } else if (bscoped && !ascoped) {
                 return 1;
             } else {
-                return Texts.compareTo(javaStringValue(a.getScope().name()), javaStringValue(b.getScope().name()));
+                return Texts.compareTo(textValue(a.getScope().name()), textValue(b.getScope().name()));
                 // return Texts.compare(a.getScope().name(), b.getScope().name());
             }
         }
         return i;
     }
 
-    public static validVariableType(c: JavaChar): boolean {
+    public static validVariableType(c: TextCharacter): boolean {
         return (c === VAR_QUERY) || (c === VAR_DEPENDENT) || (c === VAR_INDEPENDENT);
     }
 
     private static readonly MAX_CACHED_VARNAME_INDEXES: int = 64;
-    private static readonly vn1: JavaCharSequence[] = new Array<JavaCharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
-    private static readonly vn2: JavaCharSequence[] = new Array<JavaCharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
-    private static readonly vn3: JavaCharSequence[] = new Array<JavaCharSequence>(Variable.MAX_CACHED_VARNAME_INDEXES);
+    private static readonly vn1: TextString[] = new Array<TextString>(Variable.MAX_CACHED_VARNAME_INDEXES);
+    private static readonly vn2: TextString[] = new Array<TextString>(Variable.MAX_CACHED_VARNAME_INDEXES);
+    private static readonly vn3: TextString[] = new Array<TextString>(Variable.MAX_CACHED_VARNAME_INDEXES);
 
-    public static getName(type: JavaChar, index: int): JavaCharSequence {
+    public static getName(type: TextCharacter, index: int): TextString {
         if (index > Variable.MAX_CACHED_VARNAME_INDEXES)
             return Variable.newName(type, index);
 
-        let cache: JavaCharSequence[];
+        let cache: TextString[];
         switch (type) {
             case VAR_INDEPENDENT:
                 cache = Variable.vn1;
@@ -331,7 +327,7 @@ export class Variable extends Term {
                 throw new ReasonerStateError("Invalid variable type");
         }
 
-        let c: JavaCharSequence = cache[index];
+        let c: TextString = cache[index];
         if (c == null) {
             c = Variable.newName(type, index);
             cache[index] = c;
@@ -340,14 +336,14 @@ export class Variable extends Term {
         return c;
     }
 
-    protected static newName(type: JavaChar, index: int): JavaCharSequence {
+    protected static newName(type: TextCharacter, index: int): TextString {
         const typeText = typeof type === "number" ? String.fromCharCode(type) : String(type);
-        let name = typeText;
+        const digits: string[] = [];
         do {
-            name += (index % 16).toString(16);
+            digits.push((index % 16).toString(16));
             index = Math.trunc(index / 16);
         } while (index !== 0);
-        return toJavaString(name);
+        return asText(`${typeText}${digits.join("")}`);
     }
 
     // Java source type: Map<Term, Integer>; variables intentionally do not

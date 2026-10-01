@@ -5,7 +5,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { Terms } from "./Terms.ts";
 import type { Term } from "./Term.ts";
-import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/java-text.ts";
+import { asText, type TextCharacter, type TextString } from "../runtime/Text.ts";
 import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 
 const ARGUMENT_SEPARATOR = Symbols.ARGUMENT_SEPARATOR;
@@ -48,9 +48,9 @@ export abstract class SetTensional extends CompoundTerm {
      * @param arg    the list of term
      * @return the oldName of the term
      */
-    protected static makeSetName(opener: JavaChar, arg: Term[], closer: JavaChar): JavaCharSequence {
+    protected static makeSetName(opener: TextCharacter, arg: Term[], closer: TextCharacter): TextString {
         const names = arg.map((t) => String(t.name()));
-        return toJavaString(`${String(opener)}${names.join(Symbols.ARGUMENT_SEPARATOR)}${String(closer)}`);
+        return asText(`${String(opener)}${names.join(Symbols.ARGUMENT_SEPARATOR)}${String(closer)}`);
     }
 
     /**

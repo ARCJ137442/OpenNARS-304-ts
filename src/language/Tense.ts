@@ -1,7 +1,7 @@
 //! Java source: opennars/language/Tense.java
-import { javaStringValue } from "../runtime/java-text.ts";
+import { textValue } from "../runtime/Text.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import type { JavaStringInput } from "../runtime/java-text.ts";
+import type { TextInput } from "../runtime/Text.ts";
 
 /** Native enum-like representation of the canonical Java Tense enum. */
 export class Tense {
@@ -50,10 +50,10 @@ export class Tense {
         }
     }
 
-    public static tense(s: JavaStringInput): Tense {
+    public static tense(s: TextInput): Tense {
         // Normalize Java String and native JavaScript string inputs at this
         // parser boundary so Narsese preserves the Java lookup contract.
-        return Tense.stringToTense.get(javaStringValue(s)) ?? null!;
+        return Tense.stringToTense.get(textValue(s)) ?? null!;
     }
 
 }

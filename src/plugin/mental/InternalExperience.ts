@@ -233,7 +233,7 @@ export class InternalExperience implements Plugin, EventObserver {
         let operation: Term = Inheritance.make(new Product(arg), opTerm);
         if (operation === null) {
             throw new ReasonerStateError(
-                "Unable to create Inheritance: " + opTerm + ", " + arg.map(String).join(", "));
+                `Unable to create Inheritance: ${opTerm}, ${arg.map(String).join(", ")}`);
         }
         return operation;
     }

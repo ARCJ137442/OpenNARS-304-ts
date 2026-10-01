@@ -45,6 +45,7 @@ test("Item keeps Java runtime types behind project boundaries", () => {
     const source = readFileSync("src/entity/Item.ts", "utf8");
     assert.doesNotMatch(source, /from ["']jree["']/);
     assert.doesNotMatch(source, /java\.lang\.(Iterable|CharSequence|NullPointerException)/);
-    assert.match(source, /JavaCharSequenceInput/);
+    assert.match(source, /TextInput/);
+    assert.doesNotMatch(source, /JavaCharSequence|JavaString/);
     assert.match(source, /ReasonerStateError/);
 });

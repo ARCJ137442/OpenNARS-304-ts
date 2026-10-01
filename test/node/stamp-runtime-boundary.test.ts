@@ -18,5 +18,5 @@ test("Stamp keeps project-owned exception and collection boundaries", () => {
     const stamp = makeStamp(7, 11);
     assert.equal(stamp.evidentialHash(), stamp.evidentialHash());
     assert.equal(stamp.equals(stamp, true, true, true), true);
-    assert.ok(stamp.name() instanceof java.lang.String);
+    assert.equal(typeof stamp.name(), "string");
 });

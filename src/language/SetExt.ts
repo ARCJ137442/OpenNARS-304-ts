@@ -3,7 +3,7 @@ import { SetTensional } from "./SetTensional.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import { type JavaCharSequence, type JavaListInput } from "../runtime/java-text.ts";
+import { type TextString, type ArrayConvertible } from "../runtime/Text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -77,14 +77,14 @@ export class SetExt extends SetTensional {
     public static make(t: Term[]): SetExt;
     public static make(...t: Term[]): SetExt;
 
-    public static make(l: JavaListInput<Term>): SetExt;
+    public static make(l: ArrayConvertible<Term>): SetExt;
     public static make(...args: unknown[]): SetExt | null {
         switch (args.length) {
             case 1: {
-                const [t] = args as [Term[] | JavaListInput<Term>];
+                const [t] = args as [Term[] | ArrayConvertible<Term>];
                 if (!Array.isArray(t)) {
                     if (typeof (t as { toArray?: unknown }).toArray === "function") {
-                        return SetExt.make((t as JavaListInput<Term>).toArray(new Array<Term>(0)));
+                        return SetExt.make((t as ArrayConvertible<Term>).toArray(new Array<Term>(0)));
                     }
                     return new SetExt(t as unknown as Term);
                 }
@@ -98,7 +98,7 @@ export class SetExt extends SetTensional {
             }
 
             case 1: {
-                const [l] = args as [JavaListInput<Term>];
+                const [l] = args as [ArrayConvertible<Term>];
                 return SetExt.make(l.toArray(new Array<Term>(0)));
 
 
@@ -126,7 +126,7 @@ export class SetExt extends SetTensional {
      *
      * @return true for communitative
      */
-    public makeName(): JavaCharSequence {
+    public makeName(): TextString {
         return SetExt.makeSetName(SET_EXT_OPENER.ch, this.term, SET_EXT_CLOSER.ch);
     }
 }

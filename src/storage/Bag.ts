@@ -7,7 +7,7 @@ import { Parameters } from "../main/Parameters.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { javaValuesEqual } from "../runtime/java-values.ts";
-import { toJavaString, type JavaString } from "../runtime/java-text.ts";
+import { asText, type TextString } from "../runtime/Text.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MutableIterator } from "../runtime/MutableIterator.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
@@ -494,7 +494,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
     /**
      * Collect Bag content into a String for display
      */
-    public toString(): JavaString {
+    public toString(): TextString {
         const parts: string[] = [" "];
         for (let i: int = this.TOTAL_LEVEL; i >= 0; i--) {
             if (!this.emptyLevel(i - 1)) {
@@ -502,11 +502,11 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
                 for (const item of this.itemTable[i - 1]) parts.push(String(item), "\n ");
             }
         }
-        return toJavaString(parts.join(""));
+        return asText(parts.join(""));
     }
 
     /** TODO bad paste from preceding */
-    public toStringLong(): JavaString {
+    public toStringLong(): TextString {
         const parts: string[] = [" BAG ", this.getClass().getSimpleName(), " ", String(this.showSizes())];
         for (let i: int = this.TOTAL_LEVEL; i >= 0; i--) {
             if (!this.emptyLevel(i - 1)) {
@@ -515,10 +515,10 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
             }
         }
         parts.push(">>>> end of Bag", this.getClass().getSimpleName());
-        return toJavaString(parts.join(""));
+        return asText(parts.join(""));
     }
 
-    protected showSizes(): JavaString {
+    protected showSizes(): TextString {
         const sizes: string[] = [" "];
         let levels: int = 0;
         for (const items of this.itemTable) {
@@ -527,7 +527,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
                 sizes.push(String(items.length), " ");
             }
         }
-        return toJavaString(`Levels: ${levels}, sizes: ${sizes.join("")}`);
+        return asText(`Levels: ${levels}, sizes: ${sizes.join("")}`);
     }
 
     public size(): int {

@@ -8,10 +8,10 @@ import { Symbols } from "../io/Symbols.ts";
 import { Operator } from "./Operator.ts";
 import type { Task } from "../entity/Task.ts";
 import {
-    type JavaCharSequence,
-    type JavaCharSequenceInput,
-} from "../runtime/java-text.ts";
-import { javaStringValue } from "../runtime/java-text.ts";
+    type TextString,
+    type TextInput,
+} from "../runtime/Text.ts";
+import { textValue } from "../runtime/Text.ts";
 import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
@@ -119,22 +119,22 @@ export class Operation extends Inheritance {
         return this.getPredicate() as Operator;
     }
 
-    protected makeName(): JavaCharSequence {
+    protected makeName(): TextString {
         if (this.getSubject() instanceof Product && this.getPredicate() instanceof Operator)
             return Operation.makeName(this.getPredicate().name(), (this.getSubject() as Product).term);
         return Statement.makeStatementName(this.getSubject(), Symbols.NativeOperator.INHERITANCE, this.getPredicate());
     }
 
-    public static makeName(op: JavaCharSequenceInput, arg: Term[]): JavaCharSequence {
+    public static makeName(op: TextInput, arg: Term[]): TextString {
         // Java source: StringBuilder → String. The original call surface only
         // appends in order and calls toString; a native string is the same
         // semantic representation at this CharSequence compatibility boundary.
         const separator = Symbols.ARGUMENT_SEPARATOR;
-        const argumentNames = arg.map((term) => javaStringValue(term.name()));
-        const name = `${Symbols.NativeOperator.COMPOUND_TERM_OPENER.ch}${javaStringValue(op)}`
+        const argumentNames = arg.map((term) => textValue(term.name()));
+        const name = `${Symbols.NativeOperator.COMPOUND_TERM_OPENER.ch}${textValue(op)}`
             + (argumentNames.length > 0 ? `${separator}${argumentNames.join(separator)}` : "")
             + Symbols.NativeOperator.COMPOUND_TERM_CLOSER.ch;
-        return name as unknown as JavaCharSequence;
+        return name as unknown as TextString;
     }
 
     /**

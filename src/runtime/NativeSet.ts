@@ -22,12 +22,12 @@ export const javaValueHashCode = (value: unknown): number => {
         return value ? 1231 : 1237;
     }
     if (typeof value === "number") {
-        return Number.isInteger(value) ? value | 0 : javaStringHashCode(String(value));
+        return Number.isInteger(value) ? value | 0 : textHashCode(String(value));
     }
-    return javaStringHashCode(String(value));
+    return textHashCode(String(value));
 };
 
-const javaStringHashCode = (value: string): number => {
+const textHashCode = (value: string): number => {
     let hash = 0;
     for (let index = 0; index < value.length; index += 1) {
         hash = ((hash * 31) + value.charCodeAt(index)) | 0;

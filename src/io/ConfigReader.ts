@@ -8,7 +8,7 @@ import type { Plugin } from "../plugin/Plugin.ts";
 import { parseConfigXml } from "./ConfigParser.ts";
 import { PluginRegistry } from "./ConfigPluginRegistry.ts";
 import type { RuntimeCapabilities } from "../platform/RuntimeCapabilities.ts";
-import type { JavaStringInput } from "../runtime/java-text.ts";
+import type { TextInput } from "../runtime/Text.ts";
 
 export { parseConfigXml } from "./ConfigParser.ts";
 
@@ -73,7 +73,7 @@ export class ConfigReader {
         return ConfigReader.loadNodeConfigText(text, reasoner, parameters, capabilities);
     }
 
-    public static loadParamsFromFileAndReturnPlugins(filepath: JavaStringInput, reasoner: Reasoner,
+    public static loadParamsFromFileAndReturnPlugins(filepath: TextInput, reasoner: Reasoner,
         parameters: Parameters): Plugin[] {
 
         if (typeof process !== "undefined" && process.versions?.node !== undefined) {

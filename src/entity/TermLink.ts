@@ -5,7 +5,7 @@ import { Term } from "../language/Term.ts";
 import { BudgetValue } from "./BudgetValue.ts";
 import { Symbols } from "../io/Symbols.ts";
 import type { TLink } from "./TLink.ts";
-import { javaStringValue } from "../runtime/java-text.ts";
+import { textValue } from "../runtime/Text.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import {
     javaInt16ArrayEquals,
@@ -235,7 +235,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
     public toString(): string {
         // Java source return type: String; new StringBuilder().append(newKeyPrefix()).append(
         //              target != null ? target.name() : "").toString();
-        const targetText = this.target !== null ? javaStringValue(this.target.name()) : "";
+        const targetText = this.target !== null ? textValue(this.target.name()) : "";
         return `${this.newKeyPrefix()}${targetText}`;
     }
 

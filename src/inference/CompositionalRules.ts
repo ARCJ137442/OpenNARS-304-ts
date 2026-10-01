@@ -60,7 +60,7 @@ const pairValueEquals = (left: unknown, right: unknown): boolean => {
   return typeof equals === "function" && Boolean(equals.call(left, right));
 };
 
-const javaStringHashCode = (value: string): number => {
+const textHashCode = (value: string): number => {
   let hash = 0;
   for (let i = 0; i < value.length; i++) {
     hash = (hash * 31 + value.charCodeAt(i)) | 0;
@@ -72,7 +72,7 @@ const pairValueHashCode = (value: unknown): number => {
   if (value === null || value === undefined) return 0;
   const hashCode = (value as { hashCode?: unknown }).hashCode;
   if (typeof hashCode === "function") return Number(hashCode.call(value));
-  return javaStringHashCode(String(value));
+  return textHashCode(String(value));
 };
 
 const pair = <L, R>(left: L, right: R): Pair<L, R> => ({
@@ -1369,7 +1369,7 @@ export class CompositionalRules {
             varType = "$";
           }
         }
-        let introVar: Variable = new Variable(varType + "ind" + k);
+        let introVar: Variable = new Variable(`${varType}ind${k}`);
         app.put(t, introVar);
         k++;
       }

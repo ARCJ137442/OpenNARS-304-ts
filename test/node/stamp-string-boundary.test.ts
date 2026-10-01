@@ -10,7 +10,7 @@ const makeStamp = (): Stamp =>
 test("Stamp occurrence text keeps Java String output without StringBuilder construction", () => {
     const stamp = makeStamp();
 
-    assert.ok(stamp.getOccurrenceTimeString() instanceof java.lang.String);
+    assert.equal(typeof stamp.getOccurrenceTimeString(), "string");
     assert.equal(String(stamp.getOccurrenceTimeString()), "[10]");
 
     stamp.setEternal();
@@ -32,7 +32,7 @@ test("Stamp name is a cached Java String and invalidates after occurrence change
     const first = stamp.name();
     const second = stamp.name();
 
-    assert.ok(first instanceof java.lang.String);
+    assert.equal(typeof first, "string");
     assert.strictEqual(first, second);
     assert.equal(String(first), stamp.toString());
     assert.match(String(first), /10/);

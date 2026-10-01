@@ -4,7 +4,7 @@ import type { float, int } from "../../types.ts"; // Java primitive aliases form
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import { Logger } from "../../runtime/Logger.ts";
-import { toJavaString, type JavaStringInput } from "../../runtime/java-text.ts";
+import { asText, type TextInput } from "../../runtime/Text.ts";
 import { Events } from "../../io/events/Events.ts";
 import type { EventEmitter } from "../../io/events/EventEmitter.ts";
 import { Narsese } from "../../io/Narsese.ts";
@@ -41,13 +41,13 @@ export class VisionChannel extends SensoryChannel {
     // Nar"
     public readonly obs: EventEmitter.EventObserver;
 
-    public constructor(label: JavaStringInput, nar: Reasoner, reportResultsTo: Reasoner, width: int,
+    public constructor(label: TextInput, nar: Reasoner, reportResultsTo: Reasoner, width: int,
         height: int, duration: int,
         defaultOutputConfidence: float, nPrototypes: int) {
         super(nar as Nar, reportResultsTo as unknown as SensoryChannel, width, height, duration,
-            SetInt.make(new Term(toJavaString(label))));
+            SetInt.make(new Term(asText(label))));
         this.nar = nar as Nar;
-        this.label = SetInt.make(new Term(toJavaString(label)));
+        this.label = SetInt.make(new Term(asText(label)));
         this.defaultOutputConfidence = Float32Math.from(defaultOutputConfidence) as float;
         this.nPrototypes = nPrototypes;
         this.prototypes = [];
@@ -132,9 +132,9 @@ export class VisionChannel extends SensoryChannel {
         this.termid++;
         let V: Term;
         if (this.isEternal) {
-            V = SetExt.make(new Term(toJavaString(this.subj)));
+            V = SetExt.make(new Term(asText(this.subj)));
         } else {
-            V = SetExt.make(new Term(toJavaString(this.subj + this.termid)));
+            V = SetExt.make(new Term(asText(this.subj + this.termid)));
         }
         // the visual space has to be a copy.
         let cpy: Float64Array[] = VisionChannel.emptyInputs(this.height, this.width);
@@ -242,8 +242,8 @@ export class VisionChannel extends SensoryChannel {
                         // timing to make sure procedure learning observes the operation after the last
                         // prototype
                         this.nar.cycles(this.nar.narParameters.DURATION);
-                        let taskX: Task = new Narsese(this.nar).parseTask("(^move,{SELF}," + minusX + Texts.n1(xParam) + ","
-                            + minusY + Texts.n1(yParam) + "). :|:");
+                        let taskX: Task = new Narsese(this.nar).parseTask(
+                            `(^move,{SELF},${minusX}${Texts.n1(xParam)},${minusY}${Texts.n1(yParam)}). :|:`);
                         taskX.setElemOfSequenceBuffer(true);
                         this.results.push(taskX);
                         this.step_finished(time);

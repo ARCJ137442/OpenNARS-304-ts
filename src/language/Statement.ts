@@ -7,7 +7,7 @@ import { Terms } from "./Terms.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import { javaStringValue } from "../runtime/java-text.ts";
+import { textValue } from "../runtime/Text.ts";
 
 type StatementFactory = (subject: Term, predicate: Term, order: int) => Statement;
 type StatementRuntime = Record<string, any>;
@@ -15,7 +15,7 @@ type NativeOperator = Symbols.NativeOperator;
 type StatementName = ReturnType<CompoundTerm["name"]>;
 
 const javaArrayToString = (values: unknown[]): string =>
-    `[${values.map(value => value === null || value === undefined ? "null" : javaStringValue(value)).join(", ")}]`;
+    `[${values.map(value => value === null || value === undefined ? "null" : textValue(value)).join(", ")}]`;
 
 /** Java original type: Statement.EnumStatementSide. */
 class EnumStatementSide {
@@ -107,16 +107,16 @@ export abstract class Statement extends CompoundTerm {
 
     protected init(t: Term[]): void {
         if (t.length !== 2)
-            throw new ReasonerStateError("Requires 2 terms: " + javaArrayToString(t));
+            throw new ReasonerStateError(`Requires 2 terms: ${javaArrayToString(t)}`);
         if (t[0] === null)
-            throw new ReasonerStateError("Null subject: " + this);
+            throw new ReasonerStateError(`Null subject: ${this}`);
         if (t[1] === null)
-            throw new ReasonerStateError("Null predicate: " + this);
+            throw new ReasonerStateError(`Null predicate: ${this}`);
         if (Debug.DETAILED) {
                     if (this.isCommutative()) {
                 if (t[0].compareTo(t[1]) === 1) {
                     throw new ReasonerStateError(
-                        "Commutative term requires natural order of subject,predicate: " + javaArrayToString(t));
+                        `Commutative term requires natural order of subject,predicate: ${javaArrayToString(t)}`);
                 }
             }
         }
@@ -271,8 +271,8 @@ export abstract class Statement extends CompoundTerm {
 
     protected static makeStatementName(subject: Term, relation: NativeOperator,
         predicate: Term): StatementName {
-        const subjectName = javaStringValue(subject.name());
-        const predicateName = javaStringValue(predicate.name());
+        const subjectName = textValue(subject.name());
+        const predicateName = textValue(predicate.name());
         return `${Symbols.NativeOperator.STATEMENT_OPENER.ch}${subjectName} ${relation.toString()} ${predicateName}${Symbols.NativeOperator.STATEMENT_CLOSER.ch}` as unknown as StatementName;
     }
 

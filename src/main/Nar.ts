@@ -1,7 +1,7 @@
 //! Java source: opennars/main/Nar.java
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
-import { javaStringValue, toJavaString as toNativeJavaString, type JavaStringInput } from "../runtime/java-text.ts";
+import { textValue, asText as toNativeTextString, type TextInput } from "../runtime/Text.ts";
 import { toRuntimeLong, type JavaLongInput } from "../runtime/java-values.ts";
 import { Parameters } from "./Parameters.ts";
 import { Debug } from "./Debug.ts";
@@ -114,7 +114,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     protected sensoryChannels: NativeMap<Term, SensoryChannel> = new NativeMap<Term, SensoryChannel>();
 
     // Java source type: String. Normalize both boxed and native inputs in Narsese.
-    public addSensoryChannel(term: JavaStringInput, channel: SensoryChannel): void {
+    public addSensoryChannel(term: TextInput, channel: SensoryChannel): void {
         try {
             const parsedTerm = new Narsese(this).parseTerm(term);
             if (parsedTerm === null) {
@@ -133,10 +133,10 @@ export class Nar extends SensoryChannel implements Reasoner {
         }
     }
 
-    public SaveToFile(name: JavaStringInput): void {
+    public SaveToFile(name: TextInput): void {
         const saveSnapshot = this.capabilities?.saveSnapshot;
         if (saveSnapshot === undefined) throw new Error("SaveToFile requires a host saveSnapshot capability");
-        saveSnapshot(javaStringValue(name), this);
+        saveSnapshot(textValue(name), this);
     }
 
     /** Expose only the injected host capabilities needed by adapters. */
@@ -144,10 +144,10 @@ export class Nar extends SensoryChannel implements Reasoner {
         return this.capabilities;
     }
 
-    public static LoadFromFile(name: JavaStringInput, capabilities?: RuntimeCapabilities): Nar {
+    public static LoadFromFile(name: TextInput, capabilities?: RuntimeCapabilities): Nar {
         const loadSnapshot = capabilities?.loadSnapshot;
         if (loadSnapshot === undefined) throw new Error("LoadFromFile requires a host loadSnapshot capability");
-        let ret: Nar = loadSnapshot(javaStringValue(name)) as Nar;
+        let ret: Nar = loadSnapshot(textValue(name)) as Nar;
         ret.capabilities = capabilities;
         ret.memory.event = new EventEmitter();
         ret.plugins = [];
@@ -226,19 +226,19 @@ export class Nar extends SensoryChannel implements Reasoner {
     public constructor(narId: JavaLongInput);
 
     /** Constructs the NAR from explicit XML configuration text. */
-    public constructor(configText: JavaStringInput);
+    public constructor(configText: TextInput);
 
     /** Constructs the NAR with parameter overrides and embedded defaults. */
     public constructor(parameterOverrides: NativeMap<string, unknown>);
 
     /** Constructs the NAR with an id and explicit XML configuration text. */
-    public constructor(narId: JavaLongInput, configText: JavaStringInput);
+    public constructor(narId: JavaLongInput, configText: TextInput);
 
     /** Constructs the NAR from XML text with parameter overrides. */
-    public constructor(configText: JavaStringInput, parameterOverrides: NativeMap<string, unknown>);
+    public constructor(configText: TextInput, parameterOverrides: NativeMap<string, unknown>);
 
     /** Constructs the NAR with an id, XML text and parameter overrides. */
-    public constructor(narId: JavaLongInput, configText: JavaStringInput, parameterOverrides: NativeMap<string, unknown>);
+    public constructor(narId: JavaLongInput, configText: TextInput, parameterOverrides: NativeMap<string, unknown>);
     /** Constructs the NAR from explicit configuration text without file I/O. */
     public constructor(options: NarOptions);
     public constructor(...args: unknown[]) {
@@ -403,7 +403,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             }
             // 总是打印信息
             if (this.minCyclePeriodMS > 0n)
-                printInfo("INFO: Running at " + this.minCyclePeriodMS + "ms per cycle.");
+                printInfo(`INFO: Running at ${this.minCyclePeriodMS}ms per cycle.`);
             else if (this.minCyclePeriodMS === 0n)
                 printInfo("INFO: Running at full speed.");
             else
@@ -421,7 +421,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             const retVal: int = Number.parseInt(text, 10) as int;
             // * 🚩【2024-04-19 21:08:03】现在无论如何都要运行推理周期
             // if (!running) {
-            printInfo("INFO: Running " + retVal + " cycles.");
+            printInfo(`INFO: Running ${retVal} cycles.`);
             this.emit(CyclesStart.class);
             for (let i: int = 0; i < retVal; i++) {
                 this.cycle();
@@ -434,13 +434,13 @@ export class Nar extends SensoryChannel implements Reasoner {
         }
     }
 
-    public addInput(text: JavaStringInput): void;
+    public addInput(text: TextInput): void;
 
     public addInput(t: Task, time: Timable): Nar;
     public addInput(...args: unknown[]): void | Nar {
         switch (args.length) {
             case 1: {
-                const [rawText] = args as [JavaStringInput];
+                const [rawText] = args as [TextInput];
                 const inputText = String(rawText).trim();
                 let narsese: Parser = new Narsese(this);
                 if (inputText.includes("\n") && this.addMultiLineInput(inputText)) {
@@ -525,7 +525,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             if (t instanceof Inheritance) {
                 predicate = (t as Inheritance).getPredicate();
             } else {
-                predicate = SetInt.make(new Term(toNativeJavaString("OBSERVED")));
+                predicate = SetInt.make(new Term(toNativeTextString("OBSERVED")));
             }
             if (this.sensoryChannels.containsKey(predicate)) {
                 const channel = this.sensoryChannels.get(predicate);
@@ -582,11 +582,11 @@ export class Nar extends SensoryChannel implements Reasoner {
      * the deterministic clock before the task is submitted. The inherited
      * two-argument form remains the Java sensory-channel task overload.
      */
-    public addInputText(source: JavaStringInput): void;
-    public addInputText(text: JavaStringInput, time: Timable): void;
+    public addInputText(source: TextInput): void;
+    public addInputText(text: TextInput, time: Timable): void;
     public addInputText(...args: unknown[]): void {
         if (args.length === 2) {
-            super.addInputText(args[0] as JavaStringInput, args[1] as Timable);
+            super.addInputText(args[0] as TextInput, args[1] as Timable);
             return;
         }
         if (args.length !== 1) {
@@ -609,7 +609,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     }
 
     /** gets a concept if it exists, or returns null if it does not */
-    public concept(concept: JavaStringInput): Concept {
+    public concept(concept: TextInput): Concept {
         const parsedTerm = new Narsese(this).parseTerm(concept);
         if (parsedTerm === null) {
             throw new ReasonerInputError("Invalid concept term");
@@ -617,7 +617,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         return this.memory.concept(parsedTerm);
     }
 
-    public ask(termString: JavaStringInput, answered: AnswerHandler): Nar {
+    public ask(termString: TextInput, answered: AnswerHandler): Nar {
         const parsedTerm = new Narsese(this).parseTerm(termString);
         if (parsedTerm === null) {
             throw new ReasonerInputError("Invalid question term");
@@ -642,7 +642,7 @@ export class Nar extends SensoryChannel implements Reasoner {
 
     }
 
-    public askNow(termString: JavaStringInput, answered: AnswerHandler): Nar {
+    public askNow(termString: TextInput, answered: AnswerHandler): Nar {
         const parsedTerm = new Narsese(this).parseTerm(termString);
         if (parsedTerm === null) {
             throw new ReasonerInputError("Invalid question term");
@@ -743,7 +743,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                     let n_threads: int = this.narParameters.THREADS_AMOUNT;
                     this.threads = new Array<ThreadCompat>(n_threads);
                     for (let i: int = 0; i < n_threads; i++) {
-                        this.threads[i] = new ThreadCompat(this, "Inference" + i);
+                        this.threads[i] = new ThreadCompat(this, `Inference${i}`);
                         this.threads[i].start();
                     }
                 }

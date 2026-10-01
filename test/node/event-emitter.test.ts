@@ -278,7 +278,7 @@ test("TextOutputHandler formats throwable and array output without Java Arrays h
                 true,
                 nar,
             )),
-            "[{},2]",
+            "[a, 2]",
         );
     } finally {
         nar.stop();
@@ -318,10 +318,10 @@ test("TextOutputHandler.openSaveFile obtains a writer through host capabilities"
     const boxedPath = join(directory, "boxed.log");
     const opened: string[] = [];
     const nar = new Nar({ capabilities: {
-        openTextWriter(path) {
+        openTextWriter(path: string) {
             opened.push(path);
             return {
-                println(_value) {},
+                println(_value: unknown) {},
                 close() {},
             };
         },

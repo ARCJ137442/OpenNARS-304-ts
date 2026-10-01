@@ -10,8 +10,8 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Terms } from "./Terms.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
-import { javaStringHashCode, javaStringsEqual } from "../runtime/java-text.ts";
-import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/java-text.ts";
+import { textHashCode, textEquals } from "../runtime/Text.ts";
+import { asText, type TextCharacter, type TextString } from "../runtime/Text.ts";
 import { ReasonerOperationError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { NativeFixedList, NativeList } from "../runtime/NativeList.ts";
@@ -211,7 +211,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         if (Debug.DETAILED && c.getClass() !== this.getClass()) // debug relevant, while it is natural due to interval
             // simplification to reduce to other term type,
             // other cases should not appear
-            console.warn("cloneDeep resulted in different class: " + c + " from " + this);
+            console.warn(`cloneDeep resulted in different class: ${c} from ${this}`);
         if (this.isNormalized())
             (c as CompoundTerm).setNormalized(true);
         if (!(c instanceof CompoundTerm)) {
@@ -230,7 +230,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
                 if (t instanceof CompoundTerm) {
                     CompoundTerm.transformIndependentVariableToDependent(t as CompoundTerm);
                 } else if (t instanceof Variable && (t as Variable).isIndependentVariable()) { /* it's a variable */
-                    term[i] = new Variable("" + Symbols.VAR_DEPENDENT + t.name().subSequence(1, t.name().length())); // vars.get(t.toString());
+                    term[i] = new Variable(`${Symbols.VAR_DEPENDENT}${t.name().slice(1)}`);
                     /* assert term[i] != null; */
                 }
             }
@@ -309,7 +309,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             return null as unknown as CompoundTerm;
 
         if (Debug.DETAILED && c.getClass() !== this.getClass())
-            console.warn("cloneDeepVariables resulted in different class: " + c + " from " + this);
+            console.warn(`cloneDeepVariables resulted in different class: ${c} from ${this}`);
 
         let cc: CompoundTerm = c as CompoundTerm;
         cc.setNormalized(this.isNormalized());
@@ -368,11 +368,11 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      *
      * @return the oldName of the term
      */
-    protected makeName(): JavaCharSequence {
+    protected makeName(): TextString {
         return CompoundTerm.makeCompoundName(this.operator(), ...this.term);
     }
 
-    public name(): JavaCharSequence {
+    public name(): TextString {
         const currentName = this.nameInternal();
         if (currentName === null) {
             const rebuiltName = this.makeName();
@@ -389,10 +389,10 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * @param arg the list of term
      * @return the oldName of the term
      */
-    protected static makeCompoundName(op: NativeOperator, ...arg: Term[]): JavaCharSequence {
+    protected static makeCompoundName(op: NativeOperator, ...arg: Term[]): TextString {
         const opString = op.toString();
         const names = arg.map((t) => String(t.name()));
-        return toJavaString(
+        return asText(
             `${COMPOUND_TERM_OPENER.ch}${opString}${Symbols.ARGUMENT_SEPARATOR}${names.join(Symbols.ARGUMENT_SEPARATOR)}${COMPOUND_TERM_CLOSER.ch}`);
     }
 
@@ -697,7 +697,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * @return Whether the name contains a variable
      */
     public hasVar(): boolean;
-    public hasVar(type: JavaChar): boolean;
+    public hasVar(type: TextCharacter): boolean;
     public hasVar(...args: unknown[]): boolean {
         // Java overload dispatch is part of the contract: hasVar(type) must
         // reach Term.hasVar(type), rather than the cached any-variable flag.
@@ -705,7 +705,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             return this.hasVariables;
         }
         if (args.length === 1) {
-            return super.hasVar(args[0] as JavaChar);
+            return super.hasVar(args[0] as TextCharacter);
         }
         throw new ReasonerInputError("Invalid number of arguments");
     }
@@ -808,8 +808,8 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     public hashCode(): int {
-        // jree JavaString.equals/hashCode may fold case; Java String does not.
-        return javaStringHashCode(this.name());
+        // jree TextString.equals/hashCode may fold case; Java String does not.
+        return textHashCode(this.name());
     }
 
     public compareTo(that: AbstractTerm): int {
@@ -824,7 +824,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             return true;
         if (!(that instanceof Term))
             return false;
-        return javaStringsEqual(this.name(), (that as Term).name());
+        return textEquals(this.name(), (that as Term).name());
     }
 
     public setNormalized(b: boolean): void {

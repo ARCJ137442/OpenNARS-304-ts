@@ -78,7 +78,7 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const javaStringVariable = new Variable(new java.lang.String("$1"));
     const generatedVariableName = Variable.getName("$", 16);
     assert.equal(String(generatedVariableName), "$01");
-    assert.equal(typeof generatedVariableName, "object");
+    assert.equal(typeof generatedVariableName, "string");
     assert.equal(javaStringVariable.equals(sharedVariable), true);
     assert.equal(javaStringVariable.hashCode(), sharedVariable.hashCode());
     const condition = Inheritance.make(Product.make([sharedVariable, Term.get("sunglasses")]), Term.get("own"));

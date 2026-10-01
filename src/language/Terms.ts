@@ -9,7 +9,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Term } from "./Term.ts";
 import type { Memory } from "../storage/Memory.ts";
 import { javaValuesEqual } from "../runtime/java-values.ts";
-import type { JavaCharSequence } from "../runtime/java-text.ts";
+import type { TextString } from "../runtime/Text.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { NativeList } from "../runtime/NativeList.ts";
 
@@ -86,12 +86,12 @@ const normalizeComponentForLinks = (term: Term): Term => {
         }
     });
 
-    const rename = new Map<string, JavaCharSequence>();
+    const rename = new Map<string, TextString>();
     let renamed = false;
     for (const variable of variables) {
         let variableName = String(variable.name());
         if (!variable.hasVarIndep()) {
-            variableName += " " + String(variable.getScope().name());
+            variableName += ` ${String(variable.getScope().name())}`;
         }
 
         let normalizedName = rename.get(variableName);
@@ -316,7 +316,7 @@ export class Terms {
                     case EQUIVALENCE_AFTER:
                         return runtime.Equivalence.make(componentList[0], componentList[1], TemporalRules.ORDER_FORWARD);
                     default:
-                        throw new ReasonerStateError("Unknown Term operator: " + copula + " (" + copula.name() + ")");
+                        throw new ReasonerStateError(`Unknown Term operator: ${copula} (${copula.name()})`);
                 }
 
 
@@ -457,7 +457,7 @@ export class Terms {
         }
 
         if (sa === null || sb === null)
-            throw new ReasonerStateError("Equivalence requires 2 components: " + sa + sb);
+            throw new ReasonerStateError(`Equivalence requires 2 components: ${sa}${sb}`);
         let sat: Term[] = (sa as CompoundTerm).term;
         let sbt: Term[] = (sb as CompoundTerm).term;
 
@@ -683,7 +683,7 @@ export class Terms {
 
                 for (let o of t)
                     if (o === null)
-                        throw new ReasonerStateError("Element null in: " + t);
+                        throw new ReasonerStateError(`Element null in: ${t}`);
 
 
                 break;
@@ -695,7 +695,7 @@ export class Terms {
 
                 for (let o of t)
                     if (o === null)
-                        throw new ReasonerStateError("Element null in: " + javaArrayToString(t));
+                    throw new ReasonerStateError(`Element null in: ${javaArrayToString(t)}`);
 
 
                 break;
@@ -710,7 +710,7 @@ export class Terms {
     public static verifyNonNullTerms(...t: Term[]): void {
         for (let o of t)
             if (o === null)
-                throw new ReasonerStateError("Element null in: " + javaArrayToString(t));
+                throw new ReasonerStateError(`Element null in: ${javaArrayToString(t)}`);
     }
 
 
@@ -719,17 +719,17 @@ export class Terms {
             throw new ReasonerStateError("Needs >0 components");
         }
         if (!allowSingleton && (arg.length === 1)) {
-            throw new ReasonerStateError("Needs >1 components: " + javaArrayToString(arg));
+            throw new ReasonerStateError(`Needs >1 components: ${javaArrayToString(arg)}`);
         }
         let s: Term[] = Term.toSortedSetArray(...arg);
         if (arg.length !== s.length) {
-            throw new ReasonerStateError("Contains duplicates: " + javaArrayToString(arg));
+            throw new ReasonerStateError(`Contains duplicates: ${javaArrayToString(arg)}`);
         }
         let j: int = 0;
         for (let t of s) {
             if (!t.equals(arg[j++]))
                 throw new ReasonerStateError(
-                    "Un-ordered: " + javaArrayToString(arg) + " , correct order=" + javaArrayToString(s));
+                    `Un-ordered: ${javaArrayToString(arg)} , correct order=${javaArrayToString(s)}`);
         }
         return s;
     }

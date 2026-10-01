@@ -14,7 +14,7 @@ import { SetExt } from "../../language/SetExt.ts";
 import { Term } from "../../language/Term.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
-import { toJavaString } from "../../runtime/java-text.ts";
+import { asText } from "../../runtime/Text.ts";
 import type { Memory } from "../../storage/Memory.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
@@ -123,7 +123,7 @@ export class Counting implements Plugin {
 
                             let newTask: Task = new Task(j, budg, Task.EnumType.INPUT);
 
-                            memory.addNewTask(newTask, toJavaString("Derived (Cardinality)"));
+                            memory.addNewTask(newTask, asText("Derived (Cardinality)"));
                         }
                     }
                 }

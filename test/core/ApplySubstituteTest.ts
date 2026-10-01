@@ -39,7 +39,7 @@ export class ApplySubstituteTest extends JavaObject {
 
         assertTrue(c.getComplexity() > originalComplexity);
 
-        assertTrue(ab.name().toString().equals(abS)); // ab unmodified
+        assertTrue(ab.name() === abS); // ab unmodified
 
         assertTrue(String(c.name()) !== abS); // c is actually different
         assertTrue(!c.equals(ab));

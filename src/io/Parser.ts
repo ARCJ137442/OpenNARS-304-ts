@@ -1,8 +1,8 @@
 //! Java source: opennars/io/Parser.java
 import type { Task } from "../entity/Task.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import { javaStringValue } from "../runtime/java-text.ts";
-import type { JavaStringInput } from "../runtime/java-text.ts";
+import { textValue } from "../runtime/Text.ts";
+import type { TextInput } from "../runtime/Text.ts";
 
 
 
@@ -12,7 +12,7 @@ import type { JavaStringInput } from "../runtime/java-text.ts";
  * @author Robert Wünsche
  */
 export interface Parser {
-    parseTask(narsese: JavaStringInput): Task;
+    parseTask(narsese: TextInput): Task;
 }
 
 class ParserInvalidInputException extends ReasonerInputError {
@@ -21,8 +21,8 @@ class ParserInvalidInputException extends ReasonerInputError {
      *
      * @param s type of error
      */
-    public constructor(s: JavaStringInput) {
-        super(javaStringValue(s));
+    public constructor(s: TextInput) {
+        super(textValue(s));
     }
 }
 

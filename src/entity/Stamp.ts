@@ -14,8 +14,8 @@ import {
     type JavaLongInput,
 } from "../runtime/java-values.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import { toJavaString } from "../runtime/java-text.ts";
-import type { JavaString } from "../runtime/java-text.ts";
+import { asText } from "../runtime/Text.ts";
+import type { TextString } from "../runtime/Text.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Parameters } from "../main/Parameters.ts";
@@ -74,7 +74,7 @@ export class Stamp extends RuntimeObject {
     /** caches */
     // Keep the cache separate from name(); otherwise the Java-to-TypeScript
     // translation creates an instance field that shadows the method.
-    protected nameCache: JavaString | null = null;
+    protected nameCache: TextString | null = null;
 
     /**
      * derivation chain containing the used premises and conclusions which made
@@ -498,22 +498,22 @@ export class Stamp extends RuntimeObject {
      *
      * @return occurrence time
      */
-    public getOccurrenceTimeString(): JavaString {
-        return toJavaString(this.isEternal() ? "" : `[${String(this.occurrenceTime)}]`);
+    public getOccurrenceTimeString(): TextString {
+        return asText(this.isEternal() ? "" : `[${String(this.occurrenceTime)}]`);
     }
 
-    public getTense(currentTime: JavaLongInput, duration: int): JavaString {
+    public getTense(currentTime: JavaLongInput, duration: int): TextString {
 
         if (this.isEternal()) {
-            return toJavaString("");
+            return asText("");
         }
         switch (TemporalRules.order(toRuntimeLong(currentTime), this.occurrenceTime, duration)) {
             case TemporalRules.ORDER_FORWARD:
-                return toJavaString(String(Symbols.TENSE_FUTURE));
+                return asText(String(Symbols.TENSE_FUTURE));
             case TemporalRules.ORDER_BACKWARD:
-                return toJavaString(String(Symbols.TENSE_PAST));
+                return asText(String(Symbols.TENSE_PAST));
             default:
-                return toJavaString(String(Symbols.TENSE_PRESENT));
+                return asText(String(Symbols.TENSE_PRESENT));
         }
     }
 
@@ -529,7 +529,7 @@ export class Stamp extends RuntimeObject {
         }
     }
 
-    public name(): JavaString {
+    public name(): TextString {
         if (this.nameCache === null) {
             const parts: string[] = [String(Symbols.STAMP_OPENER), String(this.getCreationTime())];
             if (!this.isEternal()) {
@@ -543,9 +543,9 @@ export class Stamp extends RuntimeObject {
                 }
             }
             parts.push(String(Symbols.STAMP_CLOSER), " ");
-            this.nameCache = toJavaString(parts.join(""));
+            this.nameCache = asText(parts.join(""));
         }
-        return this.nameCache;
+        return this.nameCache!;
     }
 
     public override toString(): string {

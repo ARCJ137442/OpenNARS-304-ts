@@ -97,7 +97,7 @@ export class TermTest extends JavaObject {
         // <#1 --> (|,boy,(/,taller_than,{Tom},_))>
         const term2 = parseRequired(this.np, "<#1 --> (|,boy,(/,taller_than,{Tom},_))>");
 
-        assertTrue(term1.toString().equals(term1a.toString()));
+        assertTrue(term1.toString() === term1a.toString());
         assertTrue(term1.getComplexity() > 1);
         assertTrue(term1.getComplexity() === term2.getComplexity());
 

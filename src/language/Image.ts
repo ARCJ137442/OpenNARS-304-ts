@@ -5,8 +5,8 @@ import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { javaObjectsHash } from "../runtime/ValueArrays.ts";
-import { toJavaString, type JavaCharSequence, type JavaString } from "../runtime/java-text.ts";
-import { javaStringValue } from "../runtime/java-text.ts";
+import { asText, type TextString } from "../runtime/Text.ts";
+import { textValue } from "../runtime/Text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -52,7 +52,7 @@ export abstract class Image extends CompoundTerm {
         // which changes image parsing for a derived term named "_".
         if (!(t instanceof Term) || t.getClass() !== Term.class)
             return false;
-        let n: JavaCharSequence = t.name();
+        let n: TextString = t.name();
         if (String(n).length !== 1)
             return false;
         return String(n) === Symbols.IMAGE_PLACE_HOLDER;
@@ -66,17 +66,14 @@ export abstract class Image extends CompoundTerm {
      * @param relationIndex the location of the place holder
      * @return the oldName of the term
      */
-    protected static makeImageName(op: NativeOperator, arg: Term[], relationIndex: int): JavaString {
-        let name = `${COMPOUND_TERM_OPENER.ch}${op.toString()}${Symbols.ARGUMENT_SEPARATOR}${javaStringValue(arg[relationIndex].name())}`;
-
-        for (let i: int = 0; i < arg.length; i++) {
-            name += Symbols.ARGUMENT_SEPARATOR;
-            name += i === relationIndex
+    protected static makeImageName(op: NativeOperator, arg: Term[], relationIndex: int): TextString {
+        const relationName = textValue(arg[relationIndex].name());
+        const argumentsName = arg.map((term, index) =>
+            `${Symbols.ARGUMENT_SEPARATOR}${index === relationIndex
                 ? Symbols.IMAGE_PLACE_HOLDER
-                : javaStringValue(arg[i].name());
-        }
-        name += COMPOUND_TERM_CLOSER.ch;
-        return toJavaString(name);
+                : textValue(term.name())}`).join("");
+        return asText(
+            `${COMPOUND_TERM_OPENER.ch}${op.toString()}${Symbols.ARGUMENT_SEPARATOR}${relationName}${argumentsName}${COMPOUND_TERM_CLOSER.ch}`);
     }
 
     /**
@@ -85,7 +82,7 @@ export abstract class Image extends CompoundTerm {
      * @return The term relaterom existing fields
      * @return the name of the term
      */
-    public makeName(): JavaCharSequence {
+    public makeName(): TextString {
         return Image.makeImageName(this.operator(), this.term, this.relationIndex);
     }
 

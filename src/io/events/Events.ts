@@ -1,7 +1,7 @@
 //! Java source: opennars/io/events/Events.java
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
-import { javaStringValue } from "../../runtime/java-text.ts";
-import type { JavaStringInput } from "../../runtime/java-text.ts";
+import { textValue } from "../../runtime/Text.ts";
+import type { TextInput } from "../../runtime/Text.ts";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
@@ -50,10 +50,10 @@ abstract class TaskImmediateProcess extends RuntimeObject implements EventObserv
 }
 
 abstract class TaskAdd extends RuntimeObject implements EventObserver {
-    public abstract onTaskAdd(t: Task, reason: JavaStringInput): void;
+    public abstract onTaskAdd(t: Task, reason: TextInput): void;
 
     public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
-        this.onTaskAdd(args[0] as unknown as Task, args[1] as JavaStringInput);
+        this.onTaskAdd(args[0] as unknown as Task, args[1] as TextInput);
     }
 }
 
@@ -117,7 +117,7 @@ class ConceptNew extends ParametricInferenceEvent<Concept> {
     }
 
     public override toString(): string {
-        return `Concept Created: ${javaStringValue(this.object)}`;
+        return `Concept Created: ${textValue(this.object)}`;
     }
 }
 

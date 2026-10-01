@@ -15,7 +15,7 @@ import type { DerivationContext } from "../../control/DerivationContext.ts";
 import type { Nar } from "../../main/Nar.ts";
 import type { Plugin } from "../Plugin.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { toJavaString } from "../../runtime/java-text.ts";
+import { asText } from "../../runtime/Text.ts";
 
 
 
@@ -167,7 +167,7 @@ export class Emotions implements Plugin {
         }
 
         if (frequency !== -1) { // ok lets add an event now
-            let predicate: Term = SetInt.make(new Term(toJavaString("satisfied")));
+            let predicate: Term = SetInt.make(new Term(asText("satisfied")));
             let subject: Term = Term.SELF;
             let inh: Inheritance = Inheritance.make(subject, predicate);
             let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.happyValue, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
@@ -261,8 +261,8 @@ export class Emotions implements Plugin {
         }
 
         if (frequency !== -1) { // ok lets add an event now
-            let predicate: Term = SetInt.make(new Term(toJavaString("busy")));
-            let subject: Term = new Term(toJavaString("SELF"));
+            let predicate: Term = SetInt.make(new Term(asText("busy")));
+            let subject: Term = new Term(asText("SELF"));
             let inh: Inheritance = Inheritance.make(subject, predicate);
             let truth: TruthValue = TruthValue.fromFrequencyConfidence(this.busyValue, nal.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
                 nal.narParameters);
