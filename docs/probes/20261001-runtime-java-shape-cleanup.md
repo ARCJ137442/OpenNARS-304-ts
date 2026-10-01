@@ -321,3 +321,22 @@ Verification on the current uncommitted tree:
 
 This batch does not claim M1-prime, NAL parity, markerless equality, or spec
 031 completion. Those require a new immutable commit and their own evidence.
+
+## Exact-commit M1' protection run
+
+On commit `9c4d76b`, the frozen Java baseline `g0-java-baseline-26772af-20260917`
+(`264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`) was used
+for the 243-file M1-- body. The body completed `243/243`, with zero failure,
+exception, timeout, process-limit, stall, or not-run rows. Its SHA-256 is
+`1D098649D74E5045C0C0D05507386A76BB985C02069089F849BE9751B7CA109A`.
+
+The same commit passed the additional #246 fixture (`1/1`, SHA-256
+`2424342B18EFDF8B3B8A1BBFEFF2B167DAE040C6ADA29C315F55F0D7F95397B0`) and
+`nars_multistep_3.nal` (`1/1`, SHA-256
+`2C315E9494178D1A0747F415C075CFF6E28221B02854939AF8F11FEE3CB5CC4C`). The
+65536-cycle #245 observation was manually stopped at approximately 1 GiB RSS
+after about 1200 seconds to protect the host; it is recorded as `memory_limit`
+under `reports/evidence/m1prime-9c4d76b-long-65536-20261002-memory-protected.json`.
+This is a performance/resource limitation, not a semantic regression or a
+process-limit/timeout/stall result, and the original 2,000,000-cycle workload
+remains unclaimed.

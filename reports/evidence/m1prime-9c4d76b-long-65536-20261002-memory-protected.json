@@ -1,0 +1,20 @@
+{
+  "schema": "opennars-304-ts.long-cycle-observation.v1",
+  "commit": "9c4d76b",
+  "file": "java-master/src/main/resources/nal/stability/long_term_stability.nal",
+  "requested_cycles": 65536,
+  "runner_process_limit_ms": 1800000,
+  "classification": "memory_limit",
+  "functional_pass": false,
+  "marker_matched": false,
+  "last_progress": null,
+  "observed_cycles": null,
+  "elapsed_observation_ms": 1200000,
+  "peak_rss_bytes_observed": 1030799360,
+  "stop_reason": "Manually stopped at approximately 1 GiB RSS to prevent host memory exhaustion; runner did not emit a completed row.",
+  "timeout": false,
+  "process_limit": false,
+  "stall": false,
+  "exception": false,
+  "not_run": false
+}
