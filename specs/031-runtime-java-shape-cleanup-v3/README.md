@@ -90,3 +90,16 @@ Typecheck, build, dist API, TS M2, and Java M2 remain green. The initial demo wo
 ## Batch 4 result
 
 `Nar` host effects are represented by explicit `RuntimeCapabilities.saveSnapshot/loadSnapshot`; Node supplies the v8/file implementation while browser builds use the browser host boundary. `Nar`, `Memory` and `Stamp` no longer hard-code the Node adapter selection point. Typecheck, build, dist API and browser worker build pass. Full M2/M1-prime reruns are required before this spec can close.
+
+## Batch 5 result: native reasoner errors
+
+Production callsites for invalid arguments and invalid state now use
+`ReasonerInputError`, `ReasonerStateError`, `ReasonerInvariantError`, and
+`ReasonerOperationError`. Parser invalid-input is also project-native. The
+Java-named exception hierarchy remains only at compatibility/facade edges so
+legacy observation contracts continue to work while the namespace is removed.
+
+Typecheck, focused boundaries, TS-only M2 (`503/0/2`), Java M2 (`505/0/0`),
+affected NALs (`4/4`) and M1-prime body (`243/243`) passed on the migration
+line. Final #246/#245 and exact-commit markerless evidence still need to be
+recorded before 031 can close.
