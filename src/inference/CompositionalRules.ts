@@ -39,7 +39,7 @@ import { Float32Math } from "../runtime/Float32.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
-import { JavaSystemLoggerCompat } from "../runtime/native-host-boundary.ts";
+import { Logger } from "../runtime/Logger.ts";
 
 // Java 原类型：Map<Term, Term>，实现类型：LinkedHashMap。
 // 当前实现：NativeMap + MapContract；保留 Java 的值判等、插入顺序和 Map 操作面，
@@ -651,8 +651,8 @@ export class CompositionalRules {
     let truthB: TruthValue | null = currentBelief.truth;
     if (truthT === null || truthB === null) {
       if (Debug.DETAILED) {
-        JavaSystemLoggerCompat.getLogger("CompositionalRules").log(
-          JavaSystemLoggerCompat.Level.SEVERE,
+        Logger.named("CompositionalRules").log(
+          "SEVERE",
           "ERROR: Belief with null truth value. (introVarOuter)",
           null,
         );

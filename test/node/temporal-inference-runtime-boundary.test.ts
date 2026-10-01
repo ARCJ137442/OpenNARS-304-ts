@@ -6,5 +6,5 @@ test("TemporalInferenceControl uses project host boundaries", () => {
     const source = readFileSync("src/control/TemporalInferenceControl.ts", "utf8");
     assert.doesNotMatch(source, /from ["']jree["']/);
     assert.doesNotMatch(source, /java\.lang\.(Math|System)/);
-    assert.match(source, /JavaSystemLoggerCompat/);
+    assert.match(source, /Logger/);
 });

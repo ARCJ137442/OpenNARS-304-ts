@@ -7,5 +7,5 @@ test("ProcessGoal keeps project-owned host and collection boundaries", () => {
     assert.doesNotMatch(source, /from ["']jree["']/);
     assert.doesNotMatch(source, /java\.lang\.(System|IllegalStateException)/);
     assert.doesNotMatch(source, /java\.util\.Map/);
-    assert.match(source, /JavaSystemLoggerCompat/);
+    assert.match(source, /Logger/);
 });

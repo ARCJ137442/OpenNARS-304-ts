@@ -17,7 +17,7 @@ test("CompositionalRules keeps logging and map boundaries project-owned", () => 
     const source = readFileSync(new URL("../../src/inference/CompositionalRules.ts", import.meta.url), "utf8");
     assert.doesNotMatch(source, /from ["']jree["']/);
     assert.doesNotMatch(source, /java\.lang\.System/);
-    assert.match(source, /JavaSystemLoggerCompat/);
+    assert.match(source, /Logger/);
 });
 
 test("CompositionalRules.powerSet preserves Set order without a temporary List", () => {

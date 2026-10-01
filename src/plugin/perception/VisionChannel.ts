@@ -3,7 +3,7 @@ import { ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
 import type { float, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { JavaSystemLoggerCompat } from "../../runtime/native-host-boundary.ts";
+import { Logger } from "../../runtime/Logger.ts";
 import { toJavaString, type JavaStringInput } from "../../runtime/java-text.ts";
 import { Events } from "../../io/events/Events.ts";
 import type { EventEmitter } from "../../io/events/EventEmitter.ts";
@@ -256,7 +256,7 @@ export class VisionChannel extends SensoryChannel {
                         }
                     } catch (ex) {
                         if (ex instanceof Parser.InvalidInputException) {
-                            JavaSystemLoggerCompat.getLogger(VisionChannel.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                            Logger.named(VisionChannel.class.getName()).log("SEVERE", null, ex);
                         } else {
                             throw ex;
                         }

@@ -1,5 +1,5 @@
 //! Java source: opennars/control/TemporalInferenceControl.java
-import { JavaSystemLoggerCompat } from "../runtime/native-host-boundary.ts";
+import { Logger } from "../runtime/Logger.ts";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Stamp } from "../entity/Stamp.ts";
@@ -138,7 +138,7 @@ export class TemporalInferenceControl {
                         let x: long = Toperation.sentence.getOccurrenceTime();
                         let y: long = takeout.sentence.getOccurrenceTime();
                         if (y > x) { // something wrong here?
-                            JavaSystemLoggerCompat.getLogger("TemporalInferenceControl").log("INFO", "analyze case in TemporalInferenceControl!", null);
+                            Logger.named("TemporalInferenceControl").log("INFO", "analyze case in TemporalInferenceControl!");
                             continue;
                         }
                         // Java original: List<Task>; TemporalRules now exposes the

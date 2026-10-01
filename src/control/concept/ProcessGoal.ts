@@ -25,7 +25,7 @@ import { Operation } from "../../operator/Operation.ts";
 import { Operator } from "../../operator/Operator.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
-import { JavaSystemLoggerCompat } from "../../runtime/native-host-boundary.ts";
+import { Logger } from "../../runtime/Logger.ts";
 import { ReasonerInvariantError } from "../../runtime/ReasonerErrors.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
 import { ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
@@ -374,7 +374,7 @@ export class ProcessGoal {
                     op.allowBabbling = false;
                     /* } */
                 }
-                JavaSystemLoggerCompat.getLogger("ProcessGoal").log("INFO", `Executed based on: ${javaStringValue(executablePrecondition)}`, null);
+                Logger.named("ProcessGoal").log("INFO", `Executed based on: ${javaStringValue(executablePrecondition)}`);
                 const anticipations = anticipationsToMake.get(bestOp);
                 if (anticipations === null) {
                     throw new ReasonerStateError("Executable precondition anticipation list is missing");
@@ -594,7 +594,7 @@ export class ProcessGoal {
             return false;
         }
         if (Debug.DETAILED) {
-            JavaSystemLoggerCompat.getLogger("ProcessGoal").log("INFO", t.toStringLong(), null);
+            Logger.named("ProcessGoal").log("INFO", t.toStringLong());
         }
         return true;
     }

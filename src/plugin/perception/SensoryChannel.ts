@@ -3,9 +3,7 @@ import { ReasonerInputError, ReasonerStateError } from "../../runtime/ReasonerEr
 import type { int, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Narsese } from "../../io/Narsese.ts";
 import { Parser } from "../../io/Parser.ts";
-import {
-    JavaSystemLoggerCompat,
-} from "../../runtime/native-host-boundary.ts";
+import { Logger } from "../../runtime/Logger.ts";
 import { isJavaListInput, toJavaString, type JavaListInput, type JavaStringInput } from "../../runtime/java-text.ts";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import { Term } from "../../language/Term.ts";
@@ -123,8 +121,8 @@ export abstract class SensoryChannel extends RuntimeObject implements Plugin {
             this.addInput(parsedTask, time);
         } catch (ex) {
             if (ex instanceof Parser.InvalidInputException) {
-                JavaSystemLoggerCompat.getLogger(SensoryChannel.class.getName()).log(
-                    JavaSystemLoggerCompat.Level.SEVERE,
+                Logger.named(SensoryChannel.class.getName()).log(
+                    "SEVERE",
                     null,
                     ex,
                 );

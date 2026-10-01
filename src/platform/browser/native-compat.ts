@@ -2,4 +2,3 @@
 export { createBrowserRuntimeCapabilities, BrowserCapabilityUnavailableError } from "./native-host-adapter.ts";
 export * from "../../runtime/java-text.ts";
 export * from "../../runtime/java-values.ts";
-export * from "../../runtime/JavaExceptions.ts";
