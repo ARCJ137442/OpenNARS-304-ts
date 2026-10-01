@@ -1,12 +1,15 @@
 ---
-status: in-progress
+status: complete
 created: 2026-10-01
 priority: high
 created_at: 2026-10-01T03:52:41.998882100Z
-updated_at: 2026-10-01T03:53:13.036395400Z
+updated_at: 2026-10-01T05:51:25.731815100Z
+completed_at: 2026-10-01T05:51:25.731815100Z
 transitions:
 - status: in-progress
   at: 2026-10-01T03:53:13.036395400Z
+- status: complete
+  at: 2026-10-01T05:51:25.731815100Z
 ---
 
 # Platform-neutral main core
@@ -66,11 +69,14 @@ restored.
 - TS-only M2: `500 passed / 0 failed / 2 skipped`.
 - Java M2: `502 passed / 0 failed / 0 skipped`.
 - M1-prime body: `243/243` parity, with zero failure, timeout,
-  process-limit, exception, stall, or not-run rows.
+  process-limit, exception, stall, or not-run rows. SHA-256:
+  `C21414D508B499E8BEE61B8AA082CDCC70E2564BFD5E8CA6615B89CA29308F72`.
 - Extra `simpleOperationTest.nal`: `1/1` parity.
+  SHA-256: `B7B62317F4DB2183B92456B5FEF1C201C6F72B0431AC22639D11AD8124CF317A`.
 - Reduced #245 fixture: `long_term_stability-65536.nal` Java/TS parity `1/1`,
   TS duration about `386.8 s`, peak RSS `411623424` bytes; this is not the
   original 2,000,000-cycle stability claim.
+  SHA-256: `A8AC7A7B3CB2100EB5E4F858E88A24921DCD06D911B56C4623B183CD28495C0F`.
 - Worker build, static forbidden-token scan, demo tests `28/28`, and real
   browser Microworld smoke passed. Worker build retains six known esbuild
   warnings from translated overload switches and `import.meta` in IIFE output.
