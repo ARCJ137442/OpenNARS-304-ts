@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, S } from "../../src/runtime/native-runtime.ts";
+import { java, JavaObject, type int, S } from "../../src/platform/node/legacy-runtime-facade.ts";
 import { Concept } from "../../src/entity/Concept.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { assertEquals, assertTrue } from "../util/junit-assert.ts";

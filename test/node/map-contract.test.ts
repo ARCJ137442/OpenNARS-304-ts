@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java } from "../../src/runtime/native-runtime.ts";
+import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
 import { Inheritance } from "../../src/language/Inheritance.ts";
 import { Term } from "../../src/language/Term.ts";
 import { NativeMap } from "../../src/runtime/NativeMap.ts";

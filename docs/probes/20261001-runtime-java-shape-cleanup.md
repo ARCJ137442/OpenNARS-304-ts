@@ -163,3 +163,29 @@ failure/timeout/process_limit/exception/stall/not_run rows; affected NALs were
 `4/4`. The reduced/extra/markerless rows from the immediately preceding
 source-equivalent line remain planning evidence only; exact-commit reruns are
 still required before closing 031.
+
+## 2026-10-01 native host boundary batch
+
+The former `src/platform/node/native-host-adapter.ts` and browser counterpart
+mixed native filesystem/serialization effects with a translated `java`
+namespace. The native adapters now expose only host capabilities
+(`NodeTextWriter`, byte/value encode/decode helpers, browser clock and writer
+capabilities). The translated namespace moved to explicit
+`legacy-namespace.ts` files and is reached only by the Node legacy facade and
+the translated browser demo boundary.
+
+This removes `java.io`, `java.net`, `java.lang` and `java.util` construction
+from the native adapter boundary. It does not claim that the translated
+compatibility facade is deleted; its removal requires migrating remaining
+test/tool and demo call sites to native text, collection, class-token and
+capability APIs. The removal condition is that no maintained caller imports
+`java` from either legacy facade and parity/M1' evidence remains equal.
+
+Verification on the current worktree: `npm run typecheck` passed; native host
+contracts passed `11/11`; TS-only M2 passed `503/505` with zero failures and
+two skips; Java M2 passed `507/507`; `npm run build`, `npm run audit:jree`,
+and the browser worker build with `ALLOW_DIRTY_OPENNARS=1` passed. Existing esbuild warnings about
+`import.meta` and duplicate switch cases are unrelated.
+
+The exact-commit M1', Java M2, reduced #245, #246 and markerless rows must be
+rerun after this batch is committed; prior hashes cannot be reused.

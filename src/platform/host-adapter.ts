@@ -1,12 +1,14 @@
 /**
- * Build-time host selection point for the platform-neutral reasoner core.
- * Node entry points use the Node implementation; browser bundlers alias this
- * module to `platform/browser/native-host-adapter.ts`.
+ * Platform-neutral host contract.
+ *
+ * The reasoner consumes these capability types; Node and browser modules
+ * provide concrete implementations. There is intentionally no Java namespace
+ * or reflection facade at this boundary.
  */
-export {
-    java,
-    isJavaException,
-    isJavaThrowable,
-    toJavaString,
-} from "./node/native-host-adapter.ts";
-export type { JavaStringInput } from "./node/native-host-adapter.ts";
+export type {
+    CurrentTimeMillis,
+    MessageTransportCapability,
+    RuntimeCapabilities,
+    TextWriter,
+} from "./RuntimeCapabilities.ts";
+export { defaultCurrentTimeMillis, MissingRuntimeCapabilityError } from "./RuntimeCapabilities.ts";

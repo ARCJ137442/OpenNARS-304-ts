@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java, JavaObject } from "../../src/runtime/native-runtime.ts";
+import { java, JavaObject } from "../../src/platform/node/legacy-runtime-facade.ts";
 import {
     JavaDoubleCompat,
     addRuntimeLong,
@@ -10,7 +10,7 @@ import {
     javaStringValue,
     javaStringsEqual,
     toRuntimeLong,
-} from "../../src/runtime/native-runtime.ts";
+} from "../../src/platform/node/legacy-runtime-facade.ts";
 import { RuntimeClassToken } from "../../src/runtime/RuntimeClass.ts";
 import {
     JavaAssertionError,

@@ -4,7 +4,7 @@ import test from "node:test";
 test("native lookup tables preserve Java symbol and tense contracts", async () => {
     const { Symbols } = await import("../../src/io/Symbols.ts");
     const { Tense } = await import("../../src/language/Tense.ts");
-    const { java } = await import("../../src/runtime/native-runtime.ts");
+    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
 
     assert.equal(Symbols.getOperator("&"), Symbols.NativeOperator.INTERSECTION_EXT);
     assert.equal(Symbols.getOperator("-->"), Symbols.NativeOperator.INHERITANCE);
@@ -30,7 +30,7 @@ test("native lookup tables preserve Java symbol and tense contracts", async () =
 
 test("Term atom cache normalizes Java and native text keys", async () => {
     const { Term } = await import("../../src/language/Term.ts");
-    const { java } = await import("../../src/runtime/native-runtime.ts");
+    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
     const name = `term-cache-${Date.now()}-${Math.random()}`;
 
     const nativeTerm = Term.get(name);

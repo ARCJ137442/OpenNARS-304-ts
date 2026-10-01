@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type double, closeResources, handleResourceError, throwResourceError } from "../../src/runtime/native-runtime.ts";
+import { java, JavaObject, type int, type double, closeResources, handleResourceError, throwResourceError } from "../../src/platform/node/legacy-runtime-facade.ts";
 import {
     JavaClassNotFoundException,
     JavaIllegalAccessException,
@@ -6,7 +6,7 @@ import {
     JavaNoSuchMethodException,
     JavaInvocationTargetException,
     JavaParseException,
-} from "../../src/runtime/native-runtime.ts";
+} from "../../src/platform/node/legacy-runtime-facade.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { ClassTokenLike } from "../../src/runtime/RuntimeClass.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
@@ -27,7 +27,7 @@ import {
     JavaParserConfigurationException as ParserConfigurationException,
     JavaSAXException as SAXException,
     javaStringValue,
-} from "../../src/runtime/native-runtime.ts";
+} from "../../src/platform/node/legacy-runtime-facade.ts";
 
 
 

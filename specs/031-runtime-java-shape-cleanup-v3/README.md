@@ -109,3 +109,27 @@ body (`243/243`) and affected NALs (`4/4`). Its remaining exact-commit rows
 are intentionally not inferred from the previous equivalent source line; the
 spec stays `in-progress` until #246, reduced #245, markerless, browser/Node
 smoke and the residual runtime-shape audit are recorded on one final commit.
+
+## Batch 6 result: native host boundary
+
+`src/platform/node/native-host-adapter.ts` and
+`src/platform/browser/native-host-adapter.ts` now expose native host
+capabilities only. Filesystem, serialization, text output, clock and browser
+availability are represented as TypeScript functions/classes and
+`RuntimeCapabilities`; the adapters no longer construct or export a `java`
+namespace. The compatibility namespace was moved to explicitly named
+`legacy-namespace.ts` modules and is imported only by the legacy facade and
+the translated demo boundary.
+
+This is a boundary reduction, not the final deletion of every Java-shaped
+contract. UTF-16/hash/equality, class-token, iterator, Random and parity
+contracts remain in project-owned runtime modules until all callers have been
+migrated and exact-commit gates are rerun.
+
+The direct host contracts passed (`11/11`), typecheck and build passed, the
+serial TS-only M2 passed `503/505` with zero failures and two documented skips,
+and Java M2 passed `507/507`. The browser worker built successfully with the
+dirty-source override.
+The acceptance boxes remain open until exact-commit M1', Java M2, #246,
+reduced #245, markerless, Node/browser smoke and the residual audit are
+recorded together.

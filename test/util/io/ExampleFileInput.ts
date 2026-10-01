@@ -1,8 +1,8 @@
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { java, JavaObject, type int } from "../../../src/runtime/native-runtime.ts";
-import { javaStringValue } from "../../../src/runtime/native-runtime.ts";
+import { java, JavaObject, type int } from "../../../src/platform/node/legacy-runtime-facade.ts";
+import { javaStringValue } from "../../../src/platform/node/legacy-runtime-facade.ts";
 import type { Nar } from "../../../src/main/Nar.ts";
 import { OutputCondition } from "../test/OutputCondition.ts";
 import "../test/OutputConditionImplementations.ts";

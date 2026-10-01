@@ -1,4 +1,4 @@
-import { java, JavaObject } from "../../src/runtime/native-runtime.ts";
+import { java, JavaObject } from "../../src/platform/node/legacy-runtime-facade.ts";
 
 
 

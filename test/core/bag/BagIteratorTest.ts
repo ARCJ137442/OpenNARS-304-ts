@@ -1,6 +1,6 @@
-import { java, JavaObject, type int } from "../../../src/runtime/native-runtime.ts";
+import { java, JavaObject, type int } from "../../../src/platform/node/legacy-runtime-facade.ts";
 import { Item } from "../../../src/entity/Item.ts";
-import { JavaAssertionError } from "../../../src/runtime/native-runtime.ts";
+import { JavaAssertionError } from "../../../src/platform/node/legacy-runtime-facade.ts";
 import { Bag } from "../../../src/storage/Bag.ts";
 import { BagPerf } from "../../perf/BagPerf.ts";
 import { assertTrue } from "../../util/junit-assert.ts";

@@ -84,7 +84,7 @@ test("NativeSet.equals follows Java AbstractSet receiver direction", () => {
 });
 
 test("NativeSet deduplicates structurally equal Terms used as target Set values", async () => {
-    const { java } = await import("../../src/runtime/native-runtime.ts");
+    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
 

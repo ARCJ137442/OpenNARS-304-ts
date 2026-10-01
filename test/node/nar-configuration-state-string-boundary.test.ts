@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { java } from "../../src/runtime/native-runtime.ts";
+import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
 
 import { Nar } from "../../src/main/Nar.ts";
 import { NativeMap } from "../../src/runtime/NativeMap.ts";

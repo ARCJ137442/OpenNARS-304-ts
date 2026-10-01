@@ -1,10 +1,12 @@
-import { Class, JavaObject, java } from "../platform/node/native-host-adapter.ts";
+import { createNodeLegacyNamespace, Class, JavaObject, NativeJavaString } from "./legacy-namespace.ts";
+import type { JavaCharSequence as NativeCharSequence } from "../../runtime/java-text.ts";
 export { Class, JavaObject };
 // Host-facing legacy Java objects are exported only through this adapter. Core
 // and entry modules must not import npm jree directly.
-export { java } from "../platform/node/native-host-adapter.ts";
-import { javaStringValue } from "./java-text.ts";
-import { JavaRandom } from "./JavaRandom.ts";
+/** Legacy translated namespace. New code must use native capabilities instead. */
+export const java = createNodeLegacyNamespace();
+import { javaStringValue } from "../../runtime/java-text.ts";
+import { JavaRandom } from "../../runtime/JavaRandom.ts";
 import {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -25,15 +27,15 @@ import {
     JavaUnsupportedOperationException,
     JavaSAXException,
     JavaThrowable,
-} from "./JavaExceptions.ts";
+} from "../../runtime/JavaExceptions.ts";
 
 export {
     javaStringHashCode,
     javaStringLength,
     javaStringValue,
     javaStringsEqual,
-} from "./java-text.ts";
-export type { JavaChar } from "./java-text.ts";
+} from "../../runtime/java-text.ts";
+export type { JavaChar } from "../../runtime/java-text.ts";
 export {
     addRuntimeLong,
     addRuntimeLongValues,
@@ -42,8 +44,8 @@ export {
     subtractRuntimeLong,
     subtractRuntimeLongValues,
     toRuntimeLong,
-} from "./java-values.ts";
-export type { JavaLongInput } from "./java-values.ts";
+} from "../../runtime/java-values.ts";
+export type { JavaLongInput } from "../../runtime/java-values.ts";
 export {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -60,15 +62,15 @@ export {
     JavaParserConfigurationException,
     JavaSAXException,
     JavaUnsupportedOperationException,
-} from "./JavaExceptions.ts";
+} from "../../runtime/JavaExceptions.ts";
 
 /** Text accepted at Node-facing Java string input boundaries. */
-export type JavaStringInput = java.lang.String | string;
-export type JavaString = java.lang.String;
-export type JavaCharSequence = java.lang.CharSequence;
+export type JavaStringInput = NativeJavaString | string;
+export type JavaString = NativeJavaString;
+export type JavaCharSequence = NativeCharSequence;
 
 /** Values accepted by the Java Plugin.name() CharSequence boundary. */
-export type JavaCharSequenceInput = java.lang.CharSequence | string;
+export type JavaCharSequenceInput = NativeCharSequence | string;
 
 /**
  * Structural view of the original Java `java.util.List<T>` input contract.
@@ -84,31 +86,31 @@ export const isJavaListInput = <T>(value: unknown): value is JavaListInput<T> =>
     typeof (value as { toArray?: unknown } | null)?.toArray === "function";
 
 /** Normalize a native Node string before it enters translated Java code. */
-export const toJavaString = (value: JavaStringInput): java.lang.String =>
-    value instanceof java.lang.String ? value : new java.lang.String(value);
+export const toJavaString = (value: JavaStringInput): NativeJavaString =>
+    value instanceof NativeJavaString ? value : new NativeJavaString(value);
 
 /**
  * jree 1.3.0 does not ship java.lang.Double. Keep the boxed-number contract
  * at this compatibility boundary instead of replacing translated Java APIs
  * with native numbers at every call site.
  */
-export class JavaDoubleCompat extends java.lang.Number {
+export class JavaDoubleCompat extends Number {
     public static readonly POSITIVE_INFINITY = Number.POSITIVE_INFINITY;
     public static readonly NEGATIVE_INFINITY = Number.NEGATIVE_INFINITY;
     public static readonly NaN = Number.NaN;
 
     private readonly value: number;
 
-    public constructor(value: number | string | java.lang.String) {
+    public constructor(value: number | string | NativeJavaString) {
         super();
         this.value = Number(String(value));
     }
 
-    public static toString(value: number): java.lang.String {
-        return new java.lang.String(String(value));
+    public static toString(value: number): NativeJavaString {
+        return new NativeJavaString(String(value));
     }
 
-    public static valueOf(value: number | string | java.lang.String): JavaDoubleCompat {
+    public static valueOf(value: number | string | NativeJavaString): JavaDoubleCompat {
         return new JavaDoubleCompat(value);
     }
 
@@ -146,10 +148,10 @@ export class JavaDoubleCompat extends java.lang.Number {
  * create exceptions from untouched compatibility APIs.
  */
 export const isJavaThrowable = (value: unknown): value is JavaThrowable =>
-    value instanceof JavaThrowable || value instanceof java.lang.Throwable;
+    value instanceof JavaThrowable;
 
 export const isJavaException = (value: unknown): value is JavaException =>
-    value instanceof JavaException || value instanceof java.lang.Exception;
+    value instanceof JavaException;
 
 /** Compatibility boundary for java.util.logging.Logger, which jree 1.3.0 omits. */
 export class JavaSystemLoggerCompat {
@@ -160,7 +162,7 @@ export class JavaSystemLoggerCompat {
         this.name = name;
     }
 
-    public static getLogger(name: java.lang.String | string): JavaSystemLoggerCompat {
+    public static getLogger(name: NativeJavaString | string): JavaSystemLoggerCompat {
         return new JavaSystemLoggerCompat(javaStringValue(name));
     }
 
@@ -186,7 +188,7 @@ export class JavaSystemLoggerCompat {
 export class JavaDecimalFormatCompat {
     private readonly formatter: Intl.NumberFormat;
 
-    public constructor(pattern: java.lang.String | string) {
+    public constructor(pattern: NativeJavaString | string) {
         const normalized = javaStringValue(pattern);
         const fractionPattern = normalized.split(".")[1] ?? "";
         const maximumFractionDigits = fractionPattern.length;
@@ -198,8 +200,8 @@ export class JavaDecimalFormatCompat {
         });
     }
 
-    public format(value: number): java.lang.String {
-        return new java.lang.String(this.formatter.format(value));
+    public format(value: number): NativeJavaString {
+        return new NativeJavaString(this.formatter.format(value));
     }
 }
 
@@ -240,8 +242,8 @@ export class JavaStringJoinerCompat {
         return this;
     }
 
-    public toString(): java.lang.String {
-        return new java.lang.String(`${this.prefix}${this.values.join(this.delimiter)}${this.suffix}`);
+    public toString(): NativeJavaString {
+        return new NativeJavaString(`${this.prefix}${this.values.join(this.delimiter)}${this.suffix}`);
     }
 }
 
@@ -253,11 +255,11 @@ export const javaSystemExit = (status: number): never => {
     throw new Error(`Process exit requested with status ${status}`);
 };
 
-export type { int, char, short, long, float, double } from "../types.ts";
+export type { int, char, short, long, float, double } from "../../types.ts";
 export {
     closeResourcesCompat as closeResources,
     handleResourceErrorCompat as handleResourceError,
     throwResourceErrorCompat as throwResourceError,
-} from "./ResourceCompat.ts";
-export const S = (strings: TemplateStringsArray, ...values: unknown[]): java.lang.String =>
-    new java.lang.String(strings.reduce((result, text, index) => result + text + (values[index] ?? ""), ""));
+} from "../../runtime/ResourceCompat.ts";
+export const S = (strings: TemplateStringsArray, ...values: unknown[]): NativeJavaString =>
+    new NativeJavaString(strings.reduce((result, text, index) => result + text + (values[index] ?? ""), ""));

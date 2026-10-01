@@ -1,10 +1,10 @@
-import { java, JavaObject } from "../../src/runtime/native-runtime.ts";
+import { java, JavaObject } from "../../src/platform/node/legacy-runtime-facade.ts";
 import { AnswerHandler } from "../../src/io/events/AnswerHandler.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { NarseseConsumer } from "../../src/interfaces/NarseseConsumer.ts";
 import { Sentence } from "../../src/entity/Sentence.ts";
 import { Term } from "../../src/language/Term.ts";
-import { javaStringValue, type JavaStringInput } from "../../src/runtime/native-runtime.ts";
+import { javaStringValue, type JavaStringInput } from "../../src/platform/node/legacy-runtime-facade.ts";
 import { assertTrue } from "../util/junit-assert.ts";
 import { System as SystemOperator } from "../../src/operator/misc/System.ts";
 

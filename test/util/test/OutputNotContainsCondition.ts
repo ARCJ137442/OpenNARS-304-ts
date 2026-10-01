@@ -1,4 +1,4 @@
-import { java } from "../../../src/runtime/native-runtime.ts";
+import { java } from "../../../src/platform/node/legacy-runtime-facade.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputContainsCondition } from "./OutputContainsCondition.ts";
 import { OutputCondition } from "./OutputCondition.ts";

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 test("变量统一会替换操作参数并保留 Operation 运行时类型", async () => {
-    const { java } = await import("../../src/runtime/native-runtime.ts");
+    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { NullOperator } = await import("../../src/operator/NullOperator.ts");
     const { Operation } = await import("../../src/operator/Operation.ts");
@@ -43,7 +43,7 @@ test("变量统一会替换操作参数并保留 Operation 运行时类型", asy
 });
 
 test("common variable propagation matches Java for commutative unification", async () => {
-    const { java } = await import("../../src/runtime/native-runtime.ts");
+    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { Symbols } = await import("../../src/io/Symbols.ts");
@@ -80,7 +80,7 @@ test("common variable propagation matches Java for commutative unification", asy
 });
 
 test("commutative unification does not reuse one matched operand index", async () => {
-    const { java } = await import("../../src/runtime/native-runtime.ts");
+    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { Symbols } = await import("../../src/io/Symbols.ts");
@@ -99,7 +99,7 @@ test("commutative unification does not reuse one matched operand index", async (
 });
 
 test("Variables initializes the Java Map pair with native ordered maps", async () => {
-    const { java } = await import("../../src/runtime/native-runtime.ts");
+    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
     const { Symbols } = await import("../../src/io/Symbols.ts");
     const { Term } = await import("../../src/language/Term.ts");
     const { Variable } = await import("../../src/language/Variable.ts");

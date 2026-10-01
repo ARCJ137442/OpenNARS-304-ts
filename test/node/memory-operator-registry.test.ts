@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java } from "../../src/runtime/native-runtime.ts";
+import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { NullOperator } from "../../src/operator/NullOperator.ts";
 

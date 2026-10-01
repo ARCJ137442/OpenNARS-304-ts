@@ -84,16 +84,46 @@ export type NativeJavaFacade = {
     util: Record<string, unknown>;
 };
 
+type LegacyCollection<T> = Iterable<T> & {
+    size(): number;
+    add(value: T): boolean;
+    addAll(values: Iterable<T>): boolean;
+    contains(value: T): boolean;
+    clear(): void;
+};
+
+type LegacyList<T> = LegacyCollection<T> & {
+    get(index: number): T;
+    remove(index: number): T;
+    toArray(): T[];
+};
+
+type LegacySet<T> = LegacyCollection<T> & { remove(value: T): boolean; toArray(): T[] };
+
+type LegacyMap<K, V> = {
+    size(): number;
+    isEmpty(): boolean;
+    clear(): void;
+    get(key: K): V | null;
+    getOrDefault(key: K, fallback: V): V;
+    put(key: K, value: V): V | null;
+    remove(key: K): V | null;
+    containsKey(key: K): boolean;
+    keySet(): LegacySet<K>;
+    values(): LegacyCollection<V>;
+    entrySet(): LegacySet<{ getKey(): K; getValue(): V; setValue(value: V): V }>;
+};
+
 export type NativeJavaNamespace = NativeJavaFacade & {
     lang: any;
     util: Record<string, unknown> & {
-        LinkedHashMap: new <K, V>(...args: unknown[]) => java.util.Map<K, V>;
-        HashMap: new <K, V>(...args: unknown[]) => java.util.Map<K, V>;
-        ArrayList: new <T>(...args: unknown[]) => java.util.List<T>;
-        LinkedList: new <T>(...args: unknown[]) => java.util.List<T>;
-        LinkedHashSet: new <T>(...args: unknown[]) => java.util.LinkedHashSet<T>;
-        HashSet: new <T>(...args: unknown[]) => java.util.Set<T>;
-        Random: new (seed?: bigint | number) => java.util.Random;
+        LinkedHashMap: new <K, V>(...args: unknown[]) => LegacyMap<K, V>;
+        HashMap: new <K, V>(...args: unknown[]) => LegacyMap<K, V>;
+        ArrayList: new <T>(...args: unknown[]) => LegacyList<T>;
+        LinkedList: new <T>(...args: unknown[]) => LegacyList<T>;
+        LinkedHashSet: new <T>(...args: unknown[]) => LegacySet<T>;
+        HashSet: new <T>(...args: unknown[]) => LegacySet<T>;
+        Random: new (seed?: bigint | number) => JavaRandom;
         Arrays: any;
         NoSuchElementException: any;
         UnsupportedOperationException: any;

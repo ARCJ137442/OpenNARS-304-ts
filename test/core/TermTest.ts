@@ -1,4 +1,4 @@
-import { java, JavaObject, type int } from "../../src/runtime/native-runtime.ts";
+import { java, JavaObject, type int } from "../../src/platform/node/legacy-runtime-facade.ts";
 import { Concept } from "../../src/entity/Concept.ts";
 import { Narsese } from "../../src/io/Narsese.ts";
 import { Parser } from "../../src/io/Parser.ts";
@@ -9,7 +9,7 @@ import { CompoundTerm } from "../../src/language/CompoundTerm.ts";
 import { Inheritance } from "../../src/language/Inheritance.ts";
 import { Statement } from "../../src/language/Statement.ts";
 import { Term } from "../../src/language/Term.ts";
-import type { JavaStringInput } from "../../src/runtime/native-runtime.ts";
+import type { JavaStringInput } from "../../src/platform/node/legacy-runtime-facade.ts";
 import { assertEquals, assertTrue } from "../util/junit-assert.ts";
 
 const NativeOperator = Symbols.NativeOperator;

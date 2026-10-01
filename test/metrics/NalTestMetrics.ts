@@ -1,5 +1,5 @@
-import { java, JavaObject, type double, type int } from "../../src/runtime/native-runtime.ts";
-import { JavaDoubleCompat } from "../../src/runtime/native-runtime.ts";
+import { java, JavaObject, type double, type int } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { JavaDoubleCompat } from "../../src/platform/node/legacy-runtime-facade.ts";
 import { NALTest } from "../core/NALTest.ts";
 
 

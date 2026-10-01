@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java } from "../../src/runtime/native-runtime.ts";
+import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
 
 test("Statement keeps Java side-enum and native exception boundaries", async () => {
     const { Statement } = await import("../../src/language/Statement.ts");
@@ -39,7 +39,7 @@ test("AbstractTerm keeps the Java CharSequence name contract without a direct jr
 test("J2 text boundaries preserve supplementary UTF-16 units and Java hash", async () => {
     const { Term } = await import("../../src/language/Term.ts");
     const { Variable } = await import("../../src/language/Variable.ts");
-    const { javaStringHashCode, javaStringsEqual } = await import("../../src/runtime/native-runtime.ts");
+    const { javaStringHashCode, javaStringsEqual } = await import("../../src/platform/node/legacy-runtime-facade.ts");
 
     const supplementary = "term-😀";
     const term = Term.get(supplementary);
