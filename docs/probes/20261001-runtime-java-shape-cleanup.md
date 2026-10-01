@@ -452,3 +452,9 @@ passed. TS-only M2 passed `505/507` (two documented skips), Java M2 passed
 `507/507`, and release/build/dist API checks passed. The M2 TAP hashes are
 `4BAFE29BB3500B000419506D808382AD7A164661BAECB79124E0EA9E58CF762C` and
 `58DB74FF41DC6BD13EDBFF61CAEB3930340828F3A3C96B66E8BE18B7403E5162`.
+
+Exact-commit M1' for class-identity commit `7ffd442` completed `243/243`
+with zero failure, exception, timeout, process-limit, stall, or not-run rows.
+The JSONL SHA-256 is
+`8FDAD01DBDAA2D0C257EB58B2D4D12A655E867195BAEB04AE2F8943C18FD78FD`.
+The empty historical `Term.ts.codex-corrupt` placeholder remains untracked.

@@ -3182,6 +3182,13 @@ LeanSpec 15 项
 └─ checklist     89/111                          [################----] 80.2%
 ```
 
+## 2026-10-02 project class-identity batch
+
+- 当前代码提交：`7ffd442`（代码 `70ab148`），已完成 `ClassIdentity.ts`、`ClassToken`、`ConstructorShape`、`ReasonerObject` 的生产迁移；旧 `RuntimeClass*`/`RuntimeObject` 名称已从 `src` 移除。
+- 聚焦类/事件/核心回归：`78/78`；TS-only M2：`505/507`；Java M2：`507/507`；release/build/dist API 通过。
+- exact-commit M1'：`243/243`，JSONL SHA-256 `8FDAD01DBDAA2D0C257EB58B2D4D12A655E867195BAEB04AE2F8943C18FD78FD`。
+- 023、031 仍未完成；集合语义、剩余 Java helper、宿主边界和 demo 性能仍需继续收口。
+
 ### 2026-09-20：J4 `Feel` 原生字符串边界切片（`9990bb0`）
 
 对照 canonical Java `Feel.java`，确认构造器的 `name` 只用于传递 Operator 名称并截取
