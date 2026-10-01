@@ -67,7 +67,7 @@ export class Equivalence extends Statement {
                     return null;
                 }
                 if (t.length !== 2)
-                    throw new ReasonerStateError("Equivalence requires 2 components: [" + t.map(String).join(", ") + "]");
+                    throw new ReasonerStateError(`Equivalence requires 2 components: [${t.map(String).join(", ")}]`);
 
                 return Equivalence.make(t[0], t[1], this.temporalOrder);
 

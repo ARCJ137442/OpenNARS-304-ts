@@ -124,14 +124,14 @@ export class EventEmitter {
             throw new ReasonerStateError("Invalid parameter");
 
         if (!this.events.has(event))
-            throw new ReasonerStateError("Unknown event: " + event);
+            throw new ReasonerStateError(`Unknown event: ${event}`);
 
         // Observers are commonly plain TypeScript objects, not JavaObject
         // instances. jree's List.remove(value) only compares Java-style
         // equatable objects, so preserve Java's registration identity here.
         const observers = this.events.get(event);
         if (observers === undefined) {
-            throw new ReasonerStateError("Unknown event: " + event);
+            throw new ReasonerStateError(`Unknown event: ${event}`);
         }
         for (let index = 0; index < observers.length; index += 1) {
             if (observers[index] === o) {

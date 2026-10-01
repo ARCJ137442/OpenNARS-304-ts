@@ -86,7 +86,7 @@ export class Variable extends Term {
         this.scope = scope !== null ? scope : this;
         this.hash = 0; // calculate lazily
         if (!Variable.validVariableType(this.type))
-            throw new ReasonerStateError("Invalid variable type: " + n);
+            throw new ReasonerStateError(`Invalid variable type: ${n}`);
         return this;
     }
 

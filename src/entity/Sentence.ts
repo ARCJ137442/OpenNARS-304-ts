@@ -185,7 +185,7 @@ export class Sentence extends RuntimeObject {
                         truth.confidence = 0.0; // do it that way for now, because else further inference is interrupted.
                         if (Debug.DETAILED && Debug.DETAILED_SENTENCES)
                             throw new ReasonerStateError(
-                                "Sentence content must not be Interval: " + _content + punctuation + " " + stamp);
+                                `Sentence content must not be Interval: ${_content}${punctuation} ${stamp}`);
                     }
 
                     if ((!this.isQuestion() && !this.isQuest()) && (truth === null)

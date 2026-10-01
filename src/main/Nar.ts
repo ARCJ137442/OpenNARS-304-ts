@@ -545,7 +545,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                         const closingBracket = subjectText.lastIndexOf("]");
                         if (openingBracket < 0 || closingBracket <= openingBracket) {
                             throw new ReasonerInputError(
-                                "Sensory input is missing coordinates: " + subjectText,
+                                `Sensory input is missing coordinates: ${subjectText}`,
                             );
                         }
                         let variable: string = subjectText.slice(0, openingBracket);

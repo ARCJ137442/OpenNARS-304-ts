@@ -512,9 +512,7 @@ export class Concept extends Item<Term> {
         ) as float;
         let result: float = UtilityFunctions.or(this.acquiredQuality, linkPriority, termComplexityFactor);
         if (result < 0) {
-            throw new ReasonerStateError("Concept.getQuality < 0:  result=" + result + ", linkPriority="
-                + linkPriority + " ,termComplexityFactor=" + termComplexityFactor + ", termLinks.size="
-                + this.termLinks.size());
+            throw new ReasonerStateError(`Concept.getQuality < 0: result=${result}, linkPriority=${linkPriority}, termComplexityFactor=${termComplexityFactor}, termLinks.size=${this.termLinks.size()}`);
         }
         return result;
     }

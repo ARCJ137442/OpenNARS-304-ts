@@ -111,7 +111,7 @@ export class Implication extends Statement {
                     return null;
                 }
                 if (t.length !== 2)
-                    throw new ReasonerStateError("Implication requires 2 components: [" + t.map(String).join(", ") + "]");
+                    throw new ReasonerStateError(`Implication requires 2 components: [${t.map(String).join(", ")}]`);
 
                 return Implication.make(t[0], t[1], this.temporalOrder);
 

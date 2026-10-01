@@ -290,7 +290,7 @@ export class Stamp extends RuntimeObject {
         if (Debug.DETAILED) {
             if (eternalOccurrence && this.tense !== Tense.Eternal) {
                 throw new ReasonerStateError(
-                    "Stamp has inconsistent tense and eternal ocurrenceTime: tense=" + this.tense);
+                    `Stamp has inconsistent tense and eternal occurrenceTime: tense=${this.tense}`);
             }
         }
 

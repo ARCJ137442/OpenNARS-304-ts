@@ -512,7 +512,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
                     default:
 
                 }
-                throw new ReasonerStateError("Invalid variable type: " + type);
+                throw new ReasonerStateError(`Invalid variable type: ${type}`);
 
 
                 break;
@@ -588,7 +588,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
                     // verify consistency of compareTo() and equals()
                     let equal: boolean = a.equals(b);
                     if ((equal && (c !== 0)) || (!equal && (c === 0))) {
-                        throw new ReasonerStateError("invalid order: " + a + " = " + b);
+                        throw new ReasonerStateError(`Invalid order: ${a} = ${b}`);
                     }
                 }
 

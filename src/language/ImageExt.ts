@@ -61,8 +61,7 @@ export class ImageExt extends Image {
                     return null;
                 }
                 if (replaced.length !== this.term.length)
-                    throw new ReasonerStateError("Replaced terms not the same amount as existing terms (" + this.term.length
-                        + "): [" + replaced.map(String).join(", ") + "]");
+                    throw new ReasonerStateError(`Replaced terms not the same amount as existing terms (${this.term.length}): [${replaced.map(String).join(", ")}]`);
 
                 return new ImageExt(replaced, this.relationIndex);
 

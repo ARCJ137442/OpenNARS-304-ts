@@ -83,7 +83,7 @@ export class Inheritance extends Statement {
                 }
                 if (t.length !== 2)
                     throw new ReasonerInputError(
-                        "Invalid terms for " + this.getClass().getSimpleName() + ": [" + t.map(String).join(", ") + "]");
+                        `Invalid terms for ${this.getClass().getSimpleName()}: [${t.map(String).join(", ")}]`);
 
                 return Inheritance.make(t[0], t[1]);
 
@@ -144,7 +144,7 @@ export class Inheritance extends Statement {
 
         if (Debug.DETAILED) {
             if (!predicateOperator && String(predicate.toString()).startsWith(String(toJavaString("^")))) {
-                throw new ReasonerStateError("operator term detected but is not an operator: " + predicate);
+                throw new ReasonerStateError(`Operator term detected but is not an operator: ${predicate}`);
             }
         }
 
