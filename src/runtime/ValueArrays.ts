@@ -1,9 +1,8 @@
 import { javaValueHashCode } from "./NativeSet.ts";
 
 /**
- * Java original type: short[].
- * Native representation: Int16Array, retaining Java's indexed value and order
- * semantics without depending on jree's java.util.Arrays implementation.
+ * Native Int16Array helpers retaining the canonical indexed value and order
+ * semantics without depending on a foreign collection implementation.
  */
 export const javaInt16ArrayEquals = (
     left: Int16Array | null | undefined,

@@ -14,7 +14,7 @@ test("ImageExt and ImageInt do not construct jree exception classes directly", (
 test("ImageExt clone and make use project-owned argument/state exceptions", async () => {
     const { ImageExt } = await import("../../src/language/ImageExt.ts");
     const { Term } = await import("../../src/language/Term.ts");
-    const { JavaIllegalArgumentException, JavaIllegalStateException } = await import("../../src/runtime/JavaExceptions.ts");
+    const { JavaIllegalArgumentException, JavaIllegalStateException } = await import("../support/legacy-exceptions.ts");
     const image = new ImageExt([Term.get("relation"), Term.get("component")], 0);
     const clone = image.clone as unknown as (...args: unknown[]) => unknown;
     const make = ImageExt.make as unknown as (...args: unknown[]) => unknown;
@@ -27,7 +27,7 @@ test("ImageExt clone and make use project-owned argument/state exceptions", asyn
 test("ImageInt clone and make use project-owned argument/state exceptions", async () => {
     const { ImageInt } = await import("../../src/language/ImageInt.ts");
     const { Term } = await import("../../src/language/Term.ts");
-    const { JavaIllegalArgumentException, JavaIllegalStateException } = await import("../../src/runtime/JavaExceptions.ts");
+    const { JavaIllegalArgumentException, JavaIllegalStateException } = await import("../support/legacy-exceptions.ts");
     const image = ImageInt.make([Term.get("relation"), Term.get("component")], 0);
     const clone = image.clone as unknown as (...args: unknown[]) => unknown;
     const make = ImageInt.make as unknown as (...args: unknown[]) => unknown;

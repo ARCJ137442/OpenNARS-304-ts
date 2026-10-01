@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { JavaIllegalArgumentException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException } from "../support/legacy-exceptions.ts";
 import { TemporalRules } from "../../src/inference/TemporalRules.ts";
 
 test("TemporalRules uses project exception boundaries", () => {

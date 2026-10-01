@@ -6,7 +6,7 @@ test("Statement keeps Java side-enum and native exception boundaries", async () 
     const { Statement } = await import("../../src/language/Statement.ts");
     const { Inheritance } = await import("../../src/language/Inheritance.ts");
     const { Term } = await import("../../src/language/Term.ts");
-    const { JavaIllegalArgumentException } = await import("../../src/runtime/JavaExceptions.ts");
+    const { JavaIllegalArgumentException } = await import("../support/legacy-exceptions.ts");
 
     const subject = Statement.EnumStatementSide.SUBJECT;
     const predicate = Statement.EnumStatementSide.PREDICATE;

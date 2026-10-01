@@ -1,11 +1,11 @@
 /**
- * Project-owned implementation of java.util.Random's 48-bit LCG.
+ * Project-owned deterministic 48-bit pseudo-random generator.
  *
  * The translated core needs Java's exact state transition and bit
  * consumption. Keeping it here lets the remaining jree callers use a thin
  * adapter while later clusters migrate their constructor types.
  */
-export type JavaRandomSeed = bigint | number;
+export type ReasonerRandomSeed = bigint | number;
 
 const MULTIPLIER = 0x5deece66dn;
 const ADDEND = 0xbn;
@@ -13,10 +13,10 @@ const MASK = (1n << 48n) - 1n;
 const INT_MAX = 0x7fffffff;
 const TWO31 = 2 ** 31;
 
-const normalizeSeed = (seed: JavaRandomSeed): bigint => {
+const normalizeSeed = (seed: ReasonerRandomSeed): bigint => {
     if (typeof seed === "number") {
         if (!Number.isSafeInteger(seed)) {
-            throw new RangeError("JavaRandom seed must be a safe integer");
+            throw new RangeError("Reasoner random seed must be a safe integer");
         }
         return BigInt(seed);
     }
@@ -28,22 +28,22 @@ const defaultSeed = (): bigint => {
     return clock ^ (clock << 16n);
 };
 
-/** Java-compatible pseudo-random generator with deterministic seeded output. */
-export class JavaRandom {
+/** Deterministic generator retaining the canonical OpenNARS sequence contract. */
+export class ReasonerRandom {
     private state = 0n;
 
-    public constructor(seed: JavaRandomSeed = defaultSeed()) {
+    public constructor(seed: ReasonerRandomSeed = defaultSeed()) {
         this.setSeed(seed);
     }
 
-    public setSeed(seed: JavaRandomSeed): void {
+    public setSeed(seed: ReasonerRandomSeed): void {
         this.state = (normalizeSeed(seed) ^ MULTIPLIER) & MASK;
     }
 
     /** Return the requested high-order bits from the next LCG state. */
     public next(bits: number): number {
         if (!Number.isInteger(bits) || bits < 0 || bits > 32) {
-            throw new RangeError(`JavaRandom bits must be between 0 and 32: ${bits}`);
+            throw new RangeError(`Reasoner random bits must be between 0 and 32: ${bits}`);
         }
         this.state = (this.state * MULTIPLIER + ADDEND) & MASK;
         return bits === 0 ? 0 : Number(this.state >> BigInt(48 - bits));
@@ -55,7 +55,7 @@ export class JavaRandom {
             return value >= 2 ** 31 ? value - 2 ** 32 : value;
         }
         if (!Number.isSafeInteger(bound) || bound <= 0 || bound > INT_MAX) {
-            throw new RangeError(`JavaRandom bound must be a positive int: ${bound}`);
+            throw new RangeError(`Reasoner random bound must be a positive int: ${bound}`);
         }
 
         if ((bound & (bound - 1)) === 0) {

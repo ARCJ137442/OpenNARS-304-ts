@@ -6,7 +6,7 @@ export { Class, JavaObject };
 /** Legacy translated namespace. New code must use native capabilities instead. */
 export const java = createNodeLegacyNamespace();
 import { javaStringValue } from "../../src/runtime/java-text.ts";
-import { JavaRandom } from "../../src/runtime/JavaRandom.ts";
+import { ReasonerRandom as JavaRandom } from "../../src/runtime/ReasonerRandom.ts";
 import {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -27,7 +27,7 @@ import {
     JavaUnsupportedOperationException,
     JavaSAXException,
     JavaThrowable,
-} from "../../src/runtime/JavaExceptions.ts";
+} from "./legacy-exceptions.ts";
 
 export {
     javaStringHashCode,
@@ -62,7 +62,7 @@ export {
     JavaParserConfigurationException,
     JavaSAXException,
     JavaUnsupportedOperationException,
-} from "../../src/runtime/JavaExceptions.ts";
+} from "./legacy-exceptions.ts";
 
 /** Text accepted at Node-facing Java string input boundaries. */
 export type JavaStringInput = NativeJavaString | string;

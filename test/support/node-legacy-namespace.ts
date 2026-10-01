@@ -10,8 +10,8 @@ import {
     NodeStringWriter,
     NodeTextWriter,
 } from "../../src/platform/node/native-host-adapter.ts";
-import { NativeJavaString, createNativeJavaFacade, type NativeJavaNamespace, Class, JavaObject } from "../../src/runtime/native-java-runtime.ts";
-import { JavaException } from "../../src/runtime/JavaExceptions.ts";
+import { NativeJavaString, createNativeJavaFacade, type NativeJavaNamespace, Class, JavaObject } from "./native-java-runtime.ts";
+import { JavaException } from "./legacy-exceptions.ts";
 
 class NodeFileOutputStream {
     private readonly fd: number;
@@ -118,4 +118,4 @@ export function createNodeLegacyNamespace(): NativeJavaNamespace {
     } as unknown as NativeJavaNamespace;
 }
 
-export { Class, JavaObject, NativeJavaString } from "../../src/runtime/native-java-runtime.ts";
+export { Class, JavaObject, NativeJavaString } from "./native-java-runtime.ts";

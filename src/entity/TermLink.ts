@@ -11,7 +11,7 @@ import {
     javaInt16ArrayEquals,
     javaInt16ArrayHashCode,
     javaObjectsHash,
-} from "../runtime/JavaArrays.ts";
+} from "../runtime/ValueArrays.ts";
 
 
 

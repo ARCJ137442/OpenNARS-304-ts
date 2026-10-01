@@ -4,7 +4,7 @@ import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { javaObjectsHash } from "../runtime/JavaArrays.ts";
+import { javaObjectsHash } from "../runtime/ValueArrays.ts";
 import { toJavaString, type JavaCharSequence, type JavaString } from "../runtime/java-text.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
 

@@ -13,7 +13,7 @@ import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import {
     javaInt16ArrayEquals,
     javaInt16ArrayHashCode,
-} from "../runtime/JavaArrays.ts";
+} from "../runtime/ValueArrays.ts";
 
 
 

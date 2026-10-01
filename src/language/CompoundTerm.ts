@@ -12,14 +12,13 @@ import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
 import { javaStringHashCode, javaStringsEqual } from "../runtime/java-text.ts";
 import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/java-text.ts";
-import { JavaNoSuchElementException, JavaRuntimeException } from "../runtime/JavaExceptions.ts";
 import { ReasonerOperationError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { NativeFixedList, NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
-import type { JavaIterator } from "../runtime/JavaIterator.ts";
+import type { MutableIterator } from "../runtime/MutableIterator.ts";
 
 type RandomLike = { nextInt(bound?: number): number };
 type CollectionLike<T> = { add(value: T): unknown };
@@ -289,10 +288,10 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return ret;
     }
 
-    public static UnableToCloneException = class UnableToCloneException extends JavaRuntimeException {
+    public static UnableToCloneException = class UnableToCloneException extends ReasonerOperationError {
 
         public constructor(message: unknown) {
-            super(message);
+            super(String(message));
         }
 
         public fillInStackTrace(): this {
@@ -847,7 +846,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return y;
     }
 
-    public iterator(): JavaIterator<Term> {
+    public iterator(): MutableIterator<Term> {
         // Java delegates to Guava Iterators.forArray(term), whose
         // UnmodifiableIterator reads this array in order and rejects remove().
         const terms = this.term;
@@ -856,7 +855,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             hasNext: (): boolean => index < terms.length,
             next: (): Term => {
                 if (index >= terms.length) {
-                    throw new JavaNoSuchElementException();
+                    throw new ReasonerOperationError("CompoundTerm iterator has no next element");
                 }
                 return terms[index++];
             },

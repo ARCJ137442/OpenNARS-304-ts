@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { Term } from "../../src/language/Term.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../support/legacy-exceptions.ts";
 
 test("Term does not construct jree argument/state exceptions directly", () => {
     const source = readFileSync("src/language/Term.ts", "utf8");

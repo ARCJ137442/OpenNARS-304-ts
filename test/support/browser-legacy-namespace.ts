@@ -1,5 +1,5 @@
-import { createNativeJavaFacade, NativeJavaString, Class, JavaObject, type NativeJavaNamespace } from "../../src/runtime/native-java-runtime.ts";
-import { JavaException, JavaThrowable } from "../../src/runtime/JavaExceptions.ts";
+import { createNativeJavaFacade, NativeJavaString, Class, JavaObject, type NativeJavaNamespace } from "./native-java-runtime.ts";
+import { JavaException, JavaThrowable } from "./legacy-exceptions.ts";
 
 const unavailable = (name: string): never => {
     throw new Error(`${name} is unavailable in the browser host`);

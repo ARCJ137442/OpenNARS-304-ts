@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { JavaIllegalArgumentException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException } from "../support/legacy-exceptions.ts";
 import { Narsese } from "../../src/io/Narsese.ts";
 import { Symbols } from "../../src/io/Symbols.ts";
 

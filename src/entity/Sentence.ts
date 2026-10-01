@@ -1,7 +1,7 @@
 //! Java source: opennars/entity/Sentence.java
 import type { int, long, float, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../io/Texts.ts";
-import { javaObjectsHash } from "../runtime/JavaArrays.ts";
+import { javaObjectsHash } from "../runtime/ValueArrays.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Term } from "../language/Term.ts";
 import { CompoundTerm } from "../language/CompoundTerm.ts";
@@ -205,7 +205,7 @@ export class Sentence extends RuntimeObject {
                         if (!Term.valid(_content)) {
                             let ntc: CompoundTerm.UnableToCloneException = new CompoundTerm.UnableToCloneException(
                                 "Invalid term discovered " + _content);
-                            ntc.printStackTrace();
+                            console.error(ntc.stack ?? ntc.message);
                             throw ntc;
                         }
                     }
@@ -274,7 +274,7 @@ export class Sentence extends RuntimeObject {
                                 let ntc: CompoundTerm.UnableToCloneException = new CompoundTerm.UnableToCloneException(
                                     "Invalid term discovered after normalization: " + c + " ; prior to normalization: "
                                     + _content);
-                                ntc.printStackTrace();
+                                console.error(ntc.stack ?? ntc.message);
                                 throw ntc;
                             }
                         }

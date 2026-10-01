@@ -10,7 +10,7 @@ import { Term } from "../../src/language/Term.ts";
 import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
-} from "../../src/runtime/JavaExceptions.ts";
+} from "../support/legacy-exceptions.ts";
 
 const sources = [
     "src/language/IntersectionExt.ts",

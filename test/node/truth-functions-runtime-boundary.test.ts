@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { JavaIllegalArgumentException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException } from "../support/legacy-exceptions.ts";
 import { TruthFunctions } from "../../src/inference/TruthFunctions.ts";
 
 test("TruthFunctions keeps project-owned enum and exception boundaries", () => {

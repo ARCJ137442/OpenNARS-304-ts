@@ -8,7 +8,7 @@ import { Item } from "../../src/entity/Item.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import { Term } from "../../src/language/Term.ts";
 import { NativeMap } from "../../src/runtime/NativeMap.ts";
-import { JavaIllegalArgumentException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException } from "../support/legacy-exceptions.ts";
 
 class TestItem extends Item<string> {
     private readonly key: string;

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../support/legacy-exceptions.ts";
 
 test("Terms uses project-owned argument and state exceptions", () => {
     const source = readFileSync("src/language/Terms.ts", "utf8");

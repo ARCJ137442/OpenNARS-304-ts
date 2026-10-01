@@ -881,7 +881,7 @@ test("Believe emits native array feedback after the remaining operator migration
 
 test("Believe keeps Java's null truth exception boundary", async () => {
     const { Believe } = await import("../../src/operator/mental/Believe.ts");
-    const { JavaNullPointerException } = await import("../../src/runtime/JavaExceptions.ts");
+    const { JavaNullPointerException } = await import("../support/legacy-exceptions.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Operation } = await import("../../src/operator/Operation.ts");
     const { Term } = await import("../../src/language/Term.ts");

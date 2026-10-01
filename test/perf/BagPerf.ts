@@ -14,7 +14,7 @@ import {
 import { Nar } from "../../src/main/Nar.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import { Bag } from "../../src/storage/Bag.ts";
-import type { JavaIterator } from "../../src/runtime/JavaIterator.ts";
+import type { MutableIterator } from "../../src/runtime/MutableIterator.ts";
 import { Item } from "../../src/entity/Item.ts";
 import { BudgetValue } from "../../src/entity/BudgetValue.ts";
 import { Performance } from "./Performance.ts";
@@ -226,7 +226,7 @@ export class BagPerf extends JavaObject {
     }
 
     public static iterate(b: Bag<BagPerf.NullItem, java.lang.CharSequence>): void {
-        let i: JavaIterator<BagPerf.NullItem> = b.iterator();
+        let i: MutableIterator<BagPerf.NullItem> = b.iterator();
         let count: int = 0;
         while (i.hasNext()) {
             i.next();

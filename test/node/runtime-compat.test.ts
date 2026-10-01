@@ -18,7 +18,7 @@ import {
     JavaError,
     JavaIllegalAccessException,
     JavaThrowable,
-} from "../../src/runtime/JavaExceptions.ts";
+} from "../support/legacy-exceptions.ts";
 
 test("javaStringLength normalizes jree and native string representations", () => {
     const boxed = new java.lang.String("abc");

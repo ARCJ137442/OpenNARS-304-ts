@@ -1,42 +1,46 @@
-import { JavaThrowable } from "./JavaExceptions.ts";
+/** Native resource cleanup errors with an explicit suppressed-error chain. */
+export class ResourceError extends Error {
+    private readonly suppressed: Error[] = [];
 
-type AutoCloseableCompat = {
-    close(): void;
-};
-
-function toJavaThrowable(error: unknown): JavaThrowable {
-    if (error instanceof JavaThrowable) return error;
-    if (error instanceof Error) {
-        return new JavaThrowable(error.message, (error as Error & { cause?: unknown }).cause ?? null);
+    public constructor(message: string, options?: { cause?: unknown }) {
+        super(message, options);
+        this.name = "ResourceError";
+        Object.setPrototypeOf(this, new.target.prototype);
     }
-    return new JavaThrowable(String(error));
+
+    public addSuppressed(error: Error): void { this.suppressed.push(error); }
+    public getSuppressed(): readonly Error[] { return this.suppressed.slice(); }
+    public getMessage(): string { return this.message; }
 }
 
-export function closeResourcesCompat(resources: AutoCloseableCompat[]): JavaThrowable | undefined {
-    let error: JavaThrowable | undefined;
+type AutoCloseable = { close(): void };
+
+function toResourceError(error: unknown): ResourceError {
+    if (error instanceof ResourceError) return error;
+    if (error instanceof Error) return new ResourceError(error.message, { cause: error.cause });
+    return new ResourceError(String(error));
+}
+
+export function closeResourcesCompat(resources: AutoCloseable[]): ResourceError | undefined {
+    let error: ResourceError | undefined;
     for (const resource of [...resources].reverse()) {
         try {
             resource.close();
         } catch (cause) {
-            const throwable = toJavaThrowable(cause);
-            if (error === undefined) {
-                error = throwable;
-            } else {
-                error.addSuppressed(throwable);
-            }
+            const cleanupError = toResourceError(cause);
+            if (error === undefined) error = cleanupError;
+            else error.addSuppressed(cleanupError);
         }
     }
     return error;
 }
 
-export function handleResourceErrorCompat(cause: unknown, closeError?: JavaThrowable): JavaThrowable {
-    const error = toJavaThrowable(cause);
-    if (closeError !== undefined) {
-        error.addSuppressed(closeError);
-    }
+export function handleResourceErrorCompat(cause: unknown, closeError?: ResourceError): ResourceError {
+    const error = toResourceError(cause);
+    if (closeError !== undefined) error.addSuppressed(closeError);
     return error;
 }
 
-export function throwResourceErrorCompat(error?: JavaThrowable): void {
+export function throwResourceErrorCompat(error?: ResourceError): void {
     if (error !== undefined) throw error;
 }

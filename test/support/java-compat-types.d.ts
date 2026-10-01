@@ -1,5 +1,5 @@
-import type { NativeJavaString } from "./java-text.js";
-import type { JavaThrowable, JavaException, JavaRuntimeException } from "./JavaExceptions.js";
+import type { NativeJavaString } from "../../src/runtime/java-text.js";
+import type { JavaThrowable, JavaException, JavaRuntimeException } from "./legacy-exceptions.js";
 
 declare global {
     namespace java {

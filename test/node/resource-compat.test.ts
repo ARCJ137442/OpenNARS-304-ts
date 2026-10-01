@@ -6,7 +6,7 @@ import {
     handleResourceErrorCompat,
     throwResourceErrorCompat,
 } from "../../src/runtime/ResourceCompat.ts";
-import { JavaThrowable } from "../../src/runtime/JavaExceptions.ts";
+import { ResourceError } from "../../src/runtime/ResourceCompat.ts";
 
 test("resource helpers close in reverse order and preserve suppressed failures", () => {
     const closed: string[] = [];
@@ -26,15 +26,15 @@ test("resource helpers close in reverse order and preserve suppressed failures",
     const error = closeResourcesCompat([first, second]);
 
     assert.deepEqual(closed, ["second", "first"]);
-    assert.ok(error instanceof JavaThrowable);
+    assert.ok(error instanceof ResourceError);
     assert.equal(error?.getMessage(), "second close");
     assert.equal(error?.getSuppressed().length, 1);
-    assert.equal(error?.getSuppressed()[0]?.getMessage(), "first close");
+    assert.equal(error?.getSuppressed()[0]?.message, "first close");
 });
 
 test("resource helpers attach close failures to the primary error and rethrow", () => {
     const primary = new Error("read failure");
-    const closeError = new JavaThrowable("close failure");
+    const closeError = new ResourceError("close failure");
     const combined = handleResourceErrorCompat(primary, closeError);
 
     assert.equal(combined.getMessage(), "read failure");

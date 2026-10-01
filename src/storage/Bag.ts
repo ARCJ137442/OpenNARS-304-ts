@@ -9,7 +9,7 @@ import { Float32Math } from "../runtime/Float32.ts";
 import { javaValuesEqual } from "../runtime/java-values.ts";
 import { toJavaString, type JavaString } from "../runtime/java-text.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
-import type { JavaIterator } from "../runtime/JavaIterator.ts";
+import type { MutableIterator } from "../runtime/MutableIterator.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 import type { Memory } from "./Memory.ts";
 
@@ -535,7 +535,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
     }
 
     // Java original return type: java.util.Iterator<Type>.
-    public iterator(): JavaIterator<Type> {
+    public iterator(): MutableIterator<Type> {
         return this.nameTable.values().iterator();
     }
 

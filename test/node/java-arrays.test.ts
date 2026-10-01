@@ -4,7 +4,7 @@ import {
     javaInt16ArrayEquals,
     javaInt16ArrayHashCode,
     javaObjectsHash,
-} from "../../src/runtime/JavaArrays.ts";
+} from "../../src/runtime/ValueArrays.ts";
 
 test("Java short-array equals preserves null, length, order, and values", () => {
     assert.equal(javaInt16ArrayEquals(null, null), true);

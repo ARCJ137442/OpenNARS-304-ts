@@ -3,7 +3,7 @@ import test from "node:test";
 
 import "../support/legacy-runtime-facade.ts";
 import { java } from "../support/legacy-runtime-facade.ts";
-import { JavaRandom } from "../../src/runtime/JavaRandom.ts";
+import { ReasonerRandom as JavaRandom } from "../../src/runtime/ReasonerRandom.ts";
 
 test("jree Random.nextDouble preserves Java's 53-bit value", () => {
     const random = new java.util.Random(1n);

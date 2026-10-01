@@ -11,7 +11,7 @@ import {
     JavaNullPointerException,
     JavaRuntimeException,
     JavaThrowable,
-} from "../../src/runtime/JavaExceptions.ts";
+} from "../support/legacy-exceptions.ts";
 import { java } from "../support/legacy-runtime-facade.ts";
 import { isJavaException, isJavaThrowable } from "../support/legacy-runtime-facade.ts";
 

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { Term } from "../../src/language/Term.ts";
-import { JavaIllegalArgumentException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException } from "../support/legacy-exceptions.ts";
 
 
 test("CompoundTerm hasVar rejects invalid overloads with the project exception", () => {

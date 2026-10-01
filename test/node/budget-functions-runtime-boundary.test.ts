@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { JavaIllegalStateException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalStateException } from "../support/legacy-exceptions.ts";
 import { BudgetFunctions } from "../../src/inference/BudgetFunctions.ts";
 
 test("BudgetFunctions keeps project-owned enum and exception boundaries", () => {

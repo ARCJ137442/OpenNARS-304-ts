@@ -6,7 +6,7 @@ import { Disjunction } from "../../src/language/Disjunction.ts";
 import { Negation } from "../../src/language/Negation.ts";
 import { Similarity } from "../../src/language/Similarity.ts";
 import { Term } from "../../src/language/Term.ts";
-import { JavaIllegalArgumentException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException } from "../support/legacy-exceptions.ts";
 
 const sources = [
     "src/language/Similarity.ts",

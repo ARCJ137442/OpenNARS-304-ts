@@ -3,7 +3,7 @@ import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { long, float, int, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
-import type { JavaIterator } from "../runtime/JavaIterator.ts";
+import type { MutableIterator } from "../runtime/MutableIterator.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -35,7 +35,7 @@ import { javaStringValue } from "../runtime/java-text.ts";
 import { toJavaString as toHostJavaString } from "../runtime/java-text.ts";
 import type { JavaStringInput } from "../runtime/java-text.ts";
 import { ThreadCompat } from "../runtime/ThreadCompat.ts";
-import { JavaRandom } from "../runtime/JavaRandom.ts";
+import { ReasonerRandom } from "../runtime/ReasonerRandom.ts";
 import type { Resettable } from "../interfaces/Resettable.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 
@@ -76,7 +76,7 @@ export class Memory implements Iterable<Concept>, Resettable {
     public allowExecution: boolean = true;
 
     public readonly randomSeed: long = 1n;
-    public readonly randomNumber: JavaRandom = new JavaRandom(this.randomSeed);
+    public readonly randomNumber: ReasonerRandom = new ReasonerRandom(this.randomSeed);
 
     // todo make sense of this class and de-obfuscate
     public readonly concepts: Bag<Concept, Term>;
@@ -467,7 +467,7 @@ export class Memory implements Iterable<Concept>, Resettable {
     }
 
     // Java original return type: java.util.Iterator<Concept>.
-    public iterator(): JavaIterator<Concept> {
+    public iterator(): MutableIterator<Concept> {
         return this.concepts.iterator();
     }
 

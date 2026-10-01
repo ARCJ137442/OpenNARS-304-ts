@@ -5,7 +5,7 @@ import test from "node:test";
 import { Implication } from "../../src/language/Implication.ts";
 import { Equivalence } from "../../src/language/Equivalence.ts";
 import { Term } from "../../src/language/Term.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException, JavaIllegalStateException } from "../support/legacy-exceptions.ts";
 
 test("Implication and Equivalence use project-owned exception classes", () => {
     for (const file of ["src/language/Implication.ts", "src/language/Equivalence.ts"]) {

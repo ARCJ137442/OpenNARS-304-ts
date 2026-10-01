@@ -1,7 +1,7 @@
-import { NativeList } from "./NativeList.ts";
-import { NativeMap } from "./NativeMap.ts";
-import { NativeSet } from "./NativeSet.ts";
-import { javaStringHashCode, NativeJavaString } from "./java-text.ts";
+import { NativeList } from "../../src/runtime/NativeList.ts";
+import { NativeMap } from "../../src/runtime/NativeMap.ts";
+import { NativeSet } from "../../src/runtime/NativeSet.ts";
+import { javaStringHashCode, NativeJavaString } from "../../src/runtime/java-text.ts";
 import {
     JavaError,
     JavaException,
@@ -12,9 +12,9 @@ import {
     JavaUnsupportedOperationException,
     JavaRuntimeException,
     JavaThrowable,
-} from "./JavaExceptions.ts";
-import { JavaRandom } from "./JavaRandom.ts";
-import { RuntimeClassToken } from "./RuntimeClass.ts";
+} from "./legacy-exceptions.ts";
+import { ReasonerRandom as JavaRandom } from "../../src/runtime/ReasonerRandom.ts";
+import { RuntimeClassToken } from "../../src/runtime/RuntimeClass.ts";
 
 type Constructor<T> = new (...args: never[]) => T;
 

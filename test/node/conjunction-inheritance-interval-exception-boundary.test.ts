@@ -7,7 +7,7 @@ import { Inheritance } from "../../src/language/Inheritance.ts";
 import { Interval } from "../../src/language/Interval.ts";
 import { Debug } from "../../src/main/Debug.ts";
 import { Term } from "../../src/language/Term.ts";
-import { JavaIllegalArgumentException } from "../../src/runtime/JavaExceptions.ts";
+import { JavaIllegalArgumentException } from "../support/legacy-exceptions.ts";
 
 const sources = [
     "src/language/Conjunction.ts",
