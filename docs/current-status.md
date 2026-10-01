@@ -3189,6 +3189,13 @@ LeanSpec 15 项
 - exact-commit M1'：`243/243`，JSONL SHA-256 `8FDAD01DBDAA2D0C257EB58B2D4D12A655E867195BAEB04AE2F8943C18FD78FD`。
 - 023、031 仍未完成；集合语义、剩余 Java helper、宿主边界和 demo 性能仍需继续收口。
 
+## 2026-10-02 configuration host-capability batch
+
+- 当前代码提交：`e3710b5`，`ConfigReader` 已移除 Node 内建导入和 `process.cwd` 查找，文件读取经 `RuntimeCapabilities.readTextFile` 注入；Node capability 提供实现。
+- 配置边界回归：`17/17`；TS-only M2：`506/508`（2 skipped、0 failed）；Java M2：`508/508`；release/build/dist API 通过。
+- exact-commit M1'：`243/243`，JSONL SHA-256 `2F4D167FF78365C8F43D96519DE62E51530DE203359B4E04FE04F4B08F11B633`。
+- 平台审计 `mixedBoundaryFiles=0`，jree direct import `0/0`。023、031 尚未完成，仍有 RuntimeClass/集合/宿主与性能工作。
+
 ### 2026-09-20：J4 `Feel` 原生字符串边界切片（`9990bb0`）
 
 对照 canonical Java `Feel.java`，确认构造器的 `name` 只用于传递 Operator 名称并截取

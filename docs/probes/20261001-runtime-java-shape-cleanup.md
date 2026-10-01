@@ -468,7 +468,14 @@ Missing capabilities and read failures use project host/I/O errors. Full M2 TAP
 hashes are `698A892E8757BDA9C83AD7C7A7F3B5A04A270926846AC981C8557F3937365BA6`
 (TS-only, 506 passed / 2 skipped) and
 `A6133658F11E8AF320E796D801DFF214EB0B8363D686E8760357781CA69D9F19` (Java,
-508/508). Exact-commit M1' remains required.
+508/508). Exact-commit M1' completed `243/243` with zero failure, exception,
+timeout, process-limit, stall, or not-run rows; JSONL SHA-256 is
+`2F4D167FF78365C8F43D96519DE62E51530DE203359B4E04FE04F4B08F11B633`.
+The updated jree audit SHA-256 is
+`D98A04598DAF6126280DFAD1E4EEF42F0FF8179C4030EBCD6C950C30A792BA29`; the
+platform audit SHA-256 is
+`8811FFCF096A573863428197DDFAD33C40809311994CCB119D484F6BED0C176B` and
+reports zero mixed-boundary files.
 
 ## Next batch: configuration host capability
 
