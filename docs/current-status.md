@@ -4,11 +4,11 @@
 
 - 状态日期：2026-10-01（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
-- 当前发布提交：`61b4cbc`
-- 包版本：`1.0.1`（GitHub Release `v1.0.1` 已发布）
+- 当前发布提交：`c5de106`
+- 包版本：`1.0.2`（GitHub Release `v1.0.2` 已发布）
 - LeanSpec：024、020、027 为 `complete`；023、025、031 仍在推进
 - M1-prime：243/243 M1--、#25、#245 降载、#246 均通过；两个 markerless digest equal；含 Java M2 `498/498`
-- Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，Pages 提交 `2098f0c`，metadata 绑定核心 `61b4cbc`
+- Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，Pages 提交 `547b1d5`，metadata 绑定核心 `c5de106`
 
 ## 2026-10-01 native performance closure
 

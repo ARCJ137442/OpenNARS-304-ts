@@ -6,7 +6,7 @@
 
 ## Evidence
 
-- GitHub Release/tag `v1.0.2` is tied to the final host-boundary fix commit.
+- GitHub Release/tag `v1.0.2` is tied to the final host-boundary fix commit `c5de106`.
 - TS M2 `496 pass / 0 fail / 2 skipped`; Java M2 `498 pass / 0 fail / 0 skipped`.
 - Current M1-prime: `243/243`, #25, #245 65536 fixture, #246, and both strict markerless digests.
 - Demo: worker build, Astro check, 28 tests, static artifact check, and real browser smoke pass; Pages metadata is bound to the release commit.
