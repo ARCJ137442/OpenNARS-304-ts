@@ -11,9 +11,9 @@ import { NativeDeque } from "../runtime/NativeDeque.ts";
 import { textValue } from "../runtime/Text.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import {
-    javaInt16ArrayEquals,
-    javaInt16ArrayHashCode,
-} from "../runtime/ValueArrays.ts";
+    int16ArrayEquals,
+    int16ArrayHashCode,
+} from "../runtime/value-arrays.ts";
 
 
 
@@ -98,7 +98,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
         this.targetTask = t;
         this.recordLength = recordLength;
         this.records = new NativeDeque<TaskLink.Recording>();
-        this.hash = (((this.targetTask.hashCode() * 31) + this.type) * 31) + javaInt16ArrayHashCode(this.index);
+        this.hash = (((this.targetTask.hashCode() * 31) + this.type) * 31) + int16ArrayHashCode(this.index);
     }
 
     public hashCode(): int {
@@ -115,7 +115,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
         if (obj instanceof TaskLink) {
             let t: TaskLink = obj as TaskLink;
             return this.hash === t.hash && this.type === t.type
-                && javaInt16ArrayEquals(this.index, t.index)
+                && int16ArrayEquals(this.index, t.index)
                 && this.targetTask.equals(t.targetTask);
         }
         return false;

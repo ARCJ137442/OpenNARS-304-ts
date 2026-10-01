@@ -1,10 +1,10 @@
-import { javaValueHashCode } from "./NativeSet.ts";
+import { valueHashCode } from "./NativeSet.ts";
 
 /**
  * Native Int16Array helpers retaining the canonical indexed value and order
  * semantics without depending on a foreign collection implementation.
  */
-export const javaInt16ArrayEquals = (
+export const int16ArrayEquals = (
     left: Int16Array | null | undefined,
     right: Int16Array | null | undefined,
 ): boolean => {
@@ -25,8 +25,8 @@ export const javaInt16ArrayEquals = (
     return true;
 };
 
-/** Java Arrays.hashCode(short[]) with Java's null-array result of zero. */
-export const javaInt16ArrayHashCode = (
+/** Canonical indexed short-array hash with a null-array result of zero. */
+export const int16ArrayHashCode = (
     values: Int16Array | null | undefined,
 ): number => {
     if (values === null || values === undefined) {
@@ -39,11 +39,11 @@ export const javaInt16ArrayHashCode = (
     return result;
 };
 
-/** Java Objects.hash(Object...) using the project's Java value hash contract. */
-export const javaObjectsHash = (...values: unknown[]): number => {
+/** Ordered object-value hash using the project's value hash contract. */
+export const valuesHash = (...values: unknown[]): number => {
     let result = 1;
     for (const value of values) {
-        result = (31 * result + javaValueHashCode(value)) | 0;
+        result = (31 * result + valueHashCode(value)) | 0;
     }
     return result;
 };

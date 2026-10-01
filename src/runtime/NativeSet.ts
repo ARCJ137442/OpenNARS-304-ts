@@ -1,5 +1,5 @@
 /** Java Object.equals lookup with the searched value as receiver. */
-export const javaValueEquals = (stored: unknown, searched: unknown): boolean => {
+export const valueEquals = (stored: unknown, searched: unknown): boolean => {
     if (Object.is(stored, searched)) {
         return true;
     }
@@ -10,7 +10,7 @@ export const javaValueEquals = (stored: unknown, searched: unknown): boolean => 
     return typeof equals === "function" && equals.call(searched, stored);
 };
 
-export const javaValueHashCode = (value: unknown): number => {
+export const valueHashCode = (value: unknown): number => {
     if (value === null || value === undefined) {
         return 0;
     }
@@ -78,7 +78,7 @@ export class NativeSet<T> implements Iterable<T> {
     }
 
     public contains(value: T): boolean {
-        return this.items.some((candidate) => javaValueEquals(candidate, value));
+        return this.items.some((candidate) => valueEquals(candidate, value));
     }
 
     /**
@@ -113,7 +113,7 @@ export class NativeSet<T> implements Iterable<T> {
 
     /** Java Set.hashCode is the sum of the element hash codes. */
     public hashCode(): number {
-        return this.items.reduce((sum, value) => (sum + javaValueHashCode(value)) | 0, 0);
+        return this.items.reduce((sum, value) => (sum + valueHashCode(value)) | 0, 0);
     }
 
     public isEmpty(): boolean {
@@ -121,7 +121,7 @@ export class NativeSet<T> implements Iterable<T> {
     }
 
     public remove(value: T): boolean {
-        const index = this.items.findIndex((candidate) => javaValueEquals(candidate, value));
+        const index = this.items.findIndex((candidate) => valueEquals(candidate, value));
         if (index < 0) {
             return false;
         }

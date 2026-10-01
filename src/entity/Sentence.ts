@@ -1,7 +1,7 @@
 //! Java source: opennars/entity/Sentence.java
 import type { int, long, float, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../io/Texts.ts";
-import { javaObjectsHash } from "../runtime/ValueArrays.ts";
+import { valuesHash } from "../runtime/value-arrays.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Term } from "../language/Term.ts";
 import { CompoundTerm } from "../language/CompoundTerm.ts";
@@ -357,10 +357,10 @@ export class Sentence extends ReasonerObject {
         if (this.isNotTermlinkNormalizer()) {
             if (this.stamp === null)
                 throw new ReasonerInvariantError("Stamp should not be null");
-            this.hash = javaObjectsHash(this.term, this.punctuation, this.truth,
+            this.hash = valuesHash(this.term, this.punctuation, this.truth,
                 this.stamp.getOccurrenceTime());
         } else {
-            this.hash = javaObjectsHash(this.term, this.punctuation, this.truth);
+            this.hash = valuesHash(this.term, this.punctuation, this.truth);
         }
     }
 

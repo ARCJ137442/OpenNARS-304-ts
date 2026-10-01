@@ -42,28 +42,16 @@ const revision = LocalRules.revision;
 const trySolution = LocalRules.trySolution;
 
 /**
- * Java 原类型：Map<K, V>；ProcessGoal 中的实现类型：LinkedHashMap<K, V>。
- * NativeMap 只替换具体实现，保留 Map 的 key equals、替换值和插入顺序契约。
- * Java 的 LinkedHashMap(Map) 复制构造仍按 entrySet() 复制；NativeMap 输入则
- * 按自身的有序迭代器复制，不能把 Java Map 当成 JavaScript 的键值对象。
+ * ProcessGoal uses ordered substitution maps. NativeMap preserves key value
+ * equality, replacement, insertion order, and iteration semantics.
  */
-type JavaMapInput<K, V> = {
-    entrySet(): Iterable<{ getKey(): K; getValue(): V }>;
-};
-
-const nativeJavaMap = <K, V>(
-    source?: MapContract<K, V> | JavaMapInput<K, V>,
+const copyOrderedMap = <K, V>(
+    source?: NativeMap<K, V>,
 ): MapContract<K, V> => {
     const map = new NativeMap<K, V>();
     if (source !== undefined && source !== null) {
-        if (source instanceof NativeMap) {
-            for (const [key, value] of source) {
-                map.put(key, value);
-            }
-        } else {
-            for (const entry of (source as JavaMapInput<K, V>).entrySet()) {
-                map.put(entry.getKey(), entry.getValue());
-            }
+        for (const [key, value] of source) {
+            map.put(key, value);
         }
     }
     return map;
@@ -332,7 +320,7 @@ export class ProcessGoal {
                 // check whether the conclusion matches
                 if (Variables.findSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,
                     (precon.sentence.term as Implication).getPredicate(), projectedGoal.term,
-                    nativeJavaMap<Term, Term>(), nativeJavaMap<Term, Term>())) {
+                    copyOrderedMap<Term, Term>(), copyOrderedMap<Term, Term>())) {
                     for (let precondition of get_concept.general_executable_preconditions) {
                         generalPreconditions.push(precondition);
                         useful_component = true;
@@ -433,26 +421,23 @@ export class ProcessGoal {
             for (let l of CompoundTerm.extractIntervals(nal.memory, precTerm)) {
                 prec_intervals.push(Float32Math.from(Number(l)) as float);
             }
-            // Java 原类型：Map<Term, Term>；实现类型：LinkedHashMap。
-            let subsconc: MapContract<Term, Term> = nativeJavaMap<Term, Term>();
+            let subsconc: NativeMap<Term, Term> = new NativeMap<Term, Term>();
             let conclusionMatches: boolean = Variables.findSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,
                 CompoundTerm.replaceIntervals((t.getTerm() as Implication).getPredicate()),
-                CompoundTerm.replaceIntervals(projectedGoal.getTerm()), subsconc, nativeJavaMap<Term, Term>());
+                CompoundTerm.replaceIntervals(projectedGoal.getTerm()), subsconc, copyOrderedMap<Term, Term>());
             // ok we can look now how much it is fullfilled
             // check recent events in event bag
-            // Java 原类型：Map<Term, Term>；实现类型：LinkedHashMap。
-            let subsBest: MapContract<Term, Term> = nativeJavaMap<Term, Term>();
+            let subsBest: MapContract<Term, Term> = copyOrderedMap<Term, Term>();
             /* synchronized (concept.memory.seq_current) { */
             for (let p of concept.memory.seq_current) {
                 if (p.sentence.isJudgment() && !p.sentence.isEternal()
                     && p.sentence.getOccurrenceTime() > newesttime
                     && p.sentence.getOccurrenceTime() <= nal.time.time()) {
-                    // Java 原类型：Map<Term, Term>；实现类型：LinkedHashMap(Map) 复制构造。
-                    let subs: MapContract<Term, Term> = nativeJavaMap(subsconc);
+                    let subs: MapContract<Term, Term> = copyOrderedMap(subsconc);
                     let preconditionMatches: boolean = Variables.findSubstitute(nal.memory.randomNumber,
                         Symbols.VAR_INDEPENDENT,
                         CompoundTerm.replaceIntervals(precondition),
-                        CompoundTerm.replaceIntervals(p.sentence.term), subs, nativeJavaMap<Term, Term>());
+                        CompoundTerm.replaceIntervals(p.sentence.term), subs, copyOrderedMap<Term, Term>());
                     if (preconditionMatches && conclusionMatches) {
                         let pNew: Task = new Task(p.sentence.clone(), p.getBudget().clone(),
                             p.isInput() ? Task.EnumType.INPUT : Task.EnumType.DERIVED);

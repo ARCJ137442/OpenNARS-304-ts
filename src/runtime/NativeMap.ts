@@ -1,4 +1,4 @@
-import { javaValueEquals, javaValueHashCode } from "./NativeSet.ts";
+import { valueEquals, valueHashCode } from "./NativeSet.ts";
 
 /**
  * Minimal Java Map contract shared by native maps and translated Java map inputs.
@@ -66,7 +66,7 @@ export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
     }
 
     public containsValue(value: V): boolean {
-        return this.records.some((record) => javaValueEquals(record.value, value));
+        return this.records.some((record) => valueEquals(record.value, value));
     }
 
     public entrySet(): NativeMapEntrySetView<K, V> {
@@ -94,7 +94,7 @@ export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
             const containsKey = candidate.containsKey as (key: K) => boolean;
             const get = candidate.get as (key: K) => V | null;
             return containsKey.call(candidate, record.key)
-                && javaValueEquals(record.value, get.call(candidate, record.key));
+                && valueEquals(record.value, get.call(candidate, record.key));
         });
     }
 
@@ -110,7 +110,7 @@ export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
 
     public hashCode(): number {
         return this.records.reduce(
-            (sum, record) => (sum + (javaValueHashCode(record.key) ^ javaValueHashCode(record.value))) | 0,
+            (sum, record) => (sum + (valueHashCode(record.key) ^ valueHashCode(record.value))) | 0,
             0,
         );
     }
@@ -226,23 +226,23 @@ export class NativeMap<K, V> implements Iterable<[K, V]>, MapContract<K, V> {
     private findIndex(key: K): number {
         const hashCode = this.keyHashCode(key);
         if (hashCode === null) {
-            return this.records.findIndex((record) => record.key === key || javaValueEquals(record.key, key));
+            return this.records.findIndex((record) => record.key === key || valueEquals(record.key, key));
         }
         const bucket = this.hashBuckets.get(hashCode);
         if (bucket === undefined) {
             return -1;
         }
-        const record = bucket.find((candidate) => candidate.key === key || javaValueEquals(candidate.key, key));
+        const record = bucket.find((candidate) => candidate.key === key || valueEquals(candidate.key, key));
         return record?.index ?? -1;
     }
 
     private keyHashCode(key: K): number | null {
         if (key === null || key === undefined) {
-            return javaValueHashCode(key);
+            return valueHashCode(key);
         }
         const type = typeof key;
         if (type !== "object" && type !== "function") {
-            return javaValueHashCode(key);
+            return valueHashCode(key);
         }
         const hashCode = (key as unknown as { hashCode?: unknown }).hashCode;
         if (typeof hashCode !== "function") return null;
@@ -300,8 +300,8 @@ export class NativeMapEntry<K, V> {
             && typeof candidate === "object"
             && typeof candidate.getKey === "function"
             && typeof candidate.getValue === "function"
-            && javaValueEquals(this.record.key, candidate.getKey())
-            && javaValueEquals(this.record.value, candidate.getValue());
+            && valueEquals(this.record.key, candidate.getKey())
+            && valueEquals(this.record.value, candidate.getValue());
     }
 
     public getKey(): K {
@@ -313,7 +313,7 @@ export class NativeMapEntry<K, V> {
     }
 
     public hashCode(): number {
-        return javaValueHashCode(this.record.key) ^ javaValueHashCode(this.record.value);
+        return valueHashCode(this.record.key) ^ valueHashCode(this.record.value);
     }
 
     public setValue(value: V): V {
@@ -339,7 +339,7 @@ export class NativeMapEntrySetView<K, V> implements Iterable<NativeMapEntry<K, V
         }
         const key = candidate.getKey();
         const value = this.owner.get(key);
-        return this.owner.containsKey(key) && javaValueEquals(value, candidate.getValue());
+        return this.owner.containsKey(key) && valueEquals(value, candidate.getValue());
     }
 
     public isEmpty(): boolean {
@@ -438,7 +438,7 @@ export class NativeMapValuesView<K, V> implements Iterable<V> {
 
     public remove(value: V): boolean {
         for (const record of this.owner.recordsForView()) {
-            if (javaValueEquals(record.value, value)) {
+            if (valueEquals(record.value, value)) {
                 this.owner.removeRecord(record);
                 return true;
             }

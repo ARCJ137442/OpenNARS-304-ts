@@ -8,10 +8,10 @@ import type { TLink } from "./TLink.ts";
 import { textValue } from "../runtime/Text.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import {
-    javaInt16ArrayEquals,
-    javaInt16ArrayHashCode,
-    javaObjectsHash,
-} from "../runtime/ValueArrays.ts";
+    int16ArrayEquals,
+    int16ArrayHashCode,
+    valuesHash,
+} from "../runtime/value-arrays.ts";
 
 
 
@@ -208,7 +208,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
 
             if (this.type !== t.type)
                 return false;
-            if (!javaInt16ArrayEquals(t.index, this.index))
+            if (!int16ArrayEquals(t.index, this.index))
                 return false;
 
             let tt: Term = t.target;
@@ -228,7 +228,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      */
     protected init(): int {
         // TODO lazy calculate this?
-        let h: int = javaObjectsHash(this.target, this.type, javaInt16ArrayHashCode(this.index));
+        let h: int = valuesHash(this.target, this.type, int16ArrayHashCode(this.index));
         return h;
     }
 

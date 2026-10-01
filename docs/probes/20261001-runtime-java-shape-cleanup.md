@@ -477,6 +477,20 @@ platform audit SHA-256 is
 `8811FFCF096A573863428197DDFAD33C40809311994CCB119D484F6BED0C176B` and
 reports zero mixed-boundary files.
 
+## Value-contract naming batch
+
+Production collection and array helpers now use project names
+`valueEquals`, `valueHashCode`, `int16ArrayEquals`, `int16ArrayHashCode`, and
+`valuesHash`; `ValueArrays.ts` is now `value-arrays.ts`. `ProcessGoal` copies
+only the project `NativeMap` representation and no longer exposes an external
+Java `entrySet/getKey/getValue` adapter. Receiver direction, Java-compatible
+hash formulas, insertion order, collision fallback, iterator removal, and
+sorted-set behavior are unchanged.
+
+Focused NativeSet/NativeMap/NativeSortedSet/value-array/ProcessGoal/core
+contracts passed `67/67`; non-incremental typecheck passed. Full M2 and
+exact-commit M1' remain required.
+
 ## Next batch: configuration host capability
 
 `ConfigReader` was the remaining maintained `src/io` module importing

@@ -4,7 +4,7 @@ import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { javaObjectsHash } from "../runtime/ValueArrays.ts";
+import { valuesHash } from "../runtime/value-arrays.ts";
 import { asText, type TextString } from "../runtime/Text.ts";
 import { textValue } from "../runtime/Text.ts";
 
@@ -33,7 +33,7 @@ export abstract class Image extends CompoundTerm {
 
     protected init(components: Term[]): void {
         super.init(components);
-        this.hash = javaObjectsHash(super.hashCode(), this.relationIndex);
+        this.hash = valuesHash(super.hashCode(), this.relationIndex);
     }
 
     public compareTo(that: AbstractTerm): int {

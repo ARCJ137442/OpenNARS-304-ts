@@ -1,4 +1,4 @@
-import { javaValueHashCode } from "./NativeSet.ts";
+import { valueHashCode } from "./NativeSet.ts";
 
 /**
  * Native ordered set for translated TreeSet-shaped term helpers.
@@ -67,7 +67,7 @@ export class NativeSortedSet<T> implements Iterable<T> {
 
     /** Java Set.hashCode is the sum of the element hash codes. */
     public hashCode(): number {
-        return this.items.reduce((sum, value) => (sum + javaValueHashCode(value)) | 0, 0);
+        return this.items.reduce((sum, value) => (sum + valueHashCode(value)) | 0, 0);
     }
 
     public isEmpty(): boolean {
