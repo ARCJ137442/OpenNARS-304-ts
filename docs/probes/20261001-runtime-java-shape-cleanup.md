@@ -369,3 +369,23 @@ The safe-integer check now reports a runtime-number error rather than a Java
 language error. Focused numeric, Bag, Item, Variable, and core runtime tests
 passed `73/73`; non-incremental typecheck passed. Full M2 and exact-commit
 M1' remain required before treating this batch as a protected release point.
+
+### Exact-commit protection result for `5f92c19`
+
+- TS-only M2: `505 passed / 0 failed / 2 skipped`, TAP SHA-256
+  `C95E94AC9C7CA86D2D16C33B913A2B5A0B331612E65D411DA83AE5245C9151C8`.
+- Java M2: `507/507`, TAP SHA-256
+  `E74741AA104595D71363631966BD02B79FE7BB6CFC9F9BD1980AE2D83A02940C`.
+- Release package, build, dist API and audits passed. Raw audit files are
+  `reports/evidence/audit-jree-runtime-numbers-20261002.json` and
+  `reports/evidence/audit-platform-runtime-numbers-20261002.json`.
+- M1' body: `243/243`, zero failure/exception/timeout/process-limit/stall/
+  not-run rows; JSONL SHA-256
+  `FAC33137F47D0CE0862B7C2AAFAD635CFE83B0E9DFB101A89E2E67F387217549`.
+- #246 `simpleOperationTest.nal`: `1/1`; raw JSONL is
+  `reports/evidence/m1prime-5f92c19-simple-246-20261002.jsonl`.
+
+This closes the numeric-boundary batch only. It does not close 023 or 031:
+runtime class identity, scheduler ownership, collection semantics, remaining
+Java-named helpers, and platform host separation still require their own
+contracts and gates.

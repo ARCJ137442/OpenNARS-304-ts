@@ -18,6 +18,13 @@
 - exact-commit M1' 主体：243/243；#246 与 #25 均通过。#245 65536 在约 1200 秒、RSS 约 1 GiB 时按内存保护停止，分类 `memory_limit`；原始 2,000,000 周期仍未宣称通过。
 - 031 仍为 `in-progress`；不能据此宣称 031 阶段完成、完整 M1 或长期稳定性通过。工作区保留历史未跟踪 evidence 与用户未提交的 023 修改。
 
+## 2026-10-02 native runtime numbers batch
+
+- 当前提交：`5f92c19`，已完成数值边界原生化，生产调用改用 `RuntimeLongInput`、`runtimeValueEquals` 和 `identityHashCode`；`java-values.ts` 已更名为 `runtime-numbers.ts`。
+- TS-only M2：`505/507`（2 skipped、0 failed）；Java M2：`507/507`；release package、build、dist API、jree/platform audit 均通过。
+- exact-commit M1'：243/243；#246：1/1。#245 未重复运行，沿用本阶段已记录的长期内存保护结论。
+- 023、031 仍未完成；剩余重点是 RuntimeClass、调度器、集合兼容语义、src/main 平台边界的进一步收窄，以及 demo TPS/RPS 性能门。
+
 ## 2026-10-01 native host boundary exact gate
 
 - `cd3520f` 将 Node/browser native host adapter 收窄为 TypeScript 宿主能力；翻译兼容命名空间移至显式 `legacy-namespace.ts`，demo worker 直接向核心传入原生 `string`。
