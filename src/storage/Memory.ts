@@ -359,8 +359,8 @@ export class Memory implements Iterable<Concept>, Resettable {
         if (budget >= noiseLevel) { // only report significant derived Tasks
             if (shouldOutput) this.emit(OUT.class, t);
             if (shouldDebug) {
-                this.emit(DEBUG.class, "Parent Belief\t" + t.parentBelief);
-                this.emit(DEBUG.class, "Parent Task\t" + t.parentTask + "\n\n");
+                this.emit(DEBUG.class, `Parent Belief\t${t.parentBelief}`);
+                this.emit(DEBUG.class, `Parent Task\t${t.parentTask}\n\n`);
             }
         }
     }

@@ -559,8 +559,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                         let hval: int = Number(Math
                             .round(((height + 1.0) / 2.0 * (channel.height - 1)))) as int;
                         let ev: string = task.sentence.isEternal() ? " " : " :|: ";
-                        let newInput: string = "<" + variable + "[" + hval + "," + wval + "]} --> " + predicate.toString() + ">" +
-                            task.sentence.punctuation + ev + task.sentence.getTruth().toString();
+                        const newInput = `<${variable}[${hval},${wval}]} --> ${predicate.toString()}>${task.sentence.punctuation}${ev}${task.sentence.getTruth().toString()}`;
                         // this.emit(OutputHandler.IN.class, task); too expensive to print each input
                         // task, consider vision :)
                         this.addInput(newInput);
