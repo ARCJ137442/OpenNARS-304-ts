@@ -81,8 +81,12 @@ Focused runtime contracts: `28/28` passed. TS-only M2: `496 pass / 0 fail / 2 sk
 
 The browser host adapter now reuses the shared native Java facade for boxed numbers, StringBuilder, Class/Object tokens, collections, Random, and common language exceptions. Browser-only I/O, network-unavailable capabilities, output, UUID and clock behavior remain local to the adapter. A direct browser adapter smoke confirmed native String/hash, boxed Integer conversion, class token construction, and Random availability.
 
-Typecheck, build, dist API, TS M2, and Java M2 remain green. The demo worker build was attempted with `ALLOW_DIRTY_OPENNARS=1` and is currently blocked by the pre-existing 023 boundary: `Nar.ts` and related core files still import the Node host adapter, so esbuild reaches `node:v8` in the browser bundle. This is recorded as an open platform-boundary dependency; the batch does not claim browser bundle closure until that 023 worktree change is resolved.
+Typecheck, build, dist API, TS M2, and Java M2 remain green. The initial demo worker build exposed that `Nar.ts` and related core files selected the Node adapter directly. Batch 4 below replaces that hard-coded selection; the browser worker now builds with a browser-host alias.
 
 ## Batch 3 result
 
 `JavaString` is now a project-owned `NativeJavaString` type instead of `any`. Runtime behavior is unchanged; the change makes the existing boxed-string contract visible to TypeScript and prevents new callers from silently erasing the boundary. Typecheck and focused UTF-16/text/Narsese contracts (`21/21`) passed. This batch is a type-safety and takeover improvement, not a measured throughput claim.
+
+## Batch 4 result
+
+`Nar` host effects are represented by explicit `RuntimeCapabilities.saveSnapshot/loadSnapshot`; Node supplies the v8/file implementation while browser builds use the browser host boundary. `Nar`, `Memory` and `Stamp` no longer hard-code the Node adapter selection point. Typecheck, build, dist API and browser worker build pass. Full M2/M1-prime reruns are required before this spec can close.

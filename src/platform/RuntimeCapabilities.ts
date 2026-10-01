@@ -9,6 +9,8 @@ export type CurrentTimeMillis = () => bigint;
 export interface RuntimeCapabilities {
     readonly executeSystemCommand?: (command: string) => string;
     readonly currentTimeMillis?: CurrentTimeMillis;
+    readonly saveSnapshot?: (name: string, value: unknown) => void;
+    readonly loadSnapshot?: (name: string) => unknown;
 }
 
 export const defaultCurrentTimeMillis: CurrentTimeMillis = () => BigInt(Date.now());

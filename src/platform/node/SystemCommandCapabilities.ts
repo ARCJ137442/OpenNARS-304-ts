@@ -1,4 +1,6 @@
 import { execFileSync } from "node:child_process";
+import { readFileSync, writeFileSync } from "node:fs";
+import { deserialize, serialize } from "node:v8";
 
 import { defaultCurrentTimeMillis, type RuntimeCapabilities } from "../RuntimeCapabilities.ts";
 
@@ -13,6 +15,12 @@ export function createNodeRuntimeCapabilities(): RuntimeCapabilities {
                 // the child process' stderr into the NARS shell.
                 stdio: ["ignore", "pipe", "pipe"],
             });
+        },
+        saveSnapshot(name: string, value: unknown): void {
+            writeFileSync(name, serialize(value));
+        },
+        loadSnapshot(name: string): unknown {
+            return deserialize(readFileSync(name));
         },
     };
 }
