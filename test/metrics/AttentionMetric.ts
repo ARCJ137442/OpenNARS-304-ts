@@ -185,9 +185,9 @@ export class AttentionMetric extends JavaObject {
             }
         } catch (e) {
             if (e instanceof java.io.IOException) {
-                e.printStackTrace();
+                console.error(e);
             } else if (e instanceof Parser.InvalidInputException) {
-                e.printStackTrace();
+                console.error(e);
             } else {
                 throw e;
             }
