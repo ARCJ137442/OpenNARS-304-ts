@@ -28,3 +28,20 @@ test("CompoundTerm equality retains equal-arity name comparison", () => {
         nar.stop();
     }
 });
+
+test("CompoundTerm equality contract is name-based even after restored-name mutation", () => {
+    const nar = new Nar();
+    try {
+        const parser = new Narsese(nar);
+        const left = parser.parseTerm("(*,a,b)") as CompoundTerm;
+        const right = parser.parseTerm("(*,a,b,c)") as CompoundTerm;
+        const restoreName = (term: CompoundTerm, name: string): void => {
+            (term as unknown as { setName(value: string): void }).setName(name);
+        };
+        restoreName(left, "restored-name");
+        restoreName(right, "restored-name");
+        assert.equal(left.equals(right), true);
+    } finally {
+        nar.stop();
+    }
+});
