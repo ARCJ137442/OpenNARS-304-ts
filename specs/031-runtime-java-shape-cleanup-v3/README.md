@@ -171,3 +171,17 @@ The harness move is committed as `91482a7` and pushed. The exact-commit M1'
 and markerless evidence from `cd3520f` remains valid because this batch only
 changes test/tool imports and package contents; the post-move M2 and audit
 outputs are recorded separately in the probe above.
+
+## Batch 8 result: native semantic helper names
+
+Commit `d08a7aa` removes Java-named exception/runtime helpers from `src`.
+Resource cleanup now uses `ResourceError`; iterator, random and array helper
+modules use `MutableIterator`, `ReasonerRandom` and `ValueArrays`; legacy
+exception and namespace implementations remain test-only. The source audit
+reports direct jree `0/0` and zero `JavaObject`, `java.util` and `java.lang`
+code hits.
+
+TS-only M2 (`503 passed / 0 failed / 2 skipped`) and Java M2 (`507/507`) pass.
+031 remains in progress because Java-compatible text/hash, class identity,
+collection order, iterator removal and Random semantics still need either a
+native public representation or an explicit narrow semantic module.

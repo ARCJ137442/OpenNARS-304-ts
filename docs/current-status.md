@@ -19,6 +19,7 @@
 - 直接 npm jree import：`0/0`；package dependency declaration：`null`。剩余 Java shape 为 project-owned compatibility contracts，031 仍保持 `in-progress`。
 - 最新发布树清理：legacy facade 已移到 `test/support`，`dist` 不再包含 `legacy-runtime-facade` 或 `legacy-namespace`；TS-only M2 `503/505`（2 skipped），Java M2 `507/507`，release tarball 外部 tsc/API/CLI/Shell 全通过。
 - `91482a7` 是发布树清理提交；它只移动测试/诊断兼容 harness，未改变核心推理源文件。前一提交 `cd3520f` 的 M1'、markerless 和 demo evidence 仍适用，新的 TS/Java M2 与 audit evidence 已分别保存。
+- `d08a7aa` 又将异常、随机、数组和可变迭代器 helper 去 Java 命名化；生产 source 的 `JavaObject`、`java.util`、`java.lang` 命中均为 0，TS/Java M2 仍通过。文本 UTF-16/hash 与 class/collection 语义合同仍是 031 后续工作。
 
 ## 2026-10-01 native performance closure
 

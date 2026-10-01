@@ -243,3 +243,18 @@ tree/package boundary change only; no new M1' run is inferred from it. The
 exact post-move M2 TAP hashes are
 `070716E6E48F85AF33E9FE51CC528602C319A9F6CAEA2F51D5A8439936A9ED06` and
 `29B0F2217D5A408B7937164754E3A06C9B6066DCD4FDCAF908E0AFC4A076F1CD`.
+
+## Semantic helper cleanup batch (`d08a7aa`)
+
+Production Java-named exception/runtime helpers were removed from `src`:
+
+- `ResourceCompat` now exposes native `ResourceError` with `cause` and suppressed errors.
+- `CompoundTerm` uses `ReasonerOperationError` for iterator and clone failures.
+- `JavaRandom`, `JavaArrays`, and `JavaIterator` became `ReasonerRandom`, `ValueArrays`, and `MutableIterator`; their observable deterministic random, hash and removal contracts remain unchanged.
+- `JavaExceptions`, `native-java-runtime`, and ambient Java declarations moved to `test/support`, so they are absent from `dist` and the release package.
+
+Exact M2 evidence on `d08a7aa97ae126b3b85361c02d164ba1ae255453`:
+
+- TS-only: `503 passed / 0 failed / 2 skipped`, SHA-256 `1ADA1B40C905885CA07A4603844F5B9EE37D82EEB18846D24923F430E0D6A84E`.
+- Java: `507/507`, SHA-256 `CE1D6A1D264DB99D630945AE6C60471875464B880A6CB60A654F6185E9FE5752`.
+- Source audit: direct jree `0/0`, Java object/util/lang code hits all zero; SHA-256 `F5FC7FE7C822D3A19AF65997159FF84B92217188A3E8F9AC33056C2129D6030A`.
