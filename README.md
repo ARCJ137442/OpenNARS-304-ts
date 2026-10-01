@@ -55,7 +55,7 @@ nar.off(OutputHandler.OUT.class, observer);
 nar.stop();
 ```
 
-浏览器体验：<https://arcj137442.github.io/opennars-304-ts/>。Web demo 源码：[OpenNARS-304-ts-web-demo](https://github.com/ARCJ137442/OpenNARS-304-ts-web-demo)。
+浏览器体验：<https://arcj137442.github.io/opennars-304-ts-lab/>。Web demo 源码：[OpenNARS-304-ts-web-demo](https://github.com/ARCJ137442/OpenNARS-304-ts-web-demo)。
 
 ## 文档
 
@@ -70,7 +70,7 @@ nar.stop();
 
 ## 状态与许可证
 
-023 原生运行时和 024 平台适配阶段已按 M1-prime 门禁完成。性能优化与正式发布候选属于 020，仍在推进；长期稳定性原始 2,000,000 周期不属于日常运行负载。详见[运行与验证手册](docs/operator-runbook.md)。
+024 平台适配、027 性能收敛和 `v1.0.1` fix release 已完成；023/025 严格 host 边界与 031 Java-shape cleanup 仍在推进。长期稳定性原始 2,000,000 周期不属于日常运行负载。详见[运行与验证手册](docs/operator-runbook.md)和[开源就绪评估](docs/open-source-readiness-v1.0.1.md)。
 
 本仓库采用 MIT License，见 [LICENSE](LICENSE)。
 

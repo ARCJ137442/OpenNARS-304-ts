@@ -1,6 +1,6 @@
 # Getting started
 
-OpenNARS-304-ts runs the reasoning core in Node.js. Browser users can open the online demo without installing Node.js.
+OpenNARS-304-ts runs the reasoning core in Node.js. Browser users can open the online demo at https://arcj137442.github.io/opennars-304-ts-lab/ without installing Node.js.
 
 ## Install and run
 

@@ -36,7 +36,7 @@ npm test
 npm run deploy:pages -- H:/path/to/ARCJ137442.github.io
 ```
 
-脚本只写入 `opennars-304-ts/` 子目录，不自动提交或改变仓库可见性。
+脚本只写入 `opennars-304-ts-lab/` 子目录，不自动提交或改变仓库可见性。
 
 ## 故障排查
 

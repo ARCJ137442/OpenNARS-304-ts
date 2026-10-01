@@ -37,7 +37,7 @@ node dist/cli.mjs --cycles 1550 path/to/example.nal
 
 ## 浏览器
 
-无需安装 Node.js 即可使用在线 demo：<https://arcj137442.github.io/opennars-304-ts/>。
+无需安装 Node.js 即可使用在线 demo：<https://arcj137442.github.io/opennars-304-ts-lab/>。
 输入 `:help` 查看命令，输入 `:version` 查看 demo 绑定的核心提交。
 
 ## 下一步

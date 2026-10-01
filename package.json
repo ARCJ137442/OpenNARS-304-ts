@@ -14,7 +14,7 @@
         "opennars-304": "dist/cli.mjs",
         "opennars-304-shell": "dist/shell.mjs"
     },
-    "description": "OpenNARS 3.0.4 的 TypeScript 实现，提供 Node.js CLI、ESM API 与独立浏览器 Worker demo；023/024 已完成，020 性能优化持续推进。",
+    "description": "OpenNARS 3.0.4 的 TypeScript 实现，提供 Node.js CLI、ESM API 与独立浏览器 Worker Demo；v1.0.1 已发布，runtime Java-shape cleanup 持续推进。",
     "directories": {
         "doc": "docs",
         "test": "test"

@@ -68,7 +68,7 @@ Node 应由宿主读取配置文件后传入 `configText`；浏览器使用文�
 
 ## 浏览器
 
-在线入口：<https://arcj137442.github.io/opennars-304-ts/>。Worker 接收文本命令并返回结构化消息，浏览器不会解析 Node `fs/path/process` 或 npm `jree`。
+在线入口：<https://arcj137442.github.io/opennars-304-ts-lab/>。Worker 接收文本命令并返回结构化消息，浏览器不会解析 Node `fs/path/process` 或 npm `jree`。
 
 ## 限制
 

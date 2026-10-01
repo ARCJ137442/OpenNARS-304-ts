@@ -1,14 +1,14 @@
 # OpenNARS-304-ts 当前状态
 
-> 本文是维护与证据档案，不是第一次使用项目的入口。外部用户请先读 [README](../README.md)、[上手指南](getting-started.md) 和 [集成指南](integration-guide.md)。截至 2026-09-30，LeanSpec 023/024 为 `complete`，020 性能与发布准备仍为 `in-progress`；历史段落按其日期理解。
+> 本文是维护与证据档案，不是第一次使用项目的入口。外部用户请先读 [README](../README.md)、[上手指南](getting-started.md) 和 [集成指南](integration-guide.md)。截至 2026-10-01，027 性能收敛为 `complete`，031 runtime Java-shape cleanup 为 `in-progress`；023/025 的严格 host 边界收口仍需继续，历史段落按其日期理解。
 
-- 状态日期：2026-09-30（Asia/Shanghai）
+- 状态日期：2026-10-01（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
-- 当前发布提交：`8568ebd`
-- 包版本：`1.0.0`（GitHub Release `v1.0.0` 已发布）
-- LeanSpec：023、024、020 均为 `complete`
+- 当前发布提交：`61b4cbc`
+- 包版本：`1.0.1`（GitHub Release `v1.0.1` 已发布）
+- LeanSpec：024、020、027 为 `complete`；023、025、031 仍在推进
 - M1-prime：243/243 M1--、#25、#245 降载、#246 均通过；两个 markerless digest equal；含 Java M2 `498/498`
-- Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，metadata 绑定核心 `8568ebd`
+- Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，Pages 提交 `2098f0c`，metadata 绑定核心 `61b4cbc`
 
 ## 2026-10-01 native performance closure
 
