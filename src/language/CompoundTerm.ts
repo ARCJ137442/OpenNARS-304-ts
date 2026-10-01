@@ -828,6 +828,11 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             return true;
         if (!(that instanceof Term))
             return false;
+        if (that instanceof CompoundTerm && this.term.length !== that.term.length) {
+            // Compound names encode every component; differing arity cannot
+            // produce equal names, so avoid formatting either side.
+            return false;
+        }
         return javaStringsEqual(this.name(), (that as Term).name());
     }
 
