@@ -4,7 +4,7 @@
 
 - 状态日期：2026-10-01（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
-- 当前发布提交：`cd3520f`
+- 当前发布提交：`91482a7`
 - 包版本：`1.0.2`（GitHub Release `v1.0.2` 已发布）
 - LeanSpec：024、020、027 为 `complete`；023、025、031 仍在推进
 - M1-prime：243/243 M1--、#25、#245 降载、#246 均通过；两个 markerless digest equal；含 Java M2 `498/498`
@@ -18,6 +18,7 @@
 - 严格 markerless：simple 和 long 均 `131072/131072`、128 windows、`equal=true`、`first_difference=null`。原始 2,000,000 周期仍不宣称完整通过。
 - 直接 npm jree import：`0/0`；package dependency declaration：`null`。剩余 Java shape 为 project-owned compatibility contracts，031 仍保持 `in-progress`。
 - 最新发布树清理：legacy facade 已移到 `test/support`，`dist` 不再包含 `legacy-runtime-facade` 或 `legacy-namespace`；TS-only M2 `503/505`（2 skipped），Java M2 `507/507`，release tarball 外部 tsc/API/CLI/Shell 全通过。
+- `91482a7` 是发布树清理提交；它只移动测试/诊断兼容 harness，未改变核心推理源文件。前一提交 `cd3520f` 的 M1'、markerless 和 demo evidence 仍适用，新的 TS/Java M2 与 audit evidence 已分别保存。
 
 ## 2026-10-01 native performance closure
 

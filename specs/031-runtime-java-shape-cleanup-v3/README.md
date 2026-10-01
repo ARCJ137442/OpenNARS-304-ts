@@ -166,3 +166,8 @@ is the deliberate Java-compatible contract layer in runtime text/value,
 exceptions, class tokens, collections, iterators and Random; those contracts
 must stay until their observable parity obligations have an explicit native
 replacement.
+
+The harness move is committed as `91482a7` and pushed. The exact-commit M1'
+and markerless evidence from `cd3520f` remains valid because this batch only
+changes test/tool imports and package contents; the post-move M2 and audit
+outputs are recorded separately in the probe above.
