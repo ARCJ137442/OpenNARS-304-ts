@@ -833,9 +833,6 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             return true;
         if (!(that instanceof Term))
             return false;
-        if (that instanceof CompoundTerm && this.getComplexity() !== that.getComplexity()) {
-            return false;
-        }
         return javaStringsEqual(this.name(), (that as Term).name());
     }
 
