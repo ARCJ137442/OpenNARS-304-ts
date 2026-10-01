@@ -135,6 +135,11 @@ The 50-tick CartPole probe measured `3.713 RPS`, median step `2046.664 ms`,
 p95 `6936.998 ms`, and peak RSS `406876160` bytes. This remains a candidate;
 full M2, M3, affected NAL, M1-prime and markerless evidence are required.
 
+The arity candidate then passed full TS-only M2 (`502 pass / 0 fail / 2
+skipped`), Java M2 (`504/504`), four affected NALs (`4/4`), and M1-prime
+body (`243/243` on `712183d`). It remains pending the reduced #245, #246 and
+markerless final rows before release acceptance.
+
 The candidate was rejected: `stresstest_bird1.nal` lost its marker on the
 candidate and recovered after reverting the fast path. The call graph mutates
 some compound terms after lookup, so the apparent no-op clone is observable.
