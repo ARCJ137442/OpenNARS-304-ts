@@ -1,23 +1,25 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { java } from "../../src/runtime/native-runtime.ts";
-
-import { toJavaString } from "../../src/runtime/native-runtime.ts";
+import { Nar } from "../../src/main/Nar.ts";
 
 test("Nar file persistence exposes project-owned text path boundaries", () => {
     const source = readFileSync("src/main/Nar.ts", "utf8");
     assert.match(source, /SaveToFile\(name: JavaStringInput\)/);
-    assert.match(source, /LoadFromFile\(name: JavaStringInput\)/);
-    assert.match(source, /FileOutputStream\(toJavaString\(name\)\)/);
-    assert.match(source, /FileInputStream\(toJavaString\(name\)\)/);
+    assert.match(source, /LoadFromFile\(name: JavaStringInput/);
+    assert.doesNotMatch(source, /File(?:Input|Output)Stream/);
+    assert.match(source, /saveSnapshot/);
+    assert.match(source, /loadSnapshot/);
 
-    const nativePath = "/tmp/opennars-native.nars";
-    const boxedPath = new java.lang.String("/tmp/opennars-boxed.nars");
-    assert.equal(String(toJavaString(nativePath)), nativePath);
-    assert.equal(String(toJavaString(boxedPath)), String(boxedPath));
-
-    const io = java.io as unknown as Record<string, unknown>;
-    assert.equal(typeof io.ObjectOutputStream, "function");
-    assert.equal(typeof io.ObjectInputStream, "function");
+    const saved = new Map<string, unknown>();
+    const nar = new Nar({ capabilities: {
+        saveSnapshot(name, value) { saved.set(name, value); },
+        loadSnapshot(name) { return saved.get(name); },
+    } });
+    try {
+        nar.SaveToFile("native.nars");
+        assert.equal(saved.has("native.nars"), true);
+    } finally {
+        nar.stop();
+    }
 });

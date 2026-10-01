@@ -1,7 +1,6 @@
-//! Java source: opennars/main/NarNode.java
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
-import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { int, float } from "../types.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { Nar } from "./Nar.ts";
 import { Events } from "../io/events/Events.ts";
@@ -9,359 +8,136 @@ import type { EventEmitter } from "../io/events/EventEmitter.ts";
 import { CompoundTerm } from "../language/CompoundTerm.ts";
 import { Term } from "../language/Term.ts";
 import { Task } from "../entity/Task.ts";
-import { ThreadCompat } from "../runtime/ThreadCompat.ts";
-import { closeResourcesCompat, handleResourceErrorCompat, throwResourceErrorCompat } from "../runtime/ResourceCompat.ts";
-import { java, toJavaString as toHostJavaString } from "../platform/node/native-host-adapter.ts";
-import { isJavaException } from "../platform/node/native-host-adapter.ts";
-import { JavaSystemLoggerCompat } from "../runtime/native-host-boundary.ts";
-import { toJavaString, type JavaStringInput } from "../runtime/java-text.ts";
+import { ReasonerInputError, HostCapabilityError } from "../runtime/ReasonerErrors.ts";
+import type { MessageTransportCapability, RuntimeCapabilities } from "../platform/RuntimeCapabilities.ts";
 
 type EventObserver = EventEmitter.EventObserver;
-type DatagramPacketCompat = { getLength(): number };
-type DatagramSocketCompat = {
-    send(packet: DatagramPacketCompat): void;
-    receive(packet: DatagramPacketCompat): void;
-};
-type InetAddressCompat = object;
-type JavaNetCompat = {
-    DatagramSocket: new (...args: unknown[]) => DatagramSocketCompat;
-    DatagramPacket: new (...args: unknown[]) => DatagramPacketCompat;
-    InetAddress: { getByName(host: unknown): InetAddressCompat };
-};
-type ObjectOutputCompat = { writeObject(value: unknown): void; close(): void };
-type ObjectInputStreamCompat = { readObject(): unknown; close(): void };
-type JavaIoCompat = {
-    ObjectOutputStream: new (stream: unknown) => ObjectOutputCompat;
-    ObjectInputStream: new (stream: unknown) => ObjectInputStreamCompat;
-    ByteArrayInputStream: new (bytes: Int8Array) => unknown;
-};
 
-const javaNetCompat = java.net as unknown as JavaNetCompat;
-const javaIoCompat = java.io as unknown as JavaIoCompat;
+/** Platform-independent representation of a task or Narsese message. */
+export type NetworkMessage =
+    | { readonly kind: "task"; readonly task: Task }
+    | { readonly kind: "narsese"; readonly text: string };
 
-/**
- * @author Patrick Hammer
- */
-// Java 原始声明：public class NarNode implements EventObserver。
-// 旧 TS 仅为提供 .class 身份令牌而继承 jree.JavaObject；RuntimeObject 保留这一窄契约。
+/** Host boundary used by the optional distributed-NARS feature. */
+export interface MessageTransport {
+    listen(port: number, onMessage: (message: NetworkMessage) => void): void;
+    send(address: string, port: number, message: NetworkMessage): void;
+}
+
+export interface NetworkCapabilities extends RuntimeCapabilities {
+    readonly messageTransport?: MessageTransportCapability;
+}
+
+const networkCapabilities = new WeakMap<Nar, NetworkCapabilities>();
+export function attachNetworkCapabilities(nar: Nar, capabilities: NetworkCapabilities): void {
+    networkCapabilities.set(nar, capabilities);
+}
+
+/** Optional message routing around a NAR; all socket and wire details are injected. */
 export class NarNode extends RuntimeObject implements EventObserver {
+    public EventReceivedTask = class EventReceivedTask extends RuntimeObject {};
+    public readonly nar: Nar;
+    private readonly transport: MessageTransport;
+    private readonly targets: NarNode.TargetNar[] = [];
 
-    /* An extra event for received tasks */
-    public EventReceivedTask = (($outer) => {
-        // Java 原始声明：public class EventReceivedTask；这里只需要 .class 身份令牌。
-        return class EventReceivedTask extends RuntimeObject {
-        }
-    })(this);
-
-
-    /* The socket the Nar listens from */
-    private receiveSocket: DatagramSocketCompat;
-
-    // /*
-    // * Listen port however is not transient and can be used to recover the
-    // * deserialized instance
-    // */
-    // private int listenPort;
-
-    public nar: Nar;
-
-    /***
-     * Create a Nar node that listens for received tasks from other NarNode
-     * instances
-     *
-     * @param listenPort
-     * @throws SocketException
-     * @throws UnknownHostException
-     */
     public constructor(listenPort: int);
-
-    public constructor(nar: Nar, listenPort: int);
-    public constructor(...args: unknown[]) {
+    public constructor(nar: Nar, listenPort: int, capabilities?: NetworkCapabilities);
+    public constructor(narOrPort: Nar | int, maybePort?: int, explicitCapabilities?: NetworkCapabilities) {
         super();
-
-        let nar: Nar;
-        let listenPort: int;
-        if (args.length === 1) {
-            listenPort = args[0] as int;
-            nar = new Nar();
-        } else if (args.length === 2) {
-            [nar, listenPort] = args as [Nar, int];
-        } else {
-            throw new java.lang.IllegalArgumentException("Invalid number of arguments");
-        }
-
+        const nar = narOrPort instanceof Nar ? narOrPort : new Nar();
+        const listenPort = narOrPort instanceof Nar ? maybePort : narOrPort;
+        if (listenPort === undefined) throw new ReasonerInputError("A listen port is required");
+        const capabilities = explicitCapabilities ?? networkCapabilities.get(nar)
+            ?? nar.getRuntimeCapabilities() as NetworkCapabilities | undefined;
+        if (capabilities?.messageTransport === undefined) throw new HostCapabilityError("messageTransport");
         this.nar = nar;
-        // this.listenPort = listenPort;
-        this.receiveSocket = new javaNetCompat.DatagramSocket(listenPort, javaNetCompat.InetAddress.getByName("127.0.0.1"));
+        this.transport = capabilities.messageTransport as MessageTransport;
+        this.transport.listen(listenPort, message => this.receive(message));
         nar.event(this, true, Events.TaskAdd.class);
-        let THIS: NarNode = this;
-        new class extends ThreadCompat {
-            public run(): void {
-                for (; ;) {
-                    try {
-                        let ret: java.lang.Object = THIS.receiveObject();
-                        if (ret !== null) {
-                            if (ret instanceof Task) {
-                                nar.memory.event.emit(THIS.EventReceivedTask.class, [ret]);
-                                nar.addInput(ret as Task, nar);
-                            } else if (ret instanceof java.lang.String) { // emits IN.class anyway
-                                nar.addInput(ret as java.lang.String);
-                            }
-                        }
-                    } catch (ex) {
-                        if (isJavaException(ex)) { // log any type of exception, also parsing exceptions, because it shouldn't
-                            // crash on wrong parses or temporary network issues
-                            JavaSystemLoggerCompat.getLogger(NarNode.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
-                        } else {
-                            throw ex;
-                        }
-                    }
-                }
-            }
-        }().start();
     }
 
+    private receive(message: NetworkMessage): void {
+        if (message.kind === "task") {
+            this.nar.memory.event.emit(this.EventReceivedTask.class, [message.task]);
+            this.nar.addInput(message.task, this.nar);
+            return;
+        }
+        this.nar.addInput(message.text);
+    }
 
-    /**
-     * Input and derived tasks will be potentially sent
-     *
-     * @param event
-     * @param args
-     */
     public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
-        if (event === Events.TaskAdd.class) {
-            let t: Task = args[0] as Task;
-            try {
-                this.sendTask(t);
-            } catch (ex) {
-                if (isJavaException(ex)) {
-                    JavaSystemLoggerCompat.getLogger(NarNode.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
-                } else {
-                    throw ex;
-                }
-            }
+        if (event !== Events.TaskAdd.class) return;
+        const task = args[0];
+        if (!(task instanceof Task)) return;
+        for (const target of this.targets) {
+            if (task.getPriority() <= target.threshold || !target.matches(task.getTerm())) continue;
+            this.transport.send(target.address, target.port, { kind: "task", task });
         }
     }
 
-    /**
-     * Send tasks that are above priority threshold and contain the optional
-     * mustContainTerm
-     *
-     * @param t
-     * @throws IOException
-     */
-    private sendTask(t: Task): void {
-        let bStream: java.io.ByteArrayOutputStream = new java.io.ByteArrayOutputStream();
-        let oo: ObjectOutputCompat = new javaIoCompat.ObjectOutputStream(bStream);
-        oo.writeObject(t);
-        oo.close();
-        let serializedMessage: Int8Array = bStream.toByteArray();
-        for (let target of this.targets) {
-            if (t.getPriority() > target.threshold) {
-                let term: Term = t.getTerm();
-                let isCompound: boolean = (term instanceof CompoundTerm);
-                let searchTerm: boolean = target.mustContainTerm !== null;
-                let atomicEqualsSearched: boolean = target.mustContainTerm !== null && !isCompound && target.mustContainTerm.equals(term);
-                let compoundContainsSearched: boolean = target.mustContainTerm !== null && isCompound
-                    && (term as CompoundTerm).containsTermRecursively(target.mustContainTerm);
-                if (!searchTerm || atomicEqualsSearched || compoundContainsSearched) {
-                    let packet: DatagramPacketCompat = new javaNetCompat.DatagramPacket(serializedMessage, serializedMessage.length,
-                        target.targetAddress, target.targetPort);
-                    target.sendSocket.send(packet);
-                    // System.out.println("task sent:" + t);
-                }
-            }
-        }
+    public sendNarsese(input: string, target: NarNode.TargetNar): void {
+        if (target.matchesText(input)) this.transport.send(target.address, target.port, { kind: "narsese", text: input });
     }
 
-    /**
-     * Send Narsese that contains the optional mustContainTerm
-     *
-     * @param input
-     * @param target
-     * @throws IOException
-     */
-    public static sendNarsese(input: JavaStringInput, target: NarNode.TargetNar): void;
-
-    public static sendNarsese(input: JavaStringInput, targetIP: JavaStringInput, targetPort: int, taskThreshold: float,
-        mustContainTerm: Term | null): void;
-    public static sendNarsese(...args: unknown[]): void {
-        switch (args.length) {
-            case 2: {
-                const [input, target] = args as [JavaStringInput, NarNode.TargetNar];
-
-
-                let bStream: java.io.ByteArrayOutputStream = new java.io.ByteArrayOutputStream();
-                let oo: ObjectOutputCompat = new javaIoCompat.ObjectOutputStream(bStream);
-                oo.writeObject(toHostJavaString(input));
-                oo.close();
-                let serializedMessage: Int8Array = bStream.toByteArray();
-                let searchTerm: boolean = target.mustContainTerm !== null;
-                let containsFound: boolean = target.mustContainTerm !== null
-                    && String(input).includes(String(target.mustContainTerm.toString()));
-                if (!searchTerm || containsFound) {
-                    let packet: DatagramPacketCompat = new javaNetCompat.DatagramPacket(serializedMessage, serializedMessage.length,
-                        target.targetAddress, target.targetPort);
-                    target.sendSocket.send(packet);
-                    // System.out.println("narsese sent:" + input);
-                }
-
-
-                break;
-            }
-
-            case 5: {
-                const [input, targetIP, targetPort, taskThreshold, mustContainTerm] = args as [JavaStringInput, JavaStringInput, int, float, Term | null];
-
-
-                NarNode.sendNarsese(input, new NarNode.TargetNar(targetIP, targetPort, taskThreshold, mustContainTerm, true));
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException("Invalid number of arguments");
-            }
-        }
+    public static sendNarsese(input: string, target: NarNode.TargetNar): void {
+        target.send({ kind: "narsese", text: input });
     }
-
-
-    // Java original type: public static class TargetNar;
-    // the socket-bearing target is a plain holder; NarNode retains the host boundary.
-    public static TargetNar = class TargetNar {
-
-        /**
-         * The target Nar node, specifying under which conditions the current Nar node
-         * redirects tasks to it.
-         *
-         * @param targetIP
-         * @param targetPort
-         * @param threshold
-         * @param mustContainTerm
-         * @throws SocketException
-         * @throws UnknownHostException
-         */
-        public constructor(targetIP: JavaStringInput, targetPort: int, threshold: float, mustContainTerm: Term | null,
-            sendInput: boolean) {
-                this.targetAddress = javaNetCompat.InetAddress.getByName(toHostJavaString(targetIP));
-            this.sendSocket = new javaNetCompat.DatagramSocket();
-            this.threshold = Float32Math.from(threshold) as float;
-            this.targetPort = targetPort;
-            this.mustContainTerm = mustContainTerm;
-            this.sendInput = sendInput;
-        }
-
-        public readonly threshold: float;
-        public readonly sendSocket: DatagramSocketCompat;
-        public readonly targetPort: int;
-        public readonly targetAddress: InetAddressCompat;
-        public readonly mustContainTerm: Term | null;
-        protected readonly sendInput: boolean;
-    };
-
-
-    // Java source: private List<TargetNar> targets = new ArrayList<>();
-    // This collection is private and only supports append plus ordered iteration.
-    private targets: NarNode.TargetNar[] = [];
 
     public addRedirectionTo(target: NarNode.TargetNar): void;
-
-    /**
-     * Add another target Nar node to redirect tasks to, and under which conditions.
-     *
-     * @param targetIP        The target Nar node IP
-     * @param targetPort      The target Nar node port
-     * @param taskThreshold   The threshold the priority of the task has to have to
-     *                        redirect
-     * @param mustContainTerm The optional term that needs to be contained
-     *                        recursively in the task term
-     * @throws SocketException
-     * @throws UnknownHostException
-     */
-    public addRedirectionTo(targetIP: JavaStringInput, targetPort: int, taskThreshold: float,
-        mustContainTerm: Term | null, sendInput: boolean): void;
+    public addRedirectionTo(address: string, port: int, threshold: float, mustContainTerm: Term | null, sendInput: boolean): void;
     public addRedirectionTo(...args: unknown[]): void {
-        switch (args.length) {
-            case 1: {
-                const [target] = args as [NarNode.TargetNar];
-
-
-                this.targets.push(target);
-
-
-                break;
-            }
-
-            case 5: {
-                const [targetIP, targetPort, taskThreshold, mustContainTerm, sendInput] = args as [JavaStringInput, int, float, Term | null, boolean];
-
-
-                this.addRedirectionTo(new NarNode.TargetNar(targetIP, targetPort, taskThreshold, mustContainTerm, sendInput));
-
-
-                break;
-            }
-
-            default: {
-                throw new java.lang.IllegalArgumentException("Invalid number of arguments");
-            }
+        if (args.length === 1 && args[0] instanceof NarNode.TargetNar) {
+            this.targets.push(args[0]);
+            return;
         }
+        if (args.length === 1 && typeof args[0] === "object" && args[0] !== null) {
+            this.targets.push(args[0] as NarNode.TargetNar);
+            return;
+        }
+        if (args.length === 5) {
+            const [address, port, threshold, term, sendInput] = args as [string, int, float, Term | null, boolean];
+            this.targets.push(new NarNode.TargetNar(address, port, threshold, term, sendInput));
+            return;
+        }
+        throw new ReasonerInputError("addRedirectionTo expects a target or five target fields");
     }
 
+    public static TargetNar = class TargetNar {
+        public readonly threshold: float;
+        public readonly address: string;
+        public readonly port: int;
+        public readonly mustContainTerm: Term | null;
+        public readonly sendInput: boolean;
+        private readonly transport?: MessageTransport;
 
-    /***
-     * NarNode's receiving a task or Narsese string
-     *
-     * @return the object received (Task, String)
-     * @throws IOException when can't receive packet
-     */
-    private receiveObject(): java.lang.Object {
-        let recBytes: Int8Array = new Int8Array(65535);
-        let packet: DatagramPacketCompat = new javaNetCompat.DatagramPacket(recBytes, recBytes.length);
-        this.receiveSocket.receive(packet);
-        if (packet.getLength() > 0) {
-            try {
-                    // This holds the final error to throw (if any).
-                    let error: ReturnType<typeof closeResourcesCompat>;
-
-                    const iStream: ObjectInputStreamCompat = new javaIoCompat.ObjectInputStream(
-                        new javaIoCompat.ByteArrayInputStream(recBytes),
-                    );
-                    try {
-                        try {
-                            const msg = iStream.readObject();
-                            if (msg instanceof Task || msg instanceof java.lang.String) {
-                                return msg as java.lang.Object;
-                            }
-                        }
-                        finally {
-                            error = closeResourcesCompat([iStream]);
-                        }
-                    } catch (e) {
-                        error = handleResourceErrorCompat(e, error);
-                    } finally {
-                        throwResourceErrorCompat(error);
-                    }
-                // not an object NarNode could digest
-            } catch (ex) {
-                if (isJavaException(ex)) {
-                    // object wasn't retrieved, maybe it wasn't one
-                } else {
-                    throw ex;
-                }
-            }
-            // ok let's assume it's a raw Narsese string encoding not a Java object, the
-            // parser will tell
-            return new java.lang.String(recBytes, java.nio.charset.StandardCharsets.UTF_8).trim();
+        public constructor(address: string, port: int, threshold: float, mustContainTerm: Term | null, sendInput: boolean,
+            transport?: MessageTransport) {
+            this.address = address;
+            this.port = port;
+            this.threshold = Float32Math.from(threshold) as float;
+            this.mustContainTerm = mustContainTerm;
+            this.sendInput = sendInput;
+            this.transport = transport;
         }
-        return null as unknown as java.lang.Object;
-    }
+
+        public matches(term: Term): boolean {
+            if (this.mustContainTerm === null) return true;
+            return term instanceof CompoundTerm
+                ? term.containsTermRecursively(this.mustContainTerm)
+                : this.mustContainTerm.equals(term);
+        }
+
+        public matchesText(text: string): boolean {
+            return this.mustContainTerm === null || text.includes(String(this.mustContainTerm));
+        }
+
+        public send(message: NetworkMessage): void {
+            if (this.transport === undefined) throw new HostCapabilityError("messageTransport");
+            this.transport.send(this.address, this.port, message);
+        }
+    };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
 export namespace NarNode {
-    export type EventReceivedTask = InstanceType<NarNode["EventReceivedTask"]>;
     export type TargetNar = InstanceType<typeof NarNode.TargetNar>;
 }
-

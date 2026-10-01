@@ -7,10 +7,50 @@ import type { Nar } from "../../main/Nar.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
-import { isJavaThrowable, java, toJavaString as toHostJavaString } from "../../platform/host-adapter.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
 import type { JavaStringInput } from "../../runtime/java-text.ts";
 import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerIoError } from "../../runtime/ReasonerErrors.ts";
+
+export interface TextLineWriter {
+    println(value: unknown): void;
+    flush?(): void;
+    close?(): void;
+}
+
+interface OutputBuffer {
+    append(value: unknown): OutputBuffer;
+    setLength(length: number): void;
+    toString(): string;
+}
+
+class NativeOutputBuffer implements OutputBuffer {
+    private value = "";
+    public append(value: unknown): OutputBuffer {
+        this.value += String(value);
+        return this;
+    }
+    public setLength(length: number): void {
+        this.value = this.value.slice(0, length);
+    }
+    public toString(): string {
+        return this.value;
+    }
+}
+
+const isThrowable = (value: unknown): value is Error & { getStackTrace?: () => readonly unknown[] } =>
+    value instanceof Error;
+const isOutputBuffer = (value: unknown): value is OutputBuffer => {
+    const candidate = value as Partial<OutputBuffer> | null;
+    return candidate !== null && typeof candidate === "object"
+        && typeof candidate.append === "function"
+        && typeof candidate.setLength === "function"
+        && typeof candidate.toString === "function";
+};
+const isLineWriter = (value: unknown): value is TextLineWriter => {
+    const candidate = value as Partial<TextLineWriter> | null;
+    return candidate !== null && typeof candidate === "object" && typeof candidate.println === "function";
+};
 
 const IN = OutputHandler.IN;
 const OUT = OutputHandler.OUT;
@@ -38,7 +78,7 @@ export class TextOutputHandler extends OutputHandler {
 
     private prefix: string = "";
     private outExp2: TextOutputHandler.LineOutput | null = null;
-    private outExp: java.io.PrintWriter | null = null;
+    private outExp: TextLineWriter | null = null;
     private showErrors: boolean = true;
     private showStackTrace: boolean = false;
     private readonly showStamp: boolean = true;
@@ -54,15 +94,15 @@ export class TextOutputHandler extends OutputHandler {
 
     public constructor(n: Nar, outExp2: TextOutputHandler.LineOutput);
 
-    public constructor(n: Nar, outExp: java.io.PrintWriter);
+    public constructor(n: Nar, outExp: TextLineWriter);
 
-    public constructor(n: Nar, ps: java.io.PrintStream);
+    public constructor(n: Nar, ps: TextLineWriter);
 
-    public constructor(n: Nar, s: java.io.StringWriter);
+    public constructor(n: Nar, s: TextLineWriter);
 
-    public constructor(n: Nar, outExp: java.io.PrintWriter, minPriority: float);
+    public constructor(n: Nar, outExp: TextLineWriter, minPriority: float);
 
-    public constructor(n: Nar, ps: java.io.PrintStream, minPriority: float);
+    public constructor(n: Nar, ps: TextLineWriter, minPriority: float);
     public constructor(...args: unknown[]) {
         const n = args[0] as Nar;
         super(n, true);
@@ -75,26 +115,16 @@ export class TextOutputHandler extends OutputHandler {
 
             case 2: {
                 const target = args[1];
-                if (target instanceof java.io.PrintWriter) {
-                    this.outExp = target;
-                } else if (target instanceof java.io.PrintStream) {
-                    this.outExp = new java.io.PrintWriter(target);
-                } else if (target instanceof java.io.StringWriter) {
-                    this.outExp = new java.io.PrintWriter(target);
-                } else {
-                    this.outExp2 = target as TextOutputHandler.LineOutput;
-                }
+                if (isLineWriter(target)) this.outExp = target;
+                else this.outExp2 = target as TextOutputHandler.LineOutput;
                 break;
             }
 
             case 3: {
                 const target = args[1];
                 const minPriority = args[2] as float;
-                if (target instanceof java.io.PrintWriter) {
-                    this.outExp = target;
-                } else if (target instanceof java.io.PrintStream) {
-                    this.outExp = new java.io.PrintWriter(target);
-                } else {
+                if (isLineWriter(target)) this.outExp = target;
+                else {
                     throw new JavaIllegalArgumentException("Invalid output target");
                 }
                 this.minPriority = minPriority;
@@ -112,14 +142,14 @@ export class TextOutputHandler extends OutputHandler {
      * Open an output experience file
      */
     public openSaveFile(path: JavaStringInput): void {
+        const openTextWriter = this.nar.getRuntimeCapabilities()?.openTextWriter;
+        if (openTextWriter === undefined) {
+            throw new ReasonerIoError("Opening an output file requires the host text-writer capability");
+        }
         try {
-            this.outExp = new java.io.PrintWriter(new java.io.FileWriter(toHostJavaString(path)));
+            this.outExp = openTextWriter(javaStringValue(path));
         } catch (ex) {
-            if (ex instanceof java.io.IOException) {
-                throw new java.lang.IllegalStateException("Could not open save file.", ex);
-            } else {
-                throw ex;
-            }
+            throw new ReasonerIoError(`Could not open save file: ${javaStringValue(path)}`, { cause: ex });
         }
     }
 
@@ -128,7 +158,7 @@ export class TextOutputHandler extends OutputHandler {
      */
     public closeSaveFile(): void {
         if (this.outExp !== null)
-            this.outExp.close();
+            this.outExp.close?.();
         this.setActive(false);
     }
 
@@ -144,13 +174,13 @@ export class TextOutputHandler extends OutputHandler {
             return;
 
         if ((this.outExp !== null) || (this.outExp2 !== null)) {
-            let o: java.lang.Object = oo[0] as unknown as java.lang.Object;
-            let s: java.lang.String | null = this.process(channel, o);
+            const o: unknown = oo[0];
+            const s: string | null = this.process(channel, o);
             if (s !== null) {
-                const line = new java.lang.StringBuilder().append(this.prefix).append(s).toString();
+                const line = `${this.prefix}${s}`;
                 if (this.outExp !== null) {
                     this.outExp.println(line);
-                    this.outExp.flush();
+                    this.outExp.flush?.();
                 }
                 if (this.outExp2 !== null) {
                     this.outExp2.println(line);
@@ -159,9 +189,9 @@ export class TextOutputHandler extends OutputHandler {
         }
     }
 
-    protected readonly result: java.lang.StringBuilder = new java.lang.StringBuilder(16 /* estimate */);
+    protected readonly result: OutputBuffer = new NativeOutputBuffer();
 
-    public process(c: ClassTokenLike, o: java.lang.Object): java.lang.String | null {
+    public process(c: ClassTokenLike, o: unknown): string | null {
         return this.getOutputString(c, o, true, this.showStamp, this.nar, this.result, this.minPriority);
     }
 
@@ -185,56 +215,55 @@ export class TextOutputHandler extends OutputHandler {
         return this;
     }
 
-    public static getOutputString(channel: ClassTokenLike, signal: java.lang.Object,
-        showStamp: boolean, nar: Nar): java.lang.String | null;
+    public static getOutputString(channel: ClassTokenLike, signal: unknown,
+        showStamp: boolean, nar: Nar): string | null;
 
-    public static getOutputString(channel: ClassTokenLike, signal: java.lang.Object,
-        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String | null;
+    public static getOutputString(channel: ClassTokenLike, signal: unknown,
+        showStamp: boolean, nar: Nar, buffer: OutputBuffer): string | null;
 
-    public static getOutputString(channel: ClassTokenLike, signal: java.lang.Object, showChannel: boolean,
-        showStamp: boolean, nar: Nar): java.lang.String | null;
+    public static getOutputString(channel: ClassTokenLike, signal: unknown, showChannel: boolean,
+        showStamp: boolean, nar: Nar): string | null;
 
-    public static getOutputString(...args: unknown[]): java.lang.String | null {
+    public static getOutputString(...args: unknown[]): string | null {
         switch (args.length) {
             case 4: {
-                const [channel, signal, showStamp, nar] = args as [ClassTokenLike, java.lang.Object, boolean, Nar];
+                const [channel, signal, showStamp, nar] = args as [ClassTokenLike, unknown, boolean, Nar];
                 return TextOutputHandler.formatStaticOutputString(
-                    channel, signal, showStamp, nar, new java.lang.StringBuilder(),
+                    channel, signal, showStamp, nar, new NativeOutputBuffer(),
                 );
             }
             case 5: {
-                if (args[4] instanceof java.lang.StringBuilder) {
-                    const [channel, signal, showStamp, nar, buffer] = args as [ClassTokenLike, java.lang.Object, boolean, Nar, java.lang.StringBuilder];
+                if (isOutputBuffer(args[4])) {
+                    const [channel, signal, showStamp, nar, buffer] = args as [ClassTokenLike, unknown, boolean, Nar, OutputBuffer];
                     return TextOutputHandler.formatStaticOutputString(channel, signal, showStamp, nar, buffer);
                 }
-                const [channel, signal, showChannel, showStamp, nar] = args as [ClassTokenLike, java.lang.Object, boolean, boolean, Nar];
+                const [channel, signal, showChannel, showStamp, nar] = args as [ClassTokenLike, unknown, boolean, boolean, Nar];
                 const output = TextOutputHandler.formatStaticOutputString(
-                    channel, signal, showStamp, nar, new java.lang.StringBuilder(),
+                    channel, signal, showStamp, nar, new NativeOutputBuffer(),
                 );
                 if (output === null || !showChannel)
                     return output;
-                return new java.lang.StringBuilder()
-                    .append(channel.getSimpleName()).append(": ").append(output).toString();
+                return `${channel.getSimpleName()}: ${output}`;
             }
             default:
                 throw new JavaIllegalArgumentException("Invalid number of arguments");
         }
     }
 
-    public getOutputString(channel: ClassTokenLike, signal: java.lang.Object, showChannel: boolean,
-        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String | null;
+    public getOutputString(channel: ClassTokenLike, signal: unknown, showChannel: boolean,
+        showStamp: boolean, nar: Nar, buffer: OutputBuffer): string | null;
 
     /** generates a human-readable string from an output channel and signal */
-    public getOutputString(channel: ClassTokenLike, signal: java.lang.Object, showChannel: boolean,
-        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder, minPriority: float): java.lang.String | null;
-    public getOutputString(...args: unknown[]): java.lang.String | null {
+    public getOutputString(channel: ClassTokenLike, signal: unknown, showChannel: boolean,
+        showStamp: boolean, nar: Nar, buffer: OutputBuffer, minPriority: float): string | null;
+    public getOutputString(...args: unknown[]): string | null {
         switch (args.length) {
             case 6: {
-                const [channel, signal, showChannel, showStamp, nar, buffer] = args as [ClassTokenLike, java.lang.Object, boolean, boolean, Nar, java.lang.StringBuilder];
+                const [channel, signal, showChannel, showStamp, nar, buffer] = args as [ClassTokenLike, unknown, boolean, boolean, Nar, OutputBuffer];
                 return this.getOutputString(channel, signal, showChannel, showStamp, nar, buffer, 0);
             }
             case 7: {
-                const [channel, signal, showChannel, showStamp, nar, buffer, minPriority] = args as [ClassTokenLike, java.lang.Object, boolean, boolean, Nar, java.lang.StringBuilder, float];
+                const [channel, signal, showChannel, showStamp, nar, buffer, minPriority] = args as [ClassTokenLike, unknown, boolean, boolean, Nar, OutputBuffer, float];
                 return TextOutputHandler.formatInstanceOutputString(
                     channel, signal, showChannel, showStamp, nar, buffer, minPriority, this.showStackTrace,
                 );
@@ -244,30 +273,30 @@ export class TextOutputHandler extends OutputHandler {
         }
     }
 
-    private static formatInstanceOutputString(channel: ClassTokenLike, signal: java.lang.Object, showChannel: boolean,
-        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder, minPriority: float,
-        showStackTrace: boolean): java.lang.String | null {
+    private static formatInstanceOutputString(channel: ClassTokenLike, signal: unknown, showChannel: boolean,
+        showStamp: boolean, nar: Nar, buffer: OutputBuffer, minPriority: float,
+        showStackTrace: boolean): string | null {
         buffer.setLength(0);
 
         if (showChannel)
             buffer.append(channel.getSimpleName()).append(": ");
 
         if (channel === ERR.class) {
-            if (isJavaThrowable(signal)) {
-                const e: java.lang.Throwable = signal as unknown as java.lang.Throwable;
+            if (isThrowable(signal)) {
+                const e = signal;
                 buffer.append(e.toString().replace(/^Java/, ""));
                 if (showStackTrace) {
-                    buffer.append(" ").append(formatJavaList(e.getStackTrace()));
+                    buffer.append(" ").append(formatJavaList(e.getStackTrace?.() ?? []));
                 }
             } else {
-                buffer.append(signal.toString());
+                buffer.append(String(signal));
             }
         } else if ((channel === OUT.class) || (channel === IN.class) || (channel === ECHO.class) || (channel === EXE.class)
             || (channel === Answer.class)
             || (channel === ANTICIPATE.class) || (channel === DISAPPOINT.class) || (channel === CONFIRM.class)
             || (channel === DEBUG.class)) {
             if (channel === CONFIRM.class) {
-                buffer.append(signal.toString());
+                buffer.append(String(signal));
             }
             if (signal instanceof Task) {
                 const task: Task = signal as Task;
@@ -286,23 +315,23 @@ export class TextOutputHandler extends OutputHandler {
                     buffer.append(task.sentence.toString(nar, showStamp));
                 }
             } else {
-                buffer.append(signal.toString());
+                buffer.append(String(signal));
             }
         } else {
-            buffer.append(signal.toString());
+            buffer.append(String(signal));
         }
 
         return buffer.toString();
     }
 
-    private static formatStaticOutputString(channel: ClassTokenLike, signal: java.lang.Object,
-        showStamp: boolean, nar: Nar, buffer: java.lang.StringBuilder): java.lang.String {
+    private static formatStaticOutputString(channel: ClassTokenLike, signal: unknown,
+        showStamp: boolean, nar: Nar, buffer: OutputBuffer): string {
         buffer.setLength(0);
 
-        if (isJavaThrowable(signal)) {
-            const error = signal as unknown as java.lang.Throwable;
+        if (isThrowable(signal)) {
+            const error = signal;
             buffer.append(error.toString().replace(/^Java/, "")).append(" ")
-                .append(formatJavaList(error.getStackTrace()));
+                .append(formatJavaList(error.getStackTrace?.() ?? []));
         } else if (signal instanceof Task) {
             buffer.append(signal.sentence.toString(nar, showStamp));
         } else if (signal instanceof Sentence) {
@@ -315,7 +344,7 @@ export class TextOutputHandler extends OutputHandler {
                 buffer.append(formatJavaArray(signal as unknown[]));
             }
         } else {
-            buffer.append(signal.toString());
+            buffer.append(String(signal));
         }
 
         return buffer.toString();

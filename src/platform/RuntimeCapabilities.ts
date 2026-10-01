@@ -6,11 +6,24 @@
  */
 export type CurrentTimeMillis = () => bigint;
 
+export type TextWriter = {
+    println(value: unknown): void;
+    flush?(): void;
+    close?(): void;
+};
+
+export interface MessageTransportCapability {
+    listen(port: number, onMessage: (message: unknown) => void): void;
+    send(address: string, port: number, message: unknown): void;
+}
+
 export interface RuntimeCapabilities {
     readonly executeSystemCommand?: (command: string) => string;
     readonly currentTimeMillis?: CurrentTimeMillis;
     readonly saveSnapshot?: (name: string, value: unknown) => void;
     readonly loadSnapshot?: (name: string) => unknown;
+    readonly openTextWriter?: (path: string) => TextWriter;
+    readonly messageTransport?: MessageTransportCapability;
 }
 
 export const defaultCurrentTimeMillis: CurrentTimeMillis = () => BigInt(Date.now());

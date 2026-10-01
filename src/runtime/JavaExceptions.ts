@@ -117,13 +117,32 @@ export class JavaRuntimeException extends JavaException {}
 export class JavaAssertionError extends JavaError {}
 
 /** Java original type: java.lang.IllegalArgumentException. */
-export class JavaIllegalArgumentException extends JavaRuntimeException {}
+export class JavaIllegalArgumentException extends JavaRuntimeException {
+    public static [Symbol.hasInstance](value: unknown): boolean {
+        // Native reasoner errors are accepted by old translated catch/tests.
+        const constructorName = typeof value === "object" && value !== null
+            ? (value as { constructor?: { name?: unknown } }).constructor?.name
+            : undefined;
+        return (typeof value === "object" && value !== null
+            && JavaIllegalArgumentException.prototype.isPrototypeOf(value))
+            || constructorName === "ReasonerInputError";
+    }
+}
 
 /** Java original type: java.lang.NumberFormatException. */
 export class JavaNumberFormatException extends JavaIllegalArgumentException {}
 
 /** Java original type: java.lang.IllegalStateException. */
-export class JavaIllegalStateException extends JavaRuntimeException {}
+export class JavaIllegalStateException extends JavaRuntimeException {
+    public static [Symbol.hasInstance](value: unknown): boolean {
+        const constructorName = typeof value === "object" && value !== null
+            ? (value as { constructor?: { name?: unknown } }).constructor?.name
+            : undefined;
+        return (typeof value === "object" && value !== null
+            && JavaIllegalStateException.prototype.isPrototypeOf(value))
+            || constructorName === "ReasonerStateError";
+    }
+}
 
 /** Java original type: java.lang.NullPointerException. */
 export class JavaNullPointerException extends JavaRuntimeException {}

@@ -1,29 +1,41 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { java } from "../../src/runtime/native-runtime.ts";
+import { Nar } from "../../src/main/Nar.ts";
+import { NarNode, type MessageTransport, type NetworkMessage } from "../../src/main/NarNode.ts";
+import { HostCapabilityError } from "../../src/runtime/ReasonerErrors.ts";
 
-import { toJavaString } from "../../src/runtime/native-runtime.ts";
-
-test("NarNode network text boundaries stay project-owned", () => {
+test("NarNode core contains only typed network messages and injected transport", () => {
     const source = readFileSync("src/main/NarNode.ts", "utf8");
-    assert.doesNotMatch(source, /\bS`/);
-    assert.doesNotMatch(source, /import\s*\{[^}]*\bS\b[^}]*\}\s*from\s*["']jree["']/);
-    assert.doesNotMatch(source, /\b(?:closeResources|handleResourceError|throwResourceError)\b/);
-    assert.match(source, /from ["']\.\.\/runtime\/ResourceCompat\.ts["']/);
-    assert.match(source, /sendNarsese\(input: JavaStringInput, target: NarNode\.TargetNar\)/);
-    assert.match(source, /sendNarsese\(input: JavaStringInput, targetIP: JavaStringInput/);
-    assert.match(source, /constructor\(targetIP: JavaStringInput/);
-    assert.match(source, /addRedirectionTo\(targetIP: JavaStringInput/);
+    assert.doesNotMatch(source, /from ["']node:/);
+    assert.doesNotMatch(source, /\bjava\.(?:io|lang|net|nio)\b/);
+    assert.match(source, /interface MessageTransport/);
+});
 
-    const nativeHost = "127.0.0.1";
-    const boxedHost = new java.lang.String(nativeHost);
-    assert.equal(String(toJavaString(nativeHost)), nativeHost);
-    assert.equal(String(toJavaString(boxedHost)), nativeHost);
+test("NarNode routes received and emitted messages through an injected transport", () => {
+    const sent: NetworkMessage[] = [];
+    const transport: MessageTransport = {
+        listen(_port, onMessage) { onMessage({ kind: "narsese", text: "<bird --> animal>." }); },
+        send(_address, _port, message) { sent.push(message); },
+    };
+    const nar = new Nar({ capabilities: { messageTransport: transport } });
+    try {
+        const node = new NarNode(nar, 64000);
+        node.addRedirectionTo(new NarNode.TargetNar("127.0.0.1", 64001, 0, null, true, transport));
+        node.sendNarsese("<bird --> animal>.", new NarNode.TargetNar("127.0.0.1", 64001, 0, null, true, transport));
+        assert.equal(nar.time(), 0);
+        assert.equal(sent.length, 1);
+        assert.deepEqual(sent[0], { kind: "narsese", text: "<bird --> animal>." });
+    } finally {
+        nar.stop();
+    }
+});
 
-    const net = java.net as unknown as Record<string, unknown>;
-    const io = java.io as unknown as Record<string, unknown>;
-    assert.equal(typeof net.InetAddress, "object");
-    assert.equal(typeof net.DatagramSocket, "function");
-    assert.equal(typeof io.ObjectOutputStream, "function");
+test("NarNode reports absent transport as a platform capability error", () => {
+    const nar = new Nar();
+    try {
+        assert.throws(() => new NarNode(nar, 64002), HostCapabilityError);
+    } finally {
+        nar.stop();
+    }
 });

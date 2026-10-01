@@ -309,14 +309,24 @@ test("TextOutputHandler.LineOutput accepts project-owned text values", () => {
     assert.doesNotMatch(source, /println\(s: java\.lang\.String\): void/);
 });
 
-test("TextOutputHandler.openSaveFile accepts project-owned text paths", () => {
+test("TextOutputHandler.openSaveFile obtains a writer through host capabilities", () => {
     const source = readFileSync("src/io/events/TextOutputHandler.ts", "utf8");
     assert.doesNotMatch(source, /openSaveFile\(path: java\.lang\.String\)/);
 
     const directory = mkdtempSync(join(tmpdir(), "opennars-text-output-"));
     const nativePath = join(directory, "native.log");
     const boxedPath = join(directory, "boxed.log");
-    const handler = new TextOutputHandler(new Nar());
+    const opened: string[] = [];
+    const nar = new Nar({ capabilities: {
+        openTextWriter(path) {
+            opened.push(path);
+            return {
+                println(_value) {},
+                close() {},
+            };
+        },
+    } });
+    const handler = new TextOutputHandler(nar);
 
     try {
         handler.openSaveFile(nativePath);
@@ -324,9 +334,13 @@ test("TextOutputHandler.openSaveFile accepts project-owned text paths", () => {
         handler.openSaveFile(new java.lang.String(boxedPath));
         handler.closeSaveFile();
 
-        assert.equal(existsSync(nativePath), true);
-        assert.equal(existsSync(boxedPath), true);
+        assert.deepEqual(opened, [nativePath, boxedPath]);
+        assert.equal(existsSync(nativePath), false);
+        assert.equal(existsSync(boxedPath), false);
+        const noHostWriter = new TextOutputHandler(new Nar());
+        assert.throws(() => noHostWriter.openSaveFile(nativePath), /Opening an output file/);
     } finally {
+        nar.stop();
         rmSync(directory, { recursive: true, force: true });
     }
 });
