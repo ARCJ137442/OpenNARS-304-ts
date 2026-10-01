@@ -135,6 +135,11 @@ The 50-tick CartPole probe measured `3.713 RPS`, median step `2046.664 ms`,
 p95 `6936.998 ms`, and peak RSS `406876160` bytes. This remains a candidate;
 full M2, M3, affected NAL, M1-prime and markerless evidence are required.
 
+The candidate was rejected: `stresstest_bird1.nal` lost its marker on the
+candidate and recovered after reverting the fast path. The call graph mutates
+some compound terms after lookup, so the apparent no-op clone is observable.
+Raw candidate evidence remains untrusted; the revert is `bf03206`.
+
 ## Complexity candidate gate result
 
 On `b6f7a73`, TS-only M2 passed `504` tests with `2` skips and no failures;
