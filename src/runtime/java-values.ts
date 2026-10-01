@@ -36,6 +36,14 @@ export const subtractRuntimeLongValues = (left: JavaLongInput, right: JavaLongIn
 
 export const javaValuesEqual = (left: unknown, right: unknown): boolean => {
     if (left === right) return true;
+    const leftHash = (left as { hashCode?: unknown } | null)?.hashCode;
+    const rightHash = (right as { hashCode?: unknown } | null)?.hashCode;
+    if (typeof leftHash === "function" && typeof rightHash === "function"
+        && Number(leftHash.call(left)) !== Number(rightHash.call(right))) {
+        // Java's equals/hashCode contract permits this decisive rejection while
+        // preserving the receiver direction for equal-hash asymmetric objects.
+        return false;
+    }
     const leftEquals = (left as { equals?: unknown } | null)?.equals;
     if (typeof leftEquals === "function" && Boolean(leftEquals.call(left, right))) return true;
     const rightEquals = (right as { equals?: unknown } | null)?.equals;

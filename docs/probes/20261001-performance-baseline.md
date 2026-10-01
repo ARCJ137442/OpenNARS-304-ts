@@ -94,3 +94,31 @@ Raw evidence: `reports/evidence/rps-native-opt9-native-string-equality-20261001.
 ## Next profile target
 
 The optimization convergence gate is closed for this batch. The remaining performance work is a separate, larger investigation of concept growth, Bag/NativeMap allocation and long-tail GC behavior; it must establish a new benchmark baseline before changing inference state ownership or retention policy. The Demo concept-growth tail remains the primary user-visible bottleneck.
+
+## Structural candidate: interval replacement fast path
+
+On the `4225f8e` working tree, `CompoundTerm.replaceIntervals` was found to
+deep-clone every compound term before checking whether it contained an
+interval. The call graph treats the returned term as immutable, so the native
+candidate returns the original compound immediately when `hasInterval()` is
+false and preserves the clone path for interval-bearing terms.
+
+Focused contracts passed, including a clone-count assertion for both branches.
+The 50-tick CartPole workload improved from `2.841 RPS` / peak RSS
+`344109056` bytes to `4.618 RPS` / `415666176` bytes in the first sample and
+`4.698 RPS` / `355340288` bytes in the independent recheck. Segment TPS still
+falls below 1 after concept growth, so this is a large RPS improvement but not
+the final 20 TPS demo result.
+
+The same candidate's 50-run in-process RPS benchmark measured `3870.598
+cycles/s` median, `58.837 ms` p95, and peak RSS `269574144` bytes. Raw evidence:
+`reports/evidence/demo-workload-interval-fastpath-20261001.json`,
+`reports/evidence/demo-workload-hash-shortcut-20261001.json`,
+`reports/evidence/demo-workload-hash-shortcut-recheck-20261001.json`, and
+`reports/evidence/rps-native-hash-shortcut-20261001.json`.
+
+This candidate remains pending M3, complete M2, affected NAL, M1-prime and
+markerless validation. The `javaValuesEqual` hash short-circuit was measured
+in the same probe but is not yet accepted independently; its focused contract
+preserves receiver order for equal hashes and rejects unequal hashes before
+calling `equals`.
