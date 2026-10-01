@@ -1,10 +1,11 @@
 # 发布检查清单
 
-## v1.0.2 验证状态（2026-10-01）
+## v1.0.3 验证状态（2026-10-01）
 
 - [x] `LICENSE`、`NOTICE` 和中英文 README 存在。
 - [x] `npm run test:release`、`npm pack --dry-run`、`npm run release:bundle` 通过。
 - [x] `audit:jree` 直接 npm jree import files/occurrences 为 `0/0`。
+- [x] legacy compatibility facade 已移到 `test/support`，发布 `src` 与 `dist` 不再包含它。
 - [x] M1-prime、M2、M3、markerless、Demo Lab browser smoke 证据已落盘。
 - [x] v1.0.1 tag/release 已推送；Pages demo 已更新到 `/opennars-304-ts-lab/`。
 - [ ] 023/025 strict host boundary 与 031 Java-shape cleanup 尚未全部完成。
