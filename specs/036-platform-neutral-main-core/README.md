@@ -38,18 +38,21 @@ process exit, UDP and serialization stay under `src/platform/node`.
 - [x] Make `NarNode` route typed messages through an injected transport and add
   a Node UDP adapter.
 - [x] Make `TextOutputHandler` use native buffers and injected text writers.
-- [ ] Migrate remaining `src/main` Java-shaped value aliases and class tokens
-  after direct contracts are classified.
-- [ ] Complete Node/Browser smoke, M2, M1-prime and platform audit on one
+- [x] Remove platform and Java namespace imports from `src/main` orchestration;
+  remaining value aliases and class tokens are explicitly deferred to spec 031.
+- [x] Complete Node/Browser smoke, M2, M1-prime and platform audit on one
   immutable commit.
 
 ## Tests
 
 - [x] TypeScript typecheck.
 - [x] Focused Shell, output-writer, and NarNode transport contracts.
-- [ ] Full serial TS-only M2 and Java M2.
-- [ ] Affected NAL parity, M1-prime and markerless comparison.
-- [ ] Browser Worker and Node CLI smoke without `src/main` host imports.
+- [x] Full serial TS-only M2 (`500/502`, 2 documented skips) and Java M2
+  (`502/502`) on the final commit.
+- [x] Affected NAL parity, M1-prime (`243/243`), #246 and #245 65536 fixture
+  parity on the final commit.
+- [x] Browser Worker build/static scan, real Microworld browser smoke, and Node
+  CLI smoke without `src/main` host imports.
 
 ## Dependencies
 
@@ -57,3 +60,17 @@ This successor continues the strict jree boundary in spec 025 and the host
 separation in spec 024. The local `lean-spec link` command is unavailable in
 this installation, so those dependencies are recorded here until the tool is
 restored.
+
+## Final evidence for `07f7dee`
+
+- TS-only M2: `500 passed / 0 failed / 2 skipped`.
+- Java M2: `502 passed / 0 failed / 0 skipped`.
+- M1-prime body: `243/243` parity, with zero failure, timeout,
+  process-limit, exception, stall, or not-run rows.
+- Extra `simpleOperationTest.nal`: `1/1` parity.
+- Reduced #245 fixture: `long_term_stability-65536.nal` Java/TS parity `1/1`,
+  TS duration about `386.8 s`, peak RSS `411623424` bytes; this is not the
+  original 2,000,000-cycle stability claim.
+- Worker build, static forbidden-token scan, demo tests `28/28`, and real
+  browser Microworld smoke passed. Worker build retains six known esbuild
+  warnings from translated overload switches and `import.meta` in IIFE output.

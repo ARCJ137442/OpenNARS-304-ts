@@ -101,3 +101,16 @@ binary32 boundary, and reasoning failures are recognized as native `Error`
 values and re-emitted through NARS events. The follow-up is intentionally
 separate from the host-boundary commit so its M1' evidence can identify the
 exact source revision.
+
+## Final validation after `07f7dee`
+
+- TS-only M2: `500/502`, zero failures, two documented skips.
+- Java M2: `502/502`, zero failures and zero skips.
+- M1-prime M1-- body: `243/243`, zero failure/timeout/process_limit/
+  exception/stall/not_run. The final JSONL is
+  `reports/evidence/m1prime-07f7dee-main-core-mminus-20261001.jsonl`.
+- Extra #246 and reduced #245 65536 fixture both pass parity on the final
+  commit. The reduced fixture remains a performance observation, not an
+  original 2,000,000-cycle stability claim.
+- Browser worker build, forbidden-token scan, demo tests `28/28`, Node smoke,
+  and real browser Microworld smoke pass.
