@@ -160,7 +160,6 @@ test compatibility types and is still a separate 031/023 task.
 
 The exception-migration M1-prime body completed `243/243` with zero
 failure/timeout/process_limit/exception/stall/not_run rows; affected NALs were
-`4/4`. The final #246/#245 and markerless rows were then verified on the
-same source line: both reduced and extra rows passed, and both 131072-cycle
-stage digest comparisons returned `equal=true`, `first_difference=null` and
-`incomplete=false`.
+`4/4`. The reduced/extra/markerless rows from the immediately preceding
+source-equivalent line remain planning evidence only; exact-commit reruns are
+still required before closing 031.

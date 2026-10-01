@@ -103,3 +103,9 @@ Typecheck, focused boundaries, TS-only M2 (`503/0/2`), Java M2 (`505/0/0`),
 affected NALs (`4/4`) and M1-prime body (`243/243`) passed on the migration
 line. Final #246/#245 and exact-commit markerless evidence still need to be
 recorded before 031 can close.
+
+The exact error-migration commit `c97fa98` then completed the 243-item M1'
+body (`243/243`) and affected NALs (`4/4`). Its remaining exact-commit rows
+are intentionally not inferred from the previous equivalent source line; the
+spec stays `in-progress` until #246, reduced #245, markerless, browser/Node
+smoke and the residual runtime-shape audit are recorded on one final commit.
