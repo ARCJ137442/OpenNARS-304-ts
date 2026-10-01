@@ -247,7 +247,7 @@ test("Sentence normalization keys duplicate variables by Java text value", async
 test("CompoundTerm iterator preserves Guava forArray contract", async () => {
     const { Product } = await import("../../src/language/Product.ts");
     const { Term } = await import("../../src/language/Term.ts");
-    const { java } = await import("../support/legacy-runtime-facade.ts");
+    const { ReasonerOperationError } = await import("../../src/runtime/ReasonerErrors.ts");
 
     const compound = Product.make([Term.get("iterator-a"), Term.get("iterator-b")]);
     if (compound === null) throw new Error("product factory returned null");
@@ -257,13 +257,13 @@ test("CompoundTerm iterator preserves Guava forArray contract", async () => {
     assert.equal(String(iterator.next().name()), "iterator-a");
     assert.throws(
         () => iterator.remove(),
-        (error: unknown) => error instanceof java.lang.UnsupportedOperationException,
+        (error: unknown) => error instanceof ReasonerOperationError,
     );
     assert.equal(String(iterator.next().name()), "iterator-b");
     assert.equal(iterator.hasNext(), false);
     assert.throws(
         () => iterator.next(),
-        (error: unknown) => error instanceof java.util.NoSuchElementException,
+        (error: unknown) => error instanceof ReasonerOperationError,
     );
     assert.deepEqual(compound.term.map((term) => String(term.name())), ["iterator-a", "iterator-b"]);
 });
