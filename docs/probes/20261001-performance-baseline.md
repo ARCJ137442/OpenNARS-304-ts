@@ -134,3 +134,11 @@ receiver direction.
 The 50-tick CartPole probe measured `3.713 RPS`, median step `2046.664 ms`,
 p95 `6936.998 ms`, and peak RSS `406876160` bytes. This remains a candidate;
 full M2, M3, affected NAL, M1-prime and markerless evidence are required.
+
+## Complexity candidate gate result
+
+On `b6f7a73`, TS-only M2 passed `504` tests with `2` skips and no failures;
+Java M2 passed `506/506`. The four affected NALs passed `4/4` against the
+frozen baseline, and M3 passed all four workloads with functional/parity true.
+The candidate is eligible for the next M1-prime and markerless gate, but it is
+not yet an accepted release optimization until those gates complete.
