@@ -122,3 +122,15 @@ markerless validation. The `javaValuesEqual` hash short-circuit was measured
 in the same probe but is not yet accepted independently; its focused contract
 preserves receiver order for equal hashes and rejects unequal hashes before
 calling `equals`.
+
+## Structural candidate: complexity rejection in `CompoundTerm.equals`
+
+`CompoundTerm` already maintains a stable complexity value for each term. The
+candidate rejects two compound terms with different complexity before forcing
+their lazy names, then retains the existing Java-compatible name equality for
+equal-complexity terms. Focused tests cover both branches and preserve the
+receiver direction.
+
+The 50-tick CartPole probe measured `3.713 RPS`, median step `2046.664 ms`,
+p95 `6936.998 ms`, and peak RSS `406876160` bytes. This remains a candidate;
+full M2, M3, affected NAL, M1-prime and markerless evidence are required.
