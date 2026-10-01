@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
-import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java } from "../support/legacy-runtime-facade.ts";
 import { tmpdir } from "node:os";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { Nar } from "../../src/main/Nar.ts";
@@ -13,7 +13,7 @@ import { TextOutputHandler } from "../../src/io/events/TextOutputHandler.ts";
 import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
-} from "../../src/platform/node/legacy-runtime-facade.ts";
+} from "../support/legacy-runtime-facade.ts";
 import { RuntimeObject, type ClassTokenLike } from "../../src/runtime/RuntimeClass.ts";
 
 test("EventEmitter.set subscribes only to the requested event classes", () => {

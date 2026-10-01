@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 test("commutative conjunction follows Java term ordering for toothbrush goal", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
 
@@ -21,7 +21,7 @@ test("commutative conjunction follows Java term ordering for toothbrush goal", a
 });
 
 test("scoped variable ordering uses Java code-unit order for commutative intersections", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { CompoundTerm } = await import("../../src/language/CompoundTerm.ts");
@@ -74,7 +74,7 @@ test("default NAR loads the internal experience plugin used by Java toothbrush",
 });
 
 test("tensional sets initialize Java-compatible compound complexity", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Term } = await import("../../src/language/Term.ts");
     const { SetInt } = await import("../../src/language/SetInt.ts");
 
@@ -100,7 +100,7 @@ test("novel-task Bag preserves Java float level selection at the 0.8 boundary", 
     const { Bag } = await import("../../src/storage/Bag.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Task } = await import("../../src/entity/Task.ts");
 
     const nar = new Nar();
@@ -158,7 +158,7 @@ test("forgetting narrows Java float parameters before the exponent boundary", as
 });
 
 test("derived task applies Java float leak operands before multiplication", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
@@ -183,7 +183,7 @@ test("derived task applies Java float leak operands before multiplication", asyn
 });
 
 test("mental operation feedback does not create a Java operation frame", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { ProcessJudgment } = await import("../../src/control/concept/ProcessJudgment.ts");
@@ -206,7 +206,7 @@ test("mental operation feedback does not create a Java operation frame", async (
 });
 
 test("sentence rendering preserves Java conceptual decimal visual indices", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
 
@@ -219,7 +219,7 @@ test("sentence rendering preserves Java conceptual decimal visual indices", asyn
 });
 
 test("compound-condition TermLink overload preserves Java's leading condition index", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { TermLink } = await import("../../src/entity/TermLink.ts");
@@ -233,7 +233,7 @@ test("compound-condition TermLink overload preserves Java's leading condition in
 });
 
 test("conditional operation unification substitutes the grounded toothbrush term", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { Symbols } = await import("../../src/io/Symbols.ts");
@@ -269,7 +269,7 @@ test("conditional operation unification substitutes the grounded toothbrush term
 });
 
 test("grounded toothbrush operation produces Java-style execution feedback", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { Events } = await import("../../src/io/events/Events.ts");

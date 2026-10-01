@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java, JavaObject } from "../../src/platform/node/legacy-runtime-facade.ts";
-import { javaStringValue } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject } from "../support/legacy-runtime-facade.ts";
+import { javaStringValue } from "../support/legacy-runtime-facade.ts";
 import { runSerialParameterized } from "../util/serial-parameterized-runner.ts";
 
 test("serial parameterized runner continues after a case failure", () => {

@@ -220,3 +220,20 @@ The source audit at this commit reports `0/0` direct npm jree imports and no
 reports zero direct jree imports; remaining Node imports are confined to host
 and tooling scopes. These are closure facts, not a claim that all Java-shaped
 compatibility contracts have been deleted.
+
+## Legacy harness removal batch
+
+The compatibility namespace used by translated tests and diagnostic scripts
+was moved out of `src` into `test/support`. The published source tree now
+contains only native host adapters; `dist` has no `legacy-runtime-facade.js`
+or `legacy-namespace.js`. The demo workers already pass native strings and do
+not import this harness.
+
+After the move: typecheck/build/release package checks passed; TS-only M2 was
+`505` total with `503 passed / 0 failed / 2 skipped`; Java M2 was `507/507`.
+The raw TAP hashes are `070716E6E48F85AF33E9FE51CC528602C319A9F6CAEA2F51D5A8439936A9ED06`
+and `29B0F2217D5A408B7937164754E3A06C9B6066DCD4FDCAF908E0AFC4A076F1CD`.
+The new source audit is `0/0` direct jree imports with SHA-256
+`7EC1C0B03423ACA418E4D4CC39AB343AA99F4F3B1F8F02D183162EDB17718E48`;
+the platform audit SHA-256 is
+`10237222BD691D518BF06A73AA1C5D20BCA0357ED95940013316646EDD63B601`.

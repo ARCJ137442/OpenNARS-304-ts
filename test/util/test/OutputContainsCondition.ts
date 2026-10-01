@@ -1,4 +1,4 @@
-import { java, type double, JavaObject, type int, type char } from "../../../src/platform/node/legacy-runtime-facade.ts";
+import { java, type double, JavaObject, type int, type char } from "../../support/legacy-runtime-facade.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { Sentence } from "../../../src/entity/Sentence.ts";
 import { Task } from "../../../src/entity/Task.ts";

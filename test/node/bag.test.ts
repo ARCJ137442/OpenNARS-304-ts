@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
 
 import test from "node:test";
-import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java } from "../support/legacy-runtime-facade.ts";
 import { Bag } from "../../src/storage/Bag.ts";
 import { Item } from "../../src/entity/Item.ts";
 import { Parameters } from "../../src/main/Parameters.ts";

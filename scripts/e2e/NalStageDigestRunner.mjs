@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
-import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java } from "../../test/support/legacy-runtime-facade.ts";
 import { Concept } from "../../src/entity/Concept.ts";
 import { DerivationContext } from "../../src/control/DerivationContext.ts";
 import { Sentence } from "../../src/entity/Sentence.ts";

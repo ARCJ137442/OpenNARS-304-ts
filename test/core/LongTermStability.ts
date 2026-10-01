@@ -1,7 +1,7 @@
-import { java, JavaObject, type long, type int } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject, type long, type int } from "../support/legacy-runtime-facade.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
-import type { JavaStringInput } from "../../src/platform/node/legacy-runtime-facade.ts";
+import type { JavaStringInput } from "../support/legacy-runtime-facade.ts";
 
 
 

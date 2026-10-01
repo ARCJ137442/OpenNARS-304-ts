@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java } from "../support/legacy-runtime-facade.ts";
 import { NodeStdinInputStream, type NodeReadableInput } from "../../src/runtime/NodeStdinInputStream.ts";
 
 class FakeReadable implements NodeReadableInput {

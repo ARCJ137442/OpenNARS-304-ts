@@ -1,4 +1,4 @@
-import { java, type int } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, type int } from "../support/legacy-runtime-facade.ts";
 import { AnswerHandler } from "../../src/io/events/AnswerHandler.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";

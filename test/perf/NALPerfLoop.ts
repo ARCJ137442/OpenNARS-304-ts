@@ -1,4 +1,4 @@
-import { java, JavaObject, type int } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject, type int } from "../support/legacy-runtime-facade.ts";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";

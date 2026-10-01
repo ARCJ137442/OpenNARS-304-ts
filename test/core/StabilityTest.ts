@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type double, type float } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject, type int, type double, type float } from "../support/legacy-runtime-facade.ts";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { TextOutputHandler } from "../../src/io/events/TextOutputHandler.ts";
@@ -7,7 +7,7 @@ import "../util/test/OutputConditionImplementations.ts";
 import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
 import { assertTrue } from "../util/junit-assert.ts";
 import { NALTest } from "./NALTest.ts";
-import { javaStringValue } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { javaStringValue } from "../support/legacy-runtime-facade.ts";
 import { runSerialParameterized } from "../util/serial-parameterized-runner.ts";
 
 

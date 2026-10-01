@@ -73,7 +73,7 @@ test("translated term and sentence constructors preserve Java delegation contrac
     const { Product } = await import("../../src/language/Product.ts");
     const { SetInt } = await import("../../src/language/SetInt.ts");
     const { Implication } = await import("../../src/language/Implication.ts");
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const sharedVariable = new Variable("$1");
     const javaStringVariable = new Variable(new java.lang.String("$1"));
     const generatedVariableName = Variable.getName("$", 16);
@@ -143,8 +143,8 @@ test("compound factories flatten transient Java lists with native arrays", async
 test("Product preserves the Java List constructor boundary without a direct jree import", async () => {
     const { Product } = await import("../../src/language/Product.ts");
     const { Term } = await import("../../src/language/Term.ts");
-    const { JavaIllegalArgumentException } = await import("../../src/platform/node/legacy-runtime-facade.ts");
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { JavaIllegalArgumentException } = await import("../support/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
 
     const javaList = new java.util.ArrayList<typeof Term.prototype>();
     javaList.add(Term.get("product-list-a"));
@@ -221,7 +221,7 @@ test("Sentence normalization keys duplicate variables by Java text value", async
     const { Stamp } = await import("../../src/entity/Stamp.ts");
     const { Parameters } = await import("../../src/main/Parameters.ts");
     const { Tense } = await import("../../src/language/Tense.ts");
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
 
     const parameters = new Parameters();
     const content = Product.make([
@@ -247,7 +247,7 @@ test("Sentence normalization keys duplicate variables by Java text value", async
 test("CompoundTerm iterator preserves Guava forArray contract", async () => {
     const { Product } = await import("../../src/language/Product.ts");
     const { Term } = await import("../../src/language/Term.ts");
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
 
     const compound = Product.make([Term.get("iterator-a"), Term.get("iterator-b")]);
     if (compound === null) throw new Error("product factory returned null");
@@ -1030,7 +1030,7 @@ test("Nar explicit long overload accepts JavaScript number and bigint values", a
 });
 
 test("CompoundTerm equality preserves Java case-sensitive key identity", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
@@ -1076,7 +1076,7 @@ test("Concept long text preserves Java field labels", async () => {
 });
 
 test("Narsese truth parsing preserves Java Float.parseFloat boundaries", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
 

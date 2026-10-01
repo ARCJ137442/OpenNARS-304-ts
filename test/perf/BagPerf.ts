@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type float, type double, S } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject, type int, type float, type double, S } from "../support/legacy-runtime-facade.ts";
 import {
     JavaClassNotFoundException,
     JavaIllegalAccessException,
@@ -10,7 +10,7 @@ import {
     JavaParseException,
     JavaSystemLoggerCompat,
     JavaStringJoinerCompat,
-} from "../../src/platform/node/legacy-runtime-facade.ts";
+} from "../support/legacy-runtime-facade.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { Parameters } from "../../src/main/Parameters.ts";
 import { Bag } from "../../src/storage/Bag.ts";

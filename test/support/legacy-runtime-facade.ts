@@ -1,12 +1,12 @@
-import { createNodeLegacyNamespace, Class, JavaObject, NativeJavaString } from "./legacy-namespace.ts";
-import type { JavaCharSequence as NativeCharSequence } from "../../runtime/java-text.ts";
+import { createNodeLegacyNamespace, Class, JavaObject, NativeJavaString } from "./node-legacy-namespace.ts";
+import type { JavaCharSequence as NativeCharSequence } from "../../src/runtime/java-text.ts";
 export { Class, JavaObject };
 // Host-facing legacy Java objects are exported only through this adapter. Core
 // and entry modules must not import npm jree directly.
 /** Legacy translated namespace. New code must use native capabilities instead. */
 export const java = createNodeLegacyNamespace();
-import { javaStringValue } from "../../runtime/java-text.ts";
-import { JavaRandom } from "../../runtime/JavaRandom.ts";
+import { javaStringValue } from "../../src/runtime/java-text.ts";
+import { JavaRandom } from "../../src/runtime/JavaRandom.ts";
 import {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -27,15 +27,15 @@ import {
     JavaUnsupportedOperationException,
     JavaSAXException,
     JavaThrowable,
-} from "../../runtime/JavaExceptions.ts";
+} from "../../src/runtime/JavaExceptions.ts";
 
 export {
     javaStringHashCode,
     javaStringLength,
     javaStringValue,
     javaStringsEqual,
-} from "../../runtime/java-text.ts";
-export type { JavaChar } from "../../runtime/java-text.ts";
+} from "../../src/runtime/java-text.ts";
+export type { JavaChar } from "../../src/runtime/java-text.ts";
 export {
     addRuntimeLong,
     addRuntimeLongValues,
@@ -44,8 +44,8 @@ export {
     subtractRuntimeLong,
     subtractRuntimeLongValues,
     toRuntimeLong,
-} from "../../runtime/java-values.ts";
-export type { JavaLongInput } from "../../runtime/java-values.ts";
+} from "../../src/runtime/java-values.ts";
+export type { JavaLongInput } from "../../src/runtime/java-values.ts";
 export {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -62,7 +62,7 @@ export {
     JavaParserConfigurationException,
     JavaSAXException,
     JavaUnsupportedOperationException,
-} from "../../runtime/JavaExceptions.ts";
+} from "../../src/runtime/JavaExceptions.ts";
 
 /** Text accepted at Node-facing Java string input boundaries. */
 export type JavaStringInput = NativeJavaString | string;
@@ -255,11 +255,11 @@ export const javaSystemExit = (status: number): never => {
     throw new Error(`Process exit requested with status ${status}`);
 };
 
-export type { int, char, short, long, float, double } from "../../types.ts";
+export type { int, char, short, long, float, double } from "../../src/types.ts";
 export {
     closeResourcesCompat as closeResources,
     handleResourceErrorCompat as handleResourceError,
     throwResourceErrorCompat as throwResourceError,
-} from "../../runtime/ResourceCompat.ts";
+} from "../../src/runtime/ResourceCompat.ts";
 export const S = (strings: TemplateStringsArray, ...values: unknown[]): NativeJavaString =>
     new NativeJavaString(strings.reduce((result, text, index) => result + text + (values[index] ?? ""), ""));

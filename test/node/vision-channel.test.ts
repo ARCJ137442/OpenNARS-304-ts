@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 test("default NAR registers VisionChannel and maps decimal coordinates", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { VisionChannel } = await import("../../src/plugin/perception/VisionChannel.ts");
 
@@ -41,7 +41,7 @@ test("default NAR registers VisionChannel and maps decimal coordinates", async (
 });
 
 test("VisionChannel keeps prototype order in a native array", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { VisionChannel } = await import("../../src/plugin/perception/VisionChannel.ts");
 

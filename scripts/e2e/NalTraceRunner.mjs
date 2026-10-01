@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java } from "../../test/support/legacy-runtime-facade.ts";
 import { Concept } from "../../src/entity/Concept.ts";
 import { Sentence } from "../../src/entity/Sentence.ts";
 import { Task } from "../../src/entity/Task.ts";
@@ -11,7 +11,7 @@ import { Events } from "../../src/io/events/Events.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
-import { javaValuesEqual } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { javaValuesEqual } from "../../test/support/legacy-runtime-facade.ts";
 
 const eventDefinitions = [
     ["TaskAdd", Events.TaskAdd.class],

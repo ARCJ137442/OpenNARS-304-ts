@@ -57,9 +57,6 @@ function scopeFor(filePath) {
             "src/main/Nar.ts",
             "src/main/Shell.ts",
             "src/operator/misc/System.ts",
-            "src/platform/node/legacy-runtime-facade.ts",
-            "src/platform/node/legacy-namespace.ts",
-            "src/platform/browser/legacy-namespace.ts",
         ].includes(projectRelative)) return "mixed-boundary";
         return "core-candidate";
     }

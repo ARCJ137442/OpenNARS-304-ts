@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
-import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java } from "../support/legacy-runtime-facade.ts";
 import { Sentence } from "../../src/entity/Sentence.ts";
 import { Stamp } from "../../src/entity/Stamp.ts";
 import { Narsese } from "../../src/io/Narsese.ts";

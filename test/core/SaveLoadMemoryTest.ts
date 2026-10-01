@@ -1,4 +1,4 @@
-import { java, JavaObject } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject } from "../support/legacy-runtime-facade.ts";
 import { Concept } from "../../src/entity/Concept.ts";
 import { Nar } from "../../src/main/Nar.ts";
 

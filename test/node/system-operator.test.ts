@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java } from "../support/legacy-runtime-facade.ts";
 import { Term } from "../../src/language/Term.ts";
 import { System } from "../../src/operator/misc/System.ts";
 import { MissingRuntimeCapabilityError } from "../../src/platform/RuntimeCapabilities.ts";

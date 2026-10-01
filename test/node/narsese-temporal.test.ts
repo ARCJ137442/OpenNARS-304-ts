@@ -3,7 +3,7 @@ import test from "node:test";
 import type { ImageInt as ImageIntType } from "../../src/language/ImageInt.ts";
 
 test("Narsese preserves temporal statement order from Java relation dispatch", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
     const { CompoundTerm } = await import("../../src/language/CompoundTerm.ts");
     const { NativeList } = await import("../../src/runtime/NativeList.ts");

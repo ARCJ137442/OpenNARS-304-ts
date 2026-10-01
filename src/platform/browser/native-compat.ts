@@ -1,6 +1,5 @@
-/** Legacy compatibility entry point for translated browser demos. */
-export { Class, JavaObject, java, isJavaException, isJavaThrowable, toJavaString } from "./legacy-namespace.ts";
-export type { JavaStringInput } from "./legacy-namespace.ts";
+/** Deprecated build alias retained for old bundler configurations. */
+export { createBrowserRuntimeCapabilities, BrowserCapabilityUnavailableError } from "./native-host-adapter.ts";
 export * from "../../runtime/java-text.ts";
 export * from "../../runtime/java-values.ts";
 export * from "../../runtime/JavaExceptions.ts";

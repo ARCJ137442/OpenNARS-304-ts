@@ -150,3 +150,19 @@ updated and pushed as `ff4b01d`, with worker metadata bound to `cd3520f`.
 legacy namespace, remove the explicitly named compatibility facades when
 their observable contracts are no longer needed, and rerun the final gates
 after that removal.
+
+## Batch 7 result: remove legacy facades from the published source tree
+
+The translated namespace used only by compatibility tests and diagnostic
+scripts moved from `src/platform` to `test/support`. `src` and the generated
+`dist` no longer contain `legacy-runtime-facade` or `legacy-namespace`; the
+native host adapters remain capability-only. Test and parity callers keep the
+same observable contracts through the test-only harness.
+
+Typecheck, build, release package checks, TS-only M2 (`503 passed / 0 failed /
+2 skipped`), Java M2 (`507/507`), and both audits passed. This closes the
+published-tree portion of the Java namespace cleanup. The remaining 031 work
+is the deliberate Java-compatible contract layer in runtime text/value,
+exceptions, class tokens, collections, iterators and Random; those contracts
+must stay until their observable parity obligations have an explicit native
+replacement.

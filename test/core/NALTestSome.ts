@@ -1,4 +1,4 @@
-import { java, JavaObject } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject } from "../support/legacy-runtime-facade.ts";
 import { NALTest } from "./NALTest.ts";
 import { ExampleFileInput } from "../util/io/ExampleFileInput.ts";
 

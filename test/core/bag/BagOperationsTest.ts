@@ -1,4 +1,4 @@
-import { java, JavaObject, S, type float } from "../../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject, S, type float } from "../../support/legacy-runtime-facade.ts";
 import {
     JavaClassNotFoundException,
     JavaIllegalAccessException,
@@ -8,7 +8,7 @@ import {
     JavaParseException,
     JavaParserConfigurationException,
     JavaSAXException,
-} from "../../../src/platform/node/legacy-runtime-facade.ts";
+} from "../../support/legacy-runtime-facade.ts";
 import { BudgetValue } from "../../../src/entity/BudgetValue.ts";
 import { Concept } from "../../../src/entity/Concept.ts";
 import { Item } from "../../../src/entity/Item.ts";

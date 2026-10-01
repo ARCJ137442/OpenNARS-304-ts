@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type double } from "../../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject, type int, type double } from "../../support/legacy-runtime-facade.ts";
 import { Distributor } from "../../../src/storage/Distributor.ts";
 
 

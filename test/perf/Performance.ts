@@ -1,5 +1,5 @@
-import { java, JavaObject, type int, type double, S } from "../../src/platform/node/legacy-runtime-facade.ts";
-import { JavaDecimalFormatCompat, JavaRuntimeCompat } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject, type int, type double, S } from "../support/legacy-runtime-facade.ts";
+import { JavaDecimalFormatCompat, JavaRuntimeCompat } from "../support/legacy-runtime-facade.ts";
 
 
 

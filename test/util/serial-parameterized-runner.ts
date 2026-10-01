@@ -1,4 +1,4 @@
-import { java, JavaObject } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject } from "../support/legacy-runtime-facade.ts";
 
 export type SerialTestCase = (argumentsForTest: JavaObject[]) => void;
 export type SerialTestFailureHandler = (argumentsForTest: JavaObject[], error: unknown) => void;

@@ -17,6 +17,7 @@
 - M1' 主体：243/243 通过；#25 `nars_multistep_3.nal` 通过；#246 通过；#245 65536 复核在 `1800034 ms` 命中 `process_limit`，最后进度周期 `220251`，marker missing，分类为持续性系统瓶颈，不是 timeout、exception 或 stall。
 - 严格 markerless：simple 和 long 均 `131072/131072`、128 windows、`equal=true`、`first_difference=null`。原始 2,000,000 周期仍不宣称完整通过。
 - 直接 npm jree import：`0/0`；package dependency declaration：`null`。剩余 Java shape 为 project-owned compatibility contracts，031 仍保持 `in-progress`。
+- 最新发布树清理：legacy facade 已移到 `test/support`，`dist` 不再包含 `legacy-runtime-facade` 或 `legacy-namespace`；TS-only M2 `503/505`（2 skipped），Java M2 `507/507`，release tarball 外部 tsc/API/CLI/Shell 全通过。
 
 ## 2026-10-01 native performance closure
 

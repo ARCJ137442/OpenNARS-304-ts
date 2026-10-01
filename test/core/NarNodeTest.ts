@@ -1,4 +1,4 @@
-import { java, JavaObject, type int } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java, JavaObject, type int } from "../support/legacy-runtime-facade.ts";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { NarNode } from "../../src/main/NarNode.ts";

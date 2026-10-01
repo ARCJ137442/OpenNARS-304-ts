@@ -9,7 +9,7 @@ import test from "node:test";
 import { readFileSync } from "node:fs";
 
 test("Memory accepts native string reasons and preserves Java event payloads", async () => {
-    const { java } = await import("../../src/platform/node/legacy-runtime-facade.ts");
+    const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Events } = await import("../../src/io/events/Events.ts");
     const { Sentence } = await import("../../src/entity/Sentence.ts");

@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
+import { java } from "../../test/support/legacy-runtime-facade.ts";
 import { DerivationContext } from "../../src/control/DerivationContext.ts";
 import { Events } from "../../src/io/events/Events.ts";
 import { Nar } from "../../src/main/Nar.ts";

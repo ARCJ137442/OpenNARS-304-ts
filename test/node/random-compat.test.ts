@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import "../../src/platform/node/legacy-runtime-facade.ts";
-import { java } from "../../src/platform/node/legacy-runtime-facade.ts";
+import "../support/legacy-runtime-facade.ts";
+import { java } from "../support/legacy-runtime-facade.ts";
 import { JavaRandom } from "../../src/runtime/JavaRandom.ts";
 
 test("jree Random.nextDouble preserves Java's 53-bit value", () => {
