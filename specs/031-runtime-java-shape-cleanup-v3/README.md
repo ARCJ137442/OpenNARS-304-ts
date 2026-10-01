@@ -51,9 +51,9 @@ Reduce residual Java-shaped code in `src/runtime` and its direct callers after s
 
 ## Plan
 
-- [ ] Inventory runtime modules, direct callers, public declarations, and tests; classify each Java shape as removable, narrowable, or required.
-- [ ] Establish a runtime-shape baseline: typecheck, serial TS M2, Java M2, M3/RPS, one affected NAL set, and jree/platform audits.
-- [ ] Refactor one contract family at a time, beginning with duplicated text/value/class helper layers; add focused direct contracts before changing callers.
+- [x] Inventory runtime modules, direct callers, public declarations, and tests; classify each Java shape as removable, narrowable, or required.
+- [x] Establish a runtime-shape baseline: typecheck, serial TS M2, Java M2, M3/RPS, one affected NAL set, and jree/platform audits.
+- [x] Refactor one contract family at a time, beginning with duplicated text/value/class helper layers; add focused direct contracts before changing callers.
 - [ ] Remove dead aliases and wrapper allocations only after native and compatibility paths are both covered.
 - [ ] Re-run M2, M3/RPS, affected NALs, M1-prime, markerless digests, and browser/Node smoke on one immutable commit.
 - [ ] Record accepted/rejected candidates, residual Java shapes, and human takeover guidance; close only after all gates pass.
@@ -70,3 +70,9 @@ Reduce residual Java-shaped code in `src/runtime` and its direct callers after s
 ## Evidence
 
 Store inventory, focused contracts, benchmark output, hashes, and rejected experiments under `docs/probes/` and `reports/evidence/`. Keep historical evidence intact and stage only files owned by this spec.
+
+## Batch 1 result
+
+`native-runtime.ts` now re-exports the shared `java-text.ts` and `java-values.ts` contracts instead of carrying duplicate implementations for UTF-16 text, long arithmetic, value equality, and identity hashing. The Node facade, exceptions, boxed number compatibility, and host I/O remain separate because they still represent distinct host-facing responsibilities.
+
+Focused runtime contracts: `28/28` passed. TS-only M2: `496 pass / 0 fail / 2 skipped`; Java M2: `498 pass / 0 fail / 0 skipped`; typecheck, build, and dist API passed. RPS rechecks were `2676.559` and `2799.897 cycles/s`; against the opt12 reference `2810.655`, this batch is performance-neutral within measurement variation and is retained for reduced duplication and clearer ownership, not as a throughput claim.

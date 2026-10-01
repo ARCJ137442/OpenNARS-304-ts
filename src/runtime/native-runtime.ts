@@ -3,7 +3,7 @@ export { Class, JavaObject };
 // Host-facing legacy Java objects are exported only through this adapter. Core
 // and entry modules must not import npm jree directly.
 export { java } from "../platform/node/native-host-adapter.ts";
-import type { long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import { javaStringValue } from "./java-text.ts";
 import { JavaRandom } from "./JavaRandom.ts";
 import {
     JavaAssertionError,
@@ -26,6 +26,24 @@ import {
     JavaSAXException,
     JavaThrowable,
 } from "./JavaExceptions.ts";
+
+export {
+    javaStringHashCode,
+    javaStringLength,
+    javaStringValue,
+    javaStringsEqual,
+} from "./java-text.ts";
+export type { JavaChar } from "./java-text.ts";
+export {
+    addRuntimeLong,
+    addRuntimeLongValues,
+    javaIdentityHashCode,
+    javaValuesEqual,
+    subtractRuntimeLong,
+    subtractRuntimeLongValues,
+    toRuntimeLong,
+} from "./java-values.ts";
+export type { JavaLongInput } from "./java-values.ts";
 export {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -68,62 +86,6 @@ export const isJavaListInput = <T>(value: unknown): value is JavaListInput<T> =>
 /** Normalize a native Node string before it enters translated Java code. */
 export const toJavaString = (value: JavaStringInput): java.lang.String =>
     value instanceof java.lang.String ? value : new java.lang.String(value);
-
-/**
- * Java long values enter the Node-facing port in both jree's bigint form and
- * the numeric clock form retained by the translated OpenNARS runtime.
- * Keep that representation choice at one compatibility boundary instead of
- * forcing every caller to use a type assertion.
- */
-export type JavaLongInput = long | number;
-
-const normalizeLongNumber = (value: number): number => {
-    if (!Number.isSafeInteger(value)) {
-        throw new RangeError(`Java long number must be a safe integer: ${value}`);
-    }
-    return value;
-};
-
-const normalizeLongInput = (value: JavaLongInput): JavaLongInput =>
-    typeof value === "number" ? normalizeLongNumber(value) : value;
-
-const normalizeLongDelta = (delta: number): number => normalizeLongNumber(delta);
-
-export const toRuntimeLong = (value: JavaLongInput): long => normalizeLongInput(value) as long;
-
-export const addRuntimeLong = (value: JavaLongInput, delta: number): long => {
-    const normalized = normalizeLongInput(value);
-    const safeDelta = normalizeLongDelta(delta);
-    return (typeof normalized === "bigint"
-        ? normalized + BigInt(safeDelta)
-        : normalizeLongNumber(normalized + safeDelta)) as long;
-};
-
-export const subtractRuntimeLong = (value: JavaLongInput, delta: number): long => {
-    const normalized = normalizeLongInput(value);
-    const safeDelta = normalizeLongDelta(delta);
-    return (typeof normalized === "bigint"
-        ? normalized - BigInt(safeDelta)
-        : normalizeLongNumber(normalized - safeDelta)) as long;
-};
-
-/** Add two Java long values while preserving the active runtime representation. */
-export const addRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long => {
-    const normalizedLeft = normalizeLongInput(left);
-    const normalizedRight = normalizeLongInput(right);
-    return (typeof normalizedLeft === "bigint" || typeof normalizedRight === "bigint"
-        ? BigInt(normalizedLeft) + BigInt(normalizedRight)
-        : normalizeLongNumber(normalizedLeft + normalizedRight)) as long;
-};
-
-/** Subtract two Java long values while preserving the active runtime representation. */
-export const subtractRuntimeLongValues = (left: JavaLongInput, right: JavaLongInput): long => {
-    const normalizedLeft = normalizeLongInput(left);
-    const normalizedRight = normalizeLongInput(right);
-    return (typeof normalizedLeft === "bigint" || typeof normalizedRight === "bigint"
-        ? BigInt(normalizedLeft) - BigInt(normalizedRight)
-        : normalizeLongNumber(normalizedLeft - normalizedRight)) as long;
-};
 
 /**
  * jree 1.3.0 does not ship java.lang.Double. Keep the boxed-number contract
@@ -188,86 +150,6 @@ export const isJavaThrowable = (value: unknown): value is JavaThrowable =>
 
 export const isJavaException = (value: unknown): value is JavaException =>
     value instanceof JavaException || value instanceof java.lang.Exception;
-
-/** jree declares primitive char as a number, while translated Narsese uses string code units at runtime. */
-export type JavaChar = string;
-
-/**
- * Java string concatenation can produce either a jree JavaString or a native
- * JavaScript string after migration. Both use UTF-16 code units for length.
- */
-export const javaStringLength = (value: unknown): number =>
-    javaCharSequenceView(value)?.length ?? javaStringValue(value).length;
-
-type JavaCharSequenceView = {
-    length: number;
-    charCodeAt(index: number): number;
-};
-
-/**
- * Read Java-compatible UTF-16 code units without converting a jree String
- * through TextDecoder. Java String equality and hashing are defined over code
- * units, so this preserves the contract while avoiding repeated allocation at
- * the compatibility boundary.
- */
-const javaCharSequenceView = (value: unknown): JavaCharSequenceView | null => {
-    if (typeof value === "string") {
-        return {
-            length: value.length,
-            charCodeAt: (index: number) => value.charCodeAt(index),
-        };
-    }
-    const candidate = value as {
-        length?: unknown;
-        charAt?: unknown;
-    } | null;
-    if (typeof candidate?.length !== "function" || typeof candidate.charAt !== "function") {
-        return null;
-    }
-    const lengthMethod = candidate.length as () => unknown;
-    const charAtMethod = candidate.charAt as (index: number) => unknown;
-    const length = Number(lengthMethod.call(value));
-    if (!Number.isInteger(length) || length < 0) return null;
-    return {
-        length,
-        charCodeAt: (index: number) => {
-            const unit = charAtMethod.call(value, index);
-            if (typeof unit === "number") return unit;
-            return String(unit).charCodeAt(0);
-        },
-    };
-};
-
-/** Java String equality over UTF-16 code units, including native strings. */
-export const javaStringsEqual = (left: unknown, right: unknown): boolean => {
-    if (left === right) return true;
-    const leftView = javaCharSequenceView(left);
-    const rightView = javaCharSequenceView(right);
-    if (leftView !== null && rightView !== null) {
-        if (leftView.length !== rightView.length) return false;
-        for (let index = 0; index < leftView.length; index += 1) {
-            if (leftView.charCodeAt(index) !== rightView.charCodeAt(index)) return false;
-        }
-        return true;
-    }
-    return String(left) === String(right);
-};
-
-/**
- * Java's `+` operator invokes toString on reference values; JavaScript's `+`
- * does not do that for jree JavaObject instances. Normalize that boundary
- * before composing Java-facing diagnostic or output text.
- */
-export const javaStringValue = (value: unknown): string => {
-    if (value === null || value === undefined || typeof value === "string") {
-        return String(value);
-    }
-    const toString = (value as { toString?: unknown }).toString;
-    if (typeof toString === "function") {
-        return String(toString.call(value));
-    }
-    return String(value);
-};
 
 /** Compatibility boundary for java.util.logging.Logger, which jree 1.3.0 omits. */
 export class JavaSystemLoggerCompat {
@@ -363,50 +245,12 @@ export class JavaStringJoinerCompat {
     }
 }
 
-/** Java String.hashCode(), applied after crossing a jree/native string boundary. */
-export const javaStringHashCode = (value: unknown): number => {
-    const view = javaCharSequenceView(value);
-    let hash = 0;
-    if (view !== null) {
-        for (let index = 0; index < view.length; index += 1) {
-            hash = Math.imul(31, hash) + view.charCodeAt(index);
-        }
-        return hash;
-    }
-    const text = javaStringValue(value);
-    for (let index = 0; index < text.length; index += 1) {
-        hash = Math.imul(31, hash) + text.charCodeAt(index);
-    }
-    return hash;
-};
-
-/** Java System.identityHashCode(), stable for the lifetime of an object. */
-const identityHashCodes = new WeakMap<object, number>();
-let nextIdentityHashCode = 1;
-
-export const javaIdentityHashCode = (value: object | null): number => {
-    if (value === null) return 0;
-    const existing = identityHashCodes.get(value);
-    if (existing !== undefined) return existing;
-    const assigned = nextIdentityHashCode++;
-    identityHashCodes.set(value, assigned);
-    return assigned;
-};
-
 /** Java System.exit(), mapped to the host process boundary for the Node CLI. */
 export const javaSystemExit = (status: number): never => {
     if (typeof process !== "undefined" && typeof process.exit === "function") {
         process.exit(status);
     }
     throw new Error(`Process exit requested with status ${status}`);
-};
-
-export const javaValuesEqual = (left: unknown, right: unknown): boolean => {
-    if (left === right) return true;
-    const leftEquals = (left as { equals?: unknown } | null)?.equals;
-    if (typeof leftEquals === "function" && Boolean(leftEquals.call(left, right))) return true;
-    const rightEquals = (right as { equals?: unknown } | null)?.equals;
-    return typeof rightEquals === "function" && Boolean(rightEquals.call(right, left));
 };
 
 export type { int, char, short, long, float, double } from "../types.ts";
