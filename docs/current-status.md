@@ -25,6 +25,13 @@
 - exact-commit M1'：243/243；#246：1/1。#245 未重复运行，沿用本阶段已记录的长期内存保护结论。
 - 023、031 仍未完成；剩余重点是 RuntimeClass、调度器、集合兼容语义、src/main 平台边界的进一步收窄，以及 demo TPS/RPS 性能门。
 
+## 2026-10-02 native scheduler batch
+
+- 当前代码提交：`285eab1`，已将生产 `ThreadCompat` 边界改为 `ReasonerScheduler`，并将 `RunnableTask`、`StackFrame`、`ReasonerInterruptedError` 与 `current()/stackFrames()` 引入 `Nar`、`Memory`、`Events`。
+- TS-only M2：`505/507`；Java M2：`507/507`；release/build/dist API 通过；聚焦调度器/事件/核心回归 `68/68`。
+- exact-commit M1'：`243/243`，JSONL SHA-256 `110C1882CF8EEBD291CE3262F0E2DDB8E8160C05DA4937009B42E9DC70236AD4`。
+- 这只收口调度器命名与边界，不代表 023/031 完成；RuntimeClass、集合语义、剩余 Java helper、平台 host 与 demo 性能仍未收口。
+
 ## 2026-10-01 native host boundary exact gate
 
 - `cd3520f` 将 Node/browser native host adapter 收窄为 TypeScript 宿主能力；翻译兼容命名空间移至显式 `legacy-namespace.ts`，demo worker 直接向核心传入原生 `string`。

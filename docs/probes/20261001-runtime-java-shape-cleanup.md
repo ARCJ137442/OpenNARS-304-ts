@@ -410,6 +410,14 @@ Full M2 and release checks for this scheduler batch passed:
   `83927710F02D90228F54109C1B9075411CF402DC6EB2A99A6C5D3BB64843A1F8`.
 - Release package, build and dist API checks passed with no runtime warnings.
 
+Exact-commit M1' for scheduler commit `285eab1` completed `243/243` with zero
+failure, exception, timeout, process-limit, stall, or not-run rows. The JSONL
+SHA-256 is
+`110C1882CF8EEBD291CE3262F0E2DDB8E8160C05DA4937009B42E9DC70236AD4`.
+The 023/031 scheduler batch is behaviorally protected; it does not close the
+specs because RuntimeClass, collections, remaining Java-named helpers, and
+host separation still have open contracts.
+
 ## Next batch: native reasoner scheduler boundary
 
 `ThreadCompat` is a project-local single-thread scheduler adapter. Its
