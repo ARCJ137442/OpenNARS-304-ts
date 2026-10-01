@@ -31,8 +31,6 @@ import { Stamp } from "../entity/Stamp.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeReadOnlyList } from "../runtime/NativeList.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
-import { JavaDoubleCompat, JavaSystemLoggerCompat } from "../runtime/native-host-boundary.ts";
-import { isJavaException } from "../runtime/JavaExceptions.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { InterruptedExceptionCompat, ThreadCompat } from "../runtime/ThreadCompat.ts";
 import { Task } from "../entity/Task.ts";
@@ -125,7 +123,6 @@ export class Nar extends SensoryChannel implements Reasoner {
             this.sensoryChannels.put(parsedTerm, channel);
         } catch (ex) {
             if (ex instanceof Parser.InvalidInputException) {
-                JavaSystemLoggerCompat.getLogger(Nar.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                 throw new ReasonerStateError(
                     "Could not add sensory channel.",
                     { cause: ex },
@@ -370,8 +367,8 @@ export class Nar extends SensoryChannel implements Reasoner {
         } // 决策阈值
         else if (text.startsWith("*decisionthreshold=")) { // TODO use reflection for narParameters, allow to set
             // others too
-            let value: JavaDoubleCompat = JavaDoubleCompat.valueOf(text.split("decisionthreshold=")[1]);
-            this.narParameters.DECISION_THRESHOLD = Float32Math.from(value.floatValue()) as float;
+            const value = Number.parseFloat(text.split("decisionthreshold=")[1]);
+            this.narParameters.DECISION_THRESHOLD = Float32Math.from(value) as float;
             return true;
         } // 音量
         else if (text.startsWith("*volume=")) {
@@ -836,13 +833,12 @@ export class Nar extends SensoryChannel implements Reasoner {
             this.cycleCounter++;
             /* } */
         } catch (e) {
-            if (isJavaException(e)) {
+            if (e instanceof Error) {
                 if (Debug.SHOW_REASONING_ERRORS) {
                     this.emit(OutputHandler.ERR.class, e);
                 }
-                e.printStackTrace();
                 if (!Debug.REASONING_ERRORS_CONTINUE) {
-            throw new ReasonerStateError("Reasoning error", { cause: e });
+                    throw new ReasonerStateError("Reasoning error", { cause: e });
                 }
             } else {
                 throw e;

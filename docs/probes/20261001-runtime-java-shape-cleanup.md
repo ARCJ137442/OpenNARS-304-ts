@@ -91,3 +91,13 @@ runtime class identity remain only where the reasoner observes them. It does
 claim that core orchestration and host effects are no longer coupled to Java or
 Node names. The pending `lean-spec create` command is a repository tool gap
 (`Invalid template format`); no manual spec frontmatter is created.
+
+### Post-implementation review
+
+Commit `322836e` implements the batch. A follow-up removes `Nar`'s remaining
+`JavaSystemLoggerCompat`, `JavaDoubleCompat`, and `isJavaException` imports;
+decision-threshold parsing now uses `Number.parseFloat` plus the existing
+binary32 boundary, and reasoning failures are recognized as native `Error`
+values and re-emitted through NARS events. The follow-up is intentionally
+separate from the host-boundary commit so its M1' evidence can identify the
+exact source revision.
