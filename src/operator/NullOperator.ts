@@ -4,7 +4,7 @@ import { Operation } from "./Operation.ts";
 import { Term } from "../language/Term.ts";
 import { Debug } from "../main/Debug.ts";
 import type { JavaStringInput } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -26,7 +26,7 @@ export class NullOperator extends Operator {
         } else if (args.length === 1) {
             super(args[0] as JavaStringInput);
         } else {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
     }
 

@@ -13,7 +13,7 @@ import {
     toRuntimeLong,
     type JavaLongInput,
 } from "../../runtime/java-values.ts";
-import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { Events } from "../../io/events/Events.ts";
@@ -89,7 +89,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

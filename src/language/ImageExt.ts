@@ -1,5 +1,5 @@
 //! Java source: opennars/language/ImageExt.java
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Image } from "./Image.ts";
 import { Term } from "./Term.ts";
@@ -61,7 +61,7 @@ export class ImageExt extends Image {
                     return null;
                 }
                 if (replaced.length !== this.term.length)
-                    throw new JavaIllegalStateException("Replaced terms not the same amount as existing terms (" + this.term.length
+                    throw new ReasonerStateError("Replaced terms not the same amount as existing terms (" + this.term.length
                         + "): [" + replaced.map(String).join(", ") + "]");
 
                 return new ImageExt(replaced, this.relationIndex);
@@ -71,7 +71,7 @@ export class ImageExt extends Image {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -163,7 +163,7 @@ export class ImageExt extends Image {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

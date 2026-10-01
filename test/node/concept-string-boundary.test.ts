@@ -6,5 +6,5 @@ test("Concept keeps string and state boundaries project-owned", () => {
     const source = readFileSync("src/entity/Concept.ts", "utf8");
     assert.doesNotMatch(source, /from ["']jree["']/);
     assert.doesNotMatch(source, /java\.lang\.(String|IllegalStateException)/);
-    assert.match(source, /JavaIllegalStateException/);
+    assert.match(source, /ReasonerStateError/);
 });

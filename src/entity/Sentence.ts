@@ -23,7 +23,8 @@ import { javaStringValue, javaStringsEqual } from "../runtime/java-text.ts";
 import { addRuntimeLongValues, subtractRuntimeLongValues } from "../runtime/java-values.ts";
 import { toJavaString } from "../runtime/java-text.ts";
 import type { JavaChar, JavaCharSequence, JavaString } from "../runtime/java-text.ts";
-import { JavaAssertionError, JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInvariantError } from "../runtime/ReasonerErrors.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 
 class SentenceStringBuilder {
@@ -116,7 +117,7 @@ export class Sentence extends RuntimeObject {
         } else if (args.length === 5) {
             [_content, punctuation, truth, stamp, normalize] = args as [Term, JavaChar, TruthValue | null, Stamp, boolean];
         } else {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
 
 
@@ -183,20 +184,20 @@ export class Sentence extends RuntimeObject {
                     } else if (_content instanceof Interval && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
                         truth.confidence = 0.0; // do it that way for now, because else further inference is interrupted.
                         if (Debug.DETAILED && Debug.DETAILED_SENTENCES)
-                            throw new JavaIllegalStateException(
+                            throw new ReasonerStateError(
                                 "Sentence content must not be Interval: " + _content + punctuation + " " + stamp);
                     }
 
                     if ((!this.isQuestion() && !this.isQuest()) && (truth === null)
                         && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
-                        throw new JavaIllegalStateException("Judgment and Goal sentences require non-null truth value");
+                        throw new ReasonerStateError("Judgment and Goal sentences require non-null truth value");
                     }
 
                     if (_content.subjectOrPredicateIsIndependentVar()
                         && punctuation !== Symbols.TERM_NORMALIZING_WORKAROUND_MARK) {
                         truth.confidence = 0.0; // do it that way for now, because else further inference is interrupted.
                         if (Debug.DETAILED && Debug.DETAILED_SENTENCES)
-                            throw new JavaIllegalStateException(
+                            throw new ReasonerStateError(
                                 "A statement sentence is not allowed to have a independent variable as subj or pred");
                     }
 
@@ -351,7 +352,7 @@ export class Sentence extends RuntimeObject {
     public refreshHash(): void {
         if (this.isNotTermlinkNormalizer()) {
             if (this.stamp === null)
-                throw new JavaAssertionError("Stamp should not be null");
+                throw new ReasonerInvariantError("Stamp should not be null");
             this.hash = javaObjectsHash(this.term, this.punctuation, this.truth,
                 this.stamp.getOccurrenceTime());
         } else {
@@ -402,7 +403,7 @@ export class Sentence extends RuntimeObject {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -433,7 +434,7 @@ export class Sentence extends RuntimeObject {
 
     public projectionTruth(targetTime: long, currentTime: long, mem: Memory): TruthValue {
         if (this.truth === null) {
-            throw new JavaIllegalStateException("Cannot project a sentence without a truth value");
+            throw new ReasonerStateError("Cannot project a sentence without a truth value");
         }
         const truth = this.truth;
         let newTruth: TruthValue | null = null;
@@ -598,7 +599,7 @@ export class Sentence extends RuntimeObject {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -656,7 +657,7 @@ export class Sentence extends RuntimeObject {
      */
     public discountConfidence(narParameters: Parameters): void {
         if (this.truth === null) {
-            throw new JavaIllegalStateException("Cannot discount a sentence without a truth value");
+            throw new ReasonerStateError("Cannot discount a sentence without a truth value");
         }
         this.truth.confidence = this.truth.confidence * narParameters.DISCOUNT_RATE;
         this.truth.analytic = false;

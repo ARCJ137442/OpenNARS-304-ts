@@ -12,7 +12,8 @@ import {
     type JavaCharSequenceInput,
 } from "../runtime/java-text.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException, JavaNullPointerException } from "../runtime/JavaExceptions.ts";
+import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 
 
@@ -55,7 +56,7 @@ export class Operation extends Inheritance {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -111,7 +112,7 @@ export class Operation extends Inheritance {
         if (args.length === 5) {
             return Statement.make(...args as [Symbols.NativeOperator, Term, Term, boolean, int]);
         }
-        throw new JavaIllegalArgumentException("Invalid number of arguments");
+        throw new ReasonerInputError("Invalid number of arguments");
     }
 
     public getOperator(): Operator {
@@ -151,7 +152,7 @@ export class Operation extends Inheritance {
     public requireTask(): Task {
         const task = this.task;
         if (task === null) {
-            throw new JavaNullPointerException("Operation task is not initialized");
+            throw new ReasonerStateError("Operation task is not initialized");
         }
         return task;
     }

@@ -1,5 +1,5 @@
 //! Java source: opennars/storage/Bag.java
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "../entity/Item.ts";
 import { Distributor } from "./Distributor.ts";
@@ -62,7 +62,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
     public constructor(...args: unknown[]) {
         super();
         if (args.length !== 3) {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
         const [levels, capacity, third] = args as [int, int, Parameters | int];
         const thresholdLevel = typeof third === "number"
@@ -235,7 +235,7 @@ export class Bag<Type extends Item<K>, K> extends RuntimeObject {
     public pickOut(val: Type): Type;
     public pickOut(...args: unknown[]): Type {
         if (args.length !== 1) {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
 
         // Java overloads pickOut(K) and pickOut(Type) have the same arity.

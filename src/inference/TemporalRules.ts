@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/TemporalRules.java
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Stamp } from "../entity/Stamp.ts";
@@ -35,7 +35,7 @@ export class TemporalRules {
 
     private static getRuntime(): TemporalRuntime {
         if (TemporalRules.runtime === null) {
-            throw new JavaIllegalStateException("Temporal rules runtime classes are not registered");
+            throw new ReasonerStateError("Temporal rules runtime classes are not registered");
         }
         return TemporalRules.runtime;
     }
@@ -68,7 +68,7 @@ export class TemporalRules {
                 (first as Sentence).getTemporalOrder() === TemporalRules.ORDER_NONE ||
                 (second as Sentence).getTemporalOrder() === TemporalRules.ORDER_NONE;
         }
-        throw new JavaIllegalArgumentException("Invalid number of arguments");
+        throw new ReasonerInputError("Invalid number of arguments");
     }
 
 
@@ -352,7 +352,7 @@ export class TemporalRules {
 
 
                 if ((a === Stamp.ETERNAL) || (b === Stamp.ETERNAL))
-                    throw new JavaIllegalStateException("order() does not compare ETERNAL times");
+                    throw new ReasonerStateError("order() does not compare ETERNAL times");
 
                 return TemporalRules.order(b - a, durationCycles);
 
@@ -361,7 +361,7 @@ export class TemporalRules {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

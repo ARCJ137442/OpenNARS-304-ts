@@ -7,7 +7,7 @@ import { Product } from "./Product.ts";
 import { Debug } from "../main/Debug.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { toJavaString } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -49,7 +49,7 @@ export class Inheritance extends Statement {
             terms = [args[0] as Term, args[1] as Term];
         } else {
             super([]);
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
         super(terms);
         this.init(terms);
@@ -82,7 +82,7 @@ export class Inheritance extends Statement {
                     return null;
                 }
                 if (t.length !== 2)
-                    throw new JavaIllegalArgumentException(
+                    throw new ReasonerInputError(
                         "Invalid terms for " + this.getClass().getSimpleName() + ": [" + t.map(String).join(", ") + "]");
 
                 return Inheritance.make(t[0], t[1]);
@@ -92,7 +92,7 @@ export class Inheritance extends Statement {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -144,7 +144,7 @@ export class Inheritance extends Statement {
 
         if (Debug.DETAILED) {
             if (!predicateOperator && String(predicate.toString()).startsWith(String(toJavaString("^")))) {
-                throw new JavaIllegalStateException("operator term detected but is not an operator: " + predicate);
+                throw new ReasonerStateError("operator term detected but is not an operator: " + predicate);
             }
         }
 

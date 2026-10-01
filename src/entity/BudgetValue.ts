@@ -6,7 +6,7 @@ import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { TruthValue } from "./TruthValue.ts";
 import { Float32Math } from "../runtime/Float32.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 
 /**
  * A triple of priority (current), durability (decay), and quality (long-term
@@ -91,7 +91,7 @@ export class BudgetValue {
                 this.quality = BudgetValue.float(third);
             }
         } else {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
 
         if (this.durability >= 1.0) {
@@ -129,7 +129,7 @@ export class BudgetValue {
     public setPriority(v: float): void {
         const javaV = BudgetValue.float(v);
         if (javaV > 1.0) {
-            throw new JavaIllegalStateException("Priority > 1.0: " + javaV);
+            throw new ReasonerStateError("Priority > 1.0: " + javaV);
             // v=1.0f;
         }
         this.priority = javaV;

@@ -25,6 +25,12 @@ export class ReasonerInputError extends ReasonerError {}
 /** The requested operation conflicts with the current reasoner lifecycle. */
 export class ReasonerStateError extends ReasonerError {}
 
+/** A violated NARS invariant that should not be presented as invalid input. */
+export class ReasonerInvariantError extends ReasonerError {}
+
+/** An operation is valid for other values but unsupported for this value. */
+export class ReasonerOperationError extends ReasonerError {}
+
 /** A host capability required by an optional operation was not supplied. */
 export class HostCapabilityError extends ReasonerError {
     public readonly code = "MISSING_RUNTIME_CAPABILITY";

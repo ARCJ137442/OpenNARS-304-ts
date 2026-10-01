@@ -18,7 +18,7 @@ import { NativeSet } from "../runtime/NativeSet.ts";
 import type { Term } from "./Term.ts";
 import { javaStringLength } from "../runtime/java-text.ts";
 import type { JavaChar, JavaCharSequence } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 type RandomLike = { nextInt(bound?: number): number };
 
@@ -291,7 +291,7 @@ export class Variables {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -405,7 +405,7 @@ export class Variables {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -499,7 +499,7 @@ export class Variables {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

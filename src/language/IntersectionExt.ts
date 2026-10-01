@@ -6,7 +6,7 @@ import { SetExt } from "./SetExt.ts";
 import { SetInt } from "./SetInt.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -69,7 +69,7 @@ export class IntersectionExt extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -150,7 +150,7 @@ export class IntersectionExt extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

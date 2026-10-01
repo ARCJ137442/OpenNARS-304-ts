@@ -9,5 +9,5 @@ test("Parser and ConfigReader keep Java input types behind project boundaries", 
     assert.doesNotMatch(configReader, /from ["']jree["']/);
     assert.match(parser, /JavaStringInput/);
     assert.match(configReader, /JavaStringInput/);
-    assert.match(parser, /JavaException/);
+    assert.match(parser, /ReasonerInputError/);
 });

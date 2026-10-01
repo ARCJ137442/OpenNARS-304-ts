@@ -9,7 +9,7 @@ import { Task } from "../../entity/Task.ts";
 import { Events } from "./Events.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
 import type { JavaStringInput } from "../../runtime/java-text.ts";
-import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
 import { ReasonerIoError } from "../../runtime/ReasonerErrors.ts";
 
 export interface TextLineWriter {
@@ -125,14 +125,14 @@ export class TextOutputHandler extends OutputHandler {
                 const minPriority = args[2] as float;
                 if (isLineWriter(target)) this.outExp = target;
                 else {
-                    throw new JavaIllegalArgumentException("Invalid output target");
+                    throw new ReasonerInputError("Invalid output target");
                 }
                 this.minPriority = minPriority;
                 break;
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -246,7 +246,7 @@ export class TextOutputHandler extends OutputHandler {
                 return `${channel.getSimpleName()}: ${output}`;
             }
             default:
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
         }
     }
 
@@ -269,7 +269,7 @@ export class TextOutputHandler extends OutputHandler {
                 );
             }
             default:
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
         }
     }
 

@@ -6,7 +6,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Conjunction } from "./Conjunction.ts";
 import { Interval } from "./Interval.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import type { JavaCharSequence } from "../runtime/java-text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -79,7 +79,7 @@ export class Implication extends Statement {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -111,7 +111,7 @@ export class Implication extends Statement {
                     return null;
                 }
                 if (t.length !== 2)
-                    throw new JavaIllegalStateException("Implication requires 2 components: [" + t.map(String).join(", ") + "]");
+                    throw new ReasonerStateError("Implication requires 2 components: [" + t.map(String).join(", ") + "]");
 
                 return Implication.make(t[0], t[1], this.temporalOrder);
 
@@ -120,7 +120,7 @@ export class Implication extends Statement {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -206,7 +206,7 @@ export class Implication extends Statement {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

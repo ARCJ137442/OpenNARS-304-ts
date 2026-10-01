@@ -114,3 +114,46 @@ exact source revision.
   original 2,000,000-cycle stability claim.
 - Browser worker build, forbidden-token scan, demo tests `28/28`, Node smoke,
   and real browser Microworld smoke pass.
+
+## 2026-10-01 rejected performance candidates
+
+- `CompoundTerm.replaceIntervals` no-op clone removal improved the short demo
+  probe but failed `stresstest_bird1.nal`; reverted in `bf03206`.
+- `CompoundTerm.equals` complexity rejection failed the same marker; reverted
+  in `f0fb62a`.
+- `javaValuesEqual` hash mismatch rejection failed the restored-key contract;
+  reverted in `4d40872`.
+
+These remain rejected evidence, not accepted performance rounds. Future
+optimization must preserve mutable and restored-object behavior before claiming
+throughput gains.
+
+## 2026-10-01 Java-named exception callsite migration
+
+### Change
+
+Migrated production throw sites for invalid arguments and invalid state from
+`JavaIllegalArgumentException`/`JavaIllegalStateException` to
+`ReasonerInputError`/`ReasonerStateError` across language, inference, entity,
+operator, plugin, storage, and event modules. Also moved parser invalid-input
+from the Java exception hierarchy to `ReasonerInputError`; migrated numeric
+parse, null/state, unsupported-operation, and assertion/invariant callsites to
+native reasoner error classes. Messages and cause chains are retained; error
+message interpolation uses templates where touched.
+
+`JavaExceptions.ts` remains as a compatibility observer for legacy-facing
+tests/facades, with `Symbol.hasInstance` mapping old argument/state/null,
+number-format, unsupported and assertion observations onto the native error
+names. New production code no longer imports or constructs those Java-named
+classes. The Java-shaped namespace itself remains in runtime facade and ambient
+test compatibility types and is still a separate 031/023 task.
+
+### Verification
+
+- Non-incremental typecheck passed.
+- TS-only M2: `503 passed / 0 failed / 2 skipped`.
+- Java M2: `505 passed / 0 failed / 0 skipped`.
+- Focused boundary tests passed after replacing stale source-text assertions.
+- Run affected NALs and one serial M1-prime on the immutable
+  exception-migration commit before making any broad M1 claim. M2 alone does
+  not complete 023/031.

@@ -9,7 +9,7 @@ import type { Statement } from "../../language/Statement.ts";
 import { Term } from "../../language/Term.ts";
 import { Symbols } from "../../io/Symbols.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
 import type { JavaStringInput } from "../../runtime/java-text.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
@@ -36,7 +36,7 @@ export class Reflect extends FunctionOperator {
     protected function(memory: Memory, x: Term[]): Term {
 
         if (x.length !== 1) {
-            throw new JavaIllegalStateException("Requires 1 Term argument");
+            throw new ReasonerStateError("Requires 1 Term argument");
         }
 
         let content: Term = x[0];
@@ -95,7 +95,7 @@ export class Reflect extends FunctionOperator {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

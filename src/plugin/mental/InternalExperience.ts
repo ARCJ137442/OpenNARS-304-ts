@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/InternalExperience.java
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import type { float, double, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -176,7 +176,7 @@ export class InternalExperience implements Plugin, EventObserver {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -232,7 +232,7 @@ export class InternalExperience implements Plugin, EventObserver {
         // Operation.make ?
         let operation: Term = Inheritance.make(new Product(arg), opTerm);
         if (operation === null) {
-            throw new JavaIllegalStateException(
+            throw new ReasonerStateError(
                 "Unable to create Inheritance: " + opTerm + ", " + arg.map(String).join(", "));
         }
         return operation;
@@ -411,7 +411,7 @@ export class InternalExperience implements Plugin, EventObserver {
                 if (valid) {
                     let op: Operator = memory.getOperator("^anticipate");
                     if (op === null)
-                        throw new JavaIllegalStateException(`${this} requires ^anticipate operator`);
+                        throw new ReasonerStateError(`${this} requires ^anticipate operator`);
 
                     let args: Product = new Product(imp.getPredicate());
                     let new_term: Term = Operation.make(args, op);

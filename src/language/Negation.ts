@@ -4,7 +4,7 @@ import { Term } from "./Term.ts";
 import { Terms } from "./Terms.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { JavaCharSequence } from "../runtime/java-text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -68,7 +68,7 @@ export class Negation extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -91,7 +91,7 @@ export class Negation extends CompoundTerm {
     public static make(argument: Term[]): Term | null;
     public static make(...args: unknown[]): Term | null {
         if (args.length !== 1) {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
 
         // Java overloads make(Term) and make(Term[]) have the same arity.

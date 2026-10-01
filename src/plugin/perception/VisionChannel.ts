@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/perception/VisionChannel.java
-import { JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
 import type { float, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
@@ -214,7 +214,7 @@ export class VisionChannel extends SensoryChannel {
                     let lastSpace: VisualSpace = (this.lastPrototype.task.getTerm() as Inheritance)
                         .getSubject().imagination as VisualSpace;
                     if (best === null)
-                        throw new JavaIllegalStateException("No prototype found");
+                        throw new ReasonerStateError("No prototype found");
                     let newSpace: VisualSpace = (best.task.getTerm() as Inheritance).getSubject().imagination as VisualSpace;
                     let oldFocusX: int = lastSpace.px;
                     let oldFocusY: int = lastSpace.py;
@@ -266,7 +266,7 @@ export class VisionChannel extends SensoryChannel {
                 // 4. add the best prototype as identified sensation
                 // but with current time stamp
                 if (best === null)
-                    throw new JavaIllegalStateException("No prototype found");
+                    throw new ReasonerStateError("No prototype found");
                 let bestSentence: Sentence = new Sentence(best.task.getTerm(),
                     best.task.sentence.punctuation,
                     bestTruth,

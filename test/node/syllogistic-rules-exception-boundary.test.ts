@@ -6,5 +6,5 @@ test("SyllogisticRules uses project-owned argument exceptions", () => {
     const source = readFileSync("src/inference/SyllogisticRules.ts", "utf8");
     assert.doesNotMatch(source, /from ["']jree["']/);
     assert.doesNotMatch(source, /new java\.lang\.IllegalArgumentException/);
-    assert.match(source, /JavaIllegalArgumentException/);
+    assert.match(source, /ReasonerInputError/);
 });

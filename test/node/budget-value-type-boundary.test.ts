@@ -13,5 +13,5 @@ test("BudgetValue keeps runtime compatibility behind project-owned boundaries", 
     const source = readFileSync("src/entity/BudgetValue.ts", "utf8");
     assert.doesNotMatch(source, /from ["']jree["']/);
     assert.doesNotMatch(source, /java\.lang\.(IllegalArgumentException|IllegalStateException|Math|Object|String)/);
-    assert.match(source, /JavaIllegalArgumentException/);
+    assert.match(source, /ReasonerInputError/);
 });

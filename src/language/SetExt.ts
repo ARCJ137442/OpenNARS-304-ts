@@ -2,7 +2,7 @@
 import { SetTensional } from "./SetTensional.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { type JavaCharSequence, type JavaListInput } from "../runtime/java-text.ts";
 
 const NativeOperator = Symbols.NativeOperator;
@@ -68,7 +68,7 @@ export class SetExt extends SetTensional {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -106,7 +106,7 @@ export class SetExt extends SetTensional {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

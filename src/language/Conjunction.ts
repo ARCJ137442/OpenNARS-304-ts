@@ -8,7 +8,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Debug } from "../main/Debug.ts";
 import { Terms } from "./Terms.ts";
 import { toJavaString, type JavaCharSequence, type JavaListInput, type JavaString } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -73,7 +73,7 @@ export class Conjunction extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -111,7 +111,7 @@ export class Conjunction extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -334,7 +334,7 @@ export class Conjunction extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

@@ -5,7 +5,7 @@ import { CompoundTerm } from "../../language/CompoundTerm.ts";
 import { Variables } from "../../language/Variables.ts";
 import { LocalRules } from "../../inference/LocalRules.ts";
 import { NativeList } from "../../runtime/NativeList.ts";
-import { JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
 import type { Concept } from "../../entity/Concept.ts";
 import type { Sentence } from "../../entity/Sentence.ts";
 import type { Task } from "../../entity/Task.ts";
@@ -60,7 +60,7 @@ export class ProcessQuestion {
         if (questions.size() + 1 > concept.memory.narParameters.CONCEPT_QUESTIONS_MAX) {
             const removed = questions.remove(0); // FIFO
             if (removed === null || removed === undefined) {
-                throw new JavaIllegalStateException("Question table removal returned no task");
+                throw new ReasonerStateError("Question table removal returned no task");
             }
             concept.memory.event.emit(Events.ConceptQuestionRemove.class, concept, removed);
         }

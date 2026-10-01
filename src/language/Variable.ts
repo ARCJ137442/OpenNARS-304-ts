@@ -7,7 +7,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { javaStringHashCode, javaStringValue } from "../runtime/java-text.ts";
 import { javaIdentityHashCode } from "../runtime/java-values.ts";
 import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
 
@@ -73,7 +73,7 @@ export class Variable extends Term {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -86,7 +86,7 @@ export class Variable extends Term {
         this.scope = scope !== null ? scope : this;
         this.hash = 0; // calculate lazily
         if (!Variable.validVariableType(this.type))
-            throw new JavaIllegalStateException("Invalid variable type: " + n);
+            throw new ReasonerStateError("Invalid variable type: " + n);
         return this;
     }
 
@@ -328,7 +328,7 @@ export class Variable extends Term {
                 cache = Variable.vn3;
                 break;
             default:
-                throw new JavaIllegalStateException("Invalid variable type");
+                throw new ReasonerStateError("Invalid variable type");
         }
 
         let c: JavaCharSequence = cache[index];

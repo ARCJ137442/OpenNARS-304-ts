@@ -5,7 +5,8 @@ import {BudgetValue} from './BudgetValue.ts'
 import { javaStringHashCode, javaStringValue } from "../runtime/java-text.ts";
 import { javaValuesEqual } from "../runtime/java-values.ts";
 import type { JavaCharSequenceInput } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException, JavaNullPointerException } from "../runtime/JavaExceptions.ts";
+import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 
 interface ItemComparator<E> {
@@ -74,7 +75,7 @@ export abstract  class Item<K> extends RuntimeObject {
             const [budget] = args as [BudgetValue];
             this.budget = budget !== null ? budget.clone() : null; // clone, not assignment
         } else {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
 	}
 
@@ -264,7 +265,7 @@ export abstract  class Item<K> extends RuntimeObject {
 
     protected requireBudget(): BudgetValue {
         if (this.budget === null) {
-            throw new JavaNullPointerException("Item has no budget");
+            throw new ReasonerStateError("Item has no budget");
         }
         return this.budget;
     }

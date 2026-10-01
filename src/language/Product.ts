@@ -7,7 +7,7 @@ import {
     isJavaListInput,
 } from "../runtime/java-text.ts";
 import type { JavaListInput } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -90,7 +90,7 @@ export class Product extends CompoundTerm {
                 if (args.length > 0) {
                     return new Product(args as Term[]);
                 }
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
 
         }
@@ -129,7 +129,7 @@ export class Product extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

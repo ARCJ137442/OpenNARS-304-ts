@@ -9,7 +9,7 @@ import type { Parameters } from "../main/Parameters.ts";
 import type { Term } from "../language/Term.ts";
 import { NativeDeque } from "../runtime/NativeDeque.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import {
     javaInt16ArrayEquals,
     javaInt16ArrayHashCode,
@@ -207,7 +207,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

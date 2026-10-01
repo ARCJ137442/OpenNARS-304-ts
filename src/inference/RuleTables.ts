@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/RuleTables.java
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Events } from "../io/events/Events.ts";
@@ -682,7 +682,7 @@ export class RuleTables {
             }
         }
 
-        throw new JavaIllegalArgumentException("figure is invalid");
+        throw new ReasonerInputError("figure is invalid");
     }
 
     public static EnumFigureSide = EnumFigureSide;
@@ -823,7 +823,7 @@ export class RuleTables {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

@@ -1,5 +1,5 @@
 //! Java source: opennars/io/events/Events.java
-import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
 import type { JavaStringInput } from "../../runtime/java-text.ts";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
@@ -70,7 +70,7 @@ abstract class InferenceEvent extends RuntimeObject {
     protected constructor(...args: unknown[]) {
         super();
         if (args.length !== 1 && args.length !== 2) {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
 
         const when = args[0] as long;

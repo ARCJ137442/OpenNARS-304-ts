@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/TruthFunctions.java
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { int, float, double, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { UtilityFunctions } from "./UtilityFunctions.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
@@ -97,7 +97,7 @@ export class TruthFunctions extends UtilityFunctions {
             case REDUCECONJUNCTIONNEG:
                 return TruthFunctions.reduceConjunctionNeg(a, b, narParameters);
             default:
-                throw new JavaIllegalArgumentException("Encountered unimplemented case!"); // internal error
+                throw new ReasonerInputError("Encountered unimplemented case!"); // internal error
         }
     }
 
@@ -221,7 +221,7 @@ export class TruthFunctions extends UtilityFunctions {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -279,7 +279,7 @@ export class TruthFunctions extends UtilityFunctions {
                 let c: double = and(f1, c1, reliance);
                 return TruthValue.fromFrequencyConfidence(f1, c, narParameters, true);
         }
-        throw new JavaIllegalArgumentException("Invalid number of arguments");
+        throw new ReasonerInputError("Invalid number of arguments");
     }
 
 
@@ -363,7 +363,7 @@ export class TruthFunctions extends UtilityFunctions {
                 let c: double = w2c(w, narParameters);
                 return TruthValue.fromFrequencyConfidence(f1, c, narParameters, true);
         }
-        throw new JavaIllegalArgumentException("Invalid number of arguments");
+        throw new ReasonerInputError("Invalid number of arguments");
     }
 
 

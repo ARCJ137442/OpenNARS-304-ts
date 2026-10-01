@@ -26,9 +26,9 @@ import { Operator } from "../../operator/Operator.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import { JavaSystemLoggerCompat } from "../../runtime/native-host-boundary.ts";
-import { JavaIllegalAccessError } from "../../runtime/JavaExceptions.ts";
+import { ReasonerInvariantError } from "../../runtime/ReasonerErrors.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
-import { JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
 import { Debug } from "../../main/Debug.ts";
 import { InternalExperience } from "../../plugin/mental/InternalExperience.ts";
 import { NativeList } from "../../runtime/NativeList.ts";
@@ -119,9 +119,9 @@ export class ProcessGoal {
 
         if (oldGoalT !== null && oldGoal !== null && revisable(goal, oldGoal, nal.narParameters)) {
             if (oldGoal === null)
-                throw new JavaIllegalAccessError("oldGoal == null");
+                throw new ReasonerInvariantError("oldGoal == null");
             if (oldGoal.stamp === null)
-                throw new JavaIllegalAccessError("oldGoal.stamp ");
+                throw new ReasonerInvariantError("oldGoal.stamp");
             let oldStamp: Stamp = oldGoal.stamp;
             nal.setTheNewStamp(newStamp, oldStamp, nal.time.time());
             let projectedGoal: Sentence = oldGoal.projection(task.sentence.getOccurrenceTime(),
@@ -365,7 +365,7 @@ export class ProcessGoal {
                 const bestOp = bestOpWithMeta.bestOp;
                 const executablePrecondition = bestOpWithMeta.executable_precondition;
                 if (bestOp === null || executablePrecondition === null) {
-                    throw new JavaIllegalStateException("Executable precondition metadata is incomplete");
+                    throw new ReasonerStateError("Executable precondition metadata is incomplete");
                 }
                 let op: Concept = nal.memory.concept(bestOp);
                 if (op !== null && executablePrecondition.sentence.getTruth()
@@ -377,13 +377,13 @@ export class ProcessGoal {
                 JavaSystemLoggerCompat.getLogger("ProcessGoal").log("INFO", `Executed based on: ${javaStringValue(executablePrecondition)}`, null);
                 const anticipations = anticipationsToMake.get(bestOp);
                 if (anticipations === null) {
-                    throw new JavaIllegalStateException("Executable precondition anticipation list is missing");
+                    throw new ReasonerStateError("Executable precondition anticipation list is missing");
                 }
                 for (let precon of anticipations) {
                     const preconditionTask = precon.executable_precondition;
                     const substitution = precon.substitution;
                     if (preconditionTask === null || substitution === null) {
-                        throw new JavaIllegalStateException("Executable precondition result is incomplete");
+                        throw new ReasonerStateError("Executable precondition result is incomplete");
                     }
                     let distance: float = Float32Math.subtract(precon.timeOffset, Number(nal.time.time())) as float;
                     let urgency: float = Float32Math.add(

@@ -46,5 +46,5 @@ test("Item keeps Java runtime types behind project boundaries", () => {
     assert.doesNotMatch(source, /from ["']jree["']/);
     assert.doesNotMatch(source, /java\.lang\.(Iterable|CharSequence|NullPointerException)/);
     assert.match(source, /JavaCharSequenceInput/);
-    assert.match(source, /JavaNullPointerException/);
+    assert.match(source, /ReasonerStateError/);
 });

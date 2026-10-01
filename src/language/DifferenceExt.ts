@@ -6,7 +6,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { SetExt } from "./SetExt.ts";
 import { DifferenceInt } from "./DifferenceInt.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -67,7 +67,7 @@ export class DifferenceExt extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -133,7 +133,7 @@ export class DifferenceExt extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

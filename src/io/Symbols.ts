@@ -1,6 +1,6 @@
 //! Java source: opennars/io/Symbols.java
 import type { char } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { RuntimeObject } from "../runtime/RuntimeClass.ts";
 
 const S = (strings: TemplateStringsArray): string => strings[0] ?? "";
@@ -216,7 +216,7 @@ export class Symbols {
             } else if (args.length === 3) {
                 [string, name, index] = args as [string, string, number];
             } else {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new ReasonerInputError(S`Invalid number of arguments`);
             }
             super();
             this.enumName = name;
@@ -278,7 +278,7 @@ export class Symbols {
             }
 
             default: {
-                throw new JavaIllegalArgumentException(S`Invalid number of arguments`);
+                throw new ReasonerInputError(S`Invalid number of arguments`);
             }
         }
     }

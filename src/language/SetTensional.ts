@@ -6,7 +6,7 @@ import { Debug } from "../main/Debug.ts";
 import { Terms } from "./Terms.ts";
 import type { Term } from "./Term.ts";
 import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/java-text.ts";
-import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 
 const ARGUMENT_SEPARATOR = Symbols.ARGUMENT_SEPARATOR;
 
@@ -27,7 +27,7 @@ export abstract class SetTensional extends CompoundTerm {
         super(arg);
 
         if (arg.length === 0)
-            throw new JavaIllegalStateException("0-arg empty set");
+            throw new ReasonerStateError("0-arg empty set");
 
         if (Debug.DETAILED) {
             Terms.verifySortedAndUnique(arg, true);

@@ -13,7 +13,7 @@ import {
     type JavaString,
     type JavaStringInput,
 } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { NativeSortedSet } from "../runtime/NativeSortedSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import type { MapContract } from "../runtime/NativeMap.ts";
@@ -145,7 +145,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -222,7 +222,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -372,7 +372,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -512,14 +512,14 @@ export class Term extends RuntimeObject implements AbstractTerm {
                     default:
 
                 }
-                throw new JavaIllegalStateException("Invalid variable type: " + type);
+                throw new ReasonerStateError("Invalid variable type: " + type);
 
 
                 break;
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -588,7 +588,7 @@ export class Term extends RuntimeObject implements AbstractTerm {
                     // verify consistency of compareTo() and equals()
                     let equal: boolean = a.equals(b);
                     if ((equal && (c !== 0)) || (!equal && (c === 0))) {
-                        throw new JavaIllegalStateException("invalid order: " + a + " = " + b);
+                        throw new ReasonerStateError("invalid order: " + a + " = " + b);
                     }
                 }
 

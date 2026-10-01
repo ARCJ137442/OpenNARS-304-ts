@@ -10,7 +10,7 @@ import { Term } from "./Term.ts";
 import type { Memory } from "../storage/Memory.ts";
 import { javaValuesEqual } from "../runtime/java-values.ts";
 import type { JavaCharSequence } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { NativeList } from "../runtime/NativeList.ts";
 
 type CollectionInput<T> = Iterable<T> & { toArray(array?: T[]): T[] };
@@ -130,7 +130,7 @@ export class Terms {
 
     private static getRuntime(): TermsRuntime {
         if (Terms.runtime === null) {
-            throw new JavaIllegalStateException("Terms runtime classes are not registered");
+            throw new ReasonerStateError("Terms runtime classes are not registered");
         }
         return Terms.runtime;
     }
@@ -316,7 +316,7 @@ export class Terms {
                     case EQUIVALENCE_AFTER:
                         return runtime.Equivalence.make(componentList[0], componentList[1], TemporalRules.ORDER_FORWARD);
                     default:
-                        throw new JavaIllegalStateException("Unknown Term operator: " + copula + " (" + copula.name() + ")");
+                        throw new ReasonerStateError("Unknown Term operator: " + copula + " (" + copula.name() + ")");
                 }
 
 
@@ -324,7 +324,7 @@ export class Terms {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -457,7 +457,7 @@ export class Terms {
         }
 
         if (sa === null || sb === null)
-            throw new JavaIllegalStateException("Equivalence requires 2 components: " + sa + sb);
+            throw new ReasonerStateError("Equivalence requires 2 components: " + sa + sb);
         let sat: Term[] = (sa as CompoundTerm).term;
         let sbt: Term[] = (sb as CompoundTerm).term;
 
@@ -597,7 +597,7 @@ export class Terms {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -683,7 +683,7 @@ export class Terms {
 
                 for (let o of t)
                     if (o === null)
-                        throw new JavaIllegalStateException("Element null in: " + t);
+                        throw new ReasonerStateError("Element null in: " + t);
 
 
                 break;
@@ -695,14 +695,14 @@ export class Terms {
 
                 for (let o of t)
                     if (o === null)
-                        throw new JavaIllegalStateException("Element null in: " + javaArrayToString(t));
+                        throw new ReasonerStateError("Element null in: " + javaArrayToString(t));
 
 
                 break;
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -710,25 +710,25 @@ export class Terms {
     public static verifyNonNullTerms(...t: Term[]): void {
         for (let o of t)
             if (o === null)
-                throw new JavaIllegalStateException("Element null in: " + javaArrayToString(t));
+                throw new ReasonerStateError("Element null in: " + javaArrayToString(t));
     }
 
 
     public static verifySortedAndUnique(arg: Term[], allowSingleton: boolean): Term[] {
         if (arg.length === 0) {
-            throw new JavaIllegalStateException("Needs >0 components");
+            throw new ReasonerStateError("Needs >0 components");
         }
         if (!allowSingleton && (arg.length === 1)) {
-            throw new JavaIllegalStateException("Needs >1 components: " + javaArrayToString(arg));
+            throw new ReasonerStateError("Needs >1 components: " + javaArrayToString(arg));
         }
         let s: Term[] = Term.toSortedSetArray(...arg);
         if (arg.length !== s.length) {
-            throw new JavaIllegalStateException("Contains duplicates: " + javaArrayToString(arg));
+            throw new ReasonerStateError("Contains duplicates: " + javaArrayToString(arg));
         }
         let j: int = 0;
         for (let t of s) {
             if (!t.equals(arg[j++]))
-                throw new JavaIllegalStateException(
+                throw new ReasonerStateError(
                     "Un-ordered: " + javaArrayToString(arg) + " , correct order=" + javaArrayToString(s));
         }
         return s;

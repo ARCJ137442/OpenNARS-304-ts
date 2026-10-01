@@ -1,5 +1,5 @@
 //! Java source: opennars/control/DerivationContext.java
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import type { ClassTokenLike } from "../runtime/RuntimeClass.ts";
 import type { double, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Stamp } from "../entity/Stamp.ts";
@@ -184,7 +184,7 @@ export class DerivationContext {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -321,7 +321,7 @@ export class DerivationContext {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -418,7 +418,7 @@ export class DerivationContext {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -446,7 +446,7 @@ export class DerivationContext {
     public requireCurrentTask(): Task {
         const currentTask = this.currentTask;
         if (currentTask === null) {
-            throw new JavaIllegalStateException("DerivationContext.currentTask is not initialized");
+            throw new ReasonerStateError("DerivationContext.currentTask is not initialized");
         }
         return currentTask;
     }
@@ -474,7 +474,7 @@ export class DerivationContext {
             // value as newStamp
             const builder = this.newStampBuilder;
             if (builder === null) {
-                throw new JavaIllegalStateException("Cannot build new stamp without a StampBuilder");
+                throw new ReasonerStateError("Cannot build new stamp without a StampBuilder");
             }
             stamp = builder.build();
             this.newStamp = stamp;
@@ -487,7 +487,7 @@ export class DerivationContext {
     public resetOccurrenceTime(): void {
         const stamp = this.newStamp;
         if (stamp === null) {
-            throw new JavaIllegalStateException("Cannot reset occurrence time without a new stamp");
+            throw new ReasonerStateError("Cannot reset occurrence time without a new stamp");
         }
         stamp.setOccurrenceTime(this.original_time);
     }
@@ -528,7 +528,7 @@ export class DerivationContext {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -572,7 +572,7 @@ export class DerivationContext {
     public requireCurrentTaskLink(): TaskLink {
         const currentTaskLink = this.currentTaskLink;
         if (currentTaskLink === null) {
-            throw new JavaIllegalStateException("DerivationContext.currentTaskLink is not initialized");
+            throw new ReasonerStateError("DerivationContext.currentTaskLink is not initialized");
         }
         return currentTaskLink;
     }
@@ -594,7 +594,7 @@ export class DerivationContext {
     public requireCurrentTerm(): Term {
         const currentTerm = this.currentTerm;
         if (currentTerm === null) {
-            throw new JavaIllegalStateException("DerivationContext.currentTerm is not initialized");
+            throw new ReasonerStateError("DerivationContext.currentTerm is not initialized");
         }
         return currentTerm;
     }
@@ -616,7 +616,7 @@ export class DerivationContext {
     public requireCurrentConcept(): Concept {
         const currentConcept = this.currentConcept;
         if (currentConcept === null) {
-            throw new JavaIllegalStateException("DerivationContext.currentConcept is not initialized");
+            throw new ReasonerStateError("DerivationContext.currentConcept is not initialized");
         }
         return currentConcept;
     }
@@ -668,7 +668,7 @@ export class DerivationContext {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

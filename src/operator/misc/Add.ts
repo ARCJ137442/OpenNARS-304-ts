@@ -6,11 +6,7 @@ import {
     toJavaString,
 } from "../../runtime/java-text.ts";
 import { javaStringValue } from "../../runtime/java-text.ts";
-import {
-    JavaIllegalArgumentException,
-    JavaIllegalStateException,
-    JavaNumberFormatException,
-} from "../../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
 // Java 3.7's StringUtils.isNumeric accepts a non-empty ASCII digit sequence;
@@ -21,7 +17,7 @@ const isNumeric = (value: unknown): boolean => /^[0-9]+$/.test(javaStringValue(v
 const parseJavaInt = (value: string): int => {
     const parsed = Number(value);
     if (!Number.isSafeInteger(parsed) || parsed > 2_147_483_647) {
-        throw new JavaNumberFormatException(`For input string: "${value}"`);
+        throw new ReasonerInputError(`For input string: "${value}"`);
     }
     return parsed as int;
 };
@@ -39,7 +35,7 @@ export class Add extends FunctionOperator {
 
     protected function(memory: Memory, x: Term[]): Term {
         if (x.length !== 2) {
-            throw new JavaIllegalStateException("Requires 2 arguments");
+            throw new ReasonerStateError("Requires 2 arguments");
         }
 
         let n1: int;
@@ -49,14 +45,14 @@ export class Add extends FunctionOperator {
         if (isNumeric(first)) {
             n1 = parseJavaInt(first);
         } else {
-            throw new JavaIllegalArgumentException("1st parameter not an integer");
+            throw new ReasonerInputError("1st parameter not an integer");
         }
 
         const second = javaStringValue(x[1].name());
         if (isNumeric(second)) {
             n2 = parseJavaInt(second);
         } else {
-            throw new JavaIllegalArgumentException("2nd parameter not an integer");
+            throw new ReasonerInputError("2nd parameter not an integer");
         }
 
         return new Term(toJavaString(String(n1 + n2)));

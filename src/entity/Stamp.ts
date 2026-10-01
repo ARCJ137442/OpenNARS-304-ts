@@ -13,7 +13,7 @@ import {
     toRuntimeLong,
     type JavaLongInput,
 } from "../runtime/java-values.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { toJavaString } from "../runtime/java-text.ts";
 import type { JavaString } from "../runtime/java-text.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -237,7 +237,7 @@ export class Stamp extends RuntimeObject {
             return;
         }
 
-        throw new JavaIllegalArgumentException("Invalid number of arguments");
+        throw new ReasonerInputError("Invalid number of arguments");
     }
 
     private initializeInputStamp(time: long, tense: Tense, memory: Memory): void {
@@ -289,7 +289,7 @@ export class Stamp extends RuntimeObject {
 
         if (Debug.DETAILED) {
             if (eternalOccurrence && this.tense !== Tense.Eternal) {
-                throw new JavaIllegalStateException(
+                throw new ReasonerStateError(
                     "Stamp has inconsistent tense and eternal ocurrenceTime: tense=" + this.tense);
             }
         }
@@ -409,7 +409,7 @@ export class Stamp extends RuntimeObject {
                 const [that] = args as [unknown];
 
 
-                throw new JavaIllegalStateException("Use other equals() method");
+                throw new ReasonerStateError("Use other equals() method");
 
 
                 break;
@@ -441,7 +441,7 @@ export class Stamp extends RuntimeObject {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/BudgetFunctions.java
-import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import type { float, double, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -76,7 +76,7 @@ export class BudgetFunctions extends UtilityFunctions {
         }
         const truth = judg.truth;
         if (truth === null) {
-            throw new JavaIllegalStateException("Cannot rank a sentence without a truth value");
+            throw new ReasonerStateError("Cannot rank a sentence without a truth value");
         }
         let confidence: double = truth.confidence;
         // final float originality = judg.stamp.getOriginality();
@@ -368,7 +368,7 @@ export class BudgetFunctions extends UtilityFunctions {
 
     protected static solutionEval(problem: Sentence, solution: Sentence, task: Task,
         memory: Memory): BudgetValue {
-        throw new JavaIllegalStateException("Moved to TemporalRules.java");
+        throw new ReasonerStateError("Moved to TemporalRules.java");
     }
 
     public static budgetTermLinkConcept(c: Concept, taskBudget: BudgetValue,

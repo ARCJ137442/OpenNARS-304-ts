@@ -18,7 +18,7 @@ import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeList, NativeReadOnlyList } from "../runtime/NativeList.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
-import { JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { LocalRules } from "../inference/LocalRules.ts";
 import { Events } from "../io/events/Events.ts";
 import { ProcessQuestion } from "../control/concept/ProcessQuestion.ts";
@@ -512,7 +512,7 @@ export class Concept extends Item<Term> {
         ) as float;
         let result: float = UtilityFunctions.or(this.acquiredQuality, linkPriority, termComplexityFactor);
         if (result < 0) {
-            throw new JavaIllegalStateException("Concept.getQuality < 0:  result=" + result + ", linkPriority="
+            throw new ReasonerStateError("Concept.getQuality < 0:  result=" + result + ", linkPriority="
                 + linkPriority + " ,termComplexityFactor=" + termComplexityFactor + ", termLinks.size="
                 + this.termLinks.size());
         }

@@ -5,7 +5,7 @@ import { Terms } from "./Terms.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { Debug } from "../main/Debug.ts";
 import { SetInt } from "./SetInt.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -36,11 +36,11 @@ export class DifferenceInt extends CompoundTerm {
 
     public static ensureValidDifferenceArguments(arg: Term[]): void {
         if (arg.length !== 2)
-            throw new JavaIllegalStateException("Requires 2 components");
+            throw new ReasonerStateError("Requires 2 components");
 
         if (Debug.DETAILED) {
             if (arg[0].equals(arg[1]))
-                throw new JavaIllegalStateException("Equal arguments invalid");
+                throw new ReasonerStateError("Equal arguments invalid");
         }
     }
 
@@ -76,7 +76,7 @@ export class DifferenceInt extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -143,7 +143,7 @@ export class DifferenceInt extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

@@ -2,7 +2,7 @@
 import type { int, float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { javaStringValue } from "../runtime/java-text.ts";
 import type { JavaStringInput } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { Parser } from "./Parser.ts";
 import { Symbols } from "./Symbols.ts";
 import { Tense } from "../language/Tense.ts";
@@ -180,7 +180,7 @@ export class Narsese implements Parser {
     public constructor(n: Nar);
     public constructor(...args: unknown[]) {
         if (args.length !== 1 || args[0] === null) {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
         const value = args[0] as Memory | Nar;
         this.memory = (value as Nar).memory ?? value as Memory;

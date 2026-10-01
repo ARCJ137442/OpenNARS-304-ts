@@ -6,7 +6,7 @@ import { Symbols } from "../io/Symbols.ts";
 import { Terms } from "./Terms.ts";
 import { Debug } from "../main/Debug.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
 
 type StatementFactory = (subject: Term, predicate: Term, order: int) => Statement;
@@ -86,7 +86,7 @@ export abstract class Statement extends CompoundTerm {
 
     private static getRuntime(): StatementRuntime {
         if (Statement.runtime === null) {
-            throw new JavaIllegalStateException("Statement runtime classes are not registered");
+            throw new ReasonerStateError("Statement runtime classes are not registered");
         }
         return Statement.runtime;
     }
@@ -107,15 +107,15 @@ export abstract class Statement extends CompoundTerm {
 
     protected init(t: Term[]): void {
         if (t.length !== 2)
-            throw new JavaIllegalStateException("Requires 2 terms: " + javaArrayToString(t));
+            throw new ReasonerStateError("Requires 2 terms: " + javaArrayToString(t));
         if (t[0] === null)
-            throw new JavaIllegalStateException("Null subject: " + this);
+            throw new ReasonerStateError("Null subject: " + this);
         if (t[1] === null)
-            throw new JavaIllegalStateException("Null predicate: " + this);
+            throw new ReasonerStateError("Null predicate: " + this);
         if (Debug.DETAILED) {
                     if (this.isCommutative()) {
                 if (t[0].compareTo(t[1]) === 1) {
-                    throw new JavaIllegalStateException(
+                    throw new ReasonerStateError(
                         "Commutative term requires natural order of subject,predicate: " + javaArrayToString(t));
                 }
             }
@@ -231,7 +231,7 @@ export abstract class Statement extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -332,7 +332,7 @@ export abstract class Statement extends CompoundTerm {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

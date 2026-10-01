@@ -5,7 +5,7 @@ import { Term } from "../../language/Term.ts";
 import { SetExt } from "../../language/SetExt.ts";
 import { SetInt } from "../../language/SetInt.ts";
 import { CompoundTerm } from "../../language/CompoundTerm.ts";
-import { JavaIllegalStateException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
 import type { Memory } from "../../storage/Memory.ts";
 
 
@@ -38,12 +38,12 @@ export class Count extends FunctionOperator {
 
     protected function(memory: Memory, x: Term[]): Term {
         if (x.length !== 1) {
-            throw new JavaIllegalStateException(Count.requireMessage);
+            throw new ReasonerStateError(Count.requireMessage);
         }
 
         let content: Term = x[0];
         if (!(content instanceof SetExt) && !(content instanceof SetInt)) {
-            throw new JavaIllegalStateException(Count.requireMessage);
+            throw new ReasonerStateError(Count.requireMessage);
         }
 
         let n: int = (content as CompoundTerm).size();

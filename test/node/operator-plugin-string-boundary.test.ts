@@ -44,6 +44,6 @@ test("operator and plugin exceptions use the project-owned exception layer", () 
         for (const importedNames of jreeImports) {
             assert.doesNotMatch(importedNames, /\bJava(?:Illegal|Null|NumberFormat|Runtime|Exception|Error)[A-Z]\w*/, file);
         }
-        assert.match(source, /from ["'][^"']*runtime\/JavaExceptions\.ts["']/, file);
+        assert.match(source, /from ["'][^"']*runtime\/(?:JavaExceptions|ReasonerErrors)\.ts["']/, file);
     }
 });

@@ -12,12 +12,9 @@ import type { Memory } from "../storage/Memory.ts";
 import type { TermLink } from "../entity/TermLink.ts";
 import { javaStringHashCode, javaStringsEqual } from "../runtime/java-text.ts";
 import { toJavaString, type JavaChar, type JavaCharSequence } from "../runtime/java-text.ts";
-import {
-    JavaIllegalArgumentException,
-    JavaNoSuchElementException,
-    JavaRuntimeException,
-    JavaUnsupportedOperationException,
-} from "../runtime/JavaExceptions.ts";
+import { JavaNoSuchElementException, JavaRuntimeException } from "../runtime/JavaExceptions.ts";
+import { ReasonerOperationError } from "../runtime/ReasonerErrors.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { NativeFixedList, NativeList } from "../runtime/NativeList.ts";
 import { NativeSet } from "../runtime/NativeSet.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
@@ -711,7 +708,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         if (args.length === 1) {
             return super.hasVar(args[0] as JavaChar);
         }
-        throw new JavaIllegalArgumentException("Invalid number of arguments");
+        throw new ReasonerInputError("Invalid number of arguments");
     }
 
     public hasVarDep(): boolean {
@@ -864,7 +861,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
                 return terms[index++];
             },
             remove: (): void => {
-                    throw new JavaUnsupportedOperationException();
+                    throw new ReasonerOperationError("This iterator does not support removal");
             },
         };
     }

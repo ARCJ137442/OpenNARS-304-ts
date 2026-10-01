@@ -1,5 +1,5 @@
 //! Java source: opennars/io/events/OutputHandler.java
-import { JavaIllegalArgumentException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
 import { RuntimeObject } from "../../runtime/RuntimeClass.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 import { EventHandler } from "./EventHandler.ts";
@@ -72,7 +72,7 @@ export abstract class OutputHandler extends EventHandler {
                 ?? (candidate as Memory).event
                 ?? candidate as EventEmitter;
         } else {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
         super(source, active, ...OutputHandler.DefaultOutputEvents);
     }

@@ -1,6 +1,6 @@
 //! Java source: opennars/language/Tense.java
 import { javaStringValue } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { JavaStringInput } from "../runtime/java-text.ts";
 
 /** Native enum-like representation of the canonical Java Tense enum. */
@@ -37,7 +37,7 @@ export class Tense {
     public static valueOf(name: string): Tense {
         const value = Tense.values().find(tense => tense.name() === name);
         if (value === undefined) {
-            throw new JavaIllegalArgumentException(`No enum constant Tense.${name}`);
+            throw new ReasonerInputError(`No enum constant Tense.${name}`);
         }
         return value;
     }

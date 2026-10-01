@@ -11,8 +11,7 @@ import type { Statement } from "../language/Statement.ts";
 import type { BudgetValue } from "../entity/BudgetValue.ts";
 import { toJavaString, type JavaStringInput } from "../runtime/java-text.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
-import { isJavaException } from "../runtime/JavaExceptions.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Timable } from "../interfaces/Timable.ts";
 import type { Task } from "../entity/Task.ts";
@@ -57,14 +56,14 @@ export abstract class Operator extends Term implements Plugin {
 
                 super(toJavaString(name));
                 if (!javaStringValue(name).startsWith("^"))
-                    throw new JavaIllegalStateException("Operator name needs ^ prefix");
+                    throw new ReasonerStateError("Operator name needs ^ prefix");
 
 
                 break;
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -124,12 +123,12 @@ export abstract class Operator extends Term implements Plugin {
                 try {
                     feedback = this.execute(operation, operationArgs, memory, time);
                 } catch (ex) {
-                    if (isJavaException(ex)) {// peripherie, maybe used incorrectly, failure is unavoidable
+                    if (ex instanceof Error) {// plugin/operator code may fail at runtime
                         if (Debug.SHOW_EXECUTION_ERRORS) {
                             memory.event.emit(OutputHandler.ERR.class, ex);
                         }
                         if (!Debug.EXECUTION_ERRORS_CONTINUE) {
-                            throw new JavaIllegalStateException("Execution error:\n", ex);
+                            throw new ReasonerStateError("Execution error", { cause: ex });
                         } else {
                             return false; // failure on execution
                         }
@@ -158,7 +157,7 @@ export abstract class Operator extends Term implements Plugin {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -197,12 +196,8 @@ export abstract class Operator extends Term implements Plugin {
         if (memory.emitting(OutputHandler.EXE.class)) {
             // final Operator operator = (Operator) opT;
 
-            if (isJavaException(feedback)) {
-                const exception = feedback as JavaExceptionView;
-                const className = typeof exception.getClass === "function"
-                    ? javaStringValue(exception.getClass().getSimpleName())
-                    : exception.name;
-                feedback = `${className}: ${javaStringValue(exception.getMessage())}`;
+            if (feedback instanceof Error) {
+                feedback = `${feedback.name}: ${feedback.message}`;
             }
 
             memory.emit(OutputHandler.EXE.class, new Operator.ExecutionResult(operation, feedback));
@@ -249,12 +244,6 @@ export abstract class Operator extends Term implements Plugin {
     }
 
 }
-
-type JavaExceptionView = {
-    name: string;
-    getMessage(): unknown;
-    getClass?: () => { getSimpleName(): unknown };
-};
 
 Inheritance.registerOperatorPredicate((value) => value instanceof Operator);
 

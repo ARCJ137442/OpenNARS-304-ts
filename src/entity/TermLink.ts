@@ -6,7 +6,7 @@ import { BudgetValue } from "./BudgetValue.ts";
 import { Symbols } from "../io/Symbols.ts";
 import type { TLink } from "./TLink.ts";
 import { javaStringValue } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import {
     javaInt16ArrayEquals,
     javaInt16ArrayHashCode,
@@ -182,7 +182,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

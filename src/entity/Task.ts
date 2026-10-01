@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Task.java
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
@@ -94,7 +94,7 @@ export class Task extends Item<Sentence> {
     public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence | null, solution: Sentence | null);
     public constructor(...args: unknown[]) {
         if (args.length !== 3 && args.length !== 4) {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
         const budget = args[1] as BudgetValue;
         super(budget);
@@ -123,7 +123,7 @@ export class Task extends Item<Sentence> {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

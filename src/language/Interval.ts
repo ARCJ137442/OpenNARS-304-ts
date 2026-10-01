@@ -3,7 +3,7 @@ import type { long } from "../types.ts"; // Java primitive aliases formerly impo
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { toJavaString, type JavaStringInput } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 
 
@@ -40,7 +40,7 @@ export class Interval extends Term {
     public constructor(i: JavaStringInput);
     public constructor(...args: unknown[]) {
         if (args.length !== 1) {
-            throw new JavaIllegalArgumentException("Invalid number of arguments");
+            throw new ReasonerInputError("Invalid number of arguments");
         }
         const value = args[0] as long | JavaStringInput;
         super();

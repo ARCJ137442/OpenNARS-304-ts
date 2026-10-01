@@ -16,7 +16,7 @@ import type { CompoundTerm } from "../language/CompoundTerm.ts";
 import {
     type JavaStringInput,
 } from "../runtime/java-text.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 
 // Keep FunctionOperator below the inference layer. Importing BudgetFunctions
 // here would close the FunctionOperator -> Memory -> BudgetFunctions cycle.
@@ -61,11 +61,11 @@ export abstract class FunctionOperator extends Operator {
         let numArgs: int = args.length - 1;
 
         if (numArgs < 1) {
-            throw new JavaIllegalStateException("Requires at least 1 arguments");
+            throw new ReasonerStateError("Requires at least 1 arguments");
         }
 
         if (numArgs < 2 /* && !(this instanceof Javascript) */) {
-            throw new JavaIllegalStateException("Requires at least 2 arguments");
+            throw new ReasonerStateError("Requires at least 2 arguments");
         }
 
         // last argument a variable?
@@ -140,6 +140,6 @@ export abstract class FunctionOperator extends Operator {
             const [a, b] = args as [Term, Term];
             return a.equals(b) ? 1.0 : 0.0;
         }
-        throw new JavaIllegalArgumentException("Invalid number of arguments");
+        throw new ReasonerInputError("Invalid number of arguments");
     }
 }

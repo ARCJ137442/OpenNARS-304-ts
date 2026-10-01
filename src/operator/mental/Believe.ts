@@ -13,7 +13,7 @@ import { Memory } from "../../storage/Memory.ts";
 import type { Timable } from "../../interfaces/Timable.ts";
 import type { Term } from "../../language/Term.ts";
 import type { TruthValue } from "../../entity/TruthValue.ts";
-import { JavaNullPointerException } from "../../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
 
 
 
@@ -46,7 +46,7 @@ export class Believe extends Operator {
             truth,
             new Stamp(time, memory));
         if (truth === null) {
-            throw new JavaNullPointerException();
+            throw new ReasonerInputError("");
         }
 
         let quality: float = BudgetFunctions.truthToQuality(truth);

@@ -1,8 +1,5 @@
 //! Java source: opennars/io/events/EventEmitter.java
-import {
-    JavaIllegalArgumentException,
-    JavaIllegalStateException,
-} from "../../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
 import type { ClassTokenLike } from "../../runtime/RuntimeClass.ts";
 
 type PendingOperation = [
@@ -70,7 +67,7 @@ export class EventEmitter {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -124,17 +121,17 @@ export class EventEmitter {
      */
     public off(event: ClassTokenLike, o: EventEmitter.EventObserver): void {
         if (null === event || null === o)
-            throw new JavaIllegalStateException("Invalid parameter");
+            throw new ReasonerStateError("Invalid parameter");
 
         if (!this.events.has(event))
-            throw new JavaIllegalStateException("Unknown event: " + event);
+            throw new ReasonerStateError("Unknown event: " + event);
 
         // Observers are commonly plain TypeScript objects, not JavaObject
         // instances. jree's List.remove(value) only compares Java-style
         // equatable objects, so preserve Java's registration identity here.
         const observers = this.events.get(event);
         if (observers === undefined) {
-            throw new JavaIllegalStateException("Unknown event: " + event);
+            throw new ReasonerStateError("Unknown event: " + event);
         }
         for (let index = 0; index < observers.length; index += 1) {
             if (observers[index] === o) {

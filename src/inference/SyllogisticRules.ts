@@ -23,7 +23,7 @@ import { ProcessAnticipation } from "../control/concept/ProcessAnticipation.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { NativeMap } from "../runtime/NativeMap.ts";
 import { NativeList } from "../runtime/NativeList.ts";
-import { JavaIllegalArgumentException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 const { ORDER_NONE, ORDER_FORWARD, ORDER_BACKWARD, ORDER_INVALID } = TemporalRules;
@@ -593,7 +593,7 @@ export class SyllogisticRules {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }

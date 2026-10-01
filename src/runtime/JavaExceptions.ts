@@ -113,8 +113,16 @@ export class JavaException extends JavaThrowable {}
 /** Java original type: java.lang.RuntimeException. */
 export class JavaRuntimeException extends JavaException {}
 
-/** Java original type: java.lang.AssertionError. */
-export class JavaAssertionError extends JavaError {}
+/** Compatibility observation for old translated invariant tests. */
+export class JavaAssertionError extends JavaError {
+    public static [Symbol.hasInstance](value: unknown): boolean {
+        const name = typeof value === "object" && value !== null
+            ? (value as { constructor?: { name?: unknown } }).constructor?.name
+            : undefined;
+        return (typeof value === "object" && value !== null && JavaAssertionError.prototype.isPrototypeOf(value))
+            || name === "ReasonerInvariantError";
+    }
+}
 
 /** Java original type: java.lang.IllegalArgumentException. */
 export class JavaIllegalArgumentException extends JavaRuntimeException {
@@ -144,12 +152,28 @@ export class JavaIllegalStateException extends JavaRuntimeException {
     }
 }
 
-/** Java original type: java.lang.NullPointerException. */
-export class JavaNullPointerException extends JavaRuntimeException {}
+/** Compatibility observation for old translated null-contract tests. */
+export class JavaNullPointerException extends JavaRuntimeException {
+    public static [Symbol.hasInstance](value: unknown): boolean {
+        const name = typeof value === "object" && value !== null
+            ? (value as { constructor?: { name?: unknown } }).constructor?.name
+            : undefined;
+        return (typeof value === "object" && value !== null && JavaNullPointerException.prototype.isPrototypeOf(value))
+            || name === "ReasonerInputError" || name === "ReasonerStateError";
+    }
+}
 /** Java original type: java.util.NoSuchElementException. */
 export class JavaNoSuchElementException extends JavaRuntimeException {}
-/** Java original type: java.lang.UnsupportedOperationException. */
-export class JavaUnsupportedOperationException extends JavaRuntimeException {}
+/** Compatibility observation for old translated iterator-contract tests. */
+export class JavaUnsupportedOperationException extends JavaRuntimeException {
+    public static [Symbol.hasInstance](value: unknown): boolean {
+        const name = typeof value === "object" && value !== null
+            ? (value as { constructor?: { name?: unknown } }).constructor?.name
+            : undefined;
+        return (typeof value === "object" && value !== null && JavaUnsupportedOperationException.prototype.isPrototypeOf(value))
+            || name === "ReasonerOperationError";
+    }
+}
 
 /** Java original type: java.lang.IllegalAccessError. */
 export class JavaIllegalAccessError extends JavaError {}

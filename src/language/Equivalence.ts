@@ -5,7 +5,7 @@ import { Term } from "./Term.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
 import { Interval } from "./Interval.ts";
 import { Symbols } from "../io/Symbols.ts";
-import { JavaIllegalArgumentException, JavaIllegalStateException } from "../runtime/JavaExceptions.ts";
+import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 
 const NativeOperator = Symbols.NativeOperator;
 type NativeOperator = Symbols.NativeOperator;
@@ -67,7 +67,7 @@ export class Equivalence extends Statement {
                     return null;
                 }
                 if (t.length !== 2)
-                    throw new JavaIllegalStateException("Equivalence requires 2 components: [" + t.map(String).join(", ") + "]");
+                    throw new ReasonerStateError("Equivalence requires 2 components: [" + t.map(String).join(", ") + "]");
 
                 return Equivalence.make(t[0], t[1], this.temporalOrder);
 
@@ -76,7 +76,7 @@ export class Equivalence extends Statement {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
@@ -188,7 +188,7 @@ export class Equivalence extends Statement {
             }
 
             default: {
-                throw new JavaIllegalArgumentException("Invalid number of arguments");
+                throw new ReasonerInputError("Invalid number of arguments");
             }
         }
     }
