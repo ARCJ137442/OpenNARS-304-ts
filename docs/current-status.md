@@ -10,6 +10,14 @@
 - M1-prime：243/243 M1--、#25、#245 降载、#246 均通过；两个 markerless digest equal；含 Java M2 `498/498`
 - Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，demo 提交 `ff4b01d`，metadata 绑定核心 `cd3520f`
 
+## 2026-10-02 native text idiom batch
+
+- 当前提交：`3bdc860`（代码批次 `9c4d76b`，证据记录提交 `3bdc860`），已推送 `origin/main`。
+- 生产推理文本已批量改为原生 `string` 与模板字符串/数组 `join`；`NativeJavaString` 仅保留在 `test/support` 互操作夹具。Java UTF-16 hash、类身份、集合迭代和重载合同仍保留在明确边界。
+- TS-only M2：507 项，505 passed / 0 failed / 2 skipped；Java M2：507/507；typecheck、build、dist API、编码检查和 jree audit 通过。证据 TAP 哈希见 `docs/probes/20261001-runtime-java-shape-cleanup.md`。
+- exact-commit M1' 主体：243/243；#246 与 #25 均通过。#245 65536 在约 1200 秒、RSS 约 1 GiB 时按内存保护停止，分类 `memory_limit`；原始 2,000,000 周期仍未宣称通过。
+- 031 仍为 `in-progress`；不能据此宣称 031 阶段完成、完整 M1 或长期稳定性通过。工作区保留历史未跟踪 evidence 与用户未提交的 023 修改。
+
 ## 2026-10-01 native host boundary exact gate
 
 - `cd3520f` 将 Node/browser native host adapter 收窄为 TypeScript 宿主能力；翻译兼容命名空间移至显式 `legacy-namespace.ts`，demo worker 直接向核心传入原生 `string`。
