@@ -3189,6 +3189,13 @@ LeanSpec 15 项
 - exact-commit M1'：`243/243`，JSONL SHA-256 `8FDAD01DBDAA2D0C257EB58B2D4D12A655E867195BAEB04AE2F8943C18FD78FD`。
 - 023、031 仍未完成；集合语义、剩余 Java helper、宿主边界和 demo 性能仍需继续收口。
 
+## 2026-10-02 value-contract naming batch
+
+- 当前代码提交：`bf07aaa`，生产值集合/数组 helper 已改用 `valueEquals`、`valueHashCode`、`int16ArrayEquals`、`int16ArrayHashCode`、`valuesHash`；`ProcessGoal` 不再保留外部 Java `entrySet` adapter。
+- 聚焦 NativeSet/NativeMap/NativeSortedSet/value-array/ProcessGoal 回归：`67/67`；TS-only M2：`506/508`；Java M2：`508/508`。
+- exact-commit M1'：`243/243`，JSONL SHA-256 `2B99EC5A6EC35962D157342F032EDC4FAB037AA62E18CE8BC0F754E8618F6D4D`。
+- 023、031 仍未完成；剩余重点是平台宿主边界、其它 Java 兼容 helper 与 demo 性能门。
+
 ## 2026-10-02 configuration host-capability batch
 
 - 当前代码提交：`e3710b5`，`ConfigReader` 已移除 Node 内建导入和 `process.cwd` 查找，文件读取经 `RuntimeCapabilities.readTextFile` 注入；Node capability 提供实现。

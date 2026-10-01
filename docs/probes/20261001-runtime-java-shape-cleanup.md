@@ -491,6 +491,11 @@ Focused NativeSet/NativeMap/NativeSortedSet/value-array/ProcessGoal/core
 contracts passed `67/67`; non-incremental typecheck passed. Full M2 and
 exact-commit M1' remain required.
 
+Full M2 for the value-contract batch passed `506/508` TS-only (two skips) and
+`508/508` with Java. Exact-commit M1' for `bf07aaa` completed `243/243` with
+zero failure/exception/timeout/process-limit/stall/not-run rows; JSONL SHA-256
+is `2B99EC5A6EC35962D157342F032EDC4FAB037AA62E18CE8BC0F754E8618F6D4D`.
+
 ## Next batch: configuration host capability
 
 `ConfigReader` was the remaining maintained `src/io` module importing
