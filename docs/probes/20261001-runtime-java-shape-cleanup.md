@@ -189,3 +189,34 @@ and the browser worker build with `ALLOW_DIRTY_OPENNARS=1` passed. Existing esbu
 
 The exact-commit M1', Java M2, reduced #245, #246 and markerless rows must be
 rerun after this batch is committed; prior hashes cannot be reused.
+
+## Exact-commit gate results for `cd3520f`
+
+The boundary commit is `cd3520ff4fd2b544b2d47f74ba761ed78802d0e6` and was
+pushed to `origin/main`. The exact evidence is retained under
+`reports/evidence/` with these SHA-256 values:
+
+- TS-only M2 `505 passed / 0 failed / 2 skipped`: `m2-native-host-cd3520f-ts.tap`,
+  `018F496F4198006CCB447365E2305BCD2620198523AD90E425AD603EC3970A70`.
+- Java M2 `507 passed / 0 failed / 0 skipped`: `m2-native-host-cd3520f-java.tap`,
+  `2BB72F66CA4794102FAB6B52508EC84DD7517E889F0D8B20F9EF52320F662C8C`.
+- M1' body `243/243` passed: `m1prime-cd3520f-mminus-20261001.jsonl`,
+  `668D4741DE898DAC7BAA3B76E239BEDA1EB5EC17C205BAB3EC6B7220F334441C`.
+- #25 passed: `m1prime-cd3520f-nars-multistep-3-20261001.jsonl`,
+  `F099CA00EA48BA67A4279171440DCE3B4FA77D14D1874183889AA16459457DEF`.
+- #246 passed: `m1prime-cd3520f-simple-246-20261001.jsonl`,
+  `3D2B0470630758917F2B7ACA62415CDD0BFA2FABCF1C9696C7CEAEF83759C242`.
+- #245 65536 fixture hit `process_limit` at `1800034 ms`, last progress cycle
+  `220251`, marker missing, no exception/timeout/stall: `m1prime-cd3520f-long-65536-20261001.jsonl`,
+  `21C68524B0EFF0826FA1541BDA88805FE3673D63443ABCBD2A9A537FC0B5BE77`.
+- Strict markerless simple and long comparisons are both `equal=true`,
+  `first_difference=null`; comparison hashes are
+  `FE5D951C031772C2EBF08D947FEF80D9E79BF0E23D232826BE0F7984AFDE19` for
+  `markerless-cd3520f-simple-compare-20261001.json` and
+  `markerless-cd3520f-long-compare-20261001.json`.
+
+The source audit at this commit reports `0/0` direct npm jree imports and no
+`java.util`/`java.lang` code hits after comment masking. The platform audit
+reports zero direct jree imports; remaining Node imports are confined to host
+and tooling scopes. These are closure facts, not a claim that all Java-shaped
+compatibility contracts have been deleted.

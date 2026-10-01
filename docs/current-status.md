@@ -4,11 +4,19 @@
 
 - 状态日期：2026-10-01（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
-- 当前发布提交：`c5de106`
+- 当前发布提交：`cd3520f`
 - 包版本：`1.0.2`（GitHub Release `v1.0.2` 已发布）
 - LeanSpec：024、020、027 为 `complete`；023、025、031 仍在推进
 - M1-prime：243/243 M1--、#25、#245 降载、#246 均通过；两个 markerless digest equal；含 Java M2 `498/498`
-- Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，Pages 提交 `547b1d5`，metadata 绑定核心 `c5de106`
+- Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，demo 提交 `ff4b01d`，metadata 绑定核心 `cd3520f`
+
+## 2026-10-01 native host boundary exact gate
+
+- `cd3520f` 将 Node/browser native host adapter 收窄为 TypeScript 宿主能力；翻译兼容命名空间移至显式 `legacy-namespace.ts`，demo worker 直接向核心传入原生 `string`。
+- TS-only M2：`505` 总项中 `503 passed / 0 failed / 2 skipped`，Java M2：`507/507` 通过；typecheck、build、dist API、jree/platform audit、demo Astro check/28 tests/build/browser smoke 均通过。
+- M1' 主体：243/243 通过；#25 `nars_multistep_3.nal` 通过；#246 通过；#245 65536 复核在 `1800034 ms` 命中 `process_limit`，最后进度周期 `220251`，marker missing，分类为持续性系统瓶颈，不是 timeout、exception 或 stall。
+- 严格 markerless：simple 和 long 均 `131072/131072`、128 windows、`equal=true`、`first_difference=null`。原始 2,000,000 周期仍不宣称完整通过。
+- 直接 npm jree import：`0/0`；package dependency declaration：`null`。剩余 Java shape 为 project-owned compatibility contracts，031 仍保持 `in-progress`。
 
 ## 2026-10-01 native performance closure
 

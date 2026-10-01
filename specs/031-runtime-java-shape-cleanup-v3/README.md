@@ -133,3 +133,20 @@ dirty-source override.
 The acceptance boxes remain open until exact-commit M1', Java M2, #246,
 reduced #245, markerless, Node/browser smoke and the residual audit are
 recorded together.
+
+## Exact-commit gate result: `cd3520f`
+
+The exact commit `cd3520ff4fd2b544b2d47f74ba761ed78802d0e6` is pushed. Its
+TS-only M2 (`505/0/2`), Java M2 (`507/0/0`), M1' body (`243/243`), #25, #246,
+strict simple markerless and strict long markerless gates passed. The #245
+65536 fixture again reached the approved safety limit (`1800034 ms`, last
+progress cycle `220251`, marker missing) and is classified as `process_limit`;
+therefore the original 2,000,000-cycle workload remains a documented system
+bottleneck and does not count as a completed long-cycle gate.
+
+The native host and browser demo checks passed, and the demo repository was
+updated and pushed as `ff4b01d`, with worker metadata bound to `cd3520f`.
+031 remains `in-progress`: the remaining work is to migrate the callers of the
+legacy namespace, remove the explicitly named compatibility facades when
+their observable contracts are no longer needed, and rerun the final gates
+after that removal.
