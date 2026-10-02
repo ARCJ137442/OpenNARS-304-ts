@@ -473,6 +473,11 @@ TS-only M2 passed `506/508` (two skips, zero failures); Java M2 passed
 `508/508`; typecheck passed. Exact-commit M1' is still required before
 accepting this batch.
 
+Exact-commit M1' for final type-vocabulary commit `f7820aa` completed
+`243/243` with zero failure/exception/timeout/process-limit/stall/not-run rows;
+JSONL SHA-256 is
+`419D9F8C5B0FE167BF15B12D8DFDF68EBF0BB845BE50C65A101275F64D2144C4`.
+
 ### Rejected candidate: inline native string equality
 
 Replacing the project `textEquals` helper with direct `===` at Term,

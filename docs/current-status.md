@@ -3212,6 +3212,12 @@ LeanSpec 15 项
 - 已拒绝 Bag retained-key 快路径与 Term hash cache、双向 value-equality shortcut；它们未表现出可重复收益，保留诊断 evidence，不计为优化轮次。
 - LeanSpec 仍显示 023 与 031 为 `in-progress`，M1' 长周期 #245 的 65536 运行在约 1 GiB RSS 保护停止，原始 2,000,000 周期未通过；spec gates、markerless、demo 全门及 TPS/RPS 目标仍需完成。
 
+## 2026-10-02 native primitive vocabulary batch
+
+- 当前代码提交：`f7820aa`（代码 `3457191`），117 个 TS 源/测试文件从小写 Java 原始别名改用 `IntNumber`、`RuntimeLong`、`FloatNumber`、`DoubleNumber`、`ShortNumber`、`CharCode`；运行时仍为 `number/bigint`。
+- TS-only M2：`506/508`（2 skips、0 failures）；Java M2：`508/508`；配置协议字符串 `int.class/float.class` 保持不变。
+- exact-commit M1'：`243/243`，JSONL SHA-256 `419D9F8C5B0FE167BF15B12D8DFDF68EBF0BB845BE50C65A101275F64D2144C4`。
+
 ## 2026-10-02 remaining-helper naming batch
 
 - 当前代码提交：`f07e391`，生产 local helper 已去除 `javaArrayToString`、`javaObjectHashCode`、`javaForgetCycles` 等 Java 迁移命名，保留原数值/文本行为。
