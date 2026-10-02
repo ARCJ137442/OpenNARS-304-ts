@@ -1,0 +1,112 @@
+{
+  "base": "07aceff8086d6d378394e9183014a92ac1bbd484",
+  "head": "82469ccb9588857253656f5ed442c9077decd26a",
+  "files": [
+    "docs/probes/20261002-bag-term-equality.md",
+    "reports/evidence/bag-term-index-baseline-20261003.json",
+    "reports/evidence/bag-term-index-candidate-20261003.json",
+    "reports/evidence/bag-term-index-candidate-recheck-20261003.json",
+    "reports/evidence/bag-term-index-java-m2-20261003.tap",
+    "reports/evidence/bag-term-index-ts-only-m2-20261003.tap",
+    "specs/042-native-performance-convergence-fix-release/README.md",
+    "src/storage/Bag.ts",
+    "test/node/bag.test.ts"
+  ],
+  "frozen_java_baseline": "H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts-evidence-archive\\g0-java-baseline-frozen-26772af-20260917.jsonl",
+  "frozen_java_baseline_sha256": "264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954",
+  "tier": "T2",
+  "live_java_required": true,
+  "m1_minus_required": false,
+  "full_m1_required": false,
+  "m1_prime_required": true,
+  "m1_profile": "prime",
+  "affected_nal_required": false,
+  "validation_profile": "stage",
+  "cluster_id": null,
+  "cluster_close": false,
+  "m1_minus_reasons": [],
+  "source_files": 1,
+  "source_changed_lines": 90,
+  "reasons": [
+    "stage:rc",
+    "high-risk-path:src/storage/Bag.ts",
+    "source-line-count:90",
+    "semantic-token-change"
+  ],
+  "note": "T1 slices use affected NALs; only an enumerated cluster close runs M1-. Observed regressions or an invalid frozen baseline always escalate, and the tool never certifies semantic equivalence.",
+  "validation_plan": {
+    "plan_valid": true,
+    "validation_profile": "stage",
+    "selected_cluster": {
+      "id": "J3-inference-core",
+      "title": "推理核心簇",
+      "directTests": [
+        "test/node/bag.test.ts",
+        "test/node/tasklink-key.test.ts",
+        "test/node/compositional-rules.test.ts"
+      ],
+      "affectedNals": [
+        "java-master/src/main/resources/nal/single_step/nal6.17.nal",
+        "java-master/src/main/resources/nal/multi_step/nal4.recursion.nal",
+        "java-master/src/main/resources/nal/multi_step/nars_transitivity.nal",
+        "java-master/src/main/resources/nal/application/toothbrush2.nal"
+      ]
+    },
+    "supporting_clusters": [],
+    "touched_clusters": [
+      "J3-inference-core"
+    ],
+    "unassigned_source_files": [],
+    "multiply_assigned_source_files": [],
+    "plan_errors": [],
+    "direct_test_hints": [
+      "test/node/bag.test.ts",
+      "test/node/tasklink-key.test.ts",
+      "test/node/compositional-rules.test.ts"
+    ],
+    "affected_nal_files": [],
+    "common_commands": [
+      [
+        "npm",
+        "test"
+      ],
+      [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      [
+        "npm",
+        "run",
+        "test:build"
+      ],
+      [
+        "npm",
+        "run",
+        "test:api:dist"
+      ],
+      [
+        "npm",
+        "run",
+        "scan:migration-patterns"
+      ],
+      [
+        "npm",
+        "run",
+        "audit:jree"
+      ],
+      [
+        "npm",
+        "run",
+        "audit:platform"
+      ]
+    ],
+    "affected_nal_command": null,
+    "m1_minus_command": null,
+    "live_java_required": true,
+    "full_m1_required": false,
+    "m1_prime_required": true,
+    "m1_profile": "prime",
+    "strict_markerless_required": true
+  }
+}

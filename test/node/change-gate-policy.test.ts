@@ -48,6 +48,14 @@ test("gate policy escalates baseline changes and milestone acceptance to T2", ()
   assert.equal(classifyChangeGate({ files: ["src/storage/Bag.ts"], patch: "-old code" }).tier, "T1");
 });
 
+test("M1-prime is available for later release gates while stage 023 retains full M1", () => {
+  assert.equal(classifyChangeGate({ files: ["src/storage/Bag.ts"], m1Profile: "prime" }).m1_profile, "prime");
+  const release = classifyChangeGate({ files: [], stage: "rc", m1Profile: "prime" });
+  assert.equal(release.m1_prime_required, true);
+  assert.equal(release.full_m1_required, false);
+  assert.throws(() => classifyChangeGate({ files: [], stage: "023", m1Profile: "prime" }), /full M1/);
+});
+
 test("gate policy escalates broad production edits", () => {
   assert.equal(classifyChangeGate({ files: ["src/io/Texts.ts", "src/main/Parameters.ts", "src/platform/node/Host.ts"] }).tier, "T1");
   assert.equal(classifyChangeGate({ files: ["src/io/Texts.ts"], sourceChangedLines: 81 }).tier, "T1");

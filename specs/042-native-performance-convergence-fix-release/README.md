@@ -50,4 +50,4 @@ transitions:
 
 ## 第三批：全 Term Bag 的具体类索引（候选）
 
-针对第二批后的 CPU profile（`Bag.findEquivalentKey` 3413/7914 自耗采样），为全 Term 键的 Bag 在 hash 桶缺失时建立按具体类的原生临时索引，保留同类的完整 value equality、恢复态异 hash 查找和插入顺序；混合键仍全扫描。候选→基线→候选复测的固定 CartPole 20 ticks × 5 cycles 为 `22.625 / 9.488 / 23.525 RPS`，概念终点均 2296，峰值 RSS 较基线高约 50–62 MB。42/42 相关合同、非增量 typecheck、build、dist API 与静态审计通过；TS-only M2 `508/510`（2 skipped），Java M2 `510/510`。候选仍为未提交源码，尚不可转入固定提交的 M1′/浏览器出口。完整数据见 [词项键探查](../../docs/probes/20261002-bag-term-equality.md)。
+针对第二批后的 CPU profile（`Bag.findEquivalentKey` 3413/7914 自耗采样），为全 Term 键的 Bag 在 hash 桶缺失时建立按具体类的原生临时索引，保留同类的完整 value equality、恢复态异 hash 查找和插入顺序；混合键仍全扫描。候选→基线→候选复测的固定 CartPole 20 ticks × 5 cycles 为 `22.625 / 9.488 / 23.525 RPS`，概念终点均 2296，峰值 RSS 较基线高约 50–62 MB。固定生产提交 `82469cc` 的 42/42 相关合同、非增量 typecheck、build/dist API、静态审计、TS-only M2 `508/510`（2 skipped）、Java M2 `510/510`、M1′ 主体 `243/243`、#25/#246、#245 降载 65536 和两项 strict markerless 均通过。M1′ 单文件峰值 RSS 860 MB；当前 Worker 的真实浏览器持续性能和进一步收敛尚未验收。完整数据见 [词项键探查](../../docs/probes/20261002-bag-term-equality.md)。

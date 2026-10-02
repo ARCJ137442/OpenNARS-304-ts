@@ -40,8 +40,8 @@ export function runtimeDependencyFingerprint(manifest) {
 export function classifyChangeGate({ files = [], sourceChangedLines = 0, patch = "", stage = "none", clusterId = null, closeCluster = false, runtimeDependenciesChanged = false, m1Profile = "full" } = {}) {
   if (!STAGES.has(stage)) throw new Error(`unknown stage: ${stage}`);
   if (m1Profile !== "full" && m1Profile !== "prime") throw new Error("unknown m1 profile");
-  if (m1Profile === "prime" && (stage !== "023" && stage !== "024")) {
-    throw new Error("m1-prime profile is only valid for stage 023 or stage 024");
+  if (m1Profile === "prime" && stage === "023") {
+    throw new Error("stage 023 requires the original full M1 profile");
   }
   if (clusterId !== null && (typeof clusterId !== "string" || clusterId.trim() === "")) {
     throw new Error("clusterId must be a non-empty string or null");
