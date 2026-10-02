@@ -822,7 +822,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     public equals(that: unknown): boolean {
         if (that === this)
             return true;
-        if (!(that instanceof Term))
+        if (!(that instanceof Term) || this.constructor !== that.constructor)
             return false;
         return textEquals(this.name(), (that as Term).name());
     }
