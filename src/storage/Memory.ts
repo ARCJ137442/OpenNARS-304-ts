@@ -34,7 +34,6 @@ import type { Nar } from "../main/Nar.ts";
 import { textValue } from "../runtime/Text.ts";
 import { asText as toHostTextString } from "../runtime/Text.ts";
 import type { TextInput } from "../runtime/Text.ts";
-import { ReasonerScheduler } from "../runtime/ReasonerScheduler.ts";
 import { ReasonerRandom } from "../runtime/ReasonerRandom.ts";
 import type { Resettable } from "../interfaces/Resettable.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -97,8 +96,6 @@ export class Memory implements Iterable<Concept>, Resettable {
 
     // Boolean localInferenceMutex = false;
 
-    protected checked: boolean = false;
-    protected isjUnit: boolean = false;
 
     /* ---------- Constructor ---------- */
     /**
@@ -228,19 +225,6 @@ export class Memory implements Iterable<Concept>, Resettable {
         this.output(t);
     }
 
-    public static isJUnitTest(): boolean {
-        if (typeof process !== "undefined" && process.release?.name === "node") {
-            return false;
-        }
-        const stackTrace = ReasonerScheduler.current().stackFrames();
-        for (let element of stackTrace) {
-            if (element.getClassName().startsWith("org.junit.")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * @param time indirection to retrieve time
      */
@@ -280,10 +264,6 @@ export class Memory implements Iterable<Concept>, Resettable {
                 const [time, task, emitIn] = args as [Timable, Task, boolean];
 
 
-                if (!this.checked) {
-                    this.checked = true;
-                    this.isjUnit = Memory.isJUnitTest();
-                }
                 if (task !== null) {
                     let s: Stamp = task.sentence.stamp;
                     if (s.getCreationTime() === (-1 as unknown as long)) {

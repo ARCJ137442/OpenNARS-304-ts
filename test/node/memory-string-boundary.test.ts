@@ -2,6 +2,7 @@
 test("Memory keeps task reason literals native until event conversion", () => {
     const source = readFileSync(new URL("../../src/storage/Memory.ts", import.meta.url), "utf8");
     assert.doesNotMatch(source, /\bS`/);
+    assert.doesNotMatch(source, /process\.release|isJUnitTest|isjUnit/);
 });
 
 import assert from "node:assert/strict";
