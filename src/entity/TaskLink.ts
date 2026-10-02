@@ -178,9 +178,8 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
                 let linkKey: TermLink = termLink.name();
 
                 // iterating the FIFO deque from oldest (first) to newest (last)
-                const ir = this.records.iterator();
-                while (ir.hasNext()) {
-                    let r: TaskLink.Recording = ir.next();
+                let recordIndex = 0;
+                for (const r of this.records) {
                     if (linkKey.equals(r.link)) {
                         if (currentTimeLong < BigInt(r.getTime()) + noveltyHorizon) {
                             // too recent, not novel
@@ -189,11 +188,12 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
                             // happened RuntimeLong enough ago that we have forgotten it somewhat, making it seem
                             // more novel
                             r.setTime(currentTimeLong);
-                            ir.remove();
+                            this.records.removeAt(recordIndex);
                             this.records.addLast(r);
                             return true;
                         }
                     }
+                    recordIndex += 1;
                 }
                 // keep recordedLinks queue a maximum finite size
                 while (this.records.size() + 1 >= this.recordLength)

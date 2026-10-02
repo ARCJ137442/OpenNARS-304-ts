@@ -30,6 +30,12 @@
 - 静态 `.class` 访问器暂时只返回构造器，作为迁移过渡；它不再创建 token 对象。未知事件错误使用构造器名称。
 - typecheck、build、dist API、TS-only M2 `506/508`（0 failed、2 skipped）、含 Java M2 `508/508` 和 jree audit `0/0` 均通过；M1' 尚未在该批次提交上运行。
 
+## 2026-10-02 iterator call-site reduction
+
+- `TaskLink` 的 `NativeDeque` 查找改用 `for...of` 加逻辑索引删除；`Bag` 的原生 values 重建改用原生可迭代视图。
+- 保留 `Anticipate`、恢复态外部集合和公开 `MutableIterator` 的 `remove`/fail-fast 合同，避免把 Java 语义误删。
+- 当前提交尚未包含这两个调用点改动；typecheck 与 33 个定向集合/Bag/TaskLink 合同通过，完整 M2/M1' 延后到下一合并批次。
+
 ## 2026-10-02 native text idiom batch
 
 - 当前提交：`3bdc860`（代码批次 `9c4d76b`，证据记录提交 `3bdc860`），已推送 `origin/main`。

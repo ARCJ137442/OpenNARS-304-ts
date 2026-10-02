@@ -544,9 +544,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
             // A deserialized/legacy instance may not contain the native mirror yet.
             this.itemOrder = [];
             this.itemOrderIndex = new Map<Type, IntNumber>();
-            const iterator = this.nameTable.values().iterator();
-            while (iterator.hasNext()) {
-                const item = iterator.next();
+            for (const item of this.nameTable.values()) {
                 this.itemOrderIndex.set(item, this.itemOrder.length);
                 this.itemOrder.push(item);
             }

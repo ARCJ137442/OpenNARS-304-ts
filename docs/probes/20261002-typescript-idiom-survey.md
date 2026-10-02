@@ -49,3 +49,9 @@ This probe records the language-level cleanup boundary after the v1.0.4 release.
 - The old `ClassToken` class, WeakMap cache, token equality methods, and `.getName()`/`.getSimpleName()` event formatting were removed from production.
 - Static `.class` accessors currently return the constructor for source compatibility; the event map itself never sees a token object. Further naming cleanup can remove the transitional accessor after consumers are migrated.
 - Error messages identify unknown events by `constructor.name`, preserving useful diagnostics without object reflection wrappers.
+
+## Batch 5: iterator call-site reduction
+
+- `TaskLink` used a mutable deque iterator only to find one record, remove it, and append it again. It now uses native `for...of` plus the deque's logical `removeAt` operation.
+- `Bag` rebuilds its native order mirror by reading all values and now uses the values view directly.
+- `Anticipate`, restored external collections, and public collection iterators still require `remove`/fail-fast behavior and remain in the semantic iterator batch.
