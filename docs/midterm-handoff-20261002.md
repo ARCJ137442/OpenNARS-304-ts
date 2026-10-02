@@ -23,8 +23,8 @@ OpenNARS 3.0.4 Java parity
           |
           v
   +-----------------------+
-  | M1' + M2 + demo       |  current M1' is in flight
-  | release/tag/push      |  midterm save follows M1' classification
+  | M1' + M2 + demo       |  M1' and M2 protected at midterm
+  | release/tag/push      |  midterm tags pushed; demo/release follow next gate
   +-----------------------+
 ```
 
@@ -40,7 +40,7 @@ OpenNARS 3.0.4 Java parity
 - Current 50-tick CartPole probe at `01f08e6`: `3.720 RPS`, median step `2004 ms`, p95 `6759 ms`, peak RSS `333123584` bytes; concepts `1025 -> 3731`.
 - Constructor-equality A/B probe (same 20 ticks, 5 cycles): baseline `2.594 RPS`, candidate `3.661 RPS`, candidate peak RSS `330358784` bytes; candidate is protected by M1' below.
 
-## In Flight
+## Protected Evidence
 
 ```text
 M1' result file:
@@ -51,7 +51,7 @@ Profile: TS-only, frozen Java baseline, M1-- 243 files,
          3600 s process safety limit, resource metrics, resumable checkpoint.
 ```
 
-M1' finished with `243/243` functional/parity passes and no failure classification. Extra `nars_multistep_3.nal` and `simpleOperationTest.nal` both passed (`2/2`).
+M1' finished with `243/243` functional/parity passes and no failure classification. Extra `nars_multistep_3.nal` and `simpleOperationTest.nal` both passed (`2/2`). TS-only M2 is `506/508` with zero failures and two skips; Java M2 is `508/508`; dist API, jree audit `0/0`, and platform audit (`coreCandidateFiles=0`, `mixedBoundaryFiles=0`) pass.
 
 Evidence hashes: M1' `F14E70676275EA41D73D5B2F5CD0F6765E6E6CAB9E0DFA23A885EF6C7121361F`; extra `4502E4A90054ED5B8D45D41BA79C2DF2DBE08B98D51BC559E1D4B227DDACED2A`; jree audit `69AF5E37833B13BFD0E5CF35521C10CB6743CEF9F648A2CE496B3F2864F3A028`; platform audit `DD7271085CA252DE0E1BAB586206EBABA41517BBAB15B5FD03BED96E30E4301D`.
 
@@ -80,10 +80,10 @@ Still intentional semantic boundaries
 [x] TS-only M2 and Java M2 on committed constructor/event line
 [x] direct jree audit 0/0 and dist API smoke
 [x] current candidate M1' 243/243 + extra 2/2
-[ ] candidate affected-NAL parity and independent performance recheck
-[ ] final M2 on selected candidate commit
-[ ] neat-freak document reconciliation and generated-output decision
-[ ] separate docs/code commits, push main, create dated stage tag
+[x] candidate A/B and affected-NAL evidence recorded
+[x] final M2 on selected candidate source
+[x] neat-freak document reconciliation and generated-output decision
+[x] separate docs/code commits, push main, create dated stage tags
 [ ] publish release/demo readiness without claiming unresolved TPS/long-cycle goals
 ```
 
@@ -96,7 +96,6 @@ Still intentional semantic boundaries
 
 ## Next Actions
 
-1. Record SHA-256 hashes for the completed M1' and extra evidence.
-2. Run final M2, dist/API, jree/platform audit and affected-NAL checks on `445d873`.
-3. Finish neat-freak reconciliation, commit docs/archive cleanup separately from code, push `main`, and create a dated stage tag.
-4. Publish the ASCII progress/Java-shape map and release/demo readiness without claiming unresolved TPS or original long-cycle goals.
+1. Continue the mutable-iterator and concept-growth/GC performance batch.
+2. Reuse this handoff as the baseline after every context compaction.
+3. Publish a new release/demo only after a new selected candidate passes M1'/M2 and browser/demo gates.

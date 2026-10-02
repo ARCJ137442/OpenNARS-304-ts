@@ -47,7 +47,7 @@ but final claims are limited by the current immutable evidence and this handoff.
 020 performance/release: in progress
 Original 2,000,000-cycle stability workload: not claimed (device resource limit)
 M1' on current candidate: 243/243 + extra 2/2 passed
-M2 on current candidate: required after final candidate selection
+M2 on selected candidate: TS-only 506/508 (0 failed, 2 skipped); Java 508/508
 Demo TPS target 20 / sync target 15: not achieved; concept growth and GC tails remain
 ```
 
@@ -80,7 +80,6 @@ The frozen baseline is outside the repository at `H:\A137442\Develop\AGI\NARS\_P
 
 ## Next Actions
 
-1. Record the completed M1' classification and evidence hashes.
-2. Run final M2, dist/API, jree/platform audit and affected NAL checks on `445d873`.
-3. Finish neat-freak reconciliation, commit docs/archive cleanup separately from code, push `main`, and create a dated stage tag.
-4. Publish the ASCII progress/Java-shape map and update release/demo readiness without claiming unresolved targets.
+1. Keep the selected candidate protected by the committed M1'/M2/audit evidence.
+2. Continue the next mutable-iterator and GC/state-growth performance batch.
+3. Update the demo repository and release package only after the next selected candidate passes the same gates.
