@@ -1,5 +1,5 @@
 ---
-status: in-progress
+status: complete
 created: 2026-09-30
 priority: high
 tags:
@@ -11,10 +11,13 @@ depends_on:
 - 025-jree-free-runtime-complete
 - 027-native-performance-optimization
 created_at: 2026-09-30T23:44:07.472583300Z
-updated_at: 2026-09-30T23:44:35.821820100Z
+updated_at: 2026-10-02T05:26:56.652133300Z
+completed_at: 2026-10-02T05:26:56.652133300Z
 transitions:
 - status: in-progress
   at: 2026-09-30T23:44:35.821820100Z
+- status: complete
+  at: 2026-10-02T05:26:56.652133300Z
 ---
 
 # Runtime Java-shape cleanup
@@ -55,21 +58,39 @@ Reduce residual Java-shaped code in `src/runtime` and its direct callers after s
 - [x] Establish a runtime-shape baseline: typecheck, serial TS M2, Java M2, M3/RPS, one affected NAL set, and jree/platform audits.
 - [x] Refactor one contract family at a time, beginning with duplicated text/value/class helper layers; add focused direct contracts before changing callers.
 - [x] Remove dead aliases and wrapper allocations only after native and compatibility paths are both covered.
-- [ ] Re-run M2, M3/RPS, affected NALs, M1-prime, markerless digests, and browser/Node smoke on one immutable commit.
-- [ ] Record accepted/rejected candidates, residual Java shapes, and human takeover guidance; close only after all gates pass.
+- [x] Re-run M2, M3/RPS, affected NALs, M1-prime, markerless digests, and browser/Node smoke on one immutable commit.
+- [x] Record accepted/rejected candidates, residual Java shapes, and human takeover guidance; close only after all gates pass.
 
 ## Acceptance tests
 
-- [ ] No unexplained runtime Java-shaped implementation remains in the classified scope.
-- [ ] Public and host-facing contracts remain explicit and documented.
-- [ ] Typecheck, build, dist API, TS M2, Java M2, M3, affected NAL parity, and audits pass with zero failures.
-- [ ] M1-prime and both strict markerless digest comparisons remain equivalent.
-- [ ] Node CLI, browser Worker, Demo Lab, and operation/event behavior remain valid.
-- [ ] Any residual Java shape has a documented reason, observable contract, and removal condition.
+- [x] No unexplained runtime Java-shaped implementation remains in the classified scope.
+- [x] Public and host-facing contracts remain explicit and documented.
+- [x] Typecheck, build, dist API, TS M2, Java M2, M3, affected NAL parity, and audits pass with zero failures.
+- [x] M1-prime and both strict markerless digest comparisons remain equivalent.
+- [x] Node CLI, browser Worker, Demo Lab, and operation/event behavior remain valid.
+- [x] Any residual Java shape has a documented reason, observable contract, and removal condition.
 
 ## Evidence
 
 Store inventory, focused contracts, benchmark output, hashes, and rejected experiments under `docs/probes/` and `reports/evidence/`. Keep historical evidence intact and stage only files owned by this spec.
+
+## Final gate record: current immutable line
+
+The current code line is `234b999` (the latest source change is the native
+primitive vocabulary batch; later commits only record evidence/status). The
+final evidence set is:
+
+- TS-only M2: `506/508`, two documented skips, zero failures; Java M2: `508/508`.
+- M3: four selected NAL workloads all functional/parity passed on the current core.
+- M1': `243/243`, zero failure/exception/timeout/process-limit/stall/not-run; exact body: `reports/evidence/m1prime-f7820aa-mminus-20261002.jsonl`.
+- Strict markerless: simple and long both completed Java/TS `131072` cycles, `129` records, `incomplete=false`, `equal=true`, and `first_difference=null`.
+- Release/build/dist API, jree audit (`0/0` direct imports), platform audit (`coreCandidateFiles=0`, `mixedBoundaryFiles=0`), Node CLI, Worker build and real browser smoke passed.
+- Accepted performance candidate: direct concrete-constructor equality in `Term.equals`, with repeated demo workload RPS improvement of roughly 22-24%; rejected candidates remain recorded with raw A/B evidence.
+
+Residual contracts intentionally retained are UTF-16/hash semantics, value
+equality receiver direction, collection iterator/remove behavior, float32
+narrowing, Random ordering, and explicit host capabilities. These are
+project-owned observable contracts, not unresolved npm jree dependencies.
 
 ## Batch 1 result
 

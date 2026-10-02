@@ -3218,6 +3218,11 @@ LeanSpec 15 项
 - TS-only M2：`506/508`（2 skips、0 failures）；Java M2：`508/508`；配置协议字符串 `int.class/float.class` 保持不变。
 - exact-commit M1'：`243/243`，JSONL SHA-256 `419D9F8C5B0FE167BF15B12D8DFDF68EBF0BB845BE50C65A101275F64D2144C4`。
 
+## 2026-10-02 spec031 closure evidence
+
+- LeanSpec 031 已通过工具更新为 `complete`。当前证据闭包包括 TS/Java M2、M3 selected NAL parity、243 项 M1'、当前 HEAD strict markerless simple/long equal、Node/release/browser demo smoke，以及 jree/platform audits。
+- 023 仍保持 `in-progress`：原始 #245 2,000,000 周期在本机未完成，不能把 65536/memory-protected 观察改写成完整长期稳定性通过。
+
 ## 2026-10-02 remaining-helper naming batch
 
 - 当前代码提交：`f07e391`，生产 local helper 已去除 `javaArrayToString`、`javaObjectHashCode`、`javaForgetCycles` 等 Java 迁移命名，保留原数值/文本行为。
