@@ -208,7 +208,7 @@ export class AttentionMetric extends JavaObject {
     public static readFile(filepath: java.lang.String): java.util.List<java.lang.String> {
         let res: java.util.List<java.lang.String> = new java.util.ArrayList<java.lang.String>();
             // This holds the final error to throw (if any).
-            let error: import("../../src/runtime/ResourceCompat.ts").ResourceError | undefined;
+            let error: import("../../src/runtime/ResourceErrors.ts").ResourceError | undefined;
 
             const br: java.io.BufferedReader = new java.io.BufferedReader(new java.io.FileReader(filepath))
             try {

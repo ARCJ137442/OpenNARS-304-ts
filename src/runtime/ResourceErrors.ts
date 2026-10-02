@@ -21,7 +21,7 @@ function toResourceError(error: unknown): ResourceError {
     return new ResourceError(String(error));
 }
 
-export function closeResourcesCompat(resources: AutoCloseable[]): ResourceError | undefined {
+export function closeResources(resources: AutoCloseable[]): ResourceError | undefined {
     let error: ResourceError | undefined;
     for (const resource of [...resources].reverse()) {
         try {
@@ -35,12 +35,12 @@ export function closeResourcesCompat(resources: AutoCloseable[]): ResourceError 
     return error;
 }
 
-export function handleResourceErrorCompat(cause: unknown, closeError?: ResourceError): ResourceError {
+export function handleResourceError(cause: unknown, closeError?: ResourceError): ResourceError {
     const error = toResourceError(cause);
     if (closeError !== undefined) error.addSuppressed(closeError);
     return error;
 }
 
-export function throwResourceErrorCompat(error?: ResourceError): void {
+export function throwResourceError(error?: ResourceError): void {
     if (error !== undefined) throw error;
 }

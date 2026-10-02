@@ -477,6 +477,15 @@ platform audit SHA-256 is
 `8811FFCF096A573863428197DDFAD33C40809311994CCB119D484F6BED0C176B` and
 reports zero mixed-boundary files.
 
+## Resource/process boundary naming batch
+
+The Node process helper is now `exitProcess`; the resource cleanup module is
+`ResourceErrors.ts` with `closeResources`, `handleResourceError`, and
+`throwResourceError`. The reverse-close order, suppressed-error chain, cause
+preservation, and process-exit capability behavior are unchanged. Focused
+resource/config/core contracts passed `63/63`; full M2 passed `506/508` TS-only
+(two skips) and `508/508` with Java; release/build/dist API checks passed.
+
 ## Value-contract naming batch
 
 Production collection and array helpers now use project names

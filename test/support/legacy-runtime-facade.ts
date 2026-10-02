@@ -258,7 +258,7 @@ export class JavaStringJoinerCompat {
 }
 
 /** Java System.exit(), mapped to the host process boundary for the Node CLI. */
-export const javaSystemExit = (status: number): never => {
+export const exitProcess = (status: number): never => {
     if (typeof process !== "undefined" && typeof process.exit === "function") {
         process.exit(status);
     }
@@ -267,9 +267,9 @@ export const javaSystemExit = (status: number): never => {
 
 export type { int, char, short, long, float, double } from "../../src/types.ts";
 export {
-    closeResourcesCompat as closeResources,
-    handleResourceErrorCompat as handleResourceError,
-    throwResourceErrorCompat as throwResourceError,
-} from "../../src/runtime/ResourceCompat.ts";
+    closeResources as closeResources,
+    handleResourceError as handleResourceError,
+    throwResourceError as throwResourceError,
+} from "../../src/runtime/ResourceErrors.ts";
 export const S = (strings: TemplateStringsArray, ...values: unknown[]): NativeJavaString =>
     new NativeJavaString(strings.reduce((result, text, index) => result + text + (values[index] ?? ""), ""));
