@@ -1,0 +1,360 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-02T09:33:01.974Z",
+  "gitCommit": "445d873cb7b491693ae7237135136fd24888f255",
+  "scope": [
+    "src"
+  ],
+  "sourceFiles": 151,
+  "summary": {
+    "directJreeImportFiles": 0,
+    "directJreeImportOccurrences": 0,
+    "newArrayListOccurrences": 0,
+    "newLinkedListOccurrences": 0,
+    "newLinkedHashMapOccurrences": 0,
+    "newLinkedHashSetOccurrences": 0,
+    "javaObjectFiles": 0,
+    "javaUtilFiles": 0,
+    "javaLangFiles": 0,
+    "javaStringFiles": 0,
+    "highRiskItems": 5,
+    "semanticReviewItems": 7,
+    "candidateNativeItems": 0
+  },
+  "textualBaseline": {
+    "directJreeImportFiles": 0,
+    "newArrayListOccurrences": 0,
+    "newLinkedListOccurrences": 0,
+    "newLinkedHashMapOccurrences": 0,
+    "newLinkedHashSetOccurrences": 0,
+    "javaObjectFiles": 27,
+    "javaUtilFiles": 6,
+    "javaLangFiles": 2,
+    "note": "包含注释和禁用代码；summary基于去除注释后的代码命中，作为迁移前后计数参照。"
+  },
+  "dependency": {
+    "package": "jree",
+    "declaredVersion": null,
+    "declaredIn": "package.json"
+  },
+  "classification": {
+    "A": "可直接原生化候选，但仍需局部契约验证",
+    "B": "需要Java语义兼容实现",
+    "C": "高风险运行时边界"
+  },
+  "items": [
+    {
+      "file": "src/io/Symbols.ts",
+      "symbols": [
+        "static {"
+      ],
+      "kind": "static-initialization",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        247
+      ],
+      "runtimeUse": "静态命中static-initialization；需结合调用点确认运行时用途。",
+      "alternative": "显式初始化函数、工厂或注册表；按数据结构到入口方向安排依赖。",
+      "semanticRisk": "模块求值顺序和循环依赖可能造成未初始化导出或错误类身份。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "ES modules",
+        "jree"
+      ],
+      "requiredContracts": [
+        "初始化顺序可说明",
+        "循环依赖和首次导入路径有测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/io/events/Events.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        101
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/language/Tense.ts",
+      "symbols": [
+        "static {"
+      ],
+      "kind": "static-initialization",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        46
+      ],
+      "runtimeUse": "静态命中static-initialization；需结合调用点确认运行时用途。",
+      "alternative": "显式初始化函数、工厂或注册表；按数据结构到入口方向安排依赖。",
+      "semanticRisk": "模块求值顺序和循环依赖可能造成未初始化导出或错误类身份。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "ES modules",
+        "jree"
+      ],
+      "requiredContracts": [
+        "初始化顺序可说明",
+        "循环依赖和首次导入路径有测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/operator/NullOperator.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        39
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/operator/mental/Anticipate.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 2,
+      "lines": [
+        125,
+        171
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "medium",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/ClassIdentity.ts",
+      "symbols": [
+        "getClass("
+      ],
+      "kind": "runtime-class-identity",
+      "layer": "runtime",
+      "occurrences": 1,
+      "lines": [
+        28
+      ],
+      "runtimeUse": "静态命中runtime-class-identity；需结合调用点确认运行时用途。",
+      "alternative": "显式构造器/token映射和集中类型判断；不依赖jree的Symbol.hasInstance。",
+      "semanticRisk": "类标识坍缩会误派发事件、规则或插件。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "jree",
+        "java.lang",
+        "runtime adapter"
+      ],
+      "requiredContracts": [
+        "不同运行时类token保持可区分",
+        "instanceof/事件派发有直接回归测试"
+      ],
+      "status": "high-risk-runtime"
+    },
+    {
+      "file": "src/runtime/NativeDeque.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 1,
+      "lines": [
+        42
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/NativeList.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 2,
+      "lines": [
+        117,
+        348
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/NativeMap.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 3,
+      "lines": [
+        378,
+        416,
+        458
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/runtime/NativeSet.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 1,
+      "lines": [
+        163
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "low",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/storage/Bag.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 2,
+      "lines": [
+        377,
+        539
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    },
+    {
+      "file": "src/storage/Memory.ts",
+      "symbols": [
+        ".iterator()"
+      ],
+      "kind": "java-iterator",
+      "layer": "container",
+      "occurrences": 1,
+      "lines": [
+        451
+      ],
+      "runtimeUse": "静态命中java-iterator；需结合调用点确认运行时用途。",
+      "alternative": "Iterable/Iterator协议或原生for-of；若需要remove，提供显式可变迭代器。",
+      "semanticRisk": "Java iterator.remove、快照时机和并发修改行为不能由for-of自动保证。",
+      "performanceHeat": "high",
+      "dependencyModules": [
+        "java.util",
+        "jree"
+      ],
+      "requiredContracts": [
+        "迭代快照时机明确",
+        "remove和修改期间行为有测试"
+      ],
+      "status": "semantic-review-required"
+    }
+  ],
+  "limitations": [
+    "静态扫描不能证明调用点的真实语义；每条记录仍需局部代码审阅和测试。",
+    "集合构造计数需按专用构造表达式另行核对，不能用java.util总命中替代。",
+    "本报告只覆盖src；使用--include-tests可生成包含测试代码的辅助盘点。"
+  ]
+}

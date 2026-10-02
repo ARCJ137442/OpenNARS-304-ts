@@ -19,6 +19,7 @@
 ## 开发与维护入口
 
 - [当前开发目标与验收计划](luna-agent-active-goal.md)：恢复后的唯一现行执行目标、T0/T1/T2 触发标准和长期门禁。
+- [中期交接与路线图](midterm-handoff-20261002.md)：无上下文 Agent 接手所需的当前提交、门禁、性能和下一步路线。
 - [开发者指南](developer-guide.md)：架构、LeanSpec、门禁、恢复 DAG 和提交纪律。
 - [M1/M2/M3 命令行核实手册](verification-commands.md)：维护者复核命令和长测试口径。
 - [Java → TypeScript 迁移纠正模式库](java-to-typescript-migration-patterns.md)：经过归纳的迁移模式与自动化边界。

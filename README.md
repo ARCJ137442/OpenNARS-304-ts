@@ -45,13 +45,13 @@ import { Nar, OutputHandler } from "opennars-304-ts";
 const nar = new Nar();
 const observer = {
   event(channel, args = []) {
-    if (channel === OutputHandler.OUT.class) console.log(...args.map(String));
+    if (channel === OutputHandler.OUT) console.log(...args.map(String));
   },
 };
-nar.on(OutputHandler.OUT.class, observer);
+nar.on(OutputHandler.OUT, observer);
 nar.addInput("<bird --> animal>.");
 nar.cycles(10);
-nar.off(OutputHandler.OUT.class, observer);
+nar.off(OutputHandler.OUT, observer);
 nar.stop();
 ```
 
@@ -67,10 +67,11 @@ nar.stop();
 - [发布前检查清单](docs/release-checklist.md)
 - [开发者指南](docs/developer-guide.md)
 - [当前状态与证据](docs/current-status.md)
+- [中期交接与路线图](docs/midterm-handoff-20261002.md)
 
 ## 状态与许可证
 
-024 平台适配、027 性能收敛和 `v1.0.2` fix release 已完成；023/025 严格 host 边界与 031 Java-shape cleanup 仍在推进。长期稳定性原始 2,000,000 周期不属于日常运行负载。详见[运行与验证手册](docs/operator-runbook.md)和[开源就绪评估](docs/open-source-readiness-v1.0.2.md)。
+当前维护主线是性能、Java-shape cleanup 与发布准备。生产源码的直接 jree audit 为 `0/0`；原始 2,000,000 周期长期稳定性仍受设备资源限制，不能宣称通过。当前进展与可接手路线见[中期交接](docs/midterm-handoff-20261002.md)、[当前状态](docs/current-status.md)和[运行与验证手册](docs/operator-runbook.md)。
 
 本仓库采用 MIT License，见 [LICENSE](LICENSE)。
 

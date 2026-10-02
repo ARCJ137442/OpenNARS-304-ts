@@ -1,6 +1,6 @@
 # OpenNARS-304-ts 开发者指南
 
-本文面向维护、审阅或恢复开发的贡献者。023/024 的实现阶段已经完成；当前维护主线是 020 性能与发布准备。2026-08-27 封存点和历史 Luna 文档只用于追溯，不能直接当作执行计划。
+本文面向维护、审阅或恢复开发的贡献者。023/024 的实现阶段已有阶段证据；当前维护主线是 Java-shape cleanup、020 性能与发布准备。最终声明仍以当前提交上的 M1'/M2 和阶段证据为准。2026-08-27 封存点和历史 Luna 文档只用于追溯，不能直接当作执行计划。
 
 ## 开始前
 
@@ -82,8 +82,8 @@ node --import ./scripts/register-ts-loader.mjs scripts/e2e/run-rps-benchmark.mjs
 
 当前 LeanSpec 主线为：
 
-- `023-jree-removal-native-runtime`：complete；生产核心无直接 `runtime/jree-compat.ts` 导入，Node host adapter 是唯一直接 npm `jree` 入口。
-- `024-platform-neutral-core-host-adapters`：complete；Node 与浏览器 adapter、Worker bundle 和阶段门已按 M1-prime 口径收口。
+- `023-jree-removal-native-runtime`：实现门历史记录为 complete；当前生产源码直接 jree audit 为 `0/0`，仍需以最终候选提交重新核对发布边界。
+- `024-platform-neutral-core-host-adapters`：实现门历史记录为 complete；Node/浏览器 adapter 与 Worker bundle 已有阶段证据，当前候选仍需最终集成核对。
 - `020-ts-performance-and-release`：in-progress；性能基线、npm/Pages 发布和长期稳定性优化仍未完成。
 
 推荐恢复 DAG：

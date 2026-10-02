@@ -41,12 +41,12 @@ import { Nar, OutputHandler } from "opennars-304-ts";
 
 const nar = new Nar();
 const observer = { event(channel, args = []) {
-  if (channel === OutputHandler.OUT.class) console.log(...args.map(String));
+  if (channel === OutputHandler.OUT) console.log(...args.map(String));
 } };
-nar.on(OutputHandler.OUT.class, observer);
+nar.on(OutputHandler.OUT, observer);
 nar.addInputText("<bird --> animal>.");
 nar.cycles(10);
-nar.off(OutputHandler.OUT.class, observer);
+nar.off(OutputHandler.OUT, observer);
 nar.stop();
 ```
 
