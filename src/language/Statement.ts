@@ -14,7 +14,7 @@ type StatementRuntime = Record<string, any>;
 type NativeOperator = Symbols.NativeOperator;
 type StatementName = ReturnType<CompoundTerm["name"]>;
 
-const javaArrayToString = (values: unknown[]): string =>
+const formatArray = (values: unknown[]): string =>
     `[${values.map(value => value === null || value === undefined ? "null" : textValue(value)).join(", ")}]`;
 
 /** Java original type: Statement.EnumStatementSide. */
@@ -107,7 +107,7 @@ export abstract class Statement extends CompoundTerm {
 
     protected init(t: Term[]): void {
         if (t.length !== 2)
-            throw new ReasonerStateError(`Requires 2 terms: ${javaArrayToString(t)}`);
+            throw new ReasonerStateError(`Requires 2 terms: ${formatArray(t)}`);
         if (t[0] === null)
             throw new ReasonerStateError(`Null subject: ${this}`);
         if (t[1] === null)
@@ -116,7 +116,7 @@ export abstract class Statement extends CompoundTerm {
                     if (this.isCommutative()) {
                 if (t[0].compareTo(t[1]) === 1) {
                     throw new ReasonerStateError(
-                        `Commutative term requires natural order of subject,predicate: ${javaArrayToString(t)}`);
+                        `Commutative term requires natural order of subject,predicate: ${formatArray(t)}`);
                 }
             }
         }

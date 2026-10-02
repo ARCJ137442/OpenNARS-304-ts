@@ -216,16 +216,16 @@ export class BudgetFunctions extends UtilityFunctions {
      */
     public static applyForgetting(budget: BudgetValue, forgetCycles: float,
         relativeThreshold: float): void {
-        const javaForgetCycles: float = Math.fround(forgetCycles) as float;
-        const javaRelativeThreshold: float = Math.fround(relativeThreshold) as float;
-        let quality: float = Math.fround(budget.getQuality() * javaRelativeThreshold) as float; // re-scaled quality
+        const forgetCyclesFloat: float = Math.fround(forgetCycles) as float;
+        const relativeThresholdFloat: float = Math.fround(relativeThreshold) as float;
+        let quality: float = Math.fround(budget.getQuality() * relativeThresholdFloat) as float; // re-scaled quality
         let p: float = Math.fround(budget.getPriority() - quality) as float; // priority above quality
         if (p > 0) {
             // Java widens the float base for Math.pow and narrows only when
             // quality is stored back into its float local.
             quality = Float32Math.from(quality + p * Float32Math.powDouble(
                 budget.getDurability(),
-                1.0 / Float32Math.multiply(javaForgetCycles, p),
+                1.0 / Float32Math.multiply(forgetCyclesFloat, p),
             )) as float;
         } // priority Durability
         budget.setPriority(quality);
@@ -348,11 +348,11 @@ export class BudgetFunctions extends UtilityFunctions {
         let t: Item<unknown> = nal.getCurrentTaskLink() ?? nal.getCurrentTask();
         // Java receives both parameters as float and stores each local result
         // back into a float before the belief-link feedback is applied.
-        const javaQual: float = Math.fround(qual) as float;
-        const javaComplexity: float = Math.fround(complexity) as float;
+        const qualityFloat: float = Math.fround(qual) as float;
+        const complexityFloat: float = Math.fround(complexity) as float;
         let priority: float = Math.fround(t.getPriority()) as float;
-        let durability: float = Math.fround(t.getDurability() / javaComplexity) as float;
-        let quality: float = Math.fround(javaQual / javaComplexity) as float;
+        let durability: float = Math.fround(t.getDurability() / complexityFloat) as float;
+        let quality: float = Math.fround(qualityFloat / complexityFloat) as float;
         const bLink = nal.getCurrentBeliefLink();
         // Java returns null for an unset belief link; the translated field is
         // undefined until first assignment, so both values mean "no link".

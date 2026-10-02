@@ -14,7 +14,7 @@ import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerError
 import { NativeList } from "../runtime/NativeList.ts";
 
 type CollectionInput<T> = Iterable<T> & { toArray(array?: T[]): T[] };
-const javaArrayToString = (values: readonly unknown[]): string =>
+const formatArray = (values: readonly unknown[]): string =>
     `[${values.map((value) => String(value)).join(", ")}]`;
 import { NativeSet } from "../runtime/NativeSet.ts";
 
@@ -695,7 +695,7 @@ export class Terms {
 
                 for (let o of t)
                     if (o === null)
-                    throw new ReasonerStateError(`Element null in: ${javaArrayToString(t)}`);
+                    throw new ReasonerStateError(`Element null in: ${formatArray(t)}`);
 
 
                 break;
@@ -710,7 +710,7 @@ export class Terms {
     public static verifyNonNullTerms(...t: Term[]): void {
         for (let o of t)
             if (o === null)
-                throw new ReasonerStateError(`Element null in: ${javaArrayToString(t)}`);
+                throw new ReasonerStateError(`Element null in: ${formatArray(t)}`);
     }
 
 
@@ -719,17 +719,17 @@ export class Terms {
             throw new ReasonerStateError("Needs >0 components");
         }
         if (!allowSingleton && (arg.length === 1)) {
-            throw new ReasonerStateError(`Needs >1 components: ${javaArrayToString(arg)}`);
+            throw new ReasonerStateError(`Needs >1 components: ${formatArray(arg)}`);
         }
         let s: Term[] = Term.toSortedSetArray(...arg);
         if (arg.length !== s.length) {
-            throw new ReasonerStateError(`Contains duplicates: ${javaArrayToString(arg)}`);
+            throw new ReasonerStateError(`Contains duplicates: ${formatArray(arg)}`);
         }
         let j: int = 0;
         for (let t of s) {
             if (!t.equals(arg[j++]))
                 throw new ReasonerStateError(
-                    `Un-ordered: ${javaArrayToString(arg)} , correct order=${javaArrayToString(s)}`);
+                    `Un-ordered: ${formatArray(arg)} , correct order=${formatArray(s)}`);
         }
         return s;
     }

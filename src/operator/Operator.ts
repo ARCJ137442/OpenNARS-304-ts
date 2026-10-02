@@ -24,7 +24,7 @@ import type { Plugin } from "../plugin/Plugin.ts";
 // instead of mechanically weakening domain Set/Map abstractions elsewhere.
 export type OperatorFeedback = Task[] | null;
 
-const javaArrayToString = (values: unknown[]): string =>
+const formatArray = (values: unknown[]): string =>
     `[${values.map((value) => value === null || value === undefined ? "null" : textValue(value)).join(", ")}]`;
 
 
@@ -231,7 +231,7 @@ export abstract class Operator extends Term implements Plugin {
             let operator: Operator = this.operation.getOperator();
 
             const budgetPrefix = b !== null ? `${textValue(b.toStringExternal())} ` : "";
-            return `${budgetPrefix}${textValue(operator)}(${javaArrayToString(args)})=${textValue(this.feedback)}`;
+            return `${budgetPrefix}${textValue(operator)}(${formatArray(args)})=${textValue(this.feedback)}`;
         }
 
     };

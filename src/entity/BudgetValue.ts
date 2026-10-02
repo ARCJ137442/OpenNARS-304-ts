@@ -127,12 +127,12 @@ export class BudgetValue {
      * @param v The new priority
      */
     public setPriority(v: float): void {
-        const javaV = BudgetValue.float(v);
-        if (javaV > 1.0) {
-            throw new ReasonerStateError(`Priority > 1.0: ${javaV}`);
+        const normalizedPriority = BudgetValue.float(v);
+        if (normalizedPriority > 1.0) {
+            throw new ReasonerStateError(`Priority > 1.0: ${normalizedPriority}`);
             // v=1.0f;
         }
-        this.priority = javaV;
+        this.priority = normalizedPriority;
     }
 
     /**

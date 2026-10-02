@@ -13,7 +13,7 @@ interface ItemComparator<E> {
     compare(a: E, b: E): int;
 }
 
-const javaObjectHashCode = (value: unknown): int => {
+const objectHashCode = (value: unknown): int => {
     const hashCode = (value as { hashCode?: unknown } | null)?.hashCode;
     if (typeof hashCode === "function") {
         return hashCode.call(value) as int;
@@ -241,7 +241,7 @@ export abstract  class Item<K> extends ReasonerObject {
      */
 
     public hashCode():  int {
-        return javaObjectHashCode(this.name());
+        return objectHashCode(this.name());
     }
 
     public equals(obj: unknown):  boolean {
@@ -282,7 +282,7 @@ abstract class StringKeyItem extends Item<TextInput> {
     }
 
     public hashCode(): int {
-        return javaObjectHashCode(this.name());
+        return objectHashCode(this.name());
     }
 
     public equals(obj: unknown): boolean {

@@ -36,8 +36,8 @@ export class UtilityFunctions {
     public static or(...arr: number[]): number {
         let product: number = 1;
         for (let f of arr) {
-            const javaF = UtilityFunctions.float(f);
-            product = UtilityFunctions.float(product * UtilityFunctions.float(1 - javaF));
+            const normalizedFactor = UtilityFunctions.float(f);
+            product = UtilityFunctions.float(product * UtilityFunctions.float(1 - normalizedFactor));
         }
         return UtilityFunctions.float(1 - product);
     }

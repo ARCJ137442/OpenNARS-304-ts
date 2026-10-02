@@ -459,6 +459,19 @@ The JSONL SHA-256 is
 `8FDAD01DBDAA2D0C257EB58B2D4D12A655E867195BAEB04AE2F8943C18FD78FD`.
 The empty historical `Term.ts.codex-corrupt` placeholder remains untracked.
 
+## Remaining helper-name cleanup
+
+The production local helper names `javaArrayToString`,
+`javaObjectHashCode`, `javaForgetCycles`, `javaRelativeThreshold`,
+`javaComplexity`, `javaQual`, `javaV`, and `javaF` are now domain-neutral
+(`formatArray`, `objectHashCode`, `forgetCyclesFloat`, `relativeThresholdFloat`,
+`complexityFloat`, `qualityFloat`, `normalizedPriority`, and
+`normalizedFactor`). They were local names only; numeric narrowing and error
+behavior are unchanged. Full M2 passed `506/508` TS-only and `508/508` with
+Java; TAP SHA-256 values are
+`72E113EA9CC159522F793E77B967C15588E14BACF3165FC7E3528F5513E9ACF8` and
+`4B15C6D4559A4E2910E9201DFA96F4B2745061F8B5BB21936BA99BD6FF192A5E`.
+
 ### Constructor equality candidate result
 
 Comparing exact term constructors directly in `Term.equals` removed repeated
