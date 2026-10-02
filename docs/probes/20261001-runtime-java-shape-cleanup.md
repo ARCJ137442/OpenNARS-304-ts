@@ -478,6 +478,14 @@ identity at this point, so comparing constructors directly preserves the
 observed class contract while removing a token lookup from a hot path. This is
 an A/B candidate only until the RPS/demo workload and M1'/M2 gates prove it.
 
+### Rejected candidate: Term hash cache
+
+Caching the derived term hash at `setName` invalidation points measured
+`2.625 RPS` once and `2.549 RPS` on recheck, versus the accepted
+constructor-equality reference `2.593 RPS`. The spread does not prove a stable
+gain, so the cache was rejected and the implementation restored. Raw recheck
+evidence remains under `reports/evidence/demo-workload-term-hash-cache*.json`.
+
 The candidate commit `efc7504` passed TS-only M2 `506/508` (two skips), Java
 M2 `508/508`, and release/build/dist API checks. TAP SHA-256 values are
 `30E4DD1A38B4015E57567C7A3B330E0B75E952F28BDA66AAAC152DCC35BF9C74` and
