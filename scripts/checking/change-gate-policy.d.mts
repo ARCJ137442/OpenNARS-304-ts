@@ -6,6 +6,7 @@ export type ChangeGateInput = {
   clusterId?: string | null;
   closeCluster?: boolean;
   runtimeDependenciesChanged?: boolean;
+  m1Profile?: "full" | "prime";
 };
 
 export type ChangeGateResult = {
@@ -13,6 +14,8 @@ export type ChangeGateResult = {
   live_java_required: boolean;
   m1_minus_required: boolean;
   full_m1_required: boolean;
+  m1_prime_required: boolean;
+  m1_profile: "full" | "prime";
   affected_nal_required: boolean;
   validation_profile: "slice" | "risk-slice" | "cluster-close" | "stage";
   cluster_id: string | null;
