@@ -88,6 +88,6 @@ The frozen baseline is outside the repository at `H:\A137442\Develop\AGI\NARS\_P
 
 ## Next Actions
 
-1. Profile the actual synchronous Worker after concept growth, or build an equal-input Node harness; the current simplified Node 60-tick profile reaches fewer concepts and cannot explain the browser long tail by itself.
+1. Use the equal-input Worker harness (67-tick concepts `7218`, browser `7232`) to test Bag insertion/index maintenance and memory growth. Its first new candidate, removing the duplicate `NativeMap` lookup, was rejected after four-run A/B: stable baseline gain only 4.7%, negligible late-window improvement; source was restored.
 2. Continue measured core/Demo optimization until the stated TPS target or a valid three-round sub-5% convergence proof. Rerun final gates for any new core change and verify NARS non-babble actions.
 3. Update Pages and prepare the fix release only after the final protected candidate and Demo acceptance.
