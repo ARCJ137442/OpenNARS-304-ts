@@ -8,6 +8,8 @@ The expanded current objective and acceptance boundaries are in [active-goal-202
 
 ## Current Position
 
+Current protected production commit: `41070c1`. The second Bag fast path skips concrete-class-mismatched `Term` keys in the restored-key full scan; fixed-input cross A/B improved CartPole RPS by 83–130% with identical final concept count. On this commit, TS-only M2 is `507 passed / 2 skipped / 0 failed`, Java M2 is `509/509`, M1′ body is `243/243`, #25 and #246 pass, reduced #245 65536 passes, and two 131072-cycle strict markerless comparisons are equal. The original 2,000,000-cycle stability workload remains `not_run`. The Demo Worker still needs rebuilding and sustained browser validation against this core; performance convergence and fix release remain open. Full source identities, SHA-256 values and classifications are in [the current Bag probe](probes/20261002-bag-term-equality.md).
+
 ```text
 v1.0.4 release (44e937b)
         |
@@ -15,6 +17,7 @@ v1.0.4 release (44e937b)
         +-- ce448b6  midterm protection and push (origin/main)
         +-- 2046915  detailed active goal and spec 042
         +-- 17b5fb2  Bag restored-key scan allocation reduction
+        +-- 41070c1  Bag concrete Term class fast path (current production)
         |
         +-- M2, M1' 243 + #25 + #246, reduced #245, markerless protected
         v

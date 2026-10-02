@@ -26,3 +26,17 @@
 `Bag.ts` 的候选只在 full-scan 中对两端均为 `Term` 且构造器不同的对象早退；不同类型的普通键、同构造器的 Term/Variable 和 hash 不同的恢复态键仍走原判等。新增直接合同覆盖“同文本不同具体 Term 类型不相等”和“同构造器、hash 改变的恢复态 Term 仍可取回”；Bag 本文件 18/18、相关直接合同首轮 32/32、非增量 typecheck 通过。尚未跑完整 M2、NAL、M1′ 或浏览器，不能宣称候选已验收。
 
 该候选随后通过正式 build、dist API、jree 审计 `0/0` 与平台审计 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`。TS-only M2 为 `507 passed / 2 skipped / 0 failed`，TAP SHA-256 `F35E8C05644190A71AA7EB405A80AEAFAF61F0345E9E8590A69FCC939B42C6AD`；含 Java M2 为 `509/509 passed`，TAP SHA-256 `A2053AF4A1FA16E44F0E4BBAD7F77008CCD4ABF4B17C7CF0C14BC119B3259109`。原始 TAP 为同前缀 `reports/evidence/bag-term-fastpath-{ts-only,java}-m2-20261002.tap`。此时仍是 dirty-source 候选；需提交固定 SHA 后再跑 M1′、strict markerless、降周期 #245 和浏览器。上一轮 Bag `recordsForView()` 的证据不转移到这个源码变更上。
+
+## 固定提交的保护门（进行中）
+
+候选提交为 `41070c1`，M1′ 243 项主体在该提交上退出码 0、`243/243` functional/parity 通过，timeout、process_limit、exception、stall、not_run 均为 0；逐项耗时合计 `900,996 ms`，单文件峰值 RSS `508,129,280 bytes`。原始 checkpoint `reports/evidence/m1prime-bag-term-fastpath-20261002.jsonl`，SHA-256 `70CAA047B56B349EE80698B112F629A51750E6A4FE16CCB18144BE205A6BCCE5`。#25 已单独启动；#246、#245 降周期、strict markerless 和浏览器仍未在该提交上完成，不能把主体矩阵当作最终发布通过。
+
+#25 `nars_multistep_3.nal` 在同一提交独立退出码 0、functional/parity 通过；`406,699 ms`、实际 `502,562` 周期、峰值 RSS `494,428,160 bytes`，无 timeout/process_limit/exception/stall/not_run。checkpoint `reports/evidence/m1prime-bag-term-fastpath-extra25-20261002.jsonl`，SHA-256 `9702A7E2F7DE81AFF62180F8D2114F2338483817D95E369DF4365AD1AA3CC4CA`。上一候选约 538 秒，本次约短 24%，但这不是交叉 A/B；#246 正在串行运行。
+
+#246 `simpleOperationTest.nal` 退出码 0，functional/parity 通过，`22,115 ms`、实际 `51,564` 周期、峰值 RSS `436,101,120 bytes`，无 timeout/process_limit/exception/stall/not_run。checkpoint `reports/evidence/m1prime-bag-term-fastpath-extra246-20261002.jsonl`，SHA-256 `2AD0AE4F3D1E559AAF53B6824B543CF8E04A495C5E0B90F53478C94269F3B229`。
+
+#245 仍按降周期规则：同一 2048 夹具在该提交的 TS-only 冷进程耗时 `3,180 ms`、实际 `2,473` 周期、峰值 RSS `290,295,808 bytes`，无失败分类；checkpoint `reports/evidence/m1prime-bag-term-fastpath-long-2048-estimate-20261002.jsonl`，SHA-256 `DBBEFC9CE0525260A392492180C56BC93705006DFD0F582947C4E7E3F8B92A63`。按 2048→65536 步线性外推约 `102 s`，低于 `1200 s` 启动阈值，因此已启动完整 65536 降载夹具，仍设置 `1800 s` 安全限；这不是原始 2,000,000 周期验证。
+
+65536 降载夹具已在 `41070c1` 退出码 0，functional/parity `1/1` 通过，TS 实际运行 `110,854 ms`、`67,510` 推理周期、峰值 RSS `398,467,072 bytes`；无 timeout、process_limit、exception、stall、not_run。冻结 Java 本次未重跑，所用 baseline SHA-256 `048C804D91986FBD597593C4CAE174D37DF09AA91D38560C433057945DF2F84E`。checkpoint `reports/evidence/m1prime-bag-term-fastpath-long-65536-20261002.jsonl`，SHA-256 `83DBE2152B57ABB5CDA71F36B51AEAD38A9F2BC7D70DEA4287176B06893C66F7`。2048 步预测约 102 秒，实际约 111 秒；按实际时间外推原始 2,000,000 步约 56 分钟，超过本阶段 30 分钟阈值，故原版仍列 `not_run`，不得以本降载结果代称。
+
+同一提交的 strict markerless 两项均退出码 0、各跑满 `131,072` 周期并与对应冻结 Java 摘要逐窗口 `equal=true`：`simpleOperationTest.nal` 128 窗口、2,535,970 事件，TS JSONL SHA-256 `B71878257F96B82F6F9330F24442934D0F293F1B069B96B9070495536A599140`；`nal6.redundant.nal` 128 窗口、589,572 事件，TS JSONL SHA-256 `08F79BFDB69949DF609A57C12E8F6FAD0AB4EC9FC0B984DEA6D9795904E97ABA`。原始输出为 `reports/evidence/markerless-bag-term-{simple,redundant}-ts-20261002.jsonl`，比较结果为同前缀 `*-compare-20261002.json`，两比较文件 SHA-256 均为 `9631076595A4FAD6432EAA7E18C5B2DB836FA4B7FE37F0369A462BC8BFFA0388`。其中 redundant 必须对比归档的 `g0-nal6-redundant-java-131072-20260917.jsonl`，不能用另一夹具的 `long-java.jsonl`。到这里，本候选的核心语义门已完成；尚未在真实浏览器用当前核心 Worker 验证 Demo 性能与功能，也未证明性能收敛。
