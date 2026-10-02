@@ -459,6 +459,25 @@ The JSONL SHA-256 is
 `8FDAD01DBDAA2D0C257EB58B2D4D12A655E867195BAEB04AE2F8943C18FD78FD`.
 The empty historical `Term.ts.codex-corrupt` placeholder remains untracked.
 
+### Constructor equality candidate result
+
+Comparing exact term constructors directly in `Term.equals` removed repeated
+class-token lookups from the hot path while preserving concrete-class identity.
+On the same 20-tick/5-cycle demo workload, the baseline at commit `616deb4`
+was `2.084 RPS`, `2388.227 ms` median step, and `339865600` peak RSS. Two
+rechecks after the change were `2.551 RPS`/`1858.499 ms`/`330567680` and
+`2.593 RPS`/`1893.866 ms`/`331358208`. This candidate is accepted as a
+measured performance improvement; full M2 and exact M1' still gate the commit.
+
+## Performance candidate: native concrete-class equality
+
+The short CPU profile on the current baseline identified repeated
+`Term.equals -> getClass -> ClassToken.fromConstructor` calls in the Bag and
+CompoundTerm workload. Term equality only needs exact concrete TypeScript class
+identity at this point, so comparing constructors directly preserves the
+observed class contract while removing a token lookup from a hot path. This is
+an A/B candidate only until the RPS/demo workload and M1'/M2 gates prove it.
+
 ## Configuration host-capability implementation result
 
 `ConfigReader` no longer imports Node built-ins or consults `process.cwd`.

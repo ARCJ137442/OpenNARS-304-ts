@@ -265,7 +265,7 @@ export class Term extends ReasonerObject implements AbstractTerm {
     public equals(that: unknown): boolean {
         if (that === this)
             return true;
-        if (that === null || !(that instanceof Term) || this.getClass() !== (that as Term).getClass())
+        if (that === null || !(that instanceof Term) || this.constructor !== (that as Term).constructor)
             return false; // optimization, if complexity is different they cant be equal
         // jree's TextString currently compares its UTF-16 backing arrays through
         // a case-insensitive locale path. Term equality is Java's exact string
