@@ -99,4 +99,8 @@ Demo 输入节奏的只读核对：原版 `SimNAR.java` 第 309–321 行用单�
 
 额外异步 CartPole 探针出现 `18.903` 世界 TPS 但采样区间 `0` 个 Worker 完成事件；进一步消息计数显示切换模式后几乎没有再提交推理请求。Demo `src/demo.ts` 原调度在异步世界步进后先把 `nextStep` 更新为未来时刻，随后才要求 `now >= nextStep` 发请求，条件长期为假。已在独立 Demo 工作树修正为每个新世界状态最多发一次、前一请求完成后才发下一次，并添加 Chrome 回归检查；修复后结果仍待重建。原始 JSON `test-results/cartpole-async-bag-name-prefilter-20261003.json` SHA-256 `CFF6515C8A027ED82C130024291D3CE9CF947A93E330A6D63D4BF918690954C4`。不能把 18.9 TPS 说成 NARS 在同步推理。
 
+修复后的 Demo 提交 `25d0bac`、静态 Worker 构建提交 `278956f`；Chrome smoke 增加“异步 CartPole 至少两次新请求及两次完成”后通过。相同 30 秒配置下：`600` 世界刻、`19.952` 世界 TPS、`144` 推理请求完成、`720` NARS 周期、墙钟 `23.942 RPS`，概念 `199 → 5333`，无非 babble 操作或故障。原始 JSON SHA-256 `E17CBE320EB7627D40AD3C7E69FB702E2E4C2D468943B3DF49DB9569935F9A9E`。这是 Demo 调度修复，不是推理器吞吐提高；后台 NARS 只完成了约 24% 的目标 20 TPS × 5 周期对应工作量。
+
+当前生产代码的 Node 60 ticks × 5 cycles 单进程 CPU profile 伴随基准耗时 `9457.28 ms`、`31.722 RPS`、峰值 RSS `497385472 bytes`，概念在第 60 tick 达 `3843`。分段 TPS 为 `5.879/3.663/6.019/5.737/8.307/23.866`，并非单调下降；这与真实浏览器 CartPole 的约 `7232` 概念/67 刻不同。Node 脚本不包含 Demo 的 babble、操作、逐条输入与全部宿主消息，不能把它当作浏览器长尾的同负载 profile。原始 `reports/evidence/demo-workload-bag-name-prefilter-profile60-20261003.json` 与 `reports/evidence/cpu-prof-bag-name-prefilter-60ticks-20261003/` 留存待分析。下一步应剖析实际 Worker 输入/推理路径或构造严格等价的 Node harness。
+
 只读 `validation:plan` 在 `07aceff..82469cc`、冻结 Java baseline 与唯一证据前缀下输出 `plan_valid=true`、`T1`、J3 推理核心簇、四项受影响 NAL。当前策略脚本却拒绝在 stage `none`/`rc` 用 `--m1-profile prime`（只允许旧 023/024），与本次用户准许 023 之外使用 M1′ 的口径冲突；现阶段使用默认档生成只读风险计划并手工执行本目标的 M1′，后续需修正策略/测试，不能伪称工具已经认可 042 的 prime 档。
