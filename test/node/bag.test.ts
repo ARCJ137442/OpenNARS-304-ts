@@ -138,6 +138,33 @@ test("Bag distinguishes concrete Term types and still recovers an equal restored
     assert.equal(bag.get(new RestoredTerm("restored", 9)), restored);
 });
 
+test("Bag keeps mixed-key asymmetric equality and Term index lifecycle", () => {
+    class CrossKey {
+        public hashCode(): number { return 1234567; }
+        public equals(other: unknown): boolean {
+            return other instanceof Term && String(other.name()) === "cross";
+        }
+    }
+    class MixedItem extends Item<unknown> {
+        public constructor(private readonly key: unknown) { super(); }
+        public name(): unknown { return this.key; }
+        public getPriority(): number { return 0.8; }
+        public merge(): Item<unknown> { return this; }
+    }
+    const bag = new Bag<MixedItem, unknown>(4, 10, new Parameters());
+    const first = new MixedItem(new Term("first"));
+    const cross = new MixedItem(new CrossKey());
+    bag.putIn(first);
+    bag.putIn(cross);
+    (bag as unknown as { equalityBuckets: Map<number, unknown> }).equalityBuckets.clear();
+    assert.equal(bag.get(new Term("cross")), cross);
+    assert.equal(bag.pickOut(first), first);
+    assert.equal(bag.get(new Term("first")), null);
+    bag.clear();
+    bag.putIn(new MixedItem(new Term("fresh")));
+    assert.equal(bag.get(new Term("fresh"))?.name() instanceof Term, true);
+});
+
 test("Bag merges distinct object keys through Java equals semantics", () => {
     class EqualKey {
         public readonly value: string;

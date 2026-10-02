@@ -46,4 +46,8 @@ transitions:
 
 ## 第二批：Bag 词项键的必不相等早退
 
-在 Bag 全表回退中，仅当查询键和已有键均为 `Term` 且具体构造器不同，才跳过 `runtimeValueEquals`；`Term`、`CompoundTerm`、`Variable` 的现有 `equals` 在此情况下都返回 false。其余键、同类词项、恢复态异 hash 和变量作用域继续走原合同。两轮交叉 A/B 的 RPS 为 `4.043 -> 9.316` 和 `4.856 -> 8.904`，概念终点均为 `2296`；新增直接合同、非增量 typecheck、build/dist API、TS-only M2 `507/509`（2 skip）、Java M2 `509/509`、静态审计已通过。原始测量与来源说明见 [词项键探查](../../docs/probes/20261002-bag-term-equality.md)。该候选仍需固定提交上的 NAL、M1′、markerless 与真实浏览器验收；不可凭短测直接勾选发布门。
+在 Bag 全表回退中，仅当查询键和已有键均为 `Term` 且具体构造器不同，才跳过 `runtimeValueEquals`；`Term`、`CompoundTerm`、`Variable` 的现有 `equals` 在此情况下都返回 false。其余键、同类词项、恢复态异 hash 和变量作用域继续走原合同。两轮交叉 A/B 的 RPS 为 `4.043 -> 9.316` 和 `4.856 -> 8.904`，概念终点均为 `2296`；新增直接合同、非增量 typecheck、build/dist API、TS-only M2 `507/509`（2 skip）、Java M2 `509/509`、静态审计均通过。固定提交 `41070c1` 的 M1′ 主体 `243/243`、#25/#246、#245 降载 65536 与两项 strict markerless 也通过。真实 Chrome 重建 Worker 后，Microworld 30 秒平均 `11.520 TPS`，最后五秒 `0.40 TPS`，因此尚未达到持续 TPS 目标。原始测量与来源见 [词项键探查](../../docs/probes/20261002-bag-term-equality.md)；不得凭 M1′ 和短测勾选性能/发布门。
+
+## 第三批：全 Term Bag 的具体类索引（候选）
+
+针对第二批后的 CPU profile（`Bag.findEquivalentKey` 3413/7914 自耗采样），为全 Term 键的 Bag 在 hash 桶缺失时建立按具体类的原生临时索引，保留同类的完整 value equality、恢复态异 hash 查找和插入顺序；混合键仍全扫描。候选→基线→候选复测的固定 CartPole 20 ticks × 5 cycles 为 `22.625 / 9.488 / 23.525 RPS`，概念终点均 2296，峰值 RSS 较基线高约 50–62 MB。42/42 相关合同、非增量 typecheck、build、dist API 与静态审计通过；TS-only M2 `508/510`（2 skipped），Java M2 `510/510`。候选仍为未提交源码，尚不可转入固定提交的 M1′/浏览器出口。完整数据见 [词项键探查](../../docs/probes/20261002-bag-term-equality.md)。

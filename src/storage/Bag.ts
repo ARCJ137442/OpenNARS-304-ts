@@ -14,6 +14,16 @@ import type { MutableIterator } from "../runtime/MutableIterator.ts";
 import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 import type { Memory } from "./Memory.ts";
 
+type TermKeyIndex = {
+    table: object;
+    size: number;
+    byConstructor: Map<Function, Set<unknown>>;
+    nonTermKeys: number;
+};
+
+// An ephemeral lookup aid: it is deliberately outside Bag's serialized state.
+const termKeyIndexes = new WeakMap<object, TermKeyIndex>();
+
 
 /**
  * Original Bag implementation which distributes items into
@@ -88,6 +98,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
         // LinkedHashMap<K, Type>. Keep the ordered Map abstraction native.
         this.nameTable = new NativeMap<K, Type>();
         this.equalityBuckets = new Map<number, K[]>();
+        termKeyIndexes.delete(this);
         this.currentLevel = this.TOTAL_LEVEL - 1;
         this.levelIndex = this.capacity % this.TOTAL_LEVEL; // so that different bags start at different point
         this.mass = 0;
@@ -148,6 +159,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
         let oldItem: Type;
         if (existingKey === null) {
             oldItem = this.nameTable.put(newKey, newItem) as unknown as Type;
+            this.noteKeyAdded(newKey);
             this.addKeyToBucket(newKey);
             this.itemOrder.push(newItem);
             this.itemOrderIndex.set(newItem, this.itemOrder.length - 1);
@@ -293,10 +305,21 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
             return null as unknown as K;
         }
 
-        // The records are the same insertion-ordered map entries. Reading them
-        // directly avoids allocating a live entry wrapper for every miss while
-        // keeping the full scan needed for mutated/restored keys.
         const termKey = key instanceof Term ? key : null;
+        if (termKey !== null) {
+            const index = this.termKeyIndex();
+            if (index.nonTermKeys === 0) {
+                // Term equality rejects other concrete constructors, even if a
+                // restored key's hash changed. Iteration remains insertion ordered.
+                for (const existingKey of index.byConstructor.get(termKey.constructor) ?? []) {
+                    if (runtimeValueEquals(existingKey, key)) return existingKey as K;
+                }
+                return null as unknown as K;
+            }
+        }
+
+        // A non-Term key may define asymmetric equality with a Term. Preserve
+        // the complete scan for mixed-key and non-Term bags.
         for (const record of this.nameTable.recordsForView()) {
             const existingKey = record.key;
             // Every Term equality implementation rejects a different concrete
@@ -309,6 +332,66 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
             }
         }
         return null as unknown as K;
+    }
+
+    private termKeyIndex(): TermKeyIndex {
+        const cached = termKeyIndexes.get(this);
+        if (cached !== undefined && cached.table === this.nameTable
+            && cached.size === this.nameTable.size()) return cached;
+        const rebuilt: TermKeyIndex = {
+            table: this.nameTable,
+            size: this.nameTable.size(),
+            byConstructor: new Map(),
+            nonTermKeys: 0,
+        };
+        for (const { key } of this.nameTable.recordsForView()) {
+            if (key instanceof Term) {
+                const keys = rebuilt.byConstructor.get(key.constructor) ?? new Set<unknown>();
+                keys.add(key);
+                rebuilt.byConstructor.set(key.constructor, keys);
+            } else {
+                rebuilt.nonTermKeys += 1;
+            }
+        }
+        termKeyIndexes.set(this, rebuilt);
+        return rebuilt;
+    }
+
+    private noteKeyAdded(key: K): void {
+        const index = termKeyIndexes.get(this);
+        if (index === undefined) return;
+        if (index.table !== this.nameTable || index.size + 1 !== this.nameTable.size()) {
+            termKeyIndexes.delete(this);
+            return;
+        }
+        index.size += 1;
+        if (!(key instanceof Term)) {
+            index.nonTermKeys += 1;
+            return;
+        }
+        const keys = index.byConstructor.get(key.constructor) ?? new Set<unknown>();
+        keys.add(key);
+        index.byConstructor.set(key.constructor, keys);
+    }
+
+    private noteKeyRemoved(key: K): void {
+        const index = termKeyIndexes.get(this);
+        if (index === undefined) return;
+        if (index.table !== this.nameTable || index.size - 1 !== this.nameTable.size()) {
+            termKeyIndexes.delete(this);
+            return;
+        }
+        index.size -= 1;
+        if (!(key instanceof Term)) {
+            index.nonTermKeys -= 1;
+            return;
+        }
+        const keys = index.byConstructor.get(key.constructor);
+        if (!keys?.delete(key)) {
+            termKeyIndexes.delete(this);
+        } else if (keys.size === 0) {
+            index.byConstructor.delete(key.constructor);
+        }
     }
 
     private removeByEquivalentKey(key: K): Type {
@@ -336,6 +419,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
     private removeKey(key: K): Type {
         const item = this.nameTable.remove(key);
         if (item !== null && item !== undefined) {
+            this.noteKeyRemoved(key);
             const itemIndex = this.itemOrderIndex.get(item);
             if (itemIndex !== undefined) {
                 this.itemOrder.splice(itemIndex, 1);

@@ -1,0 +1,95 @@
+{
+  "schema": "opennars-304-ts/demo-workload-benchmark/v1",
+  "git_commit": "07aceff8086d6d378394e9183014a92ac1bbd484",
+  "node": "v22.17.0",
+  "workload": "CartPole sensor-bin + recurring composite goal + upright feedback; one Nar instance; no babble/action",
+  "configuration": {
+    "cycles": 5,
+    "ticks": 20,
+    "reportEvery": 5,
+    "output": "reports/evidence/bag-term-index-baseline-20261003.json"
+  },
+  "aggregate": {
+    "ticks": 20,
+    "cycles": 100,
+    "elapsed_ms": 10539.32,
+    "median_step_ms": 501.905,
+    "p95_step_ms": 1081.882,
+    "rps": 9.488,
+    "peak_rss_bytes": 343400448
+  },
+  "segments": [
+    {
+      "start_tick": 1,
+      "end_tick": 5,
+      "ticks": 5,
+      "duration_ms": 703.88,
+      "tps": 7.104,
+      "rps": 35.522,
+      "median_step_ms": 153.823,
+      "p95_step_ms": 246.836,
+      "concepts": 362,
+      "concepts_added": 362,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 28,
+        "recent_operations": 0
+      },
+      "rss_bytes": 261783552
+    },
+    {
+      "start_tick": 6,
+      "end_tick": 10,
+      "ticks": 5,
+      "duration_ms": 1885.45,
+      "tps": 2.652,
+      "rps": 13.263,
+      "median_step_ms": 427.889,
+      "p95_step_ms": 697.083,
+      "concepts": 1002,
+      "concepts_added": 640,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 30,
+        "recent_operations": 0
+      },
+      "rss_bytes": 318025728
+    },
+    {
+      "start_tick": 11,
+      "end_tick": 15,
+      "ticks": 5,
+      "duration_ms": 4075.25,
+      "tps": 1.227,
+      "rps": 6.135,
+      "median_step_ms": 742.379,
+      "p95_step_ms": 1320.803,
+      "concepts": 1733,
+      "concepts_added": 731,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 30,
+        "recent_operations": 0
+      },
+      "rss_bytes": 343400448
+    },
+    {
+      "start_tick": 16,
+      "end_tick": 20,
+      "ticks": 5,
+      "duration_ms": 3875.52,
+      "tps": 1.29,
+      "rps": 6.451,
+      "median_step_ms": 733.097,
+      "p95_step_ms": 1081.882,
+      "concepts": 2296,
+      "concepts_added": 563,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 30,
+        "recent_operations": 0
+      },
+      "rss_bytes": 300662784
+    }
+  ]
+}
