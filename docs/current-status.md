@@ -17,7 +17,7 @@ v1.0.4 release (44e937b, origin/main)
         |
         +-- code clean; M1' candidate evidence complete
         v
-  performance / Java-shape cleanup -> M1' -> neat-freak midterm save -> push/tag
+  performance / Java-shape cleanup -> midterm protected -> next iterator/GC batch
 ```
 
 ## Confirmed
@@ -30,7 +30,7 @@ v1.0.4 release (44e937b, origin/main)
 - Focused event/runtime contracts after constructor identity: `30/30`; focused iterator/container contracts: `33/33`.
 - Dist API, typecheck, build and jree audit pass on the current source line.
 
-## In Flight
+## Protected Evidence
 
 - M1' `m1prime-compound-constructor-20261002.jsonl`: `243/243` passed with zero failure, timeout, process_limit, exception, stall or not_run rows.
 - Extra `nars_multistep_3.nal` and `simpleOperationTest.nal`: `2/2` passed in `m1prime-compound-extra-20261002.jsonl`.
@@ -63,7 +63,7 @@ npm run audit:jree
 node scripts/e2e/run-demo-workload-benchmark.mjs --cycles 10 --ticks 50 --report-every 10 --output <unique-evidence>.json
 ```
 
-M1' command currently in flight:
+M1' command used for this protected candidate:
 
 ```powershell
 node scripts/e2e/run-nal-corpus.mjs --engine ts --java-baseline <frozen-g0-jsonl> --all --m-minus --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 3600000 --ts-mode cold --resource-metrics --result-file reports/evidence/m1prime-compound-constructor-20261002.jsonl --summary
