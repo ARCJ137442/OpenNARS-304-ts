@@ -1,6 +1,6 @@
 # OpenNARS-304-ts 当前状态
 
-> 本文是维护与证据档案，不是第一次使用项目的入口。外部用户请先读 [README](../README.md)、[上手指南](getting-started.md) 和 [集成指南](integration-guide.md)。截至 2026-10-01，027 性能收敛为 `complete`，031 runtime Java-shape cleanup 为 `in-progress`；023/025 的严格 host 边界收口仍需继续，历史段落按其日期理解。
+> 本文是维护与证据档案，不是第一次使用项目的入口。外部用户请先读 [README](../README.md)、[上手指南](getting-started.md) 和 [集成指南](integration-guide.md)。截至 2026-10-02，023、025、027、031 的当前代码/门禁记录已完成；长期稳定性原始 2,000,000 周期仍是设备资源限制，历史段落按其日期理解。
 
 - 状态日期：2026-10-01（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`

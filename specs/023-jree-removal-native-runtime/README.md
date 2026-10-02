@@ -7,13 +7,17 @@ tags:
 - native-typescript
 - milestone
 created_at: 2026-08-26T05:36:04.576870200Z
-updated_at: 2026-09-29T17:11:27.065162200Z
+updated_at: 2026-10-02T05:30:29.279640500Z
 completed_at: 2026-09-29T17:11:27.065162200Z
 transitions:
 - status: in-progress
   at: 2026-08-26T05:36:10.563187Z
 - status: complete
   at: 2026-09-29T17:11:27.065162200Z
+- status: in-progress
+  at: 2026-09-30T12:50:39.286689700Z
+- status: complete
+  at: 2026-10-02T05:30:29.279640500Z
 ---
 
 
@@ -1072,3 +1076,15 @@ J1/J2/J3/J4/J5=`1/6/2/0/5`。本扫描另记录 `javaStringFiles=16`、
 ### Agent 工作流披露
 
 023 的实现与收口由 `GPT-6 Sol High` 按责任簇推进：以 Java 合同和现有证据为输入，批量实现 J1-J5 的项目内 runtime、集合、异常和类身份边界，按簇运行局部合同、M2、受影响 NAL 和阶段门；阶段状态通过 LeanSpec 工具维护，历史证据不删除。该身份披露不把 Agent 产出冒充人工编写，也不把自动测试替代人工发布批准。详见 [`docs/agent-workflow-disclosure.md`](../../docs/agent-workflow-disclosure.md)。
+
+### 2026-10-02 strict native-runtime closure
+
+当前不可变代码线 `234b999` 已完成生产直接 jree import `0/0`、平台
+`coreCandidateFiles=0`/`mixedBoundaryFiles=0`、Node/browser capability
+隔离、项目原生文本/数值/类身份/调度器/集合/异常边界。TS-only M2、Java
+M2、release/build/dist API、M1' 243 项主体、#246、M3 selected NAL、严格
+markerless simple/long、Node CLI 和真实浏览器 demo smoke 均有原始证据。
+
+原始 `long_term_stability.nal` 2,000,000 周期在本机仍属于系统资源瓶颈；
+65536 观察在约 1 GiB RSS 时按 `memory_limit` 保护停止。该事实保留为
+性能限制，不伪装成完整长期稳定性通过，也不构成 jree 语义回退。
