@@ -52,6 +52,6 @@ transitions:
 
 针对第二批后的 CPU profile（`Bag.findEquivalentKey` 3413/7914 自耗采样），为全 Term 键的 Bag 在 hash 桶缺失时建立按具体类的原生临时索引，保留同类的完整 value equality、恢复态异 hash 查找和插入顺序；混合键仍全扫描。候选→基线→候选复测的固定 CartPole 20 ticks × 5 cycles 为 `22.625 / 9.488 / 23.525 RPS`，概念终点均 2296，峰值 RSS 较基线高约 50–62 MB。固定生产提交 `82469cc` 的 42/42 相关合同、非增量 typecheck、build/dist API、静态审计、TS-only M2 `508/510`（2 skipped）、Java M2 `510/510`、M1′ 主体 `243/243`、#25/#246、#245 降载 65536 和两项 strict markerless 均通过。M1′ 单文件峰值 RSS 860 MB。当前 Worker 的真实 Chrome 30 秒复测：Microworld 平均 `12.28 TPS`、末窗 `2.00 TPS`；CartPole 平均 `2.06 TPS`、末窗 `1.20 TPS`，仍未达到持续目标。完整数据见 [词项键探查](../../docs/probes/20261002-bag-term-equality.md)。
 
-## 第四批：标准词项名称预筛（待固定提交和长门）
+## 第四批：标准词项名称预筛（核心门通过，浏览器待测）
 
-在恢复态异 hash 的同具体类扫描中，仅当两端 `equals` 是项目内相同的标准 `Term`、`CompoundTerm` 或 `Variable` 方法时，先用原生名称排除必不相等者；自定义判等仍走双向完整合同。20-tick 候选/基线/复测 `26.47 / 23.02 / 26.53 RPS`，30-tick `27.98 / 25.79 / 28.60 RPS`，对应概念终点均一致。直接合同包括自定义跨名称相等、恢复态异 hash 与固定存储 hash 的名称变更；TS-only M2 `511 passed / 2 skipped / 0 failed`，含 Java M2 `513/513 passed`。仍未固定提交、运行 M1′、markerless 或当前 Worker 浏览器结果。此前三个小候选收益不足 5% 或回退均已撤销，它们不能代替本轮及 Demo 长尾的收敛证明。
+在恢复态异 hash 的同具体类扫描中，仅当两端 `equals` 是项目内相同的标准 `Term`、`CompoundTerm` 或 `Variable` 方法时，先用原生名称排除必不相等者；自定义判等仍走双向完整合同。20-tick 候选/基线/复测 `26.47 / 23.02 / 26.53 RPS`，30-tick `27.98 / 25.79 / 28.60 RPS`，对应概念终点均一致。直接合同包括自定义跨名称相等、恢复态异 hash 与固定存储 hash 的名称变更。固定提交 `708afc5` 的 TS-only M2 `511 passed / 2 skipped / 0 failed`、含 Java M2 `513/513`、M1′ 主体 `243/243`、#25/#246、#245 降载 65536 和两项 strict markerless 均通过。M1′ 主体逐文件耗时合计 `693624 ms`，上一候选 `665581 ms`，不能把短 Demo 负载提升泛化为全部 NAL 提升。当前 Worker 的浏览器结果仍待复测；此前三个小候选收益不足 5% 或回退均已撤销，它们不能代替本轮及 Demo 长尾的收敛证明。

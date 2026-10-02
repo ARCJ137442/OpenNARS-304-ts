@@ -1,6 +1,6 @@
 # OpenNARS-304-ts Current Status
 
-Status date: 2026-10-02 (Asia/Shanghai)
+Status date: 2026-10-03 (Asia/Shanghai)
 
 This file is the current handoff. Historical detail moved to [archive/current-status-history-20261002.md](archive/current-status-history-20261002.md); raw test evidence remains under `reports/evidence/` and is never treated as disposable output.
 
@@ -8,20 +8,20 @@ The expanded current objective and acceptance boundaries are in [active-goal-202
 
 ## Current Position
 
-Last protected production commit: `82469cc`; the fourth, currently dirty-source candidate adds a name prefilter only for the project's standard `Term`, `CompoundTerm` and `Variable` equality methods. The prior candidate's fixed-input candidate/baseline/candidate RPS was `22.625 / 9.488 / 23.525` with identical final concept count; peak RSS rose about 50–62 MB. On `82469cc`, its 42 direct contracts, TS-only M2 `508 passed / 2 skipped`, Java M2 `510/510`, nonincremental typecheck, build/dist API and static audits pass. M1′ body is `243/243`, #25/#246 and reduced #245 65536 pass, and both strict markerless samples reached 131072 cycles with Java-equal digests. The highest M1′ RSS was 860 MB; the original 2,000,000-cycle workload remains `not_run`. Current-core Chrome 30-second samples still miss the sustained Demo target: Microworld `12.28 TPS` average and `2.00 TPS` final five-second window; CartPole `2.06 TPS` average and `1.20 TPS` final window. The fourth candidate improved short 20/30-tick RPS about 8.5–15% with equal final concept counts, and passed direct contracts, TS-only M2 `511 passed / 2 skipped` and Java M2 `513/513`; it still needs a fixed commit, M1′/markerless and real Chrome recheck. Demo source is committed at `d4189e5`, but generated Workers are dirty/uncommitted. Performance convergence and fix release remain open. Full source identities, SHA-256 values and classifications are in [the current Bag probe](probes/20261002-bag-term-equality.md).
+Last fully protected **core** production commit: `708afc5`, which adds a name prefilter only for the project's standard `Term`, `CompoundTerm` and `Variable` equality methods. Its fixed-input 20/30-tick RPS improved about 8.5–15% against the prior candidate with identical final concept counts; this is a short Node workload, not a browser result. Direct contracts `21/21`, TS-only M2 `511 passed / 2 skipped`, Java M2 `513/513`, nonincremental typecheck, build/dist API and static audits pass. On the same production commit, M1′ body `243/243`, #25/#246 and reduced #245 65536 pass, and both strict markerless samples reached 131072 cycles with Java-equal digests. M1′ body peak RSS was `856879104 bytes`; original 2,000,000-cycle stability remains `not_run`. M1′ body summed duration `693624 ms` versus `665581 ms` on the previous candidate, so the short-workload gain cannot be generalized to all NAL. Prior-core Chrome 30-second samples still miss sustained Demo targets: Microworld `12.28 TPS` average and `2.00 TPS` final five-second window; CartPole `2.06 TPS` average and `1.20 TPS` final window. The current `708afc5` Worker still needs rebuilding and real Chrome recheck. Demo source is committed at `d4189e5`, but generated Workers are dirty/uncommitted. Performance convergence and fix release remain open. Source identities, SHA-256 values and classifications are in [the current Bag probe](probes/20261002-bag-term-equality.md).
 
 ```text
 v1.0.4 release (44e937b)
         |
-        +-- 445d873  CompoundTerm constructor equality optimization
         +-- ce448b6  midterm protection and push (origin/main)
-        +-- 2046915  detailed active goal and spec 042
         +-- 17b5fb2  Bag restored-key scan allocation reduction
-        +-- 41070c1  Bag concrete Term class fast path (current production)
+        +-- 41070c1  Bag concrete Term class fast path
+        +-- 82469cc  Bag concrete Term index; M1'/M2 protected
+        +-- 33125d4  M1' validation type declaration fix
+        +-- 708afc5  standard Term name prefilter; core gates passed
         |
-        +-- M2, M1' 243 + #25 + #246, reduced #245, markerless protected
         v
-  browser Demo rate gate -> further measured optimization -> fix release
+  current Worker browser recheck -> further measured optimization -> fix release
 ```
 
 ## Confirmed
@@ -30,7 +30,7 @@ v1.0.4 release (44e937b)
 - Core text rendering no longer uses private one-shot `StringBuilder` objects. Sentence output uses native fragments plus `join`; `TruthValue` returns formatted text directly.
 - Internal exact class comparisons use `constructor ===`; event identity uses constructor keys through `ClassKey` and `getClass(object)`. The old `ClassToken` object and WeakMap cache are gone from production.
 - Safe iterator call sites in `TaskLink` and `Bag` use native iteration. Mutable `remove`/fail-fast contracts remain in explicit collection boundaries.
-- Full TS-only M2 on the selected line: `506/508`, `0 failed`, `2 skipped`. Full Java M2: `508/508`.
+- Full TS-only M2 on current production: `511 passed / 2 skipped / 0 failed`. Full Java M2: `513/513 passed`.
 - Focused event/runtime contracts after constructor identity: `30/30`; focused iterator/container contracts: `33/33`.
 - Dist API, typecheck, build and jree audit pass on the current source line.
 - At `17b5fb2`, Bag's read-only restored-key scan avoids per-entry wrappers. Two fixed-input A/B runs improved RPS by about 24–25% without changing fallback equality or insertion order. TS-only M2 `506/508` (2 skipped), Java M2 `508/508`, 28 direct Bag/Map contracts, build and dist API passed.
@@ -41,7 +41,7 @@ v1.0.4 release (44e937b)
 - Extra `nars_multistep_3.nal` and `simpleOperationTest.nal`: `2/2` passed in `m1prime-compound-extra-20261002.jsonl`.
 - Candidate `CompoundTerm.equals` A/B: baseline `2.594 RPS`, candidate `3.661 RPS`, candidate peak RSS `330358784`; committed at `445d873`.
 - Evidence hashes: M1' `F14E70676275EA41D73D5B2F5CD0F6765E6E6CAB9E0DFA23A885EF6C7121361F`; extra `4502E4A90054ED5B8D45D41BA79C2DF2DBE08B98D51BC559E1D4B227DDACED2A`; jree audit `69AF5E37833B13BFD0E5CF35521C10CB6743CEF9F648A2CE496B3F2864F3A028`; platform audit `DD7271085CA252DE0E1BAB586206EBABA41517BBAB15B5FD03BED96E30E4301D`.
-- 50-tick current demo probe at `01f08e6`: `3.720 RPS`, median step `2004 ms`, p95 `6759 ms`, peak RSS `333123584`; first segment TPS `1.319`, later segments below `0.5`. Concept count grows `1025 -> 3731`.
+- Historical 50-tick demo probe at `01f08e6`: `3.720 RPS`, median step `2004 ms`, p95 `6759 ms`, peak RSS `333123584`; first segment TPS `1.319`, later segments below `0.5`. Concept count grew `1025 -> 3731`.
 - `17b5fb2` M1′ body `243/243`, #25 `1/1`, #246 `1/1`; reduced #245 65536 fixture `1/1` at `180667 ms` and peak RSS `388861952` bytes. Both strict markerless samples reached 131072 cycles and match frozen Java digests. See [the current probe](probes/20261002-performance-next-batch.md) for source SHA, classifications, baseline hashes and raw files.
 
 ## Spec / Gate State
@@ -51,10 +51,10 @@ v1.0.4 release (44e937b)
 but final claims are limited by the current immutable evidence and this handoff.
 
 020/027/031 LeanSpec board state: complete in historical spec records
-Current performance convergence goal (042): active; Demo gate and further convergence remain
+Current performance convergence goal (042): active; `708afc5` core gate passed, Demo gate and further convergence remain
 Original 2,000,000-cycle stability workload: not claimed (device resource limit)
-M1' on `17b5fb2`: 243/243 + extra 2/2, reduced #245 and strict markerless passed
-M2 on selected candidate: TS-only 506/508 (0 failed, 2 skipped); Java 508/508
+M1' on `708afc5`: 243/243 + extra 2/2, reduced #245 and strict markerless passed
+M2 on `708afc5`: TS-only 511/513 (0 failed, 2 skipped); Java 513/513
 Demo TPS target 20 / sync target 15: not achieved; concept growth and GC tails remain
 ```
 
@@ -87,6 +87,6 @@ The frozen baseline is outside the repository at `H:\A137442\Develop\AGI\NARS\_P
 
 ## Next Actions
 
-1. Commit the evidence-linked documentation without adding historical untracked files. Core source remains `17b5fb2`.
-2. Verify the independent Demo Lab clock/seed changes with its checks, a new static build, real browser smoke and fixed-window TPS/RPS measurements.
-3. Continue measured concept-growth/GC optimization until three consecutive sub-5% rounds or the stated TPS target, then rerun final gates and prepare the fix release.
+1. Rebuild the Demo Worker from `708afc5`, verify checks and real Chrome smoke, and measure fixed-window TPS/RPS with action-source counts.
+2. Continue measured concept-growth/GC optimization until the stated TPS target or a valid three-round sub-5% convergence proof; rerun final gates for any new production change.
+3. Update Pages and prepare the fix release only after the final protected candidate and Demo acceptance.
