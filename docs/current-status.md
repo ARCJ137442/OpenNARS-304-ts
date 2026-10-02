@@ -18,6 +18,18 @@
 - `Stamp.appendOcurrenceTime` 仍保留为外部/测试兼容边界；class token、值语义集合、可变迭代器和异常合同尚未在本批处理。
 - 本批不宣称 031 完成、完整 M1' 通过或发布新版本；提交后继续进入 class identity / iterator 语义批次。
 
+## 2026-10-02 exact class checks batch
+
+- 已将推理/语言内部仅用于“具体类是否相同”的 `getClass() ===` 判断改为 `constructor ===`；`ClassToken` 事件/插件派发与公共 `getClass()` 兼容接口保留。
+- 当前批次尚未提交；typecheck、build、定向合同 `108/108`、TS-only M2 `506/508`（0 failed、2 skipped）和含 Java M2 `508/508` 通过。
+- 该批次没有运行 M1'；它仍需与后续生产批次合并后在不可变提交上做最终 M1'，不能宣称 031 或完整目标完成。
+
+## 2026-10-02 native event identity batch
+
+- 事件 Map 现在直接以 TypeScript 构造器为键；生产源码移除了 `ClassToken`、WeakMap token 缓存、`.getName()`/`.getSimpleName()` 事件接口，新增 `getClass(object)` 原生辅助函数与 `ClassKey` 类型。
+- 静态 `.class` 访问器暂时只返回构造器，作为迁移过渡；它不再创建 token 对象。未知事件错误使用构造器名称。
+- typecheck、build、dist API、TS-only M2 `506/508`（0 failed、2 skipped）、含 Java M2 `508/508` 和 jree audit `0/0` 均通过；M1' 尚未在该批次提交上运行。
+
 ## 2026-10-02 native text idiom batch
 
 - 当前提交：`3bdc860`（代码批次 `9c4d76b`，证据记录提交 `3bdc860`），已推送 `origin/main`。

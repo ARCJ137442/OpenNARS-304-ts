@@ -3,7 +3,7 @@ import type { TextInput } from "../../../src/runtime/Text.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import type { EventEmitter } from "../../../src/io/events/EventEmitter.ts";
-import type { ClassTokenLike } from "../../../src/runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../../src/runtime/ClassIdentity.ts";
 
 const OUT = OutputHandler.OUT;
 const EXE = OutputHandler.EXE;
@@ -40,7 +40,7 @@ export abstract class OutputCondition extends OutputHandler {
         return false;
     }
 
-    public event(channel: ClassTokenLike, args: EventEmitter.EventPayload): void {
+    public event(channel: ClassKey, args: EventEmitter.EventPayload): void {
         if ((this.succeeded) && (!this.isInverse())) {
             return;
         }
@@ -64,7 +64,7 @@ export abstract class OutputCondition extends OutputHandler {
     }
 
     /** returns true if condition was satisfied */
-    public abstract condition(channel: ClassTokenLike, signal: java.lang.Object): boolean;
+    public abstract condition(channel: ClassKey, signal: java.lang.Object): boolean;
 
     public static registerOutputContainsFactory(factory: OutputContainsFactory): void {
         OutputCondition.outputContainsFactory = factory;
@@ -153,7 +153,7 @@ export abstract class OutputCondition extends OutputHandler {
 
     public toString(): java.lang.String {
         const status = this.succeeded ? `OK: ${String(this.getTrueReasons())}` : String(this.getFalseReason());
-        return new java.lang.String(`${this.getClass().getSimpleName()} ${status}`);
+        return new java.lang.String(`${this.constructor.name} ${status}`);
     }
 
     public getTrueReasons(): java.util.List<unknown> {

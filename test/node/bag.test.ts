@@ -69,7 +69,7 @@ test("Bag rejects invalid overload arity with the project Java exception", () =>
 test("Bag keeps its observed runtime class identity without jree JavaObject", () => {
     const bag = new Bag<TestItem, string>(4, 10, new Parameters());
 
-    assert.equal(bag.getClass().getSimpleName(), "Bag");
+    assert.equal(bag.getClass().name, "Bag");
 });
 
 test("Bag.pickOut keeps a key object with name() on the key overload", () => {

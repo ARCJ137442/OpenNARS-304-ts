@@ -202,7 +202,7 @@ export class Variables {
 
                 } else {
                     let hasAnyTermVars: boolean = term1HasVar || term2HasVar;
-                    let termsHaveSameClass: boolean = term1.getClass().equals(term2.getClass());
+                    let termsHaveSameClass: boolean = term1.constructor === term2.constructor;
 
                     if (!(hasAnyTermVars && termsHaveSameClass && term1 instanceof CompoundTerm)) {
                         return termsEqual;

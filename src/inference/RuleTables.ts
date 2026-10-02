@@ -142,7 +142,7 @@ export class RuleTables {
                 return; // only allow for eternal reasoning for now to prevent derived event floods
             }
 
-            nal.emit(Events.BeliefReason.class, belief, beliefTerm, taskTerm, nal);
+            nal.emit(Events.BeliefReason, belief, beliefTerm, taskTerm, nal);
 
             if (LocalRules.match(task, belief, beliefConcept, nal)) { // new tasks resulted from the match, so return
                 return;
@@ -913,7 +913,7 @@ export class RuleTables {
      */
     private static compoundAndCompound(taskTerm: CompoundTerm, beliefTerm: CompoundTerm,
         tindex: IntNumber, bindex: IntNumber, nal: DerivationContext): void {
-        if (taskTerm.getClass() === beliefTerm.getClass()) {
+        if (taskTerm.constructor === beliefTerm.constructor) {
             if (taskTerm.size() >= beliefTerm.size()) {
                 RuleTables.compoundAndSelf(taskTerm, beliefTerm, true, tindex, nal);
             } else if (taskTerm.size() < beliefTerm.size()) {
@@ -941,7 +941,7 @@ export class RuleTables {
         let component: Term = compound.term[index];
 
         let task: Task = nal.getCurrentTask();
-        if (component.getClass() === statement.getClass()) {
+        if (component.constructor === statement.constructor) {
             if ((compound instanceof Conjunction) && (nal.getCurrentBelief() !== null)) {
                 let conj: Conjunction = compound as Conjunction;
                 let u: Term[] = [compound, statement];

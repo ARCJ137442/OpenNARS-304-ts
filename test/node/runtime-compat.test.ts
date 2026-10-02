@@ -11,7 +11,7 @@ import {
     javaStringsEqual,
     toRuntimeLong,
 } from "../support/legacy-runtime-facade.ts";
-import { ClassToken } from "../../src/runtime/ClassIdentity.ts";
+import { getClass } from "../../src/runtime/ClassIdentity.ts";
 import {
     JavaAssertionError,
     JavaClassNotFoundException,
@@ -29,21 +29,20 @@ test("javaStringLength normalizes jree and native string representations", () =>
     assert.equal(javaStringLength(built), 3);
 });
 
-test("project runtime class tokens preserve constructor identity and instance checks", () => {
+test("native constructor identity preserves exact class checks", () => {
     class Probe {}
     class Other {}
-    const token = ClassToken.fromConstructor(Probe);
-    const sameToken = ClassToken.fromConstructor(Probe);
-    const otherToken = ClassToken.fromConstructor(Other);
+    const probe = new Probe();
+    const other = new Other();
+    const probeClass = getClass(probe);
+    const sameClass = getClass(new Probe());
+    const otherClass = getClass(other);
 
-    assert.equal(token, sameToken);
-    assert.notEqual(token, otherToken);
-    assert.equal(token.getName(), "Probe");
-    assert.equal(token.getSimpleName(), "Probe");
-    assert.equal(token.isInstance(new Probe()), true);
-    assert.equal(token.isInstance(new Other()), false);
-    assert.equal(token.equals(sameToken), true);
-    assert.equal(token.equals(otherToken), false);
+    assert.equal(probeClass, sameClass);
+    assert.notEqual(probeClass, otherClass);
+    assert.equal(probeClass.name, "Probe");
+    assert.equal(getClass(probe) === probeClass, true);
+    assert.equal(getClass(other) === probeClass, false);
 });
 
 test("runtime RuntimeLong boundaries reject unsafe numbers before arithmetic", () => {
@@ -116,6 +115,5 @@ test("native object class identity does not require a legacy FQN marker", () => 
     class Probe extends JavaObject {}
     const probe = new Probe();
     assert.equal("#fqn" in Probe, false);
-    assert.equal(probe.getClass().getName(), "Probe");
-    assert.equal(probe.getClass().getSimpleName(), "Probe");
+    assert.equal(probe.getClass().name, "Probe");
 });

@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Concept.java
-import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../runtime/ClassIdentity.ts";
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
 import type { IntNumber, FloatNumber, RuntimeLong } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
@@ -162,7 +162,7 @@ export class Concept extends Item<Term> {
     }
 
     public addToTable(task: Task, rankTruthExpectation: boolean, table: NativeList<Task>, max: IntNumber,
-        eventAdd: ClassTokenLike, eventRemove: ClassTokenLike, ...extraEventArguments: EventEmitter.EventPayload): void {
+        eventAdd: ClassKey, eventRemove: ClassKey, ...extraEventArguments: EventEmitter.EventPayload): void {
 
         let preSize: IntNumber = table.size();
         let removedT: Task | null;
@@ -371,7 +371,7 @@ export class Concept extends Item<Term> {
                     // the lowest
                     if (lowest !== null) {
                         this.taskLinks.pickOut(lowest);
-                        this.memory.emit(TaskLinkRemove.class, lowest, this);
+                        this.memory.emit(TaskLinkRemove, lowest, this);
                     }
                     break;
                 }
@@ -381,13 +381,13 @@ export class Concept extends Item<Term> {
         let removed: TaskLink = this.taskLinks.putIn(taskLink);
         if (removed !== null) {
             if (removed === taskLink) {
-                this.memory.emit(TaskLinkRemove.class, taskLink, this);
+                this.memory.emit(TaskLinkRemove, taskLink, this);
                 return false;
             } else {
-                this.memory.emit(TaskLinkRemove.class, removed, this);
+                this.memory.emit(TaskLinkRemove, removed, this);
             }
         }
-        this.memory.emit(TaskLinkAdd.class, taskLink, this);
+        this.memory.emit(TaskLinkAdd, taskLink, this);
         return true;
     }
 
@@ -442,14 +442,14 @@ export class Concept extends Item<Term> {
         let removed: TermLink = this.termLinks.putIn(termLink);
         if (removed !== null) {
             if (removed === termLink) {
-                this.memory.emit(TermLinkRemove.class, termLink, this);
+                this.memory.emit(TermLinkRemove, termLink, this);
                 return false;
             } else {
                 // emit remove and add for this case
-                this.memory.emit(TermLinkRemove.class, removed, this);
+                this.memory.emit(TermLinkRemove, removed, this);
             }
         }
-        this.memory.emit(TermLinkAdd.class, termLink, this);
+        this.memory.emit(TermLinkAdd, termLink, this);
         return true;
     }
 
@@ -543,7 +543,7 @@ export class Concept extends Item<Term> {
 
         for (let beliefT of this.beliefs) {
             let belief: Sentence = beliefT.sentence;
-            nal.emit(BeliefSelect.class, belief);
+            nal.emit(BeliefSelect, belief);
             nal.setTheNewStamp(taskStamp, belief.stamp, currentTime);
 
             let projectedBelief: Sentence = belief.projection(taskStamp.getOccurrenceTime(), nal.time.time(),

@@ -1,6 +1,6 @@
 //! Java source: opennars/interfaces/Eventable.java
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
-import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../runtime/ClassIdentity.ts";
 
 
 
@@ -10,11 +10,11 @@ import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
  * @author Robert Wünsche
  */
 export interface Eventable {
-    on(c: ClassTokenLike, o: EventEmitter.EventObserver): void;
+    on(c: ClassKey, o: EventEmitter.EventObserver): void;
 
-    off(c: ClassTokenLike, o: EventEmitter.EventObserver): void;
+    off(c: ClassKey, o: EventEmitter.EventObserver): void;
 
-    event(e: EventEmitter.EventObserver, enabled: boolean, ...events: ClassTokenLike[]): void;
+    event(e: EventEmitter.EventObserver, enabled: boolean, ...events: ClassKey[]): void;
 
-    emit(c: ClassTokenLike, ...o: EventEmitter.EventPayload): void;
+    emit(c: ClassKey, ...o: EventEmitter.EventPayload): void;
 }

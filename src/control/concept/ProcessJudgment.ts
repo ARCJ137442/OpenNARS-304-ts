@@ -86,7 +86,7 @@ export class ProcessJudgment {
             LocalRules.trySolution(judg, concept.desires.get(i), nal, true);
         }
         concept.addToTable(task, false, concept.beliefs, concept.memory.narParameters.CONCEPT_BELIEFS_MAX,
-            Events.ConceptBeliefAdd.class, Events.ConceptBeliefRemove.class);
+            Events.ConceptBeliefAdd, Events.ConceptBeliefRemove);
     }
 
     /**
@@ -210,8 +210,8 @@ export class ProcessJudgment {
             // this way the strongest confident result of this content is put into table but
             // the table ranked according to truth expectation
             target_concept.addToTable(strongest_target, true, table,
-                target_concept.memory.narParameters.CONCEPT_BELIEFS_MAX, Events.EnactableExplainationAdd.class,
-                Events.EnactableExplainationRemove.class);
+                target_concept.memory.narParameters.CONCEPT_BELIEFS_MAX, Events.EnactableExplainationAdd,
+                Events.EnactableExplainationRemove);
             /* } */
         }
     }

@@ -113,7 +113,7 @@ export class ProcessAnticipation {
                         nal.time);
                 }
             }
-            nal.memory.emit(OutputHandler.ANTICIPATE.class, specificAnticipationTerm); // disappoint/confirm printed
+            nal.memory.emit(OutputHandler.ANTICIPATE, specificAnticipationTerm); // disappoint/confirm printed
             // anyway
         }
 
@@ -164,13 +164,13 @@ export class ProcessAnticipation {
         }
         // confirmed by input, nothing to do
         if (confirmed.length > 0) {
-            concept.memory.emit(OutputHandler.CONFIRM.class, concept.getTerm());
+            concept.memory.emit(OutputHandler.CONFIRM, concept.getTerm());
         }
         const confirmedSet = new Set(confirmed);
         concept.anticipations = concept.anticipations.filter((entry) => !confirmedSet.has(entry));
         // not confirmed and time is out, generate disappointment
         if (disappointed.length > 0) {
-            concept.memory.emit(OutputHandler.DISAPPOINT.class, concept.getTerm());
+            concept.memory.emit(OutputHandler.DISAPPOINT, concept.getTerm());
         }
         for (let entry of disappointed) {
             if (entry.negConfirmation === null) {
@@ -252,7 +252,7 @@ export class ProcessAnticipation {
             }
         }
         if (confirmed.length > 0) {
-            nal.memory.emit(OutputHandler.CONFIRM.class, concept.getTerm());
+            nal.memory.emit(OutputHandler.CONFIRM, concept.getTerm());
         }
         const confirmedSet = new Set(confirmed);
         concept.anticipations = concept.anticipations.filter((entry) => !confirmedSet.has(entry));

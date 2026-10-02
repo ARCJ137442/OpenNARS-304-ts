@@ -34,3 +34,18 @@ This probe records the language-level cleanup boundary after the v1.0.4 release.
 - The native replacement is a `string` return plus a local `string[]` assembled with `join("")`.
 - Sentence keys use the existing `Stamp.getOccurrenceTimeString()` value instead of adapting a stamp to a builder.
 - The compatibility `Stamp.appendOcurrenceTime` method remains for external/test callers and is intentionally deferred to the stamp boundary batch.
+
+## Batch 3: exact class checks
+
+- Internal checks that only ask whether two terms have the same concrete TypeScript class now compare `constructor` values directly.
+- This preserves the old exact-token semantics while avoiding `ClassToken.fromConstructor` lookup on hot inference paths.
+- Event and plugin dispatch still use `ClassToken`/`.class`; those tokens are an identity protocol, not an incidental reflection call, and remain a separate compatibility boundary.
+- Diagnostic names use `constructor.name` where the old code only needed the display name.
+
+## Batch 4: native event identity
+
+- Event keys are now constructor values (`ClassKey`), not allocated reflection tokens.
+- `getClass(object)` is the readable native helper and returns `object.constructor` directly.
+- The old `ClassToken` class, WeakMap cache, token equality methods, and `.getName()`/`.getSimpleName()` event formatting were removed from production.
+- Static `.class` accessors currently return the constructor for source compatibility; the event map itself never sees a token object. Further naming cleanup can remove the transitional accessor after consumers are migrated.
+- Error messages identify unknown events by `constructor.name`, preserving useful diagnostics without object reflection wrappers.

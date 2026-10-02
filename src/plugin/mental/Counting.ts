@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/Counting.java
-import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../runtime/ClassIdentity.ts";
 import type { FloatNumber, DoubleNumber, IntNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -75,9 +75,9 @@ export class Counting implements Plugin {
 
         if (this.obs === null) {
             this.obs = {
-                event: (event: ClassTokenLike, a: EventEmitter.EventPayload): void => {
+                event: (event: ClassKey, a: EventEmitter.EventPayload): void => {
 
-                if ((event !== Events.TaskDerive.class && event !== Events.TaskAdd.class))
+                if ((event !== Events.TaskDerive && event !== Events.TaskAdd))
                     return;
 
                 let task: Task = a[0] as Task;
@@ -131,7 +131,7 @@ export class Counting implements Plugin {
             };
         }
 
-        memory.event.set(this.obs as EventObserver, enabled, Events.TaskDerive.class);
+        memory.event.set(this.obs as EventObserver, enabled, Events.TaskDerive);
         return true;
     }
 

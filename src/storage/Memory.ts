@@ -1,6 +1,6 @@
 //! Java source: opennars/storage/Memory.java
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../runtime/ClassIdentity.ts";
 import type { RuntimeLong, FloatNumber, IntNumber, DoubleNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import type { MutableIterator } from "../runtime/MutableIterator.ts";
@@ -116,7 +116,7 @@ export class Memory implements Iterable<Concept>, Resettable {
     }
 
     public reset(): void {
-        this.event.emit(ResetStart.class);
+        this.event.emit(ResetStart);
         /* synchronized (concepts) { */
         this.concepts.clear();
         /* } */
@@ -132,7 +132,7 @@ export class Memory implements Iterable<Concept>, Resettable {
         this.recent_operations.clear();
         this.lastDecision = null as unknown as Task;
         this.randomNumber.setSeed(this.randomSeed);
-        this.event.emit(ResetEnd.class);
+        this.event.emit(ResetEnd);
     }
 
     /* ---------- conversion utilities ---------- */
@@ -184,7 +184,7 @@ export class Memory implements Iterable<Concept>, Resettable {
             concept = new Concept(budget, term, this);
             // if (memory.logic!=null)
             // memory.logic.CONCEPT_NEW.commit(term.getComplexity());
-            this.emit(Events.ConceptNew.class, concept);
+            this.emit(Events.ConceptNew, concept);
         } else if (concept !== null) {
             // apply budget to existing concept
             // memory.logic.CONCEPT_ACTIVATE.commit(term.getComplexity());
@@ -219,8 +219,8 @@ export class Memory implements Iterable<Concept>, Resettable {
         this.novelTasks.putIn(t);
         /* } */
         // logic.TASK_ADD_NEW.commit(t.getPriority());
-        if (this.emitting(Events.TaskAdd.class)) {
-            this.emit(Events.TaskAdd.class, t, toHostTextString(reason));
+        if (this.emitting(Events.TaskAdd)) {
+            this.emit(Events.TaskAdd, t, toHostTextString(reason));
         }
         this.output(t);
     }
@@ -272,7 +272,7 @@ export class Memory implements Iterable<Concept>, Resettable {
                     }
 
                     if (emitIn) {
-            this.emit(IN.class, task);
+            this.emit(IN, task);
                     }
 
                     if (task.getBudget().aboveThreshold()) {
@@ -294,8 +294,8 @@ export class Memory implements Iterable<Concept>, Resettable {
 
 
     public removeTask(task: Task, reason: TextInput): void {
-        if (this.emitting(TaskRemove.class)) {
-            this.emit(TaskRemove.class, task, toHostTextString(reason));
+        if (this.emitting(TaskRemove)) {
+            this.emit(TaskRemove, task, toHostTextString(reason));
         }
     }
 
@@ -326,8 +326,8 @@ export class Memory implements Iterable<Concept>, Resettable {
     }
 
     public output(t: Task): void {
-        const shouldOutput = this.emitting(OUT.class);
-        const shouldDebug = Debug.PARENTS && this.emitting(DEBUG.class);
+        const shouldOutput = this.emitting(OUT);
+        const shouldDebug = Debug.PARENTS && this.emitting(DEBUG);
         if (!shouldOutput && !shouldDebug) return;
 
         let budget: FloatNumber = t.getBudget().summary();
@@ -337,38 +337,38 @@ export class Memory implements Iterable<Concept>, Resettable {
         let noiseLevel: FloatNumber = Float32Math.subtract(1.0, volumeRatio) as FloatNumber;
 
         if (budget >= noiseLevel) { // only report significant derived Tasks
-            if (shouldOutput) this.emit(OUT.class, t);
+            if (shouldOutput) this.emit(OUT, t);
             if (shouldDebug) {
-                this.emit(DEBUG.class, `Parent Belief\t${t.parentBelief}`);
-                this.emit(DEBUG.class, `Parent Task\t${t.parentTask}\n\n`);
+                this.emit(DEBUG, `Parent Belief\t${t.parentBelief}`);
+                this.emit(DEBUG, `Parent Task\t${t.parentTask}\n\n`);
             }
         }
     }
 
     // Java Object... accepts native TypeScript payloads as well; convert only
     // at the legacy EventEmitter boundary.
-    public emit(c: ClassTokenLike, ...signal: EventEmitter.EventPayload): void {
+    public emit(c: ClassKey, ...signal: EventEmitter.EventPayload): void {
         this.event.emit(c, ...signal);
     }
 
-    public emitting(channel: ClassTokenLike): boolean {
+    public emitting(channel: ClassKey): boolean {
         return this.event.isActive(channel);
     }
 
     public conceptRemoved(c: Concept): void {
-        this.emit(Events.ConceptForget.class, c);
+        this.emit(Events.ConceptForget, c);
     }
 
     public cycle(nar: Nar): void {
 
-        this.event.emit(Events.CycleStart.class);
+        this.event.emit(Events.CycleStart);
         for (let i: IntNumber = 0; i < nar.narParameters.NOVEL_TASK_BAG_SELECTIONS; i++) {
             this.processNovelTask(nar.narParameters, nar);
         }
         // if(noResult()) //newTasks empty
         GeneralInferenceControl.selectConceptForInference(this, nar.narParameters, nar);
 
-        this.event.emit(Events.CycleEnd.class);
+        this.event.emit(Events.CycleEnd);
         this.event.synch();
     }
 
@@ -388,7 +388,7 @@ export class Memory implements Iterable<Concept>, Resettable {
         if (currentConcept !== null) {
             let processed: boolean = ProcessTask.processTask(currentConcept, cont, task, time);
             if (processed) {
-                this.event.emit(Events.ConceptDirectProcessedTask.class, task);
+                this.event.emit(Events.ConceptDirectProcessedTask, task);
             }
         }
 
@@ -397,7 +397,7 @@ export class Memory implements Iterable<Concept>, Resettable {
         }
 
         // memory.logic.TASK_IMMEDIATE_PROCESS.commit();
-        this.emit(Events.TaskImmediateProcess.class, task, cont);
+        this.emit(Events.TaskImmediateProcess, task, cont);
         // }
     }
 

@@ -101,8 +101,8 @@ export class TermTest extends JavaObject {
         assertTrue(term1.getComplexity() > 1);
         assertTrue(term1.getComplexity() === term2.getComplexity());
 
-        assertTrue(term1.getClass().equals(Inheritance.class));
-        assertTrue(term1.getClass().equals(Inheritance.class));
+        assertTrue(term1.getClass() === Inheritance);
+        assertTrue(term1.getClass() === Inheritance);
 
         // System.out.println("t1: " + term1 + ", complexity=" + term1.getComplexity());
         // System.out.println("t2: " + term2 + ", complexity=" + term2.getComplexity());

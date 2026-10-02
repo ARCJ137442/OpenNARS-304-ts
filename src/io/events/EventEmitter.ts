@@ -1,10 +1,10 @@
 //! Java source: opennars/io/events/EventEmitter.java
 import { ReasonerInputError, ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
-import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../runtime/ClassIdentity.ts";
 
 type PendingOperation = [
     enabled: boolean,
-    event: ClassTokenLike,
+    event: ClassKey,
     observer: EventEmitter.EventObserver,
 ];
 type ObserverList = EventEmitter.EventObserver[];
@@ -20,7 +20,7 @@ type ObserverList = EventEmitter.EventObserver[];
 // registry and its observer identity rules are the actual runtime contract.
 export class EventEmitter {
 
-    private readonly events: Map<ClassTokenLike, ObserverList>;
+    private readonly events: Map<ClassKey, ObserverList>;
 
     // Java source: private final Deque<Object[]> pendingOps = new ArrayDeque<>();
     // The queue is private and only supports FIFO iteration followed by clear.
@@ -36,7 +36,7 @@ export class EventEmitter {
      * EventEmitter with a fixed set of known events; the 'events' map
      * can then be made unmodifiable and non-concurrent for speed.
      */
-    public constructor(...knownEventClasses: ClassTokenLike[]);
+    public constructor(...knownEventClasses: ClassKey[]);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -54,7 +54,7 @@ export class EventEmitter {
             }
 
             case 1: {
-                const [knownEventClasses] = args as [ClassTokenLike[]];
+                const [knownEventClasses] = args as [ClassKey[]];
 
 
                 this.events = new Map();
@@ -81,7 +81,7 @@ export class EventEmitter {
          */
     }
 
-    public isActive(event: ClassTokenLike): boolean {
+    public isActive(event: ClassKey): boolean {
         const observers = this.events.get(event);
         if (observers !== undefined)
             return observers.length > 0;
@@ -104,7 +104,7 @@ export class EventEmitter {
         /* } */
     }
 
-    public on(event: ClassTokenLike, o: EventEmitter.EventObserver): void {
+    public on(event: ClassKey, o: EventEmitter.EventObserver): void {
         const observers = this.events.get(event);
         if (observers !== undefined) {
             observers.push(o);
@@ -119,19 +119,19 @@ export class EventEmitter {
      * @param event
      * @param o
      */
-    public off(event: ClassTokenLike, o: EventEmitter.EventObserver): void {
+    public off(event: ClassKey, o: EventEmitter.EventObserver): void {
         if (null === event || null === o)
             throw new ReasonerStateError("Invalid parameter");
 
         if (!this.events.has(event))
-            throw new ReasonerStateError(`Unknown event: ${event}`);
+            throw new ReasonerStateError(`Unknown event: ${event.name}`);
 
         // Observers are commonly plain TypeScript objects, not JavaObject
         // instances. jree's List.remove(value) only compares Java-style
         // equatable objects, so preserve Java's registration identity here.
         const observers = this.events.get(event);
         if (observers === undefined) {
-            throw new ReasonerStateError(`Unknown event: ${event}`);
+            throw new ReasonerStateError(`Unknown event: ${event.name}`);
         }
         for (let index = 0; index < observers.length; index += 1) {
             if (observers[index] === o) {
@@ -148,7 +148,7 @@ export class EventEmitter {
     }
 
     /** for enabling many events at the same time */
-    public set(o: EventEmitter.EventObserver, enable: boolean, ...events: ClassTokenLike[]): void {
+    public set(o: EventEmitter.EventObserver, enable: boolean, ...events: ClassKey[]): void {
         for (let c of events) {
             if (enable)
                 this.on(c, o);
@@ -157,7 +157,7 @@ export class EventEmitter {
         }
     }
 
-    public emit(eventClass: ClassTokenLike, ...params: EventEmitter.EventPayload): void {
+    public emit(eventClass: ClassKey, ...params: EventEmitter.EventPayload): void {
         const observers = this.events.get(eventClass);
 
         if (observers === undefined || observers.length === 0)
@@ -177,7 +177,7 @@ export namespace EventEmitter {
     export type EventPayload = unknown[];
 
     export interface EventObserver {
-        event(event: ClassTokenLike, args: EventPayload): void;
+        event(event: ClassKey, args: EventPayload): void;
     }
 
 }

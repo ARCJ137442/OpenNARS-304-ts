@@ -121,7 +121,7 @@ export abstract class SensoryChannel extends ReasonerObject implements Plugin {
             this.addInput(parsedTask, time);
         } catch (ex) {
             if (ex instanceof Parser.InvalidInputException) {
-                Logger.named(SensoryChannel.class.getName()).log(
+                Logger.named(SensoryChannel.name).log(
                     "SEVERE",
                     null,
                     ex,

@@ -5,6 +5,7 @@ import { Term } from "../language/Term.ts";
 import { Debug } from "../main/Debug.ts";
 import type { TextInput } from "../runtime/Text.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
+import { getClass } from "../runtime/ClassIdentity.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
 import type { Timable } from "../interfaces/Timable.ts";
@@ -35,7 +36,7 @@ export class NullOperator extends Operator {
     protected execute(operation: Operation, args: Term[], memory: Memory,
         time: Timable): Task[] | null {
         if (Debug.DETAILED) {
-            memory.emit(this.getClass(), ...(args as EventEmitter.EventPayload));
+            memory.emit(getClass(this), ...(args as EventEmitter.EventPayload));
         }
         return null;
     }

@@ -507,14 +507,14 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
 
     /** TODO bad paste from preceding */
     public toStringLong(): TextString {
-        const parts: string[] = [" BAG ", this.getClass().getSimpleName(), " ", String(this.showSizes())];
+        const parts: string[] = [" BAG ", this.constructor.name, " ", String(this.showSizes())];
         for (let i: IntNumber = this.TOTAL_LEVEL; i >= 0; i--) {
             if (!this.emptyLevel(i - 1)) {
                 parts.push("\n --- LEVEL ", String(i), ":\n ");
                 for (const item of this.itemTable[i - 1]) parts.push(item.toStringLong(), "\n ");
             }
         }
-        parts.push(">>>> end of Bag", this.getClass().getSimpleName());
+        parts.push(">>>> end of Bag", this.constructor.name);
         return asText(parts.join(""));
     }
 

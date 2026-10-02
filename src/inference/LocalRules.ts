@@ -238,12 +238,12 @@ export class LocalRules {
             let newQ: FloatNumber = LocalRules.solutionQuality(rateByConfidence, task, belief, memory, nal.time);
             let oldQ: FloatNumber = LocalRules.solutionQuality(rateByConfidence, task, oldBest, memory, nal.time);
             let isBetterSolution: boolean = newQ > oldQ;
-            memory.emit(Events.TrySolution.class, isBetterSolution, task, belief);
+            memory.emit(Events.TrySolution, isBetterSolution, task, belief);
             if (!isBetterSolution) {
                 if (problem.isGoal() && memory.emotion !== null) {
                     memory.emotion.adjustSatisfaction(oldQ, task.getPriority(), nal);
                 }
-                memory.emit(Unsolved.class, task, belief, "Lower quality");
+                memory.emit(Unsolved, task, belief, "Lower quality");
                 return false;
             }
         }
@@ -256,19 +256,19 @@ export class LocalRules {
             // Solution Activated
             if (task.sentence.punctuation === Symbols.QUESTION_MARK || task.sentence.punctuation === Symbols.QUEST_MARK) {
                 if (task.isInput() && report) { // only show input tasks as solutions
-                    memory.emit(Answer.class, task, belief);
+                    memory.emit(Answer, task, belief);
                 } else {
-                    memory.emit(OutputHandler.class, task, belief); // solution to quests and questions can be always
+                    memory.emit(OutputHandler, task, belief); // solution to quests and questions can be always
                     // showed
                 }
             } else {
-                memory.emit(OutputHandler.class, task, belief); // goal things only show silence related
+                memory.emit(OutputHandler, task, belief); // goal things only show silence related
             }
 
             nal.addTask(nal.getCurrentTask(), budget, belief, task.getParentBelief());
             return true;
         } else {
-            memory.emit(Unsolved.class, task, belief, "Insufficient budget");
+            memory.emit(Unsolved, task, belief, "Insufficient budget");
         }
         return false;
     }

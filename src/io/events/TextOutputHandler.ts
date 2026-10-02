@@ -1,5 +1,5 @@
 //! Java source: opennars/io/events/TextOutputHandler.java
-import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../runtime/ClassIdentity.ts";
 import type { FloatNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { OutputHandler } from "./OutputHandler.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
@@ -166,11 +166,11 @@ export class TextOutputHandler extends OutputHandler {
      * Process the next chunk of output data
      *
      */
-    public event(channel: ClassTokenLike, oo: EventEmitter.EventPayload): void {
-        if (!this.showErrors && (channel === ERR.class))
+    public event(channel: ClassKey, oo: EventEmitter.EventPayload): void {
+        if (!this.showErrors && (channel === ERR))
             return;
 
-        if (!this.showInput && (channel === IN.class))
+        if (!this.showInput && (channel === IN))
             return;
 
         if ((this.outExp !== null) || (this.outExp2 !== null)) {
@@ -191,7 +191,7 @@ export class TextOutputHandler extends OutputHandler {
 
     protected readonly result: OutputBuffer = new NativeOutputBuffer();
 
-    public process(c: ClassTokenLike, o: unknown): string | null {
+    public process(c: ClassKey, o: unknown): string | null {
         return this.getOutputString(c, o, true, this.showStamp, this.nar, this.result, this.minPriority);
     }
 
@@ -215,55 +215,55 @@ export class TextOutputHandler extends OutputHandler {
         return this;
     }
 
-    public static getOutputString(channel: ClassTokenLike, signal: unknown,
+    public static getOutputString(channel: ClassKey, signal: unknown,
         showStamp: boolean, nar: Nar): string | null;
 
-    public static getOutputString(channel: ClassTokenLike, signal: unknown,
+    public static getOutputString(channel: ClassKey, signal: unknown,
         showStamp: boolean, nar: Nar, buffer: OutputBuffer): string | null;
 
-    public static getOutputString(channel: ClassTokenLike, signal: unknown, showChannel: boolean,
+    public static getOutputString(channel: ClassKey, signal: unknown, showChannel: boolean,
         showStamp: boolean, nar: Nar): string | null;
 
     public static getOutputString(...args: unknown[]): string | null {
         switch (args.length) {
             case 4: {
-                const [channel, signal, showStamp, nar] = args as [ClassTokenLike, unknown, boolean, Nar];
+                const [channel, signal, showStamp, nar] = args as [ClassKey, unknown, boolean, Nar];
                 return TextOutputHandler.formatStaticOutputString(
                     channel, signal, showStamp, nar, new NativeOutputBuffer(),
                 );
             }
             case 5: {
                 if (isOutputBuffer(args[4])) {
-                    const [channel, signal, showStamp, nar, buffer] = args as [ClassTokenLike, unknown, boolean, Nar, OutputBuffer];
+                    const [channel, signal, showStamp, nar, buffer] = args as [ClassKey, unknown, boolean, Nar, OutputBuffer];
                     return TextOutputHandler.formatStaticOutputString(channel, signal, showStamp, nar, buffer);
                 }
-                const [channel, signal, showChannel, showStamp, nar] = args as [ClassTokenLike, unknown, boolean, boolean, Nar];
+                const [channel, signal, showChannel, showStamp, nar] = args as [ClassKey, unknown, boolean, boolean, Nar];
                 const output = TextOutputHandler.formatStaticOutputString(
                     channel, signal, showStamp, nar, new NativeOutputBuffer(),
                 );
                 if (output === null || !showChannel)
                     return output;
-                return `${channel.getSimpleName()}: ${output}`;
+                return `${channel.name}: ${output}`;
             }
             default:
                 throw new ReasonerInputError("Invalid number of arguments");
         }
     }
 
-    public getOutputString(channel: ClassTokenLike, signal: unknown, showChannel: boolean,
+    public getOutputString(channel: ClassKey, signal: unknown, showChannel: boolean,
         showStamp: boolean, nar: Nar, buffer: OutputBuffer): string | null;
 
     /** generates a human-readable string from an output channel and signal */
-    public getOutputString(channel: ClassTokenLike, signal: unknown, showChannel: boolean,
+    public getOutputString(channel: ClassKey, signal: unknown, showChannel: boolean,
         showStamp: boolean, nar: Nar, buffer: OutputBuffer, minPriority: FloatNumber): string | null;
     public getOutputString(...args: unknown[]): string | null {
         switch (args.length) {
             case 6: {
-                const [channel, signal, showChannel, showStamp, nar, buffer] = args as [ClassTokenLike, unknown, boolean, boolean, Nar, OutputBuffer];
+                const [channel, signal, showChannel, showStamp, nar, buffer] = args as [ClassKey, unknown, boolean, boolean, Nar, OutputBuffer];
                 return this.getOutputString(channel, signal, showChannel, showStamp, nar, buffer, 0);
             }
             case 7: {
-                const [channel, signal, showChannel, showStamp, nar, buffer, minPriority] = args as [ClassTokenLike, unknown, boolean, boolean, Nar, OutputBuffer, FloatNumber];
+                const [channel, signal, showChannel, showStamp, nar, buffer, minPriority] = args as [ClassKey, unknown, boolean, boolean, Nar, OutputBuffer, FloatNumber];
                 return TextOutputHandler.formatInstanceOutputString(
                     channel, signal, showChannel, showStamp, nar, buffer, minPriority, this.showStackTrace,
                 );
@@ -273,15 +273,15 @@ export class TextOutputHandler extends OutputHandler {
         }
     }
 
-    private static formatInstanceOutputString(channel: ClassTokenLike, signal: unknown, showChannel: boolean,
+    private static formatInstanceOutputString(channel: ClassKey, signal: unknown, showChannel: boolean,
         showStamp: boolean, nar: Nar, buffer: OutputBuffer, minPriority: FloatNumber,
         showStackTrace: boolean): string | null {
         buffer.setLength(0);
 
         if (showChannel)
-            buffer.append(channel.getSimpleName()).append(": ");
+            buffer.append(channel.name).append(": ");
 
-        if (channel === ERR.class) {
+        if (channel === ERR) {
             if (isThrowable(signal)) {
                 const e = signal;
                 buffer.append(e.toString().replace(/^Java/, ""));
@@ -291,11 +291,11 @@ export class TextOutputHandler extends OutputHandler {
             } else {
                 buffer.append(String(signal));
             }
-        } else if ((channel === OUT.class) || (channel === IN.class) || (channel === ECHO.class) || (channel === EXE.class)
-            || (channel === Answer.class)
-            || (channel === ANTICIPATE.class) || (channel === DISAPPOINT.class) || (channel === CONFIRM.class)
-            || (channel === DEBUG.class)) {
-            if (channel === CONFIRM.class) {
+        } else if ((channel === OUT) || (channel === IN) || (channel === ECHO) || (channel === EXE)
+            || (channel === Answer)
+            || (channel === ANTICIPATE) || (channel === DISAPPOINT) || (channel === CONFIRM)
+            || (channel === DEBUG)) {
+            if (channel === CONFIRM) {
                 buffer.append(String(signal));
             }
             if (signal instanceof Task) {
@@ -303,9 +303,9 @@ export class TextOutputHandler extends OutputHandler {
                 if (task.getPriority() < minPriority)
                     return null;
 
-                if ((channel === ANTICIPATE.class) || (channel === DISAPPOINT.class)) {
+                if ((channel === ANTICIPATE) || (channel === DISAPPOINT)) {
                     buffer.append(task.sentence.toString(nar, showStamp));
-                } else if (channel === Answer.class) {
+                } else if (channel === Answer) {
                     const answer: Sentence | null = task.getBestSolution();
                     if (answer !== null)
                         buffer.append(answer.toString(nar, showStamp));
@@ -324,7 +324,7 @@ export class TextOutputHandler extends OutputHandler {
         return buffer.toString();
     }
 
-    private static formatStaticOutputString(channel: ClassTokenLike, signal: unknown,
+    private static formatStaticOutputString(channel: ClassKey, signal: unknown,
         showStamp: boolean, nar: Nar, buffer: OutputBuffer): string {
         buffer.setLength(0);
 
@@ -337,7 +337,7 @@ export class TextOutputHandler extends OutputHandler {
         } else if (signal instanceof Sentence) {
             buffer.append(signal.toString(nar, showStamp));
         } else if (Array.isArray(signal)) {
-            if (channel === Answer.class) {
+            if (channel === Answer) {
                 const answer = (signal as unknown[])[1] as Sentence;
                 buffer.append(answer.toString(nar, showStamp));
             } else {

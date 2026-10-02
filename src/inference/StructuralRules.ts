@@ -122,7 +122,7 @@ export class StructuralRules {
     public static structuralDecompose2(statement: Statement, index: IntNumber, nal: DerivationContext): void {
         let subj: Term = statement.getSubject();
         let pred: Term = statement.getPredicate();
-        if (subj.getClass() !== pred.getClass()) {
+        if (subj.constructor !== pred.constructor) {
             return;
         }
 

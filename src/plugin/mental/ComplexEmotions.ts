@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/mental/ComplexEmotions.java
-import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../runtime/ClassIdentity.ts";
 import type { FloatNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { LocalRules } from "../../inference/LocalRules.ts";
@@ -33,9 +33,9 @@ export class ComplexEmotions implements Plugin {
 
             if (this.obs === null) {
                 this.obs = {
-                    event: (event: ClassTokenLike, a: EventEmitter.EventPayload): void => {
-                    if (event !== Events.TaskDerive.class &&
-                        event !== Events.InduceSucceedingEvent.class)
+                    event: (event: ClassKey, a: EventEmitter.EventPayload): void => {
+                    if (event !== Events.TaskDerive &&
+                        event !== Events.InduceSucceedingEvent)
                         return;
                     let future_task: Task = a[0] as Task;
 
@@ -60,7 +60,7 @@ export class ComplexEmotions implements Plugin {
                                     if (C1 !== null) {
                                         C1.incPriority(fear);
                                     }
-                                    memory.emit(Answer.class, `Fear value=${fear}`);
+                                    memory.emit(Answer, `Fear value=${fear}`);
                                 }
                             }
                         }
@@ -68,7 +68,7 @@ export class ComplexEmotions implements Plugin {
                     },
                 };
             }
-            memory.event.set(this.obs as EventObserver, enabled, Events.InduceSucceedingEvent.class, Events.TaskDerive.class);
+            memory.event.set(this.obs as EventObserver, enabled, Events.InduceSucceedingEvent, Events.TaskDerive);
         }
         return true;
     }

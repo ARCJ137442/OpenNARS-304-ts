@@ -1,7 +1,7 @@
 //! Java source: opennars/io/events/EventHandler.java
 import { EventEmitter } from "./EventEmitter.ts";
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
-import { ReasonerObject, type ClassTokenLike } from "../../runtime/ClassIdentity.ts";
+import { ReasonerObject, type ClassKey } from "../../runtime/ClassIdentity.ts";
 import type { Nar } from "../../main/Nar.ts";
 
 
@@ -12,17 +12,17 @@ import type { Nar } from "../../main/Nar.ts";
 export abstract class EventHandler extends ReasonerObject implements EventEmitter.EventObserver {
     protected readonly source: EventEmitter;
     protected active: boolean = false;
-    private readonly events: ClassTokenLike[];
+    private readonly events: ClassKey[];
 
-    public constructor(n: Nar, active: boolean, ...events: ClassTokenLike[]);
+    public constructor(n: Nar, active: boolean, ...events: ClassKey[]);
 
-    public constructor(source: EventEmitter, active: boolean, ...events: ClassTokenLike[]);
+    public constructor(source: EventEmitter, active: boolean, ...events: ClassKey[]);
     public constructor(...args: unknown[]) {
         if (args.length < 2) {
             throw new ReasonerInputError("Invalid number of arguments");
         }
         const [candidate, active] = args as [Nar | EventEmitter, boolean];
-        const events = args.slice(2) as ClassTokenLike[];
+        const events = args.slice(2) as ClassKey[];
         const source = (candidate as Nar).memory?.event ?? candidate as EventEmitter;
         super();
         this.source = source;
@@ -43,5 +43,5 @@ export abstract class EventHandler extends ReasonerObject implements EventEmitte
         return this.active;
     }
 
-    public abstract event(event: ClassTokenLike, args: EventEmitter.EventPayload): void;
+    public abstract event(event: ClassKey, args: EventEmitter.EventPayload): void;
 }

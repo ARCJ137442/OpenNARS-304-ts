@@ -8,7 +8,7 @@ import {
     JavaParseException,
 } from "../support/legacy-runtime-facade.ts";
 import { Nar } from "../../src/main/Nar.ts";
-import type { ClassTokenLike } from "../../src/runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../src/runtime/ClassIdentity.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
 import { Parser } from "../../src/io/Parser.ts";
 import { Narsese } from "../../src/io/Narsese.ts";
@@ -240,7 +240,7 @@ export class AttentionMetric extends JavaObject {
             this.execOrQaAnswersByTime = execOrQaAnswersByTime;
         }
 
-        public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
+        public event(event: ClassKey, args: EventEmitter.EventPayload): void {
             let exeResult: Operator.ExecutionResult = args[0] as unknown as Operator.ExecutionResult;
             let task: Task | null = exeResult.getTask();
             if (task === null) {

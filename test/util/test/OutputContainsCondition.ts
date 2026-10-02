@@ -6,7 +6,7 @@ import { Operator } from "../../../src/operator/Operator.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import { TextOutputHandler } from "../../../src/io/events/TextOutputHandler.ts";
 import { OutputCondition } from "./OutputCondition.ts";
-import type { ClassTokenLike } from "../../../src/runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../../src/runtime/ClassIdentity.ts";
 
 const OUT = OutputHandler.OUT;
 const EXE = OutputHandler.EXE;
@@ -177,7 +177,7 @@ export class OutputContainsCondition extends OutputCondition {
         return cost[len0 - 1];
     }
 
-    public cond(channel: ClassTokenLike, signal: java.lang.Object): boolean {
+    public cond(channel: ClassKey, signal: java.lang.Object): boolean {
         if ((channel === OUT.class) || (channel === EXE.class)) {
             let o: java.lang.String;
             if (signal instanceof Task) {
@@ -233,7 +233,7 @@ export class OutputContainsCondition extends OutputCondition {
         return false;
     }
 
-    public condition(channel: ClassTokenLike, signal: java.lang.Object): boolean {
+    public condition(channel: ClassKey, signal: java.lang.Object): boolean {
         if ((channel === OUT.class) || (channel === EXE.class)) {
             if (signal instanceof Task) {
                 let t: Task = signal as Task;

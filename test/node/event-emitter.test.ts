@@ -14,7 +14,7 @@ import {
     JavaIllegalArgumentException,
     JavaIllegalStateException,
 } from "../support/legacy-runtime-facade.ts";
-import { ReasonerObject, type ClassTokenLike } from "../../src/runtime/ClassIdentity.ts";
+import { ReasonerObject, type ClassKey } from "../../src/runtime/ClassIdentity.ts";
 
 test("EventEmitter.set subscribes only to the requested event classes", () => {
     const emitter = new EventEmitter();
@@ -41,16 +41,15 @@ test("Events keeps the Java plain namespace-holder boundary", () => {
 
     assert.equal(Object.getPrototypeOf(Events.prototype), Object.prototype);
     assert.ok(events instanceof Events);
-    assert.equal(Events.CycleEnd.class.getSimpleName(), "CycleEnd");
+    assert.equal(Events.CycleEnd.name, "CycleEnd");
 });
 
 test("native event classes keep stable runtime identity tokens", () => {
     assert.equal(Events.CycleEnd.class, Events.CycleEnd.class);
     assert.notEqual(Events.CycleEnd.class, Events.CycleStart.class);
-    assert.equal(Events.CycleEnd.class.getName(), "CycleEnd");
-    assert.equal(Events.CycleEnd.class.getSimpleName(), "CycleEnd");
-    assert.equal(Events.CycleEnd.class.equals(Events.CycleEnd.class), true);
-    assert.equal(Events.CycleEnd.class.equals(Events.CycleStart.class), false);
+    assert.equal(Events.CycleEnd.name, "CycleEnd");
+    assert.equal(Events.CycleEnd === Events.CycleEnd, true);
+    assert.equal(Events.CycleEnd === Events.CycleStart, false);
 });
 
 test("EventEmitter uses native map and observer arrays while preserving identity removal", () => {
@@ -60,7 +59,7 @@ test("EventEmitter uses native map and observer arrays while preserving identity
     emitter.on(Events.CycleEnd.class, observer);
 
     const events = (emitter as unknown as {
-        events: Map<ClassTokenLike, EventEmitter.EventObserver[]>;
+        events: Map<ClassKey, EventEmitter.EventObserver[]>;
     }).events;
     const observers = events.get(Events.CycleEnd.class);
     assert.ok(observers);
@@ -81,7 +80,7 @@ test("EventEmitter.synch applies pending operations in FIFO order", () => {
         },
     };
     const pendingOps = (emitter as unknown as {
-        pendingOps: Array<[boolean, ClassTokenLike, EventEmitter.EventObserver]>;
+        pendingOps: Array<[boolean, ClassKey, EventEmitter.EventObserver]>;
     }).pendingOps;
 
     pendingOps.push([true, Events.CycleEnd.class, observer]);
@@ -128,7 +127,7 @@ test("EventEmitter preserves Java exception boundaries", () => {
 
     const emitter = new EventEmitter();
     const observer: EventEmitter.EventObserver = { event() {} };
-    assert.throws(() => emitter.off(null as unknown as ClassTokenLike, observer),
+    assert.throws(() => emitter.off(null as unknown as ClassKey, observer),
         (error: unknown) => {
             assert.ok(error instanceof JavaIllegalStateException);
             assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
@@ -139,7 +138,7 @@ test("EventEmitter preserves Java exception boundaries", () => {
         (error: unknown) => {
             assert.ok(error instanceof JavaIllegalStateException);
             assert.equal(String((error as { getMessage?: () => unknown }).getMessage?.()),
-                "Unknown event: [object Object]");
+                "Unknown event: CycleStart");
             return true;
         });
 });
@@ -148,7 +147,7 @@ test("EventHandler accepts Java-style event varargs", () => {
     const emitter = new EventEmitter();
     const received: unknown[] = [];
     class Handler extends EventHandler {
-        public event(event: ClassTokenLike): void {
+        public event(event: ClassKey): void {
             received.push(event);
         }
     }

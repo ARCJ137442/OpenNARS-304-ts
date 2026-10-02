@@ -1,6 +1,6 @@
 //! Java source: opennars/plugin/mental/InternalExperience.java
 import { ReasonerInputError, ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
-import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../runtime/ClassIdentity.ts";
 import type { FloatNumber, DoubleNumber, IntNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -186,10 +186,10 @@ export class InternalExperience implements Plugin, EventObserver {
         this.memory = n.memory;
         this.nar = n;
 
-        this.memory.event.set(this, enable, Events.ConceptDirectProcessedTask.class);
+        this.memory.event.set(this, enable, Events.ConceptDirectProcessedTask);
 
         if (this.FULL_REFLECTION)
-            this.memory.event.set(this, enable, Events.BeliefReason.class);
+            this.memory.event.set(this, enable, Events.BeliefReason);
 
         InternalExperience.enabled = enable;
 
@@ -238,9 +238,9 @@ export class InternalExperience implements Plugin, EventObserver {
         return operation;
     }
 
-    public event(event: ClassTokenLike, a: EventEmitter.EventPayload): void {
+    public event(event: ClassKey, a: EventEmitter.EventPayload): void {
 
-        if (event === Events.ConceptDirectProcessedTask.class) {
+        if (event === Events.ConceptDirectProcessedTask) {
             const memory = this.memory;
             const nar = this.nar;
             if (memory === null || nar === null) {
@@ -254,7 +254,7 @@ export class InternalExperience implements Plugin, EventObserver {
                     || task.sentence.punctuation === Symbols.QUEST_MARK))) {
                 InternalExperience.InternalExperienceFromTaskInternal(memory, task, this.FULL_REFLECTION, nar);
             }
-        } else if (event === Events.BeliefReason.class) {
+        } else if (event === Events.BeliefReason) {
             // belief, beliefTerm, taskTerm, nal
             let belief: Sentence = a[0] as Sentence;
             let beliefTerm: Term = a[1] as Term;

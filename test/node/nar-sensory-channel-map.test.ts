@@ -71,7 +71,7 @@ test("SensoryChannel keeps the Java plain-base class identity contract", () => {
     try {
         const channel = new ProbeChannel(nar);
         assert.equal(channel.getClass(), ProbeChannel.class);
-        assert.equal(channel.getClass().getSimpleName(), "ProbeChannel");
+    assert.equal(channel.getClass().name, "ProbeChannel");
     } finally {
         nar.stop();
     }

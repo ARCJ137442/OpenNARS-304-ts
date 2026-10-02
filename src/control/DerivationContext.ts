@@ -1,6 +1,6 @@
 //! Java source: opennars/control/DerivationContext.java
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../runtime/ClassIdentity.ts";
 import type { DoubleNumber, RuntimeLong, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Stamp } from "../entity/Stamp.ts";
 import { BudgetValue } from "../entity/BudgetValue.ts";
@@ -57,7 +57,7 @@ export class DerivationContext {
 
     // Java Object... accepts any event payload, including native TypeScript
     // classes that no longer extend jree JavaObject.
-    public emit(c: ClassTokenLike, ...o: unknown[]): void {
+    public emit(c: ClassKey, ...o: unknown[]): void {
         this.memory.emit(c, ...o);
     }
 
@@ -171,7 +171,7 @@ export class DerivationContext {
                         task.getBudget().getPriority() * priorityLeak,
                     ) as FloatNumber);
                 }
-                this.memory.event.emit(Events.TaskDerive.class, task, revised, single);
+                this.memory.event.emit(Events.TaskDerive, task, revised, single);
                 // memory.logic.TASK_DERIVED.commit(task.budget.getPriority());
 
                 if (addToMemory) {

@@ -119,14 +119,14 @@ export class GeneralInferenceControl {
             }
         }
 
-        nal.memory.emit(Events.ConceptFire.class, nal);
+        nal.memory.emit(Events.ConceptFire, nal);
         // memory.logic.TASKLINK_FIRE.commit(currentTaskLink.budget.getPriority());
     }
 
     public static fireTermlink(termLink: TermLink, nal: DerivationContext): boolean {
         nal.setCurrentBeliefLink(termLink);
         RuleTables.reason(nal.requireCurrentTaskLink(), termLink, nal);
-        nal.memory.emit(Events.TermLinkSelect.class, termLink, nal.requireCurrentConcept(), nal);
+        nal.memory.emit(Events.TermLinkSelect, termLink, nal.requireCurrentConcept(), nal);
         return true;
     }
 }

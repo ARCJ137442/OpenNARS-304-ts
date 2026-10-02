@@ -54,12 +54,12 @@ export class VisionChannel extends SensoryChannel {
         this.inputs = VisionChannel.emptyInputs(height, width);
         this.updated = VisionChannel.emptyUpdated(height, width);
         this.obs = { event: (ev, _args) => {
-            if (this.HadNewInput && ev === Events.CycleEnd.class) {
+            if (this.HadNewInput && ev === Events.CycleEnd) {
                 this.empty_cycles++;
                 if (this.empty_cycles > duration) { // a deadline, pixels can't appear more than duration after each other
                     this.step_start(nar); // so we know we can input, not only when all pixels were re-set.
                 }
-            } else if (ev === Events.ResetEnd.class) {
+            } else if (ev === Events.ResetEnd) {
                 this.resetChannel();
             }
         } };
@@ -67,8 +67,8 @@ export class VisionChannel extends SensoryChannel {
     }
 
     public setEnabled(n: Nar, enabled: boolean): boolean {
-        n.memory.event.set(this.obs, enabled, Events.CycleEnd.class);
-        n.memory.event.set(this.obs, enabled, Events.ResetEnd.class);
+        n.memory.event.set(this.obs, enabled, Events.CycleEnd);
+        n.memory.event.set(this.obs, enabled, Events.ResetEnd);
         return true;
     }
 
@@ -256,7 +256,7 @@ export class VisionChannel extends SensoryChannel {
                         }
                     } catch (ex) {
                         if (ex instanceof Parser.InvalidInputException) {
-                            Logger.named(VisionChannel.class.getName()).log("SEVERE", null, ex);
+                            Logger.named(VisionChannel.name).log("SEVERE", null, ex);
                         } else {
                             throw ex;
                         }

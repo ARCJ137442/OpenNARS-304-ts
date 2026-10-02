@@ -208,7 +208,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         let c: Term = this.clone(this.cloneTermsDeep());
         if (c === null)
             return null as unknown as CompoundTerm;
-        if (Debug.DETAILED && c.getClass() !== this.getClass()) // debug relevant, while it is natural due to interval
+        if (Debug.DETAILED && c.constructor !== this.constructor) // debug relevant, while it is natural due to interval
             // simplification to reduce to other term type,
             // other cases should not appear
             console.warn(`cloneDeep resulted in different class: ${c} from ${this}`);
@@ -308,7 +308,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         if (c === null)
             return null as unknown as CompoundTerm;
 
-        if (Debug.DETAILED && c.getClass() !== this.getClass())
+        if (Debug.DETAILED && c.constructor !== this.constructor)
             console.warn(`cloneDeepVariables resulted in different class: ${c} from ${this}`);
 
         let cc: CompoundTerm = c as CompoundTerm;
@@ -654,7 +654,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * @return Whether the term are all in the compound
      */
     public containsAllTermsOf(t: Term): boolean {
-        if (this.getClass() === t.getClass()) { // (t instanceof CompoundTerm) {
+        if (this.constructor === t.constructor) { // (t instanceof CompoundTerm) {
             return Terms.containsAll(this.term, (t as CompoundTerm).term);
         } else {
             return Terms.contains(this.term, t);
@@ -673,7 +673,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         let list: NativeList<Term> = this.asTermList();// Deep();
         list.remove(index);
         if (t !== null) {
-            if (this.getClass() !== t.getClass()) {
+            if (this.constructor !== t.constructor) {
                 list.add(index, t);
             } else {
                 // final List<Term> list2 = ((CompoundTerm) t).cloneTermsList();

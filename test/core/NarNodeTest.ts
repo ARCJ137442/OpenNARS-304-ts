@@ -3,7 +3,7 @@ import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { NarNode } from "../../src/main/NarNode.ts";
 import { Task } from "../../src/entity/Task.ts";
-import type { ClassTokenLike } from "../../src/runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../src/runtime/ClassIdentity.ts";
 
 const IN = OutputHandler.IN;
 const TargetNar = NarNode.TargetNar;
@@ -27,7 +27,7 @@ export class NarNodeTest extends JavaObject {
         let nar2_connection: TargetNar = new TargetNar(localIP, nar2port, 0.5, null, true);
         nar1.addRedirectionTo(nar2_connection);
         nar2.nar.event(new class implements EventEmitter.EventObserver {
-            public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
+            public event(event: ClassKey, args: EventEmitter.EventPayload): void {
                 if (event === nar2.EventReceivedTask.class || event === IN.class) {
                     let task: Task = args[0] as Task;
                     java.lang.System.out.println(`received task event triggered in nar2: ${String(task)}`);

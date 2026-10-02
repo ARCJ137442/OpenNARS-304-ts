@@ -125,7 +125,7 @@ export abstract class Operator extends Term implements Plugin {
                 } catch (ex) {
                     if (ex instanceof Error) {// plugin/operator code may fail at runtime
                         if (Debug.SHOW_EXECUTION_ERRORS) {
-                            memory.event.emit(OutputHandler.ERR.class, ex);
+                            memory.event.emit(OutputHandler.ERR, ex);
                         }
                         if (!Debug.EXECUTION_ERRORS_CONTINUE) {
                             throw new ReasonerStateError("Execution error", { cause: ex });
@@ -193,14 +193,14 @@ export abstract class Operator extends Term implements Plugin {
             return;
         }
 
-        if (memory.emitting(OutputHandler.EXE.class)) {
+        if (memory.emitting(OutputHandler.EXE)) {
             // final Operator operator = (Operator) opT;
 
             if (feedback instanceof Error) {
                 feedback = `${feedback.name}: ${feedback.message}`;
             }
 
-            memory.emit(OutputHandler.EXE.class, new Operator.ExecutionResult(operation, feedback));
+            memory.emit(OutputHandler.EXE, new Operator.ExecutionResult(operation, feedback));
         }
     }
 

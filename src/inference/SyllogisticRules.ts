@@ -656,7 +656,7 @@ export class SyllogisticRules {
             premise1 = u[0] as Implication;
             premise2 = u[1];
 
-            if (!match && (commonComponent.getClass() === oldCondition.getClass())) {
+            if (!match && (commonComponent.constructor === oldCondition.constructor)) {
 
                 let compoundCommonComponent: CompoundTerm = (commonComponent as CompoundTerm);
 
@@ -843,7 +843,7 @@ export class SyllogisticRules {
         premise1 = u[0] as Equivalence;
         premise2 = u[1];
 
-        if (!match && (commonComponent.getClass() === oldCondition.getClass())) {
+        if (!match && (commonComponent.constructor === oldCondition.constructor)) {
             u = [premise1, premise2];
             match = Variables.unify(nal.memory.randomNumber, Symbols.VAR_DEPENDENT, oldCondition.term[index],
                 (commonComponent as CompoundTerm).term[index], u);

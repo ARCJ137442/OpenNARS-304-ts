@@ -62,11 +62,11 @@ export class ProcessQuestion {
             if (removed === null || removed === undefined) {
                 throw new ReasonerStateError("Question table removal returned no task");
             }
-            concept.memory.event.emit(Events.ConceptQuestionRemove.class, concept, removed);
+            concept.memory.event.emit(Events.ConceptQuestionRemove, concept, removed);
         }
 
         questions.add(quesTask);
-        concept.memory.event.emit(Events.ConceptQuestionAdd.class, concept, task);
+        concept.memory.event.emit(Events.ConceptQuestionAdd, concept, task);
 
         let ques: Sentence = quesTask.sentence;
         let newAnswerT: Task | null = (ques.isQuestion())
@@ -84,7 +84,7 @@ export class ProcessQuestion {
             // case
             // of
             // input
-            concept.memory.emit(Events.Answer.class, quesTask, quesTask.getBestSolution());
+            concept.memory.emit(Events.Answer, quesTask, quesTask.getBestSolution());
         }
     }
 
@@ -122,7 +122,7 @@ export class ProcessQuestion {
                 }
             }
             if (newAnswer && ques.isInput()) {
-                nal.memory.emit(Events.Answer.class, ques, ques.getBestSolution());
+                nal.memory.emit(Events.Answer, ques, ques.getBestSolution());
             }
         }
     }
@@ -166,7 +166,7 @@ export class ProcessQuestion {
                         /* } */
                     }
                     if (newAnswer && ques.isInput()) {
-                        nal.memory.emit(Events.Answer.class, ques, ques.getBestSolution());
+                        nal.memory.emit(Events.Answer, ques, ques.getBestSolution());
                     }
                 }
             }

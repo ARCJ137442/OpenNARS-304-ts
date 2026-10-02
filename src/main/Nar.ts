@@ -1,5 +1,5 @@
 //! Java source: opennars/main/Nar.java
-import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../runtime/ClassIdentity.ts";
 import type { RuntimeLong, IntNumber, DoubleNumber, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { textValue, asText as toNativeTextString, type TextInput } from "../runtime/Text.ts";
 import { toRuntimeLong, type RuntimeLongInput } from "../runtime/runtime-numbers.ts";
@@ -199,7 +199,7 @@ export class Nar extends SensoryChannel implements Reasoner {
 
                 this.plugin.setEnabled($outer, enabled);
                 this.enabled = enabled;
-                    $outer.emit(Events.PluginsChange.class, this.plugin, enabled);
+                    $outer.emit(Events.PluginsChange, this.plugin, enabled);
             }
 
             public isEnabled(): boolean {
@@ -422,11 +422,11 @@ export class Nar extends SensoryChannel implements Reasoner {
             // * 🚩【2024-04-19 21:08:03】现在无论如何都要运行推理周期
             // if (!running) {
             printInfo(`INFO: Running ${retVal} cycles.`);
-            this.emit(CyclesStart.class);
+            this.emit(CyclesStart);
             for (let i: IntNumber = 0; i < retVal; i++) {
                 this.cycle();
             }
-            this.emit(CyclesEnd.class);
+            this.emit(CyclesEnd);
             // }
             return true;
         } else {
@@ -449,7 +449,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                 // Ignore any input that is just a comment
                 if (inputText.startsWith("\'") || inputText.startsWith("//") || inputText.length <= 0) {
                     if (inputText.length > 0) {
-                        this.emit(OutputHandler.ECHO.class, inputText);
+                        this.emit(OutputHandler.ECHO, inputText);
                     }
                     return;
                 }
@@ -466,7 +466,7 @@ export class Nar extends SensoryChannel implements Reasoner {
                 } catch (e) {
                     if (e instanceof Parser.InvalidInputException) {
                         if (Debug.SHOW_INPUT_ERRORS) {
-                            this.emit(OutputHandler.ERR.class, e);
+                            this.emit(OutputHandler.ERR, e);
                         }
                         if (!Debug.INPUT_ERRORS_CONTINUE) {
                             throw new ReasonerStateError(
@@ -668,17 +668,17 @@ export class Nar extends SensoryChannel implements Reasoner {
     }
 
     /** attach event handler */
-    public on(c: ClassTokenLike, o: EventObserver): void {
+    public on(c: ClassKey, o: EventObserver): void {
         this.memory.event.on(c, o);
     }
 
     /** remove event handler */
-    public off(c: ClassTokenLike, o: EventObserver): void {
+    public off(c: ClassKey, o: EventObserver): void {
         this.memory.event.off(c, o);
     }
 
     /** set an event handler. useful for multiple events. */
-    public event(e: EventObserver, enabled: boolean, ...events: ClassTokenLike[]): void {
+    public event(e: EventObserver, enabled: boolean, ...events: ClassKey[]): void {
         this.memory.event.set(e, enabled, ...events);
     }
 
@@ -694,7 +694,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         }
         let ps: Nar.PluginState = new this.PluginState(p);
         this.plugins.push(ps);
-        this.emit(Events.PluginsChange.class, p, null);
+        this.emit(Events.PluginsChange, p, null);
     }
 
     public removePlugin(ps: Nar.PluginState): void {
@@ -713,7 +713,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             }
             // TODO sensory channels can be plugins
             ps.setEnabled(false);
-        this.emit(Events.PluginsChange.class, null, p);
+        this.emit(Events.PluginsChange, null, p);
         }
     }
 
@@ -777,7 +777,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     /** Execute a fixed number of cycles. */
     public cycles(cycles: IntNumber): void {
         this.memory.allowExecution = true;
-        this.emit(CyclesStart.class);
+        this.emit(CyclesStart);
         let wasRunning: boolean = this.running;
         this.running = true;
         this.stopped = false;
@@ -785,7 +785,7 @@ export class Nar extends SensoryChannel implements Reasoner {
             this.cycle();
         }
         this.running = wasRunning;
-        this.emit(CyclesEnd.class);
+        this.emit(CyclesEnd);
     }
 
     /** Main loop executed by the scheduler. Should not be called directly. */
@@ -796,9 +796,9 @@ export class Nar extends SensoryChannel implements Reasoner {
             // * 🚩【2024-04-19 21:26:19】现在在「循环周期小于0」的时候跳过（但不停止循环）
             if (this.minCyclePeriodMS < 0n)
                 continue;
-            this.emit(CyclesStart.class);
+            this.emit(CyclesStart);
             this.cycle();
-            this.emit(CyclesEnd.class);
+            this.emit(CyclesEnd);
 
             if (this.minCyclePeriodMS > 0n) {
                 try {
@@ -815,7 +815,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         }
     }
 
-    public emit(c: ClassTokenLike, ...o: EventEmitter.EventPayload): void {
+    public emit(c: ClassKey, ...o: EventEmitter.EventPayload): void {
         this.memory.event.emit(c, ...o);
     }
 
@@ -834,7 +834,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         } catch (e) {
             if (e instanceof Error) {
                 if (Debug.SHOW_REASONING_ERRORS) {
-                    this.emit(OutputHandler.ERR.class, e);
+                    this.emit(OutputHandler.ERR, e);
                 }
                 if (!Debug.REASONING_ERRORS_CONTINUE) {
                     throw new ReasonerStateError("Reasoning error", { cause: e });

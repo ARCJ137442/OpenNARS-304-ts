@@ -177,7 +177,7 @@ export class ProcessGoal {
         ProcessGoal.bestReactionForGoal(concept, nal, projectedGoal, task);
         ProcessGoal.questionFromGoal(task, nal);
         concept.addToTable(task, false, concept.desires, nal.narParameters.CONCEPT_GOALS_MAX,
-            Events.ConceptGoalAdd.class, Events.ConceptGoalRemove.class);
+            Events.ConceptGoalAdd, Events.ConceptGoalRemove);
         InternalExperience.InternalExperienceFromTask(concept.memory, task, false, nal.time);
         if (!(task.sentence.getTerm() instanceof Operation)) {
             return;
@@ -220,7 +220,7 @@ export class ProcessGoal {
                 }
             }
             if (!Subset && !ProcessGoal.executeOperation(nal, task)) {
-                concept.memory.emit(Events.UnexecutableGoal.class, task, concept, nal);
+                concept.memory.emit(Events.UnexecutableGoal, task, concept, nal);
                 return; // it was made true by itself
             }
         }
@@ -534,7 +534,7 @@ export class ProcessGoal {
             // String.valueOf(nal.memory.randomNumber.nextInt()));
             if (!task.sentence.stamp.evidenceIsCyclic()) {
                 if (!ProcessGoal.executeOperation(nal, t)) { // this task is just used as dummy
-                    concept.memory.emit(Events.UnexecutableGoal.class, task, concept, nal);
+                    concept.memory.emit(Events.UnexecutableGoal, task, concept, nal);
                     return false;
                 }
                 return true;

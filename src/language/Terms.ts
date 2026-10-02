@@ -340,7 +340,7 @@ export class Terms {
      */
     public static reduceComponents(compound: CompoundTerm, component: Term, memory: Memory): Term {
         let list: Term[];
-        if (compound.getClass() === component.getClass()) {
+        if (compound.constructor === component.constructor) {
             list = compound.cloneTermsExcept(true, (component as CompoundTerm).term);
         } else {
             list = compound.cloneTermsExcept(true, [component]);
@@ -362,7 +362,7 @@ export class Terms {
 
     public static reduceComponentOneLayer(compound: CompoundTerm, component: Term, memory: Memory): Term {
         let list: Term[];
-        if (compound.getClass() === component.getClass()) {
+        if (compound.constructor === component.constructor) {
             list = compound.cloneTermsExcept(true, (component as CompoundTerm).term);
         } else {
             list = compound.cloneTermsExcept(true, [component]);

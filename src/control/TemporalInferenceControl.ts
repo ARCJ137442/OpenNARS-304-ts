@@ -70,7 +70,7 @@ export class TemporalInferenceControl {
             return false;
         }
 
-        nal.emit(Events.InduceSucceedingEvent.class, newEvent, nal);
+        nal.emit(Events.InduceSucceedingEvent, newEvent, nal);
 
         if (!newEvent.sentence.isJudgment() || newEvent.sentence.isEternal() || !newEvent.isInput()) {
             return false;

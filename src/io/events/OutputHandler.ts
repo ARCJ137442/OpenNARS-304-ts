@@ -1,7 +1,7 @@
 //! Java source: opennars/io/events/OutputHandler.java
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
 import { ReasonerObject } from "../../runtime/ClassIdentity.ts";
-import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../runtime/ClassIdentity.ts";
 import { EventHandler } from "./EventHandler.ts";
 import { Events } from "./Events.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
@@ -49,8 +49,8 @@ export abstract class OutputHandler extends EventHandler {
     };
 
 
-    public static readonly DefaultOutputEvents: ClassTokenLike[] = [InputChannel.class, ExecuteChannel.class, OutputChannel.class, ErrorChannel.class,
-    EchoChannel.class, Events.Answer.class, OutputHandler.ANTICIPATE.class, OutputHandler.CONFIRM.class, OutputHandler.DISAPPOINT.class, DebugChannel.class];
+    public static readonly DefaultOutputEvents: ClassKey[] = [InputChannel, ExecuteChannel, OutputChannel, ErrorChannel,
+    EchoChannel, Events.Answer, OutputHandler.ANTICIPATE, OutputHandler.CONFIRM, OutputHandler.DISAPPOINT, DebugChannel];
 
     public constructor(n: Nar);
 

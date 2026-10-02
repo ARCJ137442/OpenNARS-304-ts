@@ -134,7 +134,7 @@ export class CompositionalRules {
   ): void {
     if (
       !nal.getCurrentTask().sentence.isJudgment() ||
-      taskContent.getClass() !== beliefContent.getClass()
+      taskContent.constructor !== beliefContent.constructor
     ) {
       return;
     }
@@ -784,7 +784,7 @@ export class CompositionalRules {
     let taskSentence: Sentence = task.sentence;
     if (
       !taskSentence.isJudgment() ||
-      premise1.getClass() !== premise2.getClass() ||
+      premise1.constructor !== premise2.constructor ||
       oldCompound.containsTerm(premise1)
     ) {
       return false;

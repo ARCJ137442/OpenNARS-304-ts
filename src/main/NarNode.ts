@@ -1,4 +1,4 @@
-import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../runtime/ClassIdentity.ts";
 import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 import type { IntNumber, FloatNumber } from "../types.ts";
 import { Float32Math } from "../runtime/Float32.ts";
@@ -53,20 +53,20 @@ export class NarNode extends ReasonerObject implements EventObserver {
         this.nar = nar;
         this.transport = capabilities.messageTransport as MessageTransport;
         this.transport.listen(listenPort, message => this.receive(message));
-        nar.event(this, true, Events.TaskAdd.class);
+        nar.event(this, true, Events.TaskAdd);
     }
 
     private receive(message: NetworkMessage): void {
         if (message.kind === "task") {
-            this.nar.memory.event.emit(this.EventReceivedTask.class, [message.task]);
+            this.nar.memory.event.emit(this.EventReceivedTask, [message.task]);
             this.nar.addInput(message.task, this.nar);
             return;
         }
         this.nar.addInput(message.text);
     }
 
-    public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
-        if (event !== Events.TaskAdd.class) return;
+    public event(event: ClassKey, args: EventEmitter.EventPayload): void {
+        if (event !== Events.TaskAdd) return;
         const task = args[0];
         if (!(task instanceof Task)) return;
         for (const target of this.targets) {

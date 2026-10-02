@@ -10,7 +10,7 @@ test("Stamp keeps class identity and clone without a jree JavaObject shell", () 
     const stamp = makeStamp(7, 11);
     const clone = stamp.clone();
 
-    assert.equal(Stamp.class.getName(), "Stamp");
+    assert.equal(Stamp.name, "Stamp");
     assert.equal(stamp.getClass(), Stamp.class);
     assert.ok(clone instanceof Stamp);
 });

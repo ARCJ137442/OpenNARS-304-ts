@@ -2,7 +2,7 @@ import { java } from "../../support/legacy-runtime-facade.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
 import { OutputCondition } from "./OutputCondition.ts";
-import type { ClassTokenLike } from "../../../src/runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../../src/runtime/ClassIdentity.ts";
 
 const OUT = OutputHandler.OUT;
 const ERR = OutputHandler.ERR;
@@ -25,10 +25,10 @@ export class OutputEmptyCondition extends OutputCondition {
         return new java.lang.String(`FAIL: output exists but should not: ${String(this.output)}`);
     }
 
-    public condition(channel: ClassTokenLike, signal: java.lang.Object): boolean {
+    public condition(channel: ClassKey, signal: java.lang.Object): boolean {
         // any OUT or ERR output is a failure
         if ((channel === OUT.class) || (channel === ERR.class)) {
-            this.output.add(new java.lang.String(`${String(channel.getSimpleName())}: ${String(signal.toString())}`));
+            this.output.add(new java.lang.String(`${channel.name}: ${String(signal.toString())}`));
             this.succeeded = false;
             return false;
         }

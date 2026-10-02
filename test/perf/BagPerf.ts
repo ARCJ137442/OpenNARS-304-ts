@@ -127,23 +127,23 @@ export class BagPerf extends JavaObject {
                     nar = new Nar();
                 } catch (ex) {
                     if (ex instanceof java.io.IOException) {
-                        JavaSystemLoggerCompat.getLogger(BagPerf.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                        JavaSystemLoggerCompat.getLogger(BagPerf.name).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                     } else if (ex instanceof JavaInstantiationException) {
-                        JavaSystemLoggerCompat.getLogger(BagPerf.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                        JavaSystemLoggerCompat.getLogger(BagPerf.name).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                     } else if (ex instanceof JavaInvocationTargetException) {
-                        JavaSystemLoggerCompat.getLogger(BagPerf.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                        JavaSystemLoggerCompat.getLogger(BagPerf.name).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                     } else if (ex instanceof JavaNoSuchMethodException) {
-                        JavaSystemLoggerCompat.getLogger(BagPerf.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                        JavaSystemLoggerCompat.getLogger(BagPerf.name).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                     } else if (ex instanceof ParserConfigurationException) {
-                        JavaSystemLoggerCompat.getLogger(BagPerf.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                        JavaSystemLoggerCompat.getLogger(BagPerf.name).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                     } else if (ex instanceof JavaIllegalAccessException) {
-                        JavaSystemLoggerCompat.getLogger(BagPerf.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                        JavaSystemLoggerCompat.getLogger(BagPerf.name).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                     } else if (ex instanceof SAXException) {
-                        JavaSystemLoggerCompat.getLogger(BagPerf.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                        JavaSystemLoggerCompat.getLogger(BagPerf.name).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                     } else if (ex instanceof JavaClassNotFoundException) {
-                        JavaSystemLoggerCompat.getLogger(BagPerf.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                        JavaSystemLoggerCompat.getLogger(BagPerf.name).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                     } else if (ex instanceof JavaParseException) {
-                        JavaSystemLoggerCompat.getLogger(BagPerf.class.getName()).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
+                        JavaSystemLoggerCompat.getLogger(BagPerf.name).log(JavaSystemLoggerCompat.Level.SEVERE, null, ex);
                     } else {
                         throw ex;
                     }

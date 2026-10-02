@@ -1,6 +1,6 @@
 //! Java source: opennars/plugin/mental/Abbreviation.java
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
-import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../runtime/ClassIdentity.ts";
 import type { DoubleNumber, IntNumber, FloatNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -115,8 +115,8 @@ export class Abbreviation implements Plugin {
 
         if (this.obs === null) {
             this.obs = {
-                event: (event: ClassTokenLike, a: EventEmitter.EventPayload): void => {
-                if (event !== TaskDerive.class)
+                event: (event: ClassKey, a: EventEmitter.EventPayload): void => {
+                if (event !== TaskDerive)
                     return;
 
                 if ((this.abbreviationProbability < 1.0) && (n.memory.randomNumber.nextDouble() >= this.abbreviationProbability))
@@ -140,7 +140,7 @@ export class Abbreviation implements Plugin {
             };
         }
 
-        memory.event.set(this.obs as EventObserver, enabled, TaskDerive.class);
+        memory.event.set(this.obs as EventObserver, enabled, TaskDerive);
 
         return true;
     }

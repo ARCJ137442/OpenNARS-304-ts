@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/mental/Anticipate.java
-import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
+import type { ClassKey } from "../../runtime/ClassIdentity.ts";
 import type { FloatNumber, RuntimeLong, DoubleNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
@@ -96,7 +96,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
 
     public setEnabled(n: Nar, enabled: boolean): boolean {
-        n.memory.event.set(this, enabled, Events.InduceSucceedingEvent.class, Events.CycleEnd.class);
+        n.memory.event.set(this, enabled, Events.InduceSucceedingEvent, Events.CycleEnd);
         this.expiredTruth = TruthValue.fromFrequencyConfidence(0.0, n.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, n.narParameters);
         this.expiredBudget = new BudgetValue(n.narParameters.DEFAULT_JUDGMENT_PRIORITY,
             n.narParameters.DEFAULT_JUDGMENT_DURABILITY,
@@ -187,7 +187,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
                         // in case it happened, temporal induction will do the rest, else
                         // deriveDidntHappen occurred
                         if (!remove) {
-                            nal.memory.emit(CONFIRM.class, aTerm);
+                            nal.memory.emit(CONFIRM, aTerm);
                         }
                         remove = true;
                         hasNewTasks = !this.newTasks.isEmpty();
@@ -214,8 +214,8 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         this.newTasks.clear();
     }
 
-    public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
-        if (event === Events.InduceSucceedingEvent.class || event === Events.TaskDerive.class) {
+    public event(event: ClassKey, args: EventEmitter.EventPayload): void {
+        if (event === Events.InduceSucceedingEvent || event === Events.TaskDerive) {
             let newEvent: Task = args[0] as Task;
             let nal: DerivationContext = args[1] as unknown as DerivationContext;
             this.nal = nal;
@@ -230,7 +230,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             }
         }
 
-        if (this.nal !== null && event === CycleEnd.class) {
+        if (this.nal !== null && event === CycleEnd) {
             this.updateAnticipations(this.nal);
         }
     }
@@ -268,9 +268,9 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         }
 
         if (t !== null) {
-            memory.emit(ANTICIPATE.class, t);
+            memory.emit(ANTICIPATE, t);
         } else {
-            memory.emit(ANTICIPATE.class, content);
+            memory.emit(ANTICIPATE, content);
         }
 
         // Java source: final LinkedHashSet<Term> ae = new LinkedHashSet<>();
@@ -330,7 +330,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
         nal.derivedTask(task, false, true, false);
         task.setElemOfSequenceBuffer(true);
-        nal.memory.emit(DISAPPOINT.class, task);
+        nal.memory.emit(DISAPPOINT, task);
     }
 
     // Java source: package-private class Prediction.
