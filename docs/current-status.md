@@ -9,17 +9,16 @@ The expanded current objective and acceptance boundaries are in [active-goal-202
 ## Current Position
 
 ```text
-v1.0.4 release (44e937b, origin/main)
+v1.0.4 release (44e937b)
         |
-        +-- 148149b  template-string cleanup
-        +-- fd4735b  native sentence/truth rendering
-        +-- a033cfa  constructor identity + native event keys
-        +-- 01f08e6  safe iterator call-site reduction
         +-- 445d873  CompoundTerm constructor equality optimization
+        +-- ce448b6  midterm protection and push (origin/main)
+        +-- 2046915  detailed active goal and spec 042
+        +-- 17b5fb2  Bag restored-key scan allocation reduction
         |
-        +-- code clean; M1' candidate evidence complete
+        +-- M2, M1' 243 + #25 + #246, reduced #245, markerless protected
         v
-  performance / Java-shape cleanup -> midterm protected -> next iterator/GC batch
+  browser Demo rate gate -> further measured optimization -> fix release
 ```
 
 ## Confirmed
@@ -31,6 +30,7 @@ v1.0.4 release (44e937b, origin/main)
 - Full TS-only M2 on the selected line: `506/508`, `0 failed`, `2 skipped`. Full Java M2: `508/508`.
 - Focused event/runtime contracts after constructor identity: `30/30`; focused iterator/container contracts: `33/33`.
 - Dist API, typecheck, build and jree audit pass on the current source line.
+- At `17b5fb2`, Bag's read-only restored-key scan avoids per-entry wrappers. Two fixed-input A/B runs improved RPS by about 24–25% without changing fallback equality or insertion order. TS-only M2 `506/508` (2 skipped), Java M2 `508/508`, 28 direct Bag/Map contracts, build and dist API passed.
 
 ## Protected Evidence
 
@@ -39,6 +39,7 @@ v1.0.4 release (44e937b, origin/main)
 - Candidate `CompoundTerm.equals` A/B: baseline `2.594 RPS`, candidate `3.661 RPS`, candidate peak RSS `330358784`; committed at `445d873`.
 - Evidence hashes: M1' `F14E70676275EA41D73D5B2F5CD0F6765E6E6CAB9E0DFA23A885EF6C7121361F`; extra `4502E4A90054ED5B8D45D41BA79C2DF2DBE08B98D51BC559E1D4B227DDACED2A`; jree audit `69AF5E37833B13BFD0E5CF35521C10CB6743CEF9F648A2CE496B3F2864F3A028`; platform audit `DD7271085CA252DE0E1BAB586206EBABA41517BBAB15B5FD03BED96E30E4301D`.
 - 50-tick current demo probe at `01f08e6`: `3.720 RPS`, median step `2004 ms`, p95 `6759 ms`, peak RSS `333123584`; first segment TPS `1.319`, later segments below `0.5`. Concept count grows `1025 -> 3731`.
+- `17b5fb2` M1′ body `243/243`, #25 `1/1`, #246 `1/1`; reduced #245 65536 fixture `1/1` at `180667 ms` and peak RSS `388861952` bytes. Both strict markerless samples reached 131072 cycles and match frozen Java digests. See [the current probe](probes/20261002-performance-next-batch.md) for source SHA, classifications, baseline hashes and raw files.
 
 ## Spec / Gate State
 
@@ -47,9 +48,9 @@ v1.0.4 release (44e937b, origin/main)
 but final claims are limited by the current immutable evidence and this handoff.
 
 020/027/031 LeanSpec board state: complete in historical spec records
-Current performance convergence goal: active; not yet accepted
+Current performance convergence goal (042): active; Demo gate and further convergence remain
 Original 2,000,000-cycle stability workload: not claimed (device resource limit)
-M1' on current candidate: 243/243 + extra 2/2 passed
+M1' on `17b5fb2`: 243/243 + extra 2/2, reduced #245 and strict markerless passed
 M2 on selected candidate: TS-only 506/508 (0 failed, 2 skipped); Java 508/508
 Demo TPS target 20 / sync target 15: not achieved; concept growth and GC tails remain
 ```
@@ -83,6 +84,6 @@ The frozen baseline is outside the repository at `H:\A137442\Develop\AGI\NARS\_P
 
 ## Next Actions
 
-1. Keep the selected candidate protected by the committed M1'/M2/audit evidence.
-2. Continue the next mutable-iterator and GC/state-growth performance batch; the latest probe is `docs/probes/20261002-performance-next-batch.md`.
-3. Update the demo repository and release package only after the next selected candidate passes the same gates.
+1. Commit the evidence-linked documentation without adding historical untracked files. Core source remains `17b5fb2`.
+2. Verify the independent Demo Lab clock/seed changes with its checks, a new static build, real browser smoke and fixed-window TPS/RPS measurements.
+3. Continue measured concept-growth/GC optimization until three consecutive sub-5% rounds or the stated TPS target, then rerun final gates and prepare the fix release.
