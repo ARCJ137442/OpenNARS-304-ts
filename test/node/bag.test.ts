@@ -103,6 +103,41 @@ test("Bag.pickOut keeps a key object with name() on the key overload", () => {
     assert.equal(bag.size(), 0);
 });
 
+test("Bag distinguishes concrete Term types and still recovers an equal restored Term key", () => {
+    class AlternateTerm extends Term {}
+    class RestoredTerm extends Term {
+        public constructor(name: string, private readonly storedHash: number) {
+            super(name);
+        }
+
+        public override hashCode(): number {
+            return this.storedHash;
+        }
+    }
+    class TermKeyItem extends Item<Term> {
+        public constructor(private readonly key: Term) { super(); }
+        public name(): Term { return this.key; }
+        public getPriority(): number { return 0.8; }
+        public merge(): Item<unknown> { return this; }
+    }
+
+    const bag = new Bag<TermKeyItem, Term>(4, 10, new Parameters());
+    const ordinary = new TermKeyItem(new Term("same"));
+    const alternate = new TermKeyItem(new AlternateTerm("same"));
+    const restored = new TermKeyItem(new RestoredTerm("restored", 4));
+    bag.putIn(ordinary);
+    bag.putIn(alternate);
+    bag.putIn(restored);
+
+    // Clear the optional index to exercise lookup against the authoritative map.
+    const internals = bag as unknown as { equalityBuckets: Map<number, Term[]> };
+    internals.equalityBuckets.clear();
+    assert.equal(bag.size(), 3);
+    assert.equal(bag.get(new Term("same")), ordinary);
+    assert.equal(bag.get(new AlternateTerm("same")), alternate);
+    assert.equal(bag.get(new RestoredTerm("restored", 9)), restored);
+});
+
 test("Bag merges distinct object keys through Java equals semantics", () => {
     class EqualKey {
         public readonly value: string;

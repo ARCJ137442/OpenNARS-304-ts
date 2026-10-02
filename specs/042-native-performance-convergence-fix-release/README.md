@@ -43,3 +43,7 @@ transitions:
 ## 第一批：Bag 全表读取
 
 `Bag.findEquivalentKey` 的恢复态扫描保留 Java 相等方向和原有回退路径，读取从 `NativeMap.entrySet()` 的逐项包装改为 `recordsForView()` 的只读原始记录；同一改动覆盖 `rebuildEqualityBucket`。两轮同配置 A/B 的 RPS 增幅为 25.3% 和 24.0%；现有 Bag/NativeMap 合同 28/28、TS-only M2 506/508（2 skip）、Java M2 508/508、typecheck、build、dist API 与静态审计通过。仍须在不可变提交上完成 M1′、strict markerless 和 Demo 浏览器验收，才可接受为本规格的性能轮次。
+
+## 第二批：Bag 词项键的必不相等早退
+
+在 Bag 全表回退中，仅当查询键和已有键均为 `Term` 且具体构造器不同，才跳过 `runtimeValueEquals`；`Term`、`CompoundTerm`、`Variable` 的现有 `equals` 在此情况下都返回 false。其余键、同类词项、恢复态异 hash 和变量作用域继续走原合同。两轮交叉 A/B 的 RPS 为 `4.043 -> 9.316` 和 `4.856 -> 8.904`，概念终点均为 `2296`；新增直接合同、非增量 typecheck、build/dist API、TS-only M2 `507/509`（2 skip）、Java M2 `509/509`、静态审计已通过。原始测量与来源说明见 [词项键探查](../../docs/probes/20261002-bag-term-equality.md)。该候选仍需固定提交上的 NAL、M1′、markerless 与真实浏览器验收；不可凭短测直接勾选发布门。

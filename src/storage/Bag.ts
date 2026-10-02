@@ -2,6 +2,7 @@
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { IntNumber, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "../entity/Item.ts";
+import { Term } from "../language/Term.ts";
 import { Distributor } from "./Distributor.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
@@ -295,8 +296,14 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
         // The records are the same insertion-ordered map entries. Reading them
         // directly avoids allocating a live entry wrapper for every miss while
         // keeping the full scan needed for mutated/restored keys.
+        const termKey = key instanceof Term ? key : null;
         for (const record of this.nameTable.recordsForView()) {
             const existingKey = record.key;
+            // Every Term equality implementation rejects a different concrete
+            // constructor. Keep the full value-equality path for matching types,
+            // including Variable scope and Term complexity.
+            if (termKey !== null && existingKey instanceof Term
+                && existingKey.constructor !== termKey.constructor) continue;
             if (runtimeValueEquals(existingKey, key)) {
                 return existingKey;
             }
