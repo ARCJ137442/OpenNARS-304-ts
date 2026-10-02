@@ -478,6 +478,13 @@ identity at this point, so comparing constructors directly preserves the
 observed class contract while removing a token lookup from a hot path. This is
 an A/B candidate only until the RPS/demo workload and M1'/M2 gates prove it.
 
+The candidate commit `efc7504` passed TS-only M2 `506/508` (two skips), Java
+M2 `508/508`, and release/build/dist API checks. TAP SHA-256 values are
+`30E4DD1A38B4015E57567C7A3B330E0B75E952F28BDA66AAAC152DCC35BF9C74` and
+`3724AFC98C9555D0FA654A54FEAD5911B38DDDD90A506ED6B5A1F4013E223`.
+Exact-commit M1' completed `243/243`; JSONL SHA-256 is
+`F63B5D440D7D181538ADDBED5E00A54BA6BB4B33E33F34991B21F5FA4525FBF0`.
+
 ## Configuration host-capability implementation result
 
 `ConfigReader` no longer imports Node built-ins or consults `process.cwd`.

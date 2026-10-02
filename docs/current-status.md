@@ -3182,6 +3182,13 @@ LeanSpec 15 项
 └─ checklist     89/111                          [################----] 80.2%
 ```
 
+## 2026-10-02 constructor-equality performance candidate
+
+- 当前性能提交：`efc7504`，`Term.equals` 用直接具体构造器身份替代热路径上的 class-token lookup，保留精确类相等合同。
+- 同一 20 tick/5 cycle demo workload 两次复测 RPS：`2.551`、`2.593`，baseline `2.084`；median step 约下降 22%，峰值 RSS 约下降至 330 MB。后半段 TPS 仍约 `0.316`，未达到 demo TPS 目标。
+- TS-only M2：`506/508`；Java M2：`508/508`；exact-commit M1'：`243/243`，JSONL SHA-256 `F63B5D440D7D181538ADDBED5E00A54BA6BB4B33E33F34991B21F5FA4525FBF0`。
+- 这是已验证的一轮性能提升；后续继续 profile/优化，直到收益不足或达到 TPS/RPS 门。
+
 ## 2026-10-02 resource/process boundary batch
 
 - 当前代码提交：`d7958ad`，生产资源 helper 已改为 `ResourceErrors.ts`/`closeResources`/`handleResourceError`/`throwResourceError`，Node 进程出口为 `exitProcess`。
