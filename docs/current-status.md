@@ -8,7 +8,7 @@ The expanded current objective and acceptance boundaries are in [active-goal-202
 
 ## Current Position
 
-Last fully protected **core** production commit: `708afc5`, which adds a name prefilter only for the project's standard `Term`, `CompoundTerm` and `Variable` equality methods. Its fixed-input 20/30-tick RPS improved about 8.5–15% against the prior candidate with identical final concept counts; this is a short Node workload, not a browser result. Direct contracts `21/21`, TS-only M2 `511 passed / 2 skipped`, Java M2 `513/513`, nonincremental typecheck, build/dist API and static audits pass. On the same production commit, M1′ body `243/243`, #25/#246 and reduced #245 65536 pass, and both strict markerless samples reached 131072 cycles with Java-equal digests. M1′ body peak RSS was `856879104 bytes`; original 2,000,000-cycle stability remains `not_run`. M1′ body summed duration `693624 ms` versus `665581 ms` on the previous candidate, so the short-workload gain cannot be generalized to all NAL. Prior-core Chrome 30-second samples still miss sustained Demo targets: Microworld `12.28 TPS` average and `2.00 TPS` final five-second window; CartPole `2.06 TPS` average and `1.20 TPS` final window. The current `708afc5` Worker still needs rebuilding and real Chrome recheck. Demo source is committed at `d4189e5`, but generated Workers are dirty/uncommitted. Performance convergence and fix release remain open. Source identities, SHA-256 values and classifications are in [the current Bag probe](probes/20261002-bag-term-equality.md).
+Last fully protected **core** production commit: `708afc5`, which adds a name prefilter only for the project's standard `Term`, `CompoundTerm` and `Variable` equality methods. Its fixed-input 20/30-tick RPS improved about 8.5–15% against the prior candidate with identical final concept counts; this is a short Node workload. Direct contracts `21/21`, TS-only M2 `511 passed / 2 skipped`, Java M2 `513/513`, nonincremental typecheck, build/dist API and static audits pass. On the same production commit, M1′ body `243/243`, #25/#246 and reduced #245 65536 pass, and both strict markerless samples reached 131072 cycles with Java-equal digests. M1′ body peak RSS was `856879104 bytes`; original 2,000,000-cycle stability remains `not_run`. M1′ body summed duration `693624 ms` versus `665581 ms` on the previous candidate, so the short-workload gain cannot be generalized to all NAL. Current Worker Chrome 30-second samples still miss sustained Demo targets: Microworld `12.57 TPS` average and `2.79 TPS` final five-second window; CartPole `2.23 TPS` average and `1.59 TPS` final window, with no NARS non-babble operation in these samples. Demo `npm run check` and real Chrome smoke pass, but generated Workers and benchmark script are dirty/uncommitted. Performance convergence and fix release remain open. Source identities, SHA-256 values and classifications are in [the current Bag probe](probes/20261002-bag-term-equality.md).
 
 ```text
 v1.0.4 release (44e937b)
@@ -19,6 +19,7 @@ v1.0.4 release (44e937b)
         +-- 82469cc  Bag concrete Term index; M1'/M2 protected
         +-- 33125d4  M1' validation type declaration fix
         +-- 708afc5  standard Term name prefilter; core gates passed
+        +-- edd4036  current goal and gate clarification (docs only)
         |
         v
   current Worker browser recheck -> further measured optimization -> fix release
@@ -51,7 +52,7 @@ v1.0.4 release (44e937b)
 but final claims are limited by the current immutable evidence and this handoff.
 
 020/027/031 LeanSpec board state: complete in historical spec records
-Current performance convergence goal (042): active; `708afc5` core gate passed, Demo gate and further convergence remain
+Current performance convergence goal (042): active; `708afc5` core gate passed, Chrome functional smoke passed, Demo TPS/operation and further convergence remain
 Original 2,000,000-cycle stability workload: not claimed (device resource limit)
 M1' on `708afc5`: 243/243 + extra 2/2, reduced #245 and strict markerless passed
 M2 on `708afc5`: TS-only 511/513 (0 failed, 2 skipped); Java 513/513
@@ -87,6 +88,6 @@ The frozen baseline is outside the repository at `H:\A137442\Develop\AGI\NARS\_P
 
 ## Next Actions
 
-1. Rebuild the Demo Worker from `708afc5`, verify checks and real Chrome smoke, and measure fixed-window TPS/RPS with action-source counts.
-2. Continue measured concept-growth/GC optimization until the stated TPS target or a valid three-round sub-5% convergence proof; rerun final gates for any new production change.
+1. Verify the Demo async scheduler fix in real Chrome: the first diagnostic had `18.9` world TPS but zero completed reasoning steps during the 30-second sample because its request condition never became true after each tick. Rebuild after this documentation-only core commit, then require repeated Worker requests/completions.
+2. Profile the synchronous long-tail Worker after concept growth; continue measured core/Demo optimization until the stated TPS target or a valid three-round sub-5% convergence proof. Rerun final gates for any new core change and verify NARS non-babble actions.
 3. Update Pages and prepare the fix release only after the final protected candidate and Demo acceptance.
