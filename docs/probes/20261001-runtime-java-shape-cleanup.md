@@ -485,6 +485,18 @@ M2 `508/508`, and release/build/dist API checks. TAP SHA-256 values are
 Exact-commit M1' completed `243/243`; JSONL SHA-256 is
 `F63B5D440D7D181538ADDBED5E00A54BA6BB4B33E33F34991B21F5FA4525FBF0`.
 
+## Rejected performance candidate: Bag retained-key fast path
+
+`Bag.findEquivalentKey` already asks `NativeMap.get(key)` to apply the
+project's value-equality contract. When that lookup succeeds, rechecking the
+returned item's name with `runtimeValueEquals` duplicates the same hot-path
+comparison. The next A/B candidate returns the retained key directly while
+leaving hash-mismatch/restored-bucket fallback paths untouched. The recheck
+measured `2.542 RPS` on the same short workload, below the accepted
+constructor-equality recheck `2.593 RPS`; it is rejected and restored to the
+previous implementation. Raw evidence remains under
+`reports/evidence/demo-workload-bag-retained-key-20261002.json`.
+
 ## Configuration host-capability implementation result
 
 `ConfigReader` no longer imports Node built-ins or consults `process.cwd`.
