@@ -34,4 +34,6 @@
 | 1 | 3.827 | 4.797 | 25.3% | 0.478 / 0.609 |
 | 2 | 3.834 | 4.753 | 24.0% | 0.478 / 0.604 |
 
-四份原始 JSON 分别为 `reports/evidence/bag-records-{baseline,candidate,baseline-recheck,candidate-recheck}-20261002.json`。候选仍是未提交源码，尚未通过完整 M2、M1′、Demo 浏览器门，也未解决目标同步 TPS。后续先运行这些门；通过后才接受本轮收益。
+四份原始 JSON 分别为 `reports/evidence/bag-records-{baseline,candidate,baseline-recheck,candidate-recheck}-20261002.json`。各自 SHA-256：`E5E4DB177C800DB08A5190A3FCAFB96B43D6C3E8DCEE7EFC1508584F87E410B0`、`66542A37E775041D9621255949BCC303C6B4C7FC73DA0CB9711F823A4CA6DC4F`、`0F0230CCEB3A33687F330D884A1E872575C39D9A9C04F562F93193B570C60CDB`、`61E9EA912B54BDF2E7048F51DE68D7B48FB4AEB6D5AF0C3347992423FE3DA4E5`。
+
+本候选的 TS-only M2 `506 pass / 2 skip / 0 fail`；Java M2 `508/508`；build、dist API、jree `0/0` 和平台 `coreCandidateFiles=0`、`mixedBoundaryFiles=0` 通过。M2 TAP SHA-256 分别为 `136C45AD501F58FBFD2463AFF9D50CAA5EDB7A76B9F2AAE041FFF54B2D1159A8` 与 `710E5730219520FDDBEB67C298E3FDB2EC20D5D37C4A5C77163DCA52E484C0A6`。这些检查发生于候选未提交源码；M1′、strict markerless、Demo 浏览器门以及目标同步 TPS 仍未完成，因此不能把候选称为最终发布版本。下一步先提交可追溯的候选源码，再在该不可变提交上运行 M1′。

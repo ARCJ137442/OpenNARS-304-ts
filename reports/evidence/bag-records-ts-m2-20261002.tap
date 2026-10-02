@@ -1,0 +1,3064 @@
+
+> opennars-304-ts@1.0.4 test:unit:serial
+> node scripts/testing/run-ts-only-unit-tests.mjs
+
+TAP version 13
+# Subtest: TLink.getIndex returns correct index for valid level
+ok 1 - TLink.getIndex returns correct index for valid level
+  ---
+  duration_ms: 0.5074
+  type: 'test'
+  ...
+# Subtest: TLink.getIndex returns -1 for invalid level
+ok 2 - TLink.getIndex returns -1 for invalid level
+  ---
+  duration_ms: 0.069
+  type: 'test'
+  ...
+# Subtest: TLink.getIndex with empty indices array
+ok 3 - TLink.getIndex with empty indices array
+  ---
+  duration_ms: 0.0757
+  type: 'test'
+  ...
+# Subtest: TLink.getTarget returns the linked target object
+ok 4 - TLink.getTarget returns the linked target object
+  ---
+  duration_ms: 0.0474
+  type: 'test'
+  ...
+# Subtest: TLink.getPriority returns priority value
+ok 5 - TLink.getPriority returns priority value
+  ---
+  duration_ms: 0.0411
+  type: 'test'
+  ...
+# Subtest: TLink.getPriority returns default priority when not specified
+ok 6 - TLink.getPriority returns default priority when not specified
+  ---
+  duration_ms: 0.0388
+  type: 'test'
+  ...
+# Subtest: TLink.getPriority handles zero priority
+ok 7 - TLink.getPriority handles zero priority
+  ---
+  duration_ms: 0.0343
+  type: 'test'
+  ...
+# Subtest: TLink.getPriority handles maximum priority
+ok 8 - TLink.getPriority handles maximum priority
+  ---
+  duration_ms: 0.4831
+  type: 'test'
+  ...
+# Subtest: TLink interface supports generic Term type
+ok 9 - TLink interface supports generic Term type
+  ---
+  duration_ms: 0.1403
+  type: 'test'
+  ...
+# Subtest: TLink interface supports generic Task type
+ok 10 - TLink interface supports generic Task type
+  ---
+  duration_ms: 0.184
+  type: 'test'
+  ...
+# Subtest: TLink with multi-level indices maintains order
+ok 11 - TLink with multi-level indices maintains order
+  ---
+  duration_ms: 0.0515
+  type: 'test'
+  ...
+# Subtest: TLink.getIndex returns negative one-based index (Java compatibility)
+ok 12 - TLink.getIndex returns negative one-based index (Java compatibility)
+  ---
+  duration_ms: 0.0285
+  type: 'test'
+  ...
+# Subtest: TLink mock implementation preserves immutability
+ok 13 - TLink mock implementation preserves immutability
+  ---
+  duration_ms: 0.0259
+  type: 'test'
+  ...
+# Subtest: TLink interface can be used as type parameter
+ok 14 - TLink interface can be used as type parameter
+  ---
+  duration_ms: 0.0301
+  type: 'test'
+  ...
+# Subtest: TLink with floating point indices
+ok 15 - TLink with floating point indices
+  ---
+  duration_ms: 0.0239
+  type: 'test'
+  ...
+# Subtest: AbstractTerm exposes a native string name
+ok 16 - AbstractTerm exposes a native string name
+  ---
+  duration_ms: 0.7768
+  type: 'test'
+  ...
+# Subtest: Anticipate keeps a prediction and emits the Java-compatible signal
+ok 17 - Anticipate keeps a prediction and emits the Java-compatible signal
+  ---
+  duration_ms: 1.2139
+  type: 'test'
+  ...
+# Subtest: Anticipate keeps Java Prediction identity keys in its outer Map
+ok 18 - Anticipate keeps Java Prediction identity keys in its outer Map
+  ---
+  duration_ms: 0.1705
+  type: 'test'
+  ...
+# Subtest: Anticipate removes a confirmed NativeSet value through its Java iterator path
+ok 19 - Anticipate removes a confirmed NativeSet value through its Java iterator path
+  ---
+  duration_ms: 0.3121
+  type: 'test'
+  ...
+# Subtest: Anticipate subscribes and unsubscribes from its cycle events
+ok 20 - Anticipate subscribes and unsubscribes from its cycle events
+  ---
+  duration_ms: 0.268
+  type: 'test'
+  ...
+# Subtest: Anticipate deduplicates equal derived terms in its Set boundary
+ok 21 - Anticipate deduplicates equal derived terms in its Set boundary
+  ---
+  duration_ms: 0.1988
+  type: 'test'
+  ...
+# Subtest: Concept stores anticipation entries in a native array
+ok 22 - Concept stores anticipation entries in a native array
+  ---
+  duration_ms: 0.3307
+  type: 'test'
+  ...
+# Subtest: ProcessAnticipation accepts the native Map substitution boundary
+ok 23 - ProcessAnticipation accepts the native Map substitution boundary
+  ---
+  duration_ms: 469.3225
+  type: 'test'
+  ...
+# Subtest: Bag uses native string conversion without Java text wrappers
+ok 24 - Bag uses native string conversion without Java text wrappers
+  ---
+  duration_ms: 1.1591
+  type: 'test'
+  ...
+# Subtest: Bag.pickOut supports both Java overload shapes
+ok 25 - Bag.pickOut supports both Java overload shapes
+  ---
+  duration_ms: 0.6648
+  type: 'test'
+  ...
+# Subtest: Bag rejects invalid overload arity with the project Java exception
+ok 26 - Bag rejects invalid overload arity with the project Java exception
+  ---
+  duration_ms: 0.2894
+  type: 'test'
+  ...
+# Subtest: Bag keeps its observed runtime class identity without jree JavaObject
+ok 27 - Bag keeps its observed runtime class identity without jree JavaObject
+  ---
+  duration_ms: 0.0655
+  type: 'test'
+  ...
+# Subtest: Bag.pickOut keeps a key object with name() on the key overload
+ok 28 - Bag.pickOut keeps a key object with name() on the key overload
+  ---
+  duration_ms: 0.2416
+  type: 'test'
+  ...
+# Subtest: Bag merges distinct object keys through Java equals semantics
+ok 29 - Bag merges distinct object keys through Java equals semantics
+  ---
+  duration_ms: 0.1729
+  type: 'test'
+  ...
+# Subtest: Bag recovers Java-equal keys when a restored key hash differs
+ok 30 - Bag recovers Java-equal keys when a restored key hash differs
+  ---
+  duration_ms: 0.1618
+  type: 'test'
+  ...
+# Subtest: Bag lookup remains Java-equal when the legacy hash bucket is malformed
+ok 31 - Bag lookup remains Java-equal when the legacy hash bucket is malformed
+  ---
+  duration_ms: 0.1603
+  type: 'test'
+  ...
+# Subtest: Bag removes an item when a restored hash bucket is not a JS array
+ok 32 - Bag removes an item when a restored hash bucket is not a JS array
+  ---
+  duration_ms: 0.1521
+  type: 'test'
+  ...
+# Subtest: Bag removes from a restored Java List bucket without rebuilding the bag
+ok 33 - Bag removes from a restored Java List bucket without rebuilding the bag
+  ---
+  duration_ms: 0.3334
+  type: 'test'
+  ...
+# Subtest: Bag removes from a restored Java Set bucket through iterator.remove
+ok 34 - Bag removes from a restored Java Set bucket through iterator.remove
+  ---
+  duration_ms: 0.1606
+  type: 'test'
+  ...
+# Subtest: Bag stores priority-level FIFO queues in native arrays
+ok 35 - Bag stores priority-level FIFO queues in native arrays
+  ---
+  duration_ms: 0.0994
+  type: 'test'
+  ...
+# Subtest: Bag keeps the Java HashMap/LinkedHashMap contract with a native Map
+ok 36 - Bag keeps the Java HashMap/LinkedHashMap contract with a native Map
+  ---
+  duration_ms: 0.4391
+  type: 'test'
+  ...
+# Subtest: Bag native iteration preserves LinkedHashMap insertion order across replacement and removal
+ok 37 - Bag native iteration preserves LinkedHashMap insertion order across replacement and removal
+  ---
+  duration_ms: 0.165
+  type: 'test'
+  ...
+# Subtest: Bag Java iterator and contains preserve value equality
+ok 38 - Bag Java iterator and contains preserve value equality
+  ---
+  duration_ms: 0.1596
+  type: 'test'
+  ...
+# Subtest: Bag takeOut removes each selected item and reaches the empty state
+ok 39 - Bag takeOut removes each selected item and reaches the empty state
+  ---
+  duration_ms: 0.128
+  type: 'test'
+  ...
+# Subtest: Bag keeps native math and string boundaries
+ok 40 - Bag keeps native math and string boundaries
+  ---
+  duration_ms: 0.6269
+  type: 'test'
+  ...
+# Subtest: budget inference narrows Java FloatNumber parameters before belief feedback
+ok 41 - budget inference narrows Java FloatNumber parameters before belief feedback
+  ---
+  duration_ms: 0.831
+  type: 'test'
+  ...
+# Subtest: rankBelief narrows Java FloatNumber return values at the budget boundary
+ok 42 - rankBelief narrows Java FloatNumber return values at the budget boundary
+  ---
+  duration_ms: 0.1634
+  type: 'test'
+  ...
+# Subtest: truthToQuality and the TruthValue budget constructor share Java FloatNumber semantics
+ok 43 - truthToQuality and the TruthValue budget constructor share Java FloatNumber semantics
+  ---
+  duration_ms: 0.1568
+  type: 'test'
+  ...
+# Subtest: BudgetFunctions keeps project-owned enum and exception boundaries
+ok 44 - BudgetFunctions keeps project-owned enum and exception boundaries
+  ---
+  duration_ms: 1.3228
+  type: 'test'
+  ...
+# Subtest: BudgetValue uses native string markers
+ok 45 - BudgetValue uses native string markers
+  ---
+  duration_ms: 0.707
+  type: 'test'
+  ...
+# Subtest: BudgetValue keeps runtime compatibility behind project-owned boundaries
+ok 46 - BudgetValue keeps runtime compatibility behind project-owned boundaries
+  ---
+  duration_ms: 0.2406
+  type: 'test'
+  ...
+# Subtest: gate policy keeps a bounded documentation or low-risk source edit at T0
+ok 47 - gate policy keeps a bounded documentation or low-risk source edit at T0
+  ---
+  duration_ms: 0.8429
+  type: 'test'
+  ...
+# Subtest: gate policy escalates a hot Bag slice to T1 without spending the cluster-close M1 budget
+ok 48 - gate policy escalates a hot Bag slice to T1 without spending the cluster-close M1 budget
+  ---
+  duration_ms: 0.2312
+  type: 'test'
+  ...
+# Subtest: only an explicit enumerated cluster close requires M1-minus
+ok 49 - only an explicit enumerated cluster close requires M1-minus
+  ---
+  duration_ms: 0.5861
+  type: 'test'
+  ...
+# Subtest: gate policy escalates baseline changes and milestone acceptance to T2
+ok 50 - gate policy escalates baseline changes and milestone acceptance to T2
+  ---
+  duration_ms: 0.1151
+  type: 'test'
+  ...
+# Subtest: gate policy escalates broad production edits
+ok 51 - gate policy escalates broad production edits
+  ---
+  duration_ms: 0.1014
+  type: 'test'
+  ...
+# Subtest: source-line gate counts only production TypeScript, excluding tests, reports, docs and JavaScript
+ok 52 - source-line gate counts only production TypeScript, excluding tests, reports, docs and JavaScript
+  ---
+  duration_ms: 0.1857
+  type: 'test'
+  ...
+# Subtest: runtime dependency fingerprint ignores ordering and scripts but detects version changes
+ok 53 - runtime dependency fingerprint ignores ordering and scripts but detects version changes
+  ---
+  duration_ms: 5.7517
+  type: 'test'
+  ...
+# Subtest: ComplexEmotions keeps the Java plain-plugin boundary without a jree Object shell
+ok 54 - ComplexEmotions keeps the Java plain-plugin boundary without a jree Object shell
+  ---
+  duration_ms: 0.4108
+  type: 'test'
+  ...
+# Subtest: ComplexEmotions keeps event text on the native string boundary
+ok 55 - ComplexEmotions keeps event text on the native string boundary
+  ---
+  duration_ms: 0.3185
+  type: 'test'
+  ...
+# Subtest: Emotions keeps math and text on project boundaries
+ok 56 - Emotions keeps math and text on project boundaries
+  ---
+  duration_ms: 0.2393
+  type: 'test'
+  ...
+# Subtest: CompositionalRules keeps logging and map boundaries project-owned
+ok 57 - CompositionalRules keeps logging and map boundaries project-owned
+  ---
+  duration_ms: 0.9384
+  type: 'test'
+  ...
+# Subtest: CompositionalRules.powerSet preserves Set order without a temporary List
+ok 58 - CompositionalRules.powerSet preserves Set order without a temporary List
+  ---
+  duration_ms: 0.682
+  type: 'test'
+  ...
+# Subtest: CompositionalRules.powerSet handles empty and singleton sets
+ok 59 - CompositionalRules.powerSet handles empty and singleton sets
+  ---
+  duration_ms: 0.1035
+  type: 'test'
+  ...
+# Subtest: CompositionalRules.powerSet keeps nested Set equality by value
+ok 60 - CompositionalRules.powerSet keeps nested Set equality by value
+  ---
+  duration_ms: 0.1689
+  type: 'test'
+  ...
+# Subtest: CompositionalRules.introduceVariables keeps Java Map substitution semantics
+ok 61 - CompositionalRules.introduceVariables keeps Java Map substitution semantics
+  ---
+  duration_ms: 72.39
+  type: 'test'
+  ...
+# Subtest: TruthFunctions lookup keeps native boolean varargs and nullable selection
+ok 62 - TruthFunctions lookup keeps native boolean varargs and nullable selection
+  ---
+  duration_ms: 67.1671
+  type: 'test'
+  ...
+# Subtest: Negation, Similarity, and Disjunction avoid direct jree imports
+ok 63 - Negation, Similarity, and Disjunction avoid direct jree imports
+  ---
+  duration_ms: 1.0234
+  type: 'test'
+  ...
+# Subtest: CompoundTerm equality rejects different component counts before names
+ok 64 - CompoundTerm equality rejects different component counts before names
+  ---
+  duration_ms: 71.7627
+  type: 'test'
+  ...
+# Subtest: CompoundTerm equality retains equal-arity name comparison
+ok 65 - CompoundTerm equality retains equal-arity name comparison
+  ---
+  duration_ms: 67.5486
+  type: 'test'
+  ...
+# Subtest: CompoundTerm equality contract is name-based even after restored-name mutation
+ok 66 - CompoundTerm equality contract is name-based even after restored-name mutation
+  ---
+  duration_ms: 66.8883
+  type: 'test'
+  ...
+# Subtest: CompoundTerm hasVar rejects invalid overloads with the project exception
+ok 67 - CompoundTerm hasVar rejects invalid overloads with the project exception
+  ---
+  duration_ms: 0.7172
+  type: 'test'
+  ...
+# Subtest: CompoundTerm hasVar preserves the Java argument exception identity
+ok 68 - CompoundTerm hasVar preserves the Java argument exception identity
+  ---
+  duration_ms: 130.6021
+  type: 'test'
+  ...
+# Subtest: CompoundTerm builds names through the project string boundary
+ok 69 - CompoundTerm builds names through the project string boundary
+  ---
+  duration_ms: 0.6994
+  type: 'test'
+  ...
+# Subtest: Concept keeps string and state boundaries project-owned
+ok 70 - Concept keeps string and state boundaries project-owned
+  ---
+  duration_ms: 0.7654
+  type: 'test'
+  ...
+# Subtest: ConfigReader keeps the Java plain-class boundary without a jree Object shell
+ok 71 - ConfigReader keeps the Java plain-class boundary without a jree Object shell
+  ---
+  duration_ms: 1.0285
+  type: 'test'
+  ...
+# Subtest: ConfigReader reads file configuration through an injected host capability
+ok 72 - ConfigReader reads file configuration through an injected host capability
+  ---
+  duration_ms: 1.0295
+  type: 'test'
+  ...
+# Subtest: parseConfigXml returns a native configuration tree
+ok 73 - parseConfigXml returns a native configuration tree
+  ---
+  duration_ms: 0.4318
+  type: 'test'
+  ...
+# Subtest: parseConfigXml rejects empty, missing-root and incomplete configuration
+ok 74 - parseConfigXml rejects empty, missing-root and incomplete configuration
+  ---
+  duration_ms: 0.2595
+  type: 'test'
+  ...
+# Subtest: embedded default configuration stays byte-for-byte aligned after line-ending normalization
+ok 75 - embedded default configuration stays byte-for-byte aligned after line-ending normalization
+  ---
+  duration_ms: 0.5853
+  type: 'test'
+  ...
+# Subtest: Nar accepts explicit configuration text without reading a config file
+ok 76 - Nar accepts explicit configuration text without reading a config file
+  ---
+  duration_ms: 71.52
+  type: 'test'
+  ...
+# Subtest: Nar.PluginState keeps the Java lifecycle contract without a jree object shell
+ok 77 - Nar.PluginState keeps the Java lifecycle contract without a jree object shell
+  ---
+  duration_ms: 70.1647
+  type: 'test'
+  ...
+# Subtest: Nar rejects a path passed to the core string configuration overload
+ok 78 - Nar rejects a path passed to the core string configuration overload
+  ---
+  duration_ms: 0.282
+  type: 'test'
+  ...
+# Subtest: Nar records a missing capability instead of loading a Node-only plugin
+ok 79 - Nar records a missing capability instead of loading a Node-only plugin
+  ---
+  duration_ms: 70.6249
+  type: 'test'
+  ...
+# Subtest: Nar registers the system plugin when the Node capability is supplied
+ok 80 - Nar registers the system plugin when the Node capability is supplied
+  ---
+  duration_ms: 68.0559
+  type: 'test'
+  ...
+# Subtest: PluginRegistry returns a native ordered plugin sequence and diagnostics
+ok 81 - PluginRegistry returns a native ordered plugin sequence and diagnostics
+  ---
+  duration_ms: 0.3486
+  type: 'test'
+  ...
+# Subtest: PluginRegistry consumes Java constructor arguments with float32 narrowing
+ok 82 - PluginRegistry consumes Java constructor arguments with float32 narrowing
+  ---
+  duration_ms: 0.2925
+  type: 'test'
+  ...
+# Subtest: PluginRegistry accepts Java no-argument constructors
+ok 83 - PluginRegistry accepts Java no-argument constructors
+  ---
+  duration_ms: 0.2154
+  type: 'test'
+  ...
+# Subtest: PluginRegistry diagnoses invalid and repeated registrations without reordering valid instances
+ok 84 - PluginRegistry diagnoses invalid and repeated registrations without reordering valid instances
+  ---
+  duration_ms: 0.2156
+  type: 'test'
+  ...
+# Subtest: PluginRegistry accepts an empty plugin section without diagnostics
+ok 85 - PluginRegistry accepts an empty plugin section without diagnostics
+  ---
+  duration_ms: 0.1259
+  type: 'test'
+  ...
+# Subtest: ConfigReader forwards the native plugin sequence without a jree list wrapper
+ok 86 - ConfigReader forwards the native plugin sequence without a jree list wrapper
+  ---
+  duration_ms: 67.3859
+  type: 'test'
+  ...
+# Subtest: Nar exposes a live native read-only plugin list
+ok 87 - Nar exposes a live native read-only plugin list
+  ---
+  duration_ms: 66.2728
+  type: 'test'
+  ...
+# Subtest: Conjunction, Inheritance, and Interval avoid direct jree argument/state exceptions
+ok 88 - Conjunction, Inheritance, and Interval avoid direct jree argument/state exceptions
+  ---
+  duration_ms: 1.3001
+  type: 'test'
+  ...
+# Subtest: Conjunction and Interval preserve project-owned argument exception identity
+ok 89 - Conjunction and Interval preserve project-owned argument exception identity
+  ---
+  duration_ms: 0.2959
+  type: 'test'
+  ...
+# Subtest: Inheritance clone preserves project-owned argument exception identity
+ok 90 - Inheritance clone preserves project-owned argument exception identity
+  ---
+  duration_ms: 0.5212
+  type: 'test'
+  ...
+# Subtest: Conjunction uses the project string boundary for generated indices
+ok 91 - Conjunction uses the project string boundary for generated indices
+  ---
+  duration_ms: 0.7181
+  type: 'test'
+  ...
+# Subtest: translated term and sentence constructors preserve Java delegation contracts
+ok 92 - translated term and sentence constructors preserve Java delegation contracts
+  ---
+  duration_ms: 701.819
+  type: 'test'
+  ...
+# Subtest: compound factories flatten transient Java lists with native arrays
+ok 93 - compound factories flatten transient Java lists with native arrays
+  ---
+  duration_ms: 27.9309
+  type: 'test'
+  ...
+# Subtest: Product preserves the Java List constructor boundary without a direct jree import
+ok 94 - Product preserves the Java List constructor boundary without a direct jree import
+  ---
+  duration_ms: 1.4912
+  type: 'test'
+  ...
+# Subtest: Conjunction interval normalization preserves Java order and sums adjacent intervals
+ok 95 - Conjunction interval normalization preserves Java order and sums adjacent intervals
+  ---
+  duration_ms: 0.9717
+  type: 'test'
+  ...
+# Subtest: Sentence normalization keeps duplicate variables in traversal order
+ok 96 - Sentence normalization keeps duplicate variables in traversal order
+  ---
+  duration_ms: 2.6323
+  type: 'test'
+  ...
+# Subtest: Sentence normalization keys duplicate variables by Java text value
+ok 97 - Sentence normalization keys duplicate variables by Java text value
+  ---
+  duration_ms: 4.6872
+  type: 'test'
+  ...
+# Subtest: CompoundTerm iterator preserves Guava forArray contract
+ok 98 - CompoundTerm iterator preserves Guava forArray contract
+  ---
+  duration_ms: 5.9862
+  type: 'test'
+  ...
+# Subtest: CompoundTerm local lists preserve native storage and Java order
+ok 99 - CompoundTerm local lists preserve native storage and Java order
+  ---
+  duration_ms: 2.5784
+  type: 'test'
+  ...
+# Subtest: decimal perception coordinates remain conceptual like Java Term.get
+ok 100 - decimal perception coordinates remain conceptual like Java Term.get
+  ---
+  duration_ms: 0.451
+  type: 'test'
+  ...
+# Subtest: countTermRecursively accepts a null accumulator like Java
+ok 101 - countTermRecursively accepts a null accumulator like Java
+  ---
+  duration_ms: 1.2715
+  type: 'test'
+  ...
+# Subtest: Concept.getBelief returns null when Java belief selection has no candidate
+ok 102 - Concept.getBelief returns null when Java belief selection has no candidate
+  ---
+  duration_ms: 556.6475
+  type: 'test'
+  ...
+# Subtest: Sentence.getTruth preserves Java's nullable query accessor
+ok 103 - Sentence.getTruth preserves Java's nullable query accessor
+  ---
+  duration_ms: 68.8657
+  type: 'test'
+  ...
+# Subtest: DerivationContext currentBeliefLink preserves Java null lifecycle
+ok 104 - DerivationContext currentBeliefLink preserves Java null lifecycle
+  ---
+  duration_ms: 69.8901
+  type: 'test'
+  ...
+# Subtest: DerivationContext delayed execution state starts null and requires explicit registration
+ok 105 - DerivationContext delayed execution state starts null and requires explicit registration
+  ---
+  duration_ms: 68.1576
+  type: 'test'
+  ...
+# Subtest: DerivationContext DoubleNumber-premise results use the native ordered buffer
+ok 106 - DerivationContext DoubleNumber-premise results use the native ordered buffer
+  ---
+  duration_ms: 73.67
+  type: 'test'
+  ...
+# Subtest: TemporalRules returns the native ordered derivation buffer
+ok 107 - TemporalRules returns the native ordered derivation buffer
+  ---
+  duration_ms: 83.9402
+  type: 'test'
+  ...
+# Subtest: DerivationContext lazily builds and caches the Java newStamp
+ok 108 - DerivationContext lazily builds and caches the Java newStamp
+  ---
+  duration_ms: 67.2754
+  type: 'test'
+  ...
+# Subtest: ProcessGoal executable precondition preserves Java default metadata
+ok 109 - ProcessGoal executable precondition preserves Java default metadata
+  ---
+  duration_ms: 0.8548
+  type: 'test'
+  ...
+# Subtest: ProcessJudgment treats an empty Java Optional search as a null result
+ok 110 - ProcessJudgment treats an empty Java Optional search as a null result
+  ---
+  duration_ms: 68.7068
+  type: 'test'
+  ...
+# Subtest: ProcessGoal question staging preserves the emitted question with a native buffer
+ok 111 - ProcessGoal question staging preserves the emitted question with a native buffer
+  ---
+  duration_ms: 69.3708
+  type: 'test'
+  ...
+# Subtest: ProcessGoal keeps the native general-precondition buffer iterable
+ok 112 - ProcessGoal keeps the native general-precondition buffer iterable
+  ---
+  duration_ms: 70.8898
+  type: 'test'
+  ...
+# Subtest: ProcessGoal keeps temporary substitution maps as native Map implementations
+ok 113 - ProcessGoal keeps temporary substitution maps as native Map implementations
+  ---
+  duration_ms: 71.3934
+  type: 'test'
+  ...
+# Subtest: FunctionOperator emits native array feedback through Operator.call
+ok 114 - FunctionOperator emits native array feedback through Operator.call
+  ---
+  duration_ms: 68.6323
+  type: 'test'
+  ...
+# Subtest: Want emits native array feedback through Operator.call
+ok 115 - Want emits native array feedback through Operator.call
+  ---
+  duration_ms: 67.2864
+  type: 'test'
+  ...
+# Subtest: Evaluate emits native array feedback through Operator.call
+ok 116 - Evaluate emits native array feedback through Operator.call
+  ---
+  duration_ms: 69.3469
+  type: 'test'
+  ...
+# Subtest: Wonder emits native array feedback after mental operator boundary migration
+ok 117 - Wonder emits native array feedback after mental operator boundary migration
+  ---
+  duration_ms: 73.0574
+  type: 'test'
+  ...
+# Subtest: Believe emits native array feedback after the remaining operator migration
+ok 118 - Believe emits native array feedback after the remaining operator migration
+  ---
+  duration_ms: 67.7847
+  type: 'test'
+  ...
+# Subtest: Believe keeps Java's null truth exception boundary
+ok 119 - Believe keeps Java's null truth exception boundary
+  ---
+  duration_ms: 67.6471
+  type: 'test'
+  ...
+# Subtest: Abbreviation emits native array feedback for empty and single-task results
+ok 120 - Abbreviation emits native array feedback for empty and single-task results
+  ---
+  duration_ms: 78.4039
+  type: 'test'
+  ...
+# Subtest: set factories use native equality-aware intersection and difference
+ok 121 - set factories use native equality-aware intersection and difference
+  ---
+  duration_ms: 3.3283
+  type: 'test'
+  ...
+# Subtest: Stamp tense lookup uses Java temporal order constants
+ok 122 - Stamp tense lookup uses Java temporal order constants
+  ---
+  duration_ms: 0.8563
+  type: 'test'
+  ...
+# Subtest: Stamp RuntimeLong time arithmetic preserves bigint inputs at the boundary
+ok 123 - Stamp RuntimeLong time arithmetic preserves bigint inputs at the boundary
+  ---
+  duration_ms: 0.6906
+  type: 'test'
+  ...
+# Subtest: mixed runtime RuntimeLong values preserve temporal projection and interval normalization
+ok 124 - mixed runtime RuntimeLong values preserve temporal projection and interval normalization
+  ---
+  duration_ms: 2.7678
+  type: 'test'
+  ...
+# Subtest: Nar explicit RuntimeLong overload accepts JavaScript number and bigint values
+ok 125 - Nar explicit RuntimeLong overload accepts JavaScript number and bigint values
+  ---
+  duration_ms: 132.7027
+  type: 'test'
+  ...
+# Subtest: CompoundTerm equality preserves Java case-sensitive key identity
+ok 126 - CompoundTerm equality preserves Java case-sensitive key identity
+  ---
+  duration_ms: 68.65
+  type: 'test'
+  ...
+# Subtest: Concept RuntimeLong text preserves Java field labels
+ok 127 - Concept RuntimeLong text preserves Java field labels
+  ---
+  duration_ms: 67.5263
+  type: 'test'
+  ...
+# Subtest: Narsese truth parsing preserves Java Float.parseFloat boundaries
+ok 128 - Narsese truth parsing preserves Java Float.parseFloat boundaries
+  ---
+  duration_ms: 68.5389
+  type: 'test'
+  ...
+# Subtest: Java implicit Object classes no longer carry a jree JavaObject base
+ok 129 - Java implicit Object classes no longer carry a jree JavaObject base
+  ---
+  duration_ms: 7.4241
+  type: 'test'
+  ...
+# Subtest: static Java utility classes no longer carry a jree JavaObject base
+ok 130 - static Java utility classes no longer carry a jree JavaObject base
+  ---
+  duration_ms: 0.8692
+  type: 'test'
+  ...
+# Subtest: ItemPriorityComparator keeps the Java plain comparator boundary
+ok 131 - ItemPriorityComparator keeps the Java plain comparator boundary
+  ---
+  duration_ms: 0.3255
+  type: 'test'
+  ...
+# Subtest: Item keeps its value contract while using the project runtime class boundary
+ok 132 - Item keeps its value contract while using the project runtime class boundary
+  ---
+  duration_ms: 0.9287
+  type: 'test'
+  ...
+# Subtest: Operator.ExecutionResult keeps the Java plain event-payload boundary
+ok 133 - Operator.ExecutionResult keeps the Java plain event-payload boundary
+  ---
+  duration_ms: 0.2899
+  type: 'test'
+  ...
+# Subtest: CompoundTerm.ConvRectangle keeps the Java plain data-holder boundary
+ok 134 - CompoundTerm.ConvRectangle keeps the Java plain data-holder boundary
+  ---
+  duration_ms: 0.302
+  type: 'test'
+  ...
+# Subtest: static inference rule classes no longer carry a jree JavaObject base
+ok 135 - static inference rule classes no longer carry a jree JavaObject base
+  ---
+  duration_ms: 1.5359
+  type: 'test'
+  ...
+# Subtest: Counting keeps Java's plain-plugin boundary and constructor contracts
+ok 136 - Counting keeps Java's plain-plugin boundary and constructor contracts
+  ---
+  duration_ms: 0.4288
+  type: 'test'
+  ...
+# Subtest: Counting preserves Java's invalid constructor exception contract
+ok 137 - Counting preserves Java's invalid constructor exception contract
+  ---
+  duration_ms: 0.2605
+  type: 'test'
+  ...
+# Subtest: DerivationContext keeps project-owned exception and string boundaries
+ok 138 - DerivationContext keeps project-owned exception and string boundaries
+  ---
+  duration_ms: 0.7511
+  type: 'test'
+  ...
+# Subtest: Distributor fills order with expected counts
+ok 139 - Distributor fills order with expected counts
+  ---
+  duration_ms: 0.5867
+  type: 'test'
+  ...
+# Subtest: Distributor.next cycles through capacity
+ok 140 - Distributor.next cycles through capacity
+  ---
+  duration_ms: 0.0981
+  type: 'test'
+  ...
+# Subtest: Distributor rejects non-positive range
+ok 141 - Distributor rejects non-positive range
+  ---
+  duration_ms: 0.2139
+  type: 'test'
+  ...
+# Subtest: Emotions keeps the Java plain-plugin boundary and FloatNumber constructor contract
+ok 142 - Emotions keeps the Java plain-plugin boundary and FloatNumber constructor contract
+  ---
+  duration_ms: 0.5292
+  type: 'test'
+  ...
+# Subtest: EventEmitter.set subscribes only to the requested event classes
+ok 143 - EventEmitter.set subscribes only to the requested event classes
+  ---
+  duration_ms: 1.1196
+  type: 'test'
+  ...
+# Subtest: Events keeps the Java plain namespace-holder boundary
+ok 144 - Events keeps the Java plain namespace-holder boundary
+  ---
+  duration_ms: 0.0965
+  type: 'test'
+  ...
+# Subtest: native event classes keep stable runtime identity tokens
+ok 145 - native event classes keep stable runtime identity tokens
+  ---
+  duration_ms: 0.0679
+  type: 'test'
+  ...
+# Subtest: EventEmitter uses native map and observer arrays while preserving identity removal
+ok 146 - EventEmitter uses native map and observer arrays while preserving identity removal
+  ---
+  duration_ms: 0.0615
+  type: 'test'
+  ...
+# Subtest: EventEmitter.synch applies pending operations in FIFO order
+ok 147 - EventEmitter.synch applies pending operations in FIFO order
+  ---
+  duration_ms: 0.0971
+  type: 'test'
+  ...
+# Subtest: EventEmitter preserves native event payload order
+ok 148 - EventEmitter preserves native event payload order
+  ---
+  duration_ms: 0.1019
+  type: 'test'
+  ...
+# Subtest: EventEmitter preserves Java exception boundaries
+ok 149 - EventEmitter preserves Java exception boundaries
+  ---
+  duration_ms: 0.2945
+  type: 'test'
+  ...
+# Subtest: EventHandler accepts Java-style event varargs
+ok 150 - EventHandler accepts Java-style event varargs
+  ---
+  duration_ms: 0.1217
+  type: 'test'
+  ...
+# Subtest: EventHandler uses the project runtime identity boundary without jree
+ok 151 - EventHandler uses the project runtime identity boundary without jree
+  ---
+  duration_ms: 0.1282
+  type: 'test'
+  ...
+# Subtest: EventHandler preserves the Java illegal-argument boundary
+ok 152 - EventHandler preserves the Java illegal-argument boundary
+  ---
+  duration_ms: 0.2516
+  type: 'test'
+  ...
+# Subtest: OutputHandler preserves the Java illegal-argument boundary
+ok 153 - OutputHandler preserves the Java illegal-argument boundary
+  ---
+  duration_ms: 0.1156
+  type: 'test'
+  ...
+# Subtest: TextOutputHandler preserves the Java illegal-argument boundary
+ok 154 - TextOutputHandler preserves the Java illegal-argument boundary
+  ---
+  duration_ms: 0.0992
+  type: 'test'
+  ...
+# Subtest: Events.ConceptNew preserves the Java InferenceEvent constructor contract
+ok 155 - Events.ConceptNew preserves the Java InferenceEvent constructor contract
+  ---
+  duration_ms: 0.1191
+  type: 'test'
+  ...
+# Subtest: Events captures stack frames through the project scheduler boundary
+ok 156 - Events captures stack frames through the project scheduler boundary
+  ---
+  duration_ms: 0.3135
+  type: 'test'
+  ...
+# Subtest: InferenceEvent keeps optional stack frames in a native ordered array
+ok 157 - InferenceEvent keeps optional stack frames in a native ordered array
+  ---
+  duration_ms: 0.1873
+  type: 'test'
+  ...
+# Subtest: Events.ConceptNew keeps event text on the project-owned string boundary
+ok 158 - Events.ConceptNew keeps event text on the project-owned string boundary
+  ---
+  duration_ms: 0.1148
+  type: 'test'
+  ...
+# Subtest: Events.TaskAdd accepts native and Java string reasons at the event boundary
+ok 159 - Events.TaskAdd accepts native and Java string reasons at the event boundary
+  ---
+  duration_ms: 0.1702
+  type: 'test'
+  ...
+# Subtest: TextOutputHandler formats throwable and array output without Java Arrays helpers
+ok 160 - TextOutputHandler formats throwable and array output without Java Arrays helpers
+  ---
+  duration_ms: 72.5557
+  type: 'test'
+  ...
+# Subtest: TextOutputHandler keeps line prefixes on the native string boundary
+ok 161 - TextOutputHandler keeps line prefixes on the native string boundary
+  ---
+  duration_ms: 88.9221
+  type: 'test'
+  ...
+# Subtest: TextOutputHandler.LineOutput accepts project-owned text values
+ok 162 - TextOutputHandler.LineOutput accepts project-owned text values
+  ---
+  duration_ms: 0.5953
+  type: 'test'
+  ...
+# Subtest: TextOutputHandler.openSaveFile obtains a writer through host capabilities
+ok 163 - TextOutputHandler.openSaveFile obtains a writer through host capabilities
+  ---
+  duration_ms: 138.5786
+  type: 'test'
+  ...
+# Subtest: Float32Math narrows Java FloatNumber operands and results
+ok 164 - Float32Math narrows Java FloatNumber operands and results
+  ---
+  duration_ms: 0.4674
+  type: 'test'
+  ...
+# Subtest: Float32Math covers Java FloatNumber operation boundaries
+ok 165 - Float32Math covers Java FloatNumber operation boundaries
+  ---
+  duration_ms: 0.099
+  type: 'test'
+  ...
+# Subtest: Float32Math.pow matches Java FloatNumber storage after Math.pow
+ok 166 - Float32Math.pow matches Java FloatNumber storage after Math.pow
+  ---
+  duration_ms: 0.0581
+  type: 'test'
+  ...
+# Subtest: Float32Math.powDouble preserves Java Math.pow DoubleNumber result
+ok 167 - Float32Math.powDouble preserves Java Math.pow DoubleNumber result
+  ---
+  duration_ms: 0.0618
+  type: 'test'
+  ...
+# Subtest: Float32Math.truthToQuality preserves Java FloatNumber complement boundaries
+ok 168 - Float32Math.truthToQuality preserves Java FloatNumber complement boundaries
+  ---
+  duration_ms: 0.113
+  type: 'test'
+  ...
+# Subtest: ImageExt and ImageInt do not construct jree exception classes directly
+ok 169 - ImageExt and ImageInt do not construct jree exception classes directly
+  ---
+  duration_ms: 0.8541
+  type: 'test'
+  ...
+# Subtest: ImageExt clone and make use project-owned argument/state exceptions
+ok 170 - ImageExt clone and make use project-owned argument/state exceptions
+  ---
+  duration_ms: 407.6206
+  type: 'test'
+  ...
+# Subtest: ImageInt clone and make use project-owned argument/state exceptions
+ok 171 - ImageInt clone and make use project-owned argument/state exceptions
+  ---
+  duration_ms: 11.6921
+  type: 'test'
+  ...
+# Subtest: Image uses project-owned string and hash boundaries
+ok 172 - Image uses project-owned string and hash boundaries
+  ---
+  duration_ms: 0.7057
+  type: 'test'
+  ...
+# Subtest: Image keeps Java-compatible generated names
+ok 173 - Image keeps Java-compatible generated names
+  ---
+  duration_ms: 0.3815
+  type: 'test'
+  ...
+# Subtest: Implication and Equivalence use project-owned exception classes
+ok 174 - Implication and Equivalence use project-owned exception classes
+  ---
+  duration_ms: 0.8726
+  type: 'test'
+  ...
+# Subtest: Implication invalid overloads preserve project exception identity
+ok 175 - Implication invalid overloads preserve project exception identity
+  ---
+  duration_ms: 0.7085
+  type: 'test'
+  ...
+# Subtest: Equivalence invalid overloads preserve project exception identity
+ok 176 - Equivalence invalid overloads preserve project exception identity
+  ---
+  duration_ms: 0.4223
+  type: 'test'
+  ...
+# Subtest: Implication and Equivalence use project-owned string boundaries
+ok 177 - Implication and Equivalence use project-owned string boundaries
+  ---
+  duration_ms: 0.7703
+  type: 'test'
+  ...
+# Subtest: Inheritance avoids direct jree String construction for operator checks
+ok 178 - Inheritance avoids direct jree String construction for operator checks
+  ---
+  duration_ms: 0.7086
+  type: 'test'
+  ...
+# Subtest: Nar consumes NAL text and preserves IN creation-time semantics
+ok 179 - Nar consumes NAL text and preserves IN creation-time semantics
+  ---
+  duration_ms: 73.9707
+  type: 'test'
+  ...
+# Subtest: Nar two-argument addInputText accepts project-owned string values
+ok 180 - Nar two-argument addInputText accepts project-owned string values
+  ---
+  duration_ms: 67.5507
+  type: 'test'
+  ...
+# Subtest: InternalExperience keeps the Java plain-plugin boundary and constructor contracts
+ok 181 - InternalExperience keeps the Java plain-plugin boundary and constructor contracts
+  ---
+  duration_ms: 0.4679
+  type: 'test'
+  ...
+# Subtest: intersection and difference terms avoid direct jree argument/state exceptions
+ok 182 - intersection and difference terms avoid direct jree argument/state exceptions
+  ---
+  duration_ms: 0.9697
+  type: 'test'
+  ...
+# Subtest: intersection factories preserve project-owned argument exceptions
+ok 183 - intersection factories preserve project-owned argument exceptions
+  ---
+  duration_ms: 0.3481
+  type: 'test'
+  ...
+# Subtest: difference factories preserve project-owned argument exceptions
+ok 184 - difference factories preserve project-owned argument exceptions
+  ---
+  duration_ms: 0.1233
+  type: 'test'
+  ...
+# Subtest: DifferenceInt keeps its invalid component-count state contract
+ok 185 - DifferenceInt keeps its invalid component-count state contract
+  ---
+  duration_ms: 0.1003
+  type: 'test'
+  ...
+# Subtest: Interval uses the project string boundary for parsing and naming
+ok 186 - Interval uses the project string boundary for parsing and naming
+  ---
+  duration_ms: 0.8142
+  type: 'test'
+  ...
+# Subtest: Parser and ConfigReader keep Java input types behind project boundaries
+ok 187 - Parser and ConfigReader keep Java input types behind project boundaries
+  ---
+  duration_ms: 0.8281
+  type: 'test'
+  ...
+# Subtest: Item text methods replace one-shot StringBuilder without changing order
+ok 188 - Item text methods replace one-shot StringBuilder without changing order
+  ---
+  duration_ms: 0.6697
+  type: 'test'
+  ...
+# Subtest: Item text methods retain Java null/string conversion at the boundary
+ok 189 - Item text methods retain Java null/string conversion at the boundary
+  ---
+  duration_ms: 0.1185
+  type: 'test'
+  ...
+# Subtest: Item keeps Java runtime types behind project boundaries
+ok 190 - Item keeps Java runtime types behind project boundaries
+  ---
+  duration_ms: 0.4718
+  type: 'test'
+  ...
+# Subtest: Java ShortNumber-array equals preserves null, length, order, and values
+ok 191 - Java ShortNumber-array equals preserves null, length, order, and values
+  ---
+  duration_ms: 0.4373
+  type: 'test'
+  ...
+# Subtest: Java ShortNumber-array hash follows Arrays.hashCode(ShortNumber[])
+ok 192 - Java ShortNumber-array hash follows Arrays.hashCode(ShortNumber[])
+  ---
+  duration_ms: 0.0922
+  type: 'test'
+  ...
+# Subtest: Java Objects.hash uses the project Java value hash contract
+ok 193 - Java Objects.hash uses the project Java value hash contract
+  ---
+  duration_ms: 0.1439
+  type: 'test'
+  ...
+# Subtest: local parity runner rejects a missing selected Java artifact
+ok 194 - local parity runner rejects a missing selected Java artifact
+  ---
+  duration_ms: 282.8742
+  type: 'test'
+  ...
+# Subtest: NAL runner rejects a missing selected Java artifact
+ok 195 - NAL runner rejects a missing selected Java artifact
+  ---
+  duration_ms: 309.6001
+  type: 'test'
+  ...
+# Subtest: local parity rejects the historical 3.1.0 artifact
+ok 196 - local parity rejects the historical 3.1.0 artifact
+  ---
+  duration_ms: 283.1667
+  type: 'test'
+  ...
+# Subtest: local parity default and explicit selection identify the canonical Java artifact
+ok 197 - local parity default and explicit selection identify the canonical Java artifact # SKIP
+  ---
+  duration_ms: 0.1336
+  type: 'test'
+  ...
+# Subtest: NAL runner rejects the historical 3.1.0 artifact
+ok 198 - NAL runner rejects the historical 3.1.0 artifact
+  ---
+  duration_ms: 274.8837
+  type: 'test'
+  ...
+# Subtest: NAL runner can compare TS with the frozen Java baseline without starting Java
+ok 199 - NAL runner can compare TS with the frozen Java baseline without starting Java
+  ---
+  duration_ms: 2184.8987
+  type: 'test'
+  ...
+# Subtest: NAL runner rejects a missing frozen Java baseline
+ok 200 - NAL runner rejects a missing frozen Java baseline
+  ---
+  duration_ms: 277.5207
+  type: 'test'
+  ...
+# Subtest: native Java throwable hierarchy preserves type and message contracts
+ok 201 - native Java throwable hierarchy preserves type and message contracts
+  ---
+  duration_ms: 0.5937
+  type: 'test'
+  ...
+# Subtest: native Java exception layers retain Java-shaped subclassing
+ok 202 - native Java exception layers retain Java-shaped subclassing
+  ---
+  duration_ms: 0.1264
+  type: 'test'
+  ...
+# Subtest: native Java throwable supports Java-style cause and message updates
+ok 203 - native Java throwable supports Java-style cause and message updates
+  ---
+  duration_ms: 0.1146
+  type: 'test'
+  ...
+# Subtest: native Java throwable distinguishes uninitialized and explicit-null causes
+ok 204 - native Java throwable distinguishes uninitialized and explicit-null causes
+  ---
+  duration_ms: 0.2532
+  type: 'test'
+  ...
+# Subtest: native Java throwable protects suppressed state and returns a snapshot
+ok 205 - native Java throwable protects suppressed state and returns a snapshot
+  ---
+  duration_ms: 0.499
+  type: 'test'
+  ...
+# Subtest: native Java exception compatibility preserves old jree instanceof checks
+ok 206 - native Java exception compatibility preserves old jree instanceof checks
+  ---
+  duration_ms: 0.0737
+  type: 'test'
+  ...
+# Subtest: Statement keeps Java side-enum and native exception boundaries
+ok 207 - Statement keeps Java side-enum and native exception boundaries
+  ---
+  duration_ms: 278.7288
+  type: 'test'
+  ...
+# Subtest: AbstractTerm keeps the Java CharSequence name contract without a direct jree import
+ok 208 - AbstractTerm keeps the Java CharSequence name contract without a direct jree import
+  ---
+  duration_ms: 0.3917
+  type: 'test'
+  ...
+# Subtest: J2 text boundaries preserve supplementary UTF-16 units and Java hash
+ok 209 - J2 text boundaries preserve supplementary UTF-16 units and Java hash
+  ---
+  duration_ms: 1.2502
+  type: 'test'
+  ...
+# Subtest: Implication.clone preserves the source term and runtime type
+ok 210 - Implication.clone preserves the source term and runtime type
+  ---
+  duration_ms: 30.7585
+  type: 'test'
+  ...
+# Subtest: Image placeholder recognition keeps Java exact-Term semantics
+ok 211 - Image placeholder recognition keeps Java exact-Term semantics
+  ---
+  duration_ms: 7.5543
+  type: 'test'
+  ...
+# Subtest: Terms.term preserves the relation index when rebuilding images
+ok 212 - Terms.term preserves the relation index when rebuilding images
+  ---
+  duration_ms: 306.6846
+  type: 'test'
+  ...
+# Subtest: Terms image/product equivalence keeps Java Set de-duplication
+ok 213 - Terms image/product equivalence keeps Java Set de-duplication
+  ---
+  duration_ms: 10.8903
+  type: 'test'
+  ...
+# Subtest: CompoundTerm Set helpers preserve Java equality and insertion order
+ok 214 - CompoundTerm Set helpers preserve Java equality and insertion order
+  ---
+  duration_ms: 1.7939
+  type: 'test'
+  ...
+# Subtest: CompoundTerm.termList preserves Java Arrays.asList fixed-size semantics
+ok 215 - CompoundTerm.termList preserves Java Arrays.asList fixed-size semantics
+  ---
+  duration_ms: 1.125
+  type: 'test'
+  ...
+# Subtest: LinkedHashSet keeps insertion order for hashable Java objects
+ok 216 - LinkedHashSet keeps insertion order for hashable Java objects
+  ---
+  duration_ms: 1.0149
+  type: 'test'
+  ...
+# Subtest: LinkedHashSet add, remove, and re-add follow Java order
+ok 217 - LinkedHashSet add, remove, and re-add follow Java order
+  ---
+  duration_ms: 0.134
+  type: 'test'
+  ...
+# Subtest: Java and TypeScript local algorithm fixtures remain in parity
+ok 218 - Java and TypeScript local algorithm fixtures remain in parity # SKIP
+  ---
+  duration_ms: 0.3798
+  type: 'test'
+  ...
+# Subtest: LocalRules keeps math operations on the native boundary
+ok 219 - LocalRules keeps math operations on the native boundary
+  ---
+  duration_ms: 0.7454
+  type: 'test'
+  ...
+# Subtest: M3 benchmark statistics use median and nearest-rank p95
+ok 220 - M3 benchmark statistics use median and nearest-rank p95
+  ---
+  duration_ms: 0.723
+  type: 'test'
+  ...
+# Subtest: M3 benchmark exposes normalized throughput and marks qualified p95
+ok 221 - M3 benchmark exposes normalized throughput and marks qualified p95
+  ---
+  duration_ms: 0.4403
+  type: 'test'
+  ...
+# Subtest: M3 benchmark requires explicit files and accepts serial repetition settings
+ok 222 - M3 benchmark requires explicit files and accepts serial repetition settings
+  ---
+  duration_ms: 0.3995
+  type: 'test'
+  ...
+# Subtest: J2 MapContract substitutes with NativeMap without changing term semantics
+ok 223 - J2 MapContract substitutes with NativeMap without changing term semantics
+  ---
+  duration_ms: 0.9227
+  type: 'test'
+  ...
+# Subtest: J2 MapContract accepts Java LinkedHashMap substitution input
+ok 224 - J2 MapContract accepts Java LinkedHashMap substitution input
+  ---
+  duration_ms: 0.1711
+  type: 'test'
+  ...
+# Subtest: J2 MapContract preserves recursive term counts and insertion order
+ok 225 - J2 MapContract preserves recursive term counts and insertion order
+  ---
+  duration_ms: 0.9701
+  type: 'test'
+  ...
+# Subtest: Memory lock marker uses the native boolean contract
+ok 226 - Memory lock marker uses the native boolean contract
+  ---
+  duration_ms: 0.8515
+  type: 'test'
+  ...
+# Subtest: Memory operator registry adds, replaces, and removes operators by Java text value
+ok 227 - Memory operator registry adds, replaces, and removes operators by Java text value
+  ---
+  duration_ms: 69.8969
+  type: 'test'
+  ...
+# Subtest: Memory keeps the Java plain-class boundary without a jree object shell
+ok 228 - Memory keeps the Java plain-class boundary without a jree object shell
+  ---
+  duration_ms: 66.6357
+  type: 'test'
+  ...
+# Subtest: Memory keeps Java iterator calls and native iteration as separate contracts
+ok 229 - Memory keeps Java iterator calls and native iteration as separate contracts
+  ---
+  duration_ms: 68.7213
+  type: 'test'
+  ...
+# Subtest: Memory keeps task reason literals native until event conversion
+ok 230 - Memory keeps task reason literals native until event conversion
+  ---
+  duration_ms: 0.8845
+  type: 'test'
+  ...
+# Subtest: Memory emits native string reasons in task events
+ok 231 - Memory emits native string reasons in task events
+  ---
+  duration_ms: 1151.5859
+  type: 'test'
+  ...
+# Subtest: metrics and output conditions load without an ESM initialization cycle
+ok 232 - metrics and output conditions load without an ESM initialization cycle
+  ---
+  duration_ms: 1298.3086
+  type: 'test'
+  ...
+# Subtest: migration codemod repairs only the narrow generic alias shape
+ok 233 - migration codemod repairs only the narrow generic alias shape
+  ---
+  duration_ms: 257.7655
+  type: 'test'
+  ...
+# Subtest: migration codemod repairs split logical operators
+ok 234 - migration codemod repairs split logical operators
+  ---
+  duration_ms: 67.6213
+  type: 'test'
+  ...
+# Subtest: migration codemod adds extensions only to relative ESM imports
+ok 235 - migration codemod adds extensions only to relative ESM imports
+  ---
+  duration_ms: 65.1803
+  type: 'test'
+  ...
+# Subtest: migration scanner ignores Narsese examples in comments, strings, and regex literals
+ok 236 - migration scanner ignores Narsese examples in comments, strings, and regex literals
+  ---
+  duration_ms: 194.7107
+  type: 'test'
+  ...
+# Subtest: Narsese constructor delegation preserves either memory entry point
+ok 237 - Narsese constructor delegation preserves either memory entry point
+  ---
+  duration_ms: 0.1757
+  type: 'test'
+  ...
+# Subtest: NAL matrix summary separates timeout from an unverified semantic cause
+ok 238 - NAL matrix summary separates timeout from an unverified semantic cause
+  ---
+  duration_ms: 3.5493
+  type: 'test'
+  ...
+# Subtest: NAL matrix summary keeps a process safety limit separate from timeout
+ok 239 - NAL matrix summary keeps a process safety limit separate from timeout
+  ---
+  duration_ms: 0.5093
+  type: 'test'
+  ...
+# Subtest: NAL matrix summary records the observed nal4.7 rule-dispatch hypothesis
+ok 240 - NAL matrix summary records the observed nal4.7 rule-dispatch hypothesis
+  ---
+  duration_ms: 0.451
+  type: 'test'
+  ...
+# Subtest: NAL matrix summary records a longer-budget pass without rewriting the fixed-budget result
+ok 241 - NAL matrix summary records a longer-budget pass without rewriting the fixed-budget result
+  ---
+  duration_ms: 0.4292
+  type: 'test'
+  ...
+# Subtest: NAL matrix summary preserves runner provenance for legacy rows
+ok 242 - NAL matrix summary preserves runner provenance for legacy rows
+  ---
+  duration_ms: 0.3635
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps process exit evidence separate from exception text
+ok 243 - NAL runner keeps process exit evidence separate from exception text
+  ---
+  duration_ms: 0.4471
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps matched markers when another error flag is present
+ok 244 - NAL runner keeps matched markers when another error flag is present
+  ---
+  duration_ms: 0.3991
+  type: 'test'
+  ...
+# Subtest: NAL runner classifies progressing process limits as warnings
+ok 245 - NAL runner classifies progressing process limits as warnings
+  ---
+  duration_ms: 0.1019
+  type: 'test'
+  ...
+# Subtest: NAL runner counts final matched markers even when an exception occurs
+ok 246 - NAL runner counts final matched markers even when an exception occurs
+  ---
+  duration_ms: 1.0005
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps timeout and marker absence as separate observations
+ok 247 - NAL runner keeps timeout and marker absence as separate observations
+  ---
+  duration_ms: 0.0793
+  type: 'test'
+  ...
+# Subtest: NAL runner distinguishes a process crash from a single-file timeout
+ok 248 - NAL runner distinguishes a process crash from a single-file timeout
+  ---
+  duration_ms: 0.1245
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps files after a timeout separate from the timed-out file
+ok 249 - NAL runner keeps files after a timeout separate from the timed-out file
+  ---
+  duration_ms: 0.0606
+  type: 'test'
+  ...
+# Subtest: parity does not become functional pass when both engines miss the marker
+ok 250 - parity does not become functional pass when both engines miss the marker
+  ---
+  duration_ms: 0.7308
+  type: 'test'
+  ...
+# Subtest: parity exposes Java/TypeScript result differences independently
+ok 251 - parity exposes Java/TypeScript result differences independently
+  ---
+  duration_ms: 0.1101
+  type: 'test'
+  ...
+# Subtest: NAL runner reports marker timing against a 120-second-per-1024-cycle budget
+ok 252 - NAL runner reports marker timing against a 120-second-per-1024-cycle budget
+  ---
+  duration_ms: 0.1927
+  type: 'test'
+  ...
+# Subtest: NAL runner records runtime per reasoning cycle and relative slowdown
+ok 253 - NAL runner records runtime per reasoning cycle and relative slowdown
+  ---
+  duration_ms: 0.0671
+  type: 'test'
+  ...
+# Subtest: NAL runner marks stalled runtime as a lower bound instead of a functional verdict
+ok 254 - NAL runner marks stalled runtime as a lower bound instead of a functional verdict
+  ---
+  duration_ms: 0.1377
+  type: 'test'
+  ...
+# Subtest: NAL runner classifies no-progress watchdog termination independently of performance
+ok 255 - NAL runner classifies no-progress watchdog termination independently of performance
+  ---
+  duration_ms: 0.2128
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps a slow completed process as performance data, not a timeout
+ok 256 - NAL runner keeps a slow completed process as performance data, not a timeout
+  ---
+  duration_ms: 0.1216
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps a process safety limit separate from a no-progress timeout
+ok 257 - NAL runner keeps a process safety limit separate from a no-progress timeout
+  ---
+  duration_ms: 0.1049
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps performance observations separate when a marker is missing
+ok 258 - NAL runner keeps performance observations separate when a marker is missing
+  ---
+  duration_ms: 0.098
+  type: 'test'
+  ...
+# Subtest: marker parity is an equivalence route without requiring 131072 cycles or an internal trace
+ok 259 - marker parity is an equivalence route without requiring 131072 cycles or an internal trace
+  ---
+  duration_ms: 0.0477
+  type: 'test'
+  ...
+# Subtest: marker parity remains equivalent when an optional internal trace differs
+ok 260 - marker parity remains equivalent when an optional internal trace differs
+  ---
+  duration_ms: 0.0817
+  type: 'test'
+  ...
+# Subtest: 131072-cycle equivalence is available for inputs without Java markers
+ok 261 - 131072-cycle equivalence is available for inputs without Java markers
+  ---
+  duration_ms: 0.0466
+  type: 'test'
+  ...
+# Subtest: NAL parity rows expose marker equivalence independently of the RuntimeLong-cycle target
+ok 262 - NAL parity rows expose marker equivalence independently of the RuntimeLong-cycle target
+  ---
+  duration_ms: 0.0632
+  type: 'test'
+  ...
+# Subtest: NAL runner preserves valid rows when stdout contains a diagnostic line
+ok 263 - NAL runner preserves valid rows when stdout contains a diagnostic line
+  ---
+  duration_ms: 0.1604
+  type: 'test'
+  ...
+# Subtest: NAL runner accepts only structured progress heartbeats
+ok 264 - NAL runner accepts only structured progress heartbeats
+  ---
+  duration_ms: 0.1166
+  type: 'test'
+  ...
+# Subtest: NAL runner resets the no-progress watchdog for cycle, command, and marker heartbeats
+ok 265 - NAL runner resets the no-progress watchdog for cycle, command, and marker heartbeats
+  ---
+  duration_ms: 0.0562
+  type: 'test'
+  ...
+# Subtest: NAL runner preserves expected marker count on timeout rows
+ok 266 - NAL runner preserves expected marker count on timeout rows
+  ---
+  duration_ms: 0.0925
+  type: 'test'
+  ...
+# Subtest: NAL runner recognizes Windows timeout results with signal and message
+ok 267 - NAL runner recognizes Windows timeout results with signal and message
+  ---
+  duration_ms: 0.0416
+  type: 'test'
+  ...
+# Subtest: Tense lookup accepts Java String values at the parser boundary
+ok 268 - Tense lookup accepts Java String values at the parser boundary
+  ---
+  duration_ms: 0.0454
+  type: 'test'
+  ...
+# Subtest: NAL metadata separates embedded and runner-added cycles
+ok 269 - NAL metadata separates embedded and runner-added cycles
+  ---
+  duration_ms: 0.1105
+  type: 'test'
+  ...
+# Subtest: NAL runner validates and resumes a persisted per-file result
+ok 270 - NAL runner validates and resumes a persisted per-file result
+  ---
+  duration_ms: 1659.9538
+  type: 'test'
+  ...
+# Subtest: NAL runner selects the explicit M1-- corpus without limit-based truncation
+ok 271 - NAL runner selects the explicit M1-- corpus without limit-based truncation
+  ---
+  duration_ms: 0.4212
+  type: 'test'
+  ...
+# Subtest: NAL runner rejects partial corpus options for M1--
+ok 272 - NAL runner rejects partial corpus options for M1--
+  ---
+  duration_ms: 0.1999
+  type: 'test'
+  ...
+# Subtest: NAL runner records an explicit TypeScript process mode and separates run keys
+ok 273 - NAL runner records an explicit TypeScript process mode and separates run keys
+  ---
+  duration_ms: 0.0941
+  type: 'test'
+  ...
+# Subtest: NAL runner rejects duplicate checkpoint rows for one run
+ok 274 - NAL runner rejects duplicate checkpoint rows for one run
+  ---
+  duration_ms: 1.6135
+  type: 'test'
+  ...
+# Subtest: NAL runner rejects duplicate input files before execution
+ok 275 - NAL runner rejects duplicate input files before execution
+  ---
+  duration_ms: 0.1365
+  type: 'test'
+  ...
+# Subtest: NAL runner persists cold and hot results without overwriting either run
+ok 276 - NAL runner persists cold and hot results without overwriting either run
+  ---
+  duration_ms: 3026.4934
+  type: 'test'
+  ...
+# Subtest: NAL runner keeps hot results isolated from order and cold-process boundaries
+ok 277 - NAL runner keeps hot results isolated from order and cold-process boundaries
+  ---
+  duration_ms: 6239.652
+  type: 'test'
+  ...
+# Subtest: NAL runner resumes after a real middle-file timeout and preserves the tail
+ok 278 - NAL runner resumes after a real middle-file timeout and preserves the tail
+  ---
+  duration_ms: 1934.6561
+  type: 'test'
+  ...
+# Subtest: NAL trace describes ExecutionResult with Java-equivalent operation feedback
+ok 279 - NAL trace describes ExecutionResult with Java-equivalent operation feedback
+  ---
+  duration_ms: 1555.7002
+  type: 'test'
+  ...
+# Subtest: Nar delegates wall-clock time to an explicit runtime capability
+ok 280 - Nar delegates wall-clock time to an explicit runtime capability
+  ---
+  duration_ms: 70.015
+  type: 'test'
+  ...
+# Subtest: Nar does not call jree System.currentTimeMillis directly
+ok 281 - Nar does not call jree System.currentTimeMillis directly
+  ---
+  duration_ms: 0.4842
+  type: 'test'
+  ...
+# Subtest: Nar keeps the step clock independent from the wall-clock capability
+ok 282 - Nar keeps the step clock independent from the wall-clock capability
+  ---
+  duration_ms: 69.2805
+  type: 'test'
+  ...
+# Subtest: Node host capabilities expose a bigint millisecond clock
+ok 283 - Node host capabilities expose a bigint millisecond clock
+  ---
+  duration_ms: 13.3841
+  type: 'test'
+  ...
+# Subtest: Nar configuration keys and state strings stay native
+ok 284 - Nar configuration keys and state strings stay native
+  ---
+  duration_ms: 70.1386
+  type: 'test'
+  ...
+# Subtest: Nar diagnostics use native text literals at Java exception boundaries
+ok 285 - Nar diagnostics use native text literals at Java exception boundaries
+  ---
+  duration_ms: 1.182
+  type: 'test'
+  ...
+# Subtest: Nar file persistence exposes project-owned text path boundaries
+ok 286 - Nar file persistence exposes project-owned text path boundaries
+  ---
+  duration_ms: 73.9776
+  type: 'test'
+  ...
+# INFO: Running 1 cycles.
+# INFO: Running 2 cycles.
+# Subtest: Nar internal input helpers keep native string values
+ok 287 - Nar internal input helpers keep native string values
+  ---
+  duration_ms: 79.4743
+  type: 'test'
+  ...
+# Subtest: Nar metadata and configuration paths stay native strings
+ok 288 - Nar metadata and configuration paths stay native strings
+  ---
+  duration_ms: 70.9697
+  type: 'test'
+  ...
+# Subtest: Nar sensory channel registry keeps Java Map and Term equality semantics
+ok 289 - Nar sensory channel registry keeps Java Map and Term equality semantics
+  ---
+  duration_ms: 70.5379
+  type: 'test'
+  ...
+# Subtest: Nar sensory channel consumer accepts a native string boundary
+ok 290 - Nar sensory channel consumer accepts a native string boundary
+  ---
+  duration_ms: 66.6722
+  type: 'test'
+  ...
+# Subtest: SensoryChannel keeps the Java plain-base class identity contract
+ok 291 - SensoryChannel keeps the Java plain-base class identity contract
+  ---
+  duration_ms: 67.3429
+  type: 'test'
+  ...
+# Subtest: NarNode core contains only typed network messages and injected transport
+ok 292 - NarNode core contains only typed network messages and injected transport
+  ---
+  duration_ms: 0.8452
+  type: 'test'
+  ...
+# Subtest: NarNode routes received and emitted messages through an injected transport
+ok 293 - NarNode routes received and emitted messages through an injected transport
+  ---
+  duration_ms: 75.8726
+  type: 'test'
+  ...
+# Subtest: NarNode reports absent transport as a platform capability error
+ok 294 - NarNode reports absent transport as a platform capability error
+  ---
+  duration_ms: 69.3936
+  type: 'test'
+  ...
+# Subtest: NarNode.TargetNar keeps the Java plain network-target boundary
+ok 295 - NarNode.TargetNar keeps the Java plain network-target boundary
+  ---
+  duration_ms: 0.4609
+  type: 'test'
+  ...
+# Subtest: NarNode keeps class identity without inheriting jree.JavaObject
+ok 296 - NarNode keeps class identity without inheriting jree.JavaObject
+  ---
+  duration_ms: 0.0665
+  type: 'test'
+  ...
+# Subtest: NarNode stores redirection targets in insertion order
+ok 297 - NarNode stores redirection targets in insertion order
+  ---
+  duration_ms: 0.4313
+  type: 'test'
+  ...
+# Subtest: Narsese follows the canonical plain-class boundary
+ok 298 - Narsese follows the canonical plain-class boundary
+  ---
+  duration_ms: 73.1965
+  type: 'test'
+  ...
+# Subtest: Narsese parser uses the project string boundary for temporary arguments
+ok 299 - Narsese parser uses the project string boundary for temporary arguments
+  ---
+  duration_ms: 0.6548
+  type: 'test'
+  ...
+# Subtest: Narsese preserves temporal statement order from Java relation dispatch
+ok 300 - Narsese preserves temporal statement order from Java relation dispatch
+  ---
+  duration_ms: 1276.1526
+  type: 'test'
+  ...
+# Subtest: NativeDeque preserves FIFO order and removes from the head
+ok 301 - NativeDeque preserves FIFO order and removes from the head
+  ---
+  duration_ms: 0.8783
+  type: 'test'
+  ...
+# Subtest: NativeDeque iterator.remove preserves the remaining order
+ok 302 - NativeDeque iterator.remove preserves the remaining order
+  ---
+  duration_ms: 0.2634
+  type: 'test'
+  ...
+# Subtest: NativeDeque supports re-adding an iterator match at the tail
+ok 303 - NativeDeque supports re-adding an iterator match at the tail
+  ---
+  duration_ms: 0.069
+  type: 'test'
+  ...
+# Subtest: NativeDeque matches TaskLink's bounded-record eviction condition
+ok 304 - NativeDeque matches TaskLink's bounded-record eviction condition
+  ---
+  duration_ms: 0.0704
+  type: 'test'
+  ...
+# Subtest: native host adapter exposes capabilities without a Java namespace
+ok 305 - native host adapter exposes capabilities without a Java namespace
+  ---
+  duration_ms: 2.7879
+  type: 'test'
+  ...
+# Subtest: native Node serialization round-trips values without object stream wrappers
+ok 306 - native Node serialization round-trips values without object stream wrappers
+  ---
+  duration_ms: 0.4846
+  type: 'test'
+  ...
+# Subtest: time and multistep interfaces use native TypeScript values
+ok 307 - time and multistep interfaces use native TypeScript values
+  ---
+  duration_ms: 0.4809
+  type: 'test'
+  ...
+# Subtest: NativeList preserves Java ArrayList insertion and indexed access order
+ok 308 - NativeList preserves Java ArrayList insertion and indexed access order
+  ---
+  duration_ms: 0.8743
+  type: 'test'
+  ...
+# Subtest: NativeList preserves indexed removal and Java-style equality lookup
+ok 309 - NativeList preserves indexed removal and Java-style equality lookup
+  ---
+  duration_ms: 0.1892
+  type: 'test'
+  ...
+# Subtest: NativeList equality lookup calls equals on the searched value
+ok 310 - NativeList equality lookup calls equals on the searched value
+  ---
+  duration_ms: 0.0927
+  type: 'test'
+  ...
+# Subtest: NativeList iterator preserves removal and fail-fast behavior
+ok 311 - NativeList iterator preserves removal and fail-fast behavior
+  ---
+  duration_ms: 0.2714
+  type: 'test'
+  ...
+# Subtest: NativeList rejects invalid element and insertion indices
+ok 312 - NativeList rejects invalid element and insertion indices
+  ---
+  duration_ms: 0.0845
+  type: 'test'
+  ...
+# Subtest: native lookup tables preserve Java symbol and tense contracts
+ok 313 - native lookup tables preserve Java symbol and tense contracts
+  ---
+  duration_ms: 270.1129
+  type: 'test'
+  ...
+# Subtest: Term atom cache normalizes Java and native text keys
+ok 314 - Term atom cache normalizes Java and native text keys
+  ---
+  duration_ms: 107.5733
+  type: 'test'
+  ...
+# Subtest: NativeMap preserves Java Map equality, insertion order, and replacement position
+ok 315 - NativeMap preserves Java Map equality, insertion order, and replacement position
+  ---
+  duration_ms: 1.5232
+  type: 'test'
+  ...
+# Subtest: NativeMap scans hash collisions and removes indexed records
+ok 316 - NativeMap scans hash collisions and removes indexed records
+  ---
+  duration_ms: 0.212
+  type: 'test'
+  ...
+# Subtest: NativeMap keeps hash hits aligned with insertion order after middle removal
+ok 317 - NativeMap keeps hash hits aligned with insertion order after middle removal
+  ---
+  duration_ms: 0.2334
+  type: 'test'
+  ...
+# Subtest: NativeMap preserves equality fallback for object keys without hashCode
+ok 318 - NativeMap preserves equality fallback for object keys without hashCode
+  ---
+  duration_ms: 0.1006
+  type: 'test'
+  ...
+# Subtest: NativeMap views are live and iterators support Java-style removal
+ok 319 - NativeMap views are live and iterators support Java-style removal
+  ---
+  duration_ms: 1.0315
+  type: 'test'
+  ...
+# Subtest: NativeMap distinguishes a missing key from a mapped null value
+ok 320 - NativeMap distinguishes a missing key from a mapped null value
+  ---
+  duration_ms: 0.145
+  type: 'test'
+  ...
+# Subtest: NativeMap entry, key, and value views preserve Java removal contracts
+ok 321 - NativeMap entry, key, and value views preserve Java removal contracts
+  ---
+  duration_ms: 0.1517
+  type: 'test'
+  ...
+# Subtest: NativeMap clone, equals, hashCode, and putAll preserve entry values
+ok 322 - NativeMap clone, equals, hashCode, and putAll preserve entry values
+  ---
+  duration_ms: 0.2066
+  type: 'test'
+  ...
+# Subtest: NativeMap iterators allow entry updates and only iterator removal changes version
+ok 323 - NativeMap iterators allow entry updates and only iterator removal changes version
+  ---
+  duration_ms: 0.2305
+  type: 'test'
+  ...
+# Subtest: NativeMap count entries match jree LinkedHashMap on equal domain keys
+ok 324 - NativeMap count entries match jree LinkedHashMap on equal domain keys
+  ---
+  duration_ms: 122.762
+  type: 'test'
+  ...
+# Subtest: NativeMap implements the project MapContract without erasing Map semantics
+ok 325 - NativeMap implements the project MapContract without erasing Map semantics
+  ---
+  duration_ms: 0.3187
+  type: 'test'
+  ...
+# Subtest: NativeReadOnlyList is a live ordered view over a native array
+ok 326 - NativeReadOnlyList is a live ordered view over a native array
+  ---
+  duration_ms: 0.8258
+  type: 'test'
+  ...
+# Subtest: NativeReadOnlyList preserves NativeList equality lookup and rejects mutation
+ok 327 - NativeReadOnlyList preserves NativeList equality lookup and rejects mutation
+  ---
+  duration_ms: 0.3731
+  type: 'test'
+  ...
+# Subtest: NativeSet preserves Java Set equality and insertion order
+ok 328 - NativeSet preserves Java Set equality and insertion order
+  ---
+  duration_ms: 0.8351
+  type: 'test'
+  ...
+# Subtest: NativeSet uses the searched value as the Java equals receiver
+ok 329 - NativeSet uses the searched value as the Java equals receiver
+  ---
+  duration_ms: 0.0951
+  type: 'test'
+  ...
+# Subtest: NativeSet iterator supports Java remove and fail-fast mutation checks
+ok 330 - NativeSet iterator supports Java remove and fail-fast mutation checks
+  ---
+  duration_ms: 0.2934
+  type: 'test'
+  ...
+# Subtest: NativeSet.equals follows Java AbstractSet receiver direction
+ok 331 - NativeSet.equals follows Java AbstractSet receiver direction
+  ---
+  duration_ms: 0.1851
+  type: 'test'
+  ...
+# Subtest: NativeSet deduplicates structurally equal Terms used as target Set values
+ok 332 - NativeSet deduplicates structurally equal Terms used as target Set values
+  ---
+  duration_ms: 1189.1333
+  type: 'test'
+  ...
+# Subtest: NativeSortedSet preserves TreeSet order and comparator uniqueness
+ok 333 - NativeSortedSet preserves TreeSet order and comparator uniqueness
+  ---
+  duration_ms: 1.0584
+  type: 'test'
+  ...
+# Subtest: NativeSortedSet follows the Java Set equality and hash contract
+ok 334 - NativeSortedSet follows the Java Set equality and hash contract
+  ---
+  duration_ms: 0.3202
+  type: 'test'
+  ...
+# Subtest: Term.toSortedSet supports retainAll and Java-shaped toArray
+ok 335 - Term.toSortedSet supports retainAll and Java-shaped toArray
+  ---
+  duration_ms: 0.2925
+  type: 'test'
+  ...
+# Subtest: Task keeps its best solution null until Java sets one
+ok 336 - Task keeps its best solution null until Java sets one
+  ---
+  duration_ms: 998.9348
+  type: 'test'
+  ...
+# Subtest: initialized Term names retain their Java string value
+ok 337 - initialized Term names retain their Java string value
+  ---
+  duration_ms: 0.7508
+  type: 'test'
+  ...
+# Subtest: CompoundTerm rebuilds its name after Java null cache invalidation
+ok 338 - CompoundTerm rebuilds its name after Java null cache invalidation
+  ---
+  duration_ms: 0.8025
+  type: 'test'
+  ...
+# Subtest: operator constructors preserve Java string boundaries
+ok 339 - operator constructors preserve Java string boundaries
+  ---
+  duration_ms: 0.7541
+  type: 'test'
+  ...
+# Subtest: Feel constructors preserve the Java native String contract
+ok 340 - Feel constructors preserve the Java native String contract
+  ---
+  duration_ms: 0.1347
+  type: 'test'
+  ...
+# Subtest: FunctionOperator accepts the Java String constructor boundary
+ok 341 - FunctionOperator accepts the Java String constructor boundary
+  ---
+  duration_ms: 0.0692
+  type: 'test'
+  ...
+# Subtest: Reflect.sop preserves the translated Java varargs-array overload
+ok 342 - Reflect.sop preserves the translated Java varargs-array overload
+  ---
+  duration_ms: 0.5691
+  type: 'test'
+  ...
+# Subtest: Reflect.sop normalizes native and boxed Java string operator names
+ok 343 - Reflect.sop normalizes native and boxed Java string operator names
+  ---
+  duration_ms: 0.2198
+  type: 'test'
+  ...
+# Subtest: Count preserves Java's invalid-input exception contract
+ok 344 - Count preserves Java's invalid-input exception contract
+  ---
+  duration_ms: 0.4099
+  type: 'test'
+  ...
+# Subtest: Operation and NullOperator preserve Java invalid-argument boundaries
+ok 345 - Operation and NullOperator preserve Java invalid-argument boundaries
+  ---
+  duration_ms: 0.2201
+  type: 'test'
+  ...
+# Subtest: Operation.makeName preserves Java StringBuilder text semantics
+ok 346 - Operation.makeName preserves Java StringBuilder text semantics
+  ---
+  duration_ms: 0.1023
+  type: 'test'
+  ...
+# Subtest: Operation keeps CharSequence and exceptions behind project boundaries
+ok 347 - Operation keeps CharSequence and exceptions behind project boundaries
+  ---
+  duration_ms: 0.647
+  type: 'test'
+  ...
+# Subtest: Operator.operationExecutionString returns native Java-equivalent output text
+ok 348 - Operator.operationExecutionString returns native Java-equivalent output text
+  ---
+  duration_ms: 0.4791
+  type: 'test'
+  ...
+# Subtest: Operator.addPrefixIfMissing normalizes boxed and native Java String inputs
+ok 349 - Operator.addPrefixIfMissing normalizes boxed and native Java String inputs
+  ---
+  duration_ms: 0.0863
+  type: 'test'
+  ...
+# Subtest: FunctionOperator preserves Java arity and overload exception contracts
+ok 350 - FunctionOperator preserves Java arity and overload exception contracts
+  ---
+  duration_ms: 0.1975
+  type: 'test'
+  ...
+# Subtest: FunctionOperator copies Java parameter arguments into a fresh shallow array
+ok 351 - FunctionOperator copies Java parameter arguments into a fresh shallow array
+  ---
+  duration_ms: 0.4413
+  type: 'test'
+  ...
+# Subtest: Operator.call preserves null and ordered empty feedback contracts
+ok 352 - Operator.call preserves null and ordered empty feedback contracts
+  ---
+  duration_ms: 0.3252
+  type: 'test'
+  ...
+# Subtest: Operator.reportExecution accepts native event payloads at the Java Object boundary
+ok 353 - Operator.reportExecution accepts native event payloads at the Java Object boundary
+  ---
+  duration_ms: 0.0896
+  type: 'test'
+  ...
+# Subtest: Add preserves Java argument and result contracts
+ok 354 - Add preserves Java argument and result contracts
+  ---
+  duration_ms: 0.3115
+  type: 'test'
+  ...
+# Subtest: Add preserves Java StringUtils.isNumeric and Integer.parseInt boundaries
+ok 355 - Add preserves Java StringUtils.isNumeric and Integer.parseInt boundaries
+  ---
+  duration_ms: 0.2462
+  type: 'test'
+  ...
+# Subtest: Reflect preserves Java argument and overload contracts
+ok 356 - Reflect preserves Java argument and overload contracts
+  ---
+  duration_ms: 0.1331
+  type: 'test'
+  ...
+# Subtest: Anticipate preserves its invalid-constructor exception contract
+ok 357 - Anticipate preserves its invalid-constructor exception contract
+  ---
+  duration_ms: 0.0766
+  type: 'test'
+  ...
+# Subtest: Operator.call preserves its invalid-overload exception contract
+ok 358 - Operator.call preserves its invalid-overload exception contract
+  ---
+  duration_ms: 0.0514
+  type: 'test'
+  ...
+# Subtest: operator and plugin text boundaries use native strings
+ok 359 - operator and plugin text boundaries use native strings
+  ---
+  duration_ms: 1.394
+  type: 'test'
+  ...
+# Subtest: operator and plugin exceptions use the project-owned exception layer
+ok 360 - operator and plugin exceptions use the project-owned exception layer
+  ---
+  duration_ms: 1.4104
+  type: 'test'
+  ...
+# Subtest: Nar config preserves Java FloatNumber parameters at the TruthValue clamp boundary
+ok 361 - Nar config preserves Java FloatNumber parameters at the TruthValue clamp boundary
+  ---
+  duration_ms: 73.0271
+  type: 'test'
+  ...
+# Subtest: Memory.cycles narrows the duration before the Java multiplication
+ok 362 - Memory.cycles narrows the duration before the Java multiplication
+  ---
+  duration_ms: 67.8808
+  type: 'test'
+  ...
+# Subtest: Memory.output narrows the volume ratio before the Java subtraction
+ok 363 - Memory.output narrows the volume ratio before the Java subtraction
+  ---
+  duration_ms: 70.816
+  type: 'test'
+  ...
+# Subtest: Parameters keeps every Java FloatNumber default in binary32
+ok 364 - Parameters keeps every Java FloatNumber default in binary32
+  ---
+  duration_ms: 0.2459
+  type: 'test'
+  ...
+# Subtest: Plugin CharSequence boundary accepts Java and native string values
+ok 365 - Plugin CharSequence boundary accepts Java and native string values
+  ---
+  duration_ms: 0.8451
+  type: 'test'
+  ...
+# Subtest: Plugin names use a project-owned CharSequence boundary
+ok 366 - Plugin names use a project-owned CharSequence boundary
+  ---
+  duration_ms: 0.3986
+  type: 'test'
+  ...
+# Subtest: plugin exception boundaries use project-owned Java exception classes
+ok 367 - plugin exception boundaries use project-owned Java exception classes
+  ---
+  duration_ms: 1.1293
+  type: 'test'
+  ...
+# Subtest: ProcessAnticipation uses the project string boundary
+ok 368 - ProcessAnticipation uses the project string boundary
+  ---
+  duration_ms: 0.7986
+  type: 'test'
+  ...
+# Subtest: ProcessGoal keeps project-owned host and collection boundaries
+ok 369 - ProcessGoal keeps project-owned host and collection boundaries
+  ---
+  duration_ms: 0.7979
+  type: 'test'
+  ...
+# Subtest: ProcessJudgment uses native exception text
+ok 370 - ProcessJudgment uses native exception text
+  ---
+  duration_ms: 0.7116
+  type: 'test'
+  ...
+# Subtest: ProcessQuestion uses project-owned state exceptions
+ok 371 - ProcessQuestion uses project-owned state exceptions
+  ---
+  duration_ms: 0.7352
+  type: 'test'
+  ...
+# Subtest: jree Random.nextDouble preserves Java's 53-bit value
+ok 372 - jree Random.nextDouble preserves Java's 53-bit value
+  ---
+  duration_ms: 0.9223
+  type: 'test'
+  ...
+# Subtest: project JavaRandom preserves seeded Java sequences and reset semantics
+ok 373 - project JavaRandom preserves seeded Java sequences and reset semantics
+  ---
+  duration_ms: 0.2077
+  type: 'test'
+  ...
+# Subtest: project JavaRandom rejects invalid bit, bound, and unsafe seed inputs
+ok 374 - project JavaRandom rejects invalid bit, bound, and unsafe seed inputs
+  ---
+  duration_ms: 0.3163
+  type: 'test'
+  ...
+# Subtest: resource helpers close in reverse order and preserve suppressed failures
+ok 375 - resource helpers close in reverse order and preserve suppressed failures
+  ---
+  duration_ms: 0.8578
+  type: 'test'
+  ...
+# Subtest: resource helpers attach close failures to the primary error and rethrow
+ok 376 - resource helpers attach close failures to the primary error and rethrow
+  ---
+  duration_ms: 0.2227
+  type: 'test'
+  ...
+# Subtest: RuleTables keeps project-owned enum and exception boundaries
+ok 377 - RuleTables keeps project-owned enum and exception boundaries
+  ---
+  duration_ms: 1.1575
+  type: 'test'
+  ...
+# Subtest: javaStringLength normalizes jree and native string representations
+ok 378 - javaStringLength normalizes jree and native string representations
+  ---
+  duration_ms: 0.9719
+  type: 'test'
+  ...
+# Subtest: native constructor identity preserves exact class checks
+ok 379 - native constructor identity preserves exact class checks
+  ---
+  duration_ms: 0.0995
+  type: 'test'
+  ...
+# Subtest: runtime RuntimeLong boundaries reject unsafe numbers before arithmetic
+ok 380 - runtime RuntimeLong boundaries reject unsafe numbers before arithmetic
+  ---
+  duration_ms: 0.3031
+  type: 'test'
+  ...
+# Subtest: javaStringValue applies Java toString before JS interpolation
+ok 381 - javaStringValue applies Java toString before JS interpolation
+  ---
+  duration_ms: 0.0484
+  type: 'test'
+  ...
+# Subtest: Java string equality and hashing use exact UTF-16 code units
+ok 382 - Java string equality and hashing use exact UTF-16 code units
+  ---
+  duration_ms: 0.0835
+  type: 'test'
+  ...
+# Subtest: jree Double compatibility preserves boxed numeric operations
+ok 383 - jree Double compatibility preserves boxed numeric operations
+  ---
+  duration_ms: 0.0918
+  type: 'test'
+  ...
+# Subtest: identity hash compatibility is stable and distinguishes object identity
+ok 384 - identity hash compatibility is stable and distinguishes object identity
+  ---
+  duration_ms: 0.0542
+  type: 'test'
+  ...
+# Subtest: missing jree exception compatibility preserves Java inheritance
+ok 385 - missing jree exception compatibility preserves Java inheritance
+  ---
+  duration_ms: 0.1488
+  type: 'test'
+  ...
+# Subtest: native object class identity does not require a legacy FQN marker
+ok 386 - native object class identity does not require a legacy FQN marker
+  ---
+  duration_ms: 0.5189
+  type: 'test'
+  ...
+# Subtest: shell starts without loader or jree deprecation warnings
+ok 387 - shell starts without loader or jree deprecation warnings
+  ---
+  duration_ms: 1513.679
+  type: 'test'
+  ...
+# Subtest: shell reads an external config in the host adapter without warnings
+ok 388 - shell reads an external config in the host adapter without warnings
+  ---
+  duration_ms: 1573.3149
+  type: 'test'
+  ...
+# Subtest: Sentence normalization keeps array copying project-owned
+ok 389 - Sentence normalization keeps array copying project-owned
+  ---
+  duration_ms: 0.759
+  type: 'test'
+  ...
+# Subtest: Sentence keeps exception construction inside project boundaries
+ok 390 - Sentence keeps exception construction inside project boundaries
+  ---
+  duration_ms: 0.8266
+  type: 'test'
+  ...
+# Subtest: serial parameterized runner continues after a case failure
+ok 391 - serial parameterized runner continues after a case failure
+  ---
+  duration_ms: 0.8982
+  type: 'test'
+  ...
+# Subtest: src/language/SetExt.ts uses project-owned Java argument exceptions
+ok 392 - src/language/SetExt.ts uses project-owned Java argument exceptions
+  ---
+  duration_ms: 0.6805
+  type: 'test'
+  ...
+# Subtest: src/language/SetInt.ts uses project-owned Java argument exceptions
+ok 393 - src/language/SetInt.ts uses project-owned Java argument exceptions
+  ---
+  duration_ms: 0.2573
+  type: 'test'
+  ...
+# Subtest: SetExt and SetInt accept native or explicitly convertible arrays
+ok 394 - SetExt and SetInt accept native or explicitly convertible arrays
+  ---
+  duration_ms: 0.8782
+  type: 'test'
+  ...
+# Subtest: set operator classes avoid unused direct jree imports
+ok 395 - set operator classes avoid unused direct jree imports
+  ---
+  duration_ms: 1.0336
+  type: 'test'
+  ...
+# Subtest: SetTensional uses the project-owned Java state exception
+ok 396 - SetTensional uses the project-owned Java state exception
+  ---
+  duration_ms: 0.7933
+  type: 'test'
+  ...
+# Subtest: SetTensional exposes native strings without Java text types
+ok 397 - SetTensional exposes native strings without Java text types
+  ---
+  duration_ms: 0.9378
+  type: 'test'
+  ...
+# Subtest: SetTensional builds names through the project string boundary
+ok 398 - SetTensional builds names through the project string boundary
+  ---
+  duration_ms: 0.6895
+  type: 'test'
+  ...
+# Subtest: Shell keeps the Java plain-class boundary and ReasonerScheduler remains local
+ok 399 - Shell keeps the Java plain-class boundary and ReasonerScheduler remains local
+  ---
+  duration_ms: 0.576
+  type: 'test'
+  ...
+# Subtest: shell parses the Java-like interactive control commands
+ok 400 - shell parses the Java-like interactive control commands
+  ---
+  duration_ms: 0.9792
+  type: 'test'
+  ...
+# Subtest: shell rejects invalid automatic cycle counts
+ok 401 - shell rejects invalid automatic cycle counts
+  ---
+  duration_ms: 0.2419
+  type: 'test'
+  ...
+# Subtest: Node stdin adapter stays independent from the jree InputStream runtime
+ok 402 - Node stdin adapter stays independent from the jree InputStream runtime
+  ---
+  duration_ms: 0.8079
+  type: 'test'
+  ...
+# Subtest: Node stdin adapter exposes queued bytes through Java InputStream
+ok 403 - Node stdin adapter exposes queued bytes through Java InputStream
+  ---
+  duration_ms: 0.5596
+  type: 'test'
+  ...
+# Subtest: Node stdin adapter feeds the Java line reader through the narrow host boundary
+ok 404 - Node stdin adapter feeds the Java line reader through the narrow host boundary
+  ---
+  duration_ms: 0.3534
+  type: 'test'
+  ...
+# Subtest: Shell core has no Node, process, or Java namespace dependency
+ok 405 - Shell core has no Node, process, or Java namespace dependency
+  ---
+  duration_ms: 0.8738
+  type: 'test'
+  ...
+# Subtest: Shell parses text into platform-neutral commands
+ok 406 - Shell parses text into platform-neutral commands
+  ---
+  duration_ms: 0.6202
+  type: 'test'
+  ...
+# Subtest: Shell executes Narsese and controls using injected line output
+ok 407 - Shell executes Narsese and controls using injected line output
+  ---
+  duration_ms: 77.2128
+  type: 'test'
+  ...
+# Subtest: Shell requires host file capability only for file input
+ok 408 - Shell requires host file capability only for file input
+  ---
+  duration_ms: 67.5568
+  type: 'test'
+  ...
+# Subtest: Similarity, Disjunction, and Negation avoid direct jree argument exceptions
+ok 409 - Similarity, Disjunction, and Negation avoid direct jree argument exceptions
+  ---
+  duration_ms: 0.9228
+  type: 'test'
+  ...
+# Subtest: Similarity preserves project-owned argument exception identity
+ok 410 - Similarity preserves project-owned argument exception identity
+  ---
+  duration_ms: 0.6165
+  type: 'test'
+  ...
+# Subtest: Disjunction preserves project-owned argument exception identity
+ok 411 - Disjunction preserves project-owned argument exception identity
+  ---
+  duration_ms: 0.3074
+  type: 'test'
+  ...
+# Subtest: Negation preserves project-owned argument exception identity
+ok 412 - Negation preserves project-owned argument exception identity
+  ---
+  duration_ms: 0.1957
+  type: 'test'
+  ...
+# Subtest: checkpoint recovery stays consistent beyond 200 reasoning cycles
+ok 413 - checkpoint recovery stays consistent beyond 200 reasoning cycles
+  ---
+  duration_ms: 1107.5264
+  type: 'test'
+  ...
+# Subtest: snapshot experiment rejects an endpoint checkpoint
+ok 414 - snapshot experiment rejects an endpoint checkpoint
+  ---
+  duration_ms: 0.4446
+  type: 'test'
+  ...
+# Subtest: snapshot experiment preserves checkpoint manifests for process recovery
+ok 415 - snapshot experiment preserves checkpoint manifests for process recovery
+  ---
+  duration_ms: 510.6988
+  type: 'test'
+  ...
+# Subtest: a fresh recovery entry point matches the zero-run tail and final state
+ok 416 - a fresh recovery entry point matches the zero-run tail and final state
+  ---
+  duration_ms: 643.003
+  type: 'test'
+  ...
+# Subtest: stage digest parser requires the summary contract
+ok 417 - stage digest parser requires the summary contract
+  ---
+  duration_ms: 0.7837
+  type: 'test'
+  ...
+# Subtest: stage digest comparison returns equality for matching windows
+ok 418 - stage digest comparison returns equality for matching windows
+  ---
+  duration_ms: 0.5232
+  type: 'test'
+  ...
+# Subtest: stage digest comparison reports the first differing stage and field
+ok 419 - stage digest comparison reports the first differing stage and field
+  ---
+  duration_ms: 0.0943
+  type: 'test'
+  ...
+# Subtest: stage digest comparison distinguishes missing windows from equal empty data
+ok 420 - stage digest comparison distinguishes missing windows from equal empty data
+  ---
+  duration_ms: 0.0689
+  type: 'test'
+  ...
+# Subtest: stage digest comparison does not ignore pre-cycle input differences
+ok 421 - stage digest comparison does not ignore pre-cycle input differences
+  ---
+  duration_ms: 0.1119
+  type: 'test'
+  ...
+# Subtest: stage digest prefix comparison separates matched windows from unfinished execution
+ok 422 - stage digest prefix comparison separates matched windows from unfinished execution
+  ---
+  duration_ms: 0.1106
+  type: 'test'
+  ...
+# Subtest: Stamp keeps class identity and clone without a jree JavaObject shell
+ok 423 - Stamp keeps class identity and clone without a jree JavaObject shell
+  ---
+  duration_ms: 0.6369
+  type: 'test'
+  ...
+# Subtest: Stamp.baseOverlap uses BaseEntry value equality, not object identity
+ok 424 - Stamp.baseOverlap uses BaseEntry value equality, not object identity
+  ---
+  duration_ms: 0.1613
+  type: 'test'
+  ...
+# Subtest: Stamp.evidenceIsCyclic detects equal BaseEntry values in one evidential base
+ok 425 - Stamp.evidenceIsCyclic detects equal BaseEntry values in one evidential base
+  ---
+  duration_ms: 0.1196
+  type: 'test'
+  ...
+# Subtest: ProcessGoal evidence subset keeps Java BaseEntry equality
+ok 426 - ProcessGoal evidence subset keeps Java BaseEntry equality
+  ---
+  duration_ms: 1025.6879
+  type: 'test'
+  ...
+# Subtest: Stamp keeps project-owned exception and collection boundaries
+ok 427 - Stamp keeps project-owned exception and collection boundaries
+  ---
+  duration_ms: 0.9583
+  type: 'test'
+  ...
+# Subtest: Stamp occurrence text keeps Java String output without StringBuilder construction
+ok 428 - Stamp occurrence text keeps Java String output without StringBuilder construction
+  ---
+  duration_ms: 0.6076
+  type: 'test'
+  ...
+# Subtest: Stamp appendOcurrenceTime preserves the caller builder and append contract
+ok 429 - Stamp appendOcurrenceTime preserves the caller builder and append contract
+  ---
+  duration_ms: 0.1204
+  type: 'test'
+  ...
+# Subtest: Stamp name is a cached Java String and invalidates after occurrence changes
+ok 430 - Stamp name is a cached Java String and invalidates after occurrence changes
+  ---
+  duration_ms: 0.1916
+  type: 'test'
+  ...
+# Subtest: Node strings are normalized at Narsese input boundaries
+ok 431 - Node strings are normalized at Narsese input boundaries
+  ---
+  duration_ms: 73.7949
+  type: 'test'
+  ...
+# Subtest: Narsese compound parsing preserves native argument order
+ok 432 - Narsese compound parsing preserves native argument order
+  ---
+  duration_ms: 67.5794
+  type: 'test'
+  ...
+# Subtest: Narsese functional operation parsing consumes native operator prefix text
+ok 433 - Narsese functional operation parsing consumes native operator prefix text
+  ---
+  duration_ms: 67.356
+  type: 'test'
+  ...
+# Subtest: StructuralRules sequence array copies preserve Java component order
+ok 434 - StructuralRules sequence array copies preserve Java component order
+  ---
+  duration_ms: 610.5421
+  type: 'test'
+  ...
+# Subtest: StructuralRules no longer imports jree for array copies
+ok 435 - StructuralRules no longer imports jree for array copies
+  ---
+  duration_ms: 0.5879
+  type: 'test'
+  ...
+# Subtest: SyllogisticRules uses project-owned argument exceptions
+ok 436 - SyllogisticRules uses project-owned argument exceptions
+  ---
+  duration_ms: 0.7937
+  type: 'test'
+  ...
+# Subtest: Symbols and Narsese use project-owned argument exceptions
+ok 437 - Symbols and Narsese use project-owned argument exceptions
+  ---
+  duration_ms: 1.3018
+  type: 'test'
+  ...
+# Subtest: Symbols keeps the NativeOperator contract without a direct jree import
+ok 438 - Symbols keeps the NativeOperator contract without a direct jree import
+  ---
+  duration_ms: 0.2779
+  type: 'test'
+  ...
+# Subtest: System operator executes its Java-compatible shell contract
+ok 439 - System operator executes its Java-compatible shell contract
+  ---
+  duration_ms: 37.5456
+  type: 'test'
+  ...
+# Subtest: System operator exposes the Java range term
+ok 440 - System operator exposes the Java range term
+  ---
+  duration_ms: 0.131
+  type: 'test'
+  ...
+# Subtest: System operator reports a missing host capability explicitly
+ok 441 - System operator reports a missing host capability explicitly
+  ---
+  duration_ms: 0.3443
+  type: 'test'
+  ...
+# Subtest: System operator preserves Java empty-result behavior when the host command fails
+ok 442 - System operator preserves Java empty-result behavior when the host command fails
+  ---
+  duration_ms: 0.0835
+  type: 'test'
+  ...
+# Subtest: Task keeps project-owned enum and string boundaries
+ok 443 - Task keeps project-owned enum and string boundaries
+  ---
+  duration_ms: 0.8864
+  type: 'test'
+  ...
+# Subtest: Memory refreshes an input Sentence hash after assigning occurrence
+ok 444 - Memory refreshes an input Sentence hash after assigning occurrence
+  ---
+  duration_ms: 73.3704
+  type: 'test'
+  ...
+# Subtest: Task Bag merges Java-equal derived sentences by TruthValue hash
+ok 445 - Task Bag merges Java-equal derived sentences by TruthValue hash
+  ---
+  duration_ms: 203.3292
+  type: 'test'
+  ...
+# Subtest: TaskLink.Recording keeps its Java data contract without a jree object shell
+ok 446 - TaskLink.Recording keeps its Java data contract without a jree object shell
+  ---
+  duration_ms: 0.4043
+  type: 'test'
+  ...
+# Subtest: TemporalInferenceControl uses project host boundaries
+ok 447 - TemporalInferenceControl uses project host boundaries
+  ---
+  duration_ms: 0.7004
+  type: 'test'
+  ...
+# Subtest: TemporalInferenceControl filters equal Task values in local attempt set
+ok 448 - TemporalInferenceControl filters equal Task values in local attempt set
+  ---
+  duration_ms: 1.789
+  type: 'test'
+  ...
+# Subtest: TemporalRules uses project exception boundaries
+ok 449 - TemporalRules uses project exception boundaries
+  ---
+  duration_ms: 1.0119
+  type: 'test'
+  ...
+# Subtest: Term does not construct jree argument/state exceptions directly
+ok 450 - Term does not construct jree argument/state exceptions directly
+  ---
+  duration_ms: 0.7098
+  type: 'test'
+  ...
+# Subtest: Term invalid overloads preserve project exception identity
+ok 451 - Term invalid overloads preserve project exception identity
+  ---
+  duration_ms: 0.3161
+  type: 'test'
+  ...
+# Subtest: TermLink prefix preserves Java type, index order, and hexadecimal formatting
+ok 452 - TermLink prefix preserves Java type, index order, and hexadecimal formatting
+  ---
+  duration_ms: 0.6225
+  type: 'test'
+  ...
+# Subtest: Terms uses project-owned argument and state exceptions
+ok 453 - Terms uses project-owned argument and state exceptions
+  ---
+  duration_ms: 0.9356
+  type: 'test'
+  ...
+# Subtest: Terms invalid overloads preserve project exception identity
+ok 454 - Terms invalid overloads preserve project exception identity
+  ---
+  duration_ms: 375.051
+  type: 'test'
+  ...
+# Subtest: Texts.n2 formats values with two decimals and rounding
+ok 455 - Texts.n2 formats values with two decimals and rounding
+  ---
+  duration_ms: 0.4766
+  type: 'test'
+  ...
+# Subtest: Texts.n2 rejects out-of-range values
+ok 456 - Texts.n2 rejects out-of-range values
+  ---
+  duration_ms: 0.2394
+  type: 'test'
+  ...
+# Subtest: Texts.n4 and n1 format fixed decimals
+ok 457 - Texts.n4 and n1 format fixed decimals
+  ---
+  duration_ms: 0.1152
+  type: 'test'
+  ...
+# Subtest: Texts.yarn concatenates non-null components
+ok 458 - Texts.yarn concatenates non-null components
+  ---
+  duration_ms: 0.0755
+  type: 'test'
+  ...
+# Subtest: Texts.compareTo matches lexicographic ordering
+ok 459 - Texts.compareTo matches lexicographic ordering
+  ---
+  duration_ms: 0.0936
+  type: 'test'
+  ...
+# Subtest: ReasonerScheduler uses native scheduling and preserves the translated call surface
+ok 460 - ReasonerScheduler uses native scheduling and preserves the translated call surface
+  ---
+  duration_ms: 1.6296
+  type: 'test'
+  ...
+# Subtest: ReasonerScheduler keeps synchronous sleep and native interruption errors
+ok 461 - ReasonerScheduler keeps synchronous sleep and native interruption errors
+  ---
+  duration_ms: 14.1423
+  type: 'test'
+  ...
+# Subtest: commutative conjunction follows Java term ordering for toothbrush goal
+ok 462 - commutative conjunction follows Java term ordering for toothbrush goal
+  ---
+  duration_ms: 1191.7924
+  type: 'test'
+  ...
+# Subtest: scoped variable ordering uses Java code-unit order for commutative intersections
+ok 463 - scoped variable ordering uses Java code-unit order for commutative intersections
+  ---
+  duration_ms: 70.2791
+  type: 'test'
+  ...
+# Subtest: default NAR loads the internal experience plugin used by Java toothbrush
+ok 464 - default NAR loads the internal experience plugin used by Java toothbrush
+  ---
+  duration_ms: 70.7844
+  type: 'test'
+  ...
+# Subtest: tensional sets initialize Java-compatible compound complexity
+ok 465 - tensional sets initialize Java-compatible compound complexity
+  ---
+  duration_ms: 19.7402
+  type: 'test'
+  ...
+# Subtest: budget fields narrow at Java FloatNumber write boundaries
+ok 466 - budget fields narrow at Java FloatNumber write boundaries
+  ---
+  duration_ms: 1.3398
+  type: 'test'
+  ...
+# Subtest: novel-task Bag preserves Java FloatNumber level selection at the 0.8 boundary
+ok 467 - novel-task Bag preserves Java FloatNumber level selection at the 0.8 boundary
+  ---
+  duration_ms: 68.7238
+  type: 'test'
+  ...
+# Subtest: utility FloatNumber accumulators narrow at each Java assignment boundary
+ok 468 - utility FloatNumber accumulators narrow at each Java assignment boundary
+  ---
+  duration_ms: 0.7833
+  type: 'test'
+  ...
+# Subtest: forgetting narrows Java FloatNumber parameters before the exponent boundary
+ok 469 - forgetting narrows Java FloatNumber parameters before the exponent boundary
+  ---
+  duration_ms: 1.1596
+  type: 'test'
+  ...
+# Subtest: derived task applies Java FloatNumber leak operands before multiplication
+ok 470 - derived task applies Java FloatNumber leak operands before multiplication
+  ---
+  duration_ms: 68.1116
+  type: 'test'
+  ...
+# Subtest: mental operation feedback does not create a Java operation frame
+ok 471 - mental operation feedback does not create a Java operation frame
+  ---
+  duration_ms: 68.3167
+  type: 'test'
+  ...
+# Subtest: sentence rendering preserves Java conceptual decimal visual indices
+ok 472 - sentence rendering preserves Java conceptual decimal visual indices
+  ---
+  duration_ms: 70.4188
+  type: 'test'
+  ...
+# Subtest: compound-condition TermLink overload preserves Java's leading condition index
+ok 473 - compound-condition TermLink overload preserves Java's leading condition index
+  ---
+  duration_ms: 68.9804
+  type: 'test'
+  ...
+# Subtest: conditional operation unification substitutes the grounded toothbrush term
+ok 474 - conditional operation unification substitutes the grounded toothbrush term
+  ---
+  duration_ms: 68.7748
+  type: 'test'
+  ...
+# Subtest: grounded toothbrush operation produces Java-style execution feedback
+ok 475 - grounded toothbrush operation produces Java-style execution feedback
+  ---
+  duration_ms: 68.0934
+  type: 'test'
+  ...
+# Subtest: TruthFunctions keeps project-owned enum and exception boundaries
+ok 476 - TruthFunctions keeps project-owned enum and exception boundaries
+  ---
+  duration_ms: 1.1164
+  type: 'test'
+  ...
+# Subtest: TruthValue constructor assigns fields and keeps Parameters reference
+ok 477 - TruthValue constructor assigns fields and keeps Parameters reference
+  ---
+  duration_ms: 0.6771
+  type: 'test'
+  ...
+# Subtest: TruthValue factory methods map to expected defaults
+ok 478 - TruthValue factory methods map to expected defaults
+  ---
+  duration_ms: 0.1283
+  type: 'test'
+  ...
+# Subtest: TruthValue clamps confidence based on TRUTH_EPSILON
+ok 479 - TruthValue clamps confidence based on TRUTH_EPSILON
+  ---
+  duration_ms: 0.0551
+  type: 'test'
+  ...
+# Subtest: TruthValue expectation and negativity follow formula
+ok 480 - TruthValue expectation and negativity follow formula
+  ---
+  duration_ms: 0.0882
+  type: 'test'
+  ...
+# Subtest: TruthValue string key is stable and usable in maps
+ok 481 - TruthValue string key is stable and usable in maps
+  ---
+  duration_ms: 0.0794
+  type: 'test'
+  ...
+# Subtest: TruthValue hashCode preserves Java FloatNumber/DoubleNumber operand boundaries
+ok 482 - TruthValue hashCode preserves Java FloatNumber/DoubleNumber operand boundaries
+  ---
+  duration_ms: 0.0838
+  type: 'test'
+  ...
+# Subtest: TruthValue equals uses Java epsilon and ignores analytic metadata
+ok 483 - TruthValue equals uses Java epsilon and ignores analytic metadata
+  ---
+  duration_ms: 0.1042
+  type: 'test'
+  ...
+# Subtest: TruthValue direct frequency writes preserve Java FloatNumber storage
+ok 484 - TruthValue direct frequency writes preserve Java FloatNumber storage
+  ---
+  duration_ms: 0.0468
+  type: 'test'
+  ...
+# Subtest: TruthValue expectation difference is a Java FloatNumber result
+ok 485 - TruthValue expectation difference is a Java FloatNumber result
+  ---
+  duration_ms: 0.1637
+  type: 'test'
+  ...
+# Subtest: TruthValue word terms use the native Term factory and preserve Java words
+ok 486 - TruthValue word terms use the native Term factory and preserve Java words
+  ---
+  duration_ms: 0.3095
+  type: 'test'
+  ...
+# Subtest: TS-only process policy recognizes direct Java and shell launches
+ok 487 - TS-only process policy recognizes direct Java and shell launches
+  ---
+  duration_ms: 0.8421
+  type: 'test'
+  ...
+# Subtest: TS-only preloader rejects Java launch without invoking a real Java binary
+ok 488 - TS-only preloader rejects Java launch without invoking a real Java binary
+  ---
+  duration_ms: 67.7922
+  type: 'test'
+  ...
+# Subtest: five responsibility clusters are stable and expose two to five sentinel NAL files
+ok 489 - five responsibility clusters are stable and expose two to five sentinel NAL files
+  ---
+  duration_ms: 0.7831
+  type: 'test'
+  ...
+# Subtest: every current production TypeScript file belongs to exactly one responsibility cluster
+ok 490 - every current production TypeScript file belongs to exactly one responsibility cluster
+  ---
+  duration_ms: 7.5946
+  type: 'test'
+  ...
+# Subtest: a risk slice selects cluster sentinels and never creates an M1-minus command
+ok 491 - a risk slice selects cluster sentinels and never creates an M1-minus command
+  ---
+  duration_ms: 0.4972
+  type: 'test'
+  ...
+# Subtest: a cluster close creates one M1-minus command and omits the redundant sentinel run
+ok 492 - a cluster close creates one M1-minus command and omits the redundant sentinel run
+  ---
+  duration_ms: 0.1322
+  type: 'test'
+  ...
+# Subtest: one explicit owner may carry at most one small supporting cluster
+ok 493 - one explicit owner may carry at most one small supporting cluster
+  ---
+  duration_ms: 0.2732
+  type: 'test'
+  ...
+# Subtest: unknown, untouched and missing-evidence plans fail closed
+ok 494 - unknown, untouched and missing-evidence plans fail closed
+  ---
+  duration_ms: 0.1954
+  type: 'test'
+  ...
+# Subtest: stage acceptance requests live Java, full M1 and strict markerless evidence
+ok 495 - stage acceptance requests live Java, full M1 and strict markerless evidence
+  ---
+  duration_ms: 0.0863
+  type: 'test'
+  ...
+# Subtest: stage M1-prime explicitly replaces only the approved RuntimeLong-cycle contract
+ok 496 - stage M1-prime explicitly replaces only the approved RuntimeLong-cycle contract
+  ---
+  duration_ms: 0.0647
+  type: 'test'
+  ...
+# Subtest: Variable uses project-owned Java exception classes
+ok 497 - Variable uses project-owned Java exception classes
+  ---
+  duration_ms: 0.6609
+  type: 'test'
+  ...
+# Subtest: Variable constructors do not wrap native names with jree String
+ok 498 - Variable constructors do not wrap native names with jree String
+  ---
+  duration_ms: 0.6568
+  type: 'test'
+  ...
+# Subtest: Variables uses project-owned Java exception classes
+ok 499 - Variables uses project-owned Java exception classes
+  ---
+  duration_ms: 0.7254
+  type: 'test'
+  ...
+# Subtest: compound hasVar(type) preserves Java variable-kind dispatch
+ok 500 - compound hasVar(type) preserves Java variable-kind dispatch
+  ---
+  duration_ms: 1228.9149
+  type: 'test'
+  ...
+# Subtest: 变量统一会替换操作参数并保留 Operation 运行时类型
+ok 501 - 变量统一会替换操作参数并保留 Operation 运行时类型
+  ---
+  duration_ms: 831.4802
+  type: 'test'
+  ...
+# Subtest: common variable propagation matches Java for commutative unification
+ok 502 - common variable propagation matches Java for commutative unification
+  ---
+  duration_ms: 439.6371
+  type: 'test'
+  ...
+# Subtest: commutative unification does not reuse one matched operand index
+ok 503 - commutative unification does not reuse one matched operand index
+  ---
+  duration_ms: 69.0622
+  type: 'test'
+  ...
+# Subtest: Variables initializes the Java Map pair with native ordered maps
+ok 504 - Variables initializes the Java Map pair with native ordered maps
+  ---
+  duration_ms: 3.5035
+  type: 'test'
+  ...
+# Subtest: default NAR registers VisionChannel and maps decimal coordinates
+ok 505 - default NAR registers VisionChannel and maps decimal coordinates
+  ---
+  duration_ms: 1238.7294
+  type: 'test'
+  ...
+# Subtest: VisionChannel keeps prototype order in a native array
+ok 506 - VisionChannel keeps prototype order in a native array
+  ---
+  duration_ms: 70.1186
+  type: 'test'
+  ...
+# Subtest: VisualSpace keeps the Java plain-class boundary and image snapshot contract
+ok 507 - VisualSpace keeps the Java plain-class boundary and image snapshot contract
+  ---
+  duration_ms: 0.852
+  type: 'test'
+  ...
+# Subtest: VisualSpace keeps math and operator text on project boundaries
+ok 508 - VisualSpace keeps math and operator text on project boundaries
+  ---
+  duration_ms: 0.5006
+  type: 'test'
+  ...
+1..508
+# tests 508
+# suites 0
+# pass 506
+# fail 0
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 135795.2887

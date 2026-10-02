@@ -292,8 +292,11 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
             return null as unknown as K;
         }
 
-        for (const entry of this.nameTable.entrySet()) {
-            const existingKey = entry.getKey();
+        // The records are the same insertion-ordered map entries. Reading them
+        // directly avoids allocating a live entry wrapper for every miss while
+        // keeping the full scan needed for mutated/restored keys.
+        for (const record of this.nameTable.recordsForView()) {
+            const existingKey = record.key;
             if (runtimeValueEquals(existingKey, key)) {
                 return existingKey;
             }
@@ -403,8 +406,8 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
 
     private rebuildEqualityBucket(hashCode: number): K[] {
         const rebuilt: K[] = [];
-        for (const entry of this.nameTable.entrySet()) {
-            const existingKey = entry.getKey();
+        for (const record of this.nameTable.recordsForView()) {
+            const existingKey = record.key;
             if (this.keyHashCode(existingKey) === hashCode) rebuilt.push(existingKey);
         }
         if (rebuilt.length === 0) {

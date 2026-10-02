@@ -39,3 +39,7 @@ transitions:
 - [ ] 发布产物、许可证/来源、旧 release 资产、公开路径与文档可供无上下文用户检查。
 
 当前第一候选和原始数据见 [性能探查](../../docs/probes/20261002-performance-next-batch.md)；是否接受须待完整门禁。
+
+## 第一批：Bag 全表读取
+
+`Bag.findEquivalentKey` 的恢复态扫描保留 Java 相等方向和原有回退路径，读取从 `NativeMap.entrySet()` 的逐项包装改为 `recordsForView()` 的只读原始记录；同一改动覆盖 `rebuildEqualityBucket`。两轮同配置 A/B 的 RPS 增幅为 25.3% 和 24.0%；现有 Bag/NativeMap 合同 28/28、TS-only M2 506/508（2 skip）、Java M2 508/508、typecheck、build、dist API 与静态审计通过。仍须在不可变提交上完成 M1′、strict markerless 和 Demo 浏览器验收，才可接受为本规格的性能轮次。

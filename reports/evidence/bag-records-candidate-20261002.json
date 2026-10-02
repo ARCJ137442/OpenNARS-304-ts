@@ -1,0 +1,59 @@
+{
+  "schema": "opennars-304-ts/demo-workload-benchmark/v1",
+  "git_commit": "ce448b6436f1a6a2eca41cf4cb78ed7c339b7aeb",
+  "node": "v22.17.0",
+  "workload": "CartPole sensor-bin + recurring composite goal + upright feedback; one Nar instance; no babble/action",
+  "configuration": {
+    "cycles": 5,
+    "ticks": 20,
+    "reportEvery": 10,
+    "output": "reports/evidence/bag-records-candidate-20261002.json"
+  },
+  "aggregate": {
+    "ticks": 20,
+    "cycles": 100,
+    "elapsed_ms": 20844.77,
+    "median_step_ms": 1035.354,
+    "p95_step_ms": 2231.404,
+    "rps": 4.797,
+    "peak_rss_bytes": 288911360
+  },
+  "segments": [
+    {
+      "start_tick": 1,
+      "end_tick": 10,
+      "ticks": 10,
+      "duration_ms": 4412.88,
+      "tps": 2.266,
+      "rps": 11.331,
+      "median_step_ms": 289.932,
+      "p95_step_ms": 1330.302,
+      "concepts": 1002,
+      "concepts_added": 1002,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 30,
+        "recent_operations": 0
+      },
+      "rss_bytes": 288911360
+    },
+    {
+      "start_tick": 11,
+      "end_tick": 20,
+      "ticks": 10,
+      "duration_ms": 16432.48,
+      "tps": 0.609,
+      "rps": 3.043,
+      "median_step_ms": 1489.941,
+      "p95_step_ms": 2780.286,
+      "concepts": 2296,
+      "concepts_added": 1294,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 30,
+        "recent_operations": 0
+      },
+      "rss_bytes": 253878272
+    }
+  ]
+}
