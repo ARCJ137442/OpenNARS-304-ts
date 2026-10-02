@@ -459,6 +459,13 @@ The JSONL SHA-256 is
 `8FDAD01DBDAA2D0C257EB58B2D4D12A655E867195BAEB04AE2F8943C18FD78FD`.
 The empty historical `Term.ts.codex-corrupt` placeholder remains untracked.
 
+### Rejected candidate: same-constructor value equality shortcut
+
+Avoiding the second equality receiver call when both values shared a
+constructor regressed the same short demo workload to `2.333 RPS` (versus the
+accepted `2.593 RPS`). The candidate was restored; cross-type receiver
+fallback remains required by the NativeMap/Bag contracts.
+
 ## Remaining helper-name cleanup
 
 The production local helper names `javaArrayToString`,
