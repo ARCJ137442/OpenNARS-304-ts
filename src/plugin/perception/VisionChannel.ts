@@ -134,7 +134,7 @@ export class VisionChannel extends SensoryChannel {
         if (this.isEternal) {
             V = SetExt.make(new Term(asText(this.subj)));
         } else {
-            V = SetExt.make(new Term(asText(this.subj + this.termid)));
+            V = SetExt.make(new Term(asText(`${this.subj}${this.termid}`)));
         }
         // the visual space has to be a copy.
         let cpy: Float64Array[] = VisionChannel.emptyInputs(this.height, this.width);

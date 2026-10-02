@@ -65,7 +65,7 @@ export class AttentionMetric extends JavaObject {
                     scoreSum += AttentionMetric.runMetricTest(paths[0] as java.lang.String);
                 }
                 let averageScore: DoubleNumber = scoreSum / AttentionMetric.numberOfSamples;
-                java.lang.System.out.println(iTest.getKey() + "  avg score = " + averageScore);
+                java.lang.System.out.println(`${javaStringValue(iTest.getKey())}  avg score = ${averageScore}`);
 
             }
         }
@@ -121,7 +121,7 @@ export class AttentionMetric extends JavaObject {
                 + (firstWeight * firstTimeWeight) * weightOfFirstSolution;
 
             if (true)
-                java.lang.System.out.println("score of solution " + iEntry.getKey() + " = " + scoreOfThisEntry);
+                java.lang.System.out.println(`score of solution ${javaStringValue(iEntry.getKey())} = ${scoreOfThisEntry}`);
 
             score += scoreOfThisEntry;
         }
@@ -198,7 +198,7 @@ export class AttentionMetric extends JavaObject {
 
         let scoreOfThisTest: DoubleNumber = AttentionMetric.calcScore(execOrQaAnswersByTime, (n as Nar).narParameters);
 
-        java.lang.System.out.println("score of " + name + " = " + scoreOfThisTest);
+        java.lang.System.out.println(`score of ${javaStringValue(name)} = ${scoreOfThisTest}`);
 
         // IntNumber here = 5;
 

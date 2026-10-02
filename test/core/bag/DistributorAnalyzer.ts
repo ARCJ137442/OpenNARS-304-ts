@@ -35,7 +35,7 @@ export class DistributorAnalyzer extends JavaObject {
             p += pd;
 
             probabilityActiveAdjusted.add(p);
-            java.lang.System.out.println((i / (levels as DoubleNumber)) + "\t" + p);
+            java.lang.System.out.println(`${i / (levels as DoubleNumber)}\t${p}`);
         }
         // System.out.println(probabilityActiveAdjusted);
 

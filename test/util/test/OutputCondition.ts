@@ -152,12 +152,13 @@ export abstract class OutputCondition extends OutputHandler {
     }
 
     public toString(): java.lang.String {
-        return new java.lang.String(this.getClass().getSimpleName() + " " + (this.succeeded ? "OK: " + this.getTrueReasons() : this.getFalseReason()));
+        const status = this.succeeded ? `OK: ${String(this.getTrueReasons())}` : String(this.getFalseReason());
+        return new java.lang.String(`${this.getClass().getSimpleName()} ${status}`);
     }
 
     public getTrueReasons(): java.util.List<unknown> {
         if (!this.isTrue())
-            throw new java.lang.IllegalStateException(this + " is not true so has no true reasons");
+            throw new java.lang.IllegalStateException(`${String(this)} is not true so has no true reasons`);
         return new java.util.ArrayList<unknown>();
     }
 

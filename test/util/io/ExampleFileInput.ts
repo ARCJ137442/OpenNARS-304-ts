@@ -35,7 +35,7 @@ export class ExampleFileInput extends JavaObject {
     }
 
     public static get(id: java.lang.String): ExampleFileInput {
-        return new ExampleFileInput(ExampleFileInput.load(new java.lang.String("./nal/" + id + ".nal")));
+        return new ExampleFileInput(ExampleFileInput.load(new java.lang.String(`./nal/${javaStringValue(id)}.nal`)));
     }
 
     public enableConditions(n: Nar, similarResultsToSave: IntNumber): java.util.List<OutputCondition> {

@@ -30,7 +30,7 @@ export class NarNodeTest extends JavaObject {
             public event(event: ClassTokenLike, args: EventEmitter.EventPayload): void {
                 if (event === nar2.EventReceivedTask.class || event === IN.class) {
                     let task: Task = args[0] as Task;
-                    java.lang.System.out.println("received task event triggered in nar2: " + task);
+                    java.lang.System.out.println(`received task event triggered in nar2: ${String(task)}`);
                     /* synchronized (a) { */
                     NarNodeTest.a++;
                     /* } */

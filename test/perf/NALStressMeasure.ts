@@ -74,7 +74,7 @@ export class NALStressMeasure extends JavaObject {
             let examplePath: java.lang.String = o[0] as java.lang.String;
             totalTime += NALStressMeasure.perfNAL(n, examplePath, extraCycles, repeats, warmups, true);
         }
-        java.lang.System.out.println("\n\nTotal mean runtime (ms): " + totalTime);
+        java.lang.System.out.println(`\n\nTotal mean runtime (ms): ${totalTime}`);
     }
 
     public static main(args: java.lang.String[]): void {

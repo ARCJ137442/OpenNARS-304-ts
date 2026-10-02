@@ -272,4 +272,6 @@ export {
     throwResourceError as throwResourceError,
 } from "../../src/runtime/ResourceErrors.ts";
 export const S = (strings: TemplateStringsArray, ...values: unknown[]): NativeJavaString =>
-    new NativeJavaString(strings.reduce((result, text, index) => result + text + (values[index] ?? ""), ""));
+    new NativeJavaString(strings
+        .map((text, index) => index < values.length ? `${text}${String(values[index] ?? "")}` : text)
+        .join(""));

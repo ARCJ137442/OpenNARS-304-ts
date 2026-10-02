@@ -245,8 +245,9 @@ export class NALTest extends JavaObject {
             }
         }
 
-        java.lang.System.out.println(path + " score = " + score);
-        java.lang.System.out.println(path + " score with time = " + scoreWithTime);
+        const pathText = javaStringValue(path);
+        java.lang.System.out.println(`${pathText} score = ${score}`);
+        java.lang.System.out.println(`${pathText} score with time = ${scoreWithTime}`);
         NALTest.scoreSum += score; // accumulate score
         NALTest.scoreSumWithTime += scoreWithTime;
 
@@ -254,9 +255,9 @@ export class NALTest extends JavaObject {
         // (n.time() - lastSuccess) + " end=" + n.time());
 
         if ((!success && NALTest.showFail) || (success && NALTest.showSuccess)) {
-            java.lang.System.err.println('\n' + path + " @" + n.time());
+            java.lang.System.err.println(`\n${pathText} @${n.time()}`);
             for (let e of expects) {
-                java.lang.System.err.println("  " + e);
+                java.lang.System.err.println(`  ${String(e)}`);
             }
         }
 
@@ -278,14 +279,14 @@ export class NALTest extends JavaObject {
         java.lang.System.out.println("=======");
         java.lang.System.out.println("");
 
-        java.lang.System.out.println("score sum = " + NALTest.scoreSum);
-        java.lang.System.out.println("score sum with time = " + NALTest.scoreSumWithTime);
+        java.lang.System.out.println(`score sum = ${NALTest.scoreSum}`);
+        java.lang.System.out.println(`score sum with time = ${NALTest.scoreSumWithTime}`);
 
         java.lang.System.out.println("---");
 
         // average time and conf of best answers
-        java.lang.System.out.println("avg best time = " + (NALTest.timeSum / NALTest.samplesCnt));
-        java.lang.System.out.println("avg best conf = " + (NALTest.bestAnswerConfSum / NALTest.samplesCnt));
+        java.lang.System.out.println(`avg best time = ${NALTest.timeSum / NALTest.samplesCnt}`);
+        java.lang.System.out.println(`avg best conf = ${NALTest.bestAnswerConfSum / NALTest.samplesCnt}`);
     }
 
     public static main(args: java.lang.String[]): void {

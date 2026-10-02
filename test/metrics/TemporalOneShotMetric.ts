@@ -31,7 +31,7 @@ export class TemporalOneShotMetric extends AnswerHandler {
 
         let numberOfRandomEventsBeforeTest: IntNumber = 5;
         for (; numberOfRandomEventsBeforeTest < 30; numberOfRandomEventsBeforeTest++) {
-            java.lang.System.out.println("checking # of events=" + java.lang.Integer.toString(numberOfRandomEventsBeforeTest));
+            java.lang.System.out.println(`checking # of events=${numberOfRandomEventsBeforeTest}`);
 
             metric.numberOfRandomEventsBeforeTest = numberOfRandomEventsBeforeTest;
 
@@ -48,7 +48,7 @@ export class TemporalOneShotMetric extends AnswerHandler {
             }
         }
 
-        java.lang.System.out.println("metric of passed # events = " + java.lang.Integer.toString(numberOfRandomEventsBeforeTest - 1));
+        java.lang.System.out.println(`metric of passed # events = ${numberOfRandomEventsBeforeTest - 1}`);
 
         let debugMeHere: IntNumber = 5;
     }

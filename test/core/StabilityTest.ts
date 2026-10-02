@@ -107,16 +107,16 @@ export class StabilityTest extends JavaObject {
             let total: IntNumber = 0;
             for (let i: IntNumber = 0; i < 9; i++) {
                 let rate: FloatNumber = (levelTotals[i] > 0) ? (levelSuccess[i] as FloatNumber) / levelTotals[i] : 0;
-                let prefix: java.lang.String = new java.lang.String((i > 0) ? ("NAL" + i) : "Other");
+                let prefix: java.lang.String = new java.lang.String(i > 0 ? `NAL${i}` : "Other");
 
                 java.lang.System.out.println(
-                    prefix + ": " + (rate * 100.0) + "%  (" + levelSuccess[i] + "/" + levelTotals[i] + ")");
+                    `${javaStringValue(prefix)}: ${rate * 100.0}%  (${levelSuccess[i]}/${levelTotals[i]})`);
                 totalSucceeded += levelSuccess[i];
                 total += levelTotals[i];
             }
-            java.lang.System.out.println(totalSucceeded + " / " + total);
+            java.lang.System.out.println(`${totalSucceeded} / ${total}`);
 
-            java.lang.System.out.println("Score: " + totalScore);
+            java.lang.System.out.println(`Score: ${totalScore}`);
         }
         return totalScore;
     }
@@ -195,9 +195,9 @@ export class StabilityTest extends JavaObject {
         // (n.time() - lastSuccess) + " end=" + n.time());
 
         if ((!success && StabilityTest.showFail) || (success && StabilityTest.showSuccess)) {
-            java.lang.System.err.println('\n' + path + " @" + n.time());
+            java.lang.System.err.println(`\n${javaStringValue(path)} @${n.time()}`);
             for (let e of expects) {
-                java.lang.System.err.println("  " + e);
+                java.lang.System.err.println(`  ${String(e)}`);
             }
         }
 

@@ -64,7 +64,7 @@ export class NalTestMetrics extends JavaObject {
         NALTest.runTests(NALTest.class);
 
         let metric: DoubleNumber = NalTestMetrics.computeMetric(NALTest.scores);
-        java.lang.System.out.println("metric=" + JavaDoubleCompat.toString(metric));
+        java.lang.System.out.println(`metric=${JavaDoubleCompat.toString(metric)}`);
         let debugHere: IntNumber = 5;
     }
 }

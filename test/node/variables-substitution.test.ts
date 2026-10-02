@@ -9,7 +9,7 @@ test("变量统一会替换操作参数并保留 Operation 运行时类型", asy
     const { Symbols } = await import("../../src/io/Symbols.ts");
     const { Variables } = await import("../../src/language/Variables.ts");
 
-    const variable = String.fromCharCode(36) + "1";
+    const variable = `${String.fromCharCode(36)}1`;
     const operators = new Map([
         ["^lighter", new NullOperator(new java.lang.String("^lighter"))],
         ["^reshape", new NullOperator(new java.lang.String("^reshape"))],
