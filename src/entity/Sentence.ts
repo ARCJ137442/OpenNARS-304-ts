@@ -27,19 +27,6 @@ import { ReasonerInvariantError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 
-class SentenceStringBuilder {
-    private value = "";
-
-    public append(value: string): this {
-        this.value += value;
-        return this;
-    }
-
-    public toString(): string {
-        return this.value;
-    }
-}
-
 const formatTermIndices = (indices: Int32Array): string => {
     const coordinates = Array.from({ length: 4 }, (_, index) => String(indices[index]));
     return ` [i,j,k,l]=[${coordinates.join(",")}]`;
@@ -572,23 +559,18 @@ export class Sentence extends ReasonerObject {
 
                 const conv = this.term.term_indices === null ? "" : formatTermIndices(this.term.term_indices);
 
-                const buffer = new SentenceStringBuilder()
-                    .append(textValue(contentName))
-                    .append(this.punctuation)
-                    .append(conv);
+                const parts = [textValue(contentName), this.punctuation, conv];
 
                 if (String(tenseString).length > 0)
-                    buffer.append(" ").append(tenseString);
+                    parts.push(" ", tenseString);
 
-                if (this.truth !== null) {
-                    buffer.append(" ");
-                    this.truth.appendString(buffer, true);
-                }
+                if (this.truth !== null)
+                    parts.push(" ", this.truth.appendString(true));
 
                 if (showStamp)
-                    buffer.append(" ").append(textValue(stampString));
+                    parts.push(" ", textValue(stampString));
 
-                return asText(buffer.toString());
+                return asText(parts.join(""));
 
 
                 break;
@@ -622,20 +604,18 @@ export class Sentence extends ReasonerObject {
             const conv = this.term.term_indices === null ? "" : formatTermIndices(this.term.term_indices);
 
             // suffix = [punctuation][ ][truthString][ ][occurenceTimeString]
-            const suffix = new SentenceStringBuilder().append(this.punctuation).append(conv);
+            const suffixParts = [this.punctuation, conv];
 
             if (this.truth !== null) {
-                suffix.append(" ");
-                this.truth.appendString(suffix, false);
+                suffixParts.push(" ", this.truth.appendString(false));
             }
             if ((showOcurrenceTime) && (this.stamp !== null)) {
-                suffix.append(" ");
-                this.stamp.appendOcurrenceTime(suffix);
+                suffixParts.push(" ", textValue(this.stamp.getOccurrenceTimeString()));
             }
 
             this.key = Texts.yarn(
                 contentName,
-                suffix.toString()) ?? "";
+                suffixParts.join("")) ?? "";
         }
         return this.key;
     }

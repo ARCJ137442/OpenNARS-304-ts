@@ -7,10 +7,6 @@ export interface TruthParameters {
     DEFAULT_JUDGMENT_CONFIDENCE: number;
 }
 
-type StringBuilderLike = {
-    append(value: string): StringBuilderLike;
-};
-
 const DELIMITER: string = "%";
 const SEPARATOR: string = ";";
 
@@ -125,13 +121,8 @@ export class TruthValue {
         return Math.abs(a - b) < epsilon;
     }
 
-    public appendString(builder: StringBuilderLike, _external: boolean): StringBuilderLike {
-        return builder
-            .append(DELIMITER)
-            .append(formatN2(this.frequency))
-            .append(SEPARATOR)
-            .append(formatN2(this.confidence))
-            .append(DELIMITER);
+    public appendString(_external: boolean): string {
+        return `${DELIMITER}${formatN2(this.frequency)}${SEPARATOR}${formatN2(this.confidence)}${DELIMITER}`;
     }
 
     public name(): string {

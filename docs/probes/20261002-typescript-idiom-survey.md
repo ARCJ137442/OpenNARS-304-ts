@@ -27,3 +27,10 @@ This probe records the language-level cleanup boundary after the v1.0.4 release.
 - Constructor/token based class identity cleanup.
 - Collection and iterator migration after contract-level benchmarks.
 
+## Batch 2: sentence rendering
+
+- `SentenceStringBuilder` was a one-shot local accumulator, not a public mutable contract.
+- `TruthValue.appendString(builder, external)` had only one production caller and existed solely to append a formatted truth value.
+- The native replacement is a `string` return plus a local `string[]` assembled with `join("")`.
+- Sentence keys use the existing `Stamp.getOccurrenceTimeString()` value instead of adapting a stamp to a builder.
+- The compatibility `Stamp.appendOcurrenceTime` method remains for external/test callers and is intentionally deferred to the stamp boundary batch.

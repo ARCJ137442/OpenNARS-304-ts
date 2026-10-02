@@ -10,6 +10,14 @@
 - M1-prime：243/243 M1--、#25、#245 降载、#246 均通过；两个 markerless digest equal；含 Java M2 `498/498`
 - Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，demo 提交 `ff4b01d`，metadata 绑定核心 `cd3520f`
 
+## 2026-10-02 sentence rendering native batch
+
+- 当前代码提交：`148149b`（模板字符串整理）之后正在进行的文本批次尚未提交。
+- `SentenceStringBuilder` 与 `TruthValue.appendString(builder, ...)` 已改为原生字符串片段与 `join("")`；句子 key 使用 `Stamp.getOccurrenceTimeString()`。
+- 当前验证：typecheck、build、dist API、直接合同 `68/68`、TS-only M2 `506/508`（0 failed、2 skipped）通过；jree audit 直接导入仍为 `0/0`。
+- `Stamp.appendOcurrenceTime` 仍保留为外部/测试兼容边界；class token、值语义集合、可变迭代器和异常合同尚未在本批处理。
+- 本批不宣称 031 完成、完整 M1' 通过或发布新版本；提交后继续进入 class identity / iterator 语义批次。
+
 ## 2026-10-02 native text idiom batch
 
 - 当前提交：`3bdc860`（代码批次 `9c4d76b`，证据记录提交 `3bdc860`），已推送 `origin/main`。
