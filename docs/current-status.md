@@ -3182,6 +3182,13 @@ LeanSpec 15 项
 └─ checklist     89/111                          [################----] 80.2%
 ```
 
+## 2026-10-02 resource/process boundary batch
+
+- 当前代码提交：`d7958ad`，生产资源 helper 已改为 `ResourceErrors.ts`/`closeResources`/`handleResourceError`/`throwResourceError`，Node 进程出口为 `exitProcess`。
+- 聚焦资源/config/core 回归：`63/63`；TS-only M2：`506/508`；Java M2：`508/508`；release/build/dist API 通过。
+- exact-commit M1'：`243/243`，JSONL SHA-256 `4BEE589825221D217C7AABFF391E6B8C050F4DE48F21AB30791FB777DC2BD7D6`。
+- 023、031 仍未完成；继续处理 remaining Java helper、平台边界与性能门。
+
 ## 2026-10-02 project class-identity batch
 
 - 当前代码提交：`7ffd442`（代码 `70ab148`），已完成 `ClassIdentity.ts`、`ClassToken`、`ConstructorShape`、`ReasonerObject` 的生产迁移；旧 `RuntimeClass*`/`RuntimeObject` 名称已从 `src` 移除。

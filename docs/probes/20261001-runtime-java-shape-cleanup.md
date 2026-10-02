@@ -486,6 +486,10 @@ preservation, and process-exit capability behavior are unchanged. Focused
 resource/config/core contracts passed `63/63`; full M2 passed `506/508` TS-only
 (two skips) and `508/508` with Java; release/build/dist API checks passed.
 
+Exact-commit M1' for resource/process commit `d7958ad` completed `243/243`
+with zero failure/exception/timeout/process-limit/stall/not-run rows. JSONL
+SHA-256: `4BEE589825221D217C7AABFF391E6B8C050F4DE48F21AB30791FB777DC2BD7D6`.
+
 ## Value-contract naming batch
 
 Production collection and array helpers now use project names
