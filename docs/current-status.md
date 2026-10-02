@@ -4,6 +4,8 @@ Status date: 2026-10-02 (Asia/Shanghai)
 
 This file is the current handoff. Historical detail moved to [archive/current-status-history-20261002.md](archive/current-status-history-20261002.md); raw test evidence remains under `reports/evidence/` and is never treated as disposable output.
 
+The expanded current objective and acceptance boundaries are in [active-goal-20261002.md](active-goal-20261002.md).
+
 ## Current Position
 
 ```text
@@ -44,7 +46,8 @@ v1.0.4 release (44e937b, origin/main)
 023/024/025/027/031/036 board state: complete in LeanSpec history,
 but final claims are limited by the current immutable evidence and this handoff.
 
-020 performance/release: in progress
+020/027/031 LeanSpec board state: complete in historical spec records
+Current performance convergence goal: active; not yet accepted
 Original 2,000,000-cycle stability workload: not claimed (device resource limit)
 M1' on current candidate: 243/243 + extra 2/2 passed
 M2 on selected candidate: TS-only 506/508 (0 failed, 2 skipped); Java 508/508
@@ -81,5 +84,5 @@ The frozen baseline is outside the repository at `H:\A137442\Develop\AGI\NARS\_P
 ## Next Actions
 
 1. Keep the selected candidate protected by the committed M1'/M2/audit evidence.
-2. Continue the next mutable-iterator and GC/state-growth performance batch.
+2. Continue the next mutable-iterator and GC/state-growth performance batch; the latest probe is `docs/probes/20261002-performance-next-batch.md`.
 3. Update the demo repository and release package only after the next selected candidate passes the same gates.
