@@ -472,6 +472,10 @@ Java; TAP SHA-256 values are
 `72E113EA9CC159522F793E77B967C15588E14BACF3165FC7E3528F5513E9ACF8` and
 `4B15C6D4559A4E2910E9201DFA96F4B2745061F8B5BB21936BA99BD6FF192A5E`.
 
+Exact-commit M1' for helper-name commit `f07e391` completed `243/243` with
+zero failure/exception/timeout/process-limit/stall/not-run rows. JSONL SHA-256
+is `4C2617B66D79DC0448AFE0A4DF4949E77573E8523E83474F7850B4F3A48B25B7`.
+
 ### Constructor equality candidate result
 
 Comparing exact term constructors directly in `Term.equals` removed repeated

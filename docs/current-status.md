@@ -3196,6 +3196,11 @@ LeanSpec 15 项
 - exact-commit M1'：`243/243`，JSONL SHA-256 `4BEE589825221D217C7AABFF391E6B8C050F4DE48F21AB30791FB777DC2BD7D6`。
 - 023、031 仍未完成；继续处理 remaining Java helper、平台边界与性能门。
 
+## 2026-10-02 remaining-helper naming batch
+
+- 当前代码提交：`f07e391`，生产 local helper 已去除 `javaArrayToString`、`javaObjectHashCode`、`javaForgetCycles` 等 Java 迁移命名，保留原数值/文本行为。
+- TS-only M2：`506/508`；Java M2：`508/508`；exact-commit M1'：`243/243`，JSONL SHA-256 `4C2617B66D79DC0448AFE0A4DF4949E77573E8523E83474F7850B4F3A48B25B7`。
+
 ## 2026-10-02 project class-identity batch
 
 - 当前代码提交：`7ffd442`（代码 `70ab148`），已完成 `ClassIdentity.ts`、`ClassToken`、`ConstructorShape`、`ReasonerObject` 的生产迁移；旧 `RuntimeClass*`/`RuntimeObject` 名称已从 `src` 移除。
