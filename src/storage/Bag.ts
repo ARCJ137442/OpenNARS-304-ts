@@ -3,6 +3,8 @@ import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { IntNumber, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "../entity/Item.ts";
 import { Term } from "../language/Term.ts";
+import { CompoundTerm } from "../language/CompoundTerm.ts";
+import { Variable } from "../language/Variable.ts";
 import { Distributor } from "./Distributor.ts";
 import { Parameters } from "../main/Parameters.ts";
 import { BudgetFunctions } from "../inference/BudgetFunctions.ts";
@@ -23,6 +25,13 @@ type TermKeyIndex = {
 
 // An ephemeral lookup aid: it is deliberately outside Bag's serialized state.
 const termKeyIndexes = new WeakMap<object, TermKeyIndex>();
+// Only these built-in equality methods require equal names. An extension may
+// define another equality relation, so it must retain the full comparison.
+const nameBasedTermEquals = new Set<Term["equals"]>([
+    Term.prototype.equals,
+    CompoundTerm.prototype.equals,
+    Variable.prototype.equals,
+]);
 
 
 /**
@@ -309,9 +318,14 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
         if (termKey !== null) {
             const index = this.termKeyIndex();
             if (index.nonTermKeys === 0) {
+                const queryEquals = termKey.equals;
+                const queryName = nameBasedTermEquals.has(queryEquals) ? termKey.name() : null;
                 // Term equality rejects other concrete constructors, even if a
                 // restored key's hash changed. Iteration remains insertion ordered.
                 for (const existingKey of index.byConstructor.get(termKey.constructor) ?? []) {
+                    if (queryName !== null && existingKey instanceof Term
+                        && existingKey.equals === queryEquals
+                        && existingKey.name() !== queryName) continue;
                     if (runtimeValueEquals(existingKey, key)) return existingKey as K;
                 }
                 return null as unknown as K;

@@ -138,6 +138,48 @@ test("Bag distinguishes concrete Term types and still recovers an equal restored
     assert.equal(bag.get(new RestoredTerm("restored", 9)), restored);
 });
 
+test("Bag retains custom Term equality when names differ and restored hashes disagree", () => {
+    class DomainTerm extends Term {
+        public constructor(name: string, private readonly domainId: number, private readonly storedHash: number) {
+            super(name);
+        }
+        public override hashCode(): number { return this.storedHash; }
+        public override equals(other: unknown): boolean {
+            return other instanceof DomainTerm && this.domainId === other.domainId;
+        }
+    }
+    class DomainItem extends Item<Term> {
+        public constructor(private readonly key: Term) { super(); }
+        public name(): Term { return this.key; }
+        public getPriority(): number { return 0.8; }
+        public merge(): Item<unknown> { return this; }
+    }
+    const bag = new Bag<DomainItem, Term>(4, 10, new Parameters());
+    const item = new DomainItem(new DomainTerm("old", 7, 11));
+    bag.putIn(item);
+    assert.equal(bag.get(new DomainTerm("new", 7, 12)), item);
+});
+
+test("Bag resolves a standard Term whose name changes after insertion", () => {
+    class RenamableTerm extends Term {
+        public constructor(name: string, private readonly storedHash: number) { super(name); }
+        public rename(name: string): void { this.setName(name); }
+        public override hashCode(): number { return this.storedHash; }
+    }
+    class TermItem extends Item<Term> {
+        public constructor(private readonly key: Term) { super(); }
+        public name(): Term { return this.key; }
+        public getPriority(): number { return 0.8; }
+        public merge(): Item<unknown> { return this; }
+    }
+    const key = new RenamableTerm("before", 7);
+    const item = new TermItem(key);
+    const bag = new Bag<TermItem, Term>(4, 10, new Parameters());
+    bag.putIn(item);
+    key.rename("after");
+    assert.equal(bag.get(new RenamableTerm("after", 9)), item);
+});
+
 test("Bag keeps mixed-key asymmetric equality and Term index lifecycle", () => {
     class CrossKey {
         public hashCode(): number { return 1234567; }

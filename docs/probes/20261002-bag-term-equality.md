@@ -65,4 +65,24 @@
 
 阶段计划工具的旧约束也已修正为“023 仍需 full M1，后续普通/rc 阶段可选 M1′”。策略直接测试 `8/8`，TAP SHA-256 `5516F208B8A289A1B61FDE47B42EF2894F507BF442230DE63A0CAB03995A819C`；`07aceff..82469cc` 的 `--stage rc --m1-profile prime` 只读计划现为 `plan_valid=true`、`T2`、`m1_prime_required=true`、`full_m1_required=false`。这是工具口径修复，不改变 `82469cc` 的生产推理代码或已跑测试；仍需真实浏览器与性能收敛。
 
+## 当前 Worker 的真实浏览器诊断（2026-10-03）
+
+Demo 源码 `d4189e5`，核心 HEAD `bfef6d3`（生产源码 `82469cc`），Chrome 154、seed `3040304`、同步/目标 20 TPS、各 30 秒。Microworld/10 cycles 平均 `12.285 TPS`、`122.848 wall RPS`，六个五秒窗口 `20.15/19.97/19.98/8.60/3.00/2.00 TPS`，概念至 4426，末窗 p95 推理约 `1279.9 ms`。CartPole/5 cycles 平均 `2.062 TPS`、`10.309 wall RPS`，窗口 `2.99/1.80/3.00/1.40/2.00/1.20 TPS`，概念从 46 至 7027，末窗 p95 `989.8 ms`。两项 `pageErrors`、`workerFaults` 均为空，30 秒未观察到非 babble 操作。原始 JSON 分别在相邻 Demo 项目 `test-results/{microworld,cartpole}-sync-bag-term-index-20261003.json`；`demoTrackedSourceClean=false` 是生成 Worker 待提交，不能作为发行版的干净源码证据。Microworld 的平均值掩盖后半段严重下降；下一步在当前核心做 CPU profile，调查热路径与内存代价，继续同配置交叉测量。
+
+当前核心固定 CartPole 20 ticks × 5 cycles 的 Node CPU profile：主线程 3838 采样，`Bag.putIn` 自耗 487、`Distributor` 构造 284、`Bag.findEquivalentKey` 245、`CompoundTerm.equals` 142、`runtimeValueEquals` 141、GC 85。带 profile 的样本为 `21.375 RPS`、峰值 RSS `420974592 bytes`、概念终点 2296；路径 `reports/evidence/cpu-prof-bag-term-index-20261003/CPU.20261003.004841.17624.0.001.cpuprofile` 和 `reports/evidence/demo-workload-bag-term-index-profile-20261003.json`。profile 有 750 idle 和 114 loader hook 采样，所列是原始采样，不可直接当准确 CPU 占比。`Distributor` 在每个 Bag 构造时生成同档位确定性数组；下一候选是按 range 缓存模板，同时为每个实例复制数组以保持公开 `order` 的独立可变合同。先写直接合同并交叉 A/B，若收益不超过 5% 或回退则撤销。
+
+模板缓存候选的独立 `order` 合同测试 `4/4` 通过，非增量 typecheck 先因上一提交遗漏的 `change-gate-policy.d.mts` 声明而失败，补齐声明后通过。固定 CartPole 20 ticks × 5 cycles 顺序候选/基线/候选复测为 `24.03 / 23.20 / 24.25 RPS`，概念终点均 2296，峰值 RSS `417116160 / 420077568 / 426012672 bytes`。候选相对基线仅约 `3.6–4.5%`，未达预设 5% 接受门槛，故已撤销 `Distributor.ts` 与候选测试，保留三份原始 JSON 于 `reports/evidence/distributor-template-*-20261003.json`。这是第一项低收益尝试，但不构成“三轮性能收敛”，因为当前浏览器持续 TPS 仍低且 `Bag.putIn` 有其他明确候选。
+
+随后试验在 Bag 内按 levels 共享整个只读 `Distributor` 实例，避免每个 Bag 重算。`Bag`/`Distributor` 直接合同 `22/22` 通过；同输入候选/基线/候选复测 `23.74 / 24.04 / 23.73 RPS`，概念均 2296，峰值 RSS `410632192 / 418856960 / 411258880 bytes`。此候选吞吐反而约低 1.3%，已撤销源码；原始 JSON 为 `reports/evidence/bag-shared-distributor-*-20261003.json`。这说明 profile 中的构造采样不等于端到端高收益，应继续追踪 Bag 查找与概念增长，而非保留无效缓存。
+
+第三项尝试是 Bag 在 `findEquivalentKey` 已判定不存在时绕过 `NativeMap.put` 的重复查找，调用新插入路径。`Bag`/`NativeMap` 直接合同 `30/30` 与非增量 typecheck 通过；候选/基线/候选复测 `23.28 / 24.05 / 24.46 RPS`，概念均 2296，峰值 RSS `395714560 / 419782656 / 418226176 bytes`。候选波动跨过基线，无法证明 >5% 稳定收益；已撤销该源码，原始 JSON 为 `reports/evidence/native-map-known-absent-*-20261003.json`。这三项局部尝试不构成最终收敛：它们不代表浏览器晚期负载，且当前索引本身可能增加内存与 GC 长尾。
+
+## 新候选：标准 Term 名称预筛（未完成阶段门）
+
+`Bag.findEquivalentKey` 对同具体构造器的词项仍需遍历，以保留恢复态键 hash 变化的合同；此前每个不相等候选都执行双向 `runtimeValueEquals`。项目内 `Term`、`CompoundTerm`、`Variable` 三种标准 `equals` 都以原生 UTF-16 名称相同为必要条件。本候选仅当查询与现存键使用**同一标准方法引用**时，先比较 `name()`；自定义 `equals` 仍走完整双向判等。直接测试覆盖跨名称自定义相等、恢复态不同 hash、名称变化但存储 hash 固定的取回。对“名称变化且 hash 随之变化”的新测试，当前基线和候选均返回 null，这是 `NativeMap` 插入时 hash 桶固定的既有边界，不以性能候选改变。
+
+固定 CartPole 20 ticks × 5 cycles 候选/基线/候选复测 `26.47 / 23.02 / 26.53 RPS`，概念均 2296，峰值 RSS `422146048 / 417992704 / 407166976 bytes`；30 ticks × 5 cycles 为 `27.98 / 25.79 / 28.60 RPS`，概念均 2945，峰值 RSS `447045632 / 473096192 / 473346048 bytes`、p95 `342.01 / 378.76 / 347.68 ms`。两个负载中收益约 8.5–15%，但仍是未提交候选和短 Node 负载，不能宣称浏览器持续 TPS 提升。原始 JSON 为 `reports/evidence/bag-name-prefilter-{candidate,baseline,candidate-recheck,candidate30,baseline30,candidate30-recheck}-20261003.json`；`git_commit` 仍标 `bfef6d3`，须结合本次源码 diff 辨认 dirty-source 候选。下一步跑直接合同、M2、静态审计，提交候选固定 SHA 后再运行 M1′、strict markerless 和真实浏览器。
+
+上述六份 JSON 按 `baseline / candidate / candidate-recheck / baseline30 / candidate30 / candidate30-recheck` 顺序 SHA-256 为 `E48DC86CC544592D2665E43D3155CBD6D1867E2369337197334099D2FE58D5FA / 542B5C061F6A59BB4040B9AF32378797A26A6644655ACCAA524D353441451B15 / 7F316C3E8386D1886BE35C335DE2072FA5AEEF7F9C8910408D787776431C2117 / 02D0475B554BECC7BE79DB7827B7B711F19F36046B04B1B2C45DBAE32F94E483 / 26F1D7AFECD780B9F0E6F9C45D5D30FB13EE5F7BD3ECE8F87D86B65B38F3403A / F4BC365BB4F3C77C13382E4A26FA29F14E18851C7F51BC3A1273E6FA88A5102F`。直接 Bag 合同 `21/21`、非增量 typecheck、build、dist API、jree `0/0` 与平台核心/混合边界 `0/0` 均通过。TS-only M2 `511 passed / 2 skipped / 0 failed`，TAP SHA-256 `B0D22E98C1273C669B56F01DDBC85D8FC68428AD2DB5D98F49A17100B4AABFBA`；含 Java M2 `513/513 passed`，TAP SHA-256 `900CE6287BD7CB94505D00FF571937AC25BD52ABA362769BCAB588BA3FFC4CF1`。原始 TAP 为 `reports/evidence/bag-name-prefilter-{ts-only,java}-m2-20261003.tap`。候选仍是 dirty source，下一步必须固定提交再做 M1′ 和浏览器。
+
 只读 `validation:plan` 在 `07aceff..82469cc`、冻结 Java baseline 与唯一证据前缀下输出 `plan_valid=true`、`T1`、J3 推理核心簇、四项受影响 NAL。当前策略脚本却拒绝在 stage `none`/`rc` 用 `--m1-profile prime`（只允许旧 023/024），与本次用户准许 023 之外使用 M1′ 的口径冲突；现阶段使用默认档生成只读风险计划并手工执行本目标的 M1′，后续需修正策略/测试，不能伪称工具已经认可 042 的 prime 档。

@@ -1,0 +1,131 @@
+{
+  "schema": "opennars-304-ts/demo-workload-benchmark/v1",
+  "git_commit": "bfef6d32bfc0d1cf1002e0e17fc73a57a3c6b655",
+  "node": "v22.17.0",
+  "workload": "CartPole sensor-bin + recurring composite goal + upright feedback; one Nar instance; no babble/action",
+  "configuration": {
+    "cycles": 5,
+    "ticks": 30,
+    "reportEvery": 5,
+    "output": "reports/evidence/bag-name-prefilter-candidate30-20261003.json"
+  },
+  "aggregate": {
+    "ticks": 30,
+    "cycles": 150,
+    "elapsed_ms": 5360.28,
+    "median_step_ms": 173.402,
+    "p95_step_ms": 342.006,
+    "rps": 27.984,
+    "peak_rss_bytes": 447045632
+  },
+  "segments": [
+    {
+      "start_tick": 1,
+      "end_tick": 5,
+      "ticks": 5,
+      "duration_ms": 525.61,
+      "tps": 9.513,
+      "rps": 47.571,
+      "median_step_ms": 132.044,
+      "p95_step_ms": 173.402,
+      "concepts": 362,
+      "concepts_added": 362,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 28,
+        "recent_operations": 0
+      },
+      "rss_bytes": 236740608
+    },
+    {
+      "start_tick": 6,
+      "end_tick": 10,
+      "ticks": 5,
+      "duration_ms": 859.66,
+      "tps": 5.816,
+      "rps": 29.094,
+      "median_step_ms": 198.466,
+      "p95_step_ms": 270.743,
+      "concepts": 1002,
+      "concepts_added": 640,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 30,
+        "recent_operations": 0
+      },
+      "rss_bytes": 297553920
+    },
+    {
+      "start_tick": 11,
+      "end_tick": 15,
+      "ticks": 5,
+      "duration_ms": 1398.23,
+      "tps": 3.576,
+      "rps": 17.881,
+      "median_step_ms": 286.075,
+      "p95_step_ms": 404.049,
+      "concepts": 1733,
+      "concepts_added": 731,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 30,
+        "recent_operations": 0
+      },
+      "rss_bytes": 325111808
+    },
+    {
+      "start_tick": 16,
+      "end_tick": 20,
+      "ticks": 5,
+      "duration_ms": 1166.21,
+      "tps": 4.287,
+      "rps": 21.439,
+      "median_step_ms": 255.456,
+      "p95_step_ms": 296.996,
+      "concepts": 2296,
+      "concepts_added": 563,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 30,
+        "recent_operations": 0
+      },
+      "rss_bytes": 380878848
+    },
+    {
+      "start_tick": 21,
+      "end_tick": 25,
+      "ticks": 5,
+      "duration_ms": 782.89,
+      "tps": 6.387,
+      "rps": 31.937,
+      "median_step_ms": 124.813,
+      "p95_step_ms": 342.006,
+      "concepts": 2671,
+      "concepts_added": 375,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 30,
+        "recent_operations": 0
+      },
+      "rss_bytes": 418783232
+    },
+    {
+      "start_tick": 26,
+      "end_tick": 30,
+      "ticks": 5,
+      "duration_ms": 628.57,
+      "tps": 7.955,
+      "rps": 39.779,
+      "median_step_ms": 88.695,
+      "p95_step_ms": 278.835,
+      "concepts": 2945,
+      "concepts_added": 274,
+      "task_bags": {
+        "novel": 0,
+        "sequence": 30,
+        "recent_operations": 0
+      },
+      "rss_bytes": 447045632
+    }
+  ]
+}
