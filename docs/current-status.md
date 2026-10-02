@@ -3196,6 +3196,16 @@ LeanSpec 15 项
 - exact-commit M1'：`243/243`，JSONL SHA-256 `4BEE589825221D217C7AABFF391E6B8C050F4DE48F21AB30791FB777DC2BD7D6`。
 - 023、031 仍未完成；继续处理 remaining Java helper、平台边界与性能门。
 
+## 2026-10-02 native-runtime and performance continuation
+
+- 已推送批次依次包括：数值边界 `5f92c19`、调度器 `285eab1`、类身份 `70ab148`/占位文件跟踪修正 `7ffd442`、配置读取 capability `e3710b5`、值合同命名 `bf07aaa`、资源/进程错误边界 `d7958ad`、本地 helper 命名 `f07e391`。
+- 这些批次各自 TS-only M2 均为 `506/508`、2 skips、0 failures；Java M2 均为 `508/508`；对应 exact-commit M1' 主体均为 `243/243`。SHA-256 与各自的完整观测记录见 `docs/probes/20261001-runtime-java-shape-cleanup.md` 和 `reports/evidence/m1prime-*.jsonl`。
+- 平台进展：`ConfigReader` 的 Node fs/path/process.cwd 已移出核心并由 `readTextFile` capability 提供；平台 audit `mixedBoundaryFiles=0`、jree imports `0/0`。Node built-ins 保留在 `src/platform/node` 与 CLI 边界。
+- 性能基线 CartPole workload（50 ticks、每 tick 10 cycles）：总 RPS `3.575`、median step `2113 ms`、p95 `7000 ms`、峰值 RSS `343 MB`；后段 TPS `0.238–0.407`、概念数到 `3731`，距同步 TPS≥15 和目标 TPS/RPS≥20 仍很远。
+- 已接受性能候选 `efc7504`：Term 精确类比较改用构造器身份，20 tick/5 cycle demo RPS 两次 `2.551/2.593`，baseline `2.084`，约提升 `22–24%`；M2 与 M1' 通过。短 RPS microbenchmark 有高方差，不据此单独宣称全局 RPS 提升。
+- 已拒绝 Bag retained-key 快路径与 Term hash cache、双向 value-equality shortcut；它们未表现出可重复收益，保留诊断 evidence，不计为优化轮次。
+- LeanSpec 仍显示 023 与 031 为 `in-progress`，M1' 长周期 #245 的 65536 运行在约 1 GiB RSS 保护停止，原始 2,000,000 周期未通过；spec gates、markerless、demo 全门及 TPS/RPS 目标仍需完成。
+
 ## 2026-10-02 remaining-helper naming batch
 
 - 当前代码提交：`f07e391`，生产 local helper 已去除 `javaArrayToString`、`javaObjectHashCode`、`javaForgetCycles` 等 Java 迁移命名，保留原数值/文本行为。
