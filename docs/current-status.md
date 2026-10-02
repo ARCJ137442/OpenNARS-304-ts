@@ -2,11 +2,11 @@
 
 > 本文是维护与证据档案，不是第一次使用项目的入口。外部用户请先读 [README](../README.md)、[上手指南](getting-started.md) 和 [集成指南](integration-guide.md)。截至 2026-10-02，023、025、027、031 的当前代码/门禁记录已完成；长期稳定性原始 2,000,000 周期仍是设备资源限制，历史段落按其日期理解。
 
-- 状态日期：2026-10-01（Asia/Shanghai）
+- 状态日期：2026-10-02（Asia/Shanghai）
 - 代码冻结点：`17cec541f535d83bd62e5b15ee9c03f4a2233812`
-- 当前发布提交：`91482a7`
-- 包版本：`1.0.2`（GitHub Release `v1.0.2` 已发布）
-- LeanSpec：024、020、027 为 `complete`；023、025、031 仍在推进
+- 当前发布提交：`a74064a`
+- 包版本：`1.0.4`（本地发行候选，待创建 GitHub Release）
+- LeanSpec：020、023、024、025、027、031 为 `complete`
 - M1-prime：243/243 M1--、#25、#245 降载、#246 均通过；两个 markerless digest equal；含 Java M2 `498/498`
 - Demo Lab：公网地址 <https://arcj137442.github.io/opennars-304-ts-lab/>，demo 提交 `ff4b01d`，metadata 绑定核心 `cd3520f`
 
