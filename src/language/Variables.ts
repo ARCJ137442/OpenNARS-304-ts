@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Variables.java
-import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Variable } from "./Variable.ts";
 import { CompoundTerm } from "./CompoundTerm.ts";
@@ -96,10 +96,10 @@ export class Variables {
                     // more effective matching for NLP
                     if (c1.getTemporalOrder() === TemporalRules.ORDER_FORWARD &&
                         c2.getTemporalOrder() === TemporalRules.ORDER_FORWARD) {
-                        let size_smaller: int = c1.size();
+                        let size_smaller: IntNumber = c1.size();
                         if (c1.size() < c2.size()) {
                             // find an offset that works
-                            for (let k: int = 0; k < (c2.term.length - c1.term.length); k++) {
+                            for (let k: IntNumber = 0; k < (c2.term.length - c1.term.length); k++) {
 
                                 if (map[0] === null) {
                                     map[0] = nativeTermMap();
@@ -110,8 +110,8 @@ export class Variables {
 
                                 let mapk: MapContract<Term, Term>[] = Variables.copyMapFrom(map);
                                 let succeeded: boolean = true;
-                                for (let j: int = k; j < k + size_smaller; j++) {
-                                    let i: int = j - k;
+                                for (let j: IntNumber = k; j < k + size_smaller; j++) {
+                                    let i: IntNumber = j - k;
                                     let mapNew: MapContract<Term, Term>[] = Variables.copyMapFrom(map);
                                     // attempt unification:
                                     if (Variables.findSubstitute(rnd, type, c1.term[i], c2.term[j], mapNew)) {
@@ -162,7 +162,7 @@ export class Variables {
                     let termB: Term = term1VarUnifyAllowed ? term2 : term1;
                     let termAAsVariable: Variable = termA as Variable;
                     // https://github.com/opennars/opennars/issues/482:
-                    let mapIdx: int = term1VarUnifyAllowed ? 0 : 1;
+                    let mapIdx: IntNumber = term1VarUnifyAllowed ? 0 : 1;
                     let t: Term = ((map[mapIdx] !== null ? map[mapIdx].get(termAAsVariable) : null) as unknown as Term);
                     if (t !== null) {
                         return Variables.findSubstitute(rnd, type, t, termB, map);
@@ -243,9 +243,9 @@ export class Variables {
                         // Java source: final Set<Integer> matchedJ = new LinkedHashSet<>(list.length * 2);
                         // Keep Integer wrapper values at the translated Java boundary; NativeSet preserves Set uniqueness.
                         const matchedJ = new NativeSet<number>();
-                        for (let i: int = 0; i < list.length; i++) {
+                        for (let i: IntNumber = 0; i < list.length; i++) {
                             let succeeded: boolean = false;
-                            for (let j: int = 0; j < list.length; j++) {
+                            for (let j: IntNumber = 0; j < list.length; j++) {
                                 if (matchedJ.contains(j)) { // this one already was used to match one of the i's
                                     continue;
                                 }
@@ -275,7 +275,7 @@ export class Variables {
                         }
                         return true;
                     }
-                    for (let i: int = 0; i < cTerm1.size(); i++) {
+                    for (let i: IntNumber = 0; i < cTerm1.size(); i++) {
                         let t1: Term = list[i];
                         let t2: Term = cTerm2.term[i];
                         if (!Variables.findSubstitute(rnd, type, t1, t2, map)) {
@@ -369,7 +369,7 @@ export class Variables {
 
                 if (n === null)
                     return false;
-                for (let i: int = 0; i < n.length; i++) {
+                for (let i: IntNumber = 0; i < n.length; i++) {
                     const character = n.charAt(i);
                     switch (character) {
                         case Symbols.VAR_INDEPENDENT:

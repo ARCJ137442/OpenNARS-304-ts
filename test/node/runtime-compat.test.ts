@@ -46,7 +46,7 @@ test("project runtime class tokens preserve constructor identity and instance ch
     assert.equal(token.equals(otherToken), false);
 });
 
-test("runtime long boundaries reject unsafe numbers before arithmetic", () => {
+test("runtime RuntimeLong boundaries reject unsafe numbers before arithmetic", () => {
     assert.equal(toRuntimeLong(42), 42);
     assert.equal(addRuntimeLong(42, 8), 50);
     assert.equal(addRuntimeLong(42n, 8), 50n);

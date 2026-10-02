@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/FunctionOperator.java
-import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Operator } from "./Operator.ts";
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -20,8 +20,8 @@ import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerError
 
 // Keep FunctionOperator below the inference layer. Importing BudgetFunctions
 // here would close the FunctionOperator -> Memory -> BudgetFunctions cycle.
-const truthToQuality = (truth: any): float => {
-    return Float32Math.truthToQuality(truth.getExpectation()) as float;
+const truthToQuality = (truth: any): FloatNumber => {
+    return Float32Math.truthToQuality(truth.getExpectation()) as FloatNumber;
 };
 
 
@@ -52,13 +52,13 @@ export abstract class FunctionOperator extends Operator {
      */
     protected abstract getRange(): Term;
 
-    // abstract protected int getMinArity();
-    // abstract protected int getMaxArity();
+    // abstract protected IntNumber getMinArity();
+    // abstract protected IntNumber getMaxArity();
 
     protected execute(operation: Operation, args: Term[], m: Memory, time: Timable): Task[] | null {
         // TODO make memory access optional by constructor argument
         // TODO allow access to Nar instance?
-        let numArgs: int = args.length - 1;
+        let numArgs: IntNumber = args.length - 1;
 
         if (numArgs < 1) {
             throw new ReasonerStateError("Requires at least 1 arguments");
@@ -72,7 +72,7 @@ export abstract class FunctionOperator extends Operator {
         // final Term lastTerm = args[numArgs];
         // final boolean variable = lastTerm instanceof Variable;
 
-        let numParam: int = numArgs - 1;
+        let numParam: IntNumber = numArgs - 1;
 
         /*
          * if(this instanceof Javascript && !variable) {
@@ -112,7 +112,7 @@ export abstract class FunctionOperator extends Operator {
             (operation.getSubject() as CompoundTerm).setComponent(
                 numArgs, y, m),
             m) as Operation;
-        let confidence: float = m.narParameters.DEFAULT_JUDGMENT_CONFIDENCE;
+        let confidence: FloatNumber = m.narParameters.DEFAULT_JUDGMENT_CONFIDENCE;
         let s: Sentence = new Sentence(operation,
             Symbols.JUDGMENT_MARK,
             TruthValue.fromFrequencyConfidence(1.0, confidence, m.narParameters),
@@ -129,8 +129,8 @@ export abstract class FunctionOperator extends Operator {
      * that the 2 given terms are equal. in other words, a distance metric
      */
     public override equals(that: unknown): boolean;
-    public equals(a: Term, b: Term): float;
-    public equals(...args: unknown[]): boolean | float {
+    public equals(a: Term, b: Term): FloatNumber;
+    public equals(...args: unknown[]): boolean | FloatNumber {
         if (args.length === 1) {
             // Java overload preservation: FunctionOperator inherits Term.equals(Object)
             // while also exposing the two-argument similarity metric below.

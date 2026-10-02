@@ -1,7 +1,7 @@
 //! Java source: opennars/language/AbstractTerm.java
 
 import type { TextString } from "../runtime/Text.ts";
-import type { int } from "../types.ts";
+import type { IntNumber } from "../types.ts";
 
 
 
@@ -17,7 +17,7 @@ export interface AbstractTerm {
 
     clone(): AbstractTerm;
 
-    compareTo(o: AbstractTerm): int;
+    compareTo(o: AbstractTerm): IntNumber;
 
 
     /**

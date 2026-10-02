@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Terms.java
-import type { int, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, ShortNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { TermLink } from "../entity/TermLink.ts";
@@ -154,7 +154,7 @@ export class Terms {
         if (A.length !== B.length || !(a.operator().equals(b.operator()))) {
             return false;
         } else {
-            for (let i: int = 0; i < A.length; i++) {
+            for (let i: IntNumber = 0; i < A.length; i++) {
                 let x: Term = A[i];
                 let y: Term = B[i];
                 if (!x.equals(y)) {
@@ -189,7 +189,7 @@ export class Terms {
             return null as unknown as Term;
 
         let itself: CompoundTerm = reduced as CompoundTerm;
-        let j: int = 0;
+        let j: IntNumber = 0;
         for (let t of itself.term) {
             let t2: Term = Terms.unwrapNegation(t);
             if (!isOperator(t2, "IMPLICATION") && !isOperator(t2, "EQUIVALENCE")
@@ -254,7 +254,7 @@ export class Terms {
                     // parser form treats the first component as the relation
                     // and changes ImageInt/ImageExt semantics.
                     const runtime = Terms.getRuntime();
-                    const relationIndex = (source as CompoundTerm & { relationIndex?: short }).relationIndex;
+                    const relationIndex = (source as CompoundTerm & { relationIndex?: ShortNumber }).relationIndex;
                     if (source.operator() === IMAGE_EXT && relationIndex !== undefined) {
                         return new runtime.ImageExt(componentList, relationIndex);
                     }
@@ -516,7 +516,7 @@ export class Terms {
      * @param type           The type of TermLink to be built
      * @param term           The CompoundTerm for which the links are built
      */
-    public static prepareComponentLinks(componentLinks: NativeList<TermLink>, type: short,
+    public static prepareComponentLinks(componentLinks: NativeList<TermLink>, type: ShortNumber,
         term: CompoundTerm): NativeList<TermLink>;
     public static prepareComponentLinks(...args: unknown[]): NativeList<TermLink> {
         switch (args.length) {
@@ -524,7 +524,7 @@ export class Terms {
                 const [componentLinks, ct] = args as [NativeList<TermLink>, CompoundTerm];
 
 
-                let type: short = isStatementTerm(ct) ? TermLink.COMPOUND_STATEMENT : TermLink.COMPOUND; // default
+                let type: ShortNumber = isStatementTerm(ct) ? TermLink.COMPOUND_STATEMENT : TermLink.COMPOUND; // default
                 return Terms.prepareComponentLinks(componentLinks, type, ct);
 
 
@@ -532,14 +532,14 @@ export class Terms {
             }
 
             case 3: {
-                const [componentLinks, type, term] = args as [NativeList<TermLink>, short, CompoundTerm];
+                const [componentLinks, type, term] = args as [NativeList<TermLink>, ShortNumber, CompoundTerm];
 
 
 
                 let tEquivalence: boolean = isOperator(term, "EQUIVALENCE");
                 let tImplication: boolean = isOperator(term, "IMPLICATION");
 
-                for (let i: int = 0; i < term.size(); i++) {
+                for (let i: IntNumber = 0; i < term.size(); i++) {
                     let t1: Term = term.term[i];
                     t1 = normalizeComponentForLinks(t1);
                     if (!(t1 instanceof Variable)) {
@@ -550,11 +550,11 @@ export class Terms {
                         Terms.prepareComponentLinks(componentLinks, TermLink.COMPOUND_CONDITION, t1 as CompoundTerm);
                     } else if (t1 instanceof CompoundTerm) {
                         let ct1: CompoundTerm = t1 as CompoundTerm;
-                        let ct1Size: int = ct1.size(); // cache because this loop is critical
+                        let ct1Size: IntNumber = ct1.size(); // cache because this loop is critical
                         let t1ProductOrImage: boolean = isOperator(t1, "PRODUCT")
                             || isOperator(t1, "IMAGE_EXT") || isOperator(t1, "IMAGE_INT");
 
-                        for (let j: int = 0; j < ct1Size; j++) {
+                        for (let j: IntNumber = 0; j < ct1Size; j++) {
                             let t2: Term = ct1.term[j];
                             t2 = normalizeComponentForLinks(t2);
 
@@ -572,9 +572,9 @@ export class Terms {
                             if (isOperator(t2, "PRODUCT") || isOperator(t2, "IMAGE_EXT")
                                 || isOperator(t2, "IMAGE_INT")) {
                                 let ct2: CompoundTerm = t2 as CompoundTerm;
-                                let ct2Size: int = ct2.size();
+                                let ct2Size: IntNumber = ct2.size();
 
-                                for (let k: int = 0; k < ct2Size; k++) {
+                                for (let k: IntNumber = 0; k < ct2Size; k++) {
                                     let t3: Term = ct2.term[k];
                                     t3 = normalizeComponentForLinks(t3);
 
@@ -604,7 +604,7 @@ export class Terms {
 
 
     // TODO move this to a utility method
-    public static indexOf<T>(array: T[], v: T): int {
+    public static indexOf<T>(array: T[], v: T): IntNumber {
         /*
          * if (v == null) {
          * for (final T e : array)
@@ -612,7 +612,7 @@ export class Terms {
          * return true;
          * } else {
          */
-        let i: int = 0;
+        let i: IntNumber = 0;
         for (let e of array) {
             if (runtimeValueEquals(v, e)) {
                 return i;
@@ -666,7 +666,7 @@ export class Terms {
     protected static equals(a: Term[], b: Term[]): boolean {
         if (a.length !== b.length)
             return false;
-        for (let i: int = 0; i < a.length; i++) {
+        for (let i: IntNumber = 0; i < a.length; i++) {
             if (!a[i].equals(b[i]))
                 return false;
         }
@@ -725,7 +725,7 @@ export class Terms {
         if (arg.length !== s.length) {
             throw new ReasonerStateError(`Contains duplicates: ${formatArray(arg)}`);
         }
-        let j: int = 0;
+        let j: IntNumber = 0;
         for (let t of s) {
             if (!t.equals(arg[j++]))
                 throw new ReasonerStateError(

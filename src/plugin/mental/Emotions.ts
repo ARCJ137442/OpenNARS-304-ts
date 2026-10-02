@@ -1,6 +1,6 @@
 //! Java source: opennars/plugin/mental/Emotions.java
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
-import type { float, int, double, long } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber, IntNumber, DoubleNumber, RuntimeLong } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Stamp } from "../../entity/Stamp.ts";
@@ -28,76 +28,76 @@ import { asText } from "../../runtime/Text.ts";
 // identity is already provided by the native TypeScript class itself.
 export class Emotions implements Plugin {
 
-    public HAPPY_EVENT_HIGHER_THRESHOLD: float = Float32Math.from(0.75) as float;
-    public HAPPY_EVENT_LOWER_THRESHOLD: float = Float32Math.from(0.25) as float;
-    public BUSY_EVENT_HIGHER_THRESHOLD: float = Float32Math.from(0.9) as float; // 1.6.4, step by step^, there is already enough new
+    public HAPPY_EVENT_HIGHER_THRESHOLD: FloatNumber = Float32Math.from(0.75) as FloatNumber;
+    public HAPPY_EVENT_LOWER_THRESHOLD: FloatNumber = Float32Math.from(0.25) as FloatNumber;
+    public BUSY_EVENT_HIGHER_THRESHOLD: FloatNumber = Float32Math.from(0.9) as FloatNumber; // 1.6.4, step by step^, there is already enough new
     // things ^^
-    public BUSY_EVENT_LOWER_THRESHOLD: float = Float32Math.from(0.1) as float;
-    public CHANGE_STEPS_DEMANDED: int = 1000;
+    public BUSY_EVENT_LOWER_THRESHOLD: FloatNumber = Float32Math.from(0.1) as FloatNumber;
+    public CHANGE_STEPS_DEMANDED: IntNumber = 1000;
 
-    public lasthappy: double = 0.5;
-    public last_happy_time: long = 0 as unknown as long;
-    public last_busy_time: long = 0 as unknown as long;
+    public lasthappy: DoubleNumber = 0.5;
+    public last_happy_time: RuntimeLong = 0 as unknown as RuntimeLong;
+    public last_busy_time: RuntimeLong = 0 as unknown as RuntimeLong;
 
     /**
      * Java permits a private field and an accessor method to share a name.
      * Keep the public method names while avoiding a TypeScript instance field
      * shadowing happy() and busy().
      */
-    private happyValue: float = Float32Math.from(0) as float;
-    private busyValue: float = Float32Math.from(0) as float;
+    private happyValue: FloatNumber = Float32Math.from(0) as FloatNumber;
+    private busyValue: FloatNumber = Float32Math.from(0) as FloatNumber;
 
-    public setHAPPY_EVENT_HIGHER_THRESHOLD(val: double): void {
-        this.HAPPY_EVENT_HIGHER_THRESHOLD = Float32Math.from(val) as float;
+    public setHAPPY_EVENT_HIGHER_THRESHOLD(val: DoubleNumber): void {
+        this.HAPPY_EVENT_HIGHER_THRESHOLD = Float32Math.from(val) as FloatNumber;
     }
 
-    public getHAPPY_EVENT_HIGHER_THRESHOLD(): double {
+    public getHAPPY_EVENT_HIGHER_THRESHOLD(): DoubleNumber {
         return this.HAPPY_EVENT_HIGHER_THRESHOLD;
     }
 
-    public setHAPPY_EVENT_LOWER_THRESHOLD(val: double): void {
-        this.HAPPY_EVENT_LOWER_THRESHOLD = Float32Math.from(val) as float;
+    public setHAPPY_EVENT_LOWER_THRESHOLD(val: DoubleNumber): void {
+        this.HAPPY_EVENT_LOWER_THRESHOLD = Float32Math.from(val) as FloatNumber;
     }
 
-    public getHAPPY_EVENT_LOWER_THRESHOLD(): double {
+    public getHAPPY_EVENT_LOWER_THRESHOLD(): DoubleNumber {
         return this.HAPPY_EVENT_LOWER_THRESHOLD;
     }
 
-    public setBUSY_EVENT_HIGHER_THRESHOLD(val: double): void {
-        this.BUSY_EVENT_HIGHER_THRESHOLD = Float32Math.from(val) as float;
+    public setBUSY_EVENT_HIGHER_THRESHOLD(val: DoubleNumber): void {
+        this.BUSY_EVENT_HIGHER_THRESHOLD = Float32Math.from(val) as FloatNumber;
     }
 
-    public getBUSY_EVENT_HIGHER_THRESHOLD(): double {
+    public getBUSY_EVENT_HIGHER_THRESHOLD(): DoubleNumber {
         return this.BUSY_EVENT_HIGHER_THRESHOLD;
     }
 
-    public setBUSY_EVENT_LOWER_THRESHOLD(val: double): void {
-        this.BUSY_EVENT_LOWER_THRESHOLD = Float32Math.from(val) as float;
+    public setBUSY_EVENT_LOWER_THRESHOLD(val: DoubleNumber): void {
+        this.BUSY_EVENT_LOWER_THRESHOLD = Float32Math.from(val) as FloatNumber;
     }
 
-    public getBUSY_EVENT_LOWER_THRESHOLD(): double {
+    public getBUSY_EVENT_LOWER_THRESHOLD(): DoubleNumber {
         return this.BUSY_EVENT_LOWER_THRESHOLD;
     }
 
-    public setCHANGE_STEPS_DEMANDED(val: double): void {
-        this.CHANGE_STEPS_DEMANDED = val as int;
+    public setCHANGE_STEPS_DEMANDED(val: DoubleNumber): void {
+        this.CHANGE_STEPS_DEMANDED = val as IntNumber;
     }
 
-    public getCHANGE_STEPS_DEMANDED(): double {
+    public getCHANGE_STEPS_DEMANDED(): DoubleNumber {
         return this.CHANGE_STEPS_DEMANDED;
     }
 
     public resetEmotions(): void {
-        this.happyValue = Float32Math.from(0.5) as float;
-        this.busyValue = Float32Math.from(0.5) as float;
+        this.happyValue = Float32Math.from(0.5) as FloatNumber;
+        this.busyValue = Float32Math.from(0.5) as FloatNumber;
         this.lastbusy = 0.5;
         this.lasthappy = 0.5;
     }
 
     public constructor();
 
-    public constructor(HAPPY_EVENT_LOWER_THRESHOLD: float, HAPPY_EVENT_HIGHER_THRESHOLD: float,
-        BUSY_EVENT_LOWER_THRESHOLD: float, BUSY_EVENT_HIGHER_THRESHOLD: float, CHANGE_STEPS_DEMANDED: int);
+    public constructor(HAPPY_EVENT_LOWER_THRESHOLD: FloatNumber, HAPPY_EVENT_HIGHER_THRESHOLD: FloatNumber,
+        BUSY_EVENT_LOWER_THRESHOLD: FloatNumber, BUSY_EVENT_HIGHER_THRESHOLD: FloatNumber, CHANGE_STEPS_DEMANDED: IntNumber);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -105,12 +105,12 @@ export class Emotions implements Plugin {
             }
 
             case 5: {
-                const [HAPPY_EVENT_LOWER_THRESHOLD, HAPPY_EVENT_HIGHER_THRESHOLD, BUSY_EVENT_LOWER_THRESHOLD, BUSY_EVENT_HIGHER_THRESHOLD, CHANGE_STEPS_DEMANDED] = args as [float, float, float, float, int];
+                const [HAPPY_EVENT_LOWER_THRESHOLD, HAPPY_EVENT_HIGHER_THRESHOLD, BUSY_EVENT_LOWER_THRESHOLD, BUSY_EVENT_HIGHER_THRESHOLD, CHANGE_STEPS_DEMANDED] = args as [FloatNumber, FloatNumber, FloatNumber, FloatNumber, IntNumber];
 
-                this.BUSY_EVENT_LOWER_THRESHOLD = Float32Math.from(BUSY_EVENT_LOWER_THRESHOLD) as float;
-                this.BUSY_EVENT_HIGHER_THRESHOLD = Float32Math.from(BUSY_EVENT_HIGHER_THRESHOLD) as float;
-                this.HAPPY_EVENT_LOWER_THRESHOLD = Float32Math.from(HAPPY_EVENT_LOWER_THRESHOLD) as float;
-                this.HAPPY_EVENT_HIGHER_THRESHOLD = Float32Math.from(HAPPY_EVENT_HIGHER_THRESHOLD) as float;
+                this.BUSY_EVENT_LOWER_THRESHOLD = Float32Math.from(BUSY_EVENT_LOWER_THRESHOLD) as FloatNumber;
+                this.BUSY_EVENT_HIGHER_THRESHOLD = Float32Math.from(BUSY_EVENT_HIGHER_THRESHOLD) as FloatNumber;
+                this.HAPPY_EVENT_LOWER_THRESHOLD = Float32Math.from(HAPPY_EVENT_LOWER_THRESHOLD) as FloatNumber;
+                this.HAPPY_EVENT_HIGHER_THRESHOLD = Float32Math.from(HAPPY_EVENT_HIGHER_THRESHOLD) as FloatNumber;
                 this.CHANGE_STEPS_DEMANDED = CHANGE_STEPS_DEMANDED;
 
 
@@ -124,36 +124,36 @@ export class Emotions implements Plugin {
     }
 
 
-    public set(happy: float, busy: float): void {
-        this.happyValue = Float32Math.from(happy) as float;
-        this.busyValue = Float32Math.from(busy) as float;
+    public set(happy: FloatNumber, busy: FloatNumber): void {
+        this.happyValue = Float32Math.from(happy) as FloatNumber;
+        this.busyValue = Float32Math.from(busy) as FloatNumber;
     }
 
-    public happy(): float {
+    public happy(): FloatNumber {
         return this.happyValue;
     }
 
-    public busy(): float {
+    public busy(): FloatNumber {
         return this.busyValue;
     }
 
-    public adjustSatisfaction(newValue: float, weight: float, nal: DerivationContext): void {
+    public adjustSatisfaction(newValue: FloatNumber, weight: FloatNumber, nal: DerivationContext): void {
 
-        // float oldV = happyValue;
+        // FloatNumber oldV = happyValue;
         this.happyValue = Float32Math.add(
             this.happyValue,
             Float32Math.multiply(newValue, weight),
-        ) as float;
+        ) as FloatNumber;
         this.happyValue = Float32Math.divide(
             this.happyValue,
             Float32Math.add(1.0, weight),
-        ) as float;
+        ) as FloatNumber;
 
         if (!this.enabled) {
             return;
         }
 
-        let frequency: float = -1;
+        let frequency: FloatNumber = -1;
         if (Math.abs(this.happyValue - this.lasthappy) > this.CHANGE_THRESHOLD
             && nal.time.time() - this.last_happy_time > this.CHANGE_STEPS_DEMANDED) {
             if (this.happyValue > this.HAPPY_EVENT_HIGHER_THRESHOLD && this.lasthappy <= this.HAPPY_EVENT_HIGHER_THRESHOLD) {
@@ -226,29 +226,29 @@ export class Emotions implements Plugin {
              */
         }
         // if (Math.abs(oldV - happyValue) > 0.1) {
-        // Record.append("HAPPY: " + (int) (oldV*10.0) + " to " + (int)
+        // Record.append("HAPPY: " + (IntNumber) (oldV*10.0) + " to " + (IntNumber)
         // (happyValue*10.0) + "\n");
     }
 
-    public lastbusy: double = 0.5;
-    public readonly CHANGE_THRESHOLD: double = 0.25;
+    public lastbusy: DoubleNumber = 0.5;
+    public readonly CHANGE_THRESHOLD: DoubleNumber = 0.25;
 
-    public adjustBusy(newValue: float, weight: float, nal: DerivationContext): void {
+    public adjustBusy(newValue: FloatNumber, weight: FloatNumber, nal: DerivationContext): void {
 
         this.busyValue = Float32Math.add(
             this.busyValue,
             Float32Math.multiply(newValue, weight),
-        ) as float;
+        ) as FloatNumber;
         this.busyValue = Float32Math.divide(
             this.busyValue,
             Float32Math.add(1.0, weight),
-        ) as float;
+        ) as FloatNumber;
 
         if (!this.enabled) {
             return;
         }
 
-        let frequency: float = -1;
+        let frequency: FloatNumber = -1;
         if (Math.abs(this.busyValue - this.lastbusy) > this.CHANGE_THRESHOLD && nal.time.time() - this.last_busy_time > this.CHANGE_STEPS_DEMANDED) {
             if (this.busyValue > this.BUSY_EVENT_HIGHER_THRESHOLD && this.lastbusy <= this.BUSY_EVENT_HIGHER_THRESHOLD) {
                 frequency = 1.0;

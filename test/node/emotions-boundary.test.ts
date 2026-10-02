@@ -3,7 +3,7 @@ import test from "node:test";
 
 import { Emotions } from "../../src/plugin/mental/Emotions.ts";
 
-test("Emotions keeps the Java plain-plugin boundary and float constructor contract", () => {
+test("Emotions keeps the Java plain-plugin boundary and FloatNumber constructor contract", () => {
     const defaultPlugin = new Emotions();
     const configured = new Emotions(
         Math.fround(0.2),

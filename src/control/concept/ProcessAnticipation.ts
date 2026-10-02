@@ -1,5 +1,5 @@
 //! Java source: opennars/control/concept/ProcessAnticipation.java
-import type { long, float, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { RuntimeLong, FloatNumber, DoubleNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { DerivationContext } from "../DerivationContext.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Concept } from "../../entity/Concept.ts";
@@ -40,11 +40,11 @@ import type { Parameters } from "../../main/Parameters.ts";
 export class ProcessAnticipation {
 
     public static anticipate(nal: DerivationContext, mainSentence: Sentence, budget: BudgetValue,
-        minTime: long, maxTime: long, urgency: float, substitution: MapContract<Term, Term>): void {
+        minTime: RuntimeLong, maxTime: RuntimeLong, urgency: FloatNumber, substitution: MapContract<Term, Term>): void {
         // derivation was successful and it was a judgment event
         let stamp: Stamp = new Stamp(nal.time, nal.memory);
         stamp.setOccurrenceTime(Stamp.ETERNAL);
-        let eternalized_induction_confidence: float = nal.memory.narParameters.ANTICIPATION_CONFIDENCE;
+        let eternalized_induction_confidence: FloatNumber = nal.memory.narParameters.ANTICIPATION_CONFIDENCE;
         let s: Sentence = new Sentence(
             mainSentence.term,
             mainSentence.punctuation,
@@ -204,13 +204,13 @@ export class ProcessAnticipation {
                     // compute amount of negative evidence based on current evidence
                     // we just take the counter and don't add one because we want to compute a w
                     // "unit" which will be revised
-                    let countWithNegativeEvidence: long = (term as Implication).counter;
-                    let negativeEvidenceRatio: double = 1.0 / Number(countWithNegativeEvidence);
+                    let countWithNegativeEvidence: RuntimeLong = (term as Implication).counter;
+                    let negativeEvidenceRatio: DoubleNumber = 1.0 / Number(countWithNegativeEvidence);
 
                     // compute confidence by negative evidence
-                    let w: double = UtilityFunctions.c2w(truthOfBeliefWithTerm.confidence, narParameters);
+                    let w: DoubleNumber = UtilityFunctions.c2w(truthOfBeliefWithTerm.confidence, narParameters);
                     w *= negativeEvidenceRatio;
-                    let c: double = UtilityFunctions.w2c(Float32Math.from(w), narParameters);
+                    let c: DoubleNumber = UtilityFunctions.w2c(Float32Math.from(w), narParameters);
 
                     let truth: TruthValue = TruthValue.fromFrequencyConfidence(0.0, c, narParameters); // frequency of negative
                     // confirmation is 0.0

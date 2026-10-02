@@ -1,5 +1,5 @@
 //! Java source: opennars/io/Narsese.java
-import type { int, float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, FloatNumber, RuntimeLong } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { textValue } from "../runtime/Text.ts";
 import type { TextInput } from "../runtime/Text.ts";
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
@@ -201,10 +201,10 @@ export class Narsese implements Parser {
         const truthString = Narsese.getTruthString(buffer);
         const tense = Narsese.parseTense(buffer);
         const str = buffer.toString().trim();
-        let last: int = str.length - 1;
+        let last: IntNumber = str.length - 1;
         let punc: TextCharacter = str.charAt(last);
 
-        let stamp: Stamp = new Stamp(-1 as unknown as long /* if -1, will be set right before the Task is input */,
+        let stamp: Stamp = new Stamp(-1 as unknown as RuntimeLong /* if -1, will be set right before the Task is input */,
             tense, this.memory.newStampSerial(), this.memory.narParameters.DURATION);
 
         let truth: TruthValue | null = this.parseTruth(truthString, punc);
@@ -240,7 +240,7 @@ export class Narsese implements Parser {
         if (s.length() === 0 || String.fromCharCode(s.charAt(0)) !== BUDGET_VALUE_MARK) {
             return null;
         }
-        let i: int = s.indexOf(BUDGET_VALUE_MARK, 1); // looking for the end
+        let i: IntNumber = s.indexOf(BUDGET_VALUE_MARK, 1); // looking for the end
         if (i < 0) {
             throw new Parser.InvalidInputException("missing budget closer");
         }
@@ -262,11 +262,11 @@ export class Narsese implements Parser {
      *                                      TruthValue
      */
     private static getTruthString(s: Utf16Builder): string | null {
-        let last: int = s.length() - 1;
+        let last: IntNumber = s.length() - 1;
         if (s.length() === 0 || String.fromCharCode(s.charAt(last)) !== TRUTH_VALUE_MARK) { // use default
             return null;
         }
-        let first: int = s.indexOf(TRUTH_VALUE_MARK); // looking for the beginning
+        let first: IntNumber = s.indexOf(TRUTH_VALUE_MARK); // looking for the beginning
         if (first === last) { // no matching closer
             throw new Parser.InvalidInputException("missing truth mark");
         }
@@ -290,18 +290,18 @@ export class Narsese implements Parser {
         if ((type === QUESTION_MARK) || (type === QUEST_MARK)) {
             return null;
         }
-        let frequency: float = Math.fround(1.0) as float;
-        let confidence: float = Math.fround(this.memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE) as float;
+        let frequency: FloatNumber = Math.fround(1.0) as FloatNumber;
+        let confidence: FloatNumber = Math.fround(this.memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE) as FloatNumber;
         if (type === GOAL_MARK) {
-            confidence = Math.fround(this.memory.narParameters.DEFAULT_GOAL_CONFIDENCE) as float;
+            confidence = Math.fround(this.memory.narParameters.DEFAULT_GOAL_CONFIDENCE) as FloatNumber;
         }
         if (s !== null) {
-            let i: int = s.indexOf(VALUE_SEPARATOR);
+            let i: IntNumber = s.indexOf(VALUE_SEPARATOR);
             if (i < 0) {
-                frequency = Math.fround(Number.parseFloat(s)) as float;
+                frequency = Math.fround(Number.parseFloat(s)) as FloatNumber;
             } else {
-                frequency = Math.fround(Number.parseFloat(s.substring(0, i))) as float;
-                confidence = Math.fround(Number.parseFloat(s.substring(i + 1))) as float;
+                frequency = Math.fround(Number.parseFloat(s.substring(0, i))) as FloatNumber;
+                confidence = Math.fround(Number.parseFloat(s.substring(i + 1))) as FloatNumber;
             }
         }
         return TruthValue.fromFrequencyConfidence(frequency, confidence, this.memory.narParameters);
@@ -318,8 +318,8 @@ export class Narsese implements Parser {
      *                                      BudgetValue
      */
     private parseBudget(s: string | null, punctuation: TextCharacter, truth: TruthValue | null): BudgetValue {
-        let priority: float;
-        let durability: float;
+        let priority: FloatNumber;
+        let durability: FloatNumber;
         switch (punctuation) {
             case JUDGMENT_MARK:
                 priority = this.memory.narParameters.DEFAULT_JUDGMENT_PRIORITY;
@@ -341,18 +341,18 @@ export class Narsese implements Parser {
                 throw new Parser.InvalidInputException(`unknown punctuation: '${punctuation}'`);
         }
         if (s !== null) { // override default
-            let i: int = s.indexOf(VALUE_SEPARATOR);
+            let i: IntNumber = s.indexOf(VALUE_SEPARATOR);
             if (i < 0) { // default durability
                 priority = Number.parseFloat(s);
             } else {
-                let i2: int = s.indexOf(VALUE_SEPARATOR, i + 1);
+                let i2: IntNumber = s.indexOf(VALUE_SEPARATOR, i + 1);
                 if (i2 === -1)
                     i2 = s.length;
                 priority = Number.parseFloat(s.substring(0, i));
                 durability = Number.parseFloat(s.substring(i + 1, i2));
             }
         }
-        let quality: float = (truth === null) ? 1 : BudgetFunctions.truthToQuality(truth);
+        let quality: FloatNumber = (truth === null) ? 1 : BudgetFunctions.truthToQuality(truth);
         return new BudgetValue(priority, durability, quality, this.memory.narParameters);
     }
 
@@ -363,7 +363,7 @@ export class Narsese implements Parser {
      * @return a tense value
      */
     public static parseTense(s: Utf16Builder): Tense {
-        let i: int = s.indexOf(Symbols.TENSE_MARK);
+        let i: IntNumber = s.indexOf(Symbols.TENSE_MARK);
         let t = "";
         if (i > 0) {
             t = s.substring(i).trim();
@@ -395,7 +395,7 @@ export class Narsese implements Parser {
         if (text.length === 0)
             return null;
 
-        let index: int = text.length - 1;
+        let index: IntNumber = text.length - 1;
         let first: TextCharacter = text.charAt(0);
         let last: TextCharacter = text.charAt(index);
 
@@ -437,8 +437,8 @@ export class Narsese implements Parser {
             // function(a,b)
 
             // test for existence of matching parentheses at beginning at index!=0
-            let pOpen: int = text.indexOf('(');
-            let pClose: int = text.lastIndexOf(')');
+            let pOpen: IntNumber = text.indexOf('(');
+            let pClose: IntNumber = text.lastIndexOf(')');
             if ((pOpen !== -1) && (pClose !== -1) && (pClose === text.length - 1)) {
 
                 const operatorString: string = Operator.addPrefixIfMissing(text.substring(0, pOpen));
@@ -527,7 +527,7 @@ export class Narsese implements Parser {
      */
     private parseStatement(s0: string): Statement {
         const s = s0.trim();
-        let i: int = Narsese.topRelation(s);
+        let i: IntNumber = Narsese.topRelation(s);
         if (i < 0) {
             throw new Parser.InvalidInputException("invalid statement: topRelation(s) < 0");
         }
@@ -560,7 +560,7 @@ export class Narsese implements Parser {
         if (s.length === 0) {
             throw new Parser.InvalidInputException(`Empty compound term: ${s}`);
         }
-        let firstSeparator: int = s.indexOf(ARGUMENT_SEPARATOR);
+        let firstSeparator: IntNumber = s.indexOf(ARGUMENT_SEPARATOR);
         if (firstSeparator === -1) {
             throw new Parser.InvalidInputException(`Invalid compound term (missing ARGUMENT_SEPARATOR): ${s}`);
         }
@@ -619,8 +619,8 @@ export class Narsese implements Parser {
     private parseArguments(s0: string): Term[] {
         const s = s0.trim();
         const list: Term[] = [];
-        let start: int = 0;
-        let end: int = 0;
+        let start: IntNumber = 0;
+        let end: IntNumber = 0;
         let t: Term;
         while (end < s.length - 1) {
             end = Narsese.nextSeparator(s, start);
@@ -646,9 +646,9 @@ export class Narsese implements Parser {
      * @param s     The String to be parsed
      * @param first The starting index
      */
-    private static nextSeparator(s: string, first: int): int {
-        let levelCounter: int = 0;
-        let i: int = first;
+    private static nextSeparator(s: string, first: IntNumber): IntNumber {
+        let levelCounter: IntNumber = 0;
+        let i: IntNumber = first;
         while (i < s.length - 1) {
             if (Narsese.isOpener(s, i)) {
                 levelCounter++;
@@ -670,9 +670,9 @@ export class Narsese implements Parser {
      * @return the index of the top-level getRelation
      * @param s The String to be parsed
      */
-    private static topRelation(s: string): int { // need efficiency improvement
-        let levelCounter: int = 0;
-        let i: int = 0;
+    private static topRelation(s: string): IntNumber { // need efficiency improvement
+        let levelCounter: IntNumber = 0;
+        let i: IntNumber = 0;
         while (i < s.length - 3) { // don't need to check the last 3 characters
             if ((levelCounter === 0) && (isRelation(s.substring(i, i + 3)))) {
                 return i;
@@ -695,7 +695,7 @@ export class Narsese implements Parser {
      * @param s The String to be checked
      * @param i The starting index
      */
-    private static isOpener(s: string, i: int): boolean {
+    private static isOpener(s: string, i: IntNumber): boolean {
         let c: TextCharacter = s.charAt(i);
 
         let b: boolean = (getOpener(c) !== null);
@@ -712,7 +712,7 @@ export class Narsese implements Parser {
      * @param s The String to be checked
      * @param i The starting index
      */
-    private static isCloser(s: string, i: int): boolean {
+    private static isCloser(s: string, i: IntNumber): boolean {
         let c: TextCharacter = s.charAt(i);
 
         let b: boolean = (getCloser(c) !== null);

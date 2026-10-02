@@ -1,4 +1,4 @@
-import { java, JavaObject, type int } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber } from "../support/legacy-runtime-facade.ts";
 import { Concept } from "../../src/entity/Concept.ts";
 import { Narsese } from "../../src/io/Narsese.ts";
 import { Parser } from "../../src/io/Parser.ts";
@@ -113,8 +113,8 @@ export class TermTest extends JavaObject {
         assertTrue(term2.compareTo(term2.clone()) === 0);
 
         let t1e2: boolean = term1.equals(term2);
-        let t1c2: int = term1.compareTo(term2);
-        let t2c1: int = term2.compareTo(term1);
+        let t1c2: IntNumber = term1.compareTo(term2);
+        let t2c1: IntNumber = term2.compareTo(term1);
 
         assertTrue(!t1e2);
         assertTrue("term1 and term2 inequal, so t1.compareTo(t2) should not = 0", t1c2 !== 0);

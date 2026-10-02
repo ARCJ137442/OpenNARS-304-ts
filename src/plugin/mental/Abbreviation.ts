@@ -1,7 +1,7 @@
 //! Java source: opennars/plugin/mental/Abbreviation.java
 import { ReasonerInputError } from "../../runtime/ReasonerErrors.ts";
 import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
-import type { double, int, float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { DoubleNumber, IntNumber, FloatNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Stamp } from "../../entity/Stamp.ts";
@@ -42,37 +42,37 @@ export class Abbreviation implements Plugin {
     // process and the resulting abbreviation judgment
     // public PortableDouble priorityFactor = new PortableDouble(1.0);
 
-    public abbreviationProbability: double = 0.0001;
-    public abbreviationComplexityMin: int = 20;
-    public abbreviationQualityMin: double = 0.95;
+    public abbreviationProbability: DoubleNumber = 0.0001;
+    public abbreviationComplexityMin: IntNumber = 20;
+    public abbreviationQualityMin: DoubleNumber = 0.95;
 
-    public setAbbreviationProbability(val: double): void {
+    public setAbbreviationProbability(val: DoubleNumber): void {
         this.abbreviationProbability = val;
     }
 
-    public getAbbreviationProbability(): double {
+    public getAbbreviationProbability(): DoubleNumber {
         return this.abbreviationProbability;
     }
 
-    public setAbbreviationComplexityMin(val: double): void {
-        this.abbreviationComplexityMin = val as int;
+    public setAbbreviationComplexityMin(val: DoubleNumber): void {
+        this.abbreviationComplexityMin = val as IntNumber;
     }
 
-    public getAbbreviationComplexityMin(): double {
+    public getAbbreviationComplexityMin(): DoubleNumber {
         return this.abbreviationComplexityMin;
     }
 
-    public setAbbreviationQualityMin(val: double): void {
+    public setAbbreviationQualityMin(val: DoubleNumber): void {
         this.abbreviationQualityMin = val;
     }
 
-    public getAbbreviationQualityMin(): double {
+    public getAbbreviationQualityMin(): DoubleNumber {
         return this.abbreviationQualityMin;
     }
 
     public constructor();
 
-    public constructor(abbreviationProbability: double, abbreviationComplexityMin: int, abbreviationQualityMin: double);
+    public constructor(abbreviationProbability: DoubleNumber, abbreviationComplexityMin: IntNumber, abbreviationQualityMin: DoubleNumber);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -80,7 +80,7 @@ export class Abbreviation implements Plugin {
             }
 
             case 3: {
-                const [abbreviationProbability, abbreviationComplexityMin, abbreviationQualityMin] = args as [double, int, double];
+                const [abbreviationProbability, abbreviationComplexityMin, abbreviationQualityMin] = args as [DoubleNumber, IntNumber, DoubleNumber];
 
 
                 this.abbreviationProbability = abbreviationProbability;
@@ -154,7 +154,7 @@ export class Abbreviation implements Plugin {
             super("^abbreviate");
         }
 
-        private static currentTermSerial: int = 1;
+        private static currentTermSerial: IntNumber = 1;
 
         public newSerialTerm(prefix: TextCharacter): Term {
             /* synchronized (currentTermSerial) { */
@@ -189,7 +189,7 @@ export class Abbreviation implements Plugin {
                 // convension
                 new Stamp(time, memory));
 
-            let quality: float = BudgetFunctions.truthToQuality(sentence.getTruth());
+            let quality: FloatNumber = BudgetFunctions.truthToQuality(sentence.getTruth());
 
             let budget: BudgetValue = new BudgetValue(
                 memory.narParameters.DEFAULT_JUDGMENT_PRIORITY,

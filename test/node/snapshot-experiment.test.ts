@@ -7,7 +7,7 @@ import assert from "node:assert/strict";
 import { recoverSnapshotCheckpoint, runSnapshotExperiment } from "../../scripts/e2e/run-snapshot-experiment.mjs";
 
 test("checkpoint recovery stays consistent beyond 200 reasoning cycles", async () => {
-  const checkpointDirectory = await mkdtemp(join(tmpdir(), "opennars-long-recovery-"));
+  const checkpointDirectory = await mkdtemp(join(tmpdir(), "opennars-RuntimeLong-recovery-"));
   try {
     const result = await runSnapshotExperiment({
       cycles: 360,

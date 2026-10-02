@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Interval.java
-import type { long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { RuntimeLong } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { asText, type TextInput } from "../runtime/Text.ts";
@@ -21,32 +21,32 @@ import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 export class Interval extends Term {
 
     public static interval(i: TextInput): Interval {
-        return new Interval(Number.parseInt(String(i).slice(1), 10) as unknown as long);
+        return new Interval(Number.parseInt(String(i).slice(1), 10) as unknown as RuntimeLong);
     }
 
     public hasInterval(): boolean {
         return true;
     }
 
-    public readonly time: long;
+    public readonly time: RuntimeLong;
 
     /**
      * this constructor has an extra unused argument to differentiate it from the
      * other one,
      * for specifying magnitude directly.
      */
-    public constructor(time: long);
+    public constructor(time: RuntimeLong);
 
     public constructor(i: TextInput);
     public constructor(...args: unknown[]) {
         if (args.length !== 1) {
             throw new ReasonerInputError("Invalid number of arguments");
         }
-        const value = args[0] as long | TextInput;
+        const value = args[0] as RuntimeLong | TextInput;
         super();
         const isString = typeof value === "string" || typeof value === "object";
         const time = isString ? Number.parseInt(String(value).slice(1), 10) - 1 : Number(value);
-        this.time = time as unknown as long;
+        this.time = time as unknown as RuntimeLong;
         this.setName(asText(`${Symbols.INTERVAL_PREFIX}${time}`));
     }
 

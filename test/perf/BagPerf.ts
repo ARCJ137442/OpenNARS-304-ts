@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type float, type double, S } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber, type FloatNumber, type DoubleNumber, S } from "../support/legacy-runtime-facade.ts";
 import {
     JavaClassNotFoundException,
     JavaIllegalAccessException,
@@ -33,9 +33,9 @@ const Lists = {
 export class BagPerf extends JavaObject {
 
     private static narParameters: Parameters;
-    protected readonly repeats: int = 8;
-    protected readonly warmups: int = 1;
-    protected static forgetRate: float;
+    protected readonly repeats: IntNumber = 8;
+    protected readonly warmups: IntNumber = 1;
+    protected static forgetRate: FloatNumber;
 
     static {
         try {
@@ -65,20 +65,20 @@ export class BagPerf extends JavaObject {
         }
     }
 
-    protected randomAccesses: int = 0;
-    protected readonly insertRatio: double = 0.9;
+    protected randomAccesses: IntNumber = 0;
+    protected readonly insertRatio: DoubleNumber = 0.9;
 
     /*
-     * public int getLevelSize(Bag<?,?> lb, final int level) {
+     * public IntNumber getLevelSize(Bag<?,?> lb, final IntNumber level) {
      * return (lb.level[level] == null) ? 0 : lb.level[level].size();
      * }
      */
 
-    public getMaxItemsPerLevel<E extends Item<K>, K>(b: Bag<E, K>): float {
+    public getMaxItemsPerLevel<E extends Item<K>, K>(b: Bag<E, K>): FloatNumber {
         /*
-         * int max = getLevelSize(b,0);
-         * for (int i = 1; i < b.levels; i++) {
-         * final int s = getLevelSize(b,i);
+         * IntNumber max = getLevelSize(b,0);
+         * for (IntNumber i = 1; i < b.levels; i++) {
+         * final IntNumber s = getLevelSize(b,i);
          * if (s > max) {
          * max = s;
          * }
@@ -88,11 +88,11 @@ export class BagPerf extends JavaObject {
         return 0.0;
     }
 
-    public getMinItemsPerLevel<E extends Item<K>, K>(b: Bag<E, K>): float {
+    public getMinItemsPerLevel<E extends Item<K>, K>(b: Bag<E, K>): FloatNumber {
         /*
-         * int min = getLevelSize(b,0);
-         * for (int i = 1; i < b.levels; i++) {
-         * final int s = getLevelSize(b,i);
+         * IntNumber min = getLevelSize(b,0);
+         * for (IntNumber i = 1; i < b.levels; i++) {
+         * final IntNumber s = getLevelSize(b,i);
          * if (s < min) {
          * min = s;
          * }
@@ -102,15 +102,15 @@ export class BagPerf extends JavaObject {
         return 0;
     }
 
-    public totalPriority: float = 0;
+    public totalPriority: FloatNumber = 0;
 
 
-    public totalMinItemsPerLevel: float = 0;
+    public totalMinItemsPerLevel: FloatNumber = 0;
 
 
-    public totalMaxItemsPerLevel: float = 0;
+    public totalMaxItemsPerLevel: FloatNumber = 0;
 
-    public testBag(List: boolean, levels: int, capacity: int, forgetRate: float): void {
+    public testBag(List: boolean, levels: IntNumber, capacity: IntNumber, forgetRate: FloatNumber): void {
         const outer = this;
 
         this.totalPriority = 0;
@@ -184,7 +184,7 @@ export class BagPerf extends JavaObject {
         java.lang.System.out.println();
     }
 
-    public static itemID: int = 0;
+    public static itemID: IntNumber = 0;
     public static rnd: java.util.Random = new java.util.Random(42n);
 
     /** Empty Item implementation useful for testing */
@@ -193,14 +193,14 @@ export class BagPerf extends JavaObject {
 
         public constructor();
 
-        public constructor(priority: float);
+        public constructor(priority: FloatNumber);
         public constructor(...args: unknown[]) {
             if (args.length !== 0 && args.length !== 1) {
                 throw new java.lang.IllegalArgumentException(S`Invalid number of arguments`);
             }
             const priority = args.length === 0
                 ? BagPerf.rnd.nextFloat() * (1.0 - BagPerf.narParameters.TRUTH_EPSILON)
-                : args[0] as float;
+                : args[0] as FloatNumber;
             super(new BudgetValue(priority, priority, priority, BagPerf.narParameters));
             this.key = new java.lang.String(String(BagPerf.itemID++));
         }
@@ -212,9 +212,9 @@ export class BagPerf extends JavaObject {
     };
 
 
-    public static randomBagIO(b: Bag<BagPerf.NullItem, java.lang.CharSequence>, accesses: int,
-        insertProportion: double): void {
-        for (let i: int = 0; i < accesses; i++) {
+    public static randomBagIO(b: Bag<BagPerf.NullItem, java.lang.CharSequence>, accesses: IntNumber,
+        insertProportion: DoubleNumber): void {
+        for (let i: IntNumber = 0; i < accesses; i++) {
             if (BagPerf.rnd.nextFloat() > insertProportion) {
                 // remove
                 b.takeOut();
@@ -227,7 +227,7 @@ export class BagPerf extends JavaObject {
 
     public static iterate(b: Bag<BagPerf.NullItem, java.lang.CharSequence>): void {
         let i: MutableIterator<BagPerf.NullItem> = b.iterator();
-        let count: int = 0;
+        let count: IntNumber = 0;
         while (i.hasNext()) {
             i.next();
             count++;
@@ -238,9 +238,9 @@ export class BagPerf extends JavaObject {
     }
 
     public static getTime(label: java.lang.String, b: BagPerf.BagBuilder<BagPerf.NullItem, java.lang.CharSequence>,
-        iterations: int,
-        randomAccesses: int,
-        insertRatio: float, repeats: int, warmups: int): double {
+        iterations: IntNumber,
+        randomAccesses: IntNumber,
+        insertRatio: FloatNumber, repeats: IntNumber, warmups: IntNumber): DoubleNumber {
         let p: Performance = new class extends Performance {
 
             public init(): void {
@@ -252,7 +252,7 @@ export class BagPerf extends JavaObject {
 
                 BagPerf.randomBagIO(bag, randomAccesses, insertRatio);
 
-                for (let i: int = 0; i < iterations; i++)
+                for (let i: IntNumber = 0; i < iterations; i++)
                     BagPerf.iterate(bag);
 
             }
@@ -267,9 +267,9 @@ export class BagPerf extends JavaObject {
     public constructor() {
 
         super();
-        for (let capacity: int = 8; capacity < 40000; capacity *= capacity) {
+        for (let capacity: IntNumber = 8; capacity < 40000; capacity *= capacity) {
             this.randomAccesses = capacity * 64;
-            for (let i: int = 5; i < 200; i += 5) {
+            for (let i: IntNumber = 5; i < 200; i += 5) {
                 this.testBag(false, i, capacity, BagPerf.forgetRate);
                 this.testBag(true, i, capacity, BagPerf.forgetRate);
             }
@@ -277,12 +277,12 @@ export class BagPerf extends JavaObject {
 
     }
 
-    public static compare(iterations: int,
-        randomAccesses: int,
-        insertRatio: float,
-        repeats: int, warmups: int, ...B: Bag<BagPerf.NullItem, java.lang.CharSequence>[]): java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, double> {
+    public static compare(iterations: IntNumber,
+        randomAccesses: IntNumber,
+        insertRatio: FloatNumber,
+        repeats: IntNumber, warmups: IntNumber, ...B: Bag<BagPerf.NullItem, java.lang.CharSequence>[]): java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, DoubleNumber> {
 
-        let t: java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, double> = new java.util.LinkedHashMap();
+        let t: java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, DoubleNumber> = new java.util.LinkedHashMap();
 
         for (let X of B) {
             X.clear();
@@ -319,27 +319,27 @@ export class BagPerf extends JavaObject {
 
     public static main(args: java.lang.String[]): void {
         BagPerf.narParameters = new Nar().narParameters;
-        let itemsPerLevel: int = 10;
-        let repeats: int = 10;
-        let warmups: int = 1;
+        let itemsPerLevel: IntNumber = 10;
+        let repeats: IntNumber = 10;
+        let warmups: IntNumber = 1;
 
-        let iterationsPerItem: int = 0;
-        let accessesPerItem: int = 8;
+        let iterationsPerItem: IntNumber = 0;
+        let accessesPerItem: IntNumber = 8;
 
         let printedHeader: boolean = false;
 
-        for (let insertRatio: float = 0.1; insertRatio <= 1.0; insertRatio += 0.1) {
-            for (let levels: int = 1; levels <= 10; levels += 1) {
+        for (let insertRatio: FloatNumber = 0.1; insertRatio <= 1.0; insertRatio += 0.1) {
+            for (let levels: IntNumber = 1; levels <= 10; levels += 1) {
 
-                let items: int = levels * itemsPerLevel;
-                let iterations: int = iterationsPerItem * items;
-                let randomAccesses: int = accessesPerItem * items;
+                let items: IntNumber = levels * itemsPerLevel;
+                let iterations: IntNumber = iterationsPerItem * items;
+                let randomAccesses: IntNumber = accessesPerItem * items;
 
                 let bags: Bag<BagPerf.NullItem, java.lang.CharSequence>[] =
                     new Array<Bag<BagPerf.NullItem, java.lang.CharSequence>>(1);
                 bags[0] = new Bag(levels, items, BagPerf.narParameters);
 
-                let t: java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, double> = BagPerf.compare(
+                let t: java.util.Map<Bag<BagPerf.NullItem, java.lang.CharSequence>, DoubleNumber> = BagPerf.compare(
                     iterations, randomAccesses, insertRatio, repeats, warmups,
                     ...bags);
 

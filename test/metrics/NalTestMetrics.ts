@@ -1,4 +1,4 @@
-import { java, JavaObject, type double, type int } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type DoubleNumber, type IntNumber } from "../support/legacy-runtime-facade.ts";
 import { JavaDoubleCompat } from "../support/legacy-runtime-facade.ts";
 import { NALTest } from "../core/NALTest.ts";
 
@@ -10,16 +10,16 @@ import { NALTest } from "../core/NALTest.ts";
  * Metrics are numeric values which indicate how fast NARS could solve problems
  */
 export class NalTestMetrics extends JavaObject {
-    public static computeMetric(scores: java.util.Map<java.lang.String, java.util.List<double>>): double {
-        let metric: double = 0;
+    public static computeMetric(scores: java.util.Map<java.lang.String, java.util.List<DoubleNumber>>): DoubleNumber {
+        let metric: DoubleNumber = 0;
 
         // compute median of (valid) samples
         for (let iValues of scores.values()) {
             // remove infinities because they indicate failed tests and would mess up the
             // metric
-            let valuesWithoutInfinities: java.util.List<double> = NalTestMetrics.removeInfinities(iValues);
+            let valuesWithoutInfinities: java.util.List<DoubleNumber> = NalTestMetrics.removeInfinities(iValues);
 
-            let medianOfThisTest: double = NalTestMetrics.calcMedian(valuesWithoutInfinities);
+            let medianOfThisTest: DoubleNumber = NalTestMetrics.calcMedian(valuesWithoutInfinities);
 
             metric += medianOfThisTest;
         }
@@ -31,8 +31,8 @@ export class NalTestMetrics extends JavaObject {
     }
 
     // helper
-    public static removeInfinities(values: java.util.List<double>): java.util.List<double> {
-        let result: java.util.List<double> = new java.util.ArrayList<double>();
+    public static removeInfinities(values: java.util.List<DoubleNumber>): java.util.List<DoubleNumber> {
+        let result: java.util.List<DoubleNumber> = new java.util.ArrayList<DoubleNumber>();
 
         for (let iValue of values) {
             if (iValue !== Number.POSITIVE_INFINITY) {
@@ -44,7 +44,7 @@ export class NalTestMetrics extends JavaObject {
     }
 
     // helper
-    public static calcMedian(values: java.util.List<double>): double {
+    public static calcMedian(values: java.util.List<DoubleNumber>): DoubleNumber {
         return values.get(values.size() / 2);
     }
 
@@ -52,7 +52,7 @@ export class NalTestMetrics extends JavaObject {
         // number of samples was guessed and not computed with probability theory
         // TODO< maybe we need to compute it with probability theory to make sure that
         // we test enough and not to much for a given error margin >
-        let numberOfSamples: int = 50;
+        let numberOfSamples: IntNumber = 50;
 
         // we are only in multistep problems interested
         NALTest.directories = [
@@ -63,8 +63,8 @@ export class NalTestMetrics extends JavaObject {
 
         NALTest.runTests(NALTest.class);
 
-        let metric: double = NalTestMetrics.computeMetric(NALTest.scores);
+        let metric: DoubleNumber = NalTestMetrics.computeMetric(NALTest.scores);
         java.lang.System.out.println("metric=" + JavaDoubleCompat.toString(metric));
-        let debugHere: int = 5;
+        let debugHere: IntNumber = 5;
     }
 }

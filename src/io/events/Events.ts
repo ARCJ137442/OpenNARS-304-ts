@@ -4,7 +4,7 @@ import { textValue } from "../../runtime/Text.ts";
 import type { TextInput } from "../../runtime/Text.ts";
 import { ReasonerObject } from "../../runtime/ClassIdentity.ts";
 import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
-import type { long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { RuntimeLong, IntNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { Concept } from "../../entity/Concept.ts";
 import type { Sentence } from "../../entity/Sentence.ts";
 import type { Task } from "../../entity/Task.ts";
@@ -58,30 +58,30 @@ abstract class TaskAdd extends ReasonerObject implements EventObserver {
 }
 
 abstract class InferenceEvent extends ReasonerObject {
-    public readonly when: long;
+    public readonly when: RuntimeLong;
     public readonly stack: readonly StackFrame[] | null;
 
     // how many stack frames down to record from; we don't need to include the
     // current and the previous (InferenceEvent subclass's constructor
-    protected readonly STACK_PREFIX: int = 4;
+    protected readonly STACK_PREFIX: IntNumber = 4;
 
-    protected constructor(when: long);
-    protected constructor(when: long, stackFrames: int);
+    protected constructor(when: RuntimeLong);
+    protected constructor(when: RuntimeLong, stackFrames: IntNumber);
     protected constructor(...args: unknown[]) {
         super();
         if (args.length !== 1 && args.length !== 2) {
             throw new ReasonerInputError("Invalid number of arguments");
         }
 
-        const when = args[0] as long;
-        const stackFrames = args.length === 2 ? args[1] as int : 0;
+        const when = args[0] as RuntimeLong;
+        const stackFrames = args.length === 2 ? args[1] as IntNumber : 0;
         this.when = when;
 
         if (stackFrames > 0) {
             const sl = Array.from(
                 ReasonerScheduler.current().stackFrames() as StackFrame[],
             );
-            let frame: int = 0;
+            let frame: IntNumber = 0;
 
             for (const e of sl) {
                 frame++;
@@ -105,14 +105,14 @@ abstract class InferenceEvent extends ReasonerObject {
 abstract class ParametricInferenceEvent<O> extends InferenceEvent {
     public readonly object: O;
 
-    public constructor(object: O, when: long) {
+    public constructor(object: O, when: RuntimeLong) {
         super(when);
         this.object = object;
     }
 }
 
 class ConceptNew extends ParametricInferenceEvent<Concept> {
-    public constructor(c: Concept, when: long) {
+    public constructor(c: Concept, when: RuntimeLong) {
         super(c, when);
     }
 
@@ -353,7 +353,7 @@ export namespace Events {
 	export type PluginsChange = InstanceType<typeof Events.PluginsChange>;
 	export type ConceptDirectProcessedTask = InstanceType<typeof Events.ConceptDirectProcessedTask>;
 	export type InferenceEvent = {
-		readonly when: long;
+		readonly when: RuntimeLong;
 		readonly stack: readonly StackFrame[] | null;
 		getType(): ClassTokenLike;
 	};

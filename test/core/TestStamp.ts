@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- */import { java, JavaObject, type long } from "../support/legacy-runtime-facade.ts";
+ */import { java, JavaObject, type RuntimeLong } from "../support/legacy-runtime-facade.ts";
 import { Stamp } from "../../src/entity/Stamp.ts";
 import { assertTrue } from "../util/junit-assert.ts";
 
@@ -35,9 +35,9 @@ const toSetArray = Stamp.toSetArray;
  *
  */
 export class TestStamp extends JavaObject {
-    private narid: long = 0n;
+    private narid: RuntimeLong = 0n;
 
-    protected entry(inputId: long): BaseEntry {
+    protected entry(inputId: RuntimeLong): BaseEntry {
         return new BaseEntry(this.narid, inputId);
     }
 

@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Variable.java
-import type { int, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, ShortNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../io/Texts.ts";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
@@ -29,7 +29,7 @@ export class Variable extends Term {
 
     private scope: Term;
 
-    private hash: int;
+    private hash: IntNumber;
 
     public constructor(name: TextString | string);
 
@@ -126,7 +126,7 @@ export class Variable extends Term {
      *
      * @return The complexity of the term, an integer
      */
-    public getComplexity(): short {
+    public getComplexity(): ShortNumber {
         return 0;
     }
 
@@ -198,7 +198,7 @@ export class Variable extends Term {
         }
     }
 
-    public hashCode(): int {
+    public hashCode(): IntNumber {
         if (this.hash === 0) {
             if (this.scope !== this)
                 this.hash = 31 * textHashCode(this.name()) + this.scope.hashCode();
@@ -208,11 +208,11 @@ export class Variable extends Term {
         return this.hash;
     }
 
-    public compareTo(that: AbstractTerm): int {
+    public compareTo(that: AbstractTerm): IntNumber {
         if (this === that) {
             return 0;
         }
-        let superCmp: int = super.compareTo(that);
+        let superCmp: IntNumber = super.compareTo(that);
         if (superCmp !== 0) {
             return superCmp;
         }
@@ -225,7 +225,7 @@ export class Variable extends Term {
         // order). jree's TextString comparator applies locale punctuation
         // ordering, which reverses terms such as `#` and `[` and changes the
         // TreeSet order used by commutative compound terms.
-        let nameCmp: int = Texts.compareTo(String(this.name()), String(thatVar.name()));
+        let nameCmp: IntNumber = Texts.compareTo(String(this.name()), String(thatVar.name()));
         if (nameCmp !== 0) {
             return nameCmp;
         }
@@ -247,7 +247,7 @@ export class Variable extends Term {
      */
     /*
      * @Override
-     * public final int compareTo(final AbstractTerm that) {
+     * public final IntNumber compareTo(final AbstractTerm that) {
      * return (that instanceof Variable) ?
      * ((Comparable)name()).compareTo(that.name()) : -1;
      * }
@@ -275,17 +275,17 @@ export class Variable extends Term {
     }
 
     // ported back from 1.7, sehs addition
-    public static compare(a: Variable, b: Variable): int {
-        // int i = a.name().compareTo(b.name());
-        let i: int = Texts.compareTo(textValue(a.name()), textValue(b.name()));
+    public static compare(a: Variable, b: Variable): IntNumber {
+        // IntNumber i = a.name().compareTo(b.name());
+        let i: IntNumber = Texts.compareTo(textValue(a.name()), textValue(b.name()));
         if (i === 0) {
             let ascoped: boolean = a.scope !== a;
             let bscoped: boolean = b.scope !== b;
             if (!ascoped && !bscoped) {
                 // if the two variables are each without scope, they are not equal.
                 // so use their identityHashCode to determine a stable ordering
-                let as: int = identityHashCode(a.scope);
-                let bs: int = identityHashCode(b.scope);
+                let as: IntNumber = identityHashCode(a.scope);
+                let bs: IntNumber = identityHashCode(b.scope);
                 return as < bs ? -1 : as > bs ? 1 : 0;
             } else if (ascoped && !bscoped) {
                 return -1;
@@ -303,12 +303,12 @@ export class Variable extends Term {
         return (c === VAR_QUERY) || (c === VAR_DEPENDENT) || (c === VAR_INDEPENDENT);
     }
 
-    private static readonly MAX_CACHED_VARNAME_INDEXES: int = 64;
+    private static readonly MAX_CACHED_VARNAME_INDEXES: IntNumber = 64;
     private static readonly vn1: TextString[] = new Array<TextString>(Variable.MAX_CACHED_VARNAME_INDEXES);
     private static readonly vn2: TextString[] = new Array<TextString>(Variable.MAX_CACHED_VARNAME_INDEXES);
     private static readonly vn3: TextString[] = new Array<TextString>(Variable.MAX_CACHED_VARNAME_INDEXES);
 
-    public static getName(type: TextCharacter, index: int): TextString {
+    public static getName(type: TextCharacter, index: IntNumber): TextString {
         if (index > Variable.MAX_CACHED_VARNAME_INDEXES)
             return Variable.newName(type, index);
 
@@ -336,7 +336,7 @@ export class Variable extends Term {
         return c;
     }
 
-    protected static newName(type: TextCharacter, index: int): TextString {
+    protected static newName(type: TextCharacter, index: IntNumber): TextString {
         const typeText = typeof type === "number" ? String.fromCharCode(type) : String(type);
         const digits: string[] = [];
         do {
@@ -348,11 +348,11 @@ export class Variable extends Term {
 
     // Java source type: Map<Term, Integer>; variables intentionally do not
     // increment the count, but still accept and return the native count Map.
-    public countTermRecursively(map: MapContract<Term, int> | null): MapContract<Term, int> {
+    public countTermRecursively(map: MapContract<Term, IntNumber> | null): MapContract<Term, IntNumber> {
         if (map === null) {
             // Java original type: LinkedHashMap<Term, Integer>. Variables
             // intentionally create the accumulator but do not count.
-            map = new NativeMap<Term, int>();
+            map = new NativeMap<Term, IntNumber>();
         }
         return map; // don't count vars
     }

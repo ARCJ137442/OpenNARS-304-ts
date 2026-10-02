@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/mental/Believe.java
-import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Operator } from "../Operator.ts";
 import { Operation } from "../Operation.ts";
 import { Task } from "../../entity/Task.ts";
@@ -49,7 +49,7 @@ export class Believe extends Operator {
             throw new ReasonerInputError("");
         }
 
-        let quality: float = BudgetFunctions.truthToQuality(truth);
+        let quality: FloatNumber = BudgetFunctions.truthToQuality(truth);
         let budget: BudgetValue = new BudgetValue(memory.narParameters.DEFAULT_JUDGMENT_PRIORITY,
             memory.narParameters.DEFAULT_JUDGMENT_DURABILITY, quality, memory.narParameters);
 

@@ -4,7 +4,7 @@ import test from "node:test";
 
 test("BudgetValue uses native string markers", () => {
     const source = readFileSync("src/entity/BudgetValue.ts", "utf8");
-    assert.doesNotMatch(source, /type char\s*=/);
+    assert.doesNotMatch(source, /type CharCode\s*=/);
     assert.match(source, /private static readonly MARK: string/);
     assert.match(source, /private static readonly SEPARATOR: string/);
 });

@@ -83,7 +83,7 @@ test("tensional sets initialize Java-compatible compound complexity", async () =
     assert.equal(set.getComplexity(), 2);
 });
 
-test("budget fields narrow at Java float write boundaries", async () => {
+test("budget fields narrow at Java FloatNumber write boundaries", async () => {
     const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
     const { Parameters } = await import("../../src/main/Parameters.ts");
 
@@ -96,7 +96,7 @@ test("budget fields narrow at Java float write boundaries", async () => {
     assert.equal(budget.getPriority(), Math.fround(0.17));
 });
 
-test("novel-task Bag preserves Java float level selection at the 0.8 boundary", async () => {
+test("novel-task Bag preserves Java FloatNumber level selection at the 0.8 boundary", async () => {
     const { Bag } = await import("../../src/storage/Bag.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");
@@ -121,7 +121,7 @@ test("novel-task Bag preserves Java float level selection at the 0.8 boundary", 
     );
 });
 
-test("utility float accumulators narrow at each Java assignment boundary", async () => {
+test("utility FloatNumber accumulators narrow at each Java assignment boundary", async () => {
     const { UtilityFunctions } = await import("../../src/inference/UtilityFunctions.ts");
 
     assert.equal(
@@ -134,7 +134,7 @@ test("utility float accumulators narrow at each Java assignment boundary", async
     );
 });
 
-test("forgetting narrows Java float parameters before the exponent boundary", async () => {
+test("forgetting narrows Java FloatNumber parameters before the exponent boundary", async () => {
     const { BudgetFunctions } = await import("../../src/inference/BudgetFunctions.ts");
     const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
     const { Parameters } = await import("../../src/main/Parameters.ts");
@@ -157,7 +157,7 @@ test("forgetting narrows Java float parameters before the exponent boundary", as
     assert.equal(budget.getPriority(), Math.fround(0.2370000034570694));
 });
 
-test("derived task applies Java float leak operands before multiplication", async () => {
+test("derived task applies Java FloatNumber leak operands before multiplication", async () => {
     const { java } = await import("../support/legacy-runtime-facade.ts");
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Narsese } = await import("../../src/io/Narsese.ts");

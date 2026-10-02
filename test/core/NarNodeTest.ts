@@ -1,4 +1,4 @@
-import { java, JavaObject, type int } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber } from "../support/legacy-runtime-facade.ts";
 import { EventEmitter } from "../../src/io/events/EventEmitter.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 import { NarNode } from "../../src/main/NarNode.ts";
@@ -15,12 +15,12 @@ type TargetNar = InstanceType<typeof NarNode.TargetNar>;
  * Test for NarNode functionality
  */
 export class NarNodeTest extends JavaObject {
-    protected static a: int = 0;
+    protected static a: IntNumber = 0;
 
     public testNarToNar(): void {
         NarNodeTest.a = 0; // just in case of a re-test
-        let nar1port: int = 64001;
-        let nar2port: int = 64002;
+        let nar1port: IntNumber = 64001;
+        let nar2port: IntNumber = 64002;
         let localIP: java.lang.String = new java.lang.String("127.0.0.1");
         let nar1: NarNode = new NarNode(nar1port);
         let nar2: NarNode = new NarNode(nar2port);

@@ -1,5 +1,5 @@
 //! Java source: opennars/control/concept/ProcessJudgment.java
-import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { ProcessAnticipation } from "./ProcessAnticipation.ts";
 import { LocalRules } from "../../inference/LocalRules.ts";
@@ -77,12 +77,12 @@ export class ProcessJudgment {
         if (!task.aboveThreshold()) {
             return;
         }
-        let nnq: int = concept.questions.size();
-        for (let i: int = 0; i < nnq; i++) {
+        let nnq: IntNumber = concept.questions.size();
+        for (let i: IntNumber = 0; i < nnq; i++) {
             LocalRules.trySolution(judg, concept.questions.get(i), nal, true);
         }
-        let nng: int = concept.desires.size();
-        for (let i: int = 0; i < nng; i++) {
+        let nng: IntNumber = concept.desires.size();
+        for (let i: IntNumber = 0; i < nng; i++) {
             LocalRules.trySolution(judg, concept.desires.get(i), nal, true);
         }
         concept.addToTable(task, false, concept.beliefs, concept.memory.narParameters.CONCEPT_BELIEFS_MAX,
@@ -161,7 +161,7 @@ export class ProcessJudgment {
         if (!(task.getTerm() as Implication).getPredicate().hasVar()) {
             targets.add((task.getTerm() as Implication).getPredicate());
         } else {
-            let ret: MapContract<Term, int> = (task.getTerm() as Implication).getPredicate().countTermRecursively(null);
+            let ret: MapContract<Term, IntNumber> = (task.getTerm() as Implication).getPredicate().countTermRecursively(null);
             for (let r of ret.keySet()) {
                 targets.add(r);
             }
@@ -180,7 +180,7 @@ export class ProcessJudgment {
             return;
         }
         let prec: Term[] = ((strongest_target.getTerm() as Implication).getSubject() as Conjunction).term;
-        for (let i: int = 0; i < prec.length - 2; i++) {
+        for (let i: IntNumber = 0; i < prec.length - 2; i++) {
             if (prec[i] instanceof Operation) { // don't react to precondition with an operation before the last
                 return; // for now, these can be decomposed into smaller such statements anyway
             }
@@ -196,8 +196,8 @@ export class ProcessJudgment {
                 ? target_concept.general_executable_preconditions
                 : target_concept.executable_preconditions;
             // at first we have to remove the last one with same content from table
-            let i_delete: int = -1;
-            for (let i: int = 0; i < table.size(); i++) {
+            let i_delete: IntNumber = -1;
+            for (let i: IntNumber = 0; i < table.size(); i++) {
                 if (CompoundTerm.replaceIntervals(table.get(i).getTerm()).equals(
                         CompoundTerm.replaceIntervals(strongest_target.getTerm()))) {
                     i_delete = i; // even these with same term but different intervals are removed here

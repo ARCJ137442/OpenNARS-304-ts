@@ -1,6 +1,6 @@
 //! Java source: opennars/control/TemporalInferenceControl.java
 import { Logger } from "../runtime/Logger.ts";
-import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Stamp } from "../entity/Stamp.ts";
 import { Task } from "../entity/Task.ts";
@@ -81,7 +81,7 @@ export class TemporalInferenceControl {
         // Java source: final Set<Task> already_attempted_ops = new LinkedHashSet<>();
         const already_attempted_ops = new NativeSet<Task>();
         // Sequence formation:
-        for (let i: int = 0; i < nal.narParameters.SEQUENCE_BAG_ATTEMPTS; i++) {
+        for (let i: IntNumber = 0; i < nal.narParameters.SEQUENCE_BAG_ATTEMPTS; i++) {
             /* synchronized (nal.memory.seq_current) { */
             let takeout: Task = nal.memory.seq_current.takeOut();
             if (takeout === null) {
@@ -104,7 +104,7 @@ export class TemporalInferenceControl {
         // Conditioning:
         if (nal.memory.lastDecision !== null && newEvent !== nal.memory.lastDecision) {
             already_attempted_ops.clear();
-            for (let k: int = 0; k < nal.narParameters.OPERATION_SAMPLES; k++) {
+            for (let k: IntNumber = 0; k < nal.narParameters.OPERATION_SAMPLES; k++) {
                 already_attempted.clear(); // todo move into k loop
                 let Toperation: Task = k === 0 ? nal.memory.lastDecision : nal.memory.recent_operations.takeOut();
                 if (Toperation === null) {
@@ -124,7 +124,7 @@ export class TemporalInferenceControl {
                         opc.seq_before = new Bag(nal.narParameters.SEQUENCE_BAG_LEVELS,
                             nal.narParameters.SEQUENCE_BAG_SIZE, nal.narParameters);
                     }
-                    for (let i: int = 0; i < nal.narParameters.CONDITION_BAG_ATTEMPTS; i++) {
+                    for (let i: IntNumber = 0; i < nal.narParameters.CONDITION_BAG_ATTEMPTS; i++) {
                         let takeout: Task = opc.seq_before.takeOut();
                         if (takeout === null) {
                             break; // there were no elements in the bag to try
@@ -135,8 +135,8 @@ export class TemporalInferenceControl {
                             continue;
                         }
                         already_attempted.add(takeout);
-                        let x: long = Toperation.sentence.getOccurrenceTime();
-                        let y: long = takeout.sentence.getOccurrenceTime();
+                        let x: RuntimeLong = Toperation.sentence.getOccurrenceTime();
+                        let y: RuntimeLong = takeout.sentence.getOccurrenceTime();
                         if (y > x) { // something wrong here?
                             Logger.named("TemporalInferenceControl").log("INFO", "analyze case in TemporalInferenceControl!");
                             continue;
@@ -192,7 +192,7 @@ export class TemporalInferenceControl {
                 const newTermIndices = newEvent.getTerm().term_indices;
                 if (currentTermIndices !== null && newTermIndices !== null) {
                     let differentTermIndices: boolean = false;
-                    for (let i: int = 0; i < currentTermIndices.length; i++) {
+                    for (let i: IntNumber = 0; i < currentTermIndices.length; i++) {
                         if (currentTermIndices[i] !== newTermIndices[i]) {
                             differentTermIndices = true;
                         }
@@ -213,13 +213,13 @@ export class TemporalInferenceControl {
         // making sure we do not mess with budget of the task:
         if (!(newEvent.sentence.getTerm() instanceof Operation)) {
             let c: Concept = nal.memory.concept(newEvent.getTerm());
-            let event_quality: float = BudgetFunctions.truthToQuality(newEvent.sentence.getTruth());
-            let event_priority: float = event_quality;
+            let event_quality: FloatNumber = BudgetFunctions.truthToQuality(newEvent.sentence.getTruth());
+            let event_priority: FloatNumber = event_quality;
             if (c !== null) {
                 event_priority = Math.max(event_quality, c.getPriority());
             }
             let t2: Task = new Task(newEvent.sentence,
-                new BudgetValue(event_priority, Float32Math.divide(1.0, newEvent.sentence.term.getComplexity()) as float,
+                new BudgetValue(event_priority, Float32Math.divide(1.0, newEvent.sentence.term.getComplexity()) as FloatNumber,
                     event_quality, nal.narParameters),
                 newEvent.getParentBelief(),
                 newEvent.getBestSolution());
@@ -232,7 +232,7 @@ export class TemporalInferenceControl {
         // This is a local removal snapshot; native arrays preserve Java's order
         // while avoiding a jree LinkedList on every operation frame.
         let toRemove: Task[] = []; // can there be more than one? I don't think so..
-        let priorityGain: float = 0.0;
+        let priorityGain: FloatNumber = 0.0;
         for (let t of mem.recent_operations) { // when made sure, make single element and add break
             if (t.getTerm().equals(task.getTerm())) {
                 priorityGain = BudgetFunctions.or(priorityGain, t.getPriority());

@@ -1,33 +1,33 @@
-import { java, JavaObject, type int, type double, S } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber, type DoubleNumber, S } from "../support/legacy-runtime-facade.ts";
 import { JavaDecimalFormatCompat, JavaRuntimeCompat } from "../support/legacy-runtime-facade.ts";
 
 
 
 export abstract class Performance extends JavaObject {
-    public readonly repeats: int;
+    public readonly repeats: IntNumber;
     protected readonly name: java.lang.String;
     private totalTime: number = 0;
     private totalMemory: number = 0;
     protected readonly df: JavaDecimalFormatCompat = new JavaDecimalFormatCompat("#.###");
 
-    public constructor(name: java.lang.String, repeats: int, warmups: int);
+    public constructor(name: java.lang.String, repeats: IntNumber, warmups: IntNumber);
 
-    public constructor(name: java.lang.String, repeats: int, warmups: int, gc: boolean);
+    public constructor(name: java.lang.String, repeats: IntNumber, warmups: IntNumber, gc: boolean);
     public constructor(...args: unknown[]) {
         super();
         let name: java.lang.String;
-        let repeats: int;
-        let warmups: int;
+        let repeats: IntNumber;
+        let warmups: IntNumber;
         let gc: boolean;
         switch (args.length) {
             case 3: {
-                [name, repeats, warmups] = args as [java.lang.String, int, int];
+                [name, repeats, warmups] = args as [java.lang.String, IntNumber, IntNumber];
                 gc = true;
                 break;
             }
 
             case 4: {
-                [name, repeats, warmups, gc] = args as [java.lang.String, int, int, boolean];
+                [name, repeats, warmups, gc] = args as [java.lang.String, IntNumber, IntNumber, boolean];
                 break;
             }
 
@@ -41,8 +41,8 @@ export abstract class Performance extends JavaObject {
         this.init();
 
         const runtime = JavaRuntimeCompat.getRuntime();
-        let total: int = repeats + warmups;
-        for (let r: int = 0; r < total; r++) {
+        let total: IntNumber = repeats + warmups;
+        for (let r: IntNumber = 0; r < total; r++) {
             if (gc)
                 java.lang.System.gc();
 
@@ -78,7 +78,7 @@ export abstract class Performance extends JavaObject {
 
     public abstract run(warmup: boolean): void;
 
-    public getCycleTimeMS(): double {
+    public getCycleTimeMS(): DoubleNumber {
         return this.totalTime / this.repeats / 1000000.0;
     }
 }

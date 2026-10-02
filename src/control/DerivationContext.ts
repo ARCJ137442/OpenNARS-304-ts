@@ -1,7 +1,7 @@
 //! Java source: opennars/control/DerivationContext.java
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
-import type { double, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { DoubleNumber, RuntimeLong, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Stamp } from "../entity/Stamp.ts";
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -101,7 +101,7 @@ export class DerivationContext {
                     return false;
                 }
                 if (task.sentence !== null && task.sentence.truth !== null) {
-                    let conf: double = task.sentence.truth.confidence;
+                    let conf: DoubleNumber = task.sentence.truth.confidence;
                     if (conf < this.narParameters.TRUTH_EPSILON) {
                         // no confidence - we can delete the wrongs out that way.
                         this.memory.removeTask(task, "Ignored (zero confidence)");
@@ -160,16 +160,16 @@ export class DerivationContext {
 
                 task.setElemOfSequenceBuffer(false);
                 if (!revised) {
-                    // Java narrows both float operands before the multiplication;
+                    // Java narrows both FloatNumber operands before the multiplication;
                     // narrowing only the final JavaScript result changes Bag levels.
-                    const durabilityLeak: float = Math.fround(this.narParameters.DERIVATION_DURABILITY_LEAK) as float;
-                    const priorityLeak: float = Math.fround(this.narParameters.DERIVATION_PRIORITY_LEAK) as float;
+                    const durabilityLeak: FloatNumber = Math.fround(this.narParameters.DERIVATION_DURABILITY_LEAK) as FloatNumber;
+                    const priorityLeak: FloatNumber = Math.fround(this.narParameters.DERIVATION_PRIORITY_LEAK) as FloatNumber;
                     task.getBudget().setDurability(Math.fround(
                         task.getBudget().getDurability() * durabilityLeak,
-                    ) as float);
+                    ) as FloatNumber);
                     task.getBudget().setPriority(Math.fround(
                         task.getBudget().getPriority() * priorityLeak,
-                    ) as float);
+                    ) as FloatNumber);
                 }
                 this.memory.event.emit(Events.TaskDerive.class, task, revised, single);
                 // memory.logic.TASK_DERIVED.commit(task.budget.getPriority());
@@ -192,7 +192,7 @@ export class DerivationContext {
 
     /* --------------- new task building --------------- */
     /**
-     * Shared final operations by all double-premise rules, called from the
+     * Shared final operations by all DoubleNumber-premise rules, called from the
      * rules except StructuralRules
      *
      * @param newContent The content of the sentence in task
@@ -200,7 +200,7 @@ export class DerivationContext {
      * @param newBudget  The budget value in task
      */
     public doublePremiseTaskRevised(newContent: Term, newTruth: TruthValue,
-        newBudget: BudgetValue, counter: long): boolean {
+        newBudget: BudgetValue, counter: RuntimeLong): boolean {
         let derived_stamp: Stamp = this.getTheNewStamp().clone();
         this.resetOccurrenceTime(); // stamp was already absorbed
 
@@ -228,7 +228,7 @@ export class DerivationContext {
     } // which is not the case for other single premise tasks
 
     /**
-     * Shared final operations by all double-premise rules, called from the
+     * Shared final operations by all DoubleNumber-premise rules, called from the
      * rules except StructuralRules
      *
      * @param newContent        The content of the sentence in task
@@ -424,7 +424,7 @@ export class DerivationContext {
     }
 
 
-    public getTime(): long {
+    public getTime(): RuntimeLong {
         return this.time.time();
     }
 
@@ -462,7 +462,7 @@ export class DerivationContext {
         this.currentConcept = currentConcept;
     }
 
-    private original_time: long = 0 as unknown as long;
+    private original_time: RuntimeLong = 0 as unknown as RuntimeLong;
 
     /**
      * @return the created stamp
@@ -501,7 +501,7 @@ export class DerivationContext {
      * creates a lazy/deferred StampBuilder which only constructs the stamp if
      * getTheNewStamp() is actually invoked
      */
-    public setTheNewStamp(first: Stamp, second: Stamp, time: long): void;
+    public setTheNewStamp(first: Stamp, second: Stamp, time: RuntimeLong): void;
     public setTheNewStamp(...args: unknown[]): Stamp | void {
         switch (args.length) {
             case 1: {
@@ -517,7 +517,7 @@ export class DerivationContext {
             }
 
             case 3: {
-                const [first, second, time] = args as [Stamp, Stamp, long];
+                const [first, second, time] = args as [Stamp, Stamp, RuntimeLong];
 
 
                 this.newStamp = null;

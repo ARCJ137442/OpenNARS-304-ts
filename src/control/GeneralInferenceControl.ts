@@ -1,5 +1,5 @@
 //! Java source: opennars/control/GeneralInferenceControl.java
-import type { float, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber, IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../io/events/Events.ts";
 import { DerivationContext } from "./DerivationContext.ts";
 import { ProcessAnticipation } from "./concept/ProcessAnticipation.ts";
@@ -36,7 +36,7 @@ export class GeneralInferenceControl {
 
         let nal: DerivationContext = new DerivationContext(mem, narParameters, nar);
         let putBackConcept: boolean = false;
-        let forgetCycles: float = 0.0;
+        let forgetCycles: FloatNumber = 0.0;
         /* synchronized (currentConcept) { */ // use current concept (current concept is the resource)
         ProcessAnticipation.maintainDisappointedAnticipations(narParameters, currentConcept, nar);
         if (currentConcept.taskLinks.size() === 0) { // remove concepts without taskLinks and without termLinks
@@ -67,9 +67,9 @@ export class GeneralInferenceControl {
     }
 
     // /return true if concept must be put back
-    public static fireConcept(nal: DerivationContext, numTaskLinks: int): boolean {
+    public static fireConcept(nal: DerivationContext, numTaskLinks: IntNumber): boolean {
         const currentConcept = nal.requireCurrentConcept();
-        for (let i: int = 0; i < numTaskLinks; i++) {
+        for (let i: IntNumber = 0; i < numTaskLinks; i++) {
             if (currentConcept.taskLinks.size() === 0) {
                 return false;
             }
@@ -87,7 +87,7 @@ export class GeneralInferenceControl {
         return true;
     }
 
-    protected static fireTaskLink(nal: DerivationContext, termLinks: int): void {
+    protected static fireTaskLink(nal: DerivationContext, termLinks: IntNumber): void {
         const currentTaskLink = nal.requireCurrentTaskLink();
         const currentConcept = nal.requireCurrentConcept();
         let task: Task = currentTaskLink.getTarget();

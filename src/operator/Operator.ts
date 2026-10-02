@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/Operator.java
-import type { float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "../language/Term.ts";
 import { Inheritance } from "../language/Inheritance.ts";
 import { Operation } from "./Operation.ts";
@@ -137,7 +137,7 @@ export abstract class Operator extends Term implements Plugin {
                     }
                 }
 
-                let executionConfidence: float = memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE;
+                let executionConfidence: FloatNumber = memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE;
                 if (feedback === null || feedback.length === 0) { // null operator case
                     memory.executedTask(time, operation, TruthValue.fromFrequencyConfidence(1, executionConfidence, memory.narParameters));
                 }

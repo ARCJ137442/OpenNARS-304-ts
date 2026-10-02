@@ -1,37 +1,37 @@
-import type { long } from "../types.ts";
+import type { RuntimeLong } from "../types.ts";
 
-export type RuntimeLongInput = long | number;
+export type RuntimeLongInput = RuntimeLong | number;
 
 const normalizeLongNumber = (value: number): number => {
-    if (!Number.isSafeInteger(value)) throw new RangeError(`Runtime long input must be a safe integer: ${value}`);
+    if (!Number.isSafeInteger(value)) throw new RangeError(`Runtime RuntimeLong input must be a safe integer: ${value}`);
     return value;
 };
 
 const normalizeLong = (value: RuntimeLongInput): RuntimeLongInput =>
     typeof value === "number" ? normalizeLongNumber(value) : value;
 
-export const toRuntimeLong = (value: RuntimeLongInput): long => normalizeLong(value) as long;
+export const toRuntimeLong = (value: RuntimeLongInput): RuntimeLong => normalizeLong(value) as RuntimeLong;
 
-export const addRuntimeLong = (value: RuntimeLongInput, delta: number): long =>
+export const addRuntimeLong = (value: RuntimeLongInput, delta: number): RuntimeLong =>
     addRuntimeLongValues(value, delta);
 
-export const subtractRuntimeLong = (value: RuntimeLongInput, delta: number): long =>
+export const subtractRuntimeLong = (value: RuntimeLongInput, delta: number): RuntimeLong =>
     subtractRuntimeLongValues(value, delta);
 
-export const addRuntimeLongValues = (left: RuntimeLongInput, right: RuntimeLongInput): long => {
+export const addRuntimeLongValues = (left: RuntimeLongInput, right: RuntimeLongInput): RuntimeLong => {
     const a = normalizeLong(left);
     const b = normalizeLong(right);
     return (typeof a === "bigint" || typeof b === "bigint"
         ? BigInt(a) + BigInt(b)
-        : normalizeLongNumber(a + b)) as long;
+        : normalizeLongNumber(a + b)) as RuntimeLong;
 };
 
-export const subtractRuntimeLongValues = (left: RuntimeLongInput, right: RuntimeLongInput): long => {
+export const subtractRuntimeLongValues = (left: RuntimeLongInput, right: RuntimeLongInput): RuntimeLong => {
     const a = normalizeLong(left);
     const b = normalizeLong(right);
     return (typeof a === "bigint" || typeof b === "bigint"
         ? BigInt(a) - BigInt(b)
-        : normalizeLongNumber(a - b)) as long;
+        : normalizeLongNumber(a - b)) as RuntimeLong;
 };
 
 /** Compare values using the project's observable value-equality contract. */

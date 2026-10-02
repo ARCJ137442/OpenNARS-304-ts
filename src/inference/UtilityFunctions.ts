@@ -9,7 +9,7 @@ import { Parameters } from "../main/Parameters.ts";
  */
 export class UtilityFunctions {
 
-    private static float(value: number): number {
+    private static FloatNumber(value: number): number {
         return Math.fround(value);
     }
 
@@ -22,7 +22,7 @@ export class UtilityFunctions {
     public static and(...arr: number[]): number {
         let product: number = 1;
         for (let f of arr) {
-            product = UtilityFunctions.float(product * f);
+            product = UtilityFunctions.FloatNumber(product * f);
         }
         return product;
     }
@@ -36,10 +36,10 @@ export class UtilityFunctions {
     public static or(...arr: number[]): number {
         let product: number = 1;
         for (let f of arr) {
-            const normalizedFactor = UtilityFunctions.float(f);
-            product = UtilityFunctions.float(product * UtilityFunctions.float(1 - normalizedFactor));
+            const normalizedFactor = UtilityFunctions.FloatNumber(f);
+            product = UtilityFunctions.FloatNumber(product * UtilityFunctions.FloatNumber(1 - normalizedFactor));
         }
-        return UtilityFunctions.float(1 - product);
+        return UtilityFunctions.FloatNumber(1 - product);
     }
 
     /**
@@ -51,9 +51,9 @@ export class UtilityFunctions {
     public static aveAri(...arr: number[]): number {
         let sum: number = 0;
         for (let f of arr) {
-            sum = UtilityFunctions.float(sum + UtilityFunctions.float(f));
+            sum = UtilityFunctions.FloatNumber(sum + UtilityFunctions.FloatNumber(f));
         }
-        return UtilityFunctions.float(sum / arr.length);
+        return UtilityFunctions.FloatNumber(sum / arr.length);
     }
 
     /**
@@ -65,15 +65,15 @@ export class UtilityFunctions {
     public static aveGeo(...arr: number[]): number {
         let product: number = 1;
         for (let f of arr) {
-            product = UtilityFunctions.float(product * UtilityFunctions.float(f));
+            product = UtilityFunctions.FloatNumber(product * UtilityFunctions.FloatNumber(f));
         }
 
         if (arr.length === 2) {
-            return UtilityFunctions.float(Math.sqrt(UtilityFunctions.float(
-                UtilityFunctions.float(arr[0]) * UtilityFunctions.float(arr[1]),
+            return UtilityFunctions.FloatNumber(Math.sqrt(UtilityFunctions.FloatNumber(
+                UtilityFunctions.FloatNumber(arr[0]) * UtilityFunctions.FloatNumber(arr[1]),
             )));
         }
-        return UtilityFunctions.float(Math.pow(product, 1.00 / arr.length));
+        return UtilityFunctions.FloatNumber(Math.pow(product, 1.00 / arr.length));
     }
 
     /**

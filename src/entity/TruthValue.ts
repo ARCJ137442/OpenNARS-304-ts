@@ -85,9 +85,9 @@ export class TruthValue {
     }
 
     public set frequency(frequency: number) {
-        // Java stores frequency in a float field.  This setter is also the
+        // Java stores frequency in a FloatNumber field.  This setter is also the
         // boundary for translated code that still assigns the public field
-        // directly, so an `as float` cast cannot silently bypass narrowing.
+        // directly, so an `as FloatNumber` cast cannot silently bypass narrowing.
         this._frequency = Float32Math.from(frequency);
     }
 
@@ -97,7 +97,7 @@ export class TruthValue {
     }
 
     public getExpectation(): number {
-        // Java: ((float) confidence * (frequency - 0.5f) + 0.5f).
+        // Java: ((FloatNumber) confidence * (frequency - 0.5f) + 0.5f).
         const confidence = Float32Math.from(this.confidence);
         const centeredFrequency = Float32Math.subtract(this.frequency, 0.5);
         const product = Float32Math.multiply(confidence, centeredFrequency);
@@ -105,7 +105,7 @@ export class TruthValue {
     }
 
     /**
-     * Return the Java float evaluation used by budget-quality consumers.
+     * Return the Java FloatNumber evaluation used by budget-quality consumers.
      * Keep getExpectation()'s existing public precision for callers that use
      * the mathematical value directly.
      */
@@ -157,9 +157,9 @@ export class TruthValue {
     }
 
     public hashCode(): number {
-        // Java stores frequency as float, so the multiplication is performed
-        // with binary32 operands. Confidence is Java double and remains a
-        // binary64 operation until the explicit int conversion.
+        // Java stores frequency as FloatNumber, so the multiplication is performed
+        // with binary32 operands. Confidence is Java DoubleNumber and remains a
+        // binary64 operation until the explicit IntNumber conversion.
         const frequencyPart: number = Math.trunc(Float32Math.multiply(0xFFFF, this.frequency));
         const confidencePart: number = Math.trunc(0xFFFF * this.confidence);
         return (frequencyPart << 16) | confidencePart;

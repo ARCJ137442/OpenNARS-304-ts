@@ -6,7 +6,7 @@ import {
     valuesHash,
 } from "../../src/runtime/value-arrays.ts";
 
-test("Java short-array equals preserves null, length, order, and values", () => {
+test("Java ShortNumber-array equals preserves null, length, order, and values", () => {
     assert.equal(int16ArrayEquals(null, null), true);
     assert.equal(int16ArrayEquals(null, new Int16Array()), false);
     assert.equal(int16ArrayEquals(new Int16Array([1, 2]), new Int16Array([1, 2])), true);
@@ -14,7 +14,7 @@ test("Java short-array equals preserves null, length, order, and values", () => 
     assert.equal(int16ArrayEquals(new Int16Array([1]), new Int16Array([1, 2])), false);
 });
 
-test("Java short-array hash follows Arrays.hashCode(short[])", () => {
+test("Java ShortNumber-array hash follows Arrays.hashCode(ShortNumber[])", () => {
     assert.equal(int16ArrayHashCode(null), 0);
     assert.equal(int16ArrayHashCode(new Int16Array()), 1);
     assert.equal(int16ArrayHashCode(new Int16Array([1, 2])), 994);

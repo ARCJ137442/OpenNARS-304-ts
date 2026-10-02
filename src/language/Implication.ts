@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Implication.java
-import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
@@ -27,30 +27,30 @@ const isOperator = (value: unknown, name: string): boolean => operatorName(value
  * @author Patrick Hammer
  */
 export class Implication extends Statement {
-    private temporalOrder: int = TemporalRules.ORDER_NONE;
+    private temporalOrder: IntNumber = TemporalRules.ORDER_NONE;
 
     // counter used for evidence tracking
-    public counter: long = 1 as unknown as long;
+    public counter: RuntimeLong = 1 as unknown as RuntimeLong;
 
     /**
      * Constructor with partial values, called by make
      *
      * @param arg The component list of the term
      */
-    public constructor(arg: Term[], order: int);
+    public constructor(arg: Term[], order: IntNumber);
 
     /**
      * Constructor with partial values, called by make
      *
      * @param arg The component list of the term
      */
-    public constructor(arg: Term[], order: int, counter: long);
+    public constructor(arg: Term[], order: IntNumber, counter: RuntimeLong);
 
-    public constructor(subject: Term, predicate: Term, order: int);
+    public constructor(subject: Term, predicate: Term, order: IntNumber);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 2: {
-                const [arg, order] = args as [Term[], int];
+                const [arg, order] = args as [Term[], IntNumber];
 
 
                 super(arg);
@@ -64,10 +64,10 @@ export class Implication extends Statement {
             }
 
             case 3: {
-                const [first, second, third] = args as [Term[] | Term, int | Term, long | int];
+                const [first, second, third] = args as [Term[] | Term, IntNumber | Term, RuntimeLong | IntNumber];
                 const components = Array.isArray(first) ? first : [first as Term, second as Term];
-                const order = (Array.isArray(first) ? second : third) as int;
-                const counter = Array.isArray(first) ? third as long : 1 as unknown as long;
+                const order = (Array.isArray(first) ? second : third) as IntNumber;
+                const counter = Array.isArray(first) ? third as RuntimeLong : 1 as unknown as RuntimeLong;
 
                 super(components);
                 this.temporalOrder = order;
@@ -134,13 +134,13 @@ export class Implication extends Statement {
      * @return A compound generated or a term it reduced to
      */
     public static make(statement: Statement, subj: Term, pred: Term): Statement | null;
-    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
-    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(op: NativeOperator, subj: Term, pred: Term, order: IntNumber): Statement | null;
+    public static make(statement: Statement, subj: Term, pred: Term, order: IntNumber): Statement | null;
     public static make(o: NativeOperator, subject: Term, predicate: Term,
-        customOrder: boolean, order: int): Statement | null;
+        customOrder: boolean, order: IntNumber): Statement | null;
     public static make(subject: Term, predicate: Term): Implication;
 
-    public static make(subject: Term, predicate: Term, temporalOrder: int): Implication;
+    public static make(subject: Term, predicate: Term, temporalOrder: IntNumber): Implication;
     public static make(...args: unknown[]): Implication | Statement | null {
         switch (args.length) {
             case 2: {
@@ -157,7 +157,7 @@ export class Implication extends Statement {
                 // A normal implication call also has a Statement (for example
                 // Inheritance) as its subject. Runtime dispatch must therefore
                 // remain positional; the inherited overloads are type-only.
-                const [subject, predicate, temporalOrder] = args as [Term, Term, int];
+                const [subject, predicate, temporalOrder] = args as [Term, Term, IntNumber];
 
 
                 if (Statement.invalidStatement(subject, predicate,
@@ -177,7 +177,7 @@ export class Implication extends Statement {
                     if ((oldCondition instanceof Conjunction) && oldCondition.containsTerm(subject)) {
                         return null as unknown as Implication;
                     }
-                    let order: int = temporalOrder;
+                    let order: IntNumber = temporalOrder;
                     let spatial: boolean = false;
                     if (subject instanceof Conjunction) {
                         let conj: Conjunction = subject as Conjunction;
@@ -195,14 +195,14 @@ export class Implication extends Statement {
             }
 
             case 4: {
-                const [first, subject, predicate, order] = args as [NativeOperator | Statement, Term, Term, int];
+                const [first, subject, predicate, order] = args as [NativeOperator | Statement, Term, Term, IntNumber];
                 return first instanceof Statement
                     ? Statement.make(first, subject, predicate, order)
                     : Statement.make(first, subject, predicate, order);
             }
 
             case 5: {
-                return Statement.make(...args as [NativeOperator, Term, Term, boolean, int]);
+                return Statement.make(...args as [NativeOperator, Term, Term, boolean, IntNumber]);
             }
 
             default: {
@@ -212,7 +212,7 @@ export class Implication extends Statement {
     }
 
 
-    public static makeName(subject: Term, temporalOrder: int, predicate: Term): TextString {
+    public static makeName(subject: Term, temporalOrder: IntNumber, predicate: Term): TextString {
         let copula: NativeOperator;
         switch (temporalOrder) {
             case TemporalRules.ORDER_FORWARD:
@@ -250,7 +250,7 @@ export class Implication extends Statement {
         return NativeOperator.IMPLICATION;
     }
 
-    public getTemporalOrder(): int {
+    public getTemporalOrder(): IntNumber {
         return this.temporalOrder;
     }
 

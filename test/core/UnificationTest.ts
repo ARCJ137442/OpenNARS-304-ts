@@ -26,7 +26,7 @@ export class UnificationTest extends JavaObject {
             new java.util.LinkedHashMap<Term, Term>()];
             Variables.findSubstitute(nar.memory.randomNumber, Symbols.VAR_DEPENDENT, t1, t2, unifier);
             // Variables.unify(0, t1, t2, compound)
-            // findSubstitute(final char type, final Term term1, final Term term2, final
+            // findSubstitute(final CharCode type, final Term term1, final Term term2, final
             // Map<Term, Term>[] map, final boolean allowPartial)
             Variables.findSubstitute(nar.memory.randomNumber, Symbols.VAR_INDEPENDENT, t1, t2, unifier, true);
         } catch (ex) {

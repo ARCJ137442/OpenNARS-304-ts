@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Equivalence.java
-import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
@@ -26,14 +26,14 @@ const isOperator = (value: unknown, name: string): boolean => operatorName(value
  */
 export class Equivalence extends Statement {
 
-    private temporalOrder: int = TemporalRules.ORDER_NONE;
+    private temporalOrder: IntNumber = TemporalRules.ORDER_NONE;
 
     /**
      * Constructor with partial values, called by make
      *
      * @param components The component list of the term
      */
-    private constructor(components: Term[], order: int) {
+    private constructor(components: Term[], order: IntNumber) {
         super(components);
 
         this.temporalOrder = order;
@@ -87,7 +87,7 @@ export class Equivalence extends Statement {
      * predicate
      * to be reduced to the common term.
      */
-    public static makeTerm(subject: Term, predicate: Term, temporalOrder: int): Term {
+    public static makeTerm(subject: Term, predicate: Term, temporalOrder: IntNumber): Term {
         if (subject.equals(predicate))
             return subject;
         return Equivalence.make(subject, predicate, temporalOrder);
@@ -102,13 +102,13 @@ export class Equivalence extends Statement {
      * @return A compound generated or null
      */
     public static make(statement: Statement, subj: Term, pred: Term): Statement | null;
-    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
-    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(op: NativeOperator, subj: Term, pred: Term, order: IntNumber): Statement | null;
+    public static make(statement: Statement, subj: Term, pred: Term, order: IntNumber): Statement | null;
     public static make(o: NativeOperator, subject: Term, predicate: Term,
-        customOrder: boolean, order: int): Statement | null;
+        customOrder: boolean, order: IntNumber): Statement | null;
     public static make(subject: Term, predicate: Term): Equivalence;
 
-    public static make(subject: Term, predicate: Term, temporalOrder: int): Equivalence;
+    public static make(subject: Term, predicate: Term, temporalOrder: IntNumber): Equivalence;
     public static make(...args: unknown[]): Equivalence | Statement | null {
         switch (args.length) {
             case 2: {
@@ -123,7 +123,7 @@ export class Equivalence extends Statement {
             }
 
             case 3: {
-                let [subject, predicate, temporalOrder] = args as [Term, Term, int];
+                let [subject, predicate, temporalOrder] = args as [Term, Term, IntNumber];
 
                 // to be extended to check if
                 // subject is Conjunction
@@ -177,14 +177,14 @@ export class Equivalence extends Statement {
             }
 
             case 4: {
-                const [first, subject, predicate, order] = args as [NativeOperator | Statement, Term, Term, int];
+                const [first, subject, predicate, order] = args as [NativeOperator | Statement, Term, Term, IntNumber];
                 return first instanceof Statement
                     ? Statement.make(first, subject, predicate, order)
                     : Statement.make(first, subject, predicate, order);
             }
 
             case 5: {
-                return Statement.make(...args as [NativeOperator, Term, Term, boolean, int]);
+                return Statement.make(...args as [NativeOperator, Term, Term, boolean, IntNumber]);
             }
 
             default: {
@@ -221,7 +221,7 @@ export class Equivalence extends Statement {
         return (this.temporalOrder !== TemporalRules.ORDER_FORWARD);
     }
 
-    public getTemporalOrder(): int {
+    public getTemporalOrder(): IntNumber {
         return this.temporalOrder;
     }
 }

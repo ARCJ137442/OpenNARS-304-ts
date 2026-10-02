@@ -1,6 +1,6 @@
 //! Java source: opennars/storage/Bag.java
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "../entity/Item.ts";
 import { Distributor } from "./Distributor.ts";
 import { Parameters } from "../main/Parameters.ts";
@@ -25,9 +25,9 @@ import type { Memory } from "./Memory.ts";
 export class Bag<Type extends Item<K>, K> extends ReasonerObject {
 
     /** priority levels */
-    private readonly TOTAL_LEVEL: int;
+    private readonly TOTAL_LEVEL: IntNumber;
     /** firing threshold */
-    private readonly THRESHOLD: int;
+    private readonly THRESHOLD: IntNumber;
     /** shared DISTRIBUTOR that produce the probability distribution */
     private readonly DISTRIBUTOR: Distributor;
     /**
@@ -43,31 +43,31 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
     /** Native mirror of LinkedHashMap.values() insertion order for JS iteration. */
     private itemOrder: Type[] = [];
     /** Object-identity index for maintaining itemOrder without Java equality scans. */
-    private itemOrderIndex: Map<Type, int> = new Map<Type, int>();
+    private itemOrderIndex: Map<Type, IntNumber> = new Map<Type, IntNumber>();
     /** defined in different bags */
-    private readonly capacity: int;
+    private readonly capacity: IntNumber;
     /** current sum of occupied level */
-    private mass: int = 0;
+    private mass: IntNumber = 0;
     /** index to get next level, kept in individual objects */
-    private levelIndex: int = 0;
+    private levelIndex: IntNumber = 0;
     /** current take out level */
-    private currentLevel: int = 0;
+    private currentLevel: IntNumber = 0;
     /** maximum number of items to be taken out at current level */
-    private currentCounter: int = 0;
+    private currentCounter: IntNumber = 0;
 
-    public constructor(levels: int, capacity: int, narParameters: Parameters);
+    public constructor(levels: IntNumber, capacity: IntNumber, narParameters: Parameters);
 
     /** thresholdLevel = 0 disables "fire level completely" threshold effect */
-    public constructor(levels: int, capacity: int, thresholdLevel: int);
+    public constructor(levels: IntNumber, capacity: IntNumber, thresholdLevel: IntNumber);
     public constructor(...args: unknown[]) {
         super();
         if (args.length !== 3) {
             throw new ReasonerInputError("Invalid number of arguments");
         }
-        const [levels, capacity, third] = args as [int, int, Parameters | int];
+        const [levels, capacity, third] = args as [IntNumber, IntNumber, Parameters | IntNumber];
         const thresholdLevel = typeof third === "number"
             ? third
-            : (third as Parameters).BAG_THRESHOLD * levels as int;
+            : (third as Parameters).BAG_THRESHOLD * levels as IntNumber;
         this.TOTAL_LEVEL = levels;
         this.DISTRIBUTOR = new Distributor(this.TOTAL_LEVEL);
         this.THRESHOLD = thresholdLevel;
@@ -79,8 +79,8 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
     public clear(): void {
         this.itemTable = [];
         this.itemOrder = [];
-        this.itemOrderIndex = new Map<Type, int>();
-        for (let i: int = 0; i < this.TOTAL_LEVEL; i++) {
+        this.itemOrderIndex = new Map<Type, IntNumber>();
+        for (let i: IntNumber = 0; i < this.TOTAL_LEVEL; i++) {
             this.itemTable.push([]);
         }
         // Java original type: HashMap<K, Type>; concrete implementation:
@@ -98,16 +98,16 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
      *
      * @return The average priority of Items in the bag
      */
-    public getAveragePriority(): float {
+    public getAveragePriority(): FloatNumber {
         if (this.nameTable.isEmpty()) {
             return 0.01;
         }
-        // Java casts mass to float before dividing by the integer denominator.
+        // Java casts mass to FloatNumber before dividing by the integer denominator.
         // Narrow the numerator and the result at the same operation boundary.
-        let f: float = Float32Math.divide(
+        let f: FloatNumber = Float32Math.divide(
             Float32Math.from(this.mass),
             this.nameTable.size() * this.TOTAL_LEVEL,
-        ) as float;
+        ) as FloatNumber;
         if (f > 1) {
             return 1.0;
         }
@@ -185,8 +185,8 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
      * @param m       related memory
      * @return the item which was removed, or null if none removed
      */
-    public putBack(oldItem: Type, forgetCycles: float, m: Memory): Type {
-        let relativeThreshold: float = m.narParameters.FORGET_QUALITY_RELATIVE;
+    public putBack(oldItem: Type, forgetCycles: FloatNumber, m: Memory): Type {
+        let relativeThreshold: FloatNumber = m.narParameters.FORGET_QUALITY_RELATIVE;
         BudgetFunctions.applyForgetting(oldItem.getBudget(), forgetCycles, relativeThreshold);
         return this.putIn(oldItem);
     }
@@ -214,7 +214,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
             }
         }
         let selected: Type = this.takeOutFirst(this.currentLevel); // take out the first item in the level
-        let belongingLevel: int = this.getLevel(selected);
+        let belongingLevel: IntNumber = this.getLevel(selected);
         if (this.currentLevel !== belongingLevel) {
             this.intoBase(selected);
             return this.takeOut();
@@ -422,7 +422,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
      * @param n The level index
      * @return Whether that level is empty
      */
-    protected emptyLevel(n: int): boolean {
+    protected emptyLevel(n: IntNumber): boolean {
         return this.itemTable[n].length === 0;
     }
 
@@ -432,13 +432,13 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
      * @param item The Item to put in
      * @return The put-in level
      */
-    private getLevel(item: Type): int {
-        // Java evaluates this multiplication as float before Math.ceil. Keep
+    private getLevel(item: Type): IntNumber {
+        // Java evaluates this multiplication as FloatNumber before Math.ceil. Keep
         // the write boundary here or priorities such as 0.8 would become
         // 80.000001... in JavaScript and move to the next level.
-        // Java multiplies two float operands here before Math.ceil.
-        let fl: float = Float32Math.multiply(item.getPriority(), this.TOTAL_LEVEL) as float;
-        let level: int = Math.ceil(fl) as int - 1;
+        // Java multiplies two FloatNumber operands here before Math.ceil.
+        let fl: FloatNumber = Float32Math.multiply(item.getPriority(), this.TOTAL_LEVEL) as FloatNumber;
+        let level: IntNumber = Math.ceil(fl) as IntNumber - 1;
         return (level < 0) ? 0 : level; // cannot be -1
     }
 
@@ -450,9 +450,9 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
      */
     private intoBase(newItem: Type): Type {
         let oldItem: Type = null as unknown as Type;
-        let inLevel: int = this.getLevel(newItem);
+        let inLevel: IntNumber = this.getLevel(newItem);
         if (this.nameTable.size() > this.capacity) { // the bag is full
-            let outLevel: int = 0;
+            let outLevel: IntNumber = 0;
             while (this.emptyLevel(outLevel)) {
                 outLevel++;
             }
@@ -473,7 +473,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
      * @param level The current level
      * @return The first Item
      */
-    private takeOutFirst(level: int): Type {
+    private takeOutFirst(level: IntNumber): Type {
         const selected: Type = this.itemTable[level].shift() as Type;
         this.mass -= (level + 1);
         return selected;
@@ -485,7 +485,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
      * @param oldItem The Item to be removed
      */
     protected outOfBase(oldItem: Type): void {
-        let level: int = this.getLevel(oldItem);
+        let level: IntNumber = this.getLevel(oldItem);
         const index = this.itemTable[level].indexOf(oldItem);
         if (index >= 0) this.itemTable[level].splice(index, 1);
         this.mass -= (level + 1);
@@ -496,7 +496,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
      */
     public toString(): TextString {
         const parts: string[] = [" "];
-        for (let i: int = this.TOTAL_LEVEL; i >= 0; i--) {
+        for (let i: IntNumber = this.TOTAL_LEVEL; i >= 0; i--) {
             if (!this.emptyLevel(i - 1)) {
                 parts.push("\n --- Level ", String(i), ":\n ");
                 for (const item of this.itemTable[i - 1]) parts.push(String(item), "\n ");
@@ -508,7 +508,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
     /** TODO bad paste from preceding */
     public toStringLong(): TextString {
         const parts: string[] = [" BAG ", this.getClass().getSimpleName(), " ", String(this.showSizes())];
-        for (let i: int = this.TOTAL_LEVEL; i >= 0; i--) {
+        for (let i: IntNumber = this.TOTAL_LEVEL; i >= 0; i--) {
             if (!this.emptyLevel(i - 1)) {
                 parts.push("\n --- LEVEL ", String(i), ":\n ");
                 for (const item of this.itemTable[i - 1]) parts.push(item.toStringLong(), "\n ");
@@ -520,7 +520,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
 
     protected showSizes(): TextString {
         const sizes: string[] = [" "];
-        let levels: int = 0;
+        let levels: IntNumber = 0;
         for (const items of this.itemTable) {
             if (items.length > 0) {
                 levels++;
@@ -530,7 +530,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
         return asText(`Levels: ${levels}, sizes: ${sizes.join("")}`);
     }
 
-    public size(): int {
+    public size(): IntNumber {
         return this.nameTable.size();
     }
 
@@ -543,7 +543,7 @@ export class Bag<Type extends Item<K>, K> extends ReasonerObject {
         if (this.itemOrder.length !== this.nameTable.size()) {
             // A deserialized/legacy instance may not contain the native mirror yet.
             this.itemOrder = [];
-            this.itemOrderIndex = new Map<Type, int>();
+            this.itemOrderIndex = new Map<Type, IntNumber>();
             const iterator = this.nameTable.values().iterator();
             while (iterator.hasNext()) {
                 const item = iterator.next();

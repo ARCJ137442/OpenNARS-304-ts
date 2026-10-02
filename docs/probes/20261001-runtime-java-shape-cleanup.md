@@ -459,6 +459,20 @@ The JSONL SHA-256 is
 `8FDAD01DBDAA2D0C257EB58B2D4D12A655E867195BAEB04AE2F8943C18FD78FD`.
 The empty historical `Term.ts.codex-corrupt` placeholder remains untracked.
 
+## Native primitive-name batch
+
+The former lowercase primitive aliases in `src/types.ts` (`int`, `long`,
+`float`, `double`, `short`, `char`) are now project-owned semantic names:
+`IntNumber`, `RuntimeLong`, `FloatNumber`, `DoubleNumber`, `ShortNumber`, and
+`CharCode`. Their runtime representations remain exactly `number`/`bigint`;
+this batch changes compile-time vocabulary only. Protocol strings such as
+`int.class` and `float.class` in XML configuration remain unchanged after a
+targeted M2 failure caught an over-broad textual replacement.
+
+TS-only M2 passed `506/508` (two skips, zero failures); Java M2 passed
+`508/508`; typecheck passed. Exact-commit M1' is still required before
+accepting this batch.
+
 ### Rejected candidate: inline native string equality
 
 Replacing the project `textEquals` helper with direct `===` at Term,

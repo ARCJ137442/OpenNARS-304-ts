@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/Operation.java
-import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Inheritance } from "../language/Inheritance.ts";
 import { Product } from "../language/Product.ts";
 import { Term } from "../language/Term.ts";
@@ -85,10 +85,10 @@ export class Operation extends Inheritance {
      * @return A compound generated or null
      */
     public static make(statement: Statement, subj: Term, pred: Term): Statement | null;
-    public static make(op: Symbols.NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
-    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(op: Symbols.NativeOperator, subj: Term, pred: Term, order: IntNumber): Statement | null;
+    public static make(statement: Statement, subj: Term, pred: Term, order: IntNumber): Statement | null;
     public static make(o: Symbols.NativeOperator, subject: Term, predicate: Term,
-        customOrder: boolean, order: int): Statement | null;
+        customOrder: boolean, order: IntNumber): Statement | null;
     public static make(argProduct: Term, operator: Term): Operation;
     public static make(oper: Operator, arg: Term[], addSelf: boolean): Operation;
     public static make(...args: unknown[]): Operation | Statement | null {
@@ -104,13 +104,13 @@ export class Operation extends Inheritance {
             return new Operation(new Product(arg), oper);
         }
         if (args.length === 4) {
-            const [first, subject, predicate, order] = args as [Symbols.NativeOperator | Statement, Term, Term, int];
+            const [first, subject, predicate, order] = args as [Symbols.NativeOperator | Statement, Term, Term, IntNumber];
             return first instanceof Statement
                 ? Statement.make(first, subject, predicate, order)
                 : Statement.make(first, subject, predicate, order);
         }
         if (args.length === 5) {
-            return Statement.make(...args as [Symbols.NativeOperator, Term, Term, boolean, int]);
+            return Statement.make(...args as [Symbols.NativeOperator, Term, Term, boolean, IntNumber]);
         }
         throw new ReasonerInputError("Invalid number of arguments");
     }

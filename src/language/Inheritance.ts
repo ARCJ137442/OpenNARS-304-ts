@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Inheritance.java
-import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Statement } from "./Statement.ts";
 import { Term } from "./Term.ts";
 import { CompoundTerm } from "./CompoundTerm.ts";
@@ -115,23 +115,23 @@ export class Inheritance extends Statement {
      * @return A compound generated or null
      */
     public static make(statement: Statement, subj: Term, pred: Term): Statement | null;
-    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
-    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(op: NativeOperator, subj: Term, pred: Term, order: IntNumber): Statement | null;
+    public static make(statement: Statement, subj: Term, pred: Term, order: IntNumber): Statement | null;
     public static make(o: NativeOperator, subject: Term, predicate: Term,
-        customOrder: boolean, order: int): Statement | null;
+        customOrder: boolean, order: IntNumber): Statement | null;
     public static make(subject: Term, predicate: Term): Inheritance;
     public static make(...args: unknown[]): Inheritance | Statement | null {
         if (args.length === 3) {
             return Statement.make(...args as [Statement, Term, Term]);
         }
         if (args.length === 4) {
-            const [first, subject, predicate, order] = args as [NativeOperator | Statement, Term, Term, int];
+            const [first, subject, predicate, order] = args as [NativeOperator | Statement, Term, Term, IntNumber];
             return first instanceof Statement
                 ? Statement.make(first, subject, predicate, order)
                 : Statement.make(first, subject, predicate, order);
         }
         if (args.length === 5) {
-            return Statement.make(...args as [NativeOperator, Term, Term, boolean, int]);
+            return Statement.make(...args as [NativeOperator, Term, Term, boolean, IntNumber]);
         }
         const [subject, predicate] = args as [Term, Term];
 

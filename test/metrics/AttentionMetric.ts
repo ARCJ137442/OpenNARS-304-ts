@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type double, closeResources, handleResourceError, throwResourceError } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber, type DoubleNumber, closeResources, handleResourceError, throwResourceError } from "../support/legacy-runtime-facade.ts";
 import {
     JavaClassNotFoundException,
     JavaIllegalAccessException,
@@ -41,7 +41,7 @@ export class AttentionMetric extends JavaObject {
 
     public static showOutput: boolean = true;
 
-    public static numberOfSamples: int = 8;
+    public static numberOfSamples: IntNumber = 8;
 
     public static rng: java.util.Random = new java.util.Random(65n);
 
@@ -60,47 +60,47 @@ export class AttentionMetric extends JavaObject {
             if (enTest) {
                 let paths: JavaObject[] = iTest.getValue();
 
-                let scoreSum: double = 0.0;
-                for (let iSample: int = 0; iSample < AttentionMetric.numberOfSamples; iSample++) {
+                let scoreSum: DoubleNumber = 0.0;
+                for (let iSample: IntNumber = 0; iSample < AttentionMetric.numberOfSamples; iSample++) {
                     scoreSum += AttentionMetric.runMetricTest(paths[0] as java.lang.String);
                 }
-                let averageScore: double = scoreSum / AttentionMetric.numberOfSamples;
+                let averageScore: DoubleNumber = scoreSum / AttentionMetric.numberOfSamples;
                 java.lang.System.out.println(iTest.getKey() + "  avg score = " + averageScore);
 
             }
         }
 
-        // int debugHere = 5;
+        // IntNumber debugHere = 5;
     }
 
-    public static calcScore(execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>, narParams: Parameters): double {
-        let score: double = 0.0;
+    public static calcScore(execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime>, narParams: Parameters): DoubleNumber {
+        let score: DoubleNumber = 0.0;
 
-        let exponentialDecayTimeWeightFactor: double = 0.0003; // how fast does the "score" decay for a solution?
+        let exponentialDecayTimeWeightFactor: DoubleNumber = 0.0003; // how fast does the "score" decay for a solution?
 
-        let weightOfbestSolution: double = 1.0;
-        let weightOfFirstSolution: double = 3.0;
+        let weightOfbestSolution: DoubleNumber = 1.0;
+        let weightOfFirstSolution: DoubleNumber = 3.0;
 
         // we sum up the solutions, faster solutions with a better time get a better
         // score
         for (let iEntry of execOrQaAnswersByTime.entrySet()) {
             let iEntryVal: AttentionMetric.ExecOrAnswerByTime = iEntry.getValue();
 
-            let bestWeight: double = TruthFunctions.c2w(iEntryVal.bestTruth.confidence, narParams); // we care about
+            let bestWeight: DoubleNumber = TruthFunctions.c2w(iEntryVal.bestTruth.confidence, narParams); // we care about
             // weight because it
             // doesn't converge
             // to 1.0 like conf,
             // so we can compute
             // a more meaningful
             // score
-            let bestTimeWeight: double = java.lang.Math.exp(-Number(iEntry.getValue().bestTime.longValue()) * exponentialDecayTimeWeightFactor); // weight
+            let bestTimeWeight: DoubleNumber = java.lang.Math.exp(-Number(iEntry.getValue().bestTime.longValue()) * exponentialDecayTimeWeightFactor); // weight
             // faster
             // answers
             // with a
             // better
             // ranking
 
-            let firstWeight: double = TruthFunctions.c2w(iEntryVal.firstTruth.confidence, narParams); // we care about
+            let firstWeight: DoubleNumber = TruthFunctions.c2w(iEntryVal.firstTruth.confidence, narParams); // we care about
             // weight because
             // it doesn't
             // converge to 1.0
@@ -109,7 +109,7 @@ export class AttentionMetric extends JavaObject {
             // a more
             // meaningful
             // score
-            let firstTimeWeight: double = java.lang.Math.exp(-Number(iEntry.getValue().firstTime.longValue()) * exponentialDecayTimeWeightFactor); // weight
+            let firstTimeWeight: DoubleNumber = java.lang.Math.exp(-Number(iEntry.getValue().firstTime.longValue()) * exponentialDecayTimeWeightFactor); // weight
             // faster
             // answers
             // with
@@ -117,7 +117,7 @@ export class AttentionMetric extends JavaObject {
             // better
             // ranking
 
-            let scoreOfThisEntry: double = (bestWeight * bestTimeWeight) * weightOfbestSolution
+            let scoreOfThisEntry: DoubleNumber = (bestWeight * bestTimeWeight) * weightOfbestSolution
                 + (firstWeight * firstTimeWeight) * weightOfFirstSolution;
 
             if (true)
@@ -129,7 +129,7 @@ export class AttentionMetric extends JavaObject {
         return score;
     }
 
-    public static runMetricTest(name: java.lang.String): double {
+    public static runMetricTest(name: java.lang.String): DoubleNumber {
         let execOrQaAnswersByTime: java.util.Map<java.lang.String, AttentionMetric.ExecOrAnswerByTime> = new java.util.HashMap();
 
         let n: Reasoner | null = null;
@@ -193,14 +193,14 @@ export class AttentionMetric extends JavaObject {
             }
         }
 
-        let minCycles: int = 1000;
+        let minCycles: IntNumber = 1000;
         n.cycles(minCycles);
 
-        let scoreOfThisTest: double = AttentionMetric.calcScore(execOrQaAnswersByTime, (n as Nar).narParameters);
+        let scoreOfThisTest: DoubleNumber = AttentionMetric.calcScore(execOrQaAnswersByTime, (n as Nar).narParameters);
 
         java.lang.System.out.println("score of " + name + " = " + scoreOfThisTest);
 
-        // int here = 5;
+        // IntNumber here = 5;
 
         return scoreOfThisTest;
     }
@@ -264,7 +264,7 @@ export class AttentionMetric extends JavaObject {
         public onSolution(belief: Sentence): void {
             AttentionMetric.update(this.execOrQaAnswersByTime, belief, this.reasoner);
 
-            // int here = 5;
+            // IntNumber here = 5;
         }
     };
 

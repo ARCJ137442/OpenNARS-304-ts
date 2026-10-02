@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/LocalRules.java
-import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -93,7 +93,7 @@ export class LocalRules {
             return false;
         }
         if (s1.term.term_indices !== null && s2.term.term_indices !== null) {
-            for (let i: int = 0; i < s1.term.term_indices.length; i++) {
+            for (let i: IntNumber = 0; i < s1.term.term_indices.length; i++) {
                 if (s1.term.term_indices[i] !== s2.term.term_indices[i]) {
                     return false;
                 }
@@ -131,7 +131,7 @@ export class LocalRules {
         let budget: BudgetValue = BudgetFunctions.revise(newTruth, oldTruth, truth, feedbackToLinks, nal);
 
         if (budget.aboveThreshold()) {
-            let counter: long = -1 as unknown as long; // -1 is invalid
+            let counter: RuntimeLong = -1 as unknown as RuntimeLong; // -1 is invalid
             if (newBelief.term instanceof Implication && oldBelief.term instanceof Implication) {
                 // add because the evidence adds up
                 counter = (newBelief.term as Implication).counter + (oldBelief.term as Implication).counter;
@@ -159,57 +159,57 @@ export class LocalRules {
      * @return
      */
     public static intervalProjection(nal: DerivationContext, newBeliefTerm: Term,
-        oldBeliefTerm: Term, recent_ivals: float[], newTruth: TruthValue): boolean {
+        oldBeliefTerm: Term, recent_ivals: FloatNumber[], newTruth: TruthValue): boolean {
         let useNewBeliefTerm: boolean = false;
         if (newBeliefTerm.hasInterval()) {
             const ivalOld = CompoundTerm.extractIntervals(nal.memory, oldBeliefTerm);
             const ivalNew = CompoundTerm.extractIntervals(nal.memory, newBeliefTerm);
-            let AbsDiffSumNew: long = 0 as unknown as long;
-            let AbsDiffSumOld: long = 0 as unknown as long;
+            let AbsDiffSumNew: RuntimeLong = 0 as unknown as RuntimeLong;
+            let AbsDiffSumOld: RuntimeLong = 0 as unknown as RuntimeLong;
             /* synchronized (recent_ivals) { */
             if (recent_ivals.length === 0) {
                 for (let l of ivalOld) {
-                    recent_ivals.push(Float32Math.from(Number(l)) as float);
+                    recent_ivals.push(Float32Math.from(Number(l)) as FloatNumber);
                 }
             }
-            for (let i: int = 0; i < ivalNew.size(); i++) {
-                let inBetween: float = Float32Math.divide(
+            for (let i: IntNumber = 0; i < ivalNew.size(); i++) {
+                let inBetween: FloatNumber = Float32Math.divide(
                     Float32Math.add(recent_ivals[i], Number(ivalNew.get(i))),
                     2.0,
-                ) as float;
+                ) as FloatNumber;
                 // vote as one new entry, turtle style
-                let speed: float = Float32Math.divide(
+                let speed: FloatNumber = Float32Math.divide(
                     1.0,
                     Float32Math.multiply(
                         nal.narParameters.INTERVAL_ADAPT_SPEED,
                         Float32Math.subtract(1.0, newTruth.getExpectation()),
                     ),
-                ) as float;
+                ) as FloatNumber;
                 // less truth expectation, slower
                 recent_ivals[i] = Float32Math.add(
                     recent_ivals[i],
                     Float32Math.multiply(speed, Float32Math.subtract(inBetween, recent_ivals[i])),
-                ) as float;
+                ) as FloatNumber;
             }
-            for (let i: int = 0; i < ivalNew.size(); i++) {
+            for (let i: IntNumber = 0; i < ivalNew.size(); i++) {
                 AbsDiffSumNew += Math.abs(
                     Number(ivalNew.get(i)) - recent_ivals[i],
-                ) as unknown as long;
+                ) as unknown as RuntimeLong;
             }
-            for (let i: int = 0; i < ivalNew.size(); i++) {
+            for (let i: IntNumber = 0; i < ivalNew.size(); i++) {
                 AbsDiffSumOld += Math.abs(
                     Number(ivalOld.get(i)) - recent_ivals[i],
-                ) as unknown as long;
+                ) as unknown as RuntimeLong;
             }
             /* } */
-            let AbsDiffSum: long = 0 as unknown as long;
-            for (let i: int = 0; i < ivalNew.size(); i++) {
+            let AbsDiffSum: RuntimeLong = 0 as unknown as RuntimeLong;
+            for (let i: IntNumber = 0; i < ivalNew.size(); i++) {
                 AbsDiffSum += Math.abs(
                     Number(ivalNew.get(i)) - Number(ivalOld.get(i)),
-                ) as unknown as long;
+                ) as unknown as RuntimeLong;
             }
-            let a: float = TruthFunctions.temporalProjection(
-                0 as unknown as long, AbsDiffSum, 0 as unknown as long, nal.memory.narParameters);
+            let a: FloatNumber = TruthFunctions.temporalProjection(
+                0 as unknown as RuntimeLong, AbsDiffSum, 0 as unknown as RuntimeLong, nal.memory.narParameters);
             // re-project, and it's safe:
             // we won't count more confidence than
             // when the second premise would have been shifted
@@ -235,8 +235,8 @@ export class LocalRules {
 
         if (oldBest !== null) {
             let rateByConfidence: boolean = oldBest.getTerm().equals(belief.getTerm());
-            let newQ: float = LocalRules.solutionQuality(rateByConfidence, task, belief, memory, nal.time);
-            let oldQ: float = LocalRules.solutionQuality(rateByConfidence, task, oldBest, memory, nal.time);
+            let newQ: FloatNumber = LocalRules.solutionQuality(rateByConfidence, task, belief, memory, nal.time);
+            let oldQ: FloatNumber = LocalRules.solutionQuality(rateByConfidence, task, oldBest, memory, nal.time);
             let isBetterSolution: boolean = newQ > oldQ;
             memory.emit(Events.TrySolution.class, isBetterSolution, task, belief);
             if (!isBetterSolution) {
@@ -281,7 +281,7 @@ export class LocalRules {
      * @return The quality of the judgment as the solution
      */
     public static solutionQuality(rateByConfidence: boolean, probT: Task, solution: Sentence,
-        memory: Memory, time: Timable): float {
+        memory: Memory, time: Timable): FloatNumber {
         let problem: Sentence = probT.sentence;
 
         if ((probT.sentence.punctuation !== solution.punctuation && solution.term.hasVarQuery())
@@ -306,16 +306,16 @@ export class LocalRules {
              * increases if it has a high truth expecation
              */
 
-            // Java materializes the int * float product as float before the
-            // first Math.sqrt; a TypeScript `as float` cast would be erased.
-            const complexityFactor: float = Float32Math.multiply(
+            // Java materializes the IntNumber * FloatNumber product as FloatNumber before the
+            // first Math.sqrt; a TypeScript `as FloatNumber` cast would be erased.
+            const complexityFactor: FloatNumber = Float32Math.multiply(
                 solution.term.getComplexity(),
                 memory.narParameters.COMPLEXITY_UNIT,
-            ) as float;
+            ) as FloatNumber;
             return Float32Math.from(truth.getExpectation() / Math
-                .sqrt(Math.sqrt(Math.sqrt(complexityFactor)))) as float;
+                .sqrt(Math.sqrt(Math.sqrt(complexityFactor)))) as FloatNumber;
         } else {
-            return Float32Math.from(truth.confidence) as float;
+            return Float32Math.from(truth.confidence) as FloatNumber;
         }
     }
 
@@ -345,7 +345,7 @@ export class LocalRules {
         let judgmentTask: boolean = task.sentence.isJudgment();
         let rateByConfidence: boolean = problem.getTerm().hasVarQuery(); // here its whether its a what or where
         // question for budget adjustment
-        let quality: float = LocalRules.solutionQuality(rateByConfidence, problem, solution, nal.mem(), nal.time);
+        let quality: FloatNumber = LocalRules.solutionQuality(rateByConfidence, problem, solution, nal.mem(), nal.time);
 
         if (problem.sentence.isGoal() && nal.memory.emotion !== null) {
             nal.memory.emotion.adjustSatisfaction(quality, task.getPriority(), nal);
@@ -354,21 +354,21 @@ export class LocalRules {
         if (judgmentTask) {
             task.incPriority(quality);
         } else {
-            let taskPriority: float = task.getPriority(); // +goal satisfication is a matter of degree -
+            let taskPriority: FloatNumber = task.getPriority(); // +goal satisfication is a matter of degree -
             // https://groups.google.com/forum/#!topic/open-nars/ZfCM416Dx1M
             budget = new BudgetValue(UtilityFunctions.or(taskPriority, quality), task.getDurability(),
                 BudgetFunctions.truthToQuality(solution.getTruth()), nal.narParameters);
             task.setPriority(Float32Math.from(Math.min(
                 Float32Math.subtract(1, quality),
                 taskPriority,
-            )) as float);
+            )) as FloatNumber);
         }
         if (feedbackToLinks) {
             let tLink: TaskLink = nal.requireCurrentTaskLink();
             tLink.setPriority(Float32Math.from(Math.min(
                 Float32Math.subtract(1, quality),
                 tLink.getPriority(),
-            )) as float);
+            )) as FloatNumber);
             const bLink = nal.getCurrentBeliefLink();
             if (bLink !== null) {
                 bLink.incPriority(quality);
@@ -407,7 +407,7 @@ export class LocalRules {
      * @param figure location of the shared term
      * @param nal    Reference to the memory
      */
-    public static matchAsymSym(asym: Sentence, sym: Sentence, figure: int,
+    public static matchAsymSym(asym: Sentence, sym: Sentence, figure: IntNumber,
         nal: DerivationContext): void {
         if (nal.getCurrentTask().sentence.isJudgment()) {
             LocalRules.inferToAsym(asym, sym, nal);
@@ -530,7 +530,7 @@ export class LocalRules {
             return;
         }
         let beliefContent: Statement = belief.term as Statement;
-        let order: int = TemporalRules.reverseOrder(beliefContent.getTemporalOrder());
+        let order: IntNumber = TemporalRules.reverseOrder(beliefContent.getTemporalOrder());
         let subjT: Term = content.getSubject();
         let predT: Term = content.getPredicate();
         let subjB: Term = beliefContent.getSubject();

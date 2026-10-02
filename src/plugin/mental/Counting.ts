@@ -1,6 +1,6 @@
 //! Java source: opennars/plugin/mental/Counting.java
 import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
-import type { float, double, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber, DoubleNumber, IntNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Stamp } from "../../entity/Stamp.ts";
@@ -35,19 +35,19 @@ export class Counting implements Plugin {
     public obs: EventObserver | null = null;
 
     protected static readonly CARDINALITY: Term = Term.get("CARDINALITY");
-    public MINIMUM_PRIORITY: float = Float32Math.from(0.3) as float;
+    public MINIMUM_PRIORITY: FloatNumber = Float32Math.from(0.3) as FloatNumber;
 
-    public setMINIMUM_PRIORITY(val: double): void {
-        this.MINIMUM_PRIORITY = Float32Math.from(val) as float;
+    public setMINIMUM_PRIORITY(val: DoubleNumber): void {
+        this.MINIMUM_PRIORITY = Float32Math.from(val) as FloatNumber;
     }
 
-    public getMINIMUM_PRIORITY(): double {
+    public getMINIMUM_PRIORITY(): DoubleNumber {
         return this.MINIMUM_PRIORITY;
     }
 
     public constructor();
 
-    public constructor(MINIMUM_PRIORITY: float);
+    public constructor(MINIMUM_PRIORITY: FloatNumber);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -55,9 +55,9 @@ export class Counting implements Plugin {
             }
 
             case 1: {
-                const [MINIMUM_PRIORITY] = args as [float];
+                const [MINIMUM_PRIORITY] = args as [FloatNumber];
 
-                this.MINIMUM_PRIORITY = Float32Math.from(MINIMUM_PRIORITY) as float;
+                this.MINIMUM_PRIORITY = Float32Math.from(MINIMUM_PRIORITY) as FloatNumber;
 
 
                 break;
@@ -96,7 +96,7 @@ export class Counting implements Plugin {
                             let set_term: SetExt = inh.getSubject() as SetExt;
 
                             // this gets the cardinality of M
-                            let cardinality: int = set_term.size();
+                            let cardinality: IntNumber = set_term.size();
 
                             // now create term <(*,M,cardinality) --> CARDINALITY>.
                             let product_args: Term[] = [

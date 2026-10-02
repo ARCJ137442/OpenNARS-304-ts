@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Conjunction.java
-import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import { Interval } from "./Interval.ts";
@@ -23,10 +23,10 @@ type NativeOperator = Symbols.NativeOperator;
  */
 export class Conjunction extends CompoundTerm {
 
-    public readonly temporalOrder: int;
+    public readonly temporalOrder: IntNumber;
     public readonly isSpatial: boolean;
 
-    protected constructor(arg: Term[], order: int, normalized: boolean, spatial: boolean);
+    protected constructor(arg: Term[], order: IntNumber, normalized: boolean, spatial: boolean);
 
     /**
      * Constructor with partial values, called by make
@@ -36,12 +36,12 @@ export class Conjunction extends CompoundTerm {
      * @param normalized
      */
     // avoids re-calculates of conv rectangle
-    protected constructor(arg: Term[], order: int, normalized: boolean, spatial: boolean,
+    protected constructor(arg: Term[], order: IntNumber, normalized: boolean, spatial: boolean,
         rect: CompoundTerm.ConvRectangle);
     protected constructor(...args: unknown[]) {
         switch (args.length) {
             case 4: {
-                const [arg, order, normalized, spatial] = args as [Term[], int, boolean, boolean];
+                const [arg, order, normalized, spatial] = args as [Term[], IntNumber, boolean, boolean];
 
 
                 super(arg);
@@ -58,7 +58,7 @@ export class Conjunction extends CompoundTerm {
             }
 
             case 5: {
-                const [arg, order, normalized, spatial, rect] = args as [Term[], int, boolean, boolean, CompoundTerm.ConvRectangle];
+                const [arg, order, normalized, spatial, rect] = args as [Term[], IntNumber, boolean, boolean, CompoundTerm.ConvRectangle];
 
 
                 super(arg);
@@ -161,7 +161,7 @@ export class Conjunction extends CompoundTerm {
      * @param argList       the list of arguments
      * @return the Term generated from the arguments, or null if not possible
      */
-    public static make(argList: Term[], temporalOrder: int): Term;
+    public static make(argList: Term[], temporalOrder: IntNumber): Term;
 
     // overload this method by term type?
     /**
@@ -173,20 +173,20 @@ export class Conjunction extends CompoundTerm {
      */
     public static make(term1: Term, term2: Term): Term;
 
-    public static make(argList: Term[], temporalOrder: int, spatial: boolean): Term;
+    public static make(argList: Term[], temporalOrder: IntNumber, spatial: boolean): Term;
 
-    public static make(prefix: Term, suffix: Interval, temporalOrder: int): Term;
+    public static make(prefix: Term, suffix: Interval, temporalOrder: IntNumber): Term;
 
     /**
      *
      * @param set a set of Term as term
      * @return the Term generated from the arguments
      */
-    public static make(term1: Term, term2: Term, temporalOrder: int): Term;
+    public static make(term1: Term, term2: Term, temporalOrder: IntNumber): Term;
 
-    public static make(prefix: Term, ival: Interval, suffix: Term, temporalOrder: int): Term;
+    public static make(prefix: Term, ival: Interval, suffix: Term, temporalOrder: IntNumber): Term;
 
-    public static make(term1: Term, term2: Term, temporalOrder: int, spatial: boolean): Term;
+    public static make(term1: Term, term2: Term, temporalOrder: IntNumber, spatial: boolean): Term;
     public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
@@ -202,7 +202,7 @@ export class Conjunction extends CompoundTerm {
             case 2: {
                 const [first, second] = args;
                 if (Array.isArray(first)) {
-                    return Conjunction.make(first as Term[], second as int, false);
+                    return Conjunction.make(first as Term[], second as IntNumber, false);
                 }
                 return Conjunction.make(first as Term, second as Term, TemporalRules.ORDER_NONE);
             }
@@ -211,7 +211,7 @@ export class Conjunction extends CompoundTerm {
                 const [first, second, third] = args;
                 if (Array.isArray(first)) {
                     const argList = first as Term[];
-                    const temporalOrder = second as int;
+                    const temporalOrder = second as IntNumber;
                     const spatial = third as boolean;
                     if (Debug.DETAILED) {
                         Terms.verifyNonNullTerms(...argList);
@@ -253,22 +253,22 @@ export class Conjunction extends CompoundTerm {
                 if (typeof (first as { toArray?: unknown })?.toArray === "function") {
                     return Conjunction.make(
                         (first as ArrayConvertible<Term>).toArray(new Array<Term>(0)),
-                        second as int,
+                        second as IntNumber,
                         third as boolean,
                     );
                 }
                 if (second instanceof Interval) {
-                    return Conjunction.make([first as Term, second as Interval], third as int);
+                    return Conjunction.make([first as Term, second as Interval], third as IntNumber);
                 }
-                return Conjunction.make(first as Term, second as Term, third as int, false);
+                return Conjunction.make(first as Term, second as Term, third as IntNumber, false);
             }
 
             case 4: {
                 if (args[1] instanceof Interval) {
-                    const [prefix, ival, suffix, temporalOrder] = args as [Term, Interval, Term, int];
+                    const [prefix, ival, suffix, temporalOrder] = args as [Term, Interval, Term, IntNumber];
                     return Conjunction.make([prefix, ival, suffix], temporalOrder);
                 }
-                const [term1, term2, temporalOrder, spatial] = args as [Term, Term, int, boolean];
+                const [term1, term2, temporalOrder, spatial] = args as [Term, Term, IntNumber, boolean];
 
 
                 if (temporalOrder === TemporalRules.ORDER_FORWARD) {
@@ -339,7 +339,7 @@ export class Conjunction extends CompoundTerm {
         }
     }
 
-    public static isConjunctionAndHasSameOrder(t: Term, order: int): boolean {
+    public static isConjunctionAndHasSameOrder(t: Term, order: IntNumber): boolean {
         if (t instanceof Conjunction) {
             let c: Conjunction = t as Conjunction;
             return c.getTemporalOrder() === order;
@@ -347,10 +347,10 @@ export class Conjunction extends CompoundTerm {
         return false;
     }
 
-    public static flatten(args: Term[], order: int, isSpatial: boolean): Term[] { // flatten only same
+    public static flatten(args: Term[], order: IntNumber, isSpatial: boolean): Term[] { // flatten only same
         // order!
         // determine how many there are with same order
-        let sz: int = 0;
+        let sz: IntNumber = 0;
         for (let a of args) {
             if (Conjunction.isConjunctionAndHasSameOrder(a, order) && isSpatial === (a as Conjunction).isSpatial) {
                 sz += (a as Conjunction).term.length;
@@ -359,7 +359,7 @@ export class Conjunction extends CompoundTerm {
             }
         }
         let ret: Term[] = new Array<Term>(sz);
-        let k: int = 0;
+        let k: IntNumber = 0;
         for (let a of args) {
             if (Conjunction.isConjunctionAndHasSameOrder(a, order) && isSpatial === (a as Conjunction).isSpatial) {
                 let c: Conjunction = (a as Conjunction);
@@ -375,7 +375,7 @@ export class Conjunction extends CompoundTerm {
         return ret;
     }
 
-    public static PositiveIntString(value: int): TextString {
+    public static PositiveIntString(value: IntNumber): TextString {
         if (value === 0) {
             return asText("");
         } else {
@@ -383,11 +383,11 @@ export class Conjunction extends CompoundTerm {
         }
     }
 
-    public static UpdateRelativeIndices(minX: int, minY: int, minsX: int, minsY: int,
+    public static UpdateRelativeIndices(minX: IntNumber, minY: IntNumber, minsX: IntNumber, minsY: IntNumber,
         term: Term): Term {
         if (term instanceof CompoundTerm) {
             let ct: CompoundTerm = (term as CompoundTerm);
-            for (let i: int = 0; i < ct.term.length; i++) {
+            for (let i: IntNumber = 0; i < ct.term.length; i++) {
                 ct.term[i] = Conjunction.UpdateRelativeIndices(minX, minY, minsX, minsY, ct.term[i]);
             }
             return ct;
@@ -396,10 +396,10 @@ export class Conjunction extends CompoundTerm {
                 // term indices remain the same, but representation changes
                 // Java string concatenation turns a null reference into the literal "null".
                 let s: string = String(term.index_variable);
-                let relativeSizeX: int = term.term_indices[0] - minsX;
-                let relativeSizeY: int = term.term_indices[1] - minsY;
-                let relativePositionX: int = term.term_indices[2] - minX;
-                let relativePositionY: int = term.term_indices[3] - minY;
+                let relativeSizeX: IntNumber = term.term_indices[0] - minsX;
+                let relativeSizeY: IntNumber = term.term_indices[1] - minsY;
+                let relativePositionX: IntNumber = term.term_indices[2] - minX;
+                let relativePositionY: IntNumber = term.term_indices[3] - minY;
 
                 s += `[i${Conjunction.PositiveIntString(relativeSizeX)},j${Conjunction.PositiveIntString(relativeSizeY)}`;
                 s += `,k${Conjunction.PositiveIntString(relativePositionX)}`;
@@ -421,16 +421,16 @@ export class Conjunction extends CompoundTerm {
      */
     public static simplifyIntervals(components: Term[]): Term[] {
         const ret: Term[] = [];
-        for (let i: int = 0; i < components.length;) {
+        for (let i: IntNumber = 0; i < components.length;) {
             if (components[i] instanceof Interval) {
                 // add up next ones
-                // jree models Java long as bigint, while this port keeps Interval.time
+                // jree models Java RuntimeLong as bigint, while this port keeps Interval.time
                 // as a runtime number for compatibility with the existing arithmetic.
                 let ival: number = 0;
                 for (; i < components.length && components[i] instanceof Interval; i++) {
                     ival += Number((components[i] as Interval).time as unknown as number);
                 }
-                ret.push(new Interval(ival as unknown as long));
+                ret.push(new Interval(ival as unknown as RuntimeLong));
             } else {
                 ret.push(components[i]);
                 i++;
@@ -443,7 +443,7 @@ export class Conjunction extends CompoundTerm {
         return Conjunction.makeCompoundName(this.operator(), ...this.term);
     }
 
-    public getTemporalOrder(): int {
+    public getTemporalOrder(): IntNumber {
         return this.temporalOrder;
     }
 

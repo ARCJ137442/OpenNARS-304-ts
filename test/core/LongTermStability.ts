@@ -1,4 +1,4 @@
-import { java, JavaObject, type long, type int } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type RuntimeLong, type IntNumber } from "../support/legacy-runtime-facade.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
 import type { JavaStringInput } from "../support/legacy-runtime-facade.ts";
@@ -6,16 +6,16 @@ import type { JavaStringInput } from "../support/legacy-runtime-facade.ts";
 
 
 /**
- * Checks for the stability of the system over a long time period (days, weeks,
+ * Checks for the stability of the system over a RuntimeLong time period (days, weeks,
  * etc)
  *
  * @author Robert Wünsche
  */
 export class LongTermStability extends JavaObject {
     public static ObjectIdCounter = class ObjectIdCounter extends JavaObject {
-        protected counter: long = 0n;
+        protected counter: RuntimeLong = 0n;
 
-        protected retNext(): long {
+        protected retNext(): RuntimeLong {
             return this.counter++;
         }
     };
@@ -31,9 +31,9 @@ export class LongTermStability extends JavaObject {
         this.reasoner = reasoner;
     }
 
-    public run(timeToRunInMilliseconds: long): void {
+    public run(timeToRunInMilliseconds: RuntimeLong): void {
         // TODO< countdown time >
-        let remainingTimeToRunInMilliseconds: long = timeToRunInMilliseconds;
+        let remainingTimeToRunInMilliseconds: RuntimeLong = timeToRunInMilliseconds;
 
         while (true) {
             this.feed(this.reasoner);
@@ -41,13 +41,13 @@ export class LongTermStability extends JavaObject {
         }
     }
 
-    public cycleReasoner(numberOfCycles: int): void {
+    public cycleReasoner(numberOfCycles: IntNumber): void {
         this.reasoner.cycles(numberOfCycles);
     }
 
     public feed(consumer: Reasoner): void {
-        let objectIdA: int = this.rng.nextInt(10000);
-        let placeIdA: int = this.rng.nextInt(10000);
+        let objectIdA: IntNumber = this.rng.nextInt(10000);
+        let placeIdA: IntNumber = this.rng.nextInt(10000);
 
         this.feedRelation2(consumer, this.rng.nextInt(10000), this.rng.nextInt(10000), "at", false);
         this.feedRelation2(consumer, this.rng.nextInt(10000), this.rng.nextInt(10000), "from", false);
@@ -62,9 +62,9 @@ export class LongTermStability extends JavaObject {
         this.feedRelation2(consumer, this.rng.nextInt(3000), this.rng.nextInt(3000), "a2", true);
     }
 
-    public feedRelation2(consumer: Reasoner, objectId: long | number, placeId: long | number, relation: JavaStringInput, isQuestion: boolean): void {
+    public feedRelation2(consumer: Reasoner, objectId: RuntimeLong | number, placeId: RuntimeLong | number, relation: JavaStringInput, isQuestion: boolean): void {
         const taskType = isQuestion ? "?" : ".";
-        const nextObjectId: long | number = typeof objectId === "bigint" ? objectId + 500000n : objectId + 500000;
+        const nextObjectId: RuntimeLong | number = typeof objectId === "bigint" ? objectId + 500000n : objectId + 500000;
 
         const format = (template: string, ...args: unknown[]): java.lang.String =>
             java.lang.String.format(new java.lang.String(template), ...args);
@@ -99,7 +99,7 @@ export class LongTermStability extends JavaObject {
         let reasonerUnderTest: Reasoner = new Nar();
         let test: LongTermStability = new LongTermStability(reasonerUnderTest);
 
-        let timeToRunInMilliseconds: long = 7n * 24n * 3600n * 1000n;
+        let timeToRunInMilliseconds: RuntimeLong = 7n * 24n * 3600n * 1000n;
 
         reasonerUnderTest.addInput("*volume=0");
 

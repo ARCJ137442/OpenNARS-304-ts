@@ -1,6 +1,6 @@
 //! Java source: opennars/inference/TruthFunctions.java
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import type { int, float, double, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, FloatNumber, DoubleNumber, RuntimeLong } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { UtilityFunctions } from "./UtilityFunctions.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Parameters } from "../main/Parameters.ts";
@@ -26,14 +26,14 @@ class EnumType {
 
     private constructor(
         private readonly enumName: string,
-        private readonly enumOrdinal: int,
+        private readonly enumOrdinal: IntNumber,
     ) {}
 
     public name(): string {
         return this.enumName;
     }
 
-    public ordinal(): int {
+    public ordinal(): IntNumber {
         return this.enumOrdinal;
     }
 
@@ -133,9 +133,9 @@ export class TruthFunctions extends UtilityFunctions {
     // guards and EnumType selectors, so the boundary does not require JavaObject.
     public static lookupTruthOrNull(a: TruthValue, b: TruthValue, narParameters: Parameters,
         ...values: unknown[]): TruthValue | null {
-        let numberOfTuples: int = values.length / 2;
+        let numberOfTuples: IntNumber = values.length / 2;
 
-        for (let idx: int = 0; idx < numberOfTuples; idx++) {
+        for (let idx: IntNumber = 0; idx < numberOfTuples; idx++) {
             const value: unknown = values[idx * 2];
             if (value === true) {
                 let type: TruthFunctions.EnumType = values[idx * 2 + 1] as TruthFunctions.EnumType;
@@ -154,10 +154,10 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static conversion(v1: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let c1: double = v1.confidence;
-        let w: float = and(f1, c1) as float;
-        let c: double = w2c(w, narParameters);
+        let f1: FloatNumber = v1.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let w: FloatNumber = and(f1, c1) as FloatNumber;
+        let c: DoubleNumber = w2c(w, narParameters);
         return TruthValue.fromFrequencyConfidence(1, c, narParameters);
     }
 
@@ -169,8 +169,8 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static negation(v1: TruthValue, narParameters: Parameters): TruthValue {
-        let f: float = Float32Math.subtract(1, v1.frequency) as float;
-        let c: double = v1.confidence;
+        let f: FloatNumber = Float32Math.subtract(1, v1.frequency) as FloatNumber;
+        let c: DoubleNumber = v1.confidence;
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
 
@@ -181,14 +181,14 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static contraposition(v1: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let c1: double = v1.confidence;
-        let w: float = and(1 - f1 as double, c1) as float;
-        let c: double = w2c(w, narParameters);
+        let f1: FloatNumber = v1.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let w: FloatNumber = and(1 - f1 as DoubleNumber, c1) as FloatNumber;
+        let c: DoubleNumber = w2c(w, narParameters);
         return TruthValue.fromFrequencyConfidence(0, c, narParameters);
     }
 
-    /* ----- double argument functions, called in MatchingRules ----- */
+    /* ----- DoubleNumber argument functions, called in MatchingRules ----- */
     /**
      * {<S ==> P>, <S ==> P>} |- <S ==> P>
      *
@@ -228,18 +228,18 @@ export class TruthFunctions extends UtilityFunctions {
 
     private static revisionInto(v1: TruthValue, v2: TruthValue, result: TruthValue,
         narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let w1: double = c2w(v1.confidence, narParameters);
-        let w2: double = c2w(v2.confidence, narParameters);
-        let w: double = w1 + w2;
-        result.frequency = ((w1 * f1 + w2 * f2) / w) as float;
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let w1: DoubleNumber = c2w(v1.confidence, narParameters);
+        let w2: DoubleNumber = c2w(v2.confidence, narParameters);
+        let w: DoubleNumber = w1 + w2;
+        result.frequency = ((w1 * f1 + w2 * f2) / w) as FloatNumber;
         result.confidence = w2c(w, narParameters);
         return result;
     }
 
 
-    /* ----- double argument functions, called in SyllogisticRules ----- */
+    /* ----- DoubleNumber argument functions, called in SyllogisticRules ----- */
     /**
      * {<S ==> M>, <M ==> P>} |- <S ==> P>
      *
@@ -256,27 +256,27 @@ export class TruthFunctions extends UtilityFunctions {
      * @param reliance Confidence of the second (analytical) premise
      * @return Truth value of the conclusion
      */
-    public static deduction(v1: TruthValue, reliance: float, narParameters: Parameters): TruthValue;
+    public static deduction(v1: TruthValue, reliance: FloatNumber, narParameters: Parameters): TruthValue;
     public static deduction(...args: unknown[]): TruthValue {
         if (args.length === 3 && args[1] instanceof TruthValue) {
                 const [v1, v2, narParameters] = args as [TruthValue, TruthValue, Parameters];
 
 
-                let f1: float = v1.frequency;
-                let f2: float = v2.frequency;
-                let c1: double = v1.confidence;
-                let c2: double = v2.confidence;
-                let f: float = and(f1, f2) as float;
-                let c: double = and(c1, c2, f);
+                let f1: FloatNumber = v1.frequency;
+                let f2: FloatNumber = v2.frequency;
+                let c1: DoubleNumber = v1.confidence;
+                let c2: DoubleNumber = v2.confidence;
+                let f: FloatNumber = and(f1, f2) as FloatNumber;
+                let c: DoubleNumber = and(c1, c2, f);
                 return TruthValue.fromFrequencyConfidence(f, c, narParameters);
         }
         if (args.length === 3) {
-                const [v1, reliance, narParameters] = args as [TruthValue, float, Parameters];
+                const [v1, reliance, narParameters] = args as [TruthValue, FloatNumber, Parameters];
 
 
-                let f1: float = v1.frequency;
-                let c1: double = v1.confidence;
-                let c: double = and(f1, c1, reliance);
+                let f1: FloatNumber = v1.frequency;
+                let c1: DoubleNumber = v1.confidence;
+                let c: DoubleNumber = and(f1, c1, reliance);
                 return TruthValue.fromFrequencyConfidence(f1, c, narParameters, true);
         }
         throw new ReasonerInputError("Invalid number of arguments");
@@ -291,12 +291,12 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static analogy(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let c1: double = v1.confidence;
-        let c2: double = v2.confidence;
-        let f: float = and(f1, f2) as float;
-        let c: double = and(c1, c2, f2);
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c2: DoubleNumber = v2.confidence;
+        let f: FloatNumber = and(f1, f2) as FloatNumber;
+        let c: DoubleNumber = and(c1, c2, f2);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
 
@@ -308,12 +308,12 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static resemblance(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let c1: double = v1.confidence;
-        let c2: double = v2.confidence;
-        let f: float = and(f1, f2) as float;
-        let c: double = and(c1, c2, or(f1, f2));
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c2: DoubleNumber = v2.confidence;
+        let f: FloatNumber = and(f1, f2) as FloatNumber;
+        let c: DoubleNumber = and(c1, c2, or(f1, f2));
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
 
@@ -333,7 +333,7 @@ export class TruthFunctions extends UtilityFunctions {
      * @param reliance Confidence of the second (analytical) premise
      * @return Truth value of the conclusion
      */
-    public static abduction(v1: TruthValue, reliance: float, narParameters: Parameters): TruthValue;
+    public static abduction(v1: TruthValue, reliance: FloatNumber, narParameters: Parameters): TruthValue;
     public static abduction(...args: unknown[]): TruthValue {
         if (args.length === 3 && args[1] instanceof TruthValue) {
                 const [v1, v2, narParameters] = args as [TruthValue, TruthValue, Parameters];
@@ -342,25 +342,25 @@ export class TruthFunctions extends UtilityFunctions {
                 if (v1.analytic || v2.analytic) {
                     return TruthValue.fromFrequencyConfidence(0.5, 0, narParameters);
                 }
-                let f1: float = v1.frequency;
-                let f2: float = v2.frequency;
-                let c1: double = v1.confidence;
-                let c2: double = v2.confidence;
-                let w: double = and(f2, c1, c2);
-                let c: double = w2c(w, narParameters);
+                let f1: FloatNumber = v1.frequency;
+                let f2: FloatNumber = v2.frequency;
+                let c1: DoubleNumber = v1.confidence;
+                let c2: DoubleNumber = v2.confidence;
+                let w: DoubleNumber = and(f2, c1, c2);
+                let c: DoubleNumber = w2c(w, narParameters);
                 return TruthValue.fromFrequencyConfidence(f1, c, narParameters);
         }
         if (args.length === 3) {
-                const [v1, reliance, narParameters] = args as [TruthValue, float, Parameters];
+                const [v1, reliance, narParameters] = args as [TruthValue, FloatNumber, Parameters];
 
 
                 if (v1.analytic) {
                     return TruthValue.fromFrequencyConfidence(0.5, 0, narParameters);
                 }
-                let f1: float = v1.frequency;
-                let c1: double = v1.confidence;
-                let w: double = and(c1, reliance);
-                let c: double = w2c(w, narParameters);
+                let f1: FloatNumber = v1.frequency;
+                let c1: DoubleNumber = v1.confidence;
+                let w: DoubleNumber = and(c1, reliance);
+                let c: DoubleNumber = w2c(w, narParameters);
                 return TruthValue.fromFrequencyConfidence(f1, c, narParameters, true);
         }
         throw new ReasonerInputError("Invalid number of arguments");
@@ -389,12 +389,12 @@ export class TruthFunctions extends UtilityFunctions {
         if (v1.analytic || v2.analytic) {
             return TruthValue.fromFrequencyConfidence(0.5, 0, narParameters);
         }
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let c1: double = v1.confidence;
-        let c2: double = v2.confidence;
-        let w: double = and(f1, f2, c1, c2);
-        let c: double = w2c(w, narParameters);
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c2: DoubleNumber = v2.confidence;
+        let w: DoubleNumber = and(f1, f2, c1, c2);
+        let c: DoubleNumber = w2c(w, narParameters);
         return TruthValue.fromFrequencyConfidence(1, c, narParameters);
     }
 
@@ -406,14 +406,14 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static comparison(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let c1: double = v1.confidence;
-        let c2: double = v2.confidence;
-        let f0: float = or(f1, f2);
-        let f: float = (f0 === 0) ? 0 : Float32Math.divide(and(f1, f2), f0) as float;
-        let w: double = and(f0, c1, c2);
-        let c: double = w2c(w, narParameters);
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c2: DoubleNumber = v2.confidence;
+        let f0: FloatNumber = or(f1, f2);
+        let f: FloatNumber = (f0 === 0) ? 0 : Float32Math.divide(and(f1, f2), f0) as FloatNumber;
+        let w: DoubleNumber = and(f0, c1, c2);
+        let c: DoubleNumber = w2c(w, narParameters);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
 
@@ -426,12 +426,12 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static desireStrong(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let c1: double = v1.confidence;
-        let c2: double = v2.confidence;
-        let f: float = and(f1, f2) as float;
-        let c: double = and(c1, c2, f2);
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c2: DoubleNumber = v2.confidence;
+        let f: FloatNumber = and(f1, f2) as FloatNumber;
+        let c: DoubleNumber = and(c1, c2, f2);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
 
@@ -443,12 +443,12 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static desireWeak(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let c1: double = v1.confidence;
-        let c2: double = v2.confidence;
-        let f: float = and(f1, f2) as float;
-        let c: double = and(c1, c2, f2, w2c(1.0, narParameters));
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c2: DoubleNumber = v2.confidence;
+        let f: FloatNumber = and(f1, f2) as FloatNumber;
+        let c: DoubleNumber = and(c1, c2, f2, w2c(1.0, narParameters));
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
 
@@ -460,12 +460,12 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static desireDed(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let c1: double = v1.confidence;
-        let c2: double = v2.confidence;
-        let f: float = and(f1, f2) as float;
-        let c: double = and(c1, c2);
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c2: DoubleNumber = v2.confidence;
+        let f: FloatNumber = and(f1, f2) as FloatNumber;
+        let c: DoubleNumber = and(c1, c2);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
 
@@ -477,16 +477,16 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static desireInd(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let c1: double = v1.confidence;
-        let c2: double = v2.confidence;
-        let w: double = and(f2, c1, c2);
-        let c: double = w2c(w, narParameters);
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c2: DoubleNumber = v2.confidence;
+        let w: DoubleNumber = and(f2, c1, c2);
+        let c: DoubleNumber = w2c(w, narParameters);
         return TruthValue.fromFrequencyConfidence(f1, c, narParameters);
     }
 
-    /* ----- double argument functions, called in CompositionalRules ----- */
+    /* ----- DoubleNumber argument functions, called in CompositionalRules ----- */
     /**
      * {<M --> S>, <M > P>} |- <M --> (S|P)>
      *
@@ -495,12 +495,12 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static union(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let c1: double = v1.confidence;
-        let c2: double = v2.confidence;
-        let f: float = or(f1, f2);
-        let c: double = and(c1, c2);
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c2: DoubleNumber = v2.confidence;
+        let f: FloatNumber = or(f1, f2);
+        let c: DoubleNumber = and(c1, c2);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
 
@@ -512,12 +512,12 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static intersection(v1: TruthValue, v2: TruthValue, narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let f2: float = v2.frequency;
-        let c1: double = v1.confidence;
-        let c2: double = v2.confidence;
-        let f: float = and(f1, f2) as float;
-        let c: double = and(c1, c2);
+        let f1: FloatNumber = v1.frequency;
+        let f2: FloatNumber = v2.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c2: DoubleNumber = v2.confidence;
+        let f: FloatNumber = and(f1, f2) as FloatNumber;
+        let c: DoubleNumber = and(c1, c2);
         return TruthValue.fromFrequencyConfidence(f, c, narParameters);
     }
 
@@ -569,8 +569,8 @@ export class TruthFunctions extends UtilityFunctions {
      */
     public static anonymousAnalogy(v1: TruthValue, v2: TruthValue,
         narParameters: Parameters): TruthValue {
-        let f1: float = v1.frequency;
-        let c1: double = v1.confidence;
+        let f1: FloatNumber = v1.frequency;
+        let c1: DoubleNumber = v1.confidence;
         let v0: TruthValue = TruthValue.fromFrequencyConfidence(f1, w2c(c1, narParameters), narParameters);
         return TruthFunctions.analogy(v2, v0, narParameters);
     }
@@ -581,7 +581,7 @@ export class TruthFunctions extends UtilityFunctions {
      * Implements the same functionality like TruthValue
      */
     public static readonly EternalizedTruthValue = class EternalizedTruthValue extends TruthValue {
-        public constructor(f: float, c: double, narParameters: Parameters) {
+        public constructor(f: FloatNumber, c: DoubleNumber, narParameters: Parameters) {
             super(f, c, false, narParameters);
         }
     };
@@ -594,15 +594,15 @@ export class TruthFunctions extends UtilityFunctions {
      * @return Truth value of the conclusion
      */
     public static eternalize(v1: TruthValue, narParameters: Parameters): TruthFunctions.EternalizedTruthValue {
-        let f1: float = v1.frequency;
-        let c1: double = v1.confidence;
-        let c: double = w2c(c1, narParameters);
+        let f1: FloatNumber = v1.frequency;
+        let c1: DoubleNumber = v1.confidence;
+        let c: DoubleNumber = w2c(c1, narParameters);
         return new TruthFunctions.EternalizedTruthValue(f1, c, narParameters);
     }
 
     public static temporalProjection(sourceTime: RuntimeLongInput, targetTime: RuntimeLongInput, currentTime: RuntimeLongInput,
-        param: Parameters): float {
-        let a: double = 100000.0 * param.PROJECTION_DECAY; // projection less strict as we changed in v2.0.0 10000.0
+        param: Parameters): FloatNumber {
+        let a: DoubleNumber = 100000.0 * param.PROJECTION_DECAY; // projection less strict as we changed in v2.0.0 10000.0
         // slower decay than 100000.0
         const sourceTargetDistance = Math.abs(Number(subtractRuntimeLongValues(sourceTime, targetTime)));
         const sourceCurrentDistance = Math.abs(Number(subtractRuntimeLongValues(sourceTime, currentTime)));
@@ -613,7 +613,7 @@ export class TruthFunctions extends UtilityFunctions {
             + a,
         );
         const ratio = Float32Math.divide(sourceTargetDistance, denominator);
-        return Float32Math.subtract(1, ratio) as float;
+        return Float32Math.subtract(1, ratio) as FloatNumber;
     }
 }
 

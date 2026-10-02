@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Term.java
-import type { int, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, ShortNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Texts } from "../io/Texts.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -147,7 +147,7 @@ export class Term extends ReasonerObject implements AbstractTerm {
     public static get(name: TextInput): Term;
 
     /** gets the atomic term of an integer */
-    public static get(i: int): Term;
+    public static get(i: IntNumber): Term;
     public static get(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
@@ -174,7 +174,7 @@ export class Term extends ReasonerObject implements AbstractTerm {
                         ind_s = indices_str.split(",");
                     }
                     term_indices = new Int32Array(ind_s.length);
-                    for (let i: int = 0; i < ind_s.length; i++) {
+                    for (let i: IntNumber = 0; i < ind_s.length; i++) {
                         // Java StringUtils.isNumeric accepts only unsigned decimal digits.
                         // Decimal coordinates such as -1.0 therefore stay conceptual and
                         // are mapped by Nar.dispatchToSensoryChannel before matrix access.
@@ -203,7 +203,7 @@ export class Term extends ReasonerObject implements AbstractTerm {
             }
 
             case 1: {
-                const [i] = args as [int];
+                const [i] = args as [IntNumber];
 
 
                 return Term.get(String(i));
@@ -279,7 +279,7 @@ export class Term extends ReasonerObject implements AbstractTerm {
      *
      * @return An integer hash code
      */
-    public hashCode(): int {
+    public hashCode(): IntNumber {
         // Match java.lang.String.hashCode() instead of jree's typed-array hash
         // fallback, which otherwise gives unrelated term names the same hash.
         return textHashCode(this.name());
@@ -301,7 +301,7 @@ export class Term extends ReasonerObject implements AbstractTerm {
         return true;
     }
 
-    public getTemporalOrder(): int {
+    public getTemporalOrder(): IntNumber {
         return TemporalRules.ORDER_NONE;
     }
 
@@ -371,7 +371,7 @@ export class Term extends ReasonerObject implements AbstractTerm {
      * @return The complexity of the term, an integer
      */
     // the syntactic complexity, for constant atomic Term, is 1
-    public getComplexity(): short {
+    public getComplexity(): ShortNumber {
         return 1;
     }
 
@@ -387,7 +387,7 @@ export class Term extends ReasonerObject implements AbstractTerm {
      * @param that The Term to be compared with the current Term
      * @return The same as compareTo as defined on Strings
      */
-    public compareTo(that: AbstractTerm): int {
+    public compareTo(that: AbstractTerm): IntNumber {
         if (that === this) {
             return 0;
         }
@@ -403,7 +403,7 @@ export class Term extends ReasonerObject implements AbstractTerm {
         return Texts.compareTo(String(this.name()), String(that.name()));
     }
 
-    public containedTemporalRelations(): int {
+    public containedTemporalRelations(): IntNumber {
         return 0;
     }
 
@@ -429,12 +429,12 @@ export class Term extends ReasonerObject implements AbstractTerm {
      */
     // Java source type: Map<Term, Integer>. Integer is only an unboxed count
     // at every TypeScript call site; keep Map semantics for Term keys while
-    // storing the value as the native int alias.
-    public countTermRecursively(map: MapContract<Term, int> | null): MapContract<Term, int> {
+    // storing the value as the native IntNumber alias.
+    public countTermRecursively(map: MapContract<Term, IntNumber> | null): MapContract<Term, IntNumber> {
         if (map === null) {
             // Java original type: LinkedHashMap<Term, Integer>. Keep the
             // public Map contract while using the native ordered Map here.
-            map = new NativeMap<Term, int>();
+            map = new NativeMap<Term, IntNumber>();
         }
         map.put(this, map.getOrDefault(this, 0) + 1);
         return map;
@@ -565,7 +565,7 @@ export class Term extends ReasonerObject implements AbstractTerm {
             case 2:
                 let a: Term = values[0];
                 let b: Term = values[1];
-                let c: int = a.compareTo(b);
+                let c: IntNumber = a.compareTo(b);
 
                 if (Debug.DETAILED) {
                     // verify consistency of compareTo() and equals()

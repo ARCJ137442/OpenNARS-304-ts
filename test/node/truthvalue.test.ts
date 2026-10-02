@@ -78,7 +78,7 @@ test("TruthValue string key is stable and usable in maps", () => {
     assert.equal(map.get(keyB), a);
 });
 
-test("TruthValue hashCode preserves Java float/double operand boundaries", () => {
+test("TruthValue hashCode preserves Java FloatNumber/DoubleNumber operand boundaries", () => {
     const params = new Parameters();
     const cases = [
         [0.4, 0.4, 1717986918],
@@ -106,7 +106,7 @@ test("TruthValue equals uses Java epsilon and ignores analytic metadata", () => 
     assert.equal(base.equals(far), false);
 });
 
-test("TruthValue direct frequency writes preserve Java float storage", () => {
+test("TruthValue direct frequency writes preserve Java FloatNumber storage", () => {
     const params = new Parameters();
     const truth = TruthValue.fromFrequencyConfidence(0, 0, params);
 
@@ -115,7 +115,7 @@ test("TruthValue direct frequency writes preserve Java float storage", () => {
     assert.equal(truth.frequency, Math.fround(0.1));
 });
 
-test("TruthValue expectation difference is a Java float result", () => {
+test("TruthValue expectation difference is a Java FloatNumber result", () => {
     const params = new Parameters();
     const left = TruthValue.fromFrequencyConfidence(0.123456789, 0.87654321, params);
     const right = TruthValue.fromFrequencyConfidence(0.987654321, 0.23456789, params);

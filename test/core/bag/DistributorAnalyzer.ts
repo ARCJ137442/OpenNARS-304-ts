@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type double } from "../../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber, type DoubleNumber } from "../../support/legacy-runtime-facade.ts";
 import { Distributor } from "../../../src/storage/Distributor.ts";
 
 
@@ -10,32 +10,32 @@ export class DistributorAnalyzer extends JavaObject {
 
     public testDistributorProbabilities(): void {
 
-        let levels: int = 20;
+        let levels: IntNumber = 20;
         let d: Distributor = new Distributor(levels);
         let count: Int32Array = new Int32Array(levels);
 
-        let total: double = 0;
+        let total: DoubleNumber = 0;
         for (let x of d.order) {
             count[x]++;
             total++;
         }
 
-        let probability: java.util.List<double> = new java.util.ArrayList<double>(levels);
-        for (let i: int = 0; i < levels; i++) {
+        let probability: java.util.List<DoubleNumber> = new java.util.ArrayList<DoubleNumber>(levels);
+        for (let i: IntNumber = 0; i < levels; i++) {
             probability.add(count[i] / total);
         }
 
-        let probabilityActiveAdjusted: java.util.List<double> = new java.util.ArrayList<double>(levels);
-        let activeIncrease: double = 0.009;
-        let dormantDecrease: double = ((0.1 * levels) * activeIncrease) / ((1.0 - 0.1) * levels);
-        for (let i: int = 0; i < levels; i++) {
-            let p: double = count[i] / total;
-            let pd: double = i < ((1.0 - 0.1) * levels) ? -dormantDecrease : activeIncrease;
+        let probabilityActiveAdjusted: java.util.List<DoubleNumber> = new java.util.ArrayList<DoubleNumber>(levels);
+        let activeIncrease: DoubleNumber = 0.009;
+        let dormantDecrease: DoubleNumber = ((0.1 * levels) * activeIncrease) / ((1.0 - 0.1) * levels);
+        for (let i: IntNumber = 0; i < levels; i++) {
+            let p: DoubleNumber = count[i] / total;
+            let pd: DoubleNumber = i < ((1.0 - 0.1) * levels) ? -dormantDecrease : activeIncrease;
 
             p += pd;
 
             probabilityActiveAdjusted.add(p);
-            java.lang.System.out.println((i / (levels as double)) + "\t" + p);
+            java.lang.System.out.println((i / (levels as DoubleNumber)) + "\t" + p);
         }
         // System.out.println(probabilityActiveAdjusted);
 

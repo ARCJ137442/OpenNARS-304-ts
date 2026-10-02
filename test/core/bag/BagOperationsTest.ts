@@ -1,4 +1,4 @@
-import { java, JavaObject, S, type float } from "../../support/legacy-runtime-facade.ts";
+import { java, JavaObject, S, type FloatNumber } from "../../support/legacy-runtime-facade.ts";
 import {
     JavaClassNotFoundException,
     JavaIllegalAccessException,
@@ -57,7 +57,7 @@ export class BagOperationsTest extends JavaObject {
         }
     }
 
-    protected static makeConcept(name: java.lang.String, priority: float): Concept {
+    protected static makeConcept(name: java.lang.String, priority: FloatNumber): Concept {
         let budget: BudgetValue = new BudgetValue(priority, priority, priority, BagOperationsTest.narParameters);
         let s: Concept = new Concept(budget, new Term(name), BagOperationsTest.nar.memory);
         return s;
@@ -69,20 +69,20 @@ export class BagOperationsTest extends JavaObject {
         BagOperationsTest.testBagSequence(new Bag(2, 2, nar.narParameters));
     }
 
-    public static getMinPriority(bag: Bag<Concept, Term>): float {
-        let min: float = 1.0;
+    public static getMinPriority(bag: Bag<Concept, Term>): FloatNumber {
+        let min: FloatNumber = 1.0;
         for (let e of bag) {
-            let p: float = e.getPriority();
+            let p: FloatNumber = e.getPriority();
             if (p < min)
                 min = p;
         }
         return min;
     }
 
-    public static getMaxPriority(bag: Bag<Concept, Term>): float {
-        let max: float = 0.0;
+    public static getMaxPriority(bag: Bag<Concept, Term>): FloatNumber {
+        let max: FloatNumber = 0.0;
         for (let e of bag) {
-            let p: float = e.getPriority();
+            let p: FloatNumber = e.getPriority();
             if (p > max)
                 max = p;
         }

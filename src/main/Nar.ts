@@ -1,6 +1,6 @@
 //! Java source: opennars/main/Nar.java
 import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
-import type { long, int, double, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { RuntimeLong, IntNumber, DoubleNumber, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { textValue, asText as toNativeTextString, type TextInput } from "../runtime/Text.ts";
 import { toRuntimeLong, type RuntimeLongInput } from "../runtime/runtime-numbers.ts";
 import { Parameters } from "./Parameters.ts";
@@ -86,10 +86,10 @@ export class Nar extends SensoryChannel implements Reasoner {
     /*
      * System clock, relatively defined to guarantee the repeatability of behaviors
      */
-    // Keep the existing runtime number representation; `long` here is the
+    // Keep the existing runtime number representation; `RuntimeLong` here is the
     // translated Java contract, while the project time adapter still uses
     // numeric clock values at runtime.
-    private cycleCounter: long = 0 as unknown as long;
+    private cycleCounter: RuntimeLong = 0 as unknown as RuntimeLong;
     private currentTimeMillis: (() => bigint) | undefined;
     private capabilities: RuntimeCapabilities | undefined;
 
@@ -160,7 +160,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         return ret;
     }
 
-    protected minCyclePeriodMS: long = 0n;
+    protected minCyclePeriodMS: RuntimeLong = 0n;
 
     /**
      * The name of the reasoner
@@ -244,7 +244,7 @@ export class Nar extends SensoryChannel implements Reasoner {
     public constructor(...args: unknown[]) {
         // Java constructor delegation (`this(...)`) is not legal in
         // TypeScript. Resolve all overloads before the one and only `super()`.
-        let narId: long = Nar.randomId();
+        let narId: RuntimeLong = Nar.randomId();
         let configText = DEFAULT_CONFIG_XML;
         let configSource: string = Nar.DEFAULTCONFIG_FILEPATH;
         let parameterOverrides: NativeMap<string, unknown> | null = null;
@@ -338,7 +338,7 @@ export class Nar extends SensoryChannel implements Reasoner {
      * Reset the system with an empty memory and reset clock. Called locally.
      */
     public reset(): void {
-        this.cycleCounter = 0 as unknown as long;
+        this.cycleCounter = 0 as unknown as RuntimeLong;
         this.memory.reset();
     }
 
@@ -368,7 +368,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         else if (text.startsWith("*decisionthreshold=")) { // TODO use reflection for narParameters, allow to set
             // others too
             const value = Number.parseFloat(text.split("decisionthreshold=")[1]);
-            this.narParameters.DECISION_THRESHOLD = Float32Math.from(value) as float;
+            this.narParameters.DECISION_THRESHOLD = Float32Math.from(value) as FloatNumber;
             return true;
         } // 音量
         else if (text.startsWith("*volume=")) {
@@ -418,12 +418,12 @@ export class Nar extends SensoryChannel implements Reasoner {
         }
         // 推理循环
         else if (isNumeric(text)) {
-            const retVal: int = Number.parseInt(text, 10) as int;
+            const retVal: IntNumber = Number.parseInt(text, 10) as IntNumber;
             // * 🚩【2024-04-19 21:08:03】现在无论如何都要运行推理周期
             // if (!running) {
             printInfo(`INFO: Running ${retVal} cycles.`);
             this.emit(CyclesStart.class);
-            for (let i: int = 0; i < retVal; i++) {
+            for (let i: IntNumber = 0; i < retVal; i++) {
                 this.cycle();
             }
             this.emit(CyclesEnd.class);
@@ -533,8 +533,8 @@ export class Nar extends SensoryChannel implements Reasoner {
                     return false;
                 }
                 // transform to channel-specific coordinate if available.
-                let channelWidth: int = channel.width;
-                let channelHeight: int = channel.height;
+                let channelWidth: IntNumber = channel.width;
+                let channelHeight: IntNumber = channel.height;
                 if (channelWidth !== 0 && channelHeight !== 0 && (t instanceof Inheritance) &&
                     ((t as Inheritance).getSubject() instanceof SetExt)) {
                     let subj: SetExt = (t as Inheritance).getSubject() as SetExt;
@@ -552,12 +552,12 @@ export class Nar extends SensoryChannel implements Reasoner {
                         let vals: string[] = subjectText
                             .slice(openingBracket + 1, closingBracket)
                             .split(",");
-                        let height: double = Number.parseFloat(vals[0]);
-                        let width: double = Number.parseFloat(vals[1]);
-                        let wval: int = Number(Math
-                            .round((width + 1.0) / 2.0 * (channel.width - 1))) as int;
-                        let hval: int = Number(Math
-                            .round(((height + 1.0) / 2.0 * (channel.height - 1)))) as int;
+                        let height: DoubleNumber = Number.parseFloat(vals[0]);
+                        let width: DoubleNumber = Number.parseFloat(vals[1]);
+                        let wval: IntNumber = Number(Math
+                            .round((width + 1.0) / 2.0 * (channel.width - 1))) as IntNumber;
+                        let hval: IntNumber = Number(Math
+                            .round(((height + 1.0) / 2.0 * (channel.height - 1)))) as IntNumber;
                         let ev: string = task.sentence.isEternal() ? " " : " :|: ";
                         const newInput = `<${variable}[${hval},${wval}]} --> ${predicate.toString()}>${task.sentence.punctuation}${ev}${task.sentence.getTruth().toString()}`;
                         // this.emit(OutputHandler.IN.class, task); too expensive to print each input
@@ -723,26 +723,26 @@ export class Nar extends SensoryChannel implements Reasoner {
 
     public start(): void;
 
-    public start(minCyclePeriodMS: long): void;
+    public start(minCyclePeriodMS: RuntimeLong): void;
     public start(...args: unknown[]): void {
         switch (args.length) {
             case 0: {
 
-                this.start(this.narParameters.MILLISECONDS_PER_STEP as unknown as long);
+                this.start(this.narParameters.MILLISECONDS_PER_STEP as unknown as RuntimeLong);
 
 
                 break;
             }
 
             case 1: {
-                const [minCyclePeriodMS] = args as [long];
+                const [minCyclePeriodMS] = args as [RuntimeLong];
 
 
                 this.minCyclePeriodMS = minCyclePeriodMS;
                 if (this.schedulers === null) {
-                    const schedulerCount: int = this.narParameters.THREADS_AMOUNT;
+                    const schedulerCount: IntNumber = this.narParameters.THREADS_AMOUNT;
                     this.schedulers = new Array<ReasonerScheduler>(schedulerCount);
-                    for (let i: int = 0; i < schedulerCount; i++) {
+                    for (let i: IntNumber = 0; i < schedulerCount; i++) {
                         this.schedulers[i] = new ReasonerScheduler(this, `Inference${i}`);
                         this.schedulers[i].start();
                     }
@@ -775,13 +775,13 @@ export class Nar extends SensoryChannel implements Reasoner {
     }
 
     /** Execute a fixed number of cycles. */
-    public cycles(cycles: int): void {
+    public cycles(cycles: IntNumber): void {
         this.memory.allowExecution = true;
         this.emit(CyclesStart.class);
         let wasRunning: boolean = this.running;
         this.running = true;
         this.stopped = false;
-        for (let i: int = 0; i < cycles; i++) {
+        for (let i: IntNumber = 0; i < cycles; i++) {
             this.cycle();
         }
         this.running = wasRunning;
@@ -849,7 +849,7 @@ export class Nar extends SensoryChannel implements Reasoner {
         return String(this.memory.toString());
     }
 
-    public time(): long {
+    public time(): RuntimeLong {
         if (this.narParameters.STEPS_CLOCK) {
             return this.cycleCounter;
         } else {
@@ -861,15 +861,15 @@ export class Nar extends SensoryChannel implements Reasoner {
         return this.running;
     }
 
-    public getMinCyclePeriodMS(): long {
+    public getMinCyclePeriodMS(): RuntimeLong {
         return this.minCyclePeriodMS;
     }
 
-    private static randomId(): long {
+    private static randomId(): RuntimeLong {
         // jree does not expose java.util.UUID. A process-local numeric id is
         // sufficient here; persisted/inter-process identity is handled by the
         // explicit narId overload.
-        return BigInt(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)) as long;
+        return BigInt(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)) as RuntimeLong;
     }
 
     /**

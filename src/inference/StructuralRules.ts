@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/StructuralRules.java
-import type { short, int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { ShortNumber, IntNumber, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
 import { TruthValue } from "../entity/TruthValue.ts";
@@ -63,8 +63,8 @@ export class StructuralRules {
      * @param side      The location of the indicated term in the premise
      * @param nal       Reference to the memory
      */
-    public static structuralCompose2(compound: CompoundTerm, index: short, statement: Statement,
-        side: short, nal: DerivationContext): void {
+    public static structuralCompose2(compound: CompoundTerm, index: ShortNumber, statement: Statement,
+        side: ShortNumber, nal: DerivationContext): void {
         if (compound.equals(statement.term[side])) {
             return;
         }
@@ -95,7 +95,7 @@ export class StructuralRules {
             return;
         }
         let content: Statement | null;
-        let order: int = statement.getTemporalOrder();
+        let order: IntNumber = statement.getTemporalOrder();
         if (StructuralRules.switchOrder(compound, index)) {
             content = Statement.make(statement, pred, sub, TemporalRules.reverseOrder(order));
         } else {
@@ -119,7 +119,7 @@ export class StructuralRules {
      * @param statement The premise
      * @param nal       Reference to the memory
      */
-    public static structuralDecompose2(statement: Statement, index: int, nal: DerivationContext): void {
+    public static structuralDecompose2(statement: Statement, index: IntNumber, nal: DerivationContext): void {
         let subj: Term = statement.getSubject();
         let pred: Term = statement.getPredicate();
         if (subj.getClass() !== pred.getClass()) {
@@ -139,8 +139,8 @@ export class StructuralRules {
         let t1: Term = sub.term[index];
         let t2: Term = pre.term[index];
         let content: Statement | null;
-        let order: int = statement.getTemporalOrder();
-        if (StructuralRules.switchOrder(sub, index as short)) {
+        let order: IntNumber = statement.getTemporalOrder();
+        if (StructuralRules.switchOrder(sub, index as ShortNumber)) {
             content = Statement.make(statement, t2, t1, TemporalRules.reverseOrder(order));
         } else {
             content = Statement.make(statement, t1, t2, order);
@@ -167,7 +167,7 @@ export class StructuralRules {
      * @param index    The location of focus in the compound
      * @return Whether the direction of inheritance should be revised
      */
-    private static switchOrder(compound: CompoundTerm, index: short): boolean {
+    private static switchOrder(compound: CompoundTerm, index: ShortNumber): boolean {
         return ((((compound instanceof DifferenceExt) || (compound instanceof DifferenceInt)) && (index === 1))
             || ((compound instanceof ImageExt) && (index !== (compound as ImageExt).relationIndex))
             || ((compound instanceof ImageInt) && (index !== (compound as ImageInt).relationIndex)));
@@ -181,7 +181,7 @@ export class StructuralRules {
      * @param statement The premise
      * @param nal       Reference to the memory
      */
-    public static structuralCompose1(compound: CompoundTerm, index: short, statement: Statement,
+    public static structuralCompose1(compound: CompoundTerm, index: ShortNumber, statement: Statement,
         nal: DerivationContext): void {
         if (!nal.getCurrentTask().sentence.isJudgment()) {
             return; // forward inference only
@@ -189,10 +189,10 @@ export class StructuralRules {
         let component: Term = compound.term[index];
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
-        let order: int = sentence.getTemporalOrder();
+        let order: IntNumber = sentence.getTemporalOrder();
         let truth: TruthValue = sentence.getTruth();
 
-        let reliance: float = nal.narParameters.reliance;
+        let reliance: FloatNumber = nal.narParameters.reliance;
         let truthDed: TruthValue = TruthFunctions.deduction(truth, reliance, nal.narParameters);
         let truthNDed: TruthValue = TruthFunctions
             .negation(TruthFunctions.deduction(truth, reliance, nal.narParameters), nal.narParameters);
@@ -237,7 +237,7 @@ export class StructuralRules {
      * @param statement The premise
      * @param nal       Reference to the memory
      */
-    public static structuralDecompose1(compound: CompoundTerm, index: short, statement: Statement,
+    public static structuralDecompose1(compound: CompoundTerm, index: ShortNumber, statement: Statement,
         nal: DerivationContext): void {
         if (index >= compound.term.length) {
             return;
@@ -245,14 +245,14 @@ export class StructuralRules {
         let component: Term = compound.term[index];
         let task: Task = nal.getCurrentTask();
         let sentence: Sentence = task.sentence;
-        let order: int = sentence.getTemporalOrder();
+        let order: IntNumber = sentence.getTemporalOrder();
         let truth: TruthValue | null = sentence.truth;
 
         if (truth === null) {
             return;
         }
 
-        let reliance: float = nal.narParameters.reliance;
+        let reliance: FloatNumber = nal.narParameters.reliance;
         let truthDed: TruthValue = TruthFunctions.deduction(truth, reliance, nal.narParameters);
         let truthNDed: TruthValue = TruthFunctions
             .negation(TruthFunctions.deduction(truth, reliance, nal.narParameters), nal.narParameters);
@@ -295,7 +295,7 @@ export class StructuralRules {
      * @param truth     The truth value of the new task
      * @param nal       Reference to the memory
      */
-    private static structuralStatement(subject: Term, predicate: Term, order: int,
+    private static structuralStatement(subject: Term, predicate: Term, order: IntNumber,
         truth: TruthValue, nal: DerivationContext): void {
         let task: Task = nal.getCurrentTask();
         let oldContent: Term = task.getTerm();
@@ -317,7 +317,7 @@ export class StructuralRules {
      * @param side      The location of the indicated term in the premise
      * @param nal       Reference to the memory
      */
-    public static transformSetRelation(compound: CompoundTerm, statement: Statement, side: short,
+    public static transformSetRelation(compound: CompoundTerm, statement: Statement, side: ShortNumber,
         nal: DerivationContext): void {
         if (compound.size() > 1) {
             return;
@@ -376,8 +376,8 @@ export class StructuralRules {
         // final Memory memory = nal.mem();
         let subject: Term = inh.getSubject();
         let predicate: Term = inh.getPredicate();
-        let index: short = indices[indices.length - 1];
-        let side: short = indices[indices.length - 2];
+        let index: ShortNumber = indices[indices.length - 1];
+        let side: ShortNumber = indices[indices.length - 2];
         if (inh.equals(oldContent)) {
             if (subject instanceof CompoundTerm) {
                 StructuralRules.transformSubjectPI(index, subject as CompoundTerm, predicate, nal);
@@ -505,7 +505,7 @@ export class StructuralRules {
      * @param predicate The predicate term
      * @param nal       Reference to the memory
      */
-    private static transformSubjectPI(index: short, subject: CompoundTerm, predicate: Term,
+    private static transformSubjectPI(index: ShortNumber, subject: CompoundTerm, predicate: Term,
         nal: DerivationContext): void {
         let truth: TruthValue | null = nal.getCurrentTask().sentence.truth;
         let budget: BudgetValue;
@@ -514,7 +514,7 @@ export class StructuralRules {
         let newPred: Term;
         if (subject instanceof Product) {
             let product: Product = subject as Product;
-            let i: short = index;
+            let i: ShortNumber = index;
             if (product.term.length >= i + 1) {
                 newSubj = product.term[i];
                 newPred = ImageExt.make(product, predicate, i);
@@ -532,8 +532,8 @@ export class StructuralRules {
             }
         } else if (subject instanceof ImageInt) {
             let image: ImageInt = subject as ImageInt;
-            let relationIndex: int = image.relationIndex;
-            for (let i: short = 0; i < image.size(); i++) {
+            let relationIndex: IntNumber = image.relationIndex;
+            for (let i: ShortNumber = 0; i < image.size(); i++) {
                 if (i === relationIndex) {
                     newSubj = image.term[relationIndex];
                     newPred = Product.make(image, predicate, relationIndex);
@@ -570,7 +570,7 @@ export class StructuralRules {
      * @param predicate The predicate term
      * @param nal       Reference to the memory
      */
-    private static transformPredicatePI(index: short, subject: Term, predicate: CompoundTerm,
+    private static transformPredicatePI(index: ShortNumber, subject: Term, predicate: CompoundTerm,
         nal: DerivationContext): void {
         let truth: TruthValue | null = nal.getCurrentTask().sentence.truth;
         let budget: BudgetValue;
@@ -579,7 +579,7 @@ export class StructuralRules {
         let newPred: Term;
         if (predicate instanceof Product) {
             let product: Product = predicate as Product;
-            let i: short = index;
+            let i: ShortNumber = index;
             if (product.term.length >= i + 1) {
                 newSubj = ImageInt.make(product, subject, i);
                 newPred = product.term[i];
@@ -595,8 +595,8 @@ export class StructuralRules {
             }
         } else if (predicate instanceof ImageExt) {
             let image: ImageExt = predicate as ImageExt;
-            let relationIndex: int = image.relationIndex;
-            for (let i: short = 0; i < image.size(); i++) {
+            let relationIndex: IntNumber = image.relationIndex;
+            for (let i: ShortNumber = 0; i < image.size(); i++) {
                 if (i === relationIndex) {
                     newSubj = Product.make(image, subject, relationIndex);
                     newPred = image.term[relationIndex];
@@ -643,7 +643,7 @@ export class StructuralRules {
      * @param nal          Reference to the memory
      */
     public static flattenSequence(compound: CompoundTerm, component: Term, compoundTask: boolean,
-        index: int, nal: DerivationContext): void {
+        index: IntNumber, nal: DerivationContext): void {
         if (compound instanceof Conjunction && component instanceof Conjunction) {
             let conjCompound: Conjunction = compound as Conjunction;
             let conjComponent: Conjunction = component as Conjunction;
@@ -677,7 +677,7 @@ export class StructuralRules {
      * @param nal          Reference to the memory
      */
     public static takeOutFromConjunction(compound: CompoundTerm, component: Term, compoundTask: boolean,
-        index: int, nal: DerivationContext): void {
+        index: IntNumber, nal: DerivationContext): void {
         if (compound instanceof Conjunction) {
             let conjCompound: Conjunction = compound as Conjunction;
             let newTerm: Term[] = [
@@ -712,7 +712,7 @@ export class StructuralRules {
      * @param nal          Reference to the memory
      */
     public static splitConjunctionApart(compound: CompoundTerm, component: Term, compoundTask: boolean,
-        index: int, nal: DerivationContext): void {
+        index: IntNumber, nal: DerivationContext): void {
         if (compound instanceof Conjunction) {
             let conjCompound: Conjunction = compound as Conjunction;
             let newTermLeft: Term[] = new Array<Term>(index + 1);
@@ -724,13 +724,13 @@ export class StructuralRules {
             if (conjCompound.term.length < newTermLeft.length) {
                 return;
             }
-            for (let position: int = 0; position < newTermLeft.length; position++) {
+            for (let position: IntNumber = 0; position < newTermLeft.length; position++) {
                 newTermLeft[position] = conjCompound.term[position];
             }
             if (conjCompound.term.length - index < newTermRight.length) {
                 return;
             }
-            for (let position: int = 0; position < newTermRight.length; position++) {
+            for (let position: IntNumber = 0; position < newTermRight.length; position++) {
                 newTermRight[position] = conjCompound.term[index + position];
             }
             let curS: Sentence = nal.getCurrentTask().sentence;
@@ -763,7 +763,7 @@ export class StructuralRules {
      * @author Robert Wünsche
      */
     public static groupSequence(compound: CompoundTerm, component: Term, compoundTask: boolean,
-        index: int, nal: DerivationContext): void {
+        index: IntNumber, nal: DerivationContext): void {
         if (!(compound instanceof Conjunction) || index >= compound.size()) {
             return;
         }
@@ -777,7 +777,7 @@ export class StructuralRules {
         let hasRight: boolean = index < (compound.size() - 1);
 
         if (hasLeft) {
-            let sliceStartIndexInclusive: int = nal.memory.randomNumber.nextInt(index - 1 + 1 /* inclusive */); // if
+            let sliceStartIndexInclusive: IntNumber = nal.memory.randomNumber.nextInt(index - 1 + 1 /* inclusive */); // if
             // index-1
             // it
             // would
@@ -786,7 +786,7 @@ export class StructuralRules {
             // 1,
             // no
             // group
-            let sliceEndIndexInclusive: int = index;
+            let sliceEndIndexInclusive: IntNumber = index;
 
             let allRange: boolean = sliceStartIndexInclusive === 0
                 && sliceEndIndexInclusive === (conjCompound.term.length - 1);
@@ -796,11 +796,11 @@ export class StructuralRules {
         }
 
         if (hasRight) {
-            let sliceStartIndexInclusive: int = index;
-            let sliceEndIndexInclusive: int;
+            let sliceStartIndexInclusive: IntNumber = index;
+            let sliceEndIndexInclusive: IntNumber;
             {
-                let randminInclusive: int = index + 1;
-                let randmaxInclusive: int = compound.size() - 1;
+                let randminInclusive: IntNumber = index + 1;
+                let randmaxInclusive: IntNumber = compound.size() - 1;
                 sliceEndIndexInclusive = nal.memory.randomNumber
                     .nextInt(randmaxInclusive - randminInclusive + 1 /* inclusive */) + randminInclusive;
             }
@@ -823,22 +823,22 @@ export class StructuralRules {
      *
      * @author Robert Wünsche
      */
-    private static createSequenceTaskByRange(sourceConjunction: Conjunction, inclusiveStartIndex: int,
-        inclusiveEndIndex: int, nal: DerivationContext): void {
-        let subsequenceLength: int = inclusiveEndIndex - inclusiveStartIndex + 1; // +1 because of all being inclusive
+    private static createSequenceTaskByRange(sourceConjunction: Conjunction, inclusiveStartIndex: IntNumber,
+        inclusiveEndIndex: IntNumber, nal: DerivationContext): void {
+        let subsequenceLength: IntNumber = inclusiveEndIndex - inclusiveStartIndex + 1; // +1 because of all being inclusive
         // indices
         let subsequence: Term[] = new Array<Term>(subsequenceLength);
         // copy subsequence from source to subsequence:
-        for (let idxInSource: int = inclusiveStartIndex; idxInSource <= inclusiveEndIndex; idxInSource++) {
-            let idxInSubsequence: int = idxInSource - inclusiveStartIndex;
+        for (let idxInSource: IntNumber = inclusiveStartIndex; idxInSource <= inclusiveEndIndex; idxInSource++) {
+            let idxInSubsequence: IntNumber = idxInSource - inclusiveStartIndex;
             subsequence[idxInSubsequence] = sourceConjunction.term[idxInSource];
         }
         let destination: Term[] = new Array<Term>(sourceConjunction.size() - subsequenceLength + 1); // +1 because the
         // subsequence requires
         // one element too
         // copy everything before the subsequence:
-        let destinationIdx: int = 0;
-        for (let idx: int = 0; idx < inclusiveStartIndex; idx++) {
+        let destinationIdx: IntNumber = 0;
+        for (let idx: IntNumber = 0; idx < inclusiveStartIndex; idx++) {
             destination[destinationIdx++] = sourceConjunction.term[idx];
         }
         /* assert destinationIdx == inclusiveStartIndex; */
@@ -846,7 +846,7 @@ export class StructuralRules {
         destination[destinationIdx++] = Conjunction.make(subsequence, sourceConjunction.getTemporalOrder(),
             sourceConjunction.getIsSpatial());
         // followed by everything after the subsequence
-        for (let idxInSource: int = inclusiveEndIndex + 1; idxInSource < sourceConjunction.size(); idxInSource++) {
+        for (let idxInSource: IntNumber = inclusiveEndIndex + 1; idxInSource < sourceConjunction.size(); idxInSource++) {
             destination[destinationIdx++] = sourceConjunction.term[idxInSource];
         }
         /* assert destinationIdx == destination.length; */
@@ -875,9 +875,9 @@ export class StructuralRules {
         }
     }
 
-    public static seqToImage(conj: Conjunction, index: int, nal: DerivationContext): void {
-        let side: int = 0; // extensional
-        let indices: Int16Array = new Int16Array([side as short, index as short]);
+    public static seqToImage(conj: Conjunction, index: IntNumber, nal: DerivationContext): void {
+        let side: IntNumber = 0; // extensional
+        let indices: Int16Array = new Int16Array([side as ShortNumber, index as ShortNumber]);
         let subject: Product = Product.make(conj.term);
         let predicate: Term = Term.SEQ_TEMPORAL;
         if (conj.isSpatial) {
@@ -901,7 +901,7 @@ export class StructuralRules {
      * @param nal          Reference to the memory
      */
     public static structuralCompound(compound: CompoundTerm, component: Term, compoundTask: boolean,
-        index: int, nal: DerivationContext): boolean {
+        index: IntNumber, nal: DerivationContext): boolean {
 
         if (compound instanceof Conjunction) {
             if (nal.getCurrentTask().getTerm() === compound) {
@@ -934,7 +934,7 @@ export class StructuralRules {
         let sentence: Sentence = task.sentence;
         let truth: TruthValue | null = sentence.truth;
 
-        let reliance: float = nal.narParameters.reliance;
+        let reliance: FloatNumber = nal.narParameters.reliance;
 
         let budget: BudgetValue;
         if (sentence.isQuestion() || sentence.isQuest()) {

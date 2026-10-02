@@ -1,6 +1,6 @@
 //! Java source: opennars/language/ImageExt.java
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { ShortNumber, IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Image } from "./Image.ts";
 import { Term } from "./Term.ts";
 import { Product } from "./Product.ts";
@@ -31,7 +31,7 @@ export class ImageExt extends Image {
      * @param arg   The component list of the term
      * @param index The index of relation in the component list
      */
-    public constructor(arg: Term[], index: short) {
+    public constructor(arg: Term[], index: ShortNumber) {
         super(arg, index);
     }
 
@@ -93,7 +93,7 @@ export class ImageExt extends Image {
      * @param index    The index of the place-holder
      * @return A compound generated or a term it reduced to
      */
-    public static make(product: Product, relation: Term, index: short): Term;
+    public static make(product: Product, relation: Term, index: ShortNumber): Term;
 
     /**
      * Try to make an Image from an existing Image and a component. Called by the
@@ -104,7 +104,7 @@ export class ImageExt extends Image {
      * @param index     The index of the place-holder in the new Image
      * @return A compound generated or a term it reduced to
      */
-    public static make(oldImage: ImageExt, component: Term, index: short): Term;
+    public static make(oldImage: ImageExt, component: Term, index: ShortNumber): Term;
     public static make(...args: unknown[]): Term {
         switch (args.length) {
             case 1: {
@@ -116,9 +116,9 @@ export class ImageExt extends Image {
                 }
                 let relation: Term = argList[0];
                 let argument: Term[] = new Array<Term>(argList.length - 1);
-                let index: int = 0;
-                let n: int = 0;
-                for (let j: int = 1; j < argList.length; j++) {
+                let index: IntNumber = 0;
+                let n: IntNumber = 0;
+                for (let j: IntNumber = 1; j < argList.length; j++) {
                     if (isPlaceHolder(argList[j])) {
                         index = j - 1;
                         argument[n] = relation;
@@ -127,7 +127,7 @@ export class ImageExt extends Image {
                     }
                     n++;
                 }
-                return new ImageExt(argument, index as short);
+                return new ImageExt(argument, index as ShortNumber);
 
 
                 break;
@@ -135,16 +135,16 @@ export class ImageExt extends Image {
 
             case 3: {
                 if (args[0] instanceof ImageExt) {
-                    const [oldImage, component, index] = args as [ImageExt, Term, short];
+                    const [oldImage, component, index] = args as [ImageExt, Term, ShortNumber];
                     let argList: Term[] = oldImage.cloneTerms();
-                    let oldIndex: int = oldImage.relationIndex;
+                    let oldIndex: IntNumber = oldImage.relationIndex;
                     let relation: Term = argList[oldIndex];
                     argList[oldIndex] = component;
                     argList[index] = relation;
                     return new ImageExt(argList, index);
                 }
 
-                const [product, relation, index] = args as [Product, Term, short];
+                const [product, relation, index] = args as [Product, Term, ShortNumber];
                 if (relation instanceof Product) {
                     let p2: Product = relation as Product;
                     if ((product.size() === 2) && (p2.size() === 2)) {

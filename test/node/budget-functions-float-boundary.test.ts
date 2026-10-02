@@ -19,7 +19,7 @@ const rankableSentence = (confidence: number, expectation: number): Sentence => 
     getTruth: () => ({ getExpectation: () => expectation }),
 } as unknown as RankableSentence as Sentence);
 
-test("budget inference narrows Java float parameters before belief feedback", () => {
+test("budget inference narrows Java FloatNumber parameters before belief feedback", () => {
     const parameters = new Parameters();
     const taskPriority = Math.fround(0.37);
     const taskDurability = Math.fround(0.81);
@@ -75,7 +75,7 @@ test("budget inference narrows Java float parameters before belief feedback", ()
     );
 });
 
-test("rankBelief narrows Java float return values at the budget boundary", () => {
+test("rankBelief narrows Java FloatNumber return values at the budget boundary", () => {
     const olderBelief = rankableSentence(0.14211009442806244, 0.14211009442806244);
     const newerBelief = rankableSentence(0.14211007952690125, 0.14211007952690125);
 
@@ -91,7 +91,7 @@ test("rankBelief narrows Java float return values at the budget boundary", () =>
     );
 });
 
-test("truthToQuality and the TruthValue budget constructor share Java float semantics", () => {
+test("truthToQuality and the TruthValue budget constructor share Java FloatNumber semantics", () => {
     const parameters = new Parameters();
     const expectation = 0.3672657907009125;
     const truth = new TruthValue(0.25, 0.5, false, parameters);

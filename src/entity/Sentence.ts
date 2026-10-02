@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Sentence.java
-import type { int, long, float, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong, FloatNumber, DoubleNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../io/Texts.ts";
 import { valuesHash } from "../runtime/value-arrays.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -94,7 +94,7 @@ export class Sentence extends ReasonerObject {
      */
     private key: string | null = null;
 
-    private hash: int = 0;
+    private hash: IntNumber = 0;
 
     public constructor(term: Term, punctuation: TextCharacter, newTruth: TruthValue | null, newStamp: Stamp);
 
@@ -137,7 +137,7 @@ export class Sentence extends ReasonerObject {
                             if (c.term[c.term.length - 1] instanceof Interval) {
                                 let time: number = 0;
                                 // refined:
-                                let u: int = 0;
+                                let u: IntNumber = 0;
                                 while (c.term.length - 1 - u >= 0 && c.term[c.term.length - 1 - u] instanceof Interval) {
                                     time += Number((c.term[c.term.length - 1 - u] as Interval).time);
                                     u++;
@@ -156,7 +156,7 @@ export class Sentence extends ReasonerObject {
                             if (c.term[0] instanceof Interval) {
                                 let time: number = 0;
                                 // refined:
-                                let u: int = 0;
+                                let u: IntNumber = 0;
                                 while (u < c.term.length && (c.term[u] instanceof Interval)) {
                                     time += Number((c.term[u] as Interval).time);
                                     u++;
@@ -237,7 +237,7 @@ export class Sentence extends ReasonerObject {
 
                     this.term = newTerm;
                     let c: CompoundTerm = this.term as CompoundTerm;
-                    // Keep duplicates and traversal order; this is a short-lived normalization snapshot,
+                    // Keep duplicates and traversal order; this is a ShortNumber-lived normalization snapshot,
                     // so a native array avoids a jree list without changing the rename pass.
                     let vars: Variable[] = [];
 
@@ -331,7 +331,7 @@ export class Sentence extends ReasonerObject {
                 return false;
 
             if (this.term.term_indices !== null && t.term.term_indices !== null) {
-                for (let i: int = 0; i < this.term.term_indices.length; i++) {
+                for (let i: IntNumber = 0; i < this.term.term_indices.length; i++) {
                     if (this.term.term_indices[i] !== t.term.term_indices[i]) {
                         return false; // position or scale was different
                     }
@@ -348,7 +348,7 @@ export class Sentence extends ReasonerObject {
      *
      * @return a hashcode
      */
-    public hashCode(): int {
+    public hashCode(): IntNumber {
         return this.hash;
     }
 
@@ -420,7 +420,7 @@ export class Sentence extends ReasonerObject {
      * @param currentTime The current time as a reference
      * @return The projected belief
      */
-    public projection(targetTime: long, currentTime: long, mem: Memory): Sentence {
+    public projection(targetTime: RuntimeLong, currentTime: RuntimeLong, mem: Memory): Sentence {
 
         let newTruth: TruthValue = this.projectionTruth(targetTime, currentTime, mem);
         let eternalizing: boolean = (newTruth instanceof TruthFunctions.EternalizedTruthValue);
@@ -436,7 +436,7 @@ export class Sentence extends ReasonerObject {
             false);
     }
 
-    public projectionTruth(targetTime: long, currentTime: long, mem: Memory): TruthValue {
+    public projectionTruth(targetTime: RuntimeLong, currentTime: RuntimeLong, mem: Memory): TruthValue {
         if (this.truth === null) {
             throw new ReasonerStateError("Cannot project a sentence without a truth value");
         }
@@ -446,10 +446,10 @@ export class Sentence extends ReasonerObject {
         if (!this.stamp.isEternal()) {
             newTruth = TruthFunctions.eternalize(truth, mem.narParameters);
             if (targetTime !== Stamp.ETERNAL) {
-                let occurrenceTime: long = this.stamp.getOccurrenceTime();
-                let factor: float = TruthFunctions.temporalProjection(occurrenceTime, targetTime, currentTime,
+                let occurrenceTime: RuntimeLong = this.stamp.getOccurrenceTime();
+                let factor: FloatNumber = TruthFunctions.temporalProjection(occurrenceTime, targetTime, currentTime,
                     mem.narParameters);
-                let projectedConfidence: double = factor * truth.confidence;
+                let projectedConfidence: DoubleNumber = factor * truth.confidence;
                 if (projectedConfidence > newTruth.confidence) {
                     newTruth = TruthValue.fromFrequencyConfidence(truth.frequency, projectedConfidence, mem.narParameters);
                 }
@@ -501,11 +501,11 @@ export class Sentence extends ReasonerObject {
         this.revisable = b;
     }
 
-    public getTemporalOrder(): int {
+    public getTemporalOrder(): IntNumber {
         return this.term.getTemporalOrder();
     }
 
-    public getOccurrenceTime(): long {
+    public getOccurrenceTime(): RuntimeLong {
         return this.stamp.getOccurrenceTime();
     }
 
@@ -539,9 +539,9 @@ export class Sentence extends ReasonerObject {
 
                 let contentName: TextString = this.term.name();
 
-                // final long t = nar.time();
+                // final RuntimeLong t = nar.time();
 
-                let diff: long = this.stamp.getOccurrenceTime() - nar.time();
+                let diff: RuntimeLong = this.stamp.getOccurrenceTime() - nar.time();
                 const diffNumber = Number(diff);
                 let diffabs = Math.abs(diffNumber);
 
@@ -562,7 +562,7 @@ export class Sentence extends ReasonerObject {
 
                 let stampString: TextString | null = showStamp ? this.stamp.name() : null;
 
-                let stringLength: int = String(contentName).length + String(tenseString).length + 1 + 1;
+                let stringLength: IntNumber = String(contentName).length + String(tenseString).length + 1 + 1;
 
                 if (this.truth !== null)
                     stringLength += 11;
@@ -614,7 +614,7 @@ export class Sentence extends ReasonerObject {
             let showOcurrenceTime: boolean = ((this.punctuation === Symbols.JUDGMENT_MARK)
                 || (this.punctuation === Symbols.QUESTION_MARK));
 
-            let stringLength: int = 0;
+            let stringLength: IntNumber = 0;
             if (this.truth !== null) {
                 stringLength += (showOcurrenceTime ? 8 : 0) + 11 /* truthString.length() */;
             }

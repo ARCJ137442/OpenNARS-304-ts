@@ -1,8 +1,8 @@
 /**
- * Java float-compatible numeric boundaries for translated calculations.
+ * Java FloatNumber-compatible numeric boundaries for translated calculations.
  *
- * A TypeScript `number` is IEEE-754 binary64. Java `float` values are
- * binary32, and Java narrows a float operand before an operation as well as
+ * A TypeScript `number` is IEEE-754 binary64. Java `FloatNumber` values are
+ * binary32, and Java narrows a FloatNumber operand before an operation as well as
  * when the result is stored. Keep that rule in one small adapter instead of
  * scattering `Math.fround` casts through inference code.
  */
@@ -36,9 +36,9 @@ export const Float32Math = {
     },
 
     /**
-     * Java Math.pow receives a float operand as a widened double and returns a
-     * double. Keep the binary32 input boundary, but do not round the result
-     * until the translated caller stores it in a Java float variable.
+     * Java Math.pow receives a FloatNumber operand as a widened DoubleNumber and returns a
+     * DoubleNumber. Keep the binary32 input boundary, but do not round the result
+     * until the translated caller stores it in a Java FloatNumber variable.
      */
     powDouble(base: number, exponent: number): number {
         return Math.pow(narrow(base), exponent);
@@ -51,7 +51,7 @@ export const Float32Math = {
     /**
      * Java BudgetFunctions.truthToQuality translated with the same operand
      * boundaries as the source expression:
-     * (float) max(exp, (1 - exp) * 0.75).
+     * (FloatNumber) max(exp, (1 - exp) * 0.75).
      */
     truthToQuality(expectation: number): Float32 {
         const exp = narrow(expectation);

@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Image.java
-import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { ShortNumber, IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
@@ -21,9 +21,9 @@ const COMPOUND_TERM_CLOSER = NativeOperator.COMPOUND_TERM_CLOSER;
  */
 export abstract class Image extends CompoundTerm {
     /** The index of relation in the component list */
-    public readonly relationIndex: short;
+    public readonly relationIndex: ShortNumber;
 
-    protected constructor(components: Term[], relationIndex: short) {
+    protected constructor(components: Term[], relationIndex: ShortNumber) {
         super(components);
 
         this.relationIndex = relationIndex;
@@ -36,9 +36,9 @@ export abstract class Image extends CompoundTerm {
         this.hash = valuesHash(super.hashCode(), this.relationIndex);
     }
 
-    public compareTo(that: AbstractTerm): int {
+    public compareTo(that: AbstractTerm): IntNumber {
         if (that instanceof Image) {
-            let r: int = this.relationIndex - (that as Image).relationIndex;
+            let r: IntNumber = this.relationIndex - (that as Image).relationIndex;
             if (r !== 0)
                 return r;
         }
@@ -66,7 +66,7 @@ export abstract class Image extends CompoundTerm {
      * @param relationIndex the location of the place holder
      * @return the oldName of the term
      */
-    protected static makeImageName(op: NativeOperator, arg: Term[], relationIndex: int): TextString {
+    protected static makeImageName(op: NativeOperator, arg: Term[], relationIndex: IntNumber): TextString {
         const relationName = textValue(arg[relationIndex].name());
         const argumentsName = arg.map((term, index) =>
             `${Symbols.ARGUMENT_SEPARATOR}${index === relationIndex

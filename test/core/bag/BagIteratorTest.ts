@@ -1,4 +1,4 @@
-import { java, JavaObject, type int } from "../../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber } from "../../support/legacy-runtime-facade.ts";
 import { Item } from "../../../src/entity/Item.ts";
 import { JavaAssertionError } from "../../support/legacy-runtime-facade.ts";
 import { Bag } from "../../../src/storage/Bag.ts";
@@ -9,10 +9,10 @@ import { assertTrue } from "../../util/junit-assert.ts";
 
 export class BagIteratorTest extends JavaObject {
 
-    protected readonly L: int = 4;
+    protected readonly L: IntNumber = 4;
 
     public testIterator(b: Bag<BagPerf.NullItem, java.lang.CharSequence>): void {
-        let count: int = 0;
+        let count: IntNumber = 0;
         let first: BagPerf.NullItem | null = null;
         let current: BagPerf.NullItem | null = null;
         for (let n of b) {
@@ -33,10 +33,10 @@ export class BagIteratorTest extends JavaObject {
         assertTrue(count === b.size());
     }
 
-    public numEmptyLevels(bag: Bag<Item<unknown>, unknown>): int {
+    public numEmptyLevels(bag: Bag<Item<unknown>, unknown>): IntNumber {
         /*
-         * int empty = 0;
-         * for (int i = 0; i < bag.level.length; i++) {
+         * IntNumber empty = 0;
+         * for (IntNumber i = 0; i < bag.level.length; i++) {
          * if (bag.level[i].isEmpty()) {
          * empty++;
          * }

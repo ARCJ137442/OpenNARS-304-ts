@@ -1,4 +1,4 @@
-import { java, JavaObject, type int } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber } from "../support/legacy-runtime-facade.ts";
 import { CompoundTerm } from "../../src/language/CompoundTerm.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { Narsese } from "../../src/io/Narsese.ts";
@@ -28,7 +28,7 @@ export class ApplySubstituteTest extends JavaObject {
 
         const abS = "<a --> b>";
         const ab = parseRequired(this.np, abS) as CompoundTerm;
-        let originalComplexity: int = ab.getComplexity();
+        let originalComplexity: IntNumber = ab.getComplexity();
 
         const xyS = "<x --> y>";
         const xy = parseRequired(this.np, xyS);

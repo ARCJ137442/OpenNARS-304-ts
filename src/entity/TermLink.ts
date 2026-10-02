@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/TermLink.java
-import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { ShortNumber, IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { Term } from "../language/Term.ts";
 import { BudgetValue } from "./BudgetValue.ts";
@@ -34,29 +34,29 @@ import {
 export class TermLink extends Item<TermLink> implements TLink<Term> {
 
     /** At C, point to C; TaskLink only */
-    public static readonly SELF: short = 0;
+    public static readonly SELF: ShortNumber = 0;
     /** At (&&, A, C), point to C */
-    public static readonly COMPONENT: short = 1;
+    public static readonly COMPONENT: ShortNumber = 1;
     /** At C, point to (&&, A, C) */
-    public static readonly COMPOUND: short = 2;
+    public static readonly COMPOUND: ShortNumber = 2;
     /** At <C --> A>, point to C */
-    public static readonly COMPONENT_STATEMENT: short = 3;
+    public static readonly COMPONENT_STATEMENT: ShortNumber = 3;
     /** At C, point to <C --> A> */
-    public static readonly COMPOUND_STATEMENT: short = 4;
+    public static readonly COMPOUND_STATEMENT: ShortNumber = 4;
     /** At <(&&, C, B) ==> A>, point to C */
-    public static readonly COMPONENT_CONDITION: short = 5;
+    public static readonly COMPONENT_CONDITION: ShortNumber = 5;
     /** At C, point to <(&&, C, B) ==> A> */
-    public static readonly COMPOUND_CONDITION: short = 6;
+    public static readonly COMPOUND_CONDITION: ShortNumber = 6;
     /** At C, point to <(*, C, B) --> A>; TaskLink only */
-    public static readonly TRANSFORM: short = 8;
+    public static readonly TRANSFORM: ShortNumber = 8;
     /** At C, point to B, potentially without common subterm term */
-    public static readonly TEMPORAL: short = 9;
+    public static readonly TEMPORAL: ShortNumber = 9;
 
     /** The linked Term */
     public readonly target: Term;
 
     /** The type of link, one of the above */
-    public readonly type: short;
+    public readonly type: ShortNumber;
 
     /**
      * The index of the component in the component list of the compound, may have up
@@ -64,7 +64,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      */
     public readonly index: Int16Array;
 
-    protected readonly hash: int;
+    protected readonly hash: IntNumber;
 
     /**
      * Constructor for TermLink template
@@ -75,7 +75,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      * @param type    Link type
      * @param indices Component indices in compound, may be 1 to 4
      */
-    public constructor(target: Term, type: short, ...indices: short[]);
+    public constructor(target: Term, type: ShortNumber, ...indices: ShortNumber[]);
 
     /**
      * Constructor to make actual TermLink from a template
@@ -88,13 +88,13 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      */
     public constructor(t: Term, template: TermLink, v: BudgetValue);
 
-    public constructor(type: short, target: Term, i0: int);
+    public constructor(type: ShortNumber, target: Term, i0: IntNumber);
 
-    public constructor(type: short, target: Term, i0: int, i1: int);
+    public constructor(type: ShortNumber, target: Term, i0: IntNumber, i1: IntNumber);
 
-    public constructor(type: short, target: Term, i0: int, i1: int, i2: int);
+    public constructor(type: ShortNumber, target: Term, i0: IntNumber, i1: IntNumber, i2: IntNumber);
 
-    public constructor(type: short, target: Term, i0: int, i1: int, i2: int, i3: int);
+    public constructor(type: ShortNumber, target: Term, i0: IntNumber, i1: IntNumber, i2: IntNumber, i3: IntNumber);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 3: {
@@ -103,7 +103,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                     super(v);
                     this.target = t;
                     this.type = (template.target.equals(t))
-                        ? (template.type - 1) as short // point to component
+                        ? (template.type - 1) as ShortNumber // point to component
                         : template.type;
                     this.index = template.index;
                     this.hash = this.init();
@@ -111,9 +111,9 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
                 }
 
                 const typeFirst = typeof args[0] === "number";
-                const type = (typeFirst ? args[0] : args[1]) as short;
+                const type = (typeFirst ? args[0] : args[1]) as ShortNumber;
                 const target = (typeFirst ? args[1] : args[0]) as Term;
-                const indices = args.slice(2) as short[];
+                const indices = args.slice(2) as ShortNumber[];
                 super(null);
                 this.target = target;
                 this.type = type;
@@ -134,7 +134,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
             }
 
             case 4: {
-                const [type, target, i0, i1] = args as [short, Term, int, int];
+                const [type, target, i0, i1] = args as [ShortNumber, Term, IntNumber, IntNumber];
 
 
                 super(null);
@@ -150,7 +150,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
             }
 
             case 5: {
-                const [type, target, i0, i1, i2] = args as [short, Term, int, int, int];
+                const [type, target, i0, i1, i2] = args as [ShortNumber, Term, IntNumber, IntNumber, IntNumber];
 
 
                 super(null);
@@ -166,7 +166,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
             }
 
             case 6: {
-                const [type, target, i0, i1, i2, i3] = args as [short, Term, int, int, int, int];
+                const [type, target, i0, i1, i2, i3] = args as [ShortNumber, Term, IntNumber, IntNumber, IntNumber, IntNumber];
 
 
                 super(null);
@@ -192,7 +192,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
         return this;
     }
 
-    public hashCode(): int {
+    public hashCode(): IntNumber {
         return this.hash;
     }
 
@@ -226,9 +226,9 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
     /**
      * @return hashcode
      */
-    protected init(): int {
+    protected init(): IntNumber {
         // TODO lazy calculate this?
-        let h: int = valuesHash(this.target, this.type, int16ArrayHashCode(this.index));
+        let h: IntNumber = valuesHash(this.target, this.type, int16ArrayHashCode(this.index));
         return h;
     }
 
@@ -265,7 +265,7 @@ export class TermLink extends Item<TermLink> implements TLink<Term> {
      * @param i The index level
      * @return The index value
      */
-    public getIndex(i: int): short {
+    public getIndex(i: IntNumber): ShortNumber {
         if ((this.index !== null) && (i < this.index.length)) {
             return this.index[i];
         } else {

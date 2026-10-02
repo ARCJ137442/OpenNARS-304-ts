@@ -407,7 +407,7 @@ test("DerivationContext delayed execution state starts null and requires explici
     assert.throws(() => context.requireCurrentTaskLink());
 });
 
-test("DerivationContext double-premise results use the native ordered buffer", async () => {
+test("DerivationContext DoubleNumber-premise results use the native ordered buffer", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
     const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");
     const { DerivationContext } = await import("../../src/control/DerivationContext.ts");
@@ -426,7 +426,7 @@ test("DerivationContext double-premise results use the native ordered buffer", a
         const stamp = new Stamp(0n, Tense.Present, new Stamp.BaseEntry(0n, 1n), nar.narParameters.DURATION);
         const truth = TruthValue.fromFrequencyConfidence(0.8, 0.8, nar.narParameters);
         const currentTask = new Task(
-            new Sentence(Term.get("double-premise-current"), ".", truth, stamp),
+            new Sentence(Term.get("DoubleNumber-premise-current"), ".", truth, stamp),
             new BudgetValue(0.8, 0.8, 0.8, nar.narParameters),
             Task.EnumType.INPUT,
         );
@@ -434,7 +434,7 @@ test("DerivationContext double-premise results use the native ordered buffer", a
         context.setTheNewStamp(stamp);
 
         const results = context.doublePremiseTask(
-            Inheritance.make(Term.get("double-premise-subject"), Term.get("double-premise-predicate")),
+            Inheritance.make(Term.get("DoubleNumber-premise-subject"), Term.get("DoubleNumber-premise-predicate")),
             truth,
             new BudgetValue(0.8, 0.8, 0.8, nar.narParameters),
             false,
@@ -444,7 +444,7 @@ test("DerivationContext double-premise results use the native ordered buffer", a
 
         assert.ok(results instanceof NativeList);
         assert.equal(results?.size(), 1);
-        assert.equal(String(results?.get(0).sentence.term.name()), "<double-premise-subject --> double-premise-predicate>");
+        assert.equal(String(results?.get(0).sentence.term.name()), "<DoubleNumber-premise-subject --> DoubleNumber-premise-predicate>");
     } finally {
         nar.stop();
     }
@@ -987,7 +987,7 @@ test("Stamp tense lookup uses Java temporal order constants", async () => {
     assert.equal(String(stamp.getTense(10, 2)), Symbols.TENSE_PRESENT);
 });
 
-test("Stamp long time arithmetic preserves bigint inputs at the boundary", async () => {
+test("Stamp RuntimeLong time arithmetic preserves bigint inputs at the boundary", async () => {
     const { Stamp } = await import("../../src/entity/Stamp.ts");
     const { Tense } = await import("../../src/language/Tense.ts");
 
@@ -999,7 +999,7 @@ test("Stamp long time arithmetic preserves bigint inputs at the boundary", async
     assert.equal(future.getOccurrenceTime(), 12n);
 });
 
-test("mixed runtime long values preserve temporal projection and interval normalization", async () => {
+test("mixed runtime RuntimeLong values preserve temporal projection and interval normalization", async () => {
     const { Parameters } = await import("../../src/main/Parameters.ts");
     const { TruthFunctions } = await import("../../src/inference/TruthFunctions.ts");
     const { Sentence } = await import("../../src/entity/Sentence.ts");
@@ -1022,7 +1022,7 @@ test("mixed runtime long values preserve temporal projection and interval normal
     assert.equal(stamp.getOccurrenceTime(), 9);
 });
 
-test("Nar explicit long overload accepts JavaScript number and bigint values", async () => {
+test("Nar explicit RuntimeLong overload accepts JavaScript number and bigint values", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
 
     assert.equal(new Nar(0n).memory.narId, 0n);
@@ -1057,7 +1057,7 @@ test("CompoundTerm equality preserves Java case-sensitive key identity", async (
     assert.equal(nar.memory.concepts.size(), 2);
 });
 
-test("Concept long text preserves Java field labels", async () => {
+test("Concept RuntimeLong text preserves Java field labels", async () => {
     const { Nar } = await import("../../src/main/Nar.ts");
     const { Term } = await import("../../src/language/Term.ts");
     const { BudgetValue } = await import("../../src/entity/BudgetValue.ts");

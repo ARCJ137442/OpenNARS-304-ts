@@ -1,6 +1,6 @@
 //! Java source: opennars/inference/BudgetFunctions.java
 import { ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import type { float, double, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber, DoubleNumber, IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { TruthValue } from "../entity/TruthValue.ts";
 import { Sentence } from "../entity/Sentence.ts";
 import { TaskLink } from "../entity/TaskLink.ts";
@@ -22,14 +22,14 @@ class Activating {
 
     private constructor(
         private readonly enumName: string,
-        private readonly enumOrdinal: int,
+        private readonly enumOrdinal: IntNumber,
     ) {}
 
     public name(): string {
         return this.enumName;
     }
 
-    public ordinal(): int {
+    public ordinal(): IntNumber {
         return this.enumOrdinal;
     }
 
@@ -57,10 +57,10 @@ export class BudgetFunctions extends UtilityFunctions {
      * @param t The truth value of a judgment
      * @return The quality of the judgment, according to truth value only
      */
-    public static truthToQuality(t: TruthValue): float {
-        // Java evaluates the expectation with float operands in this budget
+    public static truthToQuality(t: TruthValue): FloatNumber {
+        // Java evaluates the expectation with FloatNumber operands in this budget
         // consumer; keep TruthValue's public precision unchanged.
-        return Float32Math.truthToQuality(t.getExpectationAsFloat()) as float;
+        return Float32Math.truthToQuality(t.getExpectationAsFloat()) as FloatNumber;
     }
 
     /**
@@ -70,7 +70,7 @@ export class BudgetFunctions extends UtilityFunctions {
      * @param judg The judgment to be ranked
      * @return The rank of the judgment, according to truth value only
      */
-    public static rankBelief(judg: Sentence, rankTruthExpectation: boolean): float {
+    public static rankBelief(judg: Sentence, rankTruthExpectation: boolean): FloatNumber {
         if (rankTruthExpectation) {
             return Float32Math.from(judg.getTruth().getExpectation());
         }
@@ -78,8 +78,8 @@ export class BudgetFunctions extends UtilityFunctions {
         if (truth === null) {
             throw new ReasonerStateError("Cannot rank a sentence without a truth value");
         }
-        let confidence: double = truth.confidence;
-        // final float originality = judg.stamp.getOriginality();
+        let confidence: DoubleNumber = truth.confidence;
+        // final FloatNumber originality = judg.stamp.getOriginality();
         return Float32Math.from(confidence); // or(confidence, originality);
     }
 
@@ -93,7 +93,7 @@ export class BudgetFunctions extends UtilityFunctions {
      */
     public static revise(tTruth: TruthValue, bTruth: TruthValue, truth: TruthValue,
         feedbackToLinks: boolean, nal: DerivationContext): BudgetValue {
-        let difT: float = truth.getExpDifAbs(tTruth);
+        let difT: FloatNumber = truth.getExpDifAbs(tTruth);
         let task: Task = nal.getCurrentTask();
         task.decPriority(1 - difT);
         task.decDurability(1 - difT);
@@ -103,15 +103,15 @@ export class BudgetFunctions extends UtilityFunctions {
             tLink.decDurability(1 - difT);
             const bLink = nal.getCurrentBeliefLink();
             if (bLink !== null) {
-                let difB: float = truth.getExpDifAbs(bTruth);
+                let difB: FloatNumber = truth.getExpDifAbs(bTruth);
                 bLink.decPriority(1 - difB);
                 bLink.decDurability(1 - difB);
             }
         }
-        let dif: double = truth.confidence - Math.max(tTruth.confidence, bTruth.confidence);
-        let priority: float = UtilityFunctions.or(dif as float, task.getPriority());
-        let durability: float = UtilityFunctions.aveAri(dif as float, task.getDurability());
-        let quality: float = BudgetFunctions.truthToQuality(truth);
+        let dif: DoubleNumber = truth.confidence - Math.max(tTruth.confidence, bTruth.confidence);
+        let priority: FloatNumber = UtilityFunctions.or(dif as FloatNumber, task.getPriority());
+        let durability: FloatNumber = UtilityFunctions.aveAri(dif as FloatNumber, task.getDurability());
+        let quality: FloatNumber = BudgetFunctions.truthToQuality(truth);
 
         /*
          * if (priority < 0) {
@@ -150,10 +150,10 @@ export class BudgetFunctions extends UtilityFunctions {
      */
     public static update(task: Task, bTruth: TruthValue, narParameters: Parameters): BudgetValue {
         let tTruth: TruthValue = task.sentence.getTruth();
-        let dif: float = tTruth.getExpDifAbs(bTruth);
-        let priority: float = UtilityFunctions.or(dif, task.getPriority());
-        let durability: float = UtilityFunctions.aveAri(dif, task.getDurability());
-        let quality: float = BudgetFunctions.truthToQuality(bTruth);
+        let dif: FloatNumber = tTruth.getExpDifAbs(bTruth);
+        let priority: FloatNumber = UtilityFunctions.or(dif, task.getPriority());
+        let durability: FloatNumber = UtilityFunctions.aveAri(dif, task.getDurability());
+        let quality: FloatNumber = BudgetFunctions.truthToQuality(bTruth);
         return new BudgetValue(priority, durability, quality, narParameters);
     }
 
@@ -165,11 +165,11 @@ export class BudgetFunctions extends UtilityFunctions {
      * @param n Number of links
      * @return Budget value for each link
      */
-    public static distributeAmongLinks(b: BudgetValue, n: int, narParameters: Parameters): BudgetValue {
-        // Java narrows the division result at the float local-variable write.
-        // Java Math.sqrt returns double; the assignment to the float local is
+    public static distributeAmongLinks(b: BudgetValue, n: IntNumber, narParameters: Parameters): BudgetValue {
+        // Java narrows the division result at the FloatNumber local-variable write.
+        // Java Math.sqrt returns DoubleNumber; the assignment to the FloatNumber local is
         // the only narrowing point in this expression.
-        let priority: float = Float32Math.from(b.getPriority() / Math.sqrt(n)) as float;
+        let priority: FloatNumber = Float32Math.from(b.getPriority() / Math.sqrt(n)) as FloatNumber;
         return new BudgetValue(priority, b.getDurability(), b.getQuality(), narParameters);
     }
 
@@ -189,7 +189,7 @@ export class BudgetFunctions extends UtilityFunctions {
                 BudgetFunctions.merge(receiver, amount);
                 break;
             case BudgetFunctions.Activating.TaskLink:
-                let oldPri: float = receiver.getPriority();
+                let oldPri: FloatNumber = receiver.getPriority();
                 receiver.setPriority(UtilityFunctions.or(oldPri, amount.getPriority()));
                 receiver.setDurability(UtilityFunctions.aveAri(receiver.getDurability(), amount.getDurability()));
                 receiver.setQuality(receiver.getQuality());
@@ -214,19 +214,19 @@ export class BudgetFunctions extends UtilityFunctions {
      * @param forgetCycles      The budget for the new item
      * @param relativeThreshold The relative threshold of the bag
      */
-    public static applyForgetting(budget: BudgetValue, forgetCycles: float,
-        relativeThreshold: float): void {
-        const forgetCyclesFloat: float = Math.fround(forgetCycles) as float;
-        const relativeThresholdFloat: float = Math.fround(relativeThreshold) as float;
-        let quality: float = Math.fround(budget.getQuality() * relativeThresholdFloat) as float; // re-scaled quality
-        let p: float = Math.fround(budget.getPriority() - quality) as float; // priority above quality
+    public static applyForgetting(budget: BudgetValue, forgetCycles: FloatNumber,
+        relativeThreshold: FloatNumber): void {
+        const forgetCyclesFloat: FloatNumber = Math.fround(forgetCycles) as FloatNumber;
+        const relativeThresholdFloat: FloatNumber = Math.fround(relativeThreshold) as FloatNumber;
+        let quality: FloatNumber = Math.fround(budget.getQuality() * relativeThresholdFloat) as FloatNumber; // re-scaled quality
+        let p: FloatNumber = Math.fround(budget.getPriority() - quality) as FloatNumber; // priority above quality
         if (p > 0) {
-            // Java widens the float base for Math.pow and narrows only when
-            // quality is stored back into its float local.
+            // Java widens the FloatNumber base for Math.pow and narrows only when
+            // quality is stored back into its FloatNumber local.
             quality = Float32Math.from(quality + p * Float32Math.powDouble(
                 budget.getDurability(),
                 1.0 / Float32Math.multiply(forgetCyclesFloat, p),
-            )) as float;
+            )) as FloatNumber;
         } // priority Durability
         budget.setPriority(quality);
     }
@@ -277,7 +277,7 @@ export class BudgetFunctions extends UtilityFunctions {
         return BudgetFunctions.budgetInference(Float32Math.multiply(
             BudgetFunctions.w2c(1, nal.narParameters),
             BudgetFunctions.truthToQuality(truth),
-        ) as float, 1, nal);
+        ) as FloatNumber, 1, nal);
     }
 
     /* ----- Task derivation in CompositionalRules and StructuralRules ----- */
@@ -291,7 +291,7 @@ export class BudgetFunctions extends UtilityFunctions {
      */
     public static compoundForward(truth: TruthValue, content: Term,
         nal: DerivationContext): BudgetValue {
-        let complexity: float = (content === null) ? nal.narParameters.COMPLEXITY_UNIT
+        let complexity: FloatNumber = (content === null) ? nal.narParameters.COMPLEXITY_UNIT
             : Float32Math.multiply(nal.narParameters.COMPLEXITY_UNIT, content.getComplexity());
         return BudgetFunctions.budgetInference(BudgetFunctions.truthToQuality(truth), complexity, nal);
     }
@@ -320,7 +320,7 @@ export class BudgetFunctions extends UtilityFunctions {
      */
     public static compoundBackwardWeak(content: Term,
         nal: DerivationContext): BudgetValue {
-        return BudgetFunctions.budgetInference(BudgetFunctions.w2c(1, nal.narParameters) as float,
+        return BudgetFunctions.budgetInference(BudgetFunctions.w2c(1, nal.narParameters) as FloatNumber,
             Float32Math.multiply(content.getComplexity(), nal.narParameters.COMPLEXITY_UNIT), nal);
     }
 
@@ -330,7 +330,7 @@ export class BudgetFunctions extends UtilityFunctions {
      * @param t The Term naming a concept
      * @return the priority value of the concept
      */
-    public static conceptActivation(mem: Memory, t: Term): float {
+    public static conceptActivation(mem: Memory, t: Term): FloatNumber {
         let c: Concept = mem.concept(t);
         return (c === null) ? 0 : c.getPriority();
     }
@@ -343,23 +343,23 @@ export class BudgetFunctions extends UtilityFunctions {
      * @param nal        Reference to the memory
      * @return Budget of the conclusion task
      */
-    private static budgetInference(qual: float, complexity: float,
+    private static budgetInference(qual: FloatNumber, complexity: FloatNumber,
         nal: DerivationContext): BudgetValue {
         let t: Item<unknown> = nal.getCurrentTaskLink() ?? nal.getCurrentTask();
-        // Java receives both parameters as float and stores each local result
-        // back into a float before the belief-link feedback is applied.
-        const qualityFloat: float = Math.fround(qual) as float;
-        const complexityFloat: float = Math.fround(complexity) as float;
-        let priority: float = Math.fround(t.getPriority()) as float;
-        let durability: float = Math.fround(t.getDurability() / complexityFloat) as float;
-        let quality: float = Math.fround(qualityFloat / complexityFloat) as float;
+        // Java receives both parameters as FloatNumber and stores each local result
+        // back into a FloatNumber before the belief-link feedback is applied.
+        const qualityFloat: FloatNumber = Math.fround(qual) as FloatNumber;
+        const complexityFloat: FloatNumber = Math.fround(complexity) as FloatNumber;
+        let priority: FloatNumber = Math.fround(t.getPriority()) as FloatNumber;
+        let durability: FloatNumber = Math.fround(t.getDurability() / complexityFloat) as FloatNumber;
+        let quality: FloatNumber = Math.fround(qualityFloat / complexityFloat) as FloatNumber;
         const bLink = nal.getCurrentBeliefLink();
         // Java returns null for an unset belief link; the translated field is
         // undefined until first assignment, so both values mean "no link".
         if (bLink !== null && bLink !== undefined) {
             priority = UtilityFunctions.or(priority, bLink.getPriority());
-            durability = UtilityFunctions.and(durability, bLink.getDurability()) as float;
-            let targetActivation: float = BudgetFunctions.conceptActivation(nal.memory, bLink.target);
+            durability = UtilityFunctions.and(durability, bLink.getDurability()) as FloatNumber;
+            let targetActivation: FloatNumber = BudgetFunctions.conceptActivation(nal.memory, bLink.target);
             bLink.incPriority(UtilityFunctions.or(quality, targetActivation));
             bLink.incDurability(quality);
         }

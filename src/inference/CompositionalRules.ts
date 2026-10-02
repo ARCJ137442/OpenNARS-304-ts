@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/CompositionalRules.java
-import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../entity/BudgetValue.ts";
 import type { Concept } from "../entity/Concept.ts";
 import { Sentence } from "../entity/Sentence.ts";
@@ -129,7 +129,7 @@ export class CompositionalRules {
   public static composeCompound(
     taskContent: Statement,
     beliefContent: Statement,
-    index: int,
+    index: IntNumber,
     nal: DerivationContext,
   ): void {
     if (
@@ -145,9 +145,9 @@ export class CompositionalRules {
     let componentT: Term = taskContent.term[1 - index];
     let componentB: Term = beliefContent.term[1 - index];
     let componentCommon: Term = taskContent.term[index];
-    let order1: int = taskContent.getTemporalOrder();
-    let order2: int = beliefContent.getTemporalOrder();
-    let order: int = TemporalRules.composeOrder(order1, order2);
+    let order1: IntNumber = taskContent.getTemporalOrder();
+    let order2: IntNumber = beliefContent.getTemporalOrder();
+    let order: IntNumber = TemporalRules.composeOrder(order1, order2);
     if (order === TemporalRules.ORDER_INVALID) {
       return;
     }
@@ -308,7 +308,7 @@ export class CompositionalRules {
     statement: Statement,
     subject: Term | null,
     predicate: Term | null,
-    order: int,
+    order: IntNumber,
     truth: TruthValue,
     nal: DerivationContext,
   ): void {
@@ -356,9 +356,9 @@ export class CompositionalRules {
     compound: CompoundTerm,
     component: Term,
     term1: Term,
-    index: int,
+    index: IntNumber,
     compoundTask: boolean,
-    order: int,
+    order: IntNumber,
     nal: DerivationContext,
   ): void {
     if (
@@ -377,7 +377,7 @@ export class CompositionalRules {
       return;
     }
 
-    let delta: long = 0 as unknown as long;
+    let delta: RuntimeLong = 0 as unknown as RuntimeLong;
     while (
       term2 instanceof Conjunction &&
       (term2 as CompoundTerm).term[0] instanceof Interval
@@ -477,8 +477,8 @@ export class CompositionalRules {
         content,
         nal,
       );
-      if (delta !== (0 as unknown as long)) {
-        let baseTime: long = task.sentence.getOccurrenceTime();
+      if (delta !== (0 as unknown as RuntimeLong)) {
+        let baseTime: RuntimeLong = task.sentence.getOccurrenceTime();
         if (baseTime !== Stamp.ETERNAL) {
           baseTime += delta;
           nal.getTheNewStamp().setOccurrenceTime(baseTime);
@@ -498,7 +498,7 @@ export class CompositionalRules {
     compound: CompoundTerm,
     component: Term,
     compoundTask: boolean,
-    index: int,
+    index: IntNumber,
     nal: DerivationContext,
   ): void {
     const currentBelief = nal.getCurrentBelief();
@@ -514,7 +514,7 @@ export class CompositionalRules {
     ) {
       return;
     }
-    let occurrence_time: long = nal
+    let occurrence_time: RuntimeLong = nal
       .getCurrentTask()
       .sentence.getOccurrenceTime();
     if (
@@ -525,7 +525,7 @@ export class CompositionalRules {
         !nal.getCurrentTask().sentence.isEternal() &&
         compound.term[index + 1] instanceof Interval
       ) {
-        let shift_occurrence: long = (compound.term[index + 1] as Interval)
+        let shift_occurrence: RuntimeLong = (compound.term[index + 1] as Interval)
           .time;
         occurrence_time =
           nal.getCurrentTask().sentence.getOccurrenceTime() + shift_occurrence;
@@ -630,7 +630,7 @@ export class CompositionalRules {
   public static introVarOuter(
     taskContent: Statement,
     beliefContent: Statement,
-    index: int,
+    index: IntNumber,
     nal: DerivationContext,
   ): void {
     if (!(taskContent instanceof Inheritance)) {
@@ -660,7 +660,7 @@ export class CompositionalRules {
       return;
     }
     for (let subjectIntroduction of [true, false]) {
-      let contents: NativeSet<Pair<Term, float>> =
+      let contents: NativeSet<Pair<Term, FloatNumber>> =
         CompositionalRules.introduceVariables(
           nal,
           Implication.make(state1, state2),
@@ -804,7 +804,7 @@ export class CompositionalRules {
         return false;
       }
       for (let subjectIntro of [true, false]) {
-        let conts: NativeSet<Pair<Term, float>> =
+        let conts: NativeSet<Pair<Term, FloatNumber>> =
           CompositionalRules.introduceVariables(nal, content, subjectIntro);
         for (let content_penalty of conts) {
           let truth: TruthValue = intersection(
@@ -831,7 +831,7 @@ export class CompositionalRules {
         return false;
       }
       for (let subjectIntro of [true, false]) {
-        let conts: NativeSet<Pair<Term, float>> =
+        let conts: NativeSet<Pair<Term, FloatNumber>> =
           CompositionalRules.introduceVariables(nal, content, subjectIntro);
         for (let content_penalty of conts) {
           let truth: TruthValue;
@@ -873,7 +873,7 @@ export class CompositionalRules {
    * http://code.google.com/p/open-nars/issues/detail?id=40&can=1
    */
   public static eliminateVariableOfConditionAbductive(
-    figure: int,
+    figure: IntNumber,
     sentence: Sentence,
     belief: Sentence,
     nal: DerivationContext,
@@ -1186,7 +1186,7 @@ export class CompositionalRules {
     subSentence: Sentence,
     component: Term,
     content: Term,
-    index: int,
+    index: IntNumber,
     nal: DerivationContext,
   ): void {
     let T1: Term = originalMainSentence.term;
@@ -1235,7 +1235,7 @@ export class CompositionalRules {
         nal.narParameters,
       );
       for (let subjectIntro of [true, false]) {
-        let conts: NativeSet<Pair<Term, float>> =
+        let conts: NativeSet<Pair<Term, FloatNumber>> =
           CompositionalRules.introduceVariables(nal, T, subjectIntro);
         for (let content_penalty of conts) {
           let budget: BudgetValue = BudgetFunctions.compoundForward(
@@ -1309,8 +1309,8 @@ export class CompositionalRules {
     nal: DerivationContext,
     implicationEquivalenceOrJunction: Term,
     subject: boolean,
-  ): NativeSet<Pair<Term, float>> {
-    const result = new NativeSet<Pair<Term, float>>();
+  ): NativeSet<Pair<Term, FloatNumber>> {
+    const result = new NativeSet<Pair<Term, FloatNumber>>();
     let validForIntroduction: boolean =
       implicationEquivalenceOrJunction instanceof Conjunction ||
       implicationEquivalenceOrJunction instanceof Disjunction ||
@@ -1346,9 +1346,9 @@ export class CompositionalRules {
         subject,
       );
     }
-    let termCounts: MapContract<Term, int> =
+    let termCounts: MapContract<Term, IntNumber> =
       implicationEquivalenceOrJunction.countTermRecursively(null);
-    let k: int = 0;
+    let k: IntNumber = 0;
     for (let t of candidates) {
       if (
         termCounts.getOrDefault(t, 0) > 1
@@ -1386,12 +1386,12 @@ export class CompositionalRules {
       shuffledVariables[j] = current;
     }
     const selected = new NativeSet<Term>();
-    let i: int = 1;
+    let i: IntNumber = 1;
     for (let t of shuffledVariables) {
       selected.add(t);
       if (
-        // Java Math.pow(double, double) has no binary32 result boundary here;
-        // native Math.pow preserves the same double comparison semantics.
+        // Java Math.pow(DoubleNumber, DoubleNumber) has no binary32 result boundary here;
+        // native Math.pow preserves the same DoubleNumber comparison semantics.
         Math.pow(2.0, i) >
         nal.narParameters.VARIABLE_INTRODUCTION_COMBINATIONS_MAX
       ) {
@@ -1406,7 +1406,7 @@ export class CompositionalRules {
         mapping.put(vIntro, app.get(vIntro) as unknown as Term);
       }
       if (mapping.size() > 0) {
-        let generalizationPenalty: float = Float32Math.pow(
+        let generalizationPenalty: FloatNumber = Float32Math.pow(
           nal.narParameters.VARIABLE_INTRODUCTION_CONFIDENCE_MUL,
           mapping.size() - 1,
         );
@@ -1439,8 +1439,8 @@ export class CompositionalRules {
       side instanceof Conjunction ||
       side instanceof Disjunction ||
       side instanceof Negation;
-    let n: int = junction ? (side as CompoundTerm).size() : 1;
-    for (let i: int = 0; i < n; i++) {
+    let n: IntNumber = junction ? (side as CompoundTerm).size() : 1;
+    for (let i: IntNumber = 0; i < n; i++) {
       // we found an Inheritance
       let t: Term = null as unknown as Term;
       if (i < n) {

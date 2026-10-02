@@ -1,5 +1,5 @@
 //! Java source: opennars/io/Symbols.java
-import type { char } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { CharCode } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 
@@ -57,9 +57,9 @@ export class Symbols {
 
     public static readonly PREFIX_MARK: string = ':';
     public static readonly COMMENT_MARK: string = '/';
-    // public static final char URL_INCLUDE_MARK = '`';
+    // public static final CharCode URL_INCLUDE_MARK = '`';
     public static readonly ECHO_MARK: string = '\'';
-    // public static final char NATURAL_LANGUAGE_MARK = '\"';
+    // public static final CharCode NATURAL_LANGUAGE_MARK = '\"';
 
     /* control commands */
     public static readonly RESET_COMMAND: string = "*reset";

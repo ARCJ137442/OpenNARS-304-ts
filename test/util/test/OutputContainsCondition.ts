@@ -1,4 +1,4 @@
-import { java, type double, JavaObject, type int, type char } from "../../support/legacy-runtime-facade.ts";
+import { java, type DoubleNumber, JavaObject, type IntNumber, type CharCode } from "../../support/legacy-runtime-facade.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { Sentence } from "../../../src/entity/Sentence.ts";
 import { Task } from "../../../src/entity/Task.ts";
@@ -23,7 +23,7 @@ class SortedComparableSet<T> implements Iterable<T> {
         return this.values.length === 0;
     }
 
-    public size(): int {
+    public size(): IntNumber {
         return this.values.length;
     }
 
@@ -71,22 +71,22 @@ type ExecutionResult = InstanceType<typeof Operator.ExecutionResult>;
  *
  */
 export class OutputContainsCondition extends OutputCondition {
-    public confOfBestAnswer: double = 0.0;
+    public confOfBestAnswer: DoubleNumber = 0.0;
     public timeOfBestAnswer: number = 0;
 
     public readonly exact: java.util.List<unknown> = new java.util.ArrayList<unknown>();
 
     public static SimilarOutput = class SimilarOutput extends JavaObject implements java.lang.Comparable<SimilarOutput> {
         public readonly signal: java.lang.String;
-        public readonly distance: int;
+        public readonly distance: IntNumber;
 
-        public constructor(signal: java.lang.String, distance: int) {
+        public constructor(signal: java.lang.String, distance: IntNumber) {
             super();
             this.signal = signal;
             this.distance = distance;
         }
 
-        public override  hashCode(): int {
+        public override  hashCode(): IntNumber {
             return this.signal.hashCode();
         }
 
@@ -98,7 +98,7 @@ export class OutputContainsCondition extends OutputCondition {
             return new java.lang.String(`similar(${this.distance}): ${String(this.signal)}`);
         }
 
-        public compareTo(o: SimilarOutput): int {
+        public compareTo(o: SimilarOutput): IntNumber {
             return java.lang.Integer.compare(this.distance, o.distance);
         }
 
@@ -109,7 +109,7 @@ export class OutputContainsCondition extends OutputCondition {
     public readonly almost: SortedComparableSet<OutputContainsCondition.SimilarOutput> =
         new SortedComparableSet((left, right) => left.compareTo(right));
     protected readonly saveSimilar: boolean;
-    protected maxSimilars: int = 5;
+    protected maxSimilars: IntNumber = 5;
 
     /**
      *
@@ -117,7 +117,7 @@ export class OutputContainsCondition extends OutputCondition {
      * @param containing
      * @param maxSimilars # of similar results to collect, -1 to disable
      */
-    public constructor(nar: Nar, containing: java.lang.String, maxSimilars: int) {
+    public constructor(nar: Nar, containing: java.lang.String, maxSimilars: IntNumber) {
         super(nar);
         this.containing = containing;
         this.maxSimilars = maxSimilars;
@@ -134,35 +134,35 @@ export class OutputContainsCondition extends OutputCondition {
         return s;
     }
 
-    public getCandidates(max: int): SortedComparableSet<OutputContainsCondition.SimilarOutput> {
+    public getCandidates(max: IntNumber): SortedComparableSet<OutputContainsCondition.SimilarOutput> {
         return this.almost;
     }
 
     /**
      * @author http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Java
      */
-    public static levenshteinDistance(a: java.lang.CharSequence, b: java.lang.CharSequence): int {
-        let len0: int = a.length() + 1;
-        let len1: int = b.length() + 1;
+    public static levenshteinDistance(a: java.lang.CharSequence, b: java.lang.CharSequence): IntNumber {
+        let len0: IntNumber = a.length() + 1;
+        let len1: IntNumber = b.length() + 1;
         let cost: Int32Array = new Int32Array(len0);
         let newcost: Int32Array = new Int32Array(len0);
-        for (let i: int = 0; i < len0; i++) {
+        for (let i: IntNumber = 0; i < len0; i++) {
             cost[i] = i;
         }
-        for (let j: int = 1; j < len1; j++) {
+        for (let j: IntNumber = 1; j < len1; j++) {
             newcost[0] = j;
             const bjValue = b.charAt(j - 1);
             if (bjValue === null) {
                 throw new java.lang.IllegalStateException(new java.lang.String("charAt returned null within a valid range"));
             }
-            const bj: char = bjValue;
-            for (let i: int = 1; i < len0; i++) {
-                let match: int = (a.charAt(i - 1) === bj) ? 0 : 1;
-                let cost_replace: int = cost[i - 1] + match;
-                let cost_insert: int = cost[i] + 1;
-                let cost_delete: int = newcost[i - 1] + 1;
+            const bj: CharCode = bjValue;
+            for (let i: IntNumber = 1; i < len0; i++) {
+                let match: IntNumber = (a.charAt(i - 1) === bj) ? 0 : 1;
+                let cost_replace: IntNumber = cost[i - 1] + match;
+                let cost_insert: IntNumber = cost[i] + 1;
+                let cost_delete: IntNumber = newcost[i - 1] + 1;
 
-                let c: int = cost_insert;
+                let c: IntNumber = cost_insert;
                 if (cost_delete < c)
                     c = cost_delete;
                 if (cost_replace < c)
@@ -211,7 +211,7 @@ export class OutputContainsCondition extends OutputCondition {
                 }
             }
             if (this.saveSimilar) {
-                let dist: int = OutputContainsCondition.levenshteinDistance(o, this.containing);
+                let dist: IntNumber = OutputContainsCondition.levenshteinDistance(o, this.containing);
 
                 if (this.almost.size() >= this.maxSimilars) {
                     let last: OutputContainsCondition.SimilarOutput = this.almost.last();

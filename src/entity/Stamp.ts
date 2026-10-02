@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Stamp.java
-import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Tense } from "../language/Tense.ts";
 import { Symbols } from "../io/Symbols.ts";
 import { TemporalRules } from "../inference/TemporalRules.ts";
@@ -20,13 +20,13 @@ import type { Timable } from "../interfaces/Timable.ts";
 import type { Memory } from "../storage/Memory.ts";
 import type { Parameters } from "../main/Parameters.ts";
 
-const hashLong = (value: long): int => {
+const hashLong = (value: RuntimeLong): IntNumber => {
     const numeric = Number(value);
     return (numeric ^ Math.trunc(numeric / 0x100000000)) | 0;
 };
 
-/** jree types Java long as bigint, while this translated 3.0.4 runtime keeps time values as numbers. */
-const runtimeLong = (value: number): long => value as unknown as long;
+/** jree types Java RuntimeLong as bigint, while this translated 3.0.4 runtime keeps time values as numbers. */
+const runtimeLong = (value: number): RuntimeLong => value as unknown as RuntimeLong;
 
 
 
@@ -45,19 +45,19 @@ export class Stamp extends ReasonerObject {
     public evidentialBase!: Stamp.BaseEntry[];
 
     /** the length of @see evidentialBase */
-    public baseLength!: int;
+    public baseLength!: IntNumber;
 
     /** creation time of the stamp */
-    private creationTime!: long;
+    private creationTime!: RuntimeLong;
 
     /** estimated occurrence time of the event */
-    private occurrenceTime!: long;
+    private occurrenceTime!: RuntimeLong;
 
     /**
      * default for atemporal events means "always" in Judgment/Question, but
      * "current" in Goal/Quest
      */
-    public static readonly ETERNAL: long = runtimeLong(-2147483648);
+    public static readonly ETERNAL: RuntimeLong = runtimeLong(-2147483648);
 
     /**
      * caches evidentialBase as a set for comparisons and hashcode, stores the
@@ -86,22 +86,22 @@ export class Stamp extends ReasonerObject {
     /** cache of hashcode of evidential base */
     // Keep the field distinct from evidentialHash(); otherwise the translated
     // instance field shadows the method at runtime.
-    private evidentialHashValue!: int;
+    private evidentialHashValue!: IntNumber;
 
-    public before(s: Stamp, duration: int): boolean {
+    public before(s: Stamp, duration: IntNumber): boolean {
         if (this.isEternal() || s.isEternal())
             return false;
         return TemporalRules.order(s.occurrenceTime, this.occurrenceTime, duration) === TemporalRules.ORDER_BACKWARD;
     }
 
-    public after(s: Stamp, duration: int): boolean {
+    public after(s: Stamp, duration: IntNumber): boolean {
         if (this.isEternal() || s.isEternal())
             return false;
         return TemporalRules.order(s.occurrenceTime, this.occurrenceTime, duration) === TemporalRules.ORDER_FORWARD;
     }
 
-    public getOriginality(): float {
-        return Float32Math.divide(1.0, this.evidentialBase.length + 1) as float;
+    public getOriginality(): FloatNumber {
+        return Float32Math.divide(1.0, this.evidentialBase.length + 1) as FloatNumber;
     }
 
     /**
@@ -146,7 +146,7 @@ export class Stamp extends ReasonerObject {
      *
      * @param time Creation time of the stamp
      */
-    public constructor(time: RuntimeLongInput, tense: Tense, serial: Stamp.BaseEntry, duration: int);
+    public constructor(time: RuntimeLongInput, tense: Tense, serial: Stamp.BaseEntry, duration: IntNumber);
 
     /**
      * Generate a new stamp for derived sentence by merging the two from parents
@@ -229,7 +229,7 @@ export class Stamp extends ReasonerObject {
         }
 
         if (args.length === 4) {
-            const [time, tense, serial, duration] = args as [RuntimeLongInput, Tense, Stamp.BaseEntry, int];
+            const [time, tense, serial, duration] = args as [RuntimeLongInput, Tense, Stamp.BaseEntry, IntNumber];
             this.baseLength = 1;
             this.evidentialBase = [serial];
             this.tense = tense;
@@ -240,7 +240,7 @@ export class Stamp extends ReasonerObject {
         throw new ReasonerInputError("Invalid number of arguments");
     }
 
-    private initializeInputStamp(time: long, tense: Tense, memory: Memory): void {
+    private initializeInputStamp(time: RuntimeLong, tense: Tense, memory: Memory): void {
         this.baseLength = 1;
         this.evidentialBase = [memory.newStampSerial()];
         this.tense = tense;
@@ -301,7 +301,7 @@ export class Stamp extends ReasonerObject {
      * sets the creation time; used to set input tasks with the actual time they
      * enter Memory
      */
-    public setCreationTime(time: RuntimeLongInput, duration: int): void {
+    public setCreationTime(time: RuntimeLongInput, duration: IntNumber): void {
         const runtimeTime = toRuntimeLong(time);
         this.creationTime = runtimeTime;
 
@@ -344,7 +344,7 @@ export class Stamp extends ReasonerObject {
         // longer inherits jree's reflection-bearing Comparable interface.
         set.sort((a, b) => a.compareTo(b));
         let lastValue: Stamp.BaseEntry | null = null;
-        let j: int = 0; // # of unique items
+        let j: IntNumber = 0; // # of unique items
         for (let v of set) {
             if (lastValue === null || !lastValue.equals(v)) {
                 j++;
@@ -368,7 +368,7 @@ export class Stamp extends ReasonerObject {
      *
      * @return The NavigableSet representation of the evidential base
      */
-    private static hashCode(values: Stamp.BaseEntry[]): int {
+    private static hashCode(values: Stamp.BaseEntry[]): IntNumber {
         let hash = 1;
         for (const value of values) {
             hash = (Math.imul(31, hash) + value.hashCode()) | 0;
@@ -452,7 +452,7 @@ export class Stamp extends ReasonerObject {
      *
      * @return hash code
      */
-    public evidentialHash(): int {
+    public evidentialHash(): IntNumber {
         if (this.evidentialSet === null)
             this.toSet();
         return this.evidentialHashValue;
@@ -471,7 +471,7 @@ export class Stamp extends ReasonerObject {
      *
      * @return occurrence time
      */
-    public getOccurrenceTime(): long {
+    public getOccurrenceTime(): RuntimeLong {
         return this.occurrenceTime;
     }
 
@@ -502,7 +502,7 @@ export class Stamp extends ReasonerObject {
         return asText(this.isEternal() ? "" : `[${String(this.occurrenceTime)}]`);
     }
 
-    public getTense(currentTime: RuntimeLongInput, duration: int): TextString {
+    public getTense(currentTime: RuntimeLongInput, duration: IntNumber): TextString {
 
         if (this.isEternal()) {
             return asText("");
@@ -536,7 +536,7 @@ export class Stamp extends ReasonerObject {
                 parts.push("|", String(this.occurrenceTime));
             }
             parts.push(" ", String(Symbols.STAMP_STARTER), " ");
-            for (let i: int = 0; i < this.baseLength; i++) {
+            for (let i: IntNumber = 0; i < this.baseLength; i++) {
                 parts.push(String(this.evidentialBase[i].toString()));
                 if (i < (this.baseLength - 1)) {
                     parts.push(String(Symbols.STAMP_SEPARATOR));
@@ -555,7 +555,7 @@ export class Stamp extends ReasonerObject {
     /**
      * @return time of creation
      */
-    public getCreationTime(): long {
+    public getCreationTime(): RuntimeLong {
         return this.creationTime;
     }
 
@@ -565,15 +565,15 @@ export class Stamp extends ReasonerObject {
     // Java source: public static class BaseEntry implements Comparable<BaseEntry>, Serializable.
     // Keep value equality, Java hashCode and ordering; Serializable is marker-only here.
     public static BaseEntry = class BaseEntry {
-        public readonly narId: long; // the NAR in which the input evidence was added
+        public readonly narId: RuntimeLong; // the NAR in which the input evidence was added
 
-        public getNarId(): long {
+        public getNarId(): RuntimeLong {
             return this.narId;
         }
 
-        public readonly inputId: long;
+        public readonly inputId: RuntimeLong;
 
-        public getInputId(): long {
+        public getInputId(): RuntimeLong {
             return this.inputId;
         }
 
@@ -603,15 +603,15 @@ export class Stamp extends ReasonerObject {
             return other_.inputId === this.inputId && other_.narId === this.narId;
         }
 
-        public hashCode(): int {
-            let prime: int = 31;
-            let result: int = 1;
+        public hashCode(): IntNumber {
+            let prime: IntNumber = 31;
+            let result: IntNumber = 1;
             result = prime * result + hashLong(this.narId);
             result = prime * result + hashLong(this.inputId);
             return result;
         }
 
-        public compareTo(o: BaseEntry): int {
+        public compareTo(o: BaseEntry): IntNumber {
             if (this.narId < o.narId) return -1;
             if (this.narId > o.narId) return 1;
             if (this.inputId < o.inputId) return -1;

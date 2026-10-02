@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/mental/Feel.java
-import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
 import { Stamp } from "../../entity/Stamp.ts";
@@ -40,7 +40,7 @@ export abstract class Feel extends Operator {
      * @param memory The memory in which the operation is executed
      * @return Immediate results as Tasks
      */
-    protected feeling(value: float, memory: Memory, time: Timable): Task[] {
+    protected feeling(value: FloatNumber, memory: Memory, time: Timable): Task[] {
         let stamp: Stamp = new Stamp(time, memory, Tense.Present);
         let truth: TruthValue = TruthValue.fromFrequencyConfidence(value, memory.narParameters.DEFAULT_JUDGMENT_CONFIDENCE,
             memory.narParameters);
@@ -54,7 +54,7 @@ export abstract class Feel extends Operator {
             truth,
             stamp);
 
-        let quality: float = BudgetFunctions.truthToQuality(truth);
+        let quality: FloatNumber = BudgetFunctions.truthToQuality(truth);
         let budget: BudgetValue = new BudgetValue(memory.narParameters.DEFAULT_JUDGMENT_PRIORITY,
             memory.narParameters.DEFAULT_JUDGMENT_DURABILITY, quality, memory.narParameters);
 

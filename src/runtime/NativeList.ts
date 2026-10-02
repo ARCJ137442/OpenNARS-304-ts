@@ -79,7 +79,7 @@ export class NativeList<T> implements Iterable<T> {
     public remove(index: number): T;
     public remove(element: T): boolean;
     public remove(value: number | T): T | boolean {
-        // Java List.remove(int) and List.remove(Object) are distinguished by
+        // Java List.remove(IntNumber) and List.remove(Object) are distinguished by
         // the translated call-site type. At runtime, primitive numeric calls
         // retain the indexed form; object values use Java-style equality.
         if (typeof value === "number") {

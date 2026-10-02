@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/misc/Add.java
-import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { Term } from "../../language/Term.ts";
 import {
@@ -14,12 +14,12 @@ import type { Memory } from "../../storage/Memory.ts";
 // Keep this check local so the operator does not depend on the main entrypoint.
 const isNumeric = (value: unknown): boolean => /^[0-9]+$/.test(textValue(value));
 
-const parseJavaInt = (value: string): int => {
+const parseIntLiteral = (value: string): IntNumber => {
     const parsed = Number(value);
     if (!Number.isSafeInteger(parsed) || parsed > 2_147_483_647) {
         throw new ReasonerInputError(`For input string: "${value}"`);
     }
-    return parsed as int;
+    return parsed as IntNumber;
 };
 
 
@@ -38,19 +38,19 @@ export class Add extends FunctionOperator {
             throw new ReasonerStateError("Requires 2 arguments");
         }
 
-        let n1: int;
-        let n2: int;
+        let n1: IntNumber;
+        let n2: IntNumber;
 
         const first = textValue(x[0].name());
         if (isNumeric(first)) {
-            n1 = parseJavaInt(first);
+            n1 = parseIntLiteral(first);
         } else {
             throw new ReasonerInputError("1st parameter not an integer");
         }
 
         const second = textValue(x[1].name());
         if (isNumeric(second)) {
-            n2 = parseJavaInt(second);
+            n2 = parseIntLiteral(second);
         } else {
             throw new ReasonerInputError("2nd parameter not an integer");
         }

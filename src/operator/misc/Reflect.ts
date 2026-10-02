@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/misc/Reflect.java
-import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { CompoundTerm } from "../../language/CompoundTerm.ts";
 import { Inheritance } from "../../language/Inheritance.ts";
@@ -78,7 +78,7 @@ export class Reflect extends FunctionOperator {
                 const operatorName = textValue(first);
                 const terms = second as Term[];
                 let m: Term[] = new Array<Term>(terms.length);
-                let i: int = 0;
+                let i: IntNumber = 0;
                 for (let x of terms)
                     m[i++] = Reflect.getMetaTerm(x);
                 return Inheritance.make(Product.make(m), Term.get(operatorName));

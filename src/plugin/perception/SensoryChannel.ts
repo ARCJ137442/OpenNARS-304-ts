@@ -1,6 +1,6 @@
 //! Java source: opennars/plugin/perception/SensoryChannel.java
 import { ReasonerInputError, ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
-import type { int, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, DoubleNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Narsese } from "../../io/Narsese.ts";
 import { Parser } from "../../io/Parser.ts";
 import { Logger } from "../../runtime/Logger.ts";
@@ -31,46 +31,46 @@ export abstract class SensoryChannel extends ReasonerObject implements Plugin {
     public nar!: Nar; // for top-down influence of concept budgets
     // Java source: public List<Task>; native array preserves push/iteration/clear semantics.
     public readonly results: Task[] = [];
-    public height: int = 0; // 1D channels have height 1
-    public width: int = 0;
-    public duration: int = -1;
+    public height: IntNumber = 0; // 1D channels have height 1
+    public width: IntNumber = 0;
+    public duration: IntNumber = -1;
     protected label: Term = new Term();
 
     public resetChannel(): void {
     }
 
-    public getHeight(): double {
+    public getHeight(): DoubleNumber {
         return this.height;
     }
 
-    public setHeight(val: double): void {
-        this.height = val as int;
+    public setHeight(val: DoubleNumber): void {
+        this.height = val as IntNumber;
         this.resetChannel();
     }
 
-    public getWidth(): double {
+    public getWidth(): DoubleNumber {
         return this.width;
     }
 
-    public setWidth(val: double): void {
-        this.width = val as int;
+    public setWidth(val: DoubleNumber): void {
+        this.width = val as IntNumber;
     }
 
-    public getDuration(): double {
+    public getDuration(): DoubleNumber {
         return this.duration;
     }
 
-    public setDuration(val: double): void {
-        this.duration = val as int;
+    public setDuration(val: DoubleNumber): void {
+        this.duration = val as IntNumber;
     }
 
     public constructor();
 
-    public constructor(nar: Nar, reportResultsTo: ArrayConvertible<SensoryChannel> | SensoryChannel[], width: int,
-        height: int, duration: int, label: Term);
+    public constructor(nar: Nar, reportResultsTo: ArrayConvertible<SensoryChannel> | SensoryChannel[], width: IntNumber,
+        height: IntNumber, duration: IntNumber, label: Term);
 
-    public constructor(nar: Nar, reportResultsTo: SensoryChannel, width: int, height: int,
-        duration: int, label: Term);
+    public constructor(nar: Nar, reportResultsTo: SensoryChannel, width: IntNumber, height: IntNumber,
+        duration: IntNumber, label: Term);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -85,9 +85,9 @@ export abstract class SensoryChannel extends ReasonerObject implements Plugin {
                 const [nar, reportResultsTo, width, height, duration, label] = args as [
                     Nar,
                     ArrayConvertible<SensoryChannel> | SensoryChannel[] | SensoryChannel,
-                    int,
-                    int,
-                    int,
+                    IntNumber,
+                    IntNumber,
+                    IntNumber,
                     Term,
                 ];
 
@@ -146,15 +146,15 @@ export abstract class SensoryChannel extends ReasonerObject implements Plugin {
         this.results.length = 0;
     }
 
-    public topDownPriority(t: Term): double {
-        let prioritySum: double = 0.0;
+    public topDownPriority(t: Term): DoubleNumber {
+        let prioritySum: DoubleNumber = 0.0;
         for (let chan of this.reportResultsTo) {
             prioritySum += chan.priority(t);
         }
-        return prioritySum / this.reportResultsTo.length as double;
+        return prioritySum / this.reportResultsTo.length as DoubleNumber;
     }
 
-    public priority(t: Term): double {
+    public priority(t: Term): DoubleNumber {
         const reasoner = this as unknown as { memory?: { concept(term: Term): Concept } };
         if (reasoner.memory !== undefined) { // on highest level it is simply the concept priority
             let c: Concept = reasoner.memory.concept(t);

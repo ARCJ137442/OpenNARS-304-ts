@@ -29,7 +29,7 @@ interface BuiltinPluginFactory {
     readonly createDefault?: () => Plugin;
 }
 
-// These fields are Java `float` values. Keep binary32 narrowing at the
+// These fields are Java `FloatNumber` values. Keep binary32 narrowing at the
 // configuration boundary before the values enter inference state.
 const FLOAT_PARAMETER_NAMES = new Set([
     "DECISION_THRESHOLD", "HORIZON", "TRUTH_EPSILON", "BUDGET_EPSILON",

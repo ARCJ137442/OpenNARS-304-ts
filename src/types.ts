@@ -3,7 +3,7 @@
  *
  * These aliases are project-owned compile-time migration contracts. They used
  * to come from jree, but moving their definitions here must not be mistaken
- * for implementing Java's numeric runtime semantics: float32/int32/long
+ * for implementing Java's numeric runtime semantics: float32/int32/RuntimeLong
  * narrowing remains an explicit follow-up contract at each operation boundary.
  *
  * For other types:
@@ -19,9 +19,9 @@
  * - Queue<T>: T[] (treat as queue semantics with push/shift)
  * - enum: enum { ... } or const object + as const
  */
-export type int = number;
-export type char = number;
-export type short = number;
-export type long = bigint;
-export type float = number;
-export type double = number;
+export type IntNumber = number;
+export type CharCode = number;
+export type ShortNumber = number;
+export type RuntimeLong = bigint;
+export type FloatNumber = number;
+export type DoubleNumber = number;

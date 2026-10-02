@@ -1,6 +1,6 @@
 //! Java source: opennars/operator/mental/Anticipate.java
 import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
-import type { float, long, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber, RuntimeLong, DoubleNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import type { DerivationContext } from "../../control/DerivationContext.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Sentence } from "../../entity/Sentence.ts";
@@ -57,15 +57,15 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
     private expiredBudget: BudgetValue = null as unknown as BudgetValue;
 
     // internal experience has less durability?
-    public ANTICIPATION_DURABILITY_MUL: float = Float32Math.from(0.1) as float; // 0.1
+    public ANTICIPATION_DURABILITY_MUL: FloatNumber = Float32Math.from(0.1) as FloatNumber; // 0.1
     // internal experience has less priority?
-    public ANTICIPATION_PRIORITY_MUL: float = Float32Math.from(0.1) as float; // 0.1
+    public ANTICIPATION_PRIORITY_MUL: FloatNumber = Float32Math.from(0.1) as FloatNumber; // 0.1
 
     private nal: DerivationContext = null as unknown as DerivationContext; // don't serialize, it will be re-set after deserialization
 
     public constructor();
 
-    public constructor(ANTICIPATION_DURABILITY_MUL: float, ANTICIPATION_PRIORITY_MUL: float);
+    public constructor(ANTICIPATION_DURABILITY_MUL: FloatNumber, ANTICIPATION_PRIORITY_MUL: FloatNumber);
     public constructor(...args: unknown[]) {
         switch (args.length) {
             case 0: {
@@ -77,12 +77,12 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             }
 
             case 2: {
-                const [ANTICIPATION_DURABILITY_MUL, ANTICIPATION_PRIORITY_MUL] = args as [float, float];
+                const [ANTICIPATION_DURABILITY_MUL, ANTICIPATION_PRIORITY_MUL] = args as [FloatNumber, FloatNumber];
 
 
                 super("^anticipate");
-                this.ANTICIPATION_DURABILITY_MUL = Float32Math.from(ANTICIPATION_DURABILITY_MUL) as float;
-                this.ANTICIPATION_PRIORITY_MUL = Float32Math.from(ANTICIPATION_PRIORITY_MUL) as float;
+                this.ANTICIPATION_DURABILITY_MUL = Float32Math.from(ANTICIPATION_DURABILITY_MUL) as FloatNumber;
+                this.ANTICIPATION_PRIORITY_MUL = Float32Math.from(ANTICIPATION_PRIORITY_MUL) as FloatNumber;
 
 
                 break;
@@ -109,7 +109,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         if (this.anticipations.isEmpty())
             return;
 
-        let now: long = nal.time.time();
+        let now: RuntimeLong = nal.time.time();
 
         // share stamps created by tasks in this cycle
         if (this.newTasks === null) {
@@ -127,8 +127,8 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
 
             const ae = aei.next();
 
-            let aTime: long = ae.getKey().predictedOccurenceTime;
-            let predictionstarted: long = ae.getKey().predictionCreationTime;
+            let aTime: RuntimeLong = ae.getKey().predictedOccurenceTime;
+            let predictionstarted: RuntimeLong = ae.getKey().predictionCreationTime;
             if (aTime < predictionstarted) { // its about the past..
                 for (const prediction of predictionsToRemove) {
                     this.anticipations.remove(prediction);
@@ -156,7 +156,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
             // constructed)
             // ok, and what predicted occurence time would that be? because only if now is
             // bigger or equal, didnt happen is true
-            let expiredate: double = Number(predictionstarted as unknown as number)
+            let expiredate: DoubleNumber = Number(predictionstarted as unknown as number)
                 + Number(Int.time as unknown as number) * nal.narParameters.ANTICIPATION_TOLERANCE;
             //
 
@@ -243,7 +243,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         }
 
         this.anticipate(args[1], memory,
-            (Number(time.time() as unknown as number) + memory.narParameters.DURATION) as unknown as long,
+            (Number(time.time() as unknown as number) + memory.narParameters.DURATION) as unknown as RuntimeLong,
             null as unknown as Task, time);
 
         return null;
@@ -310,7 +310,7 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
         }
     }
 
-    protected deriveDidntHappen(aTerm: Term, expectedOccurenceTime: long, nal: DerivationContext): void {
+    protected deriveDidntHappen(aTerm: Term, expectedOccurenceTime: RuntimeLong, nal: DerivationContext): void {
 
         let truth: TruthValue = this.expiredTruth;
         let budget: BudgetValue = this.expiredBudget;
@@ -338,9 +338,9 @@ export class Anticipate extends Operator implements EventEmitter.EventObserver {
     // reflection, or serialization behavior is consumed by this module.
     public Prediction = (($outer) => {
         return class Prediction {
-            public readonly predictionCreationTime: long; // 2014 and this is still the best way to define a data structure that
+            public readonly predictionCreationTime: RuntimeLong; // 2014 and this is still the best way to define a data structure that
             // simple?
-            public readonly predictedOccurenceTime: long;
+            public readonly predictedOccurenceTime: RuntimeLong;
 
             public constructor(predictionCreationTime: RuntimeLongInput, predictedOccurenceTime: RuntimeLongInput) { // rest of the crap:
                 this.predictionCreationTime = toRuntimeLong(predictionCreationTime); // when the prediction happened

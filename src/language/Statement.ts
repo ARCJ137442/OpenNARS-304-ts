@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Statement.java
-import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Term } from "./Term.ts";
 import { Symbols } from "../io/Symbols.ts";
@@ -9,7 +9,7 @@ import { TemporalRules } from "../inference/TemporalRules.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 import { textValue } from "../runtime/Text.ts";
 
-type StatementFactory = (subject: Term, predicate: Term, order: int) => Statement;
+type StatementFactory = (subject: Term, predicate: Term, order: IntNumber) => Statement;
 type StatementRuntime = Record<string, any>;
 type NativeOperator = Symbols.NativeOperator;
 type StatementName = ReturnType<CompoundTerm["name"]>;
@@ -24,14 +24,14 @@ class EnumStatementSide {
 
     private constructor(
         private readonly enumName: string,
-        private readonly enumOrdinal: int,
+        private readonly enumOrdinal: IntNumber,
     ) {}
 
     public name(): string {
         return this.enumName;
     }
 
-    public ordinal(): int {
+    public ordinal(): IntNumber {
         return this.enumOrdinal;
     }
 
@@ -141,9 +141,9 @@ export abstract class Statement extends CompoundTerm {
      * @param subj The first component
      * @param pred The second component
      */
-    public static make(op: NativeOperator, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(op: NativeOperator, subj: Term, pred: Term, order: IntNumber): Statement | null;
 
-    public static make(statement: Statement, subj: Term, pred: Term, order: int): Statement | null;
+    public static make(statement: Statement, subj: Term, pred: Term, order: IntNumber): Statement | null;
 
     /**
      * Make a Statement from String, called by StringParser
@@ -154,7 +154,7 @@ export abstract class Statement extends CompoundTerm {
      * @return The Statement built
      */
     public static make(o: NativeOperator, subject: Term, predicate: Term,
-        customOrder: boolean, order: int): Statement | null;
+        customOrder: boolean, order: IntNumber): Statement | null;
     public static make(...args: unknown[]): Statement | null {
         switch (args.length) {
             case 3: {
@@ -181,7 +181,7 @@ export abstract class Statement extends CompoundTerm {
             }
 
             case 4: {
-                const [first, subj, pred, order] = args as [NativeOperator | Statement, Term, Term, int];
+                const [first, subj, pred, order] = args as [NativeOperator | Statement, Term, Term, IntNumber];
                 const op = first instanceof Statement ? first.operator() : first;
                 return Statement.make(op as NativeOperator, subj, pred, true, order);
 
@@ -190,7 +190,7 @@ export abstract class Statement extends CompoundTerm {
             }
 
             case 5: {
-                const [o, subject, predicate, customOrder, order] = args as [NativeOperator, Term, Term, boolean, int];
+                const [o, subject, predicate, customOrder, order] = args as [NativeOperator, Term, Term, boolean, IntNumber];
 
 
 
@@ -206,7 +206,7 @@ export abstract class Statement extends CompoundTerm {
                 // customOrder is false. This matters for parser input such as
                 // =/> and =|>, which intentionally calls this overload with
                 // order=0.
-                let effectiveOrder: int = customOrder ? order : TemporalRules.ORDER_NONE;
+                let effectiveOrder: IntNumber = customOrder ? order : TemporalRules.ORDER_NONE;
                 if (!customOrder) {
                     switch (o) {
                         case Symbols.NativeOperator.IMPLICATION_AFTER:
@@ -248,7 +248,7 @@ export abstract class Statement extends CompoundTerm {
      * @return The Statement built
      */
     public static makeSym(statement: Statement, subj: Term, pred: Term,
-        order: int): Statement | null {
+        order: IntNumber): Statement | null {
         const runtime = Statement.getRuntime();
         if (statement instanceof runtime.Inheritance) {
             return runtime.Similarity.make(subj, pred);

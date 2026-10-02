@@ -1,4 +1,4 @@
-import { java, JavaObject, type int } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber } from "../support/legacy-runtime-facade.ts";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
@@ -16,10 +16,10 @@ export class NALPerfLoop extends JavaObject {
 
     public static main(args: java.lang.String[]): void {
 
-        let repeats: int = 2;
-        let warmups: int = 1;
-        let extraCycles: int = 2048;
-        let randomExtraCycles: int = 512;
+        let repeats: IntNumber = 2;
+        let warmups: IntNumber = 1;
+        let extraCycles: IntNumber = 2048;
+        let randomExtraCycles: IntNumber = 512;
 
         let n: Reasoner = new Nar();
 
@@ -29,7 +29,7 @@ export class NALPerfLoop extends JavaObject {
                 let examplePath: java.lang.String = o[0] as java.lang.String;
                 Debug.DETAILED = false;
 
-                perfNAL(n, examplePath, extraCycles + (java.lang.Math.random() * randomExtraCycles) as int, repeats, warmups,
+                perfNAL(n, examplePath, extraCycles + (java.lang.Math.random() * randomExtraCycles) as IntNumber, repeats, warmups,
                     true);
             }
         }

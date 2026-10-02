@@ -1,5 +1,5 @@
 //! Java source: opennars/control/concept/ProcessGoal.java
-import type { double, float, long, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { DoubleNumber, FloatNumber, RuntimeLong, IntNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Events } from "../../io/events/Events.ts";
 import { BudgetValue } from "../../entity/BudgetValue.ts";
 import { Concept } from "../../entity/Concept.ts";
@@ -149,7 +149,7 @@ export class ProcessGoal {
             return;
         }
 
-        let AntiSatisfaction: double = 0.5; // we don't know anything about that goal yet
+        let AntiSatisfaction: DoubleNumber = 0.5; // we don't know anything about that goal yet
         if (beliefT !== null) {
             let belief: Sentence = beliefT.sentence;
             let projectedBelief: Sentence = belief.projection(task.sentence.getOccurrenceTime(),
@@ -157,10 +157,10 @@ export class ProcessGoal {
             AntiSatisfaction = task.sentence.getTruth().getExpDifAbs(projectedBelief.getTruth());
         }
 
-        // Java casts AntiSatisfaction to float before multiplying two float
+        // Java casts AntiSatisfaction to FloatNumber before multiplying two FloatNumber
         // operands; casting only the final result can cross a Bag level.
-        const antiSatisfaction: float = Math.fround(AntiSatisfaction) as float;
-        task.setPriority(Float32Math.multiply(task.getPriority(), antiSatisfaction) as float);
+        const antiSatisfaction: FloatNumber = Math.fround(AntiSatisfaction) as FloatNumber;
+        task.setPriority(Float32Math.multiply(task.getPriority(), antiSatisfaction) as FloatNumber);
         if (!task.aboveThreshold()) {
             return;
         }
@@ -277,12 +277,12 @@ export class ProcessGoal {
 
     public static ExecutablePrecondition = class ExecutablePrecondition {
         public bestOp: Operation | null = null;
-        public bestOp_truthExp: float = 0.0;
+        public bestOp_truthExp: FloatNumber = 0.0;
         public bestOp_truth: TruthValue | null = null;
         public executable_precondition: Task | null = null;
-        public minTime: long = -1n;
-        public maxTime: long = -1n;
-        public timeOffset: float = 0.0;
+        public minTime: RuntimeLong = -1n;
+        public maxTime: RuntimeLong = -1n;
+        public timeOffset: FloatNumber = 0.0;
         public substitution: MapContract<Term, Term> | null = null;
     };
 
@@ -305,7 +305,7 @@ export class ProcessGoal {
         // knowledge
         // 1. pull up variable based preconditions from component concepts without
         // replacing them
-        let ret: MapContract<Term, int> = (projectedGoal.getTerm()).countTermRecursively(null);
+        let ret: MapContract<Term, IntNumber> = (projectedGoal.getTerm()).countTermRecursively(null);
         const generalPreconditions: Task[] = [];
         for (let t of ret.keySet()) {
             let get_concept: Concept = nal.memory.concept(t); // the concept to pull preconditions from
@@ -373,11 +373,11 @@ export class ProcessGoal {
                     if (preconditionTask === null || substitution === null) {
                         throw new ReasonerStateError("Executable precondition result is incomplete");
                     }
-                    let distance: float = Float32Math.subtract(precon.timeOffset, Number(nal.time.time())) as float;
-                    let urgency: float = Float32Math.add(
+                    let distance: FloatNumber = Float32Math.subtract(precon.timeOffset, Number(nal.time.time())) as FloatNumber;
+                    let urgency: FloatNumber = Float32Math.add(
                         2.0,
                         Float32Math.divide(1.0, distance),
-                    ) as float;
+                    ) as FloatNumber;
 
                     ProcessAnticipation.anticipate(nal, preconditionTask.sentence,
                         preconditionTask.getBudget(), precon.minTime, precon.maxTime, urgency,
@@ -408,18 +408,18 @@ export class ProcessGoal {
             let prec: Term[] = precTerm.term;
             let newprec: Term[] = new Array<Term>(prec.length - 3);
             newprec.splice(0, prec.length - 3, ...prec.slice(0, prec.length - 3));
-            let timeOffset: float = Float32Math.from(Number((prec[prec.length - 1] as Interval).time)) as float;
-            let timeWindowHalf: float = Float32Math.multiply(
+            let timeOffset: FloatNumber = Float32Math.from(Number((prec[prec.length - 1] as Interval).time)) as FloatNumber;
+            let timeWindowHalf: FloatNumber = Float32Math.multiply(
                 timeOffset,
                 nal.narParameters.ANTICIPATION_TOLERANCE,
-            ) as float;
+            ) as FloatNumber;
             let op: Operation = prec[prec.length - 2] as Operation;
             let precondition: Term = Conjunction.make(newprec, TemporalRules.ORDER_FORWARD);
-            let newesttime: long = -1n;
+            let newesttime: RuntimeLong = -1n;
             let bestsofar: Task | null = null;
-            const prec_intervals: float[] = [];
+            const prec_intervals: FloatNumber[] = [];
             for (let l of CompoundTerm.extractIntervals(nal.memory, precTerm)) {
-                prec_intervals.push(Float32Math.from(Number(l)) as float);
+                prec_intervals.push(Float32Math.from(Number(l)) as FloatNumber);
             }
             let subsconc: NativeMap<Term, Term> = new NativeMap<Term, Term>();
             let conclusionMatches: boolean = Variables.findSubstitute(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT,
@@ -470,21 +470,21 @@ export class ProcessGoal {
             let projectedPrecon: Sentence = bestsofar.sentence.projection(nal.time.time() /*- distance*/,
                 nal.time.time(), concept.memory);
             if (projectedPrecon.isEternal()) {
-                continue; // projection wasn't better than eternalization, too long in the past
+                continue; // projection wasn't better than eternalization, too RuntimeLong in the past
             }
             let precon: TruthValue = projectedPrecon.getTruth();
 
             // in order to derive the operator desire value:
             let opdesire: TruthValue = TruthFunctions.desireDed(precon, leftside, concept.memory.narParameters);
-            let expecdesire: float = opdesire.getExpectation();
+            let expecdesire: FloatNumber = opdesire.getExpectation();
             let bestOp: Operation = (op as CompoundTerm).applySubstitute(subsBest) as Operation;
             const timeNow: number = Number(nal.time.time());
-            const minTimeFloat: float = Float32Math.subtract(
+            const minTimeFloat: FloatNumber = Float32Math.subtract(
                 Float32Math.add(timeNow, timeOffset), timeWindowHalf);
-            const maxTimeFloat: float = Float32Math.add(
+            const maxTimeFloat: FloatNumber = Float32Math.add(
                 Float32Math.add(timeNow, timeOffset), timeWindowHalf);
-            let minTime: long = BigInt(Math.trunc(minTimeFloat));
-            let maxTime: long = BigInt(Math.trunc(maxTimeFloat));
+            let minTime: RuntimeLong = BigInt(Math.trunc(minTimeFloat));
+            let maxTime: RuntimeLong = BigInt(Math.trunc(maxTimeFloat));
             if (expecdesire > result.bestOp_truthExp) {
                 result.bestOp = bestOp;
                 result.bestOp_truthExp = expecdesire;
@@ -560,7 +560,7 @@ export class ProcessGoal {
         let prod: Product = op.getSubject() as Product;
         let arg: Term = prod.term[0];
         if (oper instanceof FunctionOperator) {
-            for (let i: int = 0; i < prod.term.length - 1; i++) { // except last one, the output arg
+            for (let i: IntNumber = 0; i < prod.term.length - 1; i++) { // except last one, the output arg
                 if (prod.term[i].hasVarDep() || prod.term[i].hasVarIndep()) {
                     return false;
                 }

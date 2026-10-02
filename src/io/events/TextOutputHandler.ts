@@ -1,6 +1,6 @@
 //! Java source: opennars/io/events/TextOutputHandler.java
 import type { ClassTokenLike } from "../../runtime/ClassIdentity.ts";
-import type { float } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { OutputHandler } from "./OutputHandler.ts";
 import type { EventEmitter } from "./EventEmitter.ts";
 import type { Nar } from "../../main/Nar.ts";
@@ -64,7 +64,7 @@ const DISAPPOINT = OutputHandler.DISAPPOINT;
 const Answer = Events.Answer;
 
 const formatArray = (values: readonly unknown[]): string => `[${values.map(String).join(", ")}]`;
-const formatJavaList = (values: readonly unknown[]): string => `[${values.map(value => String(value)).join(", ")}]`;
+const formatList = (values: readonly unknown[]): string => `[${values.map(value => String(value)).join(", ")}]`;
 
 
 /**
@@ -83,7 +83,7 @@ export class TextOutputHandler extends OutputHandler {
     private showStackTrace: boolean = false;
     private readonly showStamp: boolean = true;
     private showInput: boolean = true;
-    private minPriority: float = 0;
+    private minPriority: FloatNumber = 0;
 
     /**
      * Default constructor; adds the reasoner to a Nar's output channels
@@ -100,9 +100,9 @@ export class TextOutputHandler extends OutputHandler {
 
     public constructor(n: Nar, s: TextLineWriter);
 
-    public constructor(n: Nar, outExp: TextLineWriter, minPriority: float);
+    public constructor(n: Nar, outExp: TextLineWriter, minPriority: FloatNumber);
 
-    public constructor(n: Nar, ps: TextLineWriter, minPriority: float);
+    public constructor(n: Nar, ps: TextLineWriter, minPriority: FloatNumber);
     public constructor(...args: unknown[]) {
         const n = args[0] as Nar;
         super(n, true);
@@ -122,7 +122,7 @@ export class TextOutputHandler extends OutputHandler {
 
             case 3: {
                 const target = args[1];
-                const minPriority = args[2] as float;
+                const minPriority = args[2] as FloatNumber;
                 if (isLineWriter(target)) this.outExp = target;
                 else {
                     throw new ReasonerInputError("Invalid output target");
@@ -255,7 +255,7 @@ export class TextOutputHandler extends OutputHandler {
 
     /** generates a human-readable string from an output channel and signal */
     public getOutputString(channel: ClassTokenLike, signal: unknown, showChannel: boolean,
-        showStamp: boolean, nar: Nar, buffer: OutputBuffer, minPriority: float): string | null;
+        showStamp: boolean, nar: Nar, buffer: OutputBuffer, minPriority: FloatNumber): string | null;
     public getOutputString(...args: unknown[]): string | null {
         switch (args.length) {
             case 6: {
@@ -263,7 +263,7 @@ export class TextOutputHandler extends OutputHandler {
                 return this.getOutputString(channel, signal, showChannel, showStamp, nar, buffer, 0);
             }
             case 7: {
-                const [channel, signal, showChannel, showStamp, nar, buffer, minPriority] = args as [ClassTokenLike, unknown, boolean, boolean, Nar, OutputBuffer, float];
+                const [channel, signal, showChannel, showStamp, nar, buffer, minPriority] = args as [ClassTokenLike, unknown, boolean, boolean, Nar, OutputBuffer, FloatNumber];
                 return TextOutputHandler.formatInstanceOutputString(
                     channel, signal, showChannel, showStamp, nar, buffer, minPriority, this.showStackTrace,
                 );
@@ -274,7 +274,7 @@ export class TextOutputHandler extends OutputHandler {
     }
 
     private static formatInstanceOutputString(channel: ClassTokenLike, signal: unknown, showChannel: boolean,
-        showStamp: boolean, nar: Nar, buffer: OutputBuffer, minPriority: float,
+        showStamp: boolean, nar: Nar, buffer: OutputBuffer, minPriority: FloatNumber,
         showStackTrace: boolean): string | null {
         buffer.setLength(0);
 
@@ -286,7 +286,7 @@ export class TextOutputHandler extends OutputHandler {
                 const e = signal;
                 buffer.append(e.toString().replace(/^Java/, ""));
                 if (showStackTrace) {
-                    buffer.append(" ").append(formatJavaList(e.getStackTrace?.() ?? []));
+                    buffer.append(" ").append(formatList(e.getStackTrace?.() ?? []));
                 }
             } else {
                 buffer.append(String(signal));
@@ -331,7 +331,7 @@ export class TextOutputHandler extends OutputHandler {
         if (isThrowable(signal)) {
             const error = signal;
             buffer.append(error.toString().replace(/^Java/, "")).append(" ")
-                .append(formatJavaList(error.getStackTrace?.() ?? []));
+                .append(formatList(error.getStackTrace?.() ?? []));
         } else if (signal instanceof Task) {
             buffer.append(signal.sentence.toString(nar, showStamp));
         } else if (signal instanceof Sentence) {

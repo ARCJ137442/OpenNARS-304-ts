@@ -1,6 +1,6 @@
 import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
 import { ReasonerObject } from "../runtime/ClassIdentity.ts";
-import type { int, float } from "../types.ts";
+import type { IntNumber, FloatNumber } from "../types.ts";
 import { Float32Math } from "../runtime/Float32.ts";
 import { Nar } from "./Nar.ts";
 import { Events } from "../io/events/Events.ts";
@@ -40,9 +40,9 @@ export class NarNode extends ReasonerObject implements EventObserver {
     private readonly transport: MessageTransport;
     private readonly targets: NarNode.TargetNar[] = [];
 
-    public constructor(listenPort: int);
-    public constructor(nar: Nar, listenPort: int, capabilities?: NetworkCapabilities);
-    public constructor(narOrPort: Nar | int, maybePort?: int, explicitCapabilities?: NetworkCapabilities) {
+    public constructor(listenPort: IntNumber);
+    public constructor(nar: Nar, listenPort: IntNumber, capabilities?: NetworkCapabilities);
+    public constructor(narOrPort: Nar | IntNumber, maybePort?: IntNumber, explicitCapabilities?: NetworkCapabilities) {
         super();
         const nar = narOrPort instanceof Nar ? narOrPort : new Nar();
         const listenPort = narOrPort instanceof Nar ? maybePort : narOrPort;
@@ -84,7 +84,7 @@ export class NarNode extends ReasonerObject implements EventObserver {
     }
 
     public addRedirectionTo(target: NarNode.TargetNar): void;
-    public addRedirectionTo(address: string, port: int, threshold: float, mustContainTerm: Term | null, sendInput: boolean): void;
+    public addRedirectionTo(address: string, port: IntNumber, threshold: FloatNumber, mustContainTerm: Term | null, sendInput: boolean): void;
     public addRedirectionTo(...args: unknown[]): void {
         if (args.length === 1 && args[0] instanceof NarNode.TargetNar) {
             this.targets.push(args[0]);
@@ -95,7 +95,7 @@ export class NarNode extends ReasonerObject implements EventObserver {
             return;
         }
         if (args.length === 5) {
-            const [address, port, threshold, term, sendInput] = args as [string, int, float, Term | null, boolean];
+            const [address, port, threshold, term, sendInput] = args as [string, IntNumber, FloatNumber, Term | null, boolean];
             this.targets.push(new NarNode.TargetNar(address, port, threshold, term, sendInput));
             return;
         }
@@ -103,18 +103,18 @@ export class NarNode extends ReasonerObject implements EventObserver {
     }
 
     public static TargetNar = class TargetNar {
-        public readonly threshold: float;
+        public readonly threshold: FloatNumber;
         public readonly address: string;
-        public readonly port: int;
+        public readonly port: IntNumber;
         public readonly mustContainTerm: Term | null;
         public readonly sendInput: boolean;
         private readonly transport?: MessageTransport;
 
-        public constructor(address: string, port: int, threshold: float, mustContainTerm: Term | null, sendInput: boolean,
+        public constructor(address: string, port: IntNumber, threshold: FloatNumber, mustContainTerm: Term | null, sendInput: boolean,
             transport?: MessageTransport) {
             this.address = address;
             this.port = port;
-            this.threshold = Float32Math.from(threshold) as float;
+            this.threshold = Float32Math.from(threshold) as FloatNumber;
             this.mustContainTerm = mustContainTerm;
             this.sendInput = sendInput;
             this.transport = transport;

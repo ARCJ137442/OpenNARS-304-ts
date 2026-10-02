@@ -1,7 +1,7 @@
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { java, JavaObject, type int } from "../../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber } from "../../support/legacy-runtime-facade.ts";
 import { javaStringValue } from "../../support/legacy-runtime-facade.ts";
 import type { Nar } from "../../../src/main/Nar.ts";
 import { OutputCondition } from "../test/OutputCondition.ts";
@@ -38,7 +38,7 @@ export class ExampleFileInput extends JavaObject {
         return new ExampleFileInput(ExampleFileInput.load(new java.lang.String("./nal/" + id + ".nal")));
     }
 
-    public enableConditions(n: Nar, similarResultsToSave: int): java.util.List<OutputCondition> {
+    public enableConditions(n: Nar, similarResultsToSave: IntNumber): java.util.List<OutputCondition> {
         return OutputCondition.getConditions(n, this.source, similarResultsToSave);
     }
 

@@ -1,6 +1,6 @@
 //! Java source: opennars/inference/TemporalRules.java
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import type { int, long, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Stamp } from "../entity/Stamp.ts";
 import type { BudgetValue } from "../entity/BudgetValue.ts";
@@ -40,13 +40,13 @@ export class TemporalRules {
         return TemporalRules.runtime;
     }
 
-    public static readonly ORDER_NONE: int = 2;
-    public static readonly ORDER_FORWARD: int = 1;
-    public static readonly ORDER_CONCURRENT: int = 0;
-    public static readonly ORDER_BACKWARD: int = -1;
-    public static readonly ORDER_INVALID: int = -2;
+    public static readonly ORDER_NONE: IntNumber = 2;
+    public static readonly ORDER_FORWARD: IntNumber = 1;
+    public static readonly ORDER_CONCURRENT: IntNumber = 0;
+    public static readonly ORDER_BACKWARD: IntNumber = -1;
+    public static readonly ORDER_INVALID: IntNumber = -2;
 
-    public static reverseOrder(order: int): int {
+    public static reverseOrder(order: IntNumber): IntNumber {
         if (order === TemporalRules.ORDER_NONE) {
             return TemporalRules.ORDER_NONE;
         } else {
@@ -56,7 +56,7 @@ export class TemporalRules {
 
     public static matchingOrder(a: Sentence, b: Sentence): boolean;
 
-    public static matchingOrder(order1: int, order2: int): boolean;
+    public static matchingOrder(order1: IntNumber, order2: IntNumber): boolean;
     public static matchingOrder(...args: unknown[]): boolean {
         if (args.length === 2) {
             const [first, second] = args;
@@ -72,8 +72,8 @@ export class TemporalRules {
     }
 
 
-    public static dedExeOrder(order1: int, order2: int): int {
-        let order: int = TemporalRules.ORDER_INVALID;
+    public static dedExeOrder(order1: IntNumber, order2: IntNumber): IntNumber {
+        let order: IntNumber = TemporalRules.ORDER_INVALID;
         if ((order1 === order2) || (order2 === TemporalRules.ORDER_NONE)) {
             order = order1;
         } else if ((order1 === TemporalRules.ORDER_NONE) || (order1 === TemporalRules.ORDER_CONCURRENT)) {
@@ -84,8 +84,8 @@ export class TemporalRules {
         return order;
     }
 
-    public static abdIndComOrder(order1: int, order2: int): int {
-        let order: int = TemporalRules.ORDER_INVALID;
+    public static abdIndComOrder(order1: IntNumber, order2: IntNumber): IntNumber {
+        let order: IntNumber = TemporalRules.ORDER_INVALID;
         if (order2 === TemporalRules.ORDER_NONE) {
             order = order1;
         } else if ((order1 === TemporalRules.ORDER_NONE) || (order1 === TemporalRules.ORDER_CONCURRENT)) {
@@ -96,8 +96,8 @@ export class TemporalRules {
         return order;
     }
 
-    public static analogyOrder(order1: int, order2: int, figure: int): int {
-        let order: int = TemporalRules.ORDER_INVALID;
+    public static analogyOrder(order1: IntNumber, order2: IntNumber, figure: IntNumber): IntNumber {
+        let order: IntNumber = TemporalRules.ORDER_INVALID;
         if ((order2 === TemporalRules.ORDER_NONE) || (order2 === TemporalRules.ORDER_CONCURRENT)) {
             order = order1;
         } else if ((order1 === TemporalRules.ORDER_NONE) || (order1 === TemporalRules.ORDER_CONCURRENT)) {
@@ -114,9 +114,9 @@ export class TemporalRules {
         return order;
     }
 
-    public static resemblanceOrder(order1: int, order2: int, figure: int): int {
-        let order: int = TemporalRules.ORDER_INVALID;
-        let order1Reverse: int = TemporalRules.reverseOrder(order1);
+    public static resemblanceOrder(order1: IntNumber, order2: IntNumber, figure: IntNumber): IntNumber {
+        let order: IntNumber = TemporalRules.ORDER_INVALID;
+        let order1Reverse: IntNumber = TemporalRules.reverseOrder(order1);
 
         if ((order2 === TemporalRules.ORDER_NONE)) {
             order = (figure > 20) ? order1 : order1Reverse; // switch when 11 or 12
@@ -130,8 +130,8 @@ export class TemporalRules {
         return order;
     }
 
-    public static composeOrder(order1: int, order2: int): int {
-        let order: int = TemporalRules.ORDER_INVALID;
+    public static composeOrder(order1: IntNumber, order2: IntNumber): IntNumber {
+        let order: IntNumber = TemporalRules.ORDER_INVALID;
         if (order2 === TemporalRules.ORDER_NONE) {
             order = order1;
         } else if (order1 === TemporalRules.ORDER_NONE) {
@@ -185,10 +185,10 @@ export class TemporalRules {
         if (Statement.invalidStatement(t1, t2, false))
             return new NativeList<Task>();
 
-        let durationCycles: int = nal.narParameters.DURATION;
-        let time1: long = s1.getOccurrenceTime();
-        let time2: long = s2.getOccurrenceTime();
-        let timeDiff: long = time2 - time1;
+        let durationCycles: IntNumber = nal.narParameters.DURATION;
+        let time1: RuntimeLong = s1.getOccurrenceTime();
+        let time2: RuntimeLong = s2.getOccurrenceTime();
+        let timeDiff: RuntimeLong = time2 - time1;
         let interval: Interval | null = null;
 
         if (!TemporalRules.concurrent(time1, time2, durationCycles)) {
@@ -199,7 +199,7 @@ export class TemporalRules {
                 t2 = Conjunction.make(t2, interval, TemporalRules.ORDER_FORWARD);
             }
         }
-        let order: int = TemporalRules.order(timeDiff, durationCycles);
+        let order: IntNumber = TemporalRules.order(timeDiff, durationCycles);
         let givenTruth1: TruthValue = s1.getTruth();
         let givenTruth2: TruthValue = s2.getTruth();
 
@@ -251,7 +251,7 @@ export class TemporalRules {
         // https://groups.google.com/forum/#!topic/open-nars/uoJBa8j7ryE
         if (!deriveSequenceOnly && statement2 !== null) {
             for (let subjectIntro of [true, false]) {
-                let ress: NativeSet<Pair<Term, float>> =
+                let ress: NativeSet<Pair<Term, FloatNumber>> =
                     CompositionalRules.introduceVariables(nal, statement2, subjectIntro);
                 for (let content_penalty of ress) { // ok we applied it, all we have to do now is to use it
                     t11s.push((content_penalty.getLeft() as Statement).getPredicate());
@@ -262,14 +262,14 @@ export class TemporalRules {
         }
 
         // Java original: List<Task>, implemented as ArrayList<Task>.
-        // This is an ordered short-lived result buffer; expose the project
+        // This is an ordered ShortNumber-lived result buffer; expose the project
         // NativeList contract instead of leaking java.util.List from this rule.
         const derivations = new NativeList<Task>();
         if (!deriveSequenceOnly) {
-            for (let i: int = 0; i < t11s.length; i++) {
+            for (let i: IntNumber = 0; i < t11s.length; i++) {
                 let t11: Term = t11s[i];
                 let t22: Term = t22s[i];
-                let penalty: float = penalties[i];
+                let penalty: FloatNumber = penalties[i];
                 let statement11: Statement = Implication.make(t11, t22, order);
                 let statement22: Statement = Implication.make(t22, t11, TemporalRules.reverseOrder(order));
                 let statement33: Statement = Equivalence.make(t11, t22, order);
@@ -320,21 +320,21 @@ export class TemporalRules {
         }
     }
 
-    public static order(timeDiff: long, durationCycles: int): int;
+    public static order(timeDiff: RuntimeLong, durationCycles: IntNumber): IntNumber;
 
     /**
      * if (relative) event B after (stationary) event A then order=forward;
      * event B before then order=backward
      * occur at the same time, relative to duration: order = concurrent
      */
-    public static order(a: long, b: long, durationCycles: int): int;
-    public static order(...args: unknown[]): int {
+    public static order(a: RuntimeLong, b: RuntimeLong, durationCycles: IntNumber): IntNumber;
+    public static order(...args: unknown[]): IntNumber {
         switch (args.length) {
             case 2: {
-                const [timeDiff, durationCycles] = args as [long, int];
+                const [timeDiff, durationCycles] = args as [RuntimeLong, IntNumber];
 
 
-                let halfDuration: int = durationCycles / 2;
+                let halfDuration: IntNumber = durationCycles / 2;
                 if (timeDiff > halfDuration) {
                     return TemporalRules.ORDER_FORWARD;
                 } else if (timeDiff < -halfDuration) {
@@ -348,7 +348,7 @@ export class TemporalRules {
             }
 
             case 3: {
-                const [a, b, durationCycles] = args as [long, long, int];
+                const [a, b, durationCycles] = args as [RuntimeLong, RuntimeLong, IntNumber];
 
 
                 if ((a === Stamp.ETERNAL) || (b === Stamp.ETERNAL))
@@ -367,7 +367,7 @@ export class TemporalRules {
     }
 
 
-    public static concurrent(a: long, b: long, durationCycles: int): boolean {
+    public static concurrent(a: RuntimeLong, b: RuntimeLong, durationCycles: IntNumber): boolean {
         // since Stamp.ETERNAL is Integer.MIN_VALUE,
         // avoid any overflow errors by checking eternal first
 

@@ -1,7 +1,7 @@
 //! Java source: opennars/storage/Memory.java
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
-import type { long, float, int, double } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { RuntimeLong, FloatNumber, IntNumber, DoubleNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import type { MutableIterator } from "../runtime/MutableIterator.ts";
 import { Parameters } from "../main/Parameters.ts";
@@ -67,14 +67,14 @@ export class Memory implements Iterable<Concept>, Resettable {
     /* Nar parameters */
     public readonly narParameters: Parameters;
 
-    public narId: long = 0 as unknown as long;
+    public narId: RuntimeLong = 0 as unknown as RuntimeLong;
     // emotion meter keeping track of global emotion
     public emotion: Emotions = null as unknown as Emotions;
     public internalExperience: InternalExperience = null as unknown as InternalExperience;
     public lastDecision: Task = null as unknown as Task;
     public allowExecution: boolean = true;
 
-    public readonly randomSeed: long = 1n;
+    public readonly randomSeed: RuntimeLong = 1n;
     public readonly randomNumber: ReasonerRandom = new ReasonerRandom(this.randomSeed);
 
     // todo make sense of this class and de-obfuscate
@@ -266,7 +266,7 @@ export class Memory implements Iterable<Concept>, Resettable {
 
                 if (task !== null) {
                     let s: Stamp = task.sentence.stamp;
-                    if (s.getCreationTime() === (-1 as unknown as long)) {
+                    if (s.getCreationTime() === (-1 as unknown as RuntimeLong)) {
                         s.setCreationTime(time.time(), this.narParameters.DURATION);
                         task.sentence.refreshHash();
                     }
@@ -330,11 +330,11 @@ export class Memory implements Iterable<Concept>, Resettable {
         const shouldDebug = Debug.PARENTS && this.emitting(DEBUG.class);
         if (!shouldOutput && !shouldDebug) return;
 
-        let budget: float = t.getBudget().summary();
-        // Java evaluates both the division and subtraction as float because
+        let budget: FloatNumber = t.getBudget().summary();
+        // Java evaluates both the division and subtraction as FloatNumber because
         // VOLUME is converted to the 100.0f operand type before the divide.
-        const volumeRatio: float = Float32Math.divide(this.narParameters.VOLUME, 100) as float;
-        let noiseLevel: float = Float32Math.subtract(1.0, volumeRatio) as float;
+        const volumeRatio: FloatNumber = Float32Math.divide(this.narParameters.VOLUME, 100) as FloatNumber;
+        let noiseLevel: FloatNumber = Float32Math.subtract(1.0, volumeRatio) as FloatNumber;
 
         if (budget >= noiseLevel) { // only report significant derived Tasks
             if (shouldOutput) this.emit(OUT.class, t);
@@ -362,7 +362,7 @@ export class Memory implements Iterable<Concept>, Resettable {
     public cycle(nar: Nar): void {
 
         this.event.emit(Events.CycleStart.class);
-        for (let i: int = 0; i < nar.narParameters.NOVEL_TASK_BAG_SELECTIONS; i++) {
+        for (let i: IntNumber = 0; i < nar.narParameters.NOVEL_TASK_BAG_SELECTIONS; i++) {
             this.processNovelTask(nar.narParameters, nar);
         }
         // if(noResult()) //newTasks empty
@@ -432,18 +432,18 @@ export class Memory implements Iterable<Concept>, Resettable {
         return previous as unknown as Operator;
     }
 
-    private currentStampSerial: long = 0 as unknown as long;
+    private currentStampSerial: RuntimeLong = 0 as unknown as RuntimeLong;
 
     public newStampSerial(): Stamp.BaseEntry {
         return new Stamp.BaseEntry(this.narId, this.currentStampSerial++);
     }
 
     /** converts durations to cycles */
-    public cycles(durations: double): float {
-        // Java narrows the double duration before multiplying by the integer
+    public cycles(durations: DoubleNumber): FloatNumber {
+        // Java narrows the DoubleNumber duration before multiplying by the integer
         // DURATION; keep that operand boundary instead of narrowing only the
         // final binary64 product.
-        return Float32Math.multiply(this.narParameters.DURATION, Float32Math.from(durations)) as float;
+        return Float32Math.multiply(this.narParameters.DURATION, Float32Math.from(durations)) as FloatNumber;
     }
 
     // Java original return type: java.util.Iterator<Concept>.

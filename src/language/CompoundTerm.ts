@@ -1,5 +1,5 @@
 //! Java source: opennars/language/CompoundTerm.java
-import type { short, int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { ShortNumber, IntNumber, RuntimeLong } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Term } from "./Term.ts";
 import type { AbstractTerm } from "./AbstractTerm.ts";
 import { Interval } from "./Interval.ts";
@@ -50,7 +50,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * syntactic complexity of the compound, the sum of those of its term plus 1
      */
     // TODO make final again
-    public complexity: short = 0;
+    public complexity: ShortNumber = 0;
 
     /** Whether contains a variable */
     private hasVariables: boolean = false;
@@ -73,8 +73,8 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     // Java permits a cache field and accessor method to share a name; a JS
     // instance field would shadow the method, so keep the cache distinct.
-    protected containedTemporalRelationsCache: int = -1;
-    protected hash: int = 0;
+    protected containedTemporalRelationsCache: IntNumber = -1;
+    protected hash: IntNumber = 0;
     private normalized: boolean = false;
 
     /**
@@ -113,13 +113,13 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     public static UpdateConvRectangle(term: Term[]): CompoundTerm.ConvRectangle {
         let index_last_var: string | null = null;
-        let minX: int = INTEGER_MAX_VALUE;
-        let minY: int = INTEGER_MAX_VALUE;
-        let maxX: int = 0;
-        let maxY: int = 0;
+        let minX: IntNumber = INTEGER_MAX_VALUE;
+        let minY: IntNumber = INTEGER_MAX_VALUE;
+        let maxX: IntNumber = 0;
+        let maxY: IntNumber = 0;
         let
-            minsX: int = INTEGER_MAX_VALUE;
-        let minsY: int = INTEGER_MAX_VALUE;
+            minsX: IntNumber = INTEGER_MAX_VALUE;
+        let minsY: IntNumber = INTEGER_MAX_VALUE;
         let hasTermIndices: boolean = false;
         let calculateTermIndices: boolean = true;
         for (let t of term) {
@@ -132,14 +132,14 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
                     continue; // different "channels", don't calculate term indices
                 }
                 hasTermIndices = true;
-                let size_X: int = t.term_indices[0];
+                let size_X: IntNumber = t.term_indices[0];
                 if (size_X < minsX)
                     minsX = size_X;
-                let size_Y: int = t.term_indices[1];
+                let size_Y: IntNumber = t.term_indices[1];
                 if (size_Y < minsY)
                     minsY = size_Y;
-                let pos_X: int = t.term_indices[2];
-                let pos_Y: int = t.term_indices[3];
+                let pos_X: IntNumber = t.term_indices[2];
+                let pos_Y: IntNumber = t.term_indices[3];
                 if (pos_X < minX)
                     minX = pos_X;
                 if (pos_Y < minY)
@@ -224,7 +224,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         // transformVariableTermsDeep in
         // 1.7
         let term: Term[] = T.term;
-        for (let i: int = 0; i < term.length; i++) {
+        for (let i: IntNumber = 0; i < term.length; i++) {
             let t: Term = term[i];
             if (t.hasVar()) {
                 if (t instanceof CompoundTerm) {
@@ -237,7 +237,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         }
     }
 
-    protected static readonly conceptival: Interval = new Interval(1 as unknown as long);
+    protected static readonly conceptival: Interval = new Interval(1 as unknown as RuntimeLong);
 
     private static ReplaceIntervals(comp: CompoundTerm): void {
         if (!comp.hasIntervals) {
@@ -245,7 +245,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         }
 
         comp.invalidateName();
-        for (let i: int = 0; i < comp.term.length; i++) {
+        for (let i: IntNumber = 0; i < comp.term.length; i++) {
             let t: Term = comp.term[i];
             if (t instanceof Interval) {
                 /* assert conceptival != null; */
@@ -268,8 +268,8 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return T;
     }
 
-    private static ExtractIntervals(mem: Memory | null, ivals: NativeList<long>, comp: CompoundTerm): void {
-        for (let i: int = 0; i < comp.term.length; i++) {
+    private static ExtractIntervals(mem: Memory | null, ivals: NativeList<RuntimeLong>, comp: CompoundTerm): void {
+        for (let i: IntNumber = 0; i < comp.term.length; i++) {
             let t: Term = comp.term[i];
             if (t instanceof Interval) {
                 ivals.add((t as Interval).time);
@@ -280,8 +280,8 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     }
 
     /** Java source returns List<Long>; preserve its ordered, indexed List contract. */
-    public static extractIntervals(mem: Memory | null, T: Term): NativeList<long> {
-        const ret = new NativeList<long>();
+    public static extractIntervals(mem: Memory | null, T: Term): NativeList<RuntimeLong> {
+        const ret = new NativeList<RuntimeLong>();
         if (T instanceof CompoundTerm) {
             CompoundTerm.ExtractIntervals(mem, ret, T as CompoundTerm);
         }
@@ -316,7 +316,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         return cc;
     }
 
-    public containedTemporalRelations(): int {
+    public containedTemporalRelations(): IntNumber {
         if (this.containedTemporalRelationsCache === -1) {
 
             this.containedTemporalRelationsCache = 0;
@@ -326,7 +326,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             // Conjunction also exposes getTemporalOrder but is not a statement.
             const operatorName = String(this.operator()?.name?.() ?? this.operator());
             if (operatorName.startsWith("IMPLICATION") || operatorName.startsWith("EQUIVALENCE")) {
-                const temporalOrder = (this as unknown as { getTemporalOrder: () => int }).getTemporalOrder();
+                const temporalOrder = (this as unknown as { getTemporalOrder: () => IntNumber }).getTemporalOrder();
                 switch (temporalOrder) {
                     case TemporalRules.ORDER_FORWARD:
                     case TemporalRules.ORDER_CONCURRENT:
@@ -402,7 +402,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      *
      * @return the complexity value
      */
-    public getComplexity(): short {
+    public getComplexity(): ShortNumber {
         return this.complexity;
     }
 
@@ -426,7 +426,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      *
      * @return the size of the component list
      */
-    public size(): int {
+    public size(): IntNumber {
         return this.term.length;
     }
 
@@ -488,7 +488,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             return null as unknown as Term[];
         }
 
-        let L: int = original.length + additional.length;
+        let L: IntNumber = original.length + additional.length;
         if (L === 0)
             return original;
 
@@ -496,8 +496,8 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
         let arr: Term[] = new Array<Term>(L);
 
-        let i: int;
-        let j: int = 0;
+        let i: IntNumber;
+        let j: IntNumber = 0;
         let srcArray: Term[] = original;
         for (i = 0; i < L; i++) {
             if (i === original.length) {
@@ -519,7 +519,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     /** forced deep clone of terms */
     public cloneTermsDeep(): Term[] {
         let l: Term[] = new Array<Term>(this.term.length);
-        for (let i: int = 0; i < l.length; i++) {
+        for (let i: IntNumber = 0; i < l.length; i++) {
             l[i] = this.term[i].cloneDeep();
             if (l[i] === null) {
                 return null as unknown as Term[];
@@ -530,7 +530,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     public cloneVariableTermsDeep(): Term[] {
         let l: Term[] = new Array<Term>(this.term.length);
-        for (let i: int = 0; i < l.length; i++) {
+        for (let i: IntNumber = 0; i < l.length; i++) {
             let t: Term = this.term[i];
             if (t.hasVar()) {
                 if (t instanceof CompoundTerm) {
@@ -556,8 +556,8 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             return;
         }
 
-        for (let i: int = ar.length - 1; i > 0; i--) {
-            let index: int = randomNumber.nextInt(i + 1);
+        for (let i: IntNumber = ar.length - 1; i > 0; i--) {
+            let index: IntNumber = randomNumber.nextInt(i + 1);
             // Simple swap
             let a: Term = ar[index];
             ar[index] = ar[i];
@@ -609,12 +609,12 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * @return The counts of the terms
      */
     // Java source type: Map<Term, Integer>. Integer is only a count value;
-    // preserve the Map/Term key contract while using a native int value.
-    public countTermRecursively(map: MapContract<Term, int> | null): MapContract<Term, int> {
+    // preserve the Map/Term key contract while using a native IntNumber value.
+    public countTermRecursively(map: MapContract<Term, IntNumber> | null): MapContract<Term, IntNumber> {
         if (map === null) {
             // Java original type: LinkedHashMap<Term, Integer>. Keep the
             // public Map contract while using the native ordered Map here.
-            map = new NativeMap<Term, int>();
+            map = new NativeMap<Term, IntNumber>();
         }
         map.put(this, map.getOrDefault(this, 0) + 1);
         for (let term of this.term) {
@@ -669,7 +669,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
      * @param memory Reference to the memory
      * @return The new compound
      */
-    public setComponent(index: int, t: Term, memory: Memory): Term {
+    public setComponent(index: IntNumber, t: Term, memory: Memory): Term {
         let list: NativeList<Term> = this.asTermList();// Deep();
         list.remove(index);
         if (t !== null) {
@@ -678,7 +678,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
             } else {
                 // final List<Term> list2 = ((CompoundTerm) t).cloneTermsList();
                 let tt: Term[] = (t as CompoundTerm).term;
-                for (let i: int = 0; i < tt.length; i++) {
+                for (let i: IntNumber = 0; i < tt.length; i++) {
                     list.add(index + i, tt[i]);
                 }
             }
@@ -740,7 +740,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         let tt: Term[] = new Array<Term>(this.term.length);
         let modified: boolean = false;
 
-        for (let i: int = 0; i < tt.length; i++) {
+        for (let i: IntNumber = 0; i < tt.length; i++) {
             let t1: Term = tt[i] = this.term[i];
 
             if (subs.containsKey(t1)) {
@@ -795,7 +795,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
     public prepareComponentLinks(): NativeList<TermLink> {
         // complexity seems like an upper bound for the resulting number of
         // componentLinks.
-        // Capacity is only an optimization; avoid passing a Java short through
+        // Capacity is only an optimization; avoid passing a Java ShortNumber through
         // jree's native ArrayList length constructor.
         const componentLinks = new NativeList<TermLink>();
         return Terms.prepareComponentLinks(componentLinks, this);
@@ -807,12 +807,12 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
         }
     }
 
-    public hashCode(): int {
+    public hashCode(): IntNumber {
         // jree TextString.equals/hashCode may fold case; Java String does not.
         return textHashCode(this.name());
     }
 
-    public compareTo(that: AbstractTerm): int {
+    public compareTo(that: AbstractTerm): IntNumber {
         if (that === this) {
             return 0;
         }
@@ -837,7 +837,7 @@ export abstract class CompoundTerm extends Term implements Iterable<Term> {
 
     public cloneTermsReplacing(from: Term, to: Term): Term[] {
         let y: Term[] = new Array<Term>(this.term.length);
-        let i: int = 0;
+        let i: IntNumber = 0;
         for (let x of this.term) {
             if (x.equals(from))
                 x = to;

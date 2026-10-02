@@ -265,7 +265,7 @@ export const exitProcess = (status: number): never => {
     throw new Error(`Process exit requested with status ${status}`);
 };
 
-export type { int, char, short, long, float, double } from "../../src/types.ts";
+export type { IntNumber, CharCode, ShortNumber, RuntimeLong, FloatNumber, DoubleNumber } from "../../src/types.ts";
 export {
     closeResources as closeResources,
     handleResourceError as handleResourceError,

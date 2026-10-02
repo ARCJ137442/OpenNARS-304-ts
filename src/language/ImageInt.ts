@@ -1,6 +1,6 @@
 //! Java source: opennars/language/ImageInt.java
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
-import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { ShortNumber, IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Image } from "./Image.ts";
 import { Term } from "./Term.ts";
 import { Product } from "./Product.ts";
@@ -31,7 +31,7 @@ export class ImageInt extends Image {
      * @param arg   The component list of the term
      * @param index The index of relation in the component list
      */
-    protected constructor(arg: Term[], index: short) {
+    protected constructor(arg: Term[], index: ShortNumber) {
         super(arg, index);
     }
 
@@ -92,7 +92,7 @@ export class ImageInt extends Image {
      * @param index    The index of the place-holder in the new Image
      * @return the Term generated from the arguments
      */
-    public static make(argument: Term[], index: short): ImageInt;
+    public static make(argument: Term[], index: ShortNumber): ImageInt;
 
     /**
      * Try to make an Image from a Product and a relation. Called by the inference
@@ -103,7 +103,7 @@ export class ImageInt extends Image {
      * @param index    The index of the place-holder
      * @return A compound generated or a term it reduced to
      */
-    public static make(product: Product, relation: Term, index: short): Term;
+    public static make(product: Product, relation: Term, index: ShortNumber): Term;
 
     /**
      * Try to make an Image from an existing Image and a component. Called by the
@@ -114,7 +114,7 @@ export class ImageInt extends Image {
      * @param index     The index of the place-holder in the new Image
      * @return A compound generated or a term it reduced to
      */
-    public static make(oldImage: ImageInt, component: Term, index: short): Term;
+    public static make(oldImage: ImageInt, component: Term, index: ShortNumber): Term;
     public static make(...args: unknown[]): Term | ImageInt {
         switch (args.length) {
             case 1: {
@@ -126,9 +126,9 @@ export class ImageInt extends Image {
                 }
                 let relation: Term = argList[0];
                 let argument: Term[] = new Array<Term>(argList.length - 1);
-                let index: int = 0;
-                let n: int = 0;
-                for (let j: int = 1; j < argList.length; j++) {
+                let index: IntNumber = 0;
+                let n: IntNumber = 0;
+                for (let j: IntNumber = 1; j < argList.length; j++) {
                     if (isPlaceHolder(argList[j])) {
                         index = j - 1;
                         argument[n] = relation;
@@ -137,14 +137,14 @@ export class ImageInt extends Image {
                     }
                     n++;
                 }
-                return ImageInt.make(argument, index as short);
+                return ImageInt.make(argument, index as ShortNumber);
 
 
                 break;
             }
 
             case 2: {
-                const [argument, index] = args as [Term[], short];
+                const [argument, index] = args as [Term[], ShortNumber];
 
 
                 return new ImageInt(argument, index);
@@ -155,16 +155,16 @@ export class ImageInt extends Image {
 
             case 3: {
                 if (args[0] instanceof ImageInt) {
-                    const [oldImage, component, index] = args as [ImageInt, Term, short];
+                    const [oldImage, component, index] = args as [ImageInt, Term, ShortNumber];
                     let argList: Term[] = oldImage.cloneTerms();
-                    let oldIndex: int = oldImage.relationIndex;
+                    let oldIndex: IntNumber = oldImage.relationIndex;
                     let relation: Term = argList[oldIndex];
                     argList[oldIndex] = component;
                     argList[index] = relation;
                     return ImageInt.make(argList, index);
                 }
 
-                const [product, relation, index] = args as [Product, Term, short];
+                const [product, relation, index] = args as [Product, Term, ShortNumber];
                 if (relation instanceof Product) {
                     let p2: Product = relation as Product;
                     if ((product.size() === 2) && (p2.size() === 2)) {

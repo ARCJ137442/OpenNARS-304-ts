@@ -3,7 +3,7 @@ import test from "node:test";
 
 import { Float32Math } from "../../src/runtime/Float32.ts";
 
-test("Float32Math narrows Java float operands and results", () => {
+test("Float32Math narrows Java FloatNumber operands and results", () => {
     const left = Float32Math.from(0.1);
     const right = Float32Math.from(0.2);
     assert.equal(left, Math.fround(0.1));
@@ -14,7 +14,7 @@ test("Float32Math narrows Java float operands and results", () => {
     );
 });
 
-test("Float32Math covers Java float operation boundaries", () => {
+test("Float32Math covers Java FloatNumber operation boundaries", () => {
     const left = 16777217;
     const right = 3.25;
     const javaLeft = Math.fround(left);
@@ -26,12 +26,12 @@ test("Float32Math covers Java float operation boundaries", () => {
     assert.equal(Float32Math.sqrt(left), Math.fround(Math.sqrt(javaLeft)));
 });
 
-test("Float32Math.pow matches Java float storage after Math.pow", () => {
+test("Float32Math.pow matches Java FloatNumber storage after Math.pow", () => {
     assert.equal(Float32Math.pow(0.9, 2), Math.fround(Math.pow(Math.fround(0.9), 2)));
     assert.equal(Float32Math.pow(0.9, 2), 0.809999942779541);
 });
 
-test("Float32Math.powDouble preserves Java Math.pow double result", () => {
+test("Float32Math.powDouble preserves Java Math.pow DoubleNumber result", () => {
     const base = Math.fround(0.123456789);
     const exponent = 1.234567;
     const javaDoubleResult = Math.pow(base, exponent);
@@ -40,7 +40,7 @@ test("Float32Math.powDouble preserves Java Math.pow double result", () => {
     assert.notEqual(Float32Math.powDouble(0.123456789, exponent), Math.fround(javaDoubleResult));
 });
 
-test("Float32Math.truthToQuality preserves Java float complement boundaries", () => {
+test("Float32Math.truthToQuality preserves Java FloatNumber complement boundaries", () => {
     const cases = [
         0.3672657907009125,
         0.07869549840688705,

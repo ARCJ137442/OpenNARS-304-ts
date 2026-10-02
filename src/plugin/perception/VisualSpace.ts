@@ -1,5 +1,5 @@
 //! Java source: opennars/plugin/perception/VisualSpace.java
-import type { int, double } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, DoubleNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../../runtime/Float32.ts";
 import { TruthFunctions } from "../../inference/TruthFunctions.ts";
 import { TemporalRules } from "../../inference/TemporalRules.ts";
@@ -21,18 +21,18 @@ export class VisualSpace implements ImaginationSpace {
 
     public readonly source: Float64Array[]; // assumed to be set from outside
     public readonly cropped: Float64Array[]; // all elements assumed to be in [0,1] range
-    public readonly height: int;
-    public readonly width: int;
-    public px: int = 0;
-    public py: int = 0;
+    public readonly height: IntNumber;
+    public readonly width: IntNumber;
+    public px: IntNumber = 0;
+    public py: IntNumber = 0;
 
     // those are the same for each instance:
     public static readonly move: NullOperator = new NullOperator("^move");
     public static readonly zoom: NullOperator = new NullOperator("^zoom");
     private readonly nar: Nar;
 
-    public constructor(nar: Nar, source: Float64Array[], py: int, px: int, height: int,
-        width: int) {
+    public constructor(nar: Nar, source: Float64Array[], py: IntNumber, px: IntNumber, height: IntNumber,
+        width: IntNumber) {
         this.nar = nar;
         this.height = height;
         this.width = width;
@@ -40,13 +40,13 @@ export class VisualSpace implements ImaginationSpace {
         this.source = source.map((row) => new Float64Array(row));
         this.py = py;
         this.px = px;
-        for (let i: int = 0; i < source.length; i++) { // "snapshot" from source
+        for (let i: IntNumber = 0; i < source.length; i++) { // "snapshot" from source
             this.source[i].set(source[i]);
         }
         // now copy into data
-        for (let i: int = 0; i < height; i++) {
-            let relIndexY: int = 0; // was py, px but sensory device already does the shifting
-            let relIndexX: int = 0;
+        for (let i: IntNumber = 0; i < height; i++) {
+            let relIndexY: IntNumber = 0; // was py, px but sensory device already does the shifting
+            let relIndexX: IntNumber = 0;
             this.cropped[i].set(source[relIndexY + i].subarray(relIndexX, relIndexX + width));
         }
         nar.addPlugin(VisualSpace.move);
@@ -58,23 +58,23 @@ export class VisualSpace implements ImaginationSpace {
             return TruthValue.fromFrequencyConfidence(1.0, 0.0, this.nar.narParameters);
         }
         let other: VisualSpace = obj as VisualSpace;
-        // Java casts the integer dimensions to float before promoting them to
-        // double for this ratio. A TypeScript `as float` is compile-time only.
-        let kh: double = Float32Math.from(other.height) / this.height;
-        let kw: double = Float32Math.from(other.width) / this.width;
+        // Java casts the integer dimensions to FloatNumber before promoting them to
+        // DoubleNumber for this ratio. A TypeScript `as FloatNumber` is compile-time only.
+        let kh: DoubleNumber = Float32Math.from(other.height) / this.height;
+        let kw: DoubleNumber = Float32Math.from(other.width) / this.width;
         let bestShiftTruth: TruthValue = TruthValue.fromFrequencyConfidence(0.5, 0.01, this.nar.narParameters);
-        for (let oj: int = -this.height; oj < this.height; oj++) {
-            for (let oi: int = -this.width; oi < this.width; oi++) {
+        for (let oj: IntNumber = -this.height; oj < this.height; oj++) {
+            for (let oi: IntNumber = -this.width; oi < this.width; oi++) {
                 let sim: TruthValue = TruthValue.fromFrequencyConfidence(0.5, 0.01, this.nar.narParameters);
-                for (let i: int = 0; i < this.height; i++) {
-                    for (let j: int = 0; j < this.width; j++) {
-                        let transi: int = i + oi;
-                        let transj: int = j + oj;
+                for (let i: IntNumber = 0; i < this.height; i++) {
+                    for (let j: IntNumber = 0; j < this.width; j++) {
+                        let transi: IntNumber = i + oi;
+                        let transj: IntNumber = j + oj;
                         if (transi >= this.width || transj >= this.height || transi < 0 || transj < 0) {
                             continue;
                         }
-                        let i2: int = ((i as double) * kh) as int;
-                        let j2: int = ((j as double) * kw) as int;
+                        let i2: IntNumber = ((i as DoubleNumber) * kh) as IntNumber;
+                        let j2: IntNumber = ((j as DoubleNumber) * kw) as IntNumber;
                         let t1: TruthValue = TruthValue.fromFrequencyConfidence(this.cropped[transi][transj],
                             this.nar.narParameters.DEFAULT_JUDGMENT_CONFIDENCE, this.nar.narParameters);
                         let t2: TruthValue = TruthValue.fromFrequencyConfidence(other.cropped[i2][j2],
@@ -102,7 +102,7 @@ export class VisualSpace implements ImaginationSpace {
         }
         let cur: ImaginationSpace = beginning.imagination;
         // "execute program":
-        for (let i: int = 1; i < program.term.length; i += 1) {
+        for (let i: IntNumber = 1; i < program.term.length; i += 1) {
             if (!(program.term[i] instanceof Operation)) {
                 return null;
             }
@@ -129,10 +129,10 @@ export class VisualSpace implements ImaginationSpace {
         // copying the necessary part of source into data and setting width and height
         // for visual space the operation doesn't matter for constructing the compound
         // imagination
-        let minPX: int = Math.min(this.px, B.px) as int;
-        let maxPX: int = Math.min(this.px + this.width, B.px + B.width) as int;
-        let minPY: int = Math.min(this.py, B.py) as int;
-        let maxPY: int = Math.min(this.py + this.height, B.py + B.height) as int;
+        let minPX: IntNumber = Math.min(this.px, B.px) as IntNumber;
+        let maxPX: IntNumber = Math.min(this.px + this.width, B.px + B.width) as IntNumber;
+        let minPY: IntNumber = Math.min(this.py, B.py) as IntNumber;
+        let maxPY: IntNumber = Math.min(this.py + this.height, B.py + B.height) as IntNumber;
         let progressed: VisualSpace = new VisualSpace(this.nar, this.source, minPY, minPX, maxPY, maxPX);
         return progressed;
     }

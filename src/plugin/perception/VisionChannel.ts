@@ -1,6 +1,6 @@
 //! Java source: opennars/plugin/perception/VisionChannel.java
 import { ReasonerStateError } from "../../runtime/ReasonerErrors.ts";
-import type { float, int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber, IntNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Texts } from "../../io/Texts.ts";
 import { Float32Math } from "../../runtime/Float32.ts";
 import { Logger } from "../../runtime/Logger.ts";
@@ -27,28 +27,28 @@ import type { Timable } from "../../interfaces/Timable.ts";
 import type { Reasoner } from "../../interfaces/pub/Reasoner.ts";
 import type { Nar } from "../../main/Nar.ts";
 export class VisionChannel extends SensoryChannel {
-    public defaultOutputConfidence: float = Float32Math.from(0.5) as float;
-    public nPrototypes: int = 0;
+    public defaultOutputConfidence: FloatNumber = Float32Math.from(0.5) as FloatNumber;
+    public nPrototypes: IntNumber = 0;
     // Java source: public ArrayList<Prototype>; array preserves indexed lookup,
     // ordered append and replacement used by this channel.
     public prototypes: VisionChannel.Prototype[];
     protected inputs: Float64Array[];
     protected updated: boolean[][];
-    protected cnt_updated: int = 0;
-    protected px: int = 0;
-    protected py: int = 0;
+    protected cnt_updated: IntNumber = 0;
+    protected px: IntNumber = 0;
+    protected py: IntNumber = 0;
     protected HadNewInput: boolean = false; // only generate frames if at least something was input since last "commit to
     // Nar"
     public readonly obs: EventEmitter.EventObserver;
 
-    public constructor(label: TextInput, nar: Reasoner, reportResultsTo: Reasoner, width: int,
-        height: int, duration: int,
-        defaultOutputConfidence: float, nPrototypes: int) {
+    public constructor(label: TextInput, nar: Reasoner, reportResultsTo: Reasoner, width: IntNumber,
+        height: IntNumber, duration: IntNumber,
+        defaultOutputConfidence: FloatNumber, nPrototypes: IntNumber) {
         super(nar as Nar, reportResultsTo as unknown as SensoryChannel, width, height, duration,
             SetInt.make(new Term(asText(label))));
         this.nar = nar as Nar;
         this.label = SetInt.make(new Term(asText(label)));
-        this.defaultOutputConfidence = Float32Math.from(defaultOutputConfidence) as float;
+        this.defaultOutputConfidence = Float32Math.from(defaultOutputConfidence) as FloatNumber;
         this.nPrototypes = nPrototypes;
         this.prototypes = [];
         this.inputs = VisionChannel.emptyInputs(height, width);
@@ -83,7 +83,7 @@ export class VisionChannel extends SensoryChannel {
     }
 
     protected subj: string = "";
-    protected empty_cycles: int = 0;
+    protected empty_cycles: IntNumber = 0;
 
     public AddToMatrix(t: Task, time: Timable): boolean {
         let inh: Inheritance = t.getTerm() as Inheritance; // channels receive inheritances
@@ -102,8 +102,8 @@ export class VisionChannel extends SensoryChannel {
         if (termIndices === null) {
             return false;
         }
-        let x: int = termIndices[2];
-        let y: int = termIndices[3];
+        let x: IntNumber = termIndices[2];
+        let y: IntNumber = termIndices[3];
         if (!this.updated[y][x]) {
             this.inputs[y][x] = t.sentence.getTruth().frequency;
             this.cnt_updated++;
@@ -124,7 +124,7 @@ export class VisionChannel extends SensoryChannel {
         return this.nar;
     }
 
-    protected termid: int = 0;
+    protected termid: IntNumber = 0;
 
     public step_start(time: Timable): void {
         this.cnt_updated = 0;
@@ -138,9 +138,9 @@ export class VisionChannel extends SensoryChannel {
         }
         // the visual space has to be a copy.
         let cpy: Float64Array[] = VisionChannel.emptyInputs(this.height, this.width);
-        for (let i: int = 0; i < this.height; i++) {
-            for (let j: int = 0; j < this.width; j++) {
-                cpy[i][j] = Float32Math.from(this.inputs[i][j]) as float;
+        for (let i: IntNumber = 0; i < this.height; i++) {
+            for (let j: IntNumber = 0; j < this.width; j++) {
+                cpy[i][j] = Float32Math.from(this.inputs[i][j]) as FloatNumber;
             }
         }
         this.updated = VisionChannel.emptyUpdated(this.height, this.width);
@@ -173,13 +173,13 @@ export class VisionChannel extends SensoryChannel {
                 this.step_finished(time);
             } else {
                 // 1. determine the most similar prototype
-                let similarity: float = 0;
+                let similarity: FloatNumber = 0;
                 let bestTruth: TruthValue = null as unknown as TruthValue;
                 let best: VisionChannel.Prototype = null as unknown as VisionChannel.Prototype;
                 for (let p of this.prototypes) {
                     let inh: Inheritance = p.task.getTerm() as Inheritance;
                     let simCur: TruthValue = inh.getSubject().imagination.AbductionOrComparisonTo(vspace, true);
-                    let simCurExp: float = simCur.getExpectation();
+                    let simCurExp: FloatNumber = simCur.getExpectation();
                     if (simCurExp > similarity) {
                         best = p;
                         similarity = simCurExp;
@@ -189,9 +189,9 @@ export class VisionChannel extends SensoryChannel {
                 // 2. replace the rarest seen prototype with the new prototype when full
                 // else just add it
                 if (this.prototypes.length >= this.nPrototypes) {
-                    let lowestValue: int = Number.MAX_SAFE_INTEGER;
-                    let lowestIndex: int = -1;
-                    for (let i: int = 0; i < this.prototypes.length; i++) {
+                    let lowestValue: IntNumber = Number.MAX_SAFE_INTEGER;
+                    let lowestIndex: IntNumber = -1;
+                    for (let i: IntNumber = 0; i < this.prototypes.length; i++) {
                         let cur: VisionChannel.Prototype = this.prototypes[i];
                         if (cur.getObservationCount() < lowestValue) {
                             lowestValue = i;
@@ -209,19 +209,19 @@ export class VisionChannel extends SensoryChannel {
 
                 // 3. build spatial relation to previous
                 if (this.lastPrototype !== null) {
-                    // int oldFocusX = this.focusX;
-                    // int oldFocusY = this.focusY;
+                    // IntNumber oldFocusX = this.focusX;
+                    // IntNumber oldFocusY = this.focusY;
                     let lastSpace: VisualSpace = (this.lastPrototype.task.getTerm() as Inheritance)
                         .getSubject().imagination as VisualSpace;
                     if (best === null)
                         throw new ReasonerStateError("No prototype found");
                     let newSpace: VisualSpace = (best.task.getTerm() as Inheritance).getSubject().imagination as VisualSpace;
-                    let oldFocusX: int = lastSpace.px;
-                    let oldFocusY: int = lastSpace.py;
-                    let newFocusX: int = newSpace.px;
-                    let newFocusY: int = newSpace.py;
-                    let dx: float = 0;
-                    let dy: float = 0;
+                    let oldFocusX: IntNumber = lastSpace.px;
+                    let oldFocusY: IntNumber = lastSpace.py;
+                    let newFocusX: IntNumber = newSpace.px;
+                    let newFocusY: IntNumber = newSpace.py;
+                    let dx: FloatNumber = 0;
+                    let dy: FloatNumber = 0;
                     let minusX = "";
                     let minusY = "";
                     if (newFocusX >= oldFocusX) {
@@ -236,8 +236,8 @@ export class VisionChannel extends SensoryChannel {
                         minusY = "-";
                         dy = oldFocusY - newFocusY;
                     }
-                    let xParam: float = Float32Math.divide(dx, this.width) as float;
-                    let yParam: float = Float32Math.divide(dy, this.height) as float;
+                    let xParam: FloatNumber = Float32Math.divide(dx, this.width) as FloatNumber;
+                    let yParam: FloatNumber = Float32Math.divide(dy, this.height) as FloatNumber;
                     try {
                         // timing to make sure procedure learning observes the operation after the last
                         // prototype
@@ -284,15 +284,15 @@ export class VisionChannel extends SensoryChannel {
 
     protected lastPrototype: VisionChannel.Prototype = null as unknown as VisionChannel.Prototype;
 
-    private static emptyInputs(height: int, width: int): Float64Array[] {
+    private static emptyInputs(height: IntNumber, width: IntNumber): Float64Array[] {
         return Array.from({ length: height }, () => new Float64Array(width));
     }
 
-    private static emptyUpdated(height: int, width: int): boolean[][] {
+    private static emptyUpdated(height: IntNumber, width: IntNumber): boolean[][] {
         return Array.from({ length: height }, () => Array<boolean>(width).fill(false));
     }
 
-    public setFocus(px: int, py: int): void {
+    public setFocus(px: IntNumber, py: IntNumber): void {
         this.px = px;
         this.py = py;
     }
@@ -302,7 +302,7 @@ export class VisionChannel extends SensoryChannel {
     // reflection remain separate contracts above.
     public Prototype = (($outer) => {
         return class Prototype {
-            protected observationCount: int;
+            protected observationCount: IntNumber;
             public readonly task: Task;
 
             public constructor(t: Task) {
@@ -314,7 +314,7 @@ export class VisionChannel extends SensoryChannel {
                 this.observationCount++;
             }
 
-            public getObservationCount(): int {
+            public getObservationCount(): IntNumber {
                 return this.observationCount;
             }
         }

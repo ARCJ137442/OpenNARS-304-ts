@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/Item.java
-import type { int, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Float32Math } from "../runtime/Float32.ts";
 import {BudgetValue} from './BudgetValue.ts'
 import { textHashCode, textValue } from "../runtime/Text.ts";
@@ -10,15 +10,15 @@ import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
 import { ReasonerObject } from "../runtime/ClassIdentity.ts";
 
 interface ItemComparator<E> {
-    compare(a: E, b: E): int;
+    compare(a: E, b: E): IntNumber;
 }
 
-const objectHashCode = (value: unknown): int => {
+const objectHashCode = (value: unknown): IntNumber => {
     const hashCode = (value as { hashCode?: unknown } | null)?.hashCode;
     if (typeof hashCode === "function") {
-        return hashCode.call(value) as int;
+        return hashCode.call(value) as IntNumber;
     }
-    return textHashCode(textValue(value)) as int;
+    return textHashCode(textValue(value)) as IntNumber;
 };
 
 
@@ -40,9 +40,9 @@ export abstract  class Item<K> extends ReasonerObject {
     // it has no JavaObject/reflection contract of its own.
     public static ItemPriorityComparator =  class ItemPriorityComparator<E extends Item<unknown>> implements ItemComparator<E> {
 
-        public  compare(a: E, b: E):  int {
-             let  ap: float = a.getPriority();
-             let  bp: float = b.getPriority();
+        public  compare(a: E, b: E):  IntNumber {
+             let  ap: FloatNumber = a.getPriority();
+             let  bp: FloatNumber = b.getPriority();
 
             if ((a === b) || ((a.name() as any)?.equals?.(b.name())) || (ap === bp))
                 return a.hashCode() - b.hashCode();
@@ -92,7 +92,7 @@ export abstract  class Item<K> extends ReasonerObject {
      *
      * @return Current priority value
      */
-    public  getPriority():  float {
+    public  getPriority():  FloatNumber {
         return this.requireBudget().getPriority();
     }
 
@@ -101,7 +101,7 @@ export abstract  class Item<K> extends ReasonerObject {
      *
      * @param v Set a new priority value
      */
-    public  setPriority(v: float):  void {
+    public  setPriority(v: FloatNumber):  void {
         this.requireBudget().setPriority(v);
     }
 
@@ -110,7 +110,7 @@ export abstract  class Item<K> extends ReasonerObject {
      *
      * @param v The amount of increase
      */
-    public  incPriority(v: float):  void {
+    public  incPriority(v: FloatNumber):  void {
         this.requireBudget().incPriority(v);
     }
 
@@ -119,7 +119,7 @@ export abstract  class Item<K> extends ReasonerObject {
      *
      * @param v The amount of decrease
      */
-    public  decPriority(v: float):  void {
+    public  decPriority(v: FloatNumber):  void {
         this.requireBudget().decPriority(v);
     }
 
@@ -128,7 +128,7 @@ export abstract  class Item<K> extends ReasonerObject {
      *
      * @return Current durability value
      */
-    public  getDurability():  float {
+    public  getDurability():  FloatNumber {
         return this.requireBudget().getDurability();
     }
 
@@ -137,7 +137,7 @@ export abstract  class Item<K> extends ReasonerObject {
      *
      * @param v The new durability value
      */
-    public  setDurability(v: float):  void {
+    public  setDurability(v: FloatNumber):  void {
         this.requireBudget().setDurability(v);
     }
 
@@ -146,7 +146,7 @@ export abstract  class Item<K> extends ReasonerObject {
      *
      * @param v The amount of increase
      */
-    public  incDurability(v: float):  void {
+    public  incDurability(v: FloatNumber):  void {
         this.requireBudget().incDurability(v);
     }
 
@@ -155,7 +155,7 @@ export abstract  class Item<K> extends ReasonerObject {
      *
      * @param v The amount of decrease
      */
-    public  decDurability(v: float):  void {
+    public  decDurability(v: FloatNumber):  void {
         this.requireBudget().decDurability(v);
     }
 
@@ -164,7 +164,7 @@ export abstract  class Item<K> extends ReasonerObject {
      *
      * @return The quality value
      */
-    public  getQuality():  float {
+    public  getQuality():  FloatNumber {
         return this.requireBudget().getQuality();
     }
 
@@ -173,7 +173,7 @@ export abstract  class Item<K> extends ReasonerObject {
      *
      * @param v The new quality value
      */
-    public  setQuality(v: float):  void {
+    public  setQuality(v: FloatNumber):  void {
         this.requireBudget().setQuality(v);
     }
 
@@ -234,13 +234,13 @@ export abstract  class Item<K> extends ReasonerObject {
      * //default:
      *
      * @Override
-     * public int compareTo(final Object o) {
+     * public IntNumber compareTo(final Object o) {
      * //return System.identityHashCode(this) - System.identityHashCode(o);
      * return hashCode() - o.hashCode();
      * }
      */
 
-    public hashCode():  int {
+    public hashCode():  IntNumber {
         return objectHashCode(this.name());
     }
 
@@ -256,10 +256,10 @@ export abstract  class Item<K> extends ReasonerObject {
     public static StringKeyItem: typeof StringKeyItem;
 
 
-    public static  getPrioritySum(c: Iterable<Item<unknown>>):  float {
-        let  totalPriority: float = 0;
+    public static  getPrioritySum(c: Iterable<Item<unknown>>):  FloatNumber {
+        let  totalPriority: FloatNumber = 0;
         for (let i of c)
-            totalPriority = Float32Math.add(totalPriority, i.getPriority()) as float;
+            totalPriority = Float32Math.add(totalPriority, i.getPriority()) as FloatNumber;
         return totalPriority;
     }
 
@@ -281,7 +281,7 @@ abstract class StringKeyItem extends Item<TextInput> {
         super(budget);
     }
 
-    public hashCode(): int {
+    public hashCode(): IntNumber {
         return objectHashCode(this.name());
     }
 

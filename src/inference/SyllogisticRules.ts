@@ -1,5 +1,5 @@
 //! Java source: opennars/inference/SyllogisticRules.java
-import type { int, long, short, float } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong, ShortNumber, FloatNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Statement } from "../language/Statement.ts";
 import { CompoundTerm } from "../language/CompoundTerm.ts";
@@ -64,9 +64,9 @@ export class SyllogisticRules {
         if (Statement.invalidStatement(term1, term2)) {
             return;
         }
-        let order1: int = sentence.term.getTemporalOrder();
-        let order2: int = belief.term.getTemporalOrder();
-        let order: int = dedExeOrder(order1, order2);
+        let order1: IntNumber = sentence.term.getTemporalOrder();
+        let order2: IntNumber = belief.term.getTemporalOrder();
+        let order: IntNumber = dedExeOrder(order1, order2);
         if (order === ORDER_INVALID) {
             return;
         }
@@ -124,13 +124,13 @@ export class SyllogisticRules {
      * @param nal       Reference to the memory
      */
     public static abdIndCom(term1: Term, term2: Term, sentence1: Sentence, sentence2: Sentence,
-        figure: int, nal: DerivationContext): boolean {
+        figure: IntNumber, nal: DerivationContext): boolean {
         if (Statement.invalidStatement(term1, term2) || Statement.invalidPair(term1, term2)) {
             return false;
         }
-        let order1: int = sentence1.term.getTemporalOrder();
-        let order2: int = sentence2.term.getTemporalOrder();
-        let order: int = abdIndComOrder(order1, order2);
+        let order1: IntNumber = sentence1.term.getTemporalOrder();
+        let order2: IntNumber = sentence2.term.getTemporalOrder();
+        let order: IntNumber = abdIndComOrder(order1, order2);
 
         let taskContent: Statement = sentence1.term as Statement;
         let truth1: TruthValue = null as unknown as TruthValue;
@@ -194,14 +194,14 @@ export class SyllogisticRules {
             return true;
         }
 
-        let occurrence_time2: long = nal.getCurrentTask().sentence.getOccurrenceTime();
+        let occurrence_time2: RuntimeLong = nal.getCurrentTask().sentence.getOccurrenceTime();
         while (occurrence_time2 !== Stamp.ETERNAL && (term2 instanceof Conjunction)
             && ((term2 as CompoundTerm).term[0] instanceof Interval)) {
             let interval: Interval = (term2 as CompoundTerm).term[0] as Interval;
             occurrence_time2 += interval.time;
             term2 = (term2 as CompoundTerm).setComponent(0, null as unknown as Term, nal.mem());
         }
-        let occurrence_time1: long = nal.getCurrentTask().sentence.getOccurrenceTime();
+        let occurrence_time1: RuntimeLong = nal.getCurrentTask().sentence.getOccurrenceTime();
         while (occurrence_time1 !== Stamp.ETERNAL && (term1 instanceof Conjunction)
             && ((term1 as CompoundTerm).term[0] instanceof Interval)) {
             let interval: Interval = (term1 as CompoundTerm).term[0] as Interval;
@@ -273,14 +273,14 @@ export class SyllogisticRules {
      * @param figure Locations of the shared term in premises
      * @param nal    Reference to the memory
      */
-    public static analogy(subj: Term, pred: Term, asym: Sentence, sym: Sentence, figure: int,
+    public static analogy(subj: Term, pred: Term, asym: Sentence, sym: Sentence, figure: IntNumber,
         nal: DerivationContext): void {
         if (Statement.invalidStatement(subj, pred)) {
             return;
         }
-        let order1: int = asym.term.getTemporalOrder();
-        let order2: int = sym.term.getTemporalOrder();
-        let order: int = analogyOrder(order1, order2, figure);
+        let order1: IntNumber = asym.term.getTemporalOrder();
+        let order2: IntNumber = sym.term.getTemporalOrder();
+        let order: IntNumber = analogyOrder(order1, order2, figure);
         if (order === ORDER_INVALID) {
             return;
         }
@@ -334,13 +334,13 @@ export class SyllogisticRules {
      * @param nal      Reference to the memory
      */
     public static resemblance(term1: Term, term2: Term, belief: Sentence, sentence: Sentence,
-        figure: int, nal: DerivationContext): void {
+        figure: IntNumber, nal: DerivationContext): void {
         if (Statement.invalidStatement(term1, term2)) {
             return;
         }
-        let order1: int = belief.term.getTemporalOrder();
-        let order2: int = sentence.term.getTemporalOrder();
-        let order: int = resemblanceOrder(order1, order2, figure);
+        let order1: IntNumber = belief.term.getTemporalOrder();
+        let order2: IntNumber = sentence.term.getTemporalOrder();
+        let order: IntNumber = resemblanceOrder(order1, order2, figure);
         if (order === ORDER_INVALID) {
             return;
         }
@@ -472,15 +472,15 @@ export class SyllogisticRules {
      * @param side         The location of s2 in s1
      * @param nal          Reference to the memory
      */
-    public static detachment(mainSentence: Sentence, subSentence: Sentence, side: int,
+    public static detachment(mainSentence: Sentence, subSentence: Sentence, side: IntNumber,
         nal: DerivationContext): void;
 
-    public static detachment(mainSentence: Sentence, subSentence: Sentence, side: int,
+    public static detachment(mainSentence: Sentence, subSentence: Sentence, side: IntNumber,
         checkTermAgain: boolean, nal: DerivationContext): void;
     public static detachment(...args: unknown[]): void {
         switch (args.length) {
             case 4: {
-                const [mainSentence, subSentence, side, nal] = args as [Sentence, Sentence, int, DerivationContext];
+                const [mainSentence, subSentence, side, nal] = args as [Sentence, Sentence, IntNumber, DerivationContext];
 
 
                 SyllogisticRules.detachment(mainSentence, subSentence, side, true, nal);
@@ -490,7 +490,7 @@ export class SyllogisticRules {
             }
 
             case 5: {
-                const [mainSentence, subSentence, side, checkTermAgain, nal] = args as [Sentence, Sentence, int, boolean, DerivationContext];
+                const [mainSentence, subSentence, side, checkTermAgain, nal] = args as [Sentence, Sentence, IntNumber, boolean, DerivationContext];
 
 
                 let statement: Statement = mainSentence.term as Statement;
@@ -518,12 +518,12 @@ export class SyllogisticRules {
                 if (beliefSentence === null)
                     return;
 
-                let order: int = statement.getTemporalOrder();
-                let occurrence_time: long = nal.getCurrentTask().sentence.getOccurrenceTime();
+                let order: IntNumber = statement.getTemporalOrder();
+                let occurrence_time: RuntimeLong = nal.getCurrentTask().sentence.getOccurrenceTime();
                 if ((order !== ORDER_NONE) && (order !== ORDER_INVALID)) {
-                    let baseTime: long = subSentence.getOccurrenceTime();
+                    let baseTime: RuntimeLong = subSentence.getOccurrenceTime();
                     if (baseTime !== Stamp.ETERNAL) {
-                        let inc: long = (order * nal.narParameters.DURATION) as unknown as long;
+                        let inc: RuntimeLong = (order * nal.narParameters.DURATION) as unknown as RuntimeLong;
                         occurrence_time = (side === 0) ? baseTime + inc : baseTime - inc;
                     }
                 }
@@ -617,8 +617,8 @@ export class SyllogisticRules {
      *                 for predicate, -1 for the whole term
      * @param nal      Reference to the memory
      */
-    public static conditionalDedInd(premise1Sentence: Sentence, premise1: Implication, index: short, premise2: Term,
-        side: int, nal: DerivationContext): void {
+    public static conditionalDedInd(premise1Sentence: Sentence, premise1: Implication, index: ShortNumber, premise2: Term,
+        side: IntNumber, nal: DerivationContext): void {
         let task: Task = nal.getCurrentTask();
         let taskSentence: Sentence = task.sentence;
         const belief = nal.getCurrentBelief();
@@ -646,9 +646,9 @@ export class SyllogisticRules {
         }
         let oldCondition: Conjunction = subj as Conjunction;
 
-        let index2: int = Terms.indexOf(oldCondition.term, commonComponent);
+        let index2: IntNumber = Terms.indexOf(oldCondition.term, commonComponent);
         if (index2 >= 0) {
-            index = index2 as short;
+            index = index2 as ShortNumber;
         } else {
             let u: Term[] = [premise1, premise2];
             let match: boolean = Variables.unify(nal.memory.randomNumber, Symbols.VAR_INDEPENDENT, oldCondition.term[index],
@@ -677,7 +677,7 @@ export class SyllogisticRules {
                 return;
             }
         }
-        let conjunctionOrder: int = subj.getTemporalOrder();
+        let conjunctionOrder: IntNumber = subj.getTemporalOrder();
         if (conjunctionOrder === ORDER_FORWARD) {
             if (index > 0) {
                 return;
@@ -697,9 +697,9 @@ export class SyllogisticRules {
         }
         let content: Term | null;
 
-        let delta: long = 0 as unknown as long;
-        let minTime: long = 0 as unknown as long;
-        let maxTime: long = 0 as unknown as long;
+        let delta: RuntimeLong = 0 as unknown as RuntimeLong;
+        let minTime: RuntimeLong = 0 as unknown as RuntimeLong;
+        let maxTime: RuntimeLong = 0 as unknown as RuntimeLong;
         let predictedEvent: boolean = false;
 
         if (newCondition !== null) {
@@ -707,15 +707,15 @@ export class SyllogisticRules {
                 content = premise1.getPredicate();
                 delta = (newCondition as Interval).time;
                 if (taskSentence.getOccurrenceTime() !== Stamp.ETERNAL) {
-                    let timeOffset: float = Number((newCondition as Interval).time) as float;
-                    let timeWindowHalf: float = Float32Math.multiply(
+                    let timeOffset: FloatNumber = Number((newCondition as Interval).time) as FloatNumber;
+                    let timeWindowHalf: FloatNumber = Float32Math.multiply(
                         timeOffset,
                         nal.narParameters.ANTICIPATION_TOLERANCE,
-                    ) as float;
+                    ) as FloatNumber;
                     const taskOccurrenceTime = Number(taskSentence.getOccurrenceTime());
                     minTime = Math.max(taskOccurrenceTime,
-                        (taskOccurrenceTime + Number(timeOffset) - Number(timeWindowHalf))) as unknown as long;
-                    maxTime = (taskOccurrenceTime + Number(timeOffset) + Number(timeWindowHalf)) as unknown as long;
+                        (taskOccurrenceTime + Number(timeOffset) - Number(timeWindowHalf))) as unknown as RuntimeLong;
+                    maxTime = (taskOccurrenceTime + Number(timeOffset) + Number(timeWindowHalf)) as unknown as RuntimeLong;
                     predictedEvent = nal.narParameters.RETROSPECTIVE_ANTICIPATIONS
                         || (Number(taskSentence.getOccurrenceTime()) >= Number(nal.time.time()));
                 }
@@ -736,9 +736,9 @@ export class SyllogisticRules {
         if (content === null)
             return;
 
-        let occurrence_time: long = nal.getCurrentTask().sentence.getOccurrenceTime();
-        if (delta !== (0 as unknown as long)) {
-            let baseTime: long = taskSentence.getOccurrenceTime();
+        let occurrence_time: RuntimeLong = nal.getCurrentTask().sentence.getOccurrenceTime();
+        if (delta !== (0 as unknown as RuntimeLong)) {
+            let baseTime: RuntimeLong = taskSentence.getOccurrenceTime();
             if (baseTime !== Stamp.ETERNAL) {
                 baseTime += delta;
                 occurrence_time = baseTime;
@@ -809,7 +809,7 @@ export class SyllogisticRules {
      *                 for predicate, -1 for the whole term
      * @param nal      Reference to the memory
      */
-    public static conditionalAna(premise1: Equivalence, index: short, premise2: Term, side: int,
+    public static conditionalAna(premise1: Equivalence, index: ShortNumber, premise2: Term, side: IntNumber,
         nal: DerivationContext): void {
         let task: Task = nal.getCurrentTask();
         let taskSentence: Sentence = task.sentence;
@@ -853,7 +853,7 @@ export class SyllogisticRules {
         if (!match) {
             return;
         }
-        let conjunctionOrder: int = oldCondition.getTemporalOrder();
+        let conjunctionOrder: IntNumber = oldCondition.getTemporalOrder();
         if (conjunctionOrder === ORDER_FORWARD) {
             if (index > 0) {
                 return;
@@ -930,8 +930,8 @@ export class SyllogisticRules {
         if (!(cond1 instanceof Conjunction) && !(cond2 instanceof Conjunction)) {
             return false;
         }
-        let order1: int = st1.getTemporalOrder();
-        let order2: int = st2.getTemporalOrder();
+        let order1: IntNumber = st1.getTemporalOrder();
+        let order2: IntNumber = st2.getTemporalOrder();
         if (order1 !== TemporalRules.reverseOrder(order2)) {
             return false;
         }
@@ -959,7 +959,7 @@ export class SyllogisticRules {
             task.getTerm());
 
         // we folded the logic to use loops for more compact code
-        for (let loop: int = 0; loop < 2; loop++) {
+        for (let loop: IntNumber = 0; loop < 2; loop++) {
             let isFirstLoop: boolean = loop === 0;
             let term1InLoop: Term = isFirstLoop ? term1 : term2;
             let term2InLoop: Term = isFirstLoop ? term2 : term1;

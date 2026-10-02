@@ -1,5 +1,5 @@
 //! Java source: opennars/operator/misc/Count.java
-import type { int } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber } from "../../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { FunctionOperator } from "../FunctionOperator.ts";
 import { Term } from "../../language/Term.ts";
 import { SetExt } from "../../language/SetExt.ts";
@@ -46,7 +46,7 @@ export class Count extends FunctionOperator {
             throw new ReasonerStateError(Count.requireMessage);
         }
 
-        let n: int = (content as CompoundTerm).size();
+        let n: IntNumber = (content as CompoundTerm).size();
         return Term.get(n);
     }
 

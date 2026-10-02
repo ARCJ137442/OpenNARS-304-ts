@@ -1,6 +1,6 @@
 //! Java source: opennars/inference/RuleTables.java
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import type { short, int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { ShortNumber, IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Events } from "../io/events/Events.ts";
 import { Terms } from "../language/Terms.ts";
@@ -50,14 +50,14 @@ class EnumFigureSide {
 
     private constructor(
         private readonly enumName: string,
-        private readonly enumOrdinal: int,
+        private readonly enumOrdinal: IntNumber,
     ) {}
 
     public name(): string {
         return this.enumName;
     }
 
-    public ordinal(): int {
+    public ordinal(): IntNumber {
         return this.enumOrdinal;
     }
 
@@ -169,8 +169,8 @@ export class RuleTables {
 
     private static applyRuleTable(tLink: TaskLink, bLink: TermLink, nal: DerivationContext, task: Task,
         taskSentence: Sentence, taskTerm: Term, beliefTerm: Term, belief: Sentence | null): void {
-        let tIndex: short = tLink.getIndex(0);
-        let bIndex: short = bLink.getIndex(0);
+        let tIndex: ShortNumber = tLink.getIndex(0);
+        let bIndex: ShortNumber = bLink.getIndex(0);
         switch (tLink.type) { // dispatch first by TaskLink type
             case TermLink.SELF:
                 switch (bLink.type) {
@@ -324,7 +324,7 @@ export class RuleTables {
         }
     }
 
-    public static goalFromWantBelief(task: Task, tIndex: short, bIndex: short, taskTerm: Term,
+    public static goalFromWantBelief(task: Task, tIndex: ShortNumber, bIndex: ShortNumber, taskTerm: Term,
         nal: DerivationContext, beliefTerm: Term): void {
         if (task.sentence.isJudgment() && tIndex === 0 && bIndex === 1 && taskTerm instanceof Operation) {
             let op: Operation = taskTerm as Operation;
@@ -433,7 +433,7 @@ export class RuleTables {
         if (belief === null) {
             return;
         }
-        let figure: int;
+        let figure: IntNumber;
         if (taskTerm instanceof Inheritance) {
             if (beliefTerm instanceof Inheritance) {
                 figure = RuleTables.indexToFigure(tLink, bLink);
@@ -499,7 +499,7 @@ export class RuleTables {
      * @param link2 The link to the second premise
      * @return The figure of the syllogism, one of the four: 11, 12, 21, or 22
      */
-    private static indexToFigure(link1: TLink<unknown>, link2: TLink<unknown>): int {
+    private static indexToFigure(link1: TLink<unknown>, link2: TLink<unknown>): IntNumber {
         return (link1.getIndex(0) + 1) * 10 + (link2.getIndex(0) + 1);
     }
 
@@ -511,7 +511,7 @@ export class RuleTables {
      * @param figure       The location of the shared term
      * @param nal          Reference to the memory
      */
-    private static asymmetricAsymmetric(taskSentence: Sentence, belief: Sentence, figure: int,
+    private static asymmetricAsymmetric(taskSentence: Sentence, belief: Sentence, figure: IntNumber,
         nal: DerivationContext): void {
         let taskStatement: Statement = taskSentence.term as Statement;
         let beliefStatement: Statement = belief.term as Statement;
@@ -602,7 +602,7 @@ export class RuleTables {
      * @param figure The location of the shared term
      * @param nal    Reference to the memory
      */
-    private static asymmetricSymmetric(asym: Sentence, sym: Sentence, figure: int,
+    private static asymmetricSymmetric(asym: Sentence, sym: Sentence, figure: IntNumber,
         nal: DerivationContext): void {
         let asymSt: Statement = asym.term as Statement;
         let symSt: Statement = sym.term as Statement;
@@ -651,7 +651,7 @@ export class RuleTables {
      * @param sideOfFigure side
      * @return
      */
-    private static retSideFromFigure(figure: int, sideOfFigure: RuleTables.EnumFigureSide): Statement.EnumStatementSide {
+    private static retSideFromFigure(figure: IntNumber, sideOfFigure: RuleTables.EnumFigureSide): Statement.EnumStatementSide {
         if (sideOfFigure === RuleTables.EnumFigureSide.LEFT) {
             switch (figure) {
                 case 11:
@@ -696,7 +696,7 @@ export class RuleTables {
      * @param figure       The location of the shared term
      * @param nal          Reference to the memory
      */
-    private static symmetricSymmetric(belief: Sentence, taskSentence: Sentence, figure: int,
+    private static symmetricSymmetric(belief: Sentence, taskSentence: Sentence, figure: IntNumber,
         nal: DerivationContext): void {
         let s1: Statement = belief.term as Statement;
         let s2: Statement = taskSentence.term as Statement;
@@ -758,14 +758,14 @@ export class RuleTables {
      * @param nal                  Reference to the memory
      */
     private static detachmentWithVar(originalMainSentence: Sentence, subSentence: Sentence,
-        index: int, nal: DerivationContext): void;
+        index: IntNumber, nal: DerivationContext): void;
 
-    private static detachmentWithVar(originalMainSentence: Sentence, subSentence: Sentence, index: int,
+    private static detachmentWithVar(originalMainSentence: Sentence, subSentence: Sentence, index: IntNumber,
         checkTermAgain: boolean, nal: DerivationContext): void;
     private static detachmentWithVar(...args: unknown[]): void {
         switch (args.length) {
             case 4: {
-                const [originalMainSentence, subSentence, index, nal] = args as [Sentence, Sentence, int, DerivationContext];
+                const [originalMainSentence, subSentence, index, nal] = args as [Sentence, Sentence, IntNumber, DerivationContext];
 
 
                 RuleTables.detachmentWithVar(originalMainSentence, subSentence, index, true, nal);
@@ -775,7 +775,7 @@ export class RuleTables {
             }
 
             case 5: {
-                let [originalMainSentence, subSentence, index, checkTermAgain, nal] = args as [Sentence, Sentence, int, boolean, DerivationContext];
+                let [originalMainSentence, subSentence, index, checkTermAgain, nal] = args as [Sentence, Sentence, IntNumber, boolean, DerivationContext];
 
 
                 if (originalMainSentence === null) {
@@ -840,7 +840,7 @@ export class RuleTables {
      * @param nal         Reference to the memory
      */
     private static conditionalDedIndWithVar(conditionalSentence: Sentence, conditional: Implication,
-        index: short, statement: Statement, side: short, nal: DerivationContext): void {
+        index: ShortNumber, statement: Statement, side: ShortNumber, nal: DerivationContext): void {
 
         if (!(conditional.getSubject() instanceof CompoundTerm))
             return;
@@ -884,7 +884,7 @@ export class RuleTables {
      * @param nal          Reference to the memory
      */
     private static compoundAndSelf(compound: CompoundTerm, component: Term, compoundTask: boolean,
-        index: int, nal: DerivationContext): void {
+        index: IntNumber, nal: DerivationContext): void {
         if ((compound instanceof Conjunction) || (compound instanceof Disjunction)) {
             if (nal.getCurrentBelief() !== null) {
                 if (compound.containsTerm(component)) {
@@ -912,7 +912,7 @@ export class RuleTables {
      * @param nal        Reference to the memory
      */
     private static compoundAndCompound(taskTerm: CompoundTerm, beliefTerm: CompoundTerm,
-        tindex: int, bindex: int, nal: DerivationContext): void {
+        tindex: IntNumber, bindex: IntNumber, nal: DerivationContext): void {
         if (taskTerm.getClass() === beliefTerm.getClass()) {
             if (taskTerm.size() >= beliefTerm.size()) {
                 RuleTables.compoundAndSelf(taskTerm, beliefTerm, true, tindex, nal);
@@ -932,8 +932,8 @@ export class RuleTables {
      * @param beliefTerm The content of the belief
      * @param nal        Reference to the memory
      */
-    private static compoundAndStatement(compound: CompoundTerm, index: short, statement: Statement,
-        side: short, beliefTerm: Term, nal: DerivationContext): void {
+    private static compoundAndStatement(compound: CompoundTerm, index: ShortNumber, statement: Statement,
+        side: ShortNumber, beliefTerm: Term, nal: DerivationContext): void {
 
         if (index >= compound.term.length) {
             return;
@@ -986,8 +986,8 @@ export class RuleTables {
      * @param side      The location of the current term in the statement
      * @param nal       Reference to the memory
      */
-    private static componentAndStatement(compound: CompoundTerm, index: short, statement: Statement,
-        side: short, nal: DerivationContext): void {
+    private static componentAndStatement(compound: CompoundTerm, index: ShortNumber, statement: Statement,
+        side: ShortNumber, nal: DerivationContext): void {
         if (statement instanceof Inheritance) {
             StructuralRules.structuralDecompose1(compound, index, statement, nal);
             if (!(compound instanceof SetExt) && !(compound instanceof SetInt)) {

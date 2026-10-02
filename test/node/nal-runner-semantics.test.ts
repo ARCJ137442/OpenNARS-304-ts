@@ -325,7 +325,7 @@ test("131072-cycle equivalence is available for inputs without Java markers", ()
   assert.equal(result.equivalent, true);
 });
 
-test("NAL parity rows expose marker equivalence independently of the long-cycle target", () => {
+test("NAL parity rows expose marker equivalence independently of the RuntimeLong-cycle target", () => {
   const row = evaluateRow("fixture.nal", ["marker"],
     { expected: 1, matched: [true] },
     { expected: 1, matched: [true] },

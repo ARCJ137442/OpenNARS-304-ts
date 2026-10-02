@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type double } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber, type DoubleNumber } from "../support/legacy-runtime-facade.ts";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { TextOutputHandler } from "../../src/io/events/TextOutputHandler.ts";
@@ -17,22 +17,22 @@ import { runSerialParameterized } from "../util/serial-parameterized-runner.ts";
  * Tests example, multistep etc.
  */
 export class NALTest extends JavaObject {
-    protected readonly minCycles: int = 1550; // TODO reduce this to one or zero to avoid wasting any extra time during tests
+    protected readonly minCycles: IntNumber = 1550; // TODO reduce this to one or zero to avoid wasting any extra time during tests
     public static showOutput: boolean = false;
     public static showSuccess: boolean = false;
     public static readonly showFail: boolean = true;
     public static readonly showReport: boolean = true;
     public static readonly requireSuccess: boolean = true;
-    public static readonly similarsToSave: int = 5;
+    public static readonly similarsToSave: IntNumber = 5;
     protected static readonly examples: java.util.Map<java.lang.String, java.lang.String> = new java.util.LinkedHashMap(); // path -> script data
     public static readonly tests: java.util.Map<java.lang.String, java.lang.Boolean> = new java.util.LinkedHashMap();
 
     // we store a list of scores to keep track of each sample
-    public static readonly scores: java.util.Map<java.lang.String, java.util.List<double>> = new java.util.LinkedHashMap();
+    public static readonly scores: java.util.Map<java.lang.String, java.util.List<DoubleNumber>> = new java.util.LinkedHashMap();
     protected readonly scriptPath: java.lang.String;
 
     /** how many times should one test be run (to collect run scores) */
-    public static numberOfSamples: int = 1;
+    public static numberOfSamples: IntNumber = 1;
 
     // exposed to be able to change it from the outside
     public static directories: java.lang.String[] = [
@@ -41,13 +41,13 @@ export class NALTest extends JavaObject {
         new java.lang.String("/nal/application/")
     ];
 
-    public static scoreSum: double = 0.0; // sum of all scores
-    public static scoreSumWithTime: double = 0.0; // sum of all scores
+    public static scoreSum: DoubleNumber = 0.0; // sum of all scores
+    public static scoreSumWithTime: DoubleNumber = 0.0; // sum of all scores
 
-    public static qaScoreDecayFactor: double = 0.001; // how fast does the score decay? - later answers get less score
+    public static qaScoreDecayFactor: DoubleNumber = 0.001; // how fast does the score decay? - later answers get less score
 
-    public static timeSum: double = 0.0;
-    public static bestAnswerConfSum: double = 0.0;
+    public static timeSum: DoubleNumber = 0.0;
+    public static bestAnswerConfSum: DoubleNumber = 0.0;
     public static samplesCnt: number = 0;
 
     public static getExample(path: java.lang.String): java.lang.String {
@@ -119,12 +119,12 @@ export class NALTest extends JavaObject {
 
         /*
          * commented because name.split() is broken for a special case in NalTestMetrics
-         * final int[] levelSuccess = new int[10];
-         * final int[] levelTotals = new int[10];
+         * final IntNumber[] levelSuccess = new IntNumber[10];
+         * final IntNumber[] levelTotals = new IntNumber[10];
          *
          * for (final Map.Entry<String, Boolean> e : tests.entrySet()) {
          * final String name = e.getKey();
-         * int level = 0;
+         * IntNumber level = 0;
          * level = Integer.parseInt(name.split("\\.")[0]);
          * levelTotals[level]++;
          * if (e.getValue()) {
@@ -133,9 +133,9 @@ export class NALTest extends JavaObject {
          * }
          *
          * if (showReport) {
-         * int totalSucceeded = 0, total = 0;
-         * for (int i = 0; i < 9; i++) {
-         * final float rate = (levelTotals[i] > 0) ? ((float)levelSuccess[i]) /
+         * IntNumber totalSucceeded = 0, total = 0;
+         * for (IntNumber i = 0; i < 9; i++) {
+         * final FloatNumber rate = (levelTotals[i] > 0) ? ((FloatNumber)levelSuccess[i]) /
          * levelTotals[i] : 0;
          * final String prefix = (i > 0) ? ("NAL" + i) : "Other";
          *
@@ -154,12 +154,12 @@ export class NALTest extends JavaObject {
     }
 
     public testNAL(path: java.lang.String): void {
-        for (let iSample: int = 0; iSample < NALTest.numberOfSamples; iSample++) {
+        for (let iSample: IntNumber = 0; iSample < NALTest.numberOfSamples; iSample++) {
             this.sample(path);
         }
     }
 
-    public sample(path: java.lang.String): double {
+    public sample(path: java.lang.String): DoubleNumber {
         let example: java.lang.String = NALTest.getExample(path);
 
         if (NALTest.showOutput) {
@@ -191,11 +191,11 @@ export class NALTest extends JavaObject {
             }
         }
 
-        let score: double = 0.0;
-        let scoreWithTime: double = 0.0;
+        let score: DoubleNumber = 0.0;
+        let scoreWithTime: DoubleNumber = 0.0;
 
         if (success) {
-            // long lastSuccess = -1;
+            // RuntimeLong lastSuccess = -1;
             for (let e of expects) {
                 /*
                  * if (e.getTrueTime()!=-1) {
@@ -229,7 +229,7 @@ export class NALTest extends JavaObject {
             if (existingScores !== null) {
                 existingScores.add(score);
             } else {
-                let scoresList: java.util.List<double> = new java.util.ArrayList<double>();
+                let scoresList: java.util.List<DoubleNumber> = new java.util.ArrayList<DoubleNumber>();
                 scoresList.add(score);
                 NALTest.scores.put(path, scoresList);
             }
@@ -239,7 +239,7 @@ export class NALTest extends JavaObject {
             if (existingScores !== null) {
                 existingScores.add(0.0);
             } else {
-                let scoresList: java.util.List<double> = new java.util.ArrayList<double>();
+                let scoresList: java.util.List<DoubleNumber> = new java.util.ArrayList<DoubleNumber>();
                 scoresList.add(0.0);
                 NALTest.scores.put(path, scoresList);
             }

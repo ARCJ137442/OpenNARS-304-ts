@@ -1,5 +1,5 @@
 //! Java source: opennars/language/Product.java
-import type { int } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { CompoundTerm } from "./CompoundTerm.ts";
 import { Symbols } from "../io/Symbols.ts";
 import type { Term } from "./Term.ts";
@@ -59,7 +59,7 @@ export class Product extends CompoundTerm {
      *                  parameter
      * @return A compound generated or a term it reduced to
      */
-    public static make(image: CompoundTerm, component: Term, index: int): Term;
+    public static make(image: CompoundTerm, component: Term, index: IntNumber): Term;
     public static make(...args: unknown[]): Product | Term {
         switch (args.length) {
             case 1: {
@@ -74,7 +74,7 @@ export class Product extends CompoundTerm {
 
             case 3: {
                 if (args[0] instanceof CompoundTerm && typeof args[2] === "number") {
-                    const [image, component, index] = args as [CompoundTerm, Term, int];
+                    const [image, component, index] = args as [CompoundTerm, Term, IntNumber];
                     const argument: Term[] = image.cloneTerms();
                     argument[index] = component;
                     return new Product(argument);

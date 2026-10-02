@@ -1,7 +1,7 @@
 //! Java source: opennars/entity/Concept.java
 import type { ClassTokenLike } from "../runtime/ClassIdentity.ts";
 import type { EventEmitter } from "../io/events/EventEmitter.ts";
-import type { int, float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, FloatNumber, RuntimeLong } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { Term } from "../language/Term.ts";
 import { Sentence } from "./Sentence.ts";
@@ -107,7 +107,7 @@ export class Concept extends Item<Term> {
     // Java source: List<Float> recent_intervals.
     // Native array is intentional: LocalRules only needs numeric length,
     // indexed read/write and append operations.
-    public readonly recent_intervals: float[] = [];
+    public readonly recent_intervals: FloatNumber[] = [];
 
     public observable: boolean = false; // whether it received a "native" input task
     public allowBabbling: boolean = true; // for operations, becomes false if sufficiently
@@ -153,7 +153,7 @@ export class Concept extends Item<Term> {
         return (obj as Concept).name().equals(this.name());
     }
 
-    public hashCode(): int {
+    public hashCode(): IntNumber {
         return this.name().hashCode();
     }
 
@@ -161,10 +161,10 @@ export class Concept extends Item<Term> {
         return this.term;
     }
 
-    public addToTable(task: Task, rankTruthExpectation: boolean, table: NativeList<Task>, max: int,
+    public addToTable(task: Task, rankTruthExpectation: boolean, table: NativeList<Task>, max: IntNumber,
         eventAdd: ClassTokenLike, eventRemove: ClassTokenLike, ...extraEventArguments: EventEmitter.EventPayload): void {
 
-        let preSize: int = table.size();
+        let preSize: IntNumber = table.size();
         let removedT: Task | null;
         let removed: Sentence | null = null;
         removedT = Concept.addToTable(task, table, max, rankTruthExpectation);
@@ -234,12 +234,12 @@ export class Concept extends Item<Term> {
      * @param capacity The capacity of the table
      * @return whether table was modified
      */
-    public static addToTable(newTask: Task, table: NativeList<Task>, capacity: int,
+    public static addToTable(newTask: Task, table: NativeList<Task>, capacity: IntNumber,
         rankTruthExpectation: boolean): Task | null {
         let newSentence: Sentence = newTask.sentence;
-        let rank1: float = BudgetFunctions.rankBelief(newSentence, rankTruthExpectation); // for the new isBelief
-        let rank2: float;
-        let i: int;
+        let rank1: FloatNumber = BudgetFunctions.rankBelief(newSentence, rankTruthExpectation); // for the new isBelief
+        let rank2: FloatNumber;
+        let i: IntNumber;
         for (i = 0; i < table.size(); i++) {
             let judgment2: Sentence = table.get(i).sentence;
             rank2 = BudgetFunctions.rankBelief(judgment2, rankTruthExpectation);
@@ -278,8 +278,8 @@ export class Concept extends Item<Term> {
         // if (list == null) {
         // return null;
         // }
-        let currentBest: float = 0;
-        let beliefQuality: float;
+        let currentBest: FloatNumber = 0;
+        let beliefQuality: FloatNumber;
         let candidate: Task | null = null;
         let rateByConfidence: boolean = true; // table vote, yes/no question / local processing
         /* synchronized (list) { */
@@ -316,14 +316,14 @@ export class Concept extends Item<Term> {
     // Java source: public static class AnticipationEntry implements Serializable.
     // Serializable is a marker here; no JavaObject or runtime class contract is consumed.
     public static AnticipationEntry = class AnticipationEntry {
-        public negConfirmationPriority: float = 0.0;
+        public negConfirmationPriority: FloatNumber = 0.0;
         public negConfirmation: Task | null = null;
-        public negConfirm_abort_minTime: long = 0n;
-        public negConfirm_abort_maxTime: long = 0n;
+        public negConfirm_abort_minTime: RuntimeLong = 0n;
+        public negConfirm_abort_maxTime: RuntimeLong = 0n;
 
-        public constructor(negConfirmationPriority: float, negConfirmation: Task, negConfirm_abort_minTime: long,
-            negConfirm_abort_maxTime: long) {
-            this.negConfirmationPriority = Float32Math.from(negConfirmationPriority) as float;
+        public constructor(negConfirmationPriority: FloatNumber, negConfirmation: Task, negConfirm_abort_minTime: RuntimeLong,
+            negConfirm_abort_maxTime: RuntimeLong) {
+            this.negConfirmationPriority = Float32Math.from(negConfirmationPriority) as FloatNumber;
             this.negConfirmation = negConfirmation;
             this.negConfirm_abort_minTime = negConfirm_abort_minTime;
             this.negConfirm_abort_maxTime = negConfirm_abort_maxTime;
@@ -356,8 +356,8 @@ export class Concept extends Item<Term> {
         // if taskLinks already contain a certain amount of tasks with same content then
         // one has to go
         let isEternal: boolean = target.sentence.isEternal();
-        let nSameContent: int = 0;
-        let lowest_priority: float = Number.MAX_VALUE;
+        let nSameContent: IntNumber = 0;
+        let lowest_priority: FloatNumber = Number.MAX_VALUE;
         let lowest: TaskLink | null = null;
         for (let tl of this.taskLinks) {
             let s: Sentence = tl.getTarget().sentence;
@@ -487,10 +487,10 @@ export class Concept extends Item<Term> {
         return ` ${title}:${String(item)}`;
     }
 
-    public acquiredQuality: float = 0.0;
+    public acquiredQuality: FloatNumber = 0.0;
 
     public incAcquiredQuality(): void {
-        this.acquiredQuality = Float32Math.add(this.acquiredQuality, 0.1) as float;
+        this.acquiredQuality = Float32Math.add(this.acquiredQuality, 0.1) as FloatNumber;
         if (this.acquiredQuality > 1.0) {
             this.acquiredQuality = 1.0;
         }
@@ -502,15 +502,15 @@ export class Concept extends Item<Term> {
      *
      * @return The quality value
      */
-    public getQuality(): float {
-        let linkPriority: float = this.termLinks.getAveragePriority();
-        // Java evaluates and stores this reciprocal as a float before the
+    public getQuality(): FloatNumber {
+        let linkPriority: FloatNumber = this.termLinks.getAveragePriority();
+        // Java evaluates and stores this reciprocal as a FloatNumber before the
         // disjunctive quality combination.
-        let termComplexityFactor: float = Float32Math.divide(
+        let termComplexityFactor: FloatNumber = Float32Math.divide(
             1.0,
             Float32Math.multiply(this.term.getComplexity(), this.memory.narParameters.COMPLEXITY_UNIT),
-        ) as float;
-        let result: float = UtilityFunctions.or(this.acquiredQuality, linkPriority, termComplexityFactor);
+        ) as FloatNumber;
+        let result: FloatNumber = UtilityFunctions.or(this.acquiredQuality, linkPriority, termComplexityFactor);
         if (result < 0) {
             throw new ReasonerStateError(`Concept.getQuality < 0: result=${result}, linkPriority=${linkPriority}, termComplexityFactor=${termComplexityFactor}, termLinks.size=${this.termLinks.size()}`);
         }
@@ -539,7 +539,7 @@ export class Concept extends Item<Term> {
      */
     public getBelief(nal: DerivationContext, task: Task): Sentence | null {
         let taskStamp: Stamp = task.sentence.stamp;
-        let currentTime: long = nal.time.time();
+        let currentTime: RuntimeLong = nal.time.time();
 
         for (let beliefT of this.beliefs) {
             let belief: Sentence = beliefT.sentence;
@@ -577,10 +577,10 @@ export class Concept extends Item<Term> {
      * @param time     The current time
      * @return The selected TermLink
      */
-    public selectTermLink(taskLink: TaskLink, time: long, narParameters: Parameters): TermLink | null {
-        let toMatch: int = narParameters.TERM_LINK_MAX_MATCHED; // Math.min(memory.param.termLinkMaxMatched.get(),
+    public selectTermLink(taskLink: TaskLink, time: RuntimeLong, narParameters: Parameters): TermLink | null {
+        let toMatch: IntNumber = narParameters.TERM_LINK_MAX_MATCHED; // Math.min(memory.param.termLinkMaxMatched.get(),
         // termLinks.size());
-        for (let i: int = 0; (i < toMatch) && (this.termLinks.size() > 0); i++) {
+        for (let i: IntNumber = 0; (i < toMatch) && (this.termLinks.size() > 0); i++) {
 
             let termLink: TermLink = this.termLinks.takeOut();
             if (termLink === null)

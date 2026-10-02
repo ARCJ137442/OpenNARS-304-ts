@@ -1,4 +1,4 @@
-import { java, type int } from "../support/legacy-runtime-facade.ts";
+import { java, type IntNumber } from "../support/legacy-runtime-facade.ts";
 import { AnswerHandler } from "../../src/io/events/AnswerHandler.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
@@ -8,16 +8,16 @@ import { Sentence } from "../../src/entity/Sentence.ts";
 
 /**
  * temporal metric to test and quantify the capability of a NARS implementation
- * to retain a temporal relationship it had learned a long time ago with events.
+ * to retain a temporal relationship it had learned a RuntimeLong time ago with events.
  */
 export class TemporalOneShotMetric extends AnswerHandler {
     public reasonerUnderTest: Reasoner | null = null;
 
-    public numberOfShots: int = 2;
+    public numberOfShots: IntNumber = 2;
 
-    public numberOfTermNames: int = 500;
+    public numberOfTermNames: IntNumber = 500;
 
-    public numberOfRandomEventsBeforeTest: int = 14;
+    public numberOfRandomEventsBeforeTest: IntNumber = 14;
 
     private termNames: java.util.List<java.lang.String> = new java.util.ArrayList<java.lang.String>();
 
@@ -29,14 +29,14 @@ export class TemporalOneShotMetric extends AnswerHandler {
         let metric: TemporalOneShotMetric = new TemporalOneShotMetric();
         metric.reasonerUnderTest = new Nar();
 
-        let numberOfRandomEventsBeforeTest: int = 5;
+        let numberOfRandomEventsBeforeTest: IntNumber = 5;
         for (; numberOfRandomEventsBeforeTest < 30; numberOfRandomEventsBeforeTest++) {
             java.lang.System.out.println("checking # of events=" + java.lang.Integer.toString(numberOfRandomEventsBeforeTest));
 
             metric.numberOfRandomEventsBeforeTest = numberOfRandomEventsBeforeTest;
 
             let successes: boolean = false;
-            for (let try_: int = 0; try_ < 8; try_++) {
+            for (let try_: IntNumber = 0; try_ < 8; try_++) {
                 if (metric.check()) {
                     successes = true;
                     break;
@@ -50,7 +50,7 @@ export class TemporalOneShotMetric extends AnswerHandler {
 
         java.lang.System.out.println("metric of passed # events = " + java.lang.Integer.toString(numberOfRandomEventsBeforeTest - 1));
 
-        let debugMeHere: int = 5;
+        let debugMeHere: IntNumber = 5;
     }
 
     public check(): boolean {
@@ -64,12 +64,12 @@ export class TemporalOneShotMetric extends AnswerHandler {
         this.wasAnswered = false;
 
         // generate set of random term names
-        for (let i: int = 0; i < this.numberOfTermNames; i++) {
+        for (let i: IntNumber = 0; i < this.numberOfTermNames; i++) {
             this.termNames.add(TemporalOneShotMetric.createRandomString(7, this.rng));
         }
 
         // one/many shot learned knowledge
-        for (let i: int = 0; i < this.numberOfShots; i++) {
+        for (let i: IntNumber = 0; i < this.numberOfShots; i++) {
             reasoner.addInput("<flash --> [seen]>. :|:");
             reasoner.addInput("<b --> B>. :|:");
             reasoner.addInput("<spam --> [observed]>. :|:");
@@ -78,7 +78,7 @@ export class TemporalOneShotMetric extends AnswerHandler {
 
         // feed the reasoner with random events
 
-        for (let i: int = 0; i < this.numberOfRandomEventsBeforeTest; i++) {
+        for (let i: IntNumber = 0; i < this.numberOfRandomEventsBeforeTest; i++) {
             let chosenTermName: java.lang.String = this.termNames.get(this.rng.nextInt(this.termNames.size()));
 
             reasoner.addInput(java.lang.String.format(new java.lang.String("<%s-->[%s_]>. :|:"), chosenTermName, chosenTermName));
@@ -95,10 +95,10 @@ export class TemporalOneShotMetric extends AnswerHandler {
 
     }
 
-    private static createRandomString(length: int, rng: java.util.Random): java.lang.String {
+    private static createRandomString(length: IntNumber, rng: java.util.Random): java.lang.String {
         let res = "";
 
-        for (let i: int = 0; i < length; i++) {
+        for (let i: IntNumber = 0; i < length; i++) {
             res += String.fromCharCode(0x41 + rng.nextInt(26));
         }
 

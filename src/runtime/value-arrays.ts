@@ -25,7 +25,7 @@ export const int16ArrayEquals = (
     return true;
 };
 
-/** Canonical indexed short-array hash with a null-array result of zero. */
+/** Canonical indexed ShortNumber-array hash with a null-array result of zero. */
 export const int16ArrayHashCode = (
     values: Int16Array | null | undefined,
 ): number => {

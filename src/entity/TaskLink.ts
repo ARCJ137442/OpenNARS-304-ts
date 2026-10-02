@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/TaskLink.java
-import type { int, long, short } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong, ShortNumber } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { Task } from "./Task.ts";
 import { TermLink } from "./TermLink.ts";
@@ -34,10 +34,10 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * The Task linked. The "target" field in TermLink is not used here.
      */
     public readonly targetTask: Task;
-    private readonly recordLength: int;
+    private readonly recordLength: IntNumber;
 
     /* Hash of the object */
-    public hash: int;
+    public hash: IntNumber;
 
     /*
      * Remember the TermLinks, and when they has been used recently with this
@@ -49,18 +49,18 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
     public static readonly Recording = class Recording {
 
         public readonly link: TermLink;
-        protected time: long;
+        protected time: RuntimeLong;
 
-        public constructor(link: TermLink, time: long) {
+        public constructor(link: TermLink, time: RuntimeLong) {
             this.link = link;
             this.time = time;
         }
 
-        public getTime(): long {
+        public getTime(): RuntimeLong {
             return this.time;
         }
 
-        public setTime(t: long): void {
+        public setTime(t: RuntimeLong): void {
             this.time = t;
         }
 
@@ -71,7 +71,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
     public readonly records: NativeDeque<TaskLink.Recording>;
 
     /** The type of link, one of the above */
-    public readonly type: short;
+    public readonly type: ShortNumber;
 
     /**
      * The index of the component in the component list of the compound, may have up
@@ -88,7 +88,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param template The TermLink template
      * @param v        The budget
      */
-    public constructor(t: Task, template: TermLink | null, v: BudgetValue, recordLength: int) {
+    public constructor(t: Task, template: TermLink | null, v: BudgetValue, recordLength: IntNumber) {
         super(v);
         this.type = template === null ? TermLink.SELF : template.type;
         this.index =
@@ -101,7 +101,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
         this.hash = (((this.targetTask.hashCode() * 31) + this.type) * 31) + int16ArrayHashCode(this.index);
     }
 
-    public hashCode(): int {
+    public hashCode(): IntNumber {
         return this.hash;
     }
 
@@ -127,7 +127,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param i The index level
      * @return The index value
      */
-    public getIndex(i: int): short {
+    public getIndex(i: IntNumber): ShortNumber {
         if ((this.index !== null) && (i < this.index.length)) {
             return this.index[i];
         } else {
@@ -145,14 +145,14 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
      * @param currentTime The current time
      * @return Whether they are novel to each other
      */
-    public novel(termLink: TermLink, currentTime: long, narParameters: Parameters): boolean;
+    public novel(termLink: TermLink, currentTime: RuntimeLong, narParameters: Parameters): boolean;
 
-    public novel(termLink: TermLink, currentTime: long, narParameters: Parameters,
+    public novel(termLink: TermLink, currentTime: RuntimeLong, narParameters: Parameters,
         transformTask: boolean): boolean;
     public novel(...args: unknown[]): boolean {
         switch (args.length) {
             case 3: {
-                const [termLink, currentTime, narParameters] = args as [TermLink, long, Parameters];
+                const [termLink, currentTime, narParameters] = args as [TermLink, RuntimeLong, Parameters];
 
 
                 return this.novel(termLink, currentTime, narParameters, false);
@@ -162,10 +162,10 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
             }
 
             case 4: {
-                const [termLink, currentTime, narParameters, transformTask] = args as [TermLink, long, Parameters, boolean];
-                // The translated long may arrive at this runtime boundary as a
+                const [termLink, currentTime, narParameters, transformTask] = args as [TermLink, RuntimeLong, Parameters, boolean];
+                // The translated RuntimeLong may arrive at this runtime boundary as a
                 // JavaScript number (for example from Nar.time()). Normalize it
-                // before reproducing Java long arithmetic and keep recordings
+                // before reproducing Java RuntimeLong arithmetic and keep recordings
                 // consistently bigint-valued.
                 const currentTimeLong = BigInt(currentTime);
                 const noveltyHorizon = BigInt(narParameters.NOVELTY_HORIZON);
@@ -186,7 +186,7 @@ export class TaskLink extends Item<Task> implements TLink<Task> {
                             // too recent, not novel
                             return false;
                         } else {
-                            // happened long enough ago that we have forgotten it somewhat, making it seem
+                            // happened RuntimeLong enough ago that we have forgotten it somewhat, making it seem
                             // more novel
                             r.setTime(currentTimeLong);
                             ir.remove();

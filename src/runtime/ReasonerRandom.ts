@@ -55,7 +55,7 @@ export class ReasonerRandom {
             return value >= 2 ** 31 ? value - 2 ** 32 : value;
         }
         if (!Number.isSafeInteger(bound) || bound <= 0 || bound > INT_MAX) {
-            throw new RangeError(`Reasoner random bound must be a positive int: ${bound}`);
+            throw new RangeError(`Reasoner random bound must be a positive IntNumber: ${bound}`);
         }
 
         if ((bound & (bound - 1)) === 0) {
@@ -66,7 +66,7 @@ export class ReasonerRandom {
         while (true) {
             const bits = this.next(31);
             const value = bits % bound;
-            // Java performs this expression as a signed 32-bit int. The
+            // Java performs this expression as a signed 32-bit IntNumber. The
             // unsigned comparison below is the same rejection condition.
             if (bits - value + (bound - 1) < TWO31) {
                 return value;

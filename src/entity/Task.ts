@@ -1,6 +1,6 @@
 //! Java source: opennars/entity/Task.java
 import { ReasonerInputError } from "../runtime/ReasonerErrors.ts";
-import type { int, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { IntNumber, RuntimeLong } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Item } from "./Item.ts";
 import { InternalExperience } from "../plugin/mental/InternalExperience.ts";
 import { textValue } from "../runtime/Text.ts";
@@ -29,14 +29,14 @@ class EnumType {
 
     private constructor(
         private readonly enumName: string,
-        private readonly enumOrdinal: int,
+        private readonly enumOrdinal: IntNumber,
     ) {}
 
     public name(): string {
         return this.enumName;
     }
 
-    public ordinal(): int {
+    public ordinal(): IntNumber {
         return this.enumOrdinal;
     }
 
@@ -75,7 +75,7 @@ export class Task extends Item<Sentence> {
     public constructor(s: Sentence, b: BudgetValue, type: Task.EnumType);
 
     /***
-     * Constructors for double premise derived task
+     * Constructors for DoubleNumber premise derived task
      *
      * @param s            The sentence
      * @param b            The budget
@@ -84,7 +84,7 @@ export class Task extends Item<Sentence> {
     public constructor(s: Sentence, b: BudgetValue, parentBelief: Sentence | null);
 
     /***
-     * Constructors for solved double premise derived task
+     * Constructors for solved DoubleNumber premise derived task
      *
      * @param s            The sentence
      * @param b            The budget
@@ -143,7 +143,7 @@ export class Task extends Item<Sentence> {
         return false;
     }
 
-    public hashCode(): int {
+    public hashCode(): IntNumber {
         return this.sentence.hashCode();
     }
 
@@ -152,7 +152,7 @@ export class Task extends Item<Sentence> {
      *
      * @return The creation time of the sentence
      */
-    public getCreationTime(): long {
+    public getCreationTime(): RuntimeLong {
         return this.sentence.stamp.getCreationTime();
     }
 

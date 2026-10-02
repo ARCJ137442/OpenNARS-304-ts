@@ -163,7 +163,7 @@ export class EventEmitter {
         if (observers === undefined || observers.length === 0)
             return;
 
-        // final int n = observers.size();
+        // final IntNumber n = observers.size();
         for (let m of observers) {
             m.event(eventClass, params);
         }

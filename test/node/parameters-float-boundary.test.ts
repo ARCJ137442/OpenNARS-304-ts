@@ -8,7 +8,7 @@ import { TruthValue } from "../../src/entity/TruthValue.ts";
 import { Narsese } from "../../src/io/Narsese.ts";
 import { OutputHandler } from "../../src/io/events/OutputHandler.ts";
 
-test("Nar config preserves Java float parameters at the TruthValue clamp boundary", () => {
+test("Nar config preserves Java FloatNumber parameters at the TruthValue clamp boundary", () => {
     const nar = new Nar();
 
     assert.equal(nar.narParameters.TRUTH_EPSILON, Math.fround(0.01));
@@ -57,7 +57,7 @@ test("Memory.output narrows the volume ratio before the Java subtraction", () =>
     assert.notEqual(expected, Math.fround(1 - nar.narParameters.VOLUME / 100));
 });
 
-test("Parameters keeps every Java float default in binary32", () => {
+test("Parameters keeps every Java FloatNumber default in binary32", () => {
     const parameters = new Parameters();
     const expected: Record<string, number> = {
         DECISION_THRESHOLD: 0.51,

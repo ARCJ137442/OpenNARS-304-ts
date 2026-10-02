@@ -21,7 +21,7 @@ type NativeOperator = Symbols.NativeOperator;
 export class Negation extends CompoundTerm {
 
     /**
-     * avoid using this externally, because double-negatives can be unwrapped to the
+     * avoid using this externally, because DoubleNumber-negatives can be unwrapped to the
      * original term using Negation.make
      */
     protected constructor(t: Term) {

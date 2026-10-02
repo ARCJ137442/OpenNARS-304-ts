@@ -1,5 +1,5 @@
 //! Java source: opennars/entity/BudgetValue.java
-import type { float, long } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
+import type { FloatNumber, RuntimeLong } from "../types.ts"; // Java primitive aliases formerly imported from jree; runtime narrowing is separate.
 import { Symbols } from "../io/Symbols.ts";
 import { Texts } from "../io/Texts.ts";
 import { UtilityFunctions } from "../inference/UtilityFunctions.ts";
@@ -9,7 +9,7 @@ import { Float32Math } from "../runtime/Float32.ts";
 import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerErrors.ts";
 
 /**
- * A triple of priority (current), durability (decay), and quality (long-term
+ * A triple of priority (current), durability (decay), and quality (RuntimeLong-term
  * average).
  *
  * @author Pei Wang
@@ -19,10 +19,10 @@ import { ReasonerInputError, ReasonerStateError } from "../runtime/ReasonerError
 // both are marker contracts here, while clone() remains an explicit method below.
 export class BudgetValue {
 
-    // Java stores these fields as float.  Keep the narrowing at write
+    // Java stores these fields as FloatNumber.  Keep the narrowing at write
     // boundaries; rounding getters or every consumer would change ordering.
-    private static float(value: number): float {
-        return Math.fround(value) as float;
+    private static FloatNumber(value: number): FloatNumber {
+        return Math.fround(value) as FloatNumber;
     }
 
     /** character that marks the two ends of a budget value */
@@ -31,7 +31,7 @@ export class BudgetValue {
     private static readonly SEPARATOR: string = Symbols.VALUE_SEPARATOR;
 
     /** relative share of time resource to be allocated */
-    private priority: float;
+    private priority: FloatNumber;
 
     /**
      * The percent of priority to be kept in a constant period; All priority
@@ -39,16 +39,16 @@ export class BudgetValue {
      * "durability" factor in (0, 1) to specify the percentage of priority level
      * left after each reevaluation
      */
-    private durability: float;
+    private durability: FloatNumber;
 
     /** overall (context-independent) evaluation */
-    private quality: float;
+    private quality: FloatNumber;
 
     /**
      * time at which this budget was last forgotten, for calculating accurate memory
      * decay rates
      */
-    private lastForgetTime: long = -1n;
+    private lastForgetTime: RuntimeLong = -1n;
 
     private narParameters: Parameters;
 
@@ -59,7 +59,7 @@ export class BudgetValue {
      */
     public constructor(v: BudgetValue);
 
-    public constructor(p: float, d: float, qualityFromTruth: TruthValue, narParameters: Parameters);
+    public constructor(p: FloatNumber, d: FloatNumber, qualityFromTruth: TruthValue, narParameters: Parameters);
 
     /**
      * Constructor with initialization
@@ -68,7 +68,7 @@ export class BudgetValue {
      * @param d Initial durability
      * @param q Initial quality
      */
-    public constructor(p: float, d: float, q: float, narParameters: Parameters);
+    public constructor(p: FloatNumber, d: FloatNumber, q: FloatNumber, narParameters: Parameters);
     public constructor(...args: unknown[]) {
         if (args.length === 1) {
             const [v] = args as [BudgetValue];
@@ -77,29 +77,29 @@ export class BudgetValue {
             this.durability = v.getDurability();
             this.quality = v.getQuality();
         } else if (args.length === 4) {
-            const [p, d, third, narParameters] = args as [float, float, float | TruthValue, Parameters];
+            const [p, d, third, narParameters] = args as [FloatNumber, FloatNumber, FloatNumber | TruthValue, Parameters];
             this.narParameters = narParameters;
-            this.priority = BudgetValue.float(p);
-            this.durability = BudgetValue.float(d);
+            this.priority = BudgetValue.FloatNumber(p);
+            this.durability = BudgetValue.FloatNumber(d);
             if (third instanceof TruthValue) {
                 // Java's TruthValue-to-quality constructor path uses the
-                // float evaluation before applying the quality formula.
-                this.quality = BudgetValue.float(Float32Math.truthToQuality(
+                // FloatNumber evaluation before applying the quality formula.
+                this.quality = BudgetValue.FloatNumber(Float32Math.truthToQuality(
                     third.getExpectationAsFloat(),
                 ));
             } else {
-                this.quality = BudgetValue.float(third);
+                this.quality = BudgetValue.FloatNumber(third);
             }
         } else {
             throw new ReasonerInputError("Invalid number of arguments");
         }
 
         if (this.durability >= 1.0) {
-            this.durability = BudgetValue.float(1.0 - this.narParameters.TRUTH_EPSILON);
+            this.durability = BudgetValue.FloatNumber(1.0 - this.narParameters.TRUTH_EPSILON);
             // throw new IllegalStateException("durability value above or equal 1");
         }
         if (this.priority > 1.0) {
-            this.priority = BudgetValue.float(1.0);
+            this.priority = BudgetValue.FloatNumber(1.0);
             // throw new IllegalStateException("priority value above 1");
         }
     }
@@ -117,7 +117,7 @@ export class BudgetValue {
      *
      * @return The current priority
      */
-    public getPriority(): float {
+    public getPriority(): FloatNumber {
         return this.priority;
     }
 
@@ -126,8 +126,8 @@ export class BudgetValue {
      *
      * @param v The new priority
      */
-    public setPriority(v: float): void {
-        const normalizedPriority = BudgetValue.float(v);
+    public setPriority(v: FloatNumber): void {
+        const normalizedPriority = BudgetValue.FloatNumber(v);
         if (normalizedPriority > 1.0) {
             throw new ReasonerStateError(`Priority > 1.0: ${normalizedPriority}`);
             // v=1.0f;
@@ -140,13 +140,13 @@ export class BudgetValue {
      *
      * @param v The increasing percent
      */
-    public incPriority(v: float): void {
-        this.setPriority(Math.min(1.0, UtilityFunctions.or(this.priority, v)) as float);
+    public incPriority(v: FloatNumber): void {
+        this.setPriority(Math.min(1.0, UtilityFunctions.or(this.priority, v)) as FloatNumber);
     }
 
     /** AND's (multiplies) priority with another value */
-    public andPriority(v: float): void {
-        this.setPriority(UtilityFunctions.and(this.priority, v) as float);
+    public andPriority(v: FloatNumber): void {
+        this.setPriority(UtilityFunctions.and(this.priority, v) as FloatNumber);
     }
 
     /**
@@ -154,8 +154,8 @@ export class BudgetValue {
      *
      * @param v The decreasing percent
      */
-    public decPriority(v: float): void {
-        this.setPriority(UtilityFunctions.and(this.priority, v) as float);
+    public decPriority(v: FloatNumber): void {
+        this.setPriority(UtilityFunctions.and(this.priority, v) as FloatNumber);
     }
 
     /**
@@ -163,7 +163,7 @@ export class BudgetValue {
      *
      * @return The current durability
      */
-    public getDurability(): float {
+    public getDurability(): FloatNumber {
         return this.durability;
     }
 
@@ -172,12 +172,12 @@ export class BudgetValue {
      *
      * @param d The new durability
      */
-    public setDurability(d: float): void {
-        d = BudgetValue.float(d);
+    public setDurability(d: FloatNumber): void {
+        d = BudgetValue.FloatNumber(d);
         if (d >= 1.0) {
-            d = BudgetValue.float(1.0 - this.narParameters.TRUTH_EPSILON);
+            d = BudgetValue.FloatNumber(1.0 - this.narParameters.TRUTH_EPSILON);
         }
-        this.durability = BudgetValue.float(d);
+        this.durability = BudgetValue.FloatNumber(d);
     }
 
     /**
@@ -185,12 +185,12 @@ export class BudgetValue {
      *
      * @param v The increasing percent
      */
-    public incDurability(v: float): void {
-        let durability2: float = UtilityFunctions.or(this.durability, v);
+    public incDurability(v: FloatNumber): void {
+        let durability2: FloatNumber = UtilityFunctions.or(this.durability, v);
         if (durability2 >= 1.0) {
             durability2 = 1.0 - this.narParameters.TRUTH_EPSILON; // put into allowed range
         }
-        this.durability = BudgetValue.float(durability2);
+        this.durability = BudgetValue.FloatNumber(durability2);
     }
 
     /**
@@ -198,8 +198,8 @@ export class BudgetValue {
      *
      * @param v The decreasing percent
      */
-    public decDurability(v: float): void {
-        this.durability = UtilityFunctions.and(this.durability, v) as float;
+    public decDurability(v: FloatNumber): void {
+        this.durability = UtilityFunctions.and(this.durability, v) as FloatNumber;
     }
 
     /**
@@ -207,7 +207,7 @@ export class BudgetValue {
      *
      * @return The current quality
      */
-    public getQuality(): float {
+    public getQuality(): FloatNumber {
         return this.quality;
     }
 
@@ -216,8 +216,8 @@ export class BudgetValue {
      *
      * @param v The new quality
      */
-    public setQuality(v: float): void {
-        this.quality = BudgetValue.float(v);
+    public setQuality(v: FloatNumber): void {
+        this.quality = BudgetValue.FloatNumber(v);
     }
 
     /**
@@ -225,7 +225,7 @@ export class BudgetValue {
      *
      * @param v The increasing percent
      */
-    public incQuality(v: float): void {
+    public incQuality(v: FloatNumber): void {
         this.quality = UtilityFunctions.or(this.quality, v);
     }
 
@@ -234,8 +234,8 @@ export class BudgetValue {
      *
      * @param v The decreasing percent
      */
-    public decQuality(v: float): void {
-        this.quality = UtilityFunctions.and(this.quality, v) as float;
+    public decQuality(v: FloatNumber): void {
+        this.quality = UtilityFunctions.and(this.quality, v) as FloatNumber;
     }
 
     /**
@@ -265,20 +265,20 @@ export class BudgetValue {
      *
      * @return The summary value
      */
-    public summary(): float {
+    public summary(): FloatNumber {
         return UtilityFunctions.aveGeo(this.priority, this.durability, this.quality);
     }
 
     public equalsByPrecision(that: unknown): boolean {
         if (that instanceof BudgetValue) {
             let t: BudgetValue = (that as BudgetValue);
-            let dPrio: float = Float32Math.from(Math.abs(Float32Math.subtract(this.getPriority(), t.getPriority()))) as float;
+            let dPrio: FloatNumber = Float32Math.from(Math.abs(Float32Math.subtract(this.getPriority(), t.getPriority()))) as FloatNumber;
             if (dPrio >= this.narParameters.TRUTH_EPSILON)
                 return false;
-            let dDura: float = Float32Math.from(Math.abs(Float32Math.subtract(this.getDurability(), t.getDurability()))) as float;
+            let dDura: FloatNumber = Float32Math.from(Math.abs(Float32Math.subtract(this.getDurability(), t.getDurability()))) as FloatNumber;
             if (dDura >= this.narParameters.TRUTH_EPSILON)
                 return false;
-            let dQual: float = Float32Math.from(Math.abs(Float32Math.subtract(this.getQuality(), t.getQuality()))) as float;
+            let dQual: FloatNumber = Float32Math.from(Math.abs(Float32Math.subtract(this.getQuality(), t.getQuality()))) as FloatNumber;
             return dQual < this.narParameters.TRUTH_EPSILON;
         }
         return false;
@@ -325,8 +325,8 @@ export class BudgetValue {
      * @return period in time: currentTime - lastForgetTime
      */
     // TODO< split this into two methods >
-    public setLastForgetTime(currentTime: long): long {
-        let period: long;
+    public setLastForgetTime(currentTime: RuntimeLong): RuntimeLong {
+        let period: RuntimeLong;
         if (this.lastForgetTime === -1n)
             period = 0n;
         else
@@ -337,7 +337,7 @@ export class BudgetValue {
         return period;
     }
 
-    public getLastForgetTime(): long {
+    public getLastForgetTime(): RuntimeLong {
         return this.lastForgetTime;
     }
 }

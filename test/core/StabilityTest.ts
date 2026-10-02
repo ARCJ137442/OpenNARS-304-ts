@@ -1,4 +1,4 @@
-import { java, JavaObject, type int, type double, type float } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type IntNumber, type DoubleNumber, type FloatNumber } from "../support/legacy-runtime-facade.ts";
 import { Debug } from "../../src/main/Debug.ts";
 import { Nar } from "../../src/main/Nar.ts";
 import { TextOutputHandler } from "../../src/io/events/TextOutputHandler.ts";
@@ -18,17 +18,17 @@ export class StabilityTest extends JavaObject {
         Debug.TEST = true;
     }
 
-    protected readonly minCycles: int = 1550; // TODO reduce this to one or zero to avoid wasting any extra time during tests
+    protected readonly minCycles: IntNumber = 1550; // TODO reduce this to one or zero to avoid wasting any extra time during tests
     public static showOutput: boolean = false;
     public static saveSimilar: boolean = true;
     public static showSuccess: boolean = false;
     public static readonly showFail: boolean = true;
     public static readonly showReport: boolean = true;
     public static readonly requireSuccess: boolean = true;
-    public static readonly similarsToSave: int = 5;
+    public static readonly similarsToSave: IntNumber = 5;
     protected static readonly examples: java.util.Map<java.lang.String, java.lang.String> = new java.util.LinkedHashMap(); // path -> script data
     public static readonly tests: java.util.Map<java.lang.String, java.lang.Boolean> = new java.util.LinkedHashMap();
-    public static readonly scores: java.util.Map<java.lang.String, double> = new java.util.LinkedHashMap();
+    public static readonly scores: java.util.Map<java.lang.String, DoubleNumber> = new java.util.LinkedHashMap();
     protected readonly scriptPath: java.lang.String;
 
     public static getExample(path: java.lang.String): java.lang.String {
@@ -72,7 +72,7 @@ export class StabilityTest extends JavaObject {
         StabilityTest.tests.put(name, java.lang.Boolean.TRUE);
     }
 
-    public static runTests(): double {
+    public static runTests(): DoubleNumber {
 
         StabilityTest.tests.clear();
         StabilityTest.scores.clear();
@@ -90,7 +90,7 @@ export class StabilityTest extends JavaObject {
 
         for (let e of StabilityTest.tests.entrySet()) {
             let name: java.lang.String = e.getKey();
-            let level: int = 0;
+            let level: IntNumber = 0;
             level = java.lang.Integer.parseInt(name.split("\\.")[0]);
             levelTotals[level]++;
             if (e.getValue().booleanValue()) {
@@ -98,15 +98,15 @@ export class StabilityTest extends JavaObject {
             }
         }
 
-        let totalScore: double = 0;
+        let totalScore: DoubleNumber = 0;
         for (let d of StabilityTest.scores.values())
             totalScore += d;
 
         if (StabilityTest.showReport) {
-            let totalSucceeded: int = 0;
-            let total: int = 0;
-            for (let i: int = 0; i < 9; i++) {
-                let rate: float = (levelTotals[i] > 0) ? (levelSuccess[i] as float) / levelTotals[i] : 0;
+            let totalSucceeded: IntNumber = 0;
+            let total: IntNumber = 0;
+            for (let i: IntNumber = 0; i < 9; i++) {
+                let rate: FloatNumber = (levelTotals[i] > 0) ? (levelSuccess[i] as FloatNumber) / levelTotals[i] : 0;
                 let prefix: java.lang.String = new java.lang.String((i > 0) ? ("NAL" + i) : "Other");
 
                 java.lang.System.out.println(
@@ -139,11 +139,11 @@ export class StabilityTest extends JavaObject {
 
     }
 
-    public run(): double {
+    public run(): DoubleNumber {
         return this.testNAL(this.scriptPath);
     }
 
-    protected testNAL(path: java.lang.String): double {
+    protected testNAL(path: java.lang.String): DoubleNumber {
         let expects: java.util.List<OutputCondition> = new java.util.ArrayList<OutputCondition>();
 
         let error: boolean = false;
@@ -173,7 +173,7 @@ export class StabilityTest extends JavaObject {
                 success = false;
         }
 
-        let score: double = Number.POSITIVE_INFINITY;
+        let score: DoubleNumber = Number.POSITIVE_INFINITY;
         if (success) {
             let lastSuccess: number = -1;
             for (let e of expects) {

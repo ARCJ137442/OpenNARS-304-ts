@@ -1,4 +1,4 @@
-import { java, type int } from "../../support/legacy-runtime-facade.ts";
+import { java, type IntNumber } from "../../support/legacy-runtime-facade.ts";
 import type { TextInput } from "../../../src/runtime/Text.ts";
 import { Nar } from "../../../src/main/Nar.ts";
 import { OutputHandler } from "../../../src/io/events/OutputHandler.ts";
@@ -8,7 +8,7 @@ import type { ClassTokenLike } from "../../../src/runtime/ClassIdentity.ts";
 const OUT = OutputHandler.OUT;
 const EXE = OutputHandler.EXE;
 
-type OutputContainsFactory = (nar: Nar, containing: TextInput, maxSimilars: int) => OutputCondition;
+type OutputContainsFactory = (nar: Nar, containing: TextInput, maxSimilars: IntNumber) => OutputCondition;
 type OutputNotContainsFactory = (nar: Nar, containing: TextInput) => OutputCondition;
 type OutputEmptyFactory = (nar: Nar) => OutputCondition;
 
@@ -92,7 +92,7 @@ export abstract class OutputCondition extends OutputHandler {
      * expectations
      */
     public static getConditions(n: Nar, example: TextInput,
-        similarResultsToSave: int): java.util.List<OutputCondition> {
+        similarResultsToSave: IntNumber): java.util.List<OutputCondition> {
         const conditions: java.util.List<OutputCondition> = new java.util.ArrayList<OutputCondition>();
         let lines: string[] = String(example).split("\n");
 

@@ -1,4 +1,4 @@
-import { java, JavaObject, type double, type int, type float, S } from "../support/legacy-runtime-facade.ts";
+import { java, JavaObject, type DoubleNumber, type IntNumber, type FloatNumber, S } from "../support/legacy-runtime-facade.ts";
 import type { Reasoner } from "../../src/interfaces/pub/Reasoner.ts";
 import { NALTest } from "../core/NALTest.ts";
 import { Performance } from "./Performance.ts";
@@ -8,12 +8,12 @@ import { Nar } from "../../src/main/Nar.ts";
 
 /**
  * tests performance of NAL, but can also uncover bugs when NAL runs with a
- * heavy and long load
+ * heavy and RuntimeLong load
  * useful for examining with a profiler.
  */
 export class NALStressMeasure extends JavaObject {
-    public static perfNAL(n: Reasoner, path: java.lang.String, extraCycles: int, repeats: int,
-        warmups: int, gc: boolean): double {
+    public static perfNAL(n: Reasoner, path: java.lang.String, extraCycles: IntNumber, repeats: IntNumber,
+        warmups: IntNumber, gc: boolean): DoubleNumber {
 
         let example: java.lang.String = NALTest.getExample(path);
 
@@ -64,12 +64,12 @@ export class NALStressMeasure extends JavaObject {
     }
 
     public static test(n: Reasoner): void {
-        let repeats: int = 1;
-        let warmups: int = 0;
-        let extraCycles: int = 5000;
+        let repeats: IntNumber = 1;
+        let warmups: IntNumber = 0;
+        let extraCycles: IntNumber = 5000;
 
         let c: java.util.Collection<JavaObject[]> = NALTest.params();
-        let totalTime: double = 0;
+        let totalTime: DoubleNumber = 0;
         for (let o of c) {
             let examplePath: java.lang.String = o[0] as java.lang.String;
             totalTime += NALStressMeasure.perfNAL(n, examplePath, extraCycles, repeats, warmups, true);
