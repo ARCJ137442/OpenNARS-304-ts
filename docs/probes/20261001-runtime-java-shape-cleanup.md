@@ -555,6 +555,17 @@ platform audit SHA-256 is
 `8811FFCF096A573863428197DDFAD33C40809311994CCB119D484F6BED0C176B` and
 reports zero mixed-boundary files.
 
+## Memory host-dead-state closure
+
+`Memory.isJUnitTest()` only inspected the Node process and wrote an unread
+field; it carried no NARS behavior. It is now removed, leaving Memory free of
+Node globals and scheduler stack inspection. Focused Memory/core tests passed,
+and the platform audit reports `coreCandidateFiles=0`, `mixedBoundaryFiles=0`,
+and jree imports `0/0` (audit SHA-256
+`AD007B36F8BE8A2D990B809D4F66E4E64D2716CC68180F571A62BE352E163046`).
+Exact-commit M1' for `9afde50` completed `243/243`; JSONL SHA-256
+`8EB19E43F8511F2EB5D22CFAA2BCA47D5A3C9A057CC0C6144AB27A31687A12C1`.
+
 ## Resource/process boundary naming batch
 
 The Node process helper is now `exitProcess`; the resource cleanup module is

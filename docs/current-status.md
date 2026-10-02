@@ -3189,6 +3189,12 @@ LeanSpec 15 项
 - TS-only M2：`506/508`；Java M2：`508/508`；exact-commit M1'：`243/243`，JSONL SHA-256 `F63B5D440D7D181538ADDBED5E00A54BA6BB4B33E33F34991B21F5FA4525FBF0`。
 - 这是已验证的一轮性能提升；后续继续 profile/优化，直到收益不足或达到 TPS/RPS 门。
 
+## 2026-10-02 Memory host-dead-state closure
+
+- 当前代码提交：`9afde50`，移除 `Memory.isJUnitTest` 的 Node 进程探测、未读取状态和 scheduler stack inspection；这些不承载 NARS 语义。
+- 聚焦回归 `49/49`；TS-only M2：`506/508`；Java M2：`508/508`；platform audit `coreCandidateFiles=0`、`mixedBoundaryFiles=0`、jree `0/0`。
+- exact-commit M1'：`243/243`，JSONL SHA-256 `8EB19E43F8511F2EB5D22CFAA2BCA47D5A3C9A057CC0C6144AB27A31687A12C1`。
+
 ## 2026-10-02 resource/process boundary batch
 
 - 当前代码提交：`d7958ad`，生产资源 helper 已改为 `ResourceErrors.ts`/`closeResources`/`handleResourceError`/`throwResourceError`，Node 进程出口为 `exitProcess`。
