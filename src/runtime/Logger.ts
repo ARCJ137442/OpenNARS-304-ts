@@ -12,8 +12,9 @@ export class Logger {
 
     public log(level: LogLevel, message: unknown, error?: unknown): void {
         const prefix = `${level} ${this.name}`;
-        if (message === null || message === undefined) console.error(prefix);
-        else console.error(prefix, textValue(message));
+        const write = level === "INFO" ? console.info : console.error;
+        if (message === null || message === undefined) write.call(console, prefix);
+        else write.call(console, prefix, textValue(message));
         if (error === null || error === undefined) return;
         const printStackTrace = (error as { stack?: unknown }).stack;
         if (typeof printStackTrace === "string") console.error(printStackTrace);

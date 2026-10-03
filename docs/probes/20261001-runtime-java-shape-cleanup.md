@@ -628,3 +628,9 @@ The batch removes those Node imports from `ConfigReader`, adds the narrow
 project host/I/O errors. This keeps `src/main`/core imports browser-resolvable
 without changing XML, plugin order, diagnostics, or default configuration
 values.
+
+## 2026-10-03：INFO 日志级别的原生宿主映射
+
+`Logger.log` 原先将所有级别都写到 `console.error`；CartPole 的真实 Chrome 基准在 NARS 执行操作时因此把 `INFO ProcessGoal Executed based on...` 记成控制台错误并以退出码 1 结束，尽管没有页面异常或 Worker fault。Java `Level.INFO` 的设计意图是普通诊断，不是错误。本批只让 INFO 使用 `console.info`，其他严重/未知级别及异常堆栈继续输出到 `console.error`；不改变 NARS 词项、任务、推理或操作顺序。直接 Logger 合同 `1/1`、非增量 typecheck、build/dist API、jree `0/0`、平台核心/混合边界 `0/0` 已通过。
+
+脏源码 TS-only M2 为 `512 passed / 2 skipped / 0 failed`（总计 514），原始 `reports/evidence/logger-info-ts-only-m2-20261003.tap` SHA-256 `992F2483748E016F5B55FB40FEE1A60C2DED72F4C5CB2FCF49FE0E082EFDDA21`；含 Java M2 为 `514/514 passed`，原始 `reports/evidence/logger-info-java-m2-20261003.tap` SHA-256 `E958FA78675C22F10D5D9C10B2B415389D0D0D1C19CF8AF9B1ACF44DEC0F9D83`。提交固定源码后仍需 M1′、#25/#246、降周期 #245、strict markerless、Node/API 和重建 Worker 后的 Chrome 复测，不能从日志级别合同推定整套门禁已通过。

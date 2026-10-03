@@ -55,3 +55,7 @@ transitions:
 ## 第四批：标准词项名称预筛（核心门通过，浏览器待测）
 
 在恢复态异 hash 的同具体类扫描中，仅当两端 `equals` 是项目内相同的标准 `Term`、`CompoundTerm` 或 `Variable` 方法时，先用原生名称排除必不相等者；自定义判等仍走双向完整合同。20-tick 候选/基线/复测 `26.47 / 23.02 / 26.53 RPS`，30-tick `27.98 / 25.79 / 28.60 RPS`，对应概念终点均一致。直接合同包括自定义跨名称相等、恢复态异 hash 与固定存储 hash 的名称变更。固定提交 `708afc5` 的 TS-only M2 `511 passed / 2 skipped / 0 failed`、含 Java M2 `513/513`、M1′ 主体 `243/243`、#25/#246、#245 降载 65536 和两项 strict markerless 均通过。M1′ 主体逐文件耗时合计 `693624 ms`，上一候选 `665581 ms`，不能把短 Demo 负载提升泛化为全部 NAL 提升。当前 Worker 的浏览器结果仍待复测；此前三个小候选收益不足 5% 或回退均已撤销，它们不能代替本轮及 Demo 长尾的收敛证明。
+
+## 浏览器诊断日志修正（当前批次）
+
+真实 Demo 出现 `INFO ProcessGoal` 时，核心 `Logger.log` 原错误地调用 `console.error`，使基准把普通操作诊断分类成浏览器错误。现只将 INFO 改为 `console.info`，保留严重错误及异常堆栈的错误通道。直接合同、typecheck、build/dist API、TS-only M2 `512 passed / 2 skipped` 与含 Java M2 `514/514` 已通过；本批仍须在固定源码上补齐 M1′、markerless 和 Chrome 复测。原始 TAP 与可证伪边界见 [运行时探查](../../docs/probes/20261001-runtime-java-shape-cleanup.md)。
