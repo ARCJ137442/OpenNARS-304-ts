@@ -48,6 +48,8 @@ transitions:
 
 2026-10-03 中期收口只确认性能试探阶段终止、核心语义证据仍可追溯、044 终端与 Microworld/HUD 修复已验收。新 045–049 功能性交接下一位 Agent；042 的 Pages、GitHub fix release、最终固定提交验收与 public 评估仍未完成，故本 spec 保持 `in-progress`。
 
+发行准备补充：清理 v1.0.4 误附旧包后，发现宽泛 `src` 打包规则仍收录本地历史 `.codex-corrupt` 文件。改为 TypeScript 文件白名单并排除内部检查清单；保留所有本地证据。增强发行检查器拒绝临时源文件、内部维护文档和缺失的包内 Markdown 目标，修正用户文档的维护链接后 `test:release` 通过，325成员、TypeScript/API/CLI/Shell 均通过。原始日志及 SHA-256 在当前状态。这一打包修复不改变推理核心，也不构成新版本发布或整体 spec 完成。
+
 ## 第一批：Bag 全表读取
 
 `Bag.findEquivalentKey` 的恢复态扫描保留 Java 相等方向和原有回退路径，读取从 `NativeMap.entrySet()` 的逐项包装改为 `recordsForView()` 的只读原始记录；同一改动覆盖 `rebuildEqualityBucket`。两轮同配置 A/B 的 RPS 增幅为 25.3% 和 24.0%；现有 Bag/NativeMap 合同 28/28、TS-only M2 506/508（2 skip）、Java M2 508/508、typecheck、build、dist API 与静态审计通过。仍须在不可变提交上完成 M1′、strict markerless 和 Demo 浏览器验收，才可接受为本规格的性能轮次。

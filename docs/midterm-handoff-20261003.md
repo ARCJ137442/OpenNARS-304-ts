@@ -45,6 +45,8 @@ Microworld seed19 示例知识、babble0、同步目标20TPS的 Chrome 30秒实�
 
 发布整理补充：`v1.0.4` 误附的 0.1.0、1.0.0–1.0.3 五个包已在本地/远端 SHA-256 核对后从该 Release 移除，本地文件保留；远端仅剩 1.0.4 包与 manifest。前后清单与哈希见当前状态，下一位 Agent 不必重复此清理。
 
+下载包白名单已收紧到 `src/**/*.ts` 并排除内部发行检查清单；历史 `.codex-corrupt` 本地文件保留但不入包。用户文档中的维护链接指向源码仓库，发行检查器会拒绝包内缺失的本地链接。增强包检查通过（325成员、外部 TypeScript/API/CLI/Shell），证据哈希见当前状态。核心 `src` 树不变；包内容与检查脚本有变化，应在最终发行提交重跑 `test:release`，不把旧 tarball 哈希当新版。
+
 1. `git status --short --branch` 核对两个主线和 Grid WIP 分支；读 specs 045–049 及 Demo 六份 `20261003-*` 探查文件。LeanSpec `search` 遇中文可能 UTF-8 panic，`link` 子命令不可用；不要伪造 board/依赖结果。
 2. 先实现共享的多 Worker/角色诊断和按需内部经验事件观察，区分预置、babble、NARS 派生；此能力供 Pong 与 Shot 共用。避免每世界刻全量扫概念袋。
 3. Grid 是**另一个 Demo**，内部切换方/三角/六角格及网格数；NARS × 2048 独立入口，游戏终局自动重开但默认保留同一 Worker/记忆。Pong 在一页对照多玩法；Shot 从当前简化版升级为 NARust-o 六入口的多玩家/进化规则。各项须真实 Worker 操作与规则测试，不以漂亮画面充当学习。

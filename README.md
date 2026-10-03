@@ -64,14 +64,14 @@ nar.stop();
 - [集成指南](docs/integration-guide.md)
 - [架构说明](docs/architecture.md)
 - [运行与验证手册](docs/operator-runbook.md)
-- [发布前检查清单](docs/release-checklist.md)
-- [开发者指南](docs/developer-guide.md)
-- [当前状态与证据](docs/current-status.md)
-- [最新中期交接与路线图](docs/midterm-handoff-20261003.md)
+- [发布前检查清单](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/release-checklist.md)
+- [开发者指南](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/developer-guide.md)
+- [当前状态与证据](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/current-status.md)
+- [最新中期交接与路线图](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/midterm-handoff-20261003.md)
 
 ## 状态与许可证
 
-原生 TypeScript 核心与既定语义门已通过；本轮性能试探在连续低收益后按用户要求停止，**尚未证明持续20TPS或严格性能收敛**。下一阶段是 Demo 周边功能迭代；当前 v1.0.5 只完成包版本准备，未创建 GitHub Release，Pages 仍为 v1.0.4。生产源码直接 jree audit 为 `0/0`；原始 2,000,000 周期长期稳定性仍 `not_run`。接手路线见[最新中期交接](docs/midterm-handoff-20261003.md)、[当前状态](docs/current-status.md)和[运行与验证手册](docs/operator-runbook.md)。
+原生 TypeScript 核心与既定语义门已通过；本轮性能试探在连续低收益后按用户要求停止，**尚未证明持续20TPS或严格性能收敛**。下一阶段是 Demo 周边功能迭代；当前 v1.0.5 只完成包版本准备，未创建 GitHub Release，Pages 仍为 v1.0.4。生产源码直接 jree audit 为 `0/0`；原始 2,000,000 周期长期稳定性仍 `not_run`。接手路线见[源码仓库中的交接](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/midterm-handoff-20261003.md)与[当前状态](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/current-status.md)，运行命令见[手册](docs/operator-runbook.md)。
 
 本仓库采用 MIT License，见 [LICENSE](LICENSE)。
 

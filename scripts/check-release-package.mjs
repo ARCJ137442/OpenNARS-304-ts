@@ -3,7 +3,7 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { copyFile, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, posix, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
@@ -72,6 +72,22 @@ try {
     ]) assert.ok(packageFiles.includes(required), `tarball is missing ${required}`);
     for (const forbidden of ["reports/", "scripts/e2e/", "java-master/", "output/", "META-INF/"]) {
         assert.equal(packageFiles.some(file => file.startsWith(forbidden)), false, `tarball contains ${forbidden}`);
+    }
+    for (const file of packageFiles) {
+        if (file.startsWith("src/")) assert.ok(file.endsWith(".ts"), `tarball contains a source diagnostic: ${file}`);
+        assert.doesNotMatch(file, /(?:\.codex-corrupt|\.bak|\.tmp|~)$/, `tarball contains a temporary artifact: ${file}`);
+        assert.doesNotMatch(file, /^docs\/(?:release-checklist|current-status|midterm-handoff|active-goal|open-source-readiness)/,
+            `tarball contains an internal maintenance document: ${file}`);
+    }
+    const members = new Set(packageFiles);
+    for (const file of packageFiles.filter(file => file.endsWith(".md"))) {
+        const markdown = await readFile(join(projectRoot, file), "utf8");
+        for (const [, rawTarget] of markdown.matchAll(/\]\(([^)]+)\)/g)) {
+            const target = rawTarget.replace(/^<|>$/g, "").split("#", 1)[0];
+            if (!target || /^[a-z][a-z0-9+.-]*:/i.test(target)) continue;
+            const resolvedTarget = posix.normalize(posix.join(posix.dirname(file), target));
+            assert.ok(members.has(resolvedTarget), `shipped Markdown link is missing its target: ${file} -> ${rawTarget}`);
+        }
     }
 
     await writeFile(join(auditRoot, "package.json"), JSON.stringify({

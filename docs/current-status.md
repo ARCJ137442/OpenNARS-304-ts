@@ -44,6 +44,8 @@ v1.0.4 已发布
 
 ## 尚未完成与下一步
 
+2026-10-03 下载包审计发现并修复一个发布遗漏：`files: src` 将本地历史 `src/language/Term.ts.codex-corrupt` 收入包。现改为 `src/**/*.ts`，本地文件保留；内部发行检查清单也不再随包提供。文档索引精简为用户入口，未随包提供的维护资料改用源码仓库链接；发行检查器新增源文件/临时文件/内部文档排除及本地 Markdown 链接完整性断言。增强的 `npm run test:release` 通过外部 TypeScript、API、CLI、Shell，包成员为325；指定本机路径模式扫描0命中，不等于已完成全面机密审计。最终日志 `reports/evidence/release-package-content-fix-passed-20261003.log` SHA-256 `40EEC9FE577D12731A7B66C20F0BDD1EFE14255728B53E2E08B83D56EB5F668D`；包清单 `pack-content-after-fix-20261003.json` SHA-256 `57BC57EB2F3DE7F1EAD3DEB2BBF15F053A6C337C0AE88D436045F9B5F1DBE772`。首轮增强检查因已有缺失文档链接失败，修正后通过；推理源码未改，不重复 M1′。
+
 2026-10-03 发布资产整理已完成：GitHub `v1.0.4` Release 的五个误附旧版 `.tgz`（0.1.0、1.0.0–1.0.3）经本地/远端 SHA-256 一致性核对后移除，本地历史包保留。远端现仅有 `opennars-304-ts-1.0.4.tgz` 与 `release-manifest.json`。前后清单在 `reports/evidence/release-v1.0.4-assets-{before,after}-cleanup-20261003.json`，SHA-256 分别 `4C44ADEDDA4B9208929872A83CC502883551F16E3D14EE905174BCAC175443D1`、`EE0DFB8B13FDFB49B49BA76810E221C0D33B349B8872714412F7DCC0FB1EA83E`。这不表示创建了 v1.0.5 Release。正式 TypeScript Logo 的人类批示已补入当前目标，仍属于后续功能交接。
 
 1. BandRobot 虽发出操作，但固定 150 刻仍未完成抓取—搬运—交付；无效左移循环的负反馈候选已撤销。需以世界状态/成功交付验收，而非操作次数。

@@ -17,7 +17,7 @@ npm run test:release
 
 023/024 阶段门采用 244 个普通 NAL、#245 的 65536 周期降载 fixture 和额外 #246 `simpleOperationTest.nal`。原始 2,000,000 周期在当前设备上属于持续系统瓶颈，不作为日常门；运行时必须保留 `passed`、`process_limit`、`timeout`、`exception`、`stall` 和 `not_run` 的区别。
 
-完整命令和 canonical Java 路径见[核实手册](verification-commands.md)。长测使用单进程、唯一结果文件、逐文件 checkpoint 和 `--resume`；内存超过设备硬停止线时停止扩张。
+完整命令和 canonical Java 路径见[源码仓库中的核实手册](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/verification-commands.md)。长测使用单进程、唯一结果文件、逐文件 checkpoint 和 `--resume`；内存超过设备硬停止线时停止扩张。
 
 ## Demo 构建
 

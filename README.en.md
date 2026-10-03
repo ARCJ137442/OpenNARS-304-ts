@@ -60,8 +60,8 @@ Run `npm run release:bundle` to create a reproducible tarball and SHA-256 manife
 - [User guide](docs/user-guide.en.md)
 - [Integration guide](docs/integration-guide.en.md)
 - [Architecture](docs/architecture.en.md)
-- [Latest midterm handoff](docs/midterm-handoff-20261003.md)
-- [Open-source readiness](docs/open-source-readiness-v1.0.2.md)
+- [Latest midterm handoff](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/midterm-handoff-20261003.md)
+- [Release checklist](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/release-checklist.en.md)
 - [中文文档索引](docs/README.md)
 
 ## Attribution and license
