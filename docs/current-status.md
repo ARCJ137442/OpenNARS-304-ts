@@ -36,7 +36,7 @@ v1.0.4 已发布
 
 ## Demo 实际状态
 
-相邻 Demo 仓库当前主线 `7612d9b`：固定 Chrome smoke 显示普通 10 个 Demo 在 babble 0 时均能发出 `source=NARS` 操作；Microworld 的 seed19 示例知识可发出 `^Forward`，经典空白模式规则数为 0；无尾斜杠首页五张素材可见、首页 Worker 数 0、页面错误 0。终端已迁入 Astro 并加入同一目录，判断/目标/周期/重置在桌面与窄屏实测可用。Microworld 左/右身体语义修正及 HUD 固定槽位有直接/Chrome 回归。Demo 的 TypeScript/Astro、36 项单测和静态构建检查通过。预置因果规则有界面披露，不等于从零学习。
+相邻 Demo 仓库受测源码检查点 `7612d9b`：固定 Chrome smoke 显示普通 10 个 Demo 在 babble 0 时均能发出 `source=NARS` 操作；Microworld 的 seed19 示例知识可发出 `^Forward`，经典空白模式规则数为 0；无尾斜杠首页五张素材可见、首页 Worker 数 0、页面错误 0。终端已迁入 Astro 并加入同一目录，判断/目标/周期/重置在桌面与窄屏实测可用。Microworld 左/右身体语义修正及 HUD 固定槽位有直接/Chrome 回归。Demo 的 TypeScript/Astro、36 项单测和静态构建检查通过。预置因果规则有界面披露，不等于从零学习。
 
 同 Chrome 154 的**历史固定配置**30 秒：Microworld 示例模式目标 20 TPS、10 周期、babble 0，平均 `15.875 TPS`、末窗 `11.776`，NARS 4 次；经典空白模式同 seed 约 `19.627/19.766 TPS`，却没有 NARS 操作，不能替示例模式过门。CartPole 旧默认目标 5 TPS 时平均 `4.923`、末窗 `5.195`；20 TPS 压测平均 `9.947`、末窗 `7.588`。普通 Demo 现在目标最小20，但**尚无新配置下的持续30秒全矩阵**。扩展 Demo 的输入节奏变化是行为适配，不算核心同语义提速；TicTacToe、TestChamber、FighterPlane、Echo Relay 的历史后段仍不足。完整矩阵见相邻 Demo `docs/probes/20261003-embodied-operation-adaptation.md`。
 

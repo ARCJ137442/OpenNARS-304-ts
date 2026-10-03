@@ -24,7 +24,7 @@ Web Demo Lab
 ## 当前 Git 与现场
 
 - Core `main` 的生产源码仍与受保护 `083d7b8` 同树：`git rev-parse 083d7b8:src` 与中期文档后继的 `HEAD:src` 均为 `a36ce31778f25e74340fe4406847bacd7bb3c949`。本文件提交后需再确认。Core 当前包 `package.json` 为 `1.0.5`，**尚未发布**。
-- Demo `main` 已推送终端/首页/语义 FX/Microworld 左右修正/固定 HUD/20 TPS **目标配置**；最近生成束绑定 Core `e69160d`。GitHub Pages 仍是 v1.0.4 的旧站点，勿把本地预览当公网新版。
+- Demo `main` 的受测源码检查点 `7612d9b` 已推送终端/首页/语义 FX/Microworld 左右修正/固定 HUD/20 TPS **目标配置**；后续文档/构建提交不改变这些行为，最终 Worker 来源以 Demo `public/build-meta.json` 为准。GitHub Pages 仍是 v1.0.4 的旧站点，勿把本地预览当公网新版。
 - Demo 试验分支 `codex/gridworld-foundation-wip` 提交 `c9b237b` 已推送；包含方/三角/六角环面纯模型、未验收 Canvas 渲染器、9/9 直接合同与仅供参考的 `.astro` 页面草稿。主线不含不完整路由，可正常构建。下一 Agent 如需恢复该基础，先读该分支 `docs/probes/gridworld-wip-handoff.md`，再独立核对几何与感知。
 - Core 主线保留大量历史未跟踪 `reports/evidence/` 与旧探查文件；这是用户要求保留的原始证据，**不得删除，也不得 `git add -A`**。中期工作期间仅保留用户正在访问的 Astro preview 与 CodeGraph 服务，没有第二份 M1/M2/浏览器长测进程。
 
