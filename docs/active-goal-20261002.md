@@ -71,3 +71,29 @@ Demo 的具身适配与墙钟 RPS 监测已分批提交，生产监测提交为 
 用户随后要求经典 Microworld 的左/右操作分别表现为虫体逆/顺时针旋转，并新增单个可切换方格、三角格、六角格的环面 [046：Grid Microworld](../specs/046-grid-microworld-topologies/README.md)。该 Demo 应复用左右前与六点感知的 Narsese 合同，但作为新环境独立测试，不替代经典 Microworld 的性能或语义证据。044、045、046 的发布前工作均完成并验收后，才继续 v1.0.5 Pages 和 Release。
 
 用户继续指定独立的 [047：NARS × 2048 学习实验](../specs/047-nars-2048-learning-lab/README.md)：借鉴用户自己 MIT 项目 `jev-2048` 的纯棋盘引擎与实验呈现，游戏终局自动重开、默认保留 NARS 记忆，并以跨局数据验证实际学习。Jev 的 API/密钥和置信度语义不能照搬。当前仅完成本地源码与公开来源初查及规格，**尚未实现或验证此 Demo**；因此发行门继续等待 047。
+
+### 2026-10-03 Demo 发布前新增目标总览
+
+本节是新需求的主目标记录；操作层短期记忆在相邻 Demo 仓库 `docs/probes/20261003-demo-batch-requirements.md`。压缩后先核对两者，把较新的证据同步到本文件。原有 M1′/M2 和主动停止低收益优化的事实不因扩大 Demo 范围而失效。
+
+```text
+统一静态 Demo Lab（首页导航，不启动 NARS）
+  ├─ Astro 终端：同系列入口、实际 Worker、语义 FX/渐进披露
+  ├─ 经典 Microworld：左右身体语义修正、HUD 独立槽位
+  ├─ Grid Microworld：一个新 Demo，内部切换方/三角/六角环面格
+  ├─ Pong：OpenNARS 与 NARust-o 玩法在一个入口内切换，预留多 NARS UI
+  ├─ Shot：完整 NARust-o 多玩家/进化规则与 OpenNARS 具身适配
+  ├─ NARS × 2048：自动重开游戏、默认保留推理记忆、跨局学习对照
+  └─ 原有普通 Demo：真实操作与内部经验可见，目标 TPS 至少 20
+               ↓
+「一图胜千言」+ 事件驱动 FX + 经验/预期观察 + 无布局抖动
+               ↓
+直接合同 → Demo 全量/真实浏览器 → 核心 M1′/M2 来源一致性
+               ↓
+Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
+```
+
+- **已在 Demo 工作区实现但未发布**：无尾斜杠图片/链接修复、Astro 终端与目录卡、终端桌面/移动浏览器验证、一图胜千言规范；经典 Microworld 左右与 HUD 固定槽位、语义 FX 还需最终浏览器门。
+- **规格/调查中，未实现**：045 内部预期及操作经验可观察性、046 三拓扑 Grid Microworld、047 NARS × 2048、[048：Pong 玩法与多推理器对照](../specs/048-pong-playmodes-multi-reasoner/README.md)、[049：NARust-o Shot 多玩家完整移植](../specs/049-narust-shot-full-ports/README.md)。Pong 多模式含双控制者、对抗与双挡板；Shot 须覆盖单/双/进化六种源入口，不把当前单玩家简化 Shot 冒充完整复刻。多 NARS 须用独立 Worker/指标证明。其公开页面不得以空壳或伪数据冒充已完成。
+- **新速率口径**：所有 Demo 的**配置目标**不得低于 20 世界刻/秒；这只是目标值，不是持续实测。对每个 Demo 记录实际/目标 TPS、完成推理 RPS、有效 NARS 操作与内存；若未达到，必须如实披露。用户此前要求重复低收益时停止核心优化，不能为满足目标继续无根据地循环试探。
+- **发行冻结**：上述发布前工作未完成且未在固定版本上通过 Demo/核心验收前，不推送 Pages 新版、不创建 v1.0.5 Release。核心包版本号已在工作提交 `48b764c` 改为 `1.0.5`，但它不是已发布版本。
