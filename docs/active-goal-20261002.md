@@ -84,6 +84,7 @@ Demo 的具身适配与墙钟 RPS 监测已分批提交，生产监测提交为 
   ├─ Pong：OpenNARS 与 NARust-o 玩法在一个入口内切换，预留多 NARS UI
   ├─ Shot：完整 NARust-o 多玩家/进化规则与 OpenNARS 具身适配
   ├─ NARS × 2048：自动重开游戏、默认保留推理记忆、跨局学习对照
+  ├─ 正式 Logo：参考既有 OpenNARS SVG，以同尺寸 TypeScript 标记替换语言图标
   └─ 原有普通 Demo：真实操作与内部经验可见，目标 TPS 至少 20
                ↓
 「一图胜千言」+ 事件驱动 FX + 经验/预期观察 + 无布局抖动
@@ -93,7 +94,8 @@ Demo 的具身适配与墙钟 RPS 监测已分批提交，生产监测提交为 
 Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 ```
 
-- **已在 Demo 工作区实现但未发布**：无尾斜杠图片/链接修复、Astro 终端与目录卡、终端桌面/移动浏览器验证、一图胜千言规范；经典 Microworld 左右与 HUD 固定槽位、语义 FX 还需最终浏览器门。
+- **已提交推送并本地验收，未部署新版 Pages**：无尾斜杠图片/链接修复、Astro 终端与目录卡、终端桌面/移动浏览器验证、一图胜千言规范、经典 Microworld 左右语义与 HUD 固定槽位、首批语义 FX。Demo 主线检查点 `13d961f` 的最终构建通过 36 项单测；Core `ba0c096` 文档后继时的 Chrome 回归通过，后续 `dbf62ae` 仅改文档，生产源码树相同。原始日志与 SHA-256 见 Demo 需求总账；不能再把这些事项写成待修复。
+- **正式 Logo 待办**：Demo 需求总账中 2026-10-03 14:47:53 的人类批示指定参考 `opennars-logo-with-julia.svg` 与 `opennars-logo-modified-with-rust.svg`，将其中语言图标替换为青色方块 TS 标记，保持参考图标尺寸，用于项目官网与 Demo 网站。两个本地 SVG 已确认存在；尚未制作、审阅或部署，交下一位 Agent，实施前核对来源与许可。
 - **规格/调查中，未实现**：045 内部预期及操作经验可观察性、046 三拓扑 Grid Microworld、047 NARS × 2048、[048：Pong 玩法与多推理器对照](../specs/048-pong-playmodes-multi-reasoner/README.md)、[049：NARust-o Shot 多玩家完整移植](../specs/049-narust-shot-full-ports/README.md)。Pong 多模式含双控制者、对抗与双挡板；Shot 须覆盖单/双/进化六种源入口，不把当前单玩家简化 Shot 冒充完整复刻。多 NARS 须用独立 Worker/指标证明。其公开页面不得以空壳或伪数据冒充已完成。
 - **新速率口径**：所有 Demo 的**配置目标**不得低于 20 世界刻/秒；这只是目标值，不是持续实测。对每个 Demo 记录实际/目标 TPS、完成推理 RPS、有效 NARS 操作与内存；若未达到，必须如实披露。用户此前要求重复低收益时停止核心优化，不能为满足目标继续无根据地循环试探。
 - **本次中期边界**：2026-10-03 用户要求先收尾性能优化，将新增 045–049 功能性需求交接下一位 Agent；不在本次收尾继续做 Grid/2048/Pong/Shot。工作树保持可构建，纯 Grid 几何的 9 项测试通过的试验基础单独保存在 Demo 分支 `codex/gridworld-foundation-wip`，不进入主线或公开页面。

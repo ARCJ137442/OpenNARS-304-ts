@@ -32,5 +32,6 @@ npm run release:bundle
 - [ ] 检查 tarball、release manifest 与 SHA-256；包内只含 `dist`、必要源码/配置、CLI、双语公开文档、`LICENSE`、`NOTICE`，没有报告、崩溃日志、`.codegraph`、私钥或本机路径。
 - [ ] 中英 README、上手、集成、架构、运行手册与 Demo 文档能让干净 clone 的读者运行 Node CLI/API 和静态网页；明确 OpenNARS 3.0.4 改写来源、Demo 原始代码/素材授权和按事实记录的 Agent/模型参与。
 - [ ] 同步 Pages 的 `opennars-304-ts-lab/` 目录、审阅站点 diff、提交推送；从公网打开首页、Worker、代表 Demo 并核对版本。
-- [ ] 分内容提交推送核心和 Demo，创建**仅含本版 tarball 与 manifest** 的 GitHub fix release；旧 release 误带的历史 `.tgz` 资产单独核对清理。不发布 npm。
+- [ ] 分内容提交推送核心和 Demo，创建**仅含本版 tarball 与 manifest** 的 GitHub fix release。不发布 npm。
+- [x] 2026-10-03 已核对并清理 v1.0.4 Release 误附的五个历史 `.tgz`；现仅有 1.0.4 包与 manifest，本地历史文件保留，原始前后清单见当前状态。
 - [ ] 仓库从 private 改 public 前由所有者审查 Git 历史、Issues、Actions 日志、Pages 资产、许可证、第三方素材、机密与联系渠道；可见性变更不随本清单自动执行。

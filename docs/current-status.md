@@ -44,6 +44,8 @@ v1.0.4 已发布
 
 ## 尚未完成与下一步
 
+2026-10-03 发布资产整理已完成：GitHub `v1.0.4` Release 的五个误附旧版 `.tgz`（0.1.0、1.0.0–1.0.3）经本地/远端 SHA-256 一致性核对后移除，本地历史包保留。远端现仅有 `opennars-304-ts-1.0.4.tgz` 与 `release-manifest.json`。前后清单在 `reports/evidence/release-v1.0.4-assets-{before,after}-cleanup-20261003.json`，SHA-256 分别 `4C44ADEDDA4B9208929872A83CC502883551F16E3D14EE905174BCAC175443D1`、`EE0DFB8B13FDFB49B49BA76810E221C0D33B349B8872714412F7DCC0FB1EA83E`。这不表示创建了 v1.0.5 Release。正式 TypeScript Logo 的人类批示已补入当前目标，仍属于后续功能交接。
+
 1. BandRobot 虽发出操作，但固定 150 刻仍未完成抓取—搬运—交付；无效左移循环的负反馈候选已撤销。需以世界状态/成功交付验收，而非操作次数。
 2. 已证实 Microworld 474 刻有 596718 次 Bag 同类回退、29202388 次扫描；两版改名安全名称索引只有约 3%–5% 的 Microworld 总收益，并使 TestChamber RSS 多约 44–71 MB。其后的几何对象快路两版也没有端到端收益（Microworld 基线/候选总耗时 `9447/9533/9511 ms`），RSS 增加，**均已撤销**。用户要求在反复低收益时停止，因此本轮不再启动新性能候选。Microworld 示例模式持续 20 TPS 未达标；Bag 插入/分配、概念增长和 GC 长尾仍有未穷尽的热点，不能称严格性能收敛。原始数据、源码 patch 和 SHA 见 [Bag 探查](probes/20261002-bag-term-equality.md)。
 3. 本次仅做性能中期收口，不继续新功能；045–049 的可证伪路径见[中期交接](midterm-handoff-20261003.md)。未来任何核心生产修改需重新判断直接合同、完整 M2、M1′、markerless；Demo 新功能需静态构建与真实浏览器。最终发行仍须 Node/API、依赖/平台、编码、许可、公开资产与 Pages 现跑；GitHub fix release 未创建，也不发布 npm。仓库可见性变更仍须单独人工检查。
