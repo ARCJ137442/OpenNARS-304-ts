@@ -4,6 +4,8 @@
 
 ## 当前定位
 
+2026-10-03 新增 Demo 发布前范围：044 终端/首页路径与「一图胜千言」设计底座已由 Demo 提交 `aa06eb6`、`64ba889` 和本地构建/Chrome 证据验收；045 内部经验、046 Grid Microworld、047 NARS × 2048、048 Pong 多模式、049 Shot 完整多玩家移植仍 `in-progress`。现有 v1.0.5 仅是未发布的包版本准备；Pages/Release 仍为 v1.0.4。新需求总账见 [当前目标](active-goal-20261002.md)和相邻 Demo `docs/probes/20261003-demo-batch-requirements.md`。普通 Demo 的配置目标已改为至少 20 TPS，**实际持续速率未因此达标**。核心生产 `src` 树与受保护 `083d7b8` 的 Git 树哈希同为 `a36ce31778f25e74340fe4406847bacd7bb3c949`；v1.0.5 TS-only M2 复跑 `512 passed / 2 skipped / 0 failed`，含 Java M2 与 M1′仍沿用源树相同的既有证据，不能写成新 HEAD 现跑。
+
 ```text
 v1.0.4 已发布
     │

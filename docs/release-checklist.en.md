@@ -12,6 +12,9 @@
 
 ## Performance and Demo
 
+- [ ] Complete and verify specs 045–049 before release: actual reasoner experience, three-topology Grid Microworld, NARS × 2048 with memory retained across games, Pong play modes and multiple reasoners, and the full multiplayer Shot rules. The 044 entry/terminal foundation passed; pending items must not appear as empty public demos.
+- [ ] Configure each Demo for a target of at least 20 world ticks per second and report measured-versus-target rates separately. Raising the target is not a performance improvement.
+
 - [ ] Compare RPS, world TPS, FPS, p95 latency, concept growth, and memory with the same browser, seed, input, cycles, mode, and duration. Async world TPS never substitutes for reasoner throughput.
 - [ ] Prominently disclose that the Microworld scenario with NARS actions has not sustained 20 TPS: its 30-second average was `15.875 TPS` and its last window `11.776 TPS`. The user stopped this optimization round after repeated low-yield candidates; this is neither a convergence proof nor attainment of the target. Blank exploration speed cannot stand in for the active scenario.
 - [ ] Verify default rate and **effective** NARS actions in real browsers. Check BandRobot delivery and late-window rates for TicTacToe, TestChamber, FighterPlane, and Echo Relay.
