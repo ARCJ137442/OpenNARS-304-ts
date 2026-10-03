@@ -1,6 +1,6 @@
 {
     "name": "opennars-304-ts",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "type": "module",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -14,7 +14,7 @@
         "opennars-304": "dist/cli.mjs",
         "opennars-304-shell": "dist/shell.mjs"
     },
-    "description": "OpenNARS 3.0.4 的 TypeScript 实现，提供 Node.js CLI、ESM API 与独立浏览器 Worker Demo；v1.0.4 为运行时原生化与平台边界 fix release。",
+    "description": "OpenNARS 3.0.4 的 TypeScript 实现，提供 Node.js CLI、ESM API 与独立浏览器 Worker Demo。",
     "directories": {
         "doc": "docs",
         "test": "test"
