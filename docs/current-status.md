@@ -1,95 +1,46 @@
-# OpenNARS-304-ts Current Status
+# OpenNARS-304-ts 当前状态
 
-Status date: 2026-10-03 (Asia/Shanghai)
+日期：2026-10-03（Asia/Shanghai）。本文是当前交接入口；目标与退出条件见 [active-goal-20261002.md](active-goal-20261002.md)，历史过程见 [archive/current-status-history-20261002.md](archive/current-status-history-20261002.md)。历史未跟踪原始证据保留，不视为可随意清理的临时文件。
 
-This file is the current handoff. Historical detail moved to [archive/current-status-history-20261002.md](archive/current-status-history-20261002.md); raw test evidence remains under `reports/evidence/` and is never treated as disposable output.
-
-The expanded current objective and acceptance boundaries are in [active-goal-20261002.md](active-goal-20261002.md).
-
-## Current Position
-
-Last fully protected **core** production commit: `708afc5`, which adds a name prefilter only for the project's standard `Term`, `CompoundTerm` and `Variable` equality methods. Its fixed-input 20/30-tick RPS improved about 8.5–15% against the prior candidate with identical final concept counts; this is a short Node workload. Direct contracts `21/21`, TS-only M2 `511 passed / 2 skipped`, Java M2 `513/513`, nonincremental typecheck, build/dist API and static audits pass. On the same production commit, M1′ body `243/243`, #25/#246 and reduced #245 65536 pass, and both strict markerless samples reached 131072 cycles with Java-equal digests. M1′ body peak RSS was `856879104 bytes`; original 2,000,000-cycle stability remains `not_run`. M1′ body summed duration `693624 ms` versus `665581 ms` on the previous candidate, so the short-workload gain cannot be generalized to all NAL. Current Worker Chrome 30-second **sync** samples still miss sustained Demo targets: Microworld `12.57 TPS` average and `2.79 TPS` final five-second window; CartPole `2.23 TPS` average and `1.59 TPS` final window, with no NARS non-babble operation in these samples. Demo `npm run check` and real Chrome smoke pass. An async scheduler defect was fixed in Demo commits `25d0bac` and `278956f`: CartPole now sustains `19.95` world TPS while completing only `720` NARS cycles/30 seconds (`23.94 wall RPS`), so this is not a reasoner speedup. Performance convergence and fix release remain open. Source identities, SHA-256 values and classifications are in [the current Bag probe](probes/20261002-bag-term-equality.md).
-
-The new core candidate corrects INFO logging from `console.error` to `console.info`. Its direct test, nonincremental typecheck, build/dist API, TS-only M2 `512 passed / 2 skipped`, Java M2 `514/514` and static audits pass. Those M2 results were collected before committing the candidate; the protected M1′/markerless evidence above belongs to production `708afc5` and must be rerun on the fixed logger commit. The separate Demo worktree has a pending embodied-input batch: browser smoke now sees NARS operations in all ten ordinary demos with babble disabled, while Microworld still needs operation evidence. Its CartPole 30-second Chrome sample improved to `9.91 TPS` average and `7.58 TPS` final window at a 20 TPS target, but this remains below half target and that run classified an INFO console line as an error until the logger fix is bundled. Details are in the adjacent Demo repository's `docs/probes/20261003-embodied-operation-adaptation.md`.
+## 当前定位
 
 ```text
-v1.0.4 release (44e937b)
-        |
-        +-- ce448b6  midterm protection and push (origin/main)
-        +-- 17b5fb2  Bag restored-key scan allocation reduction
-        +-- 41070c1  Bag concrete Term class fast path
-        +-- 82469cc  Bag concrete Term index; M1'/M2 protected
-        +-- 33125d4  M1' validation type declaration fix
-        +-- 708afc5  standard Term name prefilter; core gates passed
-        +-- edd4036  current goal and gate clarification (docs only)
-        |
-        v
-  current Worker browser recheck -> further measured optimization -> fix release
+v1.0.4 已发布
+    │
+    ├─ 原生化与平台中立旧 spec：按当时口径 complete
+    ├─ 核心生产 083d7b8：M1′/M2/markerless 已保护
+    └─ Demo 生产 8a147f4：具身适配、输入节奏、墙钟 RPS 已实测
+         │
+         ├─ 10 个普通 Demo + Microworld 示例：能发出 NARS 操作
+         └─ 持续性能 / 有效任务闭环：仍有未达标项
+              ↓
+        spec 042 性能收敛 → 最终发行门 → Pages / fix release
 ```
 
-## Confirmed
+核心 `083d7b8` 将 INFO 日志从 `console.error` 改为 `console.info`，严重错误与异常堆栈仍走错误通道。源码、发布依赖没有 npm `jree`；最新静态审计 `audit:jree` 为直接导入 `0/0`、平台审计 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`。非增量 typecheck、build、dist API 通过。LeanSpec 042 为 `in-progress`；历史 023/024/025/027/031/036 的 complete 不代替本轮更严格的发行验收。
 
-- Production `src` has zero direct npm `jree` imports, zero `java.lang`/`java.util` code hits after comment stripping, and the current audit reports `0/0` direct imports/occurrences.
-- Core text rendering no longer uses private one-shot `StringBuilder` objects. Sentence output uses native fragments plus `join`; `TruthValue` returns formatted text directly.
-- Internal exact class comparisons use `constructor ===`; event identity uses constructor keys through `ClassKey` and `getClass(object)`. The old `ClassToken` object and WeakMap cache are gone from production.
-- Safe iterator call sites in `TaskLink` and `Bag` use native iteration. Mutable `remove`/fail-fast contracts remain in explicit collection boundaries.
-- Full TS-only M2 on current production: `511 passed / 2 skipped / 0 failed`. Full Java M2: `513/513 passed`.
-- Focused event/runtime contracts after constructor identity: `30/30`; focused iterator/container contracts: `33/33`.
-- Dist API, typecheck, build and jree audit pass on the current source line.
-- At `17b5fb2`, Bag's read-only restored-key scan avoids per-entry wrappers. Two fixed-input A/B runs improved RPS by about 24–25% without changing fallback equality or insertion order. TS-only M2 `506/508` (2 skipped), Java M2 `508/508`, 28 direct Bag/Map contracts, build and dist API passed.
+## 当前核心门证据
 
-## Protected Evidence
+| 门 | `083d7b8` 实际结果 | 原始证据 |
+| --- | --- | --- |
+| M1′ 主体 | 243/243 passed；failed/skipped/timeout/process_limit/exception/stall/not_run 均 0；耗时合计 614081 ms，单文件峰值 RSS 866082816 bytes | `reports/evidence/m1prime-logger-info-083d7b8-20261003.jsonl`，SHA-256 `26DD5A8BAD67FC53F397873CF2E6545B2A5C990D6B5A790BAF7930081498E726` |
+| #25 / #246 | 两项 functional/parity 均 passed；#25 502562 周期、136435 ms、RSS 849711104；#246 51564 周期、9279 ms、RSS 444280832 | 同前缀 `extra25` / `extra246` JSONL；SHA-256 分别 `8CB415247C23614B7F7BD44BF7ED32C9B01E0D143FA7F284039750080CAC689B`、`65A246A8E4ABE691CF4A30B4F0772E82B3962EA938F6FA0BE1FE168894A03C42` |
+| #245 降周期 | 2048 探针 2706 ms，估算 65536 约 86.6 秒；65536 夹具 passed、实际 67510 周期、35125 ms、RSS 596668416 | `m1prime-logger-info-083d7b8-long-65536-20261003.jsonl`，SHA-256 `138979C6427847A43241CC47B8F8E41C830163C6CB84406DC2F3286DAF5163A5`；冻结 Java 基线 SHA-256 `048C804D91986FBD597593C4CAE174D37DF09AA91D38560C433057945DF2F84E` |
+| strict markerless | simple/redundant 各 131072 周期、128 窗口，对各自冻结 Java 摘要 `equal=true` | `reports/evidence/markerless-logger-info-083d7b8-*-20261003.jsonl` 与对应 compare JSON；详见 [运行时探查](probes/20261001-runtime-java-shape-cleanup.md) |
+| 完整 M2 | 固定提交 TS-only 512 passed / 2 skipped / 0 failed；含 Java 514/514 passed | `reports/evidence/logger-info-083d7b8-committed-{ts,java}-m2-20261003.tap`，SHA-256 `0B3DA2B52102B6C430780C062F6A1B435BD08AD12DA68A71A0F1EAFC49DED820` / `C99B1F440603725E667F2A4693215786136862F8482A3C48D6D4B66B6FD12D9D` |
 
-- M1' `m1prime-compound-constructor-20261002.jsonl`: `243/243` passed with zero failure, timeout, process_limit, exception, stall or not_run rows.
-- Extra `nars_multistep_3.nal` and `simpleOperationTest.nal`: `2/2` passed in `m1prime-compound-extra-20261002.jsonl`.
-- Candidate `CompoundTerm.equals` A/B: baseline `2.594 RPS`, candidate `3.661 RPS`, candidate peak RSS `330358784`; committed at `445d873`.
-- Evidence hashes: M1' `F14E70676275EA41D73D5B2F5CD0F6765E6E6CAB9E0DFA23A885EF6C7121361F`; extra `4502E4A90054ED5B8D45D41BA79C2DF2DBE08B98D51BC559E1D4B227DDACED2A`; jree audit `69AF5E37833B13BFD0E5CF35521C10CB6743CEF9F648A2CE496B3F2864F3A028`; platform audit `DD7271085CA252DE0E1BAB586206EBABA41517BBAB15B5FD03BED96E30E4301D`.
-- Historical 50-tick demo probe at `01f08e6`: `3.720 RPS`, median step `2004 ms`, p95 `6759 ms`, peak RSS `333123584`; first segment TPS `1.319`, later segments below `0.5`. Concept count grew `1025 -> 3731`.
-- `17b5fb2` M1′ body `243/243`, #25 `1/1`, #246 `1/1`; reduced #245 65536 fixture `1/1` at `180667 ms` and peak RSS `388861952` bytes. Both strict markerless samples reached 131072 cycles and match frozen Java digests. See [the current probe](probes/20261002-performance-next-batch.md) for source SHA, classifications, baseline hashes and raw files.
+原始 2,000,000 周期长期稳定性仍为 **not_run**。降周期夹具不是原版长测，也不能宣称 Java 性能等价。
 
-## Spec / Gate State
+## Demo 实际状态
 
-```text
-023/024/025/027/031/036 board state: complete in LeanSpec history,
-but final claims are limited by the current immutable evidence and this handoff.
+相邻 Demo 仓库的具身输入批次与静态 Worker 已提交；当前监测代码生产提交 `8a147f4`。固定 Chrome smoke 显示普通 10 个 Demo 在 babble 0 时均能发出 `source=NARS` 操作；Microworld 的 seed19 示例知识也会发出 `^Forward`，经典空白模式规则数为 0；首页 Worker 数 0、页面错误 0。预置因果规则有界面披露，不等于从零学习。Demo 的 TypeScript/Astro、35 项单测和静态构建检查通过。
 
-020/027/031 LeanSpec board state: complete in historical spec records
-Current performance convergence goal (042): active; `708afc5` core gate passed, Chrome functional smoke passed, Demo TPS/operation and further convergence remain
-Original 2,000,000-cycle stability workload: not claimed (device resource limit)
-M1' on `708afc5`: 243/243 + extra 2/2, reduced #245 and strict markerless passed
-M2 on `708afc5`: TS-only 511/513 (0 failed, 2 skipped); Java 513/513
-Demo TPS target 20 / sync target 15: not achieved; concept growth and GC tails remain
-```
+同 Chrome 154、30 秒：Microworld 示例模式目标 20 TPS、10 周期、babble 0，平均 `15.875 TPS`、末窗 `11.776`，NARS 4 次；经典空白模式同 seed 约 `19.627/19.766 TPS`（平均/末窗），却没有 NARS 操作，不能用它替示例模式过门。CartPole 默认目标 5 TPS 时平均 `4.923`、末窗 `5.195`；20 TPS 压测平均 `9.947`、末窗 `7.588`。扩展 Demo 采用“前 5 刻完整输入、随后变化即报并每 5 刻刷新，反馈不丢”的**行为适配**，五项平均 TPS 对比旧输入改善 45.9%–215.2%，但 TicTacToe、TestChamber、FighterPlane、Echo Relay 的后段仍不足。完整矩阵、原始 JSON 哈希与行为限制见 Demo 仓库 `docs/probes/20261003-embodied-operation-adaptation.md`。
 
-## Evidence Commands
+`RuntimeTelemetryView` 已改为约一秒墙钟窗口统计完成的 NARS 周期，空闲归零；浏览器暂停回归通过。单次活跃推理速度不得写成持续 RPS。
 
-```powershell
-npm run typecheck
-npm run build
-npm run test:unit:serial
-npm run test:unit:with-java
-npm run test:api:dist
-npm run audit:jree
-node scripts/e2e/run-demo-workload-benchmark.mjs --cycles 10 --ticks 50 --report-every 10 --output <unique-evidence>.json
-```
+## 尚未完成与下一步
 
-M1' command used for this protected candidate:
-
-```powershell
-node scripts/e2e/run-nal-corpus.mjs --engine ts --java-baseline <frozen-g0-jsonl> --all --m-minus --chunk-size 1 --cycles 1550 --timeout-ms 180000 --process-limit-ms 3600000 --ts-mode cold --resource-metrics --result-file reports/evidence/m1prime-compound-constructor-20261002.jsonl --summary
-```
-
-The frozen baseline is outside the repository at `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts-evidence-archive\g0-java-baseline-frozen-26772af-20260917.jsonl`, SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`.
-
-## Handoff Rules
-
-- Do not delete historical evidence, crash logs, or the archived status file without an explicit retention decision.
-- Do not claim 031, complete M1, original long stability, TPS targets, or release readiness from M2 alone.
-- Keep long tests single-process with unique evidence prefixes and checkpoints. Resume the same result file after interruption.
-- After M1' terminates: classify every row (`passed`, `failed`, `skipped`, `timeout`, `process_limit`, `exception`, `stall`, `not_run`), then commit or revert the candidate based on parity and performance evidence.
-
-## Next Actions
-
-1. Use the equal-input Worker harness (67-tick concepts `7218`, browser `7232`) to test Bag insertion/index maintenance and memory growth. Its first new candidate, removing the duplicate `NativeMap` lookup, was rejected after four-run A/B: stable baseline gain only 4.7%, negligible late-window improvement; source was restored.
-2. Continue measured core/Demo optimization until the stated TPS target or a valid three-round sub-5% convergence proof. Rerun final gates for any new core change and verify NARS non-babble actions.
-3. Update Pages and prepare the fix release only after the final protected candidate and Demo acceptance.
+1. BandRobot 虽发出操作，但固定 150 刻仍未完成抓取—搬运—交付；无效左移循环的负反馈候选已撤销。需以世界状态/成功交付验收，而非操作次数。
+2. 对重负载的 TicTacToe、TestChamber、FighterPlane、Echo Relay 与 Microworld 示例模式继续做同输入剖析；以持续 TPS、真实完成周期、p95、概念增长、内存与有效操作共同验收。性能目标或“最后一次有效优化后连续三轮 <5% 且无高收益候选”的收敛证明目前都未满足。
+3. 任何新核心生产修改重新跑直接合同、完整 M2、M1′、markerless；Demo 改动跑静态构建与真实浏览器。最后核对 Node/API、依赖/平台、编码、许可及公开资产，更新中英双语文档、Pages，分内容推送并创建 GitHub fix release（不发布 npm）。仓库可见性变更仍须单独人工检查。
