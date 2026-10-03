@@ -67,11 +67,11 @@ nar.stop();
 - [发布前检查清单](docs/release-checklist.md)
 - [开发者指南](docs/developer-guide.md)
 - [当前状态与证据](docs/current-status.md)
-- [中期交接与路线图](docs/midterm-handoff-20261002.md)
+- [最新中期交接与路线图](docs/midterm-handoff-20261003.md)
 
 ## 状态与许可证
 
-当前维护主线是性能、Java-shape cleanup 与发布准备。生产源码的直接 jree audit 为 `0/0`；原始 2,000,000 周期长期稳定性仍受设备资源限制，不能宣称通过。当前进展与可接手路线见[中期交接](docs/midterm-handoff-20261002.md)、[当前状态](docs/current-status.md)和[运行与验证手册](docs/operator-runbook.md)。
+原生 TypeScript 核心与既定语义门已通过；本轮性能试探在连续低收益后按用户要求停止，**尚未证明持续20TPS或严格性能收敛**。下一阶段是 Demo 周边功能迭代；当前 v1.0.5 只完成包版本准备，未创建 GitHub Release，Pages 仍为 v1.0.4。生产源码直接 jree audit 为 `0/0`；原始 2,000,000 周期长期稳定性仍 `not_run`。接手路线见[最新中期交接](docs/midterm-handoff-20261003.md)、[当前状态](docs/current-status.md)和[运行与验证手册](docs/operator-runbook.md)。
 
 本仓库采用 MIT License，见 [LICENSE](LICENSE)。
 

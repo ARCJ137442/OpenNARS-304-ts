@@ -52,7 +52,7 @@ nar.stop();
 
 ## Release bundle
 
-Run `npm run release:bundle` to create a reproducible npm tarball and a SHA-256 manifest under `release/`.
+Run `npm run release:bundle` to create a reproducible tarball and SHA-256 manifest under `release/` for a future GitHub download. This project is not published to npm.
 
 ## Documentation
 
@@ -60,9 +60,12 @@ Run `npm run release:bundle` to create a reproducible npm tarball and a SHA-256 
 - [User guide](docs/user-guide.en.md)
 - [Integration guide](docs/integration-guide.en.md)
 - [Architecture](docs/architecture.en.md)
+- [Latest midterm handoff](docs/midterm-handoff-20261003.md)
 - [Open-source readiness](docs/open-source-readiness-v1.0.2.md)
 - [中文文档索引](docs/README.md)
 
 ## Attribution and license
 
 This project is a TypeScript rewrite and adaptation of OpenNARS 3.0.4. See [NOTICE](NOTICE) for attribution and [LICENSE](LICENSE) for the MIT License.
+
+The current performance round stopped after repeated low-yield candidates; sustained 20 TPS and strict performance convergence are not claimed. The next phase is Demo functionality. The v1.0.5 package version is prepared but unreleased; the public Pages site still serves v1.0.4.

@@ -12,9 +12,9 @@
 4. [集成指南](integration-guide.md)：Node/TypeScript、浏览器和 NAL 集成方式。
 5. [架构说明](architecture.md)：核心、Node adapter、Browser Worker 和数据流。
 6. [运行手册](operator-runbook.md)：构建、验证、部署和故障排查。
-7. [发布检查](release-checklist.md)：公开仓库、npm 和 Pages 发布前检查。
+7. [发布检查](release-checklist.md)：公开仓库、GitHub 下载包和 Pages 发布前检查；本项目不发布 npm。
 
-中英文入口均提供；发行包使用 `npm run release:bundle` 生成，Agent 工作流和身份披露见 [agent-workflow-disclosure.md](agent-workflow-disclosure.md)。
+中英文入口均提供；当前阶段事实与后续 Demo 交接见 [2026-10-03 中期交接](midterm-handoff-20261003.md)。发行下载包使用 `npm run release:bundle` 生成，Agent 工作流和身份披露见 [agent-workflow-disclosure.md](agent-workflow-disclosure.md)。
 
 ## 开发与维护入口
 

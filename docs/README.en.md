@@ -17,6 +17,7 @@
 - [Developer guide](developer-guide.md)
 - [Verification commands](verification-commands.md)
 - [Current status and evidence](current-status.md)
+- [2026-10-03 performance and Demo handoff](midterm-handoff-20261003.md)
 - [Agent workflow disclosure](agent-workflow-disclosure.md)
 
 The historical reports and specs are maintenance records, not prerequisites for using the package.
