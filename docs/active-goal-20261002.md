@@ -64,4 +64,10 @@ OpenNARS 3.0.4 可观察语义
 
 Demo 的具身适配与墙钟 RPS 监测已分批提交，生产监测提交为 `8a147f4`。真实 Chrome smoke 证明普通 10 个环境在 babble 0 时可发出 NARS 操作；Microworld 的 seed19“示例知识”可发出 `^Forward`，经典空白模式保留且不装先验。30 秒示例模式同步目标20TPS时平均 `15.875`、末窗 `11.776 TPS`，尚未达到持续20；五个扩展环境改为状态变化输入后平均 TPS 提高，但 TicTacToe、TestChamber、FighterPlane、Echo Relay 的末窗仍不足，BandRobot 的操作尚未形成完整交付。浏览器/同输入实验记录在相邻 Demo 仓库 `docs/probes/20261003-embodied-operation-adaptation.md`。原生词项名称索引与几何对象快路均未给出可接受的端到端收益，候选撤销、原始证据保留；具体反证见 [Bag 探查](probes/20261002-bag-term-equality.md)。依据用户最新指令，**停止本轮性能优化试探**，转向未完成的 Demo 行为、发布与公开核查。Microworld 持续 20 TPS 和严格“无高收益候选”收敛证明仍未达到，发行时必须明确披露。
 
-2026-10-03 新增发布前 Web Lab 门：[044：终端整合与一图胜千言设计](../specs/044-web-lab-terminal-integration/README.md)。无尾斜杠的 `/opennars-304-ts-lab` 入口实测让相对 sprite 与终端 URL 解析到网站根目录，导致首页虫子/食物消失并把终端带到 404。Demo 源码已加入统一 base path 和 Chrome 回归，构建与浏览器 smoke 通过；终端目前仍是复制的独立 HTML/JS，需进一步与 Astro Lab 整合，并按用户发布前设计原则审阅。Java Lab Launcher 的未复刻功能须列清单与后续路线，不得作为已实现入口。**v1.0.5 仅处于发行准备，尚未推送发布；先完成 044 的发布前部分再更新 Pages 和 GitHub Release。**
+2026-10-03 新增发布前 Web Lab 门：[044：终端整合与一图胜千言设计](../specs/044-web-lab-terminal-integration/README.md)。无尾斜杠的 `/opennars-304-ts-lab` 入口曾让相对 sprite 与终端 URL 解析到网站根目录，导致首页虫子/食物消失并把终端带到 404。Demo 工作区已加入统一 base path 和 Chrome 回归，终端已迁为 Astro 路由，旧复制页面从构建链移除；还须对最终工作区完成整体验收。Java Lab Launcher 的未复刻功能已单列路线，不作为已实现入口。**v1.0.5 仅处于发行准备，尚未推送发布。**
+
+随后用户又将终端明确纳入同一 Demo 系列，并要求游戏级但有语义的界面反馈、HUD 状态文案不挤动其他指标，以及可观察 NARS 内部预期和操作经验。044 的 Astro 终端/首页路径修复与设计规范已在 Demo 工作区实现并通过本地 Chrome；新 [045：Demo 内部经验观察](../specs/045-demo-experience-observatory/README.md) 正在调查 NARS 的真实事件与有界采样方式。尚未完成 045、最终提交/Pages/发行门之前，**不创建 v1.0.5 Release，也不把内部经验视图说成已完成**。
+
+用户随后要求经典 Microworld 的左/右操作分别表现为虫体逆/顺时针旋转，并新增单个可切换方格、三角格、六角格的环面 [046：Grid Microworld](../specs/046-grid-microworld-topologies/README.md)。该 Demo 应复用左右前与六点感知的 Narsese 合同，但作为新环境独立测试，不替代经典 Microworld 的性能或语义证据。044、045、046 的发布前工作均完成并验收后，才继续 v1.0.5 Pages 和 Release。
+
+用户继续指定独立的 [047：NARS × 2048 学习实验](../specs/047-nars-2048-learning-lab/README.md)：借鉴用户自己 MIT 项目 `jev-2048` 的纯棋盘引擎与实验呈现，游戏终局自动重开、默认保留 NARS 记忆，并以跨局数据验证实际学习。Jev 的 API/密钥和置信度语义不能照搬。当前仅完成本地源码与公开来源初查及规格，**尚未实现或验证此 Demo**；因此发行门继续等待 047。
