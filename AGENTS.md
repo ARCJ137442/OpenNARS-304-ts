@@ -10,9 +10,9 @@
 
 ## 阶段封存规则
 
-- 项目已于 2026-08-27 阶段封存；开始任何工作前先读 `docs/current-status.md` 与 `docs/developer-guide.md`。
-- 代码恢复点是 `17cec541f535d83bd62e5b15ee9c03f4a2233812`；旧 `v0.1.0` tag 不是新的发布候选。
-- `020`、`023`、`024` 仍未完成；没有新的明确目标时不得自行恢复，也不得为表示“暂停”而标成 complete。
+- 2026-08-27 是历史阶段封存点；开始任何工作前先读 `docs/current-status.md` 与 `docs/developer-guide.md`，再核对 Git 和 LeanSpec 实际状态。
+- `17cec541f535d83bd62e5b15ee9c03f4a2233812` 是历史代码恢复点，旧 `v0.1.0` tag 不是当前发布候选。
+- `020`、`023`、`024` 已按各自历史验收口径完成；当前性能收敛与修订发行由 `042` 跟踪，不能用旧 spec 的 complete 代称本轮目标完成，也不得为了表示“暂停”而修改状态。
 - 当前状态只维护在 `docs/current-status.md`；README 只保留必要摘要和入口。
 - 历史 Agent 提示词、旧战略与待办计划只能用于追溯，不能覆盖 Git、LeanSpec 与冻结报告的事实。
 
