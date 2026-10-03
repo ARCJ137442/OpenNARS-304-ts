@@ -21,6 +21,8 @@ transitions:
 
 本规格**需要** 031 与 036 的已实现合同。当前安装的 `lean-spec` CLI 没有 `link` 子命令，也没有 `update --depends-on`；依赖关系暂以此处显式记录，工具缺口不能伪造为已链接。
 
+2026-10-03 用户新增 Web Lab 发布前设计与终端整合要求，故本次发行还须完成 [044](../044-web-lab-terminal-integration/README.md) 的发布前入口、终端和浏览器门。LeanSpec CLI 搜索 `Demo Lab` 时因中文字节边界 panic，`link` 命令仍不可用；以实际文件和本段为准，不伪造工具结果。
+
 ## 实施计划
 
 - [ ] 对每个候选保留同配置 A/B、源码提交、RPS/TPS、长尾、概念数与 RSS；否决无收益或语义回退的候选。
