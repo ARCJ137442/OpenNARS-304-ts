@@ -13,7 +13,7 @@
 ## Performance and Demo
 
 - [ ] Compare RPS, world TPS, FPS, p95 latency, concept growth, and memory with the same browser, seed, input, cycles, mode, and duration. Async world TPS never substitutes for reasoner throughput.
-- [ ] Sustain 20 TPS in a Microworld scenario that actually issues NARS actions, or meet the goal document's three consecutive sub-5% convergence rule after the last effective optimization and prominently disclose the remaining gap. Blank exploration speed cannot stand in for the active scenario.
+- [ ] Prominently disclose that the Microworld scenario with NARS actions has not sustained 20 TPS: its 30-second average was `15.875 TPS` and its last window `11.776 TPS`. The user stopped this optimization round after repeated low-yield candidates; this is neither a convergence proof nor attainment of the target. Blank exploration speed cannot stand in for the active scenario.
 - [ ] Verify default rate and **effective** NARS actions in real browsers. Check BandRobot delivery and late-window rates for TicTacToe, TestChamber, FighterPlane, and Echo Relay.
 - [ ] Pass the Demo `npm run check`, Worker build, artifact check, and real Chrome smoke. The index must start no NARS Worker; console, page, and Worker faults must be zero. `build-meta.json.sourceCommit` must match the final core commit.
 

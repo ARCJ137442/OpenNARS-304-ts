@@ -13,7 +13,7 @@
 ## 性能与 Demo
 
 - [ ] 同浏览器、seed、输入、周期、模式和时长比较推理 RPS、世界 TPS、FPS、p95、概念增长与内存；异步世界 TPS 不充当推理吞吐。
-- [ ] Microworld 的**有操作**场景持续达到 20 TPS，或满足目标文件中“最后一次有效优化后连续三轮 <5% 且无高收益候选”的收敛与显著披露条件。经典空白场景的速率不能替代它。
+- [ ] 显著披露 Microworld **有操作**场景尚未持续达到 20 TPS：30 秒平均 `15.875`、末窗 `11.776 TPS`。重复低收益后已按用户指令主动停止本轮试探；不能把停止称为严格收敛或性能达标，也不能用经典空白场景替代。
 - [ ] 普通 Demo 的默认目标速率与有效 NARS 操作经真实浏览器验证；尤其要核对 BandRobot 的实际交付和 TicTacToe、TestChamber、FighterPlane、Echo Relay 的后段速率。
 - [ ] `npm run check`、Worker 构建、产物完整性检查与真实 Chrome smoke 通过；首页不启动 NARS Worker，Console/page/Worker 错误均为 0；`build-meta.json.sourceCommit` 指向最终核心提交。
 

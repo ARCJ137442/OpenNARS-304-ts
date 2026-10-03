@@ -123,4 +123,14 @@ Demo 输入节奏的只读核对：原版 `SimNAR.java` 第 309–321 行用单�
 
 可读 Worker 的 V8 profile 显示原 `findEquivalentKey` 自采样约 9.3%，候选降至约 2.8%，但 `indexTermKey`、Bag 插入及词项初始化/分配抵消了大部分收益。**两版源码及生成束均已撤销**；不能因为 2920 万次扫描消失就声称端到端优化达标。Microworld 四份 JSON 的 SHA-256 依次为 `C350D0517C0ED8E94400D1FF39436E4567DFE0CD6181A924812B952B14E6CFCD`、`7BAA106D3E95C4B44D3415D2CC50EEBA83F513F0CFE90B17EE227F433A9A8684`、`D7B5401A46BB0CFCE30CD202B73E6CE5ECC1EAFBA4F9FD00AC838E8E3BF8FFBD`、`41B461DA805EA3DC989D92653AF882E3561E50E8C7A0B57F74030FFB9F8C559D`。两版 patch 和未提交模块副本保存在 `reports/evidence/bag-name-index-v{1,2}-*20261003*`；原始 A/B JSON 保留在 Demo `test-results/`。这是一项低收益候选，但其他明确的推理/分配热点仍存在，**不满足性能收敛三轮的停止条件**。下一实验优先剖析 `CompoundTerm.init`、`SetExt/SetInt.make` 与 Bag 插入的分配路径，而非继续堆名称索引。
 
+## 第七候选：无空间索引词项避免临时几何对象（已否决）
+
+固定 Microworld 可读 Worker profile 中 `CompoundTerm.init`、`SetTensional` 构造与 SetExt/SetInt 工厂合计占可见的多个热点。`CompoundTerm.UpdateConvRectangle(term)` 即使所有子词项 `term_indices === null` 也扫描并构造一个只有 null 默认字段的 `ConvRectangle`；`CompoundTerm.init` 每次调用它，`Conjunction.make` 的普通非空间路径又可提前判定无空间索引。实验 v1 在内部构造路径跳过临时对象，v2 合并扫描；**公开的 `UpdateConvRectangle` 仍返回独立对象**。两版相关直接合同 `9/9` 和非增量 typecheck 均通过，但这只能说明局部合同未破坏，不能代替端到端收益。
+
+固定 Microworld seed19、示例规则、babble0、474 刻×10周期：基线总耗时 `9447 ms`、末段 `19.931 TPS`、峰值 RSS `324546560 bytes`；v1 为 `9533 ms`、`20.032 TPS`、`328462336 bytes`；v2 为 `9511 ms`、`19.499 TPS`、`337014784 bytes`。三者概念终点都为 `1549`，NARS 操作均为相同的 4 次 `^Forward`。v1 在 TestChamber 25 刻从已有基线 `7163 ms`、RSS `343220224 bytes` 变为 `7345 ms`、`347869184 bytes`。这两版既无稳定 ≥5% 吞吐收益，内存还上升，**全部撤销**；未运行 M1′/M2，不得宣称候选通过最终语义门。
+
+原始 Demo JSON `test-results/microworld-geometry-{baseline,candidate,v2-candidate}-474-20261003.json` SHA-256 依次为 `0E311C674BA876092268DDBFBAD805EE885108E6066E5662BD1652DA5FD2E089`、`9253DAEB0A671B1F86AD95E70DA18FD460D53463519C47756C77AD24D42CF9F4`、`1EA5BD439C23209FEC9211E55CE2438144113C58D02032C70ED1E44C78AB89DB`；TestChamber v1 JSON SHA-256 `986EDE24A81E9A0261472B84E85F9F85378E9913FE567815583E483FACF77A25`。候选 patch 在 `reports/evidence/term-geometry-v{1,2}-candidate-20261003.patch`，SHA-256 为 `8B59E079ACEE1B6C7D2945389A13CD6D787B43B20C5204DC792929BC32AC96F3`、`0461D7459B06221B44D4CE0FBC3BD5B85F5DD63558034317088BACCA60F075F8`。直接测试副本 SHA-256 `E34A918241DC6CE18CC87B677DF63527F686BBB733F7A356E7CB9706AE7C56D7`。这些 JSON 的 `coreCommit` 是候选实验时 HEAD，候选实际为 dirty source，须连同 patch 才能识别被测代码。
+
+用户要求重复没有明显优化时停止。重复首查、名称索引、几何对象三条候选线均未提供可接受的端到端收益，本轮**主动停止性能试探**。这不是“无高收益候选”的证明，也不能宣布 Microworld 持续 20 TPS 已达标；保留 Bag 插入/分配、概念增长和 GC 长尾作为已知残余热点，继续核对 Demo 行为与发行门，并在公开说明中披露差距。
+
 只读 `validation:plan` 在 `07aceff..82469cc`、冻结 Java baseline 与唯一证据前缀下输出 `plan_valid=true`、`T1`、J3 推理核心簇、四项受影响 NAL。当前策略脚本却拒绝在 stage `none`/`rc` 用 `--m1-profile prime`（只允许旧 023/024），与本次用户准许 023 之外使用 M1′ 的口径冲突；现阶段使用默认档生成只读风险计划并手工执行本目标的 M1′，后续需修正策略/测试，不能伪称工具已经认可 042 的 prime 档。
