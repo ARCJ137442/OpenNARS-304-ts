@@ -6,7 +6,7 @@
 
 ### 2026-10-05 默认入口修复
 
-- Demo 最新源码提交为 `65f764b`（行为修复 `df58b15`）：经典 Microworld 的默认入口现在使用随机 seed 和空白探索；只有显式 `?seed=<n>&knowledge=starter` 才装入示例先验。
+- 默认入口行为修复提交为 `df58b15`，当前 Demo 代码已推进到 `10f5a77`：经典 Microworld 使用随机 seed 和空白探索；只有显式 `?seed=<n>&knowledge=starter` 才装入示例先验。
 - 默认模式与 seed 解析已抽为 `src/demo-seed.ts` 的纯函数，并新增回归测试；本地 Demo 全量 71 项测试、typecheck、build、产物检查和浏览器探针通过。
 - Pages 仓库已提交并推送 `9c5602a`，部署目录为 `opennars-304-ts-lab/`。Core 仍为 `v1.0.6`，本次只更新 Demo，不构成新的 Core 发行版。
 - 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T19:28:38.801Z`，构建绑定 Core `0599cee`；公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
@@ -17,7 +17,7 @@
 - 经典 Microworld 与 Grid Microworld 现在共用 `src/ui/reasoner-observatory.ts`、`reasoner-panel.css` 和 `experience-timeline.ts` 的状态/呈现合同；Grid 只提供拓扑世界与 Worker 数据，不再拥有独立的操作缓存、经验刷新或观测补丁。
 - 经验 Top-N 信念在展开期间按节流窗口动态刷新，并使用当前 NAR 时钟做时间投影后排序；感知格显示具体百分比与强度条；Grid 支持虫体/食物拖动到拓扑格点。
 - Microworld 默认入口为随机种子、空白探索；只有显式 `?seed=<n>&knowledge=starter` 才启用可复现实验和示例知识。首页不再把 NARS 终端列为 Demo 卡片，终端仍保留顶部入口。
-- Demo 当前门：typecheck、70 项单测、build、产物检查和本地 Chrome 回归通过；Core M1′/M2、持续 TPS 性能目标、049 长期等价和仓库 public 审查仍未完成。
+- Demo 当前门：typecheck、73 项单测、build、产物检查和部署前缀 Chrome 回归通过；Core M1′/M2、持续 TPS 性能目标、049 长期等价和仓库 public 审查仍未完成。
 - Core 最新文档提交为 `62957cd`；本次公网 Demo 构建绑定其前一份文档身份 `0599cee`，生产 `src` 未变；Pages 最新部署为 `d223e48`。`build-meta.sourceCommit` 记录实际构建绑定提交，不能把文档提交误写成运行时变更。
 - 当前候选 Java M2 已串行现跑：`514/514 passed`，退出码 0；证据 `reports/evidence/m2-current-7492666-java-20261005.tap`，SHA-256 `7F9E7B060623EBA032D1175962C07864576524DA562C0401F161F7237AB9A3C5`。M1′/strict markerless 复用未改变生产源码树的既有证据。
 

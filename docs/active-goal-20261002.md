@@ -131,6 +131,6 @@ Demo `df58b15` 将经典 Microworld 的入口合同明确为“随机 seed + 空
 
 Demo `10f5a77` 进一步校正 Shot：静态靶纳入单人与进化模式，进化总角色和上限与 NARust-o 对齐，按玩家顺序选择首个同轴目标；操作设置速度后下一世界刻移动，射击反馈按角色队列回送；73 项 Demo 单测与部署前缀 Chrome 门通过，Pages 为 `d223e48`。公网 Chrome 实测进化模式为 4 个 NARS 角色、进化 1 次、页面错误 0。这仍不等于长期行为等价或 NARS 记忆克隆等价。
 
-Demo 当前源码提交为 `6cf5401`，共享观测重构为 `f40165e`，Pages 最新部署为 `7737547`。经典 Microworld 与 Grid Microworld 共用操作缓存/IDLE 语义、感知强度、奖励摘要、经验观察与时间投影模块；Grid 只保留拓扑世界、拖动交互和 Worker 数据适配。Grid 渲染缓存、经典素材方向、坏食物旋转、六路视野线和透明 Logo 已通过本地 Chrome 回归。
+Demo 当前源码提交为 `10f5a77`，共享观测重构为 `f40165e`，Pages 最新部署为 `d223e48`。经典 Microworld 与 Grid Microworld 共用操作缓存/IDLE 语义、感知强度、奖励摘要、经验观察与时间投影模块；Grid 只保留拓扑世界、拖动交互和 Worker 数据适配。Grid 渲染缓存、经典素材方向、坏食物旋转、六路视野线和透明 Logo 已通过本地 Chrome 回归。
 
-首页 Demo catalog 由同一份 draft 顺序自动生成编号，NARS 终端不再作为 Demo 卡片；Microworld 默认使用随机 seed 与空白探索，复现实验必须显式提供 URL 参数。Demo 当前 typecheck、72 项单测、build、产物检查通过；Core 042 的 M1′/M2 最终候选、持续性能目标、049 长期行为等价、GitHub public 可见性审查仍是总体目标的未完成边界。
+首页 Demo catalog 由同一份 draft 顺序自动生成编号，NARS 终端不再作为 Demo 卡片；Microworld 默认使用随机 seed 与空白探索，复现实验必须显式提供 URL 参数。Demo 当前 typecheck、73 项单测、build、产物检查和部署前缀浏览器门通过；Core 042 的 M1′/M2 最终候选、持续性能目标、049 长期行为等价、GitHub public 可见性审查仍是总体目标的未完成边界。
