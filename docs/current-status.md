@@ -4,7 +4,7 @@
 
 ## 当前定位
 
-2026-10-03 用户要求中期收口性能试探，功能性新需求交下一个 Agent。044 终端/首页路径与「一图胜千言」底座已由 Demo `aa06eb6`、`64ba889`、`7612d9b` 和本地构建/Chrome 证据验收；045 内部经验、046 Grid Microworld、047 NARS × 2048、048 Pong 多模式、049 Shot 完整多玩家移植仍 `in-progress`。Demo 主线保持可构建；Grid 纯几何模型与 9/9 直接测试单独在已推送分支 `codex/gridworld-foundation-wip` / `c9b237b`，该分支的页面只是未发布草稿。v1.0.5 仅是未发布的包版本准备，Pages/Release 仍为 v1.0.4。新需求总账见 [当前目标](active-goal-20261002.md)、[本次中期交接](midterm-handoff-20261003.md)和相邻 Demo `docs/probes/20261003-demo-batch-requirements.md`。普通 Demo 的配置目标已改为至少 20 TPS，**实际持续速率未因此达标**。核心生产 `src` 树与受保护 `083d7b8` 的 Git 树哈希同为 `a36ce31778f25e74340fe4406847bacd7bb3c949`；v1.0.5 TS-only M2 复跑 `512 passed / 2 skipped / 0 failed`，含 Java M2 与 M1′仍沿用源树相同的既有证据，不能写成新 HEAD 现跑。
+2026-10-03 用户要求中期收口性能试探，功能性新需求交下一个 Agent。044 终端/首页路径与「一图胜千言」底座已由 Demo `aa06eb6`、`64ba889`、`7612d9b` 和本地构建/Chrome 证据验收；045 内部经验、046 Grid Microworld、047 NARS × 2048、048 Pong 多模式已完成，049 Shot 完整多玩家移植仍 `in-progress`。Demo 主线保持可构建；v1.0.5 仅是未发布的包版本准备，Pages/Release 仍为 v1.0.4。新需求总账见 [当前目标](active-goal-20261002.md)、[本次中期交接](midterm-handoff-20261003.md)和相邻 Demo `docs/probes/20261003-demo-batch-requirements.md`。普通 Demo 的配置目标已改为至少 20 TPS，**实际持续速率未因此达标**。核心生产 `src` 树与受保护 `083d7b8` 的 Git 树哈希同为 `a36ce31778f25e74340fe4406847bacd7bb3c949`；v1.0.5 TS-only M2 复跑 `512 passed / 2 skipped / 0 failed`，含 Java M2 与 M1′仍沿用源树相同的既有证据，不能写成新 HEAD 现跑。
 
 ```text
 v1.0.4 已发布
@@ -29,6 +29,8 @@ Demo 仓库 `1aa332c` 已完成并推送 045 经验观察：普通 Demo、经典
 Demo 后续提交已完成 046 Grid Microworld：`gridworld.html` 支持正方形/正三角形/正六边形环面切换，复用真实 Microworld Worker、六路感知、经验观察和 FPS/TPS/RPS；纯模型 9 项合同、Demo 47 项测试和逐拓扑 Chrome smoke 通过。046 LeanSpec 已更新为 `complete`。Grid 是独立离散环境，不替代经典连续 Microworld 的持续 TPS 证据。
 
 047 NARS×2048 已完成 Demo 实现：纯 TS 合并引擎、Canvas 动效、键盘/触摸、棋盘重开与 NARS 记忆重置语义、经验观察、FPS/TPS/RPS 和匿名导出已接线；50 项 Demo 测试与浏览器 smoke 通过。Jev 本地规则仅作 MIT 参考，不引入其 API/密钥；跨局学习收益仍未被证明，不作性能或学习提升声明。
+
+048 Pong 已完成并推送：Demo `a52e544` 新增单页 9 种玩法、离散球场、独立多 Worker、同步/异步节奏、角色状态、经验观察和真实操作记录；纯模型合同、`typecheck`、构建、产物检查及部署前缀浏览器 smoke 通过。9/9 模式均观察到非 babble `source=NARS` 操作，页面错误 0。OpenNARS 3.0.4 不接受 `^stop` 操作词项，Pong 以可解析的 `^Idle` 作为内部操作符并在世界层归一化为 `stop`。048 规格和证据已在 Core `952ddcb` 完成；Demo 2048 几何/粒子修复另见提交 `72b14f2`。
 
 ## 当前核心门证据
 

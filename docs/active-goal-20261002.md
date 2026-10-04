@@ -96,19 +96,21 @@ Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 
 - **已提交推送并本地验收，未部署新版 Pages**：无尾斜杠图片/链接修复、Astro 终端与目录卡、终端桌面/移动浏览器验证、一图胜千言规范、经典 Microworld 左右语义与 HUD 固定槽位、首批语义 FX。Demo 主线检查点 `13d961f` 的最终构建通过 36 项单测；Core `ba0c096` 文档后继时的 Chrome 回归通过，后续 `dbf62ae` 仅改文档，生产源码树相同。原始日志与 SHA-256 见 Demo 需求总账；不能再把这些事项写成待修复。
 - **正式 Logo 已制并完成本地验证，尚未部署 Pages**：2026-10-04 按用户要求以 Julia 参考 SVG 为底稿做最小替换，Core ed71f77 是唯一品牌源，Demo 构建时复制同一文件。双语 README、favicon、首页和终端已引用。核心 release test、Demo check、Chrome smoke 均通过；Chrome smoke 检查了素材 HTTP 200 与 SVG 固有比例。Logo 只在本地/主线完成，公网更新留待最终发行。
-- **规格/调查中，未实现**：045 内部预期及操作经验可观察性、046 三拓扑 Grid Microworld、047 NARS × 2048、[048：Pong 玩法与多推理器对照](../specs/048-pong-playmodes-multi-reasoner/README.md)、[049：NARust-o Shot 多玩家完整移植](../specs/049-narust-shot-full-ports/README.md)。Pong 多模式含双控制者、对抗与双挡板；Shot 须覆盖单/双/进化六种源入口，不把当前单玩家简化 Shot 冒充完整复刻。多 NARS 须用独立 Worker/指标证明。其公开页面不得以空壳或伪数据冒充已完成。
+- **规格/调查中，未实现**：049 NARust-o Shot 多玩家完整移植。Pong 多模式已由 Demo `a52e544` 完成并通过 9/9 真实浏览器模式门；Shot 须覆盖单/双/进化六种源入口，不把当前单玩家简化 Shot 冒充完整复刻。多 NARS 须用独立 Worker/指标证明。其公开页面不得以空壳或伪数据冒充已完成。
 - **新速率口径**：所有 Demo 的**配置目标**不得低于 20 世界刻/秒；这只是目标值，不是持续实测。对每个 Demo 记录实际/目标 TPS、完成推理 RPS、有效 NARS 操作与内存；若未达到，必须如实披露。用户此前要求重复低收益时停止核心优化，不能为满足目标继续无根据地循环试探。
-- **本次中期边界**：2026-10-03 用户要求先收尾性能优化，将新增 045–049 功能性需求交接下一位 Agent；不在本次收尾继续做 Grid/2048/Pong/Shot。工作树保持可构建，纯 Grid 几何的 9 项测试通过的试验基础单独保存在 Demo 分支 `codex/gridworld-foundation-wip`，不进入主线或公开页面。
+- **本次中期边界**：2026-10-03 用户要求先收尾性能优化；当前已完成 Grid/2048/Pong，继续推进 Shot 前仍需保持真实 Worker 与浏览器门禁。早期 Grid 几何试验分支只作历史追溯。
 - **发行冻结**：上述功能范围及最终固定版本验收未完成前，不推送 Pages 新版、不创建 v1.0.5 Release。核心包版本号在 `48b764c` 改为 `1.0.5`，但它仍不是已发布版本；中期性能收口也不等于严格“无高收益候选”的技术收敛证明。
 
 ### 2026-10-04 进展增量
 
 045 已不再是未实现项：Demo 提交 `1aa332c` 已推送，普通 Demo、经典 Microworld 与 Astro 终端共用有界 NARS 经验观察；`npm run check` 的 38 项测试、静态构建和真实浏览器 smoke 均通过。经验事件区分 `nars`、`prior`、`input`、`babble`，只把推理阶段原始事件标为自主，并保留 Narsese 溯源。Core LeanSpec 045 已更新为 `complete`。
 
-因此当前功能待办为 046 Grid、047 2048、048 Pong 多模式和 049 Shot 完整移植；Pages、最终门和 v1.0.5 发行仍未完成。后续文档引用本节与 Demo `docs/probes/20261003-experience-observatory.md` 的新事实，覆盖上文 045 的历史调查状态。
+因此当前功能待办只剩 049 Shot 完整移植；Pages、最终门和 v1.0.5 发行仍未完成。后续文档引用本节与 Demo `docs/probes/20261003-experience-observatory.md` 的新事实，覆盖上文 045 的历史调查状态。
 
-046 Grid 也已完成：Demo `gridworld.html` 与共享目录卡片已推送，正方形/正三角形/正六边形环面在同一入口切换，真实 Worker、六路感知、经验观察和速率 HUD 已通过 9 项纯模型合同、Demo 全量检查及逐拓扑 Chrome smoke。Grid 是独立离散环境，不能替代经典连续 Microworld 的持续 TPS 门。当前剩余功能规格为 047、048、049。
+046 Grid 也已完成：Demo `gridworld.html` 与共享目录卡片已推送，正方形/正三角形/正六边形环面在同一入口切换，真实 Worker、六路感知、经验观察和速率 HUD 已通过 9 项纯模型合同、Demo 全量检查及逐拓扑 Chrome smoke。Grid 是独立离散环境，不能替代经典连续 Microworld 的持续 TPS 门。当前剩余功能规格为 049。
 
 047 NARS×2048 也已完成实现：独立纯 TS 引擎和 Canvas renderer 参考 Jev 的公开玩法与动效经验，接入真实 NARS Worker、跨局记忆保留、明确记忆重置、经验观察、键盘/触摸和匿名实验导出。50 项 Demo 测试与浏览器 smoke 通过；没有观察到稳定跨局学习收益时，继续保留未证明声明。
 
-当前未完成 Demo 规格只剩 048 Pong 多模式与 049 Shot 完整移植；最终 Pages、发布门和 v1.0.5 仍未完成。
+048 Pong 多模式已完成：Demo `a52e544` 通过纯模型合同、`typecheck`、静态构建、产物检查和部署前缀真实浏览器 smoke；9/9 玩法均有独立 Worker 角色、同步/异步世界刻和非 babble NARS 操作。停止语义使用可解析的 `^Idle`，在 Pong 世界边界归一化为 `stop`。Demo 2048 的尺寸/粒子修复已由 `72b14f2` 推送。
+
+当前未完成 Demo 规格只剩 049 Shot 完整移植；最终 Pages、发布门和 v1.0.5 仍未完成。
