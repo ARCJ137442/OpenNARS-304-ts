@@ -17,7 +17,7 @@
 
 先检查工作区、远端、`java-master` 本地链接、Java JAR、NAL 资料、冻结 baseline JSONL 和 Node 依赖。LeanSpec 工具不可用时，不要伪造结果，直接读取仓库中的 specs 并记录工具缺口。
 
-历史证据不得删除。当前 Termux 工作树中的历史未跟踪证据已归档到仓库外的 `/data/data/com.termux/files/home/A137442/nars/OpenNARS-304-ts-evidence-archive/termux-historical-20260927/`；不要使用 `git add -A`。
+历史证据不得删除。当前 Termux 工作树中的历史未跟踪证据已归档到仓库外的 `$EVIDENCE_ARCHIVE/termux-historical-20260927/`；接手时将 `$EVIDENCE_ARCHIVE` 替换为本机实际归档目录，不要使用 `git add -A`。
 
 ## 工作组织
 
