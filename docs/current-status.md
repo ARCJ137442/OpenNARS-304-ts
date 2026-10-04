@@ -66,3 +66,9 @@ Demo 后续提交已完成 046 Grid Microworld：`gridworld.html` 支持正方�
 1. BandRobot 虽发出操作，但固定 150 刻仍未完成抓取—搬运—交付；无效左移循环的负反馈候选已撤销。需以世界状态/成功交付验收，而非操作次数。
 2. 已证实 Microworld 474 刻有 596718 次 Bag 同类回退、29202388 次扫描；两版改名安全名称索引只有约 3%–5% 的 Microworld 总收益，并使 TestChamber RSS 多约 44–71 MB。其后的几何对象快路两版也没有端到端收益（Microworld 基线/候选总耗时 `9447/9533/9511 ms`），RSS 增加，**均已撤销**。用户要求在反复低收益时停止，因此本轮不再启动新性能候选。Microworld 示例模式持续 20 TPS 未达标；Bag 插入/分配、概念增长和 GC 长尾仍有未穷尽的热点，不能称严格性能收敛。原始数据、源码 patch 和 SHA 见 [Bag 探查](probes/20261002-bag-term-equality.md)。
 3. 本次性能试探已按用户要求停止；049 的 Shot 基础页面与增量 Worker 已交付，完整淘汰排名仍待后续。未来任何核心生产修改需重新判断直接合同、完整 M2、M1′、markerless；Pages 与 v1.0.5 已发布；仓库可见性变更仍须单独人工检查。
+
+## 2026-10-04 Demo 增量
+
+相邻 Demo 仓库已推送 `ca1ab39` 与浏览器门更新 `b0be431`，Pages 部署为 `1d5ddef`。049 的世界模型现在按 NARust-o 原作的四舍五入适应性分数（命中率 / 最近命中间隔）升序排名，克隆领先者并保留统计，淘汰落后者、统一重生；结构化排名和进化事件已有纯模型合同，但长期行为等价仍未证明。
+
+经验观察已改为按需读取概念袋信念 Top-N，按 `TruthValue.getExpectation()` 排序并显示期望、频率、信度和 NAR 时刻；派生任务、预期等原始事件仅在二级折叠层作为依据。默认折叠不遍历概念袋。经典 Microworld 图例和 Grid Microworld 场景复用 Java 版 `agent.png`、`food.png`、`fire.png`，所有 Demo 品牌入口和双语 Demo README 已使用正式 OpenNARS TypeScript Logo。Demo 65 项单测、类型检查、构建、产物检查与正确 Pages 子路径 Edge smoke 通过。
