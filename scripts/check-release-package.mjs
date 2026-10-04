@@ -110,7 +110,7 @@ try {
     const api = run(process.execPath, ["--input-type=module", "-e", "import {Nar} from 'opennars-304-ts'; const nar=new Nar(); nar.addInput('<bird --> animal>.'); nar.cycles(2); nar.stop(); if (nar.isRunning()) process.exit(1); console.log(JSON.stringify({api:'ok',cycles:2,stopped:true}));"], auditRoot);
     assertNoNodeWarnings(api.stderr, "external API");
 
-    const nalSource = join(projectRoot, "java-master", "src", "main", "resources", "nal", "single_step", "nal8.add.nal");
+    const nalSource = join(projectRoot, "test", "fixtures", "release-nal8.add.nal");
     const nalFile = join(auditRoot, "nal8.add.nal");
     await copyFile(nalSource, nalFile);
     const cliPath = join(auditRoot, "node_modules", ".bin", process.platform === "win32" ? "opennars-304.cmd" : "opennars-304");
@@ -127,9 +127,9 @@ try {
     assert.equal(cliShebang, "#!/usr/bin/env node", "published CLI must retain its shebang");
 
     const packageConfig = await readFile(join(auditRoot, "node_modules", "opennars-304-ts", "config", "defaultConfig.xml"), "utf8");
-    const javaConfig = await readFile(join(projectRoot, "java-master", "src", "main", "resources", "config", "defaultConfig.xml"), "utf8");
+    const sourceConfig = await readFile(join(projectRoot, "config", "defaultConfig.xml"), "utf8");
     const packageConfigPairs = configPairs(packageConfig);
-    assert.deepEqual(packageConfigPairs, configPairs(javaConfig), "published config values must match Java canonical config");
+    assert.deepEqual(packageConfigPairs, configPairs(sourceConfig), "published config values must match the versioned source config");
 
     const tarballHash = createHash("sha256").update(await readFile(tarball)).digest("hex");
     console.log(JSON.stringify({
