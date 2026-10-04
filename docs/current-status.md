@@ -2,6 +2,14 @@
 
 日期：2026-10-04（Asia/Shanghai）。本文是当前交接入口；目标与退出条件见 [active-goal-20261002.md](active-goal-20261002.md)，历史过程见 [archive/current-status-history-20261002.md](archive/current-status-history-20261002.md)。历史未跟踪原始证据保留，不视为可随意清理的临时文件。
 
+## 2026-10-05 权威交接校正
+
+- Demo 最新源码提交为 `db74202`，共享观测重构为 `f40165e`，当前构建绑定为 `6edb043`；Pages 最新部署为 `2b40818`。
+- 经典 Microworld 与 Grid Microworld 现在共用 `src/ui/reasoner-observatory.ts`、`reasoner-panel.css` 和 `experience-timeline.ts` 的状态/呈现合同；Grid 只提供拓扑世界与 Worker 数据，不再拥有独立的操作缓存、经验刷新或观测补丁。
+- 经验 Top-N 信念在展开期间按节流窗口动态刷新，并使用当前 NAR 时钟做时间投影后排序；感知格显示具体百分比与强度条；Grid 支持虫体/食物拖动到拓扑格点。
+- Microworld 默认入口为随机种子、空白探索；只有显式 `?seed=<n>&knowledge=starter` 才启用可复现实验和示例知识。首页不再把 NARS 终端列为 Demo 卡片，终端仍保留顶部入口。
+- Demo 当前门：typecheck、70 项单测、build、产物检查和本地 Chrome 回归通过；Core M1′/M2、持续 TPS 性能目标、049 长期等价和仓库 public 审查仍未完成。
+
 ## 2026-10-04 权威版本校正
 
 - Core 当前提交为 `9b4e8a8`，标签为 `v1.0.6`；GitHub Release：<https://github.com/ARCJ137442/OpenNARS-304-ts/releases/tag/v1.0.6>。

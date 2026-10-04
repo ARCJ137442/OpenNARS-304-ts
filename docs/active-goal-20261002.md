@@ -120,3 +120,9 @@ Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 Demo `ca1ab39` 已完成 049 的排名/克隆/淘汰世界模型合同，并接入每角色诊断；`be8647e` 更新了正确的浏览器门。排名合同通过纯模型测试，但仍不能替代固定 seed 的长期进化行为对照。经验观察改为展开时读取概念袋 Top-N 信念，主视图显示期望、频率、信度，原始任务事件仅作为二级证据。经典 Microworld 与 Grid 页面复用 Java 版虫体/食物精灵，所有 Demo 旧 `N` 品牌块已替换为正式 TS Logo，双语 Demo README 也加入 Logo；Pages 部署提交为 `1d5ddef`，Shot 性能/排名面板部署后续提交已更新。核心性能停止、Microworld 持续 TPS 未达标、原始长周期 `not_run` 与 public 审查未完成等边界不变。
 
 049 已完成第一批世界模型与页面基础：Demo `0405932` 的 4 项纯模型合同覆盖六模式、50×20 网格、同轴射击命中/重生、占位阻挡和 500 刻克隆进化；Demo `c0a27d3` 接入 Shot 页面、多 Worker、同步/异步节奏、射线 FX，`c9d16ee` 补上进化新增角色的增量 Worker；六模式与 500 刻新增角色真实浏览器门通过。原作“淘汰落后者”的完整排名策略、每 Worker 独立性能面板和最终发行门仍待完成。
+
+### 2026-10-05 观测与入口收口事实
+
+Demo 最新源码提交为 `db74202`，共享观测重构为 `f40165e`，Pages 最新部署为 `2b40818`。经典 Microworld 与 Grid Microworld 共用操作缓存/IDLE 语义、感知强度、奖励摘要、经验观察与时间投影模块；Grid 只保留拓扑世界、拖动交互和 Worker 数据适配。Grid 渲染缓存、经典素材方向、坏食物旋转、六路视野线和透明 Logo 已通过本地 Chrome 回归。
+
+首页 Demo catalog 由同一份 draft 顺序自动生成编号，NARS 终端不再作为 Demo 卡片；Microworld 默认使用随机 seed 与空白探索，复现实验必须显式提供 URL 参数。Demo 当前 typecheck、70 项单测、build、产物检查通过；Core 042 的 M1′/M2 最终候选、持续性能目标、049 长期行为等价、GitHub public 可见性审查仍是总体目标的未完成边界。
