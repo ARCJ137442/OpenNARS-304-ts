@@ -362,7 +362,7 @@
 ## 2026-09-26 崩溃恢复与 M1 245 前置复验
 
 - 崩溃恢复后确认工作区只剩 `Plugin.ts` 与 `plugin-boundary.test.ts` 的未提交 J4 `PluginName` 边界切片；没有发现残留 M1/检查点进程，用户已有 demo 服务未触碰。
-- 已从 `/data/data/com.termux/files/home/A137442/nars/304-ts/OpenNARS 304 TS Termux搬迁资料.zip` 提取仓库外冻结 Java 基线 `g0-java-baseline-frozen-26772af-20260917.jsonl` 与 manifest；基线 `246` 行，SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，与活动目标一致。
+- 已从外部 Termux 搬迁归档提取冻结 Java 基线 `g0-java-baseline-frozen-26772af-20260917.jsonl` 与 manifest；基线 `246` 行，SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，与活动目标一致。
 - `PluginName` 定向测试 `2/2` 通过，非增量 typecheck 通过；360 周期多检查点合同 `4/4` 通过，覆盖 `[50, 200, 350]`，并验证独立恢复与从零运行尾部/最终状态一致。
 - 本轮后续 M1 245 将使用单进程、`--chunk-size 1`、唯一 JSONL、逐文件落盘和同参数 `--resume`；当前仅完成前置复验，尚未宣称 M1 245 新一轮通过。
 
@@ -2222,7 +2222,7 @@ Java 基准采用“功能字段可冻结、资源指标不冻结”的策略：
 - change gate：`8318b68..b536180` 判定 `T1`，`live_java_required=false`、`m1_minus_required=true`；代码提交为 `b5361806a6959e2be93fafe4051b3b485068b9b6`。
 - M2：统一串行单测 `326` 项，`324` 通过、`2` 跳过、`0` 失败；非增量 `tsc=0`；build `sourceFileCount=137`；dist API `ok=true`；迁移扫描结构性异常项均为 `0`。
 - M1-：使用冻结 Java JSONL、TS-only、单线程、cold、逐文件串行，`244/244` functional/parity；`0` Java/TS diff、exception、marker missing、卡死式 timeout、stall、process limit、not-run、performance warning。243 项走 marker 路线；`nal6.redundant.nal` 无 marker，短保护运行到 `1650/131072`，为 `not_reached/unverified`，不构成 markerless 长周期等价结论。
-- M1- 证据：`H:\\A137442\\Develop\\AGI\\NARS\\_Project\\OpenNARS-304-ts-evidence-archive\\memory-string-boundary-m1-minus-244-20260919.jsonl`，244 行，SHA-256 `DDFF1D28562F50CDC979195254CFB9653ABA5E012AED46C5FCCBCE15A178A7CC`；TS 总时长 `1845766 ms`，最长单文件 `412163 ms`，峰值 RSS `1005223936 bytes`，最高 observed reasoning cycles `502562`，均作为后续性能观测。
+- M1- 证据位于外部 evidence archive 的 `memory-string-boundary-m1-minus-244-20260919.jsonl`，244 行，SHA-256 `DDFF1D28562F50CDC979195254CFB9653ABA5E012AED46C5FCCBCE15A178A7CC`；TS 总时长 `1845766 ms`，最长单文件 `412163 ms`，峰值 RSS `1005223936 bytes`，最高 observed reasoning cycles `502562`，均作为后续性能观测。
 - Java 标杆未变化且本批未重跑 Java：source `8675b76fe8c21ee20a7b8c1b63408fb05327210d`，canonical JAR SHA-256 `2CF519E1F85C38E38384C7076AA750C730580C612C97CC70C70B361361F273F5`，冻结 JSONL SHA-256 `264A3998076869683B374F65584BAA4C0939BF3567E3FC3B76883789A4AEB954`，结果记录 `java_artifact=null`。
 - 当前 jree 审计（`b536180`）：`directJreeImportFiles=77`、`java.utilFiles=38`、`java.langFiles=76`、`javaStringFiles=47`、`highRiskItems=41`、`semanticReviewItems=86`、`newLinkedHashMap=0`、`newLinkedHashSet=1`；`package.json` 仍声明 `jree@1.3.0`。
 

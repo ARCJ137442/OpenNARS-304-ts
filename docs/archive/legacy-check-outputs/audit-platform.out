@@ -5,8 +5,8 @@
 {
   "schemaVersion": 1,
   "generatedAt": "2026-09-25T19:57:04.660Z",
-  "projectRoot": "/data/data/com.termux/files/home/A137442/nars/OpenNARS-304-TS",
-  "demoRoot": "/data/data/com.termux/files/home/A137442/nars/OpenNARS-304-ts-web-demo",
+  "projectRoot": "<termux-project-root>",
+  "demoRoot": "<termux-demo-root>",
   "scopes": [
     "core-candidate",
     "mixed-boundary",

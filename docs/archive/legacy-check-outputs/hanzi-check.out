@@ -1185,7 +1185,7 @@
 [info] Scanned .local/304-ts-assets/OpenNARS-304-java-canonical-fixed-build/target/surefire-reports/org.opennars.ops.TestSystemOperator.txt
 [info] Scanned .local/304-ts-assets/OpenNARS-304-java-canonical-fixed-build/target/surefire-reports/org.opennars.util.TextsTest.txt
 [info] Scanned .local/304-ts-assets/OpenNARS-304-java-canonical-fixed-build/target/classes/nal/single_step/README.txt
-[info] Scanned 1187 files under PosixPath('/data/data/com.termux/files/home/A137442/nars/OpenNARS-304-TS').
+[info] Scanned 1187 files under PosixPath('<termux-project-root>').
 
 [ok] No encoding anomalies were found.
 [info] Wrote JSON report to scripts/checking/hanzi-report.json
