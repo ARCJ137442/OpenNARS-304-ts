@@ -4,7 +4,13 @@
 
 ## 2026-10-05 权威交接校正
 
-- Demo 最新源码提交为 `db74202`，共享观测重构为 `f40165e`，当前构建绑定为 `6edb043`；Pages 最新部署为 `2b40818`。
+### 2026-10-05 默认入口修复
+
+- Demo 最新源码提交为 `65f764b`（行为修复 `df58b15`）：经典 Microworld 的默认入口现在使用随机 seed 和空白探索；只有显式 `?seed=<n>&knowledge=starter` 才装入示例先验。
+- 默认模式与 seed 解析已抽为 `src/demo-seed.ts` 的纯函数，并新增回归测试；本地 Demo 全量 71 项测试、typecheck、build、产物检查和浏览器探针通过。
+- Pages 仓库已提交并推送 `9c5602a`，部署目录为 `opennars-304-ts-lab/`。Core 仍为 `v1.0.6`，本次只更新 Demo，不构成新的 Core 发行版。
+
+- Demo 当前源码提交为 `65f764b`；共享观测重构基线为 `f40165e`，当前构建绑定 Core `bdc45d5`；Pages 最新部署提交为 `9c5602a`。
 - 经典 Microworld 与 Grid Microworld 现在共用 `src/ui/reasoner-observatory.ts`、`reasoner-panel.css` 和 `experience-timeline.ts` 的状态/呈现合同；Grid 只提供拓扑世界与 Worker 数据，不再拥有独立的操作缓存、经验刷新或观测补丁。
 - 经验 Top-N 信念在展开期间按节流窗口动态刷新，并使用当前 NAR 时钟做时间投影后排序；感知格显示具体百分比与强度条；Grid 支持虫体/食物拖动到拓扑格点。
 - Microworld 默认入口为随机种子、空白探索；只有显式 `?seed=<n>&knowledge=starter` 才启用可复现实验和示例知识。首页不再把 NARS 终端列为 Demo 卡片，终端仍保留顶部入口。

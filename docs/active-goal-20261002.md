@@ -123,6 +123,10 @@ Demo `ca1ab39` 已完成 049 的排名/克隆/淘汰世界模型合同，并接�
 
 ### 2026-10-05 观测与入口收口事实
 
-Demo 最新源码提交为 `db74202`，共享观测重构为 `f40165e`，Pages 最新部署为 `2b40818`。经典 Microworld 与 Grid Microworld 共用操作缓存/IDLE 语义、感知强度、奖励摘要、经验观察与时间投影模块；Grid 只保留拓扑世界、拖动交互和 Worker 数据适配。Grid 渲染缓存、经典素材方向、坏食物旋转、六路视野线和透明 Logo 已通过本地 Chrome 回归。
+### 2026-10-05 默认入口修复
 
-首页 Demo catalog 由同一份 draft 顺序自动生成编号，NARS 终端不再作为 Demo 卡片；Microworld 默认使用随机 seed 与空白探索，复现实验必须显式提供 URL 参数。Demo 当前 typecheck、70 项单测、build、产物检查通过；Core 042 的 M1′/M2 最终候选、持续性能目标、049 长期行为等价、GitHub public 可见性审查仍是总体目标的未完成边界。
+Demo `df58b15` 将经典 Microworld 的入口合同明确为“随机 seed + 空白探索”：普通 `/microworld.html` 不注入示例先验，复现实验必须显式提供 `?seed=<n>&knowledge=starter`。`startsWithStarterKnowledge` 与 `initialDemoSeed` 位于同一纯配置模块，并由 Demo 回归测试覆盖；构建身份提交为 `65f764b`。Pages 仓库已同步提交 `9c5602a`。这项修复不改变 Core 推理语义、性能结论或 `v1.0.6` Core 发行版。
+
+Demo 当前源码提交为 `65f764b`，共享观测重构为 `f40165e`，Pages 最新部署为 `9c5602a`。经典 Microworld 与 Grid Microworld 共用操作缓存/IDLE 语义、感知强度、奖励摘要、经验观察与时间投影模块；Grid 只保留拓扑世界、拖动交互和 Worker 数据适配。Grid 渲染缓存、经典素材方向、坏食物旋转、六路视野线和透明 Logo 已通过本地 Chrome 回归。
+
+首页 Demo catalog 由同一份 draft 顺序自动生成编号，NARS 终端不再作为 Demo 卡片；Microworld 默认使用随机 seed 与空白探索，复现实验必须显式提供 URL 参数。Demo 当前 typecheck、71 项单测、build、产物检查通过；Core 042 的 M1′/M2 最终候选、持续性能目标、049 长期行为等价、GitHub public 可见性审查仍是总体目标的未完成边界。
