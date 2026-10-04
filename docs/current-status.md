@@ -20,7 +20,7 @@
 
 - 默认入口行为修复提交为 `df58b15`，当前 Demo 代码已推进到 `0b33497`：经典 Microworld 使用随机 seed 和空白探索；只有显式 `?seed=<n>&knowledge=starter` 才装入示例先验。
 - 默认模式与 seed 解析已抽为 `src/demo-seed.ts` 的纯函数，并新增回归测试；本地 Demo 全量 74 项测试、typecheck、build、产物检查和部署前缀浏览器门通过。
-- Pages 最新部署提交为 `306c2a4`，部署目录为 `opennars-304-ts-lab/`。Core 仍为 `v1.0.6`，本次只更新 Demo，不构成新的 Core 发行版。
+- Pages 最新部署提交为 `aac13a3`，部署目录为 `opennars-304-ts-lab/`；构建身份绑定 Core `c24aac3`。Core 当前修订版为 `v1.0.7`。
 - 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T20:22:50.446Z`，构建绑定 Core `77b99b1`；公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
 - 只读公开审查：`audit:jree` 直接导入/出现为 `0/0`，`audit:platform` 的 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`；已将 `ts-analysis.json` 的 119 条个人临时路径改为仓库内相对 Java 路径，将 Termux 交接提示改为 `$EVIDENCE_ARCHIVE` 占位符，并将归档维护输出改为占位路径。当前维护文档/规格/README 已无本机路径命中；历史报告和测试夹具仍保留溯源用路径，仓库改为 public 前仍需人工清理/确认，未擅自改变可见性。
 - 当前 HEAD `npm run test:release` 通过：327 个包成员、外部 TypeScript/API/CLI/Shell 全通过、forbidden package members 0，tarball SHA-256 保持 `99cbe017d69a3f247c9d27999d62e72a9861cd592d5b7d5a18389ad6a6606954`。
@@ -28,7 +28,7 @@
 - 当前 `audit:jree` 复核仍为直接导入/出现 `0/0`，但保留 5 个高风险语义边界和 7 个需人工复核项（类身份、静态初始化、可变迭代器）；迁移扫描的 Java 形状残余仍属于已披露兼容合同，未进行未经门禁保护的改写。
 - Core 语言工厂已清理 5 个重复 arity 分支（SetExt/SetInt/Term/Terms/Variables），build 重复 case 警告清零；非增量 typecheck/build 与含 Java M2 `514/514` 通过。这是语义保持的可读性清理，不是性能收益候选。
 - 公开面清理：移除 Git 跟踪的 Agent-local `.claude/settings.local.json`（保留本地副本并加入 `.gitignore`）；其内容无 token，但不属于项目运行合同。发行包哈希和成员数未变。
-- 当前开源就绪评估见 [v1.0.6 开源就绪评估](open-source-readiness-v1.0.6.md)：建议继续以 private 研究/集成 release 交付，公开源码仓库前仍需所有者人工审查历史、日志、资产、许可证和机密。
+- 当前开源就绪评估见 [v1.0.7 开源就绪评估](open-source-readiness-v1.0.7.md)：建议继续以 private 研究/集成 release 交付，公开源码仓库前仍需所有者人工审查历史、日志、资产、许可证和机密。
 - 当前版本 Microworld 20 秒复测已落盘于 Demo `docs/probes/20261005-microworld-rate-current.md`：示例知识平均/末窗 `17.618/14.364 TPS`，空白探索 `19.567/19.760 TPS`；前者有 4 次 NARS 操作，后者为 0。两者页面/Worker 错误均为 0；这不是优化收益或性能收敛证据。
 - 原始 2,000,000 周期稳定性已在 Core `bf747b6` 以 TS cold 单进程完成：请求 `2,000,000`、实际推理 `4,000,424`、`3,282,125 ms`、峰值 RSS `2,756,640,768 bytes`、功能 `1/1`，无 timeout/process_limit/exception/stall/not_run；Java 本次未重跑。详见 [原始长周期实测](probes/20261005-long-stability-2000000.md)。
 - Shot 行为校正已提交 Demo `0b33497`、Pages `306c2a4`：静态靶纳入单人/进化角色矩阵，进化总角色上限与 NARust-o 对齐；操作设置速度后下一世界刻移动，射击反馈按角色队列回送；Demo 当前 74 项测试、typecheck、build、产物检查和部署前缀 Chrome 门通过。固定 seed `3040304` 的 10,000 刻六模式世界合同通过，进化角色始终有界；公网 Chrome 实测默认 Microworld 为“空白探索”，Shot 进化为 4 个 NARS 角色、进化 1 次、页面错误 0。长期 Shot 等价仍未证明。
@@ -91,7 +91,7 @@ Demo 后续提交已完成 046 Grid Microworld：`gridworld.html` 支持正方�
 | strict markerless | simple/redundant 各 131072 周期、128 窗口，对各自冻结 Java 摘要 `equal=true` | `reports/evidence/markerless-logger-info-083d7b8-*-20261003.jsonl` 与对应 compare JSON；详见 [运行时探查](probes/20261001-runtime-java-shape-cleanup.md) |
 | 完整 M2 | 固定提交 TS-only 512 passed / 2 skipped / 0 failed；含 Java 514/514 passed | `reports/evidence/logger-info-083d7b8-committed-{ts,java}-m2-20261003.tap`，SHA-256 `0B3DA2B52102B6C430780C062F6A1B435BD08AD12DA68A71A0F1EAFC49DED820` / `C99B1F440603725E667F2A4693215786136862F8482A3C48D6D4B66B6FD12D9D` |
 
-原始 2,000,000 周期长期稳定性仍为 **not_run**。降周期夹具不是原版长测，也不能宣称 Java 性能等价。
+原始 2,000,000 周期 TS 实测已完成；Java 本次未重跑，因此不能宣称跨实现性能等价。降周期夹具仍作为历史对照证据保留。
 
 ## Demo 实际状态
 
