@@ -33,7 +33,7 @@ Demo 后续提交已完成 046 Grid Microworld：`gridworld.html` 支持正方�
 
 048 Pong 已完成并推送：Demo `a52e544` 新增单页 9 种玩法、离散球场、独立多 Worker、同步/异步节奏、角色状态、经验观察和真实操作记录；纯模型合同、`typecheck`、构建、产物检查及部署前缀浏览器 smoke 通过。9/9 模式均观察到非 babble `source=NARS` 操作，页面错误 0。OpenNARS 3.0.4 不接受 `^stop` 操作词项，Pong 以可解析的 `^Idle` 作为内部操作符并在世界层归一化为 `stop`。048 规格和证据已在 Core `952ddcb` 完成；Demo 2048 几何/粒子修复另见提交 `72b14f2`。
 
-049 Shot 已进入页面验收阶段但仍未完成：Demo `0405932` 新增独立 50×20 世界模型与六模式参数表，Demo `c0a27d3` 接入 `shot.html`、多 Worker、同步/异步节奏、射线 FX，Demo `c9d16ee` 补上 500 刻进化后的增量 Worker 装配；4 项纯模型合同、六模式真实页面操作和进化新增角色浏览器门通过。原作“淘汰落后者”的完整排名策略、每 Worker 独立性能面板和最终发行门仍未完成。
+049 Shot 已进入页面验收阶段但仍未完成：Demo `0405932` 新增独立 50×20 世界模型与六模式参数表，Demo `c0a27d3` 接入 `shot.html`、多 Worker、同步/异步节奏、射线 FX，Demo `c1fda67` 补上 500 刻进化后的增量 Worker 装配与每 Worker 延迟/概念诊断；4 项纯模型合同、六模式真实页面操作和进化新增角色浏览器门通过。原作“淘汰落后者”的完整排名策略和最终发行门仍未完成。
 
 ## 当前核心门证据
 
@@ -59,7 +59,7 @@ Demo 后续提交已完成 046 Grid Microworld：`gridworld.html` 支持正方�
 
 2026-10-03 下载包审计发现并修复一个发布遗漏：`files: src` 将本地历史 `src/language/Term.ts.codex-corrupt` 收入包。现改为 `src/**/*.ts`，本地文件保留；内部发行检查清单也不再随包提供。文档索引精简为用户入口，未随包提供的维护资料改用源码仓库链接；发行检查器新增源文件/临时文件/内部文档排除及本地 Markdown 链接完整性断言。增强的 `npm run test:release` 通过外部 TypeScript、API、CLI、Shell，包成员为325；指定本机路径模式扫描0命中，不等于已完成全面机密审计。最终日志 `reports/evidence/release-package-content-fix-passed-20261003.log` SHA-256 `40EEC9FE577D12731A7B66C20F0BDD1EFE14255728B53E2E08B83D56EB5F668D`；包清单 `pack-content-after-fix-20261003.json` SHA-256 `57BC57EB2F3DE7F1EAD3DEB2BBF15F053A6C337C0AE88D436045F9B5F1DBE772`。首轮增强检查因已有缺失文档链接失败，修正后通过；推理源码未改，不重复 M1′。
 
-2026-10-04 正式 TypeScript Logo 已加入 Core brand/、中英 README、发行包白名单；以用户提供 Julia SVG 为底稿做最小替换。Core release test、Demo build、产物检查与部署前缀 Chrome smoke 通过；Pages 部署提交为 `270b72b`，发行说明绑定更新为 `f2c1f65`。
+2026-10-04 正式 TypeScript Logo 已加入 Core brand/、中英 README、发行包白名单；以用户提供 Julia SVG 为底稿做最小替换。Core release test、Demo build、产物检查与部署前缀 Chrome smoke 通过；Pages 已同步最新 Demo 产物并可公网访问。
 
 2026-10-04 `v1.0.5` fix release 已创建：仅上传 `opennars-304-ts-1.0.5.tgz` 与 `release-manifest.json`，tarball SHA-256 为 `eb528c4013ce9d9fb88b12de41ec6f5058a8b171affaa43fed12b074f70fb2e7`，manifest 源码提交为 `f2b5005`。不发布 npm。此前 v1.0.4 旧资产清理证据仍保留在 `reports/evidence/release-v1.0.4-assets-*`。
 
