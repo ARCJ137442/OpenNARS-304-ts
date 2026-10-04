@@ -20,9 +20,11 @@ transitions:
 ## 范围
 
 - [x] 核心仓库保存 `brand/opennars-ts-logo.svg`，双语 README 中预览，包白名单包含 `brand`。
+- [x] 以 Julia 参考 SVG 为底稿，保留主体全部路径与布局，三圆组最小替换成右托盘内 TS 圆角方块。
 - [x] Demo 构建从核心品牌源复制 SVG 到静态资源；favicon、首页与终端使用 TS 标记；图片按 Pages 子路径生成。
 - [x] `brand/README.md` 标记使用的用户参考、最小 SVG 改动范围、许可边界与核心单一源；Demo 文档说明从核心构建复制。
-- [ ] `npm run test:release`、Demo `npm run check`、真实 Chrome smoke 确认 Logo 资源返回 200、非空，首页/终端布局不溢出。
+- [x] Core release test 与 Demo `npm run check` 通过；Chrome 已浏览首页/终端，Logo 资源在无尾斜杠 smoke 下返回 200、图形可见且站点页面无错误。
+- [ ] 这些 Logo 修改尚未与后续 Demo 主线功能合并或部署 Pages；最终发行提交需重新跑测试。
 
 ## 边界
 
