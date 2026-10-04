@@ -8,6 +8,12 @@
 - Shot 的长期 NARS 行为等价与记忆克隆等价暂不作为当前目标依据；049 的已实现世界/浏览器合同继续维护，长期对照保留为后续实验。
 - 自动公开审查与人工验收清单见 [2026-10-05 开源就绪审查](probes/20261005-public-audit.md)。
 
+## 2026-10-05 v1.0.7 修订发行
+
+- Core v1.0.7 已创建 GitHub Release：<https://github.com/ARCJ137442/OpenNARS-304-ts/releases/tag/v1.0.7>；tarball SHA-256 为 `0195ea1e71d8a467345e412bffd5c22dda7178d74c52874358554547b318d8a7`。
+- v1.0.7 包含 clean-clone 发布检查修复、公开路径脱敏、Shot 差分感知适配和原始 2,000,000 周期 TS 实测记录；不发布 npm。
+- 开源就绪结论见 [v1.0.7 开源就绪评估](open-source-readiness-v1.0.7.md)；源码仓库 public 仍需所有者人工确认。
+
 ## 2026-10-05 权威交接校正
 
 ### 2026-10-05 默认入口修复
