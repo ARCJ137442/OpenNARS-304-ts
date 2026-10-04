@@ -129,7 +129,7 @@ Demo `df58b15` 将经典 Microworld 的入口合同明确为“随机 seed + 空
 
 公网验证已完成：Pages 的 `build-meta.json` 对应 Core `bdc45d5`，Chrome 普通入口显示“空白探索”，显式 starter 地址显示“示例知识”。`audit:jree` 与核心平台边界审计仍通过；公开可见性审查发现历史文档中的本机路径/内部证据索引，需人工决定是否清理后再改为 public。
 
-Demo `6cf5401` 进一步校正 Shot：静态靶纳入单人与进化模式，进化总角色和上限与 NARust-o 对齐，按玩家顺序选择首个同轴目标；72 项 Demo 单测与部署前缀 Chrome 门通过，Pages 为 `7737547`。这仍不等于长期行为等价或 NARS 记忆克隆等价。
+Demo `6cf5401` 进一步校正 Shot：静态靶纳入单人与进化模式，进化总角色和上限与 NARust-o 对齐，按玩家顺序选择首个同轴目标；72 项 Demo 单测与部署前缀 Chrome 门通过，Pages 为 `7737547`。公网 Chrome 实测进化模式为 4 个 NARS 角色、进化 1 次、页面错误 0。这仍不等于长期行为等价或 NARS 记忆克隆等价。
 
 Demo 当前源码提交为 `6cf5401`，共享观测重构为 `f40165e`，Pages 最新部署为 `7737547`。经典 Microworld 与 Grid Microworld 共用操作缓存/IDLE 语义、感知强度、奖励摘要、经验观察与时间投影模块；Grid 只保留拓扑世界、拖动交互和 Worker 数据适配。Grid 渲染缓存、经典素材方向、坏食物旋转、六路视野线和透明 Logo 已通过本地 Chrome 回归。
 
