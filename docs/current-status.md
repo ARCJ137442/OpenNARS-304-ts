@@ -12,7 +12,7 @@
 - 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T19:28:38.801Z`，构建绑定 Core `0599cee`；公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
 - 只读公开审查：`audit:jree` 直接导入/出现为 `0/0`，`audit:platform` 的 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`；已将 `ts-analysis.json` 的 119 条个人临时路径改为仓库内相对 Java 路径，并将 Termux 交接提示改为 `$EVIDENCE_ARCHIVE` 占位符。当前剩余路径命中主要位于历史报告/归档和测试夹具，仓库改为 public 前仍需人工清理/确认，未擅自改变可见性。
 - 当前 HEAD `npm run test:release` 通过：327 个包成员、外部 TypeScript/API/CLI/Shell 全通过、forbidden package members 0，tarball SHA-256 保持 `99cbe017d69a3f247c9d27999d62e72a9861cd592d5b7d5a18389ad6a6606954`。
-- Shot 行为校正已提交 Demo `10f5a77`、Pages `d223e48`：静态靶纳入单人/进化角色矩阵，进化总角色上限与 NARust-o 对齐；操作设置速度后下一世界刻移动，射击反馈按角色队列回送；Demo 当前 73 项测试、typecheck、build、产物检查和部署前缀 Chrome 门通过。公网 Chrome 实测默认 Microworld 为“空白探索”，Shot 进化为 4 个 NARS 角色、进化 1 次、页面错误 0。长期 Shot 等价仍未证明。
+- Shot 行为校正已提交 Demo `0b33497`、Pages `306c2a4`：静态靶纳入单人/进化角色矩阵，进化总角色上限与 NARust-o 对齐；操作设置速度后下一世界刻移动，射击反馈按角色队列回送；Demo 当前 74 项测试、typecheck、build、产物检查和部署前缀 Chrome 门通过。固定 seed `3040304` 的 10,000 刻六模式世界合同通过，进化角色始终有界；公网 Chrome 实测默认 Microworld 为“空白探索”，Shot 进化为 4 个 NARS 角色、进化 1 次、页面错误 0。长期 Shot 等价仍未证明。
 
 - Demo 当前源码提交为 `10f5a77`；共享观测重构基线为 `f40165e`，当前构建绑定 Core `0599cee`；Pages 最新部署提交为 `d223e48`。
 - 经典 Microworld 与 Grid Microworld 现在共用 `src/ui/reasoner-observatory.ts`、`reasoner-panel.css` 和 `experience-timeline.ts` 的状态/呈现合同；Grid 只提供拓扑世界与 Worker 数据，不再拥有独立的操作缓存、经验刷新或观测补丁。
