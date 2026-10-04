@@ -59,4 +59,4 @@ Demo `ca1ab39` 已把进化世界合同对齐到原作排名方向：适应性�
 
 ## 2026-10-05 行为合同校正
 
-Demo `6cf5401` 将静态靶作为显式 `AiNull` 角色纳入 `shot-test`、`shot-test2`、`shot-evolve` 和 `shot-evolve2`：总角色矩阵分别对应原作的 2、2、3、5 个角色，进化上限对应 5/7；页面只为 NARS 角色创建 Worker，静态靶仍保留在世界与射线判定中。射击目标改为按玩家存储顺序选择首个同轴目标，与 NARust-o 的 `player_shot` 扫描合同一致。纯模型、72 项 Demo 单测、typecheck、build、产物检查和部署前缀 Chrome 门通过；Pages 部署提交为 `7737547`。长期固定 seed 的逐步行为等价、NARS 记忆克隆等价、完整每 Worker 性能公开门仍未完成，规格继续保持 `in-progress`。
+Demo `10f5a77` 将静态靶作为显式 `AiNull` 角色纳入 `shot-test`、`shot-test2`、`shot-evolve` 和 `shot-evolve2`：总角色矩阵分别对应原作的 2、2、3、5 个角色，进化上限对应 5/7；页面只为 NARS 角色创建 Worker，静态靶仍保留在世界与射线判定中。射击目标改为按玩家存储顺序选择首个同轴目标，与 NARust-o 的 `player_shot` 扫描合同一致。操作现在只设置速度，下一世界刻移动；射击保持可见窗口并在后续刻结算，命中/漏射反馈通过独立队列送回对应 NARS。纯模型、73 项 Demo 单测、typecheck、build、产物检查和部署前缀 Chrome 门通过；Pages 部署提交为 `d223e48`。长期固定 seed 的逐步行为等价、NARS 记忆克隆等价、完整每 Worker 性能公开门仍未完成，规格继续保持 `in-progress`。

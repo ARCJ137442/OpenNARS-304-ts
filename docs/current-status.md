@@ -11,7 +11,7 @@
 - Pages 仓库已提交并推送 `9c5602a`，部署目录为 `opennars-304-ts-lab/`。Core 仍为 `v1.0.6`，本次只更新 Demo，不构成新的 Core 发行版。
 - 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T18:31:53.421Z`，公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
 - 只读公开审查：`audit:jree` 直接导入/出现为 `0/0`，`audit:platform` 的 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`；但 Git 跟踪的历史维护文档仍含本机路径和内部证据索引，仓库改为 public 前仍需人工清理/确认，未擅自改变可见性。
-- Shot 行为校正已提交 Demo `6cf5401`、Pages `7737547`：静态靶纳入单人/进化角色矩阵，进化总角色上限与 NARust-o 对齐；Demo 当前 72 项测试、typecheck、build、产物检查和部署前缀 Chrome 门通过。公网 Chrome 实测默认 Microworld 为“空白探索”，Shot 进化为 4 个 NARS 角色、进化 1 次、页面错误 0。长期 Shot 等价仍未证明。
+- Shot 行为校正已提交 Demo `10f5a77`、Pages `d223e48`：静态靶纳入单人/进化角色矩阵，进化总角色上限与 NARust-o 对齐；操作设置速度后下一世界刻移动，射击反馈按角色队列回送；Demo 当前 73 项测试、typecheck、build、产物检查和部署前缀 Chrome 门通过。公网 Chrome 实测默认 Microworld 为“空白探索”，Shot 进化为 4 个 NARS 角色、进化 1 次、页面错误 0。长期 Shot 等价仍未证明。
 
 - Demo 当前源码提交为 `6cf5401`；共享观测重构基线为 `f40165e`，当前构建绑定 Core `4d83a01`；Pages 最新部署提交为 `7737547`。
 - 经典 Microworld 与 Grid Microworld 现在共用 `src/ui/reasoner-observatory.ts`、`reasoner-panel.css` 和 `experience-timeline.ts` 的状态/呈现合同；Grid 只提供拓扑世界与 Worker 数据，不再拥有独立的操作缓存、经验刷新或观测补丁。
