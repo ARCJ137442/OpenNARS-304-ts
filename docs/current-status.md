@@ -11,8 +11,9 @@
 - Pages 仓库已提交并推送 `9c5602a`，部署目录为 `opennars-304-ts-lab/`。Core 仍为 `v1.0.6`，本次只更新 Demo，不构成新的 Core 发行版。
 - 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T18:31:53.421Z`，公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
 - 只读公开审查：`audit:jree` 直接导入/出现为 `0/0`，`audit:platform` 的 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`；但 Git 跟踪的历史维护文档仍含本机路径和内部证据索引，仓库改为 public 前仍需人工清理/确认，未擅自改变可见性。
+- Shot 行为校正已提交 Demo `6cf5401`、Pages `7737547`：静态靶纳入单人/进化角色矩阵，进化总角色上限与 NARust-o 对齐；Demo 当前 72 项测试、typecheck、build、产物检查和部署前缀 Chrome 门通过。长期 Shot 等价仍未证明。
 
-- Demo 当前源码提交为 `65f764b`；共享观测重构基线为 `f40165e`，当前构建绑定 Core `bdc45d5`；Pages 最新部署提交为 `9c5602a`。
+- Demo 当前源码提交为 `6cf5401`；共享观测重构基线为 `f40165e`，当前构建绑定 Core `4d83a01`；Pages 最新部署提交为 `7737547`。
 - 经典 Microworld 与 Grid Microworld 现在共用 `src/ui/reasoner-observatory.ts`、`reasoner-panel.css` 和 `experience-timeline.ts` 的状态/呈现合同；Grid 只提供拓扑世界与 Worker 数据，不再拥有独立的操作缓存、经验刷新或观测补丁。
 - 经验 Top-N 信念在展开期间按节流窗口动态刷新，并使用当前 NAR 时钟做时间投影后排序；感知格显示具体百分比与强度条；Grid 支持虫体/食物拖动到拓扑格点。
 - Microworld 默认入口为随机种子、空白探索；只有显式 `?seed=<n>&knowledge=starter` 才启用可复现实验和示例知识。首页不再把 NARS 终端列为 Demo 卡片，终端仍保留顶部入口。
@@ -82,7 +83,7 @@ Demo 后续提交已完成 046 Grid Microworld：`gridworld.html` 支持正方�
 
 ## 尚未完成与下一步
 
-2026-10-03 下载包审计发现并修复一个发布遗漏：`files: src` 将本地历史 `src/language/Term.ts.codex-corrupt` 收入包。现改为 `src/**/*.ts`，本地文件保留；内部发行检查清单也不再随包提供。文档索引精简为用户入口，未随包提供的维护资料改用源码仓库链接；发行检查器新增源文件/临时文件/内部文档排除及本地 Markdown 链接完整性断言。增强的 `npm run test:release` 通过外部 TypeScript、API、CLI、Shell，包成员为325；指定本机路径模式扫描0命中，不等于已完成全面机密审计。最终日志 `reports/evidence/release-package-content-fix-passed-20261003.log` SHA-256 `40EEC9FE577D12731A7B66C20F0BDD1EFE14255728B53E2E08B83D56EB5F668D`；包清单 `pack-content-after-fix-20261003.json` SHA-256 `57BC57EB2F3DE7F1EAD3DEB2BBF15F053A6C337C0AE88D436045F9B5F1DBE772`。首轮增强检查因已有缺失文档链接失败，修正后通过；推理源码未改，不重复 M1′。
+2026-10-03 下载包审计发现并修复一个发布遗漏：`files: src` 将本地历史 `src/language/Term.ts.codex-corrupt` 收入包。现改为 `src/**/*.ts`，本地文件保留；内部发行检查清单也不再随包提供。文档索引精简为用户入口，未随包提供的维护资料改用源码仓库链接；发行检查器新增源文件/临时文件/内部文档排除及本地 Markdown 链接完整性断言。当前 HEAD `npm run test:release` 通过：tarball `opennars-304-ts-1.0.6.tgz`、327 个包成员、TypeScript/API/CLI/Shell 全通过、forbidden members 0；指定本机路径模式扫描0命中，不等于已完成全面机密审计。推理源码未改，不重复 M1′。
 
 2026-10-04 正式 TypeScript Logo 已加入 Core brand/、中英 README、发行包白名单；以用户提供 Julia SVG 为底稿做最小替换。Core release test、Demo build、产物检查与部署前缀 Chrome smoke 通过；Pages 已同步最新 Demo 产物并可公网访问。
 

@@ -46,7 +46,7 @@ transitions:
 
 最后一次已接受的核心优化之后，重复首查、改名安全名称索引和无空间索引词项几何对象快路均未给出可接受的端到端收益；后两者还增加了代表负载的 RSS。用户明确要求“如果屡次无明显优化，我们就停下来”，因此撤销全部尚未接受的候选，保存原始 JSON、源码 patch 与直接合同，并停止新的性能实验。完整反证见 [Bag 探查](../../docs/probes/20261002-bag-term-equality.md)。这是一项**主动停止决策**，不是“再无有效优化空间”的技术证明；Microworld 示例知识模式 30 秒平均 `15.875 TPS`、末窗 `11.776 TPS`，仍低于持续 20 TPS 期望。后续发行资料须显著披露这些限制，同时继续完成与性能试探独立的行为、M1′/M2、Node/浏览器及公开资产门。
 
-2026-10-05 已完成 Pages、GitHub `v1.0.6` fix release、Core `test:release`、typecheck、dist API、TS/Java M2 历史门复核和最新 Demo 真实浏览器回归；Demo 当前提交为 `65f764b`，Pages 为 `9c5602a`。经典 Microworld 默认入口已修正为随机 seed + 空白探索，显式 `?seed=<n>&knowledge=starter` 才启用示例先验。性能持续目标未达标、原始长稳定性 `not_run`、049 Shot 长期等价与 public 可见性审查仍未完成，故本 spec 保持 `in-progress`。
+2026-10-05 已完成 Pages、GitHub `v1.0.6` fix release、Core `test:release`、typecheck、dist API、TS/Java M2 历史门复核和最新 Demo 真实浏览器回归；当前 Demo 提交为 `6cf5401`，Pages 为 `7737547`。经典 Microworld 默认入口已修正为随机 seed + 空白探索，显式 `?seed=<n>&knowledge=starter` 才启用示例先验；Shot 静态靶/进化角色矩阵已按原作校正。性能持续目标未达标、原始长稳定性 `not_run`、049 长期行为等价与 public 可见性审查仍未完成，故本 spec 保持 `in-progress`。
 
 发行准备补充：清理 v1.0.4 误附旧包后，发现宽泛 `src` 打包规则仍收录本地历史 `.codex-corrupt` 文件。改为 TypeScript 文件白名单并排除内部检查清单；保留所有本地证据。增强发行检查器拒绝临时源文件、内部维护文档和缺失的包内 Markdown 目标，修正用户文档的维护链接后 `test:release` 通过，325成员、TypeScript/API/CLI/Shell 均通过。原始日志及 SHA-256 在当前状态。这一打包修复不改变推理核心，也不构成新版本发布或整体 spec 完成。
 
