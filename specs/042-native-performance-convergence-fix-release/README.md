@@ -30,7 +30,7 @@ transitions:
 - [x] 针对 Demo Worker 与环境调度做独立测量；确认同步/异步、HUD、非 babble 操作及真实画面；**持续目标速率仍未达**。
 - [ ] 发布前如实披露持续 TPS 与目标差额、残余热点，以及 2026-10-03 用户要求在反复低收益后主动停止本轮试探；不得把主动停止称为实测达标或严格收敛。
 - [ ] 在同一不可变提交通过 M1′、完整 M2、strict markerless、Node/API、真实浏览器、依赖与平台审计。
-- [ ] 更新中英双语文档与 Lab Pages，分内容提交推送，创建仅含当前包资产的 GitHub fix release；给出 public 可见性的人工审查结论。
+- [x] 更新中英双语文档与 Lab Pages，分内容提交推送，创建仅含当前包资产的 GitHub fix release；public 可见性的人工审查仍由仓库所有者最后确认。
 
 ## 测试与声明门
 
@@ -46,7 +46,7 @@ transitions:
 
 最后一次已接受的核心优化之后，重复首查、改名安全名称索引和无空间索引词项几何对象快路均未给出可接受的端到端收益；后两者还增加了代表负载的 RSS。用户明确要求“如果屡次无明显优化，我们就停下来”，因此撤销全部尚未接受的候选，保存原始 JSON、源码 patch 与直接合同，并停止新的性能实验。完整反证见 [Bag 探查](../../docs/probes/20261002-bag-term-equality.md)。这是一项**主动停止决策**，不是“再无有效优化空间”的技术证明；Microworld 示例知识模式 30 秒平均 `15.875 TPS`、末窗 `11.776 TPS`，仍低于持续 20 TPS 期望。后续发行资料须显著披露这些限制，同时继续完成与性能试探独立的行为、M1′/M2、Node/浏览器及公开资产门。
 
-2026-10-03 中期收口只确认性能试探阶段终止、核心语义证据仍可追溯、044 终端与 Microworld/HUD 修复已验收。新 045–049 功能性交接下一位 Agent；042 的 Pages、GitHub fix release、最终固定提交验收与 public 评估仍未完成，故本 spec 保持 `in-progress`。
+2026-10-04 已完成 Pages、GitHub `v1.0.5` fix release、当前 HEAD typecheck/build/API、TS/Java M2 复核和 Demo 部署前缀 smoke；性能持续目标未达标、原始长稳定性 `not_run`、049 Shot 完整进化与 public 可见性审查仍未完成，故本 spec 保持 `in-progress`。
 
 发行准备补充：清理 v1.0.4 误附旧包后，发现宽泛 `src` 打包规则仍收录本地历史 `.codex-corrupt` 文件。改为 TypeScript 文件白名单并排除内部检查清单；保留所有本地证据。增强发行检查器拒绝临时源文件、内部维护文档和缺失的包内 Markdown 目标，修正用户文档的维护链接后 `test:release` 通过，325成员、TypeScript/API/CLI/Shell 均通过。原始日志及 SHA-256 在当前状态。这一打包修复不改变推理核心，也不构成新版本发布或整体 spec 完成。
 

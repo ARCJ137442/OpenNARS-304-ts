@@ -94,7 +94,7 @@ Demo 的具身适配与墙钟 RPS 监测已分批提交，生产监测提交为 
 Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 ```
 
-- **已提交推送并本地验收，未部署新版 Pages**：无尾斜杠图片/链接修复、Astro 终端与目录卡、终端桌面/移动浏览器验证、一图胜千言规范、经典 Microworld 左右语义与 HUD 固定槽位、首批语义 FX。Demo 主线检查点 `13d961f` 的最终构建通过 36 项单测；Core `ba0c096` 文档后继时的 Chrome 回归通过，后续 `dbf62ae` 仅改文档，生产源码树相同。原始日志与 SHA-256 见 Demo 需求总账；不能再把这些事项写成待修复。
+- **已提交推送并完成 Pages 部署**：无尾斜杠图片/链接修复、Astro 终端与目录卡、终端桌面/移动浏览器验证、一图胜千言规范、经典 Microworld 左右语义与 HUD 固定槽位、首批语义 FX 均已部署；公网入口为 `https://arcj137442.github.io/opennars-304-ts-lab/`。
 - **正式 Logo 已制并完成 Pages 验证**：2026-10-04 按用户要求以 Julia 参考 SVG 为底稿做最小替换，Core brand 是唯一品牌源，Demo 构建时复制同一文件。双语 README、favicon、首页和终端已引用；Pages 提交 `f2c1f65` 已推送。
 - **规格/调查中，未实现**：049 NARust-o Shot 多玩家完整移植。Pong 多模式已由 Demo `a52e544` 完成并通过 9/9 真实浏览器模式门；Shot 须覆盖单/双/进化六种源入口，不把当前单玩家简化 Shot 冒充完整复刻。多 NARS 须用独立 Worker/指标证明。其公开页面不得以空壳或伪数据冒充已完成。
 - **新速率口径**：所有 Demo 的**配置目标**不得低于 20 世界刻/秒；这只是目标值，不是持续实测。对每个 Demo 记录实际/目标 TPS、完成推理 RPS、有效 NARS 操作与内存；若未达到，必须如实披露。用户此前要求重复低收益时停止核心优化，不能为满足目标继续无根据地循环试探。
@@ -105,7 +105,7 @@ Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 
 045 已不再是未实现项：Demo 提交 `1aa332c` 已推送，普通 Demo、经典 Microworld 与 Astro 终端共用有界 NARS 经验观察；`npm run check` 的 38 项测试、静态构建和真实浏览器 smoke 均通过。经验事件区分 `nars`、`prior`、`input`、`babble`，只把推理阶段原始事件标为自主，并保留 Narsese 溯源。Core LeanSpec 045 已更新为 `complete`。
 
-因此当前功能待办只剩 049 Shot 完整移植；Pages、最终门和 v1.0.5 发行仍未完成。后续文档引用本节与 Demo `docs/probes/20261003-experience-observatory.md` 的新事实，覆盖上文 045 的历史调查状态。
+因此当前功能待办只剩 049 Shot 的完整淘汰排名/进化行为与每 Worker 独立性能面板；Pages、v1.0.5 和基础发布门已完成，public 可见性审查仍未完成。后续文档引用本节与 Demo `docs/probes/20261003-experience-observatory.md` 的新事实，覆盖上文 045 的历史调查状态。
 
 046 Grid 也已完成：Demo `gridworld.html` 与共享目录卡片已推送，正方形/正三角形/正六边形环面在同一入口切换，真实 Worker、六路感知、经验观察和速率 HUD 已通过 9 项纯模型合同、Demo 全量检查及逐拓扑 Chrome smoke。Grid 是独立离散环境，不能替代经典连续 Microworld 的持续 TPS 门。当前剩余功能规格为 049。
 
@@ -113,6 +113,6 @@ Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 
 048 Pong 多模式已完成：Demo `a52e544` 通过纯模型合同、`typecheck`、静态构建、产物检查和部署前缀真实浏览器 smoke；9/9 玩法均有独立 Worker 角色、同步/异步世界刻和非 babble NARS 操作。停止语义使用可解析的 `^Idle`，在 Pong 世界边界归一化为 `stop`。Demo 2048 的尺寸/粒子修复已由 `72b14f2` 推送。
 
-当前未完成 Demo 规格只剩 049 Shot 完整移植；最终 Pages、发布门和 v1.0.5 仍未完成。
+当前未完成 Demo 规格只剩 049 Shot 的完整淘汰排名/进化行为与每 Worker 独立性能面板；最终 Pages 和 v1.0.5 已完成，public 可见性审查仍未完成。
 
 049 已完成第一批世界模型与页面基础：Demo `0405932` 的 4 项纯模型合同覆盖六模式、50×20 网格、同轴射击命中/重生、占位阻挡和 500 刻克隆进化；Demo `c0a27d3` 接入 Shot 页面、多 Worker、同步/异步节奏、射线 FX，`c9d16ee` 补上进化新增角色的增量 Worker；六模式与 500 刻新增角色真实浏览器门通过。原作“淘汰落后者”的完整排名策略、每 Worker 独立性能面板和最终发行门仍待完成。

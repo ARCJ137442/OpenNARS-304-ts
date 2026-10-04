@@ -1,6 +1,6 @@
 # 修订发行检查清单
 
-当前可下载版本为 `v1.0.4`；下一次 fix release **尚未创建**，spec 042 仍在进行。当前受保护的核心生产提交 `083d7b8` 已通过 M1′、完整 M2 与 strict markerless；这不自动证明 Demo 性能收敛或新发行可发布。每次新的核心生产修改都要重新判断门禁。
+当前可下载版本为 `v1.0.5`；spec 042 仍在进行，因为持续性能目标和 Shot 完整进化尚未闭合。当前受保护的核心生产提交 `083d7b8` 已通过 M1′、完整 M2 与 strict markerless；当前 HEAD 文档更新后的 Java M2 也已现跑通过。这不自动证明 Demo 性能收敛或 public 仓库可见性已经批准。
 
 ## 冻结候选与语义
 
@@ -12,7 +12,7 @@
 
 ## 性能与 Demo
 
-- [ ] 发布前完成并验证 spec 045–049：真实内部经验、三拓扑 Grid Microworld、跨局保留记忆的 NARS × 2048、Pong 多玩法/多推理器、Shot 多玩家全规则。044 入口/终端底座已验收；待办项目不得只展示空壳入口。
+- [ ] 发布后继续完成 spec 049 的完整淘汰排名与长期进化；045–048、Shot 六模式基础页面与真实 Worker 门已通过，未完成部分不得包装成完整复刻。
 - [ ] 所有 Demo 的目标 TPS 配置至少为 20，并分别记录实际/目标比；目标数值改变不算性能提升。
 
 - [ ] 同浏览器、seed、输入、周期、模式和时长比较推理 RPS、世界 TPS、FPS、p95、概念增长与内存；异步世界 TPS 不充当推理吞吐。
@@ -31,7 +31,7 @@ npm run release:bundle
 
 - [ ] 检查 tarball、release manifest 与 SHA-256；包内只含 `dist`、必要源码/配置、CLI、双语公开文档、`LICENSE`、`NOTICE`，没有报告、崩溃日志、`.codegraph`、私钥或本机路径。
 - [ ] 中英 README、上手、集成、架构、运行手册与 Demo 文档能让干净 clone 的读者运行 Node CLI/API 和静态网页；明确 OpenNARS 3.0.4 改写来源、Demo 原始代码/素材授权和按事实记录的 Agent/模型参与。
-- [ ] 同步 Pages 的 `opennars-304-ts-lab/` 目录、审阅站点 diff、提交推送；从公网打开首页、Worker、代表 Demo 并核对版本。
-- [ ] 分内容提交推送核心和 Demo，创建**仅含本版 tarball 与 manifest** 的 GitHub fix release。不发布 npm。
+- [x] 同步 Pages 的 `opennars-304-ts-lab/` 目录、审阅站点 diff、提交推送；从公网打开首页、Worker、代表 Demo 并核对版本。
+- [x] 分内容提交推送核心和 Demo，创建**仅含本版 tarball 与 manifest** 的 GitHub fix release。不发布 npm。
 - [x] 2026-10-03 已核对并清理 v1.0.4 Release 误附的五个历史 `.tgz`；现仅有 1.0.4 包与 manifest，本地历史文件保留，原始前后清单见当前状态。
 - [ ] 仓库从 private 改 public 前由所有者审查 Git 历史、Issues、Actions 日志、Pages 资产、许可证、第三方素材、机密与联系渠道；可见性变更不随本清单自动执行。

@@ -14,10 +14,11 @@ v1.0.4 已发布
     └─ Demo 主线 7612d9b：044 终端/首页/Microworld HUD 已验收
          │
          ├─ 10 个普通 Demo + Microworld 示例：能发出 NARS 操作
-         ├─ 045–049 功能：交下一位 Agent（Grid WIP 另存分支）
-         └─ 持续性能 / 有效任务闭环：仍有未达标项
+         ├─ 045–048 与 Shot 基础：已部署并通过浏览器门
+         ├─ 049 完整淘汰/进化：仍进行中
+         └─ 持续性能 / public 可见性：仍有未达标项
               ↓
-        性能试探中期收口 → 后续功能 / 最终发行门 → Pages / fix release
+        性能试探中期收口 → Shot 后续 / public 审查
 ```
 
 核心 `083d7b8` 将 INFO 日志从 `console.error` 改为 `console.info`，严重错误与异常堆栈仍走错误通道。源码、发布依赖没有 npm `jree`；最新静态审计 `audit:jree` 为直接导入 `0/0`、平台审计 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`。非增量 typecheck、build、dist API 通过。LeanSpec 042 为 `in-progress`；历史 023/024/025/027/031/036 的 complete 不代替本轮更严格的发行验收。

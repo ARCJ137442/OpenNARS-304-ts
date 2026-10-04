@@ -1,6 +1,6 @@
 # OpenNARS-304-ts 开发者指南
 
-本文面向维护、审阅或恢复开发的贡献者。023/024 已有阶段证据；本轮性能试探按用户要求停止，新 Demo 功能交接后续 Agent，整体发行目标尚未完成，见[当前目标](active-goal-20261002.md)。最终声明以可追溯的源码/产物身份与门禁证据为准。2026-08-27 封存点和历史 Luna 文档只用于追溯，不能直接当作执行计划。
+本文面向维护、审阅或恢复开发的贡献者。023/024 已有阶段证据；本轮性能试探按用户要求停止，v1.0.5 已发布，Shot 完整进化与 public 可见性审查仍未完成，见[当前目标](active-goal-20261002.md)。最终声明以可追溯的源码/产物身份与门禁证据为准。2026-08-27 封存点和历史 Luna 文档只用于追溯，不能直接当作执行计划。
 
 ## 开始前
 
@@ -84,7 +84,7 @@ node --import ./scripts/register-ts-loader.mjs scripts/e2e/run-rps-benchmark.mjs
 
 - `023-jree-removal-native-runtime`：实现门历史记录为 complete；当前生产源码直接 jree audit 为 `0/0`，仍需以最终候选提交重新核对发布边界。
 - `024-platform-neutral-core-host-adapters`：实现门历史记录为 complete；Node/浏览器 adapter 与 Worker bundle 已有阶段证据，当前候选仍需最终集成核对。
-- `020-ts-performance-and-release`：LeanSpec 历史状态为 complete；本轮持续性能目标和下一次 Pages/GitHub 修订版仍未完成。项目不计划发布 npm 包。
+- `020-ts-performance-and-release`：LeanSpec 历史状态为 complete；本轮持续性能目标未达标但已按用户要求停止，Pages 与 v1.0.5 GitHub fix release 已完成。项目不发布 npm。
 
 推荐恢复 DAG：
 
