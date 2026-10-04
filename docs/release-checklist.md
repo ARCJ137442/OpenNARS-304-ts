@@ -6,6 +6,7 @@
 
 - [x] 冻结最终核心与 Demo 提交，两个仓库的已跟踪工作树干净；历史未跟踪证据保留，未使用 `git add -A`。
 - [x] 在发布候选上运行直接合同、非增量 typecheck、build、dist API、TS-only 与含 Java 的完整 M2，准确记录 passed/failed/skipped。
+- [x] 当前候选再次串行现跑含 Java M2：`514/514 passed`；证据见 `reports/evidence/m2-current-7492666-java-20261005.tap`。
 - [x] M1′ 243 项主体及 #25/#246、#245 降周期和两份 strict markerless 已有同源树可追溯证据；原始 200 万周期明确为 `not_run`。
 - [x] 两份 131072-cycle strict markerless 与冻结 Java 摘要逐窗口等价，基线 SHA-256 已记录。
 - [x] `audit:jree` 为 0/0，平台核心/混合边界审计为 0；发行包不含 npm `jree` 或内部临时文件。
