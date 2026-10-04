@@ -2,6 +2,13 @@
 
 日期：2026-10-04（Asia/Shanghai）。本文是当前交接入口；目标与退出条件见 [active-goal-20261002.md](active-goal-20261002.md)，历史过程见 [archive/current-status-history-20261002.md](archive/current-status-history-20261002.md)。历史未跟踪原始证据保留，不视为可随意清理的临时文件。
 
+## 2026-10-04 权威版本校正
+
+- Core 当前提交为 `9b4e8a8`，标签为 `v1.0.6`；GitHub Release：<https://github.com/ARCJ137442/OpenNARS-304-ts/releases/tag/v1.0.6>。
+- `opennars-304-ts-1.0.6.tgz` SHA-256：`99cbe017d69a3f247c9d27999d62e72a9861cd592d5b7d5a18389ad6a6606954`；不发布 npm。
+- Demo 当前提交为 `2436237`，Microworld 透明 RGBA 素材修复提交为 `10db10b`；Pages 部署提交为 `7ae2bc8`，公网入口为 <https://arcj137442.github.io/opennars-304-ts-lab/>。
+- 本节覆盖下文历史段落中的 `v1.0.5`、`f402e4a`、`1d5ddef` 等旧发布身份；历史证据文件名和旧提交仍保留用于追溯。
+
 ## 当前定位
 
 2026-10-03 用户要求中期收口性能试探，功能性新需求交下一个 Agent。044 终端/首页路径与「一图胜千言」底座已由 Demo `aa06eb6`、`64ba889`、`7612d9b` 和本地构建/Chrome 证据验收；045 内部经验、046 Grid Microworld、047 NARS × 2048、048 Pong 多模式已完成，049 Shot 完整多玩家移植仍 `in-progress`。Demo Lab 已部署到 GitHub Pages，核心 `v1.0.5` fix release 已发布；Shot 的完整淘汰排名仍未完成。新需求总账见 [当前目标](active-goal-20261002.md)、[本次中期交接](midterm-handoff-20261003.md)和相邻 Demo `docs/probes/20261003-demo-batch-requirements.md`。普通 Demo 的配置目标已改为至少 20 TPS，**实际持续速率未因此达标**。核心生产 `src` 树与受保护 `083d7b8` 的 Git 树哈希同为 `a36ce31778f25e74340fe4406847bacd7bb3c949`；当前 HEAD 仅有文档/规格更新，TS-only M2 `512 passed / 2 skipped / 0 failed`、Java M2 `514/514 passed` 均已现跑。
