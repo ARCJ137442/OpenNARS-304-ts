@@ -48,3 +48,5 @@ Demo 已新增独立 `src/shot-lab-model.ts` 与 `test/shot-lab-model.test.ts`�
 - 进化在第 500 刻按命中率选择优秀玩家并克隆一个环境角色；NARS 记忆克隆尚未宣称等价。
 
 这批是模型基础，不是完整 Demo：页面、独立 Worker、六模式真实浏览器运行、射击 FX、进化过程可视化和发布门仍待完成。
+
+随后 Demo `c0a27d3` 已接入 `shot.html` 页面与独立 Worker：六模式切换、同步/异步世界刻、玩家/射线 Canvas、经验观察和非 babble 操作已通过部署前缀浏览器 smoke。进化超过 500 刻后的增量 Worker 装配、淘汰/克隆可视化和完整进化行为仍未完成，因此本规格继续保持 `in-progress`。
