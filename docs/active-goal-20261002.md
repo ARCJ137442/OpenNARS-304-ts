@@ -110,3 +110,5 @@ Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 046 Grid 也已完成：Demo `gridworld.html` 与共享目录卡片已推送，正方形/正三角形/正六边形环面在同一入口切换，真实 Worker、六路感知、经验观察和速率 HUD 已通过 9 项纯模型合同、Demo 全量检查及逐拓扑 Chrome smoke。Grid 是独立离散环境，不能替代经典连续 Microworld 的持续 TPS 门。当前剩余功能规格为 047、048、049。
 
 047 NARS×2048 也已完成实现：独立纯 TS 引擎和 Canvas renderer 参考 Jev 的公开玩法与动效经验，接入真实 NARS Worker、跨局记忆保留、明确记忆重置、经验观察、键盘/触摸和匿名实验导出。50 项 Demo 测试与浏览器 smoke 通过；没有观察到稳定跨局学习收益时，继续保留未证明声明。
+
+当前未完成 Demo 规格只剩 048 Pong 多模式与 049 Shot 完整移植；最终 Pages、发布门和 v1.0.5 仍未完成。

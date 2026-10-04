@@ -28,7 +28,7 @@ Demo 仓库 `1aa332c` 已完成并推送 045 经验观察：普通 Demo、经典
 
 Demo 后续提交已完成 046 Grid Microworld：`gridworld.html` 支持正方形/正三角形/正六边形环面切换，复用真实 Microworld Worker、六路感知、经验观察和 FPS/TPS/RPS；纯模型 9 项合同、Demo 47 项测试和逐拓扑 Chrome smoke 通过。046 LeanSpec 已更新为 `complete`。Grid 是独立离散环境，不替代经典连续 Microworld 的持续 TPS 证据。
 
-047 NARS×2048 已完成 Demo 实现：纯 TS 合并引擎、Canvas 动效、键盘/触摸、棋盘重开与 NARS 记忆重置语义、经验观察、速率 HUD 和匿名导出已接线；50 项 Demo 测试与浏览器 smoke 通过。Jev 本地规则仅作 MIT 参考，不引入其 API/密钥；跨局学习收益仍未被证明，不作性能或学习提升声明。
+047 NARS×2048 已完成 Demo 实现：纯 TS 合并引擎、Canvas 动效、键盘/触摸、棋盘重开与 NARS 记忆重置语义、经验观察、FPS/TPS/RPS 和匿名导出已接线；50 项 Demo 测试与浏览器 smoke 通过。Jev 本地规则仅作 MIT 参考，不引入其 API/密钥；跨局学习收益仍未被证明，不作性能或学习提升声明。
 
 ## 当前核心门证据
 
