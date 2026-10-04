@@ -7,7 +7,8 @@
 - 维护当前核心源码提交与包内 build metadata 一致。
 - Demo Lab 已部署最新的 Shot Worker RPS/进化排名面板、Microworld 操作可读缓存、概念袋 Top-N 信念观察和经典 Java 精灵透明图例。
 - M1'、M2、原始长期稳定性与持续 TPS 的事实边界沿用 v1.0.5：原始 2,000,000 周期仍为 `not_run`，Microworld 持续 20 TPS 未证明，性能试探按用户要求停止。
-- Shot 的固定 seed 1000 刻世界合同、六模式页面和真实浏览器门通过；长期 NARS 学习行为等价仍未宣称。
+- Shot 的固定 seed 10,000 刻六模式世界合同、六模式页面和真实浏览器门通过；长期 NARS 学习行为等价仍未宣称。
+- 当前 Microworld 20 秒复测：示例知识平均/末窗 `17.618/14.364 TPS`，空白探索 `19.567/19.760 TPS`；空白模式没有 NARS 操作，不能替代有操作场景。
 
 来源、许可证、Agent/模型参与和 OpenNARS 3.0.4 改写关系见 `NOTICE`、`LICENSE` 与 `docs/agent-workflow-disclosure.md`。
 
@@ -18,6 +19,7 @@ This fix release aligns the package identity with the current source and Demo La
 - The package build metadata now matches the current protected source commit.
 - The static Demo Lab includes per-Worker Shot RPS and evolution ranking, readable Microworld operation retention, Top-N concept-bag belief observation, and transparent classic Java sprites.
 - The M1', M2, original long-stability, and sustained TPS boundaries remain honest: the original 2,000,000-cycle workload is `not_run`, sustained 20 TPS is unproven, and the performance exploration round was stopped after repeated low-yield candidates.
-- The fixed-seed 1000-tick Shot world contract, six-mode page, and real-browser gates pass; long-run NARS learning equivalence is not claimed.
+- The fixed-seed 10,000-tick six-mode Shot world contract, six-mode page, and real-browser gates pass; long-run NARS learning equivalence is not claimed.
+- Current 20-second Microworld probe: starter knowledge averaged/final-window `17.618/14.364 TPS`; blank exploration averaged/final-window `19.567/19.760 TPS`. Blank exploration emitted no NARS operation and cannot substitute for the embodied workload.
 
 See `NOTICE`, `LICENSE`, and `docs/agent-workflow-disclosure.md` for provenance, licensing, and Agent/model disclosure.
