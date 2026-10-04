@@ -202,16 +202,6 @@ export class Term extends ReasonerObject implements AbstractTerm {
                 break;
             }
 
-            case 1: {
-                const [i] = args as [IntNumber];
-
-
-                return Term.get(String(i));
-
-
-                break;
-            }
-
             default: {
                 throw new ReasonerInputError("Invalid number of arguments");
             }

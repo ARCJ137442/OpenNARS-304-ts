@@ -14,6 +14,7 @@
 - 当前 HEAD `npm run test:release` 通过：327 个包成员、外部 TypeScript/API/CLI/Shell 全通过、forbidden package members 0，tarball SHA-256 保持 `99cbe017d69a3f247c9d27999d62e72a9861cd592d5b7d5a18389ad6a6606954`。
 - 当前 HEAD `npm run test:unit:with-java` 已串行现跑通过：`514/514 passed`，耗时约 `133917 ms`，0 failed、0 skipped；生产 `src` 树仍与受保护 `083d7b8` 相同，因此不重复 M1′/strict markerless。
 - 当前 `audit:jree` 复核仍为直接导入/出现 `0/0`，但保留 5 个高风险语义边界和 7 个需人工复核项（类身份、静态初始化、可变迭代器）；迁移扫描的 Java 形状残余仍属于已披露兼容合同，未进行未经门禁保护的改写。
+- Core 语言工厂已清理 5 个重复 arity 分支（SetExt/SetInt/Term/Terms/Variables），build 重复 case 警告清零；非增量 typecheck/build 与含 Java M2 `514/514` 通过。这是语义保持的可读性清理，不是性能收益候选。
 - 公开面清理：移除 Git 跟踪的 Agent-local `.claude/settings.local.json`（保留本地副本并加入 `.gitignore`）；其内容无 token，但不属于项目运行合同。发行包哈希和成员数未变。
 - 当前开源就绪评估见 [v1.0.6 开源就绪评估](open-source-readiness-v1.0.6.md)：建议继续以 private 研究/集成 release 交付，公开源码仓库前仍需所有者人工审查历史、日志、资产、许可证和机密。
 - 当前版本 Microworld 20 秒复测已落盘于 Demo `docs/probes/20261005-microworld-rate-current.md`：示例知识平均/末窗 `17.618/14.364 TPS`，空白探索 `19.567/19.760 TPS`；前者有 4 次 NARS 操作，后者为 0。两者页面/Worker 错误均为 0；这不是优化收益或性能收敛证据。

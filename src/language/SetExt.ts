@@ -97,14 +97,6 @@ export class SetExt extends SetTensional {
                 break;
             }
 
-            case 1: {
-                const [l] = args as [ArrayConvertible<Term>];
-                return SetExt.make(l.toArray(new Array<Term>(0)));
-
-
-                break;
-            }
-
             default: {
                 throw new ReasonerInputError("Invalid number of arguments");
             }

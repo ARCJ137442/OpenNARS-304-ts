@@ -94,17 +94,6 @@ export class SetInt extends SetTensional {
                 break;
             }
 
-            case 1: {
-                const [t] = args as [Term[]];
-                const sorted = Term.toSortedSetArray(...t);
-                if (sorted.length === 0)
-                    return null;
-                return new SetInt(...sorted);
-
-
-                break;
-            }
-
             default: {
                 throw new ReasonerInputError("Invalid number of arguments");
             }

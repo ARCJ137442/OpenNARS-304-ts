@@ -689,18 +689,6 @@ export class Terms {
                 break;
             }
 
-            case 1: {
-                const [t] = args as [Term[]];
-
-
-                for (let o of t)
-                    if (o === null)
-                    throw new ReasonerStateError(`Element null in: ${formatArray(t)}`);
-
-
-                break;
-            }
-
             default: {
                 throw new ReasonerInputError("Invalid number of arguments");
             }

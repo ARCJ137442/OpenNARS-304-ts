@@ -365,8 +365,8 @@ export class Variables {
         switch (args.length) {
             case 1: {
                 const [n] = args as [TextString | string];
-
-
+                if (Array.isArray(n))
+                    return n.some((x) => x instanceof Variable);
                 if (n === null)
                     return false;
                 for (let i: IntNumber = 0; i < n.length; i++) {
@@ -381,19 +381,6 @@ export class Variables {
 
                     }
                 }
-                return false;
-
-
-                break;
-            }
-
-            case 1: {
-                const [t] = args as [Term[]];
-
-
-                for (let x of t)
-                    if (x instanceof Variable)
-                        return true;
                 return false;
 
 
