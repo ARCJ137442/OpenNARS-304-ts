@@ -16,7 +16,7 @@ Web Demo Lab
     ├─ 047 NARS × 2048                 [未实现]
     ├─ 048 Pong 多玩法/多 NARS         [未实现]
     └─ 049 Shot 多玩家全规则           [未实现]
-        正式 TypeScript Logo           [人类批示已记录，未制作]
+        正式 TypeScript Logo           [本地验收，Pages 待部署]
               │
               ▼
 最终 Demo / 核心门 → Pages → GitHub fix release → public 评估 [均待后续]
@@ -47,10 +47,12 @@ Microworld seed19 示例知识、babble0、同步目标20TPS的 Chrome 30秒实�
 
 下载包白名单已收紧到 `src/**/*.ts` 并排除内部发行检查清单；历史 `.codex-corrupt` 本地文件保留但不入包。用户文档中的维护链接指向源码仓库，发行检查器会拒绝包内缺失的本地链接。增强包检查通过（325成员、外部 TypeScript/API/CLI/Shell），证据哈希见当前状态。核心 `src` 树不变；包内容与检查脚本有变化，应在最终发行提交重跑 `test:release`，不把旧 tarball 哈希当新版。
 
+正式 Logo 已在 Core commit `ed71f77` 完成最小差异制作，Demo 构建从 Core brand 唯一源复制；favicon、首页和终端已引用。Core `test:release`、Demo check、Chrome logo 资源 smoke 均通过。Demo 侧对应更改仍在工作区，需提交推送；Pages 尚未部署，v1.0.5 未发布。源码差异以用户提供 Julia SVG 为准，保留完整天平主体，仅替换末尾 Julia 三圆组及其专属颜色规则。
+
 1. `git status --short --branch` 核对两个主线和 Grid WIP 分支；读 specs 045–049 及 Demo 六份 `20261003-*` 探查文件。LeanSpec `search` 遇中文可能 UTF-8 panic，`link` 子命令不可用；不要伪造 board/依赖结果。
 2. 先实现共享的多 Worker/角色诊断和按需内部经验事件观察，区分预置、babble、NARS 派生；此能力供 Pong 与 Shot 共用。避免每世界刻全量扫概念袋。
 3. Grid 是**另一个 Demo**，内部切换方/三角/六角格及网格数；NARS × 2048 独立入口，游戏终局自动重开但默认保留同一 Worker/记忆。Pong 在一页对照多玩法；Shot 从当前简化版升级为 NARust-o 六入口的多玩家/进化规则。各项须真实 Worker 操作与规则测试，不以漂亮画面充当学习。
-   正式 Logo 也属于下一阶段：Demo 需求总账的 2026-10-03 14:47:53 人类批示提供两份既有 OpenNARS SVG，要求以同尺寸青色 TS 方块替换 Julia/Rust 标记。文件已确认存在；当前未制作，实施前先查来源/许可，再用于官网与 Lab。
+   正式 Logo 已在本地完成并接入 Core/Demo，下一步只需随最终 Demo/Pages/Release 提交部署；源码与许可边界见 Core brand/README.md 和 spec 050。
 4. 每项完成后做直接合同、Demo `npm run check`、真实 Chrome；目标 TPS 最低20与实际速率分开记录。功能全部通过后，在最终源码/产物身份上核对 M1′、完整 M2、Node/API、markerless、许可与浏览器门，再更新 Pages、创建仅含当前包/manifest 的新 GitHub Release。仓库 public 可见性需所有者单独检查；不发布 npm。
 
 操作入口：Demo 静态构建 `npm run check`；先运行 `npm run preview`，再以 `DEMO_BASE_URL=http://127.0.0.1:4321/opennars-304-ts-lab/` 执行 `npm run test:browser`。切勿把无尾斜杠入口误当根站 `/` 测；该错误曾导致 404，现已加入回归。Chrome smoke 是功能测试，不证明持续 TPS。
