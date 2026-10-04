@@ -1,5 +1,7 @@
 # OpenNARS 3.0.4 TypeScript
 
+<img src="brand/opennars-ts-logo.svg" width="260" alt="OpenNARS TypeScript logo" />
+
 [简体中文](README.md)
 
 A TypeScript implementation of OpenNARS 3.0.4 with a Node.js CLI, interactive shell, ESM library API, and a separate browser Worker demo.

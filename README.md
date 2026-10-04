@@ -1,5 +1,7 @@
 # OpenNARS 3.0.4 TypeScript
 
+<img src="brand/opennars-ts-logo.svg" width="260" alt="OpenNARS TypeScript logo" />
+
 [English](README.en.md)
 
 OpenNARS 3.0.4 的 TypeScript 实现，提供 Node.js CLI、交互式 Shell、ESM 库入口，以及独立的浏览器 Worker demo。

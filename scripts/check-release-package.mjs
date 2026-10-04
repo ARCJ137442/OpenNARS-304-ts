@@ -69,7 +69,11 @@ try {
         "dist/cli.mjs",
         "dist/shell.mjs",
         "config/defaultConfig.xml",
+        "brand/opennars-ts-logo.svg",
     ]) assert.ok(packageFiles.includes(required), `tarball is missing ${required}`);
+    const logo = await readFile(join(projectRoot, "brand", "opennars-ts-logo.svg"), "utf8");
+    assert.match(logo, /SPDX-License-Identifier: MIT/);
+    assert.match(logo, /<text[^>]*>TS<\/text>/);
     for (const forbidden of ["reports/", "scripts/e2e/", "java-master/", "output/", "META-INF/"]) {
         assert.equal(packageFiles.some(file => file.startsWith(forbidden)), false, `tarball contains ${forbidden}`);
     }

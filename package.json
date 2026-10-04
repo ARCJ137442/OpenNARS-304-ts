@@ -57,6 +57,7 @@
     "files": [
         "dist",
         "src/**/*.ts",
+        "brand",
         "config",
         "scripts/cli.mjs",
         "README.md",
