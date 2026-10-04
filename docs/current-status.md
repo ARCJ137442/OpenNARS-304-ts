@@ -9,6 +9,8 @@
 - Demo 最新源码提交为 `65f764b`（行为修复 `df58b15`）：经典 Microworld 的默认入口现在使用随机 seed 和空白探索；只有显式 `?seed=<n>&knowledge=starter` 才装入示例先验。
 - 默认模式与 seed 解析已抽为 `src/demo-seed.ts` 的纯函数，并新增回归测试；本地 Demo 全量 71 项测试、typecheck、build、产物检查和浏览器探针通过。
 - Pages 仓库已提交并推送 `9c5602a`，部署目录为 `opennars-304-ts-lab/`。Core 仍为 `v1.0.6`，本次只更新 Demo，不构成新的 Core 发行版。
+- 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T18:31:53.421Z`，公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
+- 只读公开审查：`audit:jree` 直接导入/出现为 `0/0`，`audit:platform` 的 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`；但 Git 跟踪的历史维护文档仍含本机路径和内部证据索引，仓库改为 public 前仍需人工清理/确认，未擅自改变可见性。
 
 - Demo 当前源码提交为 `65f764b`；共享观测重构基线为 `f40165e`，当前构建绑定 Core `bdc45d5`；Pages 最新部署提交为 `9c5602a`。
 - 经典 Microworld 与 Grid Microworld 现在共用 `src/ui/reasoner-observatory.ts`、`reasoner-panel.css` 和 `experience-timeline.ts` 的状态/呈现合同；Grid 只提供拓扑世界与 Worker 数据，不再拥有独立的操作缓存、经验刷新或观测补丁。
