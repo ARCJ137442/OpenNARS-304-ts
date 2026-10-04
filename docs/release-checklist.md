@@ -1,6 +1,6 @@
 # 修订发行检查清单
 
-当前可下载版本为 `v1.0.5`；spec 042 仍在进行，因为持续性能目标和 Shot 完整进化尚未闭合。当前受保护的核心生产提交 `083d7b8` 已通过 M1′、完整 M2 与 strict markerless；当前 HEAD 文档更新后的 Java M2 也已现跑通过。这不自动证明 Demo 性能收敛或 public 仓库可见性已经批准。
+当前可下载版本为 `v1.0.6`；spec 042 仍在进行，因为持续性能目标、049 长期等价和 public 审查尚未闭合。当前受保护的核心生产提交 `083d7b8` 已通过 M1′、完整 M2 与 strict markerless；当前 HEAD `52c938a` 仅为文档同步，`test:release`、typecheck 和 dist API 已现跑通过。这不自动证明 Demo 性能收敛或 public 仓库可见性已经批准。
 
 ## 冻结候选与语义
 
