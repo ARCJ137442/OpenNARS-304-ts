@@ -6,20 +6,20 @@
 
 ### 2026-10-05 默认入口修复
 
-- 默认入口行为修复提交为 `df58b15`，当前 Demo 代码已推进到 `10f5a77`：经典 Microworld 使用随机 seed 和空白探索；只有显式 `?seed=<n>&knowledge=starter` 才装入示例先验。
-- 默认模式与 seed 解析已抽为 `src/demo-seed.ts` 的纯函数，并新增回归测试；本地 Demo 全量 71 项测试、typecheck、build、产物检查和浏览器探针通过。
-- Pages 仓库已提交并推送 `9c5602a`，部署目录为 `opennars-304-ts-lab/`。Core 仍为 `v1.0.6`，本次只更新 Demo，不构成新的 Core 发行版。
-- 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T19:28:38.801Z`，构建绑定 Core `0599cee`；公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
+- 默认入口行为修复提交为 `df58b15`，当前 Demo 代码已推进到 `0b33497`：经典 Microworld 使用随机 seed 和空白探索；只有显式 `?seed=<n>&knowledge=starter` 才装入示例先验。
+- 默认模式与 seed 解析已抽为 `src/demo-seed.ts` 的纯函数，并新增回归测试；本地 Demo 全量 74 项测试、typecheck、build、产物检查和部署前缀浏览器门通过。
+- Pages 最新部署提交为 `306c2a4`，部署目录为 `opennars-304-ts-lab/`。Core 仍为 `v1.0.6`，本次只更新 Demo，不构成新的 Core 发行版。
+- 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T20:22:50.446Z`，构建绑定 Core `77b99b1`；公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
 - 只读公开审查：`audit:jree` 直接导入/出现为 `0/0`，`audit:platform` 的 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`；已将 `ts-analysis.json` 的 119 条个人临时路径改为仓库内相对 Java 路径，并将 Termux 交接提示改为 `$EVIDENCE_ARCHIVE` 占位符。当前剩余路径命中主要位于历史报告/归档和测试夹具，仓库改为 public 前仍需人工清理/确认，未擅自改变可见性。
 - 当前 HEAD `npm run test:release` 通过：327 个包成员、外部 TypeScript/API/CLI/Shell 全通过、forbidden package members 0，tarball SHA-256 保持 `99cbe017d69a3f247c9d27999d62e72a9861cd592d5b7d5a18389ad6a6606954`。
 - Shot 行为校正已提交 Demo `0b33497`、Pages `306c2a4`：静态靶纳入单人/进化角色矩阵，进化总角色上限与 NARust-o 对齐；操作设置速度后下一世界刻移动，射击反馈按角色队列回送；Demo 当前 74 项测试、typecheck、build、产物检查和部署前缀 Chrome 门通过。固定 seed `3040304` 的 10,000 刻六模式世界合同通过，进化角色始终有界；公网 Chrome 实测默认 Microworld 为“空白探索”，Shot 进化为 4 个 NARS 角色、进化 1 次、页面错误 0。长期 Shot 等价仍未证明。
 
-- Demo 当前源码提交为 `10f5a77`；共享观测重构基线为 `f40165e`，当前构建绑定 Core `0599cee`；Pages 最新部署提交为 `d223e48`。
+- Demo 当前源码提交为 `0b33497`；共享观测重构基线为 `f40165e`，当前构建绑定 Core `77b99b1`；Pages 最新部署提交为 `306c2a4`。
 - 经典 Microworld 与 Grid Microworld 现在共用 `src/ui/reasoner-observatory.ts`、`reasoner-panel.css` 和 `experience-timeline.ts` 的状态/呈现合同；Grid 只提供拓扑世界与 Worker 数据，不再拥有独立的操作缓存、经验刷新或观测补丁。
 - 经验 Top-N 信念在展开期间按节流窗口动态刷新，并使用当前 NAR 时钟做时间投影后排序；感知格显示具体百分比与强度条；Grid 支持虫体/食物拖动到拓扑格点。
 - Microworld 默认入口为随机种子、空白探索；只有显式 `?seed=<n>&knowledge=starter` 才启用可复现实验和示例知识。首页不再把 NARS 终端列为 Demo 卡片，终端仍保留顶部入口。
-- Demo 当前门：typecheck、73 项单测、build、产物检查和部署前缀 Chrome 回归通过；Core M1′/M2、持续 TPS 性能目标、049 长期等价和仓库 public 审查仍未完成。
-- Core 最新文档提交为 `62957cd`；本次公网 Demo 构建绑定其前一份文档身份 `0599cee`，生产 `src` 未变；Pages 最新部署为 `d223e48`。`build-meta.sourceCommit` 记录实际构建绑定提交，不能把文档提交误写成运行时变更。
+- Demo 当前门：typecheck、74 项单测、build、产物检查和部署前缀 Chrome 回归通过；Core M1′/M2、持续 TPS 性能目标、049 长期等价和仓库 public 审查仍未完成。
+- Core 最新文档提交为 `295b45e`；本次公网 Demo 构建绑定其前一份文档身份 `77b99b1`，生产 `src` 未变；Pages 最新部署为 `306c2a4`。`build-meta.sourceCommit` 记录实际构建绑定提交，不能把文档提交误写成运行时变更。
 - 当前候选 Java M2 已串行现跑：`514/514 passed`，退出码 0；证据 `reports/evidence/m2-current-7492666-java-20261005.tap`，SHA-256 `7F9E7B060623EBA032D1175962C07864576524DA562C0401F161F7237AB9A3C5`。M1′/strict markerless 复用未改变生产源码树的既有证据。
 
 ## 2026-10-04 权威版本校正
