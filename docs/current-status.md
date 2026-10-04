@@ -20,7 +20,7 @@
 - 经验 Top-N 信念在展开期间按节流窗口动态刷新，并使用当前 NAR 时钟做时间投影后排序；感知格显示具体百分比与强度条；Grid 支持虫体/食物拖动到拓扑格点。
 - Microworld 默认入口为随机种子、空白探索；只有显式 `?seed=<n>&knowledge=starter` 才启用可复现实验和示例知识。首页不再把 NARS 终端列为 Demo 卡片，终端仍保留顶部入口。
 - Demo 当前门：typecheck、74 项单测、build、产物检查和部署前缀 Chrome 回归通过；Core M1′/M2、持续 TPS 性能目标、049 长期等价和仓库 public 审查仍未完成。
-- Core 最新文档提交为 `295b45e`；本次公网 Demo 构建绑定其前一份文档身份 `77b99b1`，生产 `src` 未变；Pages 最新部署为 `306c2a4`。`build-meta.sourceCommit` 记录实际构建绑定提交，不能把文档提交误写成运行时变更。
+- Core 最新文档提交为 `cc02e49`；本次公网 Demo 构建绑定其前一份文档身份 `77b99b1`，生产 `src` 未变；Pages 最新部署为 `306c2a4`。`build-meta.sourceCommit` 记录实际构建绑定提交，不能把文档提交误写成运行时变更。
 - 当前候选 Java M2 已串行现跑：`514/514 passed`，退出码 0；证据 `reports/evidence/m2-current-7492666-java-20261005.tap`，SHA-256 `7F9E7B060623EBA032D1175962C07864576524DA562C0401F161F7237AB9A3C5`。M1′/strict markerless 复用未改变生产源码树的既有证据。
 
 ## 2026-10-04 权威版本校正
