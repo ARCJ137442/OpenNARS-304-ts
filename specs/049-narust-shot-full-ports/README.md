@@ -49,4 +49,4 @@ Demo 已新增独立 `src/shot-lab-model.ts` 与 `test/shot-lab-model.test.ts`�
 
 这批是模型基础，不是完整 Demo：页面、独立 Worker、六模式真实浏览器运行、射击 FX、进化过程可视化和发布门仍待完成。
 
-随后 Demo `c0a27d3` 已接入 `shot.html` 页面与独立 Worker：六模式切换、同步/异步世界刻、玩家/射线 Canvas、经验观察和非 babble 操作已通过部署前缀浏览器 smoke。进化超过 500 刻后的增量 Worker 装配、淘汰/克隆可视化和完整进化行为仍未完成，因此本规格继续保持 `in-progress`。
+随后 Demo `c0a27d3` 已接入 `shot.html` 页面与独立 Worker：六模式切换、同步/异步世界刻、玩家/射线 Canvas、经验观察和非 babble 操作已通过部署前缀浏览器 smoke；`c9d16ee` 又补上进化超过 500 刻后的新增环境角色 Worker，浏览器实际观察到角色数从 4 增至 5。原作“淘汰落后者”的完整排名策略、每 Worker 独立性能面板和最终发行门仍未完成，因此本规格继续保持 `in-progress`。
