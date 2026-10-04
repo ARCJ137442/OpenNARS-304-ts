@@ -127,7 +127,7 @@ Demo `ca1ab39` 已完成 049 的排名/克隆/淘汰世界模型合同，并接�
 
 Demo `df58b15` 将经典 Microworld 的入口合同明确为“随机 seed + 空白探索”：普通 `/microworld.html` 不注入示例先验，复现实验必须显式提供 `?seed=<n>&knowledge=starter`。`startsWithStarterKnowledge` 与 `initialDemoSeed` 位于同一纯配置模块，并由 Demo 回归测试覆盖；构建身份提交为 `65f764b`。Pages 仓库已同步提交 `9c5602a`。这项修复不改变 Core 推理语义、性能结论或 `v1.0.6` Core 发行版。
 
-公网验证已完成：Pages 的 `build-meta.json` 对应 Core `bdc45d5`，Chrome 普通入口显示“空白探索”，显式 starter 地址显示“示例知识”。`audit:jree` 与核心平台边界审计仍通过；公开可见性审查发现历史文档中的本机路径/内部证据索引，需人工决定是否清理后再改为 public。
+公网验证已完成：Pages 的 `build-meta.json` 对应构建绑定 Core `0599cee`，Demo `10f5a77` / Pages `d223e48`；Chrome 普通入口显示“空白探索”，显式 starter 地址显示“示例知识”。`audit:jree` 与核心平台边界审计仍通过；公开可见性审查发现历史文档中的本机路径/内部证据索引，需人工决定是否清理后再改为 public。
 
 Demo `10f5a77` 进一步校正 Shot：静态靶纳入单人与进化模式，进化总角色和上限与 NARust-o 对齐，按玩家顺序选择首个同轴目标；操作设置速度后下一世界刻移动，射击反馈按角色队列回送；73 项 Demo 单测与部署前缀 Chrome 门通过，Pages 为 `d223e48`。公网 Chrome 实测进化模式为 4 个 NARS 角色、进化 1 次、页面错误 0。这仍不等于长期行为等价或 NARS 记忆克隆等价。
 
