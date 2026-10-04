@@ -73,7 +73,7 @@ nar.stop();
 
 ## 状态与许可证
 
-原生 TypeScript 核心与既定语义门已通过；本轮性能试探在连续低收益后按用户要求停止，**尚未证明持续20TPS或严格性能收敛**。v1.0.5 fix release 已发布，静态 Demo Lab 已部署到 <https://arcj137442.github.io/opennars-304-ts-lab/>；Shot 的完整淘汰排名与长期进化仍在进行中。生产源码直接 jree audit 为 `0/0`；原始 2,000,000 周期长期稳定性仍 `not_run`。接手路线见[当前状态](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/current-status.md)，运行命令见[手册](docs/operator-runbook.md)。
+原生 TypeScript 核心与既定语义门已通过；本轮性能试探在连续低收益后按用户要求停止，**尚未证明持续20TPS或严格性能收敛**。v1.0.6 fix release 已发布，静态 Demo Lab 已部署到 <https://arcj137442.github.io/opennars-304-ts-lab/>；Shot 的长期 NARS 行为对照仍在进行中。生产源码直接 jree audit 为 `0/0`；原始 2,000,000 周期长期稳定性仍 `not_run`。接手路线见[当前状态](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/current-status.md)，运行命令见[手册](docs/operator-runbook.md)。
 
 本仓库采用 MIT License，见 [LICENSE](LICENSE)。
 

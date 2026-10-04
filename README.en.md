@@ -70,4 +70,4 @@ Run `npm run release:bundle` to create a reproducible tarball and SHA-256 manife
 
 This project is a TypeScript rewrite and adaptation of OpenNARS 3.0.4. See [NOTICE](NOTICE) for attribution and [LICENSE](LICENSE) for the MIT License.
 
-The current performance round stopped after repeated low-yield candidates; sustained 20 TPS and strict performance convergence are not claimed. The next phase is Demo functionality. The v1.0.5 package version is prepared but unreleased; the public Pages site still serves v1.0.4.
+The current performance round stopped after repeated low-yield candidates; sustained 20 TPS and strict performance convergence are not claimed. The v1.0.6 fix release is published; the static Pages Lab is deployed separately. Long-run Shot NARS behavior comparison remains in progress.
