@@ -30,3 +30,6 @@ __pycache__/
 
 # Local canonical Java fixture link
 java-master
+
+# Agent-local permissions and MCP settings
+.claude/settings.local.json
