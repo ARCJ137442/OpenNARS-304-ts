@@ -106,3 +106,5 @@ Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 045 已不再是未实现项：Demo 提交 `1aa332c` 已推送，普通 Demo、经典 Microworld 与 Astro 终端共用有界 NARS 经验观察；`npm run check` 的 38 项测试、静态构建和真实浏览器 smoke 均通过。经验事件区分 `nars`、`prior`、`input`、`babble`，只把推理阶段原始事件标为自主，并保留 Narsese 溯源。Core LeanSpec 045 已更新为 `complete`。
 
 因此当前功能待办为 046 Grid、047 2048、048 Pong 多模式和 049 Shot 完整移植；Pages、最终门和 v1.0.5 发行仍未完成。后续文档引用本节与 Demo `docs/probes/20261003-experience-observatory.md` 的新事实，覆盖上文 045 的历史调查状态。
+
+046 Grid 也已完成：Demo `gridworld.html` 与共享目录卡片已推送，正方形/正三角形/正六边形环面在同一入口切换，真实 Worker、六路感知、经验观察和速率 HUD 已通过 9 项纯模型合同、Demo 全量检查及逐拓扑 Chrome smoke。Grid 是独立离散环境，不能替代经典连续 Microworld 的持续 TPS 门。当前剩余功能规格为 047、048、049。
