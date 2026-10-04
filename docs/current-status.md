@@ -12,6 +12,7 @@
 - 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T20:22:50.446Z`，构建绑定 Core `77b99b1`；公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
 - 只读公开审查：`audit:jree` 直接导入/出现为 `0/0`，`audit:platform` 的 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`；已将 `ts-analysis.json` 的 119 条个人临时路径改为仓库内相对 Java 路径，将 Termux 交接提示改为 `$EVIDENCE_ARCHIVE` 占位符，并将归档维护输出改为占位路径。当前维护文档/规格/README 已无本机路径命中；历史报告和测试夹具仍保留溯源用路径，仓库改为 public 前仍需人工清理/确认，未擅自改变可见性。
 - 当前 HEAD `npm run test:release` 通过：327 个包成员、外部 TypeScript/API/CLI/Shell 全通过、forbidden package members 0，tarball SHA-256 保持 `99cbe017d69a3f247c9d27999d62e72a9861cd592d5b7d5a18389ad6a6606954`。
+- 当前 HEAD `npm run test:unit:with-java` 已串行现跑通过：`514/514 passed`，耗时约 `133917 ms`，0 failed、0 skipped；生产 `src` 树仍与受保护 `083d7b8` 相同，因此不重复 M1′/strict markerless。
 - 当前 `audit:jree` 复核仍为直接导入/出现 `0/0`，但保留 5 个高风险语义边界和 7 个需人工复核项（类身份、静态初始化、可变迭代器）；迁移扫描的 Java 形状残余仍属于已披露兼容合同，未进行未经门禁保护的改写。
 - 公开面清理：移除 Git 跟踪的 Agent-local `.claude/settings.local.json`（保留本地副本并加入 `.gitignore`）；其内容无 token，但不属于项目运行合同。发行包哈希和成员数未变。
 - 当前开源就绪评估见 [v1.0.6 开源就绪评估](open-source-readiness-v1.0.6.md)：建议继续以 private 研究/集成 release 交付，公开源码仓库前仍需所有者人工审查历史、日志、资产、许可证和机密。
