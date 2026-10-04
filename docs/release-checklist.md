@@ -1,6 +1,6 @@
 # 修订发行检查清单
 
-当前可下载版本为 `v1.0.6`；spec 042 仍在进行，因为持续性能目标、049 长期 NARS 等价和 public 审查尚未闭合。当前受保护的核心生产提交 `083d7b8` 已通过 M1′、完整 M2 与 strict markerless；当前 HEAD `3f0f697` 仅为文档同步，`test:release`、typecheck 和 dist API 已现跑通过。这不自动证明 Demo 性能收敛或 public 仓库可见性已经批准。
+当前可下载版本为 `v1.0.6`；spec 042 仍在进行，因为持续性能目标、049 长期 NARS 等价和 public 审查尚未闭合。发行资产绑定 Core tag `v1.0.6` / commit `9b4e8a8`；受保护的核心生产提交 `083d7b8` 已通过 M1′、完整 M2 与 strict markerless。当前 HEAD `5528fd8` 仅为文档/公开面同步，`test:release`、typecheck 和 dist API 已现跑通过。这不自动证明 Demo 性能收敛或 public 仓库可见性已经批准。
 
 ## 冻结候选与语义
 
