@@ -4,7 +4,7 @@
 
 ## 当前定位
 
-2026-10-03 用户要求中期收口性能试探，功能性新需求交下一个 Agent。044 终端/首页路径与「一图胜千言」底座已由 Demo `aa06eb6`、`64ba889`、`7612d9b` 和本地构建/Chrome 证据验收；045 内部经验、046 Grid Microworld、047 NARS × 2048、048 Pong 多模式已完成，049 Shot 完整多玩家移植仍 `in-progress`。Demo 主线保持可构建；v1.0.5 仅是未发布的包版本准备，Pages/Release 仍为 v1.0.4。新需求总账见 [当前目标](active-goal-20261002.md)、[本次中期交接](midterm-handoff-20261003.md)和相邻 Demo `docs/probes/20261003-demo-batch-requirements.md`。普通 Demo 的配置目标已改为至少 20 TPS，**实际持续速率未因此达标**。核心生产 `src` 树与受保护 `083d7b8` 的 Git 树哈希同为 `a36ce31778f25e74340fe4406847bacd7bb3c949`；v1.0.5 TS-only M2 复跑 `512 passed / 2 skipped / 0 failed`，含 Java M2 与 M1′仍沿用源树相同的既有证据，不能写成新 HEAD 现跑。
+2026-10-03 用户要求中期收口性能试探，功能性新需求交下一个 Agent。044 终端/首页路径与「一图胜千言」底座已由 Demo `aa06eb6`、`64ba889`、`7612d9b` 和本地构建/Chrome 证据验收；045 内部经验、046 Grid Microworld、047 NARS × 2048、048 Pong 多模式已完成，049 Shot 完整多玩家移植仍 `in-progress`。Demo Lab 已部署到 GitHub Pages，核心 `v1.0.5` fix release 已发布；Shot 的完整淘汰排名仍未完成。新需求总账见 [当前目标](active-goal-20261002.md)、[本次中期交接](midterm-handoff-20261003.md)和相邻 Demo `docs/probes/20261003-demo-batch-requirements.md`。普通 Demo 的配置目标已改为至少 20 TPS，**实际持续速率未因此达标**。核心生产 `src` 树与受保护 `083d7b8` 的 Git 树哈希同为 `a36ce31778f25e74340fe4406847bacd7bb3c949`；当前 HEAD 仅有文档/规格更新，TS-only M2 `512 passed / 2 skipped / 0 failed`、Java M2 `514/514 passed` 均已现跑。
 
 ```text
 v1.0.4 已发布
@@ -24,7 +24,7 @@ v1.0.4 已发布
 
 ## 2026-10-04 增量事实
 
-Demo 仓库 `1aa332c` 已完成并推送 045 经验观察：普通 Demo、经典 Microworld、Astro 终端共享真实 NARS 事件时间线；38 项 Demo 检查与真实浏览器 smoke 通过。事件来源明确区分 `nars`、`prior`、`input`、`babble`，仅推理阶段事件标记为自主；观察窗口有界，默认折叠，不扫描概念内容。045 LeanSpec 已由 `in-progress` 更新为 `complete`。因此后续未完成 Demo 功能范围为 046–049，Pages、v1.0.5 和最终发行门仍未完成。
+Demo 仓库 `1aa332c` 已完成并推送 045 经验观察：普通 Demo、经典 Microworld、Astro 终端共享真实 NARS 事件时间线；38 项 Demo 检查与真实浏览器 smoke 通过。事件来源明确区分 `nars`、`prior`、`input`、`babble`，仅推理阶段事件标记为自主；观察窗口有界，默认折叠，不扫描概念内容。045 LeanSpec 已由 `in-progress` 更新为 `complete`。因此后续未完成 Demo 功能范围为 049 的完整进化语义；Pages 与 v1.0.5 已发布，最终 public 可见性审查仍待仓库所有者完成。
 
 Demo 后续提交已完成 046 Grid Microworld：`gridworld.html` 支持正方形/正三角形/正六边形环面切换，复用真实 Microworld Worker、六路感知、经验观察和 FPS/TPS/RPS；纯模型 9 项合同、Demo 47 项测试和逐拓扑 Chrome smoke 通过。046 LeanSpec 已更新为 `complete`。Grid 是独立离散环境，不替代经典连续 Microworld 的持续 TPS 证据。
 
@@ -58,10 +58,10 @@ Demo 后续提交已完成 046 Grid Microworld：`gridworld.html` 支持正方�
 
 2026-10-03 下载包审计发现并修复一个发布遗漏：`files: src` 将本地历史 `src/language/Term.ts.codex-corrupt` 收入包。现改为 `src/**/*.ts`，本地文件保留；内部发行检查清单也不再随包提供。文档索引精简为用户入口，未随包提供的维护资料改用源码仓库链接；发行检查器新增源文件/临时文件/内部文档排除及本地 Markdown 链接完整性断言。增强的 `npm run test:release` 通过外部 TypeScript、API、CLI、Shell，包成员为325；指定本机路径模式扫描0命中，不等于已完成全面机密审计。最终日志 `reports/evidence/release-package-content-fix-passed-20261003.log` SHA-256 `40EEC9FE577D12731A7B66C20F0BDD1EFE14255728B53E2E08B83D56EB5F668D`；包清单 `pack-content-after-fix-20261003.json` SHA-256 `57BC57EB2F3DE7F1EAD3DEB2BBF15F053A6C337C0AE88D436045F9B5F1DBE772`。首轮增强检查因已有缺失文档链接失败，修正后通过；推理源码未改，不重复 M1′。
 
-2026-10-04 正式 TypeScript Logo 已加入 Core brand/、中英 README、发行包白名单；以用户提供 Julia SVG 为底稿，仅替换 Julia 三圆组，保留原天平矢量主体。Demo 从 Core brand 单源复制，favicon、首页和 Astro 终端引用；Core release test、Demo npm run check 与 Chrome smoke 通过。Core commit ed71f77、Demo commit f5a1f58；最终 Demo 构建绑定 Core 735c44e，Logo SHA-256 `13703EC71A49D5BF7D7A7D79B3E21AB349CA281B6C13699451BA72F1C6739142`，构建日志 `logo-final-check-ed71f77-20261004.log` SHA `6099C29FA0CA93F50C43F59FB77BEE026144FBBB8A3E304AD2C8C5072307AA33`，Chrome smoke `logo-final-browser-ed71f77-20261004.log` SHA `F61B9B86C206FE1BC6EF6EB970077CEBA6977996076A9C286C2A3712F40BF2C1`。Logo 源码已推送，Demo 改动已提交；Pages 仍未更新。
+2026-10-04 正式 TypeScript Logo 已加入 Core brand/、中英 README、发行包白名单；以用户提供 Julia SVG 为底稿做最小替换。Core release test、Demo build、产物检查与部署前缀 Chrome smoke 通过；Pages 部署提交为 `270b72b`，发行说明绑定更新为 `f2c1f65`。
 
-2026-10-03 发布资产整理已完成：GitHub `v1.0.4` Release 的五个误附旧版 `.tgz`（0.1.0、1.0.0–1.0.3）经本地/远端 SHA-256 一致性核对后移除，本地历史包保留。远端现仅有 `opennars-304-ts-1.0.4.tgz` 与 `release-manifest.json`。前后清单在 `reports/evidence/release-v1.0.4-assets-{before,after}-cleanup-20261003.json`，SHA-256 分别 `4C44ADEDDA4B9208929872A83CC502883551F16E3D14EE905174BCAC175443D1`、`EE0DFB8B13FDFB49B49BA76810E221C0D33B349B8872714412F7DCC0FB1EA83E`。这不表示创建了 v1.0.5 Release。正式 TypeScript Logo 的人类批示已补入当前目标，仍属于后续功能交接。
+2026-10-04 `v1.0.5` fix release 已创建：仅上传 `opennars-304-ts-1.0.5.tgz` 与 `release-manifest.json`，tarball SHA-256 为 `eb528c4013ce9d9fb88b12de41ec6f5058a8b171affaa43fed12b074f70fb2e7`，manifest 源码提交为 `f2b5005`。不发布 npm。此前 v1.0.4 旧资产清理证据仍保留在 `reports/evidence/release-v1.0.4-assets-*`。
 
 1. BandRobot 虽发出操作，但固定 150 刻仍未完成抓取—搬运—交付；无效左移循环的负反馈候选已撤销。需以世界状态/成功交付验收，而非操作次数。
 2. 已证实 Microworld 474 刻有 596718 次 Bag 同类回退、29202388 次扫描；两版改名安全名称索引只有约 3%–5% 的 Microworld 总收益，并使 TestChamber RSS 多约 44–71 MB。其后的几何对象快路两版也没有端到端收益（Microworld 基线/候选总耗时 `9447/9533/9511 ms`），RSS 增加，**均已撤销**。用户要求在反复低收益时停止，因此本轮不再启动新性能候选。Microworld 示例模式持续 20 TPS 未达标；Bag 插入/分配、概念增长和 GC 长尾仍有未穷尽的热点，不能称严格性能收敛。原始数据、源码 patch 和 SHA 见 [Bag 探查](probes/20261002-bag-term-equality.md)。
-3. 本次仅做性能中期收口，不继续新功能；045–049 的可证伪路径见[中期交接](midterm-handoff-20261003.md)。未来任何核心生产修改需重新判断直接合同、完整 M2、M1′、markerless；Demo 新功能需静态构建与真实浏览器。最终发行仍须 Node/API、依赖/平台、编码、许可、公开资产与 Pages 现跑；GitHub fix release 未创建，也不发布 npm。仓库可见性变更仍须单独人工检查。
+3. 本次性能试探已按用户要求停止；049 的 Shot 基础页面与增量 Worker 已交付，完整淘汰排名仍待后续。未来任何核心生产修改需重新判断直接合同、完整 M2、M1′、markerless；Pages 与 v1.0.5 已发布；仓库可见性变更仍须单独人工检查。

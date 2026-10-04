@@ -64,9 +64,9 @@ OpenNARS 3.0.4 可观察语义
 
 Demo 的具身适配与墙钟 RPS 监测已分批提交，生产监测提交为 `8a147f4`。真实 Chrome smoke 证明普通 10 个环境在 babble 0 时可发出 NARS 操作；Microworld 的 seed19“示例知识”可发出 `^Forward`，经典空白模式保留且不装先验。30 秒示例模式同步目标20TPS时平均 `15.875`、末窗 `11.776 TPS`，尚未达到持续20；五个扩展环境改为状态变化输入后平均 TPS 提高，但 TicTacToe、TestChamber、FighterPlane、Echo Relay 的末窗仍不足，BandRobot 的操作尚未形成完整交付。浏览器/同输入实验记录在相邻 Demo 仓库 `docs/probes/20261003-embodied-operation-adaptation.md`。原生词项名称索引与几何对象快路均未给出可接受的端到端收益，候选撤销、原始证据保留；具体反证见 [Bag 探查](probes/20261002-bag-term-equality.md)。依据用户最新指令，**停止本轮性能优化试探**，转向未完成的 Demo 行为、发布与公开核查。Microworld 持续 20 TPS 和严格“无高收益候选”收敛证明仍未达到，发行时必须明确披露。
 
-2026-10-03 新增发布前 Web Lab 门：[044：终端整合与一图胜千言设计](../specs/044-web-lab-terminal-integration/README.md) 已在当前 Demo 批次验收并标 `complete`。无尾斜杠的 `/opennars-304-ts-lab` 入口曾让相对 sprite 与终端 URL 解析到网站根目录；现用统一 base path，终端迁为 Astro 路由并加入同系列目录，旧复制页面移除，Chrome 已验证素材/链接/Worker。Java Lab Launcher 的未复刻功能只列路线。**v1.0.5 仍未发布。**
+2026-10-03 新增发布前 Web Lab 门：[044：终端整合与一图胜千言设计](../specs/044-web-lab-terminal-integration/README.md) 已在当前 Demo 批次验收并标 `complete`。无尾斜杠的 `/opennars-304-ts-lab` 入口现用统一 base path，终端迁为 Astro 路由并加入同系列目录；Chrome 已验证素材/链接/Worker。Java Lab Launcher 的未复刻功能只列路线。**v1.0.5 已发布，Pages 已更新。**
 
-用户还要求游戏级但有语义的界面反馈、HUD 状态文案不挤动其他指标，以及可观察 NARS 内部预期和操作经验。终端/普通 Demo/Microworld 的首批事件驱动 FX 和 Microworld HUD 固定槽位已通过本地检查；[045：Demo 内部经验观察](../specs/045-demo-experience-observatory/README.md) 仍在调查真实事件与有界采样。尚未完成 045、最终提交/Pages/发行门之前，**不创建 v1.0.5 Release，也不把内部经验视图说成已完成**。
+用户还要求游戏级但有语义的界面反馈、HUD 状态文案不挤动其他指标，以及可观察 NARS 内部预期和操作经验。终端/普通 Demo/Microworld/Pong/Shot 的事件驱动 FX、经验观察和 HUD 已通过本地/部署前缀浏览器门；v1.0.5 已创建，性能限制和 Shot 完整进化缺口在发行说明中披露。
 
 用户随后要求经典 Microworld 的左/右操作分别表现为虫体逆/顺时针旋转，并新增单个可切换方格、三角格、六角格的环面 [046：Grid Microworld](../specs/046-grid-microworld-topologies/README.md)。经典版左右符号已在 Demo 批次修正并有直接合同；网格新 Demo 尚未实现，不能替代经典版性能或语义证据。
 
@@ -95,11 +95,11 @@ Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 ```
 
 - **已提交推送并本地验收，未部署新版 Pages**：无尾斜杠图片/链接修复、Astro 终端与目录卡、终端桌面/移动浏览器验证、一图胜千言规范、经典 Microworld 左右语义与 HUD 固定槽位、首批语义 FX。Demo 主线检查点 `13d961f` 的最终构建通过 36 项单测；Core `ba0c096` 文档后继时的 Chrome 回归通过，后续 `dbf62ae` 仅改文档，生产源码树相同。原始日志与 SHA-256 见 Demo 需求总账；不能再把这些事项写成待修复。
-- **正式 Logo 已制并完成本地验证，尚未部署 Pages**：2026-10-04 按用户要求以 Julia 参考 SVG 为底稿做最小替换，Core ed71f77 是唯一品牌源，Demo 构建时复制同一文件。双语 README、favicon、首页和终端已引用。核心 release test、Demo check、Chrome smoke 均通过；Chrome smoke 检查了素材 HTTP 200 与 SVG 固有比例。Logo 只在本地/主线完成，公网更新留待最终发行。
+- **正式 Logo 已制并完成 Pages 验证**：2026-10-04 按用户要求以 Julia 参考 SVG 为底稿做最小替换，Core brand 是唯一品牌源，Demo 构建时复制同一文件。双语 README、favicon、首页和终端已引用；Pages 提交 `f2c1f65` 已推送。
 - **规格/调查中，未实现**：049 NARust-o Shot 多玩家完整移植。Pong 多模式已由 Demo `a52e544` 完成并通过 9/9 真实浏览器模式门；Shot 须覆盖单/双/进化六种源入口，不把当前单玩家简化 Shot 冒充完整复刻。多 NARS 须用独立 Worker/指标证明。其公开页面不得以空壳或伪数据冒充已完成。
 - **新速率口径**：所有 Demo 的**配置目标**不得低于 20 世界刻/秒；这只是目标值，不是持续实测。对每个 Demo 记录实际/目标 TPS、完成推理 RPS、有效 NARS 操作与内存；若未达到，必须如实披露。用户此前要求重复低收益时停止核心优化，不能为满足目标继续无根据地循环试探。
 - **本次中期边界**：2026-10-03 用户要求先收尾性能优化；当前已完成 Grid/2048/Pong，继续推进 Shot 前仍需保持真实 Worker 与浏览器门禁。早期 Grid 几何试验分支只作历史追溯。
-- **发行冻结**：上述功能范围及最终固定版本验收未完成前，不推送 Pages 新版、不创建 v1.0.5 Release。核心包版本号在 `48b764c` 改为 `1.0.5`，但它仍不是已发布版本；中期性能收口也不等于严格“无高收益候选”的技术收敛证明。
+- **发行冻结**：v1.0.5 已发布并绑定 Core `f2b5005`，Pages 已由提交 `f2c1f65` 更新。性能主动停止不等于严格“无高收益候选”的技术收敛证明，public 仓库可见性仍由所有者最终审查。
 
 ### 2026-10-04 进展增量
 

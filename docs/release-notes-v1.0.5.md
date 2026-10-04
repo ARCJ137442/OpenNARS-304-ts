@@ -10,7 +10,7 @@
 - Demo Lab 对感知输入节奏与墙钟 RPS 做了修正；真实浏览器 smoke 中，十个普通 Demo 和 Microworld 示例模式均出现非 babble 的 NARS 操作。BandRobot 已明确标为多步任务实验，因为固定场景尚未证明自主完成抓取—运输—交付。
 - Demo Lab 新增并公开了 Grid Microworld、NARS × 2048、Pong 九种玩法与 Shot 六模式基础页面；Shot 的完整淘汰排名与长期进化行为仍标为进行中。
 
-受保护核心生产提交 `083d7b8`：TS-only M2 为 `512 passed / 2 skipped / 0 failed`，含 Java M2 为 `514/514 passed`；M1′ 主体 `243/243 passed`，另有 #25、#246 和 #245 的 65536 周期降载夹具通过；两项 131072 周期 strict markerless 与冻结 Java 摘要逐窗口相等。发行提交还需复核包与 Node/浏览器入口；以上结果不能冒充原始 245 项完整 M1。
+受保护核心生产提交 `083d7b8`：TS-only M2 为 `512 passed / 2 skipped / 0 failed`，含 Java M2 为 `514/514 passed`；当前 HEAD 文档更新后的 Java M2 现跑为 `514/514 passed`；M1′ 主体 `243/243 passed`，另有 #25、#246 和 #245 的 65536 周期降载夹具通过；两项 131072 周期 strict markerless 与冻结 Java 摘要逐窗口相等。v1.0.5 包检查、Node/API/CLI/Shell、Pages 与部署前缀浏览器 smoke 均已复核；以上结果不能冒充原始 245 项完整 M1。
 
 **性能限制：** Microworld 有 NARS 操作的 seed19 示例模式，Chrome 30 秒平均 `15.875 TPS`、末五秒 `11.776 TPS`，未达到期望的持续 20 TPS。TicTacToe、TestChamber、FighterPlane 和 Echo Relay 的后段世界 TPS 也仍偏低。重复首查、名称索引和几何对象候选未获得可接受的端到端收益；应用户要求，本轮停止继续试探。Bag 插入/分配、概念增长与 GC 长尾仍是可调查热点，停止不代表性能已经收敛。原始 2,000,000 周期稳定性负载因设备资源限制 **not_run**；降载测试不证明它通过，也不宣称与 Java 性能相同。
 
@@ -26,7 +26,7 @@ This fix release includes native TypeScript cleanup, Bag term-lookup improvement
 - The Lab adjusts perception cadence and wall-clock RPS reporting. A real-browser smoke test observed non-babble NARS operations in all ten ordinary demos and the Microworld starter scenario. BandRobot is labeled a multi-step experiment: autonomous pickup, transport, and delivery have not been demonstrated in the fixed scenario.
 - The Lab now publishes Grid Microworld, NARS × 2048, nine Pong play modes, and the six-mode Shot foundation page. Shot's full elimination ranking and long-run evolution behavior remain in progress.
 
-For protected core source commit `083d7b8`, TS-only M2 was `512 passed / 2 skipped / 0 failed`, Java M2 was `514/514 passed`, the M1′ body was `243/243 passed`, and #25, #246, and the reduced 65536-cycle #245 fixture passed. Both 131072-cycle strict markerless digests matched their frozen Java baselines window by window. The release commit still requires package and Node/browser entry-point checks. These results do not constitute the original full 245-file M1.
+For protected core source commit `083d7b8`, TS-only M2 was `512 passed / 2 skipped / 0 failed`, Java M2 was `514/514 passed`; a current-HEAD Java M2 rerun also passed `514/514`. The M1′ body was `243/243 passed`, and #25, #246, and the reduced 65536-cycle #245 fixture passed. Both 131072-cycle strict markerless digests matched their frozen Java baselines window by window. Package, Node/API/CLI/Shell, Pages, and deployment-prefix browser checks were verified for v1.0.5. These results do not constitute the original full 245-file M1.
 
 **Performance limitations:** With NARS actions enabled, the Microworld seed-19 starter scenario averaged `15.875 TPS` over 30 seconds and reached `11.776 TPS` in the final five seconds in Chrome, below the desired sustained 20 TPS. TicTacToe, TestChamber, FighterPlane, and Echo Relay also have low late-window world rates. Three subsequent candidate families showed insufficient end-to-end benefit; the user stopped this optimization round. Bag insertion/allocation, concept growth, and GC tails remain possible hotspots, so this is not a convergence proof. The original two-million-cycle stability workload is **not_run** because of device resource limits; the reduced fixture cannot stand in for it or establish Java-equivalent performance.
 
