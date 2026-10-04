@@ -24,6 +24,7 @@
 - 公开面清理：移除 Git 跟踪的 Agent-local `.claude/settings.local.json`（保留本地副本并加入 `.gitignore`）；其内容无 token，但不属于项目运行合同。发行包哈希和成员数未变。
 - 当前开源就绪评估见 [v1.0.6 开源就绪评估](open-source-readiness-v1.0.6.md)：建议继续以 private 研究/集成 release 交付，公开源码仓库前仍需所有者人工审查历史、日志、资产、许可证和机密。
 - 当前版本 Microworld 20 秒复测已落盘于 Demo `docs/probes/20261005-microworld-rate-current.md`：示例知识平均/末窗 `17.618/14.364 TPS`，空白探索 `19.567/19.760 TPS`；前者有 4 次 NARS 操作，后者为 0。两者页面/Worker 错误均为 0；这不是优化收益或性能收敛证据。
+- 原始 2,000,000 周期稳定性已在 Core `bf747b6` 以 TS cold 单进程完成：请求 `2,000,000`、实际推理 `4,000,424`、`3,282,125 ms`、峰值 RSS `2,756,640,768 bytes`、功能 `1/1`，无 timeout/process_limit/exception/stall/not_run；Java 本次未重跑。详见 [原始长周期实测](probes/20261005-long-stability-2000000.md)。
 - Shot 行为校正已提交 Demo `0b33497`、Pages `306c2a4`：静态靶纳入单人/进化角色矩阵，进化总角色上限与 NARust-o 对齐；操作设置速度后下一世界刻移动，射击反馈按角色队列回送；Demo 当前 74 项测试、typecheck、build、产物检查和部署前缀 Chrome 门通过。固定 seed `3040304` 的 10,000 刻六模式世界合同通过，进化角色始终有界；公网 Chrome 实测默认 Microworld 为“空白探索”，Shot 进化为 4 个 NARS 角色、进化 1 次、页面错误 0。长期 Shot 等价仍未证明。
 
 - Demo 当前源码提交为 `0b33497`；共享观测重构基线为 `f40165e`，当前构建绑定 Core `77b99b1`；Pages 最新部署提交为 `306c2a4`。
