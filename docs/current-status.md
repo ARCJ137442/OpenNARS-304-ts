@@ -1,6 +1,6 @@
 # OpenNARS-304-ts 当前状态
 
-日期：2026-10-03（Asia/Shanghai）。本文是当前交接入口；目标与退出条件见 [active-goal-20261002.md](active-goal-20261002.md)，历史过程见 [archive/current-status-history-20261002.md](archive/current-status-history-20261002.md)。历史未跟踪原始证据保留，不视为可随意清理的临时文件。
+日期：2026-10-04（Asia/Shanghai）。本文是当前交接入口；目标与退出条件见 [active-goal-20261002.md](active-goal-20261002.md)，历史过程见 [archive/current-status-history-20261002.md](archive/current-status-history-20261002.md)。历史未跟踪原始证据保留，不视为可随意清理的临时文件。
 
 ## 当前定位
 
@@ -21,6 +21,10 @@ v1.0.4 已发布
 ```
 
 核心 `083d7b8` 将 INFO 日志从 `console.error` 改为 `console.info`，严重错误与异常堆栈仍走错误通道。源码、发布依赖没有 npm `jree`；最新静态审计 `audit:jree` 为直接导入 `0/0`、平台审计 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`。非增量 typecheck、build、dist API 通过。LeanSpec 042 为 `in-progress`；历史 023/024/025/027/031/036 的 complete 不代替本轮更严格的发行验收。
+
+## 2026-10-04 增量事实
+
+Demo 仓库 `1aa332c` 已完成并推送 045 经验观察：普通 Demo、经典 Microworld、Astro 终端共享真实 NARS 事件时间线；38 项 Demo 检查与真实浏览器 smoke 通过。事件来源明确区分 `nars`、`prior`、`input`、`babble`，仅推理阶段事件标记为自主；观察窗口有界，默认折叠，不扫描概念内容。045 LeanSpec 已由 `in-progress` 更新为 `complete`。因此后续未完成 Demo 功能范围为 046–049，Pages、v1.0.5 和最终发行门仍未完成。
 
 ## 当前核心门证据
 
