@@ -47,7 +47,7 @@ Microworld seed19 示例知识、babble0、同步目标20TPS的 Chrome 30秒实�
 
 下载包白名单已收紧到 `src/**/*.ts` 并排除内部发行检查清单；历史 `.codex-corrupt` 本地文件保留但不入包。用户文档中的维护链接指向源码仓库，发行检查器会拒绝包内缺失的本地链接。增强包检查通过（325成员、外部 TypeScript/API/CLI/Shell），证据哈希见当前状态。核心 `src` 树不变；包内容与检查脚本有变化，应在最终发行提交重跑 `test:release`，不把旧 tarball 哈希当新版。
 
-正式 Logo 已在 Core commit `ed71f77` 完成最小差异制作，Demo 构建从 Core brand 唯一源复制；favicon、首页和终端已引用。Core `test:release`、Demo check、Chrome logo 资源 smoke 均通过。Demo 侧对应更改仍在工作区，需提交推送；Pages 尚未部署，v1.0.5 未发布。源码差异以用户提供 Julia SVG 为准，保留完整天平主体，仅替换末尾 Julia 三圆组及其专属颜色规则。
+正式 Logo 已在 Core commit `ed71f77` 完成最小差异制作，Demo commit `f5a1f58` 已提交推送；Demo 构建从 Core brand 唯一源复制，最终绑定 Core `735c44e`。favicon、首页和终端已引用。Core `test:release`、Demo check、Chrome logo 资源 smoke 均通过。Pages 尚未部署，v1.0.5 未发布。源码差异以用户提供 Julia SVG 为准，保留完整天平主体，仅替换末尾 Julia 三圆组及其专属颜色规则。
 
 1. `git status --short --branch` 核对两个主线和 Grid WIP 分支；读 specs 045–049 及 Demo 六份 `20261003-*` 探查文件。LeanSpec `search` 遇中文可能 UTF-8 panic，`link` 子命令不可用；不要伪造 board/依赖结果。
 2. 先实现共享的多 Worker/角色诊断和按需内部经验事件观察，区分预置、babble、NARS 派生；此能力供 Pong 与 Shot 共用。避免每世界刻全量扫概念袋。

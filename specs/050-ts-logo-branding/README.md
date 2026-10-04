@@ -5,7 +5,7 @@ priority: medium
 tags:
 - branding web release
 created_at: 2026-10-04T01:05:31.017942700Z
-updated_at: 2026-10-04T02:55:38.306456400Z
+updated_at: 2026-10-04T03:08:48.358705800Z
 completed_at: 2026-10-04T02:55:38.306456400Z
 transitions:
 - status: in-progress
@@ -29,7 +29,7 @@ transitions:
 - [x] Core release test 与 Demo `npm run check` 通过；Chrome 已浏览首页/终端，Logo 资源在无尾斜杠 smoke 下返回 200、固有比例正确且站点页面无错误。
 - [x] Core brand/ 是唯一源，Demo 在构建时复制，产物检查验证两份 SVG 字节一致。
 
-Pages 部署属于 spec 042 的最终发行工作；本 spec 验收的是品牌源码、构建资产和界面入口，当前实现随下一次 Demo 功能批次提交，最终公网检查与发行仍须重跑。
+Pages 部署属于 spec 042 的最终发行工作；本 spec 已验收品牌源码、构建资产和界面入口。Core `ed71f77`、Demo `f5a1f58` 已推送；最终公网检查与发行仍须重跑，但不阻塞本地 spec 完成。
 
 ## 边界
 
