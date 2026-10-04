@@ -64,11 +64,11 @@ BabelNAR 测试由维护者在以下场景手工触发：
 
 ### 3.1 工作目录
 
-- TypeScript：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts`
-- BabelNAR 测试套件：`H:\A137442\Develop\AGI\NARS\_Project\BabelNAR-NAL-test-suite`
-- BabelNAR.rs：`H:\A137442\Develop\AGI\NARS\_Project\BabelNAR.rs`
-- BabelNAR CLI：`H:\A137442\Develop\AGI\NARS\_Project\BabelNAR-CLI`
-- Java canonical：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build`
+- TypeScript：`$OPENNARS_TS_ROOT`
+- BabelNAR 测试套件：`$BABELNAR_TEST_ROOT`
+- BabelNAR.rs：`$BABELNAR_RS_ROOT`
+- BabelNAR CLI：`$BABELNAR_CLI_ROOT`
+- Java canonical：`$JAVA_CANONICAL_ROOT`
 
 ### 3.2 当前记录的 Java canonical
 
@@ -358,17 +358,17 @@ P8 完成后再做：7 个禁用扩展样本、stability 与其他 NARS 实现
 
 开始前，先完整阅读：
 
-- `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\docs\babelnar-on-demand-cross-parity-test-plan.md`
-- `H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts\docs\translation-deep-pitfalls.md`
+- `$OPENNARS_TS_ROOT/docs/babelnar-on-demand-cross-parity-test-plan.md`
+- `$OPENNARS_TS_ROOT/docs/translation-deep-pitfalls.md`
 - 各相关仓库自己的 `AGENTS.md`、README 和最新阶段报告。
 
 ## 二、权威目录
 
-- TypeScript：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-ts`
-- BabelNAR 测试套件：`H:\A137442\Develop\AGI\NARS\_Project\BabelNAR-NAL-test-suite`
-- BabelNAR.rs：`H:\A137442\Develop\AGI\NARS\_Project\BabelNAR.rs`
-- BabelNAR CLI：`H:\A137442\Develop\AGI\NARS\_Project\BabelNAR-CLI`
-- Java canonical：`H:\A137442\Develop\AGI\NARS\_Project\OpenNARS-304-java-canonical-fixed-build`
+- TypeScript：`$OPENNARS_TS_ROOT`
+- BabelNAR 测试套件：`$BABELNAR_TEST_ROOT`
+- BabelNAR.rs：`$BABELNAR_RS_ROOT`
+- BabelNAR CLI：`$BABELNAR_CLI_ROOT`
+- Java canonical：`$JAVA_CANONICAL_ROOT`
 
 Java canonical 固定为：
 
