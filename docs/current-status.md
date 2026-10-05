@@ -33,7 +33,7 @@
 - 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T20:22:50.446Z`，构建绑定 Core `77b99b1`；公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
 - 只读公开审查：`audit:jree` 直接导入/出现为 `0/0`，`audit:platform` 的 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`；已将 `ts-analysis.json` 的 119 条个人临时路径改为仓库内相对 Java 路径，将 Termux 交接提示改为 `$EVIDENCE_ARCHIVE` 占位符，并将归档维护输出改为占位路径。当前维护文档/规格/README 已无本机路径命中；历史报告和测试夹具仍保留溯源用路径，仓库改为 public 前仍需人工清理/确认，未擅自改变可见性。
 - 当前 HEAD `npm run test:release` 通过：327 个包成员、外部 TypeScript/API/CLI/Shell 全通过、forbidden package members 0；v1.0.7 tarball SHA-256 为 `0195ea1e71d8a467345e412bffd5c22dda7178d74c52874358554547b318d8a7`。
-- 当前 HEAD `npm run test:unit:with-java` 已串行现跑通过：`514/514 passed`，耗时约 `133917 ms`，0 failed、0 skipped；生产 `src` 树仍与受保护 `083d7b8` 相同，因此不重复 M1′/strict markerless。
+- 当前 HEAD `npm run test:unit:with-java` 已串行现跑通过：`514/514 passed`，耗时约 `143409 ms`，0 failed、0 skipped；当前生产树相对受保护 `083d7b8` 只有语言工厂重复 arity 分支的语义保持清理，因此 M1′/strict markerless 已在当前 HEAD 重新执行。
 - 当前 `audit:jree` 复核仍为直接导入/出现 `0/0`，但保留 5 个高风险语义边界和 7 个需人工复核项（类身份、静态初始化、可变迭代器）；迁移扫描的 Java 形状残余仍属于已披露兼容合同，未进行未经门禁保护的改写。
 - Core 语言工厂已清理 5 个重复 arity 分支（SetExt/SetInt/Term/Terms/Variables），build 重复 case 警告清零；非增量 typecheck/build 与含 Java M2 `514/514` 通过。这是语义保持的可读性清理，不是性能收益候选。
 - 公开面清理：移除 Git 跟踪的 Agent-local `.claude/settings.local.json`（保留本地副本并加入 `.gitignore`）；其内容无 token，但不属于项目运行合同。发行包哈希和成员数未变。
@@ -94,6 +94,7 @@ Demo 后续提交已完成 046 Grid Microworld：`gridworld.html` 支持正方�
 
 | 门 | `083d7b8` 实际结果 | 原始证据 |
 | --- | --- | --- |
+| 当前 HEAD M1′ / #246 / #245 降载 | 243/243、1/1、1/1 passed；当前 HEAD strict markerless 两项 equal；失败、timeout、process_limit、exception、stall、not_run 均 0 | `m1prime-current-20261005*.jsonl` 与 `markerless-current-head-20261005*.jsonl`；详见 042 规格当前 HEAD 闭包 |
 | M1′ 主体 | 243/243 passed；failed/skipped/timeout/process_limit/exception/stall/not_run 均 0；耗时合计 614081 ms，单文件峰值 RSS 866082816 bytes | `reports/evidence/m1prime-logger-info-083d7b8-20261003.jsonl`，SHA-256 `26DD5A8BAD67FC53F397873CF2E6545B2A5C990D6B5A790BAF7930081498E726` |
 | #25 / #246 | 两项 functional/parity 均 passed；#25 502562 周期、136435 ms、RSS 849711104；#246 51564 周期、9279 ms、RSS 444280832 | 同前缀 `extra25` / `extra246` JSONL；SHA-256 分别 `8CB415247C23614B7F7BD44BF7ED32C9B01E0D143FA7F284039750080CAC689B`、`65A246A8E4ABE691CF4A30B4F0772E82B3962EA938F6FA0BE1FE168894A03C42` |
 | #245 降周期 | 2048 探针 2706 ms，估算 65536 约 86.6 秒；65536 夹具 passed、实际 67510 周期、35125 ms、RSS 596668416 | `m1prime-logger-info-083d7b8-long-65536-20261003.jsonl`，SHA-256 `138979C6427847A43241CC47B8F8E41C830163C6CB84406DC2F3286DAF5163A5`；冻结 Java 基线 SHA-256 `048C804D91986FBD597593C4CAE174D37DF09AA91D38560C433057945DF2F84E` |

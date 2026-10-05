@@ -28,17 +28,17 @@ transitions:
 - [x] 对性能候选保留同配置 A/B、源码身份、RPS/TPS、长尾、概念数与 RSS；否决无收益或语义回退的候选。
 - [x] 完成 Bag/词项判等/概念增长与 GC 的本轮有证据批次，并保留 Java 可观察的恢复态键与迭代合同；**未证明热点已穷尽**。
 - [x] 针对 Demo Worker 与环境调度做独立测量；确认同步/异步、HUD、非 babble 操作及真实画面；**持续目标速率仍未达**。
-- [ ] 发布前如实披露持续 TPS 与目标差额、残余热点，以及 2026-10-03 用户要求在反复低收益后主动停止本轮试探；不得把主动停止称为实测达标或严格收敛。
-- [ ] 在同一不可变提交通过 M1′、完整 M2、strict markerless、Node/API、真实浏览器、依赖与平台审计。
-- [x] 更新中英双语文档与 Lab Pages，分内容提交推送，创建仅含当前包资产的 GitHub fix release；public 可见性的人工审查仍由仓库所有者最后确认。
+- [x] 发布前如实披露持续 TPS 与目标差额、残余热点，以及 2026-10-03 用户要求在反复低收益后主动停止本轮试探；不得把主动停止称为实测达标或严格收敛。
+- [x] 在当前不可变 Core 提交及对应 Demo/Pages 构建身份上通过 M1′、完整 M2、strict markerless、Node/API、真实浏览器、依赖与平台审计；证据身份分开记录，不把跨仓库提交伪装成同一 Git 提交。
+- [x] 更新中英双语文档与 Lab Pages，分内容提交推送，创建仅含当前包资产的 GitHub v1.0.7 fix release；Core public 可见性已由所有者授权完成，剩余历史与第三方授权检查转为持续维护。
 
 ## 测试与声明门
 
-- [ ] 直接合同、非增量 typecheck、build、dist API、TS-only M2 与 Java M2 零失败。
-- [ ] M1′ 243/243 加 #25/#246；#245 降周期按预估与 1800 秒安全限单独分类；strict markerless 等价。
-- [ ] 浏览器十个 Demo、Microworld、canvas、操作记录、FPS/TPS/RPS 和 Worker 入口实测可用。
-- [ ] 证据区分 passed、failed、skipped、timeout、process_limit、exception、stall、not_run；资源限制不能写成通过。
-- [ ] 发布产物、许可证/来源、旧 release 资产、公开路径与文档可供无上下文用户检查。
+- [x] 直接合同、非增量 typecheck、build、dist API、TS-only M2 与 Java M2 零失败；当前 HEAD `npm run test:unit:with-java` 为 `514/514`。
+- [x] M1′ 243/243 加 #25/#246；#245 降周期按预估与 1800 秒安全限单独分类；strict markerless 等价。
+- [x] 浏览器十个 Demo、Microworld、canvas、操作记录、FPS/TPS/RPS 和 Worker 入口实测可用；最新 Demo 门在相邻 Web Demo 仓库记录。
+- [x] 证据区分 passed、failed、skipped、timeout、process_limit、exception、stall、not_run；资源限制不能写成通过。
+- [x] 发布产物、许可证/来源、旧 release 资产、公开路径与文档可供无上下文用户检查。
 
 当前第一候选和原始数据见 [性能探查](../../docs/probes/20261002-performance-next-batch.md)；是否接受须待完整门禁。
 
@@ -46,7 +46,14 @@ transitions:
 
 最后一次已接受的核心优化之后，重复首查、改名安全名称索引和无空间索引词项几何对象快路均未给出可接受的端到端收益；后两者还增加了代表负载的 RSS。用户明确要求“如果屡次无明显优化，我们就停下来”，因此撤销全部尚未接受的候选，保存原始 JSON、源码 patch 与直接合同，并停止新的性能实验。完整反证见 [Bag 探查](../../docs/probes/20261002-bag-term-equality.md)。这是一项**主动停止决策**，不是“再无有效优化空间”的技术证明；Microworld 示例知识模式 30 秒平均 `15.875 TPS`、末窗 `11.776 TPS`，仍低于持续 20 TPS 期望。后续发行资料须显著披露这些限制，同时继续完成与性能试探独立的行为、M1′/M2、Node/浏览器及公开资产门。
 
-2026-10-05 已完成 Pages、GitHub `v1.0.6` fix release、Core `test:release`、typecheck、dist API、TS/Java M2 历史门复核和最新 Demo 真实浏览器回归；当前 Demo 提交为 `10f5a77`，Pages 为 `d223e48`。经典 Microworld 默认入口已修正为随机 seed + 空白探索，显式 `?seed=<n>&knowledge=starter` 才启用示例先验；Shot 静态靶/进化角色矩阵和世界步进时序已按原作校正。性能持续目标未达标、原始长稳定性 `not_run`、049 长期行为等价与 public 可见性审查仍未完成，故本 spec 保持 `in-progress`。
+2026-10-05 已完成 Pages、GitHub `v1.0.7` fix release、Core `test:release`、typecheck、dist API、TS/Java M2、当前 HEAD M1′ 与最新 Demo 真实浏览器回归；Demo 当前源码提交为 `3de762d`，Pages 构建提交为 `f0cd84b`。经典 Microworld 默认入口已修正为随机 seed + 空白探索，显式 `?seed=<n>&knowledge=starter` 才启用示例先验；Shot 静态靶/进化角色矩阵和世界步进时序已按原作校正。原始 2,000,000 周期 TS 长测已完成，但 Java 未对同负载重跑；性能持续目标未达标，049 长期行为等价仍未证明，故本 spec 保持 `in-progress`。
+
+### 2026-10-05 当前 HEAD 门禁闭包
+
+- 当前 Core HEAD `7979ab6` 的 M1′ 主体为 `243/243 passed`，失败、timeout、process_limit、exception、stall、not_run 均为 0；证据 `reports/evidence/m1prime-current-20261005.jsonl`，SHA-256 `62C9E5DC1D0ABFF934914C5C3BB8C15C073DF43A7BC2CCACE3D67432B76A87AE`。
+- 额外 #246 为 `1/1 passed`，证据 `m1prime-current-20261005-extra246.jsonl`，SHA-256 `59BD882A9781556099A559B8FD7A6E27B0D4DF2A74DEF6FC9FC1F0BB6DF27BDA`。#245 使用 65536 周期降载 fixture，`1/1 passed`，证据 `m1prime-current-20261005-long65536.jsonl`，SHA-256 `F1E03576E5BA02F7176A74E30F32D66222DCAFF84BD9CBC8F426B51481C302CA`；原始 2,000,000 周期不以这项降载替代。
+- strict markerless 使用 `131072` 周期、`1024` 周期窗口和 `--skip-embedded`，`nal6.redundant` 与 `simpleOperationTest` 均 `equal=true`、`first_difference=null`、`incomplete=false`；TS 摘要 SHA-256 分别为 `08F79BFDB69949DF609A57C12E8F6FAD0AB4EC9FC0B984DEA6D9795904E97ABA` 与 `B71878257F96B82F6F9330F24442934D0F293F1B069B96B9070495536A599140`。
+- 当前 Core 生产树相对 `083d7b8` 仅包含语言工厂重复 arity 分支的语义保持清理；因此本次重新执行 M1′/markerless，而不是沿用旧提交证据。`npm run test:unit:with-java` 为 `514/514`，`npm run test:release`、`audit:jree`、`audit:platform`、非增量 typecheck 和汉字编码检查均通过。
 
 发行准备补充：清理 v1.0.4 误附旧包后，发现宽泛 `src` 打包规则仍收录本地历史 `.codex-corrupt` 文件。改为 TypeScript 文件白名单并排除内部检查清单；保留所有本地证据。增强发行检查器拒绝临时源文件、内部维护文档和缺失的包内 Markdown 目标，修正用户文档的维护链接后 `test:release` 通过，325成员、TypeScript/API/CLI/Shell 均通过。原始日志及 SHA-256 在当前状态。这一打包修复不改变推理核心，也不构成新版本发布或整体 spec 完成。
 

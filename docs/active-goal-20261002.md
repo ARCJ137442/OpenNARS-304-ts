@@ -60,7 +60,7 @@ OpenNARS 3.0.4 可观察语义
 
 ## 当前定位与下一步
 
-中期存盘、推送和阶段 tag 已完成。受保护核心生产提交 `083d7b8` 的 M1′/M2/markerless 证据仍有效；当前修订版为 v1.0.7，原始 2,000,000 周期的 TS 实测已补齐，详见 [当前状态](current-status.md)与[原始长周期实测](probes/20261005-long-stability-2000000.md)。Java 本次未重跑，不声明跨实现性能等价。
+中期存盘、推送和阶段 tag 已完成。受保护核心生产提交 `083d7b8` 的历史 M1′/M2/markerless 证据仍保留；当前 Core HEAD 已针对语言工厂清理重新通过 M1′、#246、#245 降载和 strict markerless。当前修订版为 v1.0.7，原始 2,000,000 周期的 TS 实测已补齐，详见 [当前状态](current-status.md)与[原始长周期实测](probes/20261005-long-stability-2000000.md)。Java 本次未对同负载重跑，不声明跨实现性能等价。
 
 Demo 的具身适配与墙钟 RPS 监测已分批提交，生产监测提交为 `8a147f4`。真实 Chrome smoke 证明普通 10 个环境在 babble 0 时可发出 NARS 操作；Microworld 的 seed19“示例知识”可发出 `^Forward`，经典空白模式保留且不装先验。30 秒示例模式同步目标20TPS时平均 `15.875`、末窗 `11.776 TPS`，尚未达到持续20；五个扩展环境改为状态变化输入后平均 TPS 提高，但 TicTacToe、TestChamber、FighterPlane、Echo Relay 的末窗仍不足，BandRobot 的操作尚未形成完整交付。浏览器/同输入实验记录在相邻 Demo 仓库 `docs/probes/20261003-embodied-operation-adaptation.md`。原生词项名称索引与几何对象快路均未给出可接受的端到端收益，候选撤销、原始证据保留；具体反证见 [Bag 探查](probes/20261002-bag-term-equality.md)。依据用户最新指令，**停止本轮性能优化试探**，转向未完成的 Demo 行为、发布与公开核查。Microworld 持续 20 TPS 和严格“无高收益候选”收敛证明仍未达到，发行时必须明确披露。
 
