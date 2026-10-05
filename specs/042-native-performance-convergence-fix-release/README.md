@@ -1,5 +1,5 @@
 ---
-status: in-progress
+status: complete
 created: 2026-10-02
 priority: high
 tags:
@@ -7,10 +7,13 @@ tags:
 - demo
 - release
 created_at: 2026-10-02T13:51:09.692848600Z
-updated_at: 2026-10-02T13:51:29.751352Z
+updated_at: 2026-10-05T02:36:26.759913600Z
+completed_at: 2026-10-05T02:36:26.759913600Z
 transitions:
 - status: in-progress
   at: 2026-10-02T13:51:29.751352Z
+- status: complete
+  at: 2026-10-05T02:36:26.759913600Z
 ---
 
 # Native performance convergence and fix release

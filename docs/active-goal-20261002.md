@@ -1,6 +1,6 @@
 # 当前目标：原生化、性能收敛与下一次公开发行
 
-状态：性能试探按用户要求中期收口；总体 `/goal` 尚未完成。本文记录最终方向，[当前状态](current-status.md)记录已证实的事实，[2026-10-03 中期交接](midterm-handoff-20261003.md)记录当前封存点。历史 spec 的 `complete` 只说明其既定验收口径曾通过，不能自动证明本文更严格的最终目标。
+状态：核心门禁、发布、公开仓库与 Demo Lab 收口完成；性能试探按用户要求在重复低收益后主动停止，并保留未达持续 20 TPS/严格性能收敛的披露。本文记录最终方向，[当前状态](current-status.md)记录已证实的事实，[2026-10-03 中期交接](midterm-handoff-20261003.md)记录历史封存点。042 已按当前口径由 LeanSpec 封存为 `complete`；Shot 长期行为等价等后续实验不阻塞本次发布。
 
 当前执行规格为 [042：性能收敛与修订发行](../specs/042-native-performance-convergence-fix-release/README.md)。
 
@@ -147,3 +147,10 @@ Demo `0b33497` 进一步校正 Shot：静态靶纳入单人与进化模式，进
 Demo 当前源码提交为 `0b33497`，共享观测重构为 `f40165e`，当前构建绑定 Core `77b99b1`，Pages 最新部署为 `306c2a4`。经典 Microworld 与 Grid Microworld 共用操作缓存/IDLE 语义、感知强度、奖励摘要、经验观察与时间投影模块；Grid 只保留拓扑世界、拖动交互和 Worker 数据适配。Grid 渲染缓存、经典素材方向、坏食物旋转、六路视野线和透明 Logo 已通过本地 Chrome 回归。
 
 首页 Demo catalog 由同一份 draft 顺序自动生成编号，NARS 终端不再作为 Demo 卡片；Microworld 默认使用随机 seed 与空白探索，复现实验必须显式提供 URL 参数。Demo 当前 typecheck、74 项单测、build、产物检查和部署前缀浏览器门通过；持续性能目标与 049 长期行为等价仍是后续实验，GitHub public 可见性已完成。
+
+### 2026-10-05 总体目标收口
+
+- Core 公开仓库、v1.0.7 Release、Pages Demo、人类试玩入口、本地 Shell/CLI/ESM API 路径和安全策略均已公开可用。
+- Core 门禁源码身份 `7979ab6` 的 M1′ 主体、#246、#245 降载与 strict markerless 已通过；M2 `514/514`、typecheck、release package、jree/platform audit、CodeQL 和真实浏览器 Demo 门均有证据。
+- 性能收口采用用户确认的停止口径，Microworld 持续 20 TPS、Java 同负载性能等价、Shot 长期 NARS/记忆克隆等价继续作为后续实验，不写成已达标。
+- 042 已由 LeanSpec 更新为 `complete`；历史证据、未跟踪实验输出和用户保留文件继续作为溯源材料，不影响已推送交付。
