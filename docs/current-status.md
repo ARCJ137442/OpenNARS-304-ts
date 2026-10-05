@@ -1,6 +1,6 @@
 # OpenNARS-304-ts 当前状态
 
-日期：2026-10-04（Asia/Shanghai）。本文是当前交接入口；目标与退出条件见 [active-goal-20261002.md](active-goal-20261002.md)，历史过程见 [archive/current-status-history-20261002.md](archive/current-status-history-20261002.md)。历史未跟踪原始证据保留，不视为可随意清理的临时文件。
+日期：2026-10-05（Asia/Shanghai）。本文是当前交接入口；目标与退出条件见 [active-goal-20261002.md](active-goal-20261002.md)，历史过程见 [archive/current-status-history-20261002.md](archive/current-status-history-20261002.md)。历史未跟踪原始证据保留，不视为可随意清理的临时文件。
 
 ## 2026-10-05 用户范围校正
 
@@ -12,7 +12,15 @@
 
 - Core v1.0.7 已创建 GitHub Release：<https://github.com/ARCJ137442/OpenNARS-304-ts/releases/tag/v1.0.7>；tarball SHA-256 为 `0195ea1e71d8a467345e412bffd5c22dda7178d74c52874358554547b318d8a7`。
 - v1.0.7 包含 clean-clone 发布检查修复、公开路径脱敏、Shot 差分感知适配和原始 2,000,000 周期 TS 实测记录；不发布 npm。
-- 开源就绪结论见 [v1.0.7 开源就绪评估](open-source-readiness-v1.0.7.md)；源码仓库 public 仍需所有者人工确认。
+- 开源就绪结论见 [v1.0.7 开源就绪评估](open-source-readiness-v1.0.7.md)；源码仓库已于 2026-10-05 经所有者授权改为 public。
+
+## 2026-10-05 public 发布最终核对
+
+- Core：<https://github.com/ARCJ137442/OpenNARS-304-ts> 已公开，v1.0.7 Release 可下载。
+- Demo：<https://arcj137442.github.io/opennars-304-ts-lab/> 已公开，首页、Microworld、Grid、2048、Pong、Shot 和 Terminal 都有明确入口；首页只导航，进入场景后才启动 Worker。
+- 使用路径：人类读者从 Web Lab 开始；需要本地推理时执行 `npm ci && npm run build && npm run shell`；需要集成时使用 ESM API 和 `docs/integration-guide.md`。
+- 安全：Dependabot、secret scanning、push protection、CodeQL default setup 已启用；当前 Dependabot 告警为 0。账户能力暂不支持的 non-provider patterns 与 validity checks 仍如实披露。
+- 事实边界：Microworld 持续 20 TPS、Shot 长期行为等价和 Java 同负载性能对照尚未证明；这些是后续实验，不是本次 public 发布的隐含承诺。
 
 ## 2026-10-05 权威交接校正
 
@@ -37,7 +45,7 @@
 - 经典 Microworld 与 Grid Microworld 现在共用 `src/ui/reasoner-observatory.ts`、`reasoner-panel.css` 和 `experience-timeline.ts` 的状态/呈现合同；Grid 只提供拓扑世界与 Worker 数据，不再拥有独立的操作缓存、经验刷新或观测补丁。
 - 经验 Top-N 信念在展开期间按节流窗口动态刷新，并使用当前 NAR 时钟做时间投影后排序；感知格显示具体百分比与强度条；Grid 支持虫体/食物拖动到拓扑格点。
 - Microworld 默认入口为随机种子、空白探索；只有显式 `?seed=<n>&knowledge=starter` 才启用可复现实验和示例知识。首页不再把 NARS 终端列为 Demo 卡片，终端仍保留顶部入口。
-- Demo 当前门：typecheck、74 项单测、build、产物检查和部署前缀 Chrome 回归通过；Core M1′/M2、持续 TPS 性能目标、049 长期等价和仓库 public 审查仍未完成。
+- Demo 当前门：typecheck、74 项单测、build、产物检查和部署前缀 Chrome 回归通过；Core M1′/M2 已有冻结证据，持续 TPS 性能目标和 049 长期等价仍是后续实验。
 - Core 最新文档提交为 `cc02e49`；本次公网 Demo 构建绑定其前一份文档身份 `77b99b1`，生产 `src` 未变；Pages 最新部署为 `306c2a4`。`build-meta.sourceCommit` 记录实际构建绑定提交，不能把文档提交误写成运行时变更。
 - 当前候选 Java M2 已串行现跑：`514/514 passed`，退出码 0；证据 `reports/evidence/m2-current-7492666-java-20261005.tap`，SHA-256 `7F9E7B060623EBA032D1175962C07864576524DA562C0401F161F7237AB9A3C5`。M1′/strict markerless 复用未改变生产源码树的既有证据。
 

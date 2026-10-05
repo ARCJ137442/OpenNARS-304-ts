@@ -16,6 +16,13 @@
 - CodeQL default setup 已启用并成功完成首次运行。
 - Pages、Release 和源码仓库现在都可由公众访问。
 
+## 人类使用路径
+
+- 先打开 [Web Lab](https://arcj137442.github.io/opennars-304-ts-lab/)，从目录进入一个场景；不需要安装，也不会在首页提前启动 NARS Worker。
+- 想直接观察具身闭环，可打开 [Microworld](https://arcj137442.github.io/opennars-304-ts-lab/microworld.html) 或 [Grid Microworld](https://arcj137442.github.io/opennars-304-ts-lab/gridworld.html)。
+- 想体验跨局记忆、多角色和终端，可打开 [NARS × 2048](https://arcj137442.github.io/opennars-304-ts-lab/nars2048.html)、[Pong](https://arcj137442.github.io/opennars-304-ts-lab/pong.html)、[Shot](https://arcj137442.github.io/opennars-304-ts-lab/shot.html) 或 [NARS Terminal](https://arcj137442.github.io/opennars-304-ts-lab/terminal.html)。
+- 想在本地运行核心，执行 `npm ci`、`npm run build`、`npm run shell`；想嵌入应用，阅读 `docs/integration-guide.md`。
+
 ## 仍需人工维护
 
 继续检查完整 Git 历史、Issues、Actions、Pages 资产、Release 附件和第三方许可证授权。Secret scanning 的 non-provider patterns 与 validity checks 受 GitHub 能力限制未启用，后续可在账户计划允许时补开。

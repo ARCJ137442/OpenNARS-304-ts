@@ -105,7 +105,7 @@ Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 
 045 已不再是未实现项：Demo 提交 `1aa332c` 已推送，普通 Demo、经典 Microworld 与 Astro 终端共用有界 NARS 经验观察；`npm run check` 的 38 项测试、静态构建和真实浏览器 smoke 均通过。经验事件区分 `nars`、`prior`、`input`、`babble`，只把推理阶段原始事件标为自主，并保留 Narsese 溯源。Core LeanSpec 045 已更新为 `complete`。
 
-因此当前功能待办只剩 049 Shot 的完整淘汰排名/进化行为与每 Worker 独立性能面板；Pages、v1.0.5 和基础发布门已完成，public 可见性审查仍未完成。后续文档引用本节与 Demo `docs/probes/20261003-experience-observatory.md` 的新事实，覆盖上文 045 的历史调查状态。
+因此历史收口阶段的功能待办曾集中在 049 Shot 的完整淘汰排名/进化行为与每 Worker 独立性能面板；Pages、v1.0.5 和基础发布门已完成，public 可见性审查随后在 2026-10-05 完成。后续文档引用本节与 Demo `docs/probes/20261003-experience-observatory.md` 的新事实，覆盖上文 045 的历史调查状态。
 
 046 Grid 也已完成：Demo `gridworld.html` 与共享目录卡片已推送，正方形/正三角形/正六边形环面在同一入口切换，真实 Worker、六路感知、经验观察和速率 HUD 已通过 9 项纯模型合同、Demo 全量检查及逐拓扑 Chrome smoke。Grid 是独立离散环境，不能替代经典连续 Microworld 的持续 TPS 门。当前剩余功能规格为 049。
 
@@ -113,7 +113,7 @@ Pages 更新 → v1.0.5 GitHub fix release → public 可行性评估
 
 048 Pong 多模式已完成：Demo `a52e544` 通过纯模型合同、`typecheck`、静态构建、产物检查和部署前缀真实浏览器 smoke；9/9 玩法均有独立 Worker 角色、同步/异步世界刻和非 babble NARS 操作。停止语义使用可解析的 `^Idle`，在 Pong 世界边界归一化为 `stop`。Demo 2048 的尺寸/粒子修复已由 `72b14f2` 推送。
 
-当前未完成 Demo 规格只剩 049 Shot 的完整淘汰排名/进化行为与每 Worker 独立性能面板；最终 Pages 和 v1.0.5 已完成，public 可见性审查仍未完成。
+当前未完成 Demo 规格仍以 049 Shot 的长期行为等价为后续实验；Pages、v1.0.7 和 public 可见性均已完成。
 
 ### 2026-10-04 最新 Demo 收口事实
 
@@ -127,7 +127,7 @@ Demo `ca1ab39` 已完成 049 的排名/克隆/淘汰世界模型合同，并接�
 
 - 用户确认：Microworld 持续 TPS 差额在重复低收益优化后不再阻塞本轮目标；保留实际测量与残余热点披露，不再启动新的无依据核心性能候选。
 - 用户确认：Shot 的长期 NARS 行为等价与记忆克隆等价暂不作为总体目标依据；继续保留为未证明实验边界，不阻塞当前门禁、网站和发行收口。
-- 公开审查自动部分见 [2026-10-05 开源就绪审查](probes/20261005-public-audit.md)；GitHub 安全设置、完整历史与第三方授权仍需所有者人工验收。
+- 公开审查自动部分见 [2026-10-05 开源就绪审查](probes/20261005-public-audit.md)；源码仓库已公开，完整历史与第三方授权仍需持续人工维护。
 
 ### 2026-10-05 public 发布收口
 
@@ -140,10 +140,10 @@ Demo `ca1ab39` 已完成 049 的排名/克隆/淘汰世界模型合同，并接�
 
 Demo `df58b15` 将经典 Microworld 的入口合同明确为“随机 seed + 空白探索”：普通 `/microworld.html` 不注入示例先验，复现实验必须显式提供 `?seed=<n>&knowledge=starter`。`startsWithStarterKnowledge` 与 `initialDemoSeed` 位于同一纯配置模块，并由 Demo 回归测试覆盖；构建身份提交为 `65f764b`。Pages 仓库已同步提交 `9c5602a`。这项修复不改变 Core 推理语义、性能结论或 `v1.0.6` Core 发行版。
 
-公网验证已完成：Pages 的 `build-meta.json` 对应构建绑定 Core `77b99b1`，Demo `0b33497` / Pages `306c2a4`；Chrome 普通入口显示“空白探索”，显式 starter 地址显示“示例知识”。`audit:jree` 与核心平台边界审计仍通过；公开可见性审查发现历史证据索引，需人工决定是否清理后再改为 public。
+公网验证已完成：Pages 的 `build-meta.json` 对应构建绑定 Core `77b99b1`，Demo `0b33497` / Pages `306c2a4`；Chrome 普通入口显示“空白探索”，显式 starter 地址显示“示例知识”。`audit:jree` 与核心平台边界审计仍通过；历史证据索引保留溯源用途，源码仓库已按授权公开。
 
 Demo `0b33497` 进一步校正 Shot：静态靶纳入单人与进化模式，进化总角色和上限与 NARust-o 对齐，按玩家顺序选择首个同轴目标；操作设置速度后下一世界刻移动，射击反馈按角色队列回送；74 项 Demo 单测与部署前缀 Chrome 门通过，Pages 为 `306c2a4`。固定 seed `3040304` 的 10,000 刻六模式世界合同通过，进化事件按 500 刻节奏发生且角色有界；公网 Chrome 实测进化模式为 4 个 NARS 角色、进化 1 次、页面错误 0。这仍不等于长期 NARS 行为等价或记忆克隆等价。
 
 Demo 当前源码提交为 `0b33497`，共享观测重构为 `f40165e`，当前构建绑定 Core `77b99b1`，Pages 最新部署为 `306c2a4`。经典 Microworld 与 Grid Microworld 共用操作缓存/IDLE 语义、感知强度、奖励摘要、经验观察与时间投影模块；Grid 只保留拓扑世界、拖动交互和 Worker 数据适配。Grid 渲染缓存、经典素材方向、坏食物旋转、六路视野线和透明 Logo 已通过本地 Chrome 回归。
 
-首页 Demo catalog 由同一份 draft 顺序自动生成编号，NARS 终端不再作为 Demo 卡片；Microworld 默认使用随机 seed 与空白探索，复现实验必须显式提供 URL 参数。Demo 当前 typecheck、74 项单测、build、产物检查和部署前缀浏览器门通过；Core 042 的 M1′/M2 最终候选、持续性能目标、049 长期行为等价、GitHub public 可见性审查仍是总体目标的未完成边界。
+首页 Demo catalog 由同一份 draft 顺序自动生成编号，NARS 终端不再作为 Demo 卡片；Microworld 默认使用随机 seed 与空白探索，复现实验必须显式提供 URL 参数。Demo 当前 typecheck、74 项单测、build、产物检查和部署前缀浏览器门通过；持续性能目标与 049 长期行为等价仍是后续实验，GitHub public 可见性已完成。

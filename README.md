@@ -14,6 +14,15 @@ OpenNARS 3.0.4 的 TypeScript 实现。你可以先打开 Web Lab，直接观察
 
 每个场景都会把感知、目标、推理事件、操作和环境反馈放在同一条时间线上；展开性能诊断，还能看到 FPS、TPS、RPS、概念数和等待中的 Worker。Microworld 普通入口默认是随机 seed 的空白探索，复现实验使用 `microworld.html?seed=19&knowledge=starter`。
 
+你也可以直接进入场景，省掉目录页的跳转：
+
+- [经典虫脑 Microworld](https://arcj137442.github.io/opennars-304-ts-lab/microworld.html)，观察感知、行动与经验如何连续变化
+- [格中虫脑 Grid Microworld](https://arcj137442.github.io/opennars-304-ts-lab/gridworld.html)，切换方格、三角格和六角格
+- [NARS × 2048](https://arcj137442.github.io/opennars-304-ts-lab/nars2048.html)，让记忆跨局保留并观察棋盘策略
+- [Pong](https://arcj137442.github.io/opennars-304-ts-lab/pong.html)，切换多种单 NARS 与多 NARS 玩法
+- [Shot](https://arcj137442.github.io/opennars-304-ts-lab/shot.html)，观察瞄准、射击和进化角色
+- [NARS 终端](https://arcj137442.github.io/opennars-304-ts-lab/terminal.html)，输入 Narsese，推进周期并阅读推理输出
+
 ## 5 分钟运行
 
 需要 Node.js 22+ 和 npm。

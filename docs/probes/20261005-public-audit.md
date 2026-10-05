@@ -1,6 +1,16 @@
 # 2026-10-05 开源就绪审查
 
-## 自动完成
+## 最终公开核对
+
+- Core 仓库已由所有者授权改为 public，当前 API 状态为 `isPrivate=false`：<https://github.com/ARCJ137442/OpenNARS-304-ts>。
+- v1.0.7 是正式 Release，资产为 `opennars-304-ts-1.0.7.tgz` 与 `release-manifest.json`，不是 npm 自动发布。
+- Dependabot security updates、secret scanning、secret push protection 和 CodeQL default setup 已启用；CodeQL 首次运行成功，Dependabot 告警为 0。
+- Pages 仓库与公开 Demo 可访问，Core README 现在同时提供 Web Lab、直接场景入口、本地 Shell 和 ESM API 路径。
+- 仍需人工持续检查完整 Git 历史、Issues、Actions、Pages 资产、Release 附件和第三方授权；账户能力暂不支持的 secret-scanning non-provider patterns 与 validity checks 不作已启用声明。
+
+下面的“初次审查快照”保留公开前的证据，不能覆盖上面的最终状态。
+
+## 初次审查快照（公开前，已封存）
 
 - Core `audit:jree`：直接导入文件/出现 `0/0`。
 - Core `audit:platform`：`coreCandidateFiles=0`、`mixedBoundaryFiles=0`。
@@ -9,8 +19,8 @@
 - 发布检查器已不再读取未纳入 Git 的 `java-master` checkout；CLI smoke 使用版本化 `test/fixtures/release-nal8.add.nal`，配置合同使用版本化 `config/defaultConfig.xml`。
 - Core `LICENSE`/`NOTICE` 与 Demo 的 `COPYING-GPL-3.0.txt`、`COPYING-ONA-MIT.txt`、`COPYING-JEV-2048-MIT.txt` 均存在；Demo 构建产物保留对应来源入口。
 - 当前维护文档中发现的个人路径已替换为占位符；历史 `reports/evidence`、历史归档和测试夹具仍保留溯源路径，未批量重写。
-- GitHub API 只读核对：Core 仓库当前 `private=true`；v1.0.7 为正式 Release，资产为 tarball 与 manifest，资产 digest 与本地哈希一致；Pages `main` 最新提交为 `7e1eb8b`，线上 `build-meta.json` 绑定 Core `2c83d066`、package `1.0.7`。
-- GitHub API 显示当前仓库没有 Actions workflow runs；Dependabot/vulnerability alerts 已由 Agent 启用，当前告警数为 `0`。Secret scanning 返回“not available for this repository”，code scanning default setup 仍返回未启用；两者需要 GitHub 账户/组织能力或网页设置人工处理。
+- GitHub API 只读核对（公开前）：Core 仓库当时为 `private=true`；v1.0.7 为正式 Release，资产为 tarball 与 manifest，资产 digest 与本地哈希一致。
+- GitHub API 显示的公开前安全能力状态：当时没有可用的 Actions workflow runs，secret scanning 与 code scanning 仍待账户能力/网页设置处理；该快照已由上方最终公开核对覆盖。
 - Git 历史路径审查确认 `.claude/settings.local.json` 曾存在，已由 `5528fd8` 移除；历史提交仍可追溯。当前扫描未发现 GitHub token、云密钥或私钥模式命中（历史证据与 Java 源树排除在自动扫描之外）。
 
 ## 人工验收
@@ -22,9 +32,9 @@
 3. 在另一台机器或全新网络 clone 中执行 `npm ci`、`npm run test:release`，并手动打开 Node CLI、ESM API 与 <https://arcj137442.github.io/opennars-304-ts-lab/>。
 4. 在 GitHub 仓库 Settings 中启用 secret scanning、Dependabot、code scanning，并填写 Security Policy/安全联系渠道；确认 Actions 权限遵循最小权限。
 5. 检查 GitHub Pages 实际提交为最新 Demo 构建，确认 `opennars-304-ts-lab/build-meta.json` 的 sourceCommit 与 Demo 构建身份一致。
-6. 检查源码仓库仍为 private 或由所有者明确批准改为 public；Pages 公开不等于 Core 源码公开批准。
+6. 检查源码仓库为 public，且公开动作确有所有者授权；确认 Pages、Release 和 README 链接一致。
 
-7. 若决定公开源码，确认 Dependabot 已保持开启，并在 GitHub Settings 检查 secret scanning/push protection 与 code scanning 是否因账户计划可用；当前 API 明确显示后两者不可用/未启用，再重新运行一次历史机密扫描。
+7. 继续在 GitHub Settings 检查 Dependabot、secret scanning/push protection 与 CodeQL 状态；账户能力不支持的 non-provider patterns 与 validity checks 保留人工跟踪。
 
 ## 当前边界
 

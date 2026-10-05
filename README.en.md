@@ -14,6 +14,15 @@ Open Microworld for the classic embodied scene, Grid Microworld for discrete top
 
 Each scene exposes perception, goals, inference events, operations, and environment feedback in one timeline. Expand performance diagnostics to inspect FPS, TPS, RPS, concept counts, and queued Workers. The plain Microworld entry uses a random seed and blank exploration; use `microworld.html?seed=19&knowledge=starter` for a reproducible starter run.
 
+Direct scene links are available when you already know what you want to try:
+
+- [Classic Microworld](https://arcj137442.github.io/opennars-304-ts-lab/microworld.html) for a continuous perception-action loop
+- [Grid Microworld](https://arcj137442.github.io/opennars-304-ts-lab/gridworld.html) for square, triangular, and hexagonal topologies
+- [NARS × 2048](https://arcj137442.github.io/opennars-304-ts-lab/nars2048.html) for memory across automatically restarted rounds
+- [Pong](https://arcj137442.github.io/opennars-304-ts-lab/pong.html) for single- and multi-reasoner play modes
+- [Shot](https://arcj137442.github.io/opennars-304-ts-lab/shot.html) for aiming, shooting, and evolving roles
+- [NARS Terminal](https://arcj137442.github.io/opennars-304-ts-lab/terminal.html) for entering Narsese and stepping through inference
+
 ## Quick start
 
 Requires Node.js 22 or newer.
