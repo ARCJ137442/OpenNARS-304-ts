@@ -129,6 +129,13 @@ Demo `ca1ab39` 已完成 049 的排名/克隆/淘汰世界模型合同，并接�
 - 用户确认：Shot 的长期 NARS 行为等价与记忆克隆等价暂不作为总体目标依据；继续保留为未证明实验边界，不阻塞当前门禁、网站和发行收口。
 - 公开审查自动部分见 [2026-10-05 开源就绪审查](probes/20261005-public-audit.md)；GitHub 安全设置、完整历史与第三方授权仍需所有者人工验收。
 
+### 2026-10-05 public 发布收口
+
+- Core 仓库已按所有者授权改为 GitHub `public`；v1.0.7 Release、Demo Lab 和 Pages 均可公开访问。
+- Dependabot security updates、secret scanning、secret push protection 已启用，CodeQL default setup 首次运行成功；非 provider patterns 与 validity checks 受账户能力限制未启用。
+- 人类入口已补齐，README 先引导 Web Lab 试玩，再引导本地 Shell、CLI 和 ESM API；中文说明采用面向体验和行动的叙述方式。
+- 持续 TPS 差额、Shot 长期 NARS/记忆克隆等价和严格性能收敛证明，按用户明确批示降为非阻塞实验披露项；不得写成已达标。
+
 ### 2026-10-05 默认入口修复
 
 Demo `df58b15` 将经典 Microworld 的入口合同明确为“随机 seed + 空白探索”：普通 `/microworld.html` 不注入示例先验，复现实验必须显式提供 `?seed=<n>&knowledge=starter`。`startsWithStarterKnowledge` 与 `initialDemoSeed` 位于同一纯配置模块，并由 Demo 回归测试覆盖；构建身份提交为 `65f764b`。Pages 仓库已同步提交 `9c5602a`。这项修复不改变 Core 推理语义、性能结论或 `v1.0.6` Core 发行版。
