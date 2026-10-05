@@ -5,6 +5,7 @@
 - Core 仓库已由所有者授权改为 public，当前 API 状态为 `isPrivate=false`：<https://github.com/ARCJ137442/OpenNARS-304-ts>。
 - v1.0.7 是正式 Release，资产为 `opennars-304-ts-1.0.7.tgz` 与 `release-manifest.json`，不是 npm 自动发布。
 - Dependabot security updates、secret scanning、secret push protection 和 CodeQL default setup 已启用；CodeQL 首次运行成功，Dependabot 告警为 0。
+- 设置目的和边界记录于 [v1.0.7 开源就绪评估](../open-source-readiness-v1.0.7.md#安全设置的决策依据)：依赖风险提示、密钥泄漏拦截与静态代码分析各自覆盖不同风险，不替代人工审计。
 - Pages 仓库与公开 Demo 可访问，Core README 现在同时提供 Web Lab、直接场景入口、本地 Shell 和 ESM API 路径。
 - 仍需人工持续检查完整 Git 历史、Issues、Actions、Pages 资产、Release 附件和第三方授权；账户能力暂不支持的 secret-scanning non-provider patterns 与 validity checks 不作已启用声明。
 
