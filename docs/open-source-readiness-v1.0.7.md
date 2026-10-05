@@ -9,10 +9,17 @@
 - Demo `npm run check`：Astro 0/0/0、76 项测试、构建和产物检查通过；Pages 已推送最新构建。
 - 原始长周期 TS 实测：2,000,000 请求周期、4,000,424 实际推理周期、约 54.7 分钟、峰值 RSS 2.57 GiB、功能 1/1；证据见 [长周期实测](probes/20261005-long-stability-2000000.md)。
 
-## 仍需人工确认
+## 已完成的公开动作
 
-仓库所有者仍需检查完整 Git 历史、Issues、Actions、Pages 资产、Release 附件、第三方许可证授权，并在 GitHub Settings 中确认 secret scanning、Dependabot、code scanning 和安全联系渠道。当前源码仓库可见性仍不由 Agent 改变；公开 Pages 不等于 Core 源码已批准公开。
+- Core 仓库已在 2026-10-05 通过 GitHub 管理员授权改为 public。
+- Dependabot security updates、secret scanning、secret push protection 已启用，当前 Dependabot 告警数为 0。
+- CodeQL default setup 已启用并成功完成首次运行。
+- Pages、Release 和源码仓库现在都可由公众访问。
+
+## 仍需人工维护
+
+继续检查完整 Git 历史、Issues、Actions、Pages 资产、Release 附件和第三方许可证授权。Secret scanning 的 non-provider patterns 与 validity checks 受 GitHub 能力限制未启用，后续可在账户计划允许时补开。
 
 ## 结论
 
-v1.0.7 适合作为透明的 private 研究/集成 fix release。自动可复现性和发布资产已完成；仓库改为 public 需人工审查完成后再决定。
+v1.0.7 现在作为透明的 public 研究/集成 fix release 交付。自动可复现性、发布资产和基础安全扫描已完成；性能披露边界仍以实测结果为准。

@@ -20,7 +20,7 @@
 
 - 默认入口行为修复提交为 `df58b15`，当前 Demo 代码已推进到 `0b33497`：经典 Microworld 使用随机 seed 和空白探索；只有显式 `?seed=<n>&knowledge=starter` 才装入示例先验。
 - 默认模式与 seed 解析已抽为 `src/demo-seed.ts` 的纯函数，并新增回归测试；本地 Demo 全量 74 项测试、typecheck、build、产物检查和部署前缀浏览器门通过。
-- Pages 最新部署提交为 `583a3be`，部署目录为 `opennars-304-ts-lab/`；构建身份绑定 Core `094c4c85`。Core 当前修订版为 `v1.0.7`。
+- Pages 最新部署提交为 `30bd1b3`，部署目录为 `opennars-304-ts-lab/`；构建身份绑定 Core `80a8af5`。Core 当前修订版为 `v1.0.7`。
 - 公网 `build-meta.json` 已更新至构建时间 `2026-10-04T20:22:50.446Z`，构建绑定 Core `77b99b1`；公网 Chrome 实测普通 Microworld 显示“空白探索”，显式 `seed=19&knowledge=starter` 显示“示例知识”。
 - 只读公开审查：`audit:jree` 直接导入/出现为 `0/0`，`audit:platform` 的 `coreCandidateFiles=0`、`mixedBoundaryFiles=0`；已将 `ts-analysis.json` 的 119 条个人临时路径改为仓库内相对 Java 路径，将 Termux 交接提示改为 `$EVIDENCE_ARCHIVE` 占位符，并将归档维护输出改为占位路径。当前维护文档/规格/README 已无本机路径命中；历史报告和测试夹具仍保留溯源用路径，仓库改为 public 前仍需人工清理/确认，未擅自改变可见性。
 - 当前 HEAD `npm run test:release` 通过：327 个包成员、外部 TypeScript/API/CLI/Shell 全通过、forbidden package members 0；v1.0.7 tarball SHA-256 为 `0195ea1e71d8a467345e412bffd5c22dda7178d74c52874358554547b318d8a7`。
@@ -28,12 +28,12 @@
 - 当前 `audit:jree` 复核仍为直接导入/出现 `0/0`，但保留 5 个高风险语义边界和 7 个需人工复核项（类身份、静态初始化、可变迭代器）；迁移扫描的 Java 形状残余仍属于已披露兼容合同，未进行未经门禁保护的改写。
 - Core 语言工厂已清理 5 个重复 arity 分支（SetExt/SetInt/Term/Terms/Variables），build 重复 case 警告清零；非增量 typecheck/build 与含 Java M2 `514/514` 通过。这是语义保持的可读性清理，不是性能收益候选。
 - 公开面清理：移除 Git 跟踪的 Agent-local `.claude/settings.local.json`（保留本地副本并加入 `.gitignore`）；其内容无 token，但不属于项目运行合同。发行包哈希和成员数未变。
-- 当前开源就绪评估见 [v1.0.7 开源就绪评估](open-source-readiness-v1.0.7.md)：Dependabot 已启用；secret scanning/code scanning 受 GitHub 能力限制未启用，公开源码仓库前仍需所有者人工审查历史、日志、资产、许可证和机密。
+- 当前开源就绪评估见 [v1.0.7 开源就绪评估](open-source-readiness-v1.0.7.md)：Core 已公开，Dependabot、secret scanning/push protection、CodeQL 均已启用；后续只需持续维护历史、日志、资产和许可证审查。
 - 当前版本 Microworld 20 秒复测已落盘于 Demo `docs/probes/20261005-microworld-rate-current.md`：示例知识平均/末窗 `17.618/14.364 TPS`，空白探索 `19.567/19.760 TPS`；前者有 4 次 NARS 操作，后者为 0。两者页面/Worker 错误均为 0；这不是优化收益或性能收敛证据。
 - 原始 2,000,000 周期稳定性已在 Core `bf747b6` 以 TS cold 单进程完成：请求 `2,000,000`、实际推理 `4,000,424`、`3,282,125 ms`、峰值 RSS `2,756,640,768 bytes`、功能 `1/1`，无 timeout/process_limit/exception/stall/not_run；Java 本次未重跑。详见 [原始长周期实测](probes/20261005-long-stability-2000000.md)。
 - Shot 行为校正已提交 Demo `0b33497`、Pages `306c2a4`：静态靶纳入单人/进化角色矩阵，进化总角色上限与 NARust-o 对齐；操作设置速度后下一世界刻移动，射击反馈按角色队列回送；Demo 当前 74 项测试、typecheck、build、产物检查和部署前缀 Chrome 门通过。固定 seed `3040304` 的 10,000 刻六模式世界合同通过，进化角色始终有界；公网 Chrome 实测默认 Microworld 为“空白探索”，Shot 进化为 4 个 NARS 角色、进化 1 次、页面错误 0。长期 Shot 等价仍未证明。
 
-- Demo 当前源码提交为 `12d6721`；构建绑定 Core `094c4c85`；Pages 最新部署提交为 `583a3be`。
+- Demo 当前源码提交为 `3de762d`；构建绑定 Core `80a8af5`；Pages 最新部署提交为 `30bd1b3`。
 - 经典 Microworld 与 Grid Microworld 现在共用 `src/ui/reasoner-observatory.ts`、`reasoner-panel.css` 和 `experience-timeline.ts` 的状态/呈现合同；Grid 只提供拓扑世界与 Worker 数据，不再拥有独立的操作缓存、经验刷新或观测补丁。
 - 经验 Top-N 信念在展开期间按节流窗口动态刷新，并使用当前 NAR 时钟做时间投影后排序；感知格显示具体百分比与强度条；Grid 支持虫体/食物拖动到拓扑格点。
 - Microworld 默认入口为随机种子、空白探索；只有显式 `?seed=<n>&knowledge=starter` 才启用可复现实验和示例知识。首页不再把 NARS 终端列为 Demo 卡片，终端仍保留顶部入口。
