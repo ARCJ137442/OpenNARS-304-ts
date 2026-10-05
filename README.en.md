@@ -4,7 +4,15 @@
 
 [简体中文](README.md)
 
-A TypeScript implementation of OpenNARS 3.0.4 with a Node.js CLI, interactive shell, ESM library API, and a separate browser Worker demo.
+A TypeScript implementation of OpenNARS 3.0.4. Start with the Web Lab to watch the reasoner enter a Microworld, grid, board game, or shooting arena, or run the local Shell as a Narsese reasoning workbench.
+
+## Start by playing
+
+No installation is needed for the Web Lab: <https://arcj137442.github.io/opennars-304-ts-lab/>.
+
+Open Microworld for the classic embodied scene, Grid Microworld for discrete topologies, NARS × 2048 for cross-round experiments, or Pong and Shot for multiple reasoner roles. The home page is navigation only; a browser Worker starts after you choose a scene.
+
+Each scene exposes perception, goals, inference events, operations, and environment feedback in one timeline. Expand performance diagnostics to inspect FPS, TPS, RPS, concept counts, and queued Workers. The plain Microworld entry uses a random seed and blank exploration; use `microworld.html?seed=19&knowledge=starter` for a reproducible starter run.
 
 ## Quick start
 
@@ -70,4 +78,4 @@ Run `npm run release:bundle` to create a reproducible tarball and SHA-256 manife
 
 This project is a TypeScript rewrite and adaptation of OpenNARS 3.0.4. See [NOTICE](NOTICE) for attribution and [LICENSE](LICENSE) for the MIT License.
 
-The current performance round stopped after repeated low-yield candidates; sustained 20 TPS and strict performance convergence are not claimed. The v1.0.6 fix release is published; the static Pages Lab is deployed separately. Long-run Shot NARS behavior comparison remains in progress.
+The current performance round stopped after repeated low-yield candidates; sustained 20 TPS and strict performance convergence are not claimed. The v1.0.7 fix release is published; the static Pages Lab is deployed separately. The original 2,000,000-cycle TypeScript run completed, while Java was not rerun for that workload.

@@ -4,7 +4,15 @@
 
 [English](README.en.md)
 
-OpenNARS 3.0.4 的 TypeScript 实现，提供 Node.js CLI、交互式 Shell、ESM 库入口，以及独立的浏览器 Worker demo。
+OpenNARS 3.0.4 的 TypeScript 实现。你可以先打开 Web Lab，直接观察推理器进入微世界、棋盘和射击场；也可以在本地启动 Shell，把它当成一个能读 Narsese 的推理实验台。
+
+## 先玩起来
+
+不用安装任何东西，打开 <https://arcj137442.github.io/opennars-304-ts-lab/>。
+
+想看经典虫脑，进入 Microworld；想看离散世界，试试 Grid Microworld；想看跨局棋盘，进入 NARS × 2048；想看多个独立 NARS 角色，进入 Pong 或 Shot。首页只负责导航，选择场景后才启动浏览器 Worker。
+
+每个场景都会把感知、目标、推理事件、操作和环境反馈放在同一条时间线上；展开性能诊断，还能看到 FPS、TPS、RPS、概念数和等待中的 Worker。Microworld 普通入口默认是随机 seed 的空白探索，复现实验使用 `microworld.html?seed=19&knowledge=starter`。
 
 ## 5 分钟运行
 
@@ -73,7 +81,7 @@ nar.stop();
 
 ## 状态与许可证
 
-原生 TypeScript 核心与既定语义门已通过；本轮性能试探在连续低收益后按用户要求停止，**尚未证明持续20TPS或严格性能收敛**。v1.0.6 fix release 已发布，静态 Demo Lab 已部署到 <https://arcj137442.github.io/opennars-304-ts-lab/>；Shot 的长期 NARS 行为对照仍在进行中。生产源码直接 jree audit 为 `0/0`；原始 2,000,000 周期长期稳定性仍 `not_run`。接手路线见[当前状态](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/current-status.md)，运行命令见[手册](docs/operator-runbook.md)。
+原生 TypeScript 核心与既定语义门已通过；本轮性能试探在连续低收益后按用户要求停止，**尚未证明持续20TPS或严格性能收敛**。v1.0.7 fix release 已发布，静态 Demo Lab 已部署到 <https://arcj137442.github.io/opennars-304-ts-lab/>；生产源码直接 jree audit 为 `0/0`；原始 2,000,000 周期 TS 实测已完成，但 Java 本次未重跑。接手路线见[当前状态](https://github.com/ARCJ137442/OpenNARS-304-ts/blob/main/docs/current-status.md)，运行命令见[手册](docs/operator-runbook.md)。
 
 本仓库采用 MIT License，见 [LICENSE](LICENSE)。
 
