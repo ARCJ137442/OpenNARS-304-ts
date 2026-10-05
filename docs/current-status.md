@@ -23,7 +23,7 @@
 - 安全：Dependabot、secret scanning、push protection、CodeQL default setup 已启用；当前 Dependabot 告警为 0。账户能力暂不支持的 non-provider patterns 与 validity checks 仍如实披露。
 - 事实边界：Microworld 持续 20 TPS、Shot 长期行为等价和 Java 同负载性能对照尚未证明；这些是后续实验，不是本次 public 发布的隐含承诺。
 
-## 2026-10-05 权威交接校正
+## 2026-10-05 权威交接校正（历史快照，最终状态见上方公开核对与下方门禁表）
 
 ### 2026-10-05 默认入口修复
 
