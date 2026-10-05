@@ -18,7 +18,7 @@
 
 - Core：<https://github.com/ARCJ137442/OpenNARS-304-ts> 已公开，v1.0.7 Release 可下载。
 - Demo：<https://arcj137442.github.io/opennars-304-ts-lab/> 已公开，首页、Microworld、Grid、2048、Pong、Shot 和 Terminal 都有明确入口；首页只导航，进入场景后才启动 Worker。
-- 当前交付身份：Core 文档提交 `0196933`；Pages 构建提交 `f0cd84b`；线上 Worker 的核心源码构建身份为 `ff7e345`。本次 Core 提交只更新文档，不改变生产源码。
+- 当前交付身份：Core 门禁源码身份为 `7979ab6`，最新门禁证据/状态提交为 `b722698`；Pages 构建提交 `f0cd84b`；线上 Worker 的核心源码构建身份为 `ff7e345`。b722698 只新增证据与状态文档，不改变生产源码。
 - 使用路径：人类读者从 Web Lab 开始；需要本地推理时执行 `npm ci && npm run build && npm run shell`；需要集成时使用 ESM API 和 `docs/integration-guide.md`。
 - 安全：Dependabot、secret scanning、push protection、CodeQL default setup 已启用；当前 Dependabot 告警为 0。账户能力暂不支持的 non-provider patterns 与 validity checks 仍如实披露。
 - 事实边界：Microworld 持续 20 TPS、Shot 长期行为等价和 Java 同负载性能对照尚未证明；这些是后续实验，不是本次 public 发布的隐含承诺。

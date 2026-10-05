@@ -50,7 +50,7 @@ transitions:
 
 ### 2026-10-05 当前 HEAD 门禁闭包
 
-- 当前 Core HEAD `7979ab6` 的 M1′ 主体为 `243/243 passed`，失败、timeout、process_limit、exception、stall、not_run 均为 0；证据 `reports/evidence/m1prime-current-20261005.jsonl`，SHA-256 `62C9E5DC1D0ABFF934914C5C3BB8C15C073DF43A7BC2CCACE3D67432B76A87AE`。
+- 门禁使用的 Core 源码身份为 `7979ab6`，随后以 `b722698` 提交证据与文档；M1′ 主体为 `243/243 passed`，失败、timeout、process_limit、exception、stall、not_run 均为 0；证据 `reports/evidence/m1prime-current-20261005.jsonl`，SHA-256 `62C9E5DC1D0ABFF934914C5C3BB8C15C073DF43A7BC2CCACE3D67432B76A87AE`。
 - 额外 #246 为 `1/1 passed`，证据 `m1prime-current-20261005-extra246.jsonl`，SHA-256 `59BD882A9781556099A559B8FD7A6E27B0D4DF2A74DEF6FC9FC1F0BB6DF27BDA`。#245 使用 65536 周期降载 fixture，`1/1 passed`，证据 `m1prime-current-20261005-long65536.jsonl`，SHA-256 `F1E03576E5BA02F7176A74E30F32D66222DCAFF84BD9CBC8F426B51481C302CA`；原始 2,000,000 周期不以这项降载替代。
 - strict markerless 使用 `131072` 周期、`1024` 周期窗口和 `--skip-embedded`，`nal6.redundant` 与 `simpleOperationTest` 均 `equal=true`、`first_difference=null`、`incomplete=false`；TS 摘要 SHA-256 分别为 `08F79BFDB69949DF609A57C12E8F6FAD0AB4EC9FC0B984DEA6D9795904E97ABA` 与 `B71878257F96B82F6F9330F24442934D0F293F1B069B96B9070495536A599140`。
 - 当前 Core 生产树相对 `083d7b8` 仅包含语言工厂重复 arity 分支的语义保持清理；因此本次重新执行 M1′/markerless，而不是沿用旧提交证据。`npm run test:unit:with-java` 为 `514/514`，`npm run test:release`、`audit:jree`、`audit:platform`、非增量 typecheck 和汉字编码检查均通过。
